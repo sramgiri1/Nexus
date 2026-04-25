@@ -1,0 +1,68 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "⚡ NEXUS: Orchestrator Loop",
+      "program": "${workspaceFolder}/orchestrator/loop.js",
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal",
+      "restart": true,
+      "runtimeArgs": ["--experimental-vm-modules"]
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "📊 NEXUS: Status Report",
+      "program": "${workspaceFolder}/scripts/status.js",
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🤖 Run: NEXUS Agent (ask anything)",
+      "program": "${workspaceFolder}/scripts/run-agent.js",
+      "args": ["nexus", "Give me a full portfolio status report"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🗺️ Run: ATLAS (ShiftPay PRD)",
+      "program": "${workspaceFolder}/scripts/run-agent.js",
+      "args": ["atlas", "Read the ShiftPay project and summarize what needs to happen next for Gate 1", "shiftpay"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🗄️ Run: CORE (ShiftPay Schema)",
+      "program": "${workspaceFolder}/scripts/run-agent.js",
+      "args": ["core", "Write the Prisma schema for ShiftPay and save it to the project", "shiftpay"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "📣 Run: BEACON (App Store Listing)",
+      "program": "${workspaceFolder}/scripts/run-agent.js",
+      "args": ["beacon", "Draft the App Store listing for ShiftPay including title, subtitle, description and keywords", "shiftpay"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "🔭 Run: RADAR (Market Scan)",
+      "program": "${workspaceFolder}/scripts/run-agent.js",
+      "args": ["radar", "Scan the home maintenance app category and score the opportunity"],
+      "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal"
+    }
+  ]
+}

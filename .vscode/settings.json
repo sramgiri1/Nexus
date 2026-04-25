@@ -1,0 +1,14 @@
+{
+  "editor.formatOnSave": true,
+  "editor.tabSize": 2,
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "files.exclude": { "**/node_modules": true, "**/.DS_Store": true },
+  "search.exclude": { "**/node_modules": true, "**/dist": true },
+  "files.associations": { "*.env*": "dotenv", "CLAUDE.md": "markdown" },
+  "editor.wordWrap": "on",
+  "terminal.integrated.env.osx": { "NODE_ENV": "development" },
+  "editor.rulers": [100],
+  "json.schemas": [],
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": true
+}

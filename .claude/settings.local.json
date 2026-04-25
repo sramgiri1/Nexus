@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pkill -f \"orchestrator/loop.js\")",
+      "Bash(pkill -f \"vite --port 5173\")",
+      "Bash(pkill -f \"concurrently\")"
+    ]
+  }
+}

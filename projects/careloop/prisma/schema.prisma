@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String
+  phone     String?
+  pushToken String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  memberships CircleMember[]
+  tasksCreated Task[]         @relation("TaskCreator")
+  tasksAssigned Task[]        @relation("TaskAssignee")
+  events       Event[]
+}
+
+model CareCircle {
+  id          String   @id @default(cuid())
+  name        String
+  recipientName String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  members  CircleMember[]
+  tasks    Task[]
+  events   Event[]
+}
+
+model CircleMember {
+  id       String   @id @default(cuid())
+  role     Role     @default(MEMBER)
+  joinedAt DateTime @default(now())
+
+  user     User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId String
+
+  @@unique([userId, circleId])
+}
+
+model Task {
+  id          String     @id @default(cuid())
+  title       String
+  notes       String?
+  dueAt       DateTime?
+  status      TaskStatus @default(PENDING)
+  priority    Priority   @default(NORMAL)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  circle      CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId    String
+  creator     User       @relation("TaskCreator", fields: [creatorId], references: [id])
+  creatorId   String
+  assignee    User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  assigneeId  String?
+
+  reminders   Reminder[]
+}
+
+model Reminder {
+  id          String         @id @default(cuid())
+  scheduledAt DateTime
+  sentAt      DateTime?
+  channel     Channel        @default(PUSH)
+  status      ReminderStatus @default(PENDING)
+  escalatedAt DateTime?
+
+  task   Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId String
+}
+
+model Event {
+  id        String    @id @default(cuid())
+  type      EventType
+  payload   Json      @default("{}")
+  createdAt DateTime  @default(now())
+
+  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId String
+  actor    User?      @relation(fields: [actorId], references: [id])
+  actorId  String?
+}
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+  SKIPPED
+}
+
+enum Priority {
+  LOW
+  NORMAL
+  HIGH
+  URGENT
+}
+
+enum Channel {
+  PUSH
+  EMAIL
+  SMS
+}
+
+enum ReminderStatus {
+  PENDING
+  SENT
+  FAILED
+  ESCALATED
+}
+
+enum EventType {
+  TASK_CREATED
+  TASK_UPDATED
+  TASK_COMPLETED
+  MEMBER_JOINED
+  REMINDER_SENT
+  REMINDER_ESCALATED
+  DIGEST_SENT
+}

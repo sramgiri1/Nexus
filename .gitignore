@@ -1,0 +1,12 @@
+node_modules/
+dist/
+.env
+.env.local
+.DS_Store
+*.log
+memory/conversations/
+memory/snapshots/
+dashboard/node_modules/
+dashboard/dist/
+projects/*/backend/node_modules/
+projects/*/.env

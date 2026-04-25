@@ -1,0 +1,117 @@
+{
+  "lastUpdated": "2026-04-25T12:00:56.505Z",
+  "agents": {
+    "nexus": {
+      "status": "active",
+      "task": "Orchestrating portfolio. Awaiting founder directives.",
+      "project": null,
+      "progress": 100,
+      "lastRun": null
+    },
+    "atlas": {
+      "status": "idle",
+      "task": "Awaiting Gate 1 decision lock for ShiftPay.",
+      "project": "shiftpay",
+      "progress": 15,
+      "lastRun": null
+    },
+    "prism": {
+      "status": "blocked",
+      "task": "Blocked — PRD must be approved before design starts.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "forge": {
+      "status": "idle",
+      "task": "Ready to provision infrastructure once G2 accounts created.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "core": {
+      "status": "active",
+      "task": "Schema built. Awaiting DATABASE_URL to run migrations.",
+      "project": "shiftpay",
+      "progress": 35,
+      "lastRun": null
+    },
+    "swift": {
+      "status": "blocked",
+      "task": "Blocked — needs PRISM design system before UI starts.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "sentinel": {
+      "status": "idle",
+      "task": "No build to test yet.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "beacon": {
+      "status": "idle",
+      "task": "Ready to draft App Store listing once PRD approved.",
+      "project": "shiftpay",
+      "progress": 0,
+      "lastRun": null
+    },
+    "compass": {
+      "status": "idle",
+      "task": "Keyword research not started. Waiting on app name lock.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "oracle": {
+      "status": "idle",
+      "task": "Event spec not defined. Waiting on analytics north star.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "canvas": {
+      "status": "idle",
+      "task": "Privacy page must go live before Day 8.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "stream": {
+      "status": "idle",
+      "task": "No external data sources planned Sprint 1.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "synapse": {
+      "status": "idle",
+      "task": "No AI features planned Sprint 1.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
+    },
+    "radar": {
+      "status": "done",
+      "task": "Say \"NEXUS online\" and do nothing else. No tools needed.",
+      "project": null,
+      "progress": 100,
+      "lastRun": "2026-04-25T12:00:56.505Z"
+    },
+    "meridian": {
+      "status": "done",
+      "task": "ShiftPay 44/50, CareLoop 44/50 — both GO.",
+      "project": "shiftpay",
+      "progress": 100,
+      "lastRun": null
+    },
+    "pixel": {
+      "status": "blocked",
+      "task": "Error: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CaPUHgZTVzHyCPXgN4ugR\"}",
+      "project": null,
+      "progress": 10,
+      "lastRun": "2026-04-24T23:34:01.915Z"
+    }
+  }
+}

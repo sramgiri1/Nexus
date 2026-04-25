@@ -1,0 +1,104 @@
+{
+  "lastUpdated": "2026-04-24T00:00:00Z",
+  "projects": [
+    {
+      "id": "shiftpay",
+      "name": "ShiftPay",
+      "color": "#00D9FF",
+      "tagline": "Know your take-home before accepting a shift",
+      "stage": "incubation",
+      "gate": "G1",
+      "score": 44,
+      "tam": "$144M",
+      "sprintDay": 0,
+      "sprintTotal": 10,
+      "mrr": 0,
+      "interviews": 5,
+      "interviewTarget": 5,
+      "waitlist": 0,
+      "notes": "Shift worker take-home calculator. No data dependency. Lowest compliance overhead.",
+      "agents": ["atlas", "forge", "core", "beacon", "oracle"],
+      "decisions": {
+        "bundleId": "com.shiftpay.ios",
+        "authStrategy": "static-api-key",
+        "taxDataSource": "IRS Pub 15-T bundled JSON",
+        "clinicIntegration": "PERMANENTLY_OFF",
+        "analyticsNorthStar": "calculations_per_session"
+      },
+      "gates": {
+        "g0": "done",
+        "g1": "partial",
+        "g2": "pending",
+        "g3": "pending",
+        "g4": "pending",
+        "g5": "done",
+        "g6": "partial",
+        "g7": "pending"
+      }
+    },
+    {
+      "id": "careloop",
+      "name": "CareLoop",
+      "color": "#00FFB3",
+      "tagline": "Coordinate aging parent care without group text chaos",
+      "stage": "incubation",
+      "gate": "G1",
+      "score": 44,
+      "tam": "$479M",
+      "sprintDay": 0,
+      "sprintTotal": 10,
+      "mrr": 0,
+      "interviews": 5,
+      "interviewTarget": 5,
+      "waitlist": 0,
+      "notes": "Family care coordination. FTC Health Breach Rule applies. Paused pending ShiftPay Gate 1.",
+      "agents": ["atlas", "prism", "core", "swift", "beacon", "canvas"],
+      "decisions": {
+        "bundleId": "com.careloop.ios",
+        "authStrategy": "static-api-key",
+        "reminderEscalation": "15 minutes",
+        "clinicIntegration": "PERMANENTLY_OFF",
+        "complianceLevel": "FTC-Health-Breach-Rule"
+      },
+      "gates": {
+        "g0": "done",
+        "g1": "partial",
+        "g2": "pending",
+        "g3": "pending",
+        "g4": "pending",
+        "g5": "partial",
+        "g6": "partial",
+        "g7": "pending"
+      }
+    },
+    {
+      "id": "homelog",
+      "name": "HomeLog",
+      "color": "#FF6B35",
+      "tagline": "The maintenance record every homeowner wishes they had",
+      "stage": "discovery",
+      "gate": "—",
+      "score": 41,
+      "tam": "$599M",
+      "sprintDay": 0,
+      "sprintTotal": 10,
+      "mrr": 0,
+      "interviews": 0,
+      "interviewTarget": 5,
+      "waitlist": 0,
+      "notes": "Strong market, high buildability. Queued after ShiftPay Gate 0 validation.",
+      "agents": ["radar", "meridian"],
+      "decisions": {},
+      "gates": {
+        "g0": "pending",
+        "g1": "pending",
+        "g2": "pending",
+        "g3": "pending",
+        "g4": "pending",
+        "g5": "pending",
+        "g6": "pending",
+        "g7": "pending"
+      }
+    }
+  ]
+}

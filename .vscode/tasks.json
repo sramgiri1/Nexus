@@ -1,0 +1,63 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "NEXUS: Install All Dependencies",
+      "type": "shell",
+      "command": "npm install && cd dashboard && npm install",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "NEXUS: Start Orchestrator Loop",
+      "type": "shell",
+      "command": "npm run orchestrator",
+      "group": { "kind": "build", "isDefault": true },
+      "presentation": { "reveal": "always", "panel": "new" },
+      "isBackground": true
+    },
+    {
+      "label": "NEXUS: Start Dashboard",
+      "type": "shell",
+      "command": "npm run dashboard",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "new" },
+      "isBackground": true
+    },
+    {
+      "label": "NEXUS: Status Report",
+      "type": "shell",
+      "command": "npm run status",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "NEXUS: Ask NEXUS (status)",
+      "type": "shell",
+      "command": "node scripts/run-agent.js nexus \"Give me a full portfolio status report\"",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "NEXUS: Ask NEXUS (blockers)",
+      "type": "shell",
+      "command": "node scripts/run-agent.js nexus \"What is blocking Sprint 1 from starting?\"",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "NEXUS: Ask NEXUS (investor brief)",
+      "type": "shell",
+      "command": "node scripts/run-agent.js nexus \"Brief me for an investor meeting in 5 bullet points\"",
+      "group": "test",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    },
+    {
+      "label": "NEXUS: Reset Task Queue",
+      "type": "shell",
+      "command": "npm run reset",
+      "group": "build",
+      "presentation": { "reveal": "always", "panel": "shared" }
+    }
+  ]
+}
