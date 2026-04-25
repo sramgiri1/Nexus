@@ -1,6 +1,6 @@
 # NEXUS — Agentic Venture Orchestration System
 
-> One founder. 16 specialist agents. Multiple apps in parallel.
+> One founder. 16 dispatchable agents plus 3 documented process roles. Multiple apps in parallel.
 > File-based memory. Agentic loop. MCP-style tools.
 
 ---
@@ -15,9 +15,12 @@ nexus/
 │   └── runner.js                ← Runs one agent: builds context, calls LLM, tool loop
 ├── tools/
 │   └── index.js                 ← MCP-style tool registry (11 tools)
-├── agents/                      ← System prompt for each agent (loaded from disk)
-│   ├── nexus.md                 ← Orchestrator — JARVIS-style
+├── agents/                      ← System prompt files (prompt presence ≠ runner dispatch support)
+│   ├── nexus.md                 ← Orchestrator — CEO-style
 │   ├── atlas.md                 ← Product Agent
+│   ├── shepherd.md              ← Program Manager / Sprint Gate Agent
+│   ├── warden.md                ← Compliance & Privacy Agent
+│   ├── relay.md                 ← User Feedback & Research Agent
 │   ├── prism.md                 ← Design Agent
 │   ├── forge.md                 ← DevOps Agent
 │   ├── core.md                  ← Backend Agent
@@ -61,6 +64,140 @@ nexus/
 
 ---
 
+## Agent Roster
+
+### Dispatchable Today
+
+These are the agents currently registered in `orchestrator/runner.js` and dispatchable through the queue today.
+
+### Orchestration
+
+| Agent     | Role               | What it does                                                    |
+|-----------|--------------------|-----------------------------------------------------------------|
+| **NEXUS** | CEO / Orchestrator | Coordinates all agents, routes work, answers founder questions. |
+
+### Product & Design
+
+| Agent     | Role    | What it does                                                       |
+|-----------|---------|--------------------------------------------------------------------|
+| **ATLAS** | Product | Writes the PRD, locks decisions, defines API contracts per sprint. |
+| **PRISM** | Design  | Produces design system, screen layouts, and component specs.       |
+
+### Engineering
+
+| Agent       | Role          | What it does                                                     |
+|-------------|---------------|------------------------------------------------------------------|
+| **FORGE**   | DevOps        | Provisions Supabase, deploys to Railway/Render, manages secrets. |
+| **CORE**    | Backend       | Builds the Fastify API, Prisma schema, auth, and event logging.  |
+| **SWIFT**   | iOS           | Builds all SwiftUI screens, the API client, and session logging. |
+| **PIXEL**   | Frontend      | Builds web UI outside the iOS app (e.g., the NEXUS dashboard).   |
+| **CANVAS**  | Web Builder   | Produces static assets: privacy policy HTML and landing pages.   |
+| **SYNAPSE** | AI Features   | Integrates LLM features into apps. Deferred to Sprint 2+.        |
+| **STREAM**  | Data Pipeline | Manages external data ingestion. No active work Sprint 1-2.      |
+
+### Quality & Testing
+
+| Agent        | Role | What it does                                                          |
+|--------------|------|-----------------------------------------------------------------------|
+| **SENTINEL** | QA   | Writes and executes the test plan. Signs off on sprint exit criteria. |
+
+### Growth & Analytics
+
+| Agent       | Role      | What it does                                                        |
+|-------------|-----------|---------------------------------------------------------------------|
+| **BEACON**  | Marketing | Drafts App Store listings and launch copy. Needs Apple Dev account. |
+| **COMPASS** | SEO       | Keyword research and ASO optimization. Starts when name is locked.  |
+| **ORACLE**  | Analytics | Defines event schemas and PostHog funnels. Deferred to beta.        |
+
+### Strategy
+
+| Agent        | Role       | What it does                                                      |
+|--------------|------------|-------------------------------------------------------------------|
+| **RADAR**    | Market Gap | Scans categories for whitespace, validates TAM, flags threats.    |
+| **MERIDIAN** | Business   | Scores revenue models, validates pricing, produces business case. |
+
+### Documented Process Roles
+
+These prompt files exist and are used as founder workflow lanes in the documentation, but they are not currently dispatchable from the queue because `orchestrator/runner.js` does not register them yet.
+
+| Role         | What it does                                                         |
+|--------------|----------------------------------------------------------------------|
+| **SHEPHERD** | Program manager for sprint scope, exit criteria, and release gating. |
+| **WARDEN**   | Compliance and privacy owner for user-data handling and sign-off.    |
+| **RELAY**    | Tester feedback and support synthesis routed back into product/QA.   |
+
+---
+
+## How Agents Derive Data from Each Other
+
+Agents do not call each other directly — they communicate through the shared memory files in `memory/`. The graph below shows who produces what and who reads it.
+
+```text
+FOUNDER
+  │  writes directives
+  ▼
+memory/founder-actions.json
+  │  read by
+  ▼
+NEXUS ──────────────────────────────────────────────────────────────────┐
+  │  routes work via task queue                                          │
+  ▼                                                                      │
+memory/task-queue.json                                                   │
+  │  dispatches agents                                                   │
+  ▼                                                                      │
+RADAR ──► memory/portfolio.json (TAM, score)                            │
+  │                                                                      │
+  └──► MERIDIAN reads TAM + score ──► writes business score             │
+                                                                        │
+ATLAS reads portfolio.json + RELAY's feedback clusters                  │
+  │  writes PRD (projects/careloop/docs/PRD.md)                         │
+  ▼                                                                      │
+SHEPHERD (process role; founder/manual workflow until runner wiring exists)
+  reads PRD ──► slices sprint scope ──► writes sprint plan              │
+  │                                                                      │
+  ├──► PRISM reads PRD + sprint scope ──► writes screen specs           │
+  │                                                                      │
+  ├──► CORE reads PRD + API contracts ──► writes routes, schema         │
+  │      │                                                               │
+  │      └──► SWIFT reads API contracts ──► writes iOS screens          │
+  │                                                                      │
+  ├──► SENTINEL reads PRD + sprint scope ──► writes QA checklist        │
+  │                                                                      │
+  ├──► WARDEN (process role) reads PRD §8 (compliance) ──► writes privacy policy, │
+  │           incident-response.md                                       │
+  │                                                                      │
+  └──► FORGE reads portfolio.json (infra decisions) ──► deploys API     │
+                                                                        │
+RELAY (process role) reads alpha feedback ──► clusters bugs ──► writes to│
+  memory/founder-actions.json ──► read by ATLAS, SENTINEL ◄────────────┘
+
+ORACLE reads PRD §10 (event schema) ──► configures PostHog funnels
+BEACON reads PRD + app name ──► writes App Store copy
+COMPASS reads app name + BEACON copy ──► writes ASO keywords
+CANVAS reads PRD §8 (privacy policy template) ──► writes privacy.html
+```
+
+**Key data flows in detail:**
+
+| Produces                           | Agent    | Consumed by                                    |
+|------------------------------------|----------|------------------------------------------------|
+| TAM, opportunity score             | RADAR    | MERIDIAN, NEXUS, ATLAS                         |
+| Business score, revenue model      | MERIDIAN | NEXUS, founder briefings                       |
+| PRD (requirements, API contracts)  | ATLAS    | SHEPHERD (process role), CORE, SWIFT, PRISM, SENTINEL, WARDEN (process role) |
+| Sprint plan, exit criteria         | SHEPHERD (process role) | NEXUS, SENTINEL, all engineering agents        |
+| API routes + schema                | CORE     | SWIFT, SENTINEL, FORGE                         |
+| iOS screens                        | SWIFT    | SENTINEL (test plan), RELAY (process role feedback) |
+| Screen designs                     | PRISM    | SWIFT, CORE, ATLAS                             |
+| QA checklist + test results        | SENTINEL | SHEPHERD (process-role sprint gate), ATLAS     |
+| Compliance review + privacy policy | WARDEN (process role) | SHEPHERD (process role; can't ship without sign-off) |
+| Deployed API + infra               | FORGE    | SWIFT, SENTINEL                                |
+| User feedback clusters             | RELAY (process role) | ATLAS (PRD revisions), SENTINEL (bugs)         |
+| App Store copy                     | BEACON   | COMPASS (ASO), founder review                  |
+| Event schema + funnels             | ORACLE   | NEXUS (north-star metrics), ATLAS              |
+| Privacy policy HTML                | CANVAS   | WARDEN (process role) review, FORGE (deploy)   |
+
+---
+
 ## Setup (5 minutes)
 
 ```bash
@@ -97,10 +234,11 @@ node scripts/run-agent.js nexus "Which agents should be working right now?"
 
 ```bash
 # Format: npm run task <agentId> "<task>" [projectId] [priority]
-npm run task atlas "Write the ShiftPay PRD Section 7 API Contract" shiftpay high
-npm run task core  "Generate Prisma schema for ShiftPay" shiftpay critical
-npm run task beacon "Draft App Store listing for ShiftPay" shiftpay normal
-npm run task radar  "Scan the home maintenance category" null normal
+npm run task atlas    "Write the CareLoop PRD Section 7 API Contract" careloop high
+npm run task core     "Generate Prisma schema for CareLoop"           careloop critical
+npm run task sentinel "Write Sprint 1 QA checklist"                   careloop high
+npm run task beacon   "Draft App Store listing for CareLoop"          careloop normal
+npm run task radar    "Scan the home maintenance category"            null    normal
 ```
 
 ### Check system status
@@ -138,7 +276,7 @@ npm run dev
 
 ```text
 1. You add a task:
-   npm run task atlas "Write PRD" shiftpay high
+   npm run task atlas "Write PRD" careloop high
    → Writes to memory/task-queue.json
 
 2. Loop detects change (file watcher or 10s poll):
@@ -170,7 +308,7 @@ npm run dev
 |-------------------------------------|--------------------------------------|
 | Lost when conversation ends         | Persists forever                     |
 | Grows token count every message     | Agents load only their slice         |
-| One agent context per conversation  | 16 agents share one source of truth  |
+| One agent context per conversation  | 18 agents share one source of truth  |
 | Can't be read by other tools        | Dashboard reads same files           |
 | Expensive at scale                  | Token-efficient — load what you need |
 
@@ -245,13 +383,14 @@ npm run task meridian "Validate PetLog revenue model — $4.99/mo freemium" petl
 
 **Launch configs** (F5 or Run panel):
 
-- ⚡ NEXUS: Orchestrator Loop
-- 📊 NEXUS: Status Report
-- 🤖 Run: NEXUS Agent
-- 🗺️ Run: ATLAS (ShiftPay PRD)
-- 🗄️ Run: CORE (ShiftPay Schema)
-- 📣 Run: BEACON (App Store Listing)
-- 🔭 Run: RADAR (Market Scan)
+- NEXUS: Orchestrator Loop
+- NEXUS: Status Report
+- Run: NEXUS Agent
+- Run: ATLAS (CareLoop PRD)
+- Run: CORE (CareLoop Schema)
+- Run: SENTINEL (QA Checklist)
+- Run: BEACON (App Store Listing)
+- Run: RADAR (Market Scan)
 
 **Tasks** (Cmd+Shift+P → "Run Task"):
 
@@ -268,7 +407,7 @@ npm run task meridian "Validate PetLog revenue model — $4.99/mo freemium" petl
 claude
 # Claude reads CLAUDE.md automatically
 # "What's the current portfolio status?"
-# "Run CORE to generate the ShiftPay Prisma schema"
+# "Run CORE to generate the CareLoop Prisma schema"
 ```
 
 ---

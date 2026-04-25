@@ -23,6 +23,15 @@ enum TaskStatus: String, Codable {
     case inProgress = "IN_PROGRESS"
     case done       = "DONE"
     case skipped    = "SKIPPED"
+
+    var label: String {
+        switch self {
+        case .pending:    return "Pending"
+        case .inProgress: return "In Progress"
+        case .done:       return "Done"
+        case .skipped:    return "Skipped"
+        }
+    }
 }
 
 enum TaskPriority: String, Codable, CaseIterable {

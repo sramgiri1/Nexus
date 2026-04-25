@@ -1,117 +1,138 @@
 {
-  "lastUpdated": "2026-04-25T16:49:24.478Z",
+  "lastUpdated": "2026-04-25T21:25:19.329Z",
   "agents": {
     "nexus": {
       "status": "active",
-      "task": "Orchestrating portfolio. Awaiting founder directives.",
+      "task": "Orchestrating CareLoop Sprint 1. All 18 agents aligned.",
       "project": null,
       "progress": 100,
       "lastRun": null
     },
     "atlas": {
       "status": "done",
-      "task": "Write the full CareLoop PRD — product vision, user personas (family caregiver), core features (care circles, task assignment, reminder escalation at 15min, 6pm daily digest), API contract, success metrics. Save to projects/careloop/docs/PRD.md",
+      "task": "PRD v1.1 approved for Sprint 1. All 4 open questions resolved and locked.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T16:49:24.477Z"
+      "lastRun": "2026-04-25T00:00:00Z"
+    },
+    "shepherd": {
+      "status": "active",
+      "task": "Sprint 1 open. iOS screens complete. Blocking Sprint 1 exit: Prisma migration not run, SENTINEL QA checklist + seed/reset flow not built. API deploy and Apple Dev account needed before Sprint 2.",
+      "project": "careloop",
+      "progress": 60,
+      "lastRun": null
+    },
+    "warden": {
+      "status": "active",
+      "task": "incident-response.md required before public launch. Privacy policy HTML exists. FTC compliance boundary documented in PRD §8.",
+      "project": "careloop",
+      "progress": 40,
+      "lastRun": null
+    },
+    "relay": {
+      "status": "idle",
+      "task": "No alpha testers yet. Ready to collect feedback once TestFlight is live in Sprint 3.",
+      "project": "careloop",
+      "progress": 0,
+      "lastRun": null
     },
     "prism": {
-      "status": "blocked",
-      "task": "Blocked — PRD must be approved before design starts.",
-      "project": null,
+      "status": "idle",
+      "task": "PRD approved. Ready to start design system and iOS screen designs.",
+      "project": "careloop",
       "progress": 0,
       "lastRun": null
     },
     "forge": {
       "status": "idle",
-      "task": "Ready to provision infrastructure once G2 accounts created.",
-      "project": null,
-      "progress": 0,
+      "task": "Supabase DB provisioned. Railway/Render deploy pending. APNs account pending.",
+      "project": "careloop",
+      "progress": 20,
       "lastRun": null
     },
     "core": {
       "status": "done",
-      "task": "Review the existing CareLoop Fastify API in projects/careloop/src/. Add reminder scheduling logic: when a task is created with a dueAt, create a Reminder record 15 minutes before. Add a GET /circles/:circleId/events endpoint. Save all changes to the project files.",
+      "task": "All API routes built: circles, tasks, users, events. Role auth, reminder creation, event logging complete. Migration pending for timezone+DigestLog.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T16:38:12.887Z"
+      "lastRun": "2026-04-25T00:00:00Z"
     },
     "swift": {
-      "status": "blocked",
-      "task": "Blocked — needs PRISM design system before UI starts.",
-      "project": null,
-      "progress": 0,
-      "lastRun": null
+      "status": "done",
+      "task": "All Sprint 1 iOS screens complete: onboarding, task list, new task (with admin assignee picker), task detail/edit, skip/delete via swipe + detail view, admin circle settings, member list. updateTaskStatus userId bug fixed.",
+      "project": "careloop",
+      "progress": 100,
+      "lastRun": "2026-04-25T00:00:00Z"
     },
     "sentinel": {
-      "status": "idle",
-      "task": "No build to test yet.",
-      "project": null,
-      "progress": 0,
-      "lastRun": null
+      "status": "working",
+      "task": "Write Sprint 1 QA checklist and build seed/reset flow for local testing",
+      "project": "careloop",
+      "progress": 10,
+      "lastRun": "2026-04-25T21:25:19.329Z"
     },
     "beacon": {
       "status": "idle",
-      "task": "Ready to draft App Store listing once PRD approved.",
-      "project": "shiftpay",
+      "task": "App Store listing draft pending PRD approval. Blocked on Apple Developer account.",
+      "project": "careloop",
       "progress": 0,
       "lastRun": null
     },
     "compass": {
       "status": "idle",
-      "task": "Keyword research not started. Waiting on app name lock.",
-      "project": null,
+      "task": "Keyword research not started. Ready when app name is locked.",
+      "project": "careloop",
       "progress": 0,
       "lastRun": null
     },
     "oracle": {
       "status": "idle",
-      "task": "Event spec not defined. Waiting on analytics north star.",
-      "project": null,
-      "progress": 0,
+      "task": "Analytics events defined in PRD §10. PostHog integration deferred to external beta. Event table logging active.",
+      "project": "careloop",
+      "progress": 10,
       "lastRun": null
     },
     "canvas": {
       "status": "done",
-      "task": "Build a CareLoop privacy policy page. Plain HTML/CSS. Cover: data collected, FTC Health Breach Notification Rule, no clinic integration, contact suchethram@gmail.com. Save to projects/careloop/docs/privacy.html",
+      "task": "Privacy policy HTML built at projects/careloop/docs/privacy.html.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T16:48:18.498Z"
+      "lastRun": "2026-04-25T00:00:00Z"
+    },
+    "pixel": {
+      "status": "idle",
+      "task": "No web frontend needed Sprint 1. Dashboard operational.",
+      "project": null,
+      "progress": 0,
+      "lastRun": null
     },
     "stream": {
       "status": "idle",
-      "task": "No external data sources planned Sprint 1.",
+      "task": "No external data sources Sprint 1-2.",
       "project": null,
       "progress": 0,
       "lastRun": null
     },
     "synapse": {
       "status": "idle",
-      "task": "No AI features planned Sprint 1.",
+      "task": "No AI features until Sprint 2+.",
       "project": null,
       "progress": 0,
       "lastRun": null
     },
     "radar": {
-      "status": "done",
-      "task": "Say \"NEXUS online\" and do nothing else. No tools needed.",
-      "project": null,
-      "progress": 100,
-      "lastRun": "2026-04-25T12:00:56.505Z"
-    },
-    "meridian": {
-      "status": "done",
-      "task": "ShiftPay 44/50, CareLoop 44/50 — both GO.",
-      "project": "shiftpay",
+      "status": "idle",
+      "task": "Market gap analysis complete. CareLoop TAM $479M validated.",
+      "project": "careloop",
       "progress": 100,
       "lastRun": null
     },
-    "pixel": {
-      "status": "blocked",
-      "task": "Error: 401 {\"type\":\"error\",\"error\":{\"type\":\"authentication_error\",\"message\":\"invalid x-api-key\"},\"request_id\":\"req_011CaPUHgZTVzHyCPXgN4ugR\"}",
-      "project": null,
-      "progress": 10,
-      "lastRun": "2026-04-24T23:34:01.915Z"
+    "meridian": {
+      "status": "done",
+      "task": "Business score: CareLoop 44/50 — GO. ShiftPay 44/50 — on hold until CareLoop Gate 2.",
+      "project": "careloop",
+      "progress": 100,
+      "lastRun": null
     }
   }
 }

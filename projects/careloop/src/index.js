@@ -3,6 +3,7 @@ import Fastify         from "fastify";
 import cors            from "@fastify/cors";
 import { PrismaClient } from "@prisma/client";
 
+import auth    from "./plugins/auth.js";
 import health  from "./routes/health.js";
 import circles from "./routes/circles.js";
 import tasks   from "./routes/tasks.js";
@@ -14,6 +15,7 @@ const db  = new PrismaClient();
 app.decorate("db", db);
 
 await app.register(cors);
+await app.register(auth);
 
 app.register(health);
 app.register(users);

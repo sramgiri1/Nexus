@@ -88,10 +88,11 @@ struct OnboardingView: View {
         Task {
             do {
                 let user = try await APIClient.shared.createUser(email: email, name: name, phone: nil)
+                let tz = TimeZone.current.identifier.isEmpty ? "America/New_York" : TimeZone.current.identifier
+                _ = try? await APIClient.shared.updateTimezone(userId: user.id, timezone: tz)
                 let circle: CareCircle
                 if mode == .create {
-                    circle = try await APIClient.shared.createCircle(name: circleName, recipientName: recipientName)
-                    _ = try await APIClient.shared.addMember(circleId: circle.id, userId: user.id, role: .admin)
+                    circle = try await APIClient.shared.createCircle(name: circleName, recipientName: recipientName, creatorId: user.id)
                 } else {
                     _ = try await APIClient.shared.addMember(circleId: circleId, userId: user.id)
                     circle = try await APIClient.shared.fetchCircle(id: circleId)

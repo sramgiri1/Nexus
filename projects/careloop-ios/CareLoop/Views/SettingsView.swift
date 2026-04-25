@@ -14,10 +14,13 @@ struct SettingsView: View {
                 }
                 if let circle = appState.activeCircle {
                     Section("Care Circle") {
-                        LabeledContent("Circle",    value: circle.name)
-                        LabeledContent("For",       value: circle.recipientName)
-                        LabeledContent("Circle ID", value: circle.id)
-                            .font(.caption)
+                        LabeledContent("Circle", value: circle.name)
+                        LabeledContent("For",    value: circle.recipientName)
+                        if appState.userRole == .admin {
+                            LabeledContent("Circle ID", value: circle.id)
+                                .font(.caption)
+                            ShareLink("Share Circle ID", item: circle.id)
+                        }
                     }
                 }
                 Section {

@@ -26,12 +26,12 @@ const PRIORITY = {
 };
 
 const QUICK = [
-  "Full portfolio status report",
   "What's blocking Sprint 1?",
   "What should I do today?",
+  "Full portfolio status report",
+  "Which agents are idle and can be tasked?",
   "Investor briefing — 5 bullets",
-  "Which agents need unblocking?",
-  "ShiftPay vs CareLoop priority",
+  "What does SENTINEL need to do before Sprint 2?",
 ];
 
 function Dot({color,pulse=false}){
@@ -377,8 +377,8 @@ export default function CommandCenter(){
                   </div>
                   <p style={{fontSize:13,color:T.textMuted,lineHeight:1.75,margin:0}}>
                     NEXUS is online. Context is loaded from your memory files.
-                    Both ShiftPay and CareLoop have completed Gate 0 interviews.
-                    What would you like to know?
+                    {portfolio ? ` Active: ${portfolio.projects?.find(p=>p.id===portfolio.activeProject)?.name||"CareLoop"} — Sprint ${portfolio.sprintPlan?.currentSprint||1} of ${portfolio.sprintPlan?.totalSprints||3}.` : " Loading portfolio..."}
+                    {" "}What would you like to know?
                   </p>
                 </div>
 

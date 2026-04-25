@@ -1,17 +1,21 @@
 import SwiftUI
 
 struct NewTaskView: View {
-    let circleId: String
+    let circleId:  String
     let creatorId: String
+    let members:   [CircleMember]
+    let isAdmin:   Bool
+
     @Environment(\.dismiss) private var dismiss
 
-    @State private var title    = ""
-    @State private var notes    = ""
-    @State private var dueAt    = Date().addingTimeInterval(3600)
-    @State private var hasDue   = false
-    @State private var priority = TaskPriority.normal
-    @State private var loading  = false
-    @State private var error: String?
+    @State private var title      = ""
+    @State private var notes      = ""
+    @State private var dueAt      = Date().addingTimeInterval(3600)
+    @State private var hasDue     = false
+    @State private var priority   = TaskPriority.normal
+    @State private var assigneeId: String?
+    @State private var loading    = false
+    @State private var error:     String?
 
     var body: some View {
         NavigationStack {
@@ -36,6 +40,19 @@ struct NewTaskView: View {
                     }
                     .pickerStyle(.segmented)
                 }
+                if isAdmin && !members.isEmpty {
+                    Section("Assign to") {
+                        Picker("Assignee", selection: Binding(
+                            get: { assigneeId ?? "" },
+                            set: { assigneeId = $0.isEmpty ? nil : $0 }
+                        )) {
+                            Text("Unassigned").tag("")
+                            ForEach(members) { m in
+                                Text(m.user?.name ?? "Unknown").tag(m.userId)
+                            }
+                        }
+                    }
+                }
                 if let error { Text(error).foregroundColor(.red).font(.caption) }
             }
             .navigationTitle("New Task")
@@ -44,7 +61,7 @@ struct NewTaskView: View {
                 ToolbarItem(placement: .cancellationAction) { Button("Cancel") { dismiss() } }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Add") { Task { await save() } }
-                        .disabled(title.isEmpty || loading)
+                        .disabled(title.trimmingCharacters(in: .whitespaces).isEmpty || loading)
                 }
             }
         }
@@ -55,12 +72,12 @@ struct NewTaskView: View {
         do {
             _ = try await APIClient.shared.createTask(
                 circleId:   circleId,
-                title:      title,
+                title:      title.trimmingCharacters(in: .whitespaces),
                 notes:      notes.isEmpty ? nil : notes,
                 dueAt:      hasDue ? dueAt : nil,
                 priority:   priority,
                 creatorId:  creatorId,
-                assigneeId: nil
+                assigneeId: isAdmin ? assigneeId : nil
             )
             dismiss()
         } catch { self.error = error.localizedDescription }

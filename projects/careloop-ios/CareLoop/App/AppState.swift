@@ -12,6 +12,13 @@ final class AppState: ObservableObject {
         Task { await restoreSession() }
     }
 
+    var userRole: MemberRole {
+        guard let userId = currentUser?.id,
+              let members = activeCircle?.members
+        else { return .member }
+        return members.first(where: { $0.userId == userId })?.role ?? .member
+    }
+
     func signIn(user: CareUser, circle: CareCircle) {
         currentUser  = user
         activeCircle = circle

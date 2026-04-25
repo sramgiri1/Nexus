@@ -34,6 +34,29 @@ final class APIClient {
         return try await request(path: path, method: "PATCH", body: data)
     }
 
+    func patchAny<T: Decodable>(_ path: String, body: [String: Any]) async throws -> T {
+        let data = try JSONSerialization.data(withJSONObject: body)
+        return try await request(path: path, method: "PATCH", body: data)
+    }
+
+    func deleteVoid(_ path: String, body: [String: Any]) async throws {
+        let data = try JSONSerialization.data(withJSONObject: body)
+        try await requestVoid(path: path, method: "DELETE", body: data)
+    }
+
+    private func requestVoid(path: String, method: String, body: Data?) async throws {
+        guard let url = URL(string: baseURL + path) else { throw APIError.invalidURL }
+        var req = URLRequest(url: url)
+        req.httpMethod = method
+        req.setValue(apiKey, forHTTPHeaderField: "x-api-key")
+        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        req.httpBody = body
+        let (_, response) = try await URLSession.shared.data(for: req)
+        guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
+            throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0)
+        }
+    }
+
     private func request<T: Decodable>(path: String, method: String, body: Data?) async throws -> T {
         guard let url = URL(string: baseURL + path) else { throw APIError.invalidURL }
         var req = URLRequest(url: url)
