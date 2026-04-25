@@ -44,24 +44,23 @@ const AGENT_TOOLS = {
  * @returns {Promise<{success, output, toolCallCount}>}
  */
 const AGENT_MODELS = {
-  // General agents
-  nexus:    process.env.NEXUS_MODEL    || "llama3.2:3b",
-  atlas:    "llama3.2:3b",
-  radar:    "llama3.2:3b",
-  forge:    "llama3.2:3b",
-  beacon:   "llama3.2:3b",
-  compass:  "llama3.2:3b",
+  // General agents — qwen3:4b handles tool calling reliably
+  nexus:    process.env.NEXUS_MODEL || "qwen3:4b",
+  atlas:    "qwen3:4b",
+  radar:    "qwen3:4b",
+  forge:    "qwen3:4b",
+  beacon:   "qwen3:4b",
+  compass:  "qwen3:4b",
   // Heavier reasoning
   meridian: "qwen3:4b",
   prism:    "qwen3:4b",
   oracle:   "qwen3:4b",
   sentinel: "qwen3:4b",
-  // Coding (3b)
-  pixel:    "qwen2.5-coder:3b",
-  canvas:   "qwen2.5-coder:3b",
-  stream:   "qwen2.5-coder:3b",
-  synapse:  "qwen2.5-coder:3b",
-  // Coding (7b)
+  // Coding — 7b reliably uses tools; 3b does not
+  pixel:    "qwen2.5-coder:7b",
+  canvas:   "qwen2.5-coder:7b",
+  stream:   "qwen2.5-coder:7b",
+  synapse:  "qwen2.5-coder:7b",
   core:     "qwen2.5-coder:7b",
   swift:    "qwen2.5-coder:7b",
 };
