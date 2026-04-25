@@ -1,0 +1,23 @@
+name: CareLoop
+options:
+  bundleIdPrefix: com.careloop
+  deploymentTarget:
+    iOS: "16.0"
+  xcodeVersion: "15"
+
+settings:
+  base:
+    SWIFT_VERSION: "5.9"
+    PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios
+    DEVELOPMENT_TEAM: ""
+
+targets:
+  CareLoop:
+    type: application
+    platform: iOS
+    sources:
+      - CareLoop
+    settings:
+      base:
+        INFOPLIST_FILE: CareLoop/Resources/Info.plist
+        PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios
