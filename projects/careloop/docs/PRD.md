@@ -192,8 +192,11 @@ Key constraints:
 
 ---
 
-## 10. Open Questions
+## 10. Decisions Locked
 
-- [ ] How do new members get the circle ID? (v1: Admin copies and shares manually)
-- [ ] Do we support multiple care recipients per circle? (v1: No — one per circle)
-- [ ] Digest delivery: Resend template or plain HTML? (Decision: plain HTML)
+- **Circle creation:** Onboarding supports both create (user becomes Admin) and join (enter circle ID). Two paths, one screen.
+- **Health content in notes:** Prohibited via UI disclaimer on task creation — *"Don't include medical details."* No active sanitization. FTC compliance maintained by never storing health data.
+- **Event log:** Internal/audit only in Sprint 1. `GET /circles/:circleId/events` endpoint exists but not exposed in iOS app. User-facing activity feed is Sprint 2.
+- **Circle ID sharing:** Admin copies and shares manually (v1).
+- **Multiple recipients per circle:** No — one recipient per circle (v1).
+- **Digest format:** Plain HTML via Resend.

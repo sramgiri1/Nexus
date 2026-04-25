@@ -20,6 +20,9 @@ struct NewTaskView: View {
                     TextField("Title", text: $title)
                     TextField("Notes (optional)", text: $notes, axis: .vertical)
                         .lineLimit(3...6)
+                    Text("Don't include medical details — use task titles like \"Doctor appointment\", not diagnoses.")
+                        .font(.caption)
+                        .foregroundColor(.secondary)
                 }
                 Section("Due date") {
                     Toggle("Set due date", isOn: $hasDue)
