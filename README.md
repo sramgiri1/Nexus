@@ -7,12 +7,12 @@
 
 ## Architecture
 
-```
+```text
 nexus/
 ├── CLAUDE.md                    ← Claude Code reads this first (agent instructions)
 ├── orchestrator/
 │   ├── loop.js                  ← Agentic loop — polls queue, dispatches agents
-│   └── runner.js                ← Runs one agent: builds context, calls Claude, tool loop
+│   └── runner.js                ← Runs one agent: builds context, calls LLM, tool loop
 ├── tools/
 │   └── index.js                 ← MCP-style tool registry (11 tools)
 ├── agents/                      ← System prompt for each agent (loaded from disk)
@@ -55,7 +55,7 @@ nexus/
         │   └── Traction.jsx       ← Investor metrics module
         └── utils/
             ├── memory.js          ← Fetches memory/*.json files
-            ├── api.js             ← Anthropic API calls
+            ├── api.js             ← Ollama API calls
             └── nexusPrompt.js     ← Builds NEXUS system prompt from live data
 ```
 
@@ -64,27 +64,20 @@ nexus/
 ## Setup (5 minutes)
 
 ```bash
-# 1. Clone / unzip
-cd nexus
+# 1. Install Ollama and pull models
+brew install ollama && brew services start ollama
+ollama pull llama3.2:3b
+ollama pull qwen3:4b
+ollama pull qwen2.5-coder:3b
+ollama pull qwen2.5-coder:7b
 
-# 2. Run setup script
-chmod +x setup.sh && ./setup.sh
-
-# 3. Add your API key to .env
-echo "ANTHROPIC_API_KEY=sk-ant-..." >> .env
-
-# 4. Add your API key to dashboard
-echo "VITE_ANTHROPIC_API_KEY=sk-ant-..." >> dashboard/.env
-```
-
-Or manually:
-
-```bash
+# 2. Install dependencies
 npm install
 cd dashboard && npm install && cd ..
+
+# 3. Copy env files
 cp .env.example .env
 cp dashboard/.env.example dashboard/.env
-# edit both .env files with your Anthropic API key
 ```
 
 ---
@@ -92,8 +85,8 @@ cp dashboard/.env.example dashboard/.env
 ## Usage
 
 ### Talk to NEXUS directly
+
 ```bash
-# Ask anything — NEXUS reads memory files for context
 node scripts/run-agent.js nexus "What is blocking Sprint 1?"
 node scripts/run-agent.js nexus "Give me a full portfolio status report"
 node scripts/run-agent.js nexus "Brief me for an investor meeting"
@@ -101,6 +94,7 @@ node scripts/run-agent.js nexus "Which agents should be working right now?"
 ```
 
 ### Queue tasks for the loop
+
 ```bash
 # Format: npm run task <agentId> "<task>" [projectId] [priority]
 npm run task atlas "Write the ShiftPay PRD Section 7 API Contract" shiftpay high
@@ -110,11 +104,13 @@ npm run task radar  "Scan the home maintenance category" null normal
 ```
 
 ### Check system status
+
 ```bash
 npm run status
 ```
 
 ### Start the orchestrator loop (auto-processes queue)
+
 ```bash
 npm run orchestrator
 # Loop polls task-queue.json every 10s (configurable via LOOP_INTERVAL)
@@ -122,6 +118,7 @@ npm run orchestrator
 ```
 
 ### Start the dashboard
+
 ```bash
 npm run dashboard
 # Opens http://localhost:5173
@@ -129,6 +126,7 @@ npm run dashboard
 ```
 
 ### Run both together
+
 ```bash
 npm run dev
 # Starts orchestrator loop + dashboard simultaneously
@@ -138,7 +136,7 @@ npm run dev
 
 ## How the Agentic Loop Works
 
-```
+```text
 1. You add a task:
    npm run task atlas "Write PRD" shiftpay high
    → Writes to memory/task-queue.json
@@ -150,7 +148,7 @@ npm run dev
 3. Runner executes the agent:
    → Loads agents/<agentId>.md as system prompt
    → Reads relevant memory files (lean context, not full chat)
-   → Calls Claude with MCP-style tools
+   → Calls local LLM via Ollama with MCP-style tools
    → Agent uses tools: read_memory, write_file, update_agent_status, enqueue_task...
    → Tool loop runs until stop_reason === "end_turn" (max 10 iterations)
 
@@ -202,19 +200,22 @@ Every agent gets a set of typed tools. The runner injects only the tools each ag
 
 The React dashboard at `localhost:5173` has three views:
 
-**NEXUS (Command Center)**
+### NEXUS (Command Center)
+
 - Chat with NEXUS in real-time
 - Context built from live memory files — no stale state
 - Left panel shows live agent status, founder directives, task queue
 - All data auto-refreshes every 4 seconds from memory/*.json
 
-**STAR MAP (Constellation)**
+### STAR MAP (Constellation)
+
 - 3D animated agent dependency network
 - Drag to rotate, scroll to zoom, click nodes to trace dependencies
 - Particle streams show active connections
 - Auto-rotation with twist effects
 
-**TRACTION (Investor Module)**
+### TRACTION (Investor Module)
+
 - Traction signals with progress tracking
 - Unit economics calculator (LTV, CAC, payback period, gross margin)
 - Revenue projection waterfall (Month 1–12)
@@ -243,6 +244,7 @@ npm run task meridian "Validate PetLog revenue model — $4.99/mo freemium" petl
 ## VS Code Integration
 
 **Launch configs** (F5 or Run panel):
+
 - ⚡ NEXUS: Orchestrator Loop
 - 📊 NEXUS: Status Report
 - 🤖 Run: NEXUS Agent
@@ -252,6 +254,7 @@ npm run task meridian "Validate PetLog revenue model — $4.99/mo freemium" petl
 - 🔭 Run: RADAR (Market Scan)
 
 **Tasks** (Cmd+Shift+P → "Run Task"):
+
 - NEXUS: Install All Dependencies
 - NEXUS: Start Orchestrator Loop
 - NEXUS: Start Dashboard
@@ -260,6 +263,7 @@ npm run task meridian "Validate PetLog revenue model — $4.99/mo freemium" petl
 - NEXUS: Reset Task Queue
 
 **Claude Code** — open from project root:
+
 ```bash
 claude
 # Claude reads CLAUDE.md automatically
@@ -269,45 +273,4 @@ claude
 
 ---
 
-## Active Portfolio
-
-| App       | Stage       | Gate | Score | Interviews | TAM    |
-|-----------|-------------|------|-------|------------|--------|
-| ShiftPay  | incubation  | G1   | 44/50 | 5/5 ✓      | $144M  |
-| CareLoop  | incubation  | G1   | 44/50 | 5/5 ✓      | $479M  |
-| HomeLog   | discovery   | —    | 41/50 | 0/5        | $599M  |
-
-Combined TAM: **$1.2B+**
-
----
-
-## Environment Variables
-
-**Root `.env`** (for orchestrator and agents):
-```
-ANTHROPIC_API_KEY=sk-ant-...
-LOOP_INTERVAL=10
-MAX_TOKENS=2048
-AGENT_MODEL=claude-haiku-4-5-20251001
-NEXUS_MODEL=claude-sonnet-4-6
-```
-
-**`dashboard/.env`** (for the React dashboard):
-```
-VITE_ANTHROPIC_API_KEY=sk-ant-...
-```
-
----
-
-## Token Cost Estimates
-
-| Operation                | Model      | Tokens (est.) | Cost (est.) |
-|--------------------------|------------|----------------|-------------|
-| Ask NEXUS (status)       | Sonnet 4.6 | ~2,000         | $0.006      |
-| Run ATLAS (write PRD)    | Haiku 4.5  | ~3,000         | $0.002      |
-| Run CORE (write schema)  | Haiku 4.5  | ~4,000         | $0.003      |
-| Full portfolio scan      | Haiku 4.5  | ~5,000         | $0.004      |
-| Dashboard chat message   | Sonnet 4.6 | ~1,500         | $0.005      |
-
-Agents use Haiku by default (fast + cheap). NEXUS uses Sonnet (needs reasoning).
-Change models in `.env` at any time.
+> See [REFERENCE.md](REFERENCE.md) for portfolio status, environment variables, and token cost estimates.
