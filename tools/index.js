@@ -47,6 +47,8 @@ export const writeMemory = {
   },
   execute: async ({ file, data, merge = true }) => {
     try {
+      if (typeof data !== "object" || Array.isArray(data) || data === null)
+        return { success: false, error: "data must be a JSON object, not a string or array" };
       const filePath = mem(`${file}.json`);
       let existing = {};
       try { existing = JSON.parse(await fs.readFile(filePath, "utf8")); } catch {}

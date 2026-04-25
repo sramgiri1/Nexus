@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-24T00:00:00Z",
+  "lastUpdated": "2026-04-25T00:00:00Z",
   "projects": [
     {
       "id": "shiftpay",
@@ -51,7 +51,7 @@
       "interviews": 5,
       "interviewTarget": 5,
       "waitlist": 0,
-      "notes": "Family care coordination. FTC Health Breach Rule applies. Paused pending ShiftPay Gate 1.",
+      "notes": "Family care coordination. FTC Health Breach Rule applies.",
       "agents": ["atlas", "prism", "core", "swift", "beacon", "canvas"],
       "decisions": {
         "bundleId": "com.careloop.ios",
