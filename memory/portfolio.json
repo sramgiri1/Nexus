@@ -1,12 +1,13 @@
 {
   "lastUpdated": "2026-04-25T00:00:00Z",
+  "activeProject": "careloop",
   "projects": [
     {
       "id": "shiftpay",
       "name": "ShiftPay",
       "color": "#00D9FF",
       "tagline": "Know your take-home before accepting a shift",
-      "stage": "incubation",
+      "stage": "on-hold",
       "gate": "G1",
       "score": 44,
       "tam": "$144M",
@@ -16,7 +17,7 @@
       "interviews": 5,
       "interviewTarget": 5,
       "waitlist": 0,
-      "notes": "Shift worker take-home calculator. No data dependency. Lowest compliance overhead.",
+      "notes": "ON HOLD — CareLoop is active. Resume after CareLoop Gate 2.",
       "agents": ["atlas", "forge", "core", "beacon", "oracle"],
       "decisions": {
         "bundleId": "com.shiftpay.ios",
@@ -51,8 +52,8 @@
       "interviews": 5,
       "interviewTarget": 5,
       "waitlist": 0,
-      "notes": "Family care coordination. FTC Health Breach Rule applies.",
-      "agents": ["atlas", "prism", "core", "swift", "beacon", "canvas"],
+      "notes": "ACTIVE — All agents focused here. FTC Health Breach Rule applies. Clinic integration PERMANENTLY OFF.",
+      "agents": ["atlas", "prism", "core", "swift", "beacon", "canvas", "forge", "pixel", "compass", "oracle", "sentinel", "meridian", "radar"],
       "decisions": {
         "bundleId": "com.careloop.ios",
         "authStrategy": "static-api-key",
@@ -76,7 +77,7 @@
       "name": "HomeLog",
       "color": "#FF6B35",
       "tagline": "The maintenance record every homeowner wishes they had",
-      "stage": "discovery",
+      "stage": "on-hold",
       "gate": "—",
       "score": 41,
       "tam": "$599M",
@@ -86,7 +87,7 @@
       "interviews": 0,
       "interviewTarget": 5,
       "waitlist": 0,
-      "notes": "Strong market, high buildability. Queued after ShiftPay Gate 0 validation.",
+      "notes": "ON HOLD — Resume after CareLoop Gate 2.",
       "agents": ["radar", "meridian"],
       "decisions": {},
       "gates": {

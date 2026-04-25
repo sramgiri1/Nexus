@@ -39,9 +39,9 @@ node scripts/run-agent.js nexus "Brief me for an investor meeting"
 
 ### Queue a task for the loop
 ```bash
-npm run task atlas "Write ShiftPay PRD Section 7" shiftpay high
-npm run task core "Generate Prisma schema for ShiftPay" shiftpay critical
-npm run task beacon "Draft App Store listing for ShiftPay" shiftpay normal
+npm run task atlas "Write CareLoop PRD" careloop high
+npm run task core "Add reminder scheduling" careloop critical
+npm run task beacon "Draft App Store listing for CareLoop" careloop normal
 ```
 
 ### Check system status
@@ -69,18 +69,16 @@ npm run dashboard
 
 ## Active Portfolio
 
+**ACTIVE:** CareLoop — all agents focused here
+**ON HOLD:** ShiftPay, HomeLog — resume after CareLoop Gate 2
+
 See memory/portfolio.json for current state.
 
-ShiftPay: incubation, Gate G1, 5/5 interviews done
-CareLoop: incubation, Gate G1, 5/5 interviews done
-HomeLog:  discovery, Gate 0 not started
+## CareLoop Key Decisions (Locked)
 
-## Key Decisions (Locked)
-
-- ShiftPay bundle ID: com.shiftpay.ios
-- CareLoop bundle ID: com.careloop.ios
-- CareLoop: clinic integration PERMANENTLY OFF (triggers HIPAA)
-- Auth Sprint 1: static API key (x-api-key header)
-- Tax data: IRS Pub 15-T bundled JSON (no API key needed)
+- Bundle ID: com.careloop.ios
+- Auth: static API key (x-api-key header)
+- Clinic integration: PERMANENTLY OFF (triggers HIPAA)
 - Reminder escalation: 15 minutes
 - Daily digest: 6pm local time via Resend
+- Compliance: FTC Health Breach Notification Rule
