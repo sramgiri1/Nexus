@@ -1,15 +1,15 @@
 {
-  "lastUpdated": "2026-04-24T00:00:00Z",
+  "lastUpdated": "2026-04-25T00:00:00Z",
   "actions": [
-    { "id": "f1",  "text": "Complete 5 user interviews — ShiftPay Gate 0",      "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-24" },
-    { "id": "f2",  "text": "Complete 5 user interviews — CareLoop Gate 0",      "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-24" },
-    { "id": "f3",  "text": "Create Supabase projects (dev / staging / prod)",   "done": false, "priority": "CRITICAL", "doneAt": null },
-    { "id": "f4",  "text": "Create Railway account + project",                  "done": false, "priority": "CRITICAL", "doneAt": null },
-    { "id": "f5",  "text": "Generate API key: openssl rand -hex 32",            "done": false, "priority": "CRITICAL", "doneAt": null },
-    { "id": "f6",  "text": "Register shiftpay.app domain ($14)",               "done": false, "priority": "HIGH",     "doneAt": null },
-    { "id": "f7",  "text": "Create Apple Developer account ($99/year)",         "done": false, "priority": "HIGH",     "doneAt": null },
-    { "id": "f8",  "text": "Engage privacy lawyer for CareLoop ($500–1,500)",  "done": false, "priority": "MEDIUM",   "doneAt": null },
-    { "id": "f9",  "text": "Launch waitlist page on shiftpay.app",             "done": false, "priority": "HIGH",     "doneAt": null },
-    { "id": "f10", "text": "Build web demo of ShiftPay tax calculator (1 day)","done": false, "priority": "HIGH",     "doneAt": null }
+    { "id": "f1",  "text": "Complete 5 user interviews — ShiftPay Gate 0",                        "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-24" },
+    { "id": "f2",  "text": "Complete 5 user interviews — CareLoop Gate 0",                        "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-24" },
+    { "id": "f3",  "text": "Create Supabase projects — CareLoop dev + prod",                      "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-25" },
+    { "id": "f4",  "text": "Deploy CareLoop API (Railway / Render)",                              "done": false, "priority": "HIGH",     "doneAt": null },
+    { "id": "f5",  "text": "Generate API key: openssl rand -hex 32",                              "done": true,  "priority": "CRITICAL", "doneAt": "2026-04-25" },
+    { "id": "f6",  "text": "Register shiftpay.app domain ($14)",                                  "done": false, "priority": "HIGH",     "doneAt": null },
+    { "id": "f7",  "text": "Create Apple Developer account ($99/year)",                           "done": false, "priority": "HIGH",     "doneAt": null },
+    { "id": "f8",  "text": "Engage privacy lawyer for CareLoop ($500–1,500)",                     "done": false, "priority": "MEDIUM",   "doneAt": null },
+    { "id": "f9",  "text": "Launch waitlist page on shiftpay.app",                               "done": false, "priority": "HIGH",     "doneAt": null },
+    { "id": "f10", "text": "Build web demo of ShiftPay tax calculator (1 day)",                   "done": false, "priority": "HIGH",     "doneAt": null }
   ]
 }

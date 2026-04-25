@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-25T12:00:56.505Z",
+  "lastUpdated": "2026-04-25T16:49:24.478Z",
   "agents": {
     "nexus": {
       "status": "active",
@@ -9,11 +9,11 @@
       "lastRun": null
     },
     "atlas": {
-      "status": "idle",
-      "task": "Awaiting Gate 1 decision lock for ShiftPay.",
-      "project": "shiftpay",
-      "progress": 15,
-      "lastRun": null
+      "status": "done",
+      "task": "Write the full CareLoop PRD — product vision, user personas (family caregiver), core features (care circles, task assignment, reminder escalation at 15min, 6pm daily digest), API contract, success metrics. Save to projects/careloop/docs/PRD.md",
+      "project": "careloop",
+      "progress": 100,
+      "lastRun": "2026-04-25T16:49:24.477Z"
     },
     "prism": {
       "status": "blocked",
@@ -30,11 +30,11 @@
       "lastRun": null
     },
     "core": {
-      "status": "active",
-      "task": "Schema built. Awaiting DATABASE_URL to run migrations.",
-      "project": "shiftpay",
-      "progress": 35,
-      "lastRun": null
+      "status": "done",
+      "task": "Review the existing CareLoop Fastify API in projects/careloop/src/. Add reminder scheduling logic: when a task is created with a dueAt, create a Reminder record 15 minutes before. Add a GET /circles/:circleId/events endpoint. Save all changes to the project files.",
+      "project": "careloop",
+      "progress": 100,
+      "lastRun": "2026-04-25T16:38:12.887Z"
     },
     "swift": {
       "status": "blocked",
@@ -72,11 +72,11 @@
       "lastRun": null
     },
     "canvas": {
-      "status": "idle",
-      "task": "Privacy page must go live before Day 8.",
-      "project": null,
-      "progress": 0,
-      "lastRun": null
+      "status": "done",
+      "task": "Build a CareLoop privacy policy page. Plain HTML/CSS. Cover: data collected, FTC Health Breach Notification Rule, no clinic integration, contact suchethram@gmail.com. Save to projects/careloop/docs/privacy.html",
+      "project": "careloop",
+      "progress": 100,
+      "lastRun": "2026-04-25T16:48:18.498Z"
     },
     "stream": {
       "status": "idle",
