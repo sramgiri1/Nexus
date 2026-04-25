@@ -9,4 +9,5 @@ memory/snapshots/
 dashboard/node_modules/
 dashboard/dist/
 projects/*/backend/node_modules/
-projects/*/.env
+projects/*/.env*
+projects/*/node_modules/
