@@ -67,7 +67,7 @@ extension APIClient {
 // MARK: — Users
 extension APIClient {
     func createUser(email: String, name: String, phone: String?) async throws -> CareUser {
-        try await post("/users", body: ["email": email, "name": name, "phone": phone as Any])
+        try await post("/users", body: ["email": email, "name": name, "phone": phone])
     }
 
     func fetchUser(id: String) async throws -> CareUser {

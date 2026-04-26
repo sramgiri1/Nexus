@@ -21,3 +21,14 @@ targets:
       base:
         INFOPLIST_FILE: CareLoop/Resources/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios
+
+  CareLoopTests:
+    type: bundle.unit-test
+    platform: iOS
+    sources:
+      - CareLoopTests
+    dependencies:
+      - target: CareLoop
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios.tests
