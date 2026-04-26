@@ -26,13 +26,34 @@ const PRIORITY = {
 };
 
 const QUICK = [
-  "What's blocking Sprint 1?",
+  "What's blocking Sprint 2?",
   "What should I do today?",
   "Full portfolio status report",
-  "Which agents are idle and can be tasked?",
+  "Which agents are idle right now?",
   "Investor briefing — 5 bullets",
-  "What does SENTINEL need to do before Sprint 2?",
+  "Are all verification gates passing?",
+  "What's the critical path to TestFlight?",
+  "Brief me on CareLoop Sprint 2 scope",
 ];
+
+// Team metadata — mirrors Constellation TEAMS
+const AGENT_TEAMS = {
+  nexus:"core", shepherd:"strategy", atlas:"strategy", radar:"strategy", meridian:"strategy",
+  prism:"product", core:"product", swift:"product", pixel:"product", canvas:"product",
+  forge:"platform", stream:"platform", synapse:"platform",
+  beacon:"growth", compass:"growth", oracle:"growth",
+  auditor:"verification", sentinel:"verification", warden:"verification",
+  relay:"observability",
+};
+const TEAM_META = {
+  core:         { name:"COMMAND",  color:"#4A8FBF", order:0 },
+  strategy:     { name:"STRATEGY", color:"#4A8FBF", order:1 },
+  product:      { name:"PRODUCT",  color:"#7B6DB0", order:2 },
+  platform:     { name:"PLATFORM", color:"#B87040", order:3 },
+  growth:       { name:"GROWTH",   color:"#C49A2A", order:4 },
+  verification: { name:"VERIFY",   color:"#A84848", order:5 },
+  observability:{ name:"OBSERVE",  color:"#3EA89A", order:6 },
+};
 
 function Dot({color,pulse=false}){
   return <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:color,flexShrink:0,animation:pulse?"dotpulse 2s ease-in-out infinite":"none"}}/>;
@@ -279,28 +300,39 @@ export default function CommandCenter(){
 
             {leftTab==="agents"&&(
               <>
-                {/* Summary */}
-                <div style={{display:"flex",justifyContent:"space-around",padding:"8px 12px 16px",borderBottom:`1px solid ${T.border}`,marginBottom:12}}>
+                {/* Summary row */}
+                <div style={{display:"flex",justifyContent:"space-around",padding:"8px 12px 14px",borderBottom:`1px solid ${T.border}`,marginBottom:10}}>
                   <StatChip label="Active"  value={activeCount}  color={T.blue}/>
                   <StatChip label="Blocked" value={blockedCount} color={blockedCount>0?T.red:T.textDim}/>
                   <StatChip label="Done"    value={doneCount}    color={T.green}/>
                   <StatChip label="Idle"    value={ae.length-activeCount-blockedCount-doneCount} color={T.textDim}/>
                 </div>
-                {["active","working","blocked","idle","done"].map(status=>{
-                  const group=ae.filter(([,a])=>a.status===status);
-                  if(!group.length)return null;
-                  const st=STATUS[status];
-                  return(
-                    <div key={status} style={{marginBottom:10}}>
-                      <SectionHeader label={st.label} count={group.length} right={<Dot color={st.color} pulse={status==="active"||status==="working"}/>}/>
-                      {group.map(([id,agent])=><AgentRow key={id} id={id} agent={agent}/>)}
-                    </div>
-                  );
-                })}
-                {ae.length===0&&(
+                {/* Team-grouped agents */}
+                {ae.length===0?(
                   <div style={{padding:"32px 20px",textAlign:"center"}}>
                     <p style={{fontSize:11,color:T.textDim,lineHeight:1.8}}>No agent data.<br/>Start the orchestrator:<br/><code style={{color:T.blue}}>npm run orchestrator</code></p>
                   </div>
+                ):(
+                  Object.entries(TEAM_META).sort((a,b)=>a[1].order-b[1].order).map(([teamId,meta])=>{
+                    const teamAgents=ae.filter(([id])=>AGENT_TEAMS[id]===teamId);
+                    if(!teamAgents.length)return null;
+                    const anyActive=teamAgents.some(([,a])=>a.status==="active"||a.status==="working");
+                    const anyBlocked=teamAgents.some(([,a])=>a.status==="blocked");
+                    return(
+                      <div key={teamId} style={{marginBottom:8,border:`1px solid ${meta.color}18`,borderRadius:7,overflow:"hidden"}}>
+                        {/* Team header */}
+                        <div style={{display:"flex",alignItems:"center",gap:7,padding:"5px 10px",background:`${meta.color}0A`,borderBottom:`1px solid ${meta.color}15`}}>
+                          <div style={{width:3,height:16,borderRadius:2,background:meta.color,flexShrink:0}}/>
+                          <span style={{fontSize:9,fontWeight:700,color:meta.color,letterSpacing:"0.14em",flex:1}}>{meta.name}</span>
+                          {anyActive&&<Dot color={T.blue} pulse/>}
+                          {anyBlocked&&<Dot color={T.red}/>}
+                          <span style={{fontSize:9,color:T.textDim}}>{teamAgents.length}</span>
+                        </div>
+                        {/* Agents in team */}
+                        {teamAgents.map(([id,agent])=><AgentRow key={id} id={id} agent={agent}/>)}
+                      </div>
+                    );
+                  })
                 )}
               </>
             )}
@@ -366,6 +398,36 @@ export default function CommandCenter(){
             <span style={{fontSize:10,color:T.textDim}}>{messages.length>0?`${messages.length} messages`:"No conversation yet"}</span>
           </div>
 
+          {/* Sprint pipeline status */}
+          {(()=>{
+            const sprint=portfolio?.sprintPlan?.currentSprint||1;
+            const gates=portfolio?.projects?.find(p=>p.id===portfolio?.activeProject)?.gates||{};
+            const phases=[
+              {label:`SPRINT ${sprint}`, sub:"Active",     color:T.blue,  status:"active"},
+              {label:"BUILD",            sub:"CORE+SWIFT",  color:"#4A8FBF",status:gates.build||"pending"},
+              {label:"AUDITOR",          sub:"4 skills",    color:"#C49A2A",status:gates.auditor||"pending"},
+              {label:"SENTINEL",         sub:"4 skills",    color:"#A84848",status:gates.sentinel||"pending"},
+              {label:"WARDEN",           sub:"3 skills",    color:"#7B6DB0",status:gates.warden||"pending"},
+              {label:"SIGN-OFF",         sub:"NEXUS",       color:T.green,  status:gates.release||"pending"},
+            ];
+            const sc={pass:T.green,fail:T.red,active:T.blue,pending:T.textDim};
+            return(
+              <div style={{flexShrink:0,padding:"8px 24px",background:`${T.surface}CC`,borderBottom:`1px solid ${T.border}`,display:"flex",alignItems:"center",gap:0,overflowX:"auto"}}>
+                {phases.map((p,i,arr)=>(
+                  <div key={p.label} style={{display:"flex",alignItems:"center",flexShrink:0}}>
+                    <div style={{textAlign:"center",padding:"0 6px"}}>
+                      <div style={{fontSize:9,fontWeight:700,color:sc[p.status]||T.textDim,letterSpacing:"0.06em"}}>{p.label}</div>
+                      <div style={{fontSize:8,color:T.textDim}}>{p.sub}</div>
+                    </div>
+                    {i<arr.length-1&&(
+                      <div style={{width:20,height:1,background:`linear-gradient(90deg,${sc[p.status]||T.textDim}50,${sc[arr[i+1].status]||T.textDim}50)`,flexShrink:0}}/>
+                    )}
+                  </div>
+                ))}
+              </div>
+            );
+          })()}
+
           {/* Messages */}
           <div ref={chatRef} style={{flex:1,overflowY:"auto",padding:"28px 32px"}}>
             {messages.length===0&&(
@@ -403,13 +465,15 @@ export default function CommandCenter(){
                 {/* Quick commands */}
                 <div style={{fontSize:10,fontWeight:700,color:T.textDim,letterSpacing:"0.1em",marginBottom:10,textTransform:"uppercase"}}>Suggested</div>
                 <div style={{display:"flex",flexDirection:"column",gap:2}}>
+                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
                   {QUICK.map(q=>(
-                    <button key={q} onClick={()=>send(q)} style={{display:"flex",alignItems:"center",gap:10,padding:"10px 14px",textAlign:"left",background:T.surface,border:`1px solid ${T.border}`,borderRadius:7,color:T.textMuted,fontSize:12,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}
+                    <button key={q} onClick={()=>send(q)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 12px",textAlign:"left",background:T.surface,border:`1px solid ${T.border}`,borderRadius:7,color:T.textMuted,fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}
                     onMouseEnter={e=>{e.currentTarget.style.background=T.surfaceAlt;e.currentTarget.style.color=T.text;e.currentTarget.style.borderColor=T.borderAlt;}}
                     onMouseLeave={e=>{e.currentTarget.style.background=T.surface;e.currentTarget.style.color=T.textMuted;e.currentTarget.style.borderColor=T.border;}}>
-                      <span style={{color:T.textDim,fontSize:10}}>→</span>{q}
+                      <span style={{color:T.textDim,fontSize:9,flexShrink:0}}>▶</span>{q}
                     </button>
                   ))}
+                  </div>
                 </div>
               </div>
             )}
@@ -445,7 +509,7 @@ export default function CommandCenter(){
               </button>
             </div>
             <div style={{display:"flex",gap:5,marginTop:8,flexWrap:"wrap"}}>
-              {QUICK.slice(0,4).map(q=>(
+              {QUICK.slice(0,6).map(q=>(
                 <button key={q} onClick={()=>send(q)} style={{padding:"4px 10px",background:"transparent",border:`1px solid ${T.border}`,borderRadius:5,color:T.textDim,fontSize:10,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}
                   onMouseEnter={e=>{e.currentTarget.style.color=T.text;e.currentTarget.style.borderColor=T.borderAlt;}}
                   onMouseLeave={e=>{e.currentTarget.style.color=T.textDim;e.currentTarget.style.borderColor=T.border;}}>

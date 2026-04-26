@@ -3,12 +3,14 @@ import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
 import CommandCenter  from "./pages/CommandCenter.jsx";
 import Constellation  from "./pages/Constellation.jsx";
 import Traction       from "./pages/Traction.jsx";
+import Skills         from "./pages/Skills.jsx";
 import { readMemory } from "./utils/memory.js";
 
 const NAV = [
-  { path:"/",              icon:"⬡", label:"NEXUS",         sub:"Command Center"  },
-  { path:"/constellation", icon:"◎", label:"STAR MAP",      sub:"Agent Network"   },
-  { path:"/traction",      icon:"◈", label:"TRACTION",      sub:"Investor Module" },
+  { path:"/",              icon:"⬡", label:"NEXUS",    sub:"Command Center"  },
+  { path:"/constellation", icon:"◎", label:"STAR MAP", sub:"Agent Network"   },
+  { path:"/skills",        icon:"▶", label:"SKILLS",   sub:"Run Skills"      },
+  { path:"/traction",      icon:"◈", label:"TRACTION", sub:"Investor Module" },
 ];
 
 export default function App() {
@@ -96,10 +98,11 @@ export default function App() {
       </div>
 
       {/* ── Main content ── */}
-      <div style={{ flex:1, overflow:"hidden" }}>
+      <div style={{ flex:1, minWidth:0, minHeight:0, overflow:"auto" }}>
         <Routes>
           <Route path="/"              element={<CommandCenter />} />
           <Route path="/constellation" element={<Constellation />} />
+          <Route path="/skills"        element={<Skills />} />
           <Route path="/traction"      element={<Traction />} />
         </Routes>
       </div>

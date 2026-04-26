@@ -1,865 +1,688 @@
-import { useState, useEffect, useRef, useCallback } from "react";
+import { useEffect, useState } from "react";
+import { readMemory } from "../utils/memory.js";
 
-// ─── Project Registry ──────────────────────────────────────────────────────
-const PROJECT_STAGES = {
-  discovery:   { label:"DISCOVERY",   color:"#7B6DB0", desc:"Being researched by RADAR + MERIDIAN" },
-  incubation:  { label:"INCUBATION",  color:"#C49A2A", desc:"Gates 0–7 in progress. Not yet in sprint." },
-  sprint:      { label:"IN SPRINT",   color:"#4A8FBF", desc:"Actively being built by agent team." },
-  testflight:  { label:"TESTFLIGHT",  color:"#3EA89A", desc:"Build live. Internal testing 48hrs." },
-  live:        { label:"LIVE",        color:"#3A8F5A", desc:"Published to App Store." },
-  paused:      { label:"PAUSED",      color:"#B87040", desc:"Sprint halted. Awaiting signal." },
-  killed:      { label:"KILLED",      color:"#A84848", desc:"Idea abandoned. Learnings archived." },
+const T = {
+  bg: "#07111d",
+  panel: "rgba(9,18,31,0.86)",
+  panelAlt: "rgba(11,23,39,0.92)",
+  line: "rgba(119, 163, 220, 0.12)",
+  text: "#e5eefc",
+  muted: "#8b9db8",
+  dim: "#51637f",
+  sun: "#ffd36f",
+  blue: "#6aa5ff",
+  green: "#44d6a3",
+  amber: "#f3b354",
+  red: "#ff6f6f",
 };
 
-const DEFAULT_PROJECTS = [
-  { id:"shiftpay",  name:"ShiftPay",   color:"#4A8FBF", stage:"incubation", gate:"G0",  score:44, tam:"$144M", sprintDay:0, sprintTotal:10, agents:["atlas","forge","core","beacon","oracle"], mrr:0, interviews:0, interviewTarget:5, notes:"Shift worker take-home calculator. No data dependency. Lowest compliance overhead." },
-  { id:"careloop",  name:"CareLoop",   color:"#3EA89A", stage:"incubation", gate:"G0",  score:44, tam:"$479M", sprintDay:0, sprintTotal:10, agents:["atlas","prism","core","swift","beacon","canvas"], mrr:0, interviews:0, interviewTarget:5, notes:"Family care coordination. FTC compliance required. Paused pending ShiftPay G0." },
-  { id:"homelog",   name:"HomeLog",    color:"#B87040", stage:"discovery",  gate:"—",   score:41, tam:"$599M", sprintDay:0, sprintTotal:10, agents:["radar","meridian"], mrr:0, interviews:0, interviewTarget:5, notes:"Home maintenance record. Strong market. Backlog — queued after ShiftPay." },
-  { id:"shiftpay2", name:"ShelfAlert", color:"#7B6DB0", stage:"discovery",  gate:"—",   score:43, tam:"$95M",  sprintDay:0, sprintTotal:10, agents:["radar"], mrr:0, interviews:0, interviewTarget:5, notes:"Grocery price drop alerts. Sprint 2 idea. Depends on ShiftPay infrastructure." },
+const PROJECT_STAGES = {
+  discovery:  { label: "DISCOVERY", color: "#7B6DB0" },
+  incubation: { label: "INCUBATION", color: "#C49A2A" },
+  sprint:     { label: "IN SPRINT", color: "#4A8FBF" },
+  testflight: { label: "TESTFLIGHT", color: "#3EA89A" },
+  live:       { label: "LIVE", color: "#3A8F5A" },
+  paused:     { label: "PAUSED", color: "#B87040" },
+  killed:     { label: "KILLED", color: "#A84848" },
+};
+
+const FALLBACK_PROJECTS = [
+  { id: "careloop", name: "CareLoop", color: "#00FFB3", stage: "sprint", gate: "G1", score: 44, tam: "$479M", notes: "Active project. Sprint 2 in progress.", agents: ["atlas", "shepherd", "core", "swift", "forge", "sentinel", "warden"] },
+  { id: "shiftpay", name: "ShiftPay", color: "#00D9FF", stage: "on-hold", gate: "G1", score: 44, tam: "$144M", notes: "On hold until CareLoop Gate 2.", agents: ["radar", "meridian"] },
+  { id: "homelog", name: "HomeLog", color: "#FF6B35", stage: "on-hold", gate: "—", score: 41, tam: "$599M", notes: "Backlog opportunity.", agents: ["radar", "meridian"] },
 ];
 
-// ─── Agent Registry ────────────────────────────────────────────────────────
-const FINAL_AGENTS = [
-  { id:"nexus",    name:"NEXUS",    role:"Orchestrator", color:"#4A8FBF", size:36, ring:0, angle:0,   ringR:0   },
-  { id:"atlas",    name:"ATLAS",    role:"Product",      color:"#4A8FBF", size:23, ring:1, angle:90,  ringR:148 },
-  { id:"forge",    name:"FORGE",    role:"DevOps",       color:"#B87040", size:23, ring:1, angle:162, ringR:148 },
-  { id:"meridian", name:"MERIDIAN", role:"Business",     color:"#C49A2A", size:21, ring:1, angle:234, ringR:148 },
-  { id:"radar",    name:"RADAR",    role:"Market Gap",   color:"#3EA89A", size:21, ring:1, angle:306, ringR:148 },
-  { id:"oracle",   name:"ORACLE",   role:"Analytics",    color:"#7B6DB0", size:21, ring:1, angle:18,  ringR:148 },
-  { id:"prism",    name:"PRISM",    role:"Design",       color:"#7B6DB0", size:19, ring:2, angle:60,  ringR:248 },
-  { id:"core",     name:"CORE",     role:"Backend",      color:"#3EA89A", size:19, ring:2, angle:120, ringR:248 },
-  { id:"beacon",   name:"BEACON",   role:"Marketing",    color:"#C49A2A", size:17, ring:2, angle:180, ringR:248 },
-  { id:"canvas",   name:"CANVAS",   role:"Web Builder",  color:"#B87040", size:17, ring:2, angle:240, ringR:248 },
-  { id:"stream",   name:"STREAM",   role:"Data",         color:"#4A8FBF", size:17, ring:2, angle:300, ringR:248 },
-  { id:"synapse",  name:"SYNAPSE",  role:"AI Layer",     color:"#B87040", size:17, ring:2, angle:0,   ringR:248 },
-  { id:"swift",    name:"SWIFT",    role:"iOS Dev",      color:"#4A8FBF", size:15, ring:3, angle:45,  ringR:345 },
-  { id:"sentinel", name:"SENTINEL", role:"Quality",      color:"#A84848", size:15, ring:3, angle:105, ringR:345 },
-  { id:"compass",  name:"COMPASS",  role:"SEO",          color:"#4A8FBF", size:14, ring:3, angle:165, ringR:345 },
-  { id:"pixel",    name:"PIXEL",    role:"Frontend",     color:"#7B6DB0", size:14, ring:3, angle:225, ringR:345 },
+const TEAM_PLANES = [
+  { id: "observability", name: "OBSERVABILITY", color: "#3EA89A", glyph: "◈", rx: 214, ry: 128, rot: -8, angle: -156, moonR: 34 },
+  { id: "strategy", name: "STRATEGY", color: "#4A8FBF", glyph: "△", rx: 242, ry: 146, rot: 0, angle: -90, moonR: 72 },
+  { id: "product", name: "PRODUCT", color: "#7B6DB0", glyph: "◌", rx: 246, ry: 148, rot: 8, angle: -24, moonR: 78 },
+  { id: "platform", name: "PLATFORM", color: "#B87040", glyph: "◇", rx: 246, ry: 148, rot: 8, angle: 32, moonR: 72 },
+  { id: "growth", name: "GROWTH", color: "#C49A2A", glyph: "✦", rx: 246, ry: 148, rot: -8, angle: 156, moonR: 70 },
+  { id: "verification", name: "VERIFICATION", color: "#A84848", glyph: "⬣", rx: 214, ry: 128, rot: 0, angle: 96, moonR: 72 },
 ];
 
-const EDGES = [
-  ["forge","atlas","blocks","ENV_MANIFEST"],["forge","core","blocks","DB Credentials"],
-  ["forge","prism","blocks","ENV_MANIFEST"],["forge","beacon","blocks","ENV_MANIFEST"],
-  ["forge","canvas","blocks","ENV_MANIFEST"],["atlas","prism","blocks","Approved PRD"],
-  ["atlas","beacon","blocks","Brand Kit"],["atlas","compass","blocks","App Name"],
-  ["atlas","oracle","blocks","North Star"],["atlas","synapse","blocks","AI Spec"],
-  ["atlas","stream","blocks","Data Spec"],["prism","swift","blocks","Design System"],
-  ["core","swift","blocks","Staging API"],["core","sentinel","blocks","Live Endpoints"],
-  ["swift","sentinel","blocks","TestFlight Build"],["radar","meridian","feeds","Opportunity Scan"],
-  ["meridian","atlas","feeds","Validated Idea"],["oracle","canvas","feeds","Event Spec"],
-  ["oracle","beacon","feeds","Analytics Spec"],["beacon","canvas","feeds","Copy + Assets"],
-  ["nexus","atlas","supports","Orchestrates"],["nexus","forge","supports","Orchestrates"],
-  ["nexus","radar","supports","Orchestrates"],["nexus","meridian","supports","Orchestrates"],
+const AGENTS = [
+  { id: "nexus", name: "NEXUS", role: "CEO / Orchestrator", team: "core", color: "#6aa5ff" },
+  { id: "shepherd", name: "SHEPHERD", role: "Program Manager", team: "strategy", color: "#6aa5ff" },
+  { id: "atlas", name: "ATLAS", role: "Product Lead", team: "strategy", color: "#6aa5ff" },
+  { id: "radar", name: "RADAR", role: "Market Gap", team: "strategy", color: "#44d6a3" },
+  { id: "meridian", name: "MERIDIAN", role: "Business Validation", team: "strategy", color: "#f3b354" },
+  { id: "prism", name: "PRISM", role: "Design System", team: "product", color: "#7B6DB0" },
+  { id: "core", name: "CORE", role: "Backend", team: "product", color: "#44d6a3" },
+  { id: "swift", name: "SWIFT", role: "iOS", team: "product", color: "#6aa5ff" },
+  { id: "pixel", name: "PIXEL", role: "Dashboard UI", team: "product", color: "#7B6DB0" },
+  { id: "canvas", name: "CANVAS", role: "Static Surfaces", team: "product", color: "#B87040" },
+  { id: "forge", name: "FORGE", role: "Infrastructure", team: "platform", color: "#B87040" },
+  { id: "stream", name: "STREAM", role: "Data Pipelines", team: "platform", color: "#6aa5ff" },
+  { id: "synapse", name: "SYNAPSE", role: "AI Layer", team: "platform", color: "#B87040" },
+  { id: "beacon", name: "BEACON", role: "Marketing", team: "growth", color: "#f3b354" },
+  { id: "compass", name: "COMPASS", role: "ASO / SEO", team: "growth", color: "#6aa5ff" },
+  { id: "oracle", name: "ORACLE", role: "Analytics", team: "growth", color: "#7B6DB0" },
+  { id: "auditor", name: "AUDITOR", role: "Code Gate", team: "verification", color: "#f3b354" },
+  { id: "sentinel", name: "SENTINEL", role: "QA Gate", team: "verification", color: "#ff6f6f" },
+  { id: "warden", name: "WARDEN", role: "Compliance Gate", team: "verification", color: "#ff6f6f" },
+  { id: "relay", name: "RELAY", role: "Feedback Intel", team: "observability", color: "#44d6a3" },
 ];
 
-const EDGE_COLORS = { blocks:"#A84848", feeds:"#3EA89A", supports:"rgba(74,143,191,0.5)" };
-const DEFAULT_STATUS = { nexus:"active",atlas:"idle",prism:"blocked",forge:"idle",core:"active",swift:"blocked",sentinel:"idle",beacon:"idle",compass:"idle",oracle:"idle",canvas:"idle",stream:"idle",synapse:"idle",radar:"done",meridian:"done",pixel:"idle" };
-const STATUS_COLORS  = { active:"#4A8FBF",blocked:"#A84848",done:"#3EA89A",working:"#C49A2A",idle:"rgba(74,143,191,0.2)" };
+const AGENT_LINKS = [
+  ["radar", "meridian", "feeds", "Opportunity scores"],
+  ["radar", "atlas", "feeds", "Market context"],
+  ["meridian", "atlas", "feeds", "Monetization input"],
+  ["meridian", "nexus", "feeds", "GO / NO-GO"],
+  ["shepherd", "atlas", "blocks", "Sprint scope"],
+  ["atlas", "core", "blocks", "API contracts"],
+  ["atlas", "swift", "blocks", "Feature spec"],
+  ["atlas", "prism", "blocks", "Design requirements"],
+  ["atlas", "sentinel", "feeds", "Acceptance criteria"],
+  ["atlas", "warden", "feeds", "Data-scope review"],
+  ["prism", "swift", "blocks", "Design system"],
+  ["core", "swift", "blocks", "API surface"],
+  ["core", "forge", "supports", "Server deploy"],
+  ["core", "sentinel", "supports", "API under test"],
+  ["swift", "sentinel", "supports", "UI under test"],
+  ["swift", "forge", "supports", "Build distribution"],
+  ["forge", "sentinel", "supports", "QA environment"],
+  ["forge", "warden", "supports", "Infra controls"],
+  ["warden", "canvas", "blocks", "Privacy content"],
+  ["warden", "beacon", "blocks", "Privacy language"],
+  ["canvas", "forge", "supports", "Static asset deploy"],
+  ["oracle", "core", "feeds", "Event schema"],
+  ["oracle", "atlas", "feeds", "North-star metrics"],
+  ["oracle", "nexus", "feeds", "Investor metrics"],
+  ["beacon", "compass", "supports", "Keyword brief"],
+  ["compass", "beacon", "feeds", "ASO keywords"],
+  ["beacon", "canvas", "feeds", "Copy + messaging"],
+  ["compass", "canvas", "feeds", "Web SEO"],
+  ["stream", "core", "feeds", "Normalized data"],
+  ["stream", "oracle", "feeds", "Pipeline telemetry"],
+  ["stream", "nexus", "feeds", "Pipeline status"],
+  ["synapse", "pixel", "supports", "AI UI hooks"],
+  ["canvas", "pixel", "feeds", "Static surfaces"],
+  ["core", "pixel", "feeds", "Dashboard APIs"],
+  ["core", "auditor", "blocks", "Code review gate"],
+  ["swift", "auditor", "blocks", "Code review gate"],
+  ["auditor", "sentinel", "blocks", "QA entry gate"],
+  ["sentinel", "shepherd", "blocks", "Sprint sign-off"],
+  ["warden", "shepherd", "blocks", "Compliance sign-off"],
+  ["relay", "sentinel", "feeds", "Bug reproductions"],
+  ["relay", "atlas", "feeds", "Feedback clusters"],
+  ["relay", "beacon", "feeds", "Recruitment messaging"],
+  ["relay", "nexus", "feeds", "Escalated blockers"],
+  ["nexus", "atlas", "supports", "Orchestrates"],
+  ["nexus", "forge", "supports", "Orchestrates"],
+  ["nexus", "shepherd", "supports", "Orchestrates"],
+  ["nexus", "radar", "supports", "Orchestrates"],
+  ["nexus", "meridian", "supports", "Orchestrates"],
+  ["nexus", "oracle", "supports", "Orchestrates"],
+  ["nexus", "pixel", "supports", "Reads live memory"],
+];
 
-function hexPts(r){return Array.from({length:6},(_,i)=>{const a=(i*60-30)*Math.PI/180;return`${(r*Math.cos(a)).toFixed(2)},${(r*Math.sin(a)).toFixed(2)}`;}).join(" ");}
-function hexToRgb(h){const r=parseInt(h.slice(1,3),16),g=parseInt(h.slice(3,5),16),b=parseInt(h.slice(5,7),16);return`${r},${g},${b}`;}
+const EDGE_STYLE = {
+  blocks:   { color: "#ff6f6f", dash: "0", width: 2.2 },
+  feeds:    { color: "#44d6a3", dash: "7 9", width: 1.8 },
+  supports: { color: "#6aa5ff", dash: "3 12", width: 1.4 },
+};
 
-// ─── Subcomponents ─────────────────────────────────────────────────────────
-function CornerBracket({sz=12,col="#4A8FBF"}){
-  const s={position:"absolute",width:sz,height:sz};
-  return(<>
-    <div style={{...s,top:0,left:0,borderTop:`1px solid ${col}`,borderLeft:`1px solid ${col}`}}/>
-    <div style={{...s,top:0,right:0,borderTop:`1px solid ${col}`,borderRight:`1px solid ${col}`}}/>
-    <div style={{...s,bottom:0,left:0,borderBottom:`1px solid ${col}`,borderLeft:`1px solid ${col}`}}/>
-    <div style={{...s,bottom:0,right:0,borderBottom:`1px solid ${col}`,borderRight:`1px solid ${col}`}}/>
-  </>);
+const STATUS_STYLE = {
+  active:  { color: "#6aa5ff", label: "Active" },
+  working: { color: "#f3b354", label: "Working" },
+  blocked: { color: "#ff6f6f", label: "Blocked" },
+  done:    { color: "#44d6a3", label: "Done" },
+  idle:    { color: "#51637f", label: "Idle" },
+};
+
+const MAP_W = 920;
+const MAP_H = 720;
+const SUN = { x: MAP_W / 2, y: MAP_H / 2 };
+
+function clampText(text, max = 54) {
+  if (!text) return "No active task";
+  return text.length > max ? `${text.slice(0, max - 1)}…` : text;
 }
 
-function NexusBar({value,color="#4A8FBF",h=3}){
-  return(
-    <div style={{height:h,background:"rgba(255,255,255,0.05)",borderRadius:2,overflow:"hidden"}}>
-      <div style={{width:`${Math.min(100,value)}%`,height:"100%",background:`linear-gradient(90deg,${color}60,${color})`,borderRadius:2,transition:"width 0.8s ease",boxShadow:`0 0 6px ${color}50`}}/>
-    </div>
-  );
+function ellipsePoint(cx, cy, rx, ry, rotationDeg, angleDeg) {
+  const rot = (rotationDeg * Math.PI) / 180;
+  const angle = (angleDeg * Math.PI) / 180;
+  const x = cx + Math.cos(rot) * rx * Math.cos(angle) - Math.sin(rot) * ry * Math.sin(angle);
+  const y = cy + Math.sin(rot) * rx * Math.cos(angle) + Math.cos(rot) * ry * Math.sin(angle);
+  return { x, y };
 }
 
-function ProjectCard({proj,isActive,onSelect,onUpdate}){
-  const stage=PROJECT_STAGES[proj.stage]||PROJECT_STAGES.discovery;
-  const pct=Math.round((proj.score/50)*100);
-  const interviewPct=proj.interviewTarget>0?Math.round((proj.interviews/proj.interviewTarget)*100):0;
-  const sprintPct=proj.sprintTotal>0?Math.round((proj.sprintDay/proj.sprintTotal)*100):0;
-
-  return(
-    <div onClick={onSelect} style={{
-      background:isActive?`${proj.color}08`:"rgba(0,0,0,0.3)",
-      border:`1px solid ${isActive?`${proj.color}35`:"rgba(74,143,191,0.08)"}`,
-      borderLeft:`3px solid ${stage.color}`,
-      borderRadius:8,padding:"12px 14px",cursor:"pointer",position:"relative",
-      transition:"all 0.2s",marginBottom:8,
-    }}>
-      <CornerBracket sz={8} col={isActive?proj.color:"rgba(74,143,191,0.15)"}/>
-
-      {/* Header */}
-      <div style={{display:"flex",alignItems:"flex-start",gap:10,marginBottom:10}}>
-        <div style={{flex:1}}>
-          <div style={{display:"flex",alignItems:"center",gap:7,marginBottom:3}}>
-            <span style={{fontSize:18,fontWeight:700,color:proj.color,letterSpacing:"0.12em",fontFamily:"'Courier New',monospace"}}>{proj.name}</span>
-            <span style={{fontSize:12,fontWeight:700,color:stage.color,background:`${stage.color}15`,border:`1px solid ${stage.color}30`,borderRadius:10,padding:"2px 7px",letterSpacing:"0.1em"}}>{stage.label}</span>
-          </div>
-          <p style={{margin:0,fontSize:14,color:"rgba(74,143,191,0.35)",lineHeight:1.5,fontFamily:"'Courier New',monospace"}}>{proj.notes}</p>
-        </div>
-        <div style={{textAlign:"right",flexShrink:0}}>
-          <div style={{fontSize:26,fontWeight:700,color:proj.color,fontFamily:"'Courier New',monospace",lineHeight:1}}>{proj.score}</div>
-          <div style={{fontSize:11,color:"rgba(74,143,191,0.25)",fontFamily:"'Courier New',monospace"}}>/50</div>
-        </div>
-      </div>
-
-      {/* Metrics grid */}
-      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr 1fr",gap:5,marginBottom:10}}>
-        {[
-          {label:"GATE",value:proj.gate,color:proj.color},
-          {label:"TAM",value:proj.tam,color:"#C49A2A"},
-          {label:"MRR",value:proj.mrr>0?`$${proj.mrr.toLocaleString()}`:"—",color:"#3EA89A"},
-        ].map(m=>(
-          <div key={m.label} style={{background:"rgba(0,0,0,0.3)",borderRadius:4,padding:"5px 7px"}}>
-            <div style={{fontSize:11,color:"rgba(74,143,191,0.25)",letterSpacing:"0.12em",marginBottom:2}}>{m.label}</div>
-            <div style={{fontSize:16,fontWeight:700,color:m.color,fontFamily:"'Courier New',monospace"}}>{m.value}</div>
-          </div>
-        ))}
-      </div>
-
-      {/* Progress bars */}
-      <div style={{display:"grid",gap:6}}>
-        <div>
-          <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
-            <span style={{fontSize:12,color:"rgba(74,143,191,0.3)",letterSpacing:"0.1em"}}>INTERVIEWS</span>
-            <span style={{fontSize:12,color:interviewPct>=100?"#3EA89A":"#C49A2A",fontWeight:700}}>{proj.interviews}/{proj.interviewTarget}</span>
-          </div>
-          <NexusBar value={interviewPct} color={interviewPct>=100?"#3EA89A":"#C49A2A"} h={2}/>
-        </div>
-        {proj.stage==="sprint"&&(
-          <div>
-            <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
-              <span style={{fontSize:12,color:"rgba(74,143,191,0.3)",letterSpacing:"0.1em"}}>SPRINT DAY</span>
-              <span style={{fontSize:12,color:"#4A8FBF",fontWeight:700}}>{proj.sprintDay}/{proj.sprintTotal}</span>
-            </div>
-            <NexusBar value={sprintPct} color="#4A8FBF" h={2}/>
-          </div>
-        )}
-        <div>
-          <div style={{display:"flex",justifyContent:"space-between",marginBottom:3}}>
-            <span style={{fontSize:12,color:"rgba(74,143,191,0.3)",letterSpacing:"0.1em"}}>SCORE</span>
-            <span style={{fontSize:12,color:proj.color,fontWeight:700}}>{pct}%</span>
-          </div>
-          <NexusBar value={pct} color={proj.color} h={2}/>
-        </div>
-      </div>
-
-      {/* Agents */}
-      <div style={{marginTop:8,display:"flex",gap:3,flexWrap:"wrap"}}>
-        {proj.agents.map(aid=>{
-          const a=FINAL_AGENTS.find(x=>x.id===aid);
-          if(!a)return null;
-          return(
-            <span key={aid} style={{fontSize:11,color:a.color,background:`${a.color}10`,border:`1px solid ${a.color}25`,borderRadius:3,padding:"1px 5px",fontFamily:"'Courier New',monospace",letterSpacing:"0.05em"}}>{a.name}</span>
-          );
-        })}
-      </div>
-
-      {/* Stage controls */}
-      <div style={{marginTop:8,display:"flex",gap:3,flexWrap:"wrap"}}>
-        {Object.entries(PROJECT_STAGES).map(([s,cfg])=>(
-          <button key={s} onClick={e=>{e.stopPropagation();onUpdate({...proj,stage:s});}} style={{
-            background:proj.stage===s?`${cfg.color}18`:"rgba(0,0,0,0.3)",
-            border:`1px solid ${proj.stage===s?cfg.color:"rgba(74,143,191,0.08)"}`,
-            color:proj.stage===s?cfg.color:"rgba(74,143,191,0.2)",
-            borderRadius:3,padding:"2px 6px",fontSize:11,cursor:"pointer",
-            fontFamily:"'Courier New',monospace",fontWeight:700,letterSpacing:"0.06em",
-          }}>{cfg.label}</button>
-        ))}
-      </div>
-    </div>
-  );
+function planePath(team) {
+  return `M ${SUN.x - team.rx} ${SUN.y}
+    a ${team.rx} ${team.ry} ${team.rot} 1 0 ${team.rx * 2} 0
+    a ${team.rx} ${team.ry} ${team.rot} 1 0 ${-team.rx * 2} 0`;
 }
 
-// ─── Main Component ────────────────────────────────────────────────────────
-export default function NexusConstellation() {
-  const canvasRef = useRef(null);
-  const animRef   = useRef(null);
-  const stateRef  = useRef({
-    rotX:0,rotY:0,rotZ:0,targetRotX:0,targetRotY:0,targetRotZ:0,
-    zoom:1,targetZoom:1,twist:0,targetTwist:0,
-    autoRotate:true,autoTwist:false,
-    isDragging:false,dragStart:null,lastMouse:{x:0,y:0},
-    particles:[],starField:[],time:0,pulsePhase:0,
-    selected:null,hovered:null,
+function teamHub(team) {
+  return ellipsePoint(SUN.x, SUN.y, team.rx, team.ry, team.rot, team.angle);
+}
+
+function moonPosition(team, index, total) {
+  const hub = teamHub(team);
+  const step = 360 / Math.max(total, 1);
+  const angle = -90 + index * step;
+  const x = hub.x + Math.cos((angle * Math.PI) / 180) * team.moonR;
+  const y = hub.y + Math.sin((angle * Math.PI) / 180) * team.moonR * 0.82;
+  return { x, y };
+}
+
+function curveBetween(a, b, arc = 0.18) {
+  const mx = (a.x + b.x) / 2;
+  const my = (a.y + b.y) / 2;
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  const len = Math.max(Math.sqrt(dx * dx + dy * dy), 1);
+  const nx = -dy / len;
+  const ny = dx / len;
+  const c1 = { x: mx + nx * len * arc, y: my + ny * len * arc };
+  return `M ${a.x} ${a.y} Q ${c1.x} ${c1.y} ${b.x} ${b.y}`;
+}
+
+function edgeKey(edge) {
+  return `${edge[0]}-${edge[1]}-${edge[2]}-${edge[3]}`;
+}
+
+function teamForAgent(agentId) {
+  return AGENTS.find((agent) => agent.id === agentId)?.team || "core";
+}
+
+function aggregateTeamLinks() {
+  const map = new Map();
+  for (const edge of AGENT_LINKS) {
+    const fromTeam = teamForAgent(edge[0]);
+    const toTeam = teamForAgent(edge[1]);
+    if (fromTeam === toTeam) continue;
+    const key = `${fromTeam}-${toTeam}-${edge[2]}`;
+    const current = map.get(key) || { fromTeam, toTeam, type: edge[2], count: 0, labels: [] };
+    current.count += 1;
+    current.labels.push(edge[3]);
+    map.set(key, current);
+  }
+  return Array.from(map.values());
+}
+
+function groupedTeamAgents(teamId) {
+  return AGENTS.filter((agent) => agent.team === teamId);
+}
+
+function countByStatus(agentsMap) {
+  const counts = { active: 0, working: 0, blocked: 0, done: 0, idle: 0 };
+  for (const agent of AGENTS) {
+    const status = agentsMap[agent.id]?.status || "idle";
+    counts[status] = (counts[status] || 0) + 1;
+  }
+  return counts;
+}
+
+function missionFlow() {
+  return [
+    { title: "Discover", text: "RADAR and MERIDIAN validate the opportunity and hand the signal to strategy." },
+    { title: "Define", text: "SHEPHERD and ATLAS lock sprint scope, contracts, and product intent." },
+    { title: "Build", text: "PRISM, CORE, SWIFT, and FORGE move the feature set through execution." },
+    { title: "Verify", text: "AUDITOR, SENTINEL, and WARDEN gate quality, QA, and compliance sign-off." },
+  ];
+}
+
+function activeProject(projects) {
+  return projects.find((project) => project.id === "careloop") || projects.find((project) => project.stage === "sprint") || projects[0];
+}
+
+export default function Constellation() {
+  const [portfolio, setPortfolio] = useState(null);
+  const [agentStatus, setAgentStatus] = useState(null);
+  const [selectedAgentId, setSelectedAgentId] = useState("nexus");
+  const [selectedTeamId, setSelectedTeamId] = useState("strategy");
+  const [zoom, setZoom] = useState(0.88);
+
+  useEffect(() => {
+    let active = true;
+    const load = async () => {
+      const [portfolioData, agentData] = await Promise.all([readMemory("portfolio"), readMemory("agent-status")]);
+      if (!active) return;
+      if (portfolioData) setPortfolio(portfolioData);
+      if (agentData) setAgentStatus(agentData);
+    };
+    load();
+    const interval = setInterval(load, 4000);
+    return () => {
+      active = false;
+      clearInterval(interval);
+    };
+  }, []);
+
+  const projects = portfolio?.projects || FALLBACK_PROJECTS;
+  const currentProject = activeProject(projects);
+
+  const liveAgents = {};
+  for (const [id, data] of Object.entries(agentStatus?.agents || {})) {
+    liveAgents[id] = {
+      status: data.status || "idle",
+      task: data.task || "No active task",
+      progress: data.progress || 0,
+      project: data.project || null,
+    };
+  }
+
+  const counts = countByStatus(liveAgents);
+  const selectedAgent = AGENTS.find((agent) => agent.id === selectedAgentId) || AGENTS[0];
+  const selectedTeam = TEAM_PLANES.find((team) => team.id === (selectedAgent.team === "core" ? selectedTeamId : selectedAgent.team)) || TEAM_PLANES[0];
+  const aggregatedLinks = aggregateTeamLinks();
+
+  const focusedEdges = AGENT_LINKS.filter((edge) => {
+    if (selectedAgentId === "nexus") return edge[0] === "nexus" || edge[1] === "nexus";
+    return edge[0] === selectedAgentId || edge[1] === selectedAgentId;
   });
 
-  const [projects,    setProjects]    = useState(DEFAULT_PROJECTS);
-  const [statuses,    setStatuses]    = useState(DEFAULT_STATUS);
-  const [selected,    setSelected]    = useState(null);
-  const [hovered,     setHovered]     = useState(null);
-  const [filterEdge,  setFilterEdge]  = useState("all");
-  const [autoRotate,  setAutoRotate]  = useState(true);
-  const [autoTwist,   setAutoTwist]   = useState(false);
-  const [activeView,  setActiveView]  = useState("portfolio"); // portfolio | agents | network
-  const [systemTime,  setSystemTime]  = useState(new Date());
-  const [activeProj,  setActiveProj]  = useState("shiftpay");
-  const [addingProj,  setAddingProj]  = useState(false);
-  const [newProj,     setNewProj]     = useState({name:"",tam:"",score:40,stage:"discovery",notes:""});
+  const visibleTeamLinks = selectedAgentId === "nexus"
+    ? aggregatedLinks.filter((edge) => edge.type === "blocks")
+    : aggregatedLinks.filter((edge) => edge.fromTeam === selectedTeam.id || edge.toTeam === selectedTeam.id);
 
-  const statusesRef = useRef(statuses);
-  const filterRef   = useRef(filterEdge);
-  const selectedRef = useRef(selected);
-  const hoveredRef  = useRef(hovered);
-  const projectsRef = useRef(projects);
+  const revealMoons = selectedAgentId !== "nexus";
 
-  useEffect(()=>{statusesRef.current=statuses;},[statuses]);
-  useEffect(()=>{filterRef.current=filterEdge;},[filterEdge]);
-  useEffect(()=>{selectedRef.current=selected;},[selected]);
-  useEffect(()=>{hoveredRef.current=hovered;},[hovered]);
-  useEffect(()=>{projectsRef.current=projects;},[projects]);
-  useEffect(()=>{const t=setInterval(()=>setSystemTime(new Date()),1000);return()=>clearInterval(t);},[]);
-
-  // Init
-  useEffect(()=>{
-    const s=stateRef.current;
-    s.starField=Array.from({length:200},()=>({x:(Math.random()-0.5)*1800,y:(Math.random()-0.5)*1400,z:Math.random()*900-450,r:Math.random()*1.4+0.3,twinkle:Math.random()*Math.PI*2,twinkleSpeed:Math.random()*0.02+0.005,brightness:Math.random()*0.55+0.25}));
-    s.particles=EDGES.map(e=>({from:e[0],to:e[1],type:e[2],label:e[3],progress:Math.random(),speed:0.0018+Math.random()*0.002,size:e[2]==="blocks"?3:2}));
-  },[]);
-
-  const project3D=useCallback((x,y,z,s)=>{
-    const{rotX,rotY,rotZ,twist,zoom}=s;
-    const cx=Math.cos(rotX),sx=Math.sin(rotX),cy=Math.cos(rotY),sy=Math.sin(rotY);
-    const cz=Math.cos(rotZ),sz=Math.sin(rotZ),ct=Math.cos(twist),st=Math.sin(twist);
-    let nx=x*cy+z*sy,nz=-x*sy+z*cy,ny=y;
-    let ny2=ny*cx-nz*sx,nz2=ny*sx+nz*cx;
-    let nx3=nx*cz-ny2*sz,ny3=nx*sz+ny2*cz;
-    let nx4=nx3*ct-ny3*st,ny4=nx3*st+ny3*ct;
-    const fov=720,depth=fov+nz2*0.3,scale=zoom*fov/depth;
-    return{x:nx4*scale,y:ny4*scale,scale,depth};
-  },[]);
-
-  const getPos3D=useCallback((agent,s)=>{
-    if(agent.ring===0)return{x:0,y:0,z:0};
-    const ro=agent.ring*0.3;
-    const tilt=Math.sin(s.time*0.0003+ro)*0.3;
-    const base=(agent.angle+s.time*(agent.ring===1?0.2:agent.ring===2?-0.15:0.1))*Math.PI/180;
-    const r=agent.ringR;
-    return{x:r*Math.cos(base),y:r*Math.sin(base)*Math.sin(tilt),z:r*Math.sin(base)*Math.cos(tilt)*0.4};
-  },[]);
-
-  const draw=useCallback(()=>{
-    const canvas=canvasRef.current;if(!canvas)return;
-    const ctx=canvas.getContext("2d");
-    const W=canvas.width,H=canvas.height,CX=W/2,CY=H/2;
-    const s=stateRef.current;
-    s.time++;s.pulsePhase+=0.02;
-    const ease=0.04;
-    if(s.autoRotate){s.targetRotY+=0.0018;s.targetRotZ+=0.0004;}
-    if(s.autoTwist){s.targetTwist+=0.0025;}
-    s.rotX+=(s.targetRotX-s.rotX)*ease;s.rotY+=(s.targetRotY-s.rotY)*ease;
-    s.rotZ+=(s.targetRotZ-s.rotZ)*ease;s.twist+=(s.targetTwist-s.twist)*ease;
-    s.zoom+=(s.targetZoom-s.zoom)*ease;
-
-    ctx.fillStyle="#0B1621";ctx.fillRect(0,0,W,H);
-
-    // Stars
-    s.starField.forEach(star=>{
-      star.twinkle+=star.twinkleSpeed;
-      const b=star.brightness*(0.7+0.3*Math.sin(star.twinkle));
-      const p=project3D(star.x,star.y,star.z,s);
-      const sx=CX+p.x,sy=CY+p.y;
-      if(sx<0||sx>W||sy<0||sy>H)return;
-      ctx.save();ctx.globalAlpha=b*Math.min(1,p.scale);
-      ctx.fillStyle="#fff";ctx.beginPath();ctx.arc(sx,sy,Math.max(0.3,star.r*p.scale*0.5),0,Math.PI*2);ctx.fill();
-      ctx.restore();
-    });
-
-    // Nebula
-    [{x:-300,y:-180,z:50,r:260,c:"rgba(123,109,176,0.028)"},{x:250,y:180,z:-80,r:210,c:"rgba(62,168,154,0.022)"},{x:-80,y:280,z:110,r:170,c:"rgba(184,112,64,0.02)"}].forEach(n=>{
-      const p=project3D(n.x,n.y,n.z,s);
-      const grd=ctx.createRadialGradient(CX+p.x,CY+p.y,0,CX+p.x,CY+p.y,n.r*p.scale);
-      grd.addColorStop(0,n.c);grd.addColorStop(1,"transparent");
-      ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
-    });
-
-    // Agent positions
-    const apos={};
-    FINAL_AGENTS.forEach(a=>{
-      const p3=getPos3D(a,s),p=project3D(p3.x,p3.y,p3.z,s);
-      apos[a.id]={sx:CX+p.x,sy:CY+p.y,scale:p.scale,depth:p.depth};
-    });
-
-    // Project zone rings — draw a glow ring for each project's agents
-    const projs=projectsRef.current;
-    projs.forEach((proj,pi)=>{
-      if(proj.stage==="killed")return;
-      const stageInfo=PROJECT_STAGES[proj.stage];
-      proj.agents.forEach(aid=>{
-        const ap=apos[aid];if(!ap)return;
-        const r=14*ap.scale+Math.sin(s.pulsePhase+pi*1.2)*2;
-        ctx.save();
-        ctx.globalAlpha=0.12;
-        ctx.strokeStyle=proj.color;
-        ctx.lineWidth=0.8;
-        ctx.setLineDash([2,4]);
-        ctx.beginPath();ctx.arc(ap.sx,ap.sy,r+8,0,Math.PI*2);ctx.stroke();
-        ctx.restore();
-      });
-    });
-
-    // Orbital rings
-    [1,2,3].forEach(ring=>{
-      const ra=FINAL_AGENTS.filter(a=>a.ring===ring);if(!ra.length)return;
-      const pts=[];
-      for(let a=0;a<360;a+=3){
-        const tilt=Math.sin(s.time*0.0003+ring*0.3)*0.3;
-        const rad=(a+s.time*(ring===1?0.2:ring===2?-0.15:0.1))*Math.PI/180;
-        const r=ra[0].ringR;
-        const x3=r*Math.cos(rad),y3=r*Math.sin(rad)*Math.sin(tilt),z3=r*Math.sin(rad)*Math.cos(tilt)*0.4;
-        const p=project3D(x3,y3,z3,s);
-        pts.push({sx:CX+p.x,sy:CY+p.y});
-      }
-      ctx.save();ctx.globalAlpha=0.055;
-      ctx.strokeStyle=ring===1?"#4A8FBF":ring===2?"#7B6DB0":"#3EA89A";
-      ctx.lineWidth=0.8;ctx.setLineDash([2,8]);
-      ctx.beginPath();pts.forEach((pt,i)=>i===0?ctx.moveTo(pt.sx,pt.sy):ctx.lineTo(pt.sx,pt.sy));
-      ctx.closePath();ctx.stroke();ctx.restore();
-    });
-
-    // Edges
-    const filteredEdges=filterRef.current==="all"?EDGES:EDGES.filter(e=>e[2]===filterRef.current);
-    const sel=selectedRef.current;
-    const connIds=sel?new Set(EDGES.filter(e=>e[0]===sel||e[1]===sel).flatMap(e=>[e[0],e[1]])):null;
-
-    filteredEdges.forEach(edge=>{
-      const fp=apos[edge[0]],tp=apos[edge[1]];if(!fp||!tp)return;
-      const isConn=sel?(connIds.has(edge[0])&&connIds.has(edge[1])):true;
-      const alpha=sel?(isConn?0.9:0.03):0.3;
-      const ec=EDGE_COLORS[edge[2]];
-      ctx.save();ctx.globalAlpha=alpha;ctx.strokeStyle=ec;
-      ctx.lineWidth=isConn?1.6:0.5;
-      if(edge[2]==="blocks")ctx.setLineDash([5,4]);
-      else if(edge[2]==="feeds")ctx.setLineDash([3,6]);
-      else ctx.setLineDash([1,8]);
-      if(isConn&&sel){ctx.shadowColor=ec;ctx.shadowBlur=10;}
-      ctx.beginPath();ctx.moveTo(fp.sx,fp.sy);ctx.lineTo(tp.sx,tp.sy);ctx.stroke();
-      if(isConn||!sel){
-        const dx=tp.sx-fp.sx,dy=tp.sy-fp.sy,len=Math.sqrt(dx*dx+dy*dy);
-        const ux=dx/len,uy=dy/len,ax=tp.sx-ux*17,ay=tp.sy-uy*17;
-        ctx.globalAlpha=alpha*0.85;ctx.setLineDash([]);ctx.fillStyle=ec;
-        ctx.beginPath();ctx.moveTo(ax+ux*6,ay+uy*6);ctx.lineTo(ax-uy*3,ay+ux*3);ctx.lineTo(ax+uy*3,ay-ux*3);ctx.closePath();ctx.fill();
-      }
-      if(isConn&&sel&&edge[3]){
-        const mx=(fp.sx+tp.sx)/2,my=(fp.sy+tp.sy)/2;
-        ctx.save();ctx.globalAlpha=0.95;ctx.shadowColor=ec;ctx.shadowBlur=5;
-        ctx.fillStyle="#0A1520";
-        const tw=ctx.measureText(edge[3]).width+10;
-        ctx.fillRect(mx-tw/2,my-8,tw,14);
-        ctx.fillStyle=ec;ctx.font="bold 8px 'Courier New'";ctx.textAlign="center";ctx.textBaseline="middle";
-        ctx.fillText(edge[3],mx,my);ctx.restore();
-      }
-      ctx.restore();
-    });
-
-    // Particles
-    s.particles.forEach(p=>{
-      const filtOk=filterRef.current==="all"||p.type===filterRef.current;if(!filtOk)return;
-      const fp=apos[p.from],tp=apos[p.to];if(!fp||!tp)return;
-      const isConn=sel?(connIds?.has(p.from)&&connIds?.has(p.to)):true;
-      if(!isConn&&sel)return;
-      p.progress+=p.speed*(isConn?1.6:0.6);if(p.progress>1)p.progress=0;
-      const t=p.progress;
-      const px=fp.sx+(tp.sx-fp.sx)*t,py=fp.sy+(tp.sy-fp.sy)*t;
-      const col=EDGE_COLORS[p.type];
-      ctx.save();
-      ctx.globalAlpha=(0.65+Math.sin(s.pulsePhase)*0.25)*(isConn?1:0.25);
-      ctx.shadowColor=col;ctx.shadowBlur=10;ctx.fillStyle=col;
-      ctx.beginPath();ctx.arc(px,py,p.size*Math.min(fp.scale,tp.scale)*0.7,0,Math.PI*2);ctx.fill();
-      for(let tr=1;tr<=3;tr++){
-        const tt=t-tr*0.035;if(tt<0)continue;
-        const tx2=fp.sx+(tp.sx-fp.sx)*tt,ty2=fp.sy+(tp.sy-fp.sy)*tt;
-        ctx.globalAlpha=(0.12/tr)*(isConn?1:0.15);
-        ctx.beginPath();ctx.arc(tx2,ty2,(p.size-0.5)*Math.min(fp.scale,tp.scale)*0.6,0,Math.PI*2);ctx.fill();
-      }
-      ctx.restore();
-    });
-
-    // Nodes
-    const sorted=[...FINAL_AGENTS].sort((a,b)=>(apos[b.id]?.depth||0)-(apos[a.id]?.depth||0));
-    sorted.forEach(agent=>{
-      const pos=apos[agent.id];if(!pos)return;
-      const{sx,sy,scale}=pos;
-      const status=statusesRef.current[agent.id]||"idle";
-      const sColor=STATUS_COLORS[status];
-      const isNexus=agent.id==="nexus";
-      const isSel=selectedRef.current===agent.id;
-      const isHov=hoveredRef.current===agent.id;
-      const isConn=sel?connIds?.has(agent.id):true;
-      const isDimmed=sel&&!isConn&&!isNexus;
-
-      // Project tint
-      const assignedProj=projectsRef.current.find(p=>p.agents.includes(agent.id)&&p.stage!=="killed");
-      const projColor=assignedProj?.color||agent.color;
-
-      ctx.save();ctx.globalAlpha=isDimmed?0.1:1;ctx.translate(sx,sy);
-
-      if(isNexus){
-        // Nexus outer rings
-        for(let ri=0;ri<2;ri++){
-          const rScale=ri===0?1:-0.6;
-          ctx.save();ctx.rotate(s.time*0.008*rScale);
-          ctx.strokeStyle="#4A8FBF";ctx.lineWidth=0.7;
-          ctx.globalAlpha=ri===0?0.22:0.12;
-          ctx.setLineDash(ri===0?[4,8]:[2,12]);
-          const rr=agent.size*scale+(ri===0?10:18)+Math.sin(s.pulsePhase)*3;
-          ctx.beginPath();
-          for(let i=0;i<6;i++){const a=(i*60-30)*Math.PI/180;i===0?ctx.moveTo(rr*Math.cos(a),rr*Math.sin(a)):ctx.lineTo(rr*Math.cos(a),rr*Math.sin(a));}
-          ctx.closePath();ctx.stroke();ctx.restore();
-        }
-      }
-
-      if(isSel||isHov){
-        ctx.save();ctx.rotate(s.time*(isSel?0.014:0.007));
-        ctx.strokeStyle=projColor;ctx.lineWidth=isSel?1.4:0.7;ctx.globalAlpha=isSel?0.75:0.35;ctx.setLineDash([3,6]);
-        const sr=agent.size*scale+(isSel?12:8);
-        ctx.beginPath();for(let i=0;i<6;i++){const a=(i*60-30)*Math.PI/180;i===0?ctx.moveTo(sr*Math.cos(a),sr*Math.sin(a)):ctx.lineTo(sr*Math.cos(a),sr*Math.sin(a));}
-        ctx.closePath();ctx.stroke();ctx.restore();
-      }
-
-      if(status==="active"||status==="working"||isNexus){
-        const gr=agent.size*scale+Math.sin(s.pulsePhase)*4;
-        const grd=ctx.createRadialGradient(0,0,0,0,0,gr+12);
-        grd.addColorStop(0,`${isNexus?"#4A8FBF":sColor}28`);grd.addColorStop(1,"transparent");
-        ctx.fillStyle=grd;ctx.fillRect(-gr-14,-gr-14,(gr+14)*2,(gr+14)*2);
-      }
-
-      // Project color ring on assigned agents
-      if(assignedProj&&!isNexus){
-        const pr=agent.size*scale+5+Math.sin(s.pulsePhase+assignedProj.id.length)*2;
-        ctx.save();ctx.globalAlpha=0.2;ctx.strokeStyle=projColor;ctx.lineWidth=1;ctx.setLineDash([]);
-        ctx.beginPath();for(let i=0;i<6;i++){const a=(i*60-30)*Math.PI/180;i===0?ctx.moveTo(pr*Math.cos(a),pr*Math.sin(a)):ctx.lineTo(pr*Math.cos(a),pr*Math.sin(a));}
-        ctx.closePath();ctx.stroke();ctx.restore();
-      }
-
-      const r=agent.size*scale;
-      ctx.shadowColor=isNexus?"#4A8FBF":projColor;
-      ctx.shadowBlur=isDimmed?0:isSel||isNexus?18:status==="idle"?3:10;
-      ctx.strokeStyle=isNexus?"#4A8FBF":projColor;
-      ctx.lineWidth=isSel||isNexus?1.8:1;
-      const fa=isNexus?0.18:isSel?0.2:status==="idle"?0.05:0.13;
-      ctx.fillStyle=`rgba(${hexToRgb(isNexus?"#4A8FBF":projColor)},${fa})`;
-      ctx.globalAlpha*=status==="idle"&&!isNexus?0.5:1;
-      ctx.beginPath();
-      for(let i=0;i<6;i++){const a=(i*60-30)*Math.PI/180;i===0?ctx.moveTo(r*Math.cos(a),r*Math.sin(a)):ctx.lineTo(r*Math.cos(a),r*Math.sin(a));}
-      ctx.closePath();ctx.fill();ctx.stroke();
-      ctx.shadowBlur=0;
-
-      ctx.fillStyle=isNexus?"#4A8FBF":projColor;
-      ctx.font=`bold ${Math.max(5,Math.round(isNexus?9:7)*scale)}px 'Courier New'`;
-      ctx.textAlign="center";ctx.textBaseline="middle";
-      ctx.fillText(agent.name,0,isNexus?2:1);
-
-      if((isSel||isHov||isNexus)&&!isDimmed){
-        ctx.globalAlpha*=0.55;ctx.fillStyle=isNexus?"#4A8FBF":projColor;
-        ctx.font=`${Math.max(7,Math.round(8)*scale)}px 'Courier New'`;
-        ctx.fillText(agent.role,0,isNexus?10:r+10);
-      }
-
-      if(status!=="idle"){
-        const dc=STATUS_COLORS[status];
-        ctx.globalAlpha=1;ctx.shadowColor=dc;ctx.shadowBlur=6;ctx.fillStyle=dc;
-        ctx.beginPath();const dr=Math.max(2,3*scale);
-        ctx.arc(r-3,-(r-3),dr*(status==="active"||status==="working"?1+Math.sin(s.pulsePhase)*0.3:1),0,Math.PI*2);
-        ctx.fill();
-      }
-      ctx.restore();
-    });
-
-    // Crosshair
-    ctx.save();ctx.globalAlpha=0.05;ctx.strokeStyle="#4A8FBF";ctx.lineWidth=0.5;ctx.setLineDash([2,20]);
-    ctx.beginPath();ctx.moveTo(CX-360,CY);ctx.lineTo(CX+360,CY);ctx.stroke();
-    ctx.beginPath();ctx.moveTo(CX,CY-280);ctx.lineTo(CX,CY+280);ctx.stroke();
-    ctx.restore();
-
-    animRef.current=requestAnimationFrame(draw);
-  },[project3D,getPos3D]);
-
-  useEffect(()=>{animRef.current=requestAnimationFrame(draw);return()=>cancelAnimationFrame(animRef.current);},[draw]);
-  useEffect(()=>{stateRef.current.autoRotate=autoRotate;},[autoRotate]);
-  useEffect(()=>{stateRef.current.autoTwist=autoTwist;},[autoTwist]);
-
-  useEffect(()=>{
-    const resize=()=>{const c=canvasRef.current;if(!c)return;c.width=c.offsetWidth;c.height=c.offsetHeight;};
-    resize();const ro=new ResizeObserver(resize);
-    if(canvasRef.current)ro.observe(canvasRef.current.parentElement);
-    return()=>ro.disconnect();
-  },[]);
-
-  const getHovered=useCallback((mx,my)=>{
-    const canvas=canvasRef.current;if(!canvas)return null;
-    const CX=canvas.width/2,CY=canvas.height/2,s=stateRef.current;
-    let closest=null,closestDist=32;
-    FINAL_AGENTS.forEach(agent=>{
-      const p3=getPos3D(agent,s),p=project3D(p3.x,p3.y,p3.z,s);
-      const sx=CX+p.x,sy=CY+p.y;
-      const dist=Math.sqrt((mx-sx)**2+(my-sy)**2);
-      const hit=agent.size*p.scale+10;
-      if(dist<hit&&dist<closestDist){closest=agent.id;closestDist=dist;}
-    });
-    return closest;
-  },[project3D,getPos3D]);
-
-  const handleMouseMove=useCallback(e=>{
-    const c=canvasRef.current;if(!c)return;
-    const rect=c.getBoundingClientRect(),mx=e.clientX-rect.left,my=e.clientY-rect.top;
-    const s=stateRef.current;
-    if(s.isDragging&&s.dragStart){
-      const dx=(mx-s.lastMouse.x)*0.006,dy=(my-s.lastMouse.y)*0.006;
-      s.targetRotY+=dx;s.targetRotX+=dy;s.autoRotate=false;setAutoRotate(false);
-    }
-    s.lastMouse={x:mx,y:my};
-    const h=getHovered(mx,my);hoveredRef.current=h;setHovered(h);
-    c.style.cursor=h?"pointer":"grab";
-  },[getHovered]);
-
-  const handleMouseDown=useCallback(e=>{
-    const c=canvasRef.current;if(!c)return;
-    const rect=c.getBoundingClientRect();
-    stateRef.current.isDragging=true;
-    stateRef.current.dragStart={x:e.clientX-rect.left,y:e.clientY-rect.top};
-    stateRef.current.lastMouse={x:e.clientX-rect.left,y:e.clientY-rect.top};
-    c.style.cursor="grabbing";
-  },[]);
-
-  const handleMouseUp=useCallback(e=>{
-    const s=stateRef.current,c=canvasRef.current;if(!c)return;
-    const rect=c.getBoundingClientRect(),mx=e.clientX-rect.left,my=e.clientY-rect.top;
-    if(s.isDragging&&s.dragStart&&Math.abs(mx-s.dragStart.x)<5&&Math.abs(my-s.dragStart.y)<5){
-      const h=getHovered(mx,my);const ns=h===selectedRef.current?null:h;
-      selectedRef.current=ns;setSelected(ns);
-    }
-    s.isDragging=false;s.dragStart=null;c.style.cursor="grab";
-  },[getHovered]);
-
-  const handleWheel=useCallback(e=>{e.preventDefault();stateRef.current.targetZoom=Math.max(0.35,Math.min(2.8,stateRef.current.targetZoom-e.deltaY*0.001));},[]);
-  useEffect(()=>{const c=canvasRef.current;if(!c)return;c.addEventListener("wheel",handleWheel,{passive:false});return()=>c.removeEventListener("wheel",handleWheel);},[handleWheel]);
-
-  const doZoomIn  =()=>{stateRef.current.targetZoom=Math.min(2.8,stateRef.current.targetZoom+0.3);};
-  const doZoomOut =()=>{stateRef.current.targetZoom=Math.max(0.35,stateRef.current.targetZoom-0.3);};
-  const doReset   =()=>{const s=stateRef.current;s.targetRotX=0;s.targetRotY=0;s.targetRotZ=0;s.targetTwist=0;s.targetZoom=1;setAutoRotate(true);s.autoRotate=true;};
-  const doSpin    =()=>{stateRef.current.targetRotZ+=Math.PI*2;};
-  const doFlip    =()=>{stateRef.current.targetRotX+=Math.PI;};
-  const doDive    =()=>{stateRef.current.targetRotX+=Math.PI*0.5;};
-  const doTwist   =()=>{stateRef.current.targetTwist+=Math.PI/4;};
-  const cycleAgentStatus=(id)=>{const o=["idle","active","working","blocked","done"];setStatuses(p=>({...p,[id]:o[(o.indexOf(p[id]||"idle")+1)%o.length]}));};
-
-  const addProject=()=>{
-    if(!newProj.name.trim())return;
-    const colors=["#4A8FBF","#3EA89A","#C49A2A","#7B6DB0","#B87040","#A84848"];
-    const proj={id:newProj.name.toLowerCase().replace(/\s+/g,"-")+"-"+Date.now(),name:newProj.name,color:colors[projects.length%colors.length],stage:newProj.stage,gate:"—",score:newProj.score,tam:newProj.tam||"—",sprintDay:0,sprintTotal:10,agents:["radar"],mrr:0,interviews:0,interviewTarget:5,notes:newProj.notes};
-    setProjects(p=>[...p,proj]);setNewProj({name:"",tam:"",score:40,stage:"discovery",notes:""});setAddingProj(false);
+  const nodePositions = {
+    nexus: { x: SUN.x, y: SUN.y },
   };
 
-  // Portfolio stats
-  const stageCounts = Object.fromEntries(Object.keys(PROJECT_STAGES).map(s=>[s,projects.filter(p=>p.stage===s).length]));
-  const parallelActive = projects.filter(p=>p.stage==="sprint").length;
-  const incubating = projects.filter(p=>p.stage==="incubation").length;
-  const discovering = projects.filter(p=>p.stage==="discovery").length;
-  const totalTAM = "$1.3B+";
+  for (const team of TEAM_PLANES) {
+    const teamAgents = groupedTeamAgents(team.id);
+    nodePositions[`team:${team.id}`] = teamHub(team);
+    teamAgents.forEach((agent, index) => {
+      nodePositions[agent.id] = moonPosition(team, index, teamAgents.length);
+    });
+  }
 
-  const selAgent=selected?FINAL_AGENTS.find(a=>a.id===selected):null;
-  const connIds2=selected?new Set(EDGES.filter(e=>e[0]===selected||e[1]===selected).flatMap(e=>[e[0],e[1]])):null;
+  const activeAgents = AGENTS.filter((agent) => {
+    const status = liveAgents[agent.id]?.status || "idle";
+    return status === "active" || status === "working";
+  }).slice(0, 5);
 
-  const inp={background:"rgba(0,0,0,0.4)",border:"1px solid rgba(74,143,191,0.15)",borderRadius:5,padding:"7px 10px",color:"#9BBCCC",fontSize:15,fontFamily:"'Courier New',monospace",width:"100%",outline:"none"};
-
-  return(
-    <div style={{height:"100vh",background:"linear-gradient(160deg,#0D1B2E 0%,#0A1520 55%,#0D1A2A 100%)",color:"#9BBCCC",display:"flex",flexDirection:"column",fontFamily:"'Courier New',monospace",overflow:"hidden"}}>
+  return (
+    <div style={{ height: "100%", minHeight: "100vh", background: "radial-gradient(circle at top, #10223a 0%, #07111d 45%, #040a12 100%)", color: T.text, padding: 18, overflow: "hidden" }}>
       <style>{`
-        @keyframes pulse3{0%,100%{opacity:1}50%{opacity:0.4}}
-        @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes slideIn{from{opacity:0;transform:translateX(10px)}to{opacity:1;transform:translateX(0)}}
-        *{box-sizing:border-box;}
-        ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:rgba(0,0,0,0.2);}::-webkit-scrollbar-thumb{background:rgba(74,143,191,0.35);border-radius:3px;}::-webkit-scrollbar-thumb:hover{background:rgba(74,143,191,0.6);}
-        .hbtn:hover{background:rgba(74,143,191,0.12)!important;border-color:rgba(74,143,191,0.35)!important;color:#4A8FBF!important;}
-        .hbtn:active{transform:scale(0.96);}
-        .card-hover:hover{background:rgba(74,143,191,0.04)!important;}
+        * { box-sizing: border-box; }
+        @keyframes pulseSun {
+          0%, 100% { transform: scale(1); opacity: 0.95; }
+          50% { transform: scale(1.05); opacity: 1; }
+        }
+        @keyframes pulseMoon {
+          0%, 100% { opacity: 0.32; transform: scale(1); }
+          50% { opacity: 0.78; transform: scale(1.14); }
+        }
+        @keyframes flowLine {
+          from { stroke-dashoffset: 0; }
+          to { stroke-dashoffset: -24; }
+        }
+        @keyframes drift {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-4px); }
+        }
+        .panel {
+          background: ${T.panel};
+          border: 1px solid ${T.line};
+          backdrop-filter: blur(18px);
+          box-shadow: 0 18px 80px rgba(0,0,0,0.28);
+        }
+        .metricCard {
+          background: rgba(255,255,255,0.03);
+          border: 1px solid rgba(119, 163, 220, 0.08);
+          border-radius: 14px;
+          padding: 12px 14px;
+        }
+        .projectCard:hover,
+        .agentCard:hover,
+        .teamCard:hover {
+          border-color: rgba(119, 163, 220, 0.28) !important;
+          transform: translateY(-1px);
+        }
       `}</style>
 
-      {/* ── TOP BAR ── */}
-      <div style={{position:"relative",zIndex:10,height:52,borderBottom:"1px solid rgba(74,143,191,0.1)",background:"rgba(10,18,28,0.97)",backdropFilter:"blur(20px)",display:"flex",alignItems:"center",padding:"0 18px",gap:14,flexShrink:0}}>
-        {/* Logo */}
-        <div style={{display:"flex",alignItems:"center",gap:8,paddingRight:14,borderRight:"1px solid rgba(74,143,191,0.1)"}}>
-          <div style={{width:26,height:26,clipPath:"polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)",background:"rgba(74,143,191,0.15)",display:"flex",alignItems:"center",justifyContent:"center",boxShadow:"0 0 12px rgba(74,143,191,0.3)"}}>
-            <span style={{fontSize:16,color:"#4A8FBF"}}>⬡</span>
-          </div>
-          <div>
-            <div style={{fontSize:17,fontWeight:700,color:"#4A8FBF",letterSpacing:"0.25em",textShadow:"0 0 10px rgba(74,143,191,0.5)"}}>NEXUS</div>
-            <div style={{fontSize:11,color:"rgba(74,143,191,0.3)",letterSpacing:"0.3em"}}>VENTURE CONSTELLATION</div>
-          </div>
-        </div>
-
-        {/* Portfolio overview strip */}
-        <div style={{display:"flex",gap:1}}>
-          {[
-            {label:"IN SPRINT",val:parallelActive,c:"#4A8FBF",tip:"Active parallel sprints"},
-            {label:"INCUBATING",val:incubating,c:"#C49A2A",tip:"Gates in progress"},
-            {label:"DISCOVERY",val:discovering,c:"#7B6DB0",tip:"Being researched"},
-            {label:"LIVE",val:stageCounts.live||0,c:"#3A8F5A",tip:"Published to App Store"},
-            {label:"PAUSED",val:stageCounts.paused||0,c:"#B87040",tip:"Temporarily halted"},
-            {label:"TOTAL",val:projects.length,c:"rgba(74,143,191,0.5)",tip:"All ventures"},
-          ].map(m=>(
-            <div key={m.label} title={m.tip} style={{textAlign:"center",padding:"0 10px",borderRight:"1px solid rgba(74,143,191,0.06)"}}>
-              <div style={{fontSize:22,fontWeight:700,color:m.val>0&&m.label!=="TOTAL"?m.c:m.c,textShadow:m.val>0?`0 0 8px ${m.c}60`:"none",lineHeight:1}}>{m.val}</div>
-              <div style={{fontSize:11,color:"rgba(74,143,191,0.2)",letterSpacing:"0.1em"}}>{m.label}</div>
+      <div style={{ display: "grid", gridTemplateColumns: "minmax(0, 1.85fr) minmax(360px, 0.85fr)", gap: 16, alignItems: "start", minHeight: "calc(100vh - 36px)" }}>
+        <div className="panel" style={{ borderRadius: 28, padding: 18, display: "flex", flexDirection: "column", height: "calc(100vh - 36px)", overflow: "hidden" }}>
+          <div style={{ display: "grid", gridTemplateColumns: "1fr auto", alignItems: "end", gap: 16, marginBottom: 14, flexShrink: 0 }}>
+            <div style={{ textAlign: "center", justifySelf: "center", maxWidth: 560 }}>
+              <div style={{ fontSize: 12, letterSpacing: "0.22em", color: T.dim }}>INVESTOR VIEW</div>
+              <div style={{ fontSize: 34, fontWeight: 700, lineHeight: 1.02 }}>AI Verse</div>
+              <div style={{ fontSize: 14, color: T.muted, marginTop: 8, lineHeight: 1.6 }}>
+                One founder. One command sun. Six team planes. Visible work, visible gates, visible flow.
+              </div>
             </div>
-          ))}
-        </div>
-
-        {/* Edge filter */}
-        <div style={{display:"flex",gap:4,alignItems:"center",marginLeft:"auto"}}>
-          <span style={{fontSize:12,color:"rgba(74,143,191,0.25)",letterSpacing:"0.1em"}}>LINKS:</span>
-          {["all","blocks","feeds","supports"].map(t=>{
-            const tc=t==="blocks"?"#A84848":t==="feeds"?"#3EA89A":"#4A8FBF";
-            return<button key={t} onClick={()=>setFilterEdge(t)} className="hbtn" style={{background:filterEdge===t?`${tc}12`:"rgba(0,0,0,0.3)",border:`1px solid ${filterEdge===t?tc:"rgba(74,143,191,0.1)"}`,color:filterEdge===t?tc:"rgba(74,143,191,0.25)",borderRadius:4,padding:"4px 9px",fontSize:12,cursor:"pointer",letterSpacing:"0.07em",fontFamily:"'Courier New',monospace",fontWeight:700,transition:"all 0.15s"}}>{t.toUpperCase()}</button>;
-          })}
-        </div>
-
-        {/* Clock */}
-        <div style={{paddingLeft:12,borderLeft:"1px solid rgba(74,143,191,0.08)",fontSize:15,color:"#4A8FBF",letterSpacing:"0.1em"}}>{systemTime.toLocaleTimeString("en-US",{hour12:false})}</div>
-      </div>
-
-      {/* ── CONTENT ── */}
-      <div style={{flex:1,display:"flex",overflow:"hidden",position:"relative",zIndex:5}}>
-
-        {/* ── LEFT: Portfolio Panel ── */}
-        <div style={{width:310,flexShrink:0,borderRight:"1px solid rgba(74,143,191,0.08)",background:"rgba(10,18,28,0.96)",backdropFilter:"blur(20px)",display:"flex",flexDirection:"column",overflow:"hidden"}}>
-
-          {/* Sub tabs */}
-          <div style={{display:"flex",borderBottom:"1px solid rgba(74,143,191,0.08)"}}>
-            {[["portfolio","PORTFOLIO"],["agents","AGENTS"],["network","ANALYSIS"]].map(([id,label])=>(
-              <button key={id} onClick={()=>setActiveView(id)} style={{flex:1,background:activeView===id?"rgba(74,143,191,0.06)":"transparent",border:"none",borderBottom:`2px solid ${activeView===id?"#4A8FBF":"transparent"}`,color:activeView===id?"#4A8FBF":"rgba(74,143,191,0.2)",padding:"9px 4px",fontSize:12,cursor:"pointer",letterSpacing:"0.1em",fontWeight:700,transition:"all 0.2s"}}>{label}</button>
-            ))}
+            <div style={{ textAlign: "right" }}>
+              <div style={{ fontSize: 12, color: T.dim }}>Live Status</div>
+              <div style={{ fontSize: 14, color: T.green }}>{counts.done} done · {counts.blocked} blocked</div>
+            </div>
           </div>
 
-          <div style={{flex:1,overflowY:"auto",padding:"12px 14px"}}>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 10, flexShrink: 0 }}>
+            <div style={{ fontSize: 12, letterSpacing: "0.18em", color: T.dim }}>FOCUS: {selectedAgentId === "nexus" ? "TEAM PLANES" : `${selectedAgent.name} NETWORK`}</div>
+            <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+              <button onClick={() => setZoom((z) => Math.max(0.62, +(z - 0.08).toFixed(2)))} style={{ width: 30, height: 30, borderRadius: 8, border: `1px solid ${T.line}`, background: "rgba(255,255,255,0.03)", color: T.text, cursor: "pointer" }}>−</button>
+              <div style={{ minWidth: 48, textAlign: "center", fontSize: 12, color: T.muted }}>{Math.round(zoom * 100)}%</div>
+              <button onClick={() => setZoom((z) => Math.min(1.22, +(z + 0.08).toFixed(2)))} style={{ width: 30, height: 30, borderRadius: 8, border: `1px solid ${T.line}`, background: "rgba(255,255,255,0.03)", color: T.text, cursor: "pointer" }}>+</button>
+              <button onClick={() => { setSelectedAgentId("nexus"); setZoom(0.88); }} style={{ height: 30, borderRadius: 8, border: `1px solid ${T.line}`, background: "rgba(255,255,255,0.03)", color: T.text, cursor: "pointer", padding: "0 10px", fontSize: 12 }}>Reset</button>
+            </div>
+          </div>
 
-            {/* ── PORTFOLIO VIEW ── */}
-            {activeView==="portfolio"&&(
-              <div>
-                {/* Stage summary */}
-                <div style={{marginBottom:14}}>
-                  <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:8}}>PIPELINE OVERVIEW</div>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5}}>
-                    {Object.entries(PROJECT_STAGES).map(([s,cfg])=>{
-                      const count=projects.filter(p=>p.stage===s).length;
-                      return(
-                        <div key={s} style={{background:count>0?`${cfg.color}08`:"rgba(0,0,0,0.2)",border:`1px solid ${count>0?`${cfg.color}25`:"rgba(74,143,191,0.06)"}`,borderRadius:5,padding:"6px 8px",display:"flex",alignItems:"center",gap:6}}>
-                          <div style={{width:3,height:28,background:cfg.color,borderRadius:2,opacity:count>0?1:0.2}}/>
-                          <div>
-                            <div style={{fontSize:20,fontWeight:700,color:count>0?cfg.color:"rgba(74,143,191,0.15)",fontFamily:"'Courier New',monospace",lineHeight:1}}>{count}</div>
-                            <div style={{fontSize:11,color:count>0?`${cfg.color}70`:"rgba(74,143,191,0.15)",letterSpacing:"0.08em"}}>{cfg.label}</div>
+          <div style={{ position: "relative", flex: 1, overflow: "hidden", borderRadius: 22, background: "radial-gradient(circle at center, rgba(255,211,111,0.08) 0%, rgba(14,26,44,0.38) 34%, rgba(5,10,18,0.84) 100%)", border: `1px solid ${T.line}`, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ position: "relative", width: MAP_W, height: MAP_H, transform: `scale(${zoom})`, transformOrigin: "center center", flexShrink: 0 }}>
+            <svg viewBox={`0 0 ${MAP_W} ${MAP_H}`} preserveAspectRatio="xMidYMid meet" style={{ position: "absolute", inset: 0, width: "100%", height: "100%", display: "block", zIndex: 1 }}>
+              <defs>
+                <radialGradient id="sunGlow" cx="50%" cy="50%" r="50%">
+                  <stop offset="0%" stopColor="rgba(255,211,111,0.98)" />
+                  <stop offset="35%" stopColor="rgba(255,211,111,0.32)" />
+                  <stop offset="100%" stopColor="rgba(255,211,111,0)" />
+                </radialGradient>
+                <filter id="softGlow">
+                  <feGaussianBlur stdDeviation="10" result="blur" />
+                  <feMerge>
+                    <feMergeNode in="blur" />
+                    <feMergeNode in="SourceGraphic" />
+                  </feMerge>
+                </filter>
+              </defs>
+
+              <circle cx={SUN.x} cy={SUN.y} r="200" fill="url(#sunGlow)" opacity="0.7" />
+
+              {TEAM_PLANES.map((team) => {
+                const hub = teamHub(team);
+                const teamAgents = groupedTeamAgents(team.id);
+                const activeCount = teamAgents.filter((agent) => {
+                  const status = liveAgents[agent.id]?.status || "idle";
+                  return status === "active" || status === "working";
+                }).length;
+                const isFocused = selectedTeam.id === team.id || selectedAgent.team === team.id;
+                return (
+                  <g key={team.id}>
+                    <path
+                      d={planePath(team)}
+                      fill="none"
+                      stroke={team.color}
+                      strokeOpacity={isFocused ? 0.34 : 0.12}
+                      strokeWidth={isFocused ? 2 : 1.2}
+                      strokeDasharray="2 10"
+                    />
+                    <circle cx={hub.x} cy={hub.y} r={activeCount > 0 ? 34 : 28} fill={`${team.color}18`} stroke={`${team.color}AA`} strokeWidth="1.6" filter="url(#softGlow)" />
+                    <circle cx={hub.x} cy={hub.y} r={activeCount > 0 ? 44 : 38} fill="none" stroke={`${team.color}44`} strokeWidth="1.1" />
+                    <text x={hub.x} y={hub.y - 4} textAnchor="middle" fontSize="11" fill={team.color} fontWeight="700">{team.glyph}</text>
+                    <text x={hub.x} y={hub.y + 16} textAnchor="middle" fontSize="10" fill={T.text} letterSpacing="1.5">{team.name}</text>
+                    <text x={hub.x} y={hub.y + 30} textAnchor="middle" fontSize="9" fill={T.dim}>{teamAgents.length} moons</text>
+                  </g>
+                );
+              })}
+
+              {visibleTeamLinks.map((link, index) => {
+                const from = nodePositions[`team:${link.fromTeam}`];
+                const to = nodePositions[`team:${link.toTeam}`];
+                const style = EDGE_STYLE[link.type];
+                if (!from || !to) return null;
+                return (
+                  <g key={`${link.fromTeam}-${link.toTeam}-${link.type}-${index}`}>
+                    <path
+                      d={curveBetween(from, to, link.type === "supports" ? 0.1 : 0.16)}
+                      fill="none"
+                      stroke={style.color}
+                      strokeWidth={style.width}
+                      strokeOpacity={selectedAgentId === "nexus" ? 0.18 : 0.16}
+                      strokeDasharray={style.dash}
+                      style={style.dash !== "0" ? { animation: "flowLine 5s linear infinite" } : undefined}
+                    />
+                  </g>
+                );
+              })}
+
+              {focusedEdges.map((edge) => {
+                const from = nodePositions[edge[0]];
+                const to = nodePositions[edge[1]];
+                const style = EDGE_STYLE[edge[2]];
+                if (!from || !to) return null;
+                return (
+                  <g key={edgeKey(edge)}>
+                    <path
+                      d={curveBetween(from, to, edge[2] === "supports" ? 0.12 : 0.2)}
+                      fill="none"
+                      stroke={style.color}
+                      strokeWidth={style.width + 0.6}
+                      strokeOpacity="0.92"
+                      strokeDasharray={style.dash}
+                      style={style.dash !== "0" ? { animation: "flowLine 3.5s linear infinite" } : undefined}
+                    />
+                  </g>
+                );
+              })}
+
+              <text x={MAP_W / 2} y="32" textAnchor="middle" fontSize="12" letterSpacing="2.5" fill={T.dim}>
+                SUN = CEO · PLANES = TEAMS · SELECT A PLANE OR MOON TO DRILL IN
+              </text>
+            </svg>
+
+            <div style={{ position: "absolute", inset: 0, zIndex: 2 }}>
+              <div
+                style={{
+                  position: "absolute",
+                  left: `${(SUN.x / MAP_W) * 100}%`,
+                  top: `${(SUN.y / MAP_H) * 100}%`,
+                  transform: "translate(-50%, -50%)",
+                  width: 170,
+                  height: 170,
+                  borderRadius: "50%",
+                  background: "radial-gradient(circle, rgba(255,211,111,0.3) 0%, rgba(255,211,111,0.18) 35%, rgba(255,211,111,0.03) 72%, rgba(255,211,111,0) 100%)",
+                  border: "2px solid rgba(255,211,111,0.88)",
+                  boxShadow: "0 0 42px rgba(255,211,111,0.28)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  textAlign: "center",
+                  animation: "pulseSun 3.4s ease-in-out infinite",
+                  padding: 18,
+                }}
+              >
+                <div>
+                  <div style={{ fontSize: 30, fontWeight: 700, color: T.sun, letterSpacing: "0.08em" }}>NEXUS</div>
+                  <div style={{ fontSize: 12, color: T.text, marginTop: 4 }}>CEO / Command Sun</div>
+                  <div style={{ fontSize: 10, color: T.dim, marginTop: 6, lineHeight: 1.45 }}>Routes, gates, and load-balances the verse</div>
+                </div>
+              </div>
+
+              {TEAM_PLANES.map((team) => {
+                const hub = nodePositions[`team:${team.id}`];
+                const teamAgents = groupedTeamAgents(team.id);
+                const activeCount = teamAgents.filter((agent) => {
+                  const status = liveAgents[agent.id]?.status || "idle";
+                  return status === "active" || status === "working";
+                }).length;
+                const isFocused = selectedTeam.id === team.id || selectedAgent.team === team.id;
+                return (
+                  <div key={`hub-${team.id}`}>
+                    <button
+                      onClick={() => { setSelectedTeamId(team.id); setSelectedAgentId(groupedTeamAgents(team.id)[0]?.id || "nexus"); }}
+                      style={{
+                        position: "absolute",
+                        left: `${(hub.x / MAP_W) * 100}%`,
+                        top: `${(hub.y / MAP_H) * 100}%`,
+                        transform: "translate(-50%, -50%)",
+                        width: activeCount > 0 ? 76 : 66,
+                        height: activeCount > 0 ? 76 : 66,
+                        borderRadius: "50%",
+                        background: `${team.color}1c`,
+                        border: `1.5px solid ${isFocused ? `${team.color}` : `${team.color}88`}`,
+                        boxShadow: isFocused ? `0 0 18px ${team.color}40` : "none",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        textAlign: "center",
+                        padding: 8,
+                        cursor: "pointer",
+                      }}
+                    >
+                      <div style={{ fontSize: 12, color: team.color, fontWeight: 700 }}>{team.glyph}</div>
+                      <div style={{ fontSize: 10, color: T.text, fontWeight: 700, letterSpacing: "0.08em" }}>{team.name}</div>
+                      <div style={{ fontSize: 9, color: T.dim }}>{activeCount} active</div>
+                    </button>
+
+                    {revealMoons && selectedTeam.id === team.id && teamAgents.map((agent, index) => {
+                      const pos = nodePositions[agent.id];
+                      const status = liveAgents[agent.id]?.status || "idle";
+                      const statusMeta = STATUS_STYLE[status] || STATUS_STYLE.idle;
+                      const isSelected = selectedAgentId === agent.id;
+                      const isActive = status === "active" || status === "working";
+                      return (
+                        <button
+                          key={agent.id}
+                          onClick={() => { setSelectedAgentId(agent.id); setSelectedTeamId(team.id); }}
+                          style={{
+                            position: "absolute",
+                            left: `${(pos.x / MAP_W) * 100}%`,
+                            top: `${(pos.y / MAP_H) * 100}%`,
+                            transform: "translate(-50%, -50%)",
+                            width: isSelected ? 84 : 70,
+                            minHeight: isSelected ? 52 : 44,
+                            borderRadius: 14,
+                            background: "rgba(7,17,29,0.96)",
+                            border: `1.6px solid ${isSelected ? statusMeta.color : `${agent.color}aa`}`,
+                            color: T.text,
+                            padding: "8px 10px",
+                            textAlign: "left",
+                            boxShadow: isSelected ? `0 0 18px ${statusMeta.color}35` : "0 8px 18px rgba(0,0,0,0.18)",
+                            cursor: "pointer",
+                            zIndex: isSelected ? 5 : 3,
+                          }}
+                        >
+                          {isActive && (
+                            <div
+                              style={{
+                                position: "absolute",
+                                inset: -6,
+                                borderRadius: 18,
+                                border: `1px solid ${statusMeta.color}`,
+                                opacity: 0.72,
+                                animation: "pulseMoon 2.1s ease-in-out infinite",
+                                pointerEvents: "none",
+                              }}
+                            />
+                          )}
+                          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 6 }}>
+                            <div style={{ fontSize: 10.5, fontWeight: 700, color: agent.color, letterSpacing: "0.07em" }}>{agent.name}</div>
+                            <div style={{ width: 8, height: 8, borderRadius: 999, background: statusMeta.color, flexShrink: 0 }} />
                           </div>
-                        </div>
+                          {isSelected && <div style={{ fontSize: 9, color: T.dim, marginTop: 4, lineHeight: 1.35 }}>{agent.role}</div>}
+                        </button>
                       );
                     })}
                   </div>
-                </div>
-
-                {/* Investor metrics */}
-                <div style={{background:"rgba(196,154,42,0.04)",border:"1px solid rgba(196,154,42,0.15)",borderRadius:7,padding:"10px 12px",marginBottom:14,position:"relative"}}>
-                  <CornerBracket sz={7} col="rgba(196,154,42,0.3)"/>
-                  <div style={{fontSize:12,color:"#C49A2A",letterSpacing:"0.18em",marginBottom:8}}>INVESTOR SNAPSHOT</div>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:5}}>
-                    {[{l:"COMBINED TAM",v:totalTAM,c:"#C49A2A"},{l:"PARALLEL SPRINTS",v:`${parallelActive} / 3 cap`,c:"#4A8FBF"},{l:"AGENTS DEPLOYED",v:"15",c:"#3EA89A"},{l:"IDEAS IN PIPELINE",v:projects.length,c:"#7B6DB0"}].map(m=>(
-                      <div key={m.l} style={{background:"rgba(0,0,0,0.3)",borderRadius:4,padding:"6px 8px"}}>
-                        <div style={{fontSize:11,color:"rgba(74,143,191,0.25)",letterSpacing:"0.1em",marginBottom:2}}>{m.l}</div>
-                        <div style={{fontSize:18,fontWeight:700,color:m.c,fontFamily:"'Courier New',monospace"}}>{m.v}</div>
-                      </div>
-                    ))}
-                  </div>
-                  <div style={{marginTop:8,fontSize:13,color:"rgba(196,154,42,0.45)",lineHeight:1.6}}>
-                    One founder. 15 specialist agents. Up to 3 sprints in parallel. This is the NEXUS venture model.
-                  </div>
-                </div>
-
-                {/* Project cards */}
-                <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:8,display:"flex",alignItems:"center",justifyContent:"space-between"}}>
-                  <span>ALL VENTURES ({projects.length})</span>
-                  <button onClick={()=>setAddingProj(true)} style={{background:"rgba(74,143,191,0.08)",border:"1px solid rgba(74,143,191,0.2)",color:"#4A8FBF",borderRadius:4,padding:"3px 8px",fontSize:12,cursor:"pointer",fontWeight:700,letterSpacing:"0.07em"}}>+ ADD</button>
-                </div>
-
-                {/* Add project form */}
-                {addingProj&&(
-                  <div style={{background:"rgba(74,143,191,0.04)",border:"1px solid rgba(74,143,191,0.15)",borderRadius:7,padding:12,marginBottom:10,animation:"slideIn 0.2s ease"}}>
-                    <div style={{fontSize:12,color:"#4A8FBF",letterSpacing:"0.15em",marginBottom:8}}>NEW VENTURE</div>
-                    <div style={{display:"grid",gap:6}}>
-                      <input style={inp} placeholder="App name *" value={newProj.name} onChange={e=>setNewProj(p=>({...p,name:e.target.value}))}/>
-                      <input style={inp} placeholder="TAM estimate (e.g. $200M)" value={newProj.tam} onChange={e=>setNewProj(p=>({...p,tam:e.target.value}))}/>
-                      <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-                        <input style={inp} type="number" min={0} max={50} placeholder="Score /50" value={newProj.score} onChange={e=>setNewProj(p=>({...p,score:+e.target.value}))}/>
-                        <select style={{...inp}} value={newProj.stage} onChange={e=>setNewProj(p=>({...p,stage:e.target.value}))}>
-                          {Object.entries(PROJECT_STAGES).map(([s,c])=><option key={s} value={s}>{c.label}</option>)}
-                        </select>
-                      </div>
-                      <textarea style={{...inp,resize:"none",minHeight:50}} placeholder="Notes..." value={newProj.notes} onChange={e=>setNewProj(p=>({...p,notes:e.target.value}))}/>
-                      <div style={{display:"flex",gap:6}}>
-                        <button onClick={addProject} style={{flex:1,background:"rgba(74,143,191,0.15)",border:"1px solid rgba(74,143,191,0.4)",color:"#4A8FBF",borderRadius:5,padding:"7px",fontSize:13,cursor:"pointer",fontWeight:700,letterSpacing:"0.08em"}}>ADD VENTURE</button>
-                        <button onClick={()=>setAddingProj(false)} style={{background:"rgba(0,0,0,0.3)",border:"1px solid rgba(74,143,191,0.1)",color:"rgba(74,143,191,0.3)",borderRadius:5,padding:"7px 10px",fontSize:13,cursor:"pointer"}}>✕</button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-
-                {/* Group by stage */}
-                {Object.entries(PROJECT_STAGES).map(([stage,stageInfo])=>{
-                  const stageProjs=projects.filter(p=>p.stage===stage);
-                  if(!stageProjs.length)return null;
-                  return(
-                    <div key={stage} style={{marginBottom:10}}>
-                      <div style={{fontSize:12,color:stageInfo.color,letterSpacing:"0.15em",marginBottom:6,display:"flex",alignItems:"center",gap:6}}>
-                        <div style={{flex:1,height:1,background:`${stageInfo.color}20`}}/>
-                        {stageInfo.label} · {stageProjs.length}
-                        <div style={{flex:1,height:1,background:`${stageInfo.color}20`}}/>
-                      </div>
-                      {stageProjs.map(proj=>(
-                        <ProjectCard key={proj.id} proj={proj} isActive={activeProj===proj.id}
-                          onSelect={()=>setActiveProj(proj.id)}
-                          onUpdate={updated=>setProjects(p=>p.map(x=>x.id===proj.id?updated:x))}/>
-                      ))}
-                    </div>
-                  );
-                })}
-              </div>
-            )}
-
-            {/* ── AGENTS VIEW ── */}
-            {activeView==="agents"&&(
-              <div>
-                <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:10}}>AGENT NETWORK — {FINAL_AGENTS.length-1} SPECIALISTS</div>
-                {selAgent?(
-                  <div style={{animation:"fadeUp 0.2s ease"}}>
-                    <div style={{background:`${selAgent.color}08`,border:`1px solid ${selAgent.color}25`,borderRadius:7,padding:12,marginBottom:10,position:"relative"}}>
-                      <CornerBracket sz={7} col={selAgent.color}/>
-                      <div style={{fontSize:20,fontWeight:700,color:selAgent.color,letterSpacing:"0.15em",marginBottom:2}}>{selAgent.name}</div>
-                      <div style={{fontSize:12,color:"rgba(74,143,191,0.3)",marginBottom:10}}>{selAgent.role} · Ring {selAgent.ring}</div>
-                      <div style={{fontSize:12,color:"rgba(74,143,191,0.25)",marginBottom:6}}>STATUS:</div>
-                      <div style={{display:"flex",gap:3,flexWrap:"wrap"}}>
-                        {["idle","active","working","blocked","done"].map(s=>{const c=STATUS_COLORS[s];const cur=statuses[selAgent.id]===s;return<button key={s} onClick={()=>cycleAgentStatus(selAgent.id)} style={{background:cur?`${c}18`:"rgba(0,0,0,0.4)",border:`1px solid ${cur?c:"rgba(74,143,191,0.1)"}`,color:cur?c:"rgba(74,143,191,0.25)",borderRadius:3,padding:"3px 7px",fontSize:12,cursor:"pointer",fontWeight:700,letterSpacing:"0.06em"}}>{s.toUpperCase()}</button>;})}
-                      </div>
-                    </div>
-                    {[{dir:"BLOCKED BY",incoming:true},{dir:"UNBLOCKS",incoming:false}].map(({dir,incoming})=>{
-                      const edges=EDGES.filter(e=>incoming?e[1]===selAgent.id:e[0]===selAgent.id);
-                      if(!edges.length)return null;
-                      return(<div key={dir} style={{marginBottom:10}}>
-                        <div style={{fontSize:12,color:"rgba(74,143,191,0.3)",letterSpacing:"0.12em",marginBottom:5}}>{dir}</div>
-                        {edges.map((edge,i)=>{
-                          const pid=incoming?edge[0]:edge[1],peer=FINAL_AGENTS.find(a=>a.id===pid),ec=EDGE_COLORS[edge[2]];
-                          return<div key={i} onClick={()=>{selectedRef.current=pid;setSelected(pid);}} style={{display:"flex",alignItems:"center",gap:6,padding:"5px 8px",background:"rgba(0,0,0,0.3)",border:`1px solid ${ec}18`,borderRadius:4,marginBottom:3,cursor:"pointer"}}>
-                            <div style={{width:5,height:5,borderRadius:"50%",background:ec,boxShadow:`0 0 5px ${ec}`}}/>
-                            <div style={{flex:1}}>
-                              <div style={{fontSize:14,fontWeight:700,color:peer?.color}}>{peer?.name}</div>
-                              <div style={{fontSize:11,color:"rgba(74,143,191,0.25)"}}>{edge[3]}</div>
-                            </div>
-                            <span style={{fontSize:11,color:ec,fontWeight:700}}>{edge[2].toUpperCase()}</span>
-                          </div>;
-                        })}
-                      </div>);
-                    })}
-                    <button onClick={()=>{setSelected(null);selectedRef.current=null;}} style={{width:"100%",background:"rgba(0,0,0,0.3)",border:"1px solid rgba(74,143,191,0.1)",color:"rgba(74,143,191,0.3)",borderRadius:5,padding:"6px",fontSize:12,cursor:"pointer",letterSpacing:"0.1em"}}>DESELECT</button>
-                  </div>
-                ):(
-                  <div style={{display:"grid",gap:4}}>
-                    {FINAL_AGENTS.filter(a=>a.id!=="nexus").map(agent=>{
-                      const status=statuses[agent.id]||"idle";const sc=STATUS_COLORS[status];
-                      const assignedProj=projects.find(p=>p.agents.includes(agent.id)&&p.stage!=="killed");
-                      return(
-                        <div key={agent.id} onClick={()=>{selectedRef.current=agent.id;setSelected(agent.id);}} className="card-hover"
-                          style={{display:"flex",alignItems:"center",gap:8,padding:"6px 9px",background:"rgba(0,0,0,0.25)",border:`1px solid ${agent.color}15`,borderLeft:`2px solid ${agent.color}`,borderRadius:5,cursor:"pointer",transition:"all 0.15s"}}>
-                          <div style={{width:7,height:7,borderRadius:1,background:sc,boxShadow:`0 0 5px ${sc}`,flexShrink:0}}/>
-                          <div style={{flex:1}}>
-                            <div style={{fontSize:14,fontWeight:700,color:agent.color,letterSpacing:"0.08em"}}>{agent.name}</div>
-                            <div style={{fontSize:12,color:"rgba(74,143,191,0.25)"}}>{agent.role}</div>
-                          </div>
-                          {assignedProj&&<span style={{fontSize:11,color:assignedProj.color,background:`${assignedProj.color}12`,border:`1px solid ${assignedProj.color}25`,borderRadius:3,padding:"1px 5px"}}>{assignedProj.name}</span>}
-                          <span style={{fontSize:11,color:sc,fontWeight:700,letterSpacing:"0.06em"}}>{status.toUpperCase()}</span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                )}
-              </div>
-            )}
-
-            {/* ── ANALYSIS VIEW ── */}
-            {activeView==="network"&&(
-              <div>
-                <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:10}}>DEPENDENCY ANALYSIS</div>
-                {[{type:"blocks",c:"#A84848",d:"6,4",desc:"Hard gates — nothing moves downstream until resolved"},{type:"feeds",c:"#3EA89A",d:"3,6",desc:"Data flow — enriches downstream agents"},{type:"supports",c:"rgba(74,143,191,0.6)",d:"1,8",desc:"NEXUS orchestration — continuous oversight"}].map(e=>(
-                  <div key={e.type} style={{padding:"8px 10px",background:`${e.c}08`,border:`1px solid ${e.c}18`,borderRadius:5,marginBottom:6}}>
-                    <div style={{display:"flex",gap:8,alignItems:"center",marginBottom:4}}>
-                      <svg width={28} height={6}><line x1={0} y1={3} x2={28} y2={3} stroke={e.c} strokeWidth={1.5} strokeDasharray={e.d}/></svg>
-                      <span style={{fontSize:13,color:e.c,fontWeight:700,letterSpacing:"0.07em"}}>{e.type.toUpperCase()} — {EDGES.filter(x=>x[2]===e.type).length} links</span>
-                    </div>
-                    <div style={{fontSize:12,color:"rgba(74,143,191,0.25)",lineHeight:1.5}}>{e.desc}</div>
-                  </div>
-                ))}
-
-                <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:8,marginTop:12}}>CRITICAL PATH TO TESTFLIGHT</div>
-                {["RADAR → MERIDIAN","MERIDIAN → ATLAS","ATLAS → FORGE","FORGE → CORE + PRISM","PRISM → SWIFT","CORE → SWIFT","SWIFT → SENTINEL","SENTINEL → SIGN_OFF"].map((step,i)=>(
-                  <div key={step} style={{display:"flex",alignItems:"center",gap:5,marginBottom:4}}>
-                    <span style={{fontSize:12,color:"rgba(62,168,154,0.3)",minWidth:14,fontFamily:"'Courier New',monospace"}}>{i+1}</span>
-                    <div style={{flex:1,padding:"4px 8px",background:"rgba(62,168,154,0.04)",border:"1px solid rgba(62,168,154,0.12)",borderRadius:3}}>
-                      <span style={{fontSize:13,color:"#3EA89A",fontWeight:700,letterSpacing:"0.07em"}}>{step}</span>
-                    </div>
-                  </div>
-                ))}
-
-                <div style={{fontSize:12,color:"rgba(74,143,191,0.35)",letterSpacing:"0.18em",marginBottom:8,marginTop:12}}>BOTTLENECK AGENTS</div>
-                {[{id:"forge",reason:"Gates 5 downstream agents. MUST go first."},{id:"atlas",reason:"Gates design, marketing, analytics, data, AI."},{id:"prism",reason:"Gates iOS Dev. Blocks 3 downstream."},{id:"core",reason:"Gates iOS Dev + QA. Blocks 2 downstream."}].map(b=>{
-                  const a=FINAL_AGENTS.find(x=>x.id===b.id);
-                  return<div key={b.id} style={{display:"flex",gap:8,padding:"7px 9px",background:"rgba(168,72,72,0.05)",border:"1px solid rgba(168,72,72,0.15)",borderRadius:5,marginBottom:5}}>
-                    <div style={{width:4,background:"#A84848",borderRadius:2,flexShrink:0}}/>
-                    <div>
-                      <div style={{fontSize:14,fontWeight:700,color:a?.color,letterSpacing:"0.08em"}}>{a?.name}</div>
-                      <div style={{fontSize:12,color:"rgba(74,143,191,0.3)",lineHeight:1.5}}>{b.reason}</div>
-                    </div>
-                  </div>;
-                })}
-              </div>
-            )}
+                );
+              })}
+            </div>
+            </div>
           </div>
         </div>
 
-        {/* ── CANVAS ── */}
-        <div style={{flex:1,position:"relative",overflow:"hidden"}}>
-          <canvas ref={canvasRef} onMouseMove={handleMouseMove} onMouseDown={handleMouseDown} onMouseUp={handleMouseUp} onMouseLeave={()=>{stateRef.current.isDragging=false;}} style={{width:"100%",height:"100%",display:"block",cursor:"grab"}}/>
+        <div style={{ display: "flex", flexDirection: "column", gap: 16, minWidth: 0, minHeight: 0, maxHeight: "calc(100vh - 36px)", overflowY: "auto", paddingRight: 4 }}>
+          <div className="panel" style={{ borderRadius: 22, padding: 18, flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <div>
+                <div style={{ fontSize: 12, letterSpacing: "0.22em", color: T.dim }}>FOCUS NODE</div>
+                <div style={{ fontSize: 24, fontWeight: 700, color: selectedAgent.id === "nexus" ? T.sun : selectedAgent.color }}>{selectedAgent.name}</div>
+              </div>
+              <div style={{ padding: "6px 10px", borderRadius: 999, background: "rgba(255,255,255,0.04)", border: `1px solid ${T.line}`, color: STATUS_STYLE[liveAgents[selectedAgent.id]?.status || "active"]?.color || T.blue, fontSize: 12 }}>
+                {STATUS_STYLE[liveAgents[selectedAgent.id]?.status || "active"]?.label || "Active"}
+              </div>
+            </div>
 
-          {/* Controls */}
-          <div style={{position:"absolute",bottom:18,left:"50%",transform:"translateX(-50%)",display:"flex",gap:5,background:"rgba(7,16,28,0.9)",border:"1px solid rgba(74,143,191,0.12)",borderRadius:12,padding:"7px 11px",backdropFilter:"blur(16px)"}}>
-            {[{l:"◉",t:"Zoom In",f:doZoomIn},{l:"○",t:"Zoom Out",f:doZoomOut},{l:"↻",t:"Full Spin",f:doSpin},{l:"↕",t:"Flip",f:doFlip},{l:"⟳",t:"Dive",f:doDive},{l:"⟆",t:"Twist +45°",f:doTwist},{l:"⌂",t:"Reset",f:doReset}].map(b=>(
-              <button key={b.t} onClick={b.f} title={b.t} className="hbtn" style={{background:"rgba(74,143,191,0.05)",border:"1px solid rgba(74,143,191,0.14)",color:"rgba(74,143,191,0.55)",borderRadius:7,width:32,height:32,cursor:"pointer",fontSize:20,display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s"}}>{b.l}</button>
-            ))}
-            <div style={{width:1,background:"rgba(74,143,191,0.1)",margin:"0 3px"}}/>
-            <button onClick={()=>{const v=!autoRotate;setAutoRotate(v);stateRef.current.autoRotate=v;}} className="hbtn" style={{background:autoRotate?"rgba(74,143,191,0.16)":"rgba(74,143,191,0.04)",border:`1px solid ${autoRotate?"rgba(74,143,191,0.45)":"rgba(74,143,191,0.12)"}`,color:autoRotate?"#4A8FBF":"rgba(74,143,191,0.35)",borderRadius:7,padding:"0 9px",height:32,cursor:"pointer",fontSize:12,letterSpacing:"0.1em",fontWeight:700,transition:"all 0.15s"}}>AUTO</button>
-            <button onClick={()=>{const v=!autoTwist;setAutoTwist(v);stateRef.current.autoTwist=v;}} className="hbtn" style={{background:autoTwist?"rgba(123,109,176,0.16)":"rgba(74,143,191,0.04)",border:`1px solid ${autoTwist?"rgba(123,109,176,0.45)":"rgba(74,143,191,0.12)"}`,color:autoTwist?"#7B6DB0":"rgba(74,143,191,0.35)",borderRadius:7,padding:"0 9px",height:32,cursor:"pointer",fontSize:12,letterSpacing:"0.1em",fontWeight:700,transition:"all 0.15s"}}>TWIST</button>
+            <div style={{ fontSize: 13, color: T.muted, lineHeight: 1.65, marginBottom: 14 }}>
+              {selectedAgent.role}. {selectedAgent.id === "nexus" ? "Central command sun for the entire operating system." : `Moon on the ${selectedTeam.name.toLowerCase()} plane.`}
+            </div>
+
+            <div className="metricCard" style={{ marginBottom: 12 }}>
+              <div style={{ fontSize: 11, letterSpacing: "0.14em", color: T.dim, marginBottom: 6 }}>CURRENT LOAD</div>
+              <div style={{ fontSize: 14, lineHeight: 1.6 }}>{clampText(liveAgents[selectedAgent.id]?.task || "No active task", 88)}</div>
+            </div>
+
+            <div style={{ fontSize: 12, letterSpacing: "0.2em", color: T.dim, marginBottom: 8 }}>DIRECT COMMUNICATIONS</div>
+            <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+              {focusedEdges.length === 0 && (
+                <div style={{ fontSize: 13, color: T.muted, lineHeight: 1.6 }}>
+                  Select a team plane or moon to inspect exact `blocks`, `feeds`, and `supports` contracts.
+                </div>
+              )}
+              {focusedEdges.slice(0, 4).map((edge) => {
+                const peerId = edge[0] === selectedAgent.id ? edge[1] : edge[0];
+                const peer = AGENTS.find((agent) => agent.id === peerId);
+                const style = EDGE_STYLE[edge[2]];
+                return (
+                  <div key={edgeKey(edge)} className="agentCard" style={{ background: "rgba(255,255,255,0.03)", border: `1px solid ${style.color}35`, borderRadius: 14, padding: 12, transition: "all 160ms ease" }}>
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                      <div style={{ fontSize: 14, fontWeight: 700, color: peer?.color || T.text }}>{peer?.name || peerId}</div>
+                      <div style={{ fontSize: 11, color: style.color, letterSpacing: "0.14em" }}>{edge[2].toUpperCase()}</div>
+                    </div>
+                    <div style={{ fontSize: 12, color: T.muted, marginTop: 6, lineHeight: 1.6 }}>{edge[3]}</div>
+                  </div>
+                );
+              })}
+            </div>
           </div>
 
-          {/* Top hint */}
-          <div style={{position:"absolute",top:10,left:"50%",transform:"translateX(-50%)",fontSize:12,color:"rgba(74,143,191,0.18)",letterSpacing:"0.15em",pointerEvents:"none",whiteSpace:"nowrap"}}>
-            DRAG TO ROTATE · SCROLL TO ZOOM · CLICK NODE TO TRACE DEPENDENCIES · COLORED HEX RINGS = PROJECT ASSIGNMENT
-          </div>
+          <div className="panel" style={{ borderRadius: 22, padding: 18, flexShrink: 0 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 12 }}>
+              <div style={{ fontSize: 12, letterSpacing: "0.22em", color: T.dim }}>WORKLOAD SIGNAL</div>
+              <div style={{ fontSize: 12, color: T.muted }}>{activeAgents.length} visibly moving</div>
+            </div>
 
-          {/* Hover tooltip */}
-          {hovered&&hovered!==selected&&(()=>{
-            const ha=FINAL_AGENTS.find(a=>a.id===hovered);
-            const ap=projects.find(p=>p.agents.includes(hovered));
-            return<div style={{position:"absolute",top:36,left:"50%",transform:"translateX(-50%)",background:"rgba(7,16,28,0.92)",border:`1px solid ${ha?.color||"#4A8FBF"}30`,borderRadius:6,padding:"5px 12px",fontSize:13,color:"#4A8FBF",letterSpacing:"0.08em",animation:"fadeUp 0.15s ease",pointerEvents:"none",display:"flex",alignItems:"center",gap:8}}>
-              <span style={{fontWeight:700,color:ha?.color}}>{ha?.name}</span>
-              <span style={{color:"rgba(74,143,191,0.4)"}}>·</span>
-              <span style={{color:"rgba(74,143,191,0.5)"}}>{ha?.role}</span>
-              {ap&&<><span style={{color:"rgba(74,143,191,0.4)"}}>·</span><span style={{color:ap.color,fontWeight:700}}>{ap.name}</span></>}
-              <span style={{color:"rgba(74,143,191,0.4)"}}>·</span>
-              <span style={{color:STATUS_COLORS[statuses[hovered]||"idle"],fontWeight:700}}>{(statuses[hovered]||"idle").toUpperCase()}</span>
-            </div>;
-          })()}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10, marginBottom: 18 }}>
+              {activeAgents.map((agent) => {
+                const status = liveAgents[agent.id]?.status || "idle";
+                const statusMeta = STATUS_STYLE[status] || STATUS_STYLE.idle;
+                return (
+                  <button
+                    key={agent.id}
+                    className="agentCard"
+                    onClick={() => { setSelectedAgentId(agent.id); setSelectedTeamId(agent.team === "core" ? "strategy" : agent.team); }}
+                    style={{
+                      background: "rgba(255,255,255,0.03)",
+                      border: `1px solid ${statusMeta.color}33`,
+                      borderRadius: 14,
+                      padding: 12,
+                      color: T.text,
+                      textAlign: "left",
+                      cursor: "pointer",
+                      transition: "all 160ms ease",
+                      animation: "drift 3.6s ease-in-out infinite",
+                    }}
+                  >
+                    <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 10 }}>
+                      <div>
+                        <div style={{ fontSize: 14, fontWeight: 700, color: agent.color }}>{agent.name}</div>
+                        <div style={{ fontSize: 12, color: T.muted }}>{agent.role}</div>
+                      </div>
+                      <div style={{ color: statusMeta.color, fontSize: 11, letterSpacing: "0.14em" }}>{statusMeta.label}</div>
+                    </div>
+                    <div style={{ fontSize: 12, color: T.dim, marginTop: 7, lineHeight: 1.55 }}>{clampText(liveAgents[agent.id]?.task || "No active task", 62)}</div>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ fontSize: 12, letterSpacing: "0.22em", color: T.dim, marginBottom: 10 }}>LINK LEGEND</div>
+            <div style={{ display: "grid", gap: 8 }}>
+              {Object.entries(EDGE_STYLE).map(([type, style]) => (
+                <div key={type} className="teamCard" style={{ display: "grid", gridTemplateColumns: "72px 1fr", gap: 10, padding: 10, borderRadius: 14, border: `1px solid ${style.color}28`, background: "rgba(255,255,255,0.03)", transition: "all 160ms ease" }}>
+                  <div style={{ display: "flex", alignItems: "center", justifyContent: "center" }}>
+                    <svg width="54" height="12">
+                      <line x1="0" y1="6" x2="54" y2="6" stroke={style.color} strokeWidth={style.width} strokeDasharray={style.dash} />
+                    </svg>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 13, fontWeight: 700, color: style.color }}>{type.toUpperCase()}</div>
+                    <div style={{ fontSize: 12, color: T.muted, lineHeight: 1.6 }}>
+                      {type === "blocks" && "Hard gate. Downstream work waits here."}
+                      {type === "feeds" && "Information or intelligence flowing into another agent."}
+                      {type === "supports" && "Operational support, orchestration, or enablement."}
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </div>
     </div>

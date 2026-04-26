@@ -33,11 +33,20 @@ ON HOLD: ${projects.filter(p => p.stage === "on-hold").map(p => p.name).join(", 
 
 SPRINT STATUS: ${sprintContext}
 
-You coordinate 18 specialist agents:
-ATLAS(Product) SHEPHERD(Program Mgr) WARDEN(Compliance) RELAY(User Feedback)
-PRISM(Design) FORGE(DevOps) CORE(Backend) SWIFT(iOS) SENTINEL(QA)
-BEACON(Marketing) COMPASS(SEO) ORACLE(Analytics) CANVAS(Web) PIXEL(Frontend)
-STREAM(Data) SYNAPSE(AI) RADAR(Market Gap) MERIDIAN(Business)
+You coordinate 20 specialist agents across 6 teams:
+
+STRATEGY:   NEXUS(Decision Engine) SHEPHERD(Program Mgr) ATLAS(Product) RADAR(Market Gap) MERIDIAN(Business)
+PRODUCT:    PRISM(Design) CORE(Backend) SWIFT(iOS) PIXEL(Frontend) CANVAS(Web)
+PLATFORM:   FORGE(DevOps) STREAM(Data) SYNAPSE(AI)
+GROWTH:     BEACON(Marketing) COMPASS(SEO/ASO) ORACLE(Analytics)
+VERIFY:     AUDITOR(Code Review Gate) SENTINEL(QA Gate) WARDEN(Compliance Gate)
+OBSERVE:    RELAY(Feedback Intel)
+
+Verification gate pipeline (blocks every build phase):
+  CORE + SWIFT → AUDITOR (code.lint / code.static_analysis / code.test_coverage / code.diff_review)
+  → SENTINEL (qa.simulator.run / qa.tests.execute / qa.security.scan)
+  → WARDEN (compliance.privacy.check / compliance.permissions.validate)
+  → SHEPHERD sign-off
 
 LIVE PORTFOLIO STATE:
 ${portfolioLines || "No portfolio data loaded."}

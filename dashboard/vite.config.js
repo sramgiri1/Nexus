@@ -6,7 +6,8 @@ import fs    from "fs";
 export default defineConfig({
   plugins: [
     react(),
-    // Plugin to serve ../memory/*.json files at /memory/*
+
+    // Serve ../memory/*.json at /memory/*
     {
       name: "memory-serve",
       configureServer(server) {
@@ -19,6 +20,43 @@ export default defineConfig({
           } else {
             next();
           }
+        });
+      },
+    },
+
+    // Skill runner API — POST /api/skill { agent, skill, input }
+    {
+      name: "skill-api",
+      configureServer(server) {
+        server.middlewares.use("/api/skill", (req, res) => {
+          if (req.method !== "POST") {
+            res.statusCode = 405; res.end("Method Not Allowed"); return;
+          }
+          let body = "";
+          req.on("data", chunk => { body += chunk; });
+          req.on("end", async () => {
+            try {
+              const { agent, skill, input } = JSON.parse(body);
+              const skillsPath = path.resolve(__dirname, "../skills/index.js");
+              // Use a cache-busted import to get fresh results
+              const mod = await import(`${skillsPath}?t=${Date.now()}`).catch(
+                () => import(skillsPath)
+              );
+              const result = await mod.executeSkill(agent, skill, input || {});
+              res.setHeader("Content-Type", "application/json");
+              res.setHeader("Cache-Control", "no-cache");
+              res.end(JSON.stringify(result));
+            } catch (e) {
+              res.setHeader("Content-Type", "application/json");
+              res.statusCode = 500;
+              res.end(JSON.stringify({
+                result: "FAIL",
+                summary: e.message || "Skill execution failed",
+                issues: [{ severity: "error", message: String(e.message) }],
+                data: null,
+              }));
+            }
+          });
         });
       },
     },
