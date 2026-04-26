@@ -78,6 +78,10 @@ extension APIClient {
         try await patch("/users/\(userId)/timezone", body: ["timezone": timezone])
     }
 
+    func updatePushToken(userId: String, pushToken: String) async throws -> CareUser {
+        try await patch("/users/\(userId)/push-token", body: ["pushToken": pushToken])
+    }
+
     @discardableResult
     func logSession(userId: String, circleId: String) async throws -> LogResult {
         try await post("/users/\(userId)/session", body: ["circleId": circleId])

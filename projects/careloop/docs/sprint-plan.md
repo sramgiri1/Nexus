@@ -3,7 +3,7 @@
 **Sprints:** 3 × 2 weeks  
 **Capacity:** Solo founder + AI  
 **Public launch:** End of Sprint 3  
-**Status:** Sprint 1 in progress
+**Status:** Sprint 2 in progress
 
 ---
 
@@ -47,6 +47,8 @@
 
 **Goal:** Deliver the automation features that make CareLoop materially better than group text.
 
+**Operating rule:** Build Sprint 2 to feature-complete locally before paying for deployment or Apple infrastructure. Treat Railway deploy, APNs, and live email verification as late-stage validation work inside the sprint, not prerequisites to begin coding.
+
 **Scope:**
 
 - Implement background scheduler using `node-cron` inside the API process
@@ -66,6 +68,7 @@
   - APNs device token registration
   - Upload token to backend
   - Backend push sender for reminder, escalation, and task assignment notifications
+  - If Apple infrastructure is not yet provisioned, complete the code paths locally with clear mock/stub verification points
 - Implement fallback rules:
   - No push token → send email where PRD requires fallback
   - Resend failure → mark failed, no retry in Sprint 2
@@ -73,6 +76,7 @@
   - `DigestLog.messageId` for outbound digest correlation
   - Minimal delivery metadata for push/email tracing
 - Keep digest-open tracking deferred — do not block Sprint 2 on webhook analytics
+- Keep paid external verification deferred until the local feature set is stable
 
 **Exit criteria:**
 
@@ -82,6 +86,13 @@
 - A user with timezone set receives one digest at 6pm local time
 - Digest sends are idempotent per user/day
 - Push missing or failing falls back per PRD rules
+
+**Deferred verification inside Sprint 2:**
+
+- Railway deploy and deployed migration verification
+- Live APNs delivery
+- Live Resend delivery verification
+- Apple Developer account and APNs key provisioning
 
 ---
 

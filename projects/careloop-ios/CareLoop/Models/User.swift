@@ -5,6 +5,8 @@ struct CareUser: Identifiable, Codable {
     let email: String
     let name: String
     let phone: String?
+    var pushToken: String?
+    var timezone: String?
     var memberships: [CircleMembership]?
 }
 

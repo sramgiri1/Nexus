@@ -10,6 +10,9 @@ settings:
     SWIFT_VERSION: "5.9"
     PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios
     DEVELOPMENT_TEAM: ""
+    SDKROOT: auto
+    SUPPORTED_PLATFORMS: "iphoneos iphonesimulator"
+    TARGETED_DEVICE_FAMILY: "1,2"
 
 targets:
   CareLoop:
@@ -21,6 +24,7 @@ targets:
       base:
         INFOPLIST_FILE: CareLoop/Resources/Info.plist
         PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios
+        SUPPORTS_MACCATALYST: NO
 
   CareLoopTests:
     type: bundle.unit-test
@@ -31,4 +35,7 @@ targets:
       - target: CareLoop
     settings:
       base:
+        GENERATE_INFOPLIST_FILE: YES
         PRODUCT_BUNDLE_IDENTIFIER: com.careloop.ios.tests
+        TEST_HOST: "$(BUILT_PRODUCTS_DIR)/CareLoop.app/CareLoop"
+        BUNDLE_LOADER: "$(TEST_HOST)"

@@ -1,7 +1,9 @@
 import { assertMember, logEvent } from "../lib/roles.js";
+import { deliverTaskNotification } from "../lib/push.js";
 
 const taskInclude = {
   assignee: { select: { id: true, name: true } },
+  circle: { select: { id: true, name: true } },
 };
 
 export default async function tasks(app) {
@@ -46,6 +48,15 @@ export default async function tasks(app) {
       return t;
     });
 
+    if (task.assigneeId) {
+      await deliverTaskNotification({
+        db,
+        userId: task.assigneeId,
+        task,
+        type: "assignment",
+      });
+    }
+
     return reply.code(201).send(task);
   });
 
@@ -88,10 +99,37 @@ export default async function tasks(app) {
     if (priority   !== undefined) data.priority   = priority;
     if (assigneeId !== undefined) data.assigneeId = assigneeId;
 
-    const updated = await db.task.update({
-      where:   { id: req.params.taskId },
-      data,
-      include: taskInclude,
+    const previousAssigneeId = task.assigneeId;
+    const updated = await db.$transaction(async (tx) => {
+      const nextTask = await tx.task.update({
+        where:   { id: req.params.taskId },
+        data,
+        include: taskInclude,
+      });
+
+      if (dueAt !== undefined) {
+        if (nextTask.dueAt) {
+          const scheduledAt = new Date(nextTask.dueAt.getTime() - 15 * 60 * 1000);
+          const existingReminder = await tx.reminder.findFirst({ where: { taskId: nextTask.id } });
+          if (existingReminder) {
+            await tx.reminder.update({
+              where: { id: existingReminder.id },
+              data: {
+                scheduledAt,
+                status: "PENDING",
+                sentAt: null,
+                escalatedAt: null,
+              },
+            });
+          } else {
+            await tx.reminder.create({ data: { taskId: nextTask.id, scheduledAt } });
+          }
+        } else {
+          await tx.reminder.deleteMany({ where: { taskId: nextTask.id } });
+        }
+      }
+
+      return nextTask;
     });
 
     if (status === "DONE" && task.status !== "DONE") {
@@ -103,6 +141,15 @@ export default async function tasks(app) {
       await logEvent(db, {
         type: "TASK_UPDATED", circleId: req.params.circleId,
         actorId: userId, payload: { taskId: task.id, status },
+      });
+    }
+
+    if (assigneeId !== undefined && assigneeId && assigneeId !== previousAssigneeId) {
+      await deliverTaskNotification({
+        db,
+        userId: assigneeId,
+        task: updated,
+        type: "assignment",
       });
     }
 

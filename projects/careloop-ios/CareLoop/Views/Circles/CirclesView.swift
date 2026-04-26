@@ -2,12 +2,15 @@ import SwiftUI
 
 struct CirclesView: View {
     @EnvironmentObject var appState: AppState
+    @AppStorage("askedForPush") private var askedForPush = false
     @State private var tasks:        [CareTask] = []
     @State private var loading       = true
     @State private var error:        String?
     @State private var showNewTask   = false
     @State private var showMembers   = false
     @State private var showSettings  = false
+    @State private var showPermissionSheet = false
+    @State private var deepLinkedTask: CareTask?
 
     var body: some View {
         NavigationStack {
@@ -44,7 +47,12 @@ struct CirclesView: View {
                         circleId:   circle.id,
                         creatorId:  user.id,
                         members:    circle.members ?? [],
-                        isAdmin:    appState.userRole == .admin
+                        isAdmin:    appState.userRole == .admin,
+                        onCreated:  { createdTask in
+                            if createdTask.dueAt != nil && !askedForPush {
+                                showPermissionSheet = true
+                            }
+                        }
                     )
                 }
             }
@@ -57,8 +65,26 @@ struct CirclesView: View {
                         .environmentObject(appState)
                 }
             }
+            .sheet(isPresented: $showPermissionSheet) {
+                NotificationPermissionView { _ in
+                    askedForPush = true
+                }
+            }
         }
         .task { await loadTasks() }
+        .onChange(of: appState.pendingTaskId) { _ in
+            syncPendingTaskNavigation()
+        }
+        .onChange(of: tasks) { _ in
+            syncPendingTaskNavigation()
+        }
+        .navigationDestination(item: $deepLinkedTask) { task in
+            TaskDetailView(
+                task: task,
+                onUpdate: { updated in updateInList(updated) },
+                onDelete: { removeFromList(task) }
+            )
+        }
     }
 
     // MARK: — Task list
@@ -154,5 +180,12 @@ struct CirclesView: View {
 
     private func removeFromList(_ task: CareTask) {
         tasks.removeAll { $0.id == task.id }
+    }
+
+    private func syncPendingTaskNavigation() {
+        guard let pendingTaskId = appState.pendingTaskId,
+              let task = tasks.first(where: { $0.id == pendingTaskId }) else { return }
+        deepLinkedTask = task
+        appState.consumePendingTask()
     }
 }

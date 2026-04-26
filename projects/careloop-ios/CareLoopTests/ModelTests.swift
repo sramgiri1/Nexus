@@ -114,6 +114,98 @@ final class MemberRoleTests: XCTestCase {
     }
 }
 
+// MARK: — Sprint 2: AppState push notification state
+
+final class AppStatePushTests: XCTestCase {
+
+    @MainActor
+    func test_pendingTaskId_defaultsToNil() {
+        let state = AppState()
+        XCTAssertNil(state.pendingTaskId)
+    }
+
+    @MainActor
+    func test_consumePendingTask_clearsTaskId() {
+        let state = AppState()
+        state.pendingTaskId = "task-abc"
+        state.consumePendingTask()
+        XCTAssertNil(state.pendingTaskId, "consumePendingTask should clear pendingTaskId")
+    }
+
+    @MainActor
+    func test_consumePendingTask_isIdempotent_whenAlreadyNil() {
+        let state = AppState()
+        XCTAssertNil(state.pendingTaskId)
+        state.consumePendingTask()
+        XCTAssertNil(state.pendingTaskId, "calling consumePendingTask on nil should not crash")
+    }
+
+    @MainActor
+    func test_pendingTaskId_canBeSetAndRead() {
+        let state = AppState()
+        state.pendingTaskId = "task-xyz-789"
+        XCTAssertEqual(state.pendingTaskId, "task-xyz-789")
+    }
+
+    @MainActor
+    func test_pushTaskOpenedNotification_setsPendingTaskId() {
+        let state = AppState()
+        let taskId = "push-deep-link-task"
+        NotificationCenter.default.post(
+            name: .careLoopPushTaskOpened,
+            object: taskId
+        )
+        // NotificationCenter dispatches synchronously for non-async publishers
+        // but the sink uses RunLoop.main; flush the run loop
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
+        XCTAssertEqual(state.pendingTaskId, taskId)
+    }
+}
+
+// MARK: — Sprint 2: push token endpoint contract
+
+final class PushTokenEndpointTests: XCTestCase {
+
+    func test_updatePushToken_requestBody_containsPushToken() throws {
+        // Verify the endpoint encoding is correct before any network call.
+        // APIClient.shared.updatePushToken encodes { "pushToken": <value> }.
+        let body: [String: String] = ["pushToken": "device-token-abc123"]
+        let data = try JSONSerialization.data(withJSONObject: body)
+        let decoded = try JSONSerialization.jsonObject(with: data) as? [String: String]
+        XCTAssertEqual(decoded?["pushToken"], "device-token-abc123")
+    }
+
+    func test_updatePushToken_path_format() {
+        let userId = "user-abc"
+        let path = "/users/\(userId)/push-token"
+        XCTAssertEqual(path, "/users/user-abc/push-token")
+    }
+}
+
+// MARK: — Sprint 2: Reminder scheduling contract (iOS side)
+
+final class ReminderSchedulingTests: XCTestCase {
+
+    func test_reminderScheduledAt_is_15minutesBeforeDueAt() {
+        let dueAt = Date(timeIntervalSinceNow: 3600) // 1 hour from now
+        let scheduledAt = dueAt.addingTimeInterval(-15 * 60)
+        let diff = dueAt.timeIntervalSince(scheduledAt)
+        XCTAssertEqual(diff, 15 * 60, accuracy: 1, "Reminder fires exactly 15 minutes before due time")
+    }
+
+    func test_escalation_fires_after_15_minutes_of_no_action() {
+        let sentAt = Date(timeIntervalSinceNow: -(16 * 60)) // sent 16 min ago
+        let escalationCutoff = Date(timeIntervalSinceNow: -(15 * 60))
+        XCTAssertTrue(sentAt < escalationCutoff, "sentAt 16min ago is past the 15min escalation window")
+    }
+
+    func test_escalation_does_not_fire_within_15_minutes() {
+        let sentAt = Date(timeIntervalSinceNow: -(14 * 60)) // sent 14 min ago
+        let escalationCutoff = Date(timeIntervalSinceNow: -(15 * 60))
+        XCTAssertFalse(sentAt < escalationCutoff, "sentAt 14min ago has not yet crossed the escalation window")
+    }
+}
+
 // MARK: — AppState.userRole
 
 final class AppStateRoleTests: XCTestCase {

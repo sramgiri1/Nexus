@@ -5,6 +5,7 @@ struct NewTaskView: View {
     let creatorId: String
     let members:   [CircleMember]
     let isAdmin:   Bool
+    let onCreated: (CareTask) -> Void
 
     @Environment(\.dismiss) private var dismiss
 
@@ -70,7 +71,7 @@ struct NewTaskView: View {
     private func save() async {
         loading = true
         do {
-            _ = try await APIClient.shared.createTask(
+            let createdTask = try await APIClient.shared.createTask(
                 circleId:   circleId,
                 title:      title.trimmingCharacters(in: .whitespaces),
                 notes:      notes.isEmpty ? nil : notes,
@@ -79,6 +80,7 @@ struct NewTaskView: View {
                 creatorId:  creatorId,
                 assigneeId: isAdmin ? assigneeId : nil
             )
+            onCreated(createdTask)
             dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false

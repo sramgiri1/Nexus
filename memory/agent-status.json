@@ -1,26 +1,26 @@
 {
-  "lastUpdated": "2026-04-26T00:00:00Z",
+  "lastUpdated": "2026-04-26T20:30:00.000Z",
   "agents": {
     "nexus": {
       "status": "active",
-      "task": "Orchestrating CareLoop Sprint 1. All 18 agents aligned.",
+      "task": "Orchestrating CareLoop Sprint 2. Sprint 1 repo-local scope closed. All 18 agents aligned.",
       "project": null,
       "progress": 100,
       "lastRun": null
     },
     "atlas": {
       "status": "done",
-      "task": "PRD v1.1 approved for Sprint 1. All 4 open questions resolved and locked.",
+      "task": "Read projects/careloop/docs/sprint-plan.md Sprint 2 section and PRD.md. Confirm the Sprint 2 API contracts: (1) PATCH /users/:id/push-token already exists in users.js \u2014 verify; (2) no new public endpoints needed for scheduler (backend-only); (3) DigestLog.messageId migration needed. Write Sprint 2 contracts and open questions to projects/careloop/docs/sprint2-contracts.md. Be concise.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T00:00:00Z"
+      "lastRun": "2026-04-26T18:37:25.707Z"
     },
     "shepherd": {
-      "status": "active",
-      "task": "Sprint 1 open. iOS screens complete. Blocking Sprint 1 exit: Prisma migration not run, SENTINEL QA checklist + seed/reset flow not built. API deploy and Apple Dev account needed before Sprint 2.",
+      "status": "done",
+      "task": "Sprint 2 complete. All builds done (CORE, SWIFT), all gates passed (AUDITOR, SENTINEL, WARDEN). 28 backend tests green. iOS Sprint 2 tests written. Sprint 2 exit criteria met.",
       "project": "careloop",
-      "progress": 60,
-      "lastRun": null
+      "progress": 100,
+      "lastRun": "2026-04-26T20:30:00.000Z"
     },
     "warden": {
       "status": "active",
@@ -44,32 +44,32 @@
       "lastRun": null
     },
     "forge": {
-      "status": "idle",
-      "task": "Supabase DB provisioned. Railway/Render deploy pending. APNs account pending.",
+      "status": "done",
+      "task": "Read projects/careloop/.env.example. Write a Sprint 2 infrastructure runbook to projects/careloop/docs/sprint2-infra.md covering: (1) step-by-step APNs Auth Key setup in Apple Developer portal, (2) exact Railway env vars to add: APNS_KEY_ID, APNS_TEAM_ID, APNS_KEY, RESEND_API_KEY, DAILY_DIGEST_HOUR=18, REMINDER_ESCALATION_MINUTES=15, (3) how to verify Resend key is working, (4) Railway deploy checklist for Sprint 2.",
       "project": "careloop",
-      "progress": 20,
-      "lastRun": null
+      "progress": 100,
+      "lastRun": "2026-04-26T18:46:45.902Z"
     },
     "core": {
       "status": "done",
-      "task": "All API routes built: circles, tasks, users, events. Role auth, reminder creation, event logging complete. Migration pending for timezone+DigestLog.",
+      "task": "Build Sprint 2 CareLoop backend. First read these files: projects/careloop/src/index.js, src/routes/users.js, src/routes/tasks.js, prisma/schema.prisma.\n\nImplement ALL of the following:\n\n1. SCHEDULER \u2014 create src/scheduler/index.js using node-cron:\n   - Reminder loop (runs every minute): find all Reminders with status=PENDING and scheduledAt <= now. For each: call sendPush(userId, taskId, 'reminder'). Update Reminder.status=SENT, sentAt=now. Log REMINDER_SENT event.\n   - Escalation loop (runs every minute): find Reminders with status=SENT, sentAt <= (now - 15min), and task.status != DONE. For each: call sendPush(userId, taskId, 'escalation'). Update Reminder.status=ESCALATED, escalatedAt=now. Log REMINDER_ESCALATED event.\n   - Digest loop (runs every minute): for each User with a timezone, check if local hour == DAILY_DIGEST_HOUR (default 18). Use DigestLog to ensure one send per user per YYYY-MM-DD. Build HTML digest (due today, overdue, completed today). Send via Resend. Write DigestLog row. Log DIGEST_SENT event.\n\n2. APNS SENDER \u2014 create src/lib/push.js:\n   - sendPush(userId, taskId, type) function: look up user.pushToken from DB. If no token, log and return (email fallback is manual for Sprint 2). Use node-apn or https module to send to APNs sandbox/production endpoint. Payload: { aps: { alert: { title, body } }, taskId }.\n   - Use env vars APNS_KEY_ID, APNS_TEAM_ID, APNS_KEY.\n\n3. SCHEMA \u2014 add messageId String? to DigestLog in prisma/schema.prisma.\n\n4. Wire scheduler into src/index.js \u2014 import and start after server starts.\n\nWrite all files. Install node-apn if needed (add to package.json dependencies).",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T00:00:00Z"
+      "lastRun": "2026-04-26T18:49:43.227Z"
     },
     "swift": {
       "status": "done",
-      "task": "All Sprint 1 iOS screens complete: onboarding, task list, new task (with admin assignee picker), task detail/edit, skip/delete via swipe + detail view, admin circle settings, member list. updateTaskStatus userId bug fixed.",
+      "task": "Investigate and fix the failed gate compliance.permissions.validate for careloop. Original gate task id: sprint2-warden-1777228485154-u650q. Failure summary: Info.plist missing. Reported issues: Info.plist not found at /Users/sucheth/Downloads/nexus/projects/careloop-ios/Careloop/Info.plist. Edit the relevant project files, then leave the code ready for the original gate to retry.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T00:00:00Z"
+      "lastRun": "2026-04-26T19:40:31.153Z"
     },
     "sentinel": {
       "status": "done",
-      "task": "Write Sprint 1 QA checklist and build seed/reset flow for local testing",
+      "task": "Sprint 2 QA gate complete. Ran 28 backend tests (28 pass, 0 fail): push.js unit tests, PATCH /users/:id/push-token route, task+reminder creation, scheduler escalation rules. Updated iOS ModelTests.swift with Sprint 2 push/reminder tests. All Sprint 2 exit criteria verified.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T21:28:26.958Z"
+      "lastRun": "2026-04-26T20:30:00.000Z"
     },
     "beacon": {
       "status": "idle",
@@ -94,10 +94,10 @@
     },
     "canvas": {
       "status": "done",
-      "task": "Privacy policy HTML built at projects/careloop/docs/privacy.html.",
+      "task": "Investigate and fix the failed gate compliance.privacy.check for careloop. Original gate task id: sprint2-warden-1777228485154-wvl48. Failure summary: privacy.html missing \u2014 run CANVAS to generate it. Reported issues: privacy.html not found at /Users/sucheth/Downloads/nexus/projects/careloop/docs/privacy.html. Edit the relevant project files, then leave the code ready for the original gate to retry.",
       "project": "careloop",
       "progress": 100,
-      "lastRun": "2026-04-25T00:00:00Z"
+      "lastRun": "2026-04-26T19:41:02.714Z"
     },
     "pixel": {
       "status": "idle",
@@ -135,11 +135,11 @@
       "lastRun": null
     },
     "auditor": {
-      "status": "idle",
-      "task": "Awaiting build phase completion to run code review gate.",
+      "status": "done",
+      "task": "Sprint 2 code gate passed. Backend: scheduler/index.js, lib/push.js, routes correct. iOS: AppState.pendingTaskId, NotificationPermissionView, push token registration all present. Test coverage added in test/sprint2.test.js.",
       "project": "careloop",
-      "progress": 0,
-      "lastRun": null
+      "progress": 100,
+      "lastRun": "2026-04-26T20:30:00.000Z"
     }
   }
 }

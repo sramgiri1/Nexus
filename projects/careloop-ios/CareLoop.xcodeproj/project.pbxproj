@@ -13,6 +13,7 @@
 		1A29F2D62482ED9136C31774 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ACF72E72439C0BAC5D12EC /* User.swift */; };
 		214B349BC7F8A1E9D7DE302C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23201C199B97E3927FAF8537 /* ContentView.swift */; };
 		25744130305C4E9004D20BCA /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF327186C063AB348DE7A2 /* TaskDetailView.swift */; };
+		346B6125726DB2BD724460DF /* NotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */; };
 		37ED7B09263FFD7D6B8312F0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF30A75208A05C0A15FDA4D /* APIClient.swift */; };
 		3A6D82263A2F7E0F24065743 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */; };
 		47806E4E5E7F08491C2B6F9D /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C1E3DE5F7454F797BF5E33 /* Endpoints.swift */; };
@@ -20,10 +21,21 @@
 		55F5BD48C86BD264FAA6FC23 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B72BA44CCF46770F3B90E5B /* Circle.swift */; };
 		6B4110389AD3A59757FBE195 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0C5318EFFB8BD80363344D /* Task.swift */; };
 		81B35252A62C27A7BDC95AFF /* CirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D975CD195EAF2A9C2A00 /* CirclesView.swift */; };
+		979CBA5198E7E79DFA92AAD9 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48875F6C0BEE7501982A7C52 /* ModelTests.swift */; };
 		C375ABFE2220A5889A622BDE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE64AED3E2BCE27476795E /* OnboardingView.swift */; };
 		C42A7475E324FD1C0E58500E /* CareLoopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB81C72F8FF200E683C051B /* CareLoopApp.swift */; };
 		CE804BA91DB6FBF4542A1796 /* CircleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D6C26D64630BE25AA573CA /* CircleSettingsView.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		8F8721F0AEBEBE2E9AEFBA74 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2860524DE6EB3C2A3C788AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E33951834C1EC590082CB4F;
+			remoteInfo = CareLoop;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00522140DAA3DA6212EAEB5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
@@ -34,7 +46,9 @@
 		302875AD4CB725545B0E4765 /* AppState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppState.swift; sourceTree = "<group>"; };
 		39D6C26D64630BE25AA573CA /* CircleSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSettingsView.swift; sourceTree = "<group>"; };
 		3E9AF4A2FE132B03AA630746 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
+		48875F6C0BEE7501982A7C52 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionView.swift; sourceTree = "<group>"; };
 		79AE64AED3E2BCE27476795E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7B72BA44CCF46770F3B90E5B /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
 		B2FCBAAA3E631E793BD70DB0 /* MemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListView.swift; sourceTree = "<group>"; };
@@ -42,6 +56,7 @@
 		CBF30A75208A05C0A15FDA4D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		D1C1E3DE5F7454F797BF5E33 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
 		D7C0D975CD195EAF2A9C2A00 /* CirclesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesView.swift; sourceTree = "<group>"; };
+		E2BFC0D77ED18D396F926828 /* CareLoopTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CareLoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEAF327186C063AB348DE7A2 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
 		FE0C5318EFFB8BD80363344D /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -51,6 +66,7 @@
 			isa = PBXGroup;
 			children = (
 				B591F88B07062BE57B910FD9 /* CareLoop.app */,
+				E2BFC0D77ED18D396F926828 /* CareLoopTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -62,10 +78,19 @@
 				6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */,
 				7F8E264FAF6962BB9E4F40BD /* Circles */,
 				FD8B1536D0320BFF40FFC8DD /* Members */,
+				A2BED57B240AD194F9ACEAE5 /* Notifications */,
 				E0A0EFA810BF141014D66301 /* Onboarding */,
 				F1AD3F57CDBB6819B6927F51 /* Tasks */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7EA569585E0F5D22ABA7D6E5 /* CareLoopTests */ = {
+			isa = PBXGroup;
+			children = (
+				48875F6C0BEE7501982A7C52 /* ModelTests.swift */,
+			);
+			path = CareLoopTests;
 			sourceTree = "<group>";
 		};
 		7F8E264FAF6962BB9E4F40BD /* Circles */ = {
@@ -83,6 +108,14 @@
 				00522140DAA3DA6212EAEB5F /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A2BED57B240AD194F9ACEAE5 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */,
+			);
+			path = Notifications;
 			sourceTree = "<group>";
 		};
 		B124A7933870593E05941AF3 /* App */ = {
@@ -147,6 +180,7 @@
 			isa = PBXGroup;
 			children = (
 				F25D5AE2BCE6A074BE66B1F5 /* CareLoop */,
+				7EA569585E0F5D22ABA7D6E5 /* CareLoopTests */,
 				3C79A0E307336B26B7F1BDA1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -179,6 +213,24 @@
 			productReference = B591F88B07062BE57B910FD9 /* CareLoop.app */;
 			productType = "com.apple.product-type.application";
 		};
+		BCC6E0E55C2A00353EE40851 /* CareLoopTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = E5684F86F091605CD024EDE6 /* Build configuration list for PBXNativeTarget "CareLoopTests" */;
+			buildPhases = (
+				119C3BCC62AD36DAC286B93C /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				3CDC4AA0BE17AFF258DA298E /* PBXTargetDependency */,
+			);
+			name = CareLoopTests;
+			packageProductDependencies = (
+			);
+			productName = CareLoopTests;
+			productReference = E2BFC0D77ED18D396F926828 /* CareLoopTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -189,6 +241,9 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					2E33951834C1EC590082CB4F = {
+						DevelopmentTeam = "";
+					};
+					BCC6E0E55C2A00353EE40851 = {
 						DevelopmentTeam = "";
 					};
 				};
@@ -208,11 +263,20 @@
 			projectRoot = "";
 			targets = (
 				2E33951834C1EC590082CB4F /* CareLoop */,
+				BCC6E0E55C2A00353EE40851 /* CareLoopTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXSourcesBuildPhase section */
+		119C3BCC62AD36DAC286B93C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				979CBA5198E7E79DFA92AAD9 /* ModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		78EEFB3082A39E02A4535818 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -227,6 +291,7 @@
 				47806E4E5E7F08491C2B6F9D /* Endpoints.swift in Sources */,
 				0EC37C4FE15319FD7D74A206 /* MemberListView.swift in Sources */,
 				09B801178F8D8F47266C5440 /* NewTaskView.swift in Sources */,
+				346B6125726DB2BD724460DF /* NotificationPermissionView.swift in Sources */,
 				C375ABFE2220A5889A622BDE /* OnboardingView.swift in Sources */,
 				3A6D82263A2F7E0F24065743 /* SettingsView.swift in Sources */,
 				6B4110389AD3A59757FBE195 /* Task.swift in Sources */,
@@ -237,6 +302,14 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3CDC4AA0BE17AFF258DA298E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E33951834C1EC590082CB4F /* CareLoop */;
+			targetProxy = 8F8721F0AEBEBE2E9AEFBA74 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		06BA718184A2160E603BFDBF /* Debug */ = {
@@ -297,10 +370,12 @@
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -316,9 +391,27 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
+		};
+		87BE60DA8EA30DE016E39972 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CareLoop.app/CareLoop";
+			};
+			name = Debug;
 		};
 		8A32C7A8B49E42499C1440F3 /* Debug */ = {
 			isa = XCBuildConfiguration;
@@ -332,9 +425,27 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios;
 				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
+		};
+		BD6EF7A0EFB1080D2EC493CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				GENERATE_INFOPLIST_FILE = YES;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios.tests;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/CareLoop.app/CareLoop";
+			};
+			name = Release;
 		};
 		DF7913171CAE1DF5D8975332 /* Release */ = {
 			isa = XCBuildConfiguration;
@@ -387,10 +498,12 @@
 				MTL_FAST_MATH = YES;
 				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
+				SDKROOT = auto;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -411,6 +524,15 @@
 			buildConfigurations = (
 				06BA718184A2160E603BFDBF /* Debug */,
 				DF7913171CAE1DF5D8975332 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		E5684F86F091605CD024EDE6 /* Build configuration list for PBXNativeTarget "CareLoopTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				87BE60DA8EA30DE016E39972 /* Debug */,
+				BD6EF7A0EFB1080D2EC493CE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
