@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-25T21:28:26.959Z",
+  "lastUpdated": "2026-04-26T00:00:00Z",
   "agents": {
     "nexus": {
       "status": "active",
@@ -24,7 +24,7 @@
     },
     "warden": {
       "status": "active",
-      "task": "incident-response.md required before public launch. Privacy policy HTML exists. FTC compliance boundary documented in PRD §8.",
+      "task": "incident-response.md required before public launch. Privacy policy HTML exists. FTC compliance boundary documented in PRD \u00a78.",
       "project": "careloop",
       "progress": 40,
       "lastRun": null
@@ -87,7 +87,7 @@
     },
     "oracle": {
       "status": "idle",
-      "task": "Analytics events defined in PRD §10. PostHog integration deferred to external beta. Event table logging active.",
+      "task": "Analytics events defined in PRD \u00a710. PostHog integration deferred to external beta. Event table logging active.",
       "project": "careloop",
       "progress": 10,
       "lastRun": null
@@ -129,9 +129,16 @@
     },
     "meridian": {
       "status": "done",
-      "task": "Business score: CareLoop 44/50 — GO. ShiftPay 44/50 — on hold until CareLoop Gate 2.",
+      "task": "Business score: CareLoop 44/50 \u2014 GO. ShiftPay 44/50 \u2014 on hold until CareLoop Gate 2.",
       "project": "careloop",
       "progress": 100,
+      "lastRun": null
+    },
+    "auditor": {
+      "status": "idle",
+      "task": "Awaiting build phase completion to run code review gate.",
+      "project": "careloop",
+      "progress": 0,
       "lastRun": null
     }
   }

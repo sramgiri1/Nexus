@@ -17,22 +17,34 @@ const isLocal = model => !model.startsWith("claude-");
 // Agent definitions — each agent's system prompt is loaded from agents/<id>.md
 // Only relevant memory slices are loaded (not the whole conversation)
 const AGENT_TOOLS = {
-  nexus:    ["read_memory","write_memory","update_agent_status","enqueue_task","read_project","update_project","log_event"],
+  // ── Orchestration ──────────────────────────────────────────────────────────
+  nexus:    ["read_memory","write_memory","update_agent_status","enqueue_task","read_project","update_project","log_event","run_skill"],
+  // ── Strategy ───────────────────────────────────────────────────────────────
   atlas:    ["read_memory","write_memory","update_agent_status","read_project","update_project","update_gate","write_file","log_event"],
+  radar:    ["read_memory","write_memory","update_agent_status","enqueue_task","log_event"],
+  meridian: ["read_memory","write_memory","read_project","update_project","update_agent_status","log_event"],
+  // ── Product ────────────────────────────────────────────────────────────────
   prism:    ["read_project","write_file","update_agent_status","log_event"],
+  shepherd: ["read_memory","read_project","update_project","update_gate","update_agent_status","enqueue_task","log_event"],
+  // ── Platform ───────────────────────────────────────────────────────────────
   forge:    ["read_memory","update_agent_status","update_gate","log_event"],
+  stream:   ["read_project","write_file","update_agent_status","log_event"],
+  synapse:  ["read_project","write_file","update_agent_status","log_event"],
+  // ── Engineering ────────────────────────────────────────────────────────────
   core:     ["read_project","write_file","list_files","update_agent_status","log_event"],
   swift:    ["read_project","read_file","write_file","update_agent_status","log_event"],
-  sentinel: ["read_project","read_file","list_files","update_agent_status","log_event"],
+  pixel:    ["read_project","write_file","update_agent_status","log_event"],
+  canvas:   ["read_project","write_file","update_agent_status","log_event"],
+  // ── Verification (Global Guards) ───────────────────────────────────────────
+  auditor:  ["read_project","read_file","write_file","update_agent_status","log_event","run_skill"],
+  sentinel: ["read_project","read_file","list_files","update_agent_status","log_event","run_skill"],
+  warden:   ["read_memory","read_project","write_file","update_agent_status","log_event","run_skill"],
+  // ── Growth ─────────────────────────────────────────────────────────────────
   beacon:   ["read_project","write_file","update_agent_status","log_event"],
   compass:  ["read_project","write_file","update_agent_status","log_event"],
   oracle:   ["read_project","write_file","update_agent_status","log_event"],
-  canvas:   ["read_project","write_file","update_agent_status","log_event"],
-  stream:   ["read_project","write_file","update_agent_status","log_event"],
-  synapse:  ["read_project","write_file","update_agent_status","log_event"],
-  radar:    ["read_memory","write_memory","update_agent_status","enqueue_task","log_event"],
-  meridian: ["read_memory","write_memory","read_project","update_project","update_agent_status","log_event"],
-  pixel:    ["read_project","write_file","update_agent_status","log_event"],
+  // ── Observability ──────────────────────────────────────────────────────────
+  relay:    ["read_memory","write_memory","update_agent_status","enqueue_task","log_event"],
 };
 
 /**
@@ -51,14 +63,21 @@ const HAIKU   = "claude-haiku-4-5-20251001";
 const AGENT_MODELS = {
   // Orchestration
   nexus:    process.env.NEXUS_MODEL || HAIKU,
-  // Strategy / docs
+  // Strategy
   atlas:    HAIKU,
   shepherd: HAIKU,
-  warden:   HAIKU,
-  relay:    HAIKU,
-  prism:    HAIKU,
   radar:    HAIKU,
   meridian: HAIKU,
+  // Platform
+  forge:    HAIKU,
+  stream:   HAIKU,
+  // Verification / Observability
+  auditor:  HAIKU,   // skill-driven — model just orchestrates run_skill calls
+  sentinel: HAIKU,
+  warden:   HAIKU,
+  relay:    HAIKU,
+  // Growth
+  prism:    HAIKU,
   beacon:   HAIKU,
   compass:  HAIKU,
   oracle:   HAIKU,
@@ -67,10 +86,7 @@ const AGENT_MODELS = {
   swift:    SONNET,
   pixel:    SONNET,
   canvas:   SONNET,
-  stream:   SONNET,
   synapse:  SONNET,
-  sentinel: HAIKU,
-  forge:    HAIKU,
 };
 
 export async function runAgent(agentId, task, context = {}, opts = {}) {

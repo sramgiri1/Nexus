@@ -10,6 +10,8 @@
     "dev": "concurrently \"npm run orchestrator\" \"npm run dashboard\"",
     "task": "node scripts/task.js",
     "agent": "node scripts/run-agent.js",
+    "sprint": "node scripts/sprint.js",
+    "skill": "node scripts/skill.js",
     "status": "node scripts/status.js",
     "reset": "node scripts/reset-memory.js"
   },

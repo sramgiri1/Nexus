@@ -287,6 +287,32 @@ export const logEvent = {
 };
 
 // ─────────────────────────────────────────────────────────────────────────────
+// SKILL TOOL — lets Claude agents invoke real executable skills
+// ─────────────────────────────────────────────────────────────────────────────
+
+export const runSkill = {
+  name: "run_skill",
+  description: "Execute a real skill function (linting, QA, compliance, etc). Returns { result: PASS|FAIL|INFO, issues, summary }. Use this instead of guessing outcomes.",
+  inputSchema: {
+    type: "object",
+    required: ["agent", "skill"],
+    properties: {
+      agent:   { type: "string", description: "Agent that owns the skill: auditor, sentinel, warden, nexus, orchestrator" },
+      skill:   { type: "string", description: "Skill name, e.g. code.lint, qa.tests.execute, compliance.privacy.check" },
+      input:   { type: "object", description: "Skill-specific input parameters (optional)" },
+    }
+  },
+  execute: async ({ agent, skill, input = {} }) => {
+    try {
+      const { executeSkill } = await import("../skills/index.js");
+      return await executeSkill(agent, skill, input);
+    } catch (e) {
+      return { result: "FAIL", issues: [{ severity: "error", message: e.message }], summary: `Skill execution failed: ${e.message}` };
+    }
+  }
+};
+
+// ─────────────────────────────────────────────────────────────────────────────
 // TOOL REGISTRY
 // ─────────────────────────────────────────────────────────────────────────────
 
@@ -294,7 +320,7 @@ export const ALL_TOOLS = [
   readMemory, writeMemory, updateAgentStatus, enqueueTask,
   readProject, updateProject, updateGate,
   readFile, writeFile, listFiles,
-  logEvent,
+  logEvent, runSkill,
 ];
 
 export const TOOL_MAP = Object.fromEntries(ALL_TOOLS.map(t => [t.name, t]));

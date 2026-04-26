@@ -23,6 +23,35 @@ if (!sprint || sprint < 1 || sprint > 3) {
   process.exit(1);
 }
 
+// ─── Gate phase helpers ───────────────────────────────────────────────────────
+// Skill tasks bypass Claude — the loop executes them directly.
+const AUDITOR_GATE = (sprintN) => ({
+  label: `Phase — AUDITOR code review gate`,
+  tasks: [
+    { agentId: "auditor", type: "skill", skill: "code.diff_review",   priority: "critical", input: { project: "careloop" }, task: "code.diff_review" },
+    { agentId: "auditor", type: "skill", skill: "code.lint",           priority: "critical", input: { project: "careloop" }, task: "code.lint" },
+    { agentId: "auditor", type: "skill", skill: "code.static_analysis",priority: "high",     input: { project: "careloop" }, task: "code.static_analysis" },
+    { agentId: "auditor", type: "skill", skill: "code.test_coverage",  priority: "high",     input: { project: "careloop" }, task: "code.test_coverage" },
+  ],
+});
+
+const SENTINEL_QA_GATE = () => ({
+  label: `Phase — SENTINEL automated QA gate`,
+  tasks: [
+    { agentId: "sentinel", type: "skill", skill: "qa.security.scan",   priority: "critical", input: { project: "careloop" }, task: "qa.security.scan" },
+    { agentId: "sentinel", type: "skill", skill: "qa.simulator.run",   priority: "high",     input: { device: "iPhone 16" }, task: "qa.simulator.run" },
+    { agentId: "sentinel", type: "skill", skill: "qa.tests.execute",   priority: "high",     input: { scheme: "CareLoop", destination: "iPhone 16" }, task: "qa.tests.execute" },
+  ],
+});
+
+const WARDEN_GATE = () => ({
+  label: `Phase — WARDEN compliance gate`,
+  tasks: [
+    { agentId: "warden", type: "skill", skill: "compliance.privacy.check",        priority: "high", input: { project: "careloop" }, task: "compliance.privacy.check" },
+    { agentId: "warden", type: "skill", skill: "compliance.permissions.validate", priority: "high", input: { project: "careloop" }, task: "compliance.permissions.validate" },
+  ],
+});
+
 // ─── Sprint Definitions ───────────────────────────────────────────────────────
 // Each sprint is an array of phases.
 // Tasks within a phase run in parallel.
@@ -139,6 +168,9 @@ Write all new and modified files to projects/careloop-ios/CareLoop/.`,
           },
         ],
       },
+      AUDITOR_GATE(2),
+      SENTINEL_QA_GATE(),
+      WARDEN_GATE(),
       {
         label: "Phase 3 — QA checklist",
         tasks: [
@@ -202,14 +234,23 @@ Write all new and modified files to projects/careloop-ios/CareLoop/.`,
           },
         ],
       },
+      AUDITOR_GATE(3),
+      SENTINEL_QA_GATE(),
+      WARDEN_GATE(),
       {
-        label: "Phase 4 — QA and release checklist",
+        label: "Phase 4 — QA checklist + App Store compliance",
         tasks: [
           {
             agentId:  "sentinel",
             priority: "critical",
             task: "Read projects/careloop/docs/sprint-plan.md Sprint 3 exit criteria. Write Sprint 3 QA checklist to projects/careloop/docs/qa/checklist-sprint3.md covering: (1) unauthenticated requests fail (401); (2) non-member reads fail (403) on all GET endpoints; (3) invite creation (admin-only, returns token); (4) invite redemption works once only (second redeem = 409); (5) removed member loses access immediately; (6) JWT auth end-to-end from iOS sign-in to task completion; (7) production smoke test checklist (sign-in → join circle via invite → create task → receive reminder → complete task); (8) full regression on simulator and physical device. Also write the release readiness checklist to projects/careloop/docs/release-checklist.md.",
           },
+        ],
+      },
+      {
+        label: "Phase 5 — App Store metadata gate",
+        tasks: [
+          { agentId: "warden", type: "skill", skill: "compliance.appstore.check", priority: "critical", input: { project: "careloop" }, task: "compliance.appstore.check" },
         ],
       },
     ],
@@ -235,7 +276,10 @@ async function main() {
     tasks: phase.tasks.map(t => ({
       id:        `sprint${sprint}-${t.agentId}-${Date.now()}-${Math.random().toString(36).slice(2,7)}`,
       agentId:   t.agentId,
-      task:      t.task,
+      task:      t.task || `${t.agentId}.${t.skill}`,  // skill tasks use skill name as task label
+      ...(t.type  ? { type:  t.type  } : {}),
+      ...(t.skill ? { skill: t.skill } : {}),
+      ...(t.input ? { input: t.input } : {}),
       projectId: def.project,
       priority:  t.priority || "normal",
       context:   {},
@@ -260,7 +304,9 @@ async function main() {
   for (const phase of phases) {
     console.log(`  Phase ${phase.tasks[0].phase} — ${phase.label}`);
     for (const t of phase.tasks) {
-      console.log(`    [${t.priority.toUpperCase()}] ${t.agentId.toUpperCase()} — ${t.task.slice(0, 70)}...`);
+      const typeTag = t.type === "skill" ? ` [SKILL:${t.skill}]` : "";
+      const preview = t.type === "skill" ? t.skill : t.task.slice(0, 60);
+      console.log(`    [${t.priority.toUpperCase()}] ${t.agentId.toUpperCase()}${typeTag} — ${preview}`);
       if (t.dependsOn.length) console.log(`      depends on: ${t.dependsOn.length} task(s) from previous phase`);
     }
     console.log();

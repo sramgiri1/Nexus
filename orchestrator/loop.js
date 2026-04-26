@@ -7,7 +7,9 @@ import "dotenv/config";
 import fs       from "fs/promises";
 import path     from "path";
 import chalk    from "chalk";
-import { runAgent } from "./runner.js";
+import { runAgent }  from "./runner.js";
+import { fireHook }  from "../hooks/index.js";
+import { executeSkill } from "../skills/index.js";
 
 const ROOT        = process.cwd();
 const QUEUE_FILE  = path.join(ROOT, "memory", "task-queue.json");
@@ -64,6 +66,11 @@ async function tick() {
 
     console.log(chalk.cyan(`\n⚡ Dispatching ${runnable.length} task(s) in parallel`));
 
+    // Fire hook: goals received
+    for (const task of runnable) {
+      await fireHook("on_goal_received", { agentId: task.agentId, task: task.task, projectId: task.projectId });
+    }
+
     await Promise.all(runnable.map(task => dispatchOne(task)));
 
   } catch (e) {
@@ -72,6 +79,43 @@ async function tick() {
 }
 
 async function dispatchOne(task) {
+  // ── Skill tasks: execute directly without Claude ───────────────────────────
+  if (task.type === "skill") {
+    const label = `${task.agentId.toUpperCase()}.${task.skill}`;
+    console.log(chalk.magenta(`  ⚙ [SKILL] ${label}  input=${JSON.stringify(task.input || {}).slice(0, 60)}`));
+
+    const skillResult = await executeSkill(task.agentId, task.skill, task.input || {});
+    const success = skillResult.result !== "FAIL";
+
+    console.log(
+      success
+        ? chalk.green(`  ✓ ${label} → ${skillResult.result}: ${skillResult.summary?.slice(0, 80)}`)
+        : chalk.red(  `  ✗ ${label} → FAIL: ${skillResult.summary?.slice(0, 80)}`)
+    );
+
+    if (skillResult.issues?.length) {
+      skillResult.issues.slice(0, 3).forEach(i => console.log(chalk.dim(`    [${i.severity}] ${i.message?.slice(0, 100)}`)));
+    }
+
+    const queue = await readQueue();
+    const idx   = queue.queue.findIndex(t => t.id === task.id);
+    if (idx !== -1) queue.queue.splice(idx, 1);
+
+    const finished = { ...task, skillResult, success, finishedAt: new Date().toISOString() };
+    success ? queue.completed.push({ ...finished, status: "completed" })
+            : queue.failed.push({   ...finished, status: "failed"    });
+
+    running.delete(task.id);
+    await writeQueue(queue);
+
+    const hookData = { agentId: task.agentId, taskId: task.id, success, projectId: task.projectId };
+    await (success
+      ? fireHook("on_step_completed", { ...hookData, toolCallCount: 0, iterations: 0 })
+      : fireHook("on_failure",        { ...hookData, error: skillResult.summary }));
+    return;
+  }
+
+  // ── LLM agent tasks: run through Claude ───────────────────────────────────
   console.log(chalk.yellow(`  → [${task.priority.toUpperCase()}] ${task.agentId.toUpperCase()}: ${task.task.slice(0, 80)}...`));
 
   const result = await runAgent(task.agentId, task.task, {
@@ -96,6 +140,11 @@ async function dispatchOne(task) {
 
   running.delete(task.id);
   await writeQueue(queue);
+
+  const hookData = { agentId: task.agentId, taskId: task.id, success: result.success, projectId: task.projectId, toolCallCount: result.toolCallCount, iterations: result.iterations };
+  await (result.success
+    ? fireHook("on_step_completed", hookData)
+    : fireHook("on_failure",        { ...hookData, error: result.error }));
 }
 
 // ─── File helpers ─────────────────────────────────────────────────────────────
