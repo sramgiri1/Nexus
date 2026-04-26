@@ -43,26 +43,34 @@ const AGENT_TOOLS = {
  * @param {object} [opts]
  * @returns {Promise<{success, output, toolCallCount}>}
  */
+// Sonnet for code-generating agents, Haiku for everything else.
+// Set AGENT_MODEL env var to override all, or NEXUS_MODEL for NEXUS only.
+const SONNET  = "claude-sonnet-4-6";
+const HAIKU   = "claude-haiku-4-5-20251001";
+
 const AGENT_MODELS = {
-  // General agents — qwen3:4b handles tool calling reliably
-  nexus:    process.env.NEXUS_MODEL || "qwen3:4b",
-  atlas:    "qwen3:4b",
-  radar:    "qwen3:4b",
-  forge:    "qwen3:4b",
-  beacon:   "qwen3:4b",
-  compass:  "qwen3:4b",
-  // Heavier reasoning
-  meridian: "qwen3:4b",
-  prism:    "qwen3:4b",
-  oracle:   "qwen3:4b",
-  sentinel: "qwen3:4b",
-  // Coding — 7b reliably uses tools; 3b does not
-  pixel:    "qwen2.5-coder:7b",
-  canvas:   "qwen2.5-coder:7b",
-  stream:   "qwen2.5-coder:7b",
-  synapse:  "qwen2.5-coder:7b",
-  core:     "qwen2.5-coder:7b",
-  swift:    "qwen2.5-coder:7b",
+  // Orchestration
+  nexus:    process.env.NEXUS_MODEL || HAIKU,
+  // Strategy / docs
+  atlas:    HAIKU,
+  shepherd: HAIKU,
+  warden:   HAIKU,
+  relay:    HAIKU,
+  prism:    HAIKU,
+  radar:    HAIKU,
+  meridian: HAIKU,
+  beacon:   HAIKU,
+  compass:  HAIKU,
+  oracle:   HAIKU,
+  // Code-generating agents — Sonnet required for production-quality output
+  core:     SONNET,
+  swift:    SONNET,
+  pixel:    SONNET,
+  canvas:   SONNET,
+  stream:   SONNET,
+  synapse:  SONNET,
+  sentinel: HAIKU,
+  forge:    HAIKU,
 };
 
 export async function runAgent(agentId, task, context = {}, opts = {}) {
