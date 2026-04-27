@@ -50,12 +50,6 @@
     <string>5653fa10b5ce16faf133b9709a14b1dc24443f709fa50e83d28f04676b02ec05</string>
     <key>AUTH_CALLBACK_SCHEME</key>
     <string>careloop</string>
-    <key>GOOGLE_AUTH_URL</key>
-    <string></string>
-    <key>FACEBOOK_AUTH_URL</key>
-    <string></string>
-    <key>APPLE_AUTH_URL</key>
-    <string></string>
     <key>NSAppTransportSecurity</key>
     <dict>
         <key>NSAllowsLocalNetworking</key>

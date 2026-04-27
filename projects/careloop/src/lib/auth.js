@@ -1,11 +1,22 @@
 import crypto from "node:crypto";
-import { createRemoteJWKSet, jwtVerify } from "jose";
+import { SignJWT, createRemoteJWKSet, importPKCS8, jwtVerify } from "jose";
 
 const SALT_BYTES = 16;
 const KEY_LENGTH = 64;
 const SCRYPT_COST = 16384;
 const APPLE_JWKS = createRemoteJWKSet(new URL("https://appleid.apple.com/auth/keys"));
 const PASSWORD_RESET_MINUTES = 10;
+const OAUTH_STATE_TTL_MS = 10 * 60 * 1000;
+const GOOGLE_SCOPES = ["openid", "email", "profile"];
+const FACEBOOK_SCOPES = ["email", "public_profile"];
+
+function base64UrlEncode(value) {
+  return Buffer.from(value).toString("base64url");
+}
+
+function base64UrlDecode(value) {
+  return Buffer.from(value, "base64url").toString("utf8");
+}
 
 export function normalizeEmail(value) {
   return value?.trim().toLowerCase() ?? "";
@@ -55,6 +66,276 @@ export function passwordResetMinutes() {
 
 function localFallbackAllowed() {
   return process.env.NODE_ENV !== "production";
+}
+
+function signStatePayload(serialized) {
+  return crypto
+    .createHmac("sha256", process.env.API_KEY || "careloop-dev-secret")
+    .update(serialized)
+    .digest("base64url");
+}
+
+function publicBaseUrlFor(request) {
+  const configured = process.env.PUBLIC_API_BASE_URL?.trim();
+  if (configured) return configured.replace(/\/+$/, "");
+  const protocol = request.protocol || request.headers["x-forwarded-proto"] || "http";
+  const host = request.headers["x-forwarded-host"] || request.headers.host;
+  return `${protocol}://${host}`;
+}
+
+function buildAppRedirect(callbackScheme, params) {
+  const url = new URL(`${callbackScheme}://auth`);
+  for (const [key, value] of Object.entries(params)) {
+    if (value !== undefined && value !== null && `${value}`.length > 0) {
+      url.searchParams.set(key, `${value}`);
+    }
+  }
+  return url.toString();
+}
+
+function oauthProviderConfig(provider) {
+  switch (provider) {
+    case "GOOGLE":
+      return {
+        clientId: process.env.GOOGLE_CLIENT_ID?.trim(),
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET?.trim(),
+      };
+    case "FACEBOOK":
+      return {
+        clientId: process.env.FACEBOOK_APP_ID?.trim(),
+        clientSecret: process.env.FACEBOOK_APP_SECRET?.trim(),
+      };
+    case "APPLE":
+      return {
+        clientId: (process.env.APPLE_SERVICE_ID || process.env.APPLE_CLIENT_ID || "").trim(),
+        teamId: process.env.APPLE_TEAM_ID?.trim(),
+        keyId: process.env.APPLE_KEY_ID?.trim(),
+        privateKey: process.env.APPLE_PRIVATE_KEY?.trim(),
+      };
+    default:
+      return null;
+  }
+}
+
+export function isOAuthConfigured(provider) {
+  const config = oauthProviderConfig(provider);
+  if (!config) return false;
+  switch (provider) {
+    case "GOOGLE":
+    case "FACEBOOK":
+      return Boolean(config.clientId && config.clientSecret);
+    case "APPLE":
+      return Boolean(config.clientId && config.teamId && config.keyId && config.privateKey);
+    default:
+      return false;
+  }
+}
+
+export function createOAuthState({ provider, callbackScheme }) {
+  const payload = {
+    provider,
+    callbackScheme,
+    nonce: crypto.randomBytes(12).toString("hex"),
+    issuedAt: Date.now(),
+  };
+  const encoded = base64UrlEncode(JSON.stringify(payload));
+  return `${encoded}.${signStatePayload(encoded)}`;
+}
+
+export function verifyOAuthState(state) {
+  if (!state || !state.includes(".")) {
+    throw new Error("Missing OAuth state");
+  }
+  const [encoded, signature] = state.split(".");
+  const expected = signStatePayload(encoded);
+  const signatureBuffer = Buffer.from(signature);
+  const expectedBuffer = Buffer.from(expected);
+  if (signatureBuffer.length !== expectedBuffer.length || !crypto.timingSafeEqual(signatureBuffer, expectedBuffer)) {
+    throw new Error("Invalid OAuth state");
+  }
+  const payload = JSON.parse(base64UrlDecode(encoded));
+  if (!payload.issuedAt || Date.now() - payload.issuedAt > OAUTH_STATE_TTL_MS) {
+    throw new Error("OAuth state expired");
+  }
+  return payload;
+}
+
+export function providerFromSlug(slug) {
+  switch ((slug || "").toLowerCase()) {
+    case "google":
+      return "GOOGLE";
+    case "facebook":
+      return "FACEBOOK";
+    case "apple":
+      return "APPLE";
+    default:
+      throw new Error("Unsupported provider");
+  }
+}
+
+export function buildOAuthStartUrl(provider, request, callbackScheme) {
+  if (!isOAuthConfigured(provider)) {
+    throw new Error(`${provider} sign-in is not configured yet.`);
+  }
+
+  const state = createOAuthState({ provider, callbackScheme });
+  const redirectUri = `${publicBaseUrlFor(request)}/auth/oauth/${provider.toLowerCase()}/callback`;
+
+  switch (provider) {
+    case "GOOGLE": {
+      const url = new URL("https://accounts.google.com/o/oauth2/v2/auth");
+      url.searchParams.set("client_id", process.env.GOOGLE_CLIENT_ID);
+      url.searchParams.set("redirect_uri", redirectUri);
+      url.searchParams.set("response_type", "code");
+      url.searchParams.set("scope", GOOGLE_SCOPES.join(" "));
+      url.searchParams.set("state", state);
+      url.searchParams.set("access_type", "offline");
+      url.searchParams.set("prompt", "select_account");
+      return url;
+    }
+    case "FACEBOOK": {
+      const url = new URL("https://www.facebook.com/v19.0/dialog/oauth");
+      url.searchParams.set("client_id", process.env.FACEBOOK_APP_ID);
+      url.searchParams.set("redirect_uri", redirectUri);
+      url.searchParams.set("state", state);
+      url.searchParams.set("response_type", "code");
+      url.searchParams.set("scope", FACEBOOK_SCOPES.join(","));
+      return url;
+    }
+    case "APPLE": {
+      const clientId = process.env.APPLE_SERVICE_ID || process.env.APPLE_CLIENT_ID;
+      const url = new URL("https://appleid.apple.com/auth/authorize");
+      url.searchParams.set("client_id", clientId);
+      url.searchParams.set("redirect_uri", redirectUri);
+      url.searchParams.set("response_type", "code");
+      url.searchParams.set("response_mode", "form_post");
+      url.searchParams.set("scope", "name email");
+      url.searchParams.set("state", state);
+      return url;
+    }
+    default:
+      throw new Error("Unsupported provider");
+  }
+}
+
+async function googleExchangeCode({ code, redirectUri }) {
+  const response = await fetch("https://oauth2.googleapis.com/token", {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      code,
+      client_id: process.env.GOOGLE_CLIENT_ID,
+      client_secret: process.env.GOOGLE_CLIENT_SECRET,
+      redirect_uri: redirectUri,
+      grant_type: "authorization_code",
+    }),
+  });
+  if (!response.ok) throw new Error("Google code exchange failed");
+  const payload = await response.json();
+  const profile = payload.id_token
+    ? await googleProfileFromIdToken(payload.id_token)
+    : await googleProfileFromAccessToken(payload.access_token);
+  return {
+    ...profile,
+    idToken: payload.id_token ?? null,
+    accessToken: payload.access_token ?? null,
+  };
+}
+
+async function facebookExchangeCode({ code, redirectUri }) {
+  const tokenUrl = new URL("https://graph.facebook.com/v19.0/oauth/access_token");
+  tokenUrl.searchParams.set("client_id", process.env.FACEBOOK_APP_ID);
+  tokenUrl.searchParams.set("client_secret", process.env.FACEBOOK_APP_SECRET);
+  tokenUrl.searchParams.set("redirect_uri", redirectUri);
+  tokenUrl.searchParams.set("code", code);
+  const response = await fetch(tokenUrl);
+  if (!response.ok) throw new Error("Facebook code exchange failed");
+  const payload = await response.json();
+  const profile = await facebookProfileFromAccessToken(payload.access_token);
+  return {
+    ...profile,
+    accessToken: payload.access_token ?? null,
+    idToken: null,
+  };
+}
+
+function normalizeApplePrivateKey() {
+  return (process.env.APPLE_PRIVATE_KEY || "").replace(/\\n/g, "\n");
+}
+
+async function createAppleClientSecret() {
+  const clientId = process.env.APPLE_SERVICE_ID || process.env.APPLE_CLIENT_ID;
+  const teamId = process.env.APPLE_TEAM_ID;
+  const keyId = process.env.APPLE_KEY_ID;
+  const privateKey = normalizeApplePrivateKey();
+  if (!clientId || !teamId || !keyId || !privateKey) {
+    throw new Error("Apple sign-in is not fully configured");
+  }
+  const signingKey = await importPKCS8(privateKey, "ES256");
+  return new SignJWT({})
+    .setProtectedHeader({ alg: "ES256", kid: keyId })
+    .setIssuer(teamId)
+    .setSubject(clientId)
+    .setAudience("https://appleid.apple.com")
+    .setIssuedAt()
+    .setExpirationTime("180d")
+    .sign(signingKey);
+}
+
+async function appleExchangeCode({ code, redirectUri, user }) {
+  const clientId = process.env.APPLE_SERVICE_ID || process.env.APPLE_CLIENT_ID;
+  const response = await fetch("https://appleid.apple.com/auth/token", {
+    method: "POST",
+    headers: { "content-type": "application/x-www-form-urlencoded" },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: await createAppleClientSecret(),
+      code,
+      grant_type: "authorization_code",
+      redirect_uri: redirectUri,
+    }),
+  });
+  if (!response.ok) throw new Error("Apple code exchange failed");
+  const payload = await response.json();
+  const profile = await appleProfileFromIdToken(payload.id_token);
+  const parsedUser = typeof user === "string" && user ? JSON.parse(user) : null;
+  const name = parsedUser
+    ? [parsedUser.name?.firstName, parsedUser.name?.lastName].filter(Boolean).join(" ") || null
+    : null;
+  return {
+    ...profile,
+    email: profile.email || normalizeEmail(parsedUser?.email),
+    name,
+    idToken: payload.id_token ?? null,
+    accessToken: payload.access_token ?? null,
+  };
+}
+
+export async function exchangeOAuthCode(provider, { code, redirectUri, user }) {
+  switch (provider) {
+    case "GOOGLE":
+      return googleExchangeCode({ code, redirectUri });
+    case "FACEBOOK":
+      return facebookExchangeCode({ code, redirectUri });
+    case "APPLE":
+      return appleExchangeCode({ code, redirectUri, user });
+    default:
+      throw new Error("Unsupported provider");
+  }
+}
+
+export function oauthCallbackRedirect({ callbackScheme, provider, payload, error }) {
+  if (error) {
+    return buildAppRedirect(callbackScheme, { provider, error });
+  }
+  return buildAppRedirect(callbackScheme, {
+    provider,
+    email: payload.email,
+    name: payload.name,
+    provider_user_id: payload.providerUserId,
+    id_token: payload.idToken,
+    access_token: payload.accessToken,
+  });
 }
 
 async function googleProfileFromIdToken(idToken) {

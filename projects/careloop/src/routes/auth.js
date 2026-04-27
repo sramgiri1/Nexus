@@ -1,14 +1,19 @@
 import { Prisma } from "@prisma/client";
 import { Resend } from "resend";
 import {
+  buildOAuthStartUrl,
+  exchangeOAuthCode,
   generateNumericCode,
   hashPassword,
   hashValue,
   normalizeEmail,
+  oauthCallbackRedirect,
   passwordResetExpiry,
   passwordResetMinutes,
+  providerFromSlug,
   resolveSocialProfile,
   sanitizeUser,
+  verifyOAuthState,
   verifyPassword,
 } from "../lib/auth.js";
 
@@ -26,6 +31,89 @@ async function fetchUserWithMemberships(db, id) {
 export default async function authRoutes(app) {
   const db = app.db;
   const resend = process.env.RESEND_API_KEY ? new Resend(process.env.RESEND_API_KEY) : null;
+
+  async function handleOAuthCallback(req, reply) {
+    let provider;
+    let state;
+    let code;
+    let upstreamError;
+    let user;
+
+    try {
+      provider = providerFromSlug(req.params.provider);
+      state = req.body?.state ?? req.query?.state;
+      code = req.body?.code ?? req.query?.code;
+      upstreamError = req.body?.error ?? req.query?.error;
+      user = req.body?.user ?? req.query?.user;
+
+      const verifiedState = verifyOAuthState(state);
+      const callbackScheme = verifiedState.callbackScheme;
+
+      if (verifiedState.provider !== provider) {
+        throw new Error("OAuth provider mismatch");
+      }
+
+      if (upstreamError) {
+        return reply.redirect(
+          oauthCallbackRedirect({
+            callbackScheme,
+            provider,
+            error: `${provider} sign-in was cancelled or denied.`,
+          })
+        );
+      }
+
+      if (!code) {
+        return reply.redirect(
+          oauthCallbackRedirect({
+            callbackScheme,
+            provider,
+            error: `${provider} did not return an authorization code.`,
+          })
+        );
+      }
+
+      const redirectUri = `${process.env.PUBLIC_API_BASE_URL?.replace(/\/+$/, "") || `${req.protocol || req.headers["x-forwarded-proto"] || "http"}://${req.headers["x-forwarded-host"] || req.headers.host}`}/auth/oauth/${provider.toLowerCase()}/callback`;
+      const payload = await exchangeOAuthCode(provider, { code, redirectUri, user });
+      return reply.redirect(oauthCallbackRedirect({ callbackScheme, provider, payload }));
+    } catch (error) {
+      const callbackScheme = (() => {
+        try {
+          return state ? verifyOAuthState(state).callbackScheme : "careloop";
+        } catch {
+          return "careloop";
+        }
+      })();
+      return reply.redirect(
+        oauthCallbackRedirect({
+          callbackScheme,
+          provider: provider || "OAUTH",
+          error: error.message || "Authentication failed",
+        })
+      );
+    }
+  }
+
+  app.get("/auth/oauth/:provider/start", { config: { public: true } }, async (req, reply) => {
+    try {
+      const provider = providerFromSlug(req.params.provider);
+      const callbackScheme = req.query?.callback_scheme?.trim() || "careloop";
+      const url = buildOAuthStartUrl(provider, req, callbackScheme);
+      return reply.redirect(url.toString());
+    } catch (error) {
+      const callbackScheme = req.query?.callback_scheme?.trim() || "careloop";
+      return reply.redirect(
+        oauthCallbackRedirect({
+          callbackScheme,
+          provider: req.params.provider?.toUpperCase() || "OAUTH",
+          error: error.message || "Authentication is not available",
+        })
+      );
+    }
+  });
+
+  app.get("/auth/oauth/:provider/callback", { config: { public: true } }, handleOAuthCallback);
+  app.post("/auth/oauth/:provider/callback", { config: { public: true } }, handleOAuthCallback);
 
   app.post("/auth/signup", async (req, reply) => {
     const { email, name, password, phone } = req.body ?? {};

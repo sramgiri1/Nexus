@@ -154,4 +154,4 @@ OnboardingValidationTests
 - auth callback parsing extracts email + name
 ```
 
-**Boundary note:** Email/password auth and forgot-password are now fully wired through the CareLoop backend. Social sign-in resolves to real CareLoop users and linked identities. Production completion for Google/Facebook/Apple still depends on final provider credentials and callback configuration.
+**Boundary note:** Email/password auth and forgot-password are now fully wired through the CareLoop backend. Social sign-in now launches through backend-owned OAuth start/callback routes and resolves to real CareLoop users plus linked identities. Production completion still depends on final Google/Facebook/Apple client credentials and approved redirect URIs in each provider console.

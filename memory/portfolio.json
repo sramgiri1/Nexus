@@ -62,7 +62,7 @@
       "agents": ["atlas", "shepherd", "warden", "relay", "prism", "core", "swift", "beacon", "canvas", "forge", "pixel", "compass", "oracle", "sentinel", "meridian", "radar"],
       "decisions": {
         "bundleId": "com.careloop.ios",
-        "authStrategy": "CareLoop account auth (email/password + Google/Facebook/Apple) with x-api-key transport in Sprint 2; bearer-token transport hardening in Sprint 3",
+        "authStrategy": "CareLoop account auth (email/password + Google/Facebook/Apple) with backend-owned OAuth start/callback routes and linked AuthIdentity records in Sprint 2; x-api-key transport remains for mobile API calls until bearer-token hardening in Sprint 3",
         "reminderEscalation": "15 minutes",
         "clinicIntegration": "PERMANENTLY_OFF",
         "complianceLevel": "FTC-Health-Breach-Rule",

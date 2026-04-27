@@ -133,7 +133,7 @@ Every API action and UI affordance must enforce these rules.
 - Users can create a CareLoop account with `name`, `email`, and `password`.
 - Users can log in with email/password.
 - Users can recover access through a 6-digit forgot-password flow (request code, verify code, set new password).
-- Users can also authenticate with Google, Facebook, or Apple.
+- Users can also authenticate with Google, Facebook, or Apple through CareLoop-owned OAuth start/callback routes that redirect back into the iOS app via `careloop://auth`.
 - Social sign-in maps to a first-party CareLoop `User` plus a linked `AuthIdentity` record per provider.
 - Transport auth remains `x-api-key` through Sprint 2. Account auth determines which CareLoop user is loaded in-app; bearer-token enforcement remains a Sprint 3 hardening step.
 - **Local/dev mode:** social sign-in may complete via provider-returned profile payload while provider credentials are still being finalized. Production mode must validate provider tokens or callback exchanges before identity creation.
@@ -588,7 +588,7 @@ Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
 - **Invite flow:** self-join by circle ID (Sprint 1–2) → admin-created invite token, redemption after auth (Sprint 3). Direct self-join disabled in production at Sprint 3
 - **Read enforcement:** GET endpoints are API-key-only (Sprint 1–2) → authenticated + membership-checked (Sprint 3)
 - **User profile reads:** `GET /users/:id` stays unchanged in Sprint 1–2 and becomes authenticated + self-only in Sprint 3
-- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities in Sprint 2; bearer-token identity hardening lands in Sprint 3
+- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities in Sprint 2; backend OAuth start/callback routes own provider configuration and code exchange, while bearer-token identity hardening lands in Sprint 3
 - **DigestLog correlation:** `messageId String?` added to `DigestLog` in Sprint 2 to store Resend email ID for DIGEST_OPENED tracking
 - **Operational analytics:** PostHog added at start of external beta testing (not Sprint 1)
 - **Error tracking:** Sentry added at start of external beta testing (not Sprint 1)

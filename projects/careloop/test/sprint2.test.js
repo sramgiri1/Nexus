@@ -8,6 +8,15 @@ process.env.RESEND_API_KEY     = "";   // force simulated email mode
 process.env.APNS_KEY_ID        = "";   // force simulated push mode
 process.env.APNS_TEAM_ID       = "";
 process.env.APNS_KEY            = "";
+process.env.GOOGLE_CLIENT_ID    = "google-client";
+process.env.GOOGLE_CLIENT_SECRET = "google-secret";
+process.env.FACEBOOK_APP_ID     = "facebook-app";
+process.env.FACEBOOK_APP_SECRET = "facebook-secret";
+process.env.APPLE_SERVICE_ID    = "com.careloop.web";
+process.env.APPLE_TEAM_ID       = "team123";
+process.env.APPLE_KEY_ID        = "key123";
+process.env.APPLE_PRIVATE_KEY   = "-----BEGIN PRIVATE KEY-----\\nTEST\\n-----END PRIVATE KEY-----";
+process.env.PUBLIC_API_BASE_URL = "http://localhost:3000";
 
 import { test, describe, before, after } from "node:test";
 import assert from "node:assert/strict";
@@ -19,7 +28,7 @@ import authRoutes    from "../src/routes/auth.js";
 import usersRoute    from "../src/routes/users.js";
 import circlesRoute  from "../src/routes/circles.js";
 import tasksRoute    from "../src/routes/tasks.js";
-import { hashPassword } from "../src/lib/auth.js";
+import { createOAuthState, hashPassword, verifyOAuthState } from "../src/lib/auth.js";
 
 const HDR = { "x-api-key": "test-key", "content-type": "application/json" };
 
@@ -317,6 +326,26 @@ describe("auth routes", () => {
     assert.equal(body.user.email, "social@test.com");
     assert.equal(body.method, "GOOGLE");
     await app.close();
+  });
+
+  test("GET /auth/oauth/google/start redirects to Google's consent screen", async () => {
+    const app = await buildApp(buildDb());
+    const res = await app.inject({
+      method: "GET",
+      url: "/auth/oauth/google/start?callback_scheme=careloop",
+    });
+    assert.equal(res.statusCode, 302);
+    assert.match(res.headers.location, /^https:\/\/accounts\.google\.com\/o\/oauth2\/v2\/auth\?/);
+    assert.match(res.headers.location, /client_id=google-client/);
+    assert.match(res.headers.location, /redirect_uri=http%3A%2F%2Flocalhost%3A3000%2Fauth%2Foauth%2Fgoogle%2Fcallback/);
+    await app.close();
+  });
+
+  test("verifyOAuthState returns the signed callback payload", () => {
+    const state = createOAuthState({ provider: "GOOGLE", callbackScheme: "careloop" });
+    const payload = verifyOAuthState(state);
+    assert.equal(payload.provider, "GOOGLE");
+    assert.equal(payload.callbackScheme, "careloop");
   });
 
   test("forgot password request stores a reset code and returns debugCode in local dev", async () => {

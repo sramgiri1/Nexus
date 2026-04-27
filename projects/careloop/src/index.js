@@ -1,6 +1,7 @@
 import "dotenv/config";
 import Fastify         from "fastify";
 import cors            from "@fastify/cors";
+import formbody        from "@fastify/formbody";
 import { PrismaClient } from "@prisma/client";
 
 import authPlugin from "./plugins/auth.js";
@@ -17,6 +18,7 @@ const db  = new PrismaClient();
 app.decorate("db", db);
 
 await app.register(cors);
+await app.register(formbody);
 await app.register(authPlugin);
 
 app.register(health);
