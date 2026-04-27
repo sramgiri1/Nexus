@@ -3,11 +3,12 @@ import Fastify         from "fastify";
 import cors            from "@fastify/cors";
 import { PrismaClient } from "@prisma/client";
 
-import auth    from "./plugins/auth.js";
-import health  from "./routes/health.js";
-import circles from "./routes/circles.js";
-import tasks   from "./routes/tasks.js";
-import users   from "./routes/users.js";
+import authPlugin from "./plugins/auth.js";
+import authRoutes from "./routes/auth.js";
+import health     from "./routes/health.js";
+import circles    from "./routes/circles.js";
+import tasks      from "./routes/tasks.js";
+import users      from "./routes/users.js";
 import { startScheduler } from "./scheduler/index.js";
 
 const app = Fastify({ logger: true });
@@ -16,9 +17,10 @@ const db  = new PrismaClient();
 app.decorate("db", db);
 
 await app.register(cors);
-await app.register(auth);
+await app.register(authPlugin);
 
 app.register(health);
+app.register(authRoutes);
 app.register(users);
 app.register(circles);
 app.register(tasks);

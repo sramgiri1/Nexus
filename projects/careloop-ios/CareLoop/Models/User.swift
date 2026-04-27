@@ -10,6 +10,25 @@ struct CareUser: Identifiable, Codable {
     var memberships: [CircleMembership]?
 }
 
+struct AuthResult: Codable {
+    let method: String
+    let user: CareUser
+}
+
+struct ForgotPasswordRequestResult: Codable {
+    let sent: Bool
+    let expiresInMinutes: Int
+    let debugCode: String?
+}
+
+struct ForgotPasswordVerifyResult: Codable {
+    let verified: Bool
+}
+
+struct ForgotPasswordResetResult: Codable {
+    let reset: Bool
+}
+
 struct CircleMembership: Identifiable, Codable {
     let id: String
     let circleId: String

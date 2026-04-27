@@ -1,7 +1,7 @@
 # CareLoop — Product Requirements Document
 
-**Version:** 1.2
-**Status:** Sprint 1 in progress — 3-sprint plan to public launch
+**Version:** 1.3
+**Status:** Sprint 2 in progress — auth, reminders, and launch hardening in active build
 **Bundle ID:** com.careloop.ios
 **Compliance:** FTC Health Breach Notification Rule
 **Clinic Integration:** PERMANENTLY OFF ROADMAP
@@ -68,7 +68,7 @@ Every API action and UI affordance must enforce these rules.
 | Mark task SKIPPED                                | yes   | own tasks only      |
 | Delete task                                      | yes   | own tasks only      |
 
-**API enforcement (mutations):** Circle-scoped mutating endpoints that change a circle, member, or task must verify the requesting user's role via `CircleMember`. Return `403` if the action is not permitted. Non-member setup endpoints — `POST /users`, `POST /circles`, `PATCH /users/:id/push-token`, `PATCH /users/:id/timezone`, `POST /users/:id/session`, and `POST /circles/:id/members` (self-join) — do not require an existing membership. The `userId` is passed in the request body for Sprint 1 (no session auth — static API key only).
+**API enforcement (mutations):** Circle-scoped mutating endpoints that change a circle, member, or task must verify the requesting user's role via `CircleMember`. Return `403` if the action is not permitted. Non-member setup endpoints — `POST /auth/signup`, `POST /auth/login`, `POST /auth/social`, `POST /users`, `POST /circles`, `PATCH /users/:id/push-token`, `PATCH /users/:id/timezone`, `POST /users/:id/session`, and `POST /circles/:id/members` (self-join) — do not require an existing membership. The authenticated CareLoop user is still represented in requests by `userId` through Sprint 2 while transport remains API-key protected.
 
 **API enforcement (reads):** GET endpoints are API-key-only in Sprint 1. The "member" label on GET rows in Section 6 is intent documentation (the data is circle-member data), not enforced at the API level. Membership enforcement on reads is a Sprint 3 task as part of the public-launch auth hardening.
 
@@ -127,6 +127,17 @@ Every API action and UI affordance must enforce these rules.
 - Task assignment notifications (when Admin assigns a task)
 - Requires APNs — gated on Apple Developer account
 
+### 5.6 Authentication
+
+- **Email/password auth is active in Sprint 2.**
+- Users can create a CareLoop account with `name`, `email`, and `password`.
+- Users can log in with email/password.
+- Users can recover access through a 6-digit forgot-password flow (request code, verify code, set new password).
+- Users can also authenticate with Google, Facebook, or Apple.
+- Social sign-in maps to a first-party CareLoop `User` plus a linked `AuthIdentity` record per provider.
+- Transport auth remains `x-api-key` through Sprint 2. Account auth determines which CareLoop user is loaded in-app; bearer-token enforcement remains a Sprint 3 hardening step.
+- **Local/dev mode:** social sign-in may complete via provider-returned profile payload while provider credentials are still being finalized. Production mode must validate provider tokens or callback exchanges before identity creation.
+
 ---
 
 ## 6. API Contract
@@ -174,11 +185,104 @@ Every API action and UI affordance must enforce these rules.
 
 | Method | Endpoint                    | Auth | Role |
 |--------|-----------------------------|------|------|
+| POST   | /auth/signup                | key  | any  |
+| POST   | /auth/login                 | key  | any  |
+| POST   | /auth/social                | key  | any  |
+| POST   | /auth/forgot-password/request | key | any |
+| POST   | /auth/forgot-password/verify  | key | any |
+| POST   | /auth/forgot-password/reset   | key | any |
 | POST   | /users                      | key  | any  |
 | GET    | /users/:id                  | key  | any  |
 | PATCH  | /users/:id/push-token       | key  | any  |
 | PATCH  | /users/:id/timezone         | key  | any  |
 | POST   | /users/:id/session          | key  | any  |
+
+**POST /auth/signup — body:**
+
+```json
+{ "email": "string", "name": "string", "password": "string (min 8)", "phone": "string?" }
+```
+
+**POST /auth/signup — response 201:**
+
+```json
+{
+  "method": "PASSWORD",
+  "user": { "id": "string", "email": "string", "name": "string", "memberships": [] }
+}
+```
+
+**POST /auth/login — body:**
+
+```json
+{ "email": "string", "password": "string" }
+```
+
+**POST /auth/login — response 200:** same shape as signup.
+
+**POST /auth/social — body:**
+
+```json
+{
+  "provider": "GOOGLE|FACEBOOK|APPLE",
+  "idToken": "string?",
+  "accessToken": "string?",
+  "providerUserId": "string?",
+  "email": "string?",
+  "name": "string?"
+}
+```
+
+**POST /auth/social — behavior:**
+
+- Validates provider token when available
+- Links to an existing CareLoop user by provider identity first, then by email
+- Creates a new CareLoop user on first sign-in if no linked user exists
+
+**POST /auth/social — response 200:**
+
+```json
+{
+  "method": "GOOGLE|FACEBOOK|APPLE",
+  "user": { "id": "string", "email": "string", "name": "string", "memberships": [] }
+}
+```
+
+**POST /auth/forgot-password/request — body:**
+
+```json
+{ "email": "string" }
+```
+
+**POST /auth/forgot-password/request — response 200:**
+
+```json
+{ "sent": true, "expiresInMinutes": 10 }
+```
+
+**POST /auth/forgot-password/verify — body:**
+
+```json
+{ "email": "string", "code": "string (6 digits)" }
+```
+
+**POST /auth/forgot-password/verify — response 200:**
+
+```json
+{ "verified": true }
+```
+
+**POST /auth/forgot-password/reset — body:**
+
+```json
+{ "email": "string", "code": "string (6 digits)", "password": "string (min 8)" }
+```
+
+**POST /auth/forgot-password/reset — response 200:**
+
+```json
+{ "reset": true }
+```
 
 **POST /users — body:**
 
@@ -460,7 +564,7 @@ Sprint 1 measurable metrics require corresponding events logged to the `Event` t
 
 **Sprint 2 — Reminders, Digests, Push:** `node-cron` scheduler, reminder at `dueAt - 15m`, escalation, 6pm daily digest via Resend, APNs push end-to-end (reminder + escalation + assignment), `DigestLog.messageId` for digest correlation, push-to-email fallback. Deferred: digest open tracking webhook, retry logic.
 
-**Sprint 3 — Public Launch Hardening:** Supabase Auth (magic link/OTP), per-user bearer tokens replacing shared API key, invite-based join replacing plain circle-ID self-join, membership enforcement on all GET endpoints, admin member-management UX (promote/demote/remove/invite), privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
+**Sprint 3 — Public Launch Hardening:** per-user bearer tokens replacing shared API key, invite-based join replacing plain circle-ID self-join, membership enforcement on all GET endpoints, admin member-management UX (promote/demote/remove/invite), privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
 
 Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
 
@@ -480,11 +584,11 @@ Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
 - **Self-join:** Anyone with API key + circle ID can join as Member. No invite token, no admin approval. Sprint 2+ for proper invite flow
 - **APP_SESSION:** iOS triggers `POST /users/:id/session` on every foreground (`scenePhase == .active`). One event per user per UTC day
 - **DIGEST_OPENED:** Via Resend open tracking webhook. Implementation deferred to digest scheduler sprint. Not tracked in Sprint 1
-- **Auth migration:** x-api-key (Sprint 1–2) → Supabase Auth email magic link / OTP (Sprint 3). Shared API key remains the documented app auth through Sprint 2; bearer-token auth begins in Sprint 3
+- **Auth migration:** CareLoop account auth (Sprint 2) + x-api-key transport → bearer-token auth and transport hardening (Sprint 3)
 - **Invite flow:** self-join by circle ID (Sprint 1–2) → admin-created invite token, redemption after auth (Sprint 3). Direct self-join disabled in production at Sprint 3
 - **Read enforcement:** GET endpoints are API-key-only (Sprint 1–2) → authenticated + membership-checked (Sprint 3)
 - **User profile reads:** `GET /users/:id` stays unchanged in Sprint 1–2 and becomes authenticated + self-only in Sprint 3
-- **User identity field:** `authUserId String?` added to `User` model in Sprint 3 to link CareLoop profile to Supabase Auth identity
+- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities in Sprint 2; bearer-token identity hardening lands in Sprint 3
 - **DigestLog correlation:** `messageId String?` added to `DigestLog` in Sprint 2 to store Resend email ID for DIGEST_OPENED tracking
 - **Operational analytics:** PostHog added at start of external beta testing (not Sprint 1)
 - **Error tracking:** Sentry added at start of external beta testing (not Sprint 1)

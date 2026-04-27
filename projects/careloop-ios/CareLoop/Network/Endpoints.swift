@@ -66,6 +66,56 @@ extension APIClient {
 
 // MARK: — Users
 extension APIClient {
+    func signUp(email: String, name: String, password: String, phone: String?) async throws -> AuthResult {
+        try await post("/auth/signup", body: [
+            "email": email,
+            "name": name,
+            "password": password,
+            "phone": phone
+        ])
+    }
+
+    func logIn(email: String, password: String) async throws -> AuthResult {
+        try await post("/auth/login", body: [
+            "email": email,
+            "password": password
+        ])
+    }
+
+    func socialAuth(
+        provider: AuthProvider,
+        idToken: String?,
+        accessToken: String?,
+        providerUserId: String?,
+        email: String?,
+        name: String?
+    ) async throws -> AuthResult {
+        try await post("/auth/social", body: [
+            "provider": provider.apiValue,
+            "idToken": idToken,
+            "accessToken": accessToken,
+            "providerUserId": providerUserId,
+            "email": email,
+            "name": name
+        ])
+    }
+
+    func requestPasswordReset(email: String) async throws -> ForgotPasswordRequestResult {
+        try await post("/auth/forgot-password/request", body: ["email": email])
+    }
+
+    func verifyPasswordResetCode(email: String, code: String) async throws -> ForgotPasswordVerifyResult {
+        try await post("/auth/forgot-password/verify", body: ["email": email, "code": code])
+    }
+
+    func resetPassword(email: String, code: String, password: String) async throws -> ForgotPasswordResetResult {
+        try await post("/auth/forgot-password/reset", body: [
+            "email": email,
+            "code": code,
+            "password": password
+        ])
+    }
+
     func createUser(email: String, name: String, phone: String?) async throws -> CareUser {
         try await post("/users", body: ["email": email, "name": name, "phone": phone])
     }

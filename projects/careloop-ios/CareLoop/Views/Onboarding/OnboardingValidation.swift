@@ -5,6 +5,15 @@ enum AuthProvider: String, CaseIterable {
     case google = "Google"
     case facebook = "Facebook"
     case apple = "Apple"
+
+    var apiValue: String {
+        switch self {
+        case .email: return "EMAIL"
+        case .google: return "GOOGLE"
+        case .facebook: return "FACEBOOK"
+        case .apple: return "APPLE"
+        }
+    }
 }
 
 enum OnboardingValidation {
@@ -31,16 +40,32 @@ enum OnboardingValidation {
         password == confirmPassword
     }
 
+    static func signUp(name: String, email: String, password: String, confirmPassword: String, acceptedTerms: Bool) -> Bool {
+        !trimmed(name).isEmpty &&
+        isEmailLike(email) &&
+        isStrongEnough(password) &&
+        password == confirmPassword &&
+        acceptedTerms
+    }
+
+    static func recoveryEmail(email: String) -> Bool {
+        isEmailLike(email)
+    }
+
+    static func resetPassword(password: String, confirmPassword: String) -> Bool {
+        isStrongEnough(password) && password == confirmPassword
+    }
+
     static func helperText(for provider: AuthProvider) -> String {
         switch provider {
         case .email:
             return "Create an account with your email and password."
         case .google:
-            return "Google can prefill your CareLoop account once its auth URL is configured."
+            return "Google sign-in creates or resumes your CareLoop account."
         case .facebook:
-            return "Facebook can prefill your CareLoop account once its auth URL is configured."
+            return "Facebook sign-in creates or resumes your CareLoop account."
         case .apple:
-            return "Apple can prefill your CareLoop account once its auth URL is configured."
+            return "Apple sign-in creates or resumes your CareLoop account."
         }
     }
 

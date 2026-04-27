@@ -4,23 +4,24 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev":       "node --watch src/index.js",
-    "start":     "node src/index.js",
-    "migrate":   "prisma migrate dev",
-    "generate":  "prisma generate",
-    "studio":    "prisma studio",
-    "qa:reset":  "node scripts/reset-db.js",
+    "dev": "node --watch src/index.js",
+    "start": "node src/index.js",
+    "migrate": "prisma migrate dev",
+    "generate": "prisma generate",
+    "studio": "prisma studio",
+    "qa:reset": "node scripts/reset-db.js",
     "qa:seed:sprint1": "node scripts/seed-sprint1.js",
     "test": "node --test test/sprint2.test.js",
     "test:watch": "node --test --watch test/sprint2.test.js"
   },
   "dependencies": {
+    "@fastify/cors": "^9.0.1",
     "@prisma/client": "^5.14.0",
-    "fastify":        "^4.27.0",
-    "@fastify/cors":  "^9.0.1",
-    "dotenv":         "^16.4.5",
-    "node-cron":      "^3.0.3",
-    "resend":         "^3.2.0"
+    "dotenv": "^16.4.5",
+    "fastify": "^4.27.0",
+    "jose": "^6.2.2",
+    "node-cron": "^3.0.3",
+    "resend": "^3.2.0"
   },
   "devDependencies": {
     "prisma": "^5.14.0"

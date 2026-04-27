@@ -1,5 +1,9 @@
 import Foundation
 
+private struct APIErrorBody: Decodable {
+    let error: String
+}
+
 final class APIClient {
     static let shared = APIClient()
 
@@ -51,9 +55,10 @@ final class APIClient {
         req.setValue(apiKey, forHTTPHeaderField: "x-api-key")
         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
         req.httpBody = body
-        let (_, response) = try await URLSession.shared.data(for: req)
+        let (data, response) = try await URLSession.shared.data(for: req)
         guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
-            throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0)
+            let message = try? decoder.decode(APIErrorBody.self, from: data).error
+            throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, message)
         }
     }
 
@@ -67,7 +72,8 @@ final class APIClient {
 
         let (data, response) = try await URLSession.shared.data(for: req)
         guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
-            throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0)
+            let message = try? decoder.decode(APIErrorBody.self, from: data).error
+            throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, message)
         }
         return try decoder.decode(T.self, from: data)
     }
@@ -75,12 +81,12 @@ final class APIClient {
 
 enum APIError: LocalizedError {
     case invalidURL
-    case httpError(Int)
+    case httpError(Int, String?)
 
     var errorDescription: String? {
         switch self {
         case .invalidURL:      return "Invalid URL"
-        case .httpError(let c): return "Server error \(c)"
+        case .httpError(let c, let message): return message ?? "Server error \(c)"
         }
     }
 }

@@ -1,14 +1,16 @@
 import { Prisma } from "@prisma/client";
+import { normalizeEmail, sanitizeUser } from "../lib/auth.js";
 
 export default async function users(app) {
   const db = app.db;
 
   app.post("/users", async (req, reply) => {
     const { email, name, phone } = req.body ?? {};
-    if (!email || !name) return reply.code(400).send({ error: "email and name are required" });
+    const normalizedEmail = normalizeEmail(email);
+    if (!normalizedEmail || !name) return reply.code(400).send({ error: "email and name are required" });
     try {
-      const user = await db.user.create({ data: { email, name, phone: phone ?? null } });
-      return reply.code(201).send(user);
+      const user = await db.user.create({ data: { email: normalizedEmail, name, phone: phone ?? null } });
+      return reply.code(201).send(sanitizeUser(user));
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002")
         return reply.code(409).send({ error: "Email already exists" });
@@ -19,28 +21,29 @@ export default async function users(app) {
   app.get("/users/by-email", async (req, reply) => {
     const { email } = req.query ?? {};
     if (!email) return reply.code(400).send({ error: "email required" });
+    const normalizedEmail = normalizeEmail(email);
     const user = await db.user.findUnique({
-      where:   { email },
-      include: { memberships: { include: { circle: true } } },
+      where:   { email: normalizedEmail },
+      include: { memberships: { include: { circle: true } }, identities: true },
     });
     if (!user) return reply.code(404).send({ error: "Not found" });
-    return user;
+    return sanitizeUser(user);
   });
 
   app.get("/users/:id", async (req, reply) => {
     const user = await db.user.findUnique({
       where:   { id: req.params.id },
-      include: { memberships: { include: { circle: true } } },
+      include: { memberships: { include: { circle: true } }, identities: true },
     });
     if (!user) return reply.code(404).send({ error: "Not found" });
-    return user;
+    return sanitizeUser(user);
   });
 
   app.patch("/users/:id/push-token", async (req, reply) => {
     const { pushToken } = req.body ?? {};
     if (!pushToken) return reply.code(400).send({ error: "pushToken required" });
     const user = await db.user.update({ where: { id: req.params.id }, data: { pushToken } });
-    return user;
+    return sanitizeUser(user);
   });
 
   // POST /users/:id/session — log APP_SESSION, one per user per UTC day
@@ -74,6 +77,6 @@ export default async function users(app) {
       return reply.code(400).send({ error: "Invalid IANA timezone" });
     }
     const user = await db.user.update({ where: { id: req.params.id }, data: { timezone } });
-    return user;
+    return sanitizeUser(user);
   });
 }

@@ -137,7 +137,11 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 - [x] Create Circle surface exposes Google option
 - [x] Create Circle surface exposes Facebook option
 - [x] Create Circle surface exposes Apple option
-- [x] Provider buttons launch auth entry sessions when auth URLs are configured
+- [x] Provider buttons launch real auth entry sessions
+- [x] Email/password sign-up hits backend auth endpoint
+- [x] Email/password login hits backend auth endpoint
+- [x] Forgot-password request / verify / reset flow hits backend auth endpoints
+- [x] Social sign-in resolves into a real CareLoop account session
 
 **XCTest coverage:**
 ```text
@@ -146,8 +150,8 @@ OnboardingValidationTests
 - join requires matching passwords
 - create requires matching passwords
 - provider list includes Email / Google / Facebook / Apple
-- social helper text references provider auth URLs
+- social helper text references real CareLoop account access
 - auth callback parsing extracts email + name
 ```
 
-**Boundary note:** Provider buttons now open real auth entry sessions when `GOOGLE_AUTH_URL`, `FACEBOOK_AUTH_URL`, or `APPLE_AUTH_URL` are configured in the app plist. A full account session still depends on provider/backend wiring returning callback data to the app.
+**Boundary note:** Email/password auth and forgot-password are now fully wired through the CareLoop backend. Social sign-in resolves to real CareLoop users and linked identities. Production completion for Google/Facebook/Apple still depends on final provider credentials and callback configuration.

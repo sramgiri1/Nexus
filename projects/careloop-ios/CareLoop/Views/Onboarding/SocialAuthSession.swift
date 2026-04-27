@@ -5,6 +5,9 @@ import UIKit
 struct AuthCallbackPayload {
     let email: String?
     let name: String?
+    let providerUserId: String?
+    let idToken: String?
+    let accessToken: String?
 }
 
 enum SocialAuthError: LocalizedError {
@@ -66,7 +69,7 @@ final class SocialAuthSession: NSObject, ObservableObject {
                 }
 
                 let payload = AuthProviderConfiguration.parseCallback(url: callbackURL)
-                if payload.email == nil && payload.name == nil {
+                if payload.email == nil && payload.name == nil && payload.providerUserId == nil && payload.idToken == nil && payload.accessToken == nil {
                     continuation.resume(throwing: SocialAuthError.callbackMissingData)
                 } else {
                     continuation.resume(returning: payload)
@@ -132,6 +135,15 @@ struct AuthProviderConfiguration {
         let components = URLComponents(url: url, resolvingAgainstBaseURL: false)
         let email = components?.queryItems?.first(where: { $0.name == "email" })?.value
         let name = components?.queryItems?.first(where: { $0.name == "name" })?.value
-        return AuthCallbackPayload(email: email, name: name)
+        let providerUserId = components?.queryItems?.first(where: { $0.name == "provider_user_id" || $0.name == "sub" || $0.name == "id" })?.value
+        let idToken = components?.queryItems?.first(where: { $0.name == "id_token" })?.value
+        let accessToken = components?.queryItems?.first(where: { $0.name == "access_token" })?.value
+        return AuthCallbackPayload(
+            email: email,
+            name: name,
+            providerUserId: providerUserId,
+            idToken: idToken,
+            accessToken: accessToken
+        )
     }
 }

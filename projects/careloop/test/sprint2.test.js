@@ -15,21 +15,25 @@ import assert from "node:assert/strict";
 import { deliverTaskNotification, sendReminderNotifications, sendDailyDigest } from "../src/lib/push.js";
 import Fastify from "fastify";
 import authPlugin    from "../src/plugins/auth.js";
+import authRoutes    from "../src/routes/auth.js";
 import usersRoute    from "../src/routes/users.js";
 import circlesRoute  from "../src/routes/circles.js";
 import tasksRoute    from "../src/routes/tasks.js";
+import { hashPassword } from "../src/lib/auth.js";
 
 const HDR = { "x-api-key": "test-key", "content-type": "application/json" };
 
 // ─── mock DB ─────────────────────────────────────────────────────────────────
 function buildDb(seed = {}) {
   const S = {
-    users:     [...(seed.users     || [])],
-    circles:   [...(seed.circles   || [])],
-    members:   [...(seed.members   || [])],
-    tasks:     [],
-    reminders: [],
-    events:    [],
+    users:      [...(seed.users      || [])],
+    identities: [...(seed.identities || [])],
+    passwordResetCodes: [...(seed.passwordResetCodes || [])],
+    circles:    [...(seed.circles    || [])],
+    members:    [...(seed.members    || [])],
+    tasks:      [],
+    reminders:  [],
+    events:     [],
   };
 
   let seq = 0;
@@ -37,8 +41,26 @@ function buildDb(seed = {}) {
 
   function userRepo(s) {
     return {
-      findUnique: async ({ where }) =>
-        s.users.find((u) => (where.id ? u.id === where.id : u.email === where.email)) ?? null,
+      findUnique: async ({ where, include }) => {
+        const user = s.users.find((u) => (where.id ? u.id === where.id : u.email === where.email)) ?? null;
+        if (!user || !include) return user;
+        return {
+          ...user,
+          memberships: include.memberships
+            ? s.members
+                .filter((m) => m.userId === user.id)
+                .map((m) => ({
+                  ...m,
+                  circle: include.memberships?.include?.circle
+                    ? (s.circles.find((c) => c.id === m.circleId) ?? null)
+                    : undefined,
+                }))
+            : undefined,
+          identities: include.identities
+            ? s.identities.filter((i) => i.userId === user.id)
+            : undefined,
+        };
+      },
       findMany: async () => s.users,
       create: async ({ data: d }) => {
         if (s.users.some((u) => u.email === d.email)) {
@@ -53,6 +75,59 @@ function buildDb(seed = {}) {
         if (!u) throw Object.assign(new Error("NotFound"), { code: "P2025" });
         Object.assign(u, d, { updatedAt: new Date() });
         return u;
+      },
+    };
+  }
+
+  function authIdentityRepo(s) {
+    return {
+      findUnique: async ({ where }) => {
+        const key = where.provider_providerUserId;
+        if (!key) return null;
+        return s.identities.find((i) => i.provider === key.provider && i.providerUserId === key.providerUserId) ?? null;
+      },
+      upsert: async ({ where, update, create }) => {
+        const key = where.provider_providerUserId;
+        const existing = s.identities.find((i) => i.provider === key.provider && i.providerUserId === key.providerUserId);
+        if (existing) {
+          Object.assign(existing, update, { updatedAt: new Date() });
+          return existing;
+        }
+        const identity = { id: uid("ai"), createdAt: new Date(), updatedAt: new Date(), ...create };
+        s.identities.push(identity);
+        return identity;
+      },
+    };
+  }
+
+  function passwordResetCodeRepo(s) {
+    return {
+      create: async ({ data: d }) => {
+        const record = { id: uid("pr"), createdAt: new Date(), consumedAt: null, ...d };
+        s.passwordResetCodes.push(record);
+        return record;
+      },
+      findFirst: async ({ where, orderBy }) => {
+        let items = s.passwordResetCodes.filter((r) => {
+          if (where.userId && r.userId !== where.userId) return false;
+          if (where.consumedAt === null && r.consumedAt !== null) return false;
+          if (where.expiresAt?.gt && !(r.expiresAt > where.expiresAt.gt)) return false;
+          return true;
+        });
+        if (orderBy?.createdAt === "desc") {
+          items = items.sort((a, b) => b.createdAt - a.createdAt);
+        }
+        return items[0] ?? null;
+      },
+      updateMany: async ({ where, data: d }) => {
+        let count = 0;
+        for (const record of s.passwordResetCodes) {
+          if (where.userId && record.userId !== where.userId) continue;
+          if (where.consumedAt === null && record.consumedAt !== null) continue;
+          Object.assign(record, d);
+          count += 1;
+        }
+        return { count };
       },
     };
   }
@@ -137,8 +212,11 @@ function buildDb(seed = {}) {
   }
 
   const txProxy = (s) => ({
+    user:         userRepo(s),
     careCircle:   circleRepo(s),
     circleMember: memberRepo(s),
+    authIdentity: authIdentityRepo(s),
+    passwordResetCode: passwordResetCodeRepo(s),
     task:         taskRepo(s),
     reminder:     reminderRepo(s),
     event:        eventRepo(s),
@@ -147,6 +225,8 @@ function buildDb(seed = {}) {
   return {
     _s: S,
     user:         userRepo(S),
+    authIdentity: authIdentityRepo(S),
+    passwordResetCode: passwordResetCodeRepo(S),
     careCircle:   circleRepo(S),
     circleMember: memberRepo(S),
     task:         taskRepo(S),
@@ -160,12 +240,140 @@ async function buildApp(db) {
   const app = Fastify({ logger: false });
   app.decorate("db", db);
   await app.register(authPlugin);
+  app.register(authRoutes);
   app.register(usersRoute);
   app.register(circlesRoute);
   app.register(tasksRoute);
   await app.ready();
   return app;
 }
+
+// ═══════════════════════════════════════════════════════════════════════════════
+// auth routes
+// ═══════════════════════════════════════════════════════════════════════════════
+
+describe("auth routes", () => {
+  test("POST /auth/signup creates a password-backed user", async () => {
+    const app = await buildApp(buildDb());
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/signup",
+      headers: HDR,
+      payload: { email: "New@Example.com", name: "New User", password: "password123" },
+    });
+    assert.equal(res.statusCode, 201);
+    const body = res.json();
+    assert.equal(body.user.email, "new@example.com");
+    assert.equal(body.method, "PASSWORD");
+    await app.close();
+  });
+
+  test("POST /auth/login rejects wrong password", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "a@test.com", name: "Alice", passwordHash: hashPassword("password123") }],
+    }));
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      headers: HDR,
+      payload: { email: "a@test.com", password: "wrongpass" },
+    });
+    assert.equal(res.statusCode, 401);
+    await app.close();
+  });
+
+  test("POST /auth/login returns the matching user", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "a@test.com", name: "Alice", passwordHash: hashPassword("password123") }],
+    }));
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      headers: HDR,
+      payload: { email: "A@Test.com", password: "password123" },
+    });
+    assert.equal(res.statusCode, 200);
+    const body = res.json();
+    assert.equal(body.user.id, "u1");
+    assert.equal(body.method, "PASSWORD");
+    await app.close();
+  });
+
+  test("POST /auth/social creates a user and identity from local fallback payload", async () => {
+    const app = await buildApp(buildDb());
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/social",
+      headers: HDR,
+      payload: {
+        provider: "GOOGLE",
+        providerUserId: "google-123",
+        email: "social@test.com",
+        name: "Social User",
+      },
+    });
+    assert.equal(res.statusCode, 200);
+    const body = res.json();
+    assert.equal(body.user.email, "social@test.com");
+    assert.equal(body.method, "GOOGLE");
+    await app.close();
+  });
+
+  test("forgot password request stores a reset code and returns debugCode in local dev", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "reset@test.com", name: "Reset User", passwordHash: hashPassword("password123") }],
+    }));
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/request",
+      headers: HDR,
+      payload: { email: "reset@test.com" },
+    });
+    assert.equal(res.statusCode, 200);
+    const body = res.json();
+    assert.equal(body.sent, true);
+    assert.equal(typeof body.debugCode, "string");
+    assert.equal(app.db._s.passwordResetCodes.length, 1);
+    await app.close();
+  });
+
+  test("forgot password verify/reset updates password", async () => {
+    const db = buildDb({
+      users: [{ id: "u1", email: "reset@test.com", name: "Reset User", passwordHash: hashPassword("password123") }],
+    });
+    const app = await buildApp(db);
+    const request = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/request",
+      headers: HDR,
+      payload: { email: "reset@test.com" },
+    });
+    const code = request.json().debugCode;
+    const verify = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/verify",
+      headers: HDR,
+      payload: { email: "reset@test.com", code },
+    });
+    assert.equal(verify.statusCode, 200);
+    const reset = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/reset",
+      headers: HDR,
+      payload: { email: "reset@test.com", code, password: "newpassword1" },
+    });
+    assert.equal(reset.statusCode, 200);
+
+    const login = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      headers: HDR,
+      payload: { email: "reset@test.com", password: "newpassword1" },
+    });
+    assert.equal(login.statusCode, 200);
+    await app.close();
+  });
+});
 
 // ═══════════════════════════════════════════════════════════════════════════════
 // push.js — deliverTaskNotification

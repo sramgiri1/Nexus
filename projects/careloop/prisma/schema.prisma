@@ -8,20 +8,49 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  email     String   @unique
-  name      String
-  phone     String?
-  pushToken String?
-  timezone  String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String
+  phone        String?
+  passwordHash String?
+  pushToken    String?
+  timezone     String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
-  memberships  CircleMember[]
+  identities    AuthIdentity[]
+  memberships   CircleMember[]
+  passwordResetCodes PasswordResetCode[]
   tasksCreated  Task[]         @relation("TaskCreator")
   tasksAssigned Task[]         @relation("TaskAssignee")
   events        Event[]
   digestLogs    DigestLog[]
+}
+
+model AuthIdentity {
+  id             String       @id @default(cuid())
+  provider       AuthProvider
+  providerUserId String
+  providerEmail  String?
+  providerName   String?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
+
+  @@unique([provider, providerUserId])
+}
+
+model PasswordResetCode {
+  id         String   @id @default(cuid())
+  codeHash   String
+  expiresAt  DateTime
+  consumedAt DateTime?
+  createdAt  DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId String
 }
 
 model CareCircle {
@@ -150,4 +179,10 @@ enum EventType {
   DIGEST_SENT
   DIGEST_OPENED
   APP_SESSION
+}
+
+enum AuthProvider {
+  GOOGLE
+  FACEBOOK
+  APPLE
 }

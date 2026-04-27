@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-04-25T00:00:00Z",
+  "lastUpdated": "2026-04-26T17:30:00Z",
   "activeProject": "careloop",
   "sprintPlan": {
-    "currentSprint": 1,
+    "currentSprint": 2,
     "totalSprints": 3,
     "sprintLengthWeeks": 2,
     "publicLaunch": "end of Sprint 3"
@@ -48,7 +48,7 @@
       "name": "CareLoop",
       "color": "#00FFB3",
       "tagline": "Coordinate aging parent care without group text chaos",
-      "stage": "incubation",
+      "stage": "sprint",
       "gate": "G1",
       "score": 44,
       "tam": "$479M",
@@ -58,11 +58,11 @@
       "interviews": 5,
       "interviewTarget": 5,
       "waitlist": 0,
-      "notes": "ACTIVE — Sprint 1 in progress. 3-sprint plan to public launch. FTC Health Breach Rule applies. Clinic integration PERMANENTLY OFF.",
+      "notes": "ACTIVE — Sprint 2 in progress. Build feature-complete locally first; defer Railway, APNs, Apple Developer, and live email verification until the product is stable enough to justify spending. FTC Health Breach Rule applies. Clinic integration PERMANENTLY OFF.",
       "agents": ["atlas", "shepherd", "warden", "relay", "prism", "core", "swift", "beacon", "canvas", "forge", "pixel", "compass", "oracle", "sentinel", "meridian", "radar"],
       "decisions": {
         "bundleId": "com.careloop.ios",
-        "authStrategy": "static-api-key (Sprint 1-2), Supabase Auth (Sprint 3)",
+        "authStrategy": "CareLoop account auth (email/password + Google/Facebook/Apple) with x-api-key transport in Sprint 2; bearer-token transport hardening in Sprint 3",
         "reminderEscalation": "15 minutes",
         "clinicIntegration": "PERMANENTLY_OFF",
         "complianceLevel": "FTC-Health-Breach-Rule",
