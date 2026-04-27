@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "node --watch src/index.js",
+    "dev": "node scripts/dev.js",
     "start": "node src/index.js",
     "migrate": "prisma migrate dev",
     "generate": "prisma generate",
