@@ -6,8 +6,10 @@
   "type": "module",
   "scripts": {
     "orchestrator": "node orchestrator/loop.js",
+    "supervisor": "node scripts/supervisor.js",
     "dashboard": "cd dashboard && npm run dev",
-    "dev": "concurrently \"npm run orchestrator\" \"npm run dashboard\"",
+    "careloop-api": "cd projects/careloop && npm run dev",
+    "dev": "concurrently \"npm run supervisor\" \"npm run dashboard\" \"npm run careloop-api\"",
     "task": "node scripts/task.js",
     "agent": "node scripts/run-agent.js",
     "sprint": "node scripts/sprint.js",
