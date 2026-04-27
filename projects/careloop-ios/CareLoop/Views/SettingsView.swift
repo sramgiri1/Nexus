@@ -2,6 +2,7 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
+    @State private var showJoinCircle = false
 
     var body: some View {
         NavigationStack {
@@ -24,10 +25,16 @@ struct SettingsView: View {
                     }
                 }
                 Section {
+                    Button("Join Another Circle") { showJoinCircle = true }
                     Button("Sign Out", role: .destructive) { appState.signOut() }
                 }
             }
             .navigationTitle("Settings")
+            .sheet(isPresented: $showJoinCircle) {
+                JoinCircleView()
+                    .environmentObject(appState)
+            }
         }
+        .careLoopBrandBanner()
     }
 }

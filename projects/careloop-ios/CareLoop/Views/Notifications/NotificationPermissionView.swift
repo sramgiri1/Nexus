@@ -36,6 +36,7 @@ struct NotificationPermissionView: View {
             .navigationTitle("Notifications")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .careLoopBrandBanner()
     }
 
     private func requestPermission() {

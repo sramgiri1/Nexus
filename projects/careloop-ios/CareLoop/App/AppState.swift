@@ -52,6 +52,23 @@ final class AppState: ObservableObject {
         Task { await flushPendingPushTokenIfNeeded() }
     }
 
+    func signIn(user: CareUser, circle: CareCircle?) {
+        currentUser = user
+        activeCircle = circle
+        UserDefaults.standard.set(user.id, forKey: userKey)
+        if let circle {
+            UserDefaults.standard.set(circle.id, forKey: circleKey)
+        } else {
+            UserDefaults.standard.removeObject(forKey: circleKey)
+        }
+        Task { await flushPendingPushTokenIfNeeded() }
+    }
+
+    func attachCircle(_ circle: CareCircle) {
+        activeCircle = circle
+        UserDefaults.standard.set(circle.id, forKey: circleKey)
+    }
+
     func signOut() {
         currentUser  = nil
         activeCircle = nil
@@ -60,15 +77,15 @@ final class AppState: ObservableObject {
     }
 
     private func restoreSession() async {
-        guard
-            let userId   = UserDefaults.standard.string(forKey: userKey),
-            let circleId = UserDefaults.standard.string(forKey: circleKey)
-        else { return }
+        guard let userId = UserDefaults.standard.string(forKey: userKey) else { return }
         do {
             let user   = try await APIClient.shared.fetchUser(id: userId)
-            let circle = try await APIClient.shared.fetchCircle(id: circleId)
-            currentUser  = user
-            activeCircle = circle
+            currentUser = user
+            if let circleId = UserDefaults.standard.string(forKey: circleKey) {
+                activeCircle = try await APIClient.shared.fetchCircle(id: circleId)
+            } else {
+                activeCircle = user.memberships?.first?.circle
+            }
             await flushPendingPushTokenIfNeeded()
         } catch { signOut() }
     }

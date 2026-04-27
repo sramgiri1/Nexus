@@ -74,6 +74,11 @@ extension APIClient {
         try await get("/users/\(id)")
     }
 
+    func fetchUserByEmail(_ email: String) async throws -> CareUser {
+        let encoded = email.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? email
+        return try await get("/users/by-email?email=\(encoded)")
+    }
+
     func updateTimezone(userId: String, timezone: String) async throws -> CareUser {
         try await patch("/users/\(userId)/timezone", body: ["timezone": timezone])
     }

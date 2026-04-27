@@ -39,6 +39,7 @@ struct CircleSettingsView: View {
                 }
             }
         }
+        .careLoopBrandBanner()
     }
 
     private func save() async {

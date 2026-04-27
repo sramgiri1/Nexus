@@ -1,6 +1,8 @@
 import Foundation
 
-struct CareTask: Identifiable, Codable {
+struct CareTask: Identifiable, Codable, Hashable {
+    static func == (lhs: CareTask, rhs: CareTask) -> Bool { lhs.id == rhs.id }
+    func hash(into hasher: inout Hasher) { hasher.combine(id) }
     let id: String
     let title: String
     let notes: String?

@@ -74,6 +74,7 @@ struct TaskDetailView: View {
         .confirmationDialog("Delete this task?", isPresented: $showDeleteAlert, titleVisibility: .visible) {
             Button("Delete", role: .destructive) { Task { await performDelete() } }
         }
+        .careLoopBrandBanner()
     }
 
     // MARK: — Sections

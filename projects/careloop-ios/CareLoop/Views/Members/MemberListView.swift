@@ -24,6 +24,7 @@ struct MemberListView: View {
             .navigationTitle("Circle Members")
             .navigationBarTitleDisplayMode(.inline)
         }
+        .careLoopBrandBanner()
     }
 
     @ViewBuilder

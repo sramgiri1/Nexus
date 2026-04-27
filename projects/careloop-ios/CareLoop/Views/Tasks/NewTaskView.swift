@@ -66,6 +66,7 @@ struct NewTaskView: View {
                 }
             }
         }
+        .careLoopBrandBanner()
     }
 
     private func save() async {

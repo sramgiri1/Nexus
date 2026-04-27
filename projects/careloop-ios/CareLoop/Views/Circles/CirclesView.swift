@@ -71,6 +71,7 @@ struct CirclesView: View {
                 }
             }
         }
+        .careLoopBrandBanner()
         .task { await loadTasks() }
         .onChange(of: appState.pendingTaskId) { _ in
             syncPendingTaskNavigation()
@@ -78,12 +79,17 @@ struct CirclesView: View {
         .onChange(of: tasks) { _ in
             syncPendingTaskNavigation()
         }
-        .navigationDestination(item: $deepLinkedTask) { task in
-            TaskDetailView(
-                task: task,
-                onUpdate: { updated in updateInList(updated) },
-                onDelete: { removeFromList(task) }
-            )
+        .navigationDestination(isPresented: Binding(
+            get: { deepLinkedTask != nil },
+            set: { if !$0 { deepLinkedTask = nil } }
+        )) {
+            if let task = deepLinkedTask {
+                TaskDetailView(
+                    task: task,
+                    onUpdate: { updated in updateInList(updated) },
+                    onDelete: { removeFromList(task) }
+                )
+            }
         }
     }
 

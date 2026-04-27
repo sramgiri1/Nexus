@@ -111,3 +111,43 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 | Railway env vars: APNS_KEY, RESEND_API_KEY | FORGE | No — deploy gate |
 | `incident-response.md` | WARDEN | No — pre-launch |
 | DigestLog migration to prod DB | FORGE | Sprint 3 start |
+
+---
+
+## Auth and onboarding surface (local-first)
+
+### 9. Sign in requires email and password
+- [x] Sign In form shows email field
+- [x] Sign In form shows password field
+- [x] Validation rejects blank credentials
+- [x] Validation rejects passwords shorter than 8 characters
+
+### 10. Join Circle requires password confirmation
+- [x] Join Circle form shows password field
+- [x] Join Circle form shows re-enter password field
+- [x] Validation requires matching passwords
+
+### 11. Create Circle requires password confirmation
+- [x] Create Circle form shows password field
+- [x] Create Circle form shows re-enter password field
+- [x] Validation requires matching passwords
+
+### 12. Create account entry points
+- [x] Create Circle surface exposes Email option
+- [x] Create Circle surface exposes Google option
+- [x] Create Circle surface exposes Facebook option
+- [x] Create Circle surface exposes Apple option
+- [x] Provider buttons launch auth entry sessions when auth URLs are configured
+
+**XCTest coverage:**
+```text
+OnboardingValidationTests
+- sign in requires email + password
+- join requires matching passwords
+- create requires matching passwords
+- provider list includes Email / Google / Facebook / Apple
+- social helper text references provider auth URLs
+- auth callback parsing extracts email + name
+```
+
+**Boundary note:** Provider buttons now open real auth entry sessions when `GOOGLE_AUTH_URL`, `FACEBOOK_AUTH_URL`, or `APPLE_AUTH_URL` are configured in the app plist. A full account session still depends on provider/backend wiring returning callback data to the app.

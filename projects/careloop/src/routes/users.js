@@ -16,6 +16,17 @@ export default async function users(app) {
     }
   });
 
+  app.get("/users/by-email", async (req, reply) => {
+    const { email } = req.query ?? {};
+    if (!email) return reply.code(400).send({ error: "email required" });
+    const user = await db.user.findUnique({
+      where:   { email },
+      include: { memberships: { include: { circle: true } } },
+    });
+    if (!user) return reply.code(404).send({ error: "Not found" });
+    return user;
+  });
+
   app.get("/users/:id", async (req, reply) => {
     const user = await db.user.findUnique({
       where:   { id: req.params.id },
