@@ -122,33 +122,46 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 - [x] Validation rejects blank credentials
 - [x] Validation rejects passwords shorter than 8 characters
 
-### 10. Join Circle requires password confirmation
-- [x] Join Circle form shows password field
-- [x] Join Circle form shows re-enter password field
-- [x] Validation requires matching passwords
-
-### 11. Create Circle requires password confirmation
-- [x] Create Circle form shows password field
-- [x] Create Circle form shows re-enter password field
-- [x] Validation requires matching passwords
-
-### 12. Create account entry points
-- [x] Create Circle surface exposes Email option
-- [x] Create Circle surface exposes Google option
-- [x] Create Circle surface exposes Facebook option
-- [x] Create Circle surface exposes Apple option
+### 10. Sign up and provider entry points
+- [x] Sign Up surface exposes Email option
+- [x] Sign Up surface exposes Google option
+- [x] Sign Up surface exposes Facebook option
+- [x] Sign Up surface exposes Apple option
 - [x] Provider buttons launch real auth entry sessions
 - [x] Email/password sign-up hits backend auth endpoint
 - [x] Email/password login hits backend auth endpoint
 - [x] Forgot-password request / verify / reset flow hits backend auth endpoints
 - [x] Social sign-in resolves into a real CareLoop account session
 
+### 11. Circle setup after authentication
+- [x] Join existing circle requires only `circleId`
+- [x] Circle ID field does not auto-capitalize input
+- [x] Joining a circle the user already belongs to re-enters that circle successfully
+- [x] Create new circle requires `circle name`
+- [x] Create new circle requires `recipient name`
+- [x] New circles default `archiveAfterDays` to 7
+- [x] Circle settings allows admins to edit archive retention from 1 to 30 days
+- [x] After first circle creation, New Task opens automatically
+
+### 12. Task lifecycle and archive behavior
+- [x] Task list splits into `Active` and `Completed` sections
+- [x] Saving task detail persists title, notes, due date, priority, assignee, and status together
+- [x] Saving task detail returns the user to the task list
+- [x] Completed or skipped tasks stay visible in `Completed` until retention window expires
+- [x] Archived tasks are excluded from the normal tasks API response
+- [x] Hourly scheduler archives completed/skipped tasks once `completedAt + archiveAfterDays` has elapsed
+
+### 13. Multi-circle operations
+- [x] Data model allows one user to belong to multiple circles
+- [x] Joining or creating an additional circle does not remove existing memberships
+- [ ] Explicit in-app circle-switcher UX for multi-circle users
+- [ ] Manual QA for switching between two circles and confirming task scope follows the active circle
+
 **XCTest coverage:**
 ```text
 OnboardingValidationTests
 - sign in requires email + password
-- join requires matching passwords
-- create requires matching passwords
+- sign up requires name + email + password + confirm password
 - provider list includes Email / Google / Facebook / Apple
 - social helper text references real CareLoop account access
 - auth callback parsing extracts email + name

@@ -1,7 +1,7 @@
 # CareLoop — Product Requirements Document
 
-**Version:** 1.3
-**Status:** Sprint 2 in progress — auth, reminders, and launch hardening in active build
+**Version:** 1.4
+**Status:** Sprint 2 in progress — auth and circle/task lifecycle implemented locally; multi-circle operations specified for active-circle UX
 **Bundle ID:** com.careloop.ios
 **Compliance:** FTC Health Breach Notification Rule
 **Clinic Integration:** PERMANENTLY OFF ROADMAP
@@ -84,6 +84,19 @@ Every API action and UI affordance must enforce these rules.
 - Each circle has: a name, a recipient name, and a list of members
 - Members have roles: Admin or Member (see Section 4 for permission matrix)
 - **Self-join:** anyone with the API key and a circle ID can join that circle as Member. No invite token, no admin approval. The Admin controls access by choosing who receives the circle ID. There is no invite-and-accept flow in Sprint 1.
+- **Multi-circle membership:** one CareLoop user can belong to multiple circles at the same time. The backend does not enforce a hard cap in Sprint 2. Product UX should remain optimized for roughly 10 regularly used circles per user; if users exceed that, list/search improvements are a later-sprint concern, not a membership blocker.
+- **Join idempotency:** if a user enters a circle ID for a circle they already belong to, the app should treat the operation as success and re-enter that circle instead of throwing a blocking error.
+- **Circle-scoped retention:** each circle stores `archiveAfterDays` to control how long completed tasks remain visible before archive. Default is `7`; editable range is `1...30` days in circle settings.
+
+### 5.1.1 Multi-circle operations
+
+- A user has one **active circle** at a time in the app session.
+- Task list, task detail, member list, circle settings, and new task creation are always scoped to the active circle.
+- Joining a second or third circle does not remove access to the existing circles; it adds another membership.
+- Switching circles must reload tasks, members, permissions, and circle settings for the selected circle before the user continues working.
+- The app should persist the most recently used active circle across relaunch.
+- Push/deep-link task opens must switch into the task's owning circle before presenting that task.
+- Task creation is never "global." A task is always created inside the active circle. If the user wants to create a task in another circle, they must switch active circle first.
 
 ### 5.2 Task Management
 
@@ -91,6 +104,7 @@ Every API action and UI affordance must enforce these rules.
 - Status flow: `PENDING → IN_PROGRESS → DONE` (or `SKIPPED`)
 - Any member can create and complete tasks; reassignment is Admin-only
 - Overdue tasks (dueAt < now, status != DONE) are highlighted in red
+- Completed and skipped tasks remain visible in a `Completed` section until the circle's `archiveAfterDays` window expires. After that they are archived server-side and excluded from the main task feed.
 
 ### 5.3 Reminder Escalation
 
@@ -344,7 +358,12 @@ Both PATCH endpoints return the updated user object.
 **POST /circles — body:**
 
 ```json
-{ "name": "string (required)", "recipientName": "string (required)", "creatorId": "string (required)" }
+{
+  "name": "string (required)",
+  "recipientName": "string (required)",
+  "creatorId": "string (required)",
+  "archiveAfterDays": "number? (default: 7, min: 1, max: 30)"
+}
 ```
 
 Creator is automatically added as Admin. Response 201 returns full circle object (see GET response).
@@ -356,6 +375,7 @@ Creator is automatically added as Admin. Response 201 returns full circle object
   "id": "string",
   "name": "string",
   "recipientName": "string",
+  "archiveAfterDays": 7,
   "members": [{
     "id": "string",
     "role": "ADMIN|MEMBER",
@@ -387,6 +407,16 @@ Self-join is the active join path in Sprint 1-2. The joining user is always adde
 ```
 
 **POST /circles/:id/members — errors:** `404` if user or circle not found; `409` if user is already a member.
+
+**PATCH /circles/:id — body:**
+
+```json
+{
+  "name": "string?",
+  "recipientName": "string?",
+  "archiveAfterDays": "number? (min: 1, max: 30)"
+}
+```
 
 **PATCH /circles/:id/members/:memberId/role — body:** `{ "role": "ADMIN|MEMBER" }`
 
@@ -431,11 +461,15 @@ If `dueAt` is set, a `Reminder` is created at `dueAt - 15 minutes`. Response 201
   "circleId": "string",
   "creatorId": "string",
   "assigneeId": "string|null",
+  "completedAt": "ISO8601|null",
+  "archivedAt": "ISO8601|null",
   "assignee": { "id": "string", "name": "string" },
   "createdAt": "ISO8601",
   "updatedAt": "ISO8601"
 }]
 ```
+
+`GET /circles/:circleId/tasks` returns active and completed tasks for that circle, but excludes tasks with `archivedAt != null`.
 
 **PATCH — patchable fields by role:**
 
@@ -509,19 +543,22 @@ This policy must be documented in `docs/incident-response.md` before public laun
 
 ### Screens
 
-1. **Onboarding** — fork: Create a Circle (Admin) or Join a Circle (enter ID)
-2. **Task List** — all tasks for active circle, pull-to-refresh, tap to complete. Swipe trailing: delete (own/admin). Swipe leading: skip (own/admin). Tap row: Task Detail
-3. **Task Detail / Edit** — full task fields read-only; Edit button unlocks title, notes, due date, priority (own tasks for Member, any for Admin). Status picker (DONE/IN_PROGRESS/PENDING/SKIPPED with role rules). Admin assignee picker. Delete with confirmation
-4. **New Task** — title, notes (with health disclaimer), due date picker, priority selector. Admin sees assignee picker
-5. **Member List** — circle members with name, email, and role badge (sheet)
-6. **Circle Settings** — edit circle name and recipient name (Admin only, sheet)
-7. **Settings** — account info, circle info, circle ID to share (Admin only), sign out
+1. **Authentication** — login, sign up, and forgot-password flows for email/password; Google/Facebook/Apple provider entry points route through backend-owned OAuth start/callback
+2. **Circle Setup** — after auth, user either joins an existing circle by `circleId` or creates a new circle with `circle name` + `recipient name`
+3. **Task List** — tasks for active circle only, split into `Active` and `Completed` sections, pull-to-refresh, tap row opens direct-edit detail view
+4. **Task Detail** — opens editable; task fields and status are separate sections. `Save` persists title, notes, due date, priority, assignee, and status, then returns to the task list. Direct status completion remains available in the status section.
+5. **New Task** — title, notes (with health disclaimer), due date picker, priority selector. Admin sees assignee picker. After first circle creation, this sheet auto-opens.
+6. **Member List** — circle members with name, email, and role badge (sheet)
+7. **Circle Settings** — edit circle name, recipient name, and `archiveAfterDays` (Admin only, sheet)
+8. **Settings** — account info, active circle info, circle ID to share (Admin only), sign out
+9. **Multi-circle switching** — one active circle at a time. A dedicated circle switcher/list view is required before external beta if a user belongs to multiple circles.
 
 ### Navigation
 
 - Tab bar: Tasks | Settings
 - Push (NavigationLink): Task Detail
 - Sheet: New Task, Member List (people icon), Circle Settings (gear icon, admin only)
+- Active circle state must be visible in the tasks experience and used as the scope for all task CRUD.
 
 ---
 
@@ -562,7 +599,7 @@ Sprint 1 measurable metrics require corresponding events logged to the `Event` t
 
 **Sprint 1 — Core Coordination:** circle creation/join, task CRUD with role enforcement, session restore, analytics events `CIRCLE_CREATED / TASK_CREATED / TASK_COMPLETED / APP_SESSION`, manual QA checklist, seed/reset flow. All iOS screens complete (onboarding, task list, task detail/edit, new task with assignee picker, member list, circle settings, settings).
 
-**Sprint 2 — Reminders, Digests, Push:** `node-cron` scheduler, reminder at `dueAt - 15m`, escalation, 6pm daily digest via Resend, APNs push end-to-end (reminder + escalation + assignment), `DigestLog.messageId` for digest correlation, push-to-email fallback. Deferred: digest open tracking webhook, retry logic.
+**Sprint 2 — Reminders, Digests, Push, and Auth Hardening:** `node-cron` scheduler, reminder at `dueAt - 15m`, escalation, 6pm daily digest via Resend, APNs push end-to-end (reminder + escalation + assignment), `DigestLog.messageId` for digest correlation, push-to-email fallback, CareLoop email/password auth, backend-owned Google/Facebook/Apple OAuth entry, forgot-password flow, completed-task retention (`archiveAfterDays`) and auto-archiving. Deferred: digest open tracking webhook, retry logic, polished multi-circle switcher UX.
 
 **Sprint 3 — Public Launch Hardening:** per-user bearer tokens replacing shared API key, invite-based join replacing plain circle-ID self-join, membership enforcement on all GET endpoints, admin member-management UX (promote/demote/remove/invite), privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
 
@@ -573,10 +610,14 @@ Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
 ## 12. Decisions Locked
 
 - **Circle creation:** Onboarding supports both create (user becomes Admin) and join (enter circle ID)
+- **Multi-circle membership:** Allowed in Sprint 2. Backend has no hard cap; product UX target is roughly 10 regularly used circles before dedicated search/filter improvements are required
+- **Active circle model:** A user works in one active circle at a time. Task CRUD is always scoped to the active circle; no global cross-circle task creation in v1
 - **Health content in notes:** Prohibited via UI disclaimer. No active sanitization. Accepted risk documented in Section 8
 - **Event log:** Internal/audit only in Sprint 1. Not exposed in iOS app
 - **Circle ID sharing:** Admin copies and shares manually (v1)
 - **Multiple recipients per circle:** No — one recipient per circle (v1)
+- **Completed task lifecycle:** DONE and SKIPPED tasks remain in the active circle's `Completed` section until `archiveAfterDays` elapses; hourly scheduler archives them after that window
+- **Archive retention range:** default 7 days; admin-configurable per circle from 1 to 30 days
 - **Digest format:** Plain HTML via Resend
 - **Scheduler:** `node-cron` in-process. Single instance. No distribution in Sprint 1
 - **Timezone:** IANA string stored on User. Auto-detected from device at onboarding via `TimeZone.current.identifier`. Default fallback: `America/New_York`. Digest uses stored timezone; reminders use UTC
