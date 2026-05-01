@@ -4,6 +4,26 @@ import { normalizeEmail, sanitizeUser } from "../lib/auth.js";
 export default async function users(app) {
   const db = app.db;
 
+  async function userWithContext(where) {
+    const user = await db.user.findUnique({
+      where,
+      include: { memberships: { include: { circle: true } }, identities: true },
+    });
+    if (!user) return null;
+    const pendingInvites = await db.invitation.findMany({
+      where: {
+        email: user.email,
+        status: "PENDING",
+      },
+      include: {
+        circle: { select: { id: true, name: true, recipientName: true, archiveAfterDays: true } },
+        invitedBy: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return sanitizeUser({ ...user, pendingInvites });
+  }
+
   app.post("/users", async (req, reply) => {
     const { email, name, phone } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
@@ -22,21 +42,15 @@ export default async function users(app) {
     const { email } = req.query ?? {};
     if (!email) return reply.code(400).send({ error: "email required" });
     const normalizedEmail = normalizeEmail(email);
-    const user = await db.user.findUnique({
-      where:   { email: normalizedEmail },
-      include: { memberships: { include: { circle: true } }, identities: true },
-    });
+    const user = await userWithContext({ email: normalizedEmail });
     if (!user) return reply.code(404).send({ error: "Not found" });
-    return sanitizeUser(user);
+    return user;
   });
 
   app.get("/users/:id", async (req, reply) => {
-    const user = await db.user.findUnique({
-      where:   { id: req.params.id },
-      include: { memberships: { include: { circle: true } }, identities: true },
-    });
+    const user = await userWithContext({ id: req.params.id });
     if (!user) return reply.code(404).send({ error: "Not found" });
-    return sanitizeUser(user);
+    return user;
   });
 
   app.patch("/users/:id/push-token", async (req, reply) => {

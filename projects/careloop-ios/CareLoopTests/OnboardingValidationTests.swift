@@ -9,50 +9,15 @@ final class OnboardingValidationTests: XCTestCase {
         XCTAssertTrue(OnboardingValidation.signIn(email: "alex@example.com", password: "password1"))
     }
 
-    func test_join_requiresMatchingPasswords() {
-        XCTAssertFalse(
-            OnboardingValidation.join(
-                name: "Alex",
-                email: "alex@example.com",
-                circleId: "circle-123",
-                password: "password1",
-                confirmPassword: "password2"
-            )
-        )
-
-        XCTAssertTrue(
-            OnboardingValidation.join(
-                name: "Alex",
-                email: "alex@example.com",
-                circleId: "circle-123",
-                password: "password1",
-                confirmPassword: "password1"
-            )
-        )
+    func test_joinCircle_requiresCircleIdOnly() {
+        XCTAssertFalse(OnboardingValidation.joinCircle(circleId: "   "))
+        XCTAssertTrue(OnboardingValidation.joinCircle(circleId: "circle-123"))
     }
 
-    func test_create_requiresMatchingPasswords() {
-        XCTAssertFalse(
-            OnboardingValidation.create(
-                name: "Alex",
-                email: "alex@example.com",
-                circleName: "Family",
-                recipientName: "Mom",
-                password: "password1",
-                confirmPassword: "mismatch1"
-            )
-        )
-
-        XCTAssertTrue(
-            OnboardingValidation.create(
-                name: "Alex",
-                email: "alex@example.com",
-                circleName: "Family",
-                recipientName: "Mom",
-                password: "password1",
-                confirmPassword: "password1"
-            )
-        )
+    func test_createCircle_requiresCircleAndRecipientNames() {
+        XCTAssertFalse(OnboardingValidation.createCircle(circleName: "", recipientName: "Mom"))
+        XCTAssertFalse(OnboardingValidation.createCircle(circleName: "Family", recipientName: ""))
+        XCTAssertTrue(OnboardingValidation.createCircle(circleName: "Family", recipientName: "Mom"))
     }
 
     func test_supportedCreateAccountProviders_includeEmailGoogleFacebookApple() {

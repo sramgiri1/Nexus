@@ -25,7 +25,19 @@ async function fetchUserWithMemberships(db, id) {
       identities: true,
     },
   });
-  return sanitizeUser(user);
+  if (!user) return sanitizeUser(user);
+  const pendingInvites = await db.invitation.findMany({
+    where: {
+      email: user.email,
+      status: "PENDING",
+    },
+    include: {
+      circle: { select: { id: true, name: true, recipientName: true, archiveAfterDays: true } },
+      invitedBy: { select: { id: true, name: true, email: true } },
+    },
+    orderBy: { createdAt: "desc" },
+  });
+  return sanitizeUser({ ...user, pendingInvites });
 }
 
 export default async function authRoutes(app) {

@@ -23,21 +23,13 @@ enum OnboardingValidation {
         isEmailLike(email) && isStrongEnough(password)
     }
 
-    static func join(name: String, email: String, circleId: String, password: String, confirmPassword: String) -> Bool {
-        !trimmed(name).isEmpty &&
-        !trimmed(circleId).isEmpty &&
-        isEmailLike(email) &&
-        isStrongEnough(password) &&
-        password == confirmPassword
+    static func joinCircle(circleId: String) -> Bool {
+        !trimmed(circleId).isEmpty
     }
 
-    static func create(name: String, email: String, circleName: String, recipientName: String, password: String, confirmPassword: String) -> Bool {
-        !trimmed(name).isEmpty &&
+    static func createCircle(circleName: String, recipientName: String) -> Bool {
         !trimmed(circleName).isEmpty &&
-        !trimmed(recipientName).isEmpty &&
-        isEmailLike(email) &&
-        isStrongEnough(password) &&
-        password == confirmPassword
+        !trimmed(recipientName).isEmpty
     }
 
     static func signUp(name: String, email: String, password: String, confirmPassword: String, acceptedTerms: Bool) -> Bool {

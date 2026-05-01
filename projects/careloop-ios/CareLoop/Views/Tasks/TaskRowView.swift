@@ -17,10 +17,20 @@ struct TaskRowView: View {
                 Text(task.title)
                     .strikethrough(task.status == .done)
                     .foregroundColor(task.status == .done ? .secondary : .primary)
+                if let recipient = task.recipient?.name {
+                    Text(recipient)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
                 if let due = task.dueAt {
                     Text(due, style: .relative)
                         .font(.caption)
                         .foregroundColor(task.isOverdue ? .red : .secondary)
+                }
+                if let recurrence = task.recurrence {
+                    Text(recurrence.summary)
+                        .font(.caption2)
+                        .foregroundColor(.secondary)
                 }
             }
 

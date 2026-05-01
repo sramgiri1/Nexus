@@ -975,7 +975,7 @@ struct OnboardingView: View {
     private func finalizeAuthenticatedUser(_ user: CareUser) async throws {
         let timezone = TimeZone.current.identifier
         _ = try? await APIClient.shared.updateTimezone(userId: user.id, timezone: timezone)
-        appState.signIn(user: user, circle: user.memberships?.first?.circle)
+        appState.signIn(user: user, circle: nil)
     }
 }
 

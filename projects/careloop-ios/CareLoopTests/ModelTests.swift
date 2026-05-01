@@ -9,6 +9,7 @@ final class CareTaskTests: XCTestCase {
         CareTask(
             id: "t1", title: "Test task", notes: nil,
             dueAt: dueAt, status: status, priority: .normal,
+            completedAt: nil, archivedAt: nil,
             circleId: "c1", creatorId: "u1", assigneeId: nil, assignee: nil
         )
     }
@@ -266,5 +267,168 @@ final class AppStateRoleTests: XCTestCase {
         let member = CircleMember(id: "m2", role: .member, userId: "u2", user: nil)
         state.activeCircle = CareCircle(id: "c1", name: "Test", recipientName: "Bob", members: [admin, member], tasks: nil)
         XCTAssertEqual(state.userRole, .admin)
+    }
+}
+
+// MARK: — AppState multi-circle behavior
+
+final class AppStateCircleTests: XCTestCase {
+
+    @MainActor
+    func test_circleMemberships_sortsActiveCircleFirst_thenAlphabetically() {
+        let state = AppState()
+        let alpha = CareCircle(id: "c1", name: "Alpha Family", recipientName: "Alice")
+        let beta = CareCircle(id: "c2", name: "Beta Family", recipientName: "Bob")
+        let gamma = CareCircle(id: "c3", name: "Gamma Family", recipientName: "Carol")
+
+        state.currentUser = CareUser(
+            id: "u1",
+            email: "a@test.com",
+            name: "Alice",
+            phone: nil,
+            memberships: [
+                CircleMembership(id: "m1", circleId: alpha.id, role: .member, circle: alpha),
+                CircleMembership(id: "m2", circleId: gamma.id, role: .admin, circle: gamma),
+                CircleMembership(id: "m3", circleId: beta.id, role: .member, circle: beta),
+            ]
+        )
+        state.activeCircle = gamma
+
+        XCTAssertEqual(state.circleMemberships.map(\.circleId), ["c3", "c1", "c2"])
+    }
+
+    @MainActor
+    func test_attachCircle_updatesMatchingMembershipSnapshot() {
+        let state = AppState()
+        let original = CareCircle(id: "c1", name: "Alpha Family", recipientName: "Alice", archiveAfterDays: 7)
+        let updated = CareCircle(id: "c1", name: "Alpha Family", recipientName: "Alice Johnson", archiveAfterDays: 14)
+
+        state.currentUser = CareUser(
+            id: "u1",
+            email: "a@test.com",
+            name: "Alice",
+            phone: nil,
+            memberships: [
+                CircleMembership(id: "m1", circleId: original.id, role: .admin, circle: original)
+            ]
+        )
+
+        state.attachCircle(updated)
+
+        XCTAssertEqual(state.activeCircle?.recipientName, "Alice Johnson")
+        XCTAssertEqual(state.currentUser?.memberships?.first?.circle?.recipientName, "Alice Johnson")
+        XCTAssertEqual(state.currentUser?.memberships?.first?.circle?.archiveAfterDays, 14)
+    }
+
+    @MainActor
+    func test_signIn_withoutExplicitCircle_keepsUserInDirectoryState() {
+        let state = AppState()
+        let alpha = CareCircle(id: "c1", name: "Alpha Family", recipientName: "Alice")
+        let user = CareUser(
+            id: "u1",
+            email: "a@test.com",
+            name: "Alice",
+            phone: nil,
+            memberships: [
+                CircleMembership(id: "m1", circleId: alpha.id, role: .admin, circle: alpha)
+            ]
+        )
+
+        state.signIn(user: user, circle: nil)
+
+        XCTAssertNotNil(state.currentUser)
+        XCTAssertNil(state.activeCircle)
+        XCTAssertEqual(state.circleMemberships.first?.circleId, "c1")
+    }
+}
+
+// MARK: — Recurring tasks and insights
+
+final class TaskRecurrenceTests: XCTestCase {
+
+    func test_dailyRecurrenceSummary_usesNaturalLabel() {
+        let recurrence = TaskRecurrence(frequency: .daily, interval: 1, weekdays: [], endsAt: nil)
+        XCTAssertEqual(recurrence.summary, "Daily")
+    }
+
+    func test_customRecurrenceSummary_reflectsInterval() {
+        let recurrence = TaskRecurrence(frequency: .custom, interval: 3, weekdays: [], endsAt: nil)
+        XCTAssertEqual(recurrence.summary, "Every 3 days")
+    }
+
+    func test_weeklyRecurrenceSummary_listsSelectedWeekdays() {
+        let recurrence = TaskRecurrence(frequency: .weekly, interval: 2, weekdays: ["MON", "WED", "FRI"], endsAt: nil)
+        XCTAssertEqual(recurrence.summary, "Every 2 weeks on Mon, Wed, Fri")
+    }
+
+    func test_careTaskRecurrence_isNilWhenTaskDoesNotRepeat() {
+        let task = CareTask(
+            id: "t1",
+            title: "Task",
+            notes: nil,
+            dueAt: nil,
+            status: .pending,
+            priority: .normal,
+            completedAt: nil,
+            archivedAt: nil,
+            circleId: "c1",
+            creatorId: "u1",
+            assigneeId: nil,
+            assignee: nil
+        )
+        XCTAssertNil(task.recurrence)
+    }
+}
+
+final class CompletionInsightModelTests: XCTestCase {
+
+    func test_completedTaskDay_shortLabel_formatsDate() {
+        let day = CompletedTaskDay(date: "2026-04-29", count: 2)
+        XCTAssertFalse(day.shortLabel.isEmpty)
+    }
+}
+
+final class CareCircleRecipientTests: XCTestCase {
+
+    func test_recipientDisplaySummary_usesSingleName() {
+        let circle = CareCircle(
+            id: "c1",
+            name: "Doe Family",
+            recipientName: "John Doe",
+            recipients: [
+                CareRecipient(id: "r1", name: "John Doe", relationship: nil, notes: nil, isPrimary: true)
+            ]
+        )
+        XCTAssertEqual(circle.recipientDisplaySummary, "John Doe")
+    }
+
+    func test_recipientDisplaySummary_collapsesMultipleNames() {
+        let circle = CareCircle(
+            id: "c1",
+            name: "Doe Family",
+            recipientName: "John Doe",
+            recipients: [
+                CareRecipient(id: "r1", name: "John Doe", relationship: nil, notes: nil, isPrimary: true),
+                CareRecipient(id: "r2", name: "Jane Doe", relationship: nil, notes: nil, isPrimary: false),
+                CareRecipient(id: "r3", name: "Mia Doe", relationship: nil, notes: nil, isPrimary: false),
+            ]
+        )
+        XCTAssertEqual(circle.recipientDisplaySummary, "John Doe + 2 more")
+    }
+
+    func test_orderedRecipients_respectsPrimaryThenSortOrder() {
+        let circle = CareCircle(
+            id: "c1",
+            name: "Doe Family",
+            recipientName: "John Doe",
+            recipients: [
+                CareRecipient(id: "r3", name: "Mia Doe", relationship: nil, notes: nil, isPrimary: false, sortOrder: 2),
+                CareRecipient(id: "r1", name: "John Doe", relationship: nil, notes: nil, isPrimary: true, sortOrder: 1),
+                CareRecipient(id: "r2", name: "Jane Doe", relationship: nil, notes: nil, isPrimary: false, sortOrder: 0),
+            ]
+        )
+
+        XCTAssertEqual(circle.orderedRecipients.map(\.id), ["r1", "r2", "r3"])
+        XCTAssertEqual(circle.primaryRecipient?.id, "r1")
     }
 }

@@ -5,15 +5,11 @@ struct ContentView: View {
 
     var body: some View {
         if appState.activeCircle == nil {
-            JoinCircleView()
+            CircleListView()
                 .environmentObject(appState)
         } else {
-            TabView {
-                CirclesView()
-                    .tabItem { Label("Tasks", systemImage: "checklist") }
-                SettingsView()
-                    .tabItem { Label("Settings", systemImage: "gearshape") }
-            }
+            CircleHomeView()
+                .environmentObject(appState)
         }
     }
 }

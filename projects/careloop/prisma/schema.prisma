@@ -20,9 +20,12 @@ model User {
 
   identities    AuthIdentity[]
   memberships   CircleMember[]
+  sentInvitations Invitation[] @relation("InvitationSender")
+  acceptedInvitations Invitation[] @relation("InvitationResponder")
   passwordResetCodes PasswordResetCode[]
   tasksCreated  Task[]         @relation("TaskCreator")
   tasksAssigned Task[]         @relation("TaskAssignee")
+  tasksCompleted Task[]        @relation("TaskCompletedBy")
   events        Event[]
   digestLogs    DigestLog[]
 }
@@ -57,12 +60,51 @@ model CareCircle {
   id          String   @id @default(cuid())
   name        String
   recipientName String
+  archiveAfterDays Int @default(7)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   members  CircleMember[]
+  invitations Invitation[]
+  recipients CareRecipient[]
   tasks    Task[]
   events   Event[]
+}
+
+model Invitation {
+  id         String           @id @default(cuid())
+  email      String
+  name       String
+  role       Role             @default(MEMBER)
+  status     InvitationStatus @default(PENDING)
+  acceptedAt DateTime?
+  createdAt  DateTime         @default(now())
+  updatedAt  DateTime         @updatedAt
+
+  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId String
+
+  invitedBy   User?   @relation("InvitationSender", fields: [invitedById], references: [id], onDelete: SetNull)
+  invitedById String?
+
+  acceptedBy   User?   @relation("InvitationResponder", fields: [acceptedById], references: [id], onDelete: SetNull)
+  acceptedById String?
+}
+
+model CareRecipient {
+  id           String   @id @default(cuid())
+  name         String
+  relationship String?
+  notes        String?
+  isPrimary    Boolean  @default(false)
+  sortOrder    Int      @default(0)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId String
+
+  tasks Task[]
 }
 
 model CircleMember {
@@ -85,15 +127,26 @@ model Task {
   dueAt       DateTime?
   status      TaskStatus @default(PENDING)
   priority    Priority   @default(NORMAL)
+  recurrenceFrequency RecurrenceFrequency @default(NONE)
+  recurrenceInterval Int?
+  recurrenceWeekdays String[] @default([])
+  recurrenceEndsAt DateTime?
+  seriesId     String?
+  completedAt DateTime?
+  archivedAt  DateTime?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
   circle      CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
   circleId    String
+  recipient   CareRecipient? @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+  recipientId String?
   creator     User       @relation("TaskCreator", fields: [creatorId], references: [id])
   creatorId   String
   assignee    User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
   assigneeId  String?
+  completedBy User?      @relation("TaskCompletedBy", fields: [completedById], references: [id])
+  completedById String?
 
   reminders   Reminder[]
 }
@@ -153,6 +206,14 @@ enum Priority {
   URGENT
 }
 
+enum RecurrenceFrequency {
+  NONE
+  DAILY
+  WEEKLY
+  MONTHLY
+  CUSTOM
+}
+
 enum Channel {
   PUSH
   EMAIL
@@ -168,12 +229,21 @@ enum ReminderStatus {
 
 enum EventType {
   CIRCLE_CREATED
+  INVITE_CREATED
+  INVITE_ACCEPTED
+  INVITE_DECLINED
+  INVITE_REVOKED
+  RECIPIENT_ADDED
+  RECIPIENT_UPDATED
+  RECIPIENT_REMOVED
   TASK_CREATED
+  TASK_SERIES_CREATED
   TASK_UPDATED
   TASK_COMPLETED
   TASK_DELETED
   MEMBER_JOINED
   MEMBER_REMOVED
+  MEMBER_ROLE_UPDATED
   REMINDER_SENT
   REMINDER_ESCALATED
   DIGEST_SENT
@@ -185,4 +255,11 @@ enum AuthProvider {
   GOOGLE
   FACEBOOK
   APPLE
+}
+
+enum InvitationStatus {
+  PENDING
+  ACCEPTED
+  DECLINED
+  REVOKED
 }

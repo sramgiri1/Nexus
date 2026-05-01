@@ -11,6 +11,7 @@ struct CirclesView: View {
     @State private var showSettings  = false
     @State private var showPermissionSheet = false
     @State private var deepLinkedTask: CareTask?
+    @State private var selectedRecipientFilter = "all"
 
     var body: some View {
         NavigationStack {
@@ -23,7 +24,7 @@ struct CirclesView: View {
                     taskList
                 }
             }
-            .navigationTitle(appState.activeCircle?.recipientName ?? "Care Tasks")
+            .navigationTitle(appState.activeCircle?.name ?? "Care Tasks")
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button { showNewTask = true } label: { Image(systemName: "plus") }
@@ -40,6 +41,13 @@ struct CirclesView: View {
                         }
                     }
                 }
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button {
+                        appState.clearActiveCircleSelection()
+                    } label: {
+                        Image(systemName: "square.grid.2x2")
+                    }
+                }
             }
             .sheet(isPresented: $showNewTask, onDismiss: { Task { await loadTasks() } }) {
                 if let circle = appState.activeCircle, let user = appState.currentUser {
@@ -47,6 +55,7 @@ struct CirclesView: View {
                         circleId:   circle.id,
                         creatorId:  user.id,
                         members:    circle.members ?? [],
+                        recipients: circle.recipients ?? [],
                         isAdmin:    appState.userRole == .admin,
                         onCreated:  { createdTask in
                             if createdTask.dueAt != nil && !askedForPush {
@@ -57,7 +66,8 @@ struct CirclesView: View {
                 }
             }
             .sheet(isPresented: $showMembers) {
-                MemberListView(members: appState.activeCircle?.members ?? [])
+                MemberListView()
+                    .environmentObject(appState)
             }
             .sheet(isPresented: $showSettings) {
                 if let circle = appState.activeCircle {
@@ -70,26 +80,42 @@ struct CirclesView: View {
                     askedForPush = true
                 }
             }
+            .navigationDestination(isPresented: Binding(
+                get: { deepLinkedTask != nil },
+                set: { if !$0 { deepLinkedTask = nil } }
+            )) {
+                if let task = deepLinkedTask {
+                    TaskDetailView(
+                        task: task,
+                        onUpdate: { updated in updateInList(updated) },
+                        onDelete: { removeFromList(task) }
+                    )
+                }
+            }
         }
         .careLoopBrandBanner()
         .task { await loadTasks() }
+        .onAppear {
+            if appState.shouldPromptNewTask {
+                showNewTask = true
+                appState.consumeNewTaskPrompt()
+            }
+        }
+        .onChange(of: appState.shouldPromptNewTask) { shouldPrompt in
+            if shouldPrompt {
+                showNewTask = true
+                appState.consumeNewTaskPrompt()
+            }
+        }
         .onChange(of: appState.pendingTaskId) { _ in
             syncPendingTaskNavigation()
         }
         .onChange(of: tasks) { _ in
             syncPendingTaskNavigation()
         }
-        .navigationDestination(isPresented: Binding(
-            get: { deepLinkedTask != nil },
-            set: { if !$0 { deepLinkedTask = nil } }
-        )) {
-            if let task = deepLinkedTask {
-                TaskDetailView(
-                    task: task,
-                    onUpdate: { updated in updateInList(updated) },
-                    onDelete: { removeFromList(task) }
-                )
-            }
+        .onChange(of: appState.activeCircle?.id) { _ in
+            selectedRecipientFilter = "all"
+            Task { await loadTasks() }
         }
     }
 
@@ -97,41 +123,217 @@ struct CirclesView: View {
 
     private var taskList: some View {
         List {
-            ForEach(tasks) { task in
-                NavigationLink {
-                    TaskDetailView(
-                        task:     task,
-                        onUpdate: { updated in updateInList(updated) },
-                        onDelete: { removeFromList(task) }
-                    )
-                } label: {
-                    TaskRowView(task: task) {
-                        Task { await toggle(task) }
-                    }
-                }
-                .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-                    if canMutate(task) {
-                        Button(role: .destructive) {
-                            Task { await deleteTask(task) }
-                        } label: {
-                            Label("Delete", systemImage: "trash")
+            if let circle = appState.activeCircle {
+                Section {
+                    VStack(alignment: .leading, spacing: 14) {
+                        activeCircleCard(circle)
+
+                        if !recipientFilters.isEmpty {
+                            recipientFilterRow
                         }
                     }
                 }
-                .swipeActions(edge: .leading) {
-                    if canSkip(task) {
-                        Button {
-                            Task { await setStatus(task, .skipped) }
-                        } label: {
-                            Label("Skip", systemImage: "forward.fill")
-                        }
-                        .tint(.orange)
+                .listRowBackground(Color.clear)
+            }
+
+            if !activeTasks.isEmpty {
+                Section("Active") {
+                    ForEach(activeTasks) { task in
+                        taskRow(task)
+                    }
+                }
+            }
+
+            if !completedTasks.isEmpty {
+                Section("Completed") {
+                    ForEach(completedTasks) { task in
+                        taskRow(task)
                     }
                 }
             }
         }
         .listStyle(.insetGrouped)
         .refreshable { await loadTasks() }
+    }
+
+    private var recipientFilters: [CareRecipient] {
+        appState.activeCircle?.recipients ?? []
+    }
+
+    @ViewBuilder
+    private func activeCircleCard(_ circle: CareCircle) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                RoundedRectangle(cornerRadius: 16, style: .continuous)
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                Image("CareLoopIcon")
+                    .resizable()
+                    .scaledToFit()
+                    .padding(12)
+            }
+            .frame(width: 52, height: 52)
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(circle.name)
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.10, green: 0.16, blue: 0.24))
+                Text(recipientSubtitle(for: circle))
+                    .font(.system(size: 14, weight: .medium, design: .rounded))
+                    .foregroundStyle(.secondary)
+                Text(appState.circleMemberships.count > 1 ? "Manage this circle or return to the list" : "Current active circle")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
+            }
+
+            Spacer()
+
+            VStack(alignment: .trailing, spacing: 6) {
+                Text(appState.userRole == .admin ? "Admin" : "Member")
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
+                    .foregroundStyle(appState.userRole == .admin ? Color(red: 0.13, green: 0.56, blue: 0.87) : Color(red: 0.23, green: 0.33, blue: 0.44))
+                    .padding(.horizontal, 10)
+                    .padding(.vertical, 6)
+                    .background(
+                        RoundedRectangle(cornerRadius: 999, style: .continuous)
+                            .fill(appState.userRole == .admin ? Color(red: 0.88, green: 0.95, blue: 1.0) : Color(red: 0.93, green: 0.95, blue: 0.98))
+                    )
+
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 12, weight: .bold))
+                    .foregroundStyle(.tertiary)
+            }
+        }
+        .padding(18)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+    }
+
+    @ViewBuilder
+    private var recipientFilterRow: some View {
+        ScrollView(.horizontal, showsIndicators: false) {
+            HStack(spacing: 10) {
+                filterChip(id: "all", title: "All recipients")
+                ForEach(recipientFilters) { recipient in
+                    filterChip(id: recipient.id, title: recipient.name)
+                }
+            }
+            .padding(.horizontal, 2)
+        }
+    }
+
+    @ViewBuilder
+    private func filterChip(id: String, title: String) -> some View {
+        Button {
+            selectedRecipientFilter = id
+        } label: {
+            Text(title)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundStyle(selectedRecipientFilter == id ? .white : Color(red: 0.23, green: 0.33, blue: 0.44))
+                .padding(.horizontal, 14)
+                .padding(.vertical, 10)
+                .background(
+                    Group {
+                        if selectedRecipientFilter == id {
+                            LinearGradient(
+                                colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        } else {
+                            Color.white
+                        }
+                    }
+                )
+                .clipShape(Capsule())
+                .overlay(
+                    Capsule()
+                        .stroke(Color(red: 0.84, green: 0.89, blue: 0.95), lineWidth: 1.5)
+                )
+        }
+        .buttonStyle(.plain)
+    }
+
+    private var activeTasks: [CareTask] {
+        filteredTasks
+            .filter { $0.status != .done && $0.status != .skipped }
+            .sorted {
+                switch ($0.dueAt, $1.dueAt) {
+                case let (lhs?, rhs?): return lhs < rhs
+                case (_?, nil): return true
+                case (nil, _?): return false
+                case (nil, nil): return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
+                }
+            }
+    }
+
+    private var completedTasks: [CareTask] {
+        filteredTasks
+            .filter { $0.status == .done || $0.status == .skipped }
+            .sorted {
+                let lhs = $0.completedAt ?? .distantPast
+                let rhs = $1.completedAt ?? .distantPast
+                if lhs != rhs { return lhs > rhs }
+                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
+            }
+    }
+
+    private var filteredTasks: [CareTask] {
+        guard selectedRecipientFilter != "all" else { return tasks }
+        return tasks.filter { $0.recipientId == selectedRecipientFilter }
+    }
+
+    private func recipientSubtitle(for circle: CareCircle) -> String {
+        let names = circle.recipientNames
+        switch names.count {
+        case 0:
+            return "Care group"
+        case 1:
+            return "Caring for \(names[0])"
+        case 2:
+            return "Caring for \(names[0]) and \(names[1])"
+        default:
+            return "Caring for \(names[0]) + \(names.count - 1) more"
+        }
+    }
+
+    @ViewBuilder
+    private func taskRow(_ task: CareTask) -> some View {
+        NavigationLink {
+            TaskDetailView(
+                task:     task,
+                onUpdate: { updated in updateInList(updated) },
+                onDelete: { removeFromList(task) }
+            )
+        } label: {
+            TaskRowView(task: task) {
+                Task { await toggle(task) }
+            }
+        }
+        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
+            if canMutate(task) {
+                Button(role: .destructive) {
+                    Task { await deleteTask(task) }
+                } label: {
+                    Label("Delete", systemImage: "trash")
+                }
+            }
+        }
+        .swipeActions(edge: .leading) {
+            if canSkip(task) {
+                Button {
+                    Task { await setStatus(task, .skipped) }
+                } label: {
+                    Label("Skip", systemImage: "forward.fill")
+                }
+                .tint(.orange)
+            }
+        }
     }
 
     // MARK: — Permissions
@@ -147,7 +349,11 @@ struct CirclesView: View {
     // MARK: — Data operations
 
     private func loadTasks() async {
-        guard let circleId = appState.activeCircle?.id else { return }
+        guard let circleId = appState.activeCircle?.id else {
+            tasks = []
+            loading = false
+            return
+        }
         loading = true
         do {
             tasks = try await APIClient.shared.fetchTasks(circleId: circleId)
@@ -181,7 +387,9 @@ struct CirclesView: View {
     }
 
     private func updateInList(_ task: CareTask) {
-        if let idx = tasks.firstIndex(where: { $0.id == task.id }) { tasks[idx] = task }
+        tasks = tasks.map { existing in
+            existing.id == task.id ? task : existing
+        }
     }
 
     private func removeFromList(_ task: CareTask) {

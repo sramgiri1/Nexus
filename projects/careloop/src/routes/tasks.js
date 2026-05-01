@@ -1,17 +1,127 @@
+import { randomUUID } from "node:crypto";
 import { assertMember, logEvent } from "../lib/roles.js";
 import { deliverTaskNotification } from "../lib/push.js";
+import {
+  isRecurringTask,
+  isTerminalTaskStatus,
+  nextDueAtForTask,
+  normalizeRecurrenceInput,
+  recurrenceFields,
+} from "../lib/recurrence.js";
 
 const taskInclude = {
-  assignee: { select: { id: true, name: true } },
+  assignee: { select: { id: true, email: true, name: true, phone: true, pushToken: true, timezone: true } },
+  completedBy: { select: { id: true, name: true, email: true } },
+  recipient: { select: { id: true, name: true, relationship: true, isPrimary: true } },
   circle: { select: { id: true, name: true } },
 };
+
+function parseOptionalDate(value, fieldName) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) {
+    throw new Error(`${fieldName} must be a valid ISO8601 date`);
+  }
+  return date;
+}
+
+function completionStateForStatus(nextStatus) {
+  if (nextStatus === "DONE" || nextStatus === "SKIPPED") {
+    return new Date();
+  }
+  return null;
+}
+
+function nextSeriesScope(raw) {
+  return String(raw ?? "THIS_OCCURRENCE").toUpperCase() === "SERIES"
+    ? "SERIES"
+    : "THIS_OCCURRENCE";
+}
+
+async function syncReminderForTask(tx, taskId, dueAt) {
+  if (dueAt) {
+    const scheduledAt = new Date(dueAt.getTime() - 15 * 60 * 1000);
+    const existingReminder = await tx.reminder.findFirst({ where: { taskId } });
+    if (existingReminder) {
+      await tx.reminder.update({
+        where: { id: existingReminder.id },
+        data: {
+          scheduledAt,
+          status: "PENDING",
+          sentAt: null,
+          escalatedAt: null,
+        },
+      });
+    } else {
+      await tx.reminder.create({ data: { taskId, scheduledAt } });
+    }
+    return;
+  }
+
+  await tx.reminder.deleteMany({ where: { taskId } });
+}
+
+async function createTaskRecord(tx, data) {
+  const task = await tx.task.create({
+    data,
+    include: taskInclude,
+  });
+
+  await syncReminderForTask(tx, task.id, task.dueAt);
+  return task;
+}
+
+async function ensureNextRecurringOccurrence(tx, task) {
+  const nextDueAt = nextDueAtForTask(task);
+  if (!nextDueAt || !task.seriesId) return null;
+
+  const existing = await tx.task.findFirst({
+    where: {
+      seriesId: task.seriesId,
+      dueAt: nextDueAt,
+    },
+  });
+  if (existing) return existing;
+
+  return createTaskRecord(tx, {
+    title: task.title,
+    notes: task.notes,
+    dueAt: nextDueAt,
+    priority: task.priority,
+    recipientId: task.recipientId,
+    recurrenceFrequency: task.recurrenceFrequency,
+    recurrenceInterval: task.recurrenceInterval,
+    recurrenceWeekdays: task.recurrenceWeekdays ?? [],
+    recurrenceEndsAt: task.recurrenceEndsAt ?? null,
+    seriesId: task.seriesId,
+    circleId: task.circleId,
+    creatorId: task.creatorId,
+    assigneeId: task.assigneeId ?? null,
+  });
+}
 
 export default async function tasks(app) {
   const db = app.db;
 
+  async function resolveRecipientId(tx, circleId, requestedRecipientId) {
+    if (requestedRecipientId) {
+      const recipient = await tx.careRecipient.findFirst({
+        where: { id: requestedRecipientId, circleId },
+      });
+      if (!recipient) throw new Error("recipientId must belong to this circle");
+      return recipient.id;
+    }
+
+    const primaryRecipient = await tx.careRecipient.findFirst({
+      where: { circleId },
+      orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+    });
+    return primaryRecipient?.id ?? null;
+  }
+
   // POST /circles/:circleId/tasks
   app.post("/circles/:circleId/tasks", async (req, reply) => {
-    const { title, notes, dueAt, priority, creatorId, assigneeId } = req.body ?? {};
+    const { title, notes, dueAt, priority, creatorId, assigneeId, recurrence, recipientId } = req.body ?? {};
     if (!title || !creatorId)
       return reply.code(400).send({ error: "title and creatorId are required" });
     if (title.length > 200)
@@ -22,31 +132,62 @@ export default async function tasks(app) {
     const member = await assertMember(db, req.params.circleId, creatorId, reply);
     if (!member) return;
 
-    const task = await db.$transaction(async (tx) => {
-      const t = await tx.task.create({
-        data: {
+    const dueDate = parseOptionalDate(dueAt, "dueAt");
+    let normalizedRecurrence;
+    try {
+      normalizedRecurrence = normalizeRecurrenceInput(recurrence);
+    } catch (error) {
+      return reply.code(400).send({ error: error.message });
+    }
+
+    if (normalizedRecurrence.frequency !== "NONE" && !dueDate) {
+      return reply.code(400).send({ error: "Recurring tasks require dueAt" });
+    }
+
+    const seriesId = normalizedRecurrence.frequency === "NONE" ? null : randomUUID();
+
+    let task;
+    try {
+      task = await db.$transaction(async (tx) => {
+        const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
+        if (!resolvedRecipientId) throw new Error("recipientId is required");
+
+        const createdTask = await createTaskRecord(tx, {
           title,
-          notes:      notes ?? null,
-          priority:   priority ?? "NORMAL",
-          dueAt:      dueAt ? new Date(dueAt) : undefined,
-          circleId:   req.params.circleId,
+          notes: notes ?? null,
+          priority: priority ?? "NORMAL",
+          dueAt: dueDate,
+          circleId: req.params.circleId,
+          recipientId: resolvedRecipientId,
           creatorId,
           assigneeId: assigneeId ?? null,
-        },
-        include: taskInclude,
+          ...recurrenceFields(normalizedRecurrence, seriesId),
+        });
+
+        if (seriesId) {
+          await tx.event.create({
+            data: {
+              type: "TASK_SERIES_CREATED",
+              circleId: req.params.circleId,
+              actorId: creatorId,
+              payload: {
+                seriesId,
+                taskId: createdTask.id,
+                frequency: normalizedRecurrence.frequency,
+              },
+            },
+          });
+        }
+
+        await tx.event.create({
+          data: { type: "TASK_CREATED", circleId: req.params.circleId, actorId: creatorId, payload: { taskId: createdTask.id, title } },
+        });
+
+        return createdTask;
       });
-
-      if (dueAt) {
-        const scheduledAt = new Date(new Date(dueAt).getTime() - 15 * 60 * 1000);
-        await tx.reminder.create({ data: { taskId: t.id, scheduledAt } });
-      }
-
-      await tx.event.create({
-        data: { type: "TASK_CREATED", circleId: req.params.circleId, actorId: creatorId, payload: { taskId: t.id, title } },
-      });
-
-      return t;
-    });
+    } catch (error) {
+      return reply.code(400).send({ error: error.message });
+    }
 
     if (task.assigneeId) {
       await deliverTaskNotification({
@@ -63,15 +204,17 @@ export default async function tasks(app) {
   // GET /circles/:circleId/tasks
   app.get("/circles/:circleId/tasks", async (req) => {
     return db.task.findMany({
-      where:   { circleId: req.params.circleId },
-      orderBy: { dueAt: "asc" },
+      where: { circleId: req.params.circleId, archivedAt: null },
+      orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
       include: taskInclude,
     });
   });
 
   // PATCH /circles/:circleId/tasks/:taskId
   app.patch("/circles/:circleId/tasks/:taskId", async (req, reply) => {
-    const { userId, status, title, notes, dueAt, priority, assigneeId } = req.body ?? {};
+    const { userId, status, title, notes, dueAt, priority, assigneeId, recipientId } = req.body ?? {};
+    const recurrenceWasProvided = Object.prototype.hasOwnProperty.call(req.body ?? {}, "recurrence");
+    const seriesScope = nextSeriesScope(req.body?.seriesScope);
 
     const member = await assertMember(db, req.params.circleId, userId, reply);
     if (!member) return;
@@ -81,66 +224,187 @@ export default async function tasks(app) {
     });
     if (!task) return reply.code(404).send({ error: "Task not found" });
 
+    if (title !== undefined && title.length > 200)
+      return reply.code(400).send({ error: "title exceeds 200 characters" });
+    if (notes !== undefined && notes && notes.length > 1000)
+      return reply.code(400).send({ error: "notes exceeds 1000 characters" });
+
     if (member.role === "MEMBER") {
       if (assigneeId !== undefined)
         return reply.code(403).send({ error: "Members cannot reassign tasks" });
+      if (recipientId !== undefined)
+        return reply.code(403).send({ error: "Members cannot reassign task recipients" });
       const isOwn = task.creatorId === userId;
-      if (!isOwn && (title !== undefined || notes !== undefined || dueAt !== undefined || priority !== undefined))
+      if (!isOwn && (title !== undefined || notes !== undefined || dueAt !== undefined || priority !== undefined || recurrenceWasProvided))
         return reply.code(403).send({ error: "Members can only edit their own tasks" });
       if (status === "SKIPPED" && !isOwn)
         return reply.code(403).send({ error: "Members can only skip their own tasks" });
     }
 
+    const currentDueAt = task.dueAt ?? null;
+    const nextDueAt = dueAt !== undefined
+      ? parseOptionalDate(dueAt, "dueAt")
+      : currentDueAt;
+
+    let normalizedRecurrence = null;
+    if (recurrenceWasProvided) {
+      try {
+        normalizedRecurrence = normalizeRecurrenceInput(req.body.recurrence);
+      } catch (error) {
+        return reply.code(400).send({ error: error.message });
+      }
+    }
+
+    const nextRecurrenceFrequency = recurrenceWasProvided
+      ? normalizedRecurrence.frequency
+      : task.recurrenceFrequency;
+    if (nextRecurrenceFrequency !== "NONE" && !nextDueAt) {
+      return reply.code(400).send({ error: "Recurring tasks require dueAt" });
+    }
+    if (seriesScope === "SERIES" && task.seriesId && status !== undefined && status !== task.status) {
+      return reply.code(400).send({ error: "Status updates only apply to a single occurrence" });
+    }
+
     const data = {};
-    if (status     !== undefined) data.status     = status;
-    if (title      !== undefined) data.title      = title;
-    if (notes      !== undefined) data.notes      = notes;
-    if (dueAt      !== undefined) data.dueAt      = dueAt ? new Date(dueAt) : null;
-    if (priority   !== undefined) data.priority   = priority;
+    if (status !== undefined) {
+      data.status = status;
+      data.completedAt = completionStateForStatus(status);
+      data.completedById = status === "DONE" ? userId : null;
+      data.archivedAt = null;
+    }
+    if (title !== undefined) data.title = title;
+    if (notes !== undefined) data.notes = notes;
+    if (dueAt !== undefined) data.dueAt = nextDueAt;
+    if (priority !== undefined) data.priority = priority;
     if (assigneeId !== undefined) data.assigneeId = assigneeId;
 
     const previousAssigneeId = task.assigneeId;
-    const updated = await db.$transaction(async (tx) => {
-      const nextTask = await tx.task.update({
-        where:   { id: req.params.taskId },
-        data,
-        include: taskInclude,
-      });
+    const applyToSeries = seriesScope === "SERIES" && Boolean(task.seriesId) && (
+      title !== undefined
+      || notes !== undefined
+      || dueAt !== undefined
+      || priority !== undefined
+      || assigneeId !== undefined
+      || recipientId !== undefined
+      || recurrenceWasProvided
+    );
+    let updated;
+    try {
+      updated = await db.$transaction(async (tx) => {
+        if (recipientId !== undefined) {
+          const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
+          if (!resolvedRecipientId) throw new Error("recipientId is required");
+          data.recipientId = resolvedRecipientId;
+        }
 
-      if (dueAt !== undefined) {
-        if (nextTask.dueAt) {
-          const scheduledAt = new Date(nextTask.dueAt.getTime() - 15 * 60 * 1000);
-          const existingReminder = await tx.reminder.findFirst({ where: { taskId: nextTask.id } });
-          if (existingReminder) {
-            await tx.reminder.update({
-              where: { id: existingReminder.id },
-              data: {
-                scheduledAt,
-                status: "PENDING",
-                sentAt: null,
-                escalatedAt: null,
-              },
+        if (recurrenceWasProvided) {
+          const seriesId = normalizedRecurrence.frequency === "NONE"
+            ? null
+            : (task.seriesId ?? randomUUID());
+          Object.assign(data, recurrenceFields(normalizedRecurrence, seriesId));
+        }
+
+        let nextTask;
+        if (applyToSeries) {
+          const futureTasks = await tx.task.findMany({
+            where: {
+              circleId: req.params.circleId,
+              seriesId: task.seriesId,
+              archivedAt: null,
+              dueAt: task.dueAt ? { gte: task.dueAt } : undefined,
+              status: { in: ["PENDING", "IN_PROGRESS"] },
+            },
+          });
+          const dueShiftMs = dueAt !== undefined && task.dueAt && nextDueAt
+            ? nextDueAt.getTime() - task.dueAt.getTime()
+            : null;
+
+          for (const seriesTask of futureTasks) {
+            const seriesData = { ...data };
+            if (dueShiftMs !== null && seriesTask.dueAt) {
+              seriesData.dueAt = new Date(seriesTask.dueAt.getTime() + dueShiftMs);
+            }
+
+            const seriesUpdatedTask = await tx.task.update({
+              where: { id: seriesTask.id },
+              data: seriesData,
+              include: taskInclude,
             });
-          } else {
-            await tx.reminder.create({ data: { taskId: nextTask.id, scheduledAt } });
+
+            if (dueAt !== undefined) {
+              await syncReminderForTask(tx, seriesUpdatedTask.id, seriesUpdatedTask.dueAt);
+            }
+
+            if (seriesTask.id === req.params.taskId) {
+              nextTask = seriesUpdatedTask;
+            }
+          }
+
+          if (!nextTask) {
+            nextTask = await tx.task.findFirst({
+              where: { id: req.params.taskId, circleId: req.params.circleId },
+              include: taskInclude,
+            });
           }
         } else {
-          await tx.reminder.deleteMany({ where: { taskId: nextTask.id } });
-        }
-      }
+          nextTask = await tx.task.update({
+            where: { id: req.params.taskId },
+            data,
+            include: taskInclude,
+          });
 
-      return nextTask;
-    });
+          if (dueAt !== undefined) {
+            await syncReminderForTask(tx, nextTask.id, nextTask.dueAt);
+          }
+        }
+
+        if (recurrenceWasProvided && task.recurrenceFrequency === "NONE" && nextTask.recurrenceFrequency !== "NONE" && nextTask.seriesId) {
+          await tx.event.create({
+            data: {
+              type: "TASK_SERIES_CREATED",
+              circleId: req.params.circleId,
+              actorId: userId,
+              payload: {
+                seriesId: nextTask.seriesId,
+                taskId: nextTask.id,
+                frequency: nextTask.recurrenceFrequency,
+              },
+            },
+          });
+        }
+
+        if (!isTerminalTaskStatus(task.status) && isTerminalTaskStatus(nextTask.status) && isRecurringTask(nextTask)) {
+          await ensureNextRecurringOccurrence(tx, nextTask);
+        }
+
+        return nextTask;
+      });
+    } catch (error) {
+      return reply.code(400).send({ error: error.message });
+    }
 
     if (status === "DONE" && task.status !== "DONE") {
       await logEvent(db, {
-        type: "TASK_COMPLETED", circleId: req.params.circleId,
-        actorId: userId, payload: { taskId: task.id },
+        type: "TASK_COMPLETED",
+        circleId: req.params.circleId,
+        actorId: userId,
+        payload: { taskId: task.id },
       });
-    } else if (status && status !== task.status) {
+    } else if (
+      status && status !== task.status
+      || recurrenceWasProvided
+      || title !== undefined
+      || notes !== undefined
+      || dueAt !== undefined
+      || priority !== undefined
+      || assigneeId !== undefined
+      || recipientId !== undefined
+    ) {
       await logEvent(db, {
-        type: "TASK_UPDATED", circleId: req.params.circleId,
-        actorId: userId, payload: { taskId: task.id, status },
+        type: "TASK_UPDATED",
+        circleId: req.params.circleId,
+        actorId: userId,
+        payload: { taskId: task.id, status: status ?? task.status, seriesScope },
       });
     }
 
@@ -173,8 +437,10 @@ export default async function tasks(app) {
 
     await db.task.delete({ where: { id: req.params.taskId } });
     await logEvent(db, {
-      type: "TASK_DELETED", circleId: req.params.circleId,
-      actorId: userId, payload: { taskId: task.id },
+      type: "TASK_DELETED",
+      circleId: req.params.circleId,
+      actorId: userId,
+      payload: { taskId: task.id },
     });
     return reply.code(204).send();
   });

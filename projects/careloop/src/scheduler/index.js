@@ -1,6 +1,7 @@
 import cron from "node-cron";
 import { logEvent } from "../lib/roles.js";
 import { sendDailyDigest, sendReminderNotifications } from "../lib/push.js";
+import { isRecurringTask, nextDueAtForTask } from "../lib/recurrence.js";
 
 const DIGEST_HOUR = parseInt(process.env.DAILY_DIGEST_HOUR || "18", 10);
 const ESCALATION_MINUTES = parseInt(process.env.REMINDER_ESCALATION_MINUTES || "15", 10);
@@ -192,6 +193,91 @@ async function processDigests(db) {
   }
 }
 
+async function processTaskArchiving(db) {
+  const circles = await db.careCircle.findMany({
+    select: { id: true, archiveAfterDays: true },
+  });
+
+  for (const circle of circles) {
+    const archiveAfterDays = Math.max(1, circle.archiveAfterDays ?? 7);
+    const cutoff = new Date(Date.now() - archiveAfterDays * 24 * 60 * 60 * 1000);
+    await db.task.updateMany({
+      where: {
+        circleId: circle.id,
+        archivedAt: null,
+        completedAt: { lte: cutoff },
+        status: { in: ["DONE", "SKIPPED"] },
+      },
+      data: { archivedAt: new Date() },
+    });
+  }
+}
+
+async function createRecurringOccurrence(tx, task, dueAt) {
+  const createdTask = await tx.task.create({
+    data: {
+      title: task.title,
+      notes: task.notes,
+      dueAt,
+      priority: task.priority,
+      recurrenceFrequency: task.recurrenceFrequency,
+      recurrenceInterval: task.recurrenceInterval,
+      recurrenceWeekdays: task.recurrenceWeekdays ?? [],
+      recurrenceEndsAt: task.recurrenceEndsAt ?? null,
+      seriesId: task.seriesId,
+      circleId: task.circleId,
+      creatorId: task.creatorId,
+      assigneeId: task.assigneeId ?? null,
+    },
+  });
+
+  await tx.reminder.create({
+    data: {
+      taskId: createdTask.id,
+      scheduledAt: new Date(dueAt.getTime() - 15 * 60 * 1000),
+    },
+  });
+
+  return createdTask;
+}
+
+async function processRecurringOccurrences(db) {
+  const now = new Date();
+  const recurringTasks = await db.task.findMany({
+    where: {
+      archivedAt: null,
+      dueAt: { lte: now },
+      recurrenceFrequency: { not: "NONE" },
+    },
+  });
+
+  for (const seedTask of recurringTasks) {
+    if (!isRecurringTask(seedTask) || !seedTask.seriesId) continue;
+
+    await db.$transaction(async (tx) => {
+      let currentTask = seedTask;
+      for (let index = 0; index < 180; index += 1) {
+        const nextDueAt = nextDueAtForTask(currentTask);
+        if (!nextDueAt) break;
+
+        let nextTask = await tx.task.findFirst({
+          where: {
+            seriesId: currentTask.seriesId,
+            dueAt: nextDueAt,
+          },
+        });
+
+        if (!nextTask) {
+          nextTask = await createRecurringOccurrence(tx, currentTask, nextDueAt);
+        }
+
+        if (!nextTask?.dueAt || nextTask.dueAt > now) break;
+        currentTask = nextTask;
+      }
+    });
+  }
+}
+
 export function startScheduler(db, logger = console) {
   if (process.env.DISABLE_SCHEDULER === "true") {
     logger.info?.("CareLoop scheduler disabled via DISABLE_SCHEDULER=true");
@@ -218,6 +304,20 @@ export function startScheduler(db, logger = console) {
         await processDigests(db);
       } catch (error) {
         logger.error?.({ error }, "processDigests failed");
+      }
+    }),
+    cron.schedule("0 * * * *", async () => {
+      try {
+        await processTaskArchiving(db);
+      } catch (error) {
+        logger.error?.({ error }, "processTaskArchiving failed");
+      }
+    }),
+    cron.schedule("0 * * * *", async () => {
+      try {
+        await processRecurringOccurrences(db);
+      } catch (error) {
+        logger.error?.({ error }, "processRecurringOccurrences failed");
       }
     }),
   ];

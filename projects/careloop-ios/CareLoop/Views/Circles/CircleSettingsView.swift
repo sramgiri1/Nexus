@@ -5,13 +5,14 @@ struct CircleSettingsView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var name:          String
-    @State private var recipientName: String
+    @State private var archiveAfterDays: Int
     @State private var loading        = false
     @State private var error:         String?
+    @State private var showRecipients = false
 
     init(circle: CareCircle) {
         _name          = State(initialValue: circle.name)
-        _recipientName = State(initialValue: circle.recipientName)
+        _archiveAfterDays = State(initialValue: circle.archiveAfterDays)
     }
 
     var body: some View {
@@ -19,7 +20,20 @@ struct CircleSettingsView: View {
             Form {
                 Section("Circle") {
                     TextField("Circle name", text: $name)
-                    TextField("Who you're caring for", text: $recipientName)
+                    if let circle = appState.activeCircle {
+                        LabeledContent("Care recipients", value: circle.recipientDisplaySummary)
+                    }
+                    Button("Manage care recipients") {
+                        showRecipients = true
+                    }
+                }
+                Section("Completed Tasks") {
+                    Stepper(value: $archiveAfterDays, in: 1...30) {
+                        LabeledContent("Archive after", value: "\(archiveAfterDays) day\(archiveAfterDays == 1 ? "" : "s")")
+                    }
+                    Text("Completed and skipped tasks stay visible in the Completed section until this archive window ends.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
                 if let error {
                     Section { Text(error).foregroundColor(.red).font(.caption) }
@@ -34,10 +48,13 @@ struct CircleSettingsView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Save") { Task { await save() } }
                         .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty
-                                  || recipientName.trimmingCharacters(in: .whitespaces).isEmpty
                                   || loading)
                 }
             }
+        }
+        .sheet(isPresented: $showRecipients) {
+            RecipientManagementView()
+                .environmentObject(appState)
         }
         .careLoopBrandBanner()
     }
@@ -52,9 +69,10 @@ struct CircleSettingsView: View {
                 id:            circle.id,
                 userId:        userId,
                 name:          name.trimmingCharacters(in: .whitespaces),
-                recipientName: recipientName.trimmingCharacters(in: .whitespaces)
+                recipientName: nil,
+                archiveAfterDays: archiveAfterDays
             )
-            appState.activeCircle = updated
+            appState.attachCircle(updated)
             dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false

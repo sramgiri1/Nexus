@@ -13,6 +13,7 @@
 		1A29F2D62482ED9136C31774 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ACF72E72439C0BAC5D12EC /* User.swift */; };
 		214B349BC7F8A1E9D7DE302C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23201C199B97E3927FAF8537 /* ContentView.swift */; };
 		25744130305C4E9004D20BCA /* TaskDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EEAF327186C063AB348DE7A2 /* TaskDetailView.swift */; };
+		2A57D45DC08AC9A1D9038277 /* PendingInvitesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C59BBAE384835624C0DF49F8 /* PendingInvitesView.swift */; };
 		2DEF09A8C47BCE62560AA5BC /* OnboardingValidationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E50551CBA05F03818DF86C5C /* OnboardingValidationTests.swift */; };
 		346B6125726DB2BD724460DF /* NotificationPermissionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */; };
 		37ED7B09263FFD7D6B8312F0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF30A75208A05C0A15FDA4D /* APIClient.swift */; };
@@ -22,15 +23,22 @@
 		480927E325DF54004F6E74B8 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302875AD4CB725545B0E4765 /* AppState.swift */; };
 		48A24005ACF3BCA0C28E015E /* OnboardingValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2371C5E7A53B731AA2D42FAC /* OnboardingValidation.swift */; };
 		55F5BD48C86BD264FAA6FC23 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B72BA44CCF46770F3B90E5B /* Circle.swift */; };
+		69BAC329D8BEE07EE2F77710 /* RecipientManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDD00D4C4E5E17BF29935F8 /* RecipientManagementView.swift */; };
 		6B4110389AD3A59757FBE195 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0C5318EFFB8BD80363344D /* Task.swift */; };
+		7CD08FF40B1F4400EA1EA4E7 /* CircleHomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F9B8B0791DA4FC25D9F45F52 /* CircleHomeView.swift */; };
+		7CE66F34F11C1077CF1F3ED0 /* CircleSwitcherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EFAF636FD365B6D7163CC26F /* CircleSwitcherView.swift */; };
 		80D0B387910B5E7DE427A3FB /* SocialAuthSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7EC7A865339EBDA7F92B73D0 /* SocialAuthSession.swift */; };
 		81B35252A62C27A7BDC95AFF /* CirclesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7C0D975CD195EAF2A9C2A00 /* CirclesView.swift */; };
 		979CBA5198E7E79DFA92AAD9 /* ModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 48875F6C0BEE7501982A7C52 /* ModelTests.swift */; };
+		A32AA363606FA6FDAE332DF0 /* Insights.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7149EB945E6F752F84F0095 /* Insights.swift */; };
 		C375ABFE2220A5889A622BDE /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 79AE64AED3E2BCE27476795E /* OnboardingView.swift */; };
 		C42A7475E324FD1C0E58500E /* CareLoopApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1EB81C72F8FF200E683C051B /* CareLoopApp.swift */; };
+		CABE522EA50F7D8B03955411 /* TaskWeekdayPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 610230C8D75FA1563949BF79 /* TaskWeekdayPicker.swift */; };
 		CE699D7497966CE8EDD4391B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5492BE062444FDAA36C4E975 /* Assets.xcassets */; };
 		CE804BA91DB6FBF4542A1796 /* CircleSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39D6C26D64630BE25AA573CA /* CircleSettingsView.swift */; };
+		D68F7089BA8A67E080E82198 /* AdminInsightsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF2D3EF70AFD68FB45A4A56 /* AdminInsightsView.swift */; };
 		DA464362D12F390628C291C2 /* JoinCircleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 15F6AFA5DC145E9626BB15DB /* JoinCircleView.swift */; };
+		E386E4972F40C58E405240AB /* CircleListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB0614C244F2B7588F1E1632 /* CircleListView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +56,7 @@
 		02A3C54418E5BFB0EAC1CC46 /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
 		15F6AFA5DC145E9626BB15DB /* JoinCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCircleView.swift; sourceTree = "<group>"; };
 		1EB81C72F8FF200E683C051B /* CareLoopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareLoopApp.swift; sourceTree = "<group>"; };
+		1FF2D3EF70AFD68FB45A4A56 /* AdminInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminInsightsView.swift; sourceTree = "<group>"; };
 		23201C199B97E3927FAF8537 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		2371C5E7A53B731AA2D42FAC /* OnboardingValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingValidation.swift; sourceTree = "<group>"; };
 		26ACF72E72439C0BAC5D12EC /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
@@ -56,6 +65,7 @@
 		3E9AF4A2FE132B03AA630746 /* TaskRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskRowView.swift; sourceTree = "<group>"; };
 		48875F6C0BEE7501982A7C52 /* ModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelTests.swift; sourceTree = "<group>"; };
 		5492BE062444FDAA36C4E975 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		610230C8D75FA1563949BF79 /* TaskWeekdayPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWeekdayPicker.swift; sourceTree = "<group>"; };
 		6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionView.swift; sourceTree = "<group>"; };
 		79AE64AED3E2BCE27476795E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
@@ -64,12 +74,18 @@
 		94338AEC6769116795187371 /* CareLoopBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareLoopBrand.swift; sourceTree = "<group>"; };
 		B2FCBAAA3E631E793BD70DB0 /* MemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListView.swift; sourceTree = "<group>"; };
 		B591F88B07062BE57B910FD9 /* CareLoop.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = CareLoop.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BBDD00D4C4E5E17BF29935F8 /* RecipientManagementView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipientManagementView.swift; sourceTree = "<group>"; };
+		C59BBAE384835624C0DF49F8 /* PendingInvitesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingInvitesView.swift; sourceTree = "<group>"; };
 		CBF30A75208A05C0A15FDA4D /* APIClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = APIClient.swift; sourceTree = "<group>"; };
 		D1C1E3DE5F7454F797BF5E33 /* Endpoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Endpoints.swift; sourceTree = "<group>"; };
+		D7149EB945E6F752F84F0095 /* Insights.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Insights.swift; sourceTree = "<group>"; };
 		D7C0D975CD195EAF2A9C2A00 /* CirclesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CirclesView.swift; sourceTree = "<group>"; };
 		E2BFC0D77ED18D396F926828 /* CareLoopTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CareLoopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E50551CBA05F03818DF86C5C /* OnboardingValidationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingValidationTests.swift; sourceTree = "<group>"; };
+		EB0614C244F2B7588F1E1632 /* CircleListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleListView.swift; sourceTree = "<group>"; };
 		EEAF327186C063AB348DE7A2 /* TaskDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskDetailView.swift; sourceTree = "<group>"; };
+		EFAF636FD365B6D7163CC26F /* CircleSwitcherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleSwitcherView.swift; sourceTree = "<group>"; };
+		F9B8B0791DA4FC25D9F45F52 /* CircleHomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleHomeView.swift; sourceTree = "<group>"; };
 		FE0C5318EFFB8BD80363344D /* Task.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Task.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,6 +113,7 @@
 				23201C199B97E3927FAF8537 /* ContentView.swift */,
 				6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */,
 				7F8E264FAF6962BB9E4F40BD /* Circles */,
+				7C257190929EAD1EBC3F6884 /* Insights */,
 				FD8B1536D0320BFF40FFC8DD /* Members */,
 				A2BED57B240AD194F9ACEAE5 /* Notifications */,
 				E0A0EFA810BF141014D66301 /* Onboarding */,
@@ -104,6 +121,14 @@
 				F1AD3F57CDBB6819B6927F51 /* Tasks */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		7C257190929EAD1EBC3F6884 /* Insights */ = {
+			isa = PBXGroup;
+			children = (
+				1FF2D3EF70AFD68FB45A4A56 /* AdminInsightsView.swift */,
+			);
+			path = Insights;
 			sourceTree = "<group>";
 		};
 		7EA569585E0F5D22ABA7D6E5 /* CareLoopTests */ = {
@@ -118,9 +143,14 @@
 		7F8E264FAF6962BB9E4F40BD /* Circles */ = {
 			isa = PBXGroup;
 			children = (
+				F9B8B0791DA4FC25D9F45F52 /* CircleHomeView.swift */,
+				EB0614C244F2B7588F1E1632 /* CircleListView.swift */,
 				39D6C26D64630BE25AA573CA /* CircleSettingsView.swift */,
 				D7C0D975CD195EAF2A9C2A00 /* CirclesView.swift */,
+				EFAF636FD365B6D7163CC26F /* CircleSwitcherView.swift */,
 				15F6AFA5DC145E9626BB15DB /* JoinCircleView.swift */,
+				C59BBAE384835624C0DF49F8 /* PendingInvitesView.swift */,
+				BBDD00D4C4E5E17BF29935F8 /* RecipientManagementView.swift */,
 			);
 			path = Circles;
 			sourceTree = "<group>";
@@ -174,6 +204,7 @@
 			isa = PBXGroup;
 			children = (
 				7B72BA44CCF46770F3B90E5B /* Circle.swift */,
+				D7149EB945E6F752F84F0095 /* Insights.swift */,
 				FE0C5318EFFB8BD80363344D /* Task.swift */,
 				26ACF72E72439C0BAC5D12EC /* User.swift */,
 			);
@@ -186,6 +217,7 @@
 				02A3C54418E5BFB0EAC1CC46 /* NewTaskView.swift */,
 				EEAF327186C063AB348DE7A2 /* TaskDetailView.swift */,
 				3E9AF4A2FE132B03AA630746 /* TaskRowView.swift */,
+				610230C8D75FA1563949BF79 /* TaskWeekdayPicker.swift */,
 			);
 			path = Tasks;
 			sourceTree = "<group>";
@@ -321,25 +353,33 @@
 			buildActionMask = 2147483647;
 			files = (
 				37ED7B09263FFD7D6B8312F0 /* APIClient.swift in Sources */,
+				D68F7089BA8A67E080E82198 /* AdminInsightsView.swift in Sources */,
 				480927E325DF54004F6E74B8 /* AppState.swift in Sources */,
 				C42A7475E324FD1C0E58500E /* CareLoopApp.swift in Sources */,
 				435A1E13979412F77305F902 /* CareLoopBrand.swift in Sources */,
 				55F5BD48C86BD264FAA6FC23 /* Circle.swift in Sources */,
+				7CD08FF40B1F4400EA1EA4E7 /* CircleHomeView.swift in Sources */,
+				E386E4972F40C58E405240AB /* CircleListView.swift in Sources */,
 				CE804BA91DB6FBF4542A1796 /* CircleSettingsView.swift in Sources */,
+				7CE66F34F11C1077CF1F3ED0 /* CircleSwitcherView.swift in Sources */,
 				81B35252A62C27A7BDC95AFF /* CirclesView.swift in Sources */,
 				214B349BC7F8A1E9D7DE302C /* ContentView.swift in Sources */,
 				47806E4E5E7F08491C2B6F9D /* Endpoints.swift in Sources */,
+				A32AA363606FA6FDAE332DF0 /* Insights.swift in Sources */,
 				DA464362D12F390628C291C2 /* JoinCircleView.swift in Sources */,
 				0EC37C4FE15319FD7D74A206 /* MemberListView.swift in Sources */,
 				09B801178F8D8F47266C5440 /* NewTaskView.swift in Sources */,
 				346B6125726DB2BD724460DF /* NotificationPermissionView.swift in Sources */,
 				48A24005ACF3BCA0C28E015E /* OnboardingValidation.swift in Sources */,
 				C375ABFE2220A5889A622BDE /* OnboardingView.swift in Sources */,
+				2A57D45DC08AC9A1D9038277 /* PendingInvitesView.swift in Sources */,
+				69BAC329D8BEE07EE2F77710 /* RecipientManagementView.swift in Sources */,
 				3A6D82263A2F7E0F24065743 /* SettingsView.swift in Sources */,
 				80D0B387910B5E7DE427A3FB /* SocialAuthSession.swift in Sources */,
 				6B4110389AD3A59757FBE195 /* Task.swift in Sources */,
 				25744130305C4E9004D20BCA /* TaskDetailView.swift in Sources */,
 				070638D0B7BFF0AF6E85D88A /* TaskRowView.swift in Sources */,
+				CABE522EA50F7D8B03955411 /* TaskWeekdayPicker.swift in Sources */,
 				1A29F2D62482ED9136C31774 /* User.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

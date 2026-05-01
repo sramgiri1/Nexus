@@ -2,38 +2,46 @@ import SwiftUI
 
 struct JoinCircleView: View {
     @EnvironmentObject var appState: AppState
+    @Environment(\.dismiss) private var dismiss
 
+    var dismissOnSuccess: Bool = false
+
+    private enum Mode: String, CaseIterable {
+        case join = "Join existing circle"
+        case create = "Create new circle"
+    }
+
+    @State private var mode: Mode = .join
     @State private var circleId = ""
-    @State private var password = ""
-    @State private var confirmPassword = ""
+    @State private var circleName = ""
+    @State private var recipientName = ""
     @State private var loading = false
     @State private var error: String?
+
+    private var reachedCircleLimit: Bool {
+        (appState.currentUser?.memberships?.count ?? 0) >= 3
+    }
 
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading, spacing: 24) {
-                    VStack(alignment: .leading, spacing: 10) {
-                        Text("Join Circle")
-                            .font(.system(size: 34, weight: .bold, design: .rounded))
-                        Text("Enter the circle ID from your admin to connect your account.")
-                            .font(.system(size: 16, weight: .medium, design: .rounded))
-                            .foregroundStyle(.secondary)
-                    }
+                    CareLoopBrandView(style: .wordmark, surface: .light, wordmarkHeight: 36)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 8)
 
-                    VStack(alignment: .leading, spacing: 14) {
-                        field("Circle ID", text: $circleId)
-                        secureField("Password", text: $password)
-                        secureField("Re-enter password", text: $confirmPassword)
-                    }
-                    .padding(20)
-                    .background(Color.white)
-                    .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
+                    header
+                    modePicker
+                    formCard
 
                     if let error {
                         Text(error)
                             .font(.footnote)
                             .foregroundStyle(.red)
+                    } else if reachedCircleLimit {
+                        Text("You can belong to up to 3 circles. Leave or remove a circle before joining or creating another.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
 
                     Button(action: submit) {
@@ -42,38 +50,114 @@ struct JoinCircleView: View {
                             if loading {
                                 ProgressView().tint(.white)
                             } else {
-                                Text("Join Circle")
+                                Text(mode == .join ? "Join circle" : "Create circle")
                                     .font(.system(size: 18, weight: .bold, design: .rounded))
                             }
                             Spacer()
                         }
                         .padding(.vertical, 18)
-                        .background(Color.green)
+                        .background(
+                            LinearGradient(
+                                colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
                         .foregroundStyle(.white)
                         .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
-                    .disabled(loading || !isValid)
-                    .opacity(loading || !isValid ? 0.6 : 1)
+                    .disabled(loading || !isValid || reachedCircleLimit)
+                    .opacity(loading || !isValid || reachedCircleLimit ? 0.55 : 1)
                 }
-                .padding(22)
+                .padding(.horizontal, 24)
+                .padding(.top, 20)
+                .padding(.bottom, 32)
             }
-            .background(Color(red: 0.95, green: 0.95, blue: 0.97).ignoresSafeArea())
-            .navigationTitle("Join Circle")
-            .navigationBarTitleDisplayMode(.inline)
+            .background(Color(red: 0.95, green: 0.96, blue: 0.99).ignoresSafeArea())
+            .navigationBarHidden(true)
         }
-        .careLoopBrandBanner()
+    }
+
+    private var header: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Set up your CareLoop")
+                .font(.system(size: 32, weight: .bold, design: .rounded))
+                .foregroundStyle(Color(red: 0.10, green: 0.16, blue: 0.24))
+            Text("Join a circle you were invited to, or create a new one to organize care, tasks, and updates for your family.")
+                .font(.system(size: 16, weight: .medium, design: .rounded))
+                .foregroundStyle(Color(red: 0.43, green: 0.50, blue: 0.60))
+        }
+    }
+
+    private var modePicker: some View {
+        HStack(spacing: 12) {
+            ForEach(Mode.allCases, id: \.self) { candidate in
+                Button {
+                    mode = candidate
+                    error = nil
+                } label: {
+                    Text(candidate.rawValue)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(mode == candidate ? .white : Color(red: 0.23, green: 0.33, blue: 0.44))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 16)
+                        .background(
+                            Group {
+                                if mode == candidate {
+                                    LinearGradient(
+                                        colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
+                                        startPoint: .leading,
+                                        endPoint: .trailing
+                                    )
+                                } else {
+                                    Color.white
+                                }
+                            }
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 22, style: .continuous))
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 22, style: .continuous)
+                                .stroke(Color(red: 0.84, green: 0.89, blue: 0.95), lineWidth: 2)
+                        )
+                }
+                .buttonStyle(.plain)
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var formCard: some View {
+        VStack(alignment: .leading, spacing: 18) {
+            if mode == .join {
+                Text("Join an existing circle")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                Text("Enter the circle ID shared by the circle admin.")
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(.secondary)
+                field("Circle ID", text: $circleId, placeholder: "circle-123")
+            } else {
+                Text("Create a new circle")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                Text("Create the family workspace and choose who the circle is centered around.")
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(.secondary)
+                field("Circle name", text: $circleName, placeholder: "John Doe Family")
+                field("Who are you caring for?", text: $recipientName, placeholder: "John Doe")
+            }
+        }
+        .padding(22)
+        .background(Color.white)
+        .clipShape(RoundedRectangle(cornerRadius: 28, style: .continuous))
     }
 
     private var isValid: Bool {
-        guard let user = appState.currentUser else { return false }
-        return OnboardingValidation.join(
-            name: user.name,
-            email: user.email,
-            circleId: circleId,
-            password: password,
-            confirmPassword: confirmPassword
-        )
+        switch mode {
+        case .join:
+            return OnboardingValidation.joinCircle(circleId: circleId)
+        case .create:
+            return OnboardingValidation.createCircle(circleName: circleName, recipientName: recipientName)
+        }
     }
 
     private func submit() {
@@ -82,49 +166,54 @@ struct JoinCircleView: View {
         error = nil
 
         Task {
+            defer { loading = false }
             do {
-                _ = try await APIClient.shared.addMember(
-                    circleId: circleId.trimmingCharacters(in: .whitespacesAndNewlines),
-                    userId: user.id
-                )
-                let circle = try await APIClient.shared.fetchCircle(
-                    id: circleId.trimmingCharacters(in: .whitespacesAndNewlines)
-                )
-                appState.attachCircle(circle)
+                switch mode {
+                case .join:
+                    let trimmedCircleId = circleId.trimmingCharacters(in: .whitespacesAndNewlines)
+                    do {
+                        _ = try await APIClient.shared.addMember(circleId: trimmedCircleId, userId: user.id)
+                    } catch APIError.httpError(let statusCode, _) where statusCode == 409 {
+                        // Treat duplicate join as success so users can re-enter an existing circle.
+                    }
+                    try await appState.activateCircle(id: trimmedCircleId)
+                    if dismissOnSuccess {
+                        dismiss()
+                    }
+                case .create:
+                    let created = try await APIClient.shared.createCircle(
+                        name: circleName.trimmingCharacters(in: .whitespacesAndNewlines),
+                        recipientName: recipientName.trimmingCharacters(in: .whitespacesAndNewlines),
+                        creatorId: user.id
+                    )
+                    try await appState.activateCircle(id: created.id, promptNewTask: true)
+                    if dismissOnSuccess {
+                        dismiss()
+                    }
+                }
             } catch {
                 self.error = error.localizedDescription
             }
-            loading = false
         }
     }
 
-    private func field(_ title: String, text: Binding<String>) -> some View {
+    private func field(_ title: String, text: Binding<String>, placeholder: String) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
                 .foregroundStyle(.secondary)
-            TextField("", text: text)
-                .textInputAutocapitalization(.never)
+            TextField(placeholder, text: text)
+                .textInputAutocapitalization(title == "Circle ID" ? .never : .words)
                 .autocorrectionDisabled()
                 .font(.system(size: 20, weight: .medium, design: .rounded))
                 .padding(.horizontal, 18)
                 .padding(.vertical, 18)
-                .background(Color(red: 0.97, green: 0.97, blue: 0.98))
+                .background(Color(red: 0.97, green: 0.98, blue: 0.99))
                 .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
-        }
-    }
-
-    private func secureField(_ title: String, text: Binding<String>) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(title)
-                .font(.system(size: 14, weight: .semibold, design: .rounded))
-                .foregroundStyle(.secondary)
-            SecureField("", text: text)
-                .font(.system(size: 20, weight: .medium, design: .rounded))
-                .padding(.horizontal, 18)
-                .padding(.vertical, 18)
-                .background(Color(red: 0.97, green: 0.97, blue: 0.98))
-                .clipShape(RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .overlay(
+                    RoundedRectangle(cornerRadius: 20, style: .continuous)
+                        .stroke(Color(red: 0.86, green: 0.90, blue: 0.95), lineWidth: 1.5)
+                )
         }
     }
 }

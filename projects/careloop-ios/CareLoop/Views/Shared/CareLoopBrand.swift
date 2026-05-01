@@ -50,18 +50,11 @@ struct CareLoopBrandView: View {
     }
 }
 
-private struct CareLoopBrandBannerModifier: ViewModifier {
+private struct CareLoopBrandToolbarModifier: ViewModifier {
     func body(content: Content) -> some View {
-        content.safeAreaInset(edge: .top, spacing: 0) {
-            HStack {
-                Spacer()
+        content.toolbar {
+            ToolbarItem(placement: .principal) {
                 CareLoopBrandView(style: .wordmark, surface: .light, wordmarkHeight: 20)
-                Spacer()
-            }
-            .padding(.vertical, 10)
-            .background(Color(.systemBackground).opacity(0.96))
-            .overlay(alignment: .bottom) {
-                Divider()
             }
         }
     }
@@ -69,6 +62,6 @@ private struct CareLoopBrandBannerModifier: ViewModifier {
 
 extension View {
     func careLoopBrandBanner() -> some View {
-        modifier(CareLoopBrandBannerModifier())
+        modifier(CareLoopBrandToolbarModifier())
     }
 }
