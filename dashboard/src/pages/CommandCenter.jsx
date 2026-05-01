@@ -1,524 +1,554 @@
-import { useState, useEffect, useRef } from "react";
-import { readMemory } from "../utils/memory.js";
-import { askNexus }   from "../utils/api.js";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { askNexus } from "../utils/api.js";
 import { buildNexusPrompt } from "../utils/nexusPrompt.js";
+import {
+  EmptyState,
+  PriorityPill,
+  SectionHeading,
+  StatusPill,
+  formatRelative,
+  formatTimestamp,
+} from "../components/StudioPrimitives.jsx";
 
-const T = {
-  bg:"#0f1117",surface:"#171b25",surfaceAlt:"#1c2130",
-  border:"#252b3b",borderAlt:"#2e3547",
-  text:"#e2e6f0",textMuted:"#6b7585",textDim:"#3d4557",
-  blue:"#4f8ef7",green:"#3ecf8e",amber:"#f59e0b",red:"#ef4444",purple:"#a78bfa",
+const STATUS_ORDER = {
+  blocked: 0,
+  working: 1,
+  active: 2,
+  idle: 3,
+  done: 4,
 };
 
-const STATUS = {
-  active: {color:T.blue,  bg:"#4f8ef714",label:"Active"},
-  working:{color:T.amber, bg:"#f59e0b14",label:"Working"},
-  blocked:{color:T.red,   bg:"#ef444414",label:"Blocked"},
-  done:   {color:T.green, bg:"#3ecf8e14",label:"Done"},
-  idle:   {color:T.textDim,bg:"transparent",label:"Idle"},
-};
-
-const PRIORITY = {
-  CRITICAL:{color:T.red,label:"Critical"},
-  HIGH:    {color:T.amber,label:"High"},
-  MEDIUM:  {color:T.blue,label:"Medium"},
-  LOW:     {color:T.textMuted,label:"Low"},
-};
-
-const QUICK = [
-  "What's blocking Sprint 2?",
-  "What should I do today?",
-  "Full portfolio status report",
-  "Which agents are idle right now?",
-  "Investor briefing — 5 bullets",
-  "Are all verification gates passing?",
-  "What's the critical path to TestFlight?",
-  "Brief me on CareLoop Sprint 2 scope",
+const HOME_TABS = [
+  { id: "voice", label: "Voice agent" },
+  { id: "automation", label: "Automation" },
+  { id: "platform", label: "Platform" },
 ];
 
-// Team metadata — mirrors Constellation TEAMS
-const AGENT_TEAMS = {
-  nexus:"core", shepherd:"strategy", atlas:"strategy", radar:"strategy", meridian:"strategy",
-  prism:"product", core:"product", swift:"product", pixel:"product", canvas:"product",
-  forge:"platform", stream:"platform", synapse:"platform",
-  beacon:"growth", compass:"growth", oracle:"growth",
-  auditor:"verification", sentinel:"verification", warden:"verification",
-  relay:"observability",
-};
-const TEAM_META = {
-  core:         { name:"COMMAND",  color:"#4A8FBF", order:0 },
-  strategy:     { name:"STRATEGY", color:"#4A8FBF", order:1 },
-  product:      { name:"PRODUCT",  color:"#7B6DB0", order:2 },
-  platform:     { name:"PLATFORM", color:"#B87040", order:3 },
-  growth:       { name:"GROWTH",   color:"#C49A2A", order:4 },
-  verification: { name:"VERIFY",   color:"#A84848", order:5 },
-  observability:{ name:"OBSERVE",  color:"#3EA89A", order:6 },
-};
-
-function Dot({color,pulse=false}){
-  return <span style={{display:"inline-block",width:6,height:6,borderRadius:"50%",background:color,flexShrink:0,animation:pulse?"dotpulse 2s ease-in-out infinite":"none"}}/>;
-}
-
-function Badge({label,color,bg}){
-  return <span style={{display:"inline-flex",alignItems:"center",gap:4,fontSize:10,fontWeight:600,color,background:bg,borderRadius:4,padding:"2px 7px",fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.02em"}}>{label}</span>;
-}
-
-function SectionHeader({label,count,right}){
-  return(
-    <div style={{display:"flex",alignItems:"center",justifyContent:"space-between",padding:"0 12px",marginBottom:4}}>
-      <span style={{fontSize:10,fontWeight:700,color:T.textDim,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.08em",textTransform:"uppercase"}}>
-        {label} {count!==undefined&&<span style={{color:T.textDim,fontWeight:400}}>({count})</span>}
-      </span>
-      {right}
-    </div>
-  );
-}
-
-function useTypewriter(text,speed=6){
-  const [out,setOut]=useState("");
-  useEffect(()=>{
-    setOut("");if(!text)return;
-    let i=0;
-    const iv=setInterval(()=>{i++;setOut(text.slice(0,i));if(i>=text.length)clearInterval(iv);},speed);
-    return()=>clearInterval(iv);
-  },[text]);
-  return out;
-}
-
-function Message({msg,isLatest}){
-  const isUser=msg.role==="user";
-  const typed=useTypewriter(isLatest&&!isUser?msg.content:null,6);
-  const content=isLatest&&!isUser?typed:msg.content;
-  if(isUser){
-    return(
-      <div style={{display:"flex",justifyContent:"flex-end",marginBottom:20}}>
-        <div style={{maxWidth:"68%"}}>
-          <div style={{textAlign:"right",fontSize:10,color:T.textMuted,fontFamily:"'IBM Plex Mono',monospace",marginBottom:5}}>You · {msg.time}</div>
-          <div style={{background:T.blue,borderRadius:"12px 12px 2px 12px",padding:"10px 14px"}}>
-            <p style={{margin:0,fontSize:13,color:"#fff",lineHeight:1.65}}>{content}</p>
-          </div>
-        </div>
-      </div>
-    );
+function buildWelcome(studio) {
+  const project = studio.activeProject;
+  if (!project) {
+    return "Portfolio memory is connected, but no active venture is selected. Point me at the next mission and I will map the pressure, blockers, and decision path.";
   }
-  return(
-    <div style={{display:"flex",gap:10,marginBottom:20}}>
-      <div style={{width:30,height:30,borderRadius:8,flexShrink:0,background:T.surfaceAlt,border:`1px solid ${T.borderAlt}`,display:"flex",alignItems:"center",justifyContent:"center",marginTop:2}}>
-        <span style={{fontSize:11,color:T.blue,fontFamily:"'IBM Plex Mono',monospace",fontWeight:700}}>N</span>
-      </div>
-      <div style={{flex:1,maxWidth:"calc(100% - 40px)"}}>
-        <div style={{fontSize:10,color:T.textMuted,fontFamily:"'IBM Plex Mono',monospace",marginBottom:5}}>NEXUS · {msg.time}</div>
-        <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:"2px 12px 12px 12px",padding:"12px 16px"}}>
-          <p style={{margin:0,fontSize:13.5,color:T.text,lineHeight:1.8,fontFamily:"Georgia,'Times New Roman',serif",whiteSpace:"pre-wrap"}}>
-            {content}
-            {isLatest&&!isUser&&content!==msg.content&&<span style={{color:T.blue,animation:"blink 1s step-end infinite"}}>|</span>}
-          </p>
-        </div>
-      </div>
+
+  return [
+    `${project.name} is the active venture.`,
+    `Current gate is ${project.gate}, and readiness is ${studio.gateProgress}%.`,
+    `${studio.statusCounts.active + studio.statusCounts.working} agents are engaged, ${studio.statusCounts.blocked} are blocked, and ${studio.openActions.length} founder directives remain open.`,
+    "Ask me for the shortest path, the real blocker, or the investor story that survives scrutiny.",
+  ].join(" ");
+}
+
+function liveNarrative(studio) {
+  if (studio.statusCounts.blocked > 0) {
+    return `${studio.statusCounts.blocked} blocker${studio.statusCounts.blocked === 1 ? "" : "s"} are shaping the tempo right now. Recovery discipline is the story.`;
+  }
+  if (studio.queueDepth > 0) {
+    return `${studio.queueDepth} queue item${studio.queueDepth === 1 ? "" : "s"} are still moving through the system. Execution is live with no visible stall.`;
+  }
+  return "The operating system is stable. The next shift in posture depends on founder decision quality, not agent recovery.";
+}
+
+function ChatMessage({ message }) {
+  return (
+    <div className={`message${message.role === "user" ? " message--user" : ""}`}>
+      <div className="message__meta">{message.role === "user" ? "Founder" : "NEXUS"} · {message.time}</div>
+      <div className="message__bubble">{message.content}</div>
     </div>
   );
 }
 
-function AgentRow({id,agent}){
-  const st=STATUS[agent.status]||STATUS.idle;
-  const [hov,setHov]=useState(false);
-  return(
-    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)}
-      style={{display:"grid",gridTemplateColumns:"88px 1fr auto",alignItems:"center",gap:10,padding:"8px 12px",borderRadius:6,background:hov?T.surfaceAlt:"transparent",transition:"background 0.15s"}}>
-      <div style={{display:"flex",alignItems:"center",gap:7}}>
-        <Dot color={st.color} pulse={agent.status==="active"||agent.status==="working"}/>
-        <span style={{fontSize:11,fontWeight:700,color:st.color,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.03em"}}>{id.toUpperCase()}</span>
-      </div>
-      <span style={{fontSize:11,color:T.textMuted,fontFamily:"'IBM Plex Mono',monospace",overflow:"hidden",textOverflow:"ellipsis",whiteSpace:"nowrap"}}>{agent.task}</span>
-      {agent.project&&<span style={{fontSize:10,color:T.textDim,fontFamily:"'IBM Plex Mono',monospace",flexShrink:0}}>{agent.project}</span>}
-    </div>
+function statusTone(status) {
+  if (status === "blocked") return "blocked";
+  if (status === "working") return "working";
+  if (status === "active") return "active";
+  if (status === "done") return "done";
+  return "idle";
+}
+
+function voiceButtonLabel(voiceSupported, voiceState) {
+  if (voiceState === "listening") return "Listening…";
+  if (voiceState === "sending") return "Sending…";
+  if (!voiceSupported) return "Voice unavailable";
+  return "Use voice";
+}
+
+export default function CommandCenter({ studio }) {
+  const [messages, setMessages] = useState([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [voiceState, setVoiceState] = useState("idle");
+  const [voiceSupported, setVoiceSupported] = useState(false);
+  const [activeTab] = useState("voice");
+  const threadRef = useRef(null);
+  const recognitionRef = useRef(null);
+  const pendingTranscriptRef = useRef("");
+  const latestMessagesRef = useRef(messages);
+  const sendPromptRef = useRef(null);
+
+  useEffect(() => {
+    latestMessagesRef.current = messages;
+  }, [messages]);
+
+  useEffect(() => {
+    if (messages.length) return;
+    setMessages([
+      {
+        role: "assistant",
+        content: buildWelcome(studio),
+        time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+      },
+    ]);
+  }, [messages.length, studio]);
+
+  useEffect(() => {
+    if (!threadRef.current) return;
+    threadRef.current.scrollTop = threadRef.current.scrollHeight;
+  }, [messages, loading]);
+
+  const sortedAgents = useMemo(
+    () =>
+      [...studio.agentEntries].sort((a, b) => {
+        const statusDelta = (STATUS_ORDER[a.status] ?? 99) - (STATUS_ORDER[b.status] ?? 99);
+        if (statusDelta !== 0) return statusDelta;
+        return (b.progress || 0) - (a.progress || 0) || a.name.localeCompare(b.name);
+      }),
+    [studio.agentEntries]
   );
-}
 
-function ActionRow({action,onToggle}){
-  const p=PRIORITY[action.priority]||PRIORITY.LOW;
-  const [hov,setHov]=useState(false);
-  return(
-    <div onMouseEnter={()=>setHov(true)} onMouseLeave={()=>setHov(false)} onClick={onToggle}
-      style={{display:"flex",gap:10,alignItems:"flex-start",padding:"9px 12px",borderRadius:6,cursor:"pointer",background:hov?T.surfaceAlt:"transparent",transition:"background 0.15s"}}>
-      <div style={{width:16,height:16,borderRadius:4,flexShrink:0,marginTop:1,border:`1.5px solid ${action.done?T.green:T.borderAlt}`,background:action.done?T.green:"transparent",display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s"}}>
-        {action.done&&(
-          <svg width={9} height={7} viewBox="0 0 9 7" fill="none">
-            <path d="M1 3.5L3.5 6L8 1" stroke="#fff" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        )}
-      </div>
-      <div style={{flex:1}}>
-        <p style={{margin:0,fontSize:12,lineHeight:1.55,color:action.done?T.textDim:T.text,textDecoration:action.done?"line-through":"none",fontFamily:"'IBM Plex Mono',monospace"}}>{action.text}</p>
-        <span style={{fontSize:10,color:p.color,fontFamily:"'IBM Plex Mono',monospace",fontWeight:600}}>{p.label}</span>
-      </div>
-    </div>
+  const quickPrompts = useMemo(() => {
+    const prompts = [
+      studio.activeProject ? `What is the shortest path to move ${studio.activeProject.name} through ${studio.activeProject.gate}?` : null,
+      studio.statusCounts.blocked ? "Which blocker should I remove first and why?" : null,
+      studio.openActions.length ? "Turn the founder directives into one decisive weekly agenda." : null,
+      studio.queueDepth ? "What can realistically ship if I only focus on the live queue?" : null,
+      studio.recentCompletions.length ? "What has the system actually proven in the last 24 hours?" : null,
+      "Give me the investor story in five lines with no fluff.",
+      "Where is the operating system wasting founder attention?",
+    ].filter(Boolean);
+
+    return [...new Set(prompts)].slice(0, 4);
+  }, [studio]);
+
+  const sendPrompt = useCallback(
+    async (raw) => {
+      const text = (raw ?? input).trim();
+      if (!text || loading) return;
+
+      const userMessage = {
+        role: "user",
+        content: text,
+        time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+      };
+
+      setInput("");
+      setMessages((current) => [...current, userMessage]);
+      setLoading(true);
+
+      try {
+        const systemPrompt = buildNexusPrompt(studio.portfolio, studio.agentStatus, studio.founderActions);
+        const reply = await askNexus([...latestMessagesRef.current, userMessage], systemPrompt);
+        setMessages((current) => [
+          ...current,
+          {
+            role: "assistant",
+            content: reply,
+            time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+          },
+        ]);
+      } catch (error) {
+        setMessages((current) => [
+          ...current,
+          {
+            role: "assistant",
+            content: `NEXUS console failed to respond.\n\n${error.message}`,
+            time: new Date().toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit" }),
+          },
+        ]);
+      } finally {
+        setLoading(false);
+        setVoiceState("idle");
+      }
+    },
+    [input, loading, studio]
   );
-}
 
-function QueueRow({task}){
-  const p=PRIORITY[(task.priority||"normal").toUpperCase()]||PRIORITY.LOW;
-  return(
-    <div style={{padding:"9px 12px",borderRadius:6,border:`1px solid ${T.border}`,background:T.surfaceAlt,marginBottom:6}}>
-      <div style={{display:"flex",alignItems:"center",gap:8,marginBottom:4}}>
-        <span style={{fontSize:10,color:p.color,fontFamily:"'IBM Plex Mono',monospace",fontWeight:700}}>{p.label}</span>
-        <span style={{fontSize:10,color:T.blue,fontFamily:"'IBM Plex Mono',monospace",fontWeight:700}}>→ {(task.agentId||"").toUpperCase()}</span>
-        {task.projectId&&<span style={{marginLeft:"auto",fontSize:10,color:T.textDim,fontFamily:"'IBM Plex Mono',monospace"}}>{task.projectId}</span>}
-      </div>
-      <p style={{margin:0,fontSize:11.5,color:T.textMuted,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1.5}}>{task.task}</p>
-    </div>
-  );
-}
+  useEffect(() => {
+    sendPromptRef.current = sendPrompt;
+  }, [sendPrompt]);
 
-function StatChip({label,value,color}){
-  return(
-    <div style={{display:"flex",flexDirection:"column",alignItems:"center",gap:2}}>
-      <span style={{fontSize:18,fontWeight:700,color:color||T.textMuted,fontFamily:"'IBM Plex Mono',monospace",lineHeight:1}}>{value}</span>
-      <span style={{fontSize:9,color:T.textDim,fontFamily:"'IBM Plex Mono',monospace",letterSpacing:"0.06em",textTransform:"uppercase"}}>{label}</span>
-    </div>
-  );
-}
+  useEffect(() => {
+    if (typeof window === "undefined") return undefined;
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SpeechRecognition) {
+      setVoiceSupported(false);
+      return undefined;
+    }
 
-function getTimeOfDay(){
-  const h=new Date().getHours();
-  return h<12?"morning":h<17?"afternoon":"evening";
-}
+    setVoiceSupported(true);
 
-export default function CommandCenter(){
-  const [messages,   setMessages]   = useState([]);
-  const [input,      setInput]      = useState("");
-  const [loading,    setLoading]    = useState(false);
-  const [leftTab,    setLeftTab]    = useState("agents");
-  const [portfolio,  setPortfolio]  = useState(null);
-  const [agentStatus,setAgentStatus]= useState(null);
-  const [founderActs,setFounderActs]= useState(null);
-  const [taskQueue,  setTaskQueue]  = useState(null);
-  const [clock,      setClock]      = useState(new Date());
-  const chatRef=useRef(null);
-  const inputRef=useRef(null);
+    const recognition = new SpeechRecognition();
+    recognition.lang = "en-US";
+    recognition.continuous = false;
+    recognition.interimResults = true;
 
-  useEffect(()=>{const t=setInterval(()=>setClock(new Date()),1000);return()=>clearInterval(t);},[]);
-
-  useEffect(()=>{
-    const poll=async()=>{
-      const[p,a,f,q]=await Promise.all([readMemory("portfolio"),readMemory("agent-status"),readMemory("founder-actions"),readMemory("task-queue")]);
-      if(p)setPortfolio(p);if(a)setAgentStatus(a);if(f)setFounderActs(f);if(q)setTaskQueue(q);
+    recognition.onstart = () => {
+      pendingTranscriptRef.current = "";
+      setVoiceState("listening");
     };
-    poll();const iv=setInterval(poll,4000);return()=>clearInterval(iv);
-  },[]);
 
-  useEffect(()=>{if(chatRef.current)chatRef.current.scrollTop=chatRef.current.scrollHeight;},[messages,loading]);
+    recognition.onresult = (event) => {
+      const transcript = Array.from(event.results)
+        .map((result) => result[0]?.transcript || "")
+        .join(" ")
+        .trim();
 
-  const send=async(text)=>{
-    const msg=text||input.trim();if(!msg||loading)return;
-    setInput("");
-    const t=clock.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"});
-    const uMsg={role:"user",content:msg,time:t};
-    setMessages(prev=>[...prev,uMsg]);setLoading(true);
-    try{
-      const sp=buildNexusPrompt(portfolio,agentStatus,founderActs);
-      const reply=await askNexus([...messages,uMsg],sp);
-      setMessages(prev=>[...prev,{role:"assistant",content:reply,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]);
-    }catch(e){
-      setMessages(prev=>[...prev,{role:"assistant",content:`Unable to reach NEXUS.\n\n${e.message}\n\nCheck that VITE_ANTHROPIC_API_KEY is set in dashboard/.env`,time:new Date().toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit"})}]);
-    }finally{setLoading(false);inputRef.current?.focus();}
-  };
+      pendingTranscriptRef.current = transcript;
+      setInput(transcript);
+    };
 
-  const toggleAction=(id)=>setFounderActs(prev=>({...prev,actions:prev.actions.map(a=>a.id===id?{...a,done:!a.done}:a)}));
+    recognition.onend = () => {
+      const transcript = pendingTranscriptRef.current.trim();
+      if (!transcript) {
+        setVoiceState("idle");
+        return;
+      }
 
-  const agents   = agentStatus?.agents||{};
-  const projects = portfolio?.projects||[];
-  const actions  = founderActs?.actions||[];
-  const pending  = taskQueue?.queue?.filter(t=>t.status==="pending")||[];
-  const ae       = Object.entries(agents);
-  const activeCount  = ae.filter(([,a])=>a.status==="active"||a.status==="working").length;
-  const blockedCount = ae.filter(([,a])=>a.status==="blocked").length;
-  const doneCount    = ae.filter(([,a])=>a.status==="done").length;
-  const pendingActs  = actions.filter(a=>!a.done).length;
+      pendingTranscriptRef.current = "";
+      setVoiceState("sending");
+      sendPromptRef.current?.(transcript);
+    };
 
-  const TABS=[
-    {id:"agents",  label:"Agents",     count:ae.length},
-    {id:"actions", label:"Directives", count:pendingActs},
-    {id:"queue",   label:"Queue",      count:pending.length},
-  ];
+    recognition.onerror = () => {
+      pendingTranscriptRef.current = "";
+      setVoiceState("idle");
+    };
 
-  return(
-    <div style={{height:"100vh",display:"flex",flexDirection:"column",background:T.bg,color:T.text,fontFamily:"'IBM Plex Mono',monospace"}}>
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=DM+Serif+Display&display=swap');
-        @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
-        @keyframes dotpulse{0%,100%{box-shadow:0 0 0 2px rgba(79,142,247,0.3)}50%{box-shadow:0 0 0 4px rgba(79,142,247,0.08)}}
-        @keyframes fadein{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-        @keyframes shimmer{0%{opacity:0.3}50%{opacity:0.8}100%{opacity:0.3}}
-        *{box-sizing:border-box;}
-        ::-webkit-scrollbar{width:3px;} ::-webkit-scrollbar-thumb{background:${T.borderAlt};border-radius:2px;}
-        textarea,input{outline:none;} button{cursor:pointer;}
-        ::placeholder{color:${T.textDim};}
-      `}</style>
+    recognitionRef.current = recognition;
 
-      {/* ── Header ── */}
-      <header style={{height:52,flexShrink:0,display:"flex",alignItems:"center",padding:"0 20px",gap:20,borderBottom:`1px solid ${T.border}`,background:T.surface}}>
-        <div style={{display:"flex",alignItems:"baseline",gap:10,paddingRight:20,borderRight:`1px solid ${T.border}`}}>
-          <span style={{fontFamily:"'DM Serif Display',Georgia,serif",fontSize:20,color:T.text,letterSpacing:"-0.01em"}}>Nexus</span>
-          <span style={{fontSize:10,color:T.textDim,letterSpacing:"0.1em",fontWeight:600}}>COMMAND</span>
-        </div>
-        <div style={{display:"flex",gap:6}}>
-          <Badge label={`${activeCount} Active`}  color={T.blue}  bg="#4f8ef712"/>
-          {blockedCount>0&&<Badge label={`${blockedCount} Blocked`} color={T.red} bg="#ef444412"/>}
-          <Badge label={`${doneCount} Done`}    color={T.green} bg="#3ecf8e12"/>
-          {pending.length>0&&<Badge label={`${pending.length} Queued`} color={T.amber} bg="#f59e0b12"/>}
-        </div>
-        <div style={{display:"flex",gap:4,marginLeft:"auto"}}>
-          {projects.map(p=>(
-            <div key={p.id} style={{display:"flex",alignItems:"center",gap:7,padding:"5px 11px",background:T.surfaceAlt,border:`1px solid ${T.border}`,borderRadius:6}}>
-              <div style={{width:6,height:6,borderRadius:"50%",background:p.color||T.blue}}/>
-              <span style={{fontSize:11,fontWeight:600,color:T.text,letterSpacing:"0.02em"}}>{p.name}</span>
-              <span style={{fontSize:9,color:T.textDim,fontWeight:500,textTransform:"uppercase",letterSpacing:"0.06em"}}>{p.gate||p.stage}</span>
+    return () => {
+      try {
+        recognition.stop();
+      } catch {
+        // no-op
+      }
+      recognitionRef.current = null;
+    };
+  }, []);
+
+  function toggleVoiceCapture() {
+    if (!voiceSupported || !recognitionRef.current) return;
+
+    if (voiceState === "listening") {
+      recognitionRef.current.stop();
+      return;
+    }
+
+    try {
+      recognitionRef.current.start();
+    } catch {
+      setVoiceState("idle");
+    }
+  }
+
+  const missionLabel = studio.activeProject ? `${studio.activeProject.name} operating posture` : "Command posture";
+  const missionNote =
+    studio.activeProject?.notes ||
+    "No active venture selected. Portfolio memory is connected, but mission context is still thin.";
+
+  return (
+    <div className="page page--command" data-testid="command-center-page">
+      <div className="command-home">
+        <div className="command-dock">
+          <div className="command-dock__brand">
+            <div className="command-dock__mark">N</div>
+            <div>
+              <div className="command-dock__brand-label">NEXUS command deck</div>
+              <div className="command-dock__brand-meta">Live founder-facing control surface</div>
             </div>
-          ))}
-        </div>
-        <div style={{paddingLeft:16,borderLeft:`1px solid ${T.border}`,fontSize:12,color:T.textMuted,fontWeight:500,fontVariantNumeric:"tabular-nums"}}>
-          {clock.toLocaleTimeString("en-US",{hour:"2-digit",minute:"2-digit",second:"2-digit",hour12:false})}
-        </div>
-      </header>
+          </div>
 
-      <div style={{flex:1,display:"flex",overflow:"hidden"}}>
-
-        {/* ── Left panel ── */}
-        <aside style={{width:296,flexShrink:0,borderRight:`1px solid ${T.border}`,background:T.surface,display:"flex",flexDirection:"column",overflow:"hidden"}}>
-          {/* Tabs */}
-          <div style={{display:"flex",borderBottom:`1px solid ${T.border}`,padding:"0 4px"}}>
-            {TABS.map(tab=>(
-              <button key={tab.id} onClick={()=>setLeftTab(tab.id)} style={{flex:1,padding:"11px 4px",background:"transparent",border:"none",borderBottom:`2px solid ${leftTab===tab.id?T.blue:"transparent"}`,color:leftTab===tab.id?T.text:T.textMuted,fontSize:11,fontWeight:leftTab===tab.id?600:400,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}>
+          <div className="command-dock__nav" aria-label="home modes">
+            {HOME_TABS.map((tab) => (
+              <button
+                key={tab.id}
+                type="button"
+                className={`command-dock__tab${activeTab === tab.id ? " command-dock__tab--active" : ""}`}
+              >
                 {tab.label}
-                {tab.count>0&&<span style={{marginLeft:5,fontSize:9,fontWeight:700,color:tab.id==="actions"&&tab.count>0?T.amber:tab.id==="queue"&&tab.count>0?T.blue:T.textDim}}>{tab.count}</span>}
               </button>
             ))}
           </div>
 
-          <div style={{flex:1,overflowY:"auto",padding:"12px 0"}}>
+          <div className="command-dock__actions">
+            <button type="button" className="command-dock__action command-dock__action--ghost" onClick={studio.refresh}>
+              Sync memory
+            </button>
+            <button
+              type="button"
+              className="command-dock__action command-dock__action--primary"
+              onClick={toggleVoiceCapture}
+              data-testid="voice-toggle"
+              disabled={!voiceSupported && voiceState !== "listening"}
+            >
+              {voiceButtonLabel(voiceSupported, voiceState)}
+            </button>
+          </div>
+        </div>
 
-            {leftTab==="agents"&&(
-              <>
-                {/* Summary row */}
-                <div style={{display:"flex",justifyContent:"space-around",padding:"8px 12px 14px",borderBottom:`1px solid ${T.border}`,marginBottom:10}}>
-                  <StatChip label="Active"  value={activeCount}  color={T.blue}/>
-                  <StatChip label="Blocked" value={blockedCount} color={blockedCount>0?T.red:T.textDim}/>
-                  <StatChip label="Done"    value={doneCount}    color={T.green}/>
-                  <StatChip label="Idle"    value={ae.length-activeCount-blockedCount-doneCount} color={T.textDim}/>
+        <div className="command-reference-grid">
+          <aside className="command-status-column command-reference-sidebar">
+            <div className="command-agent-shell">
+              <div className="command-agent-shell__head">
+                <div>
+                  <div className="eyebrow">Agent State</div>
+                  <h2 className="command-agent-shell__title">Live network</h2>
+                  <p className="command-agent-shell__subtitle">Seven visible at once. The rest stay in the rail.</p>
                 </div>
-                {/* Team-grouped agents */}
-                {ae.length===0?(
-                  <div style={{padding:"32px 20px",textAlign:"center"}}>
-                    <p style={{fontSize:11,color:T.textDim,lineHeight:1.8}}>No agent data.<br/>Start the orchestrator:<br/><code style={{color:T.blue}}>npm run orchestrator</code></p>
-                  </div>
-                ):(
-                  Object.entries(TEAM_META).sort((a,b)=>a[1].order-b[1].order).map(([teamId,meta])=>{
-                    const teamAgents=ae.filter(([id])=>AGENT_TEAMS[id]===teamId);
-                    if(!teamAgents.length)return null;
-                    const anyActive=teamAgents.some(([,a])=>a.status==="active"||a.status==="working");
-                    const anyBlocked=teamAgents.some(([,a])=>a.status==="blocked");
-                    return(
-                      <div key={teamId} style={{marginBottom:8,border:`1px solid ${meta.color}18`,borderRadius:7,overflow:"hidden"}}>
-                        {/* Team header */}
-                        <div style={{display:"flex",alignItems:"center",gap:7,padding:"5px 10px",background:`${meta.color}0A`,borderBottom:`1px solid ${meta.color}15`}}>
-                          <div style={{width:3,height:16,borderRadius:2,background:meta.color,flexShrink:0}}/>
-                          <span style={{fontSize:9,fontWeight:700,color:meta.color,letterSpacing:"0.14em",flex:1}}>{meta.name}</span>
-                          {anyActive&&<Dot color={T.blue} pulse/>}
-                          {anyBlocked&&<Dot color={T.red}/>}
-                          <span style={{fontSize:9,color:T.textDim}}>{teamAgents.length}</span>
-                        </div>
-                        {/* Agents in team */}
-                        {teamAgents.map(([id,agent])=><AgentRow key={id} id={id} agent={agent}/>)}
+                <StatusPill status={studio.statusCounts.blocked ? "blocked" : "active"}>{studio.agentEntries.length} total</StatusPill>
+              </div>
+
+              <div className="command-agent-shell__summary">
+                <div className="command-agent-stat">
+                  <span className="eyebrow">Engaged</span>
+                  <strong>{studio.statusCounts.active + studio.statusCounts.working}</strong>
+                </div>
+                <div className="command-agent-stat">
+                  <span className="eyebrow">Blocked</span>
+                  <strong className="tone-red">{studio.statusCounts.blocked}</strong>
+                </div>
+                <div className="command-agent-stat">
+                  <span className="eyebrow">Queue</span>
+                  <strong>{studio.queueDepth}</strong>
+                </div>
+                <div className="command-agent-stat">
+                  <span className="eyebrow">Recovered</span>
+                  <strong className="tone-green">{studio.resolvedFailures.length}</strong>
+                </div>
+              </div>
+
+              <div className="command-status-list">
+                {sortedAgents.map((agent) => (
+                  <div key={agent.id} className={`command-status-card command-status-card--${statusTone(agent.status)}`}>
+                    <div className="command-status-card__top">
+                      <div>
+                        <div className="command-status-card__name">{agent.name}</div>
+                        <div className="command-status-card__role">{agent.role}</div>
                       </div>
-                    );
-                  })
-                )}
-              </>
-            )}
-
-            {leftTab==="actions"&&(
-              <>
-                <SectionHeader label="Founder Directives" count={`${pendingActs} pending`}/>
-                <div style={{marginTop:8}}>
-                  {actions.filter(a=>!a.done).map(a=><ActionRow key={a.id} action={a} onToggle={()=>toggleAction(a.id)}/>)}
-                  {actions.filter(a=>!a.done).length>0&&actions.filter(a=>a.done).length>0&&<div style={{height:1,background:T.border,margin:"8px 12px"}}/>}
-                  {actions.filter(a=>a.done).map(a=><ActionRow key={a.id} action={a} onToggle={()=>toggleAction(a.id)}/>)}
-                </div>
-              </>
-            )}
-
-            {leftTab==="queue"&&(
-              <>
-                <SectionHeader label="Task Queue" count={pending.length}/>
-                <div style={{padding:"8px 12px 0"}}>
-                  {pending.length===0?(
-                    <div style={{padding:"24px 0",textAlign:"center"}}>
-                      <p style={{fontSize:11,color:T.textDim,lineHeight:1.9}}>Queue is empty.<br/><code style={{color:T.blue,fontSize:10}}>npm run task &lt;agent&gt; "&lt;task&gt;"</code></p>
+                      <StatusPill status={agent.status}>{agent.status}</StatusPill>
                     </div>
-                  ):pending.map(t=><QueueRow key={t.id} task={t}/>)}
-                </div>
-                {(taskQueue?.completed?.length>0||taskQueue?.failed?.length>0)&&(
-                  <>
-                    <div style={{height:1,background:T.border,margin:"12px 0"}}/>
-                    <SectionHeader label="History"/>
-                    <div style={{padding:"8px 12px",display:"flex",gap:20}}>
-                      <div><div style={{fontSize:18,fontWeight:700,color:T.green,fontFamily:"'IBM Plex Mono',monospace"}}>{taskQueue?.completed?.length||0}</div><div style={{fontSize:10,color:T.textDim}}>Completed</div></div>
-                      <div><div style={{fontSize:18,fontWeight:700,color:(taskQueue?.failed?.length||0)>0?T.red:T.textDim,fontFamily:"'IBM Plex Mono',monospace"}}>{taskQueue?.failed?.length||0}</div><div style={{fontSize:10,color:T.textDim}}>Failed</div></div>
+                    <div className="command-status-card__task">{agent.task || "No active assignment."}</div>
+                    <div className="command-status-card__meta">
+                      <span>{agent.project || "system"}</span>
+                      <span>{agent.progress || 0}%</span>
                     </div>
-                  </>
-                )}
-              </>
-            )}
-          </div>
-
-          {/* Footer */}
-          <div style={{padding:"10px 14px",borderTop:`1px solid ${T.border}`,display:"flex",alignItems:"center",gap:8}}>
-            <Dot color={T.green} pulse/>
-            <span style={{fontSize:10,color:T.textDim}}>Live · memory/*.json · 4s poll</span>
-          </div>
-        </aside>
-
-        {/* ── Chat ── */}
-        <main style={{flex:1,display:"flex",flexDirection:"column",overflow:"hidden",background:T.bg}}>
-
-          {/* Chat header */}
-          <div style={{height:48,flexShrink:0,borderBottom:`1px solid ${T.border}`,padding:"0 24px",display:"flex",alignItems:"center",justifyContent:"space-between",background:T.surface}}>
-            <div style={{display:"flex",alignItems:"center",gap:10}}>
-              <div style={{width:28,height:28,borderRadius:7,background:T.surfaceAlt,border:`1px solid ${T.borderAlt}`,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                <span style={{fontSize:11,color:T.blue,fontWeight:700}}>N</span>
-              </div>
-              <div>
-                <div style={{fontSize:13,fontWeight:600,color:T.text}}>NEXUS</div>
-                <div style={{fontSize:10,color:T.green,display:"flex",alignItems:"center",gap:5}}>
-                  <Dot color={T.green} pulse/> Online — context from live memory files
-                </div>
-              </div>
-            </div>
-            <span style={{fontSize:10,color:T.textDim}}>{messages.length>0?`${messages.length} messages`:"No conversation yet"}</span>
-          </div>
-
-          {/* Sprint pipeline status */}
-          {(()=>{
-            const sprint=portfolio?.sprintPlan?.currentSprint||1;
-            const gates=portfolio?.projects?.find(p=>p.id===portfolio?.activeProject)?.gates||{};
-            const phases=[
-              {label:`SPRINT ${sprint}`, sub:"Active",     color:T.blue,  status:"active"},
-              {label:"BUILD",            sub:"CORE+SWIFT",  color:"#4A8FBF",status:gates.build||"pending"},
-              {label:"AUDITOR",          sub:"4 skills",    color:"#C49A2A",status:gates.auditor||"pending"},
-              {label:"SENTINEL",         sub:"4 skills",    color:"#A84848",status:gates.sentinel||"pending"},
-              {label:"WARDEN",           sub:"3 skills",    color:"#7B6DB0",status:gates.warden||"pending"},
-              {label:"SIGN-OFF",         sub:"NEXUS",       color:T.green,  status:gates.release||"pending"},
-            ];
-            const sc={pass:T.green,fail:T.red,active:T.blue,pending:T.textDim};
-            return(
-              <div style={{flexShrink:0,padding:"8px 24px",background:`${T.surface}CC`,borderBottom:`1px solid ${T.border}`,display:"flex",alignItems:"center",gap:0,overflowX:"auto"}}>
-                {phases.map((p,i,arr)=>(
-                  <div key={p.label} style={{display:"flex",alignItems:"center",flexShrink:0}}>
-                    <div style={{textAlign:"center",padding:"0 6px"}}>
-                      <div style={{fontSize:9,fontWeight:700,color:sc[p.status]||T.textDim,letterSpacing:"0.06em"}}>{p.label}</div>
-                      <div style={{fontSize:8,color:T.textDim}}>{p.sub}</div>
-                    </div>
-                    {i<arr.length-1&&(
-                      <div style={{width:20,height:1,background:`linear-gradient(90deg,${sc[p.status]||T.textDim}50,${sc[arr[i+1].status]||T.textDim}50)`,flexShrink:0}}/>
-                    )}
                   </div>
                 ))}
               </div>
-            );
-          })()}
+            </div>
+          </aside>
 
-          {/* Messages */}
-          <div ref={chatRef} style={{flex:1,overflowY:"auto",padding:"28px 32px"}}>
-            {messages.length===0&&(
-              <div style={{maxWidth:560,margin:"40px auto 0",animation:"fadein 0.5s ease"}}>
-                {/* Greeting */}
-                <div style={{marginBottom:32}}>
-                  <div style={{fontFamily:"'DM Serif Display',Georgia,serif",fontSize:30,color:T.text,marginBottom:10,lineHeight:1.15}}>
-                    Good {getTimeOfDay()},<br/>Founder.
+          <div className="command-reference-main">
+            <section className="command-note">
+              <div className="command-note__chrome">
+                <div className="command-note__window">
+                  <span />
+                  <span />
+                  <span />
+                </div>
+                <div className="command-note__chiprow">
+                  <StatusPill status="active">{studio.activeProject ? studio.activeProject.name : "Portfolio"}</StatusPill>
+                  <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
+                    {studio.statusCounts.blocked ? `${studio.statusCounts.blocked} blocked` : "Stable"}
+                  </StatusPill>
+                  <StatusPill status="working">{voiceSupported ? "Voice online" : "Voice preview"}</StatusPill>
+                </div>
+              </div>
+
+              <div className="command-note__paper">
+                <div className="command-note__label">voice agent</div>
+                <h2 className="command-note__title">
+                  {studio.activeProject ? `${studio.activeProject.name} → ${studio.activeProject.gate}` : "Point NEXUS at the next mission."}
+                </h2>
+                <p className="command-note__body">{liveNarrative(studio)}</p>
+
+                <div className="command-note__metrics">
+                  <div className="command-note__metric">
+                    <span className="eyebrow">readiness</span>
+                    <strong>{studio.gateProgress}%</strong>
                   </div>
-                  <p style={{fontSize:13,color:T.textMuted,lineHeight:1.75,margin:0}}>
-                    NEXUS is online. Context is loaded from your memory files.
-                    {portfolio ? ` Active: ${portfolio.projects?.find(p=>p.id===portfolio.activeProject)?.name||"CareLoop"} — Sprint ${portfolio.sprintPlan?.currentSprint||1} of ${portfolio.sprintPlan?.totalSprints||3}.` : " Loading portfolio..."}
-                    {" "}What would you like to know?
-                  </p>
+                  <div className="command-note__metric">
+                    <span className="eyebrow">directives</span>
+                    <strong>{studio.openActions.length}</strong>
+                  </div>
+                  <div className="command-note__metric">
+                    <span className="eyebrow">sync</span>
+                    <strong>{formatRelative(studio.lastUpdated)}</strong>
+                  </div>
                 </div>
 
-                {/* Portfolio table */}
-                {portfolio?.projects?.length>0&&(
-                  <div style={{marginBottom:28}}>
-                    <div style={{fontSize:10,fontWeight:700,color:T.textDim,letterSpacing:"0.1em",marginBottom:10,textTransform:"uppercase"}}>Portfolio</div>
-                    <div style={{border:`1px solid ${T.border}`,borderRadius:8,overflow:"hidden"}}>
-                      {portfolio.projects.map((p,i)=>(
-                        <div key={p.id} style={{display:"grid",gridTemplateColumns:"8px 1fr auto auto auto",alignItems:"center",gap:12,padding:"11px 14px",background:i%2===0?T.surface:T.surfaceAlt,borderBottom:i<portfolio.projects.length-1?`1px solid ${T.border}`:"none"}}>
-                          <div style={{width:6,height:6,borderRadius:"50%",background:p.color||T.blue}}/>
-                          <span style={{fontSize:12,fontWeight:600,color:T.text}}>{p.name}</span>
-                          <span style={{fontSize:10,color:T.textDim}}>{p.stage}</span>
-                          <span style={{fontSize:10,color:T.textMuted}}>Gate {p.gate}</span>
-                          <span style={{fontSize:10,color:T.textDim}}>{p.tam}</span>
-                        </div>
-                      ))}
+                <div className="command-console__thread command-note__thread" ref={threadRef}>
+                  {messages.map((message, index) => (
+                    <ChatMessage key={`${message.time}-${index}`} message={message} />
+                  ))}
+                  {loading && (
+                    <div className="message">
+                      <div className="message__meta">NEXUS · thinking</div>
+                      <div className="message__bubble">Reasoning against current live memory…</div>
                     </div>
-                  </div>
-                )}
+                  )}
+                </div>
+              </div>
 
-                {/* Quick commands */}
-                <div style={{fontSize:10,fontWeight:700,color:T.textDim,letterSpacing:"0.1em",marginBottom:10,textTransform:"uppercase"}}>Suggested</div>
-                <div style={{display:"flex",flexDirection:"column",gap:2}}>
-                  <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:6}}>
-                  {QUICK.map(q=>(
-                    <button key={q} onClick={()=>send(q)} style={{display:"flex",alignItems:"center",gap:8,padding:"9px 12px",textAlign:"left",background:T.surface,border:`1px solid ${T.border}`,borderRadius:7,color:T.textMuted,fontSize:11,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}
-                    onMouseEnter={e=>{e.currentTarget.style.background=T.surfaceAlt;e.currentTarget.style.color=T.text;e.currentTarget.style.borderColor=T.borderAlt;}}
-                    onMouseLeave={e=>{e.currentTarget.style.background=T.surface;e.currentTarget.style.color=T.textMuted;e.currentTarget.style.borderColor=T.border;}}>
-                      <span style={{color:T.textDim,fontSize:9,flexShrink:0}}>▶</span>{q}
+              <div className="command-note__composer">
+                <div className="command-console__quick-label">Example commands</div>
+                <div className="command-console__prompts">
+                  {quickPrompts.map((prompt) => (
+                    <button
+                      key={prompt}
+                      className="quick-prompt command-prompt-chip"
+                      onClick={() => sendPrompt(prompt)}
+                      disabled={loading}
+                    >
+                      {prompt}
                     </button>
                   ))}
+                </div>
+
+                <textarea
+                  className="textarea command-console__input"
+                  placeholder="Ask for blockers, investor briefs, sprint risk, release readiness, or founder priorities."
+                  value={input}
+                  onChange={(event) => setInput(event.target.value)}
+                />
+
+                <div className="command-note__actionrow">
+                  <button className="command-dock__action command-dock__action--primary" onClick={() => sendPrompt()} disabled={loading || !input.trim()}>
+                    Send to NEXUS
+                  </button>
+                  <button className="command-dock__action command-dock__action--ghost" onClick={() => setMessages([])} disabled={loading}>
+                    Reset thread
+                  </button>
+                </div>
+              </div>
+            </section>
+
+            <div className="command-support-grid">
+              <section className="command-card">
+                <div className="command-card__head">
+                  <div>
+                    <div className="eyebrow">Mission Signal</div>
+                    <h3 className="command-card__title">{missionLabel}</h3>
+                  </div>
+                  <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
+                    {studio.statusCounts.blocked ? "Recovery pressure" : "Stable posture"}
+                  </StatusPill>
+                </div>
+                <p className="command-card__copy">{missionNote}</p>
+                <div className="command-card__metrics">
+                  <div className="command-card__metric">
+                    <span className="eyebrow">Current gate</span>
+                    <strong>{studio.activeProject?.gate || "—"}</strong>
+                  </div>
+                  <div className="command-card__metric">
+                    <span className="eyebrow">Sprint</span>
+                    <strong>{studio.sprintPlan ? `${studio.sprintPlan.currentSprint}/${studio.sprintPlan.totalSprints}` : "—"}</strong>
+                  </div>
+                  <div className="command-card__metric">
+                    <span className="eyebrow">Score</span>
+                    <strong>{studio.activeProject?.score || 0}/50</strong>
+                  </div>
+                  <div className="command-card__metric">
+                    <span className="eyebrow">Readiness</span>
+                    <strong>{studio.gateProgress}%</strong>
                   </div>
                 </div>
-              </div>
-            )}
+              </section>
 
-            {messages.map((msg,i)=>(
-              <Message key={i} msg={msg} isLatest={i===messages.length-1}/>
-            ))}
-
-            {loading&&(
-              <div style={{display:"flex",gap:10,marginBottom:20,animation:"fadein 0.2s ease"}}>
-                <div style={{width:30,height:30,borderRadius:8,flexShrink:0,background:T.surfaceAlt,border:`1px solid ${T.borderAlt}`,display:"flex",alignItems:"center",justifyContent:"center"}}>
-                  <span style={{fontSize:11,color:T.blue,fontWeight:700}}>N</span>
+              <section className="command-card">
+                <div className="command-card__head">
+                  <div>
+                    <div className="eyebrow">Founder Queue</div>
+                    <h3 className="command-card__title">Immediate directives</h3>
+                  </div>
+                  <PriorityPill priority="high">{studio.openActions.length} open</PriorityPill>
                 </div>
-                <div style={{background:T.surface,border:`1px solid ${T.border}`,borderRadius:"2px 12px 12px 12px",padding:"14px 16px",display:"flex",gap:6,alignItems:"center"}}>
-                  {[0,1,2].map(i=><div key={i} style={{width:5,height:5,borderRadius:"50%",background:T.textDim,animation:"shimmer 1.2s ease-in-out infinite",animationDelay:`${i*0.2}s`}}/>)}
-                </div>
-              </div>
-            )}
-          </div>
 
-          {/* Input */}
-          <div style={{flexShrink:0,padding:"16px 24px",borderTop:`1px solid ${T.border}`,background:T.surface}}>
-            <div style={{display:"flex",gap:10,alignItems:"flex-end",background:T.bg,border:`1px solid ${T.borderAlt}`,borderRadius:10,padding:"10px 14px",transition:"border-color 0.15s"}}
-              onFocusCapture={e=>e.currentTarget.style.borderColor=T.blue}
-              onBlurCapture={e=>e.currentTarget.style.borderColor=T.borderAlt}>
-              <textarea ref={inputRef} value={input} onChange={e=>setInput(e.target.value)} onKeyDown={e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();send();}}}
-                placeholder="Message NEXUS... (↵ send, ⇧↵ new line)" disabled={loading} rows={1}
-                style={{flex:1,background:"none",border:"none",color:T.text,fontSize:13,resize:"none",lineHeight:1.6,minHeight:22,maxHeight:120,overflow:"auto",fontFamily:"Georgia,serif"}}/>
-              <button onClick={()=>send()} disabled={loading||!input.trim()} style={{width:32,height:32,borderRadius:7,flexShrink:0,background:!loading&&input.trim()?T.blue:T.surfaceAlt,border:"none",color:!loading&&input.trim()?"#fff":T.textDim,display:"flex",alignItems:"center",justifyContent:"center",transition:"all 0.15s",cursor:loading||!input.trim()?"not-allowed":"pointer"}}>
-                <svg width={14} height={14} viewBox="0 0 14 14" fill="none">
-                  <path d="M12 7L7 2M12 7L7 12M12 7H2" stroke="currentColor" strokeWidth={1.8} strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </button>
-            </div>
-            <div style={{display:"flex",gap:5,marginTop:8,flexWrap:"wrap"}}>
-              {QUICK.slice(0,6).map(q=>(
-                <button key={q} onClick={()=>send(q)} style={{padding:"4px 10px",background:"transparent",border:`1px solid ${T.border}`,borderRadius:5,color:T.textDim,fontSize:10,fontFamily:"'IBM Plex Mono',monospace",transition:"all 0.15s"}}
-                  onMouseEnter={e=>{e.currentTarget.style.color=T.text;e.currentTarget.style.borderColor=T.borderAlt;}}
-                  onMouseLeave={e=>{e.currentTarget.style.color=T.textDim;e.currentTarget.style.borderColor=T.border;}}>
-                  {q}
-                </button>
-              ))}
+                {studio.openActions.length ? (
+                  <div className="data-list">
+                    {studio.openActions.slice(0, 4).map((action) => (
+                      <div key={action.id} className="data-row">
+                        <div className="data-row__top">
+                          <div className="data-row__title">{action.text}</div>
+                          <PriorityPill priority={action.priority}>{action.priority}</PriorityPill>
+                        </div>
+                        <div className="data-row__meta mono">{action.id}</div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <EmptyState title="No founder directives open" body="This queue is clear." />
+                )}
+              </section>
+
+              <section className="command-card command-card--span">
+                <div className="command-card__head">
+                  <div>
+                    <div className="eyebrow">Execution Ledger</div>
+                    <h3 className="command-card__title">Queue and recovery</h3>
+                  </div>
+                  <StatusPill status={studio.queueDepth ? "working" : "done"}>{studio.queueDepth} live queue</StatusPill>
+                </div>
+
+                <div className="grid-2">
+                  <div className="stack">
+                    <SectionHeading label="Pending queue" meta={`${studio.pendingQueue.length} items`} />
+                    {studio.pendingQueue.length ? (
+                      <div className="data-list">
+                        {studio.pendingQueue.slice(0, 3).map((item) => (
+                          <div key={item.id} className="data-row">
+                            <div className="data-row__top">
+                              <PriorityPill priority={item.priority}>{item.priority}</PriorityPill>
+                              <span className="mono muted">{item.agentId?.toUpperCase()}</span>
+                            </div>
+                            <div className="data-row__meta" style={{ color: "var(--text-soft)" }}>
+                              {item.label}
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <EmptyState title="Queue is clear" body="No pending operations are waiting for execution." />
+                    )}
+                  </div>
+
+                  <div className="stack">
+                    <SectionHeading label="Recent completions" meta={`${studio.recentCompletions.length} entries`} />
+                    {studio.recentCompletions.length ? (
+                      <div className="data-list">
+                        {studio.recentCompletions.slice(0, 3).map((item) => (
+                          <div key={item.id} className="data-row">
+                            <div className="data-row__top">
+                              <StatusPill status={item.resolvedFromFailure ? "done" : "active"}>
+                                {item.resolvedFromFailure ? "Recovered" : "Completed"}
+                              </StatusPill>
+                              <span className="mono muted">{item.agentId?.toUpperCase()}</span>
+                            </div>
+                            <div className="data-row__meta" style={{ color: "var(--text-soft)" }}>
+                              {item.skill || item.task}
+                            </div>
+                            <div className="data-row__meta mono">{formatTimestamp(item.finishedAt || item.doneAt)}</div>
+                          </div>
+                        ))}
+                      </div>
+                    ) : (
+                      <EmptyState title="No completions yet" body="Completed queue items will show up here." />
+                    )}
+                  </div>
+                </div>
+              </section>
             </div>
           </div>
-        </main>
+        </div>
       </div>
     </div>
   );

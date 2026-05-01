@@ -4,17 +4,21 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev":   "vite --port 5173 --open",
+    "dev": "vite --port 5173 --open",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test:unit": "node --test src/pages/constellationLayout.test.js",
+    "test:pages": "playwright test",
+    "test": "npm run test:unit && npm run test:pages"
   },
   "dependencies": {
-    "react":            "^18.2.0",
-    "react-dom":        "^18.2.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-router-dom": "^6.22.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.59.1",
     "@vitejs/plugin-react": "^4.2.1",
-    "vite":                 "^5.1.0"
+    "vite": "^5.1.0"
   }
 }

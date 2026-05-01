@@ -1,110 +1,287 @@
-import { useEffect, useState } from "react";
-import { Routes, Route, useNavigate, useLocation } from "react-router-dom";
-import CommandCenter  from "./pages/CommandCenter.jsx";
-import Constellation  from "./pages/Constellation.jsx";
-import Traction       from "./pages/Traction.jsx";
-import Skills         from "./pages/Skills.jsx";
-import { readMemory } from "./utils/memory.js";
+import { useEffect, useMemo, useState } from "react";
+import { NavLink, Route, Routes, useLocation } from "react-router-dom";
+import { NAV_ITEMS } from "./data/studio.js";
+import { useStudioData } from "./hooks/useStudioData.js";
+import CommandCenter from "./pages/CommandCenter.jsx";
+import Constellation from "./pages/Constellation.jsx";
+import Skills from "./pages/Skills.jsx";
+import Traction from "./pages/Traction.jsx";
+import {
+  EmptyState,
+  Panel,
+  ProgressBar,
+  StatusPill,
+  formatRelative,
+  formatTimestamp,
+} from "./components/StudioPrimitives.jsx";
 
-const NAV = [
-  { path:"/",              icon:"⬡", label:"NEXUS",    sub:"Command Center"  },
-  { path:"/constellation", icon:"◎", label:"STAR MAP", sub:"Agent Network"   },
-  { path:"/skills",        icon:"▶", label:"SKILLS",   sub:"Run Skills"      },
-  { path:"/traction",      icon:"◈", label:"TRACTION", sub:"Investor Module" },
-];
-
-export default function App() {
-  const navigate  = useNavigate();
-  const location  = useLocation();
-  const [time,    setTime]    = useState(new Date());
-  const [pending, setPending] = useState(0);
-  const [blocked, setBlocked] = useState(0);
-
-  useEffect(() => {
-    const t = setInterval(() => setTime(new Date()), 1000);
-    return () => clearInterval(t);
-  }, []);
-
-  // Poll agent status for sidebar indicators
-  useEffect(() => {
-    const poll = async () => {
-      const [status, actions] = await Promise.all([
-        readMemory("agent-status"),
-        readMemory("founder-actions"),
-      ]);
-      if (status?.agents) {
-        setBlocked(Object.values(status.agents).filter(a => a.status === "blocked").length);
-      }
-      if (actions?.actions) {
-        setPending(actions.actions.filter(a => !a.done).length);
-      }
-    };
-    poll();
-    const iv = setInterval(poll, 5000);
-    return () => clearInterval(iv);
-  }, []);
+function ShellRightRail({ studio }) {
+  const { activeProject, currentLoad, openActions, openFailures, queueDepth, resolvedFailures, lastUpdated, gateProgress } = studio;
 
   return (
-    <div style={{ display:"flex", height:"100vh", overflow:"hidden", background:"#020508" }}>
-      {/* ── Sidebar ── */}
-      <div style={{
-        width:64, flexShrink:0,
-        borderRight:"1px solid rgba(0,217,255,0.08)",
-        background:"rgba(2,5,8,0.98)",
-        display:"flex", flexDirection:"column",
-        alignItems:"center", padding:"12px 0 8px",
-        zIndex:50, gap:2,
-      }}>
-        {/* Logo hex */}
-        <div style={{ marginBottom:14 }}>
-          <div style={{ width:32, height:32, clipPath:"polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%)", background:"rgba(0,217,255,0.15)", display:"flex", alignItems:"center", justifyContent:"center", boxShadow:"0 0 14px rgba(0,217,255,0.3)" }}>
-            <span style={{ fontSize:13, color:"#00D9FF" }}>⬡</span>
+    <div className="shell-rail-stack">
+      <Panel
+        eyebrow="System Signal"
+        title={activeProject ? activeProject.name : "Operating System"}
+        subtitle={activeProject?.tagline || "Live memory-backed venture control surface."}
+        meta={<StatusPill status={openFailures.length ? "blocked" : "active"}>{openFailures.length ? "Attention required" : "Live"}</StatusPill>}
+      >
+        <div className="shell-signal">
+          <div className="shell-signal__row">
+            <span className="shell-signal__label">Stage</span>
+            <span className="shell-signal__value mono">{activeProject?.stage || "—"}</span>
+          </div>
+          <div className="shell-signal__row">
+            <span className="shell-signal__label">Gate</span>
+            <span className="shell-signal__value mono">{activeProject?.gate || "—"}</span>
+          </div>
+          <ProgressBar value={gateProgress} max={100} tone="green" label="Gate readiness" />
+          <div className="shell-signal__row">
+            <span className="shell-signal__label">Queue depth</span>
+            <span className="shell-signal__value mono">{queueDepth}</span>
+          </div>
+          <div className="shell-signal__row">
+            <span className="shell-signal__label">Last refresh</span>
+            <span className="shell-signal__value mono">{formatRelative(lastUpdated)}</span>
           </div>
         </div>
+      </Panel>
 
-        {/* Nav items */}
-        {NAV.map(item => {
-          const active = location.pathname === item.path;
-          return (
-            <button key={item.path} onClick={() => navigate(item.path)} title={`${item.label} — ${item.sub}`}
-              style={{ width:52, padding:"9px 4px", background:active?"rgba(0,217,255,0.1)":"transparent", border:"none", borderLeft:`2px solid ${active?"#00D9FF":"transparent"}`, color:active?"#00D9FF":"rgba(0,217,255,0.22)", cursor:"pointer", display:"flex", flexDirection:"column", alignItems:"center", gap:3, transition:"all 0.2s", borderRadius:"0 5px 5px 0" }}>
-              <span style={{ fontSize:15, filter:active?"drop-shadow(0 0 5px rgba(0,217,255,0.7))":"none" }}>{item.icon}</span>
-              <span style={{ fontSize:5.5, letterSpacing:"0.08em", lineHeight:1.3, textAlign:"center", fontFamily:"'Courier New',monospace" }}>
-                {item.label}
+      <Panel eyebrow="Founder Queue" title="Immediate Directives" subtitle="These are the live founder-level actions still open in memory.">
+        {openActions.length ? (
+          <div className="data-list">
+            {openActions.slice(0, 4).map((action) => (
+              <div key={action.id} className="data-row">
+                <div className="data-row__top">
+                  <StatusPill status="active">{action.priority}</StatusPill>
+                  <span className="muted mono">{action.id}</span>
+                </div>
+                <div className="data-row__meta" style={{ color: "var(--text-soft)" }}>
+                  {action.text}
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState title="No founder directives open" body="The founder action queue is clear." />
+        )}
+      </Panel>
+
+      <Panel eyebrow="Live Agents" title="Current Load" subtitle="The highest-signal agents currently active, working, or blocked.">
+        {currentLoad.length ? (
+          <div className="agent-list">
+            {currentLoad.map((agent) => (
+              <div key={agent.id} className="agent-chip">
+                <div className="agent-dot" style={{ background: `var(--${agent.status === "blocked" ? "red" : agent.status === "working" ? "amber" : "blue"})` }} />
+                <div>
+                  <div className="agent-chip__title">
+                    {agent.name} <span className="muted">· {agent.role}</span>
+                  </div>
+                  <div className="agent-chip__task">{agent.task || "No active task."}</div>
+                </div>
+                <div className="agent-chip__progress">{agent.progress || 0}%</div>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <EmptyState title="No active load" body="The agent network is currently idle." />
+        )}
+      </Panel>
+
+      <Panel eyebrow="Failure State" title="Recovery Ledger" subtitle="Open failures stay visible; recovered failures remain attributable.">
+        <div className="data-list">
+          <div className="data-row">
+            <div className="data-row__top">
+              <div className="data-row__title">Open failures</div>
+              <StatusPill status={openFailures.length ? "blocked" : "done"}>{openFailures.length}</StatusPill>
+            </div>
+            <div className="data-row__meta">
+              {openFailures.length ? openFailures[0].task || openFailures[0].skill || "Recovery required" : "No unresolved failures in the current queue."}
+            </div>
+          </div>
+          <div className="data-row">
+            <div className="data-row__top">
+              <div className="data-row__title">Resolved failures</div>
+              <StatusPill status="done">{resolvedFailures.length}</StatusPill>
+            </div>
+            <div className="data-row__meta">
+              {resolvedFailures.length
+                ? `Most recent: ${resolvedFailures[0].agentId?.toUpperCase() || "SYSTEM"} · ${formatTimestamp(resolvedFailures[0].finishedAt)}`
+                : "No resolved recoveries recorded yet."}
+            </div>
+          </div>
+        </div>
+      </Panel>
+    </div>
+  );
+}
+
+export default function App() {
+  const studio = useStudioData();
+  const location = useLocation();
+  const [now, setNow] = useState(new Date());
+  const isHomeView = location.pathname === "/";
+  const isVerseView = location.pathname === "/constellation";
+
+  useEffect(() => {
+    const interval = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(interval);
+  }, []);
+
+  const activeNav = useMemo(
+    () => NAV_ITEMS.find((item) => item.path === location.pathname) || NAV_ITEMS[0],
+    [location.pathname]
+  );
+
+  return (
+    <div className="studio-app">
+      <aside className="nav-rail">
+        <div className="nav-rail__brand-wrap">
+          <div className="nav-rail__brand">⬡</div>
+          <div className="nav-rail__caption">Venture OS</div>
+        </div>
+
+        <nav className="nav-links">
+          {NAV_ITEMS.map((item) => (
+            <NavLink
+              key={item.path}
+              to={item.path}
+              className={({ isActive }) => `nav-link${isActive ? " nav-link--active" : ""}`}
+            >
+              <span className="nav-link__glyph">{item.icon}</span>
+              <span className="nav-link__short">{item.short}</span>
+            </NavLink>
+          ))}
+        </nav>
+
+        <div className="nav-rail__footer">
+          <div className="nav-signal">
+            <div className="nav-signal__value" style={{ color: "var(--blue)" }}>
+              {studio.statusCounts.active + studio.statusCounts.working}
+            </div>
+            <div className="nav-signal__label">Engaged</div>
+          </div>
+          <div className="nav-signal">
+            <div className="nav-signal__value" style={{ color: studio.statusCounts.blocked ? "var(--red)" : "var(--green)" }}>
+              {studio.statusCounts.blocked}
+            </div>
+            <div className="nav-signal__label">Blocked</div>
+          </div>
+          <div className="nav-signal">
+            <div className="nav-signal__value mono" style={{ color: "var(--text-soft)", fontSize: 14 }}>
+              {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}
+            </div>
+            <div className="nav-signal__label">Local</div>
+          </div>
+        </div>
+      </aside>
+
+      <div className="studio-shell">
+        <header
+          className={`shell-topbar${
+            isVerseView ? " shell-topbar--compact shell-topbar--verse" : isHomeView ? " shell-topbar--command-lite" : ""
+          }`}
+        >
+          {isVerseView ? (
+            <div className="shell-topbar__verse-title" aria-label={activeNav.label}>
+              <span className="shell-topbar__verse-mark" aria-hidden="true">
+                //
               </span>
-            </button>
-          );
-        })}
+              <span className="shell-topbar__verse-ai">AI</span>
+              <span className="shell-topbar__verse-name">Verse</span>
+              <span className="shell-topbar__verse-mark" aria-hidden="true">
+                //
+              </span>
+            </div>
+          ) : isHomeView ? (
+            <>
+              <div className="shell-topbar__compact-line">
+                <span className="eyebrow">Nexus command deck</span>
+                <h1 className="shell-topbar__compact-title">Command Center</h1>
+                <span className="shell-topbar__compact-subtitle">Live founder-facing operating surface</span>
+              </div>
 
-        {/* Bottom indicators */}
-        <div style={{ marginTop:"auto", width:"100%", display:"flex", flexDirection:"column", alignItems:"center", gap:6, paddingBottom:4 }}>
-          {blocked > 0 && (
-            <div title={`${blocked} agents blocked`} style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#FF3B5C", fontFamily:"'Courier New',monospace", lineHeight:1 }}>{blocked}</div>
-              <div style={{ fontSize:5, color:"rgba(255,59,92,0.5)", letterSpacing:"0.08em" }}>BLOCKED</div>
-            </div>
+              <div className="shell-topbar__home-meta">
+                <div className="shell-chip-row">
+                  <StatusPill status="active">{studio.activeProject ? `${studio.activeProject.name} live` : "No active project"}</StatusPill>
+                  <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
+                    {studio.statusCounts.blocked ? `${studio.statusCounts.blocked} blocked` : "No blockers"}
+                  </StatusPill>
+                  <StatusPill status="working">{studio.openDirectiveCount} directives</StatusPill>
+                  <StatusPill status="done">{studio.queueDepth} queue</StatusPill>
+                </div>
+
+                <div className="shell-topbar__home-signal">
+                  <div>
+                    <div className="eyebrow">System time</div>
+                    <div className="mono shell-topbar__command-value">
+                      {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="eyebrow">Memory sync</div>
+                    <div className="mono shell-topbar__command-value">{formatRelative(studio.lastUpdated)}</div>
+                  </div>
+                </div>
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="shell-topbar__left">
+                <div>
+                  <div className="eyebrow">Nexus Venture Studio</div>
+                  <h1 className="shell-title">{activeNav.label}</h1>
+                  <p className="shell-subtitle">Live memory-backed operating system for ventures, agents, and execution gates.</p>
+                </div>
+              </div>
+
+              <div className="shell-topbar__center">
+                <div className="shell-chip-row">
+                  <StatusPill status="active">
+                    {studio.activeProject ? `${studio.activeProject.name} active` : "No active project"}
+                  </StatusPill>
+                  <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
+                    {studio.statusCounts.blocked ? `${studio.statusCounts.blocked} agents blocked` : "No active blockers"}
+                  </StatusPill>
+                  <StatusPill status="working">{studio.openDirectiveCount} founder directives</StatusPill>
+                  <StatusPill status="done">{studio.queueDepth} queue depth</StatusPill>
+                </div>
+              </div>
+
+              <div className="shell-topbar__right">
+                <div>
+                  <div className="eyebrow">System time</div>
+                  <div className="mono" style={{ fontSize: 18, color: "var(--text-soft)" }}>
+                    {now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false })}
+                  </div>
+                </div>
+                <div>
+                  <div className="eyebrow">Last memory sync</div>
+                  <div className="mono" style={{ fontSize: 18, color: "var(--text-soft)" }}>
+                    {formatRelative(studio.lastUpdated)}
+                  </div>
+                </div>
+              </div>
+            </>
           )}
-          {pending > 0 && (
-            <div title={`${pending} founder actions pending`} style={{ display:"flex", flexDirection:"column", alignItems:"center" }}>
-              <div style={{ fontSize:11, fontWeight:700, color:"#FF6B35", fontFamily:"'Courier New',monospace", lineHeight:1 }}>{pending}</div>
-              <div style={{ fontSize:5, color:"rgba(255,107,53,0.5)", letterSpacing:"0.08em" }}>ACTIONS</div>
-            </div>
+        </header>
+
+        <div className={`shell-main${isVerseView || isHomeView ? " shell-main--full" : ""}`}>
+          <main className={`shell-content${isVerseView ? " shell-content--verse" : ""}`}>
+            <Routes>
+              <Route path="/" element={<CommandCenter studio={studio} />} />
+              <Route path="/constellation" element={<Constellation studio={studio} />} />
+              <Route path="/skills" element={<Skills studio={studio} />} />
+              <Route path="/traction" element={<Traction studio={studio} />} />
+            </Routes>
+          </main>
+
+          {!isVerseView && !isHomeView && (
+            <aside className="shell-sidebar">
+              <ShellRightRail studio={studio} />
+            </aside>
           )}
-          {/* Clock */}
-          <div style={{ fontSize:7, color:"rgba(0,217,255,0.25)", fontFamily:"'Courier New',monospace", writingMode:"vertical-rl", transform:"rotate(180deg)", letterSpacing:"0.08em" }}>
-            {time.toLocaleTimeString("en-US", { hour12:false })}
-          </div>
         </div>
-      </div>
-
-      {/* ── Main content ── */}
-      <div style={{ flex:1, minWidth:0, minHeight:0, overflow:"auto" }}>
-        <Routes>
-          <Route path="/"              element={<CommandCenter />} />
-          <Route path="/constellation" element={<Constellation />} />
-          <Route path="/skills"        element={<Skills />} />
-          <Route path="/traction"      element={<Traction />} />
-        </Routes>
       </div>
     </div>
   );
