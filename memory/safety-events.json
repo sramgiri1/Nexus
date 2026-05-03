@@ -8,7 +8,16 @@
       "reason": "Batch blocked for task type 'migration'",
       "riskLevel": "high",
       "actionType": "llm_call"
+    },
+    {
+      "id": "se-1777841466052-xsk",
+      "timestamp": "2026-05-03T20:51:06.052Z",
+      "type": "blocked",
+      "agentId": "relay",
+      "reason": "Batch blocked for task type 'code_edit'",
+      "riskLevel": "high",
+      "actionType": "llm_call"
     }
   ],
-  "lastUpdated": "2026-05-03T20:47:21.680Z"
+  "lastUpdated": "2026-05-03T20:51:06.052Z"
 }

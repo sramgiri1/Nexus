@@ -1,7 +1,39 @@
 {
   "queue": [],
-  "submitted": [],
+  "submitted": [
+    {
+      "id": "batch-beacon-test-marketing-001",
+      "agentId": "beacon",
+      "provider": "direct_openai",
+      "model": "gpt-mini-latest",
+      "taskType": "marketing_copy",
+      "projectId": "careloop",
+      "estimatedTokens": 2000,
+      "estimatedBaseCostUsd": 0.012,
+      "estimatedDiscountedCostUsd": 0.006,
+      "estimatedCostUsd": 0.006,
+      "status": "dry_run_submitted",
+      "createdAt": "2026-05-03T20:54:11.894Z",
+      "maxLatency": "24h",
+      "safeSerializedRequest": {
+        "model": "gpt-mini-latest",
+        "maxTokens": 1024,
+        "messages": [
+          {
+            "role": "system",
+            "content": "You are BEACON, a growth and marketing agent for CareLoop. Write concise, compelling App Store marketing copy."
+          },
+          {
+            "role": "user",
+            "content": "TASK: Write a 170-character App Store subtitle for CareLoop — a caregiving coordination app for families managing aging parents. Emphasise medication tracking and family communication. PROJECT: careloop"
+          }
+        ]
+      },
+      "batchId": "dryrun-batch-1777841658281",
+      "submittedAt": "2026-05-03T20:54:18.281Z"
+    }
+  ],
   "completed": [],
   "failed": [],
-  "lastUpdated": null
+  "lastUpdated": "2026-05-03T20:54:18.281Z"
 }

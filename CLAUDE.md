@@ -325,6 +325,20 @@ object (allow_fallbacks, data_collection, sort) is constructed there and is not 
 Provider batch stubs are in `providers/openaiBatch.js` and `providers/anthropicBatch.js`. Each
 function throws with a clear message until the feature flag is set to `true`.
 
+## Agent Operating Standards
+
+All 20 agents must follow the shared standards in `agents/_shared/`. Individual agent prompts extend these standards — they do not override them.
+
+| Standard | File | What It Covers |
+| --- | --- | --- |
+| Operating Standard | `agents/_shared/agent-operating-standard.md` | Role discipline, verification rules, governor rules, prohibited actions |
+| Etiquette | `agents/_shared/agent-etiquette.md` | Communication, handoff tone, blocker resolution |
+| Skill Usage | `agents/_shared/skill-usage-standard.md` | When skills are mandatory, skill output contract, how to propose new skills |
+| Hook Usage | `agents/_shared/hook-usage-standard.md` | Hook catalogue, payload contracts, observability-only rule |
+| Handoff Standard | `agents/_shared/handoff-standard.md` | Handoff schema, validity rules, canonical chains |
+| Memory Standard | `agents/_shared/memory-standard.md` | Source of truth map, read/write protocol, protected files |
+| Output Contracts | `agents/_shared/output-contracts.md` | Structured output formats for all 8 task result types |
+
 ## Active Portfolio
 
 **ACTIVE:** CareLoop — all agents focused here
