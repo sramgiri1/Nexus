@@ -142,7 +142,10 @@ async function dispatchOne(task) {
   // Re-read queue to avoid race conditions when multiple tasks finish
   const finished = { ...task, ...result, finishedAt: new Date().toISOString() };
 
-  if (result.success) {
+  if (result.deferred) {
+    console.log(chalk.blue(`  📦 ${task.agentId.toUpperCase()} deferred to batch (batchId=${result.batchId})`));
+    await markTaskDeferred(task.id, result);
+  } else if (result.success) {
     console.log(chalk.green(`  ✓ ${task.agentId.toUpperCase()} done (${result.toolCallCount} tool calls, ${result.iterations} iters)`));
     await markTaskCompleted(task.id, { ...finished, status: "completed" });
   } else {
@@ -195,6 +198,21 @@ async function markTaskFailed(taskId, finishedTask) {
   });
 }
 
+async function markTaskDeferred(taskId, result) {
+  await updateJsonFile(QUEUE_FILE, async (queue) => {
+    const task = queue.queue.find((t) => t.id === taskId);
+    if (!task) return queue;
+    task.status        = "deferred";
+    task.batchId       = result.batchId;
+    task.batchProvider = result.provider;
+    task.batchModel    = result.model;
+    task.batchTaskType = result.taskType;
+    task.deferredAt    = new Date().toISOString();
+    queue.lastUpdated  = new Date().toISOString();
+    return queue;
+  });
+}
+
 async function tryRecoverTask(task, failure) {
   if (shouldRetryTask(task, failure.error)) {
     await rescheduleTask(task.id, failure.error);
@@ -204,9 +222,11 @@ async function tryRecoverTask(task, failure) {
 
   if (shouldAutoHealTask(task, failure)) {
     const remediationTask = buildRemediationTask(task, failure);
-    await enqueueRemediationAndRetry(task.id, remediationTask, failure.error);
-    console.log(chalk.yellow(`  ↺ ${task.agentId.toUpperCase()} remediation queued via ${remediationTask.agentId.toUpperCase()}`));
-    return true;
+    const recovered = await enqueueRemediationAndRetry(task.id, remediationTask, failure.error);
+    if (recovered) {
+      console.log(chalk.yellow(`  ↺ ${task.agentId.toUpperCase()} remediation queued via ${remediationTask.agentId.toUpperCase()}`));
+    }
+    return recovered === true;
   }
 
   return false;
@@ -313,7 +333,7 @@ async function enqueueRemediationAndRetry(taskId, remediationTask, error) {
 
   if (!enqueued.success) {
     console.log(chalk.yellow(`  ↺ auto-heal enqueue blocked by governor: ${enqueued.reason}`));
-    return;
+    return false;
   }
 
   // Update the original task: add remediation dep, schedule retry
@@ -331,6 +351,7 @@ async function enqueueRemediationAndRetry(taskId, remediationTask, error) {
     queue.lastUpdated = new Date().toISOString();
     return queue;
   });
+  return true;
 }
 
 function retryDelayMs(attempt) {

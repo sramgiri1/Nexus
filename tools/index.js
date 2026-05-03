@@ -112,7 +112,20 @@ export const enqueueTask = {
       context:   { type: "object", description: "Extra context passed to the agent" }
     }
   },
-  execute: async ({ agentId, task, projectId, priority = "normal", context = {} }) => {
+  execute: async ({ agentId, task, projectId, priority = "normal", context = {} }, ctx = {}) => {
+    // Fail closed: enqueue without an authenticated caller is always blocked.
+    if (!ctx.agentId) {
+      return { success: false, error: "[SAFETY] enqueue_task blocked: missing caller context (no agentId)" };
+    }
+    const check = await authorizeAction({
+      agentId:       ctx.agentId,
+      actionType:    "tool_call",
+      toolName:      "enqueue_task",
+      targetAgentId: agentId,
+      taskId:        ctx.taskId,
+    });
+    if (!check.allowed) return { success: false, error: `[SAFETY] ${check.reason}` };
+
     const filePath = mem("task-queue.json");
     const newTask = {
       id:        `task-${Date.now()}`,
@@ -243,7 +256,19 @@ export const writeFile = {
       content:  { type: "string", description: "File content" }
     }
   },
-  execute: async ({ filePath, content }) => {
+  execute: async ({ filePath, content }, ctx = {}) => {
+    if (!ctx.agentId) {
+      return { success: false, error: "[SAFETY] write_file blocked: missing caller context (no agentId)" };
+    }
+    const check = await authorizeAction({
+      agentId:    ctx.agentId,
+      actionType: "tool_call",
+      toolName:   "write_file",
+      filePath,
+      content,
+      taskId:     ctx.taskId,
+    });
+    if (!check.allowed) return { success: false, error: `[SAFETY] ${check.reason}` };
     try {
       const safe = path.join(ROOT, "projects", filePath.replace(/\.\./g, ""));
       await fs.mkdir(path.dirname(safe), { recursive: true });
@@ -315,7 +340,20 @@ export const runSkill = {
       input:   { type: "object", description: "Skill-specific input parameters (optional)" },
     }
   },
-  execute: async ({ agent, skill, input = {} }) => {
+  execute: async ({ agent, skill, input = {} }, ctx = {}) => {
+    if (!ctx.agentId) {
+      return { result: "FAIL", issues: [{ severity: "error", message: "[SAFETY] run_skill blocked: missing caller context (no agentId)" }], summary: "Skill blocked: no agentId in context" };
+    }
+    const check = await authorizeAction({
+      agentId:    ctx.agentId,
+      actionType: "tool_call",
+      toolName:   "run_skill",
+      skillName:  `${agent}.${skill}`,
+      taskId:     ctx.taskId,
+    });
+    if (!check.allowed) {
+      return { result: "FAIL", issues: [{ severity: "error", message: `[SAFETY] ${check.reason}` }], summary: `Skill blocked: ${check.reason}` };
+    }
     try {
       const { executeSkill } = await import("../skills/index.js");
       return await executeSkill(agent, skill, input);
@@ -387,7 +425,7 @@ export async function executeTool(toolName, toolInput, ctx = {}) {
   }
 
   try {
-    return await tool.execute(toolInput);
+    return await tool.execute(toolInput, ctx);
   } catch (e) {
     return { success: false, error: e.message };
   }

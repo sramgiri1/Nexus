@@ -6,11 +6,12 @@
 import "dotenv/config";
 import fs   from "fs/promises";
 import path from "path";
-import { writeJsonFileAtomic }        from "../utils/json-store.js";
+import { writeJsonFileAtomic, updateJsonFile } from "../utils/json-store.js";
 import { downloadOpenAIBatchResults } from "../providers/openaiBatch.js";
 
 const ROOT             = process.cwd();
 const BATCH_QUEUE_FILE = path.join(ROOT, "memory", "batch-queue.json");
+const TASK_QUEUE_FILE  = path.join(ROOT, "memory", "task-queue.json");
 
 // Agents that run verification gates — their results must never pass via batch.
 const GATE_AGENTS = new Set(["auditor", "sentinel", "warden"]);
@@ -173,6 +174,32 @@ async function run() {
   queue.lastUpdated = new Date().toISOString();
 
   await writeJsonFileAtomic(BATCH_QUEUE_FILE, queue);
+
+  // ── Update original task-queue entries (deferred tasks become completed/failed) ──
+  const taskQueueItems = [...toComplete, ...toFail].filter(i => i.originalTaskId);
+  if (taskQueueItems.length > 0) {
+    try {
+      await updateJsonFile(TASK_QUEUE_FILE, async (tq) => {
+        for (const item of taskQueueItems) {
+          const idx = tq.queue.findIndex(t => t.id === item.originalTaskId);
+          if (idx === -1) continue;
+          const original = tq.queue[idx];
+          if (item.status === "reconciled") {
+            tq.queue.splice(idx, 1);
+            tq.completed.push({ ...original, status: "completed", batchReconciledAt: item.reconciledAt, batchItemId: item.id });
+          } else if (item.status === "reconciled_failed") {
+            tq.queue.splice(idx, 1);
+            tq.failed.push({ ...original, status: "failed", batchReconciledAt: item.reconciledAt, batchItemId: item.id, reconcileNote: item.reconcileNote });
+          }
+          // reconciled_requires_review → leave task as deferred for human review
+        }
+        tq.lastUpdated = new Date().toISOString();
+        return tq;
+      });
+    } catch {
+      // task-queue.json may not exist or have no matching tasks — non-fatal
+    }
+  }
 
   const reviewCount = toComplete.filter(i => i.status === "reconciled_requires_review").length;
   const okCount     = toComplete.filter(i => i.status === "reconciled").length;

@@ -75,7 +75,7 @@ export async function submitOpenAIBatch(items, { client } = {}) {
   const batchPolicy = await loadBatchPolicy();
   const maxCost  = batchPolicy?.maxBatchCostUsd    ?? 1.0;
   const discount = batchPolicy?.discountMultiplier ?? 0.5;
-  const totalEstimated = items.reduce((s, i) => s + (i.estimatedCostUsd || 0), 0) * discount;
+  const totalEstimated = items.reduce((s, i) => s + (i.estimatedDiscountedCostUsd ?? i.estimatedCostUsd ?? 0), 0);
   if (totalEstimated > maxCost) {
     throw new Error(
       `[SAFETY] Batch estimated cost $${totalEstimated.toFixed(4)} exceeds MAX_BATCH_COST_USD ($${maxCost})`

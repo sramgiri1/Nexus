@@ -447,7 +447,9 @@ async function queueBatchTask(agentId, task, context, routing, userMessage, syst
     projectId:        context.projectId || null,
     status:           "batch_pending",
     estimatedTokens:  maxTokens,
-    estimatedCostUsd: estimateCostForProvider(routing.batchProvider, routing.batchModel, "batch", 1500, 500),
+    estimatedBaseCostUsd:       estimateCostForProvider(routing.batchProvider, routing.batchModel, "realtime", 1500, 500),
+    estimatedDiscountedCostUsd: estimateCostForProvider(routing.batchProvider, routing.batchModel, "batch",    1500, 500),
+    estimatedCostUsd:           estimateCostForProvider(routing.batchProvider, routing.batchModel, "batch",    1500, 500),
     createdAt:        new Date().toISOString(),
     maxLatency:       "24h",
   };

@@ -70,6 +70,7 @@ async function run() {
   const allowedProviders = new Set(["direct_openai", "direct_anthropic"]);
   const processedIds = new Set();
   let totalCost = 0;
+  let realSubmittedCount = 0;
 
   for (const [key, items] of Object.entries(groups)) {
     const provider = items[0].provider;
@@ -85,9 +86,8 @@ async function run() {
       continue;
     }
 
-    // Cost check
-    const groupCost = items.reduce((sum, i) => sum + (i.estimatedCostUsd || 0), 0)
-      * (batchPolicy.discountMultiplier || 0.5);
+    // Cost check — estimatedDiscountedCostUsd is already the batch-discounted cost; no further multiply
+    const groupCost = items.reduce((sum, i) => sum + (i.estimatedDiscountedCostUsd ?? i.estimatedCostUsd ?? 0), 0);
     if (totalCost + groupCost > batchPolicy.maxBatchCostUsd) {
       console.log(`    ✗ Skipped — would exceed maxBatchCostUsd ($${batchPolicy.maxBatchCostUsd})`);
       continue;
@@ -142,6 +142,7 @@ async function run() {
             item.submittedAt     = new Date().toISOString();
             processedIds.add(item.id);
           }
+          realSubmittedCount += items.length;
         } catch (err) {
           console.error(`    ✗ submitOpenAIBatch failed: ${err.message}`);
           // items stay batch_pending — eligible for retry on next batch:submit run
@@ -179,12 +180,24 @@ async function run() {
   await writeJson(BATCH_QUEUE_FILE, queue);
 
   console.log(`\n  ✓ Moved ${processed.length} item(s) to submitted list`);
-  console.log("\n  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━");
-  console.log("  DRY-RUN batch submission only. No provider batch API was called.");
-  console.log("  Status set to: " + DRY_RUN_STATUS);
-  console.log("  To enable real submission: set ENABLE_REAL_OPENAI_BATCH=true or");
-  console.log("  ENABLE_REAL_ANTHROPIC_BATCH=true after safety validation.");
-  console.log("  ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n");
+  for (const line of formatBatchFooter(realSubmittedCount)) {
+    console.log(`  ${line}`);
+  }
+  console.log();
+}
+
+export function formatBatchFooter(realSubmittedCount) {
+  if (realSubmittedCount > 0) {
+    return [`Real provider batch submission completed for ${realSubmittedCount} item(s).`];
+  }
+  return [
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+    "DRY-RUN batch submission only. No provider batch API was called.",
+    `Status set to: ${DRY_RUN_STATUS}`,
+    "To enable real submission: set ENABLE_REAL_OPENAI_BATCH=true or",
+    "ENABLE_REAL_ANTHROPIC_BATCH=true after safety validation.",
+    "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━",
+  ];
 }
 
 run().catch(e => { console.error(e); process.exit(1); });

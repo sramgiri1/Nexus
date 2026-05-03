@@ -1,17 +1,14 @@
 {
   "events": [
     {
-      "id": "se-1777839563390-x25",
-      "timestamp": "2026-05-03T20:19:23.390Z",
+      "id": "se-1777840884054-kje",
+      "timestamp": "2026-05-03T20:41:24.054Z",
       "type": "blocked",
       "agentId": "relay",
-      "reason": "Batch blocked for task type 'migration'",
+      "reason": "Batch blocked for task type 'auto_heal'",
       "riskLevel": "high",
       "actionType": "llm_call"
     }
   ],
-  "lastUpdated": "2026-05-03T20:19:23.390Z"
-}"
+  "lastUpdated": "2026-05-03T20:41:24.054Z"
 }
-}
-}}
