@@ -9,6 +9,10 @@ const PASSWORD_RESET_MINUTES = 10;
 const OAUTH_STATE_TTL_MS = 10 * 60 * 1000;
 const GOOGLE_SCOPES = ["openid", "email", "profile"];
 const FACEBOOK_SCOPES = ["email", "public_profile"];
+const ACCESS_TOKEN_TTL = "30d";
+const ACCESS_TOKEN_ISSUER = "careloop";
+const ACCESS_TOKEN_AUDIENCE = "careloop-client";
+const textEncoder = new TextEncoder();
 
 function base64UrlEncode(value) {
   return Buffer.from(value).toString("base64url");
@@ -24,6 +28,45 @@ export function normalizeEmail(value) {
 
 export function hashValue(value) {
   return crypto.createHash("sha256").update(value).digest("hex");
+}
+
+function authSecretRaw() {
+  const configured = process.env.AUTH_TOKEN_SECRET?.trim();
+  if (configured) return configured;
+  throw new Error("AUTH_TOKEN_SECRET must be configured");
+}
+
+function authSecretKey() {
+  return textEncoder.encode(authSecretRaw());
+}
+
+export async function issueAccessToken(user) {
+  return new SignJWT({
+    email: normalizeEmail(user.email),
+    name: user.name ?? undefined,
+    ver: Number.isInteger(user.authVersion) ? user.authVersion : 0,
+  })
+    .setProtectedHeader({ alg: "HS256", typ: "JWT" })
+    .setIssuer(ACCESS_TOKEN_ISSUER)
+    .setAudience(ACCESS_TOKEN_AUDIENCE)
+    .setSubject(user.id)
+    .setIssuedAt()
+    .setExpirationTime(ACCESS_TOKEN_TTL)
+    .sign(authSecretKey());
+}
+
+export async function verifyAccessToken(token) {
+  const { payload } = await jwtVerify(token, authSecretKey(), {
+    issuer: ACCESS_TOKEN_ISSUER,
+    audience: ACCESS_TOKEN_AUDIENCE,
+  });
+
+  return {
+    userId: payload.sub,
+    email: typeof payload.email === "string" ? normalizeEmail(payload.email) : null,
+    name: typeof payload.name === "string" ? payload.name : null,
+    tokenVersion: Number.isInteger(payload.ver) ? payload.ver : 0,
+  };
 }
 
 export function hashPassword(password) {
@@ -70,7 +113,7 @@ function localFallbackAllowed() {
 
 function signStatePayload(serialized) {
   return crypto
-    .createHmac("sha256", process.env.API_KEY || "careloop-dev-secret")
+    .createHmac("sha256", authSecretRaw())
     .update(serialized)
     .digest("base64url");
 }

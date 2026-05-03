@@ -15,6 +15,14 @@ const actions = JSON.parse(await fs.readFile(mem("founder-actions.json"), "utf8"
 
 const STATUS_ICON = { active:"🟢", idle:"⚪", blocked:"🔴", done:"✅", working:"🟡" };
 const PRIO_COLOR  = { CRITICAL: chalk.red, HIGH: chalk.yellow, MEDIUM: chalk.blue, LOW: chalk.dim };
+const failedDependencyRefs = new Set(
+  queue.queue.flatMap((t) => (t.dependsOn || []).filter((id) => queue.failed.some((f) => f.id === id)))
+);
+const failedOpen = queue.failed.filter((t) => failedDependencyRefs.has(t.id));
+const failedResolved = queue.failed.filter((t) => !failedDependencyRefs.has(t.id));
+const resolvedRecoveries = queue.completed.filter((t) => t.resolvedFromFailure);
+const openFailedByAgent = new Set(failedOpen.map((t) => t.agentId));
+const activeQueueByAgent = new Set(queue.queue.filter((t) => t.status === "pending" || t.status === "running").map((t) => t.agentId));
 
 console.log(chalk.cyan(`\n╔══════════════════════════════════════════╗`));
 console.log(chalk.cyan(`║         NEXUS STATUS REPORT              ║`));
@@ -32,8 +40,11 @@ for (const proj of port.projects) {
 // Agent network
 console.log(chalk.bold.cyan("\n  AGENT NETWORK"));
 for (const [id, a] of Object.entries(agents.agents)) {
-  const icon = STATUS_ICON[a.status] || "⚪";
-  const status = a.status.padEnd(8).toUpperCase();
+  const effectiveStatus = a.status === "blocked" && !openFailedByAgent.has(id) && !activeQueueByAgent.has(id)
+    ? "done"
+    : a.status;
+  const icon = STATUS_ICON[effectiveStatus] || "⚪";
+  const status = effectiveStatus.padEnd(8).toUpperCase();
   const proj = a.project ? chalk.dim(` [${a.project}]`) : "";
   console.log(`  ${icon} ${id.toUpperCase().padEnd(10)} ${chalk.dim(status)} ${a.task.slice(0,55)}${proj}`);
 }
@@ -59,4 +70,26 @@ for (const a of pending_actions.slice(0,5)) {
 }
 if (pending_actions.length > 5) console.log(chalk.dim(`  ... and ${pending_actions.length-5} more`));
 
-console.log(chalk.dim(`\n  Completed tasks: ${queue.completed.length}  Failed: ${queue.failed.length}\n`));
+console.log(chalk.dim(`\n  Completed tasks: ${queue.completed.length}  Failed: ${queue.failed.length}  Resolved: ${resolvedRecoveries.length}\n`));
+if (queue.failed.length > 0) {
+  console.log(chalk.bold.cyan("  FAILURE STATE"));
+  console.log(`  Open: ${failedOpen.length}  Resolved: ${failedResolved.length}`);
+  if (failedOpen.length > 0) {
+    for (const t of failedOpen.slice(0, 3)) {
+      console.log(chalk.red(`  OPEN      ${t.agentId.toUpperCase().padEnd(10)} ${String(t.error || t.task).slice(0, 80)}`));
+    }
+  }
+  if (failedResolved.length > 0) {
+    for (const t of failedResolved.slice(0, 3)) {
+      console.log(chalk.green(`  RESOLVED  ${t.agentId.toUpperCase().padEnd(10)} ${String(t.error || t.task).slice(0, 80)}`));
+    }
+  }
+  console.log();
+}
+if (resolvedRecoveries.length > 0) {
+  console.log(chalk.bold.cyan("  RESOLVED RECOVERIES"));
+  for (const t of resolvedRecoveries.slice(-3)) {
+    console.log(chalk.green(`  RESOLVED  ${t.agentId.toUpperCase().padEnd(10)} ${String(t.task).slice(0, 80)}`));
+  }
+  console.log();
+}

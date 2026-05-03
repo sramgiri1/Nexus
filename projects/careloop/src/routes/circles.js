@@ -1,5 +1,5 @@
 import { Prisma } from "@prisma/client";
-import { assertAdmin, assertMember, logEvent } from "../lib/roles.js";
+import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
 
 const circleInclude = {
@@ -53,15 +53,26 @@ export default async function circles(app) {
     return invitation;
   }
 
+  function rejectUserMismatch(providedUserId, authenticatedUserId, reply) {
+    if (providedUserId && providedUserId !== authenticatedUserId) {
+      reply.code(403).send({ error: "userId must match the authenticated user" });
+      return true;
+    }
+    return false;
+  }
+
   // POST /circles — create circle, auto-add creator as Admin
   app.post("/circles", async (req, reply) => {
     const { name, recipientName, creatorId, archiveAfterDays } = req.body ?? {};
-    if (!name || !recipientName || !creatorId)
-      return reply.code(400).send({ error: "name, recipientName, and creatorId are required" });
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(creatorId, authenticatedUserId, reply)) return;
+    if (!name)
+      return reply.code(400).send({ error: "name is required" });
 
-    const creator = await db.user.findUnique({ where: { id: creatorId } });
+    const creator = await db.user.findUnique({ where: { id: authenticatedUserId } });
     if (!creator) return reply.code(404).send({ error: "Creator user not found" });
-    if (!await ensureCircleCapacity(creatorId, reply)) return;
+    if (!await ensureCircleCapacity(authenticatedUserId, reply)) return;
 
     const normalizedDays = normalizedArchiveAfterDays(archiveAfterDays);
 
@@ -69,19 +80,21 @@ export default async function circles(app) {
       const c = await tx.careCircle.create({
         data: {
           name,
-          recipientName,
+          recipientName: recipientName ?? "",
           archiveAfterDays: normalizedDays,
         },
       });
-      await tx.careRecipient.create({
-        data: {
-          circleId: c.id,
-          name: recipientName,
-          isPrimary: true,
-        },
-      });
-      await tx.circleMember.create({ data: { circleId: c.id, userId: creatorId, role: "ADMIN" } });
-      await tx.event.create({ data: { type: "CIRCLE_CREATED", circleId: c.id, actorId: creatorId } });
+      if (recipientName?.trim()) {
+        await tx.careRecipient.create({
+          data: {
+            circleId: c.id,
+            name: recipientName.trim(),
+            isPrimary: true,
+          },
+        });
+      }
+      await tx.circleMember.create({ data: { circleId: c.id, userId: authenticatedUserId, role: "ADMIN" } });
+      await tx.event.create({ data: { type: "CIRCLE_CREATED", circleId: c.id, actorId: authenticatedUserId } });
       return tx.careCircle.findUnique({ where: { id: c.id }, include: circleInclude });
     });
 
@@ -90,6 +103,7 @@ export default async function circles(app) {
 
   // GET /circles/:id
   app.get("/circles/:id", async (req, reply) => {
+    if (!await assertRequestMember(db, req.params.id, req, reply)) return;
     const circle = await db.careCircle.findUnique({
       where:   { id: req.params.id },
       include: circleInclude,
@@ -100,11 +114,10 @@ export default async function circles(app) {
 
   // GET /circles/:id/insights/completion — admin only
   app.get("/circles/:id/insights/completion", async (req, reply) => {
-    const userId = req.query?.userId;
     const requestedDays = Number.parseInt(req.query?.days ?? "7", 10);
     const recipientId = req.query?.recipientId || null;
     const periodDays = Number.isInteger(requestedDays) ? Math.min(30, Math.max(7, requestedDays)) : 7;
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     if (recipientId) {
       const recipient = await db.careRecipient.findFirst({
@@ -217,7 +230,10 @@ export default async function circles(app) {
   // PATCH /circles/:id — admin only, update circle settings
   app.patch("/circles/:id", async (req, reply) => {
     const { userId, name, recipientName, archiveAfterDays } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
     const normalizedDays = normalizedArchiveAfterDays(archiveAfterDays);
 
     const circle = await db.$transaction(async (tx) => {
@@ -258,8 +274,7 @@ export default async function circles(app) {
 
   // GET /circles/:id/recipients — members can view recipients
   app.get("/circles/:id/recipients", async (req, reply) => {
-    const userId = req.query?.userId;
-    if (!await assertMember(db, req.params.id, userId, reply)) return;
+    if (!await assertRequestMember(db, req.params.id, req, reply)) return;
     return db.careRecipient.findMany({
       where: { circleId: req.params.id },
       orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
@@ -269,7 +284,10 @@ export default async function circles(app) {
   // POST /circles/:id/recipients — admin only
   app.post("/circles/:id/recipients", async (req, reply) => {
     const { userId, name, relationship, notes } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
     if (!name?.trim()) {
       return reply.code(400).send({ error: "name is required" });
     }
@@ -289,7 +307,7 @@ export default async function circles(app) {
         data: {
           type: "RECIPIENT_ADDED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { recipientId: created.id, name: created.name },
         },
       });
@@ -302,7 +320,10 @@ export default async function circles(app) {
   // PATCH /circles/:id/recipients/:recipientId — admin only
   app.patch("/circles/:id/recipients/:recipientId", async (req, reply) => {
     const { userId, name, relationship, notes, isPrimary } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const existing = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
@@ -337,7 +358,7 @@ export default async function circles(app) {
         data: {
           type: "RECIPIENT_UPDATED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { recipientId: updated.id },
         },
       });
@@ -351,7 +372,10 @@ export default async function circles(app) {
   // POST /circles/:id/recipients/reorder — admin only
   app.post("/circles/:id/recipients/reorder", async (req, reply) => {
     const { userId, recipientIds, primaryRecipientId } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
     if (!Array.isArray(recipientIds) || recipientIds.length === 0) {
       return reply.code(400).send({ error: "recipientIds must be a non-empty array" });
     }
@@ -393,7 +417,7 @@ export default async function circles(app) {
         data: {
           type: "RECIPIENT_UPDATED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { recipientIds, primaryRecipientId: nextPrimaryId },
         },
       });
@@ -408,7 +432,10 @@ export default async function circles(app) {
   // DELETE /circles/:id/recipients/:recipientId — admin only
   app.delete("/circles/:id/recipients/:recipientId", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const recipient = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
@@ -451,7 +478,7 @@ export default async function circles(app) {
         data: {
           type: "RECIPIENT_REMOVED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { recipientId: req.params.recipientId },
         },
       });
@@ -463,35 +490,40 @@ export default async function circles(app) {
   // DELETE /circles/:id — admin only
   app.delete("/circles/:id", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     await db.careCircle.delete({ where: { id: req.params.id } });
     return reply.code(204).send();
   });
 
-  // POST /circles/:id/members — self-join, API key only (no admin required)
+  // POST /circles/:id/members — authenticated self-join
   app.post("/circles/:id/members", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!userId) return reply.code(400).send({ error: "userId required" });
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
 
     const [user, circle] = await Promise.all([
-      db.user.findUnique({ where: { id: userId } }),
+      db.user.findUnique({ where: { id: authenticatedUserId } }),
       db.careCircle.findUnique({ where: { id: req.params.id } }),
     ]);
     if (!user)   return reply.code(404).send({ error: "User not found" });
     if (!circle) return reply.code(404).send({ error: "Circle not found" });
 
     const existing = await db.circleMember.findUnique({
-      where: { userId_circleId: { userId, circleId: req.params.id } },
+      where: { userId_circleId: { userId: authenticatedUserId, circleId: req.params.id } },
     });
     if (existing) return reply.code(409).send({ error: "User is already a member" });
-    if (!await ensureCircleCapacity(userId, reply)) return;
+    if (!await ensureCircleCapacity(authenticatedUserId, reply)) return;
 
     try {
       const member = await db.circleMember.create({
-        data: { circleId: req.params.id, userId, role: "MEMBER" },
+        data: { circleId: req.params.id, userId: authenticatedUserId, role: "MEMBER" },
       });
-      await logEvent(db, { type: "MEMBER_JOINED", circleId: req.params.id, actorId: userId, payload: { userId } });
+      await logEvent(db, { type: "MEMBER_JOINED", circleId: req.params.id, actorId: authenticatedUserId, payload: { userId: authenticatedUserId } });
       return reply.code(201).send(member);
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002")
@@ -502,8 +534,7 @@ export default async function circles(app) {
 
   // GET /circles/:id/invitations — admin only
   app.get("/circles/:id/invitations", async (req, reply) => {
-    const userId = req.query?.userId;
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const requestedStatus = String(req.query?.status ?? "PENDING").toUpperCase();
     const status = ["PENDING", "ACCEPTED", "DECLINED", "REVOKED"].includes(requestedStatus)
@@ -520,15 +551,18 @@ export default async function circles(app) {
   // POST /circles/:id/members/invite — admin invite by email, membership created on acceptance
   app.post("/circles/:id/members/invite", async (req, reply) => {
     const { userId, email, name, role } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const normalizedEmail = normalizeEmail(email);
     const normalizedRole = String(role ?? "MEMBER").toUpperCase();
     if (!normalizedEmail || !name?.trim()) {
       return reply.code(400).send({ error: "name and email are required" });
     }
-    if (!["ADMIN", "MEMBER"].includes(normalizedRole)) {
-      return reply.code(400).send({ error: "role must be ADMIN or MEMBER" });
+    if (!["ADMIN", "MEMBER", "RECIPIENT"].includes(normalizedRole)) {
+      return reply.code(400).send({ error: "role must be ADMIN, MEMBER, or RECIPIENT" });
     }
 
     const circle = await db.careCircle.findUnique({ where: { id: req.params.id } });
@@ -558,7 +592,7 @@ export default async function circles(app) {
           email: normalizedEmail,
           name: name.trim(),
           role: normalizedRole,
-          invitedById: userId,
+          invitedById: authenticatedUserId,
         },
       });
 
@@ -566,7 +600,7 @@ export default async function circles(app) {
         data: {
           type: "INVITE_CREATED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: {
             invitationId: created.id,
             email: normalizedEmail,
@@ -587,7 +621,10 @@ export default async function circles(app) {
   // DELETE /circles/:id/invitations/:inviteId — admin only
   app.delete("/circles/:id/invitations/:inviteId", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const invitation = await db.invitation.findUnique({ where: { id: req.params.inviteId } });
     if (!invitation || invitation.circleId !== req.params.id) {
@@ -606,7 +643,7 @@ export default async function circles(app) {
         data: {
           type: "INVITE_REVOKED",
           circleId: req.params.id,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { invitationId: req.params.inviteId },
         },
       });
@@ -618,7 +655,10 @@ export default async function circles(app) {
   // DELETE /circles/:id/members/:memberId — admin only
   app.delete("/circles/:id/members/:memberId", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const target = await db.circleMember.findUnique({ where: { id: req.params.memberId } });
     if (!target || target.circleId !== req.params.id)
@@ -633,16 +673,19 @@ export default async function circles(app) {
     }
 
     await db.circleMember.delete({ where: { id: req.params.memberId } });
-    await logEvent(db, { type: "MEMBER_REMOVED", circleId: req.params.id, actorId: userId, payload: { memberId: req.params.memberId } });
+    await logEvent(db, { type: "MEMBER_REMOVED", circleId: req.params.id, actorId: authenticatedUserId, payload: { memberId: req.params.memberId } });
     return reply.code(204).send();
   });
 
   // PATCH /circles/:id/members/:memberId/role — admin only, prevent last admin demotion
   app.patch("/circles/:id/members/:memberId/role", async (req, reply) => {
     const { userId, role } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
     if (!role || !["ADMIN", "MEMBER"].includes(role))
       return reply.code(400).send({ error: "role must be ADMIN or MEMBER" });
-    if (!await assertAdmin(db, req.params.id, userId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const target = await db.circleMember.findUnique({ where: { id: req.params.memberId } });
     if (!target || target.circleId !== req.params.id)
@@ -663,7 +706,7 @@ export default async function circles(app) {
     await logEvent(db, {
       type: "MEMBER_ROLE_UPDATED",
       circleId: req.params.id,
-      actorId: userId,
+      actorId: authenticatedUserId,
       payload: { memberId: req.params.memberId, role },
     });
     return updated;
@@ -672,10 +715,12 @@ export default async function circles(app) {
   // POST /invitations/:inviteId/accept — authenticated user accepts own pending invite
   app.post("/invitations/:inviteId/accept", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!userId) return reply.code(400).send({ error: "userId required" });
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
 
     const [user, invitation] = await Promise.all([
-      db.user.findUnique({ where: { id: userId } }),
+      db.user.findUnique({ where: { id: authenticatedUserId } }),
       findInvitationOr404(req.params.inviteId, reply),
     ]);
     if (!invitation) return;
@@ -685,14 +730,14 @@ export default async function circles(app) {
     }
 
     const existingMembership = await db.circleMember.findUnique({
-      where: { userId_circleId: { userId, circleId: invitation.circleId } },
+      where: { userId_circleId: { userId: authenticatedUserId, circleId: invitation.circleId } },
       include: { user: { select: { id: true, name: true, email: true } } },
     });
     if (existingMembership) {
       if (invitation.status === "PENDING") {
         await db.invitation.update({
           where: { id: invitation.id },
-          data: { status: "ACCEPTED", acceptedAt: new Date(), acceptedById: userId },
+          data: { status: "ACCEPTED", acceptedAt: new Date(), acceptedById: authenticatedUserId },
         });
       }
       return reply.send(existingMembership);
@@ -701,25 +746,37 @@ export default async function circles(app) {
     if (invitation.status !== "PENDING") {
       return reply.code(409).send({ error: `Invitation is already ${invitation.status.toLowerCase()}` });
     }
-    if (!await ensureCircleCapacity(userId, reply)) return;
+    if (!await ensureCircleCapacity(authenticatedUserId, reply)) return;
 
     const member = await db.$transaction(async (tx) => {
       const created = await tx.circleMember.create({
-        data: { circleId: invitation.circleId, userId, role: invitation.role },
+        data: { circleId: invitation.circleId, userId: authenticatedUserId, role: invitation.role },
       });
+
+      if (invitation.role === "RECIPIENT") {
+        const existing = await tx.careRecipient.findFirst({
+          where: { circleId: invitation.circleId },
+          orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+        });
+        const isPrimary = !existing;
+        await tx.careRecipient.create({
+          data: { circleId: invitation.circleId, name: user.name, isPrimary },
+        });
+      }
+
       await tx.invitation.update({
         where: { id: invitation.id },
         data: {
           status: "ACCEPTED",
           acceptedAt: new Date(),
-          acceptedById: userId,
+          acceptedById: authenticatedUserId,
         },
       });
       await tx.event.create({
         data: {
           type: "INVITE_ACCEPTED",
           circleId: invitation.circleId,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { invitationId: invitation.id, role: invitation.role },
         },
       });
@@ -727,8 +784,8 @@ export default async function circles(app) {
         data: {
           type: "MEMBER_JOINED",
           circleId: invitation.circleId,
-          actorId: userId,
-          payload: { userId, invitationId: invitation.id, role: invitation.role },
+          actorId: authenticatedUserId,
+          payload: { userId: authenticatedUserId, invitationId: invitation.id, role: invitation.role },
         },
       });
       return tx.circleMember.findUnique({
@@ -743,10 +800,12 @@ export default async function circles(app) {
   // POST /invitations/:inviteId/decline — authenticated user declines own pending invite
   app.post("/invitations/:inviteId/decline", async (req, reply) => {
     const { userId } = req.body ?? {};
-    if (!userId) return reply.code(400).send({ error: "userId required" });
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
 
     const [user, invitation] = await Promise.all([
-      db.user.findUnique({ where: { id: userId } }),
+      db.user.findUnique({ where: { id: authenticatedUserId } }),
       findInvitationOr404(req.params.inviteId, reply),
     ]);
     if (!invitation) return;
@@ -767,7 +826,7 @@ export default async function circles(app) {
         data: {
           type: "INVITE_DECLINED",
           circleId: invitation.circleId,
-          actorId: userId,
+          actorId: authenticatedUserId,
           payload: { invitationId: invitation.id },
         },
       });
@@ -776,11 +835,14 @@ export default async function circles(app) {
     return reply.send({ declined: true });
   });
 
-  // GET /circles/:circleId/events — internal/audit
-  app.get("/circles/:circleId/events", async (req) => {
+  // GET /circles/:circleId/events
+  app.get("/circles/:circleId/events", async (req, reply) => {
+    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
     return db.event.findMany({
       where:   { circleId: req.params.circleId },
       orderBy: { createdAt: "desc" },
+      take:    100,
+      include: { actor: { select: { id: true, name: true } } },
     });
   });
 }

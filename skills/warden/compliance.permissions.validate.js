@@ -18,11 +18,27 @@ const PERMISSION_RULES = [
 
 export async function execute({ project = "careloop" } = {}) {
   const issues = [];
-  const iosDir  = path.join(ROOT, "projects", `${project}-ios`, project.charAt(0).toUpperCase() + project.slice(1));
+  const iosRoot = path.join(ROOT, "projects", `${project}-ios`);
+  const appDirCandidates = [
+    path.join(iosRoot, "CareLoop"),
+    path.join(iosRoot, project.charAt(0).toUpperCase() + project.slice(1)),
+  ];
+  const iosDir = await firstExistingDir(appDirCandidates);
+  if (!iosDir) {
+    return {
+      result: "FAIL",
+      issues: [{ severity: "error", message: `iOS app source directory not found under ${iosRoot}` }],
+      summary: "iOS app directory missing",
+    };
+  }
 
   // Read Info.plist
   let plist = "";
-  const plistPath = path.join(iosDir, "Info.plist");
+  const plistCandidates = [
+    path.join(iosDir, "Resources", "Info.plist"),
+    path.join(iosDir, "Info.plist"),
+  ];
+  const plistPath = await firstExistingFile(plistCandidates);
   try {
     plist = await fs.readFile(plistPath, "utf8");
   } catch {
@@ -64,4 +80,24 @@ export async function execute({ project = "careloop" } = {}) {
     issues,
     summary: hasErrors ? `${issues.filter(i => i.severity === "error").length} permission errors` : "All permission keys validated",
   };
+}
+
+async function firstExistingDir(paths) {
+  for (const p of paths) {
+    try {
+      const stat = await fs.stat(p);
+      if (stat.isDirectory()) return p;
+    } catch {}
+  }
+  return null;
+}
+
+async function firstExistingFile(paths) {
+  for (const p of paths) {
+    try {
+      const stat = await fs.stat(p);
+      if (stat.isFile()) return p;
+    } catch {}
+  }
+  return paths[0];
 }

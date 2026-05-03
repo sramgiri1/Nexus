@@ -1,0 +1,29 @@
+{
+  "allowed_commands": [
+    "node", "npm", "npx", "git",
+    "ls", "cat", "grep", "find", "echo", "head", "tail", "wc", "sort", "uniq",
+    "xcodebuild", "xcrun", "swift", "swiftlint", "eslint",
+    "curl", "jq", "sed", "awk"
+  ],
+  "blocked_patterns": [
+    "rm -rf",
+    "sudo",
+    "curl | sh", "curl|sh",
+    "wget | sh", "wget|sh",
+    "bash -c",
+    "sh -c",
+    "eval ",
+    "> /dev/",
+    "chmod 777",
+    "dd if=",
+    "mkfs",
+    "shutdown",
+    "reboot",
+    ":(){:|:&};:",
+    "nc -",
+    "> /etc/",
+    "DROP TABLE",
+    "DELETE FROM"
+  ],
+  "max_command_length": 500
+}

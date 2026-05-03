@@ -17,6 +17,10 @@ struct MemberListView: View {
         }
     }
 
+    private var admins:     [CircleMember] { members.filter { $0.role == .admin } }
+    private var caregivers: [CircleMember] { members.filter { $0.role == .member } }
+    private var receivers:  [CircleMember] { members.filter { $0.role == .recipient } }
+
     var body: some View {
         NavigationStack {
             List {
@@ -28,48 +32,22 @@ struct MemberListView: View {
                     }
                 }
 
-                ForEach(members) { member in
-                    HStack(spacing: 12) {
-                        VStack(alignment: .leading, spacing: 2) {
-                            Text(member.user?.name ?? "Unknown")
-                                .font(.body)
-                            if let email = member.user?.email {
-                                Text(email)
-                                    .font(.caption)
-                                    .foregroundColor(.secondary)
-                            }
-                        }
-                        Spacer()
-                        if loadingMemberId == member.id {
-                            ProgressView()
-                                .scaleEffect(0.8)
-                        } else {
-                            HStack(spacing: 10) {
-                                roleBadge(member.role)
-                                if canManage(member) {
-                                    Menu {
-                                        if member.role == .member {
-                                            Button("Make Admin") {
-                                                Task { await updateRole(member, role: .admin) }
-                                            }
-                                        } else {
-                                            Button("Make Member") {
-                                                Task { await updateRole(member, role: .member) }
-                                            }
-                                        }
-                                        Button("Remove", role: .destructive) {
-                                            Task { await remove(member) }
-                                        }
-                                    } label: {
-                                        Image(systemName: "ellipsis.circle")
-                                            .font(.system(size: 18, weight: .semibold))
-                                            .foregroundStyle(.secondary)
-                                    }
-                                }
-                            }
-                        }
+                if !admins.isEmpty {
+                    Section("Admins") {
+                        ForEach(admins) { member in memberRow(member) }
                     }
-                    .padding(.vertical, 2)
+                }
+
+                if !caregivers.isEmpty {
+                    Section("Members") {
+                        ForEach(caregivers) { member in memberRow(member) }
+                    }
+                }
+
+                if !receivers.isEmpty {
+                    Section("Care Receivers") {
+                        ForEach(receivers) { member in memberRow(member) }
+                    }
                 }
 
                 if let error {
@@ -95,18 +73,78 @@ struct MemberListView: View {
                             Image(systemName: "person.badge.plus")
                         }
                     }
+                    if let circle = appState.activeCircle {
+                        ToolbarItem(placement: .topBarTrailing) {
+                            ShareLink(
+                                item: "Join \(circle.name) on CareLoop!\nCircle code: \(circle.id)",
+                                subject: Text("Join my CareLoop circle")
+                            ) {
+                                Image(systemName: "square.and.arrow.up")
+                            }
+                        }
+                    }
                 }
             }
-            .sheet(isPresented: $showInvite) {
-                InviteMemberView { name, email, role in
-                    Task { await invite(name: name, email: email, role: role) }
+            .sheet(isPresented: $showInvite, onDismiss: {
+                Task {
+                    await loadInvitations()
+                    if let id = appState.activeCircle?.id {
+                        try? await appState.activateCircle(id: id)
+                    }
                 }
+            }) {
+                InviteMemberView()
+                    .environmentObject(appState)
             }
             .task {
                 await loadInvitations()
             }
         }
         .careLoopBrandBanner()
+    }
+
+    @ViewBuilder
+    private func memberRow(_ member: CircleMember) -> some View {
+        HStack(spacing: 12) {
+            VStack(alignment: .leading, spacing: 2) {
+                Text(member.user?.name ?? "Unknown")
+                    .font(.body)
+                if let email = member.user?.email {
+                    Text(email)
+                        .font(.caption)
+                        .foregroundColor(.secondary)
+                }
+            }
+            Spacer()
+            if loadingMemberId == member.id {
+                ProgressView().scaleEffect(0.8)
+            } else {
+                HStack(spacing: 10) {
+                    roleBadge(member.role)
+                    if canManage(member) {
+                        Menu {
+                            if member.role == .member {
+                                Button("Make Admin") {
+                                    Task { await updateRole(member, role: .admin) }
+                                }
+                            } else if member.role == .admin {
+                                Button("Make Member") {
+                                    Task { await updateRole(member, role: .member) }
+                                }
+                            }
+                            Button("Remove", role: .destructive) {
+                                Task { await remove(member) }
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                        }
+                    }
+                }
+            }
+        }
+        .padding(.vertical, 2)
     }
 
     private func canManage(_ member: CircleMember) -> Bool {
@@ -118,46 +156,20 @@ struct MemberListView: View {
 
     private func loadInvitations() async {
         guard appState.userRole == .admin,
-              let circleId = appState.activeCircle?.id,
-              let adminUserId = appState.currentUser?.id else {
+              let circleId = appState.activeCircle?.id else {
             pendingInvitations = []
             return
         }
 
         do {
-            pendingInvitations = try await APIClient.shared.fetchInvitations(circleId: circleId, adminUserId: adminUserId)
-        } catch {
-            self.error = error.localizedDescription
-        }
-    }
-
-    private func invite(name: String, email: String, role: MemberRole) async {
-        guard let circleId = appState.activeCircle?.id,
-              let adminUserId = appState.currentUser?.id else { return }
-
-        loadingMemberId = "invite"
-        error = nil
-        defer { loadingMemberId = nil }
-
-        do {
-            _ = try await APIClient.shared.inviteMember(
-                circleId: circleId,
-                adminUserId: adminUserId,
-                name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-                email: email.trimmingCharacters(in: .whitespacesAndNewlines),
-                role: role
-            )
-            try await appState.activateCircle(id: circleId)
-            await loadInvitations()
-            showInvite = false
+            pendingInvitations = try await APIClient.shared.fetchInvitations(circleId: circleId)
         } catch {
             self.error = error.localizedDescription
         }
     }
 
     private func remove(_ member: CircleMember) async {
-        guard let circleId = appState.activeCircle?.id,
-              let adminUserId = appState.currentUser?.id else { return }
+        guard let circleId = appState.activeCircle?.id else { return }
 
         loadingMemberId = member.id
         error = nil
@@ -166,8 +178,7 @@ struct MemberListView: View {
         do {
             try await APIClient.shared.removeMember(
                 circleId: circleId,
-                memberId: member.id,
-                adminUserId: adminUserId
+                memberId: member.id
             )
             try await appState.activateCircle(id: circleId)
             await loadInvitations()
@@ -177,8 +188,7 @@ struct MemberListView: View {
     }
 
     private func updateRole(_ member: CircleMember, role: MemberRole) async {
-        guard let circleId = appState.activeCircle?.id,
-              let adminUserId = appState.currentUser?.id else { return }
+        guard let circleId = appState.activeCircle?.id else { return }
 
         loadingMemberId = member.id
         error = nil
@@ -188,7 +198,6 @@ struct MemberListView: View {
             _ = try await APIClient.shared.updateMemberRole(
                 circleId: circleId,
                 memberId: member.id,
-                adminUserId: adminUserId,
                 role: role
             )
             try await appState.activateCircle(id: circleId)
@@ -198,8 +207,7 @@ struct MemberListView: View {
     }
 
     private func revoke(_ invite: GroupInvitation) async {
-        guard let circleId = appState.activeCircle?.id,
-              let adminUserId = appState.currentUser?.id else { return }
+        guard let circleId = appState.activeCircle?.id else { return }
 
         loadingMemberId = invite.id
         error = nil
@@ -208,8 +216,7 @@ struct MemberListView: View {
         do {
             try await APIClient.shared.revokeInvitation(
                 circleId: circleId,
-                invitationId: invite.id,
-                adminUserId: adminUserId
+                invitationId: invite.id
             )
             await loadInvitations()
         } catch {
@@ -219,12 +226,21 @@ struct MemberListView: View {
 
     @ViewBuilder
     private func roleBadge(_ role: MemberRole) -> some View {
-        Text(role == .admin ? "Admin" : "Member")
+        let (label, fg, bg): (String, Color, Color) = {
+            switch role {
+            case .admin:
+                return ("Admin", .blue, Color.blue.opacity(0.15))
+            case .member:
+                return ("Member", .secondary, Color.secondary.opacity(0.12))
+            case .recipient:
+                return ("Receiver", Color(red: 0.85, green: 0.30, blue: 0.50), Color(red: 0.85, green: 0.30, blue: 0.50).opacity(0.12))
+            }
+        }()
+        Text(label)
             .font(.caption.bold())
-            .padding(.horizontal, 8)
-            .padding(.vertical, 3)
-            .background(role == .admin ? Color.blue.opacity(0.15) : Color.secondary.opacity(0.12))
-            .foregroundColor(role == .admin ? .blue : .secondary)
+            .padding(.horizontal, 8).padding(.vertical, 3)
+            .background(bg)
+            .foregroundColor(fg)
             .cornerRadius(4)
     }
 
@@ -237,7 +253,13 @@ struct MemberListView: View {
                 Text(invite.email)
                     .font(.caption)
                     .foregroundColor(.secondary)
-                Text(invite.role == .admin ? "Admin access on acceptance" : "Member access on acceptance")
+                Text({
+                        switch invite.role {
+                        case .admin:     return "Admin access on acceptance"
+                        case .member:    return "Member access on acceptance"
+                        case .recipient: return "Care Receiver access on acceptance"
+                        }
+                    }())
                     .font(.caption2)
                     .foregroundStyle(.secondary)
             }
@@ -257,13 +279,22 @@ struct MemberListView: View {
 }
 
 private struct InviteMemberView: View {
-    let onInvite: (_ name: String, _ email: String, _ role: MemberRole) -> Void
-
+    @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
 
-    @State private var name = ""
-    @State private var email = ""
-    @State private var role: MemberRole = .member
+    @State private var name:           String      = ""
+    @State private var email:          String      = ""
+    @State private var role:           MemberRole  = .member
+    @State private var confirmedAdult: Bool        = false
+    @State private var loading:        Bool        = false
+    @State private var error:          String?
+
+    private var canInvite: Bool {
+        !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
+        isValidEmail(email) &&
+        confirmedAdult &&
+        !loading
+    }
 
     var body: some View {
         NavigationStack {
@@ -274,14 +305,32 @@ private struct InviteMemberView: View {
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
-                    Picker("Access", selection: $role) {
+                    Picker("Role", selection: $role) {
                         Text("Member").tag(MemberRole.member)
                         Text("Admin").tag(MemberRole.admin)
+                        Text("Receiver").tag(MemberRole.recipient)
                     }
                     .pickerStyle(.segmented)
-                    Text("The invite stays pending until the person signs in with the same email and accepts it inside CareLoop.")
+                    Text(roleInviteDescription)
                         .font(.footnote)
                         .foregroundStyle(.secondary)
+                }
+
+                Section {
+                    Toggle(isOn: $confirmedAdult) {
+                        Text("I confirm this person is 18 years or older")
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                    }
+                } footer: {
+                    Text("CareLoop is for adults only. Invite flows for minors will be supported in a future update.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let error {
+                    Section {
+                        Text(error).foregroundStyle(.red).font(.caption)
+                    }
                 }
             }
             .navigationTitle("Invite Member")
@@ -292,11 +341,40 @@ private struct InviteMemberView: View {
                 }
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Invite") {
-                        onInvite(name, email, role)
+                        Task { await sendInvite() }
                     }
-                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || !isValidEmail(email))
+                    .disabled(!canInvite)
                 }
             }
+        }
+    }
+
+    private func sendInvite() async {
+        guard let circleId = appState.activeCircle?.id else { return }
+        loading = true
+        error = nil
+        do {
+            _ = try await APIClient.shared.inviteMember(
+                circleId: circleId,
+                name: name.trimmingCharacters(in: .whitespacesAndNewlines),
+                email: email.trimmingCharacters(in: .whitespacesAndNewlines),
+                role: role
+            )
+            dismiss()
+        } catch {
+            self.error = error.localizedDescription
+            loading = false
+        }
+    }
+
+    private var roleInviteDescription: String {
+        switch role {
+        case .admin:
+            return "Admin: can manage tasks, members, and all circle settings."
+        case .member:
+            return "Member: can create, assign, and complete tasks for the circle."
+        case .recipient:
+            return "Care Receiver: sees all care activity, gets personal reminders for their tasks, and can mark their own tasks done. They need to install CareLoop and accept this invite."
         }
     }
 

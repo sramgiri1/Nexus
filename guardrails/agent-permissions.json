@@ -1,0 +1,48 @@
+{
+  "_comment": "Defines which agents can enqueue tasks for which other agents. Tiers control blast radius.",
+  "tiers": {
+    "ORCHESTRATOR": {
+      "agents": ["nexus", "loop"],
+      "can_enqueue_for": ["*"],
+      "max_children_per_task": 10
+    },
+    "SHEPHERD": {
+      "agents": ["shepherd"],
+      "can_enqueue_for": ["core", "swift", "pixel", "canvas", "stream", "synapse", "auditor", "sentinel", "warden", "relay", "forge", "prism"],
+      "max_children_per_task": 5
+    },
+    "STRATEGY": {
+      "agents": ["atlas", "radar", "meridian", "prism", "beacon", "compass", "oracle"],
+      "can_enqueue_for": ["nexus"],
+      "max_children_per_task": 1
+    },
+    "ENGINEER": {
+      "agents": ["core", "swift", "pixel", "canvas"],
+      "can_enqueue_for": [],
+      "max_children_per_task": 0
+    },
+    "PLATFORM": {
+      "agents": ["forge", "stream", "synapse"],
+      "can_enqueue_for": [],
+      "max_children_per_task": 0
+    },
+    "VERIFIER": {
+      "agents": ["auditor", "sentinel", "warden"],
+      "can_enqueue_for": [],
+      "max_children_per_task": 0
+    },
+    "OBSERVER": {
+      "agents": ["relay"],
+      "can_enqueue_for": ["nexus", "shepherd"],
+      "max_children_per_task": 2
+    }
+  },
+  "max_queue_size": 50,
+  "skill_ownership": {
+    "auditor":      ["code.lint", "code.static_analysis", "code.test_coverage", "code.diff_review"],
+    "sentinel":     ["qa.simulator.run", "qa.tests.execute", "qa.logs.analyze", "qa.security.scan"],
+    "warden":       ["compliance.privacy.check", "compliance.permissions.validate", "compliance.appstore.check"],
+    "nexus":        ["decide.priority", "decide.release", "read.system_state"],
+    "orchestrator": ["flow.plan", "flow.dispatch", "flow.monitor", "flow.aggregate"]
+  }
+}

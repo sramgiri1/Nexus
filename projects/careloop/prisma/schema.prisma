@@ -13,9 +13,13 @@ model User {
   name         String
   phone        String?
   passwordHash String?
-  pushToken    String?
-  timezone     String?
-  createdAt    DateTime @default(now())
+  authVersion  Int      @default(0)
+  pushToken         String?
+  timezone          String?
+  notifAssignments  Boolean  @default(true)
+  notifEscalations  Boolean  @default(true)
+  notifDigest       Boolean  @default(true)
+  createdAt         DateTime @default(now())
   updatedAt    DateTime @updatedAt
 
   identities    AuthIdentity[]
@@ -26,6 +30,7 @@ model User {
   tasksCreated  Task[]         @relation("TaskCreator")
   tasksAssigned Task[]         @relation("TaskAssignee")
   tasksCompleted Task[]        @relation("TaskCompletedBy")
+  taskComments   TaskComment[]  @relation("TaskCommentAuthor")
   events        Event[]
   digestLogs    DigestLog[]
 }
@@ -149,6 +154,19 @@ model Task {
   completedById String?
 
   reminders   Reminder[]
+  comments    TaskComment[]
+}
+
+model TaskComment {
+  id        String   @id @default(cuid())
+  body      String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  task      Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId    String
+  author    User   @relation("TaskCommentAuthor", fields: [authorId], references: [id])
+  authorId  String
 }
 
 model Reminder {
@@ -190,6 +208,7 @@ model DigestLog {
 enum Role {
   ADMIN
   MEMBER
+  RECIPIENT
 }
 
 enum TaskStatus {

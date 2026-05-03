@@ -1,9 +1,9 @@
 # CareLoop — 3-Sprint Delivery Plan
 
-**Sprints:** 3 × 2 weeks  
+**Sprints:** 4 × 2 weeks  
 **Capacity:** Solo founder + AI  
-**Public launch:** End of Sprint 3  
-**Status:** Sprint 2 in progress
+**Public launch:** End of Sprint 4  
+**Status:** Sprint 4 in progress — subscription system delivered 2026-05-01
 
 ---
 
@@ -171,12 +171,71 @@
 
 ---
 
+---
+
+## Sprint 4 — Public Launch Hardening and Monetization
+
+**Goal:** Ship the subscription system, harden the app for App Store submission, and complete launch readiness.
+
+**Scope:**
+
+- **iOS subscription system (DELIVERED 2026-05-01):**
+  - `SubscriptionManager.swift` — StoreKit 2 singleton (`@MainActor ObservableObject`):
+    - Product IDs: `com.careloop.ios.premium.monthly`, `com.careloop.ios.premium.yearly`
+    - `loadProducts()` → `Product.products(for:)` on init
+    - `refreshEntitlements()` → `Transaction.currentEntitlements` async sequence
+    - `observeTransactionUpdates()` → `Transaction.updates` observer; finishes both verified and unverified transactions
+    - `purchase(_ product:)` with haptic feedback on success
+    - `restorePurchases()` via `AppStore.sync()` with user-visible restore message
+    - `openSubscriptionManagement()` via `AppStore.showManageSubscriptions(in:)`
+  - `PaywallView.swift` — dark-navy paywall:
+    - Crown hero, "CareLoop Premium" headline, 6-feature checklist
+    - Monthly/yearly plan cards with live prices from `product.displayPrice`
+    - Yearly card shows "Best Value" badge
+    - CTA shows `ProgressView` during initial product load and purchase
+    - Auto-dismisses on `store.isPremium` becoming true
+    - App Store-compliant disclosure text (auto-renewal, 24hr cancel rule, App Store Settings)
+    - Trial-aware: shows trial length from `introductoryOffer` when present
+    - Restore Purchases button with feedback message
+  - `CircleListView` — premium UX integration:
+    - Premium badge in header (crown + "Premium", teal) when `isPremium`
+    - `upgradePrompt` card when free (purple gradient, "Unlock CareLoop Premium")
+    - `showPaywall` sheet driven from parent `CircleListView` state
+    - `AccountSheet` `onUpgrade` callback pattern (parent-owned state survives child sheet dismissal)
+    - Enhanced hero: "Hi, [firstName]" greeting, stat pills for circles and invites
+  - 34 unit tests in `SubscriptionManagerTests.swift` across 5 test classes
+- Privacy policy live
+- `incident-response.md` completed and shipped
+- Production env separation and config audit
+- TestFlight / App Store submission readiness
+- Server-side entitlement sync (map Apple transaction to group-level premium unlock)
+- Group-level premium unlocks
+- Admin insights charts
+- Launch QA for full invite-based onboarding path
+
+**Deferred post-launch:**
+
+- Distributed scheduler
+- User-facing activity feed
+- `DIGEST_OPENED` webhook
+- Retry logic
+
+**Exit criteria:**
+
+- iOS subscription purchase, trial start, and restore all work end-to-end in TestFlight
+- Paywall satisfies App Store Review Guidelines (disclosure text, compliant payment path)
+- Server-side entitlement sync maps Apple transaction to group premium status
+- Compliance docs live and reviewed
+- Full smoke test from sign-in → task completion → subscription purchase passes
+
+---
+
 ## Assumptions
 
 - Sprint length: 2 weeks, fixed
 - Capacity: solo founder + AI — no additional engineer bandwidth assumed
-- Stack: iOS SwiftUI, Fastify + Prisma, PostgreSQL/Supabase, Resend, APNs
-- Public launch by Sprint 3 is realistic only if scope is frozen to this plan
-- `DIGEST_OPENED` tracking is post-launch unless Sprint 3 finishes early
+- Stack: iOS SwiftUI, Fastify + Prisma, PostgreSQL/Supabase, Resend, APNs, StoreKit 2
+- Public launch by Sprint 4 is realistic only if scope is frozen to this plan
+- `DIGEST_OPENED` tracking is post-launch unless Sprint 4 finishes early
 - `SHEPHERD`, `WARDEN`, and `RELAY` are process ownership roles used in founder workflow; runner wiring is deferred
 - EHR/clinic, medication tracking, web, Android, AI features: permanently out of scope for v1

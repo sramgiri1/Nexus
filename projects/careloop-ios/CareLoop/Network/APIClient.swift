@@ -8,20 +8,40 @@ final class APIClient {
     static let shared = APIClient()
 
     private let baseURL: String
-    private let apiKey: String
+    private let accessTokenKey = "careloop.accessToken"
     private let decoder: JSONDecoder = {
         let d = JSONDecoder()
-        d.dateDecodingStrategy = .iso8601
+        let fractional = ISO8601DateFormatter()
+        fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+        let basic = ISO8601DateFormatter()
+        basic.formatOptions = [.withInternetDateTime]
+        d.dateDecodingStrategy = .custom { decoder in
+            let container = try decoder.singleValueContainer()
+            let str = try container.decode(String.self)
+            if let date = fractional.date(from: str) { return date }
+            if let date = basic.date(from: str) { return date }
+            throw DecodingError.dataCorruptedError(in: container,
+                debugDescription: "Cannot decode ISO8601 date: \(str)")
+        }
         return d
     }()
 
     private init() {
-        guard
-            let url = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String,
-            let key = Bundle.main.object(forInfoDictionaryKey: "API_KEY") as? String
-        else { fatalError("API_BASE_URL and API_KEY must be set in Info.plist") }
+        guard let url = Bundle.main.object(forInfoDictionaryKey: "API_BASE_URL") as? String
+        else { fatalError("API_BASE_URL must be set in Info.plist") }
         self.baseURL = url
-        self.apiKey  = key
+    }
+
+    var hasAccessToken: Bool {
+        accessToken?.isEmpty == false
+    }
+
+    func setAccessToken(_ token: String) {
+        KeychainStore.set(token, for: accessTokenKey)
+    }
+
+    func clearAccessToken() {
+        KeychainStore.remove(accessTokenKey)
     }
 
     func get<T: Decodable>(_ path: String) async throws -> T {
@@ -48,8 +68,8 @@ final class APIClient {
         return try await request(path: path, method: "POST", body: data)
     }
 
-    func deleteVoid(_ path: String, body: [String: Any]) async throws {
-        let data = try JSONSerialization.data(withJSONObject: body)
+    func deleteVoid(_ path: String, body: [String: Any]? = nil) async throws {
+        let data = try body.map { try JSONSerialization.data(withJSONObject: $0) }
         try await requestVoid(path: path, method: "DELETE", body: data)
     }
 
@@ -57,8 +77,12 @@ final class APIClient {
         guard let url = URL(string: baseURL + path) else { throw APIError.invalidURL }
         var req = URLRequest(url: url)
         req.httpMethod = method
-        req.setValue(apiKey, forHTTPHeaderField: "x-api-key")
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let accessToken {
+            req.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        }
+        if body != nil {
+            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
         req.httpBody = body
         let (data, response) = try await URLSession.shared.data(for: req)
         guard let http = response as? HTTPURLResponse, (200...299).contains(http.statusCode) else {
@@ -71,8 +95,12 @@ final class APIClient {
         guard let url = URL(string: baseURL + path) else { throw APIError.invalidURL }
         var req = URLRequest(url: url)
         req.httpMethod = method
-        req.setValue(apiKey, forHTTPHeaderField: "x-api-key")
-        req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        if let accessToken {
+            req.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        }
+        if body != nil {
+            req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
         req.httpBody = body
 
         let (data, response) = try await URLSession.shared.data(for: req)
@@ -81,6 +109,10 @@ final class APIClient {
             throw APIError.httpError((response as? HTTPURLResponse)?.statusCode ?? 0, message)
         }
         return try decoder.decode(T.self, from: data)
+    }
+
+    private var accessToken: String? {
+        KeychainStore.get(accessTokenKey)
     }
 }
 

@@ -1,7 +1,7 @@
 # CareLoop — Technology Stack Decision
 
 **Status:** Approved  
-**Applies to:** Sprints 1–3
+**Applies to:** Sprints 1–4
 
 ---
 
@@ -46,6 +46,30 @@ Cheaper and simpler than Clerk/Auth0 for an iOS-first app. Fits naturally with S
 - AuthZ model: CareLoop authorization stays in the Fastify backend via `CircleMember.role`
 - Read protection: require authenticated user + membership check on all circle-scoped GET endpoints by launch (Sprint 3)
 - Supabase handles identity; Fastify handles circle/task permissions
+
+### iOS Payments and Subscriptions
+
+| Layer                | Decision                                           |
+|----------------------|----------------------------------------------------|
+| In-app purchase      | StoreKit 2 (iOS 15+)                               |
+| Subscription type    | Auto-renewing subscriptions (monthly + annual)     |
+| Payment collection   | Apple handles all payment data (no Stripe/direct)  |
+| Entitlement state    | `SubscriptionManager` singleton + server-side sync |
+| Receipt verification | `Transaction.currentEntitlements` async sequence   |
+| Restore purchases    | `AppStore.sync()` + entitlement refresh            |
+| Subscription mgmt UI | `AppStore.showManageSubscriptions(in:)`            |
+
+**Product IDs registered in App Store Connect:**
+
+- `com.careloop.ios.premium.monthly`
+- `com.careloop.ios.premium.yearly`
+
+StoreKit 2 is the only compliant payment path for iOS App Store subscriptions. Apple collects and stores all credit card and billing address data. The app collects only name and email at sign-up, and stores Apple transaction ID and expiry for server-side entitlement verification.
+
+**Delivered in Sprint 4 (2026-05-01):**
+
+- `CareLoop/App/SubscriptionManager.swift` — `@MainActor ObservableObject` singleton; manages product loading, purchase, restore, entitlement sync, and transaction observer
+- `CareLoop/Views/PaywallView.swift` — full dark-navy paywall with plan selector, trial-aware CTA, compliant disclosure text, and App Store Settings cancel instructions
 
 ### Notifications and Messaging
 

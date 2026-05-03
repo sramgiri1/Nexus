@@ -1,0 +1,49 @@
+{
+  "featureFlags": {
+    "ENABLE_REAL_OPENAI_BATCH": false,
+    "ENABLE_REAL_ANTHROPIC_BATCH": false,
+    "ENABLE_OPENROUTER_LIVE_SMOKE": false
+  },
+  "providers": {
+    "direct_openai": {
+      "envKey": "OPENAI_API_KEY",
+      "supportsRealtime": true,
+      "supportsBatch": true,
+      "supportsTools": true,
+      "billingMode": "direct",
+      "realtimeCostMultiplier": 1.0,
+      "batchCostMultiplier": 0.5,
+      "role": "critical coding, realtime execution, official OpenAI batch"
+    },
+    "direct_anthropic": {
+      "envKey": "ANTHROPIC_API_KEY",
+      "supportsRealtime": true,
+      "supportsBatch": true,
+      "supportsTools": true,
+      "billingMode": "direct",
+      "realtimeCostMultiplier": 1.0,
+      "batchCostMultiplier": 0.5,
+      "role": "deep reasoning, compliance, strategy, official Anthropic batch"
+    },
+    "openrouter": {
+      "envKey": "OPENROUTER_API_KEY",
+      "supportsRealtime": true,
+      "supportsBatch": false,
+      "supportsTools": true,
+      "billingMode": "router",
+      "realtimeCostMultiplier": 1.0,
+      "batchCostMultiplier": null,
+      "role": "unified model access, provider fallback, cost optimization, experimentation"
+    },
+    "ollama": {
+      "envKey": "OLLAMA_HOST",
+      "supportsRealtime": true,
+      "supportsBatch": false,
+      "supportsTools": true,
+      "billingMode": "local",
+      "realtimeCostMultiplier": 0.0,
+      "batchCostMultiplier": 0.0,
+      "role": "zero-cost local draft fallback only"
+    }
+  }
+}

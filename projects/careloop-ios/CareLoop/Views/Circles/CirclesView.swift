@@ -3,50 +3,61 @@ import SwiftUI
 struct CirclesView: View {
     @EnvironmentObject var appState: AppState
     @AppStorage("askedForPush") private var askedForPush = false
-    @State private var tasks:        [CareTask] = []
-    @State private var loading       = true
-    @State private var error:        String?
-    @State private var showNewTask   = false
-    @State private var showMembers   = false
-    @State private var showSettings  = false
+
+    @State private var tasks:              [CareTask] = []
+    @State private var loading             = true
+    @State private var error:              String?
+    @State private var showNewTask         = false
+    @State private var showMembers         = false
+    @State private var showSettings        = false
     @State private var showPermissionSheet = false
-    @State private var deepLinkedTask: CareTask?
-    @State private var selectedRecipientFilter = "all"
+    @State private var selectedTask:       CareTask?
+    @State private var selectedRecipient   = "all"
+
+    // MARK: – Design tokens
+    private let teal  = Color(red: 0.16, green: 0.80, blue: 0.72)
+    private let blue  = Color(red: 0.13, green: 0.56, blue: 0.87)
+    private let dark  = Color(red: 0.10, green: 0.16, blue: 0.24)
+    private let bg    = Color(red: 0.95, green: 0.96, blue: 0.99)
+    private let green = Color(red: 0.12, green: 0.68, blue: 0.49)
 
     var body: some View {
+        if appState.userRole == .recipient {
+            RecipientBoardView()
+                .environmentObject(appState)
+                .careLoopBrandBanner()
+        } else {
+            mainBoard
+        }
+    }
+
+    // MARK: – Main board (admin + member)
+
+    private var mainBoard: some View {
         NavigationStack {
             Group {
                 if loading {
                     ProgressView()
-                } else if let error {
-                    Text(error).foregroundColor(.secondary)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 } else {
-                    taskList
+                    boardScrollView
                 }
             }
+            .background(bg.ignoresSafeArea())
             .navigationTitle(appState.activeCircle?.name ?? "Care Tasks")
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button { showNewTask = true } label: { Image(systemName: "plus") }
-                }
-                ToolbarItem(placement: .topBarLeading) {
-                    HStack(spacing: 16) {
-                        Button { showMembers = true } label: {
-                            Image(systemName: "person.2")
-                        }
-                        if appState.userRole == .admin {
-                            Button { showSettings = true } label: {
-                                Image(systemName: "gearshape")
-                            }
-                        }
-                    }
-                }
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button {
-                        appState.clearActiveCircleSelection()
-                    } label: {
-                        Image(systemName: "square.grid.2x2")
-                    }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar { boardToolbar }
+            .navigationDestination(isPresented: Binding(
+                get: { selectedTask != nil },
+                set: { if !$0 { selectedTask = nil } }
+            )) {
+                if let task = selectedTask {
+                    TaskDetailView(
+                        task:     task,
+                        onUpdate: { updateInList($0) },
+                        onDelete: { removeFromList(task) }
+                    )
+                    .environmentObject(appState)
                 }
             }
             .sheet(isPresented: $showNewTask, onDismiss: { Task { await loadTasks() } }) {
@@ -57,8 +68,9 @@ struct CirclesView: View {
                         members:    circle.members ?? [],
                         recipients: circle.recipients ?? [],
                         isAdmin:    appState.userRole == .admin,
-                        onCreated:  { createdTask in
-                            if createdTask.dueAt != nil && !askedForPush {
+                        onCreated:  { created in
+                            tasks.insert(created, at: 0)
+                            if created.dueAt != nil && !askedForPush {
                                 showPermissionSheet = true
                             }
                         }
@@ -66,31 +78,15 @@ struct CirclesView: View {
                 }
             }
             .sheet(isPresented: $showMembers) {
-                MemberListView()
-                    .environmentObject(appState)
+                MemberListView().environmentObject(appState)
             }
             .sheet(isPresented: $showSettings) {
                 if let circle = appState.activeCircle {
-                    CircleSettingsView(circle: circle)
-                        .environmentObject(appState)
+                    CircleSettingsView(circle: circle).environmentObject(appState)
                 }
             }
             .sheet(isPresented: $showPermissionSheet) {
-                NotificationPermissionView { _ in
-                    askedForPush = true
-                }
-            }
-            .navigationDestination(isPresented: Binding(
-                get: { deepLinkedTask != nil },
-                set: { if !$0 { deepLinkedTask = nil } }
-            )) {
-                if let task = deepLinkedTask {
-                    TaskDetailView(
-                        task: task,
-                        onUpdate: { updated in updateInList(updated) },
-                        onDelete: { removeFromList(task) }
-                    )
-                }
+                NotificationPermissionView { _ in askedForPush = true }
             }
         }
         .careLoopBrandBanner()
@@ -102,304 +98,384 @@ struct CirclesView: View {
             }
         }
         .onChange(of: appState.shouldPromptNewTask) { shouldPrompt in
-            if shouldPrompt {
-                showNewTask = true
-                appState.consumeNewTaskPrompt()
-            }
+            if shouldPrompt { showNewTask = true; appState.consumeNewTaskPrompt() }
         }
-        .onChange(of: appState.pendingTaskId) { _ in
-            syncPendingTaskNavigation()
-        }
-        .onChange(of: tasks) { _ in
-            syncPendingTaskNavigation()
-        }
+        .onChange(of: appState.pendingTaskId) { _ in syncDeepLink() }
+        .onChange(of: tasks) { _ in syncDeepLink() }
         .onChange(of: appState.activeCircle?.id) { _ in
-            selectedRecipientFilter = "all"
+            selectedRecipient = "all"
             Task { await loadTasks() }
         }
     }
 
-    // MARK: — Task list
+    // MARK: – Toolbar
 
-    private var taskList: some View {
-        List {
-            if let circle = appState.activeCircle {
-                Section {
-                    VStack(alignment: .leading, spacing: 14) {
-                        activeCircleCard(circle)
-
-                        if !recipientFilters.isEmpty {
-                            recipientFilterRow
-                        }
+    @ToolbarContentBuilder
+    private var boardToolbar: some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            HStack(spacing: 16) {
+                Button { showMembers = true } label: {
+                    Image(systemName: "person.2")
+                }
+                if appState.userRole == .admin {
+                    Button { showSettings = true } label: {
+                        Image(systemName: "gearshape")
                     }
                 }
-                .listRowBackground(Color.clear)
-            }
-
-            if !activeTasks.isEmpty {
-                Section("Active") {
-                    ForEach(activeTasks) { task in
-                        taskRow(task)
-                    }
-                }
-            }
-
-            if !completedTasks.isEmpty {
-                Section("Completed") {
-                    ForEach(completedTasks) { task in
-                        taskRow(task)
-                    }
+                Button { appState.clearActiveCircleSelection() } label: {
+                    Image(systemName: "square.grid.2x2")
                 }
             }
         }
-        .listStyle(.insetGrouped)
+        ToolbarItem(placement: .primaryAction) {
+            Button { showNewTask = true } label: {
+                Image(systemName: "plus")
+            }
+        }
+    }
+
+    // MARK: – Board scroll view
+
+    private var boardScrollView: some View {
+        ScrollView(showsIndicators: false) {
+            LazyVStack(alignment: .leading, spacing: 20) {
+                circleHeaderCard
+                    .padding(.horizontal, 16)
+
+                if multipleRecipients {
+                    recipientFilterRow
+                        .padding(.horizontal, 16)
+                }
+
+                if let err = error {
+                    Text(err)
+                        .font(.footnote).foregroundStyle(.red)
+                        .padding(.horizontal, 16)
+                }
+
+                boardSection("Overdue",  tasks: overdueSection,  color: .red)
+                boardSection("Today",    tasks: todaySection,     color: teal)
+                boardSection("Upcoming", tasks: upcomingSection,  color: blue)
+                boardSection("Anytime",  tasks: noDateSection,    color: Color(red: 0.43, green: 0.50, blue: 0.60))
+                boardSection("Completed", tasks: completedSection, color: green)
+
+                if allEmpty {
+                    emptyStateView
+                        .padding(.horizontal, 16)
+                }
+
+                Spacer(minLength: 32)
+            }
+            .padding(.top, 14)
+            .padding(.bottom, 20)
+        }
         .refreshable { await loadTasks() }
     }
 
-    private var recipientFilters: [CareRecipient] {
-        appState.activeCircle?.recipients ?? []
-    }
+    // MARK: – Circle header card
 
-    @ViewBuilder
-    private func activeCircleCard(_ circle: CareCircle) -> some View {
+    private var circleHeaderCard: some View {
         HStack(spacing: 14) {
             ZStack {
-                RoundedRectangle(cornerRadius: 16, style: .continuous)
-                    .fill(
-                        LinearGradient(
-                            colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
-                            startPoint: .topLeading,
-                            endPoint: .bottomTrailing
-                        )
-                    )
+                RoundedRectangle(cornerRadius: 14, style: .continuous)
+                    .fill(LinearGradient(
+                        colors: [teal, blue],
+                        startPoint: .topLeading, endPoint: .bottomTrailing
+                    ))
                 Image("CareLoopIcon")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(12)
+                    .resizable().scaledToFit().padding(10)
             }
-            .frame(width: 52, height: 52)
+            .frame(width: 48, height: 48)
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text(circle.name)
-                    .font(.system(size: 18, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.10, green: 0.16, blue: 0.24))
-                Text(recipientSubtitle(for: circle))
-                    .font(.system(size: 14, weight: .medium, design: .rounded))
-                    .foregroundStyle(.secondary)
-                Text(appState.circleMemberships.count > 1 ? "Manage this circle or return to the list" : "Current active circle")
-                    .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
+            VStack(alignment: .leading, spacing: 3) {
+                Text(appState.activeCircle?.name ?? "Care Circle")
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundStyle(dark)
+                if let subtitle = circleSubtitle {
+                    Text(subtitle)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
             }
 
             Spacer()
 
-            VStack(alignment: .trailing, spacing: 6) {
-                Text(appState.userRole == .admin ? "Admin" : "Member")
-                    .font(.system(size: 12, weight: .bold, design: .rounded))
-                    .foregroundStyle(appState.userRole == .admin ? Color(red: 0.13, green: 0.56, blue: 0.87) : Color(red: 0.23, green: 0.33, blue: 0.44))
-                    .padding(.horizontal, 10)
-                    .padding(.vertical, 6)
-                    .background(
-                        RoundedRectangle(cornerRadius: 999, style: .continuous)
-                            .fill(appState.userRole == .admin ? Color(red: 0.88, green: 0.95, blue: 1.0) : Color(red: 0.93, green: 0.95, blue: 0.98))
-                    )
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 12, weight: .bold))
-                    .foregroundStyle(.tertiary)
-            }
+            let role = appState.userRole
+            Text(role.displayLabel)
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+                .foregroundStyle(role == .admin ? blue : Color(red: 0.23, green: 0.33, blue: 0.44))
+                .padding(.horizontal, 10).padding(.vertical, 5)
+                .background(
+                    Capsule().fill(role == .admin
+                        ? Color(red: 0.88, green: 0.95, blue: 1.0)
+                        : Color(red: 0.93, green: 0.95, blue: 0.98))
+                )
         }
-        .padding(18)
-        .background(Color.white)
-        .clipShape(RoundedRectangle(cornerRadius: 26, style: .continuous))
+        .padding(16)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
     }
 
-    @ViewBuilder
+    private var circleSubtitle: String? {
+        guard let circle = appState.activeCircle else { return nil }
+        let names = circle.recipientNames
+        switch names.count {
+        case 0: return nil
+        case 1: return "Caring for \(names[0])"
+        case 2: return "Caring for \(names[0]) and \(names[1])"
+        default: return "Caring for \(names[0]) + \(names.count - 1) more"
+        }
+    }
+
+    // MARK: – Recipient filter row
+
+    private var multipleRecipients: Bool {
+        (appState.activeCircle?.recipients ?? []).count > 1
+    }
+
     private var recipientFilterRow: some View {
         ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 10) {
-                filterChip(id: "all", title: "All recipients")
-                ForEach(recipientFilters) { recipient in
-                    filterChip(id: recipient.id, title: recipient.name)
+            HStack(spacing: 8) {
+                filterChip(id: "all", label: "All")
+                ForEach(appState.activeCircle?.recipients ?? []) { r in
+                    filterChip(id: r.id, label: r.name)
                 }
             }
-            .padding(.horizontal, 2)
         }
     }
 
-    @ViewBuilder
-    private func filterChip(id: String, title: String) -> some View {
-        Button {
-            selectedRecipientFilter = id
-        } label: {
-            Text(title)
+    private func filterChip(id: String, label: String) -> some View {
+        let active = selectedRecipient == id
+        return Button { selectedRecipient = id } label: {
+            Text(label)
                 .font(.system(size: 13, weight: .bold, design: .rounded))
-                .foregroundStyle(selectedRecipientFilter == id ? .white : Color(red: 0.23, green: 0.33, blue: 0.44))
-                .padding(.horizontal, 14)
-                .padding(.vertical, 10)
+                .foregroundStyle(active ? .white : Color(red: 0.23, green: 0.33, blue: 0.44))
+                .padding(.horizontal, 14).padding(.vertical, 8)
                 .background(
                     Group {
-                        if selectedRecipientFilter == id {
-                            LinearGradient(
-                                colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
-                                startPoint: .leading,
-                                endPoint: .trailing
-                            )
+                        if active {
+                            LinearGradient(colors: [teal, blue], startPoint: .leading, endPoint: .trailing)
                         } else {
                             Color.white
                         }
                     }
                 )
                 .clipShape(Capsule())
-                .overlay(
-                    Capsule()
-                        .stroke(Color(red: 0.84, green: 0.89, blue: 0.95), lineWidth: 1.5)
-                )
+                .overlay(Capsule().stroke(Color(red: 0.84, green: 0.89, blue: 0.95), lineWidth: active ? 0 : 1.5))
         }
         .buttonStyle(.plain)
     }
 
-    private var activeTasks: [CareTask] {
-        filteredTasks
-            .filter { $0.status != .done && $0.status != .skipped }
-            .sorted {
-                switch ($0.dueAt, $1.dueAt) {
-                case let (lhs?, rhs?): return lhs < rhs
-                case (_?, nil): return true
-                case (nil, _?): return false
-                case (nil, nil): return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
+    // MARK: – Board sections
+
+    @ViewBuilder
+    private func boardSection(_ title: String, tasks: [CareTask], color: Color) -> some View {
+        if !tasks.isEmpty {
+            VStack(alignment: .leading, spacing: 10) {
+                sectionHeader(title, count: tasks.count, color: color)
+                    .padding(.horizontal, 16)
+                ForEach(tasks) { task in
+                    taskCard(task)
+                        .padding(.horizontal, 16)
                 }
             }
-    }
-
-    private var completedTasks: [CareTask] {
-        filteredTasks
-            .filter { $0.status == .done || $0.status == .skipped }
-            .sorted {
-                let lhs = $0.completedAt ?? .distantPast
-                let rhs = $1.completedAt ?? .distantPast
-                if lhs != rhs { return lhs > rhs }
-                return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
-            }
-    }
-
-    private var filteredTasks: [CareTask] {
-        guard selectedRecipientFilter != "all" else { return tasks }
-        return tasks.filter { $0.recipientId == selectedRecipientFilter }
-    }
-
-    private func recipientSubtitle(for circle: CareCircle) -> String {
-        let names = circle.recipientNames
-        switch names.count {
-        case 0:
-            return "Care group"
-        case 1:
-            return "Caring for \(names[0])"
-        case 2:
-            return "Caring for \(names[0]) and \(names[1])"
-        default:
-            return "Caring for \(names[0]) + \(names.count - 1) more"
         }
+    }
+
+    private func sectionHeader(_ title: String, count: Int, color: Color) -> some View {
+        HStack(spacing: 7) {
+            Circle().fill(color).frame(width: 7, height: 7)
+            Text(title.uppercased())
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .foregroundStyle(color)
+                .tracking(0.7)
+            Text("· \(count)")
+                .font(.system(size: 11, weight: .semibold, design: .rounded))
+                .foregroundStyle(color.opacity(0.65))
+            Spacer()
+        }
+    }
+
+    // MARK: – Task card
+
+    private func taskCard(_ task: CareTask) -> some View {
+        Button { selectedTask = task } label: {
+            TaskRowView(task: task, onToggle: { Task { await toggle(task) } })
+        }
+        .buttonStyle(.plain)
+        .contextMenu { contextMenuItems(for: task) }
     }
 
     @ViewBuilder
-    private func taskRow(_ task: CareTask) -> some View {
-        NavigationLink {
-            TaskDetailView(
-                task:     task,
-                onUpdate: { updated in updateInList(updated) },
-                onDelete: { removeFromList(task) }
-            )
-        } label: {
-            TaskRowView(task: task) {
-                Task { await toggle(task) }
+    private func contextMenuItems(for task: CareTask) -> some View {
+        Button { selectedTask = task } label: {
+            Label(canEdit(task) ? "Edit task" : "View task",
+                  systemImage: canEdit(task) ? "pencil" : "eye")
+        }
+
+        if canSkip(task) {
+            Button { Task { await setStatus(task, .skipped) } } label: {
+                Label("Skip task", systemImage: "forward.fill")
             }
         }
-        .swipeActions(edge: .trailing, allowsFullSwipe: true) {
-            if canMutate(task) {
-                Button(role: .destructive) {
-                    Task { await deleteTask(task) }
-                } label: {
-                    Label("Delete", systemImage: "trash")
-                }
+
+        if task.status == .done || task.status == .skipped {
+            Button { Task { await setStatus(task, .pending) } } label: {
+                Label("Mark as pending", systemImage: "arrow.uturn.backward")
             }
         }
-        .swipeActions(edge: .leading) {
-            if canSkip(task) {
-                Button {
-                    Task { await setStatus(task, .skipped) }
-                } label: {
-                    Label("Skip", systemImage: "forward.fill")
-                }
-                .tint(.orange)
+
+        if isAdmin && task.assigneeId != nil {
+            Button { selectedTask = task } label: {
+                Label("Reassign", systemImage: "person.2.badge.gearshape")
+            }
+        }
+
+        if canDelete(task) {
+            Divider()
+            Button(role: .destructive) { Task { await deleteTask(task) } } label: {
+                Label("Delete task", systemImage: "trash")
             }
         }
     }
 
-    // MARK: — Permissions
+    // MARK: – Empty state
 
-    private func canMutate(_ task: CareTask) -> Bool {
-        appState.userRole == .admin || task.creatorId == appState.currentUser?.id
+    private var emptyStateView: some View {
+        VStack(spacing: 14) {
+            Image(systemName: "checkmark.circle.trianglebadge.exclamationmark")
+                .font(.system(size: 40))
+                .foregroundStyle(teal.opacity(0.5))
+            Text("No tasks yet")
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .foregroundStyle(dark)
+            Text("Tap + to add the first task for this care circle.")
+                .font(.system(size: 14, weight: .medium, design: .rounded))
+                .foregroundStyle(.secondary)
+                .multilineTextAlignment(.center)
+        }
+        .padding(32)
+        .frame(maxWidth: .infinity)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+    }
+
+    // MARK: – Task data sections
+
+    private var filteredTasks: [CareTask] {
+        guard selectedRecipient != "all" else { return tasks }
+        return tasks.filter { $0.recipientId == selectedRecipient }
+    }
+
+    private var activeTasks: [CareTask] {
+        filteredTasks.filter { $0.status != .done && $0.status != .skipped }
+    }
+
+    private var overdueSection: [CareTask] {
+        activeTasks
+            .filter { $0.isOverdue }
+            .sorted { ($0.dueAt ?? .distantFuture) < ($1.dueAt ?? .distantFuture) }
+    }
+
+    private var todaySection: [CareTask] {
+        activeTasks
+            .filter { task in
+                guard let d = task.dueAt else { return false }
+                return Calendar.current.isDateInToday(d) && !task.isOverdue
+            }
+            .sorted { ($0.dueAt ?? .distantFuture) < ($1.dueAt ?? .distantFuture) }
+    }
+
+    private var upcomingSection: [CareTask] {
+        activeTasks
+            .filter { task in
+                guard let d = task.dueAt else { return false }
+                return d > Date() && !Calendar.current.isDateInToday(d)
+            }
+            .sorted { ($0.dueAt ?? .distantFuture) < ($1.dueAt ?? .distantFuture) }
+    }
+
+    private var noDateSection: [CareTask] {
+        activeTasks
+            .filter { $0.dueAt == nil }
+            .sorted { $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending }
+    }
+
+    private var completedSection: [CareTask] {
+        filteredTasks
+            .filter { $0.status == .done || $0.status == .skipped }
+            .sorted { ($0.completedAt ?? .distantPast) > ($1.completedAt ?? .distantPast) }
+    }
+
+    private var allEmpty: Bool {
+        overdueSection.isEmpty && todaySection.isEmpty &&
+        upcomingSection.isEmpty && noDateSection.isEmpty && completedSection.isEmpty
+    }
+
+    // MARK: – Role-based permissions
+
+    private var userId:  String { appState.currentUser?.id ?? "" }
+    private var isAdmin: Bool   { appState.userRole == .admin }
+
+    private func canEdit(_ task: CareTask) -> Bool {
+        isAdmin || task.creatorId == userId
     }
 
     private func canSkip(_ task: CareTask) -> Bool {
-        task.status != .skipped && canMutate(task)
+        guard task.status != .done, task.status != .skipped else { return false }
+        return isAdmin || task.creatorId == userId
     }
 
-    // MARK: — Data operations
+    private func canDelete(_ task: CareTask) -> Bool {
+        isAdmin || task.creatorId == userId
+    }
+
+    // MARK: – Data operations
 
     private func loadTasks() async {
         guard let circleId = appState.activeCircle?.id else {
-            tasks = []
-            loading = false
-            return
+            tasks = []; loading = false; return
         }
-        loading = true
-        do {
-            tasks = try await APIClient.shared.fetchTasks(circleId: circleId)
-            error = nil
-        } catch { self.error = error.localizedDescription }
+        loading = true; error = nil
+        do { tasks = try await APIClient.shared.fetchTasks(circleId: circleId) }
+        catch { self.error = error.localizedDescription }
         loading = false
     }
 
     private func toggle(_ task: CareTask) async {
-        guard let circleId = appState.activeCircle?.id,
-              let userId   = appState.currentUser?.id else { return }
+        guard let circleId = appState.activeCircle?.id else { return }
         let next: TaskStatus = task.status == .done ? .pending : .done
         if let updated = try? await APIClient.shared.updateTaskStatus(
-            circleId: circleId, taskId: task.id, userId: userId, status: next
+            circleId: circleId, taskId: task.id, status: next
         ) { updateInList(updated) }
     }
 
     private func setStatus(_ task: CareTask, _ status: TaskStatus) async {
-        guard let circleId = appState.activeCircle?.id,
-              let userId   = appState.currentUser?.id else { return }
+        guard let circleId = appState.activeCircle?.id else { return }
         if let updated = try? await APIClient.shared.updateTaskStatus(
-            circleId: circleId, taskId: task.id, userId: userId, status: status
+            circleId: circleId, taskId: task.id, status: status
         ) { updateInList(updated) }
     }
 
     private func deleteTask(_ task: CareTask) async {
-        guard let circleId = appState.activeCircle?.id,
-              let userId   = appState.currentUser?.id else { return }
-        try? await APIClient.shared.deleteTask(circleId: circleId, taskId: task.id, userId: userId)
+        guard let circleId = appState.activeCircle?.id else { return }
+        try? await APIClient.shared.deleteTask(circleId: circleId, taskId: task.id)
         removeFromList(task)
     }
 
     private func updateInList(_ task: CareTask) {
-        tasks = tasks.map { existing in
-            existing.id == task.id ? task : existing
-        }
+        tasks = tasks.map { $0.id == task.id ? task : $0 }
     }
 
     private func removeFromList(_ task: CareTask) {
         tasks.removeAll { $0.id == task.id }
     }
 
-    private func syncPendingTaskNavigation() {
-        guard let pendingTaskId = appState.pendingTaskId,
-              let task = tasks.first(where: { $0.id == pendingTaskId }) else { return }
-        deepLinkedTask = task
+    private func syncDeepLink() {
+        guard let id = appState.pendingTaskId,
+              let task = tasks.first(where: { $0.id == id }) else { return }
+        selectedTask = task
         appState.consumePendingTask()
     }
 }

@@ -6,6 +6,7 @@ import {
   generateNumericCode,
   hashPassword,
   hashValue,
+  issueAccessToken,
   normalizeEmail,
   oauthCallbackRedirect,
   passwordResetExpiry,
@@ -38,6 +39,15 @@ async function fetchUserWithMemberships(db, id) {
     orderBy: { createdAt: "desc" },
   });
   return sanitizeUser({ ...user, pendingInvites });
+}
+
+async function authResponse(db, method, userId) {
+  const user = await fetchUserWithMemberships(db, userId);
+  return {
+    method,
+    accessToken: await issueAccessToken(user),
+    user,
+  };
 }
 
 export default async function authRoutes(app) {
@@ -127,7 +137,7 @@ export default async function authRoutes(app) {
   app.get("/auth/oauth/:provider/callback", { config: { public: true } }, handleOAuthCallback);
   app.post("/auth/oauth/:provider/callback", { config: { public: true } }, handleOAuthCallback);
 
-  app.post("/auth/signup", async (req, reply) => {
+  app.post("/auth/signup", { config: { public: true } }, async (req, reply) => {
     const { email, name, password, phone } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail || !name?.trim() || !password || password.trim().length < 8) {
@@ -143,10 +153,7 @@ export default async function authRoutes(app) {
           passwordHash: hashPassword(password),
         },
       });
-      return reply.code(201).send({
-        method: "PASSWORD",
-        user: await fetchUserWithMemberships(db, user.id),
-      });
+      return reply.code(201).send(await authResponse(db, "PASSWORD", user.id));
     } catch (err) {
       if (err instanceof Prisma.PrismaClientKnownRequestError && err.code === "P2002") {
         return reply.code(409).send({ error: "Email already exists" });
@@ -155,7 +162,7 @@ export default async function authRoutes(app) {
     }
   });
 
-  app.post("/auth/login", async (req, reply) => {
+  app.post("/auth/login", { config: { public: true } }, async (req, reply) => {
     const { email, password } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail || !password) {
@@ -167,13 +174,10 @@ export default async function authRoutes(app) {
       return reply.code(401).send({ error: "Invalid email or password" });
     }
 
-    return reply.send({
-      method: "PASSWORD",
-      user: await fetchUserWithMemberships(db, user.id),
-    });
+    return reply.send(await authResponse(db, "PASSWORD", user.id));
   });
 
-  app.post("/auth/social", async (req, reply) => {
+  app.post("/auth/social", { config: { public: true } }, async (req, reply) => {
     const { provider, idToken, accessToken, email, name, providerUserId } = req.body ?? {};
     if (!provider) return reply.code(400).send({ error: "provider is required" });
 
@@ -202,10 +206,7 @@ export default async function authRoutes(app) {
       if (!existingIdentity) {
         return reply.code(400).send({ error: "Provider did not return an email for first-time account creation" });
       }
-      return reply.send({
-        method: provider,
-        user: await fetchUserWithMemberships(db, existingIdentity.userId),
-      });
+      return reply.send(await authResponse(db, provider, existingIdentity.userId));
     }
 
     const identity = await db.authIdentity.findUnique({
@@ -255,13 +256,10 @@ export default async function authRoutes(app) {
       },
     });
 
-    return reply.send({
-      method: provider,
-      user: await fetchUserWithMemberships(db, userId),
-    });
+    return reply.send(await authResponse(db, provider, userId));
   });
 
-  app.post("/auth/forgot-password/request", async (req, reply) => {
+  app.post("/auth/forgot-password/request", { config: { public: true } }, async (req, reply) => {
     const { email } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail) return reply.code(400).send({ error: "email is required" });
@@ -301,7 +299,7 @@ export default async function authRoutes(app) {
     });
   });
 
-  app.post("/auth/forgot-password/verify", async (req, reply) => {
+  app.post("/auth/forgot-password/verify", { config: { public: true } }, async (req, reply) => {
     const { email, code } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail || !code) {
@@ -327,7 +325,7 @@ export default async function authRoutes(app) {
     return reply.send({ verified: true });
   });
 
-  app.post("/auth/forgot-password/reset", async (req, reply) => {
+  app.post("/auth/forgot-password/reset", { config: { public: true } }, async (req, reply) => {
     const { email, code, password } = req.body ?? {};
     const normalizedEmail = normalizeEmail(email);
     if (!normalizedEmail || !code || !password || password.trim().length < 8) {
@@ -353,7 +351,10 @@ export default async function authRoutes(app) {
     await db.$transaction(async (tx) => {
       await tx.user.update({
         where: { id: user.id },
-        data: { passwordHash: hashPassword(password) },
+        data: {
+          passwordHash: hashPassword(password),
+          authVersion: { increment: 1 },
+        },
       });
       await tx.passwordResetCode.updateMany({
         where: { userId: user.id, consumedAt: null },

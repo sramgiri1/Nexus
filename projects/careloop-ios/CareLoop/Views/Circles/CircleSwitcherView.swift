@@ -242,13 +242,13 @@ struct CircleSwitcherView: View {
     }
 
     private func accept(_ invite: GroupInvitation) async {
-        guard let userId = appState.currentUser?.id else { return }
+        guard appState.currentUser != nil else { return }
         loadingInviteId = invite.id
         error = nil
         defer { loadingInviteId = nil }
 
         do {
-            _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id, userId: userId)
+            _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id)
             try await appState.activateCircle(id: invite.circle.id)
             dismiss()
         } catch {
@@ -257,13 +257,13 @@ struct CircleSwitcherView: View {
     }
 
     private func decline(_ invite: GroupInvitation) async {
-        guard let userId = appState.currentUser?.id else { return }
+        guard appState.currentUser != nil else { return }
         loadingInviteId = invite.id
         error = nil
         defer { loadingInviteId = nil }
 
         do {
-            try await APIClient.shared.declineInvitation(invitationId: invite.id, userId: userId)
+            try await APIClient.shared.declineInvitation(invitationId: invite.id)
             try await appState.refreshCurrentUser()
         } catch {
             self.error = error.localizedDescription

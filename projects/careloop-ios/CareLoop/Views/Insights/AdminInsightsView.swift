@@ -19,7 +19,9 @@ struct AdminInsightsView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Text(circle.name)
                             .font(.system(size: 22, weight: .bold, design: .rounded))
-                        Text("Completion insight for \(circle.recipientDisplaySummary)'s care group.")
+                        Text(circle.recipientDisplaySummary.isEmpty
+                             ? "Task completion overview for this circle."
+                             : "Completion insight for \(circle.recipientDisplaySummary)'s care group.")
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                             .foregroundStyle(.secondary)
                     }
@@ -219,8 +221,7 @@ struct AdminInsightsView: View {
     }
 
     private func loadInsights() async {
-        guard let circleId = appState.activeCircle?.id,
-              let userId = appState.currentUser?.id else {
+        guard let circleId = appState.activeCircle?.id else {
             loading = false
             insights = nil
             return
@@ -231,7 +232,6 @@ struct AdminInsightsView: View {
         do {
             insights = try await APIClient.shared.fetchCompletionInsights(
                 circleId: circleId,
-                userId: userId,
                 days: selectedPeriod,
                 recipientId: selectedRecipientId == "all" ? nil : selectedRecipientId
             )

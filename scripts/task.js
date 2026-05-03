@@ -11,8 +11,8 @@
 //   node scripts/task.js core "Generate Prisma schema for ShiftPay" shiftpay critical
 
 import "dotenv/config";
-import fs   from "fs/promises";
 import path from "path";
+import { updateJsonFile } from "../utils/json-store.js";
 
 const ROOT      = process.cwd();
 const QUEUE     = path.join(ROOT, "memory", "task-queue.json");
@@ -33,8 +33,6 @@ if (!VALID_AGENTS.includes(agentId)) {
 }
 
 const prio = VALID_PRIO.includes(priority) ? priority : "normal";
-const data = JSON.parse(await fs.readFile(QUEUE, "utf8"));
-
 const newTask = {
   id:        `task-${Date.now()}`,
   agentId,
@@ -46,13 +44,15 @@ const newTask = {
   status:    "pending",
 };
 
-data.queue.push(newTask);
-data.queue.sort((a,b) => {
-  const order = { critical:0, high:1, normal:2, low:3 };
-  return (order[a.priority]||2) - (order[b.priority]||2);
+await updateJsonFile(QUEUE, async (data) => {
+  data.queue.push(newTask);
+  data.queue.sort((a,b) => {
+    const order = { critical:0, high:1, normal:2, low:3 };
+    return (order[a.priority]||2) - (order[b.priority]||2);
+  });
+  data.lastUpdated = new Date().toISOString();
+  return data;
 });
-data.lastUpdated = new Date().toISOString();
-await fs.writeFile(QUEUE, JSON.stringify(data, null, 2));
 
 console.log(`✓ Task queued [${prio.toUpperCase()}]`);
 console.log(`  Agent:   ${agentId.toUpperCase()}`);

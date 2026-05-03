@@ -106,29 +106,15 @@ npm run studio       # Prisma Studio at http://localhost:5555
 
 ### Seed a clean test state
 
-No seed script exists yet — Sprint 1 open item. Until built, create test data manually:
+Use the repeatable Sprint 1 QA scripts:
 
 ```bash
-# 1. Create admin user
-curl -s -X POST http://localhost:3000/users \
-  -H "x-api-key: $API_KEY" -H "Content-Type: application/json" \
-  -d '{"email":"admin@test.com","name":"Alice Admin"}' | jq .
-
-# 2. Create circle (use userId from response)
-curl -s -X POST http://localhost:3000/circles \
-  -H "x-api-key: $API_KEY" -H "Content-Type: application/json" \
-  -d '{"name":"Smith Family","recipientName":"Bob Smith","creatorId":"ADMIN_USER_ID"}' | jq .
-
-# 3. Create member user
-curl -s -X POST http://localhost:3000/users \
-  -H "x-api-key: $API_KEY" -H "Content-Type: application/json" \
-  -d '{"email":"member@test.com","name":"Carol Member"}' | jq .
-
-# 4. Join circle as member
-curl -s -X POST http://localhost:3000/circles/CIRCLE_ID/members \
-  -H "x-api-key: $API_KEY" -H "Content-Type: application/json" \
-  -d '{"userId":"MEMBER_USER_ID"}' | jq .
+cd projects/careloop
+npm run qa:reset
+npm run qa:seed:sprint1
 ```
+
+`qa:seed:sprint1` prints the seeded admin/member IDs, circle ID, and task IDs needed for curl-based QA.
 
 ---
 

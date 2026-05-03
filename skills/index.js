@@ -8,6 +8,8 @@
 //
 //   CLI: npm run skill <agent> <skill> [--input '{"key":"val"}']
 
+import { authorizeAction } from "../safety/governor.js";
+
 const ROOT = process.cwd();
 
 const SKILL_MAP = {
@@ -49,6 +51,13 @@ export function listSkills() {
 
 export async function executeSkill(agent, skill, input = {}) {
   const key = `${agent}.${skill}`;
+
+  // Governor: verify agent owns this skill (only enforced when called from a tool context)
+  const check = await authorizeAction({ agentId: agent, actionType: "skill_call", skillName: key });
+  if (!check.allowed) {
+    return { result: "FAIL", issues: [{ severity: "error", message: check.reason }], summary: `[SAFETY] ${check.reason}` };
+  }
+
   const loader = SKILL_MAP[key];
   if (!loader) {
     return { result: "FAIL", issues: [{ severity: "error", message: `Unknown skill: ${key}` }], summary: `Skill not found: ${key}` };

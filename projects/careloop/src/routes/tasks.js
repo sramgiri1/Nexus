@@ -1,5 +1,5 @@
 import { randomUUID } from "node:crypto";
-import { assertMember, logEvent } from "../lib/roles.js";
+import { assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { deliverTaskNotification } from "../lib/push.js";
 import {
   isRecurringTask,
@@ -12,7 +12,7 @@ import {
 const taskInclude = {
   assignee: { select: { id: true, email: true, name: true, phone: true, pushToken: true, timezone: true } },
   completedBy: { select: { id: true, name: true, email: true } },
-  recipient: { select: { id: true, name: true, relationship: true, isPrimary: true } },
+  recipient: { select: { id: true, name: true, relationship: true, notes: true, isPrimary: true, sortOrder: true } },
   circle: { select: { id: true, name: true } },
 };
 
@@ -103,7 +103,7 @@ async function ensureNextRecurringOccurrence(tx, task) {
 export default async function tasks(app) {
   const db = app.db;
 
-  async function resolveRecipientId(tx, circleId, requestedRecipientId) {
+  async function resolveRecipientId(tx, circleId, requestedRecipientId, assigneeId) {
     if (requestedRecipientId) {
       const recipient = await tx.careRecipient.findFirst({
         where: { id: requestedRecipientId, circleId },
@@ -116,20 +116,41 @@ export default async function tasks(app) {
       where: { circleId },
       orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
     });
-    return primaryRecipient?.id ?? null;
+    if (primaryRecipient) return primaryRecipient.id;
+
+    // No CareRecipient profile exists yet. If the assignee is a RECIPIENT member,
+    // auto-create their profile so tasks can be saved without manual setup.
+    if (assigneeId) {
+      const assigneeMember = await tx.circleMember.findUnique({
+        where: { userId_circleId: { userId: assigneeId, circleId } },
+        include: { user: true },
+      });
+      if (assigneeMember?.role === "RECIPIENT" && assigneeMember.user) {
+        return (await tx.careRecipient.create({
+          data: { circleId, name: assigneeMember.user.name, isPrimary: true },
+        })).id;
+      }
+    }
+
+    return null;
   }
 
   // POST /circles/:circleId/tasks
   app.post("/circles/:circleId/tasks", async (req, reply) => {
     const { title, notes, dueAt, priority, creatorId, assigneeId, recurrence, recipientId } = req.body ?? {};
-    if (!title || !creatorId)
-      return reply.code(400).send({ error: "title and creatorId are required" });
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (!title)
+      return reply.code(400).send({ error: "title is required" });
+    if (creatorId && creatorId !== authenticatedUserId) {
+      return reply.code(403).send({ error: "creatorId must match the authenticated user" });
+    }
     if (title.length > 200)
       return reply.code(400).send({ error: "title exceeds 200 characters" });
     if (notes && notes.length > 1000)
       return reply.code(400).send({ error: "notes exceeds 1000 characters" });
 
-    const member = await assertMember(db, req.params.circleId, creatorId, reply);
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
 
     const dueDate = parseOptionalDate(dueAt, "dueAt");
@@ -149,7 +170,7 @@ export default async function tasks(app) {
     let task;
     try {
       task = await db.$transaction(async (tx) => {
-        const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
+        const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId, assigneeId);
         if (!resolvedRecipientId) throw new Error("recipientId is required");
 
         const createdTask = await createTaskRecord(tx, {
@@ -159,7 +180,7 @@ export default async function tasks(app) {
           dueAt: dueDate,
           circleId: req.params.circleId,
           recipientId: resolvedRecipientId,
-          creatorId,
+          creatorId: authenticatedUserId,
           assigneeId: assigneeId ?? null,
           ...recurrenceFields(normalizedRecurrence, seriesId),
         });
@@ -169,7 +190,7 @@ export default async function tasks(app) {
             data: {
               type: "TASK_SERIES_CREATED",
               circleId: req.params.circleId,
-              actorId: creatorId,
+              actorId: authenticatedUserId,
               payload: {
                 seriesId,
                 taskId: createdTask.id,
@@ -180,7 +201,7 @@ export default async function tasks(app) {
         }
 
         await tx.event.create({
-          data: { type: "TASK_CREATED", circleId: req.params.circleId, actorId: creatorId, payload: { taskId: createdTask.id, title } },
+          data: { type: "TASK_CREATED", circleId: req.params.circleId, actorId: authenticatedUserId, payload: { taskId: createdTask.id, title } },
         });
 
         return createdTask;
@@ -190,19 +211,20 @@ export default async function tasks(app) {
     }
 
     if (task.assigneeId) {
-      await deliverTaskNotification({
-        db,
-        userId: task.assigneeId,
-        task,
-        type: "assignment",
+      const assigneeMember = await db.circleMember.findUnique({
+        where: { userId_circleId: { userId: task.assigneeId, circleId: task.circleId } },
+        select: { role: true },
       });
+      const notifType = assigneeMember?.role === "RECIPIENT" ? "recipientAssignment" : "assignment";
+      await deliverTaskNotification({ db, userId: task.assigneeId, task, type: notifType });
     }
 
     return reply.code(201).send(task);
   });
 
   // GET /circles/:circleId/tasks
-  app.get("/circles/:circleId/tasks", async (req) => {
+  app.get("/circles/:circleId/tasks", async (req, reply) => {
+    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
     return db.task.findMany({
       where: { circleId: req.params.circleId, archivedAt: null },
       orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
@@ -213,10 +235,15 @@ export default async function tasks(app) {
   // PATCH /circles/:circleId/tasks/:taskId
   app.patch("/circles/:circleId/tasks/:taskId", async (req, reply) => {
     const { userId, status, title, notes, dueAt, priority, assigneeId, recipientId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (userId && userId !== authenticatedUserId) {
+      return reply.code(403).send({ error: "userId must match the authenticated user" });
+    }
     const recurrenceWasProvided = Object.prototype.hasOwnProperty.call(req.body ?? {}, "recurrence");
     const seriesScope = nextSeriesScope(req.body?.seriesScope);
 
-    const member = await assertMember(db, req.params.circleId, userId, reply);
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
 
     const task = await db.task.findFirst({
@@ -229,12 +256,21 @@ export default async function tasks(app) {
     if (notes !== undefined && notes && notes.length > 1000)
       return reply.code(400).send({ error: "notes exceeds 1000 characters" });
 
+    if (member.role === "RECIPIENT") {
+      const isAssignedToMe = task.assigneeId === authenticatedUserId;
+      if (!isAssignedToMe || status === undefined || assigneeId !== undefined || recipientId !== undefined
+          || title !== undefined || notes !== undefined || dueAt !== undefined || priority !== undefined || recurrenceWasProvided)
+        return reply.code(403).send({ error: "Care receivers can only mark their own assigned tasks as done" });
+      if (status !== "DONE")
+        return reply.code(403).send({ error: "Care receivers can only mark tasks as done" });
+    }
+
     if (member.role === "MEMBER") {
       if (assigneeId !== undefined)
         return reply.code(403).send({ error: "Members cannot reassign tasks" });
       if (recipientId !== undefined)
         return reply.code(403).send({ error: "Members cannot reassign task recipients" });
-      const isOwn = task.creatorId === userId;
+      const isOwn = task.creatorId === authenticatedUserId;
       if (!isOwn && (title !== undefined || notes !== undefined || dueAt !== undefined || priority !== undefined || recurrenceWasProvided))
         return reply.code(403).send({ error: "Members can only edit their own tasks" });
       if (status === "SKIPPED" && !isOwn)
@@ -269,7 +305,7 @@ export default async function tasks(app) {
     if (status !== undefined) {
       data.status = status;
       data.completedAt = completionStateForStatus(status);
-      data.completedById = status === "DONE" ? userId : null;
+      data.completedById = status === "DONE" ? authenticatedUserId : null;
       data.archivedAt = null;
     }
     if (title !== undefined) data.title = title;
@@ -363,7 +399,7 @@ export default async function tasks(app) {
             data: {
               type: "TASK_SERIES_CREATED",
               circleId: req.params.circleId,
-              actorId: userId,
+              actorId: authenticatedUserId,
               payload: {
                 seriesId: nextTask.seriesId,
                 taskId: nextTask.id,
@@ -387,9 +423,29 @@ export default async function tasks(app) {
       await logEvent(db, {
         type: "TASK_COMPLETED",
         circleId: req.params.circleId,
-        actorId: userId,
+        actorId: authenticatedUserId,
         payload: { taskId: task.id },
       });
+
+      if (updated.assigneeId && updated.assigneeId !== authenticatedUserId) {
+        const assigneeMember = await db.circleMember.findUnique({
+          where: { userId_circleId: { userId: updated.assigneeId, circleId: updated.circleId } },
+          select: { role: true },
+        });
+        if (assigneeMember?.role === "RECIPIENT") {
+          const completerFirst = updated.completedBy?.name?.split(" ")[0] ?? "Your caregiver";
+          await deliverTaskNotification({
+            db, userId: updated.assigneeId, task: updated,
+            type: "taskCompletedForRecipient", extra: completerFirst,
+          });
+        }
+      } else if (member.role === "RECIPIENT" && updated.creatorId !== authenticatedUserId) {
+        const recipientName = updated.recipient?.name ?? updated.completedBy?.name ?? "Care receiver";
+        await deliverTaskNotification({
+          db, userId: updated.creatorId, task: updated,
+          type: "recipientCompletedTask", extra: recipientName,
+        });
+      }
     } else if (
       status && status !== task.status
       || recurrenceWasProvided
@@ -403,18 +459,18 @@ export default async function tasks(app) {
       await logEvent(db, {
         type: "TASK_UPDATED",
         circleId: req.params.circleId,
-        actorId: userId,
+        actorId: authenticatedUserId,
         payload: { taskId: task.id, status: status ?? task.status, seriesScope },
       });
     }
 
     if (assigneeId !== undefined && assigneeId && assigneeId !== previousAssigneeId) {
-      await deliverTaskNotification({
-        db,
-        userId: assigneeId,
-        task: updated,
-        type: "assignment",
+      const assigneeMember = await db.circleMember.findUnique({
+        where: { userId_circleId: { userId: assigneeId, circleId: updated.circleId } },
+        select: { role: true },
       });
+      const notifType = assigneeMember?.role === "RECIPIENT" ? "recipientAssignment" : "assignment";
+      await deliverTaskNotification({ db, userId: assigneeId, task: updated, type: notifType });
     }
 
     return updated;
@@ -423,8 +479,13 @@ export default async function tasks(app) {
   // DELETE /circles/:circleId/tasks/:taskId — admin or own task
   app.delete("/circles/:circleId/tasks/:taskId", async (req, reply) => {
     const { userId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (userId && userId !== authenticatedUserId) {
+      return reply.code(403).send({ error: "userId must match the authenticated user" });
+    }
 
-    const member = await assertMember(db, req.params.circleId, userId, reply);
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
 
     const task = await db.task.findFirst({
@@ -432,16 +493,73 @@ export default async function tasks(app) {
     });
     if (!task) return reply.code(404).send({ error: "Task not found" });
 
-    if (member.role === "MEMBER" && task.creatorId !== userId)
+    if (member.role === "MEMBER" && task.creatorId !== authenticatedUserId)
       return reply.code(403).send({ error: "Members can only delete their own tasks" });
 
     await db.task.delete({ where: { id: req.params.taskId } });
     await logEvent(db, {
       type: "TASK_DELETED",
       circleId: req.params.circleId,
-      actorId: userId,
+      actorId: authenticatedUserId,
       payload: { taskId: task.id },
     });
+    return reply.code(204).send();
+  });
+
+  const commentInclude = {
+    author: { select: { id: true, name: true } },
+  };
+
+  // GET /circles/:circleId/tasks/:taskId/comments
+  app.get("/circles/:circleId/tasks/:taskId/comments", async (req, reply) => {
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
+    const task = await db.task.findFirst({
+      where: { id: req.params.taskId, circleId: req.params.circleId },
+      select: { id: true },
+    });
+    if (!task) return reply.code(404).send({ error: "Task not found" });
+    return db.taskComment.findMany({
+      where: { taskId: req.params.taskId },
+      orderBy: { createdAt: "asc" },
+      include: commentInclude,
+    });
+  });
+
+  // POST /circles/:circleId/tasks/:taskId/comments
+  app.post("/circles/:circleId/tasks/:taskId/comments", async (req, reply) => {
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
+    const { body } = req.body ?? {};
+    if (!body?.trim()) return reply.code(400).send({ error: "body is required" });
+    const task = await db.task.findFirst({
+      where: { id: req.params.taskId, circleId: req.params.circleId },
+      select: { id: true },
+    });
+    if (!task) return reply.code(404).send({ error: "Task not found" });
+    const comment = await db.taskComment.create({
+      data: { body: body.trim(), taskId: req.params.taskId, authorId: authenticatedUserId },
+      include: commentInclude,
+    });
+    return reply.code(201).send(comment);
+  });
+
+  // DELETE /circles/:circleId/tasks/:taskId/comments/:commentId
+  app.delete("/circles/:circleId/tasks/:taskId/comments/:commentId", async (req, reply) => {
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
+    const comment = await db.taskComment.findFirst({
+      where: { id: req.params.commentId, taskId: req.params.taskId },
+      select: { id: true, authorId: true },
+    });
+    if (!comment) return reply.code(404).send({ error: "Comment not found" });
+    if (member.role !== "ADMIN" && comment.authorId !== authenticatedUserId)
+      return reply.code(403).send({ error: "Only admins or the comment author can delete comments" });
+    await db.taskComment.delete({ where: { id: req.params.commentId } });
     return reply.code(204).send();
   });
 }

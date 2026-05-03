@@ -22,7 +22,30 @@ nexus/
 │   ├── portfolio.json       ← All projects, gates, scores
 │   ├── agent-status.json    ← Live agent states (20 agents now incl. AUDITOR)
 │   ├── task-queue.json      ← Pending/running/completed tasks
-│   └── founder-actions.json ← Founder directives
+│   ├── founder-actions.json ← Founder directives
+│   ├── safety-events.json   ← All governor blocks + approvals (append-only log)
+│   └── system-usage.json    ← Token + cost tracking per day/month/agent
+│
+├── guardrails/              ← Safety policy configs (JSON — edit to tune limits)
+│   ├── budget.json          ← Token/cost limits per day, month, per-task
+│   ├── agent-permissions.json ← Tier definitions + skill ownership map
+│   ├── command-policy.json  ← Shell command allowlist + blocked patterns
+│   ├── file-scope.json      ← Protected paths + agents with write access
+│   ├── loop-policy.json     ← Max iterations, retry limits, loop depth
+│   ├── model-policy.json    ← Allowed models + max tokens per call
+│   └── approval-policy.json ← Approval thresholds + headless auto-approve
+│
+├── safety/                  ← Governor modules (additive — never replaces existing code)
+│   ├── governor.js          ← authorizeAction() entry point
+│   ├── budgetGuard.js       ← Token/cost enforcement + recordUsage()
+│   ├── loopGuard.js         ← Self-enqueue + circular handoff detection
+│   ├── permissionGuard.js   ← Agent tier enforcement + skill ownership
+│   ├── commandGuard.js      ← Shell command allowlist
+│   ├── fileScopeGuard.js    ← Path traversal + protected path enforcement
+│   ├── secretGuard.js       ← Regex scan for API keys/tokens before write
+│   ├── approvalGate.js      ← Log approvals; auto-approve in headless mode
+│   ├── safetyLogger.js      ← Writes to memory/safety-events.json
+│   └── config.js            ← Loads + caches guardrail JSON configs
 │
 ├── agents/                  ← Agent system prompts (one .md per agent)
 │   ├── [nexus|atlas|...]    ← 19 existing + auditor.md (NEW)
@@ -47,7 +70,8 @@ nexus/
 │   ├── sprint.js            ← Enqueue sprint: npm run sprint <1|2|3>
 │   ├── skill.js             ← Run skill: npm run skill <agent> <skill> (NEW)
 │   ├── run-agent.js         ← Run directly: npm run agent <agent> "<task>"
-│   └── status.js            ← Print status: npm run status
+│   ├── status.js            ← Print status: npm run status
+│   └── check-safety.js      ← Safety governor smoke tests: node scripts/check-safety.js
 ├── projects/
 │   ├── careloop/            ← CareLoop backend (Fastify + Prisma + PostgreSQL)
 │   └── careloop-ios/        ← CareLoop iOS (SwiftUI)
@@ -179,6 +203,127 @@ Skills are real executable Node.js + Bash functions. They bypass Claude entirely
 | on_goal_received   | Task picked up by loop           | Logs to orchestrator.log       |
 | on_step_completed  | Task/skill completes (pass/fail) | Logs result + tool calls       |
 | on_failure         | Task/skill returns FAIL          | Logs error for investigation   |
+
+## Safety Governor
+
+All sensitive actions are intercepted by `safety/governor.js` before executing.
+The governor is **additive** — no existing agents, skills, tools, or memory files were removed.
+
+### What is guarded
+
+| Action                    | Guard applied                                        |
+|---------------------------|------------------------------------------------------|
+| `write_file` tool         | fileScopeGuard (path traversal) + secretGuard        |
+| `enqueue_task` tool       | permissionGuard (tier) + loopGuard (self/cycle)      |
+| `run_skill` tool          | permissionGuard (skill ownership)                    |
+| LLM call (Anthropic only) | budgetGuard (daily token/cost limits)                |
+| Shell command (future)    | commandGuard (allowlist + blocked patterns)          |
+
+### Permission tiers
+
+| Tier         | Agents                                                  | Can enqueue for        |
+|--------------|---------------------------------------------------------|------------------------|
+| ORCHESTRATOR | nexus                                                   | anyone                 |
+| SHEPHERD     | shepherd                                                | all engineering agents |
+| STRATEGY     | atlas, radar, meridian, prism, beacon, compass, oracle  | nexus only             |
+| ENGINEER     | core, swift, pixel, canvas                              | nobody                 |
+| PLATFORM     | forge, stream, synapse                                  | nobody                 |
+| VERIFIER     | auditor, sentinel, warden                               | nobody                 |
+| OBSERVER     | relay                                                   | nexus, shepherd        |
+
+### Tune limits
+
+Edit files in `guardrails/` — no code change needed:
+
+- `budget.json` — raise/lower daily token/cost limits
+- `agent-permissions.json` — add agents to tiers, adjust skill ownership
+- `command-policy.json` — add/remove allowed shell commands
+- `approval-policy.json` — change `auto_approve_in_headless` to `false` to require human sign-off
+
+### Smoke test
+
+```bash
+node scripts/check-safety.js   # 20 tests covering all 6 guard types
+```
+
+### Audit log
+
+```bash
+cat memory/safety-events.json  # all blocked actions + approvals
+cat memory/system-usage.json   # token + cost usage by day/agent
+```
+
+## Provider Strategy
+
+### Provider Roles
+
+| Provider | Use case |
+| --- | --- |
+| **direct_anthropic** | Deep reasoning, compliance, strategy, official Anthropic batch |
+| **direct_openai** | Critical coding, realtime execution, official OpenAI batch |
+| **openrouter** | Cheap realtime fallback, experimentation, cost-sensitive non-blocking tasks |
+| **ollama** | Zero-cost local draft fallback only — never authoritative |
+
+### Routing config
+
+```text
+config/
+├── model-map.json            ← per-agent provider/model/batch settings
+├── model-aliases.json        ← alias → ${ENV_VAR} resolution
+├── provider-policy.json      ← provider capabilities + cost multipliers
+├── batch-policy.json         ← batch eligibility rules
+├── openrouter-policy.json    ← OpenRouter allowed/blocked task types
+├── fallback-policy.json      ← fallback trigger conditions
+└── task-classification.json  ← task text → task type rules
+```
+
+### Batch Processing
+
+- Batch calls cost 50% less (direct_openai or direct_anthropic only).
+- Batch is async — task deferred to `memory/batch-queue.json`, no tool loop.
+- **Never batch:** code edits, gates, deploys, release decisions, auto-heal, tool loops, secrets, CI/CD, infra.
+- **Prefer batch for:** reports, summaries, marketing copy, ASO/SEO, market scans, QA docs.
+- OpenRouter chat batch is **disabled** — no official support.
+
+### OpenRouter
+
+- Requires `OPENROUTER_API_KEY`.
+- Uses OpenAI-compatible endpoint (`https://openrouter.ai/api/v1`).
+- Supports provider routing: `allow_fallbacks`, `require_parameters`, `data_collection: deny`, `sort: price`.
+- **Never** used for: `release_decision`, `security_blocker`, `deploy`, `verification_gate`, `auto_heal`.
+
+### Fallback
+
+- Attempted once on first provider call if: `missing_api_key`, `rate_limit`, `provider_unavailable`, `timeout`.
+- **Never** fallback on: `budget_exceeded`, `safety_blocked`, `secret_detected`, `permission_denied`.
+- Ollama never used as fallback for high-risk task types.
+
+### Commands
+
+```bash
+npm run check:model-routing   # validate all agent routing configs (no API calls)
+npm run batch:status          # show batch queue counts
+npm run batch:submit          # mark pending batches as submitted (local-only, no real API call yet)
+```
+
+## Batch implementation status
+
+| Capability | Status |
+| --- | --- |
+| Dry-run queueing to `memory/batch-queue.json` | **Live** |
+| Lifecycle states (`batch_pending`, `dry_run_submitted`, …) | **Live** |
+| Real OpenAI Batch API submission | **Disabled** — `ENABLE_REAL_OPENAI_BATCH=false` |
+| Real Anthropic Message Batches API | **Disabled** — `ENABLE_REAL_ANTHROPIC_BATCH=false` |
+| Batch result polling / reconciliation | **Not yet implemented** |
+| OpenRouter live smoke test | **Disabled** — `ENABLE_OPENROUTER_LIVE_SMOKE=false` |
+
+**Do not enable any real-batch flag until `npm run check:model-routing` passes with 0 failures.**
+
+OpenRouter request building is isolated in `providers/openRouterClient.js`. The `provider` routing
+object (allow_fallbacks, data_collection, sort) is constructed there and is not spread elsewhere.
+
+Provider batch stubs are in `providers/openaiBatch.js` and `providers/anthropicBatch.js`. Each
+function throws with a clear message until the feature flag is set to `true`.
 
 ## Active Portfolio
 

@@ -27,9 +27,8 @@ enum OnboardingValidation {
         !trimmed(circleId).isEmpty
     }
 
-    static func createCircle(circleName: String, recipientName: String) -> Bool {
-        !trimmed(circleName).isEmpty &&
-        !trimmed(recipientName).isEmpty
+    static func createCircle(circleName: String) -> Bool {
+        !trimmed(circleName).isEmpty
     }
 
     static func signUp(name: String, email: String, password: String, confirmPassword: String, acceptedTerms: Bool) -> Bool {

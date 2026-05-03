@@ -51,11 +51,21 @@ Families caring for one or more loved ones face a coordination problem, not just
 - May need admin privileges even though they are not a care recipient
 - Needs easy invite, acceptance, and clear role boundaries
 
-### Care Recipient
+### Care Receiver (App User)
 
-- Aging parent, disabled adult, spouse, child, or another loved one receiving care
-- Not a direct app user in v1
-- Represented inside a group as a recipient profile, not a login account
+- Aging parent, disabled adult, spouse, or another adult receiving care who wants visibility and participation in their own care plan
+- A real CareLoop account — invited by an Admin via email, installs the app, and accepts the invite
+- Gets a warm "My Care" experience: sees Today's tasks, Coming Up, Anytime, Done, and their Care Team
+- Can receive tasks assigned directly to them (e.g. "Take your 8pm medication", "Call the physio") and get push notification reminders
+- Can mark their own assigned tasks as done — cannot create, edit, reassign, or delete tasks
+- Must be **18 years or older** — the inviting Admin confirms this at invite time
+- **Minors as care receivers are a next-phase feature** — see Section 7 (Future Phases)
+
+### Care Profile (Name-only record)
+
+- Represents a recipient who does **not** use the app (no smartphone, cognitive barriers, or preference)
+- Stored as a profile record with name, relationship, and optional notes
+- Used for task scoping ("this task is for Dad") — no login or invite flow
 
 ---
 
@@ -63,30 +73,33 @@ Families caring for one or more loved ones face a coordination problem, not just
 
 Every API action and UI affordance must enforce these rules.
 
-| Action                                              | Admin | Member              |
-|-----------------------------------------------------|-------|---------------------|
-| Create a new group                                  | yes   | yes (becomes Admin) |
-| Edit group settings                                 | yes   | no                  |
-| Delete group                                        | yes   | no                  |
-| Add / edit / remove care recipient profiles         | yes   | no                  |
-| Invite caregiver                                    | yes   | no                  |
-| Remove caregiver                                    | yes   | no                  |
-| Promote caregiver to Admin                          | yes   | no                  |
-| Demote caregiver from Admin                         | yes   | no                  |
-| Switch active group                                 | yes   | yes                 |
-| Create task                                         | yes   | yes                 |
-| Edit task (title, notes, due date, priority)        | yes   | own tasks only      |
-| Reassign task to another caregiver                  | yes   | no                  |
-| Change task recipient                               | yes   | no                  |
-| Mark task DONE / IN_PROGRESS                        | yes   | yes (any task)      |
-| Mark task SKIPPED                                   | yes   | own tasks only      |
-| Delete task                                         | yes   | own tasks only      |
+| Action                                              | Admin   | Member              | Care Receiver      |
+|-----------------------------------------------------|---------|---------------------|--------------------|
+| Create a new group                                  | yes     | yes (becomes Admin) | no                 |
+| Edit group settings                                 | yes     | no                  | no                 |
+| Delete group                                        | yes     | no                  | no                 |
+| Leave group                                         | no      | yes                 | yes                |
+| Add / edit / remove care recipient profiles         | yes     | no                  | no                 |
+| Invite caregiver (Admin/Member/Receiver)            | yes     | no                  | no                 |
+| Remove caregiver / receiver                         | yes     | no                  | no                 |
+| Promote caregiver to Admin                          | yes     | no                  | no                 |
+| Demote caregiver from Admin                         | yes     | no                  | no                 |
+| Switch active group                                 | yes     | yes                 | yes                |
+| Create task                                         | yes     | yes                 | no                 |
+| Edit task (title, notes, due date, priority)        | yes     | own tasks only      | no                 |
+| Reassign task to another caregiver                  | yes     | no                  | no                 |
+| Change task recipient                               | yes     | no                  | no                 |
+| Receive task assigned to them + push reminder       | yes     | yes                 | yes                |
+| Mark task DONE / IN_PROGRESS                        | yes     | yes (any task)      | own assigned only  |
+| Mark task SKIPPED                                   | yes     | own tasks only      | no                 |
+| Delete task                                         | yes     | own tasks only      | no                 |
+| View task board                                     | yes     | yes                 | yes (My Care)      |
 
-**Role model:** a group can have multiple Admins. Admins are caregiver accounts, not care recipients. At least one Admin must remain in every group at all times.
+**Role model:** a group can have multiple Admins. Admins are caregiver accounts, not care recipients. At least one Admin must remain in every group at all times. All members, caregivers, and care receivers must be **18 years or older** — confirmed by the inviting Admin at invite time. Minor support is a next-phase feature.
 
-**API enforcement (mutations):** Group-scoped mutating endpoints that change a group, recipient, member, invite, or task must verify the requesting user's role via `CircleMember` (legacy schema name). Return `403` if the action is not permitted. Non-member setup endpoints — `POST /auth/signup`, `POST /auth/login`, `POST /auth/social`, `POST /auth/forgot-password/request`, `POST /auth/forgot-password/verify`, `POST /auth/forgot-password/reset`, `POST /users`, `POST /circles`, `PATCH /users/:id/push-token`, `PATCH /users/:id/timezone`, and `POST /users/:id/session` — do not require an existing membership. Invite acceptance happens only after authentication.
+**API enforcement (mutations):** Group-scoped mutating endpoints that change a group, recipient, member, invite, or task must verify the requesting user's role via `CircleMember` (legacy schema name). Return `403` if the action is not permitted. Public auth bootstrap endpoints — `POST /auth/signup`, `POST /auth/login`, `POST /auth/social`, `POST /auth/forgot-password/request`, `POST /auth/forgot-password/verify`, and `POST /auth/forgot-password/reset` — do not require authentication. Authenticated setup endpoints — `POST /circles`, `PATCH /users/:id/push-token`, `PATCH /users/:id/timezone`, and `POST /users/:id/session` — do not require an existing group membership. Invite acceptance happens only after authentication.
 
-**API enforcement (reads):** GET endpoints are API-key-only in the current local build. The "member" label on GET rows in Section 6 is intent documentation. Membership enforcement on reads must be completed before public launch.
+**API enforcement (reads):** GET endpoints require an authenticated bearer token. Group-scoped reads must enforce membership, and admin-only reads must enforce `ADMIN` role through `CircleMember`. Self-profile reads are self-only.
 
 **UI enforcement:** Hide or disable affordances the user cannot perform. Do not rely on API `403` as the only gate.
 
@@ -266,7 +279,7 @@ Every API action and UI affordance must enforce these rules.
 - Users can also authenticate with Google, Facebook, or Apple through CareLoop-owned OAuth start/callback routes that redirect back into the iOS app via `careloop://auth`.
 - Social sign-in maps to a first-party CareLoop `User` plus a linked `AuthIdentity` record per provider.
 - After authentication, the app should check for pending invites matching the authenticated email identity and surface them before sending the user into normal group selection.
-- Transport auth remains `x-api-key` in the current local build. Account auth determines which CareLoop user is loaded in-app; bearer-token enforcement must land before public launch.
+- Transport auth is bearer-token based in the current local build. Account auth issues a first-party CareLoop access token, and all protected reads/mutations execute in the authenticated user context.
 - **Local/dev mode:** social sign-in may complete via provider-returned profile payload while provider credentials are still being finalized. Production mode must validate provider tokens or callback exchanges before identity creation.
 - **Session restore (current implementation):** the iOS app persists `userId` and last attached `circleId`. On relaunch, it restores that circle if possible; otherwise it falls back to the user's first membership.
 
@@ -278,7 +291,7 @@ Every API action and UI affordance must enforce these rules.
 
 **Base URL (prod):** TBD — pending deployment
 
-**Auth:** `x-api-key` header required on all endpoints except `/health`, `GET /auth/oauth/:provider/start`, and `GET|POST /auth/oauth/:provider/callback`
+**Auth:** `Authorization: Bearer <accessToken>` required on all protected endpoints. Public endpoints are `/health`, `POST /auth/signup`, `POST /auth/login`, `POST /auth/social`, `POST /auth/forgot-password/request`, `POST /auth/forgot-password/verify`, `POST /auth/forgot-password/reset`, `GET /auth/oauth/:provider/start`, and `GET|POST /auth/oauth/:provider/callback`.
 
 **Content-Type:** `application/json`
 
@@ -291,7 +304,7 @@ Every API action and UI affordance must enforce these rules.
 | Status | Meaning                                        |
 |--------|------------------------------------------------|
 | 400    | Validation failure — missing or invalid field  |
-| 401    | Missing or invalid x-api-key                   |
+| 401    | Missing or invalid bearer token                |
 | 403    | Action not permitted for this user's role      |
 | 404    | Resource not found                             |
 | 409    | Conflict (e.g. user already a member)          |
@@ -317,21 +330,22 @@ Every API action and UI affordance must enforce these rules.
 
 | Method | Endpoint                    | Auth | Role |
 |--------|-----------------------------|------|------|
-| POST   | /auth/signup                | key  | any  |
-| POST   | /auth/login                 | key  | any  |
-| POST   | /auth/social                | key  | any  |
+| POST   | /auth/signup                | none | any  |
+| POST   | /auth/login                 | none | any  |
+| POST   | /auth/social                | none | any  |
 | GET    | /auth/oauth/:provider/start | none | any  |
 | GET    | /auth/oauth/:provider/callback | none | any |
 | POST   | /auth/oauth/:provider/callback | none | any |
-| POST   | /auth/forgot-password/request | key | any |
-| POST   | /auth/forgot-password/verify  | key | any |
-| POST   | /auth/forgot-password/reset   | key | any |
-| POST   | /users                      | key  | any  |
-| GET    | /users/by-email             | key  | any  |
-| GET    | /users/:id                  | key  | any  |
-| PATCH  | /users/:id/push-token       | key  | any  |
-| PATCH  | /users/:id/timezone         | key  | any  |
-| POST   | /users/:id/session          | key  | any  |
+| POST   | /auth/forgot-password/request | none | any |
+| POST   | /auth/forgot-password/verify  | none | any |
+| POST   | /auth/forgot-password/reset   | none | any |
+| POST   | /users                      | bearer | authenticated  |
+| GET    | /users/me                   | bearer | authenticated |
+| GET    | /users/by-email             | bearer | authenticated |
+| GET    | /users/:id                  | bearer | self |
+| PATCH  | /users/:id/push-token       | bearer | self |
+| PATCH  | /users/:id/timezone         | bearer | self |
+| POST   | /users/:id/session          | bearer | self |
 
 **POST /auth/signup — body:**
 
@@ -344,6 +358,7 @@ Every API action and UI affordance must enforce these rules.
 ```json
 {
   "method": "PASSWORD",
+  "accessToken": "string",
   "user": {
     "id": "string",
     "email": "string",
@@ -387,6 +402,7 @@ Every API action and UI affordance must enforce these rules.
 ```json
 {
   "method": "GOOGLE|FACEBOOK|APPLE",
+  "accessToken": "string",
   "user": {
     "id": "string",
     "email": "string",
@@ -460,6 +476,8 @@ Every API action and UI affordance must enforce these rules.
 
 **POST /users — errors:** `400` if email/name missing; `409` if email already exists.
 
+**GET /users/me — response 200:** same shape as `GET /users/:id`.
+
 **GET /users/:id — response 200:**
 
 ```json
@@ -493,7 +511,7 @@ Every API action and UI affordance must enforce these rules.
 
 **GET /users/by-email — note:** internal/dev helper endpoint used for local diagnostics and older setup flows. Not required for the main iOS auth path.
 
-**Public-launch rule for `GET /users/:id`:** once bearer-token auth is enabled, this endpoint becomes authenticated and self-only. The authenticated CareLoop user may fetch only their own profile and memberships. No admin cross-user profile read path is introduced in v1.
+**`GET /users/:id` rule:** this endpoint is authenticated and self-only. The authenticated CareLoop user may fetch only their own profile and memberships. No admin cross-user profile read path is introduced in v1.
 
 **PATCH /users/:id/push-token — body:** `{ "pushToken": "string" }`
 
@@ -511,18 +529,18 @@ Both PATCH endpoints return the updated user object.
 
 | Method | Endpoint                                 | Auth | Role          |
 |--------|------------------------------------------|------|---------------|
-| POST   | /circles                                 | key  | any           |
-| GET    | /circles/:id                             | key  | member        |
-| PATCH  | /circles/:id                             | key  | admin         |
-| DELETE | /circles/:id                             | key  | admin         |
-| POST   | /circles/:id/recipients                  | key  | admin         |
-| PATCH  | /circles/:id/recipients/:recipientId     | key  | admin         |
-| DELETE | /circles/:id/recipients/:recipientId     | key  | admin         |
-| POST   | /circles/:id/invitations                 | key  | admin         |
-| POST   | /invitations/:inviteId/accept            | key  | authenticated |
-| DELETE | /circles/:id/invitations/:inviteId       | key  | admin         |
-| DELETE | /circles/:id/members/:memberId           | key  | admin         |
-| PATCH  | /circles/:id/members/:memberId/role      | key  | admin         |
+| POST   | /circles                                 | bearer | authenticated |
+| GET    | /circles/:id                             | bearer | member        |
+| PATCH  | /circles/:id                             | bearer | admin         |
+| DELETE | /circles/:id                             | bearer | admin         |
+| POST   | /circles/:id/recipients                  | bearer | admin         |
+| PATCH  | /circles/:id/recipients/:recipientId     | bearer | admin         |
+| DELETE | /circles/:id/recipients/:recipientId     | bearer | admin         |
+| POST   | /circles/:id/invitations                 | bearer | admin         |
+| POST   | /invitations/:inviteId/accept            | bearer | authenticated |
+| DELETE | /circles/:id/invitations/:inviteId       | bearer | admin         |
+| DELETE | /circles/:id/members/:memberId           | bearer | admin         |
+| PATCH  | /circles/:id/members/:memberId/role      | bearer | admin         |
 
 **POST /circles — body:**
 
@@ -530,12 +548,11 @@ Both PATCH endpoints return the updated user object.
 {
   "name": "string (required)",
   "firstRecipientName": "string (required)",
-  "creatorId": "string (required)",
   "archiveAfterDays": "number? (default: 7, min: 1, max: 30)"
 }
 ```
 
-Creator is automatically added as Admin. Creating a fourth group for the same user must return a clear `400` limit error. Response 201 returns full group object (see GET response).
+Creator comes from the authenticated bearer token and is automatically added as Admin. Legacy callers may still send `creatorId`, but it must match the authenticated user. Creating a fourth group for the same user must return a clear `400` limit error. Response 201 returns full group object (see GET response).
 
 **GET /circles/:id — response 200:**
 
@@ -647,10 +664,10 @@ Errors: `403` if requester is not Admin; `404` if member not found; `400` if las
 
 | Method | Endpoint                                  | Auth | Role                |
 |--------|-------------------------------------------|------|---------------------|
-| POST   | /circles/:circleId/tasks                  | key  | member              |
-| GET    | /circles/:circleId/tasks                  | key  | member              |
-| PATCH  | /circles/:circleId/tasks/:taskId          | key  | member (limited)    |
-| DELETE | /circles/:circleId/tasks/:taskId          | key  | member (own)/admin  |
+| POST   | /circles/:circleId/tasks                  | bearer | member              |
+| GET    | /circles/:circleId/tasks                  | bearer | member              |
+| PATCH  | /circles/:circleId/tasks/:taskId          | bearer | member (limited)    |
+| DELETE | /circles/:circleId/tasks/:taskId          | bearer | member (own)/admin  |
 
 **POST /circles/:circleId/tasks — body:**
 
@@ -660,7 +677,6 @@ Errors: `403` if requester is not Admin; `404` if member not found; `400` if las
   "notes": "string? (max 1000 chars)",
   "dueAt": "ISO8601?",
   "priority": "LOW | NORMAL | HIGH | URGENT (default: NORMAL)",
-  "creatorId": "string (required)",
   "assigneeId": "string?",
   "recipientId": "string (required)",
   "recurrence": {
@@ -672,7 +688,7 @@ Errors: `403` if requester is not Admin; `404` if member not found; `400` if las
 }
 ```
 
-If `dueAt` is set, a `Reminder` is created at `dueAt - 15 minutes`. Response 201 returns full task object.
+Creator comes from the authenticated bearer token. Legacy callers may still send `creatorId`, but it must match the authenticated user. If `dueAt` is set, a `Reminder` is created at `dueAt - 15 minutes`. Response 201 returns full task object.
 
 **GET /circles/:circleId/tasks — response 200:**
 
@@ -723,7 +739,7 @@ Errors: `403` if Member tries to edit another user's task or reassign; `404` if 
 
 | Method | Endpoint                      | Auth | Role   |
 |--------|-------------------------------|------|--------|
-| GET    | /circles/:circleId/events     | key  | member |
+| GET    | /circles/:circleId/events     | bearer | member |
 
 Sprint 1: internal/audit use only. Not exposed in iOS app.
 
@@ -940,9 +956,30 @@ This product should not use per-caregiver billing. The natural buyer is the prim
 
 **Sprint 3 — Group Model Upgrade:** multiple care recipients per group, group dashboard, recipient-scoped tasks, recurring task series + occurrences, invite creation and acceptance flow, group-scoped settings, admin invite/remove/promote, and enforced 3-group membership cap.
 
-**Sprint 4 — Public Launch Hardening and Monetization:** per-user bearer tokens replacing shared API key, membership enforcement on all GET endpoints, privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission, StoreKit 2 subscriptions, 14-day trial, server-side entitlement sync, group-level premium unlocks, admin insights charts, and launch QA for the full invite-based onboarding path. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
+**Sprint 4 — Public Launch Hardening and Monetization:** privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission, StoreKit 2 subscriptions (iOS implementation complete as of 2026-05-01 — `SubscriptionManager.swift` + `PaywallView.swift` + `CircleListView` premium UX; 34 unit tests added), 14-day trial, server-side entitlement sync, group-level premium unlocks, admin insights charts, and launch QA for the full invite-based onboarding path. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
+
+**Sprint 4 (continued) — Care Receiver role (iOS implementation, 2026-05-02):** full invite-based Care Receiver flow (email invite → install app → accept → read-only My Care board), role-gated UI for all three roles (Admin/Member/Receiver) across every screen, delete circle (Admin only) and leave circle (Member/Receiver) with confirmation flows, 18+ age confirmation on all invite forms. Minors as care receivers deferred to next phase — see Section 13.
 
 Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
+
+---
+
+## 13. Future Phases
+
+### Minor Care Receivers (Next Phase)
+
+CareLoop currently requires all members, caregivers, and care receivers to be **18 years or older**. This is enforced at the invite level — the inviting Admin confirms the invitee's age before the invite is sent.
+
+Supporting minors as care receivers (children, teenagers, young adults under guardianship) requires:
+
+- **Parental / guardian consent flow** — a parent or legal guardian must approve the minor's participation before they can accept an invite
+- **Restricted data handling** — COPPA compliance for under-13; FERPA awareness for school-age children
+- **Simplified UI** — age-appropriate task view and language for younger care receivers
+- **Guardian as co-account holder** — the minor's account is linked to a guardian's account; guardian can review and approve all circle activity visible to the minor
+- **Backend schema** — `User.dateOfBirth`, `User.guardianUserId`, `GroupInvitation.requiresGuardianApproval` fields
+- **App Store age rating** — current rating must be reviewed and updated before launch
+
+This phase is intentionally deferred from the initial public launch. Admins who attempt to invite a minor should see a clear message directing them to wait for this feature.
 
 ---
 
@@ -967,14 +1004,14 @@ Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
 - **Digest format:** Plain HTML via Resend
 - **Scheduler:** `node-cron` in-process. Single instance. No distribution in Sprint 1
 - **Timezone:** IANA string stored on User. Auto-detected from device at onboarding via `TimeZone.current.identifier`. Default fallback: `America/New_York`. Digest uses stored timezone; reminders use UTC
-- **Auth:** Static API key transport remains a temporary implementation detail until bearer-token hardening. Role enforcement comes from group membership
+- **Auth:** Bearer-token transport is active in the local build. Role enforcement comes from group membership and self-only user route checks
 - **Self-join:** Not a public product flow. Legacy direct join may exist temporarily for local/dev, but shipped product should prefer invite acceptance
 - **APP_SESSION:** iOS triggers `POST /users/:id/session` on every foreground (`scenePhase == .active`). One event per user per UTC day
 - **DIGEST_OPENED:** Via Resend open tracking webhook. Implementation deferred to digest scheduler sprint. Not tracked in Sprint 1
-- **Auth migration:** CareLoop account auth + OAuth providers first; bearer-token auth and transport hardening lands before public launch
-- **Read enforcement:** GET endpoints become authenticated + membership-checked before public launch
-- **User profile reads:** `GET /users/:id` becomes authenticated + self-only before public launch
-- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities; backend OAuth start/callback routes own provider configuration and code exchange, while bearer-token identity hardening lands before public launch
+- **Auth migration:** CareLoop account auth + OAuth providers now issue bearer tokens in the local build; production launch still requires final provider credentials and callback approvals
+- **Read enforcement:** GET endpoints are authenticated and membership-checked in the local build
+- **User profile reads:** `GET /users/:id` is authenticated + self-only in the local build
+- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities; backend OAuth start/callback routes own provider configuration and code exchange
 - **DigestLog correlation:** `messageId String?` added to `DigestLog` in Sprint 2 to store Resend email ID for DIGEST_OPENED tracking
 - **Operational analytics:** PostHog added at start of external beta testing (not Sprint 1)
 - **Error tracking:** Sentry added at start of external beta testing (not Sprint 1)
@@ -995,7 +1032,7 @@ Full decision doc: `docs/tech-stack.md`
 | Email                 | Resend                                             | 1             |
 | Push                  | APNs directly                                      | 2             |
 | Background jobs       | `node-cron` in-process                             | 2             |
-| Auth                  | CareLoop account auth + provider OAuth → bearer tokens | 2→4       |
+| Auth                  | CareLoop account auth + provider OAuth → bearer tokens | 2         |
 | Billing               | StoreKit 2 + server entitlement sync               | 4             |
 | Operational analytics | PostHog                                            | external beta |
 | Error tracking        | Sentry                                             | external beta |

@@ -1,0 +1,12 @@
+{
+  "_comment": "In headless (autonomous) mode, approval is logged but auto-approved unless explicitly blocked.",
+  "auto_approve_in_headless": true,
+  "require_explicit_approval_for": [
+    "delete_circle",
+    "production_deploy",
+    "external_api_write"
+  ],
+  "log_all_blocked": true,
+  "log_all_approvals": true,
+  "cost_approval_threshold_usd": 1.00
+}

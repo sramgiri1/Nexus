@@ -1,0 +1,29 @@
+{
+  "enabled": true,
+  "maxFallbackAttempts": 1,
+  "fallbackOnlyOn": [
+    "missing_api_key",
+    "rate_limit",
+    "provider_unavailable",
+    "model_unavailable",
+    "timeout"
+  ],
+  "doNotFallbackOn": [
+    "budget_exceeded",
+    "safety_blocked",
+    "secret_detected",
+    "permission_denied",
+    "verification_failed",
+    "test_failed"
+  ],
+  "fallbackOrderForLowRisk": [
+    "openrouter",
+    "direct_openai",
+    "direct_anthropic",
+    "ollama"
+  ],
+  "fallbackOrderForHighRisk": [
+    "direct_openai",
+    "direct_anthropic"
+  ]
+}

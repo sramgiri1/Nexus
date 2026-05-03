@@ -15,7 +15,13 @@
     "sprint": "node scripts/sprint.js",
     "skill": "node scripts/skill.js",
     "status": "node scripts/status.js",
-    "reset": "node scripts/reset-memory.js"
+    "reset": "node scripts/reset-memory.js",
+    "check:model-routing": "node scripts/check-model-routing.js",
+    "batch:submit": "node scripts/batch-submit.js",
+    "batch:status": "node scripts/batch-status.js",
+    "batch:poll:openai": "node scripts/batch-poll-openai.js",
+    "batch:reconcile:openai": "node scripts/batch-reconcile-openai.js",
+    "check:openai-batch": "node scripts/check-openai-batch.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
@@ -24,6 +30,7 @@
     "dotenv": "^16.4.5",
     "node-cron": "^3.0.3",
     "ollama": "^0.6.3",
+    "openai": "^4.47.1",
     "zod": "^3.22.4"
   },
   "devDependencies": {

@@ -11,3 +11,6 @@ dashboard/dist/
 projects/*/backend/node_modules/
 projects/*/.env*
 projects/*/node_modules/
+# Xcode per-user workspace state
+**/*.xcworkspace/xcuserdata/
+**/*.xcodeproj/xcuserdata/

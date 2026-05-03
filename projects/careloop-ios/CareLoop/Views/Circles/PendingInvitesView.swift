@@ -58,7 +58,9 @@ struct PendingInvitesView: View {
             VStack(alignment: .leading, spacing: 6) {
                 Text(invite.circle.name)
                     .font(.system(size: 24, weight: .bold, design: .rounded))
-                Text(invite.circle.recipientDisplaySummary)
+                Text(invite.role == .recipient
+                     ? "Your care is organized in this circle"
+                     : invite.circle.recipientDisplaySummary)
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
             }
@@ -134,25 +136,31 @@ struct PendingInvitesView: View {
 
     @ViewBuilder
     private func roleBadge(_ role: MemberRole) -> some View {
-        Text(role == .admin ? "Admin access" : "Member access")
+        let (label, fg, bg): (String, Color, Color) = {
+            switch role {
+            case .admin:
+                return ("Admin access", Color(red: 0.13, green: 0.56, blue: 0.87), Color(red: 0.88, green: 0.95, blue: 1.0))
+            case .member:
+                return ("Member access", Color(red: 0.23, green: 0.33, blue: 0.44), Color(red: 0.93, green: 0.95, blue: 0.98))
+            case .recipient:
+                return ("Care Receiver", Color(red: 0.85, green: 0.30, blue: 0.50), Color(red: 0.99, green: 0.91, blue: 0.94))
+            }
+        }()
+        Text(label)
             .font(.system(size: 12, weight: .bold, design: .rounded))
-            .foregroundStyle(role == .admin ? Color(red: 0.13, green: 0.56, blue: 0.87) : Color(red: 0.23, green: 0.33, blue: 0.44))
-            .padding(.horizontal, 10)
-            .padding(.vertical, 6)
-            .background(
-                Capsule(style: .continuous)
-                    .fill(role == .admin ? Color(red: 0.88, green: 0.95, blue: 1.0) : Color(red: 0.93, green: 0.95, blue: 0.98))
-            )
+            .foregroundStyle(fg)
+            .padding(.horizontal, 10).padding(.vertical, 6)
+            .background(Capsule(style: .continuous).fill(bg))
     }
 
     private func accept(_ invite: GroupInvitation) async {
-        guard let userId = appState.currentUser?.id else { return }
+        guard appState.currentUser != nil else { return }
         loadingInviteId = invite.id
         error = nil
         defer { loadingInviteId = nil }
 
         do {
-            _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id, userId: userId)
+            _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id)
             try await appState.activateCircle(id: invite.circle.id)
         } catch {
             self.error = error.localizedDescription
@@ -160,13 +168,13 @@ struct PendingInvitesView: View {
     }
 
     private func decline(_ invite: GroupInvitation) async {
-        guard let userId = appState.currentUser?.id else { return }
+        guard appState.currentUser != nil else { return }
         loadingInviteId = invite.id
         error = nil
         defer { loadingInviteId = nil }
 
         do {
-            try await APIClient.shared.declineInvitation(invitationId: invite.id, userId: userId)
+            try await APIClient.shared.declineInvitation(invitationId: invite.id)
             try await appState.refreshCurrentUser()
         } catch {
             self.error = error.localizedDescription

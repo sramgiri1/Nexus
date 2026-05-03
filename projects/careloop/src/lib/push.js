@@ -40,7 +40,7 @@ function createApnsJwt() {
   return cachedApnsToken;
 }
 
-function taskNotificationContent(type, taskTitle) {
+function taskNotificationContent(type, taskTitle, extra) {
   switch (type) {
     case "assignment":
       return {
@@ -48,11 +48,35 @@ function taskNotificationContent(type, taskTitle) {
         body: `You were assigned: ${taskTitle}`,
         emailSubject: `Assigned in CareLoop: ${taskTitle}`,
       };
+    case "recipientAssignment":
+      return {
+        title: "A care reminder was set for you",
+        body: taskTitle,
+        emailSubject: `Care reminder: ${taskTitle}`,
+      };
+    case "recipientReminder":
+      return {
+        title: "Care reminder",
+        body: taskTitle,
+        emailSubject: `Care reminder: ${taskTitle}`,
+      };
     case "escalation":
       return {
         title: "Task still needs attention",
         body: `${taskTitle} is still not done.`,
         emailSubject: `Escalation in CareLoop: ${taskTitle}`,
+      };
+    case "taskCompletedForRecipient":
+      return {
+        title: "Care task completed",
+        body: `${extra ?? "Your caregiver"} completed: ${taskTitle}`,
+        emailSubject: `CareLoop: "${taskTitle}" was completed`,
+      };
+    case "recipientCompletedTask":
+      return {
+        title: `${extra ?? "Care receiver"} completed a task`,
+        body: taskTitle,
+        emailSubject: `${extra ?? "Care receiver"} completed: ${taskTitle}`,
       };
     default:
       return {
@@ -144,13 +168,24 @@ function taskEmailHtml({ heading, taskTitle, body, circleName }) {
 </html>`;
 }
 
-export async function deliverTaskNotification({ db, userId, task, type }) {
+export async function deliverTaskNotification({ db, userId, task, type, extra }) {
   const user = await db.user.findUnique({ where: { id: userId } });
   if (!user) {
     return { delivered: false, channel: "NONE", reason: "user_not_found" };
   }
 
-  const content = taskNotificationContent(type, task.title);
+  // "recipientReminder" is a time-based care reminder sent to the recipient — treated as an
+  // assignment-type notification so it respects the recipient's notifAssignments preference.
+  const isAssignmentType = type === "assignment" || type === "recipientAssignment" ||
+    type === "recipientReminder" || type === "taskCompletedForRecipient" || type === "recipientCompletedTask";
+  const isEscalationType = type === "escalation";
+
+  if (isAssignmentType && user.notifAssignments === false)
+    return { delivered: false, channel: "NONE", reason: "notifications_disabled_by_user" };
+  if (isEscalationType && user.notifEscalations === false)
+    return { delivered: false, channel: "NONE", reason: "notifications_disabled_by_user" };
+
+  const content = taskNotificationContent(type, task.title, extra);
   const payload = {
     aps: {
       alert: { title: content.title, body: content.body },

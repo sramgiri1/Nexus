@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-04-26T20:30:00.000Z",
+  "lastUpdated": "2026-05-03T15:24:53.257Z",
   "agents": {
     "nexus": {
       "status": "active",
@@ -10,7 +10,7 @@
     },
     "atlas": {
       "status": "done",
-      "task": "Read projects/careloop/docs/sprint-plan.md Sprint 2 section and PRD.md. Confirm the Sprint 2 API contracts: (1) PATCH /users/:id/push-token already exists in users.js \u2014 verify; (2) no new public endpoints needed for scheduler (backend-only); (3) DigestLog.messageId migration needed. Write Sprint 2 contracts and open questions to projects/careloop/docs/sprint2-contracts.md. Be concise.",
+      "task": "Read projects/careloop/docs/sprint-plan.md Sprint 2 section and PRD.md. Confirm the Sprint 2 API contracts: (1) PATCH /users/:id/push-token already exists in users.js — verify; (2) no new public endpoints needed for scheduler (backend-only); (3) DigestLog.messageId migration needed. Write Sprint 2 contracts and open questions to projects/careloop/docs/sprint2-contracts.md. Be concise.",
       "project": "careloop",
       "progress": 100,
       "lastRun": "2026-04-26T18:37:25.707Z"
@@ -24,7 +24,7 @@
     },
     "warden": {
       "status": "active",
-      "task": "incident-response.md required before public launch. Privacy policy HTML exists. FTC compliance boundary documented in PRD \u00a78.",
+      "task": "incident-response.md required before public launch. Privacy policy HTML exists. FTC compliance boundary documented in PRD §8.",
       "project": "careloop",
       "progress": 40,
       "lastRun": null
@@ -52,10 +52,10 @@
     },
     "core": {
       "status": "done",
-      "task": "Build Sprint 2 CareLoop backend. First read these files: projects/careloop/src/index.js, src/routes/users.js, src/routes/tasks.js, prisma/schema.prisma.\n\nImplement ALL of the following:\n\n1. SCHEDULER \u2014 create src/scheduler/index.js using node-cron:\n   - Reminder loop (runs every minute): find all Reminders with status=PENDING and scheduledAt <= now. For each: call sendPush(userId, taskId, 'reminder'). Update Reminder.status=SENT, sentAt=now. Log REMINDER_SENT event.\n   - Escalation loop (runs every minute): find Reminders with status=SENT, sentAt <= (now - 15min), and task.status != DONE. For each: call sendPush(userId, taskId, 'escalation'). Update Reminder.status=ESCALATED, escalatedAt=now. Log REMINDER_ESCALATED event.\n   - Digest loop (runs every minute): for each User with a timezone, check if local hour == DAILY_DIGEST_HOUR (default 18). Use DigestLog to ensure one send per user per YYYY-MM-DD. Build HTML digest (due today, overdue, completed today). Send via Resend. Write DigestLog row. Log DIGEST_SENT event.\n\n2. APNS SENDER \u2014 create src/lib/push.js:\n   - sendPush(userId, taskId, type) function: look up user.pushToken from DB. If no token, log and return (email fallback is manual for Sprint 2). Use node-apn or https module to send to APNs sandbox/production endpoint. Payload: { aps: { alert: { title, body } }, taskId }.\n   - Use env vars APNS_KEY_ID, APNS_TEAM_ID, APNS_KEY.\n\n3. SCHEMA \u2014 add messageId String? to DigestLog in prisma/schema.prisma.\n\n4. Wire scheduler into src/index.js \u2014 import and start after server starts.\n\nWrite all files. Install node-apn if needed (add to package.json dependencies).",
-      "project": "careloop",
+      "task": "test",
+      "project": null,
       "progress": 100,
-      "lastRun": "2026-04-26T18:49:43.227Z"
+      "lastRun": "2026-05-03T15:24:53.257Z"
     },
     "swift": {
       "status": "done",
@@ -87,14 +87,14 @@
     },
     "oracle": {
       "status": "idle",
-      "task": "Analytics events defined in PRD \u00a710. PostHog integration deferred to external beta. Event table logging active.",
+      "task": "Analytics events defined in PRD §10. PostHog integration deferred to external beta. Event table logging active.",
       "project": "careloop",
       "progress": 10,
       "lastRun": null
     },
     "canvas": {
       "status": "done",
-      "task": "Investigate and fix the failed gate compliance.privacy.check for careloop. Original gate task id: sprint2-warden-1777228485154-wvl48. Failure summary: privacy.html missing \u2014 run CANVAS to generate it. Reported issues: privacy.html not found at /Users/sucheth/Downloads/nexus/projects/careloop/docs/privacy.html. Edit the relevant project files, then leave the code ready for the original gate to retry.",
+      "task": "Investigate and fix the failed gate compliance.privacy.check for careloop. Original gate task id: sprint2-warden-1777228485154-wvl48. Failure summary: privacy.html missing — run CANVAS to generate it. Reported issues: privacy.html not found at /Users/sucheth/Downloads/nexus/projects/careloop/docs/privacy.html. Edit the relevant project files, then leave the code ready for the original gate to retry.",
       "project": "careloop",
       "progress": 100,
       "lastRun": "2026-04-26T19:41:02.714Z"
@@ -129,7 +129,7 @@
     },
     "meridian": {
       "status": "done",
-      "task": "Business score: CareLoop 44/50 \u2014 GO. ShiftPay 44/50 \u2014 on hold until CareLoop Gate 2.",
+      "task": "Business score: CareLoop 44/50 — GO. ShiftPay 44/50 — on hold until CareLoop Gate 2.",
       "project": "careloop",
       "progress": 100,
       "lastRun": null

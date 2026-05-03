@@ -20,7 +20,7 @@ You are FORGE. You own all infrastructure for CareLoop — Supabase provisioning
 | Database       | Supabase Postgres     | Provisioned     | careloop-dev project exists              |
 | API hosting    | Railway (preferred)   | Pending deploy  | Render is acceptable fallback            |
 | iOS build      | Xcode / Xcode Cloud   | Pending         | TestFlight in Sprint 3                   |
-| Push certs     | APNs (Apple Dev acct) | Pending         | Required before Sprint 2 push work       |
+| Push certs     | APNs (Apple Dev acct) | Pending         | Required before live Sprint 2 push verification, not before local feature work |
 | Email          | Resend                | Key in .env     | Already wired in backend                 |
 | Error tracking | Sentry                | Deferred        | Add when external beta begins            |
 | Analytics      | PostHog               | Deferred        | Add when external beta begins            |
@@ -111,13 +111,15 @@ railway run npx prisma migrate deploy
 
 ---
 
-## APNs Setup (Sprint 2 Blocker)
+## APNs Setup (Sprint 2 Verification Work)
 
 1. Apple Developer account required (suchethram@gmail.com)
 2. Create App ID for `com.careloop.ios` with Push Notifications enabled
 3. Generate APNs Auth Key (.p8) in Certificates, Identifiers and Profiles
 4. Add `APNS_KEY_ID`, `APNS_TEAM_ID`, `APNS_KEY` to Railway env vars
 5. Never commit the .p8 file to the repo
+
+Until that is available, SWIFT and CORE may complete local code paths using simulator-safe or mocked verification flows.
 
 ---
 

@@ -7,12 +7,16 @@ struct CareUser: Identifiable, Codable {
     let phone: String?
     var pushToken: String?
     var timezone: String?
+    var notifAssignments: Bool?
+    var notifEscalations: Bool?
+    var notifDigest: Bool?
     var memberships: [CircleMembership]?
     var pendingInvites: [GroupInvitation]?
 }
 
 struct AuthResult: Codable {
     let method: String
+    let accessToken: String
     let user: CareUser
 }
 

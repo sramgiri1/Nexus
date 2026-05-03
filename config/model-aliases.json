@@ -1,0 +1,15 @@
+{
+  "direct_openai": {
+    "gpt-codex-latest": "${OPENAI_CODE_MODEL}",
+    "gpt-latest": "${OPENAI_REASONING_MODEL}",
+    "gpt-mini-latest": "${OPENAI_CHEAP_MODEL}"
+  },
+  "direct_anthropic": {
+    "claude-sonnet-latest": "${ANTHROPIC_REASONING_MODEL}",
+    "claude-haiku-latest": "${ANTHROPIC_CHEAP_MODEL}"
+  },
+  "openrouter": {
+    "openrouter/auto": "openrouter/auto"
+  },
+  "ollama": {}
+}

@@ -1,0 +1,77 @@
+{
+  "defaultTaskType": "general",
+  "rules": [
+    {
+      "taskType": "code_edit",
+      "match": ["edit", "implement", "fix code", "refactor", "add route", "add screen", "modify file", "write code"]
+    },
+    {
+      "taskType": "verification_gate",
+      "match": ["gate", "lint", "test coverage", "simulator", "security scan", "privacy check", "permissions validate"]
+    },
+    {
+      "taskType": "qa_report",
+      "match": ["qa report", "qa checklist", "test summary", "write checklist"]
+    },
+    {
+      "taskType": "test_log_summary",
+      "match": ["analyze logs", "summarize test logs", "failure summary"]
+    },
+    {
+      "taskType": "bug_clustering",
+      "match": ["cluster bugs", "feedback synthesis", "group issues"]
+    },
+    {
+      "taskType": "marketing_copy",
+      "match": ["app store copy", "launch email", "marketing", "copy variants"]
+    },
+    {
+      "taskType": "aso_keywords",
+      "match": ["aso", "seo", "keywords", "metadata"]
+    },
+    {
+      "taskType": "release_decision",
+      "match": ["release decision", "go no-go", "decide release"]
+    },
+    {
+      "taskType": "deploy",
+      "match": ["deploy", "railway", "render", "production deploy"]
+    },
+    {
+      "taskType": "auto_heal",
+      "match": ["auto-heal", "remediation", "failed gate"]
+    },
+    {
+      "taskType": "secrets_change",
+      "match": ["secret", "api key", "env var", ".env", "token"]
+    },
+    {
+      "taskType": "ci_cd_change",
+      "match": ["github action", "ci", "cd", "pipeline", "workflow"]
+    },
+    {
+      "taskType": "migration",
+      "match": ["database migration", "prisma migrate", "schema.prisma"]
+    },
+    {
+      "taskType": "prd_draft",
+      "match": ["prd", "product requirements", "sprint scope", "api contracts"]
+    },
+    {
+      "taskType": "report_summary",
+      "match": ["report", "summary", "investor brief", "brief me", "status report"]
+    },
+    {
+      "taskType": "market_scan",
+      "match": ["market scan", "tam", "competitor", "threat detection"]
+    },
+    {
+      "taskType": "analytics_report",
+      "match": ["analytics", "funnel", "posthog", "event schema"]
+    },
+    {
+      "taskType": "compliance_report",
+      "match": ["compliance report", "privacy report", "appstore check"]
+    }
+  ]
+}

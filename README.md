@@ -1,6 +1,6 @@
 # NEXUS — Agentic Operating System
 
-> One founder. 20 specialized agents. Strict execution boundaries. Real skill execution. Parallel phases with blocking verification gates.
+> One founder. 20 specialized agents. Strict execution boundaries. Real skill execution. Parallel phases with blocking verification gates. Central safety governor on every sensitive action.
 
 ---
 
@@ -31,14 +31,42 @@ loop.js  (Program Orchestrator — ORCHESTRATE)
 NEXUS final decision (decide.release skill)
 ```
 
+Every sensitive action — file writes, task enqueues, skill invocations, LLM calls — passes through `safety/governor.js` before it executes.
+
+---
+
 ## File Structure
 
 ```
 nexus/
 ├── CLAUDE.md                    ← Claude Code reads this first
+│
+├── guardrails/                  ← Safety policy configs (edit to tune limits, no code change)
+│   ├── budget.json              ← Token/cost limits per day, month; zero-cost local models
+│   ├── agent-permissions.json   ← Tier definitions + skill ownership + queue size cap (50)
+│   ├── command-policy.json      ← Shell command allowlist + blocked patterns
+│   ├── file-scope.json          ← Protected paths + verifier write restrictions
+│   ├── loop-policy.json         ← Max iterations, retry limits
+│   ├── model-policy.json        ← Allowed models + max tokens per call
+│   └── approval-policy.json     ← Headless auto-approve threshold
+│
+├── safety/                      ← Governor modules (additive — no existing code removed)
+│   ├── governor.js              ← authorizeAction() — single entry point for all checks
+│   ├── budgetGuard.js           ← Daily token/cost enforcement + recordUsage()
+│   ├── loopGuard.js             ← Self-enqueue + circular-handoff detection (in-memory)
+│   ├── permissionGuard.js       ← Agent tier enforcement + skill ownership map
+│   ├── commandGuard.js          ← Shell command allowlist
+│   ├── fileScopeGuard.js        ← Path traversal + verifier write-path restrictions
+│   ├── secretGuard.js           ← Regex scan for API keys/tokens before write_file
+│   ├── approvalGate.js          ← Log approvals; auto-approve in headless mode
+│   ├── safeQueue.js             ← Governor-authorized queue write for internal loop ops
+│   ├── safetyLogger.js          ← Appends to memory/safety-events.json
+│   └── config.js                ← Loads + caches guardrail JSON configs
+│
 ├── orchestrator/
-│   ├── loop.js                  ← Parallel loop + dependsOn + skill task type + hooks
-│   └── runner.js                ← One agent: loads prompt, calls Claude, tool loop
+│   ├── loop.js                  ← Parallel loop + dependsOn + skill tasks + hooks
+│   └── runner.js                ← One agent: loads prompt, calls Claude/Ollama, tool loop
+│
 ├── skills/                      ← Real executable functions (no Claude needed)
 │   ├── index.js                 ← Registry: executeSkill(agent, skill, input)
 │   ├── auditor/                 ← code.lint | code.static_analysis | code.test_coverage | code.diff_review
@@ -46,24 +74,32 @@ nexus/
 │   ├── warden/                  ← compliance.privacy.check | compliance.permissions.validate | compliance.appstore.check
 │   ├── nexus/                   ← decide.priority | decide.release | read.system_state
 │   └── orchestrator/            ← flow.plan | flow.dispatch | flow.monitor | flow.aggregate
+│
 ├── hooks/
 │   └── index.js                 ← on_goal_received | on_step_completed | on_failure
+│
 ├── tools/
 │   └── index.js                 ← MCP-style tools (12 tools, incl. run_skill)
+│
 ├── agents/                      ← System prompt .md files (20 agents)
-│   ├── auditor.md               ← NEW: Code Review Gate
 │   └── [nexus|atlas|core|...]
-├── memory/                      ← SOURCE OF TRUTH
+│
+├── memory/                      ← SOURCE OF TRUTH (all state lives here)
 │   ├── portfolio.json
 │   ├── agent-status.json
 │   ├── task-queue.json
-│   └── founder-actions.json
+│   ├── founder-actions.json
+│   ├── safety-events.json       ← Append-only log of all blocked actions + approvals
+│   └── system-usage.json        ← Token + cost usage tracked per day / month / agent
+│
 ├── scripts/
 │   ├── sprint.js                ← Enqueue sprint with gate phases built in
-│   ├── skill.js                 ← Run any skill directly from CLI (NEW)
+│   ├── skill.js                 ← Run any skill directly from CLI
 │   ├── task.js                  ← Add single task to queue
 │   ├── run-agent.js             ← Run one agent directly (bypass queue)
-│   └── status.js                ← Print system status
+│   ├── status.js                ← Print system status
+│   └── check-safety.js          ← Safety governor smoke tests (42 tests)
+│
 └── projects/
     ├── careloop/                ← Fastify + Prisma + PostgreSQL backend
     └── careloop-ios/            ← SwiftUI iOS app
@@ -75,9 +111,9 @@ nexus/
 
 ### Core Engine
 
-| Agent     | Layer        | Role                                                        |
-|-----------|--------------|-------------------------------------------------------------|
-| **NEXUS** | DECIDE       | Strategic brain — goals, priorities, release decisions      |
+| Agent     | Layer   | Role                                                        |
+|-----------|---------|-------------------------------------------------------------|
+| **NEXUS** | DECIDE  | Strategic brain — goals, priorities, release decisions      |
 
 ### Strategy Team
 
@@ -88,31 +124,33 @@ nexus/
 
 ### Product Team (SHEPHERD orchestrates)
 
-| Agent       | Layer   | Role                                              |
-|-------------|---------|---------------------------------------------------|
-| **SHEPHERD**| ORCHESTRATE | Sprint scope, exit criteria, release gating   |
-| **ATLAS**   | EXECUTE | PRD, API contracts, sprint scope locking          |
-| **PRISM**   | EXECUTE | Design system, screen specs, component layouts    |
-| **CORE**    | EXECUTE | Fastify API, Prisma schema, auth, event logging   |
-| **SWIFT**   | EXECUTE | SwiftUI screens, API client, session restore      |
-| **PIXEL**   | EXECUTE | Web frontend, NEXUS dashboard                     |
-| **CANVAS**  | EXECUTE | Static assets, privacy policy HTML, landing pages |
+| Agent        | Layer       | Role                                              |
+|--------------|-------------|---------------------------------------------------|
+| **SHEPHERD** | ORCHESTRATE | Sprint scope, exit criteria, release gating       |
+| **ATLAS**    | EXECUTE     | PRD, API contracts, sprint scope locking          |
+| **PRISM**    | EXECUTE     | Design system, screen specs, component layouts    |
+| **CORE**     | EXECUTE     | Fastify API, Prisma schema, auth, event logging   |
+| **SWIFT**    | EXECUTE     | SwiftUI screens, API client, session restore      |
+| **PIXEL**    | EXECUTE     | Web frontend, NEXUS dashboard                     |
+| **CANVAS**   | EXECUTE     | Static assets, privacy policy HTML, landing pages |
 
 ### Platform Team
 
-| Agent      | Layer   | Role                                              |
-|------------|---------|---------------------------------------------------|
-| **FORGE**  | EXECUTE | Railway/Render deploy, secrets, CI/CD             |
-| **STREAM** | EXECUTE | Data pipelines, external data ingestion           |
-| **SYNAPSE**| EXECUTE | AI feature integration (Sprint 3+)                |
+| Agent       | Layer   | Role                                              |
+|-------------|---------|---------------------------------------------------|
+| **FORGE**   | EXECUTE | Railway/Render deploy, secrets, CI/CD             |
+| **STREAM**  | EXECUTE | Data pipelines, external data ingestion           |
+| **SYNAPSE** | EXECUTE | AI feature integration (Sprint 3+)                |
 
 ### Verification — Global Blocking Gates
 
-| Agent        | Layer  | Skills                                                           |
-|--------------|--------|------------------------------------------------------------------|
-| **AUDITOR**  | VERIFY | `code.lint` `code.static_analysis` `code.test_coverage` `code.diff_review` |
-| **SENTINEL** | VERIFY | `qa.simulator.run` `qa.tests.execute` `qa.logs.analyze` `qa.security.scan`  |
+| Agent        | Layer  | Skills                                                                           |
+|--------------|--------|----------------------------------------------------------------------------------|
+| **AUDITOR**  | VERIFY | `code.lint` `code.static_analysis` `code.test_coverage` `code.diff_review`       |
+| **SENTINEL** | VERIFY | `qa.simulator.run` `qa.tests.execute` `qa.logs.analyze` `qa.security.scan`        |
 | **WARDEN**   | VERIFY | `compliance.privacy.check` `compliance.permissions.validate` `compliance.appstore.check` |
+
+Verifier agents can only write to their own report paths (`reports/<agent>/`) and project QA/compliance subdirectories. They are blocked from writing to `src/`, `app/`, `lib/`, and all system directories.
 
 ### Observability
 
@@ -132,7 +170,7 @@ nexus/
 
 ## Sprint Execution Flow
 
-Every sprint auto-inserts verification gates between the build phase and the QA docs phase:
+Every sprint auto-inserts verification gates between the build phase and the QA docs phase. All task enqueues during auto-heal pass through the safety governor.
 
 ```
 Phase 2:   CORE + SWIFT  ← build in parallel (Claude Sonnet)
@@ -149,7 +187,66 @@ Phase 2.3: WARDEN gate   ← 2 skills (no Claude)
 Phase 3:   SENTINEL writes QA checklist doc (Claude Haiku)
 ```
 
-If any gate FAIL, the next phase's tasks remain blocked by `dependsOn`. Fix the issue, re-run the gate skill, re-enqueue.
+If any gate FAILs, the next phase's tasks remain blocked by `dependsOn`. Loop auto-heals by enqueuing a remediation task through `safeQueue.js` (governor-checked). Fix the issue, re-run the gate skill, re-enqueue.
+
+---
+
+## Safety Governor
+
+All sensitive actions are intercepted by `safety/governor.js` before executing.
+
+### What is enforced
+
+| Action | Guards |
+|--------|--------|
+| `write_file` tool | Path-traversal check + secret scan + verifier path restrictions |
+| `enqueue_task` tool | Permission tier + self-enqueue block + circular-handoff block + queue size cap (50) |
+| `run_skill` tool | Skill ownership — agent can only invoke skills it owns |
+| `write_memory` tool | Blocks writes to `safety-events` and `system-usage` (audit integrity) |
+| LLM call (Anthropic) | Daily token/cost budget check; actual usage recorded after every call |
+| Local model (Ollama) | Max 3 iterations, 8 000 prompt tokens, 120 s timeout; $0 usage logged |
+| Auto-heal enqueue | `safeEnqueueTask` in `safeQueue.js` — same governor path as the tool |
+
+### Permission tiers
+
+| Tier | Agents | Can enqueue for |
+|------|--------|-----------------|
+| ORCHESTRATOR | nexus, loop | anyone |
+| SHEPHERD | shepherd | all engineering agents |
+| STRATEGY | atlas, radar, meridian, prism, beacon, compass, oracle | nexus only |
+| ENGINEER | core, swift, pixel, canvas | nobody |
+| PLATFORM | forge, stream, synapse | nobody |
+| VERIFIER | auditor, sentinel, warden | nobody |
+| OBSERVER | relay | nexus, shepherd |
+
+### Audit logs
+
+```bash
+cat memory/safety-events.json   # all blocked actions + approvals
+cat memory/system-usage.json    # token + cost usage by day / agent
+```
+
+### Tune limits — no code change needed
+
+```bash
+# Daily spend cap
+guardrails/budget.json → limits.daily_cost_usd
+
+# Queue size cap
+guardrails/agent-permissions.json → max_queue_size
+
+# Verifier allowed write paths
+guardrails/file-scope.json → verifier_write_restrictions
+
+# Local model limits
+LOCAL_MAX_ITER=3  LOCAL_MAX_PROMPT_TOKENS=8000  LOCAL_TIMEOUT_SECONDS=120
+```
+
+### Run smoke tests
+
+```bash
+node scripts/check-safety.js    # 42 tests — all 6 guard types + bypass regressions
+```
 
 ---
 
@@ -171,16 +268,16 @@ npm run dashboard            # watch live (terminal 2, optional)
 ### Run any skill directly
 
 ```bash
-npm run skill -- --list                     # all available skills
+npm run skill -- --list                        # all available skills
 
-npm run skill auditor code.lint             # ESLint + SwiftLint
-npm run skill auditor code.diff_review      # git diff risk analysis
-npm run skill sentinel qa.tests.execute     # xcodebuild test
-npm run skill sentinel qa.simulator.run     # boot simulator
+npm run skill auditor code.lint                # ESLint + SwiftLint
+npm run skill auditor code.diff_review         # git diff risk analysis
+npm run skill sentinel qa.tests.execute        # xcodebuild test
+npm run skill sentinel qa.simulator.run        # boot simulator
 npm run skill warden compliance.privacy.check
-npm run skill nexus read.system_state       # full system snapshot
-npm run skill nexus decide.release          # GO / NO-GO
-npm run skill orchestrator flow.monitor     # queue status
+npm run skill nexus read.system_state          # full system snapshot
+npm run skill nexus decide.release             # GO / NO-GO
+npm run skill orchestrator flow.monitor        # queue status
 ```
 
 ### Talk to NEXUS
@@ -217,10 +314,11 @@ npm run skill orchestrator flow.monitor
 3.  For each runnable task (dependsOn satisfied):
       type === "skill"  →  executeSkill(agent, skill, input)  [no Claude]
       type === (LLM)    →  runAgent(agentId, task, context)   [Claude API]
-4.  Hooks fire: on_goal_received → on_step_completed / on_failure
-5.  Results written to queue.completed or queue.failed
-6.  Gate phase tasks inherit dependsOn from all preceding phase task IDs
-7.  If gate FAIL: next phase stays blocked; fix and re-enqueue gate task
+4.  Governor authorizes every write_file / enqueue_task / run_skill / LLM call
+5.  Hooks fire: on_goal_received → on_step_completed / on_failure
+6.  Results written to queue.completed or queue.failed
+7.  Gate FAIL → auto-heal via safeEnqueueTask (governor-checked) → blocks next phase
+8.  taskId passed through context so loopGuard detects circular handoffs
 ```
 
 ---
@@ -233,36 +331,36 @@ Skills are deterministic Node.js functions that shell out to real tools. They re
 { "result": "PASS | FAIL | INFO", "issues": [], "summary": "one-line" }
 ```
 
-Every verification agent (AUDITOR, SENTINEL, WARDEN) uses `run_skill` via the tool registry. Claude agents can call skills too — they never fabricate lint/test/compliance results.
+Every verification agent (AUDITOR, SENTINEL, WARDEN) uses `run_skill` via the tool registry. Claude agents can call skills too — they never fabricate lint/test/compliance results. The governor checks skill ownership: agents can only invoke skills they own.
 
 ---
 
-## MCP-Style Tools (12 tools)
+## MCP-Style Tools
 
-| Tool                  | What It Does                                            |
-|-----------------------|---------------------------------------------------------|
-| `read_memory`         | Read any memory JSON file                               |
-| `write_memory`        | Write/merge into a memory JSON file                     |
-| `update_agent_status` | Update agent status, task, progress                     |
-| `enqueue_task`        | Add a task to the queue for another agent               |
-| `read_project`        | Read a project from portfolio.json                      |
-| `update_project`      | Update project fields (stage, gate, score...)           |
-| `update_gate`         | Update a single gate status for a project               |
-| `read_file`           | Read a file from projects/                              |
-| `write_file`          | Write a file to projects/ (creates dirs)                |
-| `list_files`          | List files in a projects/ directory                     |
-| `log_event`           | Append to agent's activity log                          |
-| `run_skill`           | Execute a real skill (lint, QA, compliance) — **NEW**   |
+| Tool                  | What It Does                                                       |
+|-----------------------|--------------------------------------------------------------------|
+| `read_memory`         | Read any memory JSON file                                          |
+| `write_memory`        | Write/merge into a memory JSON file (safety-events and system-usage are write-protected) |
+| `update_agent_status` | Update agent status, task, progress                                |
+| `enqueue_task`        | Add a task to the queue — governor checks tier + queue size (≤ 50) |
+| `read_project`        | Read a project from portfolio.json                                 |
+| `update_project`      | Update project fields (stage, gate, score...)                      |
+| `update_gate`         | Update a single gate status for a project                          |
+| `read_file`           | Read a file from projects/                                         |
+| `write_file`          | Write a file to projects/ — governor checks scope + secrets        |
+| `list_files`          | List files in a projects/ directory                                |
+| `log_event`           | Append to agent's activity log                                     |
+| `run_skill`           | Execute a real skill — governor checks skill ownership             |
 
 ---
 
 ## Hooks
 
-| Event              | Fires when                    | Built-in behavior                    |
-|--------------------|-------------------------------|--------------------------------------|
-| `on_goal_received` | Task picked up by loop        | Logs to memory/conversations/orchestrator.log |
-| `on_step_completed`| Task or skill finishes        | Logs result, tool calls, iterations  |
-| `on_failure`       | Task or skill returns FAIL    | Logs error summary                   |
+| Event               | Fires when                    | Built-in behavior                             |
+|---------------------|-------------------------------|-----------------------------------------------|
+| `on_goal_received`  | Task picked up by loop        | Logs to memory/conversations/orchestrator.log |
+| `on_step_completed` | Task or skill finishes        | Logs result, tool calls, iterations           |
+| `on_failure`        | Task or skill returns FAIL    | Logs error summary                            |
 
 Register custom hooks in `hooks/index.js` via `registerHook(event, asyncFn)`.
 
@@ -271,10 +369,32 @@ Register custom hooks in `hooks/index.js` via `registerHook(event, asyncFn)`.
 ## Environment Variables
 
 ```bash
-ANTHROPIC_API_KEY=sk-ant-...   # required — Claude Sonnet + Haiku
-NEXUS_MODEL=                   # optional override for NEXUS agent
-LOOP_INTERVAL=10               # seconds between queue polls (default 10)
-OLLAMA_HOST=http://localhost:11434  # optional local model fallback
+# Required
+ANTHROPIC_API_KEY=sk-ant-...      # Claude Sonnet + Haiku
+
+# Orchestrator tuning
+LOOP_INTERVAL=10                  # seconds between queue polls (default 10)
+MAX_TOKENS=2048                   # max output tokens per LLM call
+
+# Model overrides (default: Haiku for fast agents, Sonnet for code agents)
+AGENT_MODEL=                      # global override for all agents
+NEXUS_MODEL=                      # per-agent override example
+CORE_MODEL=
+SWIFT_MODEL=
+
+# Local model fallback (Ollama)
+OLLAMA_HOST=http://localhost:11434
+LOCAL_FAST_MODEL=qwen3:4b
+LOCAL_CODE_MODEL=qwen2.5-coder:7b
+
+# Local model safety limits
+LOCAL_MAX_ITER=3                  # max agentic loop iterations for Ollama models
+LOCAL_MAX_PROMPT_TOKENS=8000      # estimated prompt token cap before Ollama call
+LOCAL_TIMEOUT_SECONDS=120         # per-call timeout for Ollama
+
+# Retry / auto-heal
+MAX_AUTO_HEAL_ATTEMPTS=2          # max remediation tasks per failed gate
+TASK_RETRY_DELAY_MS=15000         # base delay before retry (exponential backoff)
 ```
 
 ---
@@ -290,5 +410,5 @@ cp .env.example .env
 
 ---
 
-> See [CLAUDE.md](CLAUDE.md) for agent instructions and key decisions.
+> See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
 > See [REFERENCE.md](REFERENCE.md) for portfolio status and token cost estimates.

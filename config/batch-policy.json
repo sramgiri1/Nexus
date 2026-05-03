@@ -1,0 +1,51 @@
+{
+  "enabled": true,
+  "useDirectProvidersOnly": true,
+  "openRouterChatBatchSupported": false,
+  "discountMultiplier": 0.5,
+  "maxBatchCostUsd": 1.0,
+  "maxBatchItems": 500,
+  "defaultMaxLatency": "24h",
+  "forceRealtimeWhenToolsRequired": true,
+  "forceRealtimeWhenBlocking": true,
+  "neverBatchAgents": [
+    "nexus",
+    "shepherd",
+    "core",
+    "swift",
+    "pixel",
+    "forge"
+  ],
+  "neverBatchTaskTypes": [
+    "code_edit",
+    "code_review_fix",
+    "deploy",
+    "release_decision",
+    "security_blocker",
+    "queue_orchestration",
+    "verification_gate",
+    "tool_loop",
+    "migration",
+    "secrets_change",
+    "ci_cd_change",
+    "infra_change",
+    "hotfix",
+    "auto_heal"
+  ],
+  "batchPreferredTaskTypes": [
+    "report_summary",
+    "qa_report",
+    "test_log_summary",
+    "bug_clustering",
+    "marketing_copy",
+    "aso_keywords",
+    "seo_metadata",
+    "prd_draft",
+    "analytics_report",
+    "compliance_report",
+    "market_scan",
+    "investor_brief",
+    "release_notes",
+    "copy_variants"
+  ]
+}

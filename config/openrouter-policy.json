@@ -1,0 +1,33 @@
+{
+  "enabled": true,
+  "baseUrl": "https://openrouter.ai/api/v1",
+  "defaultModel": "openrouter/auto",
+  "allowFallbacks": true,
+  "requireParameters": true,
+  "dataCollection": "deny",
+  "providerPreference": {
+    "allowFallbacks": true,
+    "requireParameters": true,
+    "sort": "price"
+  },
+  "neverUseFor": [
+    "release_decision",
+    "security_blocker",
+    "deploy",
+    "secrets_change",
+    "ci_cd_change",
+    "migration",
+    "verification_gate",
+    "auto_heal"
+  ],
+  "preferredFor": [
+    "market_scan",
+    "marketing_copy",
+    "aso_keywords",
+    "seo_metadata",
+    "bug_clustering",
+    "copy_variants",
+    "release_notes",
+    "draft_summary"
+  ]
+}

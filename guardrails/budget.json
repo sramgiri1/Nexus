@@ -1,0 +1,19 @@
+{
+  "limits": {
+    "daily_tokens": 500000,
+    "weekly_tokens": 2000000,
+    "per_task_tokens": 50000,
+    "daily_cost_usd": 5.00,
+    "monthly_cost_usd": 100.00,
+    "per_task_cost_usd": 0.50
+  },
+  "model_costs": {
+    "claude-sonnet-4-6":        { "input_per_1k": 0.003,   "output_per_1k": 0.015  },
+    "claude-haiku-4-5-20251001": { "input_per_1k": 0.00025, "output_per_1k": 0.00125 },
+    "claude-opus-4-7":           { "input_per_1k": 0.015,   "output_per_1k": 0.075  },
+    "qwen3:4b":                  { "input_per_1k": 0,        "output_per_1k": 0       },
+    "qwen2.5-coder:7b":          { "input_per_1k": 0,        "output_per_1k": 0       }
+  },
+  "default_model_costs": { "input_per_1k": 0.003, "output_per_1k": 0.015 },
+  "estimate_tokens_per_call": 500
+}

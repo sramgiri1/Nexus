@@ -6,22 +6,24 @@ extension APIClient {
         try await get("/circles/\(id)")
     }
 
-    func createCircle(name: String, recipientName: String, creatorId: String, archiveAfterDays: Int = 7) async throws -> CareCircle {
+    func fetchEvents(circleId: String) async throws -> [CircleEvent] {
+        try await get("/circles/\(circleId)/events")
+    }
+
+    func createCircle(name: String, recipientName: String, archiveAfterDays: Int = 7) async throws -> CareCircle {
         try await postAny("/circles", body: [
             "name": name,
             "recipientName": recipientName,
-            "creatorId": creatorId,
             "archiveAfterDays": archiveAfterDays
         ])
     }
 
-    func fetchRecipients(circleId: String, userId: String) async throws -> [CareRecipient] {
-        try await get("/circles/\(circleId)/recipients?userId=\(userId)")
+    func fetchRecipients(circleId: String) async throws -> [CareRecipient] {
+        try await get("/circles/\(circleId)/recipients")
     }
 
-    func createRecipient(circleId: String, userId: String, name: String, relationship: String?, notes: String? = nil) async throws -> CareRecipient {
+    func createRecipient(circleId: String, name: String, relationship: String?, notes: String? = nil) async throws -> CareRecipient {
         var body: [String: Any] = [
-            "userId": userId,
             "name": name
         ]
         if let relationship { body["relationship"] = relationship }
@@ -32,14 +34,12 @@ extension APIClient {
     func updateRecipient(
         circleId: String,
         recipientId: String,
-        userId: String,
         name: String,
         relationship: String?,
         notes: String? = nil,
         isPrimary: Bool? = nil
     ) async throws -> CareRecipient {
         var body: [String: Any] = [
-            "userId": userId,
             "name": name
         ]
         body["relationship"] = relationship.map { $0 as Any } ?? NSNull()
@@ -50,13 +50,12 @@ extension APIClient {
         return try await patchAny("/circles/\(circleId)/recipients/\(recipientId)", body: body)
     }
 
-    func deleteRecipient(circleId: String, recipientId: String, userId: String) async throws {
-        try await deleteVoid("/circles/\(circleId)/recipients/\(recipientId)", body: ["userId": userId])
+    func deleteRecipient(circleId: String, recipientId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/recipients/\(recipientId)")
     }
 
-    func reorderRecipients(circleId: String, userId: String, recipientIds: [String], primaryRecipientId: String? = nil) async throws -> [CareRecipient] {
+    func reorderRecipients(circleId: String, recipientIds: [String], primaryRecipientId: String? = nil) async throws -> [CareRecipient] {
         var body: [String: Any] = [
-            "userId": userId,
             "recipientIds": recipientIds,
         ]
         if let primaryRecipientId {
@@ -65,13 +64,12 @@ extension APIClient {
         return try await postAny("/circles/\(circleId)/recipients/reorder", body: body)
     }
 
-    func addMember(circleId: String, userId: String) async throws -> CircleMember {
-        try await post("/circles/\(circleId)/members", body: ["userId": userId])
+    func addMember(circleId: String) async throws -> CircleMember {
+        try await post("/circles/\(circleId)/members", body: [String: String]())
     }
 
-    func inviteMember(circleId: String, adminUserId: String, name: String, email: String, role: MemberRole, phone: String? = nil) async throws -> GroupInvitation {
+    func inviteMember(circleId: String, name: String, email: String, role: MemberRole, phone: String? = nil) async throws -> GroupInvitation {
         var body: [String: Any] = [
-            "userId": adminUserId,
             "name": name,
             "email": email,
             "role": role.rawValue,
@@ -80,28 +78,28 @@ extension APIClient {
         return try await postAny("/circles/\(circleId)/members/invite", body: body)
     }
 
-    func fetchInvitations(circleId: String, adminUserId: String, status: InvitationStatus = .pending) async throws -> [GroupInvitation] {
-        try await get("/circles/\(circleId)/invitations?userId=\(adminUserId)&status=\(status.rawValue)")
+    func fetchInvitations(circleId: String, status: InvitationStatus = .pending) async throws -> [GroupInvitation] {
+        try await get("/circles/\(circleId)/invitations?status=\(status.rawValue)")
     }
 
-    func revokeInvitation(circleId: String, invitationId: String, adminUserId: String) async throws {
-        try await deleteVoid("/circles/\(circleId)/invitations/\(invitationId)", body: ["userId": adminUserId])
+    func revokeInvitation(circleId: String, invitationId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/invitations/\(invitationId)")
     }
 
-    func acceptInvitation(invitationId: String, userId: String) async throws -> CircleMember {
-        try await post("/invitations/\(invitationId)/accept", body: ["userId": userId])
+    func acceptInvitation(invitationId: String) async throws -> CircleMember {
+        try await post("/invitations/\(invitationId)/accept", body: [String: String]())
     }
 
-    func declineInvitation(invitationId: String, userId: String) async throws {
-        _ = try await postAny("/invitations/\(invitationId)/decline", body: ["userId": userId]) as InvitationDeclineResult
+    func declineInvitation(invitationId: String) async throws {
+        _ = try await postAny("/invitations/\(invitationId)/decline", body: [String: String]()) as InvitationDeclineResult
     }
 
-    func removeMember(circleId: String, memberId: String, adminUserId: String) async throws {
-        try await deleteVoid("/circles/\(circleId)/members/\(memberId)", body: ["userId": adminUserId])
+    func removeMember(circleId: String, memberId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/members/\(memberId)")
     }
 
-    func updateMemberRole(circleId: String, memberId: String, adminUserId: String, role: MemberRole) async throws -> CircleMember {
-        try await patch("/circles/\(circleId)/members/\(memberId)/role", body: ["userId": adminUserId, "role": role.rawValue])
+    func updateMemberRole(circleId: String, memberId: String, role: MemberRole) async throws -> CircleMember {
+        try await patch("/circles/\(circleId)/members/\(memberId)/role", body: ["role": role.rawValue])
     }
 }
 
@@ -112,13 +110,12 @@ extension APIClient {
     }
 
     func createTask(circleId: String, title: String, notes: String?, dueAt: Date?,
-                    priority: TaskPriority, creatorId: String, assigneeId: String?,
+                    priority: TaskPriority, assigneeId: String?,
                     recipientId: String?,
                     recurrence: TaskRecurrence?) async throws -> CareTask {
         var body: [String: Any] = [
             "title": title,
             "priority": priority.rawValue,
-            "creatorId": creatorId,
         ]
         body["notes"] = notes.map { $0 as Any } ?? NSNull()
         body["assigneeId"] = assigneeId.map { $0 as Any } ?? NSNull()
@@ -130,18 +127,17 @@ extension APIClient {
         return try await postAny("/circles/\(circleId)/tasks", body: body)
     }
 
-    func updateTaskStatus(circleId: String, taskId: String, userId: String, status: TaskStatus) async throws -> CareTask {
-        try await patch("/circles/\(circleId)/tasks/\(taskId)", body: ["userId": userId, "status": status.rawValue])
+    func updateTaskStatus(circleId: String, taskId: String, status: TaskStatus) async throws -> CareTask {
+        try await patch("/circles/\(circleId)/tasks/\(taskId)", body: ["status": status.rawValue])
     }
 
-    func updateTask(circleId: String, taskId: String, userId: String,
+    func updateTask(circleId: String, taskId: String,
                     title: String, notes: String?, dueAt: Date?,
                     priority: TaskPriority, status: TaskStatus, isAdmin: Bool, assigneeId: String?,
                     recipientId: String?,
                     recurrence: TaskRecurrence?,
                     seriesScope: TaskSeriesScope = .occurrence) async throws -> CareTask {
         var body: [String: Any] = [
-            "userId":   userId,
             "title":    title,
             "priority": priority.rawValue,
             "status":   status.rawValue,
@@ -155,8 +151,20 @@ extension APIClient {
         return try await patchAny("/circles/\(circleId)/tasks/\(taskId)", body: body)
     }
 
-    func deleteTask(circleId: String, taskId: String, userId: String) async throws {
-        try await deleteVoid("/circles/\(circleId)/tasks/\(taskId)", body: ["userId": userId])
+    func deleteTask(circleId: String, taskId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/tasks/\(taskId)")
+    }
+
+    func fetchComments(circleId: String, taskId: String) async throws -> [TaskComment] {
+        try await get("/circles/\(circleId)/tasks/\(taskId)/comments")
+    }
+
+    func postComment(circleId: String, taskId: String, body: String) async throws -> TaskComment {
+        try await post("/circles/\(circleId)/tasks/\(taskId)/comments", body: ["body": body])
+    }
+
+    func deleteComment(circleId: String, taskId: String, commentId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/tasks/\(taskId)/comments/\(commentId)")
     }
 }
 
@@ -182,16 +190,24 @@ private func recurrencePayload(from recurrence: TaskRecurrence?) -> [String: Any
 
 // MARK: — Circles (admin mutations)
 extension APIClient {
-    func updateCircle(id: String, userId: String, name: String?, recipientName: String?, archiveAfterDays: Int? = nil) async throws -> CareCircle {
-        var body: [String: Any] = ["userId": userId]
+    func deleteCircle(id: String) async throws {
+        try await deleteVoid("/circles/\(id)")
+    }
+
+    func leaveCircle(circleId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/members/me")
+    }
+
+    func updateCircle(id: String, name: String?, recipientName: String?, archiveAfterDays: Int? = nil) async throws -> CareCircle {
+        var body: [String: Any] = [:]
         if let n = name          { body["name"]          = n }
         if let r = recipientName { body["recipientName"] = r }
         if let d = archiveAfterDays { body["archiveAfterDays"] = d }
         return try await patchAny("/circles/\(id)", body: body)
     }
 
-    func fetchCompletionInsights(circleId: String, userId: String, days: Int = 7, recipientId: String? = nil) async throws -> CircleCompletionInsights {
-        var path = "/circles/\(circleId)/insights/completion?userId=\(userId)&days=\(days)"
+    func fetchCompletionInsights(circleId: String, days: Int = 7, recipientId: String? = nil) async throws -> CircleCompletionInsights {
+        var path = "/circles/\(circleId)/insights/completion?days=\(days)"
         if let recipientId, !recipientId.isEmpty {
             path += "&recipientId=\(recipientId)"
         }
@@ -255,6 +271,10 @@ extension APIClient {
         try await post("/users", body: ["email": email, "name": name, "phone": phone])
     }
 
+    func fetchCurrentUser() async throws -> CareUser {
+        try await get("/users/me")
+    }
+
     func fetchUser(id: String) async throws -> CareUser {
         try await get("/users/\(id)")
     }
@@ -270,6 +290,19 @@ extension APIClient {
 
     func updatePushToken(userId: String, pushToken: String) async throws -> CareUser {
         try await patch("/users/\(userId)/push-token", body: ["pushToken": pushToken])
+    }
+
+    func updateNotificationPreferences(
+        userId: String,
+        notifAssignments: Bool? = nil,
+        notifEscalations: Bool? = nil,
+        notifDigest: Bool? = nil
+    ) async throws -> CareUser {
+        var body: [String: Any] = [:]
+        if let v = notifAssignments { body["notifAssignments"] = v }
+        if let v = notifEscalations { body["notifEscalations"] = v }
+        if let v = notifDigest      { body["notifDigest"]      = v }
+        return try await patchAny("/users/\(userId)/notification-preferences", body: body)
     }
 
     @discardableResult

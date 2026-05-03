@@ -25,7 +25,8 @@ struct CareTask: Identifiable, Codable, Hashable {
         lhs.assignee?.email == rhs.assignee?.email &&
         lhs.assignee?.phone == rhs.assignee?.phone &&
         lhs.assignee?.pushToken == rhs.assignee?.pushToken &&
-        lhs.assignee?.timezone == rhs.assignee?.timezone
+        lhs.assignee?.timezone == rhs.assignee?.timezone &&
+        lhs.completedBy?.id == rhs.completedBy?.id
     }
 
     func hash(into hasher: inout Hasher) {
@@ -53,6 +54,7 @@ struct CareTask: Identifiable, Codable, Hashable {
         hasher.combine(assignee?.phone)
         hasher.combine(assignee?.pushToken)
         hasher.combine(assignee?.timezone)
+        hasher.combine(completedBy?.id)
     }
 
     let id: String
@@ -67,6 +69,8 @@ struct CareTask: Identifiable, Codable, Hashable {
     let recurrenceEndsAt: Date?
     let seriesId: String?
     let completedAt: Date?
+    let completedById: String?
+    let completedBy: CareUser?
     let archivedAt: Date?
     let circleId: String
     let recipientId: String?
@@ -88,6 +92,8 @@ struct CareTask: Identifiable, Codable, Hashable {
         recurrenceEndsAt: Date? = nil,
         seriesId: String? = nil,
         completedAt: Date?,
+        completedById: String? = nil,
+        completedBy: CareUser? = nil,
         archivedAt: Date?,
         circleId: String,
         recipientId: String? = nil,
@@ -108,6 +114,8 @@ struct CareTask: Identifiable, Codable, Hashable {
         self.recurrenceEndsAt = recurrenceEndsAt
         self.seriesId = seriesId
         self.completedAt = completedAt
+        self.completedById = completedById
+        self.completedBy = completedBy
         self.archivedAt = archivedAt
         self.circleId = circleId
         self.recipientId = recipientId
@@ -131,6 +139,23 @@ struct CareTask: Identifiable, Codable, Hashable {
             endsAt: recurrenceEndsAt
         )
     }
+}
+
+struct TaskComment: Identifiable, Codable, Equatable {
+    let id: String
+    let body: String
+    let createdAt: Date
+    let authorId: String
+    let author: CommentAuthor?
+
+    static func == (lhs: TaskComment, rhs: TaskComment) -> Bool {
+        lhs.id == rhs.id && lhs.body == rhs.body
+    }
+}
+
+struct CommentAuthor: Codable, Equatable {
+    let id: String
+    let name: String
 }
 
 struct TaskRecurrence: Codable, Hashable {

@@ -41,10 +41,18 @@ async function processPendingReminders(db) {
 
   for (const reminder of reminders) {
     const targetUserId = reminder.task.assigneeId || reminder.task.creatorId;
+    let reminderType = "reminder";
+    if (reminder.task.assigneeId) {
+      const member = await db.circleMember.findUnique({
+        where: { userId_circleId: { userId: reminder.task.assigneeId, circleId: reminder.task.circleId } },
+        select: { role: true },
+      });
+      if (member?.role === "RECIPIENT") reminderType = "recipientReminder";
+    }
     const deliveries = await sendReminderNotifications({
       db,
       task: reminder.task,
-      type: "reminder",
+      type: reminderType,
       userIds: [targetUserId],
     });
     const failed = deliveries.some((delivery) => !delivery.delivered && !delivery.simulated);
@@ -122,6 +130,7 @@ async function processDigests(db) {
   for (const user of users) {
     const timezone = user.timezone;
     if (!timezone) continue;
+    if (user.notifDigest === false) continue;
     const now = userLocalParts(new Date(), timezone);
     if (now.hour !== DIGEST_HOUR) continue;
 

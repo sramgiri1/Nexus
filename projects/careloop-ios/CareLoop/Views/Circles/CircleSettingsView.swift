@@ -21,7 +21,10 @@ struct CircleSettingsView: View {
                 Section("Circle") {
                     TextField("Circle name", text: $name)
                     if let circle = appState.activeCircle {
-                        LabeledContent("Care recipients", value: circle.recipientDisplaySummary)
+                        LabeledContent("Care recipients",
+                                   value: circle.recipientDisplaySummary.isEmpty
+                                          ? "None yet — invite via Members"
+                                          : circle.recipientDisplaySummary)
                     }
                     Button("Manage care recipients") {
                         showRecipients = true
@@ -60,14 +63,12 @@ struct CircleSettingsView: View {
     }
 
     private func save() async {
-        guard let circle = appState.activeCircle,
-              let userId = appState.currentUser?.id else { return }
+        guard let circle = appState.activeCircle else { return }
         loading = true
         error   = nil
         do {
             let updated = try await APIClient.shared.updateCircle(
                 id:            circle.id,
-                userId:        userId,
                 name:          name.trimmingCharacters(in: .whitespaces),
                 recipientName: nil,
                 archiveAfterDays: archiveAfterDays

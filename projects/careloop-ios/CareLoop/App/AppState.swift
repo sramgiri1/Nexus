@@ -96,9 +96,7 @@ final class AppState: ObservableObject {
         promptNewTask: Bool = false,
         selectCircle: Bool = true
     ) async throws {
-        guard let userId = currentUser?.id else { return }
-
-        let user = try await APIClient.shared.fetchUser(id: userId)
+        let user = try await APIClient.shared.fetchCurrentUser()
         let targetCircleId = resolvedCircleId(from: user, preferredCircleId: preferredCircleId)
         let selectedCircle = selectCircle
             ? try await resolvedActiveCircle(from: user, preferredCircleId: targetCircleId)
@@ -107,7 +105,7 @@ final class AppState: ObservableObject {
         currentUser = mergedUser(user, with: selectedCircle)
         activeCircle = selectedCircle
         shouldPromptNewTask = promptNewTask
-        persistSession(userId: userId, circleId: targetCircleId)
+        persistSession(userId: user.id, circleId: targetCircleId)
         await flushPendingPushTokenIfNeeded()
     }
 
@@ -126,18 +124,19 @@ final class AppState: ObservableObject {
         currentUser  = nil
         activeCircle = nil
         shouldPromptNewTask = false
+        APIClient.shared.clearAccessToken()
         UserDefaults.standard.removeObject(forKey: userKey)
         UserDefaults.standard.removeObject(forKey: circleKey)
     }
 
     private func restoreSession() async {
-        guard let userId = UserDefaults.standard.string(forKey: userKey) else { return }
+        guard APIClient.shared.hasAccessToken else { return }
         do {
-            let user = try await APIClient.shared.fetchUser(id: userId)
+            let user = try await APIClient.shared.fetchCurrentUser()
             let rememberedCircleId = resolvedCircleId(from: user, preferredCircleId: storedCircleId)
             currentUser = mergedUser(user, with: nil)
             activeCircle = nil
-            persistSession(userId: userId, circleId: rememberedCircleId)
+            persistSession(userId: user.id, circleId: rememberedCircleId)
             await flushPendingPushTokenIfNeeded()
         } catch { signOut() }
     }

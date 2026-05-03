@@ -3,6 +3,7 @@
 
 // Set env before any module-level reads (override shell env for isolation)
 process.env.API_KEY            = "test-key";
+process.env.AUTH_TOKEN_SECRET  = "test-auth-secret";
 process.env.DISABLE_SCHEDULER = "true";
 process.env.RESEND_API_KEY     = "";   // force simulated email mode
 process.env.APNS_KEY_ID        = "";   // force simulated push mode
@@ -28,9 +29,16 @@ import authRoutes    from "../src/routes/auth.js";
 import usersRoute    from "../src/routes/users.js";
 import circlesRoute  from "../src/routes/circles.js";
 import tasksRoute    from "../src/routes/tasks.js";
-import { createOAuthState, hashPassword, verifyOAuthState } from "../src/lib/auth.js";
+import { createOAuthState, hashPassword, issueAccessToken, verifyOAuthState } from "../src/lib/auth.js";
 
-const HDR = { "x-api-key": "test-key", "content-type": "application/json" };
+async function authHeaders(user = { id: "u1", email: "a@t.com", name: "Alice" }) {
+  return {
+    authorization: `Bearer ${await issueAccessToken(user)}`,
+    "content-type": "application/json",
+  };
+}
+
+const HDR = await authHeaders();
 
 // ─── mock DB ─────────────────────────────────────────────────────────────────
 function buildDb(seed = {}) {
@@ -102,14 +110,29 @@ function buildDb(seed = {}) {
         if (s.users.some((u) => u.email === d.email)) {
           throw Object.assign(new Error("Unique"), { code: "P2002" });
         }
-        const u = { id: uid("u"), createdAt: new Date(), updatedAt: new Date(), pushToken: null, timezone: null, phone: null, ...d };
+        const u = {
+          id: uid("u"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          authVersion: 0,
+          pushToken: null,
+          timezone: null,
+          phone: null,
+          ...d,
+        };
         s.users.push(u);
         return u;
       },
       update: async ({ where, data: d }) => {
         const u = s.users.find((x) => x.id === where.id);
         if (!u) throw Object.assign(new Error("NotFound"), { code: "P2025" });
-        Object.assign(u, d, { updatedAt: new Date() });
+        const resolved = Object.fromEntries(Object.entries(d).map(([key, value]) => {
+          if (value && typeof value === "object" && "increment" in value) {
+            return [key, (u[key] ?? 0) + value.increment];
+          }
+          return [key, value];
+        }));
+        Object.assign(u, resolved, { updatedAt: new Date() });
         return u;
       },
     };
@@ -613,13 +636,13 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/signup",
-      headers: HDR,
       payload: { email: "New@Example.com", name: "New User", password: "password123" },
     });
     assert.equal(res.statusCode, 201);
     const body = res.json();
     assert.equal(body.user.email, "new@example.com");
     assert.equal(body.method, "PASSWORD");
+    assert.ok(body.accessToken, "access token is returned");
     await app.close();
   });
 
@@ -630,7 +653,6 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/login",
-      headers: HDR,
       payload: { email: "a@test.com", password: "wrongpass" },
     });
     assert.equal(res.statusCode, 401);
@@ -644,13 +666,13 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/login",
-      headers: HDR,
       payload: { email: "A@Test.com", password: "password123" },
     });
     assert.equal(res.statusCode, 200);
     const body = res.json();
     assert.equal(body.user.id, "u1");
     assert.equal(body.method, "PASSWORD");
+    assert.ok(body.accessToken, "access token is returned");
     await app.close();
   });
 
@@ -659,7 +681,6 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/social",
-      headers: HDR,
       payload: {
         provider: "GOOGLE",
         providerUserId: "google-123",
@@ -671,6 +692,7 @@ describe("auth routes", () => {
     const body = res.json();
     assert.equal(body.user.email, "social@test.com");
     assert.equal(body.method, "GOOGLE");
+    assert.ok(body.accessToken, "access token is returned");
     await app.close();
   });
 
@@ -695,7 +717,6 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/login",
-      headers: HDR,
       payload: { email: "member@test.com", password: "password123" },
     });
     assert.equal(res.statusCode, 200);
@@ -732,7 +753,6 @@ describe("auth routes", () => {
     const res = await app.inject({
       method: "POST",
       url: "/auth/forgot-password/request",
-      headers: HDR,
       payload: { email: "reset@test.com" },
     });
     assert.equal(res.statusCode, 200);
@@ -751,21 +771,18 @@ describe("auth routes", () => {
     const request = await app.inject({
       method: "POST",
       url: "/auth/forgot-password/request",
-      headers: HDR,
       payload: { email: "reset@test.com" },
     });
     const code = request.json().debugCode;
     const verify = await app.inject({
       method: "POST",
       url: "/auth/forgot-password/verify",
-      headers: HDR,
       payload: { email: "reset@test.com", code },
     });
     assert.equal(verify.statusCode, 200);
     const reset = await app.inject({
       method: "POST",
       url: "/auth/forgot-password/reset",
-      headers: HDR,
       payload: { email: "reset@test.com", code, password: "newpassword1" },
     });
     assert.equal(reset.statusCode, 200);
@@ -773,10 +790,53 @@ describe("auth routes", () => {
     const login = await app.inject({
       method: "POST",
       url: "/auth/login",
-      headers: HDR,
       payload: { email: "reset@test.com", password: "newpassword1" },
     });
     assert.equal(login.statusCode, 200);
+    await app.close();
+  });
+
+  test("forgot password reset revokes previously issued access tokens", async () => {
+    const db = buildDb({
+      users: [{ id: "u1", email: "reset2@test.com", name: "Reset User", passwordHash: hashPassword("password123"), authVersion: 0 }],
+    });
+    const app = await buildApp(db);
+
+    const login = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      payload: { email: "reset2@test.com", password: "password123" },
+    });
+    assert.equal(login.statusCode, 200);
+    const oldToken = login.json().accessToken;
+
+    const request = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/request",
+      payload: { email: "reset2@test.com" },
+    });
+    const code = request.json().debugCode;
+
+    const reset = await app.inject({
+      method: "POST",
+      url: "/auth/forgot-password/reset",
+      payload: { email: "reset2@test.com", code, password: "newpassword1" },
+    });
+    assert.equal(reset.statusCode, 200);
+
+    const staleSession = await app.inject({
+      method: "GET",
+      url: "/users/me",
+      headers: { authorization: `Bearer ${oldToken}` },
+    });
+    assert.equal(staleSession.statusCode, 401);
+
+    const freshLogin = await app.inject({
+      method: "POST",
+      url: "/auth/login",
+      payload: { email: "reset2@test.com", password: "newpassword1" },
+    });
+    assert.equal(freshLogin.statusCode, 200);
     await app.close();
   });
 });
@@ -939,8 +999,8 @@ describe("circle membership management", () => {
     const res = await app.inject({
       method: "POST",
       url: "/invitations/i1/accept",
-      headers: HDR,
-      payload: { userId: "u2" },
+      headers: await authHeaders({ id: "u2", email: "member@test.com", name: "Member" }),
+      payload: {},
     });
 
     assert.equal(res.statusCode, 201);
@@ -973,13 +1033,117 @@ describe("circle membership management", () => {
     const res = await app.inject({
       method: "POST",
       url: "/invitations/i1/decline",
-      headers: HDR,
-      payload: { userId: "u2" },
+      headers: await authHeaders({ id: "u2", email: "member@test.com", name: "Member" }),
+      payload: {},
     });
 
     assert.equal(res.statusCode, 200);
     assert.equal(res.json().declined, true);
     assert.equal(app.db._s.invitations[0].status, "DECLINED");
+    await app.close();
+  });
+
+  test("supports multi-user signup, invite acceptance, and self-join flows", async () => {
+    const app = await buildApp(buildDb());
+
+    const adminSignup = await app.inject({
+      method: "POST",
+      url: "/auth/signup",
+      payload: { email: "admin@careloop.test", name: "Admin User", password: "password123" },
+    });
+    assert.equal(adminSignup.statusCode, 201);
+    const adminAuth = adminSignup.json();
+
+    const invitedSignup = await app.inject({
+      method: "POST",
+      url: "/auth/signup",
+      payload: { email: "invitee@careloop.test", name: "Invitee User", password: "password123" },
+    });
+    assert.equal(invitedSignup.statusCode, 201);
+    const inviteeAuth = invitedSignup.json();
+
+    const joinerSignup = await app.inject({
+      method: "POST",
+      url: "/auth/signup",
+      payload: { email: "joiner@careloop.test", name: "Joiner User", password: "password123" },
+    });
+    assert.equal(joinerSignup.statusCode, 201);
+    const joinerAuth = joinerSignup.json();
+
+    const adminHeaders = {
+      authorization: `Bearer ${adminAuth.accessToken}`,
+      "content-type": "application/json",
+    };
+    const inviteeHeaders = {
+      authorization: `Bearer ${inviteeAuth.accessToken}`,
+      "content-type": "application/json",
+    };
+    const joinerHeaders = {
+      authorization: `Bearer ${joinerAuth.accessToken}`,
+      "content-type": "application/json",
+    };
+
+    const createCircle = await app.inject({
+      method: "POST",
+      url: "/circles",
+      headers: adminHeaders,
+      payload: { name: "Care Team Alpha", recipientName: "John Doe" },
+    });
+    assert.equal(createCircle.statusCode, 201);
+    const circle = createCircle.json();
+
+    const invite = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/members/invite`,
+      headers: adminHeaders,
+      payload: { name: "Invitee User", email: "invitee@careloop.test", role: "MEMBER" },
+    });
+    assert.equal(invite.statusCode, 201);
+    const invitation = invite.json();
+
+    const inviteeContext = await app.inject({
+      method: "GET",
+      url: "/users/me",
+      headers: inviteeHeaders,
+    });
+    assert.equal(inviteeContext.statusCode, 200);
+    assert.equal(inviteeContext.json().pendingInvites.length, 1);
+    assert.equal(inviteeContext.json().pendingInvites[0].id, invitation.id);
+
+    const acceptInvite = await app.inject({
+      method: "POST",
+      url: `/invitations/${invitation.id}/accept`,
+      headers: inviteeHeaders,
+      payload: {},
+    });
+    assert.equal(acceptInvite.statusCode, 201);
+    assert.equal(acceptInvite.json().userId, inviteeAuth.user.id);
+
+    const selfJoin = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/members`,
+      headers: joinerHeaders,
+      payload: {},
+    });
+    assert.equal(selfJoin.statusCode, 201);
+    assert.equal(selfJoin.json().userId, joinerAuth.user.id);
+
+    const inviteeCircle = await app.inject({
+      method: "GET",
+      url: `/circles/${circle.id}`,
+      headers: inviteeHeaders,
+    });
+    assert.equal(inviteeCircle.statusCode, 200);
+    assert.equal(inviteeCircle.json().members.length, 3);
+
+    const joinerTasks = await app.inject({
+      method: "GET",
+      url: `/circles/${circle.id}/tasks`,
+      headers: joinerHeaders,
+    });
+    assert.equal(joinerTasks.statusCode, 200);
+    assert.deepEqual(joinerTasks.json(), []);
+
     await app.close();
   });
 
@@ -1231,7 +1395,7 @@ describe("PATCH /users/:id/push-token", () => {
     assert.equal(JSON.parse(res.payload).error, "pushToken required");
   });
 
-  test("returns 401 when x-api-key header is missing", async () => {
+  test("returns 401 when authorization header is missing", async () => {
     const res = await app.inject({
       method: "PATCH", url: "/users/u1/push-token",
       headers: { "content-type": "application/json" },
@@ -1240,13 +1404,147 @@ describe("PATCH /users/:id/push-token", () => {
     assert.equal(res.statusCode, 401);
   });
 
-  test("returns 401 when x-api-key header is wrong", async () => {
+  test("returns 401 when bearer token is invalid", async () => {
     const res = await app.inject({
       method: "PATCH", url: "/users/u1/push-token",
-      headers: { "x-api-key": "wrong-key", "content-type": "application/json" },
+      headers: { authorization: "Bearer wrong-token", "content-type": "application/json" },
       body: JSON.stringify({ pushToken: "tok" }),
     });
     assert.equal(res.statusCode, 401);
+  });
+});
+
+describe("auth hardening and protected reads", () => {
+  test("GET /users/me returns the authenticated user context", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", name: "Alice", email: "alice@test.com", pushToken: null }],
+    }));
+
+    const res = await app.inject({
+      method: "GET",
+      url: "/users/me",
+      headers: await authHeaders({ id: "u1", email: "alice@test.com", name: "Alice" }),
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().id, "u1");
+    await app.close();
+  });
+
+  test("prevents cross-user profile and push-token mutation", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", name: "Alice", email: "alice@test.com", pushToken: null },
+        { id: "u2", name: "Bob", email: "bob@test.com", pushToken: null },
+      ],
+    }));
+
+    const userOneHeaders = await authHeaders({ id: "u1", email: "alice@test.com", name: "Alice" });
+
+    const profile = await app.inject({
+      method: "GET",
+      url: "/users/u2",
+      headers: userOneHeaders,
+    });
+    assert.equal(profile.statusCode, 403);
+
+    const pushToken = await app.inject({
+      method: "PATCH",
+      url: "/users/u2/push-token",
+      headers: userOneHeaders,
+      payload: { pushToken: "forbidden" },
+    });
+    assert.equal(pushToken.statusCode, 403);
+    await app.close();
+  });
+
+  test("prevents APP_SESSION writes into a foreign circle", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", name: "Alice", email: "alice@test.com", pushToken: null },
+      ],
+      circles: [
+        { id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 },
+        { id: "c2", name: "Beta", recipientName: "Jane Doe", archiveAfterDays: 7 },
+      ],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+      ],
+    }));
+
+    const userHeaders = await authHeaders({ id: "u1", email: "alice@test.com", name: "Alice" });
+    const res = await app.inject({
+      method: "POST",
+      url: "/users/u1/session",
+      headers: userHeaders,
+      payload: { circleId: "c2" },
+    });
+
+    assert.equal(res.statusCode, 403);
+    assert.equal(app.db._s.events.length, 0);
+    await app.close();
+  });
+
+  test("prevents non-members from reading circle data and members from reading admin-only insights", async () => {
+    const db = buildDb({
+      users: [
+        { id: "u1", name: "Admin", email: "admin@test.com" },
+        { id: "u2", name: "Member", email: "member@test.com" },
+        { id: "u3", name: "Outsider", email: "outsider@test.com" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" },
+      ],
+      tasks: [{
+        id: "t1",
+        title: "Give meds",
+        status: "PENDING",
+        priority: "NORMAL",
+        circleId: "c1",
+        creatorId: "u1",
+        assigneeId: "u2",
+        completedById: null,
+        completedAt: null,
+        dueAt: null,
+        archivedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        recurrenceFrequency: "NONE",
+        recurrenceInterval: null,
+        recurrenceWeekdays: [],
+        recurrenceEndsAt: null,
+        seriesId: null,
+        recipientId: "cr1",
+      }],
+    });
+    const app = await buildApp(db);
+
+    const outsiderHeaders = await authHeaders({ id: "u3", email: "outsider@test.com", name: "Outsider" });
+    const memberHeaders = await authHeaders({ id: "u2", email: "member@test.com", name: "Member" });
+
+    const outsiderCircle = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: outsiderHeaders,
+    });
+    assert.equal(outsiderCircle.statusCode, 403);
+
+    const outsiderTasks = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: outsiderHeaders,
+    });
+    assert.equal(outsiderTasks.statusCode, 403);
+
+    const memberInsights = await app.inject({
+      method: "GET",
+      url: "/circles/c1/insights/completion?days=7",
+      headers: memberHeaders,
+    });
+    assert.equal(memberInsights.statusCode, 403);
+    await app.close();
   });
 });
 
@@ -1277,6 +1575,8 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     });
     assert.equal(res.statusCode, 201);
     const task = JSON.parse(res.payload);
+    assert.equal(task.recipient.sortOrder, 0);
+    assert.equal(task.recipient.notes, null);
 
     const reminder = db._s.reminders.find((r) => r.taskId === task.id);
     assert.ok(reminder, "Reminder exists in DB");
@@ -1578,7 +1878,7 @@ describe("GET /circles/:id/insights/completion", () => {
     try {
       const res = await app.inject({
         method: "GET",
-        url: "/circles/c1/insights/completion?userId=u1&days=7",
+        url: "/circles/c1/insights/completion?days=7",
         headers: HDR,
       });
 
@@ -1614,7 +1914,7 @@ describe("GET /circles/:id/insights/completion", () => {
 
       const filtered = await app.inject({
         method: "GET",
-        url: "/circles/c1/insights/completion?userId=u1&days=7&recipientId=cr1",
+        url: "/circles/c1/insights/completion?days=7&recipientId=cr1",
         headers: HDR,
       });
       assert.equal(filtered.statusCode, 200);

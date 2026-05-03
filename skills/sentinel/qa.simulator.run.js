@@ -1,43 +1,50 @@
 // skills/sentinel/qa.simulator.run.js
 // Boot iOS Simulator, optionally build + install CareLoop, verify launch (no crash).
 
-import { exec } from "child_process";
-import { promisify } from "util";
-
-const execAsync = promisify(exec);
+import { execWithXcode, listAvailableIOSDevices, resolveDeveloperDir } from "./xcode.js";
 
 const BUNDLE_ID  = "com.careloop.ios";
 const DEVICE     = "iPhone 16";
 
 async function run(cmd, timeout = 60000) {
-  const { stdout, stderr } = await execAsync(cmd, { timeout });
+  const { stdout, stderr } = await execWithXcode(cmd, { timeout });
   return (stdout + stderr).trim();
 }
 
 export async function execute({ device = DEVICE, build = false } = {}) {
   const issues = [];
+  let resolvedDevice = device;
 
   // 1. Check Xcode tools
-  try {
-    await run("xcode-select -p");
-  } catch {
-    return { result: "FAIL", issues: [{ severity: "error", message: "Xcode command-line tools not installed. Run: xcode-select --install" }], summary: "Xcode tools missing" };
+  const developerDir = await resolveDeveloperDir();
+  if (!developerDir) {
+    return {
+      result: "FAIL",
+      issues: [{ severity: "error", message: "Full Xcode not found. Install Xcode.app or set DEVELOPER_DIR to an Xcode developer directory." }],
+      summary: "Xcode developer dir missing",
+    };
   }
 
   // 2. Find or boot simulator
   let udid = "";
   try {
-    const { stdout } = await execAsync(`xcrun simctl list devices available -j`, { timeout: 15000 });
-    const all = JSON.parse(stdout);
-    for (const [runtime, devices] of Object.entries(all.devices)) {
-      if (!runtime.includes("iOS")) continue;
-      const match = devices.find(d => d.name === device && d.isAvailable);
-      if (match) { udid = match.udid; break; }
+    const available = await listAvailableIOSDevices();
+    const exact = available.find((d) => d.name === device);
+    const fallback = available.find((d) => d.name.includes("iPhone")) || available[0];
+    const match = exact || fallback;
+
+    if (match) {
+      udid = match.udid;
+      resolvedDevice = match.name;
     }
+
     if (!udid) {
       issues.push({ severity: "warning", message: `Simulator "${device}" not found. Available simulators listed below.` });
-      const names = Object.values(all.devices).flat().filter(d => d.isAvailable).map(d => d.name).slice(0, 5);
+      const names = available.map(d => d.name).slice(0, 5);
       return { result: "FAIL", issues, summary: `Simulator not found. Try: ${names.join(", ")}` };
+    }
+    if (!exact && fallback) {
+      issues.push({ severity: "warning", message: `Simulator "${device}" not found. Falling back to "${fallback.name}".` });
     }
   } catch (e) {
     return { result: "FAIL", issues: [{ severity: "error", message: `simctl error: ${e.message}` }], summary: "simctl failed" };
@@ -72,6 +79,6 @@ export async function execute({ device = DEVICE, build = false } = {}) {
   return {
     result: "PASS",
     issues,
-    summary: `Simulator "${device}" (${udid.slice(0, 8)}...) booted. App installed: ${installed}. Ready for QA.`,
+    summary: `Simulator "${resolvedDevice}" (${udid.slice(0, 8)}...) booted via ${developerDir}. App installed: ${installed}. Ready for QA.`,
   };
 }

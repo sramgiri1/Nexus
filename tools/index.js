@@ -5,6 +5,8 @@
 
 import fs   from "fs/promises";
 import path from "path";
+import { readJsonFile, updateJsonFile, writeJsonFileAtomic } from "../utils/json-store.js";
+import { authorizeAction } from "../safety/governor.js";
 
 const ROOT = process.cwd();
 const mem  = (f) => path.join(ROOT, "memory", f);
@@ -25,8 +27,7 @@ export const readMemory = {
   },
   execute: async ({ file }) => {
     try {
-      const data = await fs.readFile(mem(`${file}.json`), "utf8");
-      return { success: true, data: JSON.parse(data) };
+      return { success: true, data: await readJsonFile(mem(`${file}.json`)) };
     } catch (e) {
       return { success: false, error: `Memory file '${file}' not found: ${e.message}` };
     }
@@ -50,11 +51,13 @@ export const writeMemory = {
       if (typeof data !== "object" || Array.isArray(data) || data === null)
         return { success: false, error: "data must be a JSON object, not a string or array" };
       const filePath = mem(`${file}.json`);
-      let existing = {};
-      try { existing = JSON.parse(await fs.readFile(filePath, "utf8")); } catch {}
-      const toWrite = merge ? deepMerge(existing, data) : data;
-      toWrite.lastUpdated = new Date().toISOString();
-      await fs.writeFile(filePath, JSON.stringify(toWrite, null, 2));
+      let written;
+      await updateJsonFile(filePath, async (existing) => {
+        const toWrite = merge ? deepMerge(existing || {}, data) : data;
+        toWrite.lastUpdated = new Date().toISOString();
+        written = toWrite;
+        return toWrite;
+      });
       return { success: true, written: filePath };
     } catch (e) {
       return { success: false, error: e.message };
@@ -78,17 +81,20 @@ export const updateAgentStatus = {
   },
   execute: async ({ agentId, status, task, progress, project }) => {
     const filePath = mem("agent-status.json");
-    const data = JSON.parse(await fs.readFile(filePath, "utf8"));
-    if (!data.agents[agentId]) return { success: false, error: `Unknown agent: ${agentId}` };
-    const agent = data.agents[agentId];
-    if (status)             agent.status   = status;
-    if (task !== undefined) agent.task     = task;
-    if (progress !== undefined) agent.progress = progress;
-    if (project !== undefined)  agent.project  = project;
-    agent.lastRun = new Date().toISOString();
-    data.lastUpdated = new Date().toISOString();
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-    return { success: true, agent: data.agents[agentId] };
+    let updatedAgent;
+    await updateJsonFile(filePath, async (data) => {
+      if (!data.agents[agentId]) throw new Error(`Unknown agent: ${agentId}`);
+      const agent = data.agents[agentId];
+      if (status) agent.status = status;
+      if (task !== undefined) agent.task = task;
+      if (progress !== undefined) agent.progress = progress;
+      if (project !== undefined) agent.project = project;
+      agent.lastRun = new Date().toISOString();
+      data.lastUpdated = new Date().toISOString();
+      updatedAgent = { ...agent };
+      return data;
+    });
+    return { success: true, agent: updatedAgent };
   }
 };
 
@@ -108,7 +114,6 @@ export const enqueueTask = {
   },
   execute: async ({ agentId, task, projectId, priority = "normal", context = {} }) => {
     const filePath = mem("task-queue.json");
-    const data = JSON.parse(await fs.readFile(filePath, "utf8"));
     const newTask = {
       id:        `task-${Date.now()}`,
       agentId,
@@ -119,13 +124,15 @@ export const enqueueTask = {
       createdAt: new Date().toISOString(),
       status:    "pending"
     };
-    data.queue.push(newTask);
-    data.queue.sort((a,b) => {
-      const order = { critical:0, high:1, normal:2, low:3 };
-      return (order[a.priority]||2) - (order[b.priority]||2);
+    await updateJsonFile(filePath, async (data) => {
+      data.queue.push(newTask);
+      data.queue.sort((a,b) => {
+        const order = { critical:0, high:1, normal:2, low:3 };
+        return (order[a.priority]||2) - (order[b.priority]||2);
+      });
+      data.lastUpdated = new Date().toISOString();
+      return data;
     });
-    data.lastUpdated = new Date().toISOString();
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
     return { success: true, taskId: newTask.id };
   }
 };
@@ -143,7 +150,7 @@ export const readProject = {
     properties: { projectId: { type: "string" } }
   },
   execute: async ({ projectId }) => {
-    const data = JSON.parse(await fs.readFile(mem("portfolio.json"), "utf8"));
+    const data = await readJsonFile(mem("portfolio.json"));
     const proj = data.projects.find(p => p.id === projectId);
     return proj ? { success: true, project: proj } : { success: false, error: `Project not found: ${projectId}` };
   }
@@ -162,13 +169,16 @@ export const updateProject = {
   },
   execute: async ({ projectId, updates }) => {
     const filePath = mem("portfolio.json");
-    const data = JSON.parse(await fs.readFile(filePath, "utf8"));
-    const idx = data.projects.findIndex(p => p.id === projectId);
-    if (idx === -1) return { success: false, error: `Project not found: ${projectId}` };
-    data.projects[idx] = deepMerge(data.projects[idx], updates);
-    data.lastUpdated = new Date().toISOString();
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-    return { success: true, project: data.projects[idx] };
+    let project;
+    await updateJsonFile(filePath, async (data) => {
+      const idx = data.projects.findIndex(p => p.id === projectId);
+      if (idx === -1) throw new Error(`Project not found: ${projectId}`);
+      data.projects[idx] = deepMerge(data.projects[idx], updates);
+      data.lastUpdated = new Date().toISOString();
+      project = data.projects[idx];
+      return data;
+    });
+    return { success: true, project };
   }
 };
 
@@ -186,13 +196,16 @@ export const updateGate = {
   },
   execute: async ({ projectId, gate, status }) => {
     const filePath = mem("portfolio.json");
-    const data = JSON.parse(await fs.readFile(filePath, "utf8"));
-    const proj = data.projects.find(p => p.id === projectId);
-    if (!proj) return { success: false, error: `Project not found: ${projectId}` };
-    proj.gates[gate] = status;
-    data.lastUpdated = new Date().toISOString();
-    await fs.writeFile(filePath, JSON.stringify(data, null, 2));
-    return { success: true, gates: proj.gates };
+    let gates;
+    await updateJsonFile(filePath, async (data) => {
+      const proj = data.projects.find(p => p.id === projectId);
+      if (!proj) throw new Error(`Project not found: ${projectId}`);
+      proj.gates[gate] = status;
+      data.lastUpdated = new Date().toISOString();
+      gates = { ...proj.gates };
+      return data;
+    });
+    return { success: true, gates };
   }
 };
 
@@ -335,10 +348,44 @@ export function toAnthropicTools(toolNames) {
   }));
 }
 
-// Execute a tool call from an Anthropic response
-export async function executeTool(toolName, toolInput) {
+// Execute a tool call from an Anthropic response.
+// ctx = { agentId, taskId } — injected by runner.js so the governor knows who is calling.
+export async function executeTool(toolName, toolInput, ctx = {}) {
   const tool = TOOL_MAP[toolName];
   if (!tool) return { success: false, error: `Unknown tool: ${toolName}` };
+
+  const agentId = ctx.agentId || "unknown";
+
+  // ── write_memory: block writes to the two protected audit/usage files ────────
+  if (toolName === "write_memory") {
+    const PROTECTED_MEM = ["safety-events", "system-usage"];
+    if (PROTECTED_MEM.includes(toolInput.file)) {
+      const reason = `Write to protected memory file '${toolInput.file}' blocked — it is managed by the safety system`;
+      authorizeAction({ agentId, actionType: "tool_call", toolName, filePath: `memory/${toolInput.file}.json` })
+        .catch(() => {}); // fire-and-forget for logging
+      return { success: false, error: `[SAFETY] ${reason}` };
+    }
+  }
+
+  // ── Governor intercept for write_file / enqueue_task / run_skill ─────────────
+  if (toolName === "write_file" || toolName === "enqueue_task" || toolName === "run_skill") {
+    const skillName = toolName === "run_skill" && toolInput.agent && toolInput.skill
+      ? `${toolInput.agent}.${toolInput.skill}`
+      : undefined;
+
+    const check = await authorizeAction({
+      agentId,
+      actionType:    "tool_call",
+      toolName,
+      filePath:      toolInput.filePath,
+      content:       toolInput.content,
+      targetAgentId: toolInput.agentId,  // for enqueue_task
+      skillName,
+      taskId:        ctx.taskId,
+    });
+    if (!check.allowed) return { success: false, error: `[SAFETY] ${check.reason}` };
+  }
+
   try {
     return await tool.execute(toolInput);
   } catch (e) {

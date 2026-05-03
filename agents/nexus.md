@@ -40,10 +40,10 @@ memory/founder-actions.json  # founder directives and open items
 
 ## CareLoop Sprint Status
 
-- **Current sprint:** Sprint 1 (in progress)
-- **Sprint 1 goal:** Core coordination complete — circle, task CRUD, role permissions, session restore
-- **Sprint 1 blockers:** Railway deploy pending (FORGE), SENTINEL sign-off not yet written
-- **Sprint 2 starts when:** SENTINEL Sprint 1 sign-off is written and FORGE deploy is confirmed
+- **Current sprint:** Sprint 2 (in progress)
+- **Sprint 1 status:** Core coordination complete — repo-local QA and sign-off done
+- **Sprint 2 focus:** Reminders, digests, push, plus deploy verification owned by FORGE
+- **Sprint 2 starts with:** Sprint 1 repo-local scope closed; deploy verification moved into Sprint 2
 
 ---
 
@@ -55,7 +55,7 @@ memory/founder-actions.json  # founder directives and open items
 |----------|--------|------------------------------------------------------|
 | CORE     | Done   | All API routes built — Sprint 2 scheduler work next  |
 | SWIFT    | Done   | All Sprint 1 iOS screens complete                    |
-| FORGE    | Active | Railway deploy pending, APNs account pending         |
+| FORGE    | Active | Sprint 2 infra: Railway deploy, deployed migration check, APNs setup |
 | PIXEL    | Idle   | No web frontend needed Sprint 1                      |
 | CANVAS   | Done   | Privacy policy HTML built                            |
 | SYNAPSE  | Idle   | No AI features until Sprint 2+                       |
@@ -72,13 +72,13 @@ memory/founder-actions.json  # founder directives and open items
 
 | Agent    | Status | Current task                                         |
 |----------|--------|------------------------------------------------------|
-| SENTINEL | Done   | Sprint 1 QA checklist written — sign-off pending     |
+| SENTINEL | Done   | Sprint 1 QA checklist, sign-off, and local XCTest complete |
 
 ### Process Roles (founder-executed, not queue-dispatched)
 
 | Agent    | Status | Current task                                         |
 |----------|--------|------------------------------------------------------|
-| SHEPHERD | Active | Sprint 1 open — blocking exit: deploy + sign-off     |
+| SHEPHERD | Active | Sprint 2 open — tracking infra prerequisites and scheduler scope |
 | WARDEN   | Active | incident-response.md required before public launch   |
 | RELAY    | Idle   | Activates when TestFlight is live in Sprint 3        |
 

@@ -1,0 +1,17 @@
+{
+  "events": [
+    {
+      "id": "se-1777839563390-x25",
+      "timestamp": "2026-05-03T20:19:23.390Z",
+      "type": "blocked",
+      "agentId": "relay",
+      "reason": "Batch blocked for task type 'migration'",
+      "riskLevel": "high",
+      "actionType": "llm_call"
+    }
+  ],
+  "lastUpdated": "2026-05-03T20:19:23.390Z"
+}"
+}
+}
+}}

@@ -1,0 +1,32 @@
+{
+  "_comment": "write_file paths are relative to projects/. Verifier path restrictions apply before any allowed check.",
+  "protected_memory_paths": [
+    "memory/system-usage.json",
+    "memory/safety-events.json"
+  ],
+  "agents_with_full_memory_write": ["nexus", "shepherd", "relay", "atlas"],
+  "blocked_path_patterns": [
+    "../memory/",
+    "../guardrails/",
+    "../safety/"
+  ],
+
+  "verifier_agents": ["auditor", "sentinel", "warden"],
+  "verifier_write_restrictions": {
+    "auditor": {
+      "allowed_prefixes": ["reports/auditor/", "memory/reports/auditor/"],
+      "allowed_segments": [],
+      "blocked_contains":  ["/src/", "/app/", "/lib/", "guardrails/", "safety/", "orchestrator/", "tools/", "skills/"]
+    },
+    "sentinel": {
+      "allowed_prefixes": ["reports/sentinel/", "memory/reports/sentinel/"],
+      "allowed_segments": ["/qa/"],
+      "blocked_contains":  ["/src/", "/app/", "/lib/", "guardrails/", "safety/", "orchestrator/", "tools/", "skills/"]
+    },
+    "warden": {
+      "allowed_prefixes": ["reports/warden/", "memory/reports/warden/"],
+      "allowed_segments": ["/compliance/"],
+      "blocked_contains":  ["/src/", "/app/", "/lib/", "guardrails/", "safety/", "orchestrator/", "tools/", "skills/"]
+    }
+  }
+}

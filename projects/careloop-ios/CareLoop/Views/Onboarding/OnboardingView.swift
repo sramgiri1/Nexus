@@ -805,7 +805,7 @@ struct OnboardingView: View {
                     email: payload.email,
                     name: payload.name
                 )
-                try await finalizeAuthenticatedUser(result.user)
+                try await finalizeAuthenticatedUser(result)
                 showSignUp = false
                 showForgotPassword = false
             } catch let authError as SocialAuthError {
@@ -948,7 +948,7 @@ struct OnboardingView: View {
             email: signInEmail.trimmingCharacters(in: .whitespacesAndNewlines),
             password: signInPassword
         )
-        try await finalizeAuthenticatedUser(result.user)
+        try await finalizeAuthenticatedUser(result)
     }
 
     private func submitCreate() async throws {
@@ -969,10 +969,12 @@ struct OnboardingView: View {
             password: createPassword,
             phone: nil
         )
-        try await finalizeAuthenticatedUser(result.user)
+        try await finalizeAuthenticatedUser(result)
     }
 
-    private func finalizeAuthenticatedUser(_ user: CareUser) async throws {
+    private func finalizeAuthenticatedUser(_ result: AuthResult) async throws {
+        APIClient.shared.setAccessToken(result.accessToken)
+        let user = result.user
         let timezone = TimeZone.current.identifier
         _ = try? await APIClient.shared.updateTimezone(userId: user.id, timezone: timezone)
         appState.signIn(user: user, circle: nil)

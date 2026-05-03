@@ -1,5 +1,6 @@
 import { Prisma } from "@prisma/client";
 import { normalizeEmail, sanitizeUser } from "../lib/auth.js";
+import { assertSelf, requireAuthenticatedUser } from "../lib/roles.js";
 
 export default async function users(app) {
   const db = app.db;
@@ -42,32 +43,66 @@ export default async function users(app) {
     const { email } = req.query ?? {};
     if (!email) return reply.code(400).send({ error: "email required" });
     const normalizedEmail = normalizeEmail(email);
+    const authenticatedEmail = normalizeEmail(req.auth?.email);
+    if (!authenticatedEmail || authenticatedEmail !== normalizedEmail) {
+      return reply.code(403).send({ error: "Authenticated user does not match requested email" });
+    }
     const user = await userWithContext({ email: normalizedEmail });
     if (!user) return reply.code(404).send({ error: "Not found" });
     return user;
   });
 
+  app.get("/users/me", async (req, reply) => {
+    const userId = requireAuthenticatedUser(req, reply);
+    if (!userId) return;
+    const user = await userWithContext({ id: userId });
+    if (!user) return reply.code(404).send({ error: "Not found" });
+    return user;
+  });
+
   app.get("/users/:id", async (req, reply) => {
+    if (!assertSelf(req, req.params.id, reply)) return;
     const user = await userWithContext({ id: req.params.id });
     if (!user) return reply.code(404).send({ error: "Not found" });
     return user;
   });
 
   app.patch("/users/:id/push-token", async (req, reply) => {
+    if (!assertSelf(req, req.params.id, reply)) return;
     const { pushToken } = req.body ?? {};
     if (!pushToken) return reply.code(400).send({ error: "pushToken required" });
     const user = await db.user.update({ where: { id: req.params.id }, data: { pushToken } });
     return sanitizeUser(user);
   });
 
+  // PATCH /users/:id/notification-preferences — self only
+  app.patch("/users/:id/notification-preferences", async (req, reply) => {
+    if (!assertSelf(req, req.params.id, reply)) return;
+    const { notifAssignments, notifEscalations, notifDigest } = req.body ?? {};
+    const data = {};
+    if (typeof notifAssignments === "boolean") data.notifAssignments = notifAssignments;
+    if (typeof notifEscalations === "boolean") data.notifEscalations = notifEscalations;
+    if (typeof notifDigest === "boolean") data.notifDigest = notifDigest;
+    if (Object.keys(data).length === 0)
+      return reply.code(400).send({ error: "At least one preference field is required" });
+    const user = await db.user.update({ where: { id: req.params.id }, data });
+    return sanitizeUser(user);
+  });
+
   // POST /users/:id/session — log APP_SESSION, one per user per UTC day
   app.post("/users/:id/session", async (req, reply) => {
+    if (!assertSelf(req, req.params.id, reply)) return;
     const { circleId } = req.body ?? {};
     let cid = circleId;
     if (!cid) {
       const membership = await db.circleMember.findFirst({ where: { userId: req.params.id } });
       if (!membership) return reply.code(404).send({ error: "No circle membership found" });
       cid = membership.circleId;
+    } else {
+      const membership = await db.circleMember.findFirst({
+        where: { userId: req.params.id, circleId: cid },
+      });
+      if (!membership) return reply.code(403).send({ error: "Authenticated user is not a member of that circle" });
     }
 
     const todayStart = new Date(); todayStart.setUTCHours(0,  0,  0,   0);
@@ -83,6 +118,7 @@ export default async function users(app) {
   });
 
   app.patch("/users/:id/timezone", async (req, reply) => {
+    if (!assertSelf(req, req.params.id, reply)) return;
     const { timezone } = req.body ?? {};
     if (!timezone) return reply.code(400).send({ error: "timezone required" });
     try {

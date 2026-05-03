@@ -5,18 +5,28 @@ struct JoinCircleView: View {
     @Environment(\.dismiss) private var dismiss
 
     var dismissOnSuccess: Bool = false
+    /// When non-nil, the mode picker is hidden and the view starts locked to this mode.
+    /// true = create, false = join
+    var startInCreateMode: Bool? = nil
 
     private enum Mode: String, CaseIterable {
         case join = "Join existing circle"
         case create = "Create new circle"
     }
 
-    @State private var mode: Mode = .join
-    @State private var circleId = ""
-    @State private var circleName = ""
+    @State private var mode: Mode
+
+    init(dismissOnSuccess: Bool = false, startInCreateMode: Bool? = nil) {
+        self.dismissOnSuccess = dismissOnSuccess
+        self.startInCreateMode = startInCreateMode
+        _mode = State(initialValue: startInCreateMode == true ? .create : .join)
+    }
+
+    @State private var circleId      = ""
+    @State private var circleName    = ""
     @State private var recipientName = ""
-    @State private var loading = false
-    @State private var error: String?
+    @State private var loading       = false
+    @State private var error:        String?
 
     private var reachedCircleLimit: Bool {
         (appState.currentUser?.memberships?.count ?? 0) >= 3
@@ -31,7 +41,9 @@ struct JoinCircleView: View {
                         .padding(.top, 8)
 
                     header
-                    modePicker
+                    if startInCreateMode == nil {
+                        modePicker
+                    }
                     formCard
 
                     if let error {
@@ -84,7 +96,15 @@ struct JoinCircleView: View {
             Text("Set up your CareLoop")
                 .font(.system(size: 32, weight: .bold, design: .rounded))
                 .foregroundStyle(Color(red: 0.10, green: 0.16, blue: 0.24))
-            Text("Join a circle you were invited to, or create a new one to organize care, tasks, and updates for your family.")
+            let subtitle: String = {
+                if startInCreateMode == true {
+                    return "Give your care circle a name. You can invite everyone once it's set up."
+                } else if startInCreateMode == false {
+                    return "Enter the invite code or circle ID shared with you by your family."
+                }
+                return "Join a circle you were invited to, or create a new one to organize care, tasks, and updates for your family."
+            }()
+            Text(subtitle)
                 .font(.system(size: 16, weight: .medium, design: .rounded))
                 .foregroundStyle(Color(red: 0.43, green: 0.50, blue: 0.60))
         }
@@ -139,11 +159,11 @@ struct JoinCircleView: View {
             } else {
                 Text("Create a new circle")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
-                Text("Create the family workspace and choose who the circle is centered around.")
+                Text("Give your care circle a name. You can invite caregivers and care receivers once it's created.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
-                field("Circle name", text: $circleName, placeholder: "John Doe Family")
-                field("Who are you caring for?", text: $recipientName, placeholder: "John Doe")
+                field("Circle name", text: $circleName, placeholder: "Smith Family Care")
+                field("Who is being cared for?", text: $recipientName, placeholder: "e.g. Mom, Dad, John")
             }
         }
         .padding(22)
@@ -156,12 +176,13 @@ struct JoinCircleView: View {
         case .join:
             return OnboardingValidation.joinCircle(circleId: circleId)
         case .create:
-            return OnboardingValidation.createCircle(circleName: circleName, recipientName: recipientName)
+            return OnboardingValidation.createCircle(circleName: circleName)
+                && !recipientName.trimmingCharacters(in: .whitespaces).isEmpty
         }
     }
 
     private func submit() {
-        guard let user = appState.currentUser else { return }
+        guard appState.currentUser != nil else { return }
         loading = true
         error = nil
 
@@ -172,7 +193,7 @@ struct JoinCircleView: View {
                 case .join:
                     let trimmedCircleId = circleId.trimmingCharacters(in: .whitespacesAndNewlines)
                     do {
-                        _ = try await APIClient.shared.addMember(circleId: trimmedCircleId, userId: user.id)
+                        _ = try await APIClient.shared.addMember(circleId: trimmedCircleId)
                     } catch APIError.httpError(let statusCode, _) where statusCode == 409 {
                         // Treat duplicate join as success so users can re-enter an existing circle.
                     }
@@ -183,8 +204,7 @@ struct JoinCircleView: View {
                 case .create:
                     let created = try await APIClient.shared.createCircle(
                         name: circleName.trimmingCharacters(in: .whitespacesAndNewlines),
-                        recipientName: recipientName.trimmingCharacters(in: .whitespacesAndNewlines),
-                        creatorId: user.id
+                        recipientName: recipientName.trimmingCharacters(in: .whitespacesAndNewlines)
                     )
                     try await appState.activateCircle(id: created.id, promptNewTask: true)
                     if dismissOnSuccess {

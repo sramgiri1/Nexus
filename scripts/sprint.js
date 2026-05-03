@@ -8,8 +8,8 @@
 //   node scripts/sprint.js 2 --dry-run  # print the task graph without enqueueing
 
 import "dotenv/config";
-import fs   from "fs/promises";
 import path from "path";
+import { readJsonFile, writeJsonFileAtomic } from "../utils/json-store.js";
 
 const ROOT       = process.cwd();
 const QUEUE_FILE = path.join(ROOT, "memory", "task-queue.json");
@@ -319,7 +319,7 @@ async function main() {
 
   // Enqueue all tasks
   const allTasks = phases.flatMap(p => p.tasks);
-  const queue    = JSON.parse(await fs.readFile(QUEUE_FILE, "utf8"));
+  const queue    = await readJsonFile(QUEUE_FILE);
 
   // Priority sort order
   const order = { critical: 0, high: 1, normal: 2, low: 3 };
@@ -330,7 +330,7 @@ async function main() {
 
   queue.queue.sort((a, b) => (order[a.priority] ?? 2) - (order[b.priority] ?? 2));
   queue.lastUpdated = new Date().toISOString();
-  await fs.writeFile(QUEUE_FILE, JSON.stringify(queue, null, 2));
+  await writeJsonFileAtomic(QUEUE_FILE, queue);
 
   console.log(`  ✓ Enqueued ${allTasks.length} tasks across ${phases.length} phases`);
   console.log(`  ✓ Start the loop:  npm run orchestrator`);
