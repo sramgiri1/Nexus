@@ -1,0 +1,64 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "release-contract",
+  "title": "Release Contract",
+  "description": "Final artifact produced by NEXUS nexus.decide.release skill. References all three gate results. A GO decision requires PASS evidence from all three verifiers.",
+  "type": "object",
+  "required": [
+    "projectId",
+    "auditorResult",
+    "sentinelResult",
+    "wardenResult",
+    "openCriticalSafetyEvents",
+    "unreconciledBlockingBatchTasks",
+    "failedBlockingGates",
+    "releaseDecision",
+    "evidence"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "projectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "auditorResult": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INFO", "NOT_REQUIRED"]
+    },
+    "sentinelResult": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INFO", "NOT_REQUIRED"]
+    },
+    "wardenResult": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INFO", "NOT_REQUIRED"]
+    },
+    "openCriticalSafetyEvents": {
+      "type": "number",
+      "minimum": 0
+    },
+    "unreconciledBlockingBatchTasks": {
+      "type": "number",
+      "minimum": 0
+    },
+    "failedBlockingGates": {
+      "type": "number",
+      "minimum": 0
+    },
+    "releaseDecision": {
+      "type": "string",
+      "enum": ["GO", "NO_GO", "BLOCKED"]
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "type": "string" }
+    },
+    "notes": {
+      "type": "string"
+    },
+    "decidedAt": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "skill-result",
+  "title": "Skill Result",
+  "description": "Typed result produced by a deterministic skill execution. The unit of gate evidence.",
+  "type": "object",
+  "required": [
+    "result",
+    "issues",
+    "summary"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "result": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INFO"]
+    },
+    "issues": {
+      "type": "array",
+      "minItems": 0,
+      "items": {
+        "type": "object",
+        "required": ["severity", "message"],
+        "additionalProperties": false,
+        "properties": {
+          "severity": {
+            "type": "string",
+            "enum": ["error", "warning", "info"]
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "type": "number"
+          },
+          "message": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "type": "string" }
+    },
+    "reportPath": {
+      "type": "string"
+    },
+    "command": {
+      "type": "string"
+    },
+    "startedAt": {
+      "type": "string"
+    },
+    "finishedAt": {
+      "type": "string"
+    },
+    "durationMs": {
+      "type": "number",
+      "minimum": 0
+    }
+  }
+}

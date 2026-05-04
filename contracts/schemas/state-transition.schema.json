@@ -1,0 +1,53 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "state-transition",
+  "title": "State Transition",
+  "description": "Typed record of a proposed state transition. The state machine validates and commits these; agents may not commit transitions directly.",
+  "type": "object",
+  "required": [
+    "entityType",
+    "entityId",
+    "from",
+    "to",
+    "requestedBy",
+    "evidence",
+    "reason",
+    "createdAt"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "entityType": {
+      "type": "string",
+      "enum": ["task", "gate", "release"]
+    },
+    "entityId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "from": {
+      "type": "string",
+      "minLength": 1
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "requestedBy": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 0,
+      "items": { "type": "string" }
+    },
+    "reason": {
+      "type": "string",
+      "minLength": 1
+    },
+    "createdAt": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

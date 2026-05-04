@@ -1,0 +1,48 @@
+import { validateSchema } from './validateSchema.js';
+
+const schema = {
+  type: 'object',
+  required: [
+    'id',
+    'contractVersion',
+    'projectId',
+    'sourceAgent',
+    'targetAgent',
+    'taskType',
+    'objective',
+    'allowedFiles',
+    'forbiddenFiles',
+    'inputs',
+    'acceptanceCriteria',
+    'requiredSkills',
+    'riskLevel',
+    'blocking',
+    'dependsOn',
+    'parentTaskId',
+    'createdAt',
+  ],
+  additionalProperties: false,
+  properties: {
+    id:               { type: 'string', minLength: 1 },
+    contractVersion:  { type: 'string', minLength: 1 },
+    projectId:        { type: 'string', minLength: 1 },
+    sourceAgent:      { type: 'string', minLength: 1 },
+    targetAgent:      { type: 'string', minLength: 1 },
+    taskType:         { type: 'string', minLength: 1 },
+    objective:        { type: 'string', minLength: 1 },
+    allowedFiles:     { type: 'array', minItems: 0, items: { type: 'string' } },
+    forbiddenFiles:   { type: 'array', minItems: 0, items: { type: 'string' } },
+    inputs:           { type: 'object' },
+    acceptanceCriteria: { type: 'array', minItems: 1, items: { type: 'string' } },
+    requiredSkills:   { type: 'array', minItems: 0, items: { type: 'string' } },
+    riskLevel:        { type: 'string', enum: ['low', 'medium', 'high', 'critical'] },
+    blocking:         { type: 'boolean' },
+    dependsOn:        { type: 'array', minItems: 0, items: { type: 'string' } },
+    parentTaskId:     { type: ['string', 'null'] },
+    createdAt:        { type: 'string', minLength: 1 },
+  },
+};
+
+export function validateTaskContract(data) {
+  return validateSchema(data, schema);
+}
