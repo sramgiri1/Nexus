@@ -149,6 +149,31 @@ npm run check:contracts
 
 ---
 
+## Schema Valid ≠ Transition Allowed
+
+A state-transition contract that passes schema validation is not guaranteed to be allowed by the state machine. Schema validation checks shape — required fields, types, enum values. The state machine checks meaning — whether the transition is permitted given who is requesting it, what evidence exists, and what the current lifecycle rules are.
+
+Example: this contract is schema-valid:
+
+```json
+{
+  "entityType": "task",
+  "entityId": "task-001",
+  "from": "running",
+  "to": "completed",
+  "requestedBy": "core",
+  "evidence": [],
+  "reason": "implementation finished",
+  "createdAt": "2026-05-03T11:00:00Z"
+}
+```
+
+It is state-machine-blocked: `core` is a worker, and workers cannot transition a task directly to `completed`. Completion requires verification-plane sign-off.
+
+See [state-machine/STATE_MACHINE.md](../state-machine/STATE_MACHINE.md) for the full state machine rules.
+
+---
+
 ## Migration Note
 
-This contracts layer is documentation and schema validation only. It does not yet block invalid contracts at queue write time — that integration happens in Phase 3 (loop.js + tools integration). The contracts define the target shape; `check-contracts.js` verifies the validators work correctly.
+This contracts layer is documentation and schema validation only. It does not yet block invalid contracts at queue write time — that integration happens in a future phase. The contracts define the target shape; `check-contracts.js` verifies the validators work correctly.

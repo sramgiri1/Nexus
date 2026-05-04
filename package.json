@@ -22,7 +22,8 @@
     "batch:poll:openai": "node scripts/batch-poll-openai.js",
     "batch:reconcile:openai": "node scripts/batch-reconcile-openai.js",
     "check:openai-batch": "node scripts/check-openai-batch.js",
-    "check:contracts": "node scripts/check-contracts.js"
+    "check:contracts": "node scripts/check-contracts.js",
+    "check:state-machine": "node scripts/check-state-machine.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

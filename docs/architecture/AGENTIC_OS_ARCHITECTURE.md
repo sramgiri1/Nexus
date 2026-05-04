@@ -289,6 +289,12 @@ An agent that writes `"status": "completed"` to a task is proposing a transition
 
 This is the structural reason why workers cannot mark final completion directly.
 
+### Schema Valid ≠ Transition Allowed
+
+The contracts layer and the state machine layer enforce different things. A state-transition contract that is schema-valid (all required fields present, types correct) can still be state-machine-blocked. Example: a contract with `from: running, to: completed, requestedBy: core` passes schema validation but is blocked by the state machine because `core` is a worker and workers cannot self-certify completion.
+
+See [state-machine/STATE_MACHINE.md](../../state-machine/STATE_MACHINE.md) for the full state machine specification, all lifecycle diagrams, and forbidden transition tables.
+
 ---
 
 ## 7. Governor Owns Permission
