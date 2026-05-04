@@ -4,9 +4,66 @@
 
 ---
 
+## What NEXUS Is
+
+NEXUS is an agentic operating system for turning founder intent into verified software delivery.
+
+It is not 20 agents chatting. It is an OS with:
+
+- **Control plane** — NEXUS + SHEPHERD + governor + scheduler + state machine + memory
+- **Execution plane** — domain agents that produce artifacts within typed contracts
+- **Verification plane** — AUDITOR + SENTINEL + WARDEN running deterministic skills
+- **Observability plane** — hooks, RELAY, safety events, cost tracking, batch lifecycle
+- **Contracts** — typed task and handoff contracts; no work moves without one
+- **State machine** — agents propose transitions; the state machine commits them
+- **Skills** — deterministic procedures that run real tools; gates are not prompts
+- **Hooks** — lifecycle enforcement at every transition point
+- **Governor** — single authorization point for every sensitive action
+- **Memory** — typed evidence store; every gate pass produces a file artifact
+- **Model router** — routes each task to the lowest-cost capable model
+- **Batch queue** — async batch for non-blocking work; isolated from real-time gates
+
+**High-level flow:**
+
+```text
+Founder intent
+  → NEXUS decision
+  → SHEPHERD execution plan
+  → typed task contracts
+  → domain agents (execution plane)
+  → deterministic skills (verification plane)
+  → state machine gate commit
+  → NEXUS release decision
+```
+
+> *Intent in. Verified execution out.*
+
+---
+
+## Why NEXUS Is Not Agentic Soup
+
+Loose multi-agent systems degenerate into agentic soup: vague handoffs, unclear ownership, agents self-certifying their own work, untyped memory, and enforcement that exists only in documentation.
+
+NEXUS prevents this structurally:
+
+- **No free-form handoffs** — every delegation is a typed handoff contract with scope, skills, and acceptance criteria
+- **No unbounded task spawning** — permission tiers enforce who can enqueue for whom; queue size cap is 50
+- **No self-certified completion** — the agent that builds the work cannot gate the work; verifiers are a separate plane
+- **No batch gates** — batch output is async and deferred; it cannot satisfy synchronous gate evidence requirements
+- **No direct unsafe actions** — the governor authorizes every file write, task enqueue, skill invocation, and LLM call before execution
+- **No code release without evidence** — a release decision requires AUDITOR + SENTINEL + WARDEN gate reports as artifacts
+- **No prompt-only enforcement** — every policy has a runtime guard in `safety/governor.js`; documentation alone is not enforcement
+
+See [`docs/architecture/AGENTIC_OS_ARCHITECTURE.md`](docs/architecture/AGENTIC_OS_ARCHITECTURE.md) for the full architecture.
+See [`docs/prd/NEXUS_AGENTIC_OS_PRD.md`](docs/prd/NEXUS_AGENTIC_OS_PRD.md) for the product requirements.
+See [`docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md`](docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md) for plane definitions.
+See [`docs/architecture/NEXUS_OS_GLOSSARY.md`](docs/architecture/NEXUS_OS_GLOSSARY.md) for term definitions.
+
+---
+
 ## Architecture
 
-```
+```text
 FOUNDER
   ↓
 NEXUS  (Decision Engine — DECIDE)
@@ -37,7 +94,7 @@ Every sensitive action — file writes, task enqueues, skill invocations, LLM ca
 
 ## File Structure
 
-```
+```text
 nexus/
 ├── CLAUDE.md                    ← Claude Code reads this first
 │
@@ -144,11 +201,11 @@ nexus/
 
 ### Verification — Global Blocking Gates
 
-| Agent        | Layer  | Skills                                                                           |
-|--------------|--------|----------------------------------------------------------------------------------|
-| **AUDITOR**  | VERIFY | `code.lint` `code.static_analysis` `code.test_coverage` `code.diff_review`       |
-| **SENTINEL** | VERIFY | `qa.simulator.run` `qa.tests.execute` `qa.logs.analyze` `qa.security.scan`        |
-| **WARDEN**   | VERIFY | `compliance.privacy.check` `compliance.permissions.validate` `compliance.appstore.check` |
+| Agent | Layer | Skills |
+| --- | --- | --- |
+| **AUDITOR** | VERIFY | `code.lint` `code.static_analysis` `code.test_coverage` `code.diff_review` |
+| **SENTINEL** | VERIFY | `qa.simulator.run` `qa.tests.execute` `qa.logs.analyze` `qa.security.scan` |
+| **WARDEN** | VERIFY | `compliance.privacy.check` `compliance.permissions.validate` `compliance.appstore.check` |
 
 Verifier agents can only write to their own report paths (`reports/<agent>/`) and project QA/compliance subdirectories. They are blocked from writing to `src/`, `app/`, `lib/`, and all system directories.
 
@@ -172,7 +229,7 @@ Verifier agents can only write to their own report paths (`reports/<agent>/`) an
 
 Every sprint auto-inserts verification gates between the build phase and the QA docs phase. All task enqueues during auto-heal pass through the safety governor.
 
-```
+```text
 Phase 2:   CORE + SWIFT  ← build in parallel (Claude Sonnet)
   ↓
 Phase 2.1: AUDITOR gate  ← 4 skills run in parallel (no Claude)
@@ -198,7 +255,7 @@ All sensitive actions are intercepted by `safety/governor.js` before executing.
 ### What is enforced
 
 | Action | Guards |
-|--------|--------|
+| --- | --- |
 | `write_file` tool | Path-traversal check + secret scan + verifier path restrictions |
 | `enqueue_task` tool | Permission tier + self-enqueue block + circular-handoff block + queue size cap (50) |
 | `run_skill` tool | Skill ownership — agent can only invoke skills it owns |
@@ -210,7 +267,7 @@ All sensitive actions are intercepted by `safety/governor.js` before executing.
 ### Permission tiers
 
 | Tier | Agents | Can enqueue for |
-|------|--------|-----------------|
+| --- | --- | --- |
 | ORCHESTRATOR | nexus, loop | anyone |
 | SHEPHERD | shepherd | all engineering agents |
 | STRATEGY | atlas, radar, meridian, prism, beacon, compass, oracle | nexus only |
@@ -308,7 +365,7 @@ npm run skill orchestrator flow.monitor
 
 ## How the Loop Works
 
-```
+```text
 1.  sprint.js enqueues tasks in phases with dependsOn wiring + gate skill tasks
 2.  loop.js polls task-queue.json every 10s (file watcher triggers instantly)
 3.  For each runnable task (dependsOn satisfied):
@@ -337,20 +394,20 @@ Every verification agent (AUDITOR, SENTINEL, WARDEN) uses `run_skill` via the to
 
 ## MCP-Style Tools
 
-| Tool                  | What It Does                                                       |
-|-----------------------|--------------------------------------------------------------------|
-| `read_memory`         | Read any memory JSON file                                          |
-| `write_memory`        | Write/merge into a memory JSON file (safety-events and system-usage are write-protected) |
-| `update_agent_status` | Update agent status, task, progress                                |
-| `enqueue_task`        | Add a task to the queue — governor checks tier + queue size (≤ 50) |
-| `read_project`        | Read a project from portfolio.json                                 |
-| `update_project`      | Update project fields (stage, gate, score...)                      |
-| `update_gate`         | Update a single gate status for a project                          |
-| `read_file`           | Read a file from projects/                                         |
-| `write_file`          | Write a file to projects/ — governor checks scope + secrets        |
-| `list_files`          | List files in a projects/ directory                                |
-| `log_event`           | Append to agent's activity log                                     |
-| `run_skill`           | Execute a real skill — governor checks skill ownership             |
+| Tool | What It Does |
+| --- | --- |
+| `read_memory` | Read any memory JSON file |
+| `write_memory` | Write/merge into a memory JSON file (safety-events and system-usage are write-protected) |
+| `update_agent_status` | Update agent status, task, progress |
+| `enqueue_task` | Add a task to the queue — governor checks tier + queue size (≤ 50) |
+| `read_project` | Read a project from portfolio.json |
+| `update_project` | Update project fields (stage, gate, score...) |
+| `update_gate` | Update a single gate status for a project |
+| `read_file` | Read a file from projects/ |
+| `write_file` | Write a file to projects/ — governor checks scope + secrets |
+| `list_files` | List files in a projects/ directory |
+| `log_event` | Append to agent's activity log |
+| `run_skill` | Execute a real skill — governor checks skill ownership |
 
 ---
 
