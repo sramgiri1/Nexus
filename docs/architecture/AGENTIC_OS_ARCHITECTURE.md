@@ -7,7 +7,7 @@
 
 ## Core Principle
 
-```
+```text
 Domains own authority.
 Agents own judgment.
 Contracts own delegation.
@@ -82,7 +82,7 @@ Domain ownership is enforced at two levels:
 
 ## 2. Agents Own Judgment
 
-### Definition
+### What Agents Are
 
 Agents are reasoning units that operate within defined role boundaries. An agent's job is to interpret intent, make decisions within its scope, propose artifacts, and request state transitions. An agent does not own truth — it proposes truth to the state machine.
 
@@ -113,7 +113,7 @@ An agent that builds an API route has good judgment about whether that route is 
 
 ## 3. Contracts Own Delegation
 
-### Definition
+### What Contracts Are
 
 No work moves between agents without a typed contract. A contract is a structured object that specifies what work is being delegated, to whom, under what constraints, and with what acceptance criteria. Without a contract, there is no delegation.
 
@@ -178,7 +178,7 @@ Contracts convert intention into specification. They are the interface between a
 
 ## 4. Skills Own Execution
 
-### Definition
+### What Skills Are
 
 Skills are deterministic Node.js procedures that run real tools — ESLint, SwiftLint, xcodebuild, xcrun, grep — and return typed results. Skills do not use Claude. Skills do not reason about results. Skills run and return `PASS`, `FAIL`, or `INFO`.
 
@@ -233,7 +233,7 @@ Skills write full output to `reports/<agent>/`. The structured result is used fo
 
 ## 5. Hooks Own Lifecycle Enforcement
 
-### Definition
+### What Hooks Are
 
 Hooks are observer functions that fire at defined lifecycle transition points. They do not replace agents — they enforce transitions that agents cannot self-authorize. Hooks record evidence, prevent invalid transitions, and maintain audit continuity.
 
@@ -262,13 +262,13 @@ Hook handlers must be fast. Hooks execute synchronously in the loop before the n
 
 ## 6. State Machines Own Truth
 
-### Definition
+### What the State Machine Does
 
 The state machine is the authoritative record of task, gate, and project state. Agents propose state transitions. The state machine validates and commits them. A state that has not been committed by the state machine does not exist — regardless of what any agent has written to chat or to a file.
 
 ### Task State Lifecycle
 
-```
+```text
 queued → running → completed → verified → released
 ```
 
@@ -299,7 +299,7 @@ See [state-machine/STATE_MACHINE.md](../../state-machine/STATE_MACHINE.md) for t
 
 ## 7. Governor Owns Permission
 
-### Definition
+### What the Governor Does
 
 The governor is the single authorization point for all sensitive actions. It runs before every tool execution. It cannot be bypassed by any agent at any tier.
 
@@ -337,7 +337,7 @@ This is what makes NEXUS enforceable rather than merely documented.
 
 ## 8. Memory Owns Evidence
 
-### Definition
+### What Memory Is
 
 Memory is the typed state store and evidence database. Every significant action produces a record. Every gate pass produces an artifact. Every decision can be traced to a file. Memory is not a cache. It is not a conversation transcript. It is the audit trail.
 
@@ -380,7 +380,7 @@ The release decision is not a conclusion in a chat thread. It is a structured ar
 
 ## System Diagram
 
-```
+```text
 ┌─────────────────────────────────────────────────────────────┐
 │  FOUNDER INTENT                                             │
 │  npm run sprint N  |  npm run agent nexus "..."             │
@@ -422,3 +422,39 @@ The release decision is not a conclusion in a chat thread. It is a structured ar
 ```
 
 All planes share the governor as their single authorization point. All planes share memory as the evidence store. No plane can bypass either.
+
+---
+
+## 9. Agent Enablement Layer
+
+### Why It Exists
+
+The contracts layer, state machine layer, and governor define what the OS enforces. The agent enablement layer defines what each agent must understand in order to operate correctly within that enforcement.
+
+Contracts and state machine rules exist as code. But agents are LLM-based processes — they must be explicitly taught to read contracts, propose state transitions rather than commit them, route to the correct model, defer batch work, attach evidence, and produce well-formed handoffs. Without shared standards, agents drift: they claim completion without evidence, produce vague handoffs, or attempt transitions the state machine will reject.
+
+### What the Enablement Layer Is Not
+
+The agent enablement layer does not change runtime behavior. It does not modify the governor, loop.js, skills, or providers. It is shared documentation that agent system prompts reference and extend.
+
+Individual agents will be retrofitted to reference these standards in a subsequent phase. Until then, the standards define the target behavior — not the current baseline.
+
+### The Standards
+
+Shared standards live in `agents/_shared/`. All 20 agent prompts extend these standards; they do not override them.
+
+| Standard | File | Covers |
+| --- | --- | --- |
+| Operating Standard | `agent-operating-standard.md` | Role discipline, OS process model, "Agents propose. Skills execute. State machines commit." |
+| Contract Usage | `contract-usage-standard.md` | How to read task contracts, produce handoffs, handle missing contracts |
+| State Machine | `state-machine-standard.md` | What each tier may propose, forbidden transitions, lifecycle diagrams |
+| Model Routing | `model-routing-standard.md` | Provider policy, fallback rules, batch eligibility by task type |
+| Batch Usage | `batch-usage-standard.md` | Which tasks are batch-eligible, never-batch list, evidence isolation |
+| Skill Usage | `skill-usage-standard.md` | Mandatory skills, skill-first verification, skill result format |
+| Evidence | `evidence-standard.md` | Evidence types, attachment rules, evidence item shape |
+| Handoff | `handoff-standard.md` | Handoff schema, validity rules, canonical chains |
+| Etiquette | `agent-etiquette.md` | Communication tone, fabrication prohibition, escalation rules |
+
+### Delivery Sequencing
+
+CareLoop parallel execution should not begin until agents have been confirmed as contract-aware, state-machine-aware, model-aware, batch-aware, skill-aware, and evidence-aware. The agent enablement layer is the prerequisite to governed parallel execution — not an optional add-on.

@@ -244,7 +244,45 @@ These constraints are not configurable. They define what NEXUS is.
 
 ---
 
-## 10. Future Considerations (Out of Scope for v1)
+## 10. Agent Enablement Layer
+
+### Status
+
+Contracts layer: **implemented** (`contracts/`)
+State machine layer: **implemented** (`state-machine/`)
+Agent enablement layer: **standards written; individual agent retrofitting in progress**
+
+### Purpose
+
+The contracts layer defines what work looks like. The state machine layer defines what transitions are allowed. The agent enablement layer defines how each agent must behave to operate correctly within those systems.
+
+Without shared standards, agents drift. An agent with no contract awareness may attempt a direct `running -> completed` transition. An agent with no evidence standard may claim a gate passed without attaching skill output. An agent with no batch awareness may route gate verification work to async batch. The enablement layer closes these gaps explicitly.
+
+### What It Is Not
+
+The agent enablement layer does not change runtime behavior. The governor, loop.js, skills, and providers are unchanged. The shared standards in `agents/_shared/` are documentation that agent prompts extend — not runtime code.
+
+### Shared Standards
+
+Nine shared standards are defined in `agents/_shared/`:
+
+- `agent-operating-standard.md` — OS process model, role discipline, the "Agents propose. Skills execute. State machines commit." rule
+- `contract-usage-standard.md` — how to read, validate, and produce contracts
+- `state-machine-standard.md` — per-tier transition expectations, forbidden transitions
+- `model-routing-standard.md` — provider policy, fallback rules, budget awareness
+- `batch-usage-standard.md` — batch-eligible vs never-batch task types, evidence isolation
+- `skill-usage-standard.md` — mandatory skills, skill-first verification, skill result format
+- `evidence-standard.md` — evidence types, attachment rules, release evidence requirements
+- `handoff-standard.md` — handoff schema, validity rules, canonical chains
+- `agent-etiquette.md` — communication tone, fabrication prohibition, blocker resolution
+
+### Delivery Dependency
+
+CareLoop parallel execution (CORE + SWIFT building simultaneously, AUDITOR gate running after, SENTINEL after that) should not begin until agents are confirmed contract-aware and state-machine-aware. The agent enablement layer is a prerequisite to governed parallel execution. Not all 20 agents have been individually retrofitted yet — that is the next phase.
+
+---
+
+## 11. Future Considerations (Out of Scope for v1)
 
 The following are acknowledged as future directions. They are not in scope for the current architecture pass.
 

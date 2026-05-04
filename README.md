@@ -61,6 +61,28 @@ See [`docs/architecture/NEXUS_OS_GLOSSARY.md`](docs/architecture/NEXUS_OS_GLOSSA
 
 ---
 
+## Agent Enablement Layer
+
+Contracts and state machine rules enforce the OS boundaries at runtime. But agents are LLM-based processes — they must be explicitly taught to use those boundaries correctly.
+
+The agent enablement layer is a set of shared standards that every agent must follow:
+
+| Standard | What it covers |
+| --- | --- |
+| [Operating Standard](agents/_shared/agent-operating-standard.md) | OS process model, role discipline, the core rule: *Agents propose. Skills execute. State machines commit. Verifiers certify. NEXUS decides.* |
+| [Contract Usage](agents/_shared/contract-usage-standard.md) | How to read task contracts, produce handoffs, handle invalid or missing contracts |
+| [State Machine](agents/_shared/state-machine-standard.md) | What each tier may propose, forbidden transitions, per-lifecycle diagrams |
+| [Model Routing](agents/_shared/model-routing-standard.md) | Provider policy, fallback rules, task type → execution mode mapping |
+| [Batch Usage](agents/_shared/batch-usage-standard.md) | Batch-eligible tasks, never-batch list, gate isolation |
+| [Skill Usage](agents/_shared/skill-usage-standard.md) | Mandatory skills, skill-first verification, result format |
+| [Evidence](agents/_shared/evidence-standard.md) | Evidence types, attachment rules, release evidence requirements |
+| [Handoff](agents/_shared/handoff-standard.md) | Handoff schema, validity rules, canonical chains |
+| [Etiquette](agents/_shared/agent-etiquette.md) | Communication tone, fabrication prohibition, blocker resolution |
+
+**Current status:** Standards written. Individual agent retrofitting is in progress — not all 20 agents have been confirmed contract- and state-machine-aware yet. CareLoop full parallel execution should not begin until agents have been individually validated against these standards.
+
+---
+
 ## Architecture
 
 ```text
