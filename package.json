@@ -23,7 +23,8 @@
     "batch:reconcile:openai": "node scripts/batch-reconcile-openai.js",
     "check:openai-batch": "node scripts/check-openai-batch.js",
     "check:contracts": "node scripts/check-contracts.js",
-    "check:state-machine": "node scripts/check-state-machine.js"
+    "check:state-machine": "node scripts/check-state-machine.js",
+    "check:agent-os-readiness": "node scripts/check-agent-os-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
