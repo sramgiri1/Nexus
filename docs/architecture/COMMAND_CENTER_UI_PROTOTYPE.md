@@ -41,6 +41,12 @@ The visual language is dark, dense, enterprise-oriented, and evidence-first by d
 
 This prototype uses mock data only.
 
+Static data source files:
+
+- `dashboard/src/data/studio.js`
+- `dashboard/src/hooks/useStudioData.js`
+- `dashboard/src/pages/CommandCenter.jsx`
+
 Static includes:
 
 - project state
@@ -56,6 +62,7 @@ Static includes:
 - demo mode concepts
 
 The dashboard does not call a backend or live NEXUS runtime in this phase.
+It does not read runtime memory files, a database, or a live API in this phase.
 
 ---
 
@@ -93,6 +100,8 @@ The prototype shows the surfaces that later map to:
 - `COMMAND_CENTER_UI.md`
 - `NEXUS_API_ARCHITECTURE.md`
 - `NEXUS_DATABASE_ARCHITECTURE.md`
+- `DATA_PROTECTION_AND_PII.md`
+- `DATABASE_AGENT_SECURITY.md`
 - execution runtime and evidence architecture docs
 
 It intentionally avoids bypassing the kernel by not wiring any state-changing behavior directly into the page.

@@ -25,7 +25,8 @@
     "check:contracts": "node scripts/check-contracts.js",
     "check:state-machine": "node scripts/check-state-machine.js",
     "check:agent-os-readiness": "node scripts/check-agent-os-readiness.js",
-    "check:agent-context": "node scripts/check-agent-context.js"
+    "check:agent-context": "node scripts/check-agent-context.js",
+    "check:data-protection": "node scripts/check-data-protection.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

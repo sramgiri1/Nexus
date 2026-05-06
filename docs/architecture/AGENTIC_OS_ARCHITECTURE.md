@@ -302,9 +302,22 @@ See:
 - [`COMMAND_CENTER_UI.md`](COMMAND_CENTER_UI.md)
 - [`NEXUS_API_ARCHITECTURE.md`](NEXUS_API_ARCHITECTURE.md)
 - [`NEXUS_DATABASE_ARCHITECTURE.md`](NEXUS_DATABASE_ARCHITECTURE.md)
+- [`DATA_PROTECTION_AND_PII.md`](DATA_PROTECTION_AND_PII.md)
+- [`DATABASE_AGENT_SECURITY.md`](DATABASE_AGENT_SECURITY.md)
 - [`NEXUS_PLATFORM_ROADMAP.md`](NEXUS_PLATFORM_ROADMAP.md)
 
-Phase 7 defines the operator platform architecture only. It does not implement UI, API, or DB runtime changes. Phase 7A adds a static Command Center prototype in `dashboard/` so the operator surface can be reviewed visually before API, DB, and runtime integration work begins.
+Phase 7 defines the operator platform architecture only. It does not implement UI, API,
+or DB runtime changes. Phase 7A adds a static Command Center prototype in `dashboard/`
+so the operator surface can be reviewed visually before API, DB, and runtime integration
+work begins.
+
+Data protection is a separate OS boundary. Classification, redaction, scanning, provider
+policy, hook checks, and audit must mediate anything that touches personal information,
+DB results, logs, evidence, or batch payloads. Batch and OpenRouter are restricted to
+`public` or `internal` data by default. Future DB-agent behavior must route through safe
+DB gateway tools and safe views, never raw unrestricted access. This phase defines that
+policy, documentation, and validation surface only; it does not implement runtime
+enforcement yet.
 
 ---
 

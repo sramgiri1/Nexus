@@ -1,0 +1,63 @@
+{
+  "version": "1.0",
+  "defaultAccess": "deny",
+  "productionAccessDefault": "deny",
+  "auditRequired": true,
+  "allowedAgents": [
+    "core",
+    "stream",
+    "oracle",
+    "forge",
+    "warden",
+    "nexus"
+  ],
+  "allowedTools": [
+    "db.read_schema",
+    "db.read_safe_summary",
+    "db.run_safe_query",
+    "db.create_migration_plan",
+    "db.audit_table_access",
+    "db.request_approval"
+  ],
+  "approvalRequiredActions": [
+    "production_query",
+    "bulk_export",
+    "user_table_access",
+    "schema_migration",
+    "destructive_sql",
+    "production_data_sampling",
+    "secrets_env_access"
+  ],
+  "neverAllowedFields": [
+    "password",
+    "passwordHash",
+    "token",
+    "refreshToken",
+    "accessToken",
+    "apiKey",
+    "secret",
+    "privateKey",
+    "dbUrl",
+    "connectionString",
+    "session"
+  ],
+  "neverAllowedPatterns": [
+    "select\\s+\\*\\s+from\\s+users",
+    "drop\\s+table",
+    "truncate\\s+table",
+    "alter\\s+table\\s+.*drop",
+    "copy\\s+.*to\\s+stdout",
+    "pg_read_file",
+    "information_schema\\.role_",
+    "pg_catalog\\.pg_auth"
+  ],
+  "maxRowsDefault": 100,
+  "safeViews": [
+    "safe_users",
+    "safe_projects",
+    "safe_tasks",
+    "safe_evidence_summary",
+    "safe_model_usage",
+    "safe_agent_runs"
+  ]
+}

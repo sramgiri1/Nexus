@@ -71,6 +71,32 @@ This phase does not add Prisma or migrations. It defines the durable architectur
 - JSON memory remains export or debug format during migration.
 - Task leases and worker heartbeats are future durable execution work.
 - Data protection phase must happen before DB contains personal information.
+- Batch and OpenRouter are restricted to `public` or `internal` data by default.
+- Future DB agents must use a DB gateway and safe views, never raw unrestricted access.
+- Obsidian is not runtime memory.
+
+---
+
+## Data Protection Boundary
+
+Before DB mirror mode or DB primary mode contains personal information, NEXUS must have:
+
+- classification policy
+- redaction flow
+- result scanning
+- audit events
+- DB gateway policy
+- safe views
+- approval path for production data access
+
+That means:
+
+- raw DB rows must not go to LLM context
+- raw DB rows must not go to batch
+- secret values must never be stored raw
+- confidential or restricted DB outputs must be summarized or redacted before leaving the DB boundary
+
+This phase defines that protection model in docs and validation only. It does not implement DB enforcement yet.
 
 ---
 

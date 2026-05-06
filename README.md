@@ -59,6 +59,7 @@ See [`docs/prd/NEXUS_AGENTIC_OS_PRD.md`](docs/prd/NEXUS_AGENTIC_OS_PRD.md) for t
 See [`docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md`](docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md) for plane definitions.
 See [`docs/architecture/NEXUS_OS_GLOSSARY.md`](docs/architecture/NEXUS_OS_GLOSSARY.md) for term definitions.
 See [`docs/architecture/COMMAND_CENTER_UI.md`](docs/architecture/COMMAND_CENTER_UI.md), [`docs/architecture/NEXUS_API_ARCHITECTURE.md`](docs/architecture/NEXUS_API_ARCHITECTURE.md), and [`docs/architecture/NEXUS_DATABASE_ARCHITECTURE.md`](docs/architecture/NEXUS_DATABASE_ARCHITECTURE.md) for the planned operator platform.
+See [`docs/architecture/DATA_PROTECTION_AND_PII.md`](docs/architecture/DATA_PROTECTION_AND_PII.md) and [`docs/architecture/DATABASE_AGENT_SECURITY.md`](docs/architecture/DATABASE_AGENT_SECURITY.md) for the Phase 8 data-protection boundary.
 
 ---
 
@@ -80,7 +81,7 @@ The agent enablement layer is a set of shared standards that every agent must fo
 | [Handoff](agents/_shared/handoff-standard.md) | Handoff schema, validity rules, canonical chains |
 | [Etiquette](agents/_shared/agent-etiquette.md) | Communication tone, fabrication prohibition, blocker resolution |
 
-**Current status:** Shared standards are in place, all 20 agents have been retrofitted, the agent OS readiness checker passes, and the task-context adapter exists. The next layer is operator platform architecture: Command Center, API boundary, runtime evidence flow, and later durable database-backed state.
+**Current status:** Shared standards are in place, all 20 agents have been retrofitted, the agent OS readiness checker passes, the task-context adapter exists, and the Command Center prototype is static-data-only. The next layer is operator platform hardening: data protection, DB gateway policy, and later durable database-backed state.
 
 ---
 
@@ -143,7 +144,7 @@ Command Center UI
   → JSON memory now / PostgreSQL later
 ```
 
-The UI, API, and durable database are not implemented yet. JSON memory remains the runtime source of truth today. PostgreSQL is planned later for durable state. Read-only demo and investor modes are also planned later. Obsidian is not runtime memory; it is only for optional human planning notes.
+The UI, API, and durable database are not implemented yet. JSON memory remains the runtime source of truth today. PostgreSQL is planned later for durable state. Read-only demo and investor modes are also planned later. Obsidian is not runtime memory; it is only for optional human planning notes. Data protection must be implemented before DB mirror or DB primary mode contains personal information. Batch and OpenRouter are restricted to `public` or `internal` data by default.
 
 ---
 
@@ -530,7 +531,13 @@ NEXUS uses [AGENTS.md](AGENTS.md) for Codex and repo-level operating rules. Loca
 
 ## Command Center Prototype
 
-A static Command Center prototype now exists in [`dashboard/`](dashboard/) as the first visual operator console for the NEXUS Agentic OS. It is a UI-only prototype for Mission Control, agents, tasks, gates, evidence, runtime, cost, safety, approvals, release control, and demo mode. It is not wired to API, DB, auth, or runtime dispatch yet.
+A static Command Center prototype now exists in [`dashboard/`](dashboard/) as the first visual operator console for the NEXUS Agentic OS. It is a UI-only prototype for Mission Control, agents, tasks, gates, evidence, runtime, cost, safety, approvals, release control, and demo mode. It is not wired to API, DB, auth, or runtime dispatch yet. The prototype currently uses static data from `dashboard/src/data/studio.js` and `dashboard/src/hooks/useStudioData.js`.
+
+---
+
+## Data Protection
+
+Phase 8 defines the classification, redaction, scan, policy, hook, and audit model for personal information, logs, evidence, model context, batch payloads, and future DB-agent behavior. It does not implement runtime DB enforcement yet. DB agents must later use safe gateway tools and safe views, never raw unrestricted access.
 
 ---
 

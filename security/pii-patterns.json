@@ -1,0 +1,117 @@
+{
+  "version": "1.0",
+  "patterns": [
+    {
+      "name": "email",
+      "description": "Email address",
+      "regex": "\\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\\.[A-Z]{2,}\\b",
+      "severity": "high",
+      "replacement": "[REDACTED_EMAIL]"
+    },
+    {
+      "name": "phone",
+      "description": "Phone number with optional country code",
+      "regex": "(?:\\+?\\d{1,3}[\\s.-]?)?(?:\\(?\\d{3}\\)?[\\s.-]?)\\d{3}[\\s.-]?\\d{4}",
+      "severity": "high",
+      "replacement": "[REDACTED_PHONE]"
+    },
+    {
+      "name": "ssn",
+      "description": "US Social Security number",
+      "regex": "\\b\\d{3}-\\d{2}-\\d{4}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_SSN]"
+    },
+    {
+      "name": "credit_card",
+      "description": "Payment card-like 13 to 19 digit pattern",
+      "regex": "\\b(?:\\d[ -]*?){13,19}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_CARD]"
+    },
+    {
+      "name": "jwt",
+      "description": "JWT token shape",
+      "regex": "\\beyJ[A-Za-z0-9_-]+\\.[A-Za-z0-9._-]+\\.[A-Za-z0-9._-]+\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_JWT]"
+    },
+    {
+      "name": "api_key",
+      "description": "Generic API key assignment",
+      "regex": "(?i)api[_-]?key\\s*[:=]\\s*['\\\"]?[A-Za-z0-9_\\-]{12,}['\\\"]?",
+      "severity": "critical",
+      "replacement": "[REDACTED_SECRET]"
+    },
+    {
+      "name": "private_key",
+      "description": "PEM private key block",
+      "regex": "-----BEGIN(?: RSA| EC| OPENSSH)? PRIVATE KEY-----[\\s\\S]+?-----END(?: RSA| EC| OPENSSH)? PRIVATE KEY-----",
+      "severity": "critical",
+      "replacement": "[REDACTED_PRIVATE_KEY]"
+    },
+    {
+      "name": "db_url",
+      "description": "Database connection URL",
+      "regex": "\\b(?:postgres(?:ql)?|mysql|mongodb(?:\\+srv)?|redis):\\/\\/[^\\s'\\\"]+",
+      "severity": "critical",
+      "replacement": "[REDACTED_DB_URL]"
+    },
+    {
+      "name": "password_like_key",
+      "description": "Password-like assignment key",
+      "regex": "(?i)(?:password|passwd|pwd)\\s*[:=]\\s*['\\\"]?[^\\s'\\\"]+['\\\"]?",
+      "severity": "critical",
+      "replacement": "[REDACTED_PASSWORD]"
+    },
+    {
+      "name": "refresh_token",
+      "description": "Refresh token assignment",
+      "regex": "(?i)refresh[_-]?token\\s*[:=]\\s*['\\\"]?[A-Za-z0-9._\\-]{12,}['\\\"]?",
+      "severity": "critical",
+      "replacement": "[REDACTED_REFRESH_TOKEN]"
+    },
+    {
+      "name": "access_token",
+      "description": "Access token assignment",
+      "regex": "(?i)access[_-]?token\\s*[:=]\\s*['\\\"]?[A-Za-z0-9._\\-]{12,}['\\\"]?",
+      "severity": "critical",
+      "replacement": "[REDACTED_ACCESS_TOKEN]"
+    },
+    {
+      "name": "session_token",
+      "description": "Session token assignment",
+      "regex": "(?i)session[_-]?token\\s*[:=]\\s*['\\\"]?[A-Za-z0-9._\\-]{12,}['\\\"]?",
+      "severity": "critical",
+      "replacement": "[REDACTED_SESSION_TOKEN]"
+    },
+    {
+      "name": "aws_access_key",
+      "description": "AWS access key ID",
+      "regex": "\\bAKIA[0-9A-Z]{16}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_AWS_ACCESS_KEY]"
+    },
+    {
+      "name": "openai_key",
+      "description": "OpenAI API key",
+      "regex": "\\bsk-[A-Za-z0-9]{20,}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_OPENAI_KEY]"
+    },
+    {
+      "name": "anthropic_key",
+      "description": "Anthropic API key",
+      "regex": "\\bsk-ant-[A-Za-z0-9_-]{20,}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_ANTHROPIC_KEY]"
+    },
+    {
+      "name": "github_token",
+      "description": "GitHub personal or fine-grained token",
+      "regex": "\\b(?:ghp|github_pat)_[A-Za-z0-9_]{20,}\\b",
+      "severity": "critical",
+      "replacement": "[REDACTED_GITHUB_TOKEN]"
+    }
+  ]
+}

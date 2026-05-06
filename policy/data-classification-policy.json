@@ -1,0 +1,99 @@
+{
+  "version": "1.0",
+  "defaultClass": "internal",
+  "classes": {
+    "public": {
+      "description": "Publicly shareable information such as docs, marketing copy, and non-sensitive demo data."
+    },
+    "internal": {
+      "description": "Internal operational data that is not personal, restricted, or secret."
+    },
+    "confidential": {
+      "description": "Sensitive business or user-adjacent data that requires redaction or approval before model use."
+    },
+    "restricted": {
+      "description": "Raw personal records, production DB rows, session/auth data, and other high-risk content."
+    },
+    "secret": {
+      "description": "Credentials, keys, tokens, passwords, DB URLs, and other secret-bearing material."
+    }
+  },
+  "providerRules": {
+    "openRouter": {
+      "allowedClasses": [
+        "public",
+        "internal"
+      ],
+      "blockedClasses": [
+        "confidential",
+        "restricted",
+        "secret"
+      ],
+      "notes": "OpenRouter is restricted to public/internal data by default."
+    },
+    "directProviders": {
+      "allowedClasses": [
+        "public",
+        "internal"
+      ],
+      "reviewedClasses": [
+        "confidential"
+      ],
+      "blockedClasses": [
+        "restricted",
+        "secret"
+      ],
+      "notes": "Direct OpenAI/Anthropic may receive carefully reviewed confidential data only when task policy allows it."
+    },
+    "llmContextRule": [
+      "classify",
+      "redact",
+      "scan",
+      "approve_or_block"
+    ]
+  },
+  "batchRules": {
+    "allowedClasses": [
+      "public",
+      "internal"
+    ],
+    "blockedClasses": [
+      "confidential",
+      "restricted",
+      "secret"
+    ],
+    "requireTaskPolicy": true,
+    "notes": "Batch is for non-blocking work only and rejects confidential/restricted/secret data by default."
+  },
+  "logRules": {
+    "redactionScanRequired": true,
+    "blockedClassesWithoutRedaction": [
+      "confidential",
+      "restricted",
+      "secret"
+    ],
+    "secretBlocked": true,
+    "notes": "All logs require redaction scan before persistence."
+  },
+  "evidenceRules": {
+    "storeReferencesOrHashes": true,
+    "blockedClasses": [
+      "secret"
+    ],
+    "restrictedBlockedByDefault": true,
+    "confidentialRequiresRedactionOrApproval": true,
+    "notes": "Evidence should reference artifacts rather than persist sensitive blobs."
+  },
+  "uiRules": {
+    "defaultAllowedClasses": [
+      "public",
+      "internal"
+    ],
+    "confidentialRequiresRoleAndRedaction": true,
+    "blockedClassesByDefault": [
+      "restricted",
+      "secret"
+    ],
+    "notes": "UI payloads should expose redacted summaries and evidence references, not sensitive raw content."
+  }
+}
