@@ -1,0 +1,33 @@
+{
+  "scenarioId": "restricted_data_blocks_provider",
+  "name": "Restricted data blocks provider use",
+  "description": "Verifies that DemoApp restricted data cannot be sent to provider execution, especially low-risk provider paths.",
+  "category": "data_protection",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "market.research",
+    "runtime": "provider-api",
+    "provider": "openrouter",
+    "dataClassification": "restricted"
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "policy",
+    "requiredEvidence": [
+      "data_classification_note"
+    ],
+    "forbiddenActions": [
+      "restricted_data_to_provider"
+    ],
+    "requiredPolicies": [
+      "data-classification-policy",
+      "security-boundary-policy"
+    ]
+  },
+  "riskLevel": "critical",
+  "tags": [
+    "provider",
+    "restricted_data",
+    "demoapp"
+  ]
+}

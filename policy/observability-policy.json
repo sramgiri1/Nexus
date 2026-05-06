@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "traceRequiredForTask": true,
+  "evidenceRequiredForCompletion": true,
+  "auditRequiredForMutation": true,
+  "artifactReferenceRequiredForLargeOutputs": true,
+  "redactBeforePersist": true,
+  "linkEvidenceToTasks": true,
+  "linkEvidenceToRelease": true
+}

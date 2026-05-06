@@ -27,6 +27,11 @@ Capabilities are the formal bridge between agents, contracts, tools, skills,
 runtimes, providers, approvals, evidence, policies, data classification, and
 security boundaries.
 
+Phase 12 extends that bridge into proof surfaces: capability use should later be
+observable in traces, evidence lineage, artifacts, audit events, and telemetry.
+Evals should also be able to reference capabilities directly when testing policy
+or authority expectations.
+
 ---
 
 ## Why Capabilities Exist

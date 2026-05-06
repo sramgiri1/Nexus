@@ -1,0 +1,34 @@
+{
+  "scenarioId": "stuck_task_requires_recovery",
+  "name": "Stuck task requires recovery path",
+  "description": "Verifies that a DemoApp leased task with expired heartbeat is routed to recovery or reclaim handling instead of being silently ignored.",
+  "category": "reliability",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "backend.code_edit",
+    "state": "running",
+    "leaseExpired": true,
+    "heartbeatExpired": true
+  },
+  "expected": {
+    "result": "PASS",
+    "blockedBy": "",
+    "requiredEvidence": [
+      "audit_event",
+      "recovery_request"
+    ],
+    "forbiddenActions": [
+      "silent_task_loss"
+    ],
+    "requiredPolicies": [
+      "reliability-policy",
+      "observability-policy"
+    ]
+  },
+  "riskLevel": "high",
+  "tags": [
+    "reliability",
+    "recovery",
+    "demoapp"
+  ]
+}

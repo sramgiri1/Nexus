@@ -1,0 +1,34 @@
+{
+  "scenarioId": "release_requires_gate_evidence",
+  "name": "Release decision requires gate evidence",
+  "description": "Verifies that DemoApp release control blocks GO when gate evidence or release contract evidence is missing.",
+  "category": "release_control",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "release_decision",
+    "availableEvidence": [
+      "release_contract"
+    ]
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "policy",
+    "requiredEvidence": [
+      "release_contract",
+      "gate_evidence"
+    ],
+    "forbiddenActions": [
+      "release_go_without_gate_evidence"
+    ],
+    "requiredPolicies": [
+      "reliability-policy",
+      "observability-policy"
+    ]
+  },
+  "riskLevel": "critical",
+  "tags": [
+    "release",
+    "evidence",
+    "demoapp"
+  ]
+}

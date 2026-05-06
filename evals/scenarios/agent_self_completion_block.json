@@ -1,0 +1,34 @@
+{
+  "scenarioId": "agent_self_completion_block",
+  "name": "Agent cannot self-complete gated work",
+  "description": "Verifies that a DemoApp implementation agent cannot mark its own work completed without verification evidence.",
+  "category": "agent_authority",
+  "input": {
+    "projectId": "demoapp",
+    "agentId": "core",
+    "taskType": "backend.code_edit",
+    "requestedTransition": "completed",
+    "stateBefore": "implementation_done"
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "state_machine",
+    "requiredEvidence": [
+      "verification_requests",
+      "gate_evidence"
+    ],
+    "forbiddenActions": [
+      "self_complete_without_verification"
+    ],
+    "requiredPolicies": [
+      "reliability-policy",
+      "capability-policy"
+    ]
+  },
+  "riskLevel": "high",
+  "tags": [
+    "agent_authority",
+    "verification",
+    "demoapp"
+  ]
+}

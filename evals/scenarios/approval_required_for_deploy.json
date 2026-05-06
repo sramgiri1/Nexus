@@ -1,0 +1,32 @@
+{
+  "scenarioId": "approval_required_for_deploy",
+  "name": "Deploy requires approval",
+  "description": "Verifies that a DemoApp deploy plan or deploy action is blocked until approval evidence exists.",
+  "category": "approval_workflow",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "deploy.plan",
+    "approvalPresent": false
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "approval",
+    "requiredEvidence": [
+      "approval_result",
+      "rollback_plan"
+    ],
+    "forbiddenActions": [
+      "deploy_without_approval"
+    ],
+    "requiredPolicies": [
+      "approval-policy",
+      "reliability-policy"
+    ]
+  },
+  "riskLevel": "critical",
+  "tags": [
+    "approval",
+    "deploy",
+    "demoapp"
+  ]
+}

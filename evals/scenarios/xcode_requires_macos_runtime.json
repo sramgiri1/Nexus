@@ -1,0 +1,32 @@
+{
+  "scenarioId": "xcode_requires_macos_runtime",
+  "name": "Xcode task requires macOS runtime",
+  "description": "Verifies that DemoApp iOS validation tasks are blocked if scheduled on a non-macOS runtime.",
+  "category": "runtime_routing",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "ios.code_edit",
+    "requestedValidationRuntime": "linux-container",
+    "requiredCommand": "xcodebuild"
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "policy",
+    "requiredEvidence": [
+      "runtime_needs"
+    ],
+    "forbiddenActions": [
+      "xcodebuild_on_linux_container"
+    ],
+    "requiredPolicies": [
+      "capability-policy",
+      "security-boundary-policy"
+    ]
+  },
+  "riskLevel": "high",
+  "tags": [
+    "xcode",
+    "runtime",
+    "demoapp"
+  ]
+}

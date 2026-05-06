@@ -1,0 +1,33 @@
+{
+  "scenarioId": "batch_cannot_pass_gate",
+  "name": "Batch output cannot satisfy a gate",
+  "description": "Verifies that DemoApp batch output cannot pass a verification gate or unblock release directly.",
+  "category": "batch_policy",
+  "input": {
+    "projectId": "demoapp",
+    "taskType": "verification_gate",
+    "runtime": "batch-provider",
+    "evidenceType": "batch_output"
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "policy",
+    "requiredEvidence": [
+      "lint_result",
+      "test_result"
+    ],
+    "forbiddenActions": [
+      "gate_pass_from_batch"
+    ],
+    "requiredPolicies": [
+      "capability-policy",
+      "observability-policy"
+    ]
+  },
+  "riskLevel": "high",
+  "tags": [
+    "batch",
+    "gate",
+    "demoapp"
+  ]
+}

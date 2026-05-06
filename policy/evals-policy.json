@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "offlineByDefault": true,
+  "noSecretsInEvals": true,
+  "requiredCategories": [
+    "agent_authority",
+    "verification_gate",
+    "batch_policy",
+    "data_protection",
+    "provider_security",
+    "runtime_routing",
+    "approval_workflow",
+    "capability_policy",
+    "reliability",
+    "release_control"
+  ],
+  "promotionRequiresEvalPass": true,
+  "requiredScenarioCountMinimum": 8,
+  "evalReportRequired": true
+}

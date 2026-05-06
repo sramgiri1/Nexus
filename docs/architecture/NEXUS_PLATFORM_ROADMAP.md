@@ -33,39 +33,41 @@ CareLoop remains parked until the OS foundation and UI direction are clearer.
 - Phase 9 Security boundary
 - Phase 6 Execution runtime and Xcode Runner architecture
 - Phase 10 OS reliability
+- Phase 11 Tooling and capability model
 
 ---
 
 ## Current Phase
 
-### Phase 11 — Tooling and Capability Model
+### Phase 12 — Observability, Evals, Artifacts
 
 Goal:
 
-- formalize the capability bridge between agents, contracts, tools, skills,
-  runtimes, providers, approvals, evidence, and policies
+- make execution quality, proof surfaces, and system behavior measurable
 
 Deliverables:
 
-- capability model architecture
-- capability registry and schema
-- tool and skill governance model
-- capability policy and validation
+- observability architecture
+- trace model
+- eval model and scenarios
+- artifact registry model and examples
+- evidence lineage model
+- telemetry model and validation
 - platform roadmap update
 
 Non-goals:
 
-- no runtime capability enforcement
-- no new MCP servers
-- no new tools or skills
+- no live telemetry exporters
+- no external services
+- no runtime observability enforcement
 - no dispatch changes
 
 Validation checks:
 
-- registry is machine-readable
-- capability policy parses
-- no hidden authority expansion
-- docs stay aligned with runtime, security, approvals, and data protection
+- eval scenarios are machine-readable
+- policies parse
+- artifact and evidence proof surfaces are explicit
+- docs stay aligned with capabilities, reliability, security, and data protection
 
 Risk level:
 

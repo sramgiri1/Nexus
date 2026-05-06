@@ -285,6 +285,12 @@ MCP execution should resolve through a capability check before execution. This
 phase defines the registry and validation model only; it does not implement
 runtime capability enforcement yet.
 
+Phase 12 extends the proof model further with observability, traces, offline
+evals, artifact metadata, telemetry, and evidence lineage. These make artifacts
+and evidence explicit proof surfaces and keep evals offline and deterministic by
+default. This phase defines models, policies, examples, and checks only; it
+does not implement live telemetry exporters or runtime observability pipelines.
+
 See:
 
 - [`EXECUTION_RUNTIME_ARCHITECTURE.md`](EXECUTION_RUNTIME_ARCHITECTURE.md)

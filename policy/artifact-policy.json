@@ -1,0 +1,10 @@
+{
+  "version": "1.0",
+  "requireArtifactId": true,
+  "requireHashWherePossible": true,
+  "requireDataClassification": true,
+  "restrictedNotAllowedInBatch": true,
+  "secretNotAllowedInArtifacts": true,
+  "retentionRequired": true,
+  "largeArtifactsStoredByReference": true
+}

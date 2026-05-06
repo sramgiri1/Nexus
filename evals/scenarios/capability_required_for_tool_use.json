@@ -1,0 +1,33 @@
+{
+  "scenarioId": "capability_required_for_tool_use",
+  "name": "Tool use requires capability",
+  "description": "Verifies that DemoApp tool execution is blocked when no matching capability grants the requested tool action.",
+  "category": "capability_policy",
+  "input": {
+    "projectId": "demoapp",
+    "agentId": "core",
+    "taskType": "backend.code_edit",
+    "requestedTool": "approval.request",
+    "capabilityMatch": false
+  },
+  "expected": {
+    "result": "BLOCKED",
+    "blockedBy": "policy",
+    "requiredEvidence": [
+      "capability_check_result"
+    ],
+    "forbiddenActions": [
+      "tool_use_without_capability"
+    ],
+    "requiredPolicies": [
+      "capability-policy",
+      "security-boundary-policy"
+    ]
+  },
+  "riskLevel": "high",
+  "tags": [
+    "capability",
+    "tool_use",
+    "demoapp"
+  ]
+}

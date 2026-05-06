@@ -38,6 +38,7 @@ What that prototype demonstrates:
 - mission-control layout and hierarchy
 - evidence-first operator posture
 - gate, runtime, approval, and release visibility
+- traces, artifact references, and proof-surface visibility later
 - the intended command bar, navigation, and panel structure
 
 What it does not do yet:
@@ -64,6 +65,9 @@ The prototype is a visual and interaction architecture checkpoint, not the produ
 - risky actions require approval
 - all state-changing actions are audited
 - UI must never mutate DB or memory directly
+- artifacts and evidence are proof surfaces, not decorative attachments
+- evals and telemetry should remain visible later without pretending they are
+  live exporter integrations in this phase
 
 ---
 

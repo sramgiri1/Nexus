@@ -77,6 +77,13 @@ See [`docs/architecture/CAPABILITY_MODEL.md`](docs/architecture/CAPABILITY_MODEL
 [`docs/architecture/CAPABILITY_REGISTRY.md`](docs/architecture/CAPABILITY_REGISTRY.md),
 and [`docs/architecture/TOOL_AND_SKILL_GOVERNANCE.md`](docs/architecture/TOOL_AND_SKILL_GOVERNANCE.md)
 for the Phase 11 capability model and registry.
+See [`docs/architecture/OBSERVABILITY_MODEL.md`](docs/architecture/OBSERVABILITY_MODEL.md),
+[`docs/architecture/TRACE_MODEL.md`](docs/architecture/TRACE_MODEL.md),
+[`docs/architecture/EVALS_MODEL.md`](docs/architecture/EVALS_MODEL.md),
+[`docs/architecture/ARTIFACT_REGISTRY.md`](docs/architecture/ARTIFACT_REGISTRY.md),
+[`docs/architecture/EVIDENCE_LINEAGE.md`](docs/architecture/EVIDENCE_LINEAGE.md),
+and [`docs/architecture/TELEMETRY_MODEL.md`](docs/architecture/TELEMETRY_MODEL.md)
+for the Phase 12 observability, evals, and artifact model.
 
 ---
 
@@ -199,6 +206,15 @@ architecture, registry, policy, and validation only; it does not enforce
 capabilities at runtime yet.
 
 The capability validator is available as `npm run check:capabilities`.
+
+Phase 12 adds the observability model: traces, offline and deterministic evals by
+default, artifact metadata, evidence lineage, and telemetry policy. Artifacts and
+evidence are treated as proof surfaces. This phase adds models, policies, example
+data, and validation only; it does not implement live telemetry exporters or a
+runtime observability pipeline.
+
+The observability validator is available as
+`npm run check:observability-evals-artifacts`.
 
 ---
 

@@ -1,0 +1,158 @@
+{
+  "version": "1.0",
+  "projectId": "demoapp",
+  "artifacts": [
+    {
+      "artifactId": "artifact-lint-report-001",
+      "type": "report",
+      "projectId": "demoapp",
+      "taskId": "task-demo-001",
+      "agentId": "auditor",
+      "runtime": "node-local",
+      "path": "reports/auditor/demoapp-lint-report.md",
+      "hash": "sha256-demoapp-lint-001",
+      "sizeBytes": 4096,
+      "mimeType": "text/markdown",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "90d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-lint-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-test-output-001",
+      "type": "test_output",
+      "projectId": "demoapp",
+      "taskId": "task-demo-002",
+      "agentId": "sentinel",
+      "runtime": "linux-container",
+      "path": "artifacts/demoapp/test-output-001.txt",
+      "hash": "sha256-demoapp-test-001",
+      "sizeBytes": 8192,
+      "mimeType": "text/plain",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "30d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-test-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-simulator-result-001",
+      "type": "screenshot",
+      "projectId": "demoapp",
+      "taskId": "task-demo-003",
+      "agentId": "sentinel",
+      "runtime": "macos-xcode",
+      "path": "artifacts/demoapp/simulator-placeholder-001.png",
+      "hash": "sha256-demoapp-sim-001",
+      "sizeBytes": 2048,
+      "mimeType": "image/png",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "30d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-simulator-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-xcresult-001",
+      "type": "xcresult",
+      "projectId": "demoapp",
+      "taskId": "task-demo-003",
+      "agentId": "sentinel",
+      "runtime": "macos-xcode",
+      "path": "artifacts/demoapp/xcresult-placeholder-001.xcresult",
+      "hash": "sha256-demoapp-xcresult-001",
+      "sizeBytes": 10240,
+      "mimeType": "application/octet-stream",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "30d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-xcresult-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-privacy-report-001",
+      "type": "report",
+      "projectId": "demoapp",
+      "taskId": "task-demo-004",
+      "agentId": "warden",
+      "runtime": "node-local",
+      "path": "reports/warden/demoapp-privacy-report.md",
+      "hash": "sha256-demoapp-privacy-001",
+      "sizeBytes": 3072,
+      "mimeType": "text/markdown",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "90d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-privacy-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-release-contract-001",
+      "type": "release_contract",
+      "projectId": "demoapp",
+      "taskId": "task-demo-005",
+      "agentId": "nexus",
+      "runtime": "provider-api",
+      "path": "artifacts/demoapp/release-contract-001.json",
+      "hash": "sha256-demoapp-release-001",
+      "sizeBytes": 1536,
+      "mimeType": "application/json",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "180d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-release-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-approval-result-001",
+      "type": "approval_result",
+      "projectId": "demoapp",
+      "taskId": "task-demo-006",
+      "agentId": "shepherd",
+      "runtime": "human-approval",
+      "path": "artifacts/demoapp/approval-result-001.json",
+      "hash": "sha256-demoapp-approval-001",
+      "sizeBytes": 1024,
+      "mimeType": "application/json",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "180d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-approval-001"
+      ]
+    },
+    {
+      "artifactId": "artifact-eval-report-001",
+      "type": "eval_report",
+      "projectId": "demoapp",
+      "taskId": "task-demo-007",
+      "agentId": "nexus",
+      "runtime": "node-local",
+      "path": "reports/demoapp-eval-report-001.md",
+      "hash": "sha256-demoapp-eval-001",
+      "sizeBytes": 5120,
+      "mimeType": "text/markdown",
+      "dataClassification": "internal",
+      "redacted": true,
+      "retentionPolicy": "90d",
+      "createdAt": "2026-05-06T00:00:00.000Z",
+      "linkedEvidenceIds": [
+        "evidence-eval-001"
+      ]
+    }
+  ]
+}

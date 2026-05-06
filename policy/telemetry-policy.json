@@ -1,0 +1,11 @@
+{
+  "version": "1.0",
+  "costTrackingRequired": true,
+  "providerUsageTrackingRequired": true,
+  "agentMetricsRequired": true,
+  "runtimeMetricsRequired": true,
+  "gateMetricsRequired": true,
+  "safetyMetricsRequired": true,
+  "noRawSecrets": true,
+  "aggregateSensitiveData": true
+}

@@ -30,7 +30,8 @@
     "check:format-readability": "node scripts/check-format-readability.js",
     "check:security-boundary": "node scripts/check-security-boundary.js",
     "check:os-reliability": "node scripts/check-os-reliability.js",
-    "check:capabilities": "node scripts/check-capabilities.js"
+    "check:capabilities": "node scripts/check-capabilities.js",
+    "check:observability-evals-artifacts": "node scripts/check-observability-evals-artifacts.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
