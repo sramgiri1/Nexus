@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "approvalRequiredActions": [
+    "deploy",
+    "secrets_env_change",
+    "ci_cd_change",
+    "infrastructure_change",
+    "migration",
+    "destructive_sql",
+    "production_data_access",
+    "external_data_export",
+    "new_mcp_server",
+    "new_provider",
+    "dependency_install",
+    "release_go",
+    "failed_gate_waiver",
+    "rollback_from_final_state",
+    "high_cost_budget_override"
+  ],
+  "approvalResultStates": [
+    "approved",
+    "rejected",
+    "expired"
+  ],
+  "approvalExpiryRequired": true,
+  "selfApprovalAllowed": false,
+  "auditRequired": true
+}

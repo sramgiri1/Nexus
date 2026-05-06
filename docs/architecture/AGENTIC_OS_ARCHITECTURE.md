@@ -267,12 +267,24 @@ Two principles follow from this:
 
 Runtime selection must happen before scheduling, because verifier evidence is only valid if it comes from a runtime that can actually perform the work.
 
+The runtime model now also has a documented security boundary: sandbox rules,
+default-deny network posture, secret handling, provider controls, MCP lifecycle,
+and human approvals. Phase 9 adds the policy and validation model for those layers
+only. It does not implement runtime enforcement yet.
+
 See:
 
 - [`EXECUTION_RUNTIME_ARCHITECTURE.md`](EXECUTION_RUNTIME_ARCHITECTURE.md)
 - [`XCODE_RUNNER_ARCHITECTURE.md`](XCODE_RUNNER_ARCHITECTURE.md)
 - [`SKILL_RUNTIME_MAPPING.md`](SKILL_RUNTIME_MAPPING.md)
 - [`EXECUTION_EVIDENCE_MODEL.md`](EXECUTION_EVIDENCE_MODEL.md)
+- [`SECURITY_BOUNDARY.md`](SECURITY_BOUNDARY.md)
+- [`RUNTIME_SANDBOX_MODEL.md`](RUNTIME_SANDBOX_MODEL.md)
+- [`NETWORK_SECURITY_MODEL.md`](NETWORK_SECURITY_MODEL.md)
+- [`SECRET_BOUNDARY.md`](SECRET_BOUNDARY.md)
+- [`MCP_SECURITY_MODEL.md`](MCP_SECURITY_MODEL.md)
+- [`HUMAN_APPROVAL_WORKFLOW.md`](HUMAN_APPROVAL_WORKFLOW.md)
+- [`PROVIDER_SECURITY_MODEL.md`](PROVIDER_SECURITY_MODEL.md)
 
 ---
 
@@ -321,6 +333,10 @@ DB results, logs, evidence, or batch payloads. Batch and OpenRouter are restrict
 DB gateway tools and safe views, never raw unrestricted access. This phase defines that
 policy, documentation, and validation surface only; it does not implement runtime
 enforcement yet.
+
+Phase 9 extends that boundary with default-deny network rules, secret boundary rules,
+MCP lifecycle controls, provider safety, runtime sandbox assumptions, and human
+approval workflow policy.
 
 ---
 

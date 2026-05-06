@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "defaultEgress": "deny",
+  "allowedProviderClasses": [
+    "direct_openai",
+    "direct_anthropic",
+    "openrouter",
+    "batch_openai",
+    "batch_anthropic",
+    "local_ollama"
+  ],
+  "blockedDestinations": [
+    "unknown_domains",
+    "random_webhooks",
+    "raw_database_hosts",
+    "arbitrary_curl_wget",
+    "file_upload_endpoints",
+    "public_pastebins",
+    "unapproved_telemetry_endpoints",
+    "exfiltration_destinations"
+  ],
+  "approvalRequiredNetworkActions": [
+    "new_provider",
+    "new_mcp_server",
+    "new_webhook",
+    "external_upload",
+    "dependency_install",
+    "production_network_access",
+    "ci_cd_integration"
+  ],
+  "openRouterAllowedDataClasses": [
+    "public",
+    "internal"
+  ]
+}

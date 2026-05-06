@@ -32,6 +32,14 @@ Personal or sensitive data must never leak through:
 
 This phase defines the policy, architecture, and validation model only. It does not implement runtime enforcement yet.
 
+The data protection model is part of the wider security boundary:
+
+- default-deny network posture
+- default-deny MCP posture
+- secret boundary by reference only
+- classify, redact, and scan before provider, batch, log, evidence, or UI flow
+- human approval for production data access and related high-risk actions
+
 ---
 
 ## Data Classes
@@ -218,6 +226,9 @@ Local runtime and deterministic tooling may inspect more than remote providers, 
 - avoid logging restricted or secret content
 - persist only redacted evidence
 
+Provider and network restrictions do not imply that local models are automatically
+safe for secrets. Classification, redaction, scanning, and audit still apply.
+
 ---
 
 ## Database Data Rule
@@ -257,6 +268,9 @@ The current Command Center prototype uses static mock data only.
 ---
 
 ## Memory and Notes
+
+Obsidian is not runtime memory. Runtime memory remains JSON now and will move to
+PostgreSQL later through governed API and kernel paths.
 
 Obsidian is not runtime memory.
 

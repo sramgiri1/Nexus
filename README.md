@@ -65,6 +65,14 @@ for the planned operator platform.
 See [`docs/architecture/DATA_PROTECTION_AND_PII.md`](docs/architecture/DATA_PROTECTION_AND_PII.md)
 and [`docs/architecture/DATABASE_AGENT_SECURITY.md`](docs/architecture/DATABASE_AGENT_SECURITY.md)
 for the Phase 8 data-protection boundary.
+See [`docs/architecture/SECURITY_BOUNDARY.md`](docs/architecture/SECURITY_BOUNDARY.md),
+[`docs/architecture/RUNTIME_SANDBOX_MODEL.md`](docs/architecture/RUNTIME_SANDBOX_MODEL.md),
+[`docs/architecture/NETWORK_SECURITY_MODEL.md`](docs/architecture/NETWORK_SECURITY_MODEL.md),
+[`docs/architecture/SECRET_BOUNDARY.md`](docs/architecture/SECRET_BOUNDARY.md),
+[`docs/architecture/MCP_SECURITY_MODEL.md`](docs/architecture/MCP_SECURITY_MODEL.md),
+[`docs/architecture/HUMAN_APPROVAL_WORKFLOW.md`](docs/architecture/HUMAN_APPROVAL_WORKFLOW.md),
+and [`docs/architecture/PROVIDER_SECURITY_MODEL.md`](docs/architecture/PROVIDER_SECURITY_MODEL.md)
+for the Phase 9 security boundary.
 
 ---
 
@@ -138,6 +146,10 @@ validation. These runtimes produce evidence that future state transitions and re
 decisions will consume. This phase defines the architecture only; it does not implement
 the Xcode Runner yet.
 
+Phase 9 adds the security boundary model across runtime sandboxing, network egress,
+secret handling, MCP lifecycle, provider routing safety, and human approvals. These
+are documentation, policy, and validation artifacts only in the current phase.
+
 See:
 
 - [`docs/architecture/EXECUTION_RUNTIME_ARCHITECTURE.md`](docs/architecture/EXECUTION_RUNTIME_ARCHITECTURE.md)
@@ -162,6 +174,14 @@ demo and investor modes are also planned later. Obsidian is not runtime memory; 
 only for optional human planning notes. Data protection must be implemented before DB
 mirror or DB primary mode contains personal information. Batch and OpenRouter are
 restricted to `public` or `internal` data by default.
+
+Security posture for the operator platform is default deny by design:
+
+- network and MCP access require explicit approval and scoping
+- secrets are referenced by name only
+- UI actions flow through API, governor, contracts, and state machine
+- provider payloads must be classified, redacted, and scanned
+- approvals do not replace verification evidence
 
 ---
 

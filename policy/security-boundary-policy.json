@@ -1,0 +1,43 @@
+{
+  "version": "1.0",
+  "defaultAction": "deny",
+  "layers": [
+    "human_operator",
+    "ui_api",
+    "agent",
+    "tool_skill",
+    "runtime",
+    "network",
+    "secret",
+    "data",
+    "approval",
+    "audit"
+  ],
+  "blockedActions": [
+    "bypass_governor",
+    "bypass_contracts",
+    "bypass_state_machine",
+    "self_approve_risky_action",
+    "raw_secret_exposure",
+    "unreviewed_mcp_enablement",
+    "unapproved_network_egress",
+    "raw_db_rows_to_llm",
+    "raw_db_rows_to_batch",
+    "release_without_evidence"
+  ],
+  "approvalRequiredActions": [
+    "production_deploy",
+    "secrets_env_change",
+    "ci_cd_change",
+    "infrastructure_change",
+    "database_migration",
+    "destructive_operation",
+    "production_data_access",
+    "new_mcp_server",
+    "new_provider",
+    "external_data_export",
+    "failed_gate_waiver",
+    "high_cost_override"
+  ],
+  "auditRequired": true
+}

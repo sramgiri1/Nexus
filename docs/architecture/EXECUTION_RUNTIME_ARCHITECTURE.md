@@ -246,6 +246,15 @@ Future runtime integration should separate three questions before execution:
 
 That means runtime selection is not just an implementation detail. It is part of the execution contract.
 
+Runtime selection is also part of the security boundary. A runtime is only valid if:
+
+- the task is allowed there
+- the command family is allowed there
+- the path boundary is allowed there
+- data classification is allowed there
+- network and provider policy are allowed there
+- approval exists when required
+
 ---
 
 ## Architecture Boundaries
@@ -258,6 +267,9 @@ This document does not:
 - modify `orchestrator/runner.js`
 - implement linux workers
 - implement the macOS Xcode Runner
+- implement sandbox enforcement
+- implement live network controls
+- implement live approval gates
 - add Dockerfiles
 - add MCP servers
 - change state-machine behavior

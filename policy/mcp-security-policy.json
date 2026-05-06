@@ -1,0 +1,42 @@
+{
+  "version": "1.0",
+  "defaultMcpAccess": "deny",
+  "lifecycleStates": [
+    "proposed",
+    "security_reviewed",
+    "capability_scoped",
+    "approved",
+    "enabled",
+    "monitored",
+    "disabled",
+    "revoked"
+  ],
+  "requiredRegistrationFields": [
+    "serverId",
+    "purpose",
+    "owner",
+    "allowedAgents",
+    "allowedTools",
+    "allowedDomains",
+    "dataClassesAllowed",
+    "secretsRequired",
+    "approvalRequired",
+    "networkAccess",
+    "auditLevel",
+    "riskLevel"
+  ],
+  "blockedMcpCapabilities": [
+    "broad_filesystem_access",
+    "hidden_network_egress",
+    "secret_access_without_approval",
+    "restricted_data_by_default",
+    "governor_bypass",
+    "contract_bypass",
+    "state_machine_bypass"
+  ],
+  "allowedDataClassesDefault": [
+    "public",
+    "internal"
+  ],
+  "auditRequired": true
+}

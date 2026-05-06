@@ -32,6 +32,8 @@ This API is not implemented in this phase.
 - API uses correlation IDs.
 - state-changing endpoints support idempotency keys.
 - API supports read-only investor or demo mode later.
+- API follows the Phase 9 security boundary and default-deny posture.
+- API must honor data classification, redaction, and approval rules.
 
 ---
 
@@ -191,6 +193,7 @@ The API is not the state machine. It is the boundary that invokes the state mach
 - mutations always audited
 - risky mutations require approval
 - release decisions require evidence
+- network, MCP, and provider use remain policy-scoped and default deny until approved
 
 Additional rules:
 
@@ -227,3 +230,7 @@ This phase does not:
 - change JSON memory
 
 It defines the future mutation boundary and the operator-to-kernel flow.
+
+Phase 9 adds policy references for security boundary layers, secret handling,
+sandbox runtime assumptions, provider safety, and human approvals. These remain
+architecture and validation artifacts only in the current phase.

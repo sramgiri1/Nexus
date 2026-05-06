@@ -23,6 +23,7 @@ const javascriptFiles = [
   "scripts/check-agent-context.js",
   "scripts/check-data-protection.js",
   "scripts/check-format-readability.js",
+  "scripts/check-security-boundary.js",
   "orchestrator/agentContext.js",
   "dashboard/src/data/studio.js",
   "dashboard/src/hooks/useStudioData.js",
@@ -33,6 +34,11 @@ const javascriptFiles = [
 const jsonFiles = [
   "policy/data-classification-policy.json",
   "policy/database-access-policy.json",
+  "policy/security-boundary-policy.json",
+  "policy/network-policy.json",
+  "policy/secret-boundary-policy.json",
+  "policy/mcp-security-policy.json",
+  "policy/approval-policy.json",
   "security/pii-patterns.json",
 ];
 
