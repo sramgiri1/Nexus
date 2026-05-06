@@ -19,6 +19,11 @@ exceptions.
 This phase defines the security architecture, policies, and validation model only.
 It does not implement runtime enforcement yet.
 
+Phase 11 extends this posture with a machine-readable capability model. That
+registry does not replace the governor, contracts, or state machine. It adds an
+explicit authorization layer that future runtime integration can consult before
+tool, provider, runtime, or MCP execution.
+
 ---
 
 ## Security Layers
@@ -51,6 +56,8 @@ It does not implement runtime enforcement yet.
 - tools enforce allowed paths and policy boundaries
 - tools emit evidence
 - tool outputs are classified and redacted before persistence or LLM context reuse
+- future tool, skill, provider, and MCP requests should also require a declared
+  capability from the capability registry
 
 ### 5. Runtime Boundary
 

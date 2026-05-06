@@ -14,6 +14,11 @@ NEXUS must know where a task can safely run before scheduling it.
 
 This document defines the execution runtimes that future runtime integration will target without changing dispatch behavior in this phase.
 
+Phase 11 adds capability declarations on top of these runtimes. Future runtime
+selection should check not just task type and policy, but also whether the
+agent's capability allows the runtime, tools, skills, provider, data class, and
+approval path involved.
+
 ---
 
 ## Runtime Catalog

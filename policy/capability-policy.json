@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "defaultCapabilityAccess": "deny",
+  "requireCapabilityForToolUse": true,
+  "requireCapabilityForSkillUse": true,
+  "requireCapabilityForProviderUse": true,
+  "requireCapabilityForMcpUse": true,
+  "requireEvidenceForCapabilityResult": true,
+  "requireApprovalForHighRisk": true,
+  "requireDataClassification": true,
+  "requireRuntimeDeclaration": true,
+  "requireOwnerAgent": true,
+  "batchCannotPassGates": true,
+  "mcpDefaultAllowed": false,
+  "secretDataAllowedInCapabilities": false,
+  "auditRequired": true
+}

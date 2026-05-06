@@ -23,7 +23,9 @@ const javascriptFiles = [
   "scripts/check-agent-context.js",
   "scripts/check-data-protection.js",
   "scripts/check-format-readability.js",
+  "scripts/check-os-reliability.js",
   "scripts/check-security-boundary.js",
+  "scripts/check-capabilities.js",
   "orchestrator/agentContext.js",
   "dashboard/src/data/studio.js",
   "dashboard/src/hooks/useStudioData.js",
@@ -39,6 +41,12 @@ const jsonFiles = [
   "policy/secret-boundary-policy.json",
   "policy/mcp-security-policy.json",
   "policy/approval-policy.json",
+  "policy/reliability-policy.json",
+  "policy/retry-policy.json",
+  "policy/incident-policy.json",
+  "policy/capability-policy.json",
+  "capabilities/schema.json",
+  "capabilities/registry.json",
   "security/pii-patterns.json",
 ];
 

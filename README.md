@@ -73,6 +73,10 @@ See [`docs/architecture/SECURITY_BOUNDARY.md`](docs/architecture/SECURITY_BOUNDA
 [`docs/architecture/HUMAN_APPROVAL_WORKFLOW.md`](docs/architecture/HUMAN_APPROVAL_WORKFLOW.md),
 and [`docs/architecture/PROVIDER_SECURITY_MODEL.md`](docs/architecture/PROVIDER_SECURITY_MODEL.md)
 for the Phase 9 security boundary.
+See [`docs/architecture/CAPABILITY_MODEL.md`](docs/architecture/CAPABILITY_MODEL.md),
+[`docs/architecture/CAPABILITY_REGISTRY.md`](docs/architecture/CAPABILITY_REGISTRY.md),
+and [`docs/architecture/TOOL_AND_SKILL_GOVERNANCE.md`](docs/architecture/TOOL_AND_SKILL_GOVERNANCE.md)
+for the Phase 11 capability model and registry.
 
 ---
 
@@ -187,6 +191,14 @@ Security posture for the operator platform is default deny by design:
 Phase 10 adds the reliability architecture across durable execution, leases,
 heartbeats, retries, dead-letter handling, recovery, rollback, and incidents. These
 are documentation, policy, and validation artifacts only in the current phase.
+
+Phase 11 adds the capability model that bridges agents, contracts, tools, skills,
+runtimes, providers, approvals, evidence, and policies. Every future tool, skill,
+provider, or MCP action is expected to require a capability. This phase adds
+architecture, registry, policy, and validation only; it does not enforce
+capabilities at runtime yet.
+
+The capability validator is available as `npm run check:capabilities`.
 
 ---
 

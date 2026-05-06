@@ -1,0 +1,208 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/capabilities/schema.json",
+  "title": "NEXUS Capability Registry",
+  "type": "object",
+  "required": [
+    "version",
+    "capabilities"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": {
+      "type": "string"
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "capabilityId",
+          "name",
+          "description",
+          "ownerAgent",
+          "allowedAgents",
+          "agentGroups",
+          "contractTypes",
+          "taskTypes",
+          "tools",
+          "skills",
+          "runtimes",
+          "providers",
+          "dataClassesAllowed",
+          "approvalRequired",
+          "approvalTypes",
+          "evidenceRequired",
+          "policies",
+          "riskLevel",
+          "blockingAllowed",
+          "batchEligible",
+          "mcpAllowed",
+          "status"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "capabilityId": {
+            "type": "string",
+            "minLength": 1
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 1
+          },
+          "ownerAgent": {
+            "type": "string",
+            "minLength": 1
+          },
+          "allowedAgents": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "agentGroups": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "contractTypes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "taskTypes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "tools": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "skills": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "runtimes": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "node-local",
+                "linux-container",
+                "macos-xcode",
+                "provider-api",
+                "batch-provider",
+                "mcp-server",
+                "human-approval"
+              ]
+            }
+          },
+          "providers": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "direct_openai",
+                "direct_anthropic",
+                "openrouter",
+                "local_ollama",
+                "batch_openai",
+                "batch_anthropic",
+                "none"
+              ]
+            }
+          },
+          "dataClassesAllowed": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "enum": [
+                "public",
+                "internal",
+                "confidential",
+                "restricted",
+                "secret"
+              ]
+            }
+          },
+          "approvalRequired": {
+            "type": "boolean"
+          },
+          "approvalTypes": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidenceRequired": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "policies": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "riskLevel": {
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "high",
+              "critical"
+            ]
+          },
+          "blockingAllowed": {
+            "type": "boolean"
+          },
+          "batchEligible": {
+            "type": "boolean"
+          },
+          "mcpAllowed": {
+            "type": "boolean"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "proposed",
+              "reviewed",
+              "approved",
+              "enabled",
+              "deprecated",
+              "disabled"
+            ]
+          }
+        }
+      }
+    }
+  }
+}

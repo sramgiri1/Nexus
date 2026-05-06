@@ -1,0 +1,1457 @@
+{
+  "version": "1.0",
+  "capabilities": [
+    {
+      "capabilityId": "control.read_system_state",
+      "name": "Read system state",
+      "description": "Read consolidated OS state snapshots for control and orchestration decisions.",
+      "ownerAgent": "nexus",
+      "allowedAgents": [
+        "nexus",
+        "shepherd"
+      ],
+      "agentGroups": [
+        "control"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "control.read_state"
+      ],
+      "tools": [
+        "memory.read",
+        "evidence.write"
+      ],
+      "skills": [
+        "nexus.read.system_state"
+      ],
+      "runtimes": [
+        "node-local"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "system_state_snapshot"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "low",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "control.decide_release",
+      "name": "Decide release",
+      "description": "Make the release decision using gate evidence and release contract inputs.",
+      "ownerAgent": "nexus",
+      "allowedAgents": [
+        "nexus"
+      ],
+      "agentGroups": [
+        "control"
+      ],
+      "contractTypes": [
+        "release_contract"
+      ],
+      "taskTypes": [
+        "release_decision"
+      ],
+      "tools": [
+        "skill.run",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [
+        "nexus.decide.release"
+      ],
+      "runtimes": [
+        "provider-api"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "release_decision_result",
+        "release_contract",
+        "gate_evidence"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "critical",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "orchestration.plan_flow",
+      "name": "Plan flow",
+      "description": "Turn founder or control intent into task contracts and handoff structure.",
+      "ownerAgent": "shepherd",
+      "allowedAgents": [
+        "shepherd"
+      ],
+      "agentGroups": [
+        "control"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "taskTypes": [
+        "orchestration.plan"
+      ],
+      "tools": [
+        "contract.validate",
+        "queue.enqueue",
+        "evidence.write"
+      ],
+      "skills": [
+        "orchestrator.flow.plan"
+      ],
+      "runtimes": [
+        "node-local",
+        "provider-api"
+      ],
+      "providers": [
+        "none",
+        "direct_openai",
+        "direct_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "plan_result",
+        "task_contracts",
+        "handoff_contracts"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "orchestration.dispatch_task",
+      "name": "Dispatch task",
+      "description": "Dispatch validated tasks into the queue with dependency and state linkage.",
+      "ownerAgent": "shepherd",
+      "allowedAgents": [
+        "shepherd"
+      ],
+      "agentGroups": [
+        "control"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "taskTypes": [
+        "orchestration.dispatch"
+      ],
+      "tools": [
+        "queue.enqueue",
+        "contract.validate",
+        "state.request_transition",
+        "evidence.write"
+      ],
+      "skills": [
+        "orchestrator.flow.dispatch"
+      ],
+      "runtimes": [
+        "node-local"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "dispatch_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "verification.code_quality_gate",
+      "name": "Code quality gate",
+      "description": "Run deterministic code-quality verification for backend, web, or iOS changes.",
+      "ownerAgent": "auditor",
+      "allowedAgents": [
+        "auditor"
+      ],
+      "agentGroups": [
+        "verification"
+      ],
+      "contractTypes": [
+        "verification_contract"
+      ],
+      "taskTypes": [
+        "verification_gate"
+      ],
+      "tools": [
+        "repo.read",
+        "skill.run",
+        "evidence.write"
+      ],
+      "skills": [
+        "auditor.code.lint",
+        "auditor.code.static_analysis",
+        "auditor.code.test_coverage",
+        "auditor.code.diff_review"
+      ],
+      "runtimes": [
+        "node-local",
+        "linux-container",
+        "macos-xcode"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "lint_result",
+        "static_analysis_result",
+        "test_coverage_result",
+        "diff_review_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "verification.qa_gate",
+      "name": "QA gate",
+      "description": "Run deterministic QA, simulator, log, and security-scan checks for gated execution.",
+      "ownerAgent": "sentinel",
+      "allowedAgents": [
+        "sentinel"
+      ],
+      "agentGroups": [
+        "verification"
+      ],
+      "contractTypes": [
+        "verification_contract"
+      ],
+      "taskTypes": [
+        "verification_gate"
+      ],
+      "tools": [
+        "repo.read",
+        "skill.run",
+        "evidence.write"
+      ],
+      "skills": [
+        "sentinel.qa.simulator.run",
+        "sentinel.qa.tests.execute",
+        "sentinel.qa.logs.analyze",
+        "sentinel.qa.security.scan"
+      ],
+      "runtimes": [
+        "node-local",
+        "linux-container",
+        "macos-xcode"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "test_result",
+        "simulator_result",
+        "log_analysis_result",
+        "security_scan_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "verification.compliance_gate",
+      "name": "Compliance gate",
+      "description": "Run privacy, permissions, and App Store compliance checks under WARDEN scope.",
+      "ownerAgent": "warden",
+      "allowedAgents": [
+        "warden"
+      ],
+      "agentGroups": [
+        "verification"
+      ],
+      "contractTypes": [
+        "verification_contract"
+      ],
+      "taskTypes": [
+        "verification_gate"
+      ],
+      "tools": [
+        "repo.read",
+        "skill.run",
+        "evidence.write"
+      ],
+      "skills": [
+        "warden.compliance.privacy.check",
+        "warden.compliance.permissions.validate",
+        "warden.compliance.appstore.check"
+      ],
+      "runtimes": [
+        "node-local",
+        "provider-api",
+        "macos-xcode"
+      ],
+      "providers": [
+        "none",
+        "direct_openai",
+        "direct_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "privacy_check_result",
+        "permissions_validation_result",
+        "appstore_policy_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "secret-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "implementation.backend_code",
+      "name": "Backend implementation",
+      "description": "Implement backend code changes within contract-scoped file boundaries.",
+      "ownerAgent": "core",
+      "allowedAgents": [
+        "core"
+      ],
+      "agentGroups": [
+        "product"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "backend.code_edit"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "skill.run",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "linux-container"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "verification_requests"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "implementation.ios_code",
+      "name": "iOS implementation",
+      "description": "Implement iOS changes and validate them through the macOS Xcode runtime where required.",
+      "ownerAgent": "swift",
+      "allowedAgents": [
+        "swift"
+      ],
+      "agentGroups": [
+        "product"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "ios.code_edit"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "skill.run",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "macos-xcode"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "runtime_needs",
+        "verification_requests",
+        "xcresult"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "implementation.web_dashboard",
+      "name": "Web and dashboard implementation",
+      "description": "Implement web or dashboard code changes with contract-scoped repo access.",
+      "ownerAgent": "pixel",
+      "allowedAgents": [
+        "pixel"
+      ],
+      "agentGroups": [
+        "product"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "web.code_edit"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "skill.run",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "linux-container"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "ui_state_notes",
+        "verification_requests"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "implementation.static_content",
+      "name": "Static content and landing artifacts",
+      "description": "Create static content artifacts and non-blocking content variants with review hooks where required.",
+      "ownerAgent": "canvas",
+      "allowedAgents": [
+        "canvas"
+      ],
+      "agentGroups": [
+        "product"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "static.content_artifact"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "none",
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "content_artifact_summary",
+        "warden_review_request"
+      ],
+      "policies": [
+        "capability-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "network-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "platform.deploy_plan",
+      "name": "Deployment planning",
+      "description": "Prepare deploy readiness and rollback evidence under explicit approval scope.",
+      "ownerAgent": "forge",
+      "allowedAgents": [
+        "forge"
+      ],
+      "agentGroups": [
+        "platform"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "approval_contract"
+      ],
+      "taskTypes": [
+        "deploy.plan"
+      ],
+      "tools": [
+        "repo.read",
+        "approval.request",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "human-approval"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": true,
+      "approvalTypes": [
+        "deploy_approval"
+      ],
+      "evidenceRequired": [
+        "deployment_readiness_report",
+        "rollback_plan",
+        "approval_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "security-boundary-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "critical",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "platform.secrets_change_request",
+      "name": "Secrets change request",
+      "description": "Request a secret or environment change without exposing raw secret values.",
+      "ownerAgent": "forge",
+      "allowedAgents": [
+        "forge"
+      ],
+      "agentGroups": [
+        "platform"
+      ],
+      "contractTypes": [
+        "approval_contract"
+      ],
+      "taskTypes": [
+        "secrets_change"
+      ],
+      "tools": [
+        "approval.request",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "human-approval"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "internal"
+      ],
+      "approvalRequired": true,
+      "approvalTypes": [
+        "secrets_change_approval"
+      ],
+      "evidenceRequired": [
+        "approval_result",
+        "secrets_change_request_without_values"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "secret-boundary-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "critical",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "platform.data_pipeline",
+      "name": "Data pipeline work",
+      "description": "Plan or implement pipeline work with explicit data classification and verification linkage.",
+      "ownerAgent": "stream",
+      "allowedAgents": [
+        "stream"
+      ],
+      "agentGroups": [
+        "platform"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "data.pipeline"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "skill.run",
+        "evidence.write",
+        "approval.request"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "linux-container"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "approvalRequired": true,
+      "approvalTypes": [
+        "production_data_access"
+      ],
+      "evidenceRequired": [
+        "data_classification_note",
+        "pipeline_summary",
+        "verification_requests"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "data-classification-policy",
+        "database-access-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "platform.ai_integration",
+      "name": "AI integration work",
+      "description": "Integrate approved providers and AI execution boundaries with policy and verification notes.",
+      "ownerAgent": "synapse",
+      "allowedAgents": [
+        "synapse"
+      ],
+      "agentGroups": [
+        "platform"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "approval_contract"
+      ],
+      "taskTypes": [
+        "ai.integration"
+      ],
+      "tools": [
+        "repo.read",
+        "repo.write",
+        "provider.realtime",
+        "approval.request",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "provider-api"
+      ],
+      "providers": [
+        "none",
+        "direct_openai",
+        "direct_anthropic",
+        "local_ollama"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": true,
+      "approvalTypes": [
+        "new_provider",
+        "new_tool",
+        "new_mcp_server"
+      ],
+      "evidenceRequired": [
+        "provider_policy_note",
+        "data_classification_note",
+        "verification_requests"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "security-boundary-policy",
+        "network-policy",
+        "data-classification-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "strategy.market_research",
+      "name": "Market research",
+      "description": "Produce market summaries and research artifacts for public or internal non-blocking work.",
+      "ownerAgent": "radar",
+      "allowedAgents": [
+        "radar"
+      ],
+      "agentGroups": [
+        "strategy"
+      ],
+      "contractTypes": [
+        "research_contract",
+        "task_contract"
+      ],
+      "taskTypes": [
+        "market.research"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "source_summary",
+        "data_classification_note"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "strategy.business_model",
+      "name": "Business model strategy",
+      "description": "Generate business strategy, pricing, and narrative variants within public or internal scope.",
+      "ownerAgent": "meridian",
+      "allowedAgents": [
+        "meridian"
+      ],
+      "agentGroups": [
+        "strategy"
+      ],
+      "contractTypes": [
+        "strategy_contract",
+        "task_contract"
+      ],
+      "taskTypes": [
+        "business.strategy"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "assumptions",
+        "source_summary"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "observability.feedback_triage",
+      "name": "Feedback triage",
+      "description": "Cluster and summarize redacted feedback into actionable observability artifacts.",
+      "ownerAgent": "relay",
+      "allowedAgents": [
+        "relay"
+      ],
+      "agentGroups": [
+        "observability"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "feedback_contract"
+      ],
+      "taskTypes": [
+        "feedback.triage"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "redaction_note",
+        "feedback_summary"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "growth.marketing_copy",
+      "name": "Marketing copy",
+      "description": "Produce marketing and demo copy variants inside public or internal scope.",
+      "ownerAgent": "beacon",
+      "allowedAgents": [
+        "beacon"
+      ],
+      "agentGroups": [
+        "growth"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "marketing_contract"
+      ],
+      "taskTypes": [
+        "marketing.copy"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "claim_checklist",
+        "required_review"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "growth.aso_seo_keywords",
+      "name": "ASO and SEO keywords",
+      "description": "Generate discoverability research and keyword variants under low-risk provider scope.",
+      "ownerAgent": "compass",
+      "allowedAgents": [
+        "compass"
+      ],
+      "agentGroups": [
+        "growth"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "discoverability_contract"
+      ],
+      "taskTypes": [
+        "discoverability.keywords"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "direct_openai",
+        "direct_anthropic",
+        "openrouter",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "source_notes",
+        "required_review"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "medium",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "growth.analytics_schema",
+      "name": "Analytics schema strategy",
+      "description": "Define analytics schema and measurement artifacts with privacy review linkage.",
+      "ownerAgent": "oracle",
+      "allowedAgents": [
+        "oracle"
+      ],
+      "agentGroups": [
+        "growth"
+      ],
+      "contractTypes": [
+        "analytics_contract",
+        "task_contract"
+      ],
+      "taskTypes": [
+        "analytics.schema"
+      ],
+      "tools": [
+        "provider.realtime",
+        "batch.submit",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "provider-api",
+        "batch-provider"
+      ],
+      "providers": [
+        "none",
+        "direct_openai",
+        "direct_anthropic",
+        "batch_openai",
+        "batch_anthropic"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "data_classification_note",
+        "privacy_review_request"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "network-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": true,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "data.safe_db_summary",
+      "name": "Safe database summary",
+      "description": "Obtain approved safe database summaries through a future gateway with redaction and audit.",
+      "ownerAgent": "future_db_agent",
+      "allowedAgents": [
+        "future_db_agent",
+        "warden",
+        "stream",
+        "oracle"
+      ],
+      "agentGroups": [
+        "verification",
+        "platform",
+        "growth"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "approval_contract"
+      ],
+      "taskTypes": [
+        "database.safe_summary"
+      ],
+      "tools": [
+        "database.read_safe_summary",
+        "approval.request",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local",
+        "human-approval"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "approvalRequired": true,
+      "approvalTypes": [
+        "production_data_access"
+      ],
+      "evidenceRequired": [
+        "audit_event",
+        "redaction_note",
+        "data_classification_note"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "data-classification-policy",
+        "database-access-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "approved"
+    },
+    {
+      "capabilityId": "security.secret_scan",
+      "name": "Secret scan",
+      "description": "Scan artifacts for secret patterns without exposing raw values in evidence or logs.",
+      "ownerAgent": "warden",
+      "allowedAgents": [
+        "warden",
+        "forge",
+        "auditor"
+      ],
+      "agentGroups": [
+        "verification",
+        "platform"
+      ],
+      "contractTypes": [
+        "task_contract",
+        "verification_contract"
+      ],
+      "taskTypes": [
+        "security.secret_scan"
+      ],
+      "tools": [
+        "repo.read",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential",
+        "restricted"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "secret_scan_result"
+      ],
+      "policies": [
+        "capability-policy",
+        "secret-boundary-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "approval.request",
+      "name": "Request approval",
+      "description": "Create a scoped human approval request with linked evidence and expiry metadata.",
+      "ownerAgent": "shepherd",
+      "allowedAgents": [
+        "shepherd",
+        "forge",
+        "stream",
+        "synapse",
+        "nexus"
+      ],
+      "agentGroups": [
+        "control",
+        "platform"
+      ],
+      "contractTypes": [
+        "approval_contract"
+      ],
+      "taskTypes": [
+        "approval.request"
+      ],
+      "tools": [
+        "approval.request",
+        "evidence.write",
+        "state.request_transition"
+      ],
+      "skills": [],
+      "runtimes": [
+        "human-approval"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal",
+        "confidential"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "approval_request"
+      ],
+      "policies": [
+        "capability-policy",
+        "approval-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "high",
+      "blockingAllowed": true,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    },
+    {
+      "capabilityId": "demo.replay_scenario",
+      "name": "Replay demo scenario",
+      "description": "Replay a static operator demo scenario without touching live runtime state.",
+      "ownerAgent": "nexus",
+      "allowedAgents": [
+        "nexus",
+        "shepherd"
+      ],
+      "agentGroups": [
+        "control"
+      ],
+      "contractTypes": [
+        "task_contract"
+      ],
+      "taskTypes": [
+        "demo.replay"
+      ],
+      "tools": [
+        "memory.read",
+        "evidence.write"
+      ],
+      "skills": [],
+      "runtimes": [
+        "node-local"
+      ],
+      "providers": [
+        "none"
+      ],
+      "dataClassesAllowed": [
+        "public",
+        "internal"
+      ],
+      "approvalRequired": false,
+      "approvalTypes": [],
+      "evidenceRequired": [
+        "demo_replay_event"
+      ],
+      "policies": [
+        "capability-policy",
+        "data-classification-policy",
+        "security-boundary-policy",
+        "reliability-policy"
+      ],
+      "riskLevel": "low",
+      "blockingAllowed": false,
+      "batchEligible": false,
+      "mcpAllowed": false,
+      "status": "enabled"
+    }
+  ]
+}

@@ -278,6 +278,13 @@ default-deny network posture, secret handling, provider controls, MCP lifecycle,
 and human approvals. Phase 9 adds the policy and validation model for those layers
 only. It does not implement runtime enforcement yet.
 
+Phase 11 layers a capability model on top of that runtime and security structure.
+Capabilities are the bridge between agents, contracts, tools, skills, runtimes,
+providers, approvals, evidence, and policies. Future tool, skill, provider, and
+MCP execution should resolve through a capability check before execution. This
+phase defines the registry and validation model only; it does not implement
+runtime capability enforcement yet.
+
 See:
 
 - [`EXECUTION_RUNTIME_ARCHITECTURE.md`](EXECUTION_RUNTIME_ARCHITECTURE.md)

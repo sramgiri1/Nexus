@@ -32,74 +32,48 @@ CareLoop remains parked until the OS foundation and UI direction are clearer.
 - Phase 8 Data protection and DB agent security
 - Phase 9 Security boundary
 - Phase 6 Execution runtime and Xcode Runner architecture
+- Phase 10 OS reliability
 
 ---
 
 ## Current Phase
 
-### Phase 10 — OS Reliability
-
-Goal:
-
-- make NEXUS durable and recoverable under failure
-
-Deliverables:
-
-- OS reliability architecture
-- durable execution model
-- task lease and heartbeat model
-- retry and dead-letter model
-- recovery and rollback model
-- incident response model
-- reliability policy and validation
-- platform roadmap update
-
-Non-goals:
-
-- no live leases
-- no runtime retry enforcement
-- no DB schema or migration work
-- no worker implementation changes
-
-Validation checks:
-
-- reliability docs exist
-- policies parse
-- failure scenarios are modeled
-- docs stay aligned with runtime, state machine, security, and DB architecture
-
-Risk level:
-
-- high
-
----
-
-## Upcoming
-
 ### Phase 11 — Tooling and Capability Model
 
 Goal:
 
-- formalize capabilities, tool grants, and integration boundaries
+- formalize the capability bridge between agents, contracts, tools, skills,
+  runtimes, providers, approvals, evidence, and policies
 
 Deliverables:
 
-- capability registry
-- runtime and tool authorization model
-- MCP registration policy
+- capability model architecture
+- capability registry and schema
+- tool and skill governance model
+- capability policy and validation
+- platform roadmap update
 
 Non-goals:
 
-- no arbitrary plugin sprawl
+- no runtime capability enforcement
+- no new MCP servers
+- no new tools or skills
+- no dispatch changes
 
 Validation checks:
 
-- capabilities are explicit
+- registry is machine-readable
+- capability policy parses
 - no hidden authority expansion
+- docs stay aligned with runtime, security, approvals, and data protection
 
 Risk level:
 
 - medium
+
+---
+
+## Upcoming
 
 ### Phase 12 — Observability, Evals, Artifacts
 
