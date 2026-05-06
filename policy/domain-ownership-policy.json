@@ -1,0 +1,738 @@
+{
+  "version": "1.0",
+  "defaultOwner": "shepherd",
+  "defaultDecisionOwner": "nexus",
+  "releaseOwner": "nexus",
+  "planningOwner": "shepherd",
+  "verificationOwners": [
+    "auditor",
+    "sentinel",
+    "warden"
+  ],
+  "ownershipRequired": true,
+  "evidenceRequiredForCompletion": true,
+  "contractsRequiredForHandoff": true,
+  "domainOwners": {
+    "control": {
+      "ownerAgent": "nexus",
+      "supportingAgents": [
+        "shepherd"
+      ],
+      "verifierAgents": [],
+      "requiredContracts": [
+        "task_contract",
+        "release_contract"
+      ],
+      "allowedCapabilities": [
+        "control.read_system_state",
+        "control.decide_release"
+      ],
+      "approvalTriggers": [
+        "release_approval_if_configured"
+      ],
+      "evidenceRequired": [
+        "system_state_snapshot",
+        "release_decision_result",
+        "release_contract"
+      ],
+      "escalationOwner": "nexus"
+    },
+    "orchestration": {
+      "ownerAgent": "shepherd",
+      "supportingAgents": [
+        "nexus",
+        "atlas"
+      ],
+      "verifierAgents": [],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "orchestration.plan_flow",
+        "orchestration.dispatch_task",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "high_risk_dispatch_exception"
+      ],
+      "evidenceRequired": [
+        "plan_result",
+        "task_contracts",
+        "handoff_contracts",
+        "dispatch_result"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "product_definition": {
+      "ownerAgent": "atlas",
+      "supportingAgents": [
+        "shepherd",
+        "prism",
+        "core",
+        "swift",
+        "pixel"
+      ],
+      "verifierAgents": [
+        "auditor",
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "orchestration.plan_flow"
+      ],
+      "approvalTriggers": [
+        "release_scoped_scope_change"
+      ],
+      "evidenceRequired": [
+        "scope_notes",
+        "acceptance_criteria",
+        "handoff_contracts"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "design": {
+      "ownerAgent": "prism",
+      "supportingAgents": [
+        "atlas",
+        "pixel",
+        "swift",
+        "canvas"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "orchestration.plan_flow"
+      ],
+      "approvalTriggers": [
+        "regulated_claim_change"
+      ],
+      "evidenceRequired": [
+        "design_spec",
+        "ui_state_notes"
+      ],
+      "escalationOwner": "atlas"
+    },
+    "backend": {
+      "ownerAgent": "core",
+      "supportingAgents": [
+        "atlas",
+        "forge"
+      ],
+      "verifierAgents": [
+        "auditor",
+        "sentinel",
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "verification_contract"
+      ],
+      "allowedCapabilities": [
+        "implementation.backend_code"
+      ],
+      "approvalTriggers": [
+        "destructive_data_access",
+        "deploy_coupled_change"
+      ],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "verification_requests"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "ios": {
+      "ownerAgent": "swift",
+      "supportingAgents": [
+        "atlas",
+        "prism",
+        "forge"
+      ],
+      "verifierAgents": [
+        "sentinel",
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "verification_contract"
+      ],
+      "allowedCapabilities": [
+        "implementation.ios_code"
+      ],
+      "approvalTriggers": [
+        "signing_or_runtime_access"
+      ],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "runtime_needs",
+        "verification_requests",
+        "xcresult"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "web_dashboard": {
+      "ownerAgent": "pixel",
+      "supportingAgents": [
+        "atlas",
+        "prism",
+        "canvas"
+      ],
+      "verifierAgents": [
+        "auditor",
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "verification_contract"
+      ],
+      "allowedCapabilities": [
+        "implementation.web_dashboard"
+      ],
+      "approvalTriggers": [
+        "risky_runtime_ui_path"
+      ],
+      "evidenceRequired": [
+        "changed_files_summary",
+        "ui_state_notes",
+        "verification_requests"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "static_content": {
+      "ownerAgent": "canvas",
+      "supportingAgents": [
+        "prism",
+        "beacon",
+        "pixel"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "implementation.static_content"
+      ],
+      "approvalTriggers": [
+        "public_claim_or_packaging_change"
+      ],
+      "evidenceRequired": [
+        "content_artifact_summary",
+        "warden_review_request"
+      ],
+      "escalationOwner": "atlas"
+    },
+    "deployment": {
+      "ownerAgent": "forge",
+      "supportingAgents": [
+        "shepherd",
+        "core",
+        "swift",
+        "pixel"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "platform.deploy_plan",
+        "platform.secrets_change_request",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "deploy",
+        "infra_change",
+        "secrets_change",
+        "rollback"
+      ],
+      "evidenceRequired": [
+        "deployment_readiness_report",
+        "rollback_plan",
+        "approval_result"
+      ],
+      "escalationOwner": "forge"
+    },
+    "data_pipeline": {
+      "ownerAgent": "stream",
+      "supportingAgents": [
+        "forge",
+        "oracle",
+        "warden"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "platform.data_pipeline",
+        "data.safe_db_summary"
+      ],
+      "approvalTriggers": [
+        "confidential_or_production_data_access",
+        "export"
+      ],
+      "evidenceRequired": [
+        "data_classification_note",
+        "pipeline_summary",
+        "audit_event"
+      ],
+      "escalationOwner": "stream"
+    },
+    "ai_integration": {
+      "ownerAgent": "synapse",
+      "supportingAgents": [
+        "forge",
+        "warden",
+        "nexus"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "platform.ai_integration",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "new_provider",
+        "new_mcp",
+        "new_tool"
+      ],
+      "evidenceRequired": [
+        "provider_policy_note",
+        "data_classification_note",
+        "verification_requests"
+      ],
+      "escalationOwner": "synapse"
+    },
+    "code_quality": {
+      "ownerAgent": "auditor",
+      "supportingAgents": [
+        "core",
+        "swift",
+        "pixel"
+      ],
+      "verifierAgents": [
+        "auditor"
+      ],
+      "requiredContracts": [
+        "verification_contract"
+      ],
+      "allowedCapabilities": [
+        "verification.code_quality_gate"
+      ],
+      "approvalTriggers": [
+        "failed_gate_waiver_if_configured"
+      ],
+      "evidenceRequired": [
+        "lint_result",
+        "static_analysis_result",
+        "test_coverage_result",
+        "diff_review_result"
+      ],
+      "escalationOwner": "auditor"
+    },
+    "qa": {
+      "ownerAgent": "sentinel",
+      "supportingAgents": [
+        "forge",
+        "swift",
+        "core",
+        "relay"
+      ],
+      "verifierAgents": [
+        "sentinel"
+      ],
+      "requiredContracts": [
+        "verification_contract"
+      ],
+      "allowedCapabilities": [
+        "verification.qa_gate"
+      ],
+      "approvalTriggers": [
+        "runtime_access",
+        "deploy_linked_rerun"
+      ],
+      "evidenceRequired": [
+        "test_result",
+        "simulator_result",
+        "log_analysis_result",
+        "security_scan_result"
+      ],
+      "escalationOwner": "sentinel"
+    },
+    "compliance_privacy": {
+      "ownerAgent": "warden",
+      "supportingAgents": [
+        "forge",
+        "stream",
+        "synapse",
+        "canvas",
+        "compass",
+        "oracle"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "verification_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "verification.compliance_gate",
+        "security.secret_scan",
+        "data.safe_db_summary"
+      ],
+      "approvalTriggers": [
+        "production_data_review",
+        "policy_waiver"
+      ],
+      "evidenceRequired": [
+        "privacy_check_result",
+        "permissions_validation_result",
+        "appstore_policy_result",
+        "secret_scan_result"
+      ],
+      "escalationOwner": "warden"
+    },
+    "observability": {
+      "ownerAgent": "relay",
+      "supportingAgents": [
+        "nexus",
+        "shepherd",
+        "oracle"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "observability.feedback_triage"
+      ],
+      "approvalTriggers": [
+        "sensitive_feedback_export"
+      ],
+      "evidenceRequired": [
+        "redaction_note",
+        "feedback_summary"
+      ],
+      "escalationOwner": "relay"
+    },
+    "market_strategy": {
+      "ownerAgent": "radar",
+      "supportingAgents": [
+        "nexus",
+        "meridian",
+        "beacon"
+      ],
+      "verifierAgents": [],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "strategy.market_research"
+      ],
+      "approvalTriggers": [
+        "new_paid_source",
+        "external_upload"
+      ],
+      "evidenceRequired": [
+        "source_summary",
+        "data_classification_note"
+      ],
+      "escalationOwner": "nexus"
+    },
+    "business_strategy": {
+      "ownerAgent": "meridian",
+      "supportingAgents": [
+        "nexus",
+        "radar",
+        "oracle"
+      ],
+      "verifierAgents": [],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "strategy.business_model"
+      ],
+      "approvalTriggers": [
+        "regulated_financial_claim"
+      ],
+      "evidenceRequired": [
+        "assumptions",
+        "source_summary"
+      ],
+      "escalationOwner": "nexus"
+    },
+    "marketing": {
+      "ownerAgent": "beacon",
+      "supportingAgents": [
+        "canvas",
+        "compass",
+        "warden"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "growth.marketing_copy"
+      ],
+      "approvalTriggers": [
+        "public_launch_claim"
+      ],
+      "evidenceRequired": [
+        "claim_checklist",
+        "required_review"
+      ],
+      "escalationOwner": "beacon"
+    },
+    "aso_seo": {
+      "ownerAgent": "compass",
+      "supportingAgents": [
+        "beacon",
+        "canvas",
+        "warden"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "growth.aso_seo_keywords"
+      ],
+      "approvalTriggers": [
+        "store_metadata_change"
+      ],
+      "evidenceRequired": [
+        "source_notes",
+        "required_review"
+      ],
+      "escalationOwner": "compass"
+    },
+    "analytics": {
+      "ownerAgent": "oracle",
+      "supportingAgents": [
+        "stream",
+        "relay",
+        "warden"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "growth.analytics_schema",
+        "data.safe_db_summary"
+      ],
+      "approvalTriggers": [
+        "user_data_analytics",
+        "production_access"
+      ],
+      "evidenceRequired": [
+        "data_classification_note",
+        "privacy_review_request"
+      ],
+      "escalationOwner": "oracle"
+    },
+    "security": {
+      "ownerAgent": "warden",
+      "supportingAgents": [
+        "forge",
+        "auditor",
+        "sentinel",
+        "synapse"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "verification_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "security.secret_scan",
+        "verification.compliance_gate",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "security_incident",
+        "secret_exposure"
+      ],
+      "evidenceRequired": [
+        "secret_scan_result",
+        "privacy_check_result",
+        "approval_result"
+      ],
+      "escalationOwner": "warden"
+    },
+    "reliability": {
+      "ownerAgent": "shepherd",
+      "supportingAgents": [
+        "forge",
+        "relay",
+        "nexus"
+      ],
+      "verifierAgents": [
+        "auditor",
+        "sentinel",
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "orchestration.dispatch_task",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "rollback",
+        "recovery_of_high_risk_action"
+      ],
+      "evidenceRequired": [
+        "dispatch_result",
+        "incident_record",
+        "recovery_note"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "capabilities": {
+      "ownerAgent": "nexus",
+      "supportingAgents": [
+        "shepherd",
+        "warden",
+        "synapse"
+      ],
+      "verifierAgents": [
+        "warden"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract"
+      ],
+      "allowedCapabilities": [
+        "control.read_system_state"
+      ],
+      "approvalTriggers": [
+        "new_high_risk_capability_enablement"
+      ],
+      "evidenceRequired": [
+        "capability_review_note",
+        "policy_links",
+        "audit_event"
+      ],
+      "escalationOwner": "nexus"
+    },
+    "demo_showcase": {
+      "ownerAgent": "canvas",
+      "supportingAgents": [
+        "pixel",
+        "beacon",
+        "nexus",
+        "shepherd"
+      ],
+      "verifierAgents": [
+        "warden",
+        "auditor",
+        "sentinel"
+      ],
+      "requiredContracts": [
+        "task_contract",
+        "handoff_contract",
+        "release_contract"
+      ],
+      "allowedCapabilities": [
+        "implementation.static_content",
+        "demo.replay_scenario"
+      ],
+      "approvalTriggers": [
+        "public_showcase_publication"
+      ],
+      "evidenceRequired": [
+        "content_artifact_summary",
+        "claim_checklist",
+        "showcase_summary"
+      ],
+      "escalationOwner": "shepherd"
+    },
+    "release_control": {
+      "ownerAgent": "nexus",
+      "supportingAgents": [
+        "shepherd",
+        "auditor",
+        "sentinel",
+        "warden",
+        "forge"
+      ],
+      "verifierAgents": [
+        "auditor",
+        "sentinel",
+        "warden"
+      ],
+      "requiredContracts": [
+        "release_contract",
+        "verification_contract",
+        "approval_contract"
+      ],
+      "allowedCapabilities": [
+        "control.decide_release",
+        "approval.request"
+      ],
+      "approvalTriggers": [
+        "release_approval_if_configured",
+        "failed_gate_waiver",
+        "rollback_from_final_state"
+      ],
+      "evidenceRequired": [
+        "gate_evidence",
+        "release_contract",
+        "release_decision_result",
+        "approval_result"
+      ],
+      "escalationOwner": "nexus"
+    }
+  }
+}

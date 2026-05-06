@@ -25,6 +25,16 @@ mode is zero-key, read-only by default, and intended for recruiters, investors,
 and technical reviewers. It explains the operating system without private
 project data and without adding runtime enforcement in this phase.
 
+Phase 14 adds a domain ownership layer that answers who owns each domain, who
+may decide, who may execute, who may verify, who may approve, and who resolves
+conflicts. That ownership model is documented and validated in policy files, but
+it is not runtime-enforced yet.
+
+See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
+[`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
+[`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
+[`ESCALATION_AND_CONFLICT_RESOLUTION.md`](ESCALATION_AND_CONFLICT_RESOLUTION.md).
+
 ---
 
 ## What Makes NEXUS an OS

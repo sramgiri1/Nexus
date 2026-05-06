@@ -27,6 +27,11 @@ Capabilities are the formal bridge between agents, contracts, tools, skills,
 runtimes, providers, approvals, evidence, policies, data classification, and
 security boundaries.
 
+Phase 14 adds the ownership side of that bridge. The capability registry answers
+what may be requested. The domain ownership policy and authority matrix answer
+who may request, decide, execute, verify, and escalate when authority is
+ambiguous.
+
 Phase 12 extends that bridge into proof surfaces: capability use should later be
 observable in traces, evidence lineage, artifacts, audit events, and telemetry.
 Evals should also be able to reference capabilities directly when testing policy
@@ -162,6 +167,12 @@ replace verification evidence or state-machine rules.
 Capabilities are governed by the security boundary, the governor, and the state
 machine. Capability registration makes future enforcement explicit; it does not
 grant bypass authority.
+
+### Domain Ownership
+
+Capabilities do not replace ownership. A capability may exist in the registry,
+but the owning domain, contract scope, verifier, approval path, and escalation
+owner still constrain who may use it and how the result can move through the OS.
 
 ---
 

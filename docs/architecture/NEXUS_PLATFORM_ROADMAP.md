@@ -38,40 +38,38 @@ belongs in separate private repos.
 - Phase 10 OS reliability
 - Phase 11 Tooling and capability model
 - Phase 12 Observability, evals, and artifacts
+- Phase 13 Demo and showcase mode
 
 ---
 
 ## Current Phase
 
-### Phase 13 — Demo and Showcase Mode
+### Phase 14 — Domain Ownership Policy
 
 Goal:
 
-- make NEXUS easy to understand without API keys, private project ideas, or
-  live runtime execution
+- harden domain-level authority and decision ownership across the OS
 
 Deliverables:
 
-- zero-key CLI demo
-- public-safe DemoApp scenario
-- demo contracts and reports
-- public safety checks
-- README and docs navigation for recruiters, investors, and reviewers
-- read-only Command Center showcase path
+- explicit domain ownership policy
+- authority matrix for all 20 agents
+- handoff ownership model
+- escalation and conflict rules
+- validation against capability, security, reliability, and public-safety layers
 
 Non-goals:
 
-- no live provider calls
-- no DB
 - no runtime enforcement changes
-- no private product execution path
+- no agent prompt changes
+- no dashboard behavior changes
 
 Validation checks:
 
-- demo runs locally with no keys
-- public-safety check passes
-- dashboard remains static and public-safe
-- release decision stays evidence-based and blocked until required proof exists
+- no ambiguous ownership paths
+- authority matrix is internally consistent
+- handoffs remain contract-based
+- escalations block release when unresolved
 
 Risk level:
 
@@ -80,31 +78,6 @@ Risk level:
 ---
 
 ## Upcoming
-
-### Phase 14 — Domain Ownership Policy
-
-Goal:
-
-- harden domain-level authority and artifact ownership across the OS
-
-Deliverables:
-
-- explicit ownership policy
-- conflict rules
-- artifact and decision ownership refinements
-
-Non-goals:
-
-- not new execution runtimes
-
-Validation checks:
-
-- no ambiguous ownership paths
-- domain writes are explainable and auditable
-
-Risk level:
-
-- medium
 
 ### Phase 15 — Containerization and Worker Scaling
 

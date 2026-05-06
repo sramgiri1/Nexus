@@ -56,6 +56,10 @@ Phase 13 layers a public-safe showcase surface on top of the same static shell.
 The public demo uses `DemoApp`, stays read-only by default, avoids provider
 calls, and explains the operating-system flow without private project data.
 
+Phase 14 adds future ownership visibility requirements. The operator surface
+should eventually show domain owner, verifier, approval owner, escalation owner,
+and conflict state next to tasks, gates, and release posture.
+
 ---
 
 ## Core Principles

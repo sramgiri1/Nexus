@@ -1,0 +1,506 @@
+{
+  "version": "1.0",
+  "agents": [
+    {
+      "agentId": "nexus",
+      "domain": "control",
+      "plane": "control",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": false,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": true,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "release_approval_if_configured",
+        "high_cost_override"
+      ],
+      "forbiddenActions": [
+        "implement_code",
+        "self_certify_gates",
+        "bypass_evidence"
+      ]
+    },
+    {
+      "agentId": "shepherd",
+      "domain": "orchestration",
+      "plane": "control",
+      "mayDecide": true,
+      "mayPlan": true,
+      "mayExecute": false,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "high_risk_dispatch_exception",
+        "risky_recovery_action"
+      ],
+      "forbiddenActions": [
+        "implement_work",
+        "pass_gates",
+        "release_go"
+      ]
+    },
+    {
+      "agentId": "auditor",
+      "domain": "code_quality",
+      "plane": "verification",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": false,
+      "mayVerify": true,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": false,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "failed_gate_waiver_if_configured"
+      ],
+      "forbiddenActions": [
+        "implement_fixes",
+        "pass_qa_or_compliance_gates",
+        "release"
+      ]
+    },
+    {
+      "agentId": "sentinel",
+      "domain": "qa",
+      "plane": "verification",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": false,
+      "mayVerify": true,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": false,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "runtime_access",
+        "deploy_linked_rerun"
+      ],
+      "forbiddenActions": [
+        "implement_fixes",
+        "pass_code_or_compliance_gates",
+        "release"
+      ]
+    },
+    {
+      "agentId": "warden",
+      "domain": "compliance_privacy",
+      "plane": "verification",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": false,
+      "mayVerify": true,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": false,
+      "mayUseBatch": false,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "production_data_review",
+        "policy_waiver"
+      ],
+      "forbiddenActions": [
+        "implement_fixes",
+        "pass_code_or_qa_gates",
+        "release"
+      ]
+    },
+    {
+      "agentId": "atlas",
+      "domain": "product_definition",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "release_scoped_scope_change"
+      ],
+      "forbiddenActions": [
+        "implement_code",
+        "verify_gates",
+        "release"
+      ]
+    },
+    {
+      "agentId": "prism",
+      "domain": "design",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "regulated_claim_change"
+      ],
+      "forbiddenActions": [
+        "silently_override_scope",
+        "verify_gates",
+        "release"
+      ]
+    },
+    {
+      "agentId": "core",
+      "domain": "backend",
+      "plane": "execution",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "destructive_data_access",
+        "deploy_coupled_change"
+      ],
+      "forbiddenActions": [
+        "self_complete",
+        "pass_gates",
+        "modify_out_of_scope_files"
+      ]
+    },
+    {
+      "agentId": "swift",
+      "domain": "ios",
+      "plane": "execution",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "signing",
+        "device_access",
+        "runtime_access"
+      ],
+      "forbiddenActions": [
+        "claim_xcode_pass_without_evidence",
+        "pass_gates",
+        "modify_out_of_scope_files"
+      ]
+    },
+    {
+      "agentId": "pixel",
+      "domain": "web_dashboard",
+      "plane": "execution",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "risky_runtime_ui_path"
+      ],
+      "forbiddenActions": [
+        "pass_gates",
+        "modify_out_of_scope_files",
+        "release"
+      ]
+    },
+    {
+      "agentId": "canvas",
+      "domain": "static_content",
+      "plane": "execution",
+      "mayDecide": false,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "public_claim_change",
+        "public_showcase_packaging"
+      ],
+      "forbiddenActions": [
+        "pass_gates",
+        "publish_unreviewed_regulated_content",
+        "release"
+      ]
+    },
+    {
+      "agentId": "forge",
+      "domain": "deployment",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": false,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "deploy",
+        "infra_change",
+        "secrets_change",
+        "ci_cd_change",
+        "rollback"
+      ],
+      "forbiddenActions": [
+        "expose_raw_secrets",
+        "release_go",
+        "bypass_approval"
+      ]
+    },
+    {
+      "agentId": "stream",
+      "domain": "data_pipeline",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": false,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "production_data_access",
+        "export",
+        "destructive_pipeline_action"
+      ],
+      "forbiddenActions": [
+        "expose_raw_rows",
+        "bypass_classification",
+        "bypass_approval"
+      ]
+    },
+    {
+      "agentId": "synapse",
+      "domain": "ai_integration",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": true,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "new_provider",
+        "new_mcp",
+        "new_tool",
+        "restricted_payload_path"
+      ],
+      "forbiddenActions": [
+        "change_routing_outside_scope",
+        "bypass_provider_policy",
+        "bypass_approval"
+      ]
+    },
+    {
+      "agentId": "radar",
+      "domain": "market_strategy",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": false,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "new_paid_source",
+        "external_upload"
+      ],
+      "forbiddenActions": [
+        "fabricate_sources",
+        "decide_pricing",
+        "release"
+      ]
+    },
+    {
+      "agentId": "meridian",
+      "domain": "business_strategy",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": false,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "regulated_financial_claim",
+        "high_cost_analysis"
+      ],
+      "forbiddenActions": [
+        "fabricate_financial_claims",
+        "release",
+        "pass_gates"
+      ]
+    },
+    {
+      "agentId": "relay",
+      "domain": "observability",
+      "plane": "observability",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "sensitive_feedback_export"
+      ],
+      "forbiddenActions": [
+        "fix_issues_directly",
+        "expose_unredacted_feedback",
+        "release"
+      ]
+    },
+    {
+      "agentId": "beacon",
+      "domain": "marketing",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "public_launch_claim"
+      ],
+      "forbiddenActions": [
+        "fabricate_traction",
+        "fabricate_customer_quotes",
+        "release"
+      ]
+    },
+    {
+      "agentId": "compass",
+      "domain": "aso_seo",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": false,
+      "requiresApprovalFor": [
+        "store_metadata_change"
+      ],
+      "forbiddenActions": [
+        "fabricate_rankings",
+        "bypass_warden_review",
+        "release"
+      ]
+    },
+    {
+      "agentId": "oracle",
+      "domain": "analytics",
+      "plane": "execution",
+      "mayDecide": true,
+      "mayPlan": false,
+      "mayExecute": true,
+      "mayVerify": false,
+      "mayApprove": false,
+      "mayRelease": false,
+      "mayModifySource": false,
+      "mayRequestVerification": true,
+      "mayUseBatch": true,
+      "mayUseProvider": true,
+      "mayAccessSensitiveData": true,
+      "requiresApprovalFor": [
+        "user_data_analytics",
+        "production_access",
+        "export"
+      ],
+      "forbiddenActions": [
+        "fabricate_analytics_outcomes",
+        "bypass_privacy_review",
+        "release"
+      ]
+    }
+  ]
+}

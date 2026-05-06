@@ -57,6 +57,10 @@ cd dashboard && npm run test:pages
 - [Public repo boundary](docs/PUBLIC_REPO_BOUNDARY.md)
 - [Private project boundary](docs/PRIVATE_PROJECT_BOUNDARY.md)
 - [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
+- [Domain ownership policy](docs/architecture/DOMAIN_OWNERSHIP_POLICY.md)
+- [Agent authority matrix](docs/architecture/AGENT_AUTHORITY_MATRIX.md)
+- [Handoff ownership model](docs/architecture/HANDOFF_OWNERSHIP_MODEL.md)
+- [Escalation and conflict resolution](docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md)
 - [Architecture docs](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - [Demo contracts](demo/contracts)
 - [Demo reports](demo/reports)
@@ -68,6 +72,7 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run check:domain-ownership
 npm run check:observability-evals-artifacts
 npm run check:capabilities
 npm run check:os-reliability
@@ -171,6 +176,11 @@ See [`docs/architecture/DEMO_SHOWCASE_MODE.md`](docs/architecture/DEMO_SHOWCASE_
 [`docs/use-cases.md`](docs/use-cases.md),
 and [`docs/roadmap.md`](docs/roadmap.md)
 for the Phase 13 public-safe demo and showcase mode.
+See [`docs/architecture/DOMAIN_OWNERSHIP_POLICY.md`](docs/architecture/DOMAIN_OWNERSHIP_POLICY.md),
+[`docs/architecture/AGENT_AUTHORITY_MATRIX.md`](docs/architecture/AGENT_AUTHORITY_MATRIX.md),
+[`docs/architecture/HANDOFF_OWNERSHIP_MODEL.md`](docs/architecture/HANDOFF_OWNERSHIP_MODEL.md),
+and [`docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md`](docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md)
+for the Phase 14 domain ownership, authority, handoff, and escalation model.
 
 ---
 

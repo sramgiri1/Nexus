@@ -1,0 +1,41 @@
+{
+  "version": "1.0",
+  "escalationTypes": [
+    "missing_contract",
+    "ambiguous_owner",
+    "conflicting_agents",
+    "missing_evidence",
+    "failed_gate",
+    "policy_block",
+    "approval_required",
+    "data_classification_missing",
+    "provider_policy_missing",
+    "runtime_missing",
+    "capability_missing",
+    "security_incident",
+    "release_blocker"
+  ],
+  "escalationOwners": {
+    "strategic_decision": "nexus",
+    "planning_ambiguity": "shepherd",
+    "code_quality_ambiguity": "auditor",
+    "qa_or_runtime_ambiguity": "sentinel",
+    "privacy_or_security_ambiguity": "warden",
+    "deploy_or_secrets_path": "forge",
+    "data_flow_ambiguity": "stream",
+    "provider_or_mcp_ambiguity": "synapse",
+    "feedback_routing_ambiguity": "relay"
+  },
+  "conflictRules": {
+    "verificationConflict": "If auditor, sentinel, or warden disagree, release remains blocked until resolved.",
+    "productVsImplementation": "Atlas and Shepherd resolve scope. Implementation agents do not silently change scope.",
+    "designVsImplementation": "Prism and Atlas clarify design intent before execution continues.",
+    "securityVsSpeed": "Security, data protection, and governor boundaries win by default.",
+    "costVsQuality": "NEXUS decides with budget and evidence. Agents do not bypass cost policy.",
+    "providerFallback": "Fallback is not allowed on safety, budget, permission, secret, or verification failure.",
+    "releaseConflict": "NEXUS may only decide after required evidence exists."
+  },
+  "releaseBlockedOnUnresolvedEscalation": true,
+  "securityWinsByDefault": true,
+  "auditRequired": true
+}

@@ -24,6 +24,10 @@ registry does not replace the governor, contracts, or state machine. It adds an
 explicit authorization layer that future runtime integration can consult before
 tool, provider, runtime, or MCP execution.
 
+Phase 14 adds domain ownership and agent authority rules on top of that. The
+security boundary answers what must be blocked. The ownership model answers who
+may request, decide, verify, escalate, or stay out of a domain entirely.
+
 ---
 
 ## Security Layers

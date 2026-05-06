@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "contractsRequired": true,
+  "requiredFields": [
+    "sourceAgent",
+    "targetAgent",
+    "projectId",
+    "taskId",
+    "objective",
+    "context",
+    "allowedFiles",
+    "forbiddenFiles",
+    "acceptanceCriteria",
+    "requiredEvidence",
+    "riskLevel",
+    "blocking",
+    "dependsOn",
+    "escalationOwner"
+  ],
+  "allowedHandoffTypes": [
+    "control_to_orchestration",
+    "orchestration_to_execution",
+    "product_to_design",
+    "product_to_backend",
+    "product_to_ios",
+    "product_to_web",
+    "implementation_to_verification",
+    "verification_to_remediation",
+    "platform_to_approval",
+    "data_to_compliance",
+    "ai_to_security",
+    "growth_to_content",
+    "observability_to_remediation",
+    "release_to_decision"
+  ],
+  "forbiddenHandoffPatterns": [
+    "someone fix this",
+    "mark complete",
+    "pass gate without evidence",
+    "deploy without approval",
+    "use provider without data classification",
+    "analyze DB without approval"
+  ],
+  "defaultEscalationOwner": "shepherd",
+  "releaseHandoffOwner": "nexus",
+  "verificationOwners": [
+    "auditor",
+    "sentinel",
+    "warden"
+  ]
+}
