@@ -182,7 +182,10 @@ When AUDITOR finds lint errors, it reports them and sets gate status to FAIL. It
 
 **Verifiers do not modify production source code.**
 
-The file-scope guard in `guardrails/file-scope.json` restricts verifier write access to `reports/<agent>/` and project QA/compliance subdirectories. Verifiers are blocked from writing to `src/`, `app/`, `lib/`, and all system directories. This restriction exists even if a verifier believes it has a good reason to edit source.
+The file-scope guard in `guardrails/file-scope.json` restricts verifier write access to
+`reports/<agent>/` and project QA/compliance subdirectories. Verifiers are blocked from
+writing to `src/`, `app/`, `lib/`, and all system directories. This restriction exists
+even if a verifier believes it has a good reason to edit source.
 
 **Verifiers do not release.**
 

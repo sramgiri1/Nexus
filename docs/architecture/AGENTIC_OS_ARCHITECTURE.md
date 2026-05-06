@@ -56,7 +56,10 @@ The operator layer follows the same rule. Humans do not operate NEXUS by editing
 
 ### Definition
 
-A domain is a bounded area of the system that has a designated lead agent and a defined scope of ownership. The domain lead is the authoritative source of output within that domain. Other agents can read domain outputs but cannot write to authoritative domain artifacts without delegating through the domain lead.
+A domain is a bounded area of the system that has a designated lead agent and a defined
+scope of ownership. The domain lead is the authoritative source of output within that
+domain. Other agents can read domain outputs but cannot write to authoritative domain
+artifacts without delegating through the domain lead.
 
 ### Domain Map
 
@@ -381,7 +384,11 @@ This is the structural reason why workers cannot mark final completion directly.
 
 ### Schema Valid ≠ Transition Allowed
 
-The contracts layer and the state machine layer enforce different things. A state-transition contract that is schema-valid (all required fields present, types correct) can still be state-machine-blocked. Example: a contract with `from: running, to: completed, requestedBy: core` passes schema validation but is blocked by the state machine because `core` is a worker and workers cannot self-certify completion.
+The contracts layer and the state machine layer enforce different things. A
+state-transition contract that is schema-valid (all required fields present, types
+correct) can still be state-machine-blocked. Example: a contract with `from: running,
+to: completed, requestedBy: core` passes schema validation but is blocked by the state
+machine because `core` is a worker and workers cannot self-certify completion.
 
 See [state-machine/STATE_MACHINE.md](../../state-machine/STATE_MACHINE.md) for the full state machine specification, all lifecycle diagrams, and forbidden transition tables.
 
@@ -519,9 +526,16 @@ All planes share the governor as their single authorization point. All planes sh
 
 ### Why It Exists
 
-The contracts layer, state machine layer, and governor define what the OS enforces. The agent enablement layer defines what each agent must understand in order to operate correctly within that enforcement.
+The contracts layer, state machine layer, and governor define what the OS enforces. The
+agent enablement layer defines what each agent must understand in order to operate
+correctly within that enforcement.
 
-Contracts and state machine rules exist as code. But agents are LLM-based processes — they must be explicitly taught to read contracts, propose state transitions rather than commit them, route to the correct model, defer batch work, attach evidence, and produce well-formed handoffs. Without shared standards, agents drift: they claim completion without evidence, produce vague handoffs, or attempt transitions the state machine will reject.
+Contracts and state machine rules exist as code. But agents are LLM-based processes —
+they must be explicitly taught to read contracts, propose state transitions rather than
+commit them, route to the correct model, defer batch work, attach evidence, and produce
+well-formed handoffs. Without shared standards, agents drift: they claim completion
+without evidence, produce vague handoffs, or attempt transitions the state machine will
+reject.
 
 ### What the Enablement Layer Is Not
 

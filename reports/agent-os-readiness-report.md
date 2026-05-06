@@ -1,8 +1,8 @@
 # Agent OS Readiness Report
 
-- Timestamp: 2026-05-06T02:11:30.573Z
-- Branch: arch/agent-os-readiness-checker
-- Commit: 48c0148
+- Timestamp: 2026-05-06T09:47:31.006Z
+- Branch: chore/format-generated-docs-and-scripts
+- Commit: 9390701
 - Agents checked: 20
 
 ## Agents Checked

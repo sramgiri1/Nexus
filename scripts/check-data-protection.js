@@ -343,8 +343,8 @@ const timestamp = new Date().toISOString();
 
 const report = `# NEXUS Data Protection Check
 
-**Timestamp:** ${timestamp}  
-**Branch:** ${branch}  
+**Timestamp:** ${timestamp}
+**Branch:** ${branch}
 **Commit:** ${commit}
 
 ## Summary
