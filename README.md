@@ -112,6 +112,25 @@ NEXUS final decision (decide.release skill)
 
 Every sensitive action — file writes, task enqueues, skill invocations, LLM calls — passes through `safety/governor.js` before it executes.
 
+NEXUS is also runtime-aware. Execution is expected to route through one of:
+
+- `node-local`
+- `linux-container`
+- `macos-xcode`
+- `provider-api`
+- `batch-provider`
+- `mcp-server`
+- `human-approval`
+
+iOS and simulator execution require a macOS Xcode Runner. Containerization is useful later for backend and web execution, but it does not replace macOS runtime for iOS validation. These runtimes produce evidence that future state transitions and release decisions will consume. This phase defines the architecture only; it does not implement the Xcode Runner yet.
+
+See:
+
+- [`docs/architecture/EXECUTION_RUNTIME_ARCHITECTURE.md`](docs/architecture/EXECUTION_RUNTIME_ARCHITECTURE.md)
+- [`docs/architecture/XCODE_RUNNER_ARCHITECTURE.md`](docs/architecture/XCODE_RUNNER_ARCHITECTURE.md)
+- [`docs/architecture/SKILL_RUNTIME_MAPPING.md`](docs/architecture/SKILL_RUNTIME_MAPPING.md)
+- [`docs/architecture/EXECUTION_EVIDENCE_MODEL.md`](docs/architecture/EXECUTION_EVIDENCE_MODEL.md)
+
 ---
 
 ## File Structure

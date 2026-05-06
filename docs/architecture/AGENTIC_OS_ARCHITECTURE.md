@@ -231,6 +231,46 @@ Skills write full output to `reports/<agent>/`. The structured result is used fo
 
 ---
 
+## 4.1 Execution Is Runtime-Aware
+
+Skills and agents do not execute in an abstract void. They execute inside specific runtimes with specific capabilities and limits.
+
+NEXUS execution runtimes are:
+
+- `node-local`
+- `linux-container`
+- `macos-xcode`
+- `provider-api`
+- `batch-provider`
+- `mcp-server`
+- `human-approval`
+
+The runtime is part of the execution contract, not an incidental implementation detail.
+
+Examples:
+
+- backend lint, static analysis, and many local checks can run in `node-local` or later `linux-container`
+- iOS simulator and `xcodebuild` tasks require `macos-xcode`
+- realtime planning or release decisions route through `provider-api`
+- non-blocking summaries can route through `batch-provider`
+- deploy, secrets, migration, and production-data actions may require `human-approval`
+
+Two principles follow from this:
+
+1. Execution is runtime-aware.
+2. Containerization does not replace macOS Xcode runtime for iOS validation.
+
+Runtime selection must happen before scheduling, because verifier evidence is only valid if it comes from a runtime that can actually perform the work.
+
+See:
+
+- [`EXECUTION_RUNTIME_ARCHITECTURE.md`](EXECUTION_RUNTIME_ARCHITECTURE.md)
+- [`XCODE_RUNNER_ARCHITECTURE.md`](XCODE_RUNNER_ARCHITECTURE.md)
+- [`SKILL_RUNTIME_MAPPING.md`](SKILL_RUNTIME_MAPPING.md)
+- [`EXECUTION_EVIDENCE_MODEL.md`](EXECUTION_EVIDENCE_MODEL.md)
+
+---
+
 ## 5. Hooks Own Lifecycle Enforcement
 
 ### What Hooks Are
