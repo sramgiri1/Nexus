@@ -20,6 +20,11 @@ Memory owns evidence.
 
 This is not a metaphor. Each statement is a structural rule that defines which part of the system is authoritative for which class of decision. Violations of these rules — agents owning truth, prompts owning execution, memory owning permission — are the root causes of agentic soup.
 
+Phase 13 adds a public-safe Demo and Showcase Mode built around `DemoApp`. That
+mode is zero-key, read-only by default, and intended for recruiters, investors,
+and technical reviewers. It explains the operating system without private
+project data and without adding runtime enforcement in this phase.
+
 ---
 
 ## What Makes NEXUS an OS
@@ -136,11 +141,11 @@ No work moves between agents without a typed contract. A contract is a structure
 {
   "taskId": "task-...",
   "agentId": "core",
-  "projectId": "careloop",
+  "projectId": "demoapp",
   "taskType": "implementation",
   "objective": "...",
-  "allowedFiles": ["projects/careloop/src/"],
-  "forbiddenFiles": ["projects/careloop/.env"],
+  "allowedFiles": ["demo/", "dashboard/"],
+  "forbiddenFiles": ["memory/", "projects/"],
   "acceptanceCriteria": ["..."],
   "riskLevel": "medium",
   "blocking": true,
@@ -154,10 +159,10 @@ No work moves between agents without a typed contract. A contract is a structure
 {
   "sourceAgent": "core",
   "targetAgent": "auditor",
-  "projectId": "careloop",
+  "projectId": "demoapp",
   "taskType": "verification_gate",
   "objective": "...",
-  "allowedFiles": ["projects/careloop/src/"],
+  "allowedFiles": ["demo/", "dashboard/"],
   "requiredSkills": ["auditor.code.lint", "auditor.code.diff_review"],
   "acceptanceCriteria": ["code.lint PASS", "code.diff_review PASS"],
   "riskLevel": "medium",
@@ -174,7 +179,7 @@ No work moves between agents without a typed contract. A contract is a structure
   "agentId": "auditor",
   "skillResults": [...],
   "gateDecision": "PASS — all required skills passed",
-  "reportFile": "reports/auditor/careloop-diff-review-sprint2-2026-05-03.md",
+  "reportFile": "demo/reports/auditor-report.json",
   "completedAt": "..."
 }
 ```
@@ -506,10 +511,10 @@ Memory is the typed state store and evidence database. Every significant action 
 
 When NEXUS makes a release decision, that decision is backed by files:
 
-- `reports/auditor/careloop-diff-review-sprint2-<date>.md`
-- `reports/sentinel/careloop-qa-checklist-<date>.md`
-- `reports/warden/careloop-compliance-signoff-<date>.md`
-- `nexus.decide.release` skill output (written to `reports/nexus/`)
+- `demo/reports/auditor-report.json`
+- `demo/reports/sentinel-report.json`
+- `demo/reports/warden-report.json`
+- `demo/reports/release-decision.json`
 
 The release decision is not a conclusion in a chat thread. It is a structured artifact that references three independent verification artifacts.
 
@@ -601,4 +606,7 @@ Shared standards live in `agents/_shared/`. All 20 agent prompts extend these st
 
 ### Delivery Sequencing
 
-CareLoop parallel execution should not begin until agents have been confirmed as contract-aware, state-machine-aware, model-aware, batch-aware, skill-aware, and evidence-aware. The agent enablement layer is the prerequisite to governed parallel execution — not an optional add-on.
+DemoApp showcase execution should not begin until agents have been confirmed as
+contract-aware, state-machine-aware, model-aware, batch-aware, skill-aware, and
+evidence-aware. The agent enablement layer is the prerequisite to governed
+parallel execution, not an optional add-on.

@@ -1,0 +1,99 @@
+{
+  "scenarioId": "demoapp-sprint",
+  "projectId": "demoapp",
+  "projectName": "DemoApp",
+  "publicSafe": true,
+  "mission": "Build and validate a sample app through governed agents.",
+  "agents": [
+    "nexus",
+    "shepherd",
+    "core",
+    "swift",
+    "auditor",
+    "sentinel",
+    "warden",
+    "forge",
+    "beacon"
+  ],
+  "taskFlow": [
+    "Founder intent captured",
+    "NEXUS evaluates the mission and keeps release evidence-based",
+    "SHEPHERD plans the sprint and handoffs",
+    "CORE implements a sample task API contract",
+    "SWIFT prepares a sample iOS task list flow",
+    "AUDITOR verifies code quality evidence",
+    "SENTINEL requires macOS/Xcode runtime evidence before QA gate pass",
+    "WARDEN verifies privacy and compliance posture",
+    "NEXUS blocks release until all required gate evidence exists"
+  ],
+  "contracts": [
+    "demo/contracts/core-task-contract.json",
+    "demo/contracts/auditor-verification-contract.json",
+    "demo/contracts/sentinel-verification-contract.json",
+    "demo/contracts/warden-verification-contract.json",
+    "demo/contracts/nexus-release-contract.json"
+  ],
+  "reports": [
+    "demo/reports/auditor-report.json",
+    "demo/reports/sentinel-report.json",
+    "demo/reports/warden-report.json",
+    "demo/reports/release-decision.json",
+    "demo/reports/showcase-summary.json"
+  ],
+  "gates": [
+    {
+      "agentId": "auditor",
+      "status": "PASS",
+      "requiredEvidence": [
+        "lint_result",
+        "static_analysis_result",
+        "diff_review_result"
+      ]
+    },
+    {
+      "agentId": "sentinel",
+      "status": "PENDING",
+      "requiredEvidence": [
+        "test_result",
+        "simulator_result",
+        "xcresult"
+      ]
+    },
+    {
+      "agentId": "warden",
+      "status": "PASS",
+      "requiredEvidence": [
+        "privacy_check_result",
+        "permissions_validation_result"
+      ]
+    }
+  ],
+  "evidence": [
+    "evidence-demoapp-lint-001",
+    "evidence-demoapp-static-001",
+    "evidence-demoapp-diff-001",
+    "evidence-demoapp-privacy-001",
+    "evidence-demoapp-permissions-001",
+    "evidence-demoapp-release-001"
+  ],
+  "releaseDecision": {
+    "status": "NO_GO",
+    "reason": "SENTINEL macOS/Xcode evidence is still missing."
+  },
+  "dashboardPanelsRepresented": [
+    "Mission Control",
+    "Projects",
+    "Tasks",
+    "Agents",
+    "Contracts",
+    "Gates",
+    "Evidence",
+    "Runtime",
+    "Batch",
+    "Cost",
+    "Safety",
+    "Approvals",
+    "Release",
+    "Demo Mode"
+  ]
+}

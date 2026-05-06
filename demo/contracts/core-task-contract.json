@@ -1,0 +1,22 @@
+{
+  "contractId": "contract-demoapp-core-task-001",
+  "contractType": "task_contract",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-core-api",
+  "agentId": "core",
+  "capabilityId": "implementation.backend_code",
+  "status": "implementation_done",
+  "result": "READY_FOR_VERIFICATION",
+  "riskLevel": "high",
+  "blocking": true,
+  "dataClassification": "internal",
+  "allowedFiles": [
+    "demo/",
+    "dashboard/"
+  ],
+  "evidenceRequired": [
+    "changed_files_summary",
+    "verification_requests"
+  ],
+  "objective": "Implement a sample task API contract for DemoApp without live backend execution."
+}

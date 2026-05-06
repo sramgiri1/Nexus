@@ -1,0 +1,24 @@
+{
+  "contractId": "contract-demoapp-release-001",
+  "contractType": "release_contract",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-release-decision",
+  "agentId": "nexus",
+  "capabilityId": "control.decide_release",
+  "status": "blocked",
+  "result": "NO_GO",
+  "riskLevel": "critical",
+  "blocking": true,
+  "dataClassification": "internal",
+  "evidenceRequired": [
+    "lint_result",
+    "static_analysis_result",
+    "diff_review_result",
+    "test_result",
+    "simulator_result",
+    "xcresult",
+    "privacy_check_result",
+    "permissions_validation_result"
+  ],
+  "summary": "Release remains blocked until SENTINEL provides the required macOS/Xcode QA evidence."
+}

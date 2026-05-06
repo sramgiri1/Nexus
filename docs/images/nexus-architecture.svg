@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-labelledby="title desc">
+  <title id="title">NEXUS Demo Architecture</title>
+  <desc id="desc">A simple public-safe diagram showing founder intent flowing through NEXUS, planning, execution, verification, evidence, and release control.</desc>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#08111f"/>
+      <stop offset="100%" stop-color="#10233f"/>
+    </linearGradient>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <text x="80" y="90" fill="#eef4ff" font-size="38" font-family="Helvetica, Arial, sans-serif">NEXUS Agentic OS</text>
+  <text x="80" y="126" fill="#93a6c6" font-size="18" font-family="Helvetica, Arial, sans-serif">Public-safe DemoApp showcase flow</text>
+
+  <g font-family="Helvetica, Arial, sans-serif">
+    <rect x="80" y="180" width="210" height="92" rx="20" fill="#132945" stroke="#4f7fc2"/>
+    <text x="110" y="220" fill="#dce8ff" font-size="22">Founder Intent</text>
+    <text x="110" y="248" fill="#9fb5d9" font-size="16">Public-safe mission input</text>
+
+    <rect x="360" y="180" width="230" height="92" rx="20" fill="#132945" stroke="#55b1ff"/>
+    <text x="392" y="220" fill="#dce8ff" font-size="22">NEXUS + SHEPHERD</text>
+    <text x="392" y="248" fill="#9fb5d9" font-size="16">Decision and planning</text>
+
+    <rect x="660" y="180" width="240" height="92" rx="20" fill="#132945" stroke="#86c067"/>
+    <text x="694" y="220" fill="#dce8ff" font-size="22">Execution Agents</text>
+    <text x="694" y="248" fill="#9fb5d9" font-size="16">CORE, SWIFT, FORGE</text>
+
+    <rect x="970" y="180" width="230" height="92" rx="20" fill="#132945" stroke="#f6b04b"/>
+    <text x="1006" y="220" fill="#dce8ff" font-size="22">Verification Gates</text>
+    <text x="1006" y="248" fill="#9fb5d9" font-size="16">AUDITOR, SENTINEL, WARDEN</text>
+
+    <rect x="235" y="420" width="260" height="100" rx="20" fill="#162d4a" stroke="#6cc6d8"/>
+    <text x="270" y="462" fill="#dce8ff" font-size="24">Evidence + Artifacts</text>
+    <text x="270" y="492" fill="#9fb5d9" font-size="16">Reports, logs, xcresult placeholders</text>
+
+    <rect x="720" y="420" width="285" height="100" rx="20" fill="#162d4a" stroke="#ff7b7b"/>
+    <text x="758" y="462" fill="#dce8ff" font-size="24">Release Control</text>
+    <text x="758" y="492" fill="#9fb5d9" font-size="16">NO_GO until SENTINEL evidence exists</text>
+
+    <path d="M290 226H360" stroke="#87bfff" stroke-width="4"/>
+    <path d="M590 226H660" stroke="#87bfff" stroke-width="4"/>
+    <path d="M900 226H970" stroke="#87bfff" stroke-width="4"/>
+    <path d="M1085 272V350H365V420" stroke="#87bfff" stroke-width="4" fill="none"/>
+    <path d="M365 520V576H862V520" stroke="#87bfff" stroke-width="4" fill="none"/>
+
+    <text x="80" y="650" fill="#8da4c7" font-size="16">Zero-key. Public-safe. Deterministic. Evidence-first.</text>
+  </g>
+</svg>

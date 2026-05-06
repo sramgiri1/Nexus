@@ -1,0 +1,19 @@
+{
+  "contractId": "contract-demoapp-auditor-001",
+  "contractType": "verification_contract",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-auditor-gate",
+  "agentId": "auditor",
+  "capabilityId": "verification.code_quality_gate",
+  "status": "pass",
+  "result": "PASS",
+  "riskLevel": "high",
+  "blocking": true,
+  "dataClassification": "internal",
+  "evidenceRequired": [
+    "lint_result",
+    "static_analysis_result",
+    "diff_review_result"
+  ],
+  "summary": "AUDITOR has validated the DemoApp implementation slice with deterministic code-quality evidence."
+}

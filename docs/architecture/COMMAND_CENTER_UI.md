@@ -49,7 +49,12 @@ What it does not do yet:
 - schedule real execution
 - enforce auth or RBAC
 
-The prototype is a visual and interaction architecture checkpoint, not the production operator platform.
+The prototype is a visual and interaction architecture checkpoint, not the
+production operator platform.
+
+Phase 13 layers a public-safe showcase surface on top of the same static shell.
+The public demo uses `DemoApp`, stays read-only by default, avoids provider
+calls, and explains the operating-system flow without private project data.
 
 ---
 
@@ -312,7 +317,7 @@ High-level OS dashboard.
 - replay mode
 - seeded demo data
 - investor read-only view
-- CareLoop demo scenario later
+- DemoApp showcase scenario
 - evidence timeline
 - “NEXUS built this” story
 

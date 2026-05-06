@@ -1,0 +1,28 @@
+{
+  "reportId": "report-demoapp-auditor-001",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-auditor-gate",
+  "agentId": "auditor",
+  "capabilityId": "verification.code_quality_gate",
+  "status": "PASS",
+  "result": "PASS",
+  "dataClassification": "internal",
+  "evidence": [
+    {
+      "evidenceId": "evidence-demoapp-lint-001",
+      "type": "lint_result",
+      "result": "PASS"
+    },
+    {
+      "evidenceId": "evidence-demoapp-static-001",
+      "type": "static_analysis_result",
+      "result": "PASS"
+    },
+    {
+      "evidenceId": "evidence-demoapp-diff-001",
+      "type": "diff_review_result",
+      "result": "PASS"
+    }
+  ],
+  "summary": "Code quality checks passed for the DemoApp sample implementation slice."
+}

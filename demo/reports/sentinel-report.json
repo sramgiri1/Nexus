@@ -1,0 +1,23 @@
+{
+  "reportId": "report-demoapp-sentinel-001",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-sentinel-gate",
+  "agentId": "sentinel",
+  "capabilityId": "verification.qa_gate",
+  "status": "PENDING",
+  "result": "BLOCKED_PENDING_MACOS_XCODE",
+  "dataClassification": "internal",
+  "evidence": [
+    {
+      "evidenceId": "evidence-demoapp-tests-001",
+      "type": "test_result",
+      "result": "PENDING"
+    },
+    {
+      "evidenceId": "evidence-demoapp-simulator-001",
+      "type": "simulator_result",
+      "result": "MISSING_RUNTIME"
+    }
+  ],
+  "summary": "QA cannot complete until the macOS/Xcode runtime path produces simulator and xcresult evidence."
+}

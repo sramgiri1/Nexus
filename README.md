@@ -1,6 +1,87 @@
 # NEXUS — Agentic Operating System
 
+NEXUS is a governed Agentic OS for coordinating specialized AI agents through
+contracts, skills, verification gates, evidence, and human approvals.
+
 > One founder. 20 specialized agents. Strict execution boundaries. Real skill execution. Parallel phases with blocking verification gates. Central safety governor on every sensitive action.
+
+---
+
+## What Is NEXUS? (30 Seconds)
+
+NEXUS turns founder intent into governed execution. Instead of relying on a
+prompt-only loop, it separates planning, implementation, verification,
+approvals, evidence, and release control into explicit operating-system layers.
+
+## Why This Matters
+
+Prompt-only agent demos tend to hide authority, skip verification, and blur the
+difference between "an agent said it is done" and "the system proved it is
+done."
+
+NEXUS is built around:
+
+- contracts
+- state machines
+- capabilities
+- evidence
+- gates
+- safety boundaries
+- cost, batch, and provider policies
+- a Command Center operator surface
+
+## Zero-Key Demo
+
+```bash
+npm run demo
+npm run check:demo-showcase
+npm run check:public-safety
+```
+
+## Command Center
+
+The dashboard is a static showcase in this phase. Validate it with:
+
+```bash
+cd dashboard && npm run build
+cd dashboard && npm run test:unit
+cd dashboard && npm run test:pages
+```
+
+## Docs Navigation
+
+- [Demo walkthrough](docs/demo-walkthrough.md)
+- [Safety model](docs/safety-model.md)
+- [Use cases](docs/use-cases.md)
+- [Public roadmap](docs/roadmap.md)
+- [Public repo boundary](docs/PUBLIC_REPO_BOUNDARY.md)
+- [Private project boundary](docs/PRIVATE_PROJECT_BOUNDARY.md)
+- [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
+- [Architecture docs](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
+- [Demo contracts](demo/contracts)
+- [Demo reports](demo/reports)
+- [Architecture placeholder](docs/images/nexus-architecture.svg)
+- [Dashboard placeholder](docs/images/dashboard-screenshot-placeholder.svg)
+
+## Verification Commands
+
+```bash
+npm run check:demo-showcase
+npm run check:public-safety
+npm run check:observability-evals-artifacts
+npm run check:capabilities
+npm run check:os-reliability
+npm run check:security-boundary
+npm run check:format-readability
+npm run check:data-protection
+npm run check:agent-os-readiness
+npm run check:agent-context
+```
+
+## Public Safety
+
+This public repo uses `DemoApp` only. Private projects should live in separate
+private repos.
 
 ---
 
@@ -84,6 +165,12 @@ See [`docs/architecture/OBSERVABILITY_MODEL.md`](docs/architecture/OBSERVABILITY
 [`docs/architecture/EVIDENCE_LINEAGE.md`](docs/architecture/EVIDENCE_LINEAGE.md),
 and [`docs/architecture/TELEMETRY_MODEL.md`](docs/architecture/TELEMETRY_MODEL.md)
 for the Phase 12 observability, evals, and artifact model.
+See [`docs/architecture/DEMO_SHOWCASE_MODE.md`](docs/architecture/DEMO_SHOWCASE_MODE.md),
+[`docs/demo-walkthrough.md`](docs/demo-walkthrough.md),
+[`docs/safety-model.md`](docs/safety-model.md),
+[`docs/use-cases.md`](docs/use-cases.md),
+and [`docs/roadmap.md`](docs/roadmap.md)
+for the Phase 13 public-safe demo and showcase mode.
 
 ---
 
@@ -284,8 +371,7 @@ nexus/
 │   └── check-safety.js          ← Safety governor smoke tests (42 tests)
 │
 └── projects/
-    ├── careloop/                ← Fastify + Prisma + PostgreSQL backend
-    └── careloop-ios/            ← SwiftUI iOS app
+    └── [private-product-work]/  ← Keep private app code in separate private repos
 ```
 
 ---
@@ -474,9 +560,9 @@ npm run agent nexus "Which agents should be working right now?"
 ### Queue a single task
 
 ```bash
-npm run task core "Add reminder scheduling" careloop critical
-npm run task atlas "Review Sprint 2 contracts" careloop high
-npm run task beacon "Write App Store description" careloop normal
+npm run task core "Add reminder scheduling" demoapp critical
+npm run task atlas "Review Sprint 2 contracts" demoapp high
+npm run task beacon "Write App Store description" demoapp normal
 ```
 
 ### Check status
@@ -553,7 +639,7 @@ Register custom hooks in `hooks/index.js` via `registerHook(event, asyncFn)`.
 
 ```bash
 # Required
-ANTHROPIC_API_KEY=sk-ant-...      # Claude Sonnet + Haiku
+ANTHROPIC_API_KEY                 # private env var name for Claude Sonnet + Haiku
 
 # Orchestrator tuning
 LOOP_INTERVAL=10                  # seconds between queue polls (default 10)

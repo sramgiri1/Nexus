@@ -1,0 +1,31 @@
+{
+  "reportId": "report-demoapp-release-001",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-release-decision",
+  "agentId": "nexus",
+  "capabilityId": "control.decide_release",
+  "status": "BLOCKED",
+  "result": "NO_GO",
+  "dataClassification": "internal",
+  "requiredEvidence": [
+    "lint_result",
+    "static_analysis_result",
+    "diff_review_result",
+    "test_result",
+    "simulator_result",
+    "xcresult",
+    "privacy_check_result",
+    "permissions_validation_result"
+  ],
+  "availableEvidence": [
+    "lint_result",
+    "static_analysis_result",
+    "diff_review_result",
+    "privacy_check_result",
+    "permissions_validation_result"
+  ],
+  "blockedBy": [
+    "sentinel_missing_macos_xcode_evidence"
+  ],
+  "summary": "DemoApp release remains NO_GO because the SENTINEL gate is incomplete."
+}

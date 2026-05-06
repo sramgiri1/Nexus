@@ -36,7 +36,7 @@ const KPI_CARDS = [
 ];
 
 const PROJECT_SUMMARY = [
-  { label: "Project stage", value: "Operator Prototype", detail: "CareLoop remains the active OS proof project." },
+  { label: "Project stage", value: "Demo Showcase", detail: "DemoApp is the active public-safe OS proof project." },
   { label: "Project health", value: "Watch", detail: "Architecture is stable; release path is still gated by runtime evidence." },
   { label: "Release status", value: "Blocked pending SENTINEL", detail: "No GO/NO-GO call without simulator evidence." },
   { label: "Top risk", value: "macOS Xcode runtime gap", detail: "Linux/container workers cannot satisfy iOS validation." },
@@ -222,14 +222,14 @@ const APPROVALS = [
     title: "Demo deployment approval",
     owner: "FORGE",
     risk: "high",
-    project: "CareLoop",
+    project: "DemoApp",
     evidence: "runtime validation note + rollback plan",
   },
   {
     title: "Replay batch enablement",
     owner: "SHEPHERD",
     risk: "medium",
-    project: "CareLoop",
+    project: "DemoApp",
     evidence: "safety classification + reconciliation plan",
   },
 ];
@@ -252,8 +252,8 @@ const DEMO_MODE_ITEMS = [
     detail: "Show the OS in evidence-first mode without mutation rights or raw artifact exposure.",
   },
   {
-    title: "CareLoop scenario",
-    detail: "Narrative follows CORE, SWIFT, SENTINEL, WARDEN, and FORGE across the governed MVP path.",
+    title: "DemoApp scenario",
+    detail: "Narrative follows CORE, SWIFT, SENTINEL, WARDEN, and FORGE across the governed sample delivery path.",
   },
   {
     title: "“NEXUS built this”",
@@ -312,14 +312,14 @@ export default function CommandCenter({ studio }) {
           <section id="mission-control" className="command-prototype__hero">
             <Panel
               eyebrow="Mission Control"
-              title="Build and validate CareLoop MVP through governed NEXUS agents."
+              title="Build and validate DemoApp through governed NEXUS agents."
               subtitle="Founder intent is visible as an operating chain: NEXUS decision, SHEPHERD plan, agent execution, deterministic verification, release evidence, and final human accountability."
               meta={<StatusPill status="active">OS status · governed</StatusPill>}
             >
               <div className="command-prototype__hero-grid">
                 <div className="command-prototype__hero-main">
                   <div className="command-prototype__chip-row">
-                    <StatusPill status="active">Active project · {studio.activeProject?.name || "CareLoop"}</StatusPill>
+                    <StatusPill status="active">Active project · {studio.activeProject?.name || "DemoApp"}</StatusPill>
                     <StatusPill status="working">Release readiness · {studio.gateProgress}%</StatusPill>
                     <StatusPill status="blocked">Next required decision · macOS Xcode approval</StatusPill>
                     <StatusPill status="done">Environment · Prototype</StatusPill>
@@ -328,7 +328,7 @@ export default function CommandCenter({ studio }) {
                   <div className="command-prototype__hero-story">
                     <div className="command-prototype__story-step">
                       <span className="eyebrow">Founder intent</span>
-                      <strong>CareLoop MVP must ship through evidence-backed gates.</strong>
+                      <strong>DemoApp must ship through evidence-backed gates.</strong>
                     </div>
                     <div className="command-prototype__story-step">
                       <span className="eyebrow">NEXUS decision</span>
@@ -367,7 +367,7 @@ export default function CommandCenter({ studio }) {
             <div id="projects">
               <Panel
                 eyebrow="Projects"
-                title="CareLoop is the active operator proof"
+                title="DemoApp is the active operator proof"
                 subtitle="The Command Center keeps project state, gate posture, risk, and decision history in one visual surface."
               >
                 <div className="command-prototype__detail-list">

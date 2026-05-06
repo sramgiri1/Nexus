@@ -1,15 +1,18 @@
 # NEXUS Platform Roadmap
 
 **Version:** 1.0  
-**Date:** 2026-05-05
+**Date:** 2026-05-06
 
 ---
 
 ## Purpose
 
-This roadmap tracks the platform build-out of NEXUS as an Agentic OS and clarifies which phases are complete, which are architectural, and which are still implementation work.
+This roadmap tracks the public platform build-out of NEXUS as an Agentic OS and
+clarifies which phases are complete, which are architecture-only, and which are
+still future implementation work.
 
-CareLoop remains parked until the OS foundation and UI direction are clearer.
+The public repo uses `DemoApp` for showcase material. Private product work
+belongs in separate private repos.
 
 ---
 
@@ -27,47 +30,48 @@ CareLoop remains parked until the OS foundation and UI direction are clearer.
 - Phase 4B.5 Growth, strategy, and observability agent retrofit
 - Phase 4C Agent OS readiness checker
 - Phase 4D Agent task context adapter
+- Phase 6 Execution runtime and Xcode Runner architecture
 - Phase 7 Operator platform architecture
 - Phase 7A Command Center UI prototype
 - Phase 8 Data protection and DB agent security
 - Phase 9 Security boundary
-- Phase 6 Execution runtime and Xcode Runner architecture
 - Phase 10 OS reliability
 - Phase 11 Tooling and capability model
+- Phase 12 Observability, evals, and artifacts
 
 ---
 
 ## Current Phase
 
-### Phase 12 — Observability, Evals, Artifacts
+### Phase 13 — Demo and Showcase Mode
 
 Goal:
 
-- make execution quality, proof surfaces, and system behavior measurable
+- make NEXUS easy to understand without API keys, private project ideas, or
+  live runtime execution
 
 Deliverables:
 
-- observability architecture
-- trace model
-- eval model and scenarios
-- artifact registry model and examples
-- evidence lineage model
-- telemetry model and validation
-- platform roadmap update
+- zero-key CLI demo
+- public-safe DemoApp scenario
+- demo contracts and reports
+- public safety checks
+- README and docs navigation for recruiters, investors, and reviewers
+- read-only Command Center showcase path
 
 Non-goals:
 
-- no live telemetry exporters
-- no external services
-- no runtime observability enforcement
-- no dispatch changes
+- no live provider calls
+- no DB
+- no runtime enforcement changes
+- no private product execution path
 
 Validation checks:
 
-- eval scenarios are machine-readable
-- policies parse
-- artifact and evidence proof surfaces are explicit
-- docs stay aligned with capabilities, reliability, security, and data protection
+- demo runs locally with no keys
+- public-safety check passes
+- dashboard remains static and public-safe
+- release decision stays evidence-based and blocked until required proof exists
 
 Risk level:
 
@@ -76,58 +80,6 @@ Risk level:
 ---
 
 ## Upcoming
-
-### Phase 12 — Observability, Evals, Artifacts
-
-Goal:
-
-- make execution quality and system behavior measurable
-
-Deliverables:
-
-- runtime metrics
-- evaluation harnesses
-- artifact indexing
-- evidence analytics
-
-Non-goals:
-
-- not demo polish first
-
-Validation checks:
-
-- measurable success and failure signals
-- evaluator outputs tied to evidence
-
-Risk level:
-
-- medium
-
-### Phase 13 — Demo and Showcase Mode
-
-Goal:
-
-- create replayable operator demos and investor-facing showcase paths
-
-Deliverables:
-
-- seeded scenarios
-- read-only investor mode
-- evidence timeline replay
-- “NEXUS built this” narrative path
-
-Non-goals:
-
-- not production operations tooling expansion
-
-Validation checks:
-
-- demo is deterministic
-- read-only guarantees are clear
-
-Risk level:
-
-- medium
 
 ### Phase 14 — Domain Ownership Policy
 
@@ -206,25 +158,28 @@ Risk level:
 
 - high
 
-### Phase 5 — CareLoop Agent-Built MVP
+### Future Public Platform Work
 
 Goal:
 
-- resume CareLoop as a flagship product once OS and operator platform direction are stable
+- continue turning the public repo into a recruiter-, investor-, and reviewer-
+  friendly proof surface without leaking private work
 
 Deliverables:
 
-- CareLoop execution on top of the hardened NEXUS operator platform
-- product delivery using the OS constraints rather than parallel ad hoc workflows
+- replay mode
+- stronger public screenshots and walkthrough assets
+- future runtime enforcement milestones
+- API and DB implementation phases when the boundaries are ready
 
 Non-goals:
 
-- not before the operator platform and safety model are clearer
+- not exposing private product ideas in the public repo
 
 Validation checks:
 
-- CareLoop work uses the operator platform
-- agent execution is evidence-backed and runtime-aware
+- showcase remains public-safe
+- proof surfaces remain evidence-first
 
 Risk level:
 
@@ -232,12 +187,9 @@ Risk level:
 
 ---
 
-## Parking Note
+## Private Product Work Later
 
-CareLoop is parked until:
-
-- OS foundation is clearer
-- operator platform direction is clearer
-- UI, API, runtime, and durable-state boundaries are more mature
-
-This avoids building product complexity on top of incomplete operating-system foundations.
+Private product delivery should resume only after the public OS foundation,
+runtime enforcement, approvals, safety boundaries, and durable execution path
+are more mature. That work belongs in private repos, not in the public DemoApp
+showcase surface.

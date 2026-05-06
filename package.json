@@ -31,7 +31,10 @@
     "check:security-boundary": "node scripts/check-security-boundary.js",
     "check:os-reliability": "node scripts/check-os-reliability.js",
     "check:capabilities": "node scripts/check-capabilities.js",
-    "check:observability-evals-artifacts": "node scripts/check-observability-evals-artifacts.js"
+    "check:observability-evals-artifacts": "node scripts/check-observability-evals-artifacts.js",
+    "demo": "node scripts/demo.js",
+    "check:demo-showcase": "node scripts/check-demo-showcase.js",
+    "check:public-safety": "node scripts/check-public-safety.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

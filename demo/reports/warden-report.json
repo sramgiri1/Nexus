@@ -1,0 +1,23 @@
+{
+  "reportId": "report-demoapp-warden-001",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-warden-gate",
+  "agentId": "warden",
+  "capabilityId": "verification.compliance_gate",
+  "status": "PASS",
+  "result": "PASS",
+  "dataClassification": "internal",
+  "evidence": [
+    {
+      "evidenceId": "evidence-demoapp-privacy-001",
+      "type": "privacy_check_result",
+      "result": "PASS"
+    },
+    {
+      "evidenceId": "evidence-demoapp-permissions-001",
+      "type": "permissions_validation_result",
+      "result": "PASS"
+    }
+  ],
+  "summary": "Public-safe privacy handling and permissions review passed for DemoApp."
+}

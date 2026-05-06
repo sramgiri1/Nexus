@@ -1,0 +1,18 @@
+{
+  "contractId": "contract-demoapp-warden-001",
+  "contractType": "verification_contract",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-warden-gate",
+  "agentId": "warden",
+  "capabilityId": "verification.compliance_gate",
+  "status": "pass",
+  "result": "PASS",
+  "riskLevel": "high",
+  "blocking": true,
+  "dataClassification": "internal",
+  "evidenceRequired": [
+    "privacy_check_result",
+    "permissions_validation_result"
+  ],
+  "summary": "WARDEN confirms DemoApp privacy and permissions posture for the public showcase path."
+}

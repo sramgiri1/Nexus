@@ -1,0 +1,19 @@
+{
+  "contractId": "contract-demoapp-sentinel-001",
+  "contractType": "verification_contract",
+  "projectId": "demoapp",
+  "taskId": "task-demoapp-sentinel-gate",
+  "agentId": "sentinel",
+  "capabilityId": "verification.qa_gate",
+  "status": "pending",
+  "result": "BLOCKED_PENDING_MACOS_XCODE",
+  "riskLevel": "high",
+  "blocking": true,
+  "dataClassification": "internal",
+  "evidenceRequired": [
+    "test_result",
+    "simulator_result",
+    "xcresult"
+  ],
+  "summary": "SENTINEL cannot pass DemoApp QA until macOS/Xcode simulator evidence exists."
+}

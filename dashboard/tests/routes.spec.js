@@ -24,12 +24,12 @@ test("home route renders static command center mission-control prototype", async
 
   await expect(page.locator(".page--command")).toBeVisible();
   await expect(page.getByRole("heading", { name: "NEXUS Command Center" })).toBeVisible();
-  await expect(page.getByRole("banner").getByText("Active project · CareLoop")).toBeVisible();
   await expect(page.getByRole("banner").getByText("Environment · Prototype")).toBeVisible();
   await expect(page.locator(".command-prototype__sidebar")).toBeVisible();
   await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Release/i })).toBeVisible();
-  await expect(page.getByText("Build and validate CareLoop MVP through governed NEXUS agents.")).toBeVisible();
+  await expect(page.getByText("Build and validate DemoApp through governed NEXUS agents.")).toBeVisible();
+  await expect(page.getByText("Active project · DemoApp")).toBeVisible();
   await expect(page.locator("#tasks")).toContainText("Task queue");
   await expect(page.locator("#gates")).toContainText("AUDITOR, SENTINEL, and WARDEN");
   await expect(page.locator("#evidence")).toContainText("Evidence timeline");

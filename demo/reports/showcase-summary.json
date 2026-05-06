@@ -1,0 +1,26 @@
+{
+  "reportId": "report-demoapp-showcase-summary-001",
+  "projectId": "demoapp",
+  "status": "READY_TO_SHOW",
+  "result": "PUBLIC_SAFE_DEMO",
+  "dataClassification": "public",
+  "agentsInvolved": [
+    "nexus",
+    "shepherd",
+    "core",
+    "swift",
+    "auditor",
+    "sentinel",
+    "warden",
+    "forge",
+    "beacon"
+  ],
+  "gateStatuses": {
+    "auditor": "PASS",
+    "sentinel": "PENDING",
+    "warden": "PASS"
+  },
+  "evidenceCount": 6,
+  "releaseDecision": "NO_GO",
+  "summary": "The showcase demonstrates evidence-first release gating with DemoApp and no private project data."
+}
