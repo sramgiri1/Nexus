@@ -232,9 +232,15 @@ const passed = failures.length === 0;
 
 const report = `# Format Readability Report
 
-- Timestamp: ${timestamp}
-- Branch: ${branch}
-- Commit: ${commit}
+## Metadata
+
+- Generated at: ${timestamp}
+- Validation branch: ${branch}
+- Validation HEAD: ${commit}
+- Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
+
+## Summary
+
 - Files checked: ${filesChecked.length}
 
 ## Warnings
@@ -251,7 +257,7 @@ ${topLongest.length
     ? topLongest
         .map(
           (item) =>
-            `- ${item.file}:${item.line} (${item.length}) — ${item.preview.replace(/\|/g, "\\|")}`
+            `- ${item.file}:${item.line} (${item.length}) — ${item.preview.trimEnd().replace(/\|/g, "\\|")}`
         )
         .join("\n")
     : "- none"}

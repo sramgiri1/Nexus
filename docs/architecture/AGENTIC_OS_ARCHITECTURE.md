@@ -50,6 +50,12 @@ The OS framing is load-bearing. NEXUS is not "agents with guardrails." The gover
 
 The operator layer follows the same rule. Humans do not operate NEXUS by editing JSON, poking memory files, or bypassing dispatch. They operate it later through a Command Center UI and a NEXUS API boundary that still routes through governor, contracts, and the state machine.
 
+Validation reports follow a narrower rule: they are generated during validation before
+the final phase commit exists. Their metadata records the validation branch and
+validation HEAD at generation time. That metadata is useful for traceability, but it is
+not authoritative release metadata. Kanban and phase summaries remain the source of
+truth for final phase commit IDs.
+
 ---
 
 ## 1. Domains Own Authority

@@ -1,8 +1,11 @@
 # Agent Task Context Report
 
-- Timestamp: 2026-05-06T09:47:31.161Z
-- Branch: chore/format-generated-docs-and-scripts
-- Commit: 9390701
+## Metadata
+
+- Generated at: 2026-05-06T10:16:11.920Z
+- Validation branch: chore/cross-phase-cleanup
+- Validation HEAD: a058918
+- Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Sample Cases Run
 

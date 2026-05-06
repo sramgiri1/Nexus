@@ -457,9 +457,15 @@ console.log(consoleLines.join('\n'));
 const reportLines = [
   '# Agent OS Readiness Report',
   '',
-  `- Timestamp: ${timestamp}`,
-  `- Branch: ${branch}`,
-  `- Commit: ${commit}`,
+  '## Metadata',
+  '',
+  `- Generated at: ${timestamp}`,
+  `- Validation branch: ${branch}`,
+  `- Validation HEAD: ${commit}`,
+  '- Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.',
+  '',
+  '## Summary',
+  '',
   `- Agents checked: ${roster.length}`,
   '',
   '## Agents Checked',
@@ -490,6 +496,7 @@ if (failures.size === 0) {
   }
 }
 
+reportLines.push('');
 reportLines.push('## Recommended Next Action', '');
 reportLines.push(
   overallPass

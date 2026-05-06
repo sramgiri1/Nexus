@@ -591,5 +591,16 @@ safe gateway tools and safe views, never raw unrestricted access.
 
 ---
 
+## Validation Report Metadata
+
+Validation reports are generated during the validation step, before the final commit for
+that phase is created. They record the validation branch and validation HEAD at report
+generation time. That means a report's `Validation HEAD` may differ from the final Git
+commit that contains the report. Kanban and phase summaries remain the source of truth
+for final phase commit IDs, and the reports should be treated as validation artifacts,
+not authoritative Git release metadata.
+
+---
+
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
 > See [REFERENCE.md](REFERENCE.md) for portfolio status and token cost estimates.
