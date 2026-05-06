@@ -489,5 +489,11 @@ cp .env.example .env
 
 ---
 
+## Coding Agent Tooling
+
+NEXUS uses [AGENTS.md](AGENTS.md) for Codex and repo-level operating rules. Local Codex skills exist for branch safety, phase implementation, agent retrofit, PR review, security review, and UI concept work. Claude Code's official `frontend-design` plugin may be used for UI concepts only. Community plugins are intentionally not part of core NEXUS. Tooling assists workflow but does not replace contracts, governor, state machine, skills, or verification gates.
+
+---
+
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
 > See [REFERENCE.md](REFERENCE.md) for portfolio status and token cost estimates.

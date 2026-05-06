@@ -1,0 +1,18 @@
+# NEXUS Codex project configuration
+# No secrets in this file.
+# User-level Codex config controls auth, model, provider, and personal settings.
+# MCP servers are intentionally not configured at project level yet.
+
+# This project file stays conservative on purpose.
+# Add only reviewed repo-level settings here.
+
+# project_doc_max_bytes = 65536
+
+# [profiles.nexus-plan]
+# approval_policy = "never"
+
+# [profiles.nexus-edit]
+# approval_policy = "untrusted"
+
+# [profiles.nexus-review]
+# approval_policy = "never"
