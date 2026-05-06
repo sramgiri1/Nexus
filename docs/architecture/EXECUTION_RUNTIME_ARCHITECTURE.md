@@ -233,6 +233,8 @@ Additional rules:
 - batch tasks cannot execute tools or pass gates
 - provider-api work must still observe model routing and data classification rules
 - human approval is additive, not substitutive
+- runtime work should eventually emit enough heartbeat and evidence detail to support
+  reclaim, retry, recovery, and incident handling
 
 ---
 
@@ -270,6 +272,7 @@ This document does not:
 - implement sandbox enforcement
 - implement live network controls
 - implement live approval gates
+- implement durable leases or worker heartbeats
 - add Dockerfiles
 - add MCP servers
 - change state-machine behavior

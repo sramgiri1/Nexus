@@ -27,124 +27,15 @@ CareLoop remains parked until the OS foundation and UI direction are clearer.
 - Phase 4B.5 Growth, strategy, and observability agent retrofit
 - Phase 4C Agent OS readiness checker
 - Phase 4D Agent task context adapter
+- Phase 7 Operator platform architecture
+- Phase 7A Command Center UI prototype
+- Phase 8 Data protection and DB agent security
+- Phase 9 Security boundary
 - Phase 6 Execution runtime and Xcode Runner architecture
 
 ---
 
 ## Current Phase
-
-### Phase 7 — Operator Platform Architecture
-
-Goal:
-
-- define the human operator layer for NEXUS
-- define the UI, API, and database boundaries
-- define the migration path from JSON memory to durable storage
-
-Deliverables:
-
-- Command Center architecture
-- NEXUS API architecture
-- durable DB architecture
-- platform roadmap
-
-Non-goals:
-
-- no UI implementation
-- no API implementation
-- no DB implementation
-
-Validation checks:
-
-- architecture docs exist
-- docs stay aligned with governor, contracts, state machine, and runtime-awareness principles
-
-Risk level:
-
-- medium
-
----
-
-## Upcoming
-
-### Phase 7A — Command Center UI Prototype
-
-Goal:
-
-- build the first operator-facing Command Center prototype
-
-Deliverables:
-
-- Mission Control shell
-- project, queue, gate, evidence, runtime, and approval views
-- read-only operator flows first
-
-Non-goals:
-
-- no production-grade RBAC
-- no direct DB migration yet
-
-Validation checks:
-
-- screens map to architecture
-- evidence-first operator flows
-- no direct mutation around kernel boundary
-
-Risk level:
-
-- medium
-
-### Phase 8 — Data Protection and DB Agent Security
-
-Goal:
-
-- define and implement safe handling for personal, confidential, restricted, and secret data before DB primary mode
-
-Deliverables:
-
-- data classification enforcement
-- DB and agent access policy
-- PII handling rules
-- artifact redaction policy
-
-Non-goals:
-
-- not full production hardening yet
-
-Validation checks:
-
-- restricted data blocked from unsafe model or batch paths
-- DB access design does not leak raw PII to agents
-
-Risk level:
-
-- high
-
-### Phase 9 — Security Boundary
-
-Goal:
-
-- harden platform security around approvals, runtime boundaries, tool access, and data egress
-
-Deliverables:
-
-- tighter approval model
-- runtime access policies
-- external integration boundaries
-- secret and artifact handling rules
-
-Non-goals:
-
-- not worker autoscaling yet
-
-Validation checks:
-
-- clear blocked-by paths
-- no unsafe bypass around governor or policy boundaries
-
-Risk level:
-
-- high
 
 ### Phase 10 — OS Reliability
 
@@ -154,23 +45,36 @@ Goal:
 
 Deliverables:
 
-- retries and remediation architecture
-- durable leases and heartbeats
-- stuck-task handling
-- replay and recovery patterns
+- OS reliability architecture
+- durable execution model
+- task lease and heartbeat model
+- retry and dead-letter model
+- recovery and rollback model
+- incident response model
+- reliability policy and validation
+- platform roadmap update
 
 Non-goals:
 
-- not broad feature expansion
+- no live leases
+- no runtime retry enforcement
+- no DB schema or migration work
+- no worker implementation changes
 
 Validation checks:
 
-- failure scenarios modeled
-- task and evidence recovery path defined
+- reliability docs exist
+- policies parse
+- failure scenarios are modeled
+- docs stay aligned with runtime, state machine, security, and DB architecture
 
 Risk level:
 
 - high
+
+---
+
+## Upcoming
 
 ### Phase 11 — Tooling and Capability Model
 

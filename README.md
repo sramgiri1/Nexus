@@ -97,7 +97,8 @@ The agent enablement layer is a set of shared standards that every agent must fo
 **Current status:** Shared standards are in place, all 20 agents have been retrofitted,
 the agent OS readiness checker passes, the task-context adapter exists, and the
 Command Center prototype is static-data-only. The next layer is operator platform
-hardening: data protection, DB gateway policy, and later durable database-backed state.
+hardening: data protection, security boundary policy, OS reliability, and later
+durable database-backed state.
 
 ---
 
@@ -182,6 +183,10 @@ Security posture for the operator platform is default deny by design:
 - UI actions flow through API, governor, contracts, and state machine
 - provider payloads must be classified, redacted, and scanned
 - approvals do not replace verification evidence
+
+Phase 10 adds the reliability architecture across durable execution, leases,
+heartbeats, retries, dead-letter handling, recovery, rollback, and incidents. These
+are documentation, policy, and validation artifacts only in the current phase.
 
 ---
 
@@ -588,6 +593,21 @@ Phase 8 defines the classification, redaction, scan, policy, hook, and audit mod
 personal information, logs, evidence, model context, batch payloads, and future DB-agent
 behavior. It does not implement runtime DB enforcement yet. DB agents must later use
 safe gateway tools and safe views, never raw unrestricted access.
+
+---
+
+## OS Reliability
+
+Phase 10 defines the durable execution and OS reliability model for NEXUS:
+
+- durable task and transition history
+- lease and heartbeat expectations
+- bounded retries and dead-letter handling
+- evidence-linked recovery and rollback
+- incident response and runbooks
+
+The reliability layer is documented and validated in this phase, but it does not
+change runtime dispatch or implement live worker leases yet.
 
 ---
 

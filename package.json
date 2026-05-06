@@ -28,7 +28,8 @@
     "check:agent-context": "node scripts/check-agent-context.js",
     "check:data-protection": "node scripts/check-data-protection.js",
     "check:format-readability": "node scripts/check-format-readability.js",
-    "check:security-boundary": "node scripts/check-security-boundary.js"
+    "check:security-boundary": "node scripts/check-security-boundary.js",
+    "check:os-reliability": "node scripts/check-os-reliability.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

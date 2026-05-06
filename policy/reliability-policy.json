@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "durableExecutionRequired": true,
+  "leaseRequiredForRunning": true,
+  "heartbeatRequired": true,
+  "stateTransitionsAppendOnly": true,
+  "evidenceRequiredForCompletion": true,
+  "releaseRequiresGateEvidence": true,
+  "auditRequired": true,
+  "maxAutoHealAttempts": 2,
+  "highRiskRequiresApproval": true
+}

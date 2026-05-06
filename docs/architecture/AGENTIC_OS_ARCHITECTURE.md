@@ -344,6 +344,11 @@ Phase 9 extends that boundary with default-deny network rules, secret boundary r
 MCP lifecycle controls, provider safety, runtime sandbox assumptions, and human
 approval workflow policy.
 
+Phase 10 extends the OS boundary again with durable execution, task leases,
+heartbeats, bounded retries, dead-letter handling, recovery and rollback models, and
+incident response. These remain architecture, policy, and validation artifacts only in
+this phase.
+
 ---
 
 ## 5. Hooks Own Lifecycle Enforcement

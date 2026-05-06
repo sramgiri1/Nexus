@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "defaultMaxAttempts": 2,
+  "failureClasses": [
+    "transient_failure",
+    "deterministic_failure",
+    "policy_block",
+    "approval_block",
+    "verification_failure",
+    "provider_failure",
+    "batch_failure",
+    "runtime_failure",
+    "tool_failure",
+    "contract_failure",
+    "state_transition_failure",
+    "secret_or_security_failure",
+    "data_protection_failure",
+    "human_intervention_required"
+  ],
+  "retryableClasses": [
+    "transient_failure",
+    "provider_failure",
+    "batch_failure",
+    "runtime_failure",
+    "tool_failure"
+  ],
+  "nonRetryableClasses": [
+    "policy_block",
+    "approval_block",
+    "verification_failure",
+    "contract_failure",
+    "state_transition_failure",
+    "secret_or_security_failure",
+    "data_protection_failure",
+    "human_intervention_required"
+  ],
+  "backoffStrategy": "exponential",
+  "deadLetterRules": [
+    "max_attempts_exceeded",
+    "unrecoverable_policy_or_security_failure",
+    "repeated_provider_failure",
+    "uncorrectable_invalid_contract",
+    "unsafe_stuck_task",
+    "repeated_batch_reconciliation_failure"
+  ],
+  "autoHealRestrictions": [
+    "no_security_secret_data_policy_auto_heal",
+    "no_release_decision_auto_heal",
+    "no_failed_gate_auto_heal_without_remediation",
+    "no_deploy_migration_secrets_auto_heal_without_approval"
+  ]
+}

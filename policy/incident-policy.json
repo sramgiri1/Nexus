@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "severityLevels": [
+    "SEV0",
+    "SEV1",
+    "SEV2",
+    "SEV3"
+  ],
+  "incidentTypes": [
+    "security_incident",
+    "data_protection_incident",
+    "secret_exposure_incident",
+    "provider_incident",
+    "runtime_incident",
+    "batch_incident",
+    "db_incident",
+    "mcp_incident",
+    "release_incident",
+    "cost_incident",
+    "stuck_queue_incident"
+  ],
+  "releaseBlockingSeverities": [
+    "SEV0",
+    "SEV1"
+  ],
+  "requiredRunbooks": [
+    "secret_exposure",
+    "raw_personal_data_sent_to_llm_or_batch",
+    "provider_outage",
+    "stuck_batch_reconciliation",
+    "failed_release_gate",
+    "unapproved_deploy_attempt",
+    "runaway_cost_or_budget_spike",
+    "stuck_queue_or_worker_heartbeat_expired",
+    "mcp_suspicious_tool_result"
+  ],
+  "humanReviewRequiredTypes": [
+    "security_incident",
+    "data_protection_incident",
+    "secret_exposure_incident",
+    "release_incident",
+    "mcp_incident"
+  ],
+  "auditRequired": true
+}

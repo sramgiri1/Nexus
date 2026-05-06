@@ -47,6 +47,8 @@ This phase does not add Prisma or migrations. It defines the durable architectur
 - JSON becomes export or debug snapshot
 - worker leases and heartbeats use DB
 - API reads and writes DB through kernel, governor, and state machine
+- retry, dead-letter, recovery, and incident linkage become durable instead of
+  best-effort
 
 ### Phase DB-4: Production Mode
 
@@ -74,6 +76,8 @@ This phase does not add Prisma or migrations. It defines the durable architectur
 - Batch and OpenRouter are restricted to `public` or `internal` data by default.
 - Future DB agents must use a DB gateway and safe views, never raw unrestricted access.
 - Obsidian is not runtime memory.
+- Durable execution later depends on DB-backed leases, heartbeats, idempotency records,
+  retry tracking, incident linkage, and dead-letter durability.
 
 ---
 
