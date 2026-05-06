@@ -48,6 +48,8 @@ NEXUS provides an equivalent structure for agentic work:
 
 The OS framing is load-bearing. NEXUS is not "agents with guardrails." The governor, state machine, and contracts are not guardrails bolted onto a chat system. They are the kernel. The agents run on top of them.
 
+The operator layer follows the same rule. Humans do not operate NEXUS by editing JSON, poking memory files, or bypassing dispatch. They operate it later through a Command Center UI and a NEXUS API boundary that still routes through governor, contracts, and the state machine.
+
 ---
 
 ## 1. Domains Own Authority
@@ -268,6 +270,41 @@ See:
 - [`XCODE_RUNNER_ARCHITECTURE.md`](XCODE_RUNNER_ARCHITECTURE.md)
 - [`SKILL_RUNTIME_MAPPING.md`](SKILL_RUNTIME_MAPPING.md)
 - [`EXECUTION_EVIDENCE_MODEL.md`](EXECUTION_EVIDENCE_MODEL.md)
+
+---
+
+## 4.2 Operator Platform Boundary
+
+Humans should not operate NEXUS by mutating memory files directly.
+
+The future operator path is:
+
+```text
+Command Center UI
+  → NEXUS API
+  → Governor
+  → Contract validation
+  → State machine
+  → JSON memory now / PostgreSQL later
+```
+
+This means:
+
+- UI actions flow through API, not directly to memory
+- API is the mutation boundary
+- JSON remains runtime memory now
+- PostgreSQL becomes durable state later
+- demo and investor views are read-only later
+- Obsidian is not runtime memory
+
+See:
+
+- [`COMMAND_CENTER_UI.md`](COMMAND_CENTER_UI.md)
+- [`NEXUS_API_ARCHITECTURE.md`](NEXUS_API_ARCHITECTURE.md)
+- [`NEXUS_DATABASE_ARCHITECTURE.md`](NEXUS_DATABASE_ARCHITECTURE.md)
+- [`NEXUS_PLATFORM_ROADMAP.md`](NEXUS_PLATFORM_ROADMAP.md)
+
+Phase 7 defines the operator platform architecture only. It does not implement UI, API, or DB runtime changes.
 
 ---
 

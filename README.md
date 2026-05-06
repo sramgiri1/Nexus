@@ -58,6 +58,7 @@ See [`docs/architecture/AGENTIC_OS_ARCHITECTURE.md`](docs/architecture/AGENTIC_O
 See [`docs/prd/NEXUS_AGENTIC_OS_PRD.md`](docs/prd/NEXUS_AGENTIC_OS_PRD.md) for the product requirements.
 See [`docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md`](docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md) for plane definitions.
 See [`docs/architecture/NEXUS_OS_GLOSSARY.md`](docs/architecture/NEXUS_OS_GLOSSARY.md) for term definitions.
+See [`docs/architecture/COMMAND_CENTER_UI.md`](docs/architecture/COMMAND_CENTER_UI.md), [`docs/architecture/NEXUS_API_ARCHITECTURE.md`](docs/architecture/NEXUS_API_ARCHITECTURE.md), and [`docs/architecture/NEXUS_DATABASE_ARCHITECTURE.md`](docs/architecture/NEXUS_DATABASE_ARCHITECTURE.md) for the planned operator platform.
 
 ---
 
@@ -79,7 +80,7 @@ The agent enablement layer is a set of shared standards that every agent must fo
 | [Handoff](agents/_shared/handoff-standard.md) | Handoff schema, validity rules, canonical chains |
 | [Etiquette](agents/_shared/agent-etiquette.md) | Communication tone, fabrication prohibition, blocker resolution |
 
-**Current status:** Standards written. Individual agent retrofitting is in progress — not all 20 agents have been confirmed contract- and state-machine-aware yet. CareLoop full parallel execution should not begin until agents have been individually validated against these standards.
+**Current status:** Shared standards are in place, all 20 agents have been retrofitted, the agent OS readiness checker passes, and the task-context adapter exists. The next layer is operator platform architecture: Command Center, API boundary, runtime evidence flow, and later durable database-backed state.
 
 ---
 
@@ -130,6 +131,19 @@ See:
 - [`docs/architecture/XCODE_RUNNER_ARCHITECTURE.md`](docs/architecture/XCODE_RUNNER_ARCHITECTURE.md)
 - [`docs/architecture/SKILL_RUNTIME_MAPPING.md`](docs/architecture/SKILL_RUNTIME_MAPPING.md)
 - [`docs/architecture/EXECUTION_EVIDENCE_MODEL.md`](docs/architecture/EXECUTION_EVIDENCE_MODEL.md)
+
+The planned operator platform follows the same kernel boundary:
+
+```text
+Command Center UI
+  → NEXUS API
+  → Governor
+  → Contracts
+  → State machine
+  → JSON memory now / PostgreSQL later
+```
+
+The UI, API, and durable database are not implemented yet. JSON memory remains the runtime source of truth today. PostgreSQL is planned later for durable state. Read-only demo and investor modes are also planned later. Obsidian is not runtime memory; it is only for optional human planning notes.
 
 ---
 
