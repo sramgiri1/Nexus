@@ -30,10 +30,13 @@ const SCANNED_FILES = [
   "demo/reports/warden-report.json",
   "demo/reports/release-decision.json",
   "demo/reports/showcase-summary.json",
+  "dashboard/src/App.jsx",
   "dashboard/src/data/studio.js",
   "dashboard/src/pages/CommandCenter.jsx",
+  "dashboard/src/pages/Skills.jsx",
   "dashboard/src/hooks/useStudioData.js",
   "dashboard/tests/routes.spec.js",
+  "dashboard/src/utils/nexusPrompt.js",
   "docs/images/nexus-architecture.svg",
   "docs/images/dashboard-screenshot-placeholder.svg",
 ];
@@ -163,8 +166,11 @@ function main() {
   const privateDataFindings = collectFindings(SCANNED_FILES, PRIVATE_DATA_PATTERNS, failures, "Private data");
 
   const dashboardFiles = [
+    "dashboard/src/App.jsx",
     "dashboard/src/data/studio.js",
     "dashboard/src/pages/CommandCenter.jsx",
+    "dashboard/src/pages/Skills.jsx",
+    "dashboard/src/utils/nexusPrompt.js",
     "dashboard/tests/routes.spec.js",
   ];
   const dashboardSafe = dashboardFiles.every((file) => readFile(file).includes("DemoApp"));

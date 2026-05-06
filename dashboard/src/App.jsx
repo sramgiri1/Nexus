@@ -206,8 +206,8 @@ export default function App() {
 
                 <div className="shell-topbar__prototype-meta">
                   <div className="shell-chip-row">
-                    <StatusPill status="active">Active project · CareLoop</StatusPill>
-                    <StatusPill status="working">Current phase · Phase 7A</StatusPill>
+                    <StatusPill status="active">Active project · {studio.activeProject?.name || "DemoApp"}</StatusPill>
+                    <StatusPill status="working">Current phase · Phase 13</StatusPill>
                     <StatusPill status="done">Environment · Prototype</StatusPill>
                     <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
                       Global status · {studio.statusCounts.blocked ? "Attention required" : "Stable"}

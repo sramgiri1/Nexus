@@ -27,10 +27,13 @@ const REQUIRED_FILES = [
   "demo/reports/warden-report.json",
   "demo/reports/release-decision.json",
   "demo/reports/showcase-summary.json",
+  "dashboard/src/App.jsx",
   "dashboard/src/data/studio.js",
   "dashboard/src/pages/CommandCenter.jsx",
+  "dashboard/src/pages/Skills.jsx",
   "dashboard/src/hooks/useStudioData.js",
   "dashboard/tests/routes.spec.js",
+  "dashboard/src/utils/nexusPrompt.js",
 ];
 
 const README_LINK_TARGETS = [
@@ -147,16 +150,28 @@ function main() {
     }
   }
 
+  const appShell = readFile("dashboard/src/App.jsx");
   const studioData = readFile("dashboard/src/data/studio.js");
   const commandCenter = readFile("dashboard/src/pages/CommandCenter.jsx");
+  const skillsPage = readFile("dashboard/src/pages/Skills.jsx");
+  const nexusPrompt = readFile("dashboard/src/utils/nexusPrompt.js");
   const routesSpec = readFile("dashboard/tests/routes.spec.js");
   const hooksSource = readFile("dashboard/src/hooks/useStudioData.js");
 
+  if (!appShell.includes("DemoApp")) {
+    failures.push("dashboard/src/App.jsx does not present DemoApp.");
+  }
   if (!studioData.includes("DemoApp")) {
     failures.push("dashboard/src/data/studio.js does not use DemoApp.");
   }
   if (!commandCenter.includes("DemoApp")) {
     failures.push("dashboard/src/pages/CommandCenter.jsx does not present DemoApp.");
+  }
+  if (!skillsPage.includes("DemoApp")) {
+    failures.push("dashboard/src/pages/Skills.jsx does not present DemoApp.");
+  }
+  if (!nexusPrompt.includes("DemoApp")) {
+    failures.push("dashboard/src/utils/nexusPrompt.js does not present DemoApp.");
   }
   if (!routesSpec.includes("DemoApp")) {
     warnings.push("dashboard/tests/routes.spec.js does not assert DemoApp explicitly.");
@@ -182,7 +197,13 @@ function main() {
     `Demo script: ${formatStatus(demoOutput.length > 0 && !failures.some((item) => item.includes("scripts/demo.js")))}`,
     `Release decision: ${formatStatus(evidenceBasedDecision)}`,
     `README navigation: ${formatStatus(README_LINK_TARGETS.every((target) => readme.includes(target)))}`,
-    `Dashboard static source: ${formatStatus(studioData.includes("DemoApp") && commandCenter.includes("DemoApp"))}`,
+    `Dashboard static source: ${formatStatus(
+      appShell.includes("DemoApp") &&
+      studioData.includes("DemoApp") &&
+      commandCenter.includes("DemoApp") &&
+      skillsPage.includes("DemoApp") &&
+      nexusPrompt.includes("DemoApp")
+    )}`,
     "",
     "## Failures",
     "",

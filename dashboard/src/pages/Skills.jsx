@@ -11,7 +11,7 @@ import {
 
 function defaultInputForSkill(skillId) {
   if (skillId.startsWith("qa.") || skillId.startsWith("compliance.")) {
-    return { project: "careloop" };
+    return { project: "demoapp" };
   }
   return {};
 }
@@ -123,7 +123,7 @@ export default function Skills({ studio }) {
     }
   }
 
-  const activeProject = studio.activeProject?.name || "CareLoop";
+  const activeProject = studio.activeProject?.name || "DemoApp";
 
   return (
     <div className="page" data-testid="skills-page">
@@ -148,7 +148,7 @@ export default function Skills({ studio }) {
         <MetricTile label="Skill Library" value={SKILL_CATALOG.reduce((sum, group) => sum + group.skills.length, 0)} meta="Callable from dashboard or CLI" tone="blue" />
         <MetricTile label="Session Passes" value={sessionMetrics.passCount} meta={`${sessionMetrics.total} total executions tracked`} tone="green" />
         <MetricTile label="Session Fails" value={sessionMetrics.failCount} meta="Non-passing runs stay visible in the ledger" tone={sessionMetrics.failCount ? "red" : "amber"} />
-        <MetricTile label="Target Project" value={activeProject} meta="Compliance and QA skills default to CareLoop inputs" tone="purple" />
+        <MetricTile label="Target Project" value={activeProject} meta="Compliance and QA skills default to DemoApp inputs" tone="purple" />
       </div>
 
       <div className="skills-layout">
