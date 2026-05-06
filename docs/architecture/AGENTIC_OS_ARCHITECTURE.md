@@ -304,7 +304,7 @@ See:
 - [`NEXUS_DATABASE_ARCHITECTURE.md`](NEXUS_DATABASE_ARCHITECTURE.md)
 - [`NEXUS_PLATFORM_ROADMAP.md`](NEXUS_PLATFORM_ROADMAP.md)
 
-Phase 7 defines the operator platform architecture only. It does not implement UI, API, or DB runtime changes.
+Phase 7 defines the operator platform architecture only. It does not implement UI, API, or DB runtime changes. Phase 7A adds a static Command Center prototype in `dashboard/` so the operator surface can be reviewed visually before API, DB, and runtime integration work begins.
 
 ---
 

@@ -29,6 +29,29 @@ The UI never mutates runtime files, JSON memory, or database state directly.
 
 ---
 
+## Phase 7A Static Prototype
+
+A static visual prototype now exists in `dashboard/` as the first concrete Command Center surface.
+
+What that prototype demonstrates:
+
+- mission-control layout and hierarchy
+- evidence-first operator posture
+- gate, runtime, approval, and release visibility
+- the intended command bar, navigation, and panel structure
+
+What it does not do yet:
+
+- call a NEXUS API
+- mutate runtime state
+- read/write a durable database
+- schedule real execution
+- enforce auth or RBAC
+
+The prototype is a visual and interaction architecture checkpoint, not the production operator platform.
+
+---
+
 ## Core Principles
 
 - show evidence, not just status

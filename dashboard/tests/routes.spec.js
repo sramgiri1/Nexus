@@ -17,41 +17,25 @@ function captureClientErrors(page) {
   return errors;
 }
 
-test("home route renders command center with live network and nexus console", async ({ page }) => {
+test("home route renders static command center mission-control prototype", async ({ page }) => {
   const errors = captureClientErrors(page);
 
   await page.goto("/");
 
   await expect(page.locator(".page--command")).toBeVisible();
-  await expect(page.getByRole("heading", { name: "Command Center" })).toBeVisible();
-  await expect(page.locator(".command-dock")).toBeVisible();
-  await expect(page.getByTestId("voice-toggle")).toBeVisible();
-  await expect(page.getByText("Live network")).toBeVisible();
-  await expect(page.locator(".command-note__label")).toHaveText(/voice agent/i);
-  await expect(page.locator(".command-note")).toBeVisible();
-  await expect(page.locator(".command-console__quick-label")).toHaveText("Example commands");
-  await expect(page.locator(".command-status-card").first()).toBeVisible();
-  await expect(page.locator(".command-support-grid")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "NEXUS Command Center" })).toBeVisible();
+  await expect(page.getByRole("banner").getByText("Active project · CareLoop")).toBeVisible();
+  await expect(page.getByRole("banner").getByText("Environment · Prototype")).toBeVisible();
+  await expect(page.locator(".command-prototype__sidebar")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Release/i })).toBeVisible();
+  await expect(page.getByText("Build and validate CareLoop MVP through governed NEXUS agents.")).toBeVisible();
+  await expect(page.locator("#tasks")).toContainText("Task queue");
+  await expect(page.locator("#gates")).toContainText("AUDITOR, SENTINEL, and WARDEN");
+  await expect(page.locator("#evidence")).toContainText("Evidence timeline");
+  await expect(page.locator("#release")).toContainText("Release Control");
+  await expect(page.locator("#demo-mode")).toContainText("Demo Mode");
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
-
-  const statusList = page.locator(".command-status-list");
-  const scrollMetrics = await statusList.evaluate((element) => ({
-    clientHeight: element.clientHeight,
-    scrollHeight: element.scrollHeight,
-    overflowY: getComputedStyle(element).overflowY,
-  }));
-
-  expect(scrollMetrics.scrollHeight).toBe(scrollMetrics.clientHeight);
-
-  const visibleCardCount = await statusList.evaluate((list) => {
-    const viewport = list.getBoundingClientRect();
-    return [...list.querySelectorAll(".command-status-card")].filter((card) => {
-      const rect = card.getBoundingClientRect();
-      return rect.top >= viewport.top && rect.bottom <= viewport.bottom;
-    }).length;
-  });
-
-  expect(visibleCardCount).toBe(await page.locator(".command-status-card").count());
 
   expect(errors).toEqual([]);
 });

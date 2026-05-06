@@ -528,5 +528,11 @@ NEXUS uses [AGENTS.md](AGENTS.md) for Codex and repo-level operating rules. Loca
 
 ---
 
+## Command Center Prototype
+
+A static Command Center prototype now exists in [`dashboard/`](dashboard/) as the first visual operator console for the NEXUS Agentic OS. It is a UI-only prototype for Mission Control, agents, tasks, gates, evidence, runtime, cost, safety, approvals, release control, and demo mode. It is not wired to API, DB, auth, or runtime dispatch yet.
+
+---
+
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
 > See [REFERENCE.md](REFERENCE.md) for portfolio status and token cost estimates.

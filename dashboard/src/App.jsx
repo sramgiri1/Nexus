@@ -195,23 +195,31 @@ export default function App() {
             </div>
           ) : isHomeView ? (
             <>
-              <div className="shell-topbar__compact-line">
-                <span className="eyebrow">Nexus command deck</span>
-                <h1 className="shell-topbar__compact-title">Command Center</h1>
-                <span className="shell-topbar__compact-subtitle">Live founder-facing operating surface</span>
-              </div>
-
-              <div className="shell-topbar__home-meta">
-                <div className="shell-chip-row">
-                  <StatusPill status="active">{studio.activeProject ? `${studio.activeProject.name} live` : "No active project"}</StatusPill>
-                  <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
-                    {studio.statusCounts.blocked ? `${studio.statusCounts.blocked} blocked` : "No blockers"}
-                  </StatusPill>
-                  <StatusPill status="working">{studio.openDirectiveCount} directives</StatusPill>
-                  <StatusPill status="done">{studio.queueDepth} queue</StatusPill>
+              <div className="shell-topbar__prototype">
+                <div className="shell-topbar__prototype-title">
+                  <div className="eyebrow">Operator Platform Prototype</div>
+                  <h1 className="shell-topbar__prototype-heading">NEXUS Command Center</h1>
+                  <p className="shell-topbar__prototype-copy">
+                    Evidence-first mission control for governed execution, verification gates, approvals, and release posture.
+                  </p>
                 </div>
 
-                <div className="shell-topbar__home-signal">
+                <div className="shell-topbar__prototype-meta">
+                  <div className="shell-chip-row">
+                    <StatusPill status="active">Active project · CareLoop</StatusPill>
+                    <StatusPill status="working">Current phase · Phase 7A</StatusPill>
+                    <StatusPill status="done">Environment · Prototype</StatusPill>
+                    <StatusPill status={studio.statusCounts.blocked ? "blocked" : "done"}>
+                      Global status · {studio.statusCounts.blocked ? "Attention required" : "Stable"}
+                    </StatusPill>
+                  </div>
+
+                  <div className="shell-topbar__prototype-search" aria-label="Search or command placeholder">
+                    Search or issue a governed command…
+                  </div>
+                </div>
+
+                <div className="shell-topbar__prototype-signal">
                   <div>
                     <div className="eyebrow">System time</div>
                     <div className="mono shell-topbar__command-value">
@@ -219,7 +227,7 @@ export default function App() {
                     </div>
                   </div>
                   <div>
-                    <div className="eyebrow">Memory sync</div>
+                    <div className="eyebrow">Snapshot age</div>
                     <div className="mono shell-topbar__command-value">{formatRelative(studio.lastUpdated)}</div>
                   </div>
                 </div>
