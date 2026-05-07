@@ -54,7 +54,9 @@
     "demo": "node scripts/demo.js",
     "check:demo-showcase": "node scripts/check-demo-showcase.js",
     "check:public-safety": "node scripts/check-public-safety.js",
-    "check:private-project-mode": "node scripts/check-private-project-mode.js"
+    "check:private-project-mode": "node scripts/check-private-project-mode.js",
+    "careloop:inventory": "NEXUS_MODE=local-private node scripts/careloop-inventory.js",
+    "check:careloop-readiness": "node scripts/check-careloop-readiness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

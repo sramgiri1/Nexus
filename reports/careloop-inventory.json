@@ -1,0 +1,105 @@
+{
+  "snapshotVersion": "1.0",
+  "mode": "local-private",
+  "generatedAt": "2026-05-07T23:35:40.575Z",
+  "readOnly": true,
+  "project": {
+    "id": "private-project-01",
+    "private": true,
+    "publicSafe": false
+  },
+  "readiness": {
+    "backend": {
+      "status": "READY_FOR_VALIDATION",
+      "reasons": [
+        "Prisma schema detected — database migration readiness available.",
+        "Test directory detected."
+      ]
+    },
+    "ios": {
+      "status": "READY_FOR_XCODE_INVENTORY",
+      "reasons": [
+        "Xcode project detected.",
+        "XcodeGen project.yml detected.",
+        "Test directory detected: CareLoopTests."
+      ]
+    },
+    "overall": "READY_FOR_NEXT_GOVERNED_TASK"
+  },
+  "recommendedNextTask": {
+    "taskId": "careloop-p28-backend-validation",
+    "title": "Create CareLoop backend validation plan through NEXUS",
+    "agent": "SHEPHERD",
+    "capabilityId": "orchestration.plan_flow",
+    "riskLevel": "medium",
+    "requiresApproval": false,
+    "mutationAllowed": false,
+    "reason": "Backend src and package detected — ready for first governed validation gate."
+  },
+  "safety": {
+    "providerCalls": false,
+    "projectMutation": false,
+    "buildExecuted": false,
+    "testExecuted": false,
+    "dbAccess": false,
+    "apiServer": false
+  },
+  "backendExists": true,
+  "backendPackage": {
+    "name": "careloop-api",
+    "scripts": [
+      "dev",
+      "start",
+      "migrate",
+      "generate",
+      "studio",
+      "qa:reset",
+      "qa:seed:sprint1",
+      "test",
+      "test:watch"
+    ],
+    "dependencies": [
+      "@fastify/cors",
+      "@fastify/formbody",
+      "@prisma/client",
+      "dotenv",
+      "fastify",
+      "jose",
+      "node-cron",
+      "resend"
+    ],
+    "devDependencies": [
+      "prisma"
+    ]
+  },
+  "backendStructure": {
+    "src": true,
+    "tests": true,
+    "docs": true,
+    "prisma": true,
+    "schemaPrisma": true,
+    "envExample": true
+  },
+  "iosExists": true,
+  "iosProject": {
+    "xcodeproj": true,
+    "xcworkspace": false,
+    "packageSwift": false,
+    "podfile": false,
+    "projectYml": true
+  },
+  "iosStructure": {
+    "sources": true,
+    "sourceDirectories": [
+      "CareLoop",
+      "CareLoopTests"
+    ],
+    "tests": true,
+    "testDirectory": "CareLoopTests",
+    "docs": false,
+    "readme": false,
+    "infoPlist": true
+  },
+  "warnings": [],
+  "errors": []
+}

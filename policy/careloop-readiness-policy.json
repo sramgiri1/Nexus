@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "modeRequired": "local-private",
+  "projectIds": [
+    "careloop",
+    "careloop-ios"
+  ],
+  "allowedPurposes": [
+    "inventory",
+    "read"
+  ],
+  "deniedPurposes": [
+    "write",
+    "build",
+    "test",
+    "execute",
+    "mutate",
+    "deploy"
+  ],
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "apiServerAllowed": false,
+  "projectMutationAllowed": false,
+  "buildExecutionAllowed": false,
+  "testExecutionAllowed": false,
+  "sourceContentExtractionAllowed": false,
+  "publicDemoOutputAllowed": false,
+  "evidenceAllowed": true,
+  "auditAllowed": true,
+  "commandCenterPublicSurfaceAllowed": false
+}
