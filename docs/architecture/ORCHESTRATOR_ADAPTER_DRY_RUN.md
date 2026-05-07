@@ -53,10 +53,20 @@ task input
 - no private product execution yet
 - not wired into `loop.js` or `runner.js`
 
+## Relationship to controlled local execution
+
+Dry-run mode still matters after Phase 20-LOCAL.
+
+It remains the zero-write proof path for:
+
+- validating structure without mutating local runtime state
+- comparing simulated writes against controlled local writes
+- keeping a no-persistence validation mode available for future regressions
+
 ## Future transition
 
-Later phases can move from dry-run to controlled local execution by routing the
-same adapter path into:
+Phase 20-LOCAL now adds controlled local execution. Later phases can route the
+same adapter path further into:
 
 - real task dispatch
 - controlled tool execution

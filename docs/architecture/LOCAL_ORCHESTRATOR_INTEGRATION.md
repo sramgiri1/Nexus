@@ -20,6 +20,11 @@ Phase 19-LOCAL adds an orchestrator adapter dry-run mode on top of those
 helpers. That adapter proves the local OS path end to end without executing
 agents, tools, providers, or project mutations.
 
+Phase 20-LOCAL adds controlled local execution on top of the same path. It
+uses the traffic plane and local write boundary to create real local runtime
+records for `DemoApp` only, while still keeping providers, tools, project
+mutation, DB, and API layers disabled.
+
 ## Future flow
 
 ```text
@@ -83,3 +88,14 @@ The dry-run adapter now proves:
 - dry-run local write-boundary validation
 - dry-run evidence and audit simulation
 - structured dry-run result reporting
+
+## Controlled local proof path
+
+Controlled local execution now proves:
+
+- task creation through the local write boundary
+- append-only audit recording
+- append-only evidence recording
+- append-only runtime-event recording
+- approval-request recording for blocked high-risk work
+- blocked-attempt audit and incident recording for secret-data paths

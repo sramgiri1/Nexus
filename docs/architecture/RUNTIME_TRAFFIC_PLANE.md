@@ -157,3 +157,8 @@ to `local-state/runtime/`. Dispatch wiring still remains out of scope.
 Phase 19-LOCAL places the traffic plane inside a dry-run orchestrator adapter.
 That path proves identity, capability, policy, behavior, and evidence handling
 before any live local execution mode is introduced.
+
+Phase 20-LOCAL adds controlled local execution on top of that path. The
+traffic plane now gates real local runtime-record writes for `DemoApp` tasks
+through the local write boundary, while provider calls, tool calls, project
+mutation, DB writes, and API calls remain disabled.

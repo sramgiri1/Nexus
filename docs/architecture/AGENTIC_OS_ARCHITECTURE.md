@@ -57,6 +57,12 @@ evaluation, dry-run local write-boundary validation, and dry-run evidence and
 audit simulation without wiring `loop.js`, `runner.js`, providers, or project
 mutation.
 
+Phase 20-LOCAL adds controlled local execution mode. It takes the same
+governed path one step further by allowing real redacted task, audit,
+evidence, runtime-event, approval, and incident records to be written under
+`local-state/runtime/` for `DemoApp` only. It still does not wire dispatch,
+execute providers or tools, mutate projects, or add DB/API layers.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

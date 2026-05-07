@@ -44,41 +44,45 @@ belongs in separate private repos.
 - Phase 16-LOCAL Command Center live wiring
 - Phase 17-LOCAL Local state adapter and read API boundary
 - Phase 18-LOCAL Local orchestrator read/write integration plan
+- Phase 19-LOCAL Orchestrator adapter dry-run mode
 
 ---
 
 ## Current Phase
 
-### Phase 19-LOCAL — Orchestrator Adapter Dry-Run Mode
+### Phase 20-LOCAL — Controlled Local Execution Mode
 
 Goal:
 
-- prove the governed local OS path from task input through traffic policy and
-  dry-run local state handling without executing real agents, tools, or
-  providers
+- allow governed DemoApp-only local runtime writes after traffic-plane
+  evaluation without enabling providers, tools, project mutation, DB, or API
+  layers
 
 Deliverables:
 
-- local orchestrator dry-run adapter
-- dry-run scenario factory
-- dry-run execution plan
-- orchestrator dry-run CLI
-- validation against dry-run, traffic-plane, and local write-boundary rules
+- controlled local executor
+- controlled local execution plan
+- controlled local execution CLI
+- validation against traffic-plane, local write-boundary, and runtime-file
+  constraints
 
 Non-goals:
 
 - no API server
 - no DB
-- no write API
+- no write API outside local-state/runtime
 - no mutation endpoints
 - no real provider calls
+- no tool execution
 - no dispatch rewrite
+- no project mutation
 
 Validation checks:
 
-- orchestrator dry-run scenarios run locally
-- dry-run local writes do not persist
+- controlled local scenarios run locally
+- local writes stay under `local-state/runtime`
 - traffic-plane and identity surfaces are present in each scenario result
+- audit, evidence, runtime, approval, and incident records remain parseable
 - dashboard and existing local validation surfaces remain green
 
 Risk level:

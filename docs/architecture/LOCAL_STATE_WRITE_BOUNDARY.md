@@ -76,6 +76,11 @@ Phase 19-LOCAL uses this write boundary in `dryRun: true` mode so the
 orchestrator adapter can validate task, audit, evidence, and runtime-event
 records without persisting them.
 
+Phase 20-LOCAL adds controlled local execution on top of the same boundary.
+That mode may persist real redacted `DemoApp` runtime records under
+`local-state/runtime/`, but it still does not execute providers, tools, or
+project mutations.
+
 It does not:
 
 - wire `loop.js`

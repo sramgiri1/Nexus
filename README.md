@@ -60,6 +60,10 @@ OS path through identity, agent context, traffic policy, dry-run local writes,
 and dry-run evidence simulation without executing real agents, tools, or
 providers.
 
+Phase 20-LOCAL adds controlled local execution mode. It writes real redacted
+runtime records for `DemoApp` under `local-state/runtime/`, but it still does
+not execute providers, tools, project mutations, or dispatch wiring.
+
 Validate it with:
 
 ```bash
@@ -82,6 +86,7 @@ cd dashboard && npm run test:pages
 - [Local state write boundary](docs/architecture/LOCAL_STATE_WRITE_BOUNDARY.md)
 - [Local orchestrator integration](docs/architecture/LOCAL_ORCHESTRATOR_INTEGRATION.md)
 - [Orchestrator adapter dry-run](docs/architecture/ORCHESTRATOR_ADAPTER_DRY_RUN.md)
+- [Controlled local execution](docs/architecture/CONTROLLED_LOCAL_EXECUTION.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -102,6 +107,8 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run orchestrator:local-execute
+npm run check:controlled-local-execution
 npm run orchestrator:dry-run
 npm run check:orchestrator-dry-run
 npm run check:local-state-boundary
@@ -271,6 +278,11 @@ Phase 19-LOCAL adds a dry-run orchestrator adapter that exercises the local OS
 path without executing real work. It is still not wired into `loop.js` or
 `runner.js`, and it does not add provider calls, tool execution, DB access, or
 project mutation.
+
+Phase 20-LOCAL adds controlled local execution mode for `DemoApp` only. It
+writes redacted task, audit, evidence, runtime-event, approval, and incident
+records to `local-state/runtime/`, but it still does not execute providers,
+tools, project mutations, or dispatch wiring.
 
 ---
 

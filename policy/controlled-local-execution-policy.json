@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "executionMode": "controlled-local",
+  "providerCallsAllowed": false,
+  "toolCallsAllowed": false,
+  "projectWritesAllowed": false,
+  "dbWritesAllowed": false,
+  "apiCallsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false,
+  "localStateWritesAllowed": true,
+  "allowedWriteRoot": "local-state/runtime",
+  "requireIdentityContext": true,
+  "requireAgentContext": true,
+  "requireTrafficPlaneDecision": true,
+  "requireLocalWriteBoundary": true,
+  "requireEvidenceRecord": true,
+  "requireAuditEvent": true,
+  "noRawPromptStorage": true,
+  "noRawResponseStorage": true,
+  "publicSafetyRequired": true
+}
