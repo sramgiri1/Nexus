@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "baselinePerAgentRole": true,
+  "trackToolDistribution": true,
+  "trackArgumentShape": true,
+  "trackResponseClasses": true,
+  "trackChainDepth": true,
+  "trackEgressVolume": true,
+  "trackCost": true,
+  "driftAfterModelUpdateRequiresReview": true,
+  "escalationRequiredOnSevereDrift": true
+}

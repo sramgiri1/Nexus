@@ -58,6 +58,10 @@ whether an agent "should probably be allowed" to use a tool, the OS can later
 check whether a declared capability allows that request under the governor,
 contracts, state machine, and policy boundary.
 
+Phase 15-LOCAL adds the local traffic-plane helper that can later evaluate a
+capability per call together with identity context, data classification, and
+policy outcome. That helper exists as a module boundary only in this phase.
+
 ---
 
 ## Capability Lifecycle
@@ -167,6 +171,9 @@ replace verification evidence or state-machine rules.
 Capabilities are governed by the security boundary, the governor, and the state
 machine. Capability registration makes future enforcement explicit; it does not
 grant bypass authority.
+
+The runtime traffic plane is the first local place where that future
+capability-aware enforcement path can be modeled without rewriting dispatch.
 
 ### Domain Ownership
 

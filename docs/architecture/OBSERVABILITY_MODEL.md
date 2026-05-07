@@ -24,6 +24,7 @@ Observable facts come from:
 - contracts
 - state transitions
 - tool or skill results
+- runtime traffic-plane evidence records
 - runtime events
 - evidence artifacts
 - model usage
@@ -115,6 +116,10 @@ Observable facts come from:
 - release decisions
 - capability checks
 - cost
+
+Phase 15-LOCAL extends observability with per-call accountability evidence
+records and local behavior-baseline comparison. Those helpers create proof
+objects and drift signals, but they do not add a live telemetry exporter yet.
 
 ---
 

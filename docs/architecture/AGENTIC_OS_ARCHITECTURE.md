@@ -30,10 +30,20 @@ may decide, who may execute, who may verify, who may approve, and who resolves
 conflicts. That ownership model is documented and validated in policy files, but
 it is not runtime-enforced yet.
 
+Phase 15-LOCAL adds the first local runtime traffic-plane layer. It introduces
+identity propagation, per-call policy decisions, accountability evidence
+records, and behavior baseline helpers that future execution paths can pass
+through. The helpers are local modules only in this phase; orchestrator
+dispatch is not rewritten yet.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
 [`ESCALATION_AND_CONFLICT_RESOLUTION.md`](ESCALATION_AND_CONFLICT_RESOLUTION.md).
+See also [`RUNTIME_TRAFFIC_PLANE.md`](RUNTIME_TRAFFIC_PLANE.md),
+[`IDENTITY_PROPAGATION.md`](IDENTITY_PROPAGATION.md),
+[`ACCOUNTABILITY_EVIDENCE_RECORD.md`](ACCOUNTABILITY_EVIDENCE_RECORD.md), and
+[`BEHAVIOR_BASELINE_MODEL.md`](BEHAVIOR_BASELINE_MODEL.md).
 
 ---
 

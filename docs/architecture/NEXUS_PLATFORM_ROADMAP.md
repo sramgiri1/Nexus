@@ -39,37 +39,43 @@ belongs in separate private repos.
 - Phase 11 Tooling and capability model
 - Phase 12 Observability, evals, and artifacts
 - Phase 13 Demo and showcase mode
+- Phase 14 Domain ownership policy
 
 ---
 
 ## Current Phase
 
-### Phase 14 — Domain Ownership Policy
+### Phase 15-LOCAL — Runtime Traffic Plane and Identity Propagation
 
 Goal:
 
-- harden domain-level authority and decision ownership across the OS
+- add the first deterministic local enforcement layer for privilege,
+  behavioral monitoring, and accountability without rewriting dispatch yet
 
 Deliverables:
 
-- explicit domain ownership policy
-- authority matrix for all 20 agents
-- handoff ownership model
-- escalation and conflict rules
-- validation against capability, security, reliability, and public-safety layers
+- runtime traffic-plane helper modules
+- identity propagation model
+- per-call policy decision model
+- accountability evidence record model
+- local behavior-baseline model
+- validation against capability, security, observability, and public-safety
+  layers
 
 Non-goals:
 
 - no runtime enforcement changes
 - no agent prompt changes
 - no dashboard behavior changes
+- no real provider calls
+- no dispatch rewrite
 
 Validation checks:
 
-- no ambiguous ownership paths
-- authority matrix is internally consistent
-- handoffs remain contract-based
-- escalations block release when unresolved
+- traffic plane modules exist and export correctly
+- policy sample cases behave deterministically
+- accountability records hash and verify
+- public-safe demo surface remains intact
 
 Risk level:
 

@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "trafficPlaneRequiredForFutureRuntime": true,
+  "requireIdentityContext": true,
+  "requireCapabilityId": true,
+  "requirePolicyDecision": true,
+  "requireEvidenceRecord": true,
+  "requireBehaviorEvent": true,
+  "denyOnMissingIdentity": true,
+  "denyOnMissingCapability": true,
+  "blockSecretData": true,
+  "blockRestrictedBatch": true,
+  "blockOpenRouterRestricted": true,
+  "requireApprovalForHighRiskActions": true
+}

@@ -1,0 +1,9 @@
+{
+  "version": "1.0",
+  "originatingUserRequired": true,
+  "sessionRequired": true,
+  "delegationChainRequired": true,
+  "serviceAccountMustPreserveOriginatingUser": true,
+  "scopesEvaluatedPerCall": true,
+  "demoIdentityAllowed": true
+}

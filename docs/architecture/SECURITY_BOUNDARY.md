@@ -28,6 +28,11 @@ Phase 14 adds domain ownership and agent authority rules on top of that. The
 security boundary answers what must be blocked. The ownership model answers who
 may request, decide, verify, escalate, or stay out of a domain entirely.
 
+Phase 15-LOCAL adds a local traffic-plane helper between agents and future
+model, tool, skill, runtime, provider, batch, or MCP calls. That helper
+enforces the operational categories of privilege, behavioral monitoring, and
+accountability, but it is not fully wired into orchestrator dispatch yet.
+
 ---
 
 ## Security Layers

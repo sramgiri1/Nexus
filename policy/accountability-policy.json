@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "evidenceRecordPerCall": true,
+  "includeSessionId": true,
+  "includeOriginatingUser": true,
+  "includeDelegationChain": true,
+  "includeAgentVersion": true,
+  "includePromptClassification": true,
+  "includeRetrievedContextClassification": true,
+  "includeResponseClassification": true,
+  "includeDownstreamToolCalls": true,
+  "includePolicyDecision": true,
+  "hashRawContent": true,
+  "rawPromptStorageAllowed": false,
+  "rawResponseStorageAllowed": false,
+  "redactionRequired": true
+}

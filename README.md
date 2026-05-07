@@ -24,6 +24,7 @@ NEXUS is built around:
 - contracts
 - state machines
 - capabilities
+- runtime traffic enforcement helpers
 - evidence
 - gates
 - safety boundaries
@@ -57,6 +58,10 @@ cd dashboard && npm run test:pages
 - [Public repo boundary](docs/PUBLIC_REPO_BOUNDARY.md)
 - [Private project boundary](docs/PRIVATE_PROJECT_BOUNDARY.md)
 - [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
+- [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
+- [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
+- [Accountability evidence record](docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md)
+- [Behavior baseline model](docs/architecture/BEHAVIOR_BASELINE_MODEL.md)
 - [Domain ownership policy](docs/architecture/DOMAIN_OWNERSHIP_POLICY.md)
 - [Agent authority matrix](docs/architecture/AGENT_AUTHORITY_MATRIX.md)
 - [Handoff ownership model](docs/architecture/HANDOFF_OWNERSHIP_MODEL.md)
@@ -72,6 +77,7 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run check:runtime-traffic-plane
 npm run check:domain-ownership
 npm run check:observability-evals-artifacts
 npm run check:capabilities
@@ -181,6 +187,11 @@ See [`docs/architecture/DOMAIN_OWNERSHIP_POLICY.md`](docs/architecture/DOMAIN_OW
 [`docs/architecture/HANDOFF_OWNERSHIP_MODEL.md`](docs/architecture/HANDOFF_OWNERSHIP_MODEL.md),
 and [`docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md`](docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md)
 for the Phase 14 domain ownership, authority, handoff, and escalation model.
+See [`docs/architecture/RUNTIME_TRAFFIC_PLANE.md`](docs/architecture/RUNTIME_TRAFFIC_PLANE.md),
+[`docs/architecture/IDENTITY_PROPAGATION.md`](docs/architecture/IDENTITY_PROPAGATION.md),
+[`docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md`](docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md),
+and [`docs/architecture/BEHAVIOR_BASELINE_MODEL.md`](docs/architecture/BEHAVIOR_BASELINE_MODEL.md)
+for the Phase 15-LOCAL runtime traffic plane and identity propagation layer.
 
 ---
 
@@ -207,6 +218,11 @@ the agent OS readiness checker passes, the task-context adapter exists, and the
 Command Center prototype is static-data-only. The next layer is operator platform
 hardening: data protection, security boundary policy, OS reliability, and later
 durable database-backed state.
+
+Phase 15-LOCAL adds the first local runtime traffic-plane helpers for privilege,
+behavioral monitoring, accountability evidence records, and identity
+propagation. Those helpers exist as local modules and validation logic only.
+They are not wired into orchestrator dispatch yet.
 
 ---
 
