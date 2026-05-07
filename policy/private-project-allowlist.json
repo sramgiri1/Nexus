@@ -1,0 +1,46 @@
+{
+  "version": "1.0",
+  "mode": "local-private",
+  "projects": [
+    {
+      "projectId": "careloop",
+      "root": "projects/careloop",
+      "allowedModes": [
+        "local-private",
+        "test"
+      ],
+      "allowedPurposes": [
+        "inventory",
+        "read"
+      ],
+      "deniedPurposes": [
+        "write",
+        "build",
+        "test",
+        "execute",
+        "mutate",
+        "deploy"
+      ]
+    },
+    {
+      "projectId": "careloop-ios",
+      "root": "projects/careloop-ios",
+      "allowedModes": [
+        "local-private",
+        "test"
+      ],
+      "allowedPurposes": [
+        "inventory",
+        "read"
+      ],
+      "deniedPurposes": [
+        "write",
+        "build",
+        "test",
+        "execute",
+        "mutate",
+        "deploy"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "defaultMode": "demo",
+  "publicModePrivateProjectAccess": "deny",
+  "demoModePrivateProjectAccess": "deny",
+  "localPrivateModePrivateProjectAccess": "allow_with_allowlist",
+  "allowedPurposesThisPhase": [
+    "inventory",
+    "read"
+  ],
+  "deniedPurposesThisPhase": [
+    "write",
+    "build",
+    "test",
+    "execute",
+    "mutate",
+    "deploy"
+  ],
+  "providerCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "apiServerAllowed": false,
+  "projectMutationAllowed": false,
+  "careloopExecutionAllowed": false,
+  "publicSafetyMustRemainStrict": true
+}

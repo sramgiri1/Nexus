@@ -53,7 +53,8 @@
     "check:guarded-task-execution": "node scripts/check-guarded-task-execution.js",
     "demo": "node scripts/demo.js",
     "check:demo-showcase": "node scripts/check-demo-showcase.js",
-    "check:public-safety": "node scripts/check-public-safety.js"
+    "check:public-safety": "node scripts/check-public-safety.js",
+    "check:private-project-mode": "node scripts/check-private-project-mode.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
