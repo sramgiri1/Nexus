@@ -6,7 +6,13 @@ import {
   appendIncidentRecord,
   appendRuntimeEvent,
 } from "./stateStore.js";
-import { addTask, updateTaskState, validateTask } from "./taskStore.js";
+import {
+  addTask,
+  getTaskById,
+  updateTaskState,
+  validateTask,
+} from "./taskStore.js";
+import { validateLocalTaskTransition } from "./stateTransitionGuard.js";
 import {
   LOCAL_APPROVALS_FILE,
   LOCAL_AUDIT_FILE,
@@ -33,6 +39,10 @@ const ALLOWED_TYPES = new Set([
 
 function normalizeString(value) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function ensureArray(value) {
+  return Array.isArray(value) ? [...value] : [];
 }
 
 function validatePolicyDecision(policyDecision) {
@@ -140,6 +150,100 @@ function validateRoute(type, record) {
   }
 }
 
+function buildTransitionInput(taskRecord, writeRecord) {
+  return {
+    entityType: "task",
+    entityId: taskRecord.taskId,
+    fromState: taskRecord.state,
+    toState:
+      normalizeString(writeRecord.nextState) || normalizeString(writeRecord.state),
+    actor:
+      normalizeString(writeRecord.actorId) ||
+      normalizeString(writeRecord.actor) ||
+      normalizeString(writeRecord.targetAgent),
+    agentId:
+      normalizeString(writeRecord.agentId) ||
+      normalizeString(taskRecord.targetAgent),
+    projectId: taskRecord.projectId,
+    taskId: taskRecord.taskId,
+    reason: normalizeString(writeRecord.reason),
+    evidence: ensureArray(writeRecord.evidence),
+    context: {
+      taskType: taskRecord.taskType,
+      ...((writeRecord.context &&
+        typeof writeRecord.context === "object" &&
+        writeRecord.context) ||
+        {}),
+    },
+  };
+}
+
+function buildBlockedTransitionAuditRecord(taskRecord, writeRecord, transition) {
+  return {
+    eventType: "task_state_transition_blocked",
+    actorId:
+      normalizeString(writeRecord.actorId) ||
+      normalizeString(writeRecord.actor) ||
+      normalizeString(writeRecord.agentId) ||
+      normalizeString(taskRecord?.targetAgent) ||
+      "system",
+    actorType: normalizeString(writeRecord.actorType) || "agent",
+    projectId:
+      normalizeString(writeRecord.projectId) ||
+      normalizeString(taskRecord?.projectId),
+    taskId:
+      normalizeString(writeRecord.taskId) || normalizeString(taskRecord?.taskId),
+    capabilityId:
+      normalizeString(writeRecord.capabilityId) ||
+      normalizeString(taskRecord?.capabilityId),
+    policyDecisionId: normalizeString(writeRecord.policyDecisionId),
+    summary:
+      normalizeString(writeRecord.summary) ||
+      `Blocked task transition ${normalizeString(
+        transition.transitionEvidence?.fromState
+      )} -> ${normalizeString(
+        transition.transitionEvidence?.toState
+      )}: ${normalizeString(transition.reason)}`,
+    previousState: normalizeString(transition.transitionEvidence?.fromState),
+    nextState: normalizeString(transition.transitionEvidence?.toState),
+    redacted: true,
+  };
+}
+
+function shouldCreateTransitionIncident(transition) {
+  const serialized = JSON.stringify({
+    reason: transition.reason,
+    errors: transition.errors,
+  }).toLowerCase();
+
+  return /security|secret|policy|restricted|confidential/.test(serialized);
+}
+
+function validateTaskStateTransition(record, warnings = []) {
+  const taskLookup = getTaskById(record.taskId);
+  if (!taskLookup.ok) {
+    return {
+      ok: false,
+      taskLookup,
+      transition: null,
+      warnings: [...warnings, ...taskLookup.warnings],
+      errors: taskLookup.errors,
+    };
+  }
+
+  const transition = validateLocalTaskTransition(
+    buildTransitionInput(taskLookup.record, record)
+  );
+
+  return {
+    ok: transition.allowed,
+    taskLookup,
+    transition,
+    warnings: [...warnings, ...transition.warnings],
+    errors: transition.allowed ? [] : transition.errors,
+  };
+}
+
 export function validateLocalWrite(input = {}) {
   const type = normalizeString(input.type);
   const record =
@@ -157,7 +261,11 @@ export function validateLocalWrite(input = {}) {
     );
   }
 
-  if (!input.record || typeof input.record !== "object" || Array.isArray(input.record)) {
+  if (
+    !input.record ||
+    typeof input.record !== "object" ||
+    Array.isArray(input.record)
+  ) {
     errors.push("record must be an object.");
   }
 
@@ -174,7 +282,9 @@ export function validateLocalWrite(input = {}) {
   }
 
   const policyValidation = validatePolicyDecision(input.policyDecision);
-  errors.push(...policyValidation.errors.map((error) => `policyDecision: ${error}`));
+  errors.push(
+    ...policyValidation.errors.map((error) => `policyDecision: ${error}`)
+  );
   warnings.push(
     ...policyValidation.warnings.map((warning) => `policyDecision: ${warning}`)
   );
@@ -203,6 +313,7 @@ export function writeLocalStateEvent(input = {}) {
   if (!validation.valid) {
     return {
       ok: false,
+      blocked: false,
       type,
       written: false,
       path,
@@ -212,9 +323,151 @@ export function writeLocalStateEvent(input = {}) {
     };
   }
 
+  if (type === "task_state") {
+    const transitionCheck = validateTaskStateTransition(
+      validation.record,
+      validation.warnings
+    );
+
+    if (!transitionCheck.taskLookup?.ok) {
+      return {
+        ok: false,
+        blocked: false,
+        type,
+        written: false,
+        path,
+        record: validation.record,
+        errors: transitionCheck.errors,
+        warnings: transitionCheck.warnings,
+      };
+    }
+
+    if (input.dryRun) {
+      return {
+        ok: transitionCheck.ok,
+        blocked: !transitionCheck.ok,
+        type,
+        written: false,
+        path,
+        record: validation.record,
+        transition: transitionCheck.transition,
+        errors: transitionCheck.errors,
+        warnings: transitionCheck.warnings,
+      };
+    }
+
+    if (!transitionCheck.ok) {
+      const auditResult = appendAuditEvent(
+        buildBlockedTransitionAuditRecord(
+          transitionCheck.taskLookup.record,
+          validation.record,
+          transitionCheck.transition
+        )
+      );
+
+      let incidentResult = null;
+      if (shouldCreateTransitionIncident(transitionCheck.transition)) {
+        incidentResult = appendIncidentRecord({
+          type: "task_state_transition_blocked",
+          severity: normalizeString(validation.record.riskLevel) || "high",
+          projectId: transitionCheck.taskLookup.record.projectId,
+          taskId: transitionCheck.taskLookup.record.taskId,
+          summary: `Blocked local task transition ${normalizeString(
+            transitionCheck.transition.transitionEvidence?.fromState
+          )} -> ${normalizeString(
+            transitionCheck.transition.transitionEvidence?.toState
+          )}: ${normalizeString(transitionCheck.transition.reason)}`,
+          status: "open",
+          redacted: true,
+        });
+      }
+
+      return {
+        ok: false,
+        blocked: true,
+        type,
+        written: false,
+        path,
+        record: validation.record,
+        transition: transitionCheck.transition,
+        audit: auditResult.record,
+        incident: incidentResult?.record || null,
+        errors: [
+          ...transitionCheck.errors,
+          ...(auditResult.ok ? [] : auditResult.errors),
+          ...(incidentResult?.ok === false ? incidentResult.errors : []),
+        ],
+        warnings: [
+          ...transitionCheck.warnings,
+          ...(auditResult.ok ? [] : auditResult.warnings),
+          ...(incidentResult?.ok === false ? incidentResult.warnings : []),
+        ],
+        reason: transitionCheck.transition.reason,
+      };
+    }
+
+    const nextState =
+      normalizeString(validation.record.nextState) ||
+      normalizeString(validation.record.state);
+    const previousState = transitionCheck.taskLookup.record.state;
+    const updateResult = updateTaskState(validation.record.taskId, nextState, {
+      ...validation.record,
+      previousState,
+      nextState,
+    });
+
+    if (!updateResult.ok) {
+      return {
+        ok: false,
+        blocked: false,
+        type,
+        written: false,
+        path,
+        record: validation.record,
+        transition: transitionCheck.transition,
+        errors: updateResult.errors,
+        warnings: [...transitionCheck.warnings, ...updateResult.warnings],
+      };
+    }
+
+    const runtimeEvent = appendRuntimeEvent({
+      eventType: "task_state_transition",
+      projectId: transitionCheck.taskLookup.record.projectId,
+      taskId: transitionCheck.taskLookup.record.taskId,
+      agentId:
+        normalizeString(validation.record.agentId) ||
+        normalizeString(transitionCheck.taskLookup.record.targetAgent),
+      runtime: normalizeString(validation.record.runtime) || "node-local",
+      summary: `Local task transition ${previousState} -> ${nextState} recorded for ${transitionCheck.taskLookup.record.taskId}.`,
+      redacted: true,
+    });
+
+    return {
+      ok: updateResult.ok && runtimeEvent.ok,
+      blocked: false,
+      type,
+      written: updateResult.ok,
+      path,
+      record: updateResult.record,
+      transition: transitionCheck.transition,
+      audit: updateResult.audit,
+      runtimeEvent: runtimeEvent.record,
+      errors: [
+        ...updateResult.errors,
+        ...(runtimeEvent.ok ? [] : runtimeEvent.errors),
+      ],
+      warnings: [
+        ...transitionCheck.warnings,
+        ...updateResult.warnings,
+        ...(runtimeEvent.ok ? [] : runtimeEvent.warnings),
+      ],
+    };
+  }
+
   if (input.dryRun) {
     return {
       ok: true,
+      blocked: false,
       type,
       written: false,
       path,
@@ -228,13 +481,6 @@ export function writeLocalStateEvent(input = {}) {
   switch (type) {
     case "task":
       result = addTask(validation.record);
-      break;
-    case "task_state":
-      result = updateTaskState(
-        validation.record.taskId,
-        validation.record.nextState || validation.record.state,
-        validation.record
-      );
       break;
     case "evidence":
       result = appendEvidence(validation.record);
@@ -263,10 +509,12 @@ export function writeLocalStateEvent(input = {}) {
 
   return {
     ok: result.ok,
+    blocked: result.blocked === true,
     type,
     written: Boolean(result.ok),
     path: result.path || path,
     record: result.record || validation.record,
+    transition: result.transition,
     errors: result.errors || [],
     warnings: [...validation.warnings, ...(result.warnings || [])],
   };

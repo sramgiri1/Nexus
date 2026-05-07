@@ -40,20 +40,12 @@ function mapDecisionToResult(decisionResult) {
   return "FAIL";
 }
 
-function taskStateForResult(result) {
-  if (result === "PASS") {
-    return "local_recorded";
-  }
-
+function initialTaskStateForResult(result) {
   if (result === "REQUIRE_APPROVAL") {
-    return "approval_required";
+    return "awaiting_approval";
   }
 
-  if (result === "BLOCKED") {
-    return "blocked";
-  }
-
-  return "failed";
+  return "queued";
 }
 
 function normalizeProjectId(projectId) {
@@ -88,6 +80,38 @@ function performLocalWrite(label, type, record, executionContext, trafficResult)
       dryRun: false,
     }),
     dryRun: false,
+  };
+}
+
+function createTransitionWriteLabel(fromState, toState) {
+  return `task_state_${normalizeString(fromState)}_${normalizeString(toState)}`;
+}
+
+function countTransitionEvidence(result) {
+  if (!result?.transition?.transitionEvidence) {
+    return 0;
+  }
+
+  return Array.isArray(result.transition.transitionEvidence.evidenceTypes)
+    ? result.transition.transitionEvidence.evidenceTypes.length
+    : 0;
+}
+
+function summarizeTransitions(localWrites = []) {
+  const transitionWrites = localWrites.filter(
+    (write) => typeof write.label === "string" && write.label.startsWith("task_state_")
+  );
+
+  return {
+    transitionsAttempted: transitionWrites.length,
+    transitionsAllowed: transitionWrites.filter((write) => write.ok).length,
+    transitionsBlocked: transitionWrites.filter(
+      (write) => write.blocked === true || write.ok === false
+    ).length,
+    transitionEvidenceCount: transitionWrites.reduce(
+      (total, write) => total + countTransitionEvidence(write),
+      0
+    ),
   };
 }
 
@@ -318,7 +342,7 @@ function buildLocalWriteRecords(input, executionContext, trafficResult, result) 
       targetAgent,
       taskType: normalizeString(input.taskType),
       objective: normalizeString(input.objective),
-      state: taskStateForResult(result),
+      state: initialTaskStateForResult(result),
       riskLevel: normalizeString(input.riskLevel),
       blocking: input.blocking !== false,
       dependsOn: ensureArray(input.dependsOn),
@@ -529,8 +553,26 @@ export function runControlledLocalExecution(input = {}) {
   );
   const localWrites = [];
 
+  function pushWrite(write) {
+    localWrites.push(write);
+    steps.push(
+      createControlledExecutionStep(
+        `write_local_${write.label}`,
+        write.ok ? "PASS" : write.blocked ? "BLOCKED" : "FAIL",
+        {
+          path: write.path,
+          written: write.written,
+          dryRun: false,
+          blocked: write.blocked === true,
+        }
+      )
+    );
+    errors.push(...(write.errors || []));
+    warnings.push(...(write.warnings || []));
+  }
+
   if (result === "BLOCKED") {
-    localWrites.push(
+    pushWrite(
       performLocalWrite(
         "audit",
         "audit",
@@ -541,7 +583,7 @@ export function runControlledLocalExecution(input = {}) {
     );
 
     if (isSecurityBlockedDecision(trafficResult.decision)) {
-      localWrites.push(
+      pushWrite(
         performLocalWrite(
           "incident",
           "incident",
@@ -552,7 +594,7 @@ export function runControlledLocalExecution(input = {}) {
       );
     }
   } else if (result === "REQUIRE_APPROVAL") {
-    localWrites.push(
+    pushWrite(
       performLocalWrite(
         "task",
         "task",
@@ -561,7 +603,7 @@ export function runControlledLocalExecution(input = {}) {
         trafficResult
       )
     );
-    localWrites.push(
+    pushWrite(
       performLocalWrite(
         "audit",
         "audit",
@@ -570,7 +612,7 @@ export function runControlledLocalExecution(input = {}) {
         trafficResult
       )
     );
-    localWrites.push(
+    pushWrite(
       performLocalWrite(
         "approval",
         "approval",
@@ -580,72 +622,121 @@ export function runControlledLocalExecution(input = {}) {
       )
     );
   } else if (result === "PASS") {
-    localWrites.push(
-      performLocalWrite(
-        "task",
-        "task",
-        localWriteRecords.task,
-        executionContext,
-        trafficResult
-      )
+    const taskWrite = performLocalWrite(
+      "task",
+      "task",
+      localWriteRecords.task,
+      executionContext,
+      trafficResult
     );
-    localWrites.push(
-      performLocalWrite(
-        "audit",
-        "audit",
-        localWriteRecords.audit,
-        executionContext,
-        trafficResult
-      )
-    );
-    localWrites.push(
-      performLocalWrite(
-        "evidence",
-        "evidence",
-        localWriteRecords.evidence,
-        executionContext,
-        trafficResult
-      )
-    );
-    localWrites.push(
-      performLocalWrite(
-        "runtime_event",
-        "runtime_event",
-        localWriteRecords.runtimeEvent,
-        executionContext,
-        trafficResult
-      )
-    );
-  }
+    pushWrite(taskWrite);
 
-  for (const write of localWrites) {
-    steps.push(
-      createControlledExecutionStep(
-        `write_local_${write.label}`,
-        write.ok ? "PASS" : "FAIL",
+    if (taskWrite.ok) {
+      const startTransition = performLocalWrite(
+        createTransitionWriteLabel("queued", "running"),
+        "task_state",
         {
-          path: write.path,
-          written: write.written,
-          dryRun: false,
+          taskId: executionContext.taskId,
+          nextState: "running",
+          actorId: normalizeString(input.targetAgent),
+          actorType: "agent",
+          agentId: normalizeString(input.targetAgent),
+          capabilityId: normalizeString(input.capabilityId),
+          policyDecisionId: trafficResult.decision.decisionId,
+          runtime: normalizeString(input.runtime) || "node-local",
+          evidence: [],
+          context: {
+            taskType: normalizeString(input.taskType),
+          },
+        },
+        executionContext,
+        trafficResult
+      );
+      pushWrite(startTransition);
+
+      if (startTransition.ok) {
+        const finishTransition = performLocalWrite(
+          createTransitionWriteLabel("running", "implementation_done"),
+          "task_state",
+          {
+            taskId: executionContext.taskId,
+            nextState: "implementation_done",
+            actorId: normalizeString(input.targetAgent),
+            actorType: "agent",
+            agentId: normalizeString(input.targetAgent),
+            capabilityId: normalizeString(input.capabilityId),
+            policyDecisionId: trafficResult.decision.decisionId,
+            runtime: normalizeString(input.runtime) || "node-local",
+            evidence: [],
+            context: {
+              taskType: normalizeString(input.taskType),
+            },
+          },
+          executionContext,
+          trafficResult
+        );
+        pushWrite(finishTransition);
+
+        if (!finishTransition.ok) {
+          result = finishTransition.blocked ? "BLOCKED" : "FAIL";
         }
-      )
-    );
+      } else {
+        result = startTransition.blocked ? "BLOCKED" : "FAIL";
+      }
+    } else {
+      result = "FAIL";
+    }
 
-    errors.push(...(write.errors || []));
-    warnings.push(...(write.warnings || []));
+    if (result === "PASS") {
+      pushWrite(
+        performLocalWrite(
+          "audit",
+          "audit",
+          localWriteRecords.audit,
+          executionContext,
+          trafficResult
+        )
+      );
+      pushWrite(
+        performLocalWrite(
+          "evidence",
+          "evidence",
+          localWriteRecords.evidence,
+          executionContext,
+          trafficResult
+        )
+      );
+      pushWrite(
+        performLocalWrite(
+          "runtime_event",
+          "runtime_event",
+          localWriteRecords.runtimeEvent,
+          executionContext,
+          trafficResult
+        )
+      );
+    }
   }
 
-  if (localWrites.some((write) => !write.ok)) {
+  if (localWrites.some((write) => !write.ok && write.blocked !== true)) {
     result = "FAIL";
+  } else if (
+    result === "PASS" &&
+    localWrites.some((write) => write.blocked === true)
+  ) {
+    result = "BLOCKED";
   }
+
+  const transitionSummary = summarizeTransitions(localWrites);
 
   steps.push(
     createControlledExecutionStep(
       "finalize_result",
-      result === "FAIL" ? "FAIL" : "PASS",
+      result === "FAIL" ? "FAIL" : result === "BLOCKED" ? "BLOCKED" : "PASS",
       {
         result,
         executionMode: "controlled-local",
+        ...transitionSummary,
       }
     )
   );
@@ -662,6 +753,10 @@ export function runControlledLocalExecution(input = {}) {
     behavior: trafficResult.behavior,
     evidenceRecord: trafficResult.evidenceRecord,
     localWrites,
+    transitionsAttempted: transitionSummary.transitionsAttempted,
+    transitionsAllowed: transitionSummary.transitionsAllowed,
+    transitionsBlocked: transitionSummary.transitionsBlocked,
+    transitionEvidenceCount: transitionSummary.transitionEvidenceCount,
     result,
     errors: unique(errors),
     warnings: unique(warnings),

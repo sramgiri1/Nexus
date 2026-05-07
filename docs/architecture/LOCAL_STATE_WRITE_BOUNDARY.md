@@ -81,6 +81,10 @@ That mode may persist real redacted `DemoApp` runtime records under
 `local-state/runtime/`, but it still does not execute providers, tools, or
 project mutations.
 
+Phase 22-LOCAL adds task-state enforcement before state writes. Controlled
+local execution may still write only under `local-state/runtime/`, but task
+state changes now pass through the existing task state machine before commit.
+
 It does not:
 
 - wire `loop.js`

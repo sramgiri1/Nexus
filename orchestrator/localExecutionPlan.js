@@ -93,6 +93,22 @@ export function summarizeControlledExecutionResults(results = []) {
     "REQUIRE_APPROVAL"
   );
   const fail = countByResult(scenarioResults, "FAIL");
+  const transitionsAttempted = scenarioResults.reduce(
+    (total, result) => total + (Number(result.transitionsAttempted) || 0),
+    0
+  );
+  const transitionsAllowed = scenarioResults.reduce(
+    (total, result) => total + (Number(result.transitionsAllowed) || 0),
+    0
+  );
+  const transitionsBlocked = scenarioResults.reduce(
+    (total, result) => total + (Number(result.transitionsBlocked) || 0),
+    0
+  );
+  const transitionEvidenceCount = scenarioResults.reduce(
+    (total, result) => total + (Number(result.transitionEvidenceCount) || 0),
+    0
+  );
 
   return {
     ok: fail === 0,
@@ -102,8 +118,12 @@ export function summarizeControlledExecutionResults(results = []) {
     blocked,
     requireApproval,
     fail,
+    transitionsAttempted,
+    transitionsAllowed,
+    transitionsBlocked,
+    transitionEvidenceCount,
     results: scenarioResults,
-    summary: `${scenarioResults.length} controlled-local scenarios: ${pass} pass, ${requireApproval} require approval, ${blocked} blocked, ${fail} fail.`,
+    summary: `${scenarioResults.length} controlled-local scenarios: ${pass} pass, ${requireApproval} require approval, ${blocked} blocked, ${fail} fail, ${transitionsAllowed}/${transitionsAttempted} transitions allowed.`,
   };
 }
 

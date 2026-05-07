@@ -69,6 +69,12 @@ reads a generated browser-safe snapshot derived from `local-state/runtime/`
 files, while staying read-only and without adding API, DB, mutation, provider,
 or tool execution.
 
+Phase 22-LOCAL adds local state-machine enforcement for controlled local task
+transitions. Before a local task state changes, the executor now validates the
+transition through the existing task state machine. This is still local
+prototype enforcement only, and it is not wired into `loop.js` or `runner.js`
+yet.
+
 Validate it with:
 
 ```bash
@@ -93,6 +99,7 @@ cd dashboard && npm run test:pages
 - [Orchestrator adapter dry-run](docs/architecture/ORCHESTRATOR_ADAPTER_DRY_RUN.md)
 - [Controlled local execution](docs/architecture/CONTROLLED_LOCAL_EXECUTION.md)
 - [Command Center runtime ingestion](docs/architecture/COMMAND_CENTER_RUNTIME_INGESTION.md)
+- [Local state machine enforcement](docs/architecture/LOCAL_STATE_MACHINE_ENFORCEMENT.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -117,6 +124,7 @@ npm run generate:command-center-snapshot
 npm run check:command-center-runtime-ingestion
 npm run orchestrator:local-execute
 npm run check:controlled-local-execution
+npm run check:local-state-machine
 npm run orchestrator:dry-run
 npm run check:orchestrator-dry-run
 npm run check:local-state-boundary

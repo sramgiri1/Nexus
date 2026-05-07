@@ -41,6 +41,7 @@
     "check:orchestrator-dry-run": "node scripts/check-orchestrator-dry-run.js",
     "orchestrator:local-execute": "node scripts/orchestrator-local-execute.js",
     "check:controlled-local-execution": "node scripts/check-controlled-local-execution.js",
+    "check:local-state-machine": "node scripts/check-local-state-machine-enforcement.js",
     "generate:command-center-snapshot": "node scripts/generate-command-center-snapshot.js",
     "check:command-center-runtime-ingestion": "node scripts/check-command-center-runtime-ingestion.js",
     "demo": "node scripts/demo.js",

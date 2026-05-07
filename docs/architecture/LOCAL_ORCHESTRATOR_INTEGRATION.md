@@ -25,6 +25,10 @@ uses the traffic plane and local write boundary to create real local runtime
 records for `DemoApp` only, while still keeping providers, tools, project
 mutation, DB, and API layers disabled.
 
+Phase 22-LOCAL adds local state-machine enforcement to the same path. Task
+state changes now validate against the existing task state machine before the
+local write boundary commits them.
+
 ## Future flow
 
 ```text
@@ -32,6 +36,7 @@ task request
   → identity context
   → capability check
   → runtime traffic plane policy decision
+  → task state-machine transition validation
   → local write boundary
   → task, evidence, and audit update
   → Command Center read boundary

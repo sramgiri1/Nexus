@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "taskTransitionsRequireStateMachine": true,
+  "directTaskStateUpdateAllowed": false,
+  "blockedTransitionWritesAllowed": false,
+  "auditRequiredForTransition": true,
+  "evidenceRequiredForCompletion": true,
+  "approvalEvidenceRequiredForApprovalTransition": true,
+  "batchReconciledEvidenceRequiredForBatchCompletion": true,
+  "implementationAgentsCannotCompleteDirectly": true,
+  "verificationRequiredForCompletion": true,
+  "dryRunValidationSupported": true,
+  "appliesTo": ["task"],
+  "futureAppliesTo": ["gate", "release", "batch"]
+}

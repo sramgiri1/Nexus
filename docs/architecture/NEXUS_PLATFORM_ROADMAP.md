@@ -46,44 +46,42 @@ belongs in separate private repos.
 - Phase 18-LOCAL Local orchestrator read/write integration plan
 - Phase 19-LOCAL Orchestrator adapter dry-run mode
 - Phase 20-LOCAL Controlled local execution mode
+- Phase 21-LOCAL Command Center runtime file ingestion
 
 ---
 
 ## Current Phase
 
-### Phase 21-LOCAL — Command Center Runtime File Ingestion
+### Phase 22-LOCAL — State Machine Enforcement in Local Executor
 
 Goal:
 
-- surface real local runtime-file summaries in Command Center through a
-  generated browser-safe snapshot without adding API, DB, mutation, providers,
-  or tool execution
+- require local controlled task-state changes to pass through the existing task
+  state machine before `local-state/runtime` writes are committed
 
 Deliverables:
 
-- runtime file normalizer
-- Command Center snapshot generator
-- dashboard runtime snapshot data module
-- Command Center runtime-state panels
-- validation against read-only snapshot-ingestion rules
+- local task transition guard
+- guarded `task_state` writes through `writeLocalStateEvent`
+- controlled local execution updates that use queued, running, and
+  implementation_done transitions
+- validation against approval, verification, and batch-evidence transition rules
 
 Non-goals:
 
-- no API server
-- no DB
-- no live browser filesystem reads
-- no mutation endpoints
-- no real provider calls
-- no tool execution
-- no dispatch rewrite
+- no provider calls
+- no external tool execution
 - no project mutation
+- no DB or API server
+- no dispatch rewrite
+- no private product execution
 
 Validation checks:
 
-- runtime summaries are derived from `local-state/runtime`
-- generated snapshot stays read-only and browser-safe
-- Command Center surfaces recent runtime file data
-- dashboard and existing local validation surfaces remain green
+- queued, verification, approval, and deferred-batch transitions are validated
+- blocked transitions do not mutate task state
+- controlled local execution still passes for `DemoApp`
+- existing runtime, Command Center, and policy checks remain green
 
 Risk level:
 

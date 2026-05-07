@@ -32,6 +32,7 @@ task input
   → identity context
   → agent context
   → traffic plane
+  → task state-machine validation
   → local write boundary
   → local task, evidence, audit, and runtime writes
   → execution result
@@ -56,6 +57,8 @@ Controlled local execution may write only to:
 
 ## Current phase boundary
 
+- local task transitions are validated through the existing task state machine
+  before writes
 - no provider calls
 - no tool calls
 - no project mutation

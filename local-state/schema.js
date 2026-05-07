@@ -118,6 +118,11 @@ export const KNOWN_REPORTS = [
     name: "Command Center Runtime Ingestion",
     path: "reports/command-center-runtime-ingestion-report.md",
   },
+  {
+    id: "local-state-machine-enforcement",
+    name: "Local State Machine Enforcement",
+    path: "reports/local-state-machine-enforcement-report.md",
+  },
 ];
 
 export const KNOWN_DEMO_CONTRACTS = [

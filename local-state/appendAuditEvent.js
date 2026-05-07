@@ -31,6 +31,8 @@ function buildAuditEvent(event = {}) {
     capabilityId: normalizeString(sanitized.capabilityId),
     policyDecisionId: normalizeString(sanitized.policyDecisionId),
     summary: normalizeString(sanitized.summary),
+    previousState: normalizeString(sanitized.previousState),
+    nextState: normalizeString(sanitized.nextState),
     createdAt: normalizeString(sanitized.createdAt) || new Date().toISOString(),
     redacted: true,
   };

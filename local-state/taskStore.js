@@ -239,7 +239,45 @@ export function addTask(task = {}) {
   };
 }
 
+export function getTaskById(taskId) {
+  const currentState = readTasks();
+  if (!currentState.ok) {
+    return {
+      ok: false,
+      path: LOCAL_TASKS_FILE,
+      record: null,
+      errors: currentState.errors,
+      warnings: currentState.warnings,
+    };
+  }
+
+  const normalizedTaskId = normalizeString(taskId);
+  const record = currentState.document.tasks.find(
+    (task) => task.taskId === normalizedTaskId
+  );
+
+  if (!normalizedTaskId || !record) {
+    return {
+      ok: false,
+      path: LOCAL_TASKS_FILE,
+      record: null,
+      errors: ["taskId was not found in the local task store."],
+      warnings: [],
+    };
+  }
+
+  return {
+    ok: true,
+    path: LOCAL_TASKS_FILE,
+    record,
+    errors: [],
+    warnings: [],
+  };
+}
+
 export function updateTaskState(taskId, nextState, metadata = {}) {
+  // Low-level helper only. Callers should prefer writeLocalStateEvent(type:
+  // "task_state") so state-machine validation runs before this write occurs.
   const currentState = readTasks();
   if (!currentState.ok) {
     return {
@@ -294,6 +332,9 @@ export function updateTaskState(taskId, nextState, metadata = {}) {
     summary:
       normalizeString(metadata.summary) ||
       `Task ${existingTask.taskId} state changed from ${existingTask.state} to ${normalizedNextState}.`,
+    previousState:
+      normalizeString(metadata.previousState) || existingTask.state,
+    nextState: normalizeString(metadata.nextState) || normalizedNextState,
     createdAt: normalizeString(metadata.createdAt),
     redacted: true,
   });
@@ -367,6 +408,8 @@ export function updateTaskState(taskId, nextState, metadata = {}) {
     path: LOCAL_TASKS_FILE,
     document: writeResult.document,
     record: updatedTaskValidation.record,
+    previousState: existingTask.state,
+    nextState: normalizedNextState,
     audit: auditResult.record,
     errors: [],
     warnings: [],

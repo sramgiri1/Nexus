@@ -73,9 +73,16 @@ export {
   readTasks,
   writeTasks,
   addTask,
+  getTaskById,
   updateTaskState,
   validateTask,
 } from "./taskStore.js";
+export {
+  validateLocalTaskTransition,
+  buildTransitionEvidence,
+  normalizeTransitionActor,
+  createTransitionGuardResult,
+} from "./stateTransitionGuard.js";
 export {
   appendRuntimeEvent,
   appendApprovalRecord,

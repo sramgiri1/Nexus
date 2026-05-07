@@ -68,6 +68,12 @@ consumes a generated browser-safe snapshot derived from `local-state/runtime/`
 so it can show real local runtime counts and recent records while remaining
 read-only and without adding API, DB, or mutation wiring.
 
+Phase 22-LOCAL adds local state-machine enforcement for controlled local task
+execution. Before a local task state changes under `local-state/runtime/`, the
+executor now validates that transition through the existing task state machine.
+This is local prototype enforcement only; it is not wired into `loop.js` or
+`runner.js` yet.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
