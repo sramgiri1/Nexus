@@ -48,40 +48,43 @@ belongs in separate private repos.
 - Phase 20-LOCAL Controlled local execution mode
 - Phase 21-LOCAL Command Center runtime file ingestion
 - Phase 22-LOCAL State machine enforcement in local executor
+- Phase 23-LOCAL Approval workflow wiring for local execution
 
 ---
 
 ## Current Phase
 
-### Phase 23-LOCAL — Approval Workflow Wiring for Local Execution
+### Phase 24-LOCAL — Command Center Approval + Runtime Refresh
 
 Goal:
 
-- turn `REQUIRE_APPROVAL` into a real local approval workflow with request,
-  decision, approval evidence, and guarded transition support
+- make the Command Center reflect local approval workflow records and refreshed
+  runtime snapshots without adding API or mutation paths
 
 Deliverables:
 
-- append-only local approval request store
-- approve and reject CLIs
-- approval decision audit and evidence records
-- approval evidence support for `awaiting_approval -> running`
-- validation for local approval request and decision flow
+- approval workflow summary in generated runtime snapshots
+- Command Center approval counts and recent approval visibility
+- approval evidence visibility in the read-only dashboard
+- runtime refresh metadata and CLI guidance in the dashboard
+- validation for generated approval snapshot ingestion
 
 Non-goals:
 
+- no API server
+- no DB
+- no UI mutation actions
 - no provider calls
-- no external tool execution
+- no tool execution
 - no project mutation
-- no DB or API server
-- no dispatch rewrite
 - no private product execution
 
 Validation checks:
 
-- approval requests append to local runtime state
-- approve and reject decisions append audit and approval evidence
-- guarded approval transitions respect `approval_granted`
+- generated snapshot includes approval workflow summary and refresh metadata
+- Command Center surfaces Approval Workflow, Approval Evidence, Runtime Refresh,
+  and Blocked by Approval
+- dashboard remains read-only and points operators to CLI approval commands
 - existing local execution, runtime, and Command Center checks remain green
 
 Risk level:

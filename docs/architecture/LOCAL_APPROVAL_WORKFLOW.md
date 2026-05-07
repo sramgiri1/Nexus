@@ -29,6 +29,8 @@ approval request
    - approval evidence
 6. State transitions such as `awaiting_approval -> running` may proceed only
    when `approval_granted` evidence is present.
+7. Regenerating the Command Center snapshot makes the updated approval records
+   and approval evidence visible in the read-only dashboard.
 
 ## Decision outcomes
 
@@ -68,6 +70,12 @@ Local approval decisions are append-only and redacted:
 - no tool execution
 - no private product execution yet
 - no `loop.js` or `runner.js` wiring
+
+Approval decisions are visible in the Command Center only after:
+
+```bash
+npm run generate:command-center-snapshot
+```
 
 ## Relationship to state-machine enforcement
 

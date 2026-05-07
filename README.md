@@ -81,6 +81,15 @@ CLI, and produces approval evidence that can unlock guarded
 `awaiting_approval -> running` transitions. It is still local only and does not
 add API, DB, provider, tool, or project execution.
 
+Phase 24-LOCAL adds Command Center approval runtime refresh. The dashboard now
+shows approval workflow counts, approval evidence summaries, blocked-by-
+approval task visibility, and snapshot refresh metadata from the generated
+runtime snapshot. It is still read-only and still does not add API, DB,
+provider, tool, or project execution.
+
+After local approval or execution changes, refresh the browser-safe snapshot
+with `npm run generate:command-center-snapshot`.
+
 Validate it with:
 
 ```bash
@@ -105,6 +114,7 @@ cd dashboard && npm run test:pages
 - [Orchestrator adapter dry-run](docs/architecture/ORCHESTRATOR_ADAPTER_DRY_RUN.md)
 - [Controlled local execution](docs/architecture/CONTROLLED_LOCAL_EXECUTION.md)
 - [Command Center runtime ingestion](docs/architecture/COMMAND_CENTER_RUNTIME_INGESTION.md)
+- [Command Center approval runtime refresh](docs/architecture/COMMAND_CENTER_APPROVAL_RUNTIME_REFRESH.md)
 - [Local state machine enforcement](docs/architecture/LOCAL_STATE_MACHINE_ENFORCEMENT.md)
 - [Local approval workflow](docs/architecture/LOCAL_APPROVAL_WORKFLOW.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
@@ -136,6 +146,7 @@ npm run approvals:list
 npm run approvals:approve -- <approvalId> --reason "approved locally"
 npm run approvals:reject -- <approvalId> --reason "rejected locally"
 npm run check:local-approval-workflow
+npm run check:command-center-approval-runtime
 npm run orchestrator:dry-run
 npm run check:orchestrator-dry-run
 npm run check:local-state-boundary

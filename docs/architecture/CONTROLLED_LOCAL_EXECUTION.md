@@ -61,6 +61,8 @@ Controlled local execution may write only to:
   before writes
 - approval-required work now creates real local approval requests and waits for
   approval evidence before it can proceed
+- Command Center can surface those approval records only through regenerated
+  read-only runtime snapshots
 - no provider calls
 - no tool calls
 - no project mutation
@@ -72,7 +74,6 @@ Controlled local execution may write only to:
 
 Later phases can build on this mode by:
 
-- surfacing generated local runtime-record summaries in Command Center
 - wiring the adapter into controlled dispatch checkpoints
 - introducing controlled tool execution
 - introducing controlled provider execution

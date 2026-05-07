@@ -1748,6 +1748,7 @@ a {
 
 .mono {
   font-family: "IBM Plex Mono", monospace;
+  overflow-wrap: anywhere;
 }
 
 .muted {

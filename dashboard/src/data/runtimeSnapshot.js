@@ -6,7 +6,7 @@ export const runtimeSnapshot = {
   "snapshotVersion": "1.0",
   "source": "generated-from-local-state-runtime",
   "readOnly": true,
-  "generatedAt": "2026-05-07T10:46:19.378Z",
+  "generatedAt": "2026-05-07T21:33:54.980Z",
   "runtimeState": {
     "tasks": {
       "total": 0,
@@ -33,7 +33,13 @@ export const runtimeSnapshot = {
     },
     "approvals": {
       "total": 0,
+      "requested": 0,
+      "approved": 0,
+      "rejected": 0,
+      "expired": 0,
       "byDecision": {},
+      "byTaskId": {},
+      "linkedEvidence": [],
       "recent": []
     },
     "incidents": {
@@ -42,6 +48,20 @@ export const runtimeSnapshot = {
       "byStatus": {},
       "recent": []
     }
+  },
+  "approvalWorkflow": {
+    "total": 0,
+    "requested": 0,
+    "approved": 0,
+    "rejected": 0,
+    "expired": 0,
+    "recent": [],
+    "linkedEvidence": []
+  },
+  "refresh": {
+    "command": "npm run generate:command-center-snapshot",
+    "readOnly": true,
+    "liveApi": false
   },
   "health": {
     "tasksPresent": true,

@@ -22,6 +22,11 @@ const SECRET_PATTERN = new RegExp(
   ].join("|")
 );
 const PRIVATE_EXECUTION_KEY = ["care", "loop", "ExecutionEnabled"].join("");
+const APPROVAL_EVIDENCE_TYPES = new Set([
+  "approval_granted",
+  "approval_rejected",
+  "approval_expired",
+]);
 
 function normalizeString(value) {
   return typeof value === "string" ? value.trim() : "";
@@ -77,6 +82,139 @@ function collectSerializationIssues(serializedValue, label, errors) {
   if (SECRET_PATTERN.test(serializedValue)) {
     errors.push(`Secret-like content found in ${label}.`);
   }
+}
+
+function sortByCreatedAt(records) {
+  return [...records].sort(
+    (left, right) => toTimestamp(left.createdAt) - toTimestamp(right.createdAt)
+  );
+}
+
+function consolidateApprovals(records = []) {
+  const grouped = new Map();
+
+  for (const record of records) {
+    const approvalId = normalizeString(record.approvalId);
+    if (!approvalId) {
+      continue;
+    }
+
+    const current = grouped.get(approvalId) || {
+      approvalId,
+      request: null,
+      decisions: [],
+    };
+
+    if (normalizeString(record.decision) === "requested" && !current.request) {
+      current.request = record;
+    } else {
+      current.decisions.push(record);
+    }
+
+    grouped.set(approvalId, current);
+  }
+
+  return [...grouped.values()].map((entry) => {
+    const decisions = sortByCreatedAt(entry.decisions);
+    const latestDecision = decisions[decisions.length - 1] || null;
+    const request = entry.request || latestDecision || {};
+
+    return {
+      approvalId: entry.approvalId,
+      type: normalizeString(request.type),
+      requestedBy: normalizeString(request.requestedBy),
+      projectId: normalizeString(request.projectId),
+      taskId: normalizeString(request.taskId),
+      riskLevel: normalizeString(request.riskLevel),
+      reason: normalizeString(request.reason),
+      decision:
+        normalizeString(latestDecision?.decision) ||
+        normalizeString(request.decision) ||
+        "requested",
+      createdAt: normalizeString(request.createdAt),
+      updatedAt:
+        normalizeString(latestDecision?.createdAt) ||
+        normalizeString(request.createdAt),
+      expiresAt: normalizeString(request.expiresAt),
+      decisions,
+    };
+  });
+}
+
+function summarizeApprovals(approvalRecords, evidenceRecords) {
+  const approvals = consolidateApprovals(approvalRecords);
+  const byDecision = {};
+  const byTaskId = {};
+  const linkedEvidence = [];
+  const linkedEvidenceIds = new Set();
+
+  for (const approval of approvals) {
+    incrementCounter(byDecision, approval.decision);
+    if (normalizeString(approval.taskId)) {
+      incrementCounter(byTaskId, approval.taskId);
+    }
+  }
+
+  const recent = sortRecent(approvals, ["updatedAt", "createdAt"]).map(
+    (approval) => {
+      const approvalLinkedEvidence = evidenceRecords
+        .filter((record) => {
+          if (!APPROVAL_EVIDENCE_TYPES.has(normalizeString(record.type))) {
+            return false;
+          }
+
+          const traceIds = normalizeArray(record.traceIds).map(normalizeString);
+          const matchesTrace = traceIds.includes(approval.approvalId);
+          const matchesTask =
+            normalizeString(approval.taskId) &&
+            normalizeString(record.taskId) === normalizeString(approval.taskId);
+
+          return matchesTrace || matchesTask;
+        })
+        .map((record) => ({
+          evidenceId: normalizeString(record.evidenceId),
+          taskId: normalizeString(record.taskId),
+          type: normalizeString(record.type),
+          result: normalizeString(record.result),
+          createdAt: normalizeString(record.createdAt),
+        }));
+
+      for (const record of approvalLinkedEvidence) {
+        if (!record.evidenceId || linkedEvidenceIds.has(record.evidenceId)) {
+          continue;
+        }
+
+        linkedEvidenceIds.add(record.evidenceId);
+        linkedEvidence.push(record);
+      }
+
+      return {
+        approvalId: approval.approvalId,
+        type: approval.type,
+        requestedBy: approval.requestedBy,
+        taskId: approval.taskId,
+        decision: approval.decision,
+        riskLevel: approval.riskLevel,
+        createdAt: approval.createdAt,
+        updatedAt: approval.updatedAt,
+        linkedEvidenceIds: approvalLinkedEvidence.map(
+          (record) => record.evidenceId
+        ),
+      };
+    }
+  );
+
+  return {
+    total: approvals.length,
+    requested: byDecision.requested || 0,
+    approved: byDecision.approved || 0,
+    rejected: byDecision.rejected || 0,
+    expired: byDecision.expired || 0,
+    byDecision,
+    byTaskId,
+    recent,
+    linkedEvidence: sortRecent(linkedEvidence, ["createdAt"]),
+  };
 }
 
 export function readRuntimeJsonl(relativePath) {
@@ -256,10 +394,10 @@ export function summarizeRuntimeFiles() {
     incrementCounter(eventsByEventType, record.eventType);
   }
 
-  const approvalsByDecision = {};
-  for (const record of approvalsState.records) {
-    incrementCounter(approvalsByDecision, record.decision);
-  }
+  const approvalsSummary = summarizeApprovals(
+    approvalsState.records,
+    evidenceState.records
+  );
 
   const incidentsBySeverity = {};
   const incidentsByStatus = {};
@@ -325,19 +463,15 @@ export function summarizeRuntimeFiles() {
         })),
       },
       approvals: {
-        total: approvalsState.records.length,
-        byDecision: approvalsByDecision,
-        recent: sortRecent(approvalsState.records, ["createdAt"]).map(
-          (record) => ({
-            approvalId: normalizeString(record.approvalId),
-            type: normalizeString(record.type),
-            requestedBy: normalizeString(record.requestedBy),
-            taskId: normalizeString(record.taskId),
-            decision: normalizeString(record.decision),
-            riskLevel: normalizeString(record.riskLevel),
-            createdAt: normalizeString(record.createdAt),
-          })
-        ),
+        total: approvalsSummary.total,
+        requested: approvalsSummary.requested,
+        approved: approvalsSummary.approved,
+        rejected: approvalsSummary.rejected,
+        expired: approvalsSummary.expired,
+        byDecision: approvalsSummary.byDecision,
+        byTaskId: approvalsSummary.byTaskId,
+        linkedEvidence: approvalsSummary.linkedEvidence,
+        recent: approvalsSummary.recent,
       },
       incidents: {
         total: incidentsState.records.length,
@@ -355,6 +489,20 @@ export function summarizeRuntimeFiles() {
         ),
       },
     },
+    approvalWorkflow: {
+      total: approvalsSummary.total,
+      requested: approvalsSummary.requested,
+      approved: approvalsSummary.approved,
+      rejected: approvalsSummary.rejected,
+      expired: approvalsSummary.expired,
+      recent: approvalsSummary.recent,
+      linkedEvidence: approvalsSummary.linkedEvidence,
+    },
+    refresh: {
+      command: "npm run generate:command-center-snapshot",
+      readOnly: true,
+      liveApi: false,
+    },
     warnings,
     errors,
   };
@@ -369,6 +517,8 @@ export function buildCommandCenterRuntimeSnapshot() {
     readOnly: true,
     generatedAt: new Date().toISOString(),
     runtimeState: runtimeSummary.runtimeState,
+    approvalWorkflow: runtimeSummary.approvalWorkflow,
+    refresh: runtimeSummary.refresh,
     health: {
       tasksPresent: readRuntimeTasks().present,
       evidencePresent: readRuntimeEvidence().present,

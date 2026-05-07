@@ -97,6 +97,14 @@ export function validateLocalStateSnapshot(snapshot) {
     errors.push("Runtime file summary is missing.");
   }
 
+  if (!localState.runtimeFiles?.approvalWorkflow) {
+    errors.push("Approval workflow summary is missing.");
+  }
+
+  if (!localState.runtimeFiles?.refresh) {
+    errors.push("Runtime refresh metadata is missing.");
+  }
+
   const serializedSnapshot = JSON.stringify(localState).replaceAll(
     PRIVATE_EXECUTION_KEY,
     "privateProductExecutionEnabled"

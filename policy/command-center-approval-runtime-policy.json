@@ -1,0 +1,12 @@
+{
+  "version": "1.0",
+  "readOnly": true,
+  "approvalActionsInUiAllowed": false,
+  "cliApprovalActionsAllowed": true,
+  "snapshotRefreshRequired": true,
+  "apiRequiredForLiveMutation": true,
+  "dbReadsAllowed": false,
+  "providerCallsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false,
+  "publicSafetyRequired": true
+}

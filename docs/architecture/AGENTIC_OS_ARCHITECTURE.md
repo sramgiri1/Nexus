@@ -80,6 +80,11 @@ decisions, audit records, and approval evidence that can unlock guarded local
 state transitions. This is still local only and does not add API, DB, or
 provider execution.
 
+Phase 24-LOCAL extends the read-only Command Center path so approval workflow
+records and runtime refresh metadata are visible in the dashboard from the
+generated runtime snapshot. The UI still does not mutate state, call providers,
+or bypass the local CLI approval path.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

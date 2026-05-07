@@ -64,6 +64,8 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
   const runtimeTrafficPlane = localStateSnapshot.runtime?.runtimeTrafficPlane || {};
   const runtimeFilesSnapshot = localStateSnapshot.runtimeFiles || {};
   const runtimeFiles = runtimeFilesSnapshot.runtimeState || {};
+  const approvalWorkflow = runtimeFilesSnapshot.approvalWorkflow || {};
+  const runtimeRefresh = runtimeFilesSnapshot.refresh || {};
   const demo = localStateSnapshot.demo || {};
 
   return {
@@ -100,6 +102,21 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
         runtimeTrafficPlane.dispatchWiring === "not_wired"
           ? "Not wired yet"
           : "Unknown",
+    },
+    approvalWorkflow: {
+      total: approvalWorkflow.total || 0,
+      requested: approvalWorkflow.requested || 0,
+      approved: approvalWorkflow.approved || 0,
+      rejected: approvalWorkflow.rejected || 0,
+      expired: approvalWorkflow.expired || 0,
+      recent: approvalWorkflow.recent || [],
+      linkedEvidence: approvalWorkflow.linkedEvidence || [],
+    },
+    runtimeRefresh: {
+      command:
+        runtimeRefresh.command || "npm run generate:command-center-snapshot",
+      readOnly: runtimeRefresh.readOnly !== false,
+      liveApi: runtimeRefresh.liveApi === true,
     },
     runtimeFiles,
     runtimeSnapshot: runtimeFilesSnapshot,

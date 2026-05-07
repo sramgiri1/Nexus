@@ -14,6 +14,10 @@ read-only.
 
 Generated static snapshot from local-state/runtime.
 
+Phase 24-LOCAL extends the generated snapshot with approval workflow totals,
+linked approval evidence, and refresh metadata so the dashboard can reflect CLI
+approval activity after the snapshot is regenerated.
+
 - no API
 - no DB
 - no mutation
@@ -40,9 +44,10 @@ Command Center.
 - evidence counts and recent evidence
 - audit event counts and recent audit rows
 - runtime event counts
-- approvals
+- approvals and approval workflow totals
+- linked approval evidence
 - incidents
-- snapshot metadata
+- snapshot metadata and refresh guidance
 - not-wired-yet limits
 
 ## What is not implemented

@@ -221,23 +221,6 @@ const SAFETY_EVENTS = [
   },
 ];
 
-const APPROVALS = [
-  {
-    title: "Demo deployment approval",
-    owner: "FORGE",
-    risk: "high",
-    project: "DemoApp",
-    evidence: "runtime validation note + rollback plan",
-  },
-  {
-    title: "Replay batch enablement",
-    owner: "SHEPHERD",
-    risk: "medium",
-    project: "DemoApp",
-    evidence: "safety classification + reconciliation plan",
-  },
-];
-
 const RELEASE_CHECKLIST = [
   { label: "AUDITOR evidence attached", complete: true },
   { label: "SENTINEL simulator evidence attached", complete: false },
@@ -265,14 +248,14 @@ function statusTone(value) {
   }
 
   if (
-    ["PENDING", "REQUIRE_APPROVAL", "WARNING", "NOT WIRED YET", "NOT_WIRED_YET"].includes(
+    ["PENDING", "REQUESTED", "REQUIRE_APPROVAL", "WARNING", "NOT WIRED YET", "NOT_WIRED_YET"].includes(
       normalized
     )
   ) {
     return "working";
   }
 
-  if (["NO_GO", "BLOCKED", "DENY", "ESCALATE", "FAIL"].includes(normalized)) {
+  if (["NO_GO", "BLOCKED", "DENY", "ESCALATE", "FAIL", "REJECTED", "EXPIRED"].includes(normalized)) {
     return "blocked";
   }
 
@@ -298,14 +281,28 @@ export default function CommandCenter({ studio }) {
   const localReports = studio.localReports || {};
   const validation = localReports.validation || {};
   const runtimeTrafficStatus = localReports.runtimeTrafficPlane || {};
+  const approvalWorkflow = localReports.approvalWorkflow || {};
+  const runtimeRefresh = localReports.runtimeRefresh || {};
   const runtimeSnapshot = localReports.runtimeSnapshot || {};
   const runtimeFiles = localReports.runtimeFiles || {};
-  const runtimeTasks = runtimeFiles.tasks || { total: 0, recent: [] };
+  const runtimeTasks = runtimeFiles.tasks || { total: 0, byState: {}, recent: [] };
   const runtimeEvidence = runtimeFiles.evidence || { total: 0, recent: [] };
   const runtimeAudit = runtimeFiles.audit || { total: 0, recent: [] };
   const runtimeEvents = runtimeFiles.events || { total: 0, recent: [] };
   const runtimeApprovals = runtimeFiles.approvals || { total: 0, recent: [] };
   const runtimeIncidents = runtimeFiles.incidents || { total: 0, recent: [] };
+  const approvalEvidence = approvalWorkflow.linkedEvidence || [];
+  const blockedByApprovalTasks = (runtimeTasks.recent || []).filter(
+    (task) => task.state === "awaiting_approval"
+  );
+  const approvalEvidenceCounts = approvalEvidence.reduce(
+    (acc, record) => {
+      const type = record.type || "other";
+      acc[type] = (acc[type] || 0) + 1;
+      return acc;
+    },
+    { approval_granted: 0, approval_rejected: 0, approval_expired: 0 }
+  );
   const runtimeTrafficSample = studio.runtimeTrafficSample || {};
   const identitySample = runtimeTrafficSample.identityContextSample || {};
   const policyDecisionSample = runtimeTrafficSample.policyDecisionSample || {};
@@ -422,14 +419,24 @@ export default function CommandCenter({ studio }) {
       detail: "Snapshot build time for the current read-only dashboard data.",
     },
     {
+      label: "Refresh command",
+      value: runtimeRefresh.command || "npm run generate:command-center-snapshot",
+      detail: "Regenerate the browser-safe runtime snapshot after local approval or execution changes.",
+    },
+    {
       label: "Read-only",
-      value: runtimeSnapshot.readOnly ? "true" : "false",
+      value: runtimeRefresh.readOnly ? "true" : "false",
       detail: "The Command Center surface is still read-only in this phase.",
+    },
+    {
+      label: "Live API",
+      value: String(runtimeRefresh.liveApi || false),
+      detail: "Live API read endpoints are not wired yet.",
     },
     {
       label: "API wired",
       value: String(runtimeSnapshot.limits?.apiWired ?? false),
-      detail: "Live API read endpoints are not wired yet.",
+      detail: "The runtime snapshot still reflects generated local state, not live API reads.",
     },
     {
       label: "DB wired",
@@ -844,6 +851,69 @@ export default function CommandCenter({ studio }) {
                 title="Reports and evidence available on disk"
                 subtitle={`Source: ${localReports.lastUpdatedSource || "local snapshot"}. DemoApp evidence stays visible without any API or filesystem reads at runtime.`}
               >
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading
+                    label="Approval Evidence"
+                    meta="Local approval decisions become visible after snapshot regeneration. No UI mutation yet."
+                  />
+                  <div className="command-prototype__sample-grid">
+                    <div className="command-prototype__sample-card">
+                      <div className="command-prototype__detail-label">approval_granted</div>
+                      <strong>{approvalEvidenceCounts.approval_granted || 0}</strong>
+                      <div className="command-prototype__detail-copy">
+                        Evidence rows that can unlock awaiting_approval transitions.
+                      </div>
+                    </div>
+                    <div className="command-prototype__sample-card">
+                      <div className="command-prototype__detail-label">approval_rejected</div>
+                      <strong>{approvalEvidenceCounts.approval_rejected || 0}</strong>
+                      <div className="command-prototype__detail-copy">
+                        Rejections remain auditable and do not unlock execution.
+                      </div>
+                    </div>
+                    <div className="command-prototype__sample-card">
+                      <div className="command-prototype__detail-label">approval_expired</div>
+                      <strong>{approvalEvidenceCounts.approval_expired || 0}</strong>
+                      <div className="command-prototype__detail-copy">
+                        Expired approvals remain visible as redacted evidence.
+                      </div>
+                    </div>
+                  </div>
+
+                  {approvalEvidence.length ? (
+                    <div className="command-prototype__detail-list">
+                      {approvalEvidence.map((record) => (
+                        <div key={record.evidenceId} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label mono">
+                              {record.evidenceId}
+                            </div>
+                            <div className="command-prototype__detail-copy">
+                              {record.type || "unknown"} · task {record.taskId || "no task"}
+                            </div>
+                          </div>
+                          <StatusPill status={statusTone(record.result || "INFO")}>
+                            {record.result || "INFO"}
+                          </StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-state__title">No approval evidence yet</div>
+                      <div className="empty-state__body">
+                        Use CLI: <span className="mono">npm run approvals:approve -- &lt;id&gt; --reason "approved locally"</span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading
+                    label="Local Evidence"
+                    meta="Demo reports and validation artifacts remain visible beside approval workflow evidence."
+                  />
+                </div>
                 <div className="command-prototype__detail-list">
                   {localEvidenceRows.map((item) => (
                     <div key={item.id} className="command-prototype__detail-row">
@@ -881,7 +951,7 @@ export default function CommandCenter({ studio }) {
             <div id="runtime-snapshot">
               <Panel
                 eyebrow="Snapshot Metadata"
-                title="Generated runtime snapshot"
+                title="Runtime Refresh"
                 subtitle="The browser consumes a generated module because it cannot safely read local files directly."
                 meta={<StatusPill status="done">{runtimeSnapshot.readOnly ? "Read-only" : "Unknown"}</StatusPill>}
               >
@@ -1022,18 +1092,44 @@ export default function CommandCenter({ studio }) {
             <div id="runtime-governance">
               <Panel
                 eyebrow="Approvals / Incidents"
-                title="Governance records"
-                subtitle="Approval and incident summaries are derived from local runtime JSONL stores."
+                title="Approval Workflow"
+                subtitle="Approval requests, decisions, and linked incidents are derived from local runtime JSONL stores."
               >
+                <div className="command-prototype__sample-grid">
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Requested / pending</div>
+                    <strong>{approvalWorkflow.requested || 0}</strong>
+                    <div className="command-prototype__detail-copy">
+                      Pending approvals still waiting on CLI decision.
+                    </div>
+                  </div>
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Approved</div>
+                    <strong>{approvalWorkflow.approved || 0}</strong>
+                    <div className="command-prototype__detail-copy">
+                      Approved local decisions with linked approval evidence.
+                    </div>
+                  </div>
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Rejected / expired</div>
+                    <strong>
+                      {(approvalWorkflow.rejected || 0) + (approvalWorkflow.expired || 0)}
+                    </strong>
+                    <div className="command-prototype__detail-copy">
+                      Rejected and expired approvals remain visible in the audit trail.
+                    </div>
+                  </div>
+                </div>
+
                 <div className="command-prototype__detail-list">
                   <div className="command-prototype__detail-row">
                     <div>
                       <div className="command-prototype__detail-label">Approvals total</div>
                       <div className="command-prototype__detail-copy">
-                        Recent approval records from approvals.jsonl
+                        Consolidated local approval workflow records from approvals.jsonl
                       </div>
                     </div>
-                    <strong>{runtimeApprovals.total || 0}</strong>
+                    <strong>{approvalWorkflow.total || runtimeApprovals.total || 0}</strong>
                   </div>
                   <div className="command-prototype__detail-row">
                     <div>
@@ -1047,18 +1143,22 @@ export default function CommandCenter({ studio }) {
                 </div>
 
                 <div className="command-prototype__stack-gap">
-                  <SectionHeading label="Recent approvals" meta="Requested approval records visible from local runtime state." />
-                  {runtimeApprovals.recent?.length ? (
+                  <SectionHeading label="Recent approvals" meta="Requested, approved, rejected, and expired approval records visible from local runtime state." />
+                  {approvalWorkflow.recent?.length ? (
                     <div className="command-prototype__detail-list">
-                      {runtimeApprovals.recent.map((record) => (
+                      {approvalWorkflow.recent.map((record) => (
                         <div key={record.approvalId} className="command-prototype__detail-row">
                           <div>
                             <div className="command-prototype__detail-label mono">
                               {record.approvalId}
                             </div>
                             <div className="command-prototype__detail-copy">
-                              {record.type || "unknown"} · {record.requestedBy || "unknown"} ·{" "}
-                              {record.taskId || "no task"}
+                              {record.taskId || "no task"} · {record.riskLevel || "unknown"} ·{" "}
+                              {record.requestedBy || "unknown"}
+                            </div>
+                            <div className="command-prototype__detail-copy">
+                              {record.type || "unknown"} · linked evidence{" "}
+                              {record.linkedEvidenceIds?.length || 0}
                             </div>
                           </div>
                           <StatusPill status={statusTone(record.decision || "requested")}>
@@ -1071,7 +1171,8 @@ export default function CommandCenter({ studio }) {
                     <div className="empty-state">
                       <div className="empty-state__title">No approval records yet</div>
                       <div className="empty-state__body">
-                        Approval-required controlled local execution paths will append records here.
+                        Run <span className="mono">npm run orchestrator:local-execute</span> to
+                        generate a local approval request, then refresh the snapshot.
                       </div>
                     </div>
                   )}
@@ -1134,25 +1235,49 @@ export default function CommandCenter({ studio }) {
 
             <div id="approvals">
               <Panel
-                eyebrow="Approvals"
-                title="Pending human decisions"
-                subtitle="Risky mutations route through human approval before platform work can continue."
+                eyebrow="Approval Blocking"
+                title="Blocked by Approval"
+                subtitle="Tasks waiting on approval remain read-only in the UI. No UI mutation yet."
               >
-                <div className="command-prototype__approval-stack">
-                  {APPROVALS.map((item) => (
-                    <div key={item.title} className="command-prototype__approval-card">
-                      <div className="command-prototype__approval-top">
+                {blockedByApprovalTasks.length ? (
+                  <div className="command-prototype__detail-list">
+                    {blockedByApprovalTasks.map((task) => (
+                      <div key={task.taskId} className="command-prototype__detail-row">
                         <div>
-                          <div className="command-prototype__detail-label">{item.title}</div>
+                          <div className="command-prototype__detail-label mono">
+                            {task.taskId}
+                          </div>
                           <div className="command-prototype__detail-copy">
-                            Requested by {item.owner} for {item.project}
+                            {task.projectId || "demoapp"} · {task.targetAgent || "unknown"} ·{" "}
+                            {task.capabilityId || "no capability"}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            Waiting on local approval evidence before running.
                           </div>
                         </div>
-                        <PriorityPill priority={item.risk}>{item.risk}</PriorityPill>
+                        <PriorityPill priority={task.riskLevel || "high"}>
+                          {task.riskLevel || "high"}
+                        </PriorityPill>
                       </div>
-                      <div className="command-prototype__approval-evidence">Evidence: {item.evidence}</div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">No local tasks are waiting on approval</div>
+                    <div className="empty-state__body">
+                      Use CLI: <span className="mono">npm run approvals:list</span>
                     </div>
-                  ))}
+                  </div>
+                )}
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading
+                    label="Read-only operator note"
+                    meta='Use CLI: npm run approvals:approve -- &lt;id&gt; --reason "approved locally"'
+                  />
+                  <div className="command-prototype__detail-copy">
+                    Use CLI: <span className="mono">npm run approvals:reject -- &lt;id&gt; --reason "rejected locally"</span>
+                  </div>
                 </div>
               </Panel>
             </div>
