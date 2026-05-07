@@ -9,6 +9,8 @@ import {
 
 const NAV_SECTIONS = [
   { id: "mission-control", label: "Mission Control" },
+  { id: "local-os", label: "Local OS" },
+  { id: "validation", label: "Validation" },
   { id: "projects", label: "Projects" },
   { id: "tasks", label: "Tasks" },
   { id: "agents", label: "Agents" },
@@ -16,12 +18,14 @@ const NAV_SECTIONS = [
   { id: "gates", label: "Gates" },
   { id: "evidence", label: "Evidence" },
   { id: "runtime", label: "Runtime" },
+  { id: "traffic-plane", label: "Traffic Plane" },
+  { id: "local-evidence", label: "Local Evidence" },
   { id: "batch", label: "Batch" },
   { id: "cost", label: "Cost" },
   { id: "safety", label: "Safety" },
   { id: "approvals", label: "Approvals" },
   { id: "release", label: "Release" },
-  { id: "demo-mode", label: "Demo Mode" },
+  { id: "demo-mode", label: "Read-only" },
 ];
 
 const KPI_CARDS = [
@@ -242,25 +246,6 @@ const RELEASE_CHECKLIST = [
   { label: "Deployment approval evidence linked", complete: false },
 ];
 
-const DEMO_MODE_ITEMS = [
-  {
-    title: "Replay demo",
-    detail: "Step through founder intent, SHEPHERD routing, gate evidence, and release blockers as a guided story.",
-  },
-  {
-    title: "Investor read-only",
-    detail: "Show the OS in evidence-first mode without mutation rights or raw artifact exposure.",
-  },
-  {
-    title: "DemoApp scenario",
-    detail: "Narrative follows CORE, SWIFT, SENTINEL, WARDEN, and FORGE across the governed sample delivery path.",
-  },
-  {
-    title: "“NEXUS built this”",
-    detail: "Timeline view ties every visible outcome to tasks, contracts, gates, evidence, and operator decisions.",
-  },
-];
-
 function taskTone(state) {
   if (state === "blocked") return "blocked";
   if (state === "queued" || state === "awaiting_verification" || state === "implementation_done" || state === "deferred_batch") return "working";
@@ -272,8 +257,105 @@ function formatStatus(value) {
   return value.replaceAll("_", " ");
 }
 
+function statusTone(value) {
+  const normalized = (value || "").toUpperCase();
+
+  if (["PASS", "READY", "NORMAL"].includes(normalized)) {
+    return "done";
+  }
+
+  if (
+    ["PENDING", "REQUIRE_APPROVAL", "WARNING", "NOT WIRED YET", "NOT_WIRED_YET"].includes(
+      normalized
+    )
+  ) {
+    return "working";
+  }
+
+  if (["NO_GO", "BLOCKED", "DENY", "ESCALATE", "FAIL"].includes(normalized)) {
+    return "blocked";
+  }
+
+  return "active";
+}
+
 export default function CommandCenter({ studio }) {
   const agentMap = Object.fromEntries(studio.agentEntries.map((agent) => [agent.id, agent]));
+  const localReports = studio.localReports || {};
+  const validation = localReports.validation || {};
+  const runtimeTrafficStatus = localReports.runtimeTrafficPlane || {};
+  const runtimeTrafficSample = studio.runtimeTrafficSample || {};
+  const identitySample = runtimeTrafficSample.identityContextSample || {};
+  const policyDecisionSample = runtimeTrafficSample.policyDecisionSample || {};
+  const evidenceRecordSample = runtimeTrafficSample.evidenceRecordSample || {};
+  const behaviorBaselineSample = runtimeTrafficSample.behaviorBaselineSample || {};
+  const runtimeTrafficRows = [
+    {
+      label: "Originating user",
+      value: identitySample.originatingUser?.userId || "demo-user",
+      detail: `${identitySample.originatingUser?.authType || "demo"} auth · scopes ${
+        identitySample.originatingUser?.scopes?.join(", ") || "demo:read"
+      }`,
+    },
+    {
+      label: "Session",
+      value: identitySample.session?.sessionId || "session-demoapp-001",
+      detail: `${identitySample.session?.source || "demo"} source`,
+    },
+    {
+      label: "Agent",
+      value: identitySample.agent?.agentId || "nexus",
+      detail: `version ${identitySample.agent?.agentVersion || "1.0.0"}`,
+    },
+    {
+      label: "Capability",
+      value: runtimeTrafficSample.trafficRequest?.capabilityId || policyDecisionSample.capabilityId || "control.decide_release",
+      detail: runtimeTrafficSample.project || "DemoApp",
+    },
+    {
+      label: "Action type",
+      value: runtimeTrafficSample.trafficRequest?.actionType || "model_call",
+      detail: `${runtimeTrafficSample.trafficRequest?.runtime || "provider-api"} · ${
+        runtimeTrafficSample.trafficRequest?.provider || "direct_openai"
+      }`,
+    },
+    {
+      label: "Policy decision",
+      value: policyDecisionSample.result || "REQUIRE_APPROVAL",
+      detail: policyDecisionSample.reason || "Release path is still awaiting gate evidence.",
+    },
+    {
+      label: "Evidence record hash",
+      value: evidenceRecordSample.recordHash ? "Present" : "Missing",
+      detail: evidenceRecordSample.recordId || "record-demoapp-release-001",
+    },
+    {
+      label: "Behavior status",
+      value: behaviorBaselineSample.status || "NORMAL",
+      detail: `${behaviorBaselineSample.baselineSamples || 0} local baseline samples`,
+    },
+  ];
+  const validationRows = [
+    ["Demo Showcase", validation.demoShowcase || "PASS"],
+    ["Public Safety", validation.publicSafety || "PASS"],
+    ["Runtime Traffic Plane", validation.runtimeTrafficPlane || "PASS"],
+    ["Domain Ownership", validation.domainOwnership || "PASS"],
+    ["Capabilities", validation.capabilities || "PASS"],
+    ["Reliability", validation.reliability || "PASS"],
+    ["Security Boundary", validation.securityBoundary || "PASS"],
+    ["Data Protection", validation.dataProtection || "PASS"],
+    ["Agent Readiness", validation.agentReadiness || "PASS"],
+    ["Agent Context", validation.agentContext || "PASS"],
+  ];
+  const localOsRows = [
+    ["Runtime Traffic Plane", runtimeTrafficStatus.status || "PASS"],
+    ["Identity Propagation", runtimeTrafficStatus.identityPropagation || "Ready"],
+    ["Policy Decisions", runtimeTrafficStatus.policyDecisions || "Ready"],
+    ["Evidence Records", runtimeTrafficStatus.evidenceRecords || "Ready"],
+    ["Behavior Baseline", runtimeTrafficStatus.behaviorBaseline || "Ready"],
+    ["Dispatch Wiring", runtimeTrafficStatus.dispatchWiring || "Not wired yet"],
+  ];
+  const localEvidenceRows = [...(localReports.evidence || []), ...(localReports.reports || [])];
 
   return (
     <div className="page page--command command-prototype" data-testid="command-center-page">
@@ -361,6 +443,68 @@ export default function CommandCenter({ studio }) {
             {KPI_CARDS.map((item) => (
               <MetricTile key={item.label} label={item.label} value={item.value} meta={item.meta} tone={item.tone} />
             ))}
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="local-os">
+              <Panel
+                eyebrow="Local OS Status"
+                title="Read-only local visibility"
+                subtitle="Command Center now surfaces bundled local status instead of relying only on hardcoded showcase copy."
+                meta={<StatusPill status="done">{runtimeTrafficStatus.status || "PASS"}</StatusPill>}
+              >
+                <div className="command-prototype__detail-list">
+                  {localOsRows.map(([label, value]) => (
+                    <div key={label} className="command-prototype__detail-row">
+                      <div>
+                        <div className="command-prototype__detail-label">{label}</div>
+                        <div className="command-prototype__detail-copy">
+                          {label === "Dispatch Wiring"
+                            ? "The UI reads local snapshot data, but orchestrator dispatch is still not wired through this surface."
+                            : "Bundled snapshot status derived from local NEXUS artifacts."}
+                        </div>
+                      </div>
+                      <StatusPill status={statusTone(value)}>{value}</StatusPill>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+
+            <div id="validation">
+              <Panel
+                eyebrow="Validation Status"
+                title="Local report posture"
+                subtitle="Validation checks are surfaced as local snapshot data so reviewers can see current OS proof points in one place."
+                meta={<StatusPill status="done">{validation.demoShowcase || "PASS"}</StatusPill>}
+              >
+                <div className="command-prototype__detail-list">
+                  {validationRows.map(([label, value]) => (
+                    <div key={label} className="command-prototype__detail-row">
+                      <div>
+                        <div className="command-prototype__detail-label">{label}</div>
+                        <div className="command-prototype__detail-copy">
+                          Local snapshot mirrors the latest checked report outcome for this surface.
+                        </div>
+                      </div>
+                      <StatusPill status={statusTone(value)}>{value}</StatusPill>
+                    </div>
+                  ))}
+                  <div className="command-prototype__detail-row">
+                    <div>
+                      <div className="command-prototype__detail-label">Format Readability</div>
+                      <div className="command-prototype__detail-copy">
+                        PASS with {validation.formatReadability?.warnings ?? 9} warnings /{" "}
+                        {validation.formatReadability?.failures ?? 0} failures
+                      </div>
+                    </div>
+                    <StatusPill status={statusTone(validation.formatReadability?.status || "PASS")}>
+                      {validation.formatReadability?.status || "PASS"}
+                    </StatusPill>
+                  </div>
+                </div>
+              </Panel>
+            </div>
           </section>
 
           <section className="command-prototype__grid command-prototype__grid--duo">
@@ -579,6 +723,47 @@ export default function CommandCenter({ studio }) {
           </section>
 
           <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="traffic-plane">
+              <Panel
+                eyebrow="Runtime Traffic Plane"
+                title="Identity Propagation and policy sample"
+                subtitle="This read-only panel shows what a local traffic-plane decision looks like for the DemoApp release path."
+                meta={<StatusPill status={statusTone(policyDecisionSample.result || "REQUIRE_APPROVAL")}>{policyDecisionSample.result || "REQUIRE_APPROVAL"}</StatusPill>}
+              >
+                <div className="command-prototype__sample-grid">
+                  {runtimeTrafficRows.map((item) => (
+                    <div key={item.label} className="command-prototype__sample-card">
+                      <div className="command-prototype__detail-label">{item.label}</div>
+                      <strong>{item.value}</strong>
+                      <div className="command-prototype__detail-copy">{item.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+
+            <div id="local-evidence">
+              <Panel
+                eyebrow="Local Evidence"
+                title="Reports and evidence available on disk"
+                subtitle={`Source: ${localReports.lastUpdatedSource || "local snapshot"}. DemoApp evidence stays visible without any API or filesystem reads at runtime.`}
+              >
+                <div className="command-prototype__detail-list">
+                  {localEvidenceRows.map((item) => (
+                    <div key={item.id} className="command-prototype__detail-row">
+                      <div>
+                        <div className="command-prototype__detail-label">{item.name}</div>
+                        <div className="command-prototype__detail-copy">{item.path}</div>
+                      </div>
+                      <StatusPill status={statusTone(item.status)}>{item.status}</StatusPill>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
             <div id="safety">
               <Panel
                 eyebrow="Safety Center"
@@ -667,15 +852,17 @@ export default function CommandCenter({ studio }) {
 
             <div id="demo-mode">
               <Panel
-                eyebrow="Demo Mode"
-                title="Investor and showcase narrative"
-                subtitle="A read-only story mode can later replay the operating system without granting mutation authority."
+                eyebrow="Read-only status"
+                title="Not Wired Yet"
+                subtitle="Local visibility is real in this phase, but there is No live API, DB, or mutation path yet."
               >
                 <div className="command-prototype__demo-stack">
-                  {DEMO_MODE_ITEMS.map((item) => (
-                    <div key={item.title} className="command-prototype__demo-card">
-                      <div className="command-prototype__detail-label">{item.title}</div>
-                      <div className="command-prototype__detail-copy">{item.detail}</div>
+                  {(localReports.notWiredYet || []).map((item) => (
+                    <div key={item} className="command-prototype__demo-card">
+                      <div className="command-prototype__detail-label">{item}</div>
+                      <div className="command-prototype__detail-copy">
+                        DemoApp stays in a governed local snapshot mode until future API, DB, and runtime execution wiring exists.
+                      </div>
                     </div>
                   ))}
                 </div>

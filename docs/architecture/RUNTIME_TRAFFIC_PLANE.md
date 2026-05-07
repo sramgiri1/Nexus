@@ -143,3 +143,8 @@ This phase does not:
 - add external telemetry
 - add runtime network calls
 - enforce the traffic plane everywhere yet
+
+Phase 16-LOCAL adds a read-only Command Center surface that can display local
+traffic-plane sample status, policy decision posture, and evidence-record
+availability. That UI wiring is a bundled snapshot only, not a live execution
+adapter.

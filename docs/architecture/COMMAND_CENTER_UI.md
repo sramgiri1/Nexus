@@ -60,6 +60,11 @@ Phase 14 adds future ownership visibility requirements. The operator surface
 should eventually show domain owner, verifier, approval owner, escalation owner,
 and conflict state next to tasks, gates, and release posture.
 
+Phase 16-LOCAL moves the dashboard one step closer to local NEXUS visibility.
+The Command Center now reads a bundled local snapshot of validation state, demo
+reports, and runtime traffic-plane sample data. It is still read-only and does
+not add API, DB, provider, or mutation wiring in this phase.
+
 ---
 
 ## Core Principles
@@ -77,6 +82,8 @@ and conflict state next to tasks, gates, and release posture.
 - artifacts and evidence are proof surfaces, not decorative attachments
 - evals and telemetry should remain visible later without pretending they are
   live exporter integrations in this phase
+- local read-only wiring should show report and evidence availability honestly
+  without claiming live execution
 
 ---
 

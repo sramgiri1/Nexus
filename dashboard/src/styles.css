@@ -2640,13 +2640,20 @@ a {
   gap: 12px;
 }
 
+.command-prototype__sample-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+}
+
 .command-prototype__detail-row,
 .command-prototype__contract-card,
 .command-prototype__gate-card,
 .command-prototype__runtime-card,
 .command-prototype__safety-card,
 .command-prototype__approval-card,
-.command-prototype__demo-card {
+.command-prototype__demo-card,
+.command-prototype__sample-card {
   padding: 16px 18px;
   border-radius: 18px;
   border: 1px solid rgba(120, 184, 255, 0.12);
@@ -2663,6 +2670,16 @@ a {
 .command-prototype__detail-row strong {
   font-size: 14px;
   text-align: right;
+}
+
+.command-prototype__sample-card {
+  display: grid;
+  gap: 8px;
+}
+
+.command-prototype__sample-card strong {
+  font-size: 15px;
+  letter-spacing: -0.01em;
 }
 
 .command-prototype__detail-label,
@@ -2883,7 +2900,8 @@ a {
   .command-prototype__grid--duo,
   .command-prototype__release-head,
   .command-prototype__runtime-grid,
-  .command-prototype__agent-grid {
+  .command-prototype__agent-grid,
+  .command-prototype__sample-grid {
     grid-template-columns: minmax(0, 1fr);
   }
 }

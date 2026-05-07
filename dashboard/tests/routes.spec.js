@@ -17,7 +17,7 @@ function captureClientErrors(page) {
   return errors;
 }
 
-test("home route renders static command center mission-control prototype", async ({ page }) => {
+test("home route renders command center with local read-only wiring", async ({ page }) => {
   const errors = captureClientErrors(page);
 
   await page.goto("/");
@@ -30,11 +30,18 @@ test("home route renders static command center mission-control prototype", async
   await expect(page.getByRole("link", { name: /Release/i })).toBeVisible();
   await expect(page.getByText("Build and validate DemoApp through governed NEXUS agents.")).toBeVisible();
   await expect(page.getByRole("banner").getByText("Active project · DemoApp")).toBeVisible();
+  await expect(page.getByText("Read-only local visibility")).toBeVisible();
+  await expect(page.locator("#local-os")).toContainText("Runtime Traffic Plane");
+  await expect(page.locator("#local-os")).toContainText("Identity Propagation");
+  await expect(page.locator("#validation")).toContainText("Validation Status");
+  await expect(page.locator("#local-evidence")).toContainText("Local Evidence");
+  await expect(page.locator("#demo-mode")).toContainText("Not Wired Yet");
+  await expect(page.locator("#demo-mode")).toContainText("No live API");
   await expect(page.locator("#tasks")).toContainText("Task queue");
   await expect(page.locator("#gates")).toContainText("AUDITOR, SENTINEL, and WARDEN");
   await expect(page.locator("#evidence")).toContainText("Evidence timeline");
   await expect(page.locator("#release")).toContainText("Release Control");
-  await expect(page.locator("#demo-mode")).toContainText("Demo Mode");
+  await expect(page.locator("#demo-mode")).toContainText("No real provider calls");
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
   expect(errors).toEqual([]);

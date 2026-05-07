@@ -36,6 +36,10 @@ records, and behavior baseline helpers that future execution paths can pass
 through. The helpers are local modules only in this phase; orchestrator
 dispatch is not rewritten yet.
 
+Phase 16-LOCAL adds read-only Command Center live wiring. The dashboard now
+surfaces bundled local validation, evidence, and runtime traffic-plane sample
+status without adding API, DB, mutation, provider, or dispatch wiring yet.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
@@ -80,6 +84,11 @@ the final phase commit exists. Their metadata records the validation branch and
 validation HEAD at generation time. That metadata is useful for traceability, but it is
 not authoritative release metadata. Kanban and phase summaries remain the source of
 truth for final phase commit IDs.
+
+The Command Center follows a similar truthfulness rule in Phase 16-LOCAL: local
+snapshot visibility is allowed, but the UI must not imply that live task queue
+mutation, API calls, DB persistence, provider execution, or Xcode execution are
+already wired.
 
 ---
 

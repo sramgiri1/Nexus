@@ -1,0 +1,76 @@
+export const RUNTIME_TRAFFIC_SAMPLE = {
+  project: "DemoApp",
+  trafficRequest: {
+    capabilityId: "control.decide_release",
+    actionType: "model_call",
+    runtime: "provider-api",
+    provider: "direct_openai",
+    riskLevel: "high",
+  },
+  identityContextSample: {
+    originatingUser: {
+      userId: "demo-user",
+      role: "founder",
+      authType: "demo",
+      scopes: ["demo:read", "release:review"],
+    },
+    session: {
+      sessionId: "session-demoapp-001",
+      source: "demo",
+      startedAt: "2026-05-06T00:00:00.000Z",
+    },
+    agent: {
+      agentId: "nexus",
+      agentVersion: "1.0.0",
+      agentGroup: "control",
+      agentPlane: "control",
+    },
+    request: {
+      requestId: "request-demoapp-release-001",
+      taskId: "task-demoapp-release-decision",
+      projectId: "demoapp",
+      correlationId: "corr-demoapp-release-001",
+      idempotencyKey: "idem-demoapp-release-001",
+    },
+    delegationChain: [
+      {
+        hopId: "hop-demoapp-001",
+        from: "shepherd",
+        to: "nexus",
+        reason: "Summarize DemoApp release posture for the local showcase.",
+        capabilityId: "control.decide_release",
+        timestamp: "2026-05-06T00:05:00.000Z",
+      },
+    ],
+  },
+  policyDecisionSample: {
+    decisionId: "decision-demoapp-release-001",
+    result: "REQUIRE_APPROVAL",
+    reason:
+      "Release remains blocked until SENTINEL macOS/Xcode evidence and release approval are attached.",
+    blockedBy: ["approval-policy", "runtime-traffic-policy"],
+    capabilityId: "control.decide_release",
+    agentId: "nexus",
+    runtime: "provider-api",
+    provider: "direct_openai",
+    dataClassification: "internal",
+    approvalRequired: true,
+    evidenceRequired: ["gate_evidence", "release_contract", "approval_result"],
+    createdAt: "2026-05-06T00:05:04.000Z",
+  },
+  evidenceRecordSample: {
+    recordId: "record-demoapp-release-001",
+    sessionId: "session-demoapp-001",
+    originatingUserId: "demo-user",
+    agentId: "nexus",
+    capabilityId: "control.decide_release",
+    actionType: "model_call",
+    recordHash: "sha256:demoapp-runtime-traffic-record",
+    redacted: true,
+  },
+  behaviorBaselineSample: {
+    status: "NORMAL",
+    reasons: [],
+    baselineSamples: 5,
+  },
+};

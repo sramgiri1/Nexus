@@ -29,7 +29,7 @@ NEXUS is built around:
 - gates
 - safety boundaries
 - cost, batch, and provider policies
-- a Command Center operator surface
+- a Command Center operator surface with local read-only visibility
 
 ## Zero-Key Demo
 
@@ -41,7 +41,11 @@ npm run check:public-safety
 
 ## Command Center
 
-The dashboard is a static showcase in this phase. Validate it with:
+Command Center local read-only wiring is now available. It surfaces bundled
+validation status, demo evidence, and runtime traffic-plane sample status, but
+there is no API, DB, or mutation path yet.
+
+Validate it with:
 
 ```bash
 cd dashboard && npm run build
@@ -58,6 +62,7 @@ cd dashboard && npm run test:pages
 - [Public repo boundary](docs/PUBLIC_REPO_BOUNDARY.md)
 - [Private project boundary](docs/PRIVATE_PROJECT_BOUNDARY.md)
 - [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
+- [Command Center live wiring](docs/architecture/COMMAND_CENTER_LIVE_WIRING.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
 - [Accountability evidence record](docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md)
@@ -188,10 +193,12 @@ See [`docs/architecture/DOMAIN_OWNERSHIP_POLICY.md`](docs/architecture/DOMAIN_OW
 and [`docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md`](docs/architecture/ESCALATION_AND_CONFLICT_RESOLUTION.md)
 for the Phase 14 domain ownership, authority, handoff, and escalation model.
 See [`docs/architecture/RUNTIME_TRAFFIC_PLANE.md`](docs/architecture/RUNTIME_TRAFFIC_PLANE.md),
+[`docs/architecture/COMMAND_CENTER_LIVE_WIRING.md`](docs/architecture/COMMAND_CENTER_LIVE_WIRING.md),
 [`docs/architecture/IDENTITY_PROPAGATION.md`](docs/architecture/IDENTITY_PROPAGATION.md),
 [`docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md`](docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md),
 and [`docs/architecture/BEHAVIOR_BASELINE_MODEL.md`](docs/architecture/BEHAVIOR_BASELINE_MODEL.md)
-for the Phase 15-LOCAL runtime traffic plane and identity propagation layer.
+for the Phase 15-LOCAL runtime traffic plane and the Phase 16-LOCAL
+Command Center live-wiring layer.
 
 ---
 
@@ -215,9 +222,8 @@ The agent enablement layer is a set of shared standards that every agent must fo
 
 **Current status:** Shared standards are in place, all 20 agents have been retrofitted,
 the agent OS readiness checker passes, the task-context adapter exists, and the
-Command Center prototype is static-data-only. The next layer is operator platform
-hardening: data protection, security boundary policy, OS reliability, and later
-durable database-backed state.
+Command Center now has read-only local wiring for validation, evidence, and
+traffic-plane sample visibility. There is still no API, DB, or mutation path yet.
 
 Phase 15-LOCAL adds the first local runtime traffic-plane helpers for privilege,
 behavioral monitoring, accountability evidence records, and identity
@@ -718,11 +724,13 @@ machine, skills, or verification gates.
 
 ## Command Center Prototype
 
-A static Command Center prototype now exists in [`dashboard/`](dashboard/) as the first
-visual operator console for the NEXUS Agentic OS. It is a UI-only prototype for Mission
-Control, agents, tasks, gates, evidence, runtime, cost, safety, approvals, release
-control, and demo mode. It is not wired to API, DB, auth, or runtime dispatch yet. The
-prototype currently uses static data from `dashboard/src/data/studio.js` and
+A Command Center prototype now exists in [`dashboard/`](dashboard/) as the first
+visual operator console for the NEXUS Agentic OS. It now includes command
+center local read-only wiring for Mission Control, validation status, evidence,
+runtime traffic-plane sample status, cost, safety, approvals, release control,
+and honest not-wired-yet messaging. It is not wired to API, DB, auth, provider
+execution, or runtime dispatch yet. The prototype uses local snapshot data from
+`dashboard/src/data/studio.js`, `dashboard/src/data/localReports.js`, and
 `dashboard/src/hooks/useStudioData.js`.
 
 ---

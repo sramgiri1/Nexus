@@ -7,6 +7,8 @@ import {
   PROTOTYPE_TASK_QUEUE,
   TEAM_META,
 } from "../data/studio.js";
+import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
+import { RUNTIME_TRAFFIC_SAMPLE } from "../data/runtimeTrafficSample.js";
 
 const PRIORITY_ORDER = {
   critical: 0,
@@ -163,6 +165,8 @@ function buildStudioSnapshot() {
     gateProgress: computeGateProgress(activeProject?.gates),
     openDirectiveCount: openActions.length,
     queueDepth: queue.filter((task) => !["completed", "failed"].includes(task.status)).length,
+    localReports: LOCAL_REPORT_SNAPSHOT,
+    runtimeTrafficSample: RUNTIME_TRAFFIC_SAMPLE,
   };
 }
 

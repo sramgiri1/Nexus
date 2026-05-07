@@ -173,9 +173,9 @@ export const PROTOTYPE_PORTFOLIO = {
   activeProject: "demoapp",
   lastUpdated: "2026-05-06T14:24:00Z",
   sprintPlan: {
-    currentSprint: 13,
+    currentSprint: 16,
     totalSprints: 16,
-    phase: "Phase 13 · Demo and Showcase Mode",
+    phase: "Phase 16-LOCAL · Command Center Live Wiring",
   },
   projects: [
     {
@@ -189,7 +189,7 @@ export const PROTOTYPE_PORTFOLIO = {
       score: 72,
       health: "watch",
       releaseStatus: "blocked_pending_sentinel",
-      activeSprint: "Phase 13",
+      activeSprint: "Phase 16-LOCAL",
       gates: {
         auditor: "done",
         sentinel: "partial",

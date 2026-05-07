@@ -40,42 +40,44 @@ belongs in separate private repos.
 - Phase 12 Observability, evals, and artifacts
 - Phase 13 Demo and showcase mode
 - Phase 14 Domain ownership policy
+- Phase 15-LOCAL Runtime traffic plane and identity propagation
 
 ---
 
 ## Current Phase
 
-### Phase 15-LOCAL — Runtime Traffic Plane and Identity Propagation
+### Phase 16-LOCAL — Command Center Live Wiring
 
 Goal:
 
-- add the first deterministic local enforcement layer for privilege,
-  behavioral monitoring, and accountability without rewriting dispatch yet
+- move Command Center from a pure static prototype toward read-only local NEXUS
+  visibility without adding an API, DB, or mutation path yet
 
 Deliverables:
 
-- runtime traffic-plane helper modules
-- identity propagation model
-- per-call policy decision model
-- accountability evidence record model
-- local behavior-baseline model
-- validation against capability, security, observability, and public-safety
-  layers
+- local validation status summary surfaced in the dashboard
+- local demo evidence and report references surfaced in the dashboard
+- local runtime traffic-plane sample surfaced in the dashboard
+- explicit not-wired-yet posture for API, DB, provider, dispatch, and Xcode
+  execution
+- validation against runtime traffic plane, public safety, and dashboard tests
 
 Non-goals:
 
-- no runtime enforcement changes
+- no API server
+- no DB
 - no agent prompt changes
-- no dashboard behavior changes
+- no live mutation
 - no real provider calls
 - no dispatch rewrite
+- no real Xcode execution
 
 Validation checks:
 
-- traffic plane modules exist and export correctly
-- policy sample cases behave deterministically
-- accountability records hash and verify
-- public-safe demo surface remains intact
+- command center local read-only check passes
+- dashboard build and tests pass
+- traffic-plane and public-safety evidence remain visible
+- no forbidden API or network behavior is introduced in the dashboard
 
 Risk level:
 
@@ -150,6 +152,7 @@ Deliverables:
 - stronger public screenshots and walkthrough assets
 - future runtime enforcement milestones
 - API and DB implementation phases when the boundaries are ready
+- public repo separation from old private history when a clean export is ready
 
 Non-goals:
 
