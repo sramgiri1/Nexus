@@ -24,6 +24,10 @@ full OS:
 - deferred batch completion requires batch reconciliation evidence
 - blocked transitions must not silently mutate task state
 
+Phase 23-LOCAL builds on this by wiring a local approval workflow that creates
+real `approval_granted` or `approval_rejected` evidence records before
+`awaiting_approval -> running` may proceed.
+
 ## Flow
 
 ```text

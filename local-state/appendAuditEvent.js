@@ -30,6 +30,7 @@ function buildAuditEvent(event = {}) {
     taskId: normalizeString(sanitized.taskId),
     capabilityId: normalizeString(sanitized.capabilityId),
     policyDecisionId: normalizeString(sanitized.policyDecisionId),
+    approvalId: normalizeString(sanitized.approvalId),
     summary: normalizeString(sanitized.summary),
     previousState: normalizeString(sanitized.previousState),
     nextState: normalizeString(sanitized.nextState),

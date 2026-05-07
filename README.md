@@ -75,6 +75,12 @@ transition through the existing task state machine. This is still local
 prototype enforcement only, and it is not wired into `loop.js` or `runner.js`
 yet.
 
+Phase 23-LOCAL adds a local approval workflow. Approval-required local work now
+creates real approval requests, supports approve and reject decisions through a
+CLI, and produces approval evidence that can unlock guarded
+`awaiting_approval -> running` transitions. It is still local only and does not
+add API, DB, provider, tool, or project execution.
+
 Validate it with:
 
 ```bash
@@ -100,6 +106,7 @@ cd dashboard && npm run test:pages
 - [Controlled local execution](docs/architecture/CONTROLLED_LOCAL_EXECUTION.md)
 - [Command Center runtime ingestion](docs/architecture/COMMAND_CENTER_RUNTIME_INGESTION.md)
 - [Local state machine enforcement](docs/architecture/LOCAL_STATE_MACHINE_ENFORCEMENT.md)
+- [Local approval workflow](docs/architecture/LOCAL_APPROVAL_WORKFLOW.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -125,6 +132,10 @@ npm run check:command-center-runtime-ingestion
 npm run orchestrator:local-execute
 npm run check:controlled-local-execution
 npm run check:local-state-machine
+npm run approvals:list
+npm run approvals:approve -- <approvalId> --reason "approved locally"
+npm run approvals:reject -- <approvalId> --reason "rejected locally"
+npm run check:local-approval-workflow
 npm run orchestrator:dry-run
 npm run check:orchestrator-dry-run
 npm run check:local-state-boundary

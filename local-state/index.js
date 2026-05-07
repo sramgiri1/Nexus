@@ -70,6 +70,14 @@ export {
 export { appendAuditEvent, validateAuditEvent } from "./appendAuditEvent.js";
 export { appendEvidence, validateEvidence } from "./appendEvidence.js";
 export {
+  appendApprovalRequest,
+  listApprovals,
+  getApprovalById,
+  decideApproval,
+  validateApprovalRequest,
+  validateApprovalDecision,
+} from "./approvalStore.js";
+export {
   readTasks,
   writeTasks,
   addTask,

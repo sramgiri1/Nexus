@@ -69,6 +69,29 @@ function isSecurityBlockedDecision(decision = {}) {
   return /secret|security|data-classification/.test(serialized);
 }
 
+function deriveApprovalType(input = {}) {
+  const serialized = [
+    normalizeString(input.taskType),
+    normalizeString(input.operation),
+    normalizeString(input.requestedAction),
+    normalizeString(input.target),
+  ]
+    .join(" ")
+    .toLowerCase();
+
+  if (serialized.includes("deploy")) return "deploy";
+  if (serialized.includes("secret")) return "secrets";
+  if (serialized.includes("migration")) return "migration";
+  if (serialized.includes("production_data_access")) {
+    return "production_data_access";
+  }
+  if (serialized.includes("state_transition")) return "state_transition";
+  if (["high", "critical"].includes(normalizeString(input.riskLevel))) {
+    return "high_risk";
+  }
+  return "other";
+}
+
 function performLocalWrite(label, type, record, executionContext, trafficResult) {
   return {
     label,
@@ -396,15 +419,26 @@ function buildLocalWriteRecords(input, executionContext, trafficResult, result) 
       redacted: true,
     },
     approval: {
-      type: "controlled_local_execution",
+      type: deriveApprovalType(input),
       requestedBy: targetAgent,
       projectId,
       taskId,
       riskLevel: normalizeString(input.riskLevel),
-      decision: "requested",
-      summary: `Approval requested before controlled local execution may proceed for ${normalizeString(
+      reason: `Approval required before local execution may proceed for ${normalizeString(
         input.taskType
       )}.`,
+      evidence: [
+        {
+          type: "policy_decision",
+          reference: trafficResult.decision.decisionId,
+        },
+        {
+          type: "traffic_evidence",
+          reference: trafficResult.evidenceRecord.recordId,
+        },
+      ],
+      decision: "requested",
+      expiresAt: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
       redacted: true,
     },
     incident: {

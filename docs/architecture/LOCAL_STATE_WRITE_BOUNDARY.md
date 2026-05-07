@@ -85,6 +85,10 @@ Phase 22-LOCAL adds task-state enforcement before state writes. Controlled
 local execution may still write only under `local-state/runtime/`, but task
 state changes now pass through the existing task state machine before commit.
 
+Phase 23-LOCAL adds append-only local approval requests and approval decisions
+to the same boundary. Approval evidence now becomes a first-class local runtime
+artifact that guarded task transitions may consume.
+
 It does not:
 
 - wire `loop.js`

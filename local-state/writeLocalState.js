@@ -1,8 +1,11 @@
 import { validateIdentityContext } from "../runtime/identityContext.js";
 import { appendAuditEvent, validateAuditEvent } from "./appendAuditEvent.js";
+import {
+  appendApprovalRequest,
+  validateApprovalRequest,
+} from "./approvalStore.js";
 import { appendEvidence, validateEvidence } from "./appendEvidence.js";
 import {
-  appendApprovalRecord,
   appendIncidentRecord,
   appendRuntimeEvent,
 } from "./stateStore.js";
@@ -117,17 +120,7 @@ function validateRoute(type, record) {
         record,
       };
     case "approval":
-      return {
-        valid: Boolean(
-          normalizeString(record.type) && normalizeString(record.requestedBy)
-        ),
-        errors:
-          normalizeString(record.type) && normalizeString(record.requestedBy)
-            ? []
-            : ["approval requires type and requestedBy."],
-        warnings: [],
-        record,
-      };
+      return validateApprovalRequest(record);
     case "incident":
       return {
         valid: Boolean(
@@ -492,7 +485,7 @@ export function writeLocalStateEvent(input = {}) {
       result = appendRuntimeEvent(validation.record);
       break;
     case "approval":
-      result = appendApprovalRecord(validation.record);
+      result = appendApprovalRequest(validation.record);
       break;
     case "incident":
       result = appendIncidentRecord(validation.record);

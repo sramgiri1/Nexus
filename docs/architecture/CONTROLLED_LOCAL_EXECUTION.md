@@ -59,6 +59,8 @@ Controlled local execution may write only to:
 
 - local task transitions are validated through the existing task state machine
   before writes
+- approval-required work now creates real local approval requests and waits for
+  approval evidence before it can proceed
 - no provider calls
 - no tool calls
 - no project mutation

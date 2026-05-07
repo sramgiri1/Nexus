@@ -61,11 +61,18 @@ function buildApprovalRecord(record = {}) {
     approvalId: normalizeString(sanitized.approvalId) || randomUUID(),
     type: normalizeString(sanitized.type),
     requestedBy: normalizeString(sanitized.requestedBy),
+    decidedBy: normalizeString(sanitized.decidedBy),
     projectId: normalizeString(sanitized.projectId),
     taskId: normalizeString(sanitized.taskId),
     riskLevel: normalizeString(sanitized.riskLevel),
+    reason: normalizeString(sanitized.reason),
+    evidence: Array.isArray(sanitized.evidence)
+      ? sanitized.evidence.filter(Boolean)
+      : [],
     decision: normalizeString(sanitized.decision) || "requested",
-    summary: normalizeString(sanitized.summary),
+    expiresAt: normalizeString(sanitized.expiresAt),
+    summary:
+      normalizeString(sanitized.summary) || normalizeString(sanitized.reason),
     createdAt: normalizeString(sanitized.createdAt) || new Date().toISOString(),
     redacted: true,
   };
@@ -190,10 +197,16 @@ export function appendRuntimeEvent(event = {}) {
 }
 
 export function appendApprovalRecord(record = {}) {
+  const preparedRecord = buildApprovalRecord(record);
+  const requiredFields =
+    preparedRecord.decision === "requested"
+      ? ["type", "requestedBy", "projectId", "taskId", "riskLevel", "reason"]
+      : ["approvalId", "decidedBy", "reason"];
+
   const validation = validatePreparedRecord(
     LOCAL_APPROVALS_FILE,
-    buildApprovalRecord(record),
-    ["type", "requestedBy"]
+    preparedRecord,
+    requiredFields
   );
 
   if (

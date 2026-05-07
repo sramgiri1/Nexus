@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "localApprovalsEnabled": true,
+  "approvalRecordsAppendOnly": true,
+  "approvalEvidenceRequiredForTransition": true,
+  "selfApprovalAllowed": false,
+  "redactionRequired": true,
+  "providerCallsAllowed": false,
+  "projectWritesAllowed": false,
+  "dbWritesAllowed": false,
+  "apiCallsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false
+}

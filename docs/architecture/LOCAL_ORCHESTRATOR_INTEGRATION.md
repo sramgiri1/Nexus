@@ -29,6 +29,10 @@ Phase 22-LOCAL adds local state-machine enforcement to the same path. Task
 state changes now validate against the existing task state machine before the
 local write boundary commits them.
 
+Phase 23-LOCAL adds a local approval workflow. Approval-required work now
+creates append-only approval requests and uses approval evidence to unlock
+guarded `awaiting_approval -> running` transitions.
+
 ## Future flow
 
 ```text
@@ -36,6 +40,7 @@ task request
   → identity context
   → capability check
   → runtime traffic plane policy decision
+  → local approval workflow when required
   → task state-machine transition validation
   → local write boundary
   → task, evidence, and audit update

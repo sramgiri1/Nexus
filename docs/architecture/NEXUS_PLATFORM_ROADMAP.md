@@ -47,25 +47,26 @@ belongs in separate private repos.
 - Phase 19-LOCAL Orchestrator adapter dry-run mode
 - Phase 20-LOCAL Controlled local execution mode
 - Phase 21-LOCAL Command Center runtime file ingestion
+- Phase 22-LOCAL State machine enforcement in local executor
 
 ---
 
 ## Current Phase
 
-### Phase 22-LOCAL — State Machine Enforcement in Local Executor
+### Phase 23-LOCAL — Approval Workflow Wiring for Local Execution
 
 Goal:
 
-- require local controlled task-state changes to pass through the existing task
-  state machine before `local-state/runtime` writes are committed
+- turn `REQUIRE_APPROVAL` into a real local approval workflow with request,
+  decision, approval evidence, and guarded transition support
 
 Deliverables:
 
-- local task transition guard
-- guarded `task_state` writes through `writeLocalStateEvent`
-- controlled local execution updates that use queued, running, and
-  implementation_done transitions
-- validation against approval, verification, and batch-evidence transition rules
+- append-only local approval request store
+- approve and reject CLIs
+- approval decision audit and evidence records
+- approval evidence support for `awaiting_approval -> running`
+- validation for local approval request and decision flow
 
 Non-goals:
 
@@ -78,10 +79,10 @@ Non-goals:
 
 Validation checks:
 
-- queued, verification, approval, and deferred-batch transitions are validated
-- blocked transitions do not mutate task state
-- controlled local execution still passes for `DemoApp`
-- existing runtime, Command Center, and policy checks remain green
+- approval requests append to local runtime state
+- approve and reject decisions append audit and approval evidence
+- guarded approval transitions respect `approval_granted`
+- existing local execution, runtime, and Command Center checks remain green
 
 Risk level:
 

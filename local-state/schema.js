@@ -123,6 +123,11 @@ export const KNOWN_REPORTS = [
     name: "Local State Machine Enforcement",
     path: "reports/local-state-machine-enforcement-report.md",
   },
+  {
+    id: "local-approval-workflow",
+    name: "Local Approval Workflow",
+    path: "reports/local-approval-workflow-report.md",
+  },
 ];
 
 export const KNOWN_DEMO_CONTRACTS = [

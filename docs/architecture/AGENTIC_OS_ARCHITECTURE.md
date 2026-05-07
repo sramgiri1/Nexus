@@ -74,6 +74,12 @@ executor now validates that transition through the existing task state machine.
 This is local prototype enforcement only; it is not wired into `loop.js` or
 `runner.js` yet.
 
+Phase 23-LOCAL adds a local approval workflow on top of that path. Approval-
+required work now creates append-only local approval requests, approval
+decisions, audit records, and approval evidence that can unlock guarded local
+state transitions. This is still local only and does not add API, DB, or
+provider execution.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
