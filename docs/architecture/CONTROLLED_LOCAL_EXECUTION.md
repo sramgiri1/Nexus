@@ -67,9 +67,8 @@ Controlled local execution may write only to:
 
 Later phases can build on this mode by:
 
-- surfacing local runtime records in Command Center
+- surfacing generated local runtime-record summaries in Command Center
 - wiring the adapter into controlled dispatch checkpoints
 - introducing controlled tool execution
 - introducing controlled provider execution
 - exposing read endpoints backed by the same local runtime state
-

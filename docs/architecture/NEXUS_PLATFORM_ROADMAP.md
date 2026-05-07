@@ -45,32 +45,33 @@ belongs in separate private repos.
 - Phase 17-LOCAL Local state adapter and read API boundary
 - Phase 18-LOCAL Local orchestrator read/write integration plan
 - Phase 19-LOCAL Orchestrator adapter dry-run mode
+- Phase 20-LOCAL Controlled local execution mode
 
 ---
 
 ## Current Phase
 
-### Phase 20-LOCAL — Controlled Local Execution Mode
+### Phase 21-LOCAL — Command Center Runtime File Ingestion
 
 Goal:
 
-- allow governed DemoApp-only local runtime writes after traffic-plane
-  evaluation without enabling providers, tools, project mutation, DB, or API
-  layers
+- surface real local runtime-file summaries in Command Center through a
+  generated browser-safe snapshot without adding API, DB, mutation, providers,
+  or tool execution
 
 Deliverables:
 
-- controlled local executor
-- controlled local execution plan
-- controlled local execution CLI
-- validation against traffic-plane, local write-boundary, and runtime-file
-  constraints
+- runtime file normalizer
+- Command Center snapshot generator
+- dashboard runtime snapshot data module
+- Command Center runtime-state panels
+- validation against read-only snapshot-ingestion rules
 
 Non-goals:
 
 - no API server
 - no DB
-- no write API outside local-state/runtime
+- no live browser filesystem reads
 - no mutation endpoints
 - no real provider calls
 - no tool execution
@@ -79,10 +80,9 @@ Non-goals:
 
 Validation checks:
 
-- controlled local scenarios run locally
-- local writes stay under `local-state/runtime`
-- traffic-plane and identity surfaces are present in each scenario result
-- audit, evidence, runtime, approval, and incident records remain parseable
+- runtime summaries are derived from `local-state/runtime`
+- generated snapshot stays read-only and browser-safe
+- Command Center surfaces recent runtime file data
 - dashboard and existing local validation surfaces remain green
 
 Risk level:

@@ -62,6 +62,8 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
   const validation = localStateSnapshot.validation || {};
   const uiMirror = validation.uiMirror || {};
   const runtimeTrafficPlane = localStateSnapshot.runtime?.runtimeTrafficPlane || {};
+  const runtimeFilesSnapshot = localStateSnapshot.runtimeFiles || {};
+  const runtimeFiles = runtimeFilesSnapshot.runtimeState || {};
   const demo = localStateSnapshot.demo || {};
 
   return {
@@ -99,6 +101,8 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
           ? "Not wired yet"
           : "Unknown",
     },
+    runtimeFiles,
+    runtimeSnapshot: runtimeFilesSnapshot,
     reports: (validation.reports || []).map((report) => ({
       id: report.id,
       name: report.name,
@@ -120,7 +124,10 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
       "No real Xcode execution",
       "No private product execution yet",
     ],
-    lastUpdatedSource: localStateSnapshot.lastUpdatedSource || "local snapshot mirror",
+    lastUpdatedSource:
+      runtimeFilesSnapshot.source ||
+      localStateSnapshot.lastUpdatedSource ||
+      "local snapshot mirror",
   };
 }
 
@@ -233,6 +240,7 @@ function buildStudioSnapshot() {
     queueDepth: queue.filter((task) => !["completed", "failed"].includes(task.status)).length,
     localReports: buildCommandCenterLocalReports(LOCAL_REPORT_SNAPSHOT),
     localStateSnapshot: LOCAL_REPORT_SNAPSHOT,
+    runtimeSnapshot: LOCAL_REPORT_SNAPSHOT.runtimeFiles || {},
     runtimeTrafficSample: RUNTIME_TRAFFIC_SAMPLE,
   };
 }

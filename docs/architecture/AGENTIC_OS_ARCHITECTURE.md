@@ -63,6 +63,11 @@ evidence, runtime-event, approval, and incident records to be written under
 `local-state/runtime/` for `DemoApp` only. It still does not wire dispatch,
 execute providers or tools, mutate projects, or add DB/API layers.
 
+Phase 21-LOCAL adds Command Center runtime file ingestion. The dashboard now
+consumes a generated browser-safe snapshot derived from `local-state/runtime/`
+so it can show real local runtime counts and recent records while remaining
+read-only and without adding API, DB, or mutation wiring.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

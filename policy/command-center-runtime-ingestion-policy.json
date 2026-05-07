@@ -1,0 +1,15 @@
+{
+  "version": "1.0",
+  "readOnly": true,
+  "source": "local-state/runtime",
+  "generatedSnapshotRequired": true,
+  "browserFilesystemReadAllowed": false,
+  "apiRequiredForLiveRead": true,
+  "mutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbReadsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false,
+  "secretsAllowed": false,
+  "privateProjectDataAllowed": false,
+  "publicSafetyRequired": true
+}

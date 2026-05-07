@@ -64,6 +64,11 @@ Phase 20-LOCAL adds controlled local execution mode. It writes real redacted
 runtime records for `DemoApp` under `local-state/runtime/`, but it still does
 not execute providers, tools, project mutations, or dispatch wiring.
 
+Phase 21-LOCAL adds Command Center runtime file ingestion. The dashboard now
+reads a generated browser-safe snapshot derived from `local-state/runtime/`
+files, while staying read-only and without adding API, DB, mutation, provider,
+or tool execution.
+
 Validate it with:
 
 ```bash
@@ -87,6 +92,7 @@ cd dashboard && npm run test:pages
 - [Local orchestrator integration](docs/architecture/LOCAL_ORCHESTRATOR_INTEGRATION.md)
 - [Orchestrator adapter dry-run](docs/architecture/ORCHESTRATOR_ADAPTER_DRY_RUN.md)
 - [Controlled local execution](docs/architecture/CONTROLLED_LOCAL_EXECUTION.md)
+- [Command Center runtime ingestion](docs/architecture/COMMAND_CENTER_RUNTIME_INGESTION.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -107,6 +113,8 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run generate:command-center-snapshot
+npm run check:command-center-runtime-ingestion
 npm run orchestrator:local-execute
 npm run check:controlled-local-execution
 npm run orchestrator:dry-run
@@ -283,6 +291,11 @@ Phase 20-LOCAL adds controlled local execution mode for `DemoApp` only. It
 writes redacted task, audit, evidence, runtime-event, approval, and incident
 records to `local-state/runtime/`, but it still does not execute providers,
 tools, project mutations, or dispatch wiring.
+
+Phase 21-LOCAL adds a generated runtime snapshot for Command Center. The
+dashboard can now display real local runtime record summaries from
+`local-state/runtime/`, but it still does not use a live API, DB, mutation
+actions, provider calls, or tool execution.
 
 ---
 

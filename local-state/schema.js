@@ -6,6 +6,12 @@ export const LOCAL_AUDIT_FILE = `${LOCAL_RUNTIME_DIR}/audit.jsonl`;
 export const LOCAL_EVENTS_FILE = `${LOCAL_RUNTIME_DIR}/events.jsonl`;
 export const LOCAL_APPROVALS_FILE = `${LOCAL_RUNTIME_DIR}/approvals.jsonl`;
 export const LOCAL_INCIDENTS_FILE = `${LOCAL_RUNTIME_DIR}/incidents.jsonl`;
+export const LOCAL_RUNTIME_TASKS = LOCAL_TASKS_FILE;
+export const LOCAL_RUNTIME_EVIDENCE = LOCAL_EVIDENCE_FILE;
+export const LOCAL_RUNTIME_AUDIT = LOCAL_AUDIT_FILE;
+export const LOCAL_RUNTIME_EVENTS = LOCAL_EVENTS_FILE;
+export const LOCAL_RUNTIME_APPROVALS = LOCAL_APPROVALS_FILE;
+export const LOCAL_RUNTIME_INCIDENTS = LOCAL_INCIDENTS_FILE;
 
 export const ALLOWED_SOURCE_DIRS = [
   "reports",
@@ -106,6 +112,11 @@ export const KNOWN_REPORTS = [
     id: "local-write-boundary",
     name: "Local Write Boundary",
     path: "reports/local-write-boundary-report.md",
+  },
+  {
+    id: "command-center-runtime-ingestion",
+    name: "Command Center Runtime Ingestion",
+    path: "reports/command-center-runtime-ingestion-report.md",
   },
 ];
 

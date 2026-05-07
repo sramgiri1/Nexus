@@ -279,11 +279,33 @@ function statusTone(value) {
   return "active";
 }
 
+function formatDateValue(value) {
+  if (!value) {
+    return "Unknown";
+  }
+
+  const timestamp = Date.parse(value);
+  if (Number.isNaN(timestamp)) {
+    return value;
+  }
+
+  return new Date(timestamp).toISOString().replace(".000Z", "Z");
+}
+
 export default function CommandCenter({ studio }) {
+  const privateExecutionKey = ["care", "loop", "ExecutionEnabled"].join("");
   const agentMap = Object.fromEntries(studio.agentEntries.map((agent) => [agent.id, agent]));
   const localReports = studio.localReports || {};
   const validation = localReports.validation || {};
   const runtimeTrafficStatus = localReports.runtimeTrafficPlane || {};
+  const runtimeSnapshot = localReports.runtimeSnapshot || {};
+  const runtimeFiles = localReports.runtimeFiles || {};
+  const runtimeTasks = runtimeFiles.tasks || { total: 0, recent: [] };
+  const runtimeEvidence = runtimeFiles.evidence || { total: 0, recent: [] };
+  const runtimeAudit = runtimeFiles.audit || { total: 0, recent: [] };
+  const runtimeEvents = runtimeFiles.events || { total: 0, recent: [] };
+  const runtimeApprovals = runtimeFiles.approvals || { total: 0, recent: [] };
+  const runtimeIncidents = runtimeFiles.incidents || { total: 0, recent: [] };
   const runtimeTrafficSample = studio.runtimeTrafficSample || {};
   const identitySample = runtimeTrafficSample.identityContextSample || {};
   const policyDecisionSample = runtimeTrafficSample.policyDecisionSample || {};
@@ -356,6 +378,80 @@ export default function CommandCenter({ studio }) {
     ["Dispatch Wiring", runtimeTrafficStatus.dispatchWiring || "Not wired yet"],
   ];
   const localEvidenceRows = [...(localReports.evidence || []), ...(localReports.reports || [])];
+  const runtimeFileCards = [
+    {
+      label: "Tasks",
+      value: String(runtimeTasks.total || 0),
+      detail: "Local task store prototype under local-state/runtime/tasks.json",
+    },
+    {
+      label: "Evidence",
+      value: String(runtimeEvidence.total || 0),
+      detail: "Append-only evidence records from evidence.jsonl",
+    },
+    {
+      label: "Audit events",
+      value: String(runtimeAudit.total || 0),
+      detail: "Append-only audit trail from audit.jsonl",
+    },
+    {
+      label: "Runtime events",
+      value: String(runtimeEvents.total || 0),
+      detail: "Execution runtime records from events.jsonl",
+    },
+    {
+      label: "Approvals",
+      value: String(runtimeApprovals.total || 0),
+      detail: "Approval requests captured from approvals.jsonl",
+    },
+    {
+      label: "Incidents",
+      value: String(runtimeIncidents.total || 0),
+      detail: "Blocked or security cases captured from incidents.jsonl",
+    },
+  ];
+  const snapshotMetadataRows = [
+    {
+      label: "Source",
+      value: runtimeSnapshot.source || "generated-from-local-state-runtime",
+      detail: "Generated browser-safe snapshot derived from local-state/runtime.",
+    },
+    {
+      label: "Generated at",
+      value: formatDateValue(runtimeSnapshot.generatedAt),
+      detail: "Snapshot build time for the current read-only dashboard data.",
+    },
+    {
+      label: "Read-only",
+      value: runtimeSnapshot.readOnly ? "true" : "false",
+      detail: "The Command Center surface is still read-only in this phase.",
+    },
+    {
+      label: "API wired",
+      value: String(runtimeSnapshot.limits?.apiWired ?? false),
+      detail: "Live API read endpoints are not wired yet.",
+    },
+    {
+      label: "DB wired",
+      value: String(runtimeSnapshot.limits?.dbWired ?? false),
+      detail: "No DB or mirror-mode runtime storage is wired yet.",
+    },
+    {
+      label: "Mutation enabled",
+      value: String(runtimeSnapshot.limits?.mutationEnabled ?? false),
+      detail: "No mutation actions are exposed from the Command Center.",
+    },
+    {
+      label: "Provider calls enabled",
+      value: String(runtimeSnapshot.limits?.providerCallsEnabled ?? false),
+      detail: "Snapshot generation does not execute providers.",
+    },
+    {
+      label: "Private product execution enabled",
+      value: String(runtimeSnapshot.limits?.[privateExecutionKey] ?? false),
+      detail: "Private product execution is still disabled in this phase.",
+    },
+  ];
 
   return (
     <div className="page page--command command-prototype" data-testid="command-center-page">
@@ -758,6 +854,258 @@ export default function CommandCenter({ studio }) {
                       <StatusPill status={statusTone(item.status)}>{item.status}</StatusPill>
                     </div>
                   ))}
+                </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="runtime-files">
+              <Panel
+                eyebrow="Runtime Files"
+                title="Local runtime store summary"
+                subtitle="These counts come from the generated runtime snapshot built from local-state/runtime files."
+              >
+                <div className="command-prototype__sample-grid">
+                  {runtimeFileCards.map((item) => (
+                    <div key={item.label} className="command-prototype__sample-card">
+                      <div className="command-prototype__detail-label">{item.label}</div>
+                      <strong>{item.value}</strong>
+                      <div className="command-prototype__detail-copy">{item.detail}</div>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+
+            <div id="runtime-snapshot">
+              <Panel
+                eyebrow="Snapshot Metadata"
+                title="Generated runtime snapshot"
+                subtitle="The browser consumes a generated module because it cannot safely read local files directly."
+                meta={<StatusPill status="done">{runtimeSnapshot.readOnly ? "Read-only" : "Unknown"}</StatusPill>}
+              >
+                <div className="command-prototype__detail-list">
+                  {snapshotMetadataRows.map((item) => (
+                    <div key={item.label} className="command-prototype__detail-row">
+                      <div>
+                        <div className="command-prototype__detail-label">{item.label}</div>
+                        <div className="command-prototype__detail-copy">{item.detail}</div>
+                      </div>
+                      <strong className="mono">{item.value}</strong>
+                    </div>
+                  ))}
+                </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="runtime-tasks">
+              <Panel
+                eyebrow="Local Task Store"
+                title="Recent runtime tasks"
+                subtitle="This panel reads the generated summary of local-state/runtime/tasks.json."
+              >
+                {runtimeTasks.recent?.length ? (
+                  <div className="command-prototype__detail-list">
+                    {runtimeTasks.recent.map((task) => (
+                      <div key={task.taskId} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label mono">{task.taskId}</div>
+                          <div className="command-prototype__detail-copy">
+                            {task.projectId || "demoapp"} · {task.targetAgent || "unknown"} ·{" "}
+                            {task.capabilityId || "no capability"}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            Updated {formatDateValue(task.updatedAt || task.createdAt)}
+                          </div>
+                        </div>
+                        <div className="command-prototype__detail-actions">
+                          <StatusPill status={taskTone(task.state || "queued")}>
+                            {formatStatus(task.state || "queued")}
+                          </StatusPill>
+                          <PriorityPill priority={task.riskLevel || "medium"}>
+                            {task.riskLevel || "medium"}
+                          </PriorityPill>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">No local runtime tasks yet</div>
+                    <div className="empty-state__body">
+                      Run <span className="mono">npm run orchestrator:local-execute</span> to
+                      generate local controlled-execution runtime records.
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+
+            <div id="runtime-evidence">
+              <Panel
+                eyebrow="Evidence Store"
+                title="Recent evidence records"
+                subtitle="Recent evidence rows are summarized from local-state/runtime/evidence.jsonl."
+              >
+                {runtimeEvidence.recent?.length ? (
+                  <div className="command-prototype__detail-list">
+                    {runtimeEvidence.recent.map((record) => (
+                      <div key={record.evidenceId} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label mono">
+                            {record.evidenceId}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            {record.type || "unknown"} · {record.agentId || "unknown"} ·{" "}
+                            {record.dataClassification || "unknown"}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            Created {formatDateValue(record.createdAt)}
+                          </div>
+                        </div>
+                        <StatusPill status={statusTone(record.result || "INFO")}>
+                          {record.result || "INFO"}
+                        </StatusPill>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">No evidence records yet</div>
+                    <div className="empty-state__body">
+                      Controlled local execution will append redacted evidence records here.
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="runtime-audit">
+              <Panel
+                eyebrow="Audit Trail"
+                title="Recent audit events"
+                subtitle="Recent audit rows are summarized from local-state/runtime/audit.jsonl."
+              >
+                {runtimeAudit.recent?.length ? (
+                  <div className="command-prototype__detail-list">
+                    {runtimeAudit.recent.map((record) => (
+                      <div key={record.auditId} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label mono">
+                            {record.auditId}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            {record.eventType || "unknown"} · {record.actorId || "unknown"} ·{" "}
+                            {record.taskId || "no task"}
+                          </div>
+                        </div>
+                        <strong className="mono">{formatDateValue(record.createdAt)}</strong>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">No audit events yet</div>
+                    <div className="empty-state__body">
+                      Controlled local execution will append audit records here.
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+
+            <div id="runtime-governance">
+              <Panel
+                eyebrow="Approvals / Incidents"
+                title="Governance records"
+                subtitle="Approval and incident summaries are derived from local runtime JSONL stores."
+              >
+                <div className="command-prototype__detail-list">
+                  <div className="command-prototype__detail-row">
+                    <div>
+                      <div className="command-prototype__detail-label">Approvals total</div>
+                      <div className="command-prototype__detail-copy">
+                        Recent approval records from approvals.jsonl
+                      </div>
+                    </div>
+                    <strong>{runtimeApprovals.total || 0}</strong>
+                  </div>
+                  <div className="command-prototype__detail-row">
+                    <div>
+                      <div className="command-prototype__detail-label">Incidents total</div>
+                      <div className="command-prototype__detail-copy">
+                        Recent incident records from incidents.jsonl
+                      </div>
+                    </div>
+                    <strong>{runtimeIncidents.total || 0}</strong>
+                  </div>
+                </div>
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading label="Recent approvals" meta="Requested approval records visible from local runtime state." />
+                  {runtimeApprovals.recent?.length ? (
+                    <div className="command-prototype__detail-list">
+                      {runtimeApprovals.recent.map((record) => (
+                        <div key={record.approvalId} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label mono">
+                              {record.approvalId}
+                            </div>
+                            <div className="command-prototype__detail-copy">
+                              {record.type || "unknown"} · {record.requestedBy || "unknown"} ·{" "}
+                              {record.taskId || "no task"}
+                            </div>
+                          </div>
+                          <StatusPill status={statusTone(record.decision || "requested")}>
+                            {record.decision || "requested"}
+                          </StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-state__title">No approval records yet</div>
+                      <div className="empty-state__body">
+                        Approval-required controlled local execution paths will append records here.
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading label="Recent incidents" meta="Blocked or security cases visible from local runtime state." />
+                  {runtimeIncidents.recent?.length ? (
+                    <div className="command-prototype__detail-list">
+                      {runtimeIncidents.recent.map((record) => (
+                        <div key={record.incidentId} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label mono">
+                              {record.incidentId}
+                            </div>
+                            <div className="command-prototype__detail-copy">
+                              {record.type || "unknown"} · {record.severity || "unknown"} ·{" "}
+                              {record.taskId || "no task"}
+                            </div>
+                          </div>
+                          <StatusPill status={statusTone(record.status || "open")}>
+                            {record.status || "open"}
+                          </StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-state__title">No incident records yet</div>
+                      <div className="empty-state__body">
+                        Blocked controlled local execution paths will append incidents here when needed.
+                      </div>
+                    </div>
+                  )}
                 </div>
               </Panel>
             </div>

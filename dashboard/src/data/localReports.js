@@ -1,3 +1,5 @@
+import { runtimeSnapshot } from "./runtimeSnapshot.js";
+
 export const LOCAL_REPORT_SNAPSHOT = {
   snapshotVersion: "1.0",
   source: "local-files",
@@ -244,6 +246,7 @@ export const LOCAL_REPORT_SNAPSHOT = {
       dispatchWiring: "not_wired",
     },
   },
+  runtimeFiles: runtimeSnapshot,
   capabilities: {
     count: 25,
     enabled: 24,

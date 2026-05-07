@@ -13,6 +13,10 @@ Move Command Center from a pure static mock UI toward local NEXUS visibility.
 
 This phase adds read-only local snapshot wiring.
 
+Phase 21-LOCAL extends that wiring with a generated runtime snapshot built from
+`local-state/runtime` so the Command Center can show real local runtime record
+totals and recent rows without any API or DB layer.
+
 ## What is wired
 
 - local validation status summary
@@ -20,6 +24,7 @@ This phase adds read-only local snapshot wiring.
 - runtime traffic plane sample
 - evidence and report references
 - a bundled snapshot that mirrors the local state adapter output
+- generated runtime-file summaries from `local-state/runtime`
 - explicit not-wired-yet status
 
 ## What is not wired
@@ -49,3 +54,4 @@ This phase adds read-only local snapshot wiring.
 - live evidence ingestion
 - approval actions
 - future private product execution visibility
+- future API read endpoints that replace the generated snapshot

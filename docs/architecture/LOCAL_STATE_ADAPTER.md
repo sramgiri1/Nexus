@@ -67,6 +67,20 @@ files and summarized into release posture, gate posture, and evidence counts.
 Runtime status is derived from local traffic-plane reports, capability registry
 data, and policy presence checks.
 
+## Normalized runtime files
+
+Phase 21-LOCAL adds normalized summaries for the local runtime prototype files
+under `local-state/runtime/`. The adapter now summarizes:
+
+- tasks
+- evidence
+- audit events
+- runtime events
+- approvals
+- incidents
+
+Those summaries feed a generated browser-safe Command Center snapshot.
+
 ## Current phase boundary
 
 This is a local adapter only. There is still no DB, API, or mutation path in
@@ -78,6 +92,7 @@ This adapter is the bridge toward:
 
 - API read endpoints
 - local write-boundary output
+- generated Command Center runtime snapshots
 - DB mirror mode
 - live evidence ingestion
 - future redacted status snapshots for the Command Center

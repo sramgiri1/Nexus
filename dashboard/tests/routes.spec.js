@@ -35,6 +35,11 @@ test("home route renders command center with local read-only wiring", async ({ p
   await expect(page.locator("#local-os")).toContainText("Identity Propagation");
   await expect(page.locator("#validation")).toContainText("Validation Status");
   await expect(page.locator("#local-evidence")).toContainText("Local Evidence");
+  await expect(page.locator("#runtime-files")).toContainText("Runtime Files");
+  await expect(page.locator("#runtime-tasks")).toContainText("Local Task Store");
+  await expect(page.locator("#runtime-evidence")).toContainText("Evidence Store");
+  await expect(page.locator("#runtime-audit")).toContainText("Audit Trail");
+  await expect(page.locator("#runtime-snapshot")).toContainText("Snapshot Metadata");
   await expect(page.locator("#demo-mode")).toContainText("Not Wired Yet");
   await expect(page.locator("#demo-mode")).toContainText("No live API");
   await expect(page.locator("#tasks")).toContainText("Task queue");

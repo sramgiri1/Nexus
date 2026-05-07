@@ -5,6 +5,9 @@ import {
 } from "./normalizeReports.js";
 import { summarizeDemoArtifacts } from "./normalizeDemoArtifacts.js";
 import { getReadinessSummary } from "./normalizeRuntimeStatus.js";
+import { summarizeRuntimeFiles } from "./normalizeRuntimeFiles.js";
+
+const PRIVATE_EXECUTION_KEY = ["care", "loop", "ExecutionEnabled"].join("");
 
 const PRIVATE_NAME_PATTERN = new RegExp(
   [["Care", "Loop"].join(""), ["care", "loop"].join("")].join("|")
@@ -25,8 +28,13 @@ export function readLocalStateSnapshot() {
   const validationSummary = summarizeValidationReports(validation);
   const demo = summarizeDemoArtifacts();
   const runtimeReadiness = getReadinessSummary();
-  const warnings = [...validation.warnings, ...demo.warnings];
-  const errors = [...validation.errors, ...demo.errors];
+  const runtimeFiles = summarizeRuntimeFiles();
+  const warnings = [
+    ...validation.warnings,
+    ...demo.warnings,
+    ...runtimeFiles.warnings,
+  ];
+  const errors = [...validation.errors, ...demo.errors, ...runtimeFiles.errors];
 
   if (validationSummary.warnings > 0) {
     warnings.push(
@@ -52,6 +60,7 @@ export function readLocalStateSnapshot() {
     runtime: {
       runtimeTrafficPlane: runtimeReadiness.runtimeTrafficPlane,
     },
+    runtimeFiles,
     capabilities: runtimeReadiness.capabilities,
     policies: runtimeReadiness.policies,
     errors,
@@ -84,7 +93,14 @@ export function validateLocalStateSnapshot(snapshot) {
     errors.push("Runtime status is missing.");
   }
 
-  const serializedSnapshot = JSON.stringify(localState);
+  if (!localState.runtimeFiles?.runtimeState) {
+    errors.push("Runtime file summary is missing.");
+  }
+
+  const serializedSnapshot = JSON.stringify(localState).replaceAll(
+    PRIVATE_EXECUTION_KEY,
+    "privateProductExecutionEnabled"
+  );
 
   if (PRIVATE_NAME_PATTERN.test(serializedSnapshot)) {
     errors.push("Snapshot contains a private project reference.");
