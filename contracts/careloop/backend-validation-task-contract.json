@@ -1,0 +1,70 @@
+{
+  "contractVersion": "1.0",
+  "contractType": "task",
+  "projectId": "careloop",
+  "privateProject": true,
+  "mode": "local-private",
+  "taskId": "careloop-backend-validation-plan",
+  "title": "Create CareLoop backend validation plan through NEXUS",
+  "objective": "Create a governed validation plan for the existing CareLoop backend without mutating project files or running build/test commands.",
+  "sourceAgent": "nexus",
+  "targetAgent": "shepherd",
+  "capabilityId": "orchestration.plan_flow",
+  "riskLevel": "medium",
+  "dataClassification": "confidential",
+  "mutationAllowed": false,
+  "buildExecutionAllowed": false,
+  "testExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "allowedRoots": [
+    "projects/careloop"
+  ],
+  "forbiddenActions": [
+    "modify CareLoop source files",
+    "run npm install",
+    "run npm test",
+    "run Prisma commands",
+    "call providers",
+    "call network",
+    "start API server",
+    "access DB",
+    "read .env"
+  ],
+  "acceptanceCriteria": [
+    "CareLoop backend validation plan is created",
+    "No CareLoop files are modified",
+    "No build/test commands are executed",
+    "No provider/API/DB/network calls are made",
+    "Task enters local runtime state through guarded NEXUS path",
+    "Evidence and audit records are redacted and linked"
+  ],
+  "requiredEvidence": [
+    "careloop_inventory_snapshot",
+    "validation_plan_artifact",
+    "local_task_record",
+    "audit_event",
+    "runtime_event"
+  ],
+  "observedBackendScripts": [
+    "dev",
+    "start",
+    "migrate",
+    "generate",
+    "studio",
+    "qa:reset",
+    "qa:seed:sprint1",
+    "test",
+    "test:watch"
+  ],
+  "observedBackendStructure": {
+    "src": true,
+    "tests": true,
+    "docs": true,
+    "prisma": true,
+    "schemaPrisma": true,
+    "envExample": true
+  },
+  "createdAt": "2026-05-07T23:45:15.077Z"
+}

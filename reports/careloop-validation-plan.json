@@ -1,0 +1,111 @@
+{
+  "planVersion": "1.0",
+  "projectId": "careloop",
+  "privateProject": true,
+  "mode": "local-private",
+  "createdAt": "2026-05-07T23:45:15.078Z",
+  "ownerAgent": "shepherd",
+  "capabilityId": "orchestration.plan_flow",
+  "mutationAllowed": false,
+  "executionAllowed": false,
+  "backend": {
+    "readiness": "READY_FOR_VALIDATION",
+    "observedScripts": [
+      "dev",
+      "start",
+      "migrate",
+      "generate",
+      "studio",
+      "qa:reset",
+      "qa:seed:sprint1",
+      "test",
+      "test:watch"
+    ],
+    "observedStructure": {
+      "src": true,
+      "tests": true,
+      "docs": true,
+      "prisma": true,
+      "schemaPrisma": true,
+      "envExample": true
+    }
+  },
+  "validationPlan": {
+    "safeNextChecks": [
+      {
+        "id": "backend-package-script-review",
+        "description": "Review available backend package scripts and classify which can run later under NEXUS.",
+        "executionNow": false,
+        "riskLevel": "low"
+      },
+      {
+        "id": "prisma-schema-validation-candidate",
+        "description": "Plan future Prisma schema validation without reading schema contents in this phase.",
+        "executionNow": false,
+        "riskLevel": "medium"
+      },
+      {
+        "id": "backend-test-command-candidate",
+        "description": "Plan future backend test execution after command allowlist and dependency readiness are checked.",
+        "executionNow": false,
+        "riskLevel": "medium"
+      }
+    ],
+    "requiredFutureApprovals": [],
+    "requiredFutureEvidence": [
+      "package_script_classification",
+      "prisma_validation_result",
+      "backend_test_result",
+      "audit_event",
+      "command_allowlist_decision"
+    ],
+    "blockedNow": [
+      "source mutation",
+      "dependency install",
+      "test execution",
+      "database access",
+      "provider calls",
+      "network calls"
+    ]
+  },
+  "recommendedNextTask": {
+    "title": "Classify CareLoop backend validation commands for controlled execution",
+    "agent": "AUDITOR",
+    "capabilityId": "verification.code_quality_gate",
+    "riskLevel": "medium",
+    "mutationAllowed": false,
+    "executionAllowed": false
+  },
+  "safety": {
+    "providerCalls": false,
+    "projectMutation": false,
+    "buildExecuted": false,
+    "testExecuted": false,
+    "dbAccess": false,
+    "apiServer": false
+  },
+  "taskRecord": {
+    "taskId": "1d2174c6-01b6-46cb-929d-ba79b633e3de",
+    "finalState": "implementation_done",
+    "transitions": [
+      {
+        "from": "queued",
+        "to": "running",
+        "allowed": true
+      },
+      {
+        "from": "running",
+        "to": "implementation_done",
+        "allowed": true
+      }
+    ]
+  },
+  "evidenceIds": [
+    "3ba4d2eb-b167-4fae-8a25-a4a7999ef567"
+  ],
+  "auditIds": [
+    "36095ce6-af28-4578-93f1-f9ea4f732bf0"
+  ],
+  "warnings": [],
+  "errors": []
+}

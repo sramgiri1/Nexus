@@ -1,5 +1,50 @@
 {
   "version": "1.0",
   "source": "local-runtime-prototype",
-  "tasks": []
+  "tasks": [
+    {
+      "taskId": "1d2174c6-01b6-46cb-929d-ba79b633e3de",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "validation_planning",
+      "objective": "Governed validation planning task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "orchestration.plan_flow",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "9211cee9-8a1c-4d16-8145-097ca755931d",
+        "39727145-0867-45ac-bcbf-959f9653273c"
+      ],
+      "createdAt": "2026-05-07T23:45:15.079Z",
+      "updatedAt": "2026-05-07T23:45:15.080Z",
+      "redacted": true
+    },
+    {
+      "taskId": "e83597da-50eb-4dca-bfc6-3d65f9e65ecd",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "validation_planning",
+      "objective": "Governed validation planning task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "orchestration.plan_flow",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "e9e4b45e-e602-43e6-ac61-19d12ce9d020",
+        "ef55eb38-4da9-412b-a179-e20c92c39c79"
+      ],
+      "createdAt": "2026-05-07T23:46:39.074Z",
+      "updatedAt": "2026-05-07T23:46:39.075Z",
+      "redacted": true
+    }
+  ]
 }
