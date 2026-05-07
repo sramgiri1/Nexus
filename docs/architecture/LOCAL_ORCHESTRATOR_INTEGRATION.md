@@ -33,15 +33,23 @@ Phase 23-LOCAL adds a local approval workflow. Approval-required work now
 creates append-only approval requests and uses approval evidence to unlock
 guarded `awaiting_approval -> running` transitions.
 
+Phase 25-LOCAL adds guarded local agent-task execution. Deterministic local
+checks can now move through contract, identity, agent context, capability,
+traffic-plane, state-machine, and local write-boundary layers while emitting
+evidence, audit, and runtime events.
+
 ## Future flow
 
 ```text
 task request
+  → task contract
   → identity context
+  → agent context
   → capability check
   → runtime traffic plane policy decision
   → local approval workflow when required
   → task state-machine transition validation
+  → deterministic local skill or check when explicitly allowed
   → local write boundary
   → task, evidence, and audit update
   → Command Center read boundary
@@ -109,3 +117,13 @@ Controlled local execution now proves:
 - append-only runtime-event recording
 - approval-request recording for blocked high-risk work
 - blocked-attempt audit and incident recording for secret-data paths
+
+## Guarded local proof path
+
+Guarded local agent-task execution now proves:
+
+- deterministic local checks can execute without providers or external tools
+- capability checks happen before deterministic execution
+- governed evidence, audit, and runtime records are emitted for successful
+  checks
+- blocked local actions stay inside the same bounded runtime path

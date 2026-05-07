@@ -49,43 +49,43 @@ belongs in separate private repos.
 - Phase 21-LOCAL Command Center runtime file ingestion
 - Phase 22-LOCAL State machine enforcement in local executor
 - Phase 23-LOCAL Approval workflow wiring for local execution
+- Phase 24-LOCAL Command Center approval and runtime refresh
 
 ---
 
 ## Current Phase
 
-### Phase 24-LOCAL — Command Center Approval + Runtime Refresh
+### Phase 25-LOCAL — Guarded Local Agent Task Execution
 
 Goal:
 
-- make the Command Center reflect local approval workflow records and refreshed
-  runtime snapshots without adding API or mutation paths
+- execute deterministic local agent-task checks through the governed NEXUS
+  path without providers, external tools, project mutation, API, or DB layers
 
 Deliverables:
 
-- approval workflow summary in generated runtime snapshots
-- Command Center approval counts and recent approval visibility
-- approval evidence visibility in the read-only dashboard
-- runtime refresh metadata and CLI guidance in the dashboard
-- validation for generated approval snapshot ingestion
+- guarded local agent-task executor
+- deterministic local task plan covering verification and runtime checks
+- governed evidence, audit, and runtime-event writes for guarded local tasks
+- blocked-path handling for unknown local actions
+- validation and reporting for guarded local execution
 
 Non-goals:
 
 - no API server
 - no DB
-- no UI mutation actions
 - no provider calls
-- no tool execution
+- no external tool execution
 - no project mutation
 - no private product execution
 
 Validation checks:
 
-- generated snapshot includes approval workflow summary and refresh metadata
-- Command Center surfaces Approval Workflow, Approval Evidence, Runtime Refresh,
-  and Blocked by Approval
-- dashboard remains read-only and points operators to CLI approval commands
-- existing local execution, runtime, and Command Center checks remain green
+- guarded task plan executes with four PASS results and one BLOCKED result
+- deterministic local actions flow through identity, capability, traffic plane,
+  state machine, local writes, evidence, audit, and runtime events
+- runtime files remain restorable after validation
+- existing local execution and Command Center checks remain green
 
 Risk level:
 

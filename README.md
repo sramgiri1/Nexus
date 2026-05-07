@@ -87,6 +87,13 @@ approval task visibility, and snapshot refresh metadata from the generated
 runtime snapshot. It is still read-only and still does not add API, DB,
 provider, tool, or project execution.
 
+Phase 25-LOCAL adds guarded local agent-task execution. Selected agents can now
+run deterministic local checks through the governed NEXUS path, including
+identity context, agent context, capability checks, traffic-plane policy,
+state-machine validation, local evidence, audit, runtime events, and Command
+Center snapshot refresh. This still does not add providers, external tools,
+project mutation, API, or DB execution.
+
 After local approval or execution changes, refresh the browser-safe snapshot
 with `npm run generate:command-center-snapshot`.
 
@@ -117,6 +124,7 @@ cd dashboard && npm run test:pages
 - [Command Center approval runtime refresh](docs/architecture/COMMAND_CENTER_APPROVAL_RUNTIME_REFRESH.md)
 - [Local state machine enforcement](docs/architecture/LOCAL_STATE_MACHINE_ENFORCEMENT.md)
 - [Local approval workflow](docs/architecture/LOCAL_APPROVAL_WORKFLOW.md)
+- [Guarded local agent task execution](docs/architecture/GUARDED_LOCAL_AGENT_TASK_EXECUTION.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -147,6 +155,8 @@ npm run approvals:approve -- <approvalId> --reason "approved locally"
 npm run approvals:reject -- <approvalId> --reason "rejected locally"
 npm run check:local-approval-workflow
 npm run check:command-center-approval-runtime
+npm run guarded-task:execute
+npm run check:guarded-task-execution
 npm run orchestrator:dry-run
 npm run check:orchestrator-dry-run
 npm run check:local-state-boundary

@@ -85,6 +85,12 @@ records and runtime refresh metadata are visible in the dashboard from the
 generated runtime snapshot. The UI still does not mutate state, call providers,
 or bypass the local CLI approval path.
 
+Phase 25-LOCAL adds guarded local agent-task execution. Deterministic local
+checks can now execute through task contracts, identity context, agent context,
+capability policy, runtime traffic-plane decisions, task state-machine
+validation, and the local write boundary. This still excludes providers,
+external tools, project mutation, API, DB, and private-product execution.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

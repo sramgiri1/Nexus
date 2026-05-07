@@ -49,6 +49,8 @@
     "generate:command-center-snapshot": "node scripts/generate-command-center-snapshot.js",
     "check:command-center-runtime-ingestion": "node scripts/check-command-center-runtime-ingestion.js",
     "check:command-center-approval-runtime": "node scripts/check-command-center-approval-runtime.js",
+    "guarded-task:execute": "node scripts/guarded-task-execute.js",
+    "check:guarded-task-execution": "node scripts/check-guarded-task-execution.js",
     "demo": "node scripts/demo.js",
     "check:demo-showcase": "node scripts/check-demo-showcase.js",
     "check:public-safety": "node scripts/check-public-safety.js"

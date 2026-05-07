@@ -25,6 +25,12 @@ Controlled local execution shows that the system can:
   records
 - summarize the result without performing real work
 
+Phase 25-LOCAL builds on this by introducing guarded local agent-task
+execution for deterministic local checks. That path still uses the same
+identity, traffic-plane, state-machine, and local write boundary layers, but
+it allows a narrow set of read-only local validation actions to emit governed
+evidence.
+
 ## Flow
 
 ```text
@@ -61,6 +67,8 @@ Controlled local execution may write only to:
   before writes
 - approval-required work now creates real local approval requests and waits for
   approval evidence before it can proceed
+- guarded local agent tasks can now execute deterministic local checks and emit
+  evidence through the governed path
 - Command Center can surface those approval records only through regenerated
   read-only runtime snapshots
 - no provider calls

@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "executionMode": "guarded-local",
+  "providerCallsAllowed": false,
+  "externalToolCallsAllowed": false,
+  "projectWritesAllowed": false,
+  "dbWritesAllowed": false,
+  "apiCallsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false,
+  "allowedLocalActions": [
+    "validate_demo_contracts",
+    "validate_demo_reports",
+    "validate_runtime_snapshot",
+    "validate_public_safety_surface"
+  ],
+  "requireIdentityContext": true,
+  "requireAgentContext": true,
+  "requireTrafficPlaneDecision": true,
+  "requireStateMachineTransition": true,
+  "requireEvidenceRecord": true,
+  "requireAuditEvent": true,
+  "publicSafetyRequired": true
+}
