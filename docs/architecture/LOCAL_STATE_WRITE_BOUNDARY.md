@@ -72,6 +72,10 @@ This phase blocks writes to:
 
 This phase creates deterministic local helper code only.
 
+Phase 19-LOCAL uses this write boundary in `dryRun: true` mode so the
+orchestrator adapter can validate task, audit, evidence, and runtime-event
+records without persisting them.
+
 It does not:
 
 - wire `loop.js`

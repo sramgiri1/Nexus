@@ -55,6 +55,11 @@ state under `local-state/runtime`. It prepares safe local task, evidence,
 audit, approval, incident, and runtime-event writes without wiring orchestrator
 dispatch yet.
 
+Phase 19-LOCAL adds an orchestrator adapter dry-run mode. It proves the local
+OS path through identity, agent context, traffic policy, dry-run local writes,
+and dry-run evidence simulation without executing real agents, tools, or
+providers.
+
 Validate it with:
 
 ```bash
@@ -76,6 +81,7 @@ cd dashboard && npm run test:pages
 - [Local state adapter](docs/architecture/LOCAL_STATE_ADAPTER.md)
 - [Local state write boundary](docs/architecture/LOCAL_STATE_WRITE_BOUNDARY.md)
 - [Local orchestrator integration](docs/architecture/LOCAL_ORCHESTRATOR_INTEGRATION.md)
+- [Orchestrator adapter dry-run](docs/architecture/ORCHESTRATOR_ADAPTER_DRY_RUN.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -96,6 +102,8 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run orchestrator:dry-run
+npm run check:orchestrator-dry-run
 npm run check:local-state-boundary
 npm run check:local-write-boundary
 npm run check:runtime-traffic-plane
@@ -258,6 +266,11 @@ Phase 18-LOCAL adds the local state write boundary that can safely persist
 prototype task and append-only runtime records under `local-state/runtime`.
 This is still local helper code only; it does not wire orchestrator dispatch,
 providers, DB, or API mutation paths.
+
+Phase 19-LOCAL adds a dry-run orchestrator adapter that exercises the local OS
+path without executing real work. It is still not wired into `loop.js` or
+`runner.js`, and it does not add provider calls, tool execution, DB access, or
+project mutation.
 
 ---
 

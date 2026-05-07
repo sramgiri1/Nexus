@@ -43,27 +43,27 @@ belongs in separate private repos.
 - Phase 15-LOCAL Runtime traffic plane and identity propagation
 - Phase 16-LOCAL Command Center live wiring
 - Phase 17-LOCAL Local state adapter and read API boundary
+- Phase 18-LOCAL Local orchestrator read/write integration plan
 
 ---
 
 ## Current Phase
 
-### Phase 18-LOCAL — Local Orchestrator Read/Write Integration Plan
+### Phase 19-LOCAL — Orchestrator Adapter Dry-Run Mode
 
 Goal:
 
-- create a safe local write boundary that can persist local prototype task,
-  evidence, audit, event, approval, and incident state without adding DB, API,
-  or provider execution
+- prove the governed local OS path from task input through traffic policy and
+  dry-run local state handling without executing real agents, tools, or
+  providers
 
 Deliverables:
 
-- append-only JSONL runtime record helpers
-- local task store prototype
-- write guards and blocked path rules
-- local runtime seed files under `local-state/runtime`
-- local write entrypoint for deterministic dry-run and local write validation
-- validation against write-boundary rules and existing checks
+- local orchestrator dry-run adapter
+- dry-run scenario factory
+- dry-run execution plan
+- orchestrator dry-run CLI
+- validation against dry-run, traffic-plane, and local write-boundary rules
 
 Non-goals:
 
@@ -76,10 +76,10 @@ Non-goals:
 
 Validation checks:
 
-- local write boundary check passes
-- append-only runtime files stay constrained to `local-state/runtime`
-- task state changes create audit records
-- local state snapshot still validates after prototype writes
+- orchestrator dry-run scenarios run locally
+- dry-run local writes do not persist
+- traffic-plane and identity surfaces are present in each scenario result
+- dashboard and existing local validation surfaces remain green
 
 Risk level:
 

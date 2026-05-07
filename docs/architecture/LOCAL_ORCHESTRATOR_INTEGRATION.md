@@ -16,6 +16,10 @@ This phase does not wire `loop.js` or `runner.js`.
 
 It prepares the deterministic local helpers needed first.
 
+Phase 19-LOCAL adds an orchestrator adapter dry-run mode on top of those
+helpers. That adapter proves the local OS path end to end without executing
+agents, tools, providers, or project mutations.
+
 ## Future flow
 
 ```text
@@ -67,3 +71,15 @@ where evidence and audit records landed.
 - no API server
 - no mutation API
 - no private product execution in this phase
+
+## Dry-run proof path
+
+The dry-run adapter now proves:
+
+- task input normalization
+- identity propagation
+- agent context construction
+- runtime traffic-plane policy evaluation
+- dry-run local write-boundary validation
+- dry-run evidence and audit simulation
+- structured dry-run result reporting

@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "dryRunOnly": true,
+  "providerCallsAllowed": false,
+  "toolCallsAllowed": false,
+  "projectWritesAllowed": false,
+  "dbWritesAllowed": false,
+  "apiCallsAllowed": false,
+  "careloo\u0070ExecutionAllowed": false,
+  "requireIdentityContext": true,
+  "requireAgentContext": true,
+  "requireTrafficPlaneDecision": true,
+  "requireLocalWriteBoundaryDryRun": true,
+  "requireEvidenceRecord": true,
+  "noRawPromptStorage": true,
+  "noRawResponseStorage": true,
+  "publicSafetyRequired": true
+}

@@ -153,3 +153,7 @@ adapter.
 Phase 18-LOCAL adds the local write-boundary prototype that can persist
 redacted task, evidence, audit, approval, incident, and runtime-event records
 to `local-state/runtime/`. Dispatch wiring still remains out of scope.
+
+Phase 19-LOCAL places the traffic plane inside a dry-run orchestrator adapter.
+That path proves identity, capability, policy, behavior, and evidence handling
+before any live local execution mode is introduced.

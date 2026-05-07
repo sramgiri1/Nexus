@@ -51,6 +51,12 @@ plus a local task store prototype that future orchestrator integration can use.
 It still does not wire orchestrator dispatch, add DB or API layers, or execute
 providers.
 
+Phase 19-LOCAL adds an orchestrator adapter dry-run mode. It proves that a
+task can flow through identity context, agent context, runtime traffic-plane
+evaluation, dry-run local write-boundary validation, and dry-run evidence and
+audit simulation without wiring `loop.js`, `runner.js`, providers, or project
+mutation.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and
