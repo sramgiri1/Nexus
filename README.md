@@ -45,6 +45,11 @@ Command Center local read-only wiring is now available. It surfaces bundled
 validation status, demo evidence, and runtime traffic-plane sample status, but
 there is no API, DB, or mutation path yet.
 
+Phase 17-LOCAL adds a local state adapter and read-only file boundary behind
+that surface. The dashboard still uses a bundled mirror of the normalized local
+snapshot. It does not read files directly in the browser, and there is still no
+API, DB, or mutation path yet.
+
 Validate it with:
 
 ```bash
@@ -63,6 +68,8 @@ cd dashboard && npm run test:pages
 - [Private project boundary](docs/PRIVATE_PROJECT_BOUNDARY.md)
 - [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
 - [Command Center live wiring](docs/architecture/COMMAND_CENTER_LIVE_WIRING.md)
+- [Local state adapter](docs/architecture/LOCAL_STATE_ADAPTER.md)
+- [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
 - [Accountability evidence record](docs/architecture/ACCOUNTABILITY_EVIDENCE_RECORD.md)
@@ -82,6 +89,7 @@ cd dashboard && npm run test:pages
 ```bash
 npm run check:demo-showcase
 npm run check:public-safety
+npm run check:local-state-boundary
 npm run check:runtime-traffic-plane
 npm run check:domain-ownership
 npm run check:observability-evals-artifacts
@@ -200,6 +208,10 @@ and [`docs/architecture/BEHAVIOR_BASELINE_MODEL.md`](docs/architecture/BEHAVIOR_
 for the Phase 15-LOCAL runtime traffic plane and the Phase 16-LOCAL
 Command Center live-wiring layer.
 
+See [`docs/architecture/LOCAL_STATE_ADAPTER.md`](docs/architecture/LOCAL_STATE_ADAPTER.md)
+and [`docs/architecture/READ_API_BOUNDARY.md`](docs/architecture/READ_API_BOUNDARY.md)
+for the Phase 17-LOCAL local state read boundary.
+
 ---
 
 ## Agent Enablement Layer
@@ -229,6 +241,10 @@ Phase 15-LOCAL adds the first local runtime traffic-plane helpers for privilege,
 behavioral monitoring, accountability evidence records, and identity
 propagation. Those helpers exist as local modules and validation logic only.
 They are not wired into orchestrator dispatch yet.
+
+Phase 17-LOCAL adds the local state adapter that reads approved local files and
+builds a normalized read-only snapshot for the Command Center and future API
+read endpoints. It still does not add DB or mutation behavior.
 
 ---
 

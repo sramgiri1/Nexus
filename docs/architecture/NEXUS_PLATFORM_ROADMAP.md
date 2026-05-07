@@ -41,43 +41,44 @@ belongs in separate private repos.
 - Phase 13 Demo and showcase mode
 - Phase 14 Domain ownership policy
 - Phase 15-LOCAL Runtime traffic plane and identity propagation
+- Phase 16-LOCAL Command Center live wiring
 
 ---
 
 ## Current Phase
 
-### Phase 16-LOCAL — Command Center Live Wiring
+### Phase 17-LOCAL — Local State Adapter and Read API Boundary
 
 Goal:
 
-- move Command Center from a pure static prototype toward read-only local NEXUS
-  visibility without adding an API, DB, or mutation path yet
+- create a safe local read boundary that can normalize NEXUS reports, demo
+  artifacts, runtime status, and policy presence without adding an API server
+  or DB
 
 Deliverables:
 
-- local validation status summary surfaced in the dashboard
-- local demo evidence and report references surfaced in the dashboard
-- local runtime traffic-plane sample surfaced in the dashboard
-- explicit not-wired-yet posture for API, DB, provider, dispatch, and Xcode
-  execution
-- validation against runtime traffic plane, public safety, and dashboard tests
+- safe local file reader with blocked path rules
+- normalized validation report summary
+- normalized demo contract and evidence summary
+- normalized runtime status summary
+- read-only snapshot for Command Center and future API read routes
+- validation against public safety, local-state boundaries, and existing checks
 
 Non-goals:
 
 - no API server
 - no DB
-- no agent prompt changes
-- no live mutation
+- no write API
+- no mutation
 - no real provider calls
 - no dispatch rewrite
-- no real Xcode execution
 
 Validation checks:
 
-- command center local read-only check passes
-- dashboard build and tests pass
-- traffic-plane and public-safety evidence remain visible
-- no forbidden API or network behavior is introduced in the dashboard
+- local state boundary check passes
+- snapshot validates as read-only and local-files sourced
+- blocked paths stay blocked
+- dashboard continues to consume a bundled mirror, not Node filesystem access
 
 Risk level:
 

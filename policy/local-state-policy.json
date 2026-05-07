@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "readOnly": true,
+  "allowedSourceDirs": [
+    "reports",
+    "demo",
+    "artifacts",
+    "capabilities",
+    "policy",
+    "docs/architecture"
+  ],
+  "blockedSourceDirs": [
+    "node_modules",
+    ".git",
+    "projects",
+    "private",
+    "memory/private"
+  ],
+  "blockedSecretLikeFiles": [
+    ".env",
+    ".env.local",
+    "*.pem",
+    "*.key",
+    "*.p12"
+  ],
+  "normalizedSnapshotRequired": true,
+  "failClosed": true
+}

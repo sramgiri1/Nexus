@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "currentMode": "local_adapter_only",
+  "uiMustNotReadFilesystemDirectly": true,
+  "futureReadEndpoints": [
+    "GET /status",
+    "GET /reports",
+    "GET /demo",
+    "GET /runtime",
+    "GET /capabilities",
+    "GET /evidence"
+  ],
+  "noDirectUiDbAccess": true,
+  "noMutationRoutesInThisPhase": true,
+  "noSecretsInReadResponses": true,
+  "governorProtectedMutations": true
+}

@@ -40,6 +40,11 @@ Phase 16-LOCAL adds read-only Command Center live wiring. The dashboard now
 surfaces bundled local validation, evidence, and runtime traffic-plane sample
 status without adding API, DB, mutation, provider, or dispatch wiring yet.
 
+Phase 17-LOCAL adds a local state adapter and read boundary. It can safely read
+approved local files, normalize validation and demo artifacts, and build a
+read-only snapshot for the Command Center and future API read routes. It does
+not add DB, mutation endpoints, or live API behavior in this phase.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

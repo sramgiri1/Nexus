@@ -19,6 +19,7 @@ This phase adds read-only local snapshot wiring.
 - local demo reports summary
 - runtime traffic plane sample
 - evidence and report references
+- a bundled snapshot that mirrors the local state adapter output
 - explicit not-wired-yet status
 
 ## What is not wired
@@ -41,6 +42,7 @@ This phase adds read-only local snapshot wiring.
 
 ## Future phases
 
+- local state adapter bridge
 - API read endpoints
 - DB mirror mode
 - live task state

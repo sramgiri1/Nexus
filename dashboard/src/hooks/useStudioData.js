@@ -58,6 +58,72 @@ function summarizeQueueTask(task) {
   };
 }
 
+function buildCommandCenterLocalReports(localStateSnapshot) {
+  const validation = localStateSnapshot.validation || {};
+  const uiMirror = validation.uiMirror || {};
+  const runtimeTrafficPlane = localStateSnapshot.runtime?.runtimeTrafficPlane || {};
+  const demo = localStateSnapshot.demo || {};
+
+  return {
+    validation: {
+      demoShowcase: uiMirror.demoShowcase || "UNKNOWN",
+      publicSafety: uiMirror.publicSafety || "UNKNOWN",
+      runtimeTrafficPlane: uiMirror.runtimeTrafficPlane || "UNKNOWN",
+      domainOwnership: uiMirror.domainOwnership || "UNKNOWN",
+      capabilities: uiMirror.capabilities || "UNKNOWN",
+      reliability: uiMirror.reliability || "UNKNOWN",
+      securityBoundary: uiMirror.securityBoundary || "UNKNOWN",
+      dataProtection: uiMirror.dataProtection || "UNKNOWN",
+      agentReadiness: uiMirror.agentReadiness || "UNKNOWN",
+      agentContext: uiMirror.agentContext || "UNKNOWN",
+      formatReadability: uiMirror.formatReadability || {
+        status: "UNKNOWN",
+        warnings: 0,
+        failures: 0,
+      },
+      reports: validation.reports || [],
+      summary: validation.summary || {},
+    },
+    runtimeTrafficPlane: {
+      status: runtimeTrafficPlane.status || "UNKNOWN",
+      identityPropagation:
+        runtimeTrafficPlane.identityPropagation === "ready" ? "Ready" : "Not ready",
+      policyDecisions:
+        runtimeTrafficPlane.policyDecision === "ready" ? "Ready" : "Not ready",
+      evidenceRecords:
+        runtimeTrafficPlane.evidenceRecords === "ready" ? "Ready" : "Not ready",
+      behaviorBaseline:
+        runtimeTrafficPlane.behaviorBaseline === "ready" ? "Ready" : "Not ready",
+      dispatchWiring:
+        runtimeTrafficPlane.dispatchWiring === "not_wired"
+          ? "Not wired yet"
+          : "Unknown",
+    },
+    reports: (validation.reports || []).map((report) => ({
+      id: report.id,
+      name: report.name,
+      status: report.status,
+      path: report.path,
+    })),
+    evidence: (demo.reports || []).map((report) => ({
+      id: report.id,
+      name: report.name,
+      type: report.type,
+      status: report.status,
+      path: report.path,
+    })),
+    notWiredYet: [
+      "No live API",
+      "No DB",
+      "No orchestrator dispatch wiring",
+      "No real provider calls",
+      "No real Xcode execution",
+      "No private product execution yet",
+    ],
+    lastUpdatedSource: localStateSnapshot.lastUpdatedSource || "local snapshot mirror",
+  };
+}
+
 function buildStudioSnapshot() {
   const portfolio = PROTOTYPE_PORTFOLIO;
   const agentStatus = PROTOTYPE_AGENT_STATUS;
@@ -165,7 +231,8 @@ function buildStudioSnapshot() {
     gateProgress: computeGateProgress(activeProject?.gates),
     openDirectiveCount: openActions.length,
     queueDepth: queue.filter((task) => !["completed", "failed"].includes(task.status)).length,
-    localReports: LOCAL_REPORT_SNAPSHOT,
+    localReports: buildCommandCenterLocalReports(LOCAL_REPORT_SNAPSHOT),
+    localStateSnapshot: LOCAL_REPORT_SNAPSHOT,
     runtimeTrafficSample: RUNTIME_TRAFFIC_SAMPLE,
   };
 }
