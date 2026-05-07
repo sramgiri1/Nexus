@@ -1,0 +1,14 @@
+{
+  "version": "1.0",
+  "runtimeTrafficPlaneRequiredBeforeDispatch": true,
+  "identityContextRequired": true,
+  "capabilityRequired": true,
+  "policyDecisionRequired": true,
+  "evidenceRecordRequired": true,
+  "localWriteBoundaryRequired": true,
+  "orchestratorDispatchWired": false,
+  "providerCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "mutationApiEnabled": false,
+  "careloo\u0070ExecutionEnabled": false
+}

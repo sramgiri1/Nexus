@@ -50,6 +50,11 @@ that surface. The dashboard still uses a bundled mirror of the normalized local
 snapshot. It does not read files directly in the browser, and there is still no
 API, DB, or mutation path yet.
 
+Phase 18-LOCAL adds a local write boundary and append-only prototype runtime
+state under `local-state/runtime`. It prepares safe local task, evidence,
+audit, approval, incident, and runtime-event writes without wiring orchestrator
+dispatch yet.
+
 Validate it with:
 
 ```bash
@@ -69,6 +74,8 @@ cd dashboard && npm run test:pages
 - [Demo and Showcase Mode architecture](docs/architecture/DEMO_SHOWCASE_MODE.md)
 - [Command Center live wiring](docs/architecture/COMMAND_CENTER_LIVE_WIRING.md)
 - [Local state adapter](docs/architecture/LOCAL_STATE_ADAPTER.md)
+- [Local state write boundary](docs/architecture/LOCAL_STATE_WRITE_BOUNDARY.md)
+- [Local orchestrator integration](docs/architecture/LOCAL_ORCHESTRATOR_INTEGRATION.md)
 - [Read API boundary](docs/architecture/READ_API_BOUNDARY.md)
 - [Runtime traffic plane](docs/architecture/RUNTIME_TRAFFIC_PLANE.md)
 - [Identity propagation](docs/architecture/IDENTITY_PROPAGATION.md)
@@ -90,6 +97,7 @@ cd dashboard && npm run test:pages
 npm run check:demo-showcase
 npm run check:public-safety
 npm run check:local-state-boundary
+npm run check:local-write-boundary
 npm run check:runtime-traffic-plane
 npm run check:domain-ownership
 npm run check:observability-evals-artifacts
@@ -245,6 +253,11 @@ They are not wired into orchestrator dispatch yet.
 Phase 17-LOCAL adds the local state adapter that reads approved local files and
 builds a normalized read-only snapshot for the Command Center and future API
 read endpoints. It still does not add DB or mutation behavior.
+
+Phase 18-LOCAL adds the local state write boundary that can safely persist
+prototype task and append-only runtime records under `local-state/runtime`.
+This is still local helper code only; it does not wire orchestrator dispatch,
+providers, DB, or API mutation paths.
 
 ---
 

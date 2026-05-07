@@ -14,6 +14,11 @@ development, demo, and Command Center visibility.
 
 This phase reads approved local files and returns a normalized snapshot.
 
+Phase 18-LOCAL adds a matching local write boundary and local runtime prototype
+files under `local-state/runtime/`. The read adapter remains read-only, but it
+is now positioned to consume those append-only task, evidence, audit, and
+runtime records later.
+
 It does not add:
 
 - DB access
@@ -72,6 +77,7 @@ this phase.
 This adapter is the bridge toward:
 
 - API read endpoints
+- local write-boundary output
 - DB mirror mode
 - live evidence ingestion
 - future redacted status snapshots for the Command Center

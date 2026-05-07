@@ -42,43 +42,44 @@ belongs in separate private repos.
 - Phase 14 Domain ownership policy
 - Phase 15-LOCAL Runtime traffic plane and identity propagation
 - Phase 16-LOCAL Command Center live wiring
+- Phase 17-LOCAL Local state adapter and read API boundary
 
 ---
 
 ## Current Phase
 
-### Phase 17-LOCAL — Local State Adapter and Read API Boundary
+### Phase 18-LOCAL — Local Orchestrator Read/Write Integration Plan
 
 Goal:
 
-- create a safe local read boundary that can normalize NEXUS reports, demo
-  artifacts, runtime status, and policy presence without adding an API server
-  or DB
+- create a safe local write boundary that can persist local prototype task,
+  evidence, audit, event, approval, and incident state without adding DB, API,
+  or provider execution
 
 Deliverables:
 
-- safe local file reader with blocked path rules
-- normalized validation report summary
-- normalized demo contract and evidence summary
-- normalized runtime status summary
-- read-only snapshot for Command Center and future API read routes
-- validation against public safety, local-state boundaries, and existing checks
+- append-only JSONL runtime record helpers
+- local task store prototype
+- write guards and blocked path rules
+- local runtime seed files under `local-state/runtime`
+- local write entrypoint for deterministic dry-run and local write validation
+- validation against write-boundary rules and existing checks
 
 Non-goals:
 
 - no API server
 - no DB
 - no write API
-- no mutation
+- no mutation endpoints
 - no real provider calls
 - no dispatch rewrite
 
 Validation checks:
 
-- local state boundary check passes
-- snapshot validates as read-only and local-files sourced
-- blocked paths stay blocked
-- dashboard continues to consume a bundled mirror, not Node filesystem access
+- local write boundary check passes
+- append-only runtime files stay constrained to `local-state/runtime`
+- task state changes create audit records
+- local state snapshot still validates after prototype writes
 
 Risk level:
 

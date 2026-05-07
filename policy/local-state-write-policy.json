@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "defaultWriteAccess": "deny",
+  "allowedWriteRoot": "local-state/runtime",
+  "appendOnlyFiles": [
+    "evidence.jsonl",
+    "audit.jsonl",
+    "events.jsonl",
+    "approvals.jsonl",
+    "incidents.jsonl"
+  ],
+  "taskStoreFile": "tasks.json",
+  "deletionAllowed": false,
+  "pathTraversalAllowed": false,
+  "absolutePathWritesAllowed": false,
+  "secretsAllowed": false,
+  "privateProjectReferencesAllowed": false,
+  "redactionRequired": true,
+  "auditRequiredForTaskStateChange": true
+}

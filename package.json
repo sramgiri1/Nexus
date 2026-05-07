@@ -36,6 +36,7 @@
     "check:runtime-traffic-plane": "node scripts/check-runtime-traffic-plane.js",
     "check:command-center-live": "node scripts/check-command-center-live.js",
     "check:local-state-boundary": "node scripts/check-local-state-boundary.js",
+    "check:local-write-boundary": "node scripts/check-local-write-boundary.js",
     "demo": "node scripts/demo.js",
     "check:demo-showcase": "node scripts/check-demo-showcase.js",
     "check:public-safety": "node scripts/check-public-safety.js"

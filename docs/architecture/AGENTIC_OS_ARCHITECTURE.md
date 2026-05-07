@@ -45,6 +45,12 @@ approved local files, normalize validation and demo artifacts, and build a
 read-only snapshot for the Command Center and future API read routes. It does
 not add DB, mutation endpoints, or live API behavior in this phase.
 
+Phase 18-LOCAL adds a safe local write boundary. It introduces append-only
+local runtime records for evidence, audit, events, approvals, and incidents,
+plus a local task store prototype that future orchestrator integration can use.
+It still does not wire orchestrator dispatch, add DB or API layers, or execute
+providers.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

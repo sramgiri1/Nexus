@@ -21,6 +21,9 @@ not exist yet in this phase.
 Future read endpoints should expose redacted snapshots instead of raw local
 files or raw database access.
 
+Those snapshots should eventually come from the local write boundary first and
+then from DB mirror or DB primary storage later.
+
 Candidate read routes later:
 
 - `GET /status`
@@ -36,6 +39,8 @@ Mutation endpoints remain separate.
 
 They must stay governor-protected, approval-aware, and isolated from read-only
 status routes.
+
+The current phase does not add those mutation endpoints.
 
 ## Rules
 

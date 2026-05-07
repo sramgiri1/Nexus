@@ -120,6 +120,7 @@ identity
 → policy
 → behavior comparison
 → evidence record
+→ local write boundary
 → execution or block
 
 ---
@@ -148,3 +149,7 @@ Phase 16-LOCAL adds a read-only Command Center surface that can display local
 traffic-plane sample status, policy decision posture, and evidence-record
 availability. That UI wiring is a bundled snapshot only, not a live execution
 adapter.
+
+Phase 18-LOCAL adds the local write-boundary prototype that can persist
+redacted task, evidence, audit, approval, incident, and runtime-event records
+to `local-state/runtime/`. Dispatch wiring still remains out of scope.

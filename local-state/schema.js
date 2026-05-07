@@ -1,4 +1,11 @@
 export const LOCAL_STATE_VERSION = "1.0";
+export const LOCAL_RUNTIME_DIR = "local-state/runtime";
+export const LOCAL_TASKS_FILE = `${LOCAL_RUNTIME_DIR}/tasks.json`;
+export const LOCAL_EVIDENCE_FILE = `${LOCAL_RUNTIME_DIR}/evidence.jsonl`;
+export const LOCAL_AUDIT_FILE = `${LOCAL_RUNTIME_DIR}/audit.jsonl`;
+export const LOCAL_EVENTS_FILE = `${LOCAL_RUNTIME_DIR}/events.jsonl`;
+export const LOCAL_APPROVALS_FILE = `${LOCAL_RUNTIME_DIR}/approvals.jsonl`;
+export const LOCAL_INCIDENTS_FILE = `${LOCAL_RUNTIME_DIR}/incidents.jsonl`;
 
 export const ALLOWED_SOURCE_DIRS = [
   "reports",
@@ -7,6 +14,7 @@ export const ALLOWED_SOURCE_DIRS = [
   "capabilities",
   "policy",
   "docs/architecture",
+  LOCAL_RUNTIME_DIR,
 ];
 
 export const BLOCKED_SOURCE_DIRS = [
@@ -15,6 +23,17 @@ export const BLOCKED_SOURCE_DIRS = [
   "projects",
   "private",
   "memory/private",
+];
+
+export const ALLOWED_WRITE_DIRS = [LOCAL_RUNTIME_DIR];
+
+export const BLOCKED_WRITE_DIRS = [
+  "node_modules",
+  ".git",
+  "projects",
+  "private",
+  "memory",
+  "config",
 ];
 
 export const KNOWN_REPORTS = [
@@ -82,6 +101,11 @@ export const KNOWN_REPORTS = [
     id: "format-readability",
     name: "Format Readability",
     path: "reports/format-readability-report.md",
+  },
+  {
+    id: "local-write-boundary",
+    name: "Local Write Boundary",
+    path: "reports/local-write-boundary-report.md",
   },
 ];
 
