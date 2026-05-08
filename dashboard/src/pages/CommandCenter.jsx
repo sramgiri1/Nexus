@@ -13,7 +13,7 @@ const NAV_SECTIONS = [
   { id: "validation", label: "Validation" },
   { id: "projects", label: "Projects" },
   { id: "tasks", label: "Tasks" },
-  { id: "agents", label: "Agents" },
+  { id: "agents", label: "Agent Fleet" },
   { id: "contracts", label: "Contracts" },
   { id: "gates", label: "Gates" },
   { id: "evidence", label: "Evidence" },
@@ -229,6 +229,21 @@ const RELEASE_CHECKLIST = [
   { label: "WARDEN privacy review attached", complete: true },
   { label: "Release contract reconciled", complete: false },
   { label: "Deployment approval evidence linked", complete: false },
+];
+
+const PIPELINE_STEPS = [
+  { label: "Founder Intent", key: "intent", status: "done" },
+  { label: "NEXUS Decision", key: "nexus", status: "done" },
+  { label: "SHEPHERD Plan", key: "shepherd", status: "done" },
+  { label: "Execution", key: "execution", status: "active" },
+  { label: "Verification", key: "verification", status: "working" },
+  { label: "Release GO", key: "release", status: "blocked" },
+];
+
+const COST_PROVIDERS = [
+  { name: "Anthropic (direct)", type: "realtime", amount: "$94", pct: 51 },
+  { name: "OpenAI (direct)", type: "realtime", amount: "$72", pct: 39 },
+  { name: "OpenRouter", type: "fallback", amount: "$20", pct: 11 },
 ];
 
 function taskTone(state) {
@@ -612,6 +627,10 @@ export default function CommandCenter({ studio }) {
             <p className="command-prototype__sidebar-copy">
               Founder intent flows through contracts, runtimes, evidence, and approvals before NEXUS can recommend release.
             </p>
+            <div className="command-prototype__sidebar-mode">
+              <span className="command-prototype__sidebar-mode-dot" aria-hidden="true" />
+              <span>local-private</span>
+            </div>
           </div>
 
           <nav className="command-prototype__nav" aria-label="Command Center sections">
@@ -636,6 +655,18 @@ export default function CommandCenter({ studio }) {
         </aside>
 
         <div className="command-prototype__content">
+          <div className="os-mode-banner">
+            <span className="os-mode-banner__indicator" aria-hidden="true" />
+            <span className="os-mode-banner__label">Mode</span>
+            <span className="os-mode-banner__value">local-private</span>
+            <span className="os-mode-banner__sep" aria-hidden="true">·</span>
+            <span>Read-only snapshot</span>
+            <span className="os-mode-banner__sep" aria-hidden="true">·</span>
+            <span>No live API</span>
+            <span className="os-mode-banner__sep" aria-hidden="true">·</span>
+            <span>No mutations</span>
+          </div>
+
           <section id="mission-control" className="command-prototype__hero">
             <Panel
               eyebrow="Mission Control"
@@ -650,6 +681,20 @@ export default function CommandCenter({ studio }) {
                     <StatusPill status="working">Release readiness · {studio.gateProgress}%</StatusPill>
                     <StatusPill status="blocked">Next required decision · macOS Xcode approval</StatusPill>
                     <StatusPill status="done">Environment · Prototype</StatusPill>
+                  </div>
+
+                  <div className="os-pipeline" aria-label="OS execution pipeline">
+                    {PIPELINE_STEPS.map((step, index) => (
+                      <div key={step.key} className="os-pipeline__step">
+                        <div className={`os-pipeline__node os-pipeline__node--${step.status}`}>
+                          <span className="os-pipeline__node-label">{step.label}</span>
+                          <span className="os-pipeline__node-status">{step.status}</span>
+                        </div>
+                        {index < PIPELINE_STEPS.length - 1 && (
+                          <div className="os-pipeline__connector" aria-hidden="true" />
+                        )}
+                      </div>
+                    ))}
                   </div>
 
                   <div className="command-prototype__hero-story">
@@ -799,7 +844,7 @@ export default function CommandCenter({ studio }) {
           <section className="command-prototype__grid command-prototype__grid--duo">
             <div id="agents">
               <Panel
-                eyebrow="Agents"
+                eyebrow="Agent Fleet"
                 title="Agent activity by operating plane"
                 subtitle="Authority, model posture, and last-known assignment stay visible by group instead of buried in logs."
               >
@@ -826,6 +871,12 @@ export default function CommandCenter({ studio }) {
                                 <span>{AGENT_AUTHORITY[agent.id]}</span>
                                 <span>{agent.team}</span>
                               </div>
+                              <div className="agent-util-bar" aria-hidden="true">
+                                <div
+                                  className={`agent-util-bar__fill agent-util-bar__fill--${agent.status}`}
+                                  style={{ width: `${agent.status === "idle" ? 0 : Math.max(agent.progress || 0, 8)}%` }}
+                                />
+                              </div>
                             </div>
                           );
                         })}
@@ -843,6 +894,14 @@ export default function CommandCenter({ studio }) {
                 subtitle="Realtime, blocked, verification, batch, and completed work stay on one surface with runtime and evidence context."
                 meta={<StatusPill status="working">dependsOn-aware queue</StatusPill>}
               >
+                <div className="task-stat-row">
+                  <div className="task-stat-chip"><strong>{TASK_ROWS.filter((t) => t.state === "running").length}</strong>Running</div>
+                  <div className="task-stat-chip"><strong>{TASK_ROWS.filter((t) => t.state === "blocked").length}</strong>Blocked</div>
+                  <div className="task-stat-chip"><strong>{TASK_ROWS.filter((t) => ["queued", "awaiting_verification", "implementation_done", "deferred_batch"].includes(t.state)).length}</strong>Pending</div>
+                  <div className="task-stat-chip"><strong>{TASK_ROWS.filter((t) => t.state === "completed").length}</strong>Completed</div>
+                  <div className="task-stat-chip"><strong>{TASK_ROWS.filter((t) => t.blocking === "yes").length}</strong>Release-blocking</div>
+                </div>
+
                 <div className="command-prototype__task-table" role="table" aria-label="Task queue">
                   <div className="command-prototype__task-head" role="row">
                     <span>Task</span>
@@ -946,7 +1005,7 @@ export default function CommandCenter({ studio }) {
               </Panel>
             </div>
 
-            <div>
+            <div id="cost">
               <Panel
                 eyebrow="Batch + Cost"
                 title="Cost center and batch queue"
@@ -959,9 +1018,30 @@ export default function CommandCenter({ studio }) {
                         <div className="command-prototype__detail-label">{item.label}</div>
                         <div className="command-prototype__detail-copy">{item.detail}</div>
                       </div>
-                      <strong id={item.label === "Provider cost" ? "cost" : undefined}>{item.value}</strong>
+                      <strong>{item.value}</strong>
                     </div>
                   ))}
+                </div>
+                <div className="command-prototype__stack-gap">
+                  <div className="cost-provider-table">
+                    {COST_PROVIDERS.map((provider) => (
+                      <div key={provider.name} className="cost-provider-row">
+                        <div className="cost-provider-row__top">
+                          <div>
+                            <div className="cost-provider-row__name">{provider.name}</div>
+                            <div className="cost-provider-row__type">{provider.type}</div>
+                          </div>
+                          <div className="cost-provider-row__amount">{provider.amount}</div>
+                        </div>
+                        <div className="cost-provider-row__bar">
+                          <div
+                            className="cost-provider-row__bar-fill"
+                            style={{ width: `${provider.pct}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </Panel>
             </div>
@@ -1752,6 +1832,19 @@ export default function CommandCenter({ studio }) {
                 subtitle="NEXUS can recommend GO or NO-GO only when the release contract and gate evidence are complete."
                 meta={<StatusPill status="blocked">GO / NO-GO placeholder</StatusPill>}
               >
+                <div className="go-no-go">
+                  <div className="go-no-go__card go-no-go__card--go">
+                    <div className="go-no-go__label">GO condition</div>
+                    <div className="go-no-go__decision">GO</div>
+                    <div className="go-no-go__reason">All 3 gates PASS + approval evidence linked</div>
+                  </div>
+                  <div className="go-no-go__card go-no-go__card--nogo">
+                    <div className="go-no-go__label">Current status</div>
+                    <div className="go-no-go__decision">NO-GO</div>
+                    <div className="go-no-go__reason">SENTINEL pending · approval evidence missing</div>
+                  </div>
+                </div>
+
                 <div className="command-prototype__release-head">
                   <div>
                     <span className="eyebrow">Current posture</span>

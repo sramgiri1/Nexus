@@ -57,6 +57,12 @@ test("home route renders command center with local read-only wiring", async ({ p
   await expect(page.locator("#governed-actions")).toContainText("Action bridge readiness");
   await expect(page.locator("#governed-actions")).toContainText("npm run action:bridge-demo");
   await expect(page.locator("#governed-actions")).toContainText("UI cannot execute");
+  await expect(page.locator(".os-mode-banner")).toBeVisible();
+  await expect(page.locator(".os-mode-banner")).toContainText("local-private");
+  await expect(page.locator(".os-pipeline")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Agent Fleet/i })).toBeVisible();
+  await expect(page.locator("#release")).toContainText("NO-GO");
+  await expect(page.locator("#cost")).toBeVisible();
   await expect(page.locator("#demo-mode")).toContainText("Not Wired Yet");
   await expect(page.locator("#demo-mode")).toContainText("No live API");
   await expect(page.locator("#approvals")).toContainText("No UI mutation yet");
