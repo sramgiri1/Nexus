@@ -243,6 +243,113 @@
       "createdAt": "2026-05-08T01:20:29.743Z",
       "updatedAt": "2026-05-08T01:20:29.745Z",
       "redacted": true
+    },
+    {
+      "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
+      "projectId": "demoapp",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "demo.local_execution",
+      "objective": "Execute a controlled local DemoApp task through a governed NEXUS path.",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [],
+      "capabilityId": "implementation.backend_code",
+      "contractId": "controlled-local-contract",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "f57b85fc-0245-4e43-a0a1-dab3241b943c",
+        "6736559b-d713-4a07-9122-c553f5b70c2c"
+      ],
+      "createdAt": "2026-05-08T02:04:46.345Z",
+      "updatedAt": "2026-05-08T02:04:46.347Z",
+      "redacted": true
+    },
+    {
+      "taskId": "5b16a310-d6fc-403d-b57b-c55edb71c18c",
+      "projectId": "demoapp",
+      "sourceAgent": "nexus",
+      "targetAgent": "forge",
+      "taskType": "deploy.plan",
+      "objective": "Record a controlled local deploy-plan request that should stop for approval.",
+      "state": "awaiting_approval",
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [],
+      "capabilityId": "platform.deploy_plan",
+      "contractId": "controlled-local-contract",
+      "evidenceIds": [],
+      "auditEventIds": [],
+      "createdAt": "2026-05-08T02:04:46.349Z",
+      "updatedAt": "2026-05-08T02:04:46.349Z",
+      "redacted": true
+    },
+    {
+      "taskId": "8ad1bed1-f5c5-4b93-a13f-889dd63c74a1",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "auditor",
+      "taskType": "controlled_validation",
+      "objective": "Governed controlled validation task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "fdabba10-84a5-41ca-a4ae-0b047f594efe",
+        "1908bacb-1ac6-4f40-a1a7-6b98555d9d9a"
+      ],
+      "createdAt": "2026-05-08T09:32:17.731Z",
+      "updatedAt": "2026-05-08T09:32:17.734Z",
+      "redacted": true
+    },
+    {
+      "taskId": "cef1de3e-e861-40fb-aa69-eebf0ee53d90",
+      "projectId": "private-project-01",
+      "sourceAgent": "shepherd",
+      "targetAgent": "auditor",
+      "taskType": "command_classification",
+      "objective": "Governed command classification task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "687b0b93-92b1-4343-8408-2a3f4ae9bb72",
+        "01c7e227-1add-4e19-b14b-cee7d46da12a"
+      ],
+      "createdAt": "2026-05-08T09:32:33.886Z",
+      "updatedAt": "2026-05-08T09:32:33.888Z",
+      "redacted": true
+    },
+    {
+      "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "validation_planning",
+      "objective": "Governed validation planning task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "orchestration.plan_flow",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "a251250e-5ab7-4183-99df-0b99e17bcc31",
+        "fcfeea37-775d-4555-841d-d203b84801bf"
+      ],
+      "createdAt": "2026-05-08T09:32:38.524Z",
+      "updatedAt": "2026-05-08T09:32:38.526Z",
+      "redacted": true
     }
   ]
 }

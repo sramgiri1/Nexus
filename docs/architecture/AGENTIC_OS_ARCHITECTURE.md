@@ -91,6 +91,22 @@ capability policy, runtime traffic-plane decisions, task state-machine
 validation, and the local write boundary. This still excludes providers,
 external tools, project mutation, API, DB, and private-product execution.
 
+Phase 26-LOCAL introduces a strict public/demo versus local-private boundary
+for private project access. Public and demo modes stay DemoApp-only, while
+local-private mode can access allowlisted private projects for limited
+inventory and read purposes.
+
+Phases 27-LOCAL through 31-LOCAL build the first governed private-project
+validation path under that boundary: readiness inventory, governed planning,
+command classification, controlled backend validation, and a narrow
+remediation pass with clean post-fix validation.
+
+Phase 32-LOCAL adds a read-only Command Center private validation view. The UI
+still does not mutate state or execute tests. It renders a generated
+local-private snapshot that summarizes private-project validation status,
+governance posture, and redacted runtime records without adding API, DB, or
+provider wiring.
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

@@ -101,6 +101,12 @@ fixes the one failing test surfaced by P30: a narrow 1-line patch to the
 private-project backend source resolves a `date_window_boundary_bug` with high
 confidence. All 58 tests pass. All phases run only under `local-private` mode.
 
+Phase 32-LOCAL adds a read-only private-project validation view in Command
+Center. The dashboard consumes a generated local-private snapshot so operators
+can see validation state, remediation posture, and redacted runtime evidence
+without adding API, DB, UI mutation, provider, network, or test execution from
+the browser.
+
 After local approval or execution changes, refresh the browser-safe snapshot
 with `npm run generate:command-center-snapshot`.
 
@@ -154,6 +160,8 @@ npm run check:demo-showcase
 npm run check:public-safety
 npm run generate:command-center-snapshot
 npm run check:command-center-runtime-ingestion
+npm run generate:private-validation-snapshot
+npm run check:command-center-private-validation
 npm run orchestrator:local-execute
 npm run check:controlled-local-execution
 npm run check:local-state-machine

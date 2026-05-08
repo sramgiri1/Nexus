@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-07T10:23:39.050Z
-- Validation branch: arch/controlled-local-execution
-- Validation HEAD: 3665d28
+- Generated at: 2026-05-08T09:33:26.880Z
+- Validation branch: arch/command-center-private-validation-view
+- Validation HEAD: ed0f66c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

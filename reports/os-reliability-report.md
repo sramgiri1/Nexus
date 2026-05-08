@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-06T10:27:42.632Z
-- Validation branch: arch/os-reliability
-- Validation HEAD: ef9998b
+- Generated at: 2026-05-08T09:33:37.837Z
+- Validation branch: arch/command-center-private-validation-view
+- Validation HEAD: ed0f66c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

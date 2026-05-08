@@ -1,4 +1,5 @@
 import { runtimeSnapshot } from "./runtimeSnapshot.js";
+import { privateValidationSnapshot } from "./privateValidationSnapshot.js";
 
 export const LOCAL_REPORT_SNAPSHOT = {
   snapshotVersion: "1.0",
@@ -267,6 +268,7 @@ export const LOCAL_REPORT_SNAPSHOT = {
     },
   },
   runtimeFiles: runtimeSnapshot,
+  privateValidation: privateValidationSnapshot,
   capabilities: {
     count: 25,
     enabled: 24,

@@ -3,7 +3,7 @@
   "mode": "local-private",
   "projectId": "careloop",
   "privateProject": true,
-  "generatedAt": "2026-05-08T01:17:59.053Z",
+  "generatedAt": "2026-05-08T09:32:17.735Z",
   "command": {
     "commandId": "careloop-backend-npm-test",
     "command": "npm",
@@ -28,10 +28,10 @@
   "execution": {
     "status": "PASS",
     "exitCode": 0,
-    "durationMs": 1041,
-    "stdoutPreview": "\n> careloop-api@0.1.0 test\n> node --test test/sprint2.test.js\n\n▶ auth routes\n  ✔ POST /auth/signup creates a password-backed user (61.299458ms)\n  ✔ POST /auth/login rejects wrong password (63.166667ms)\n  ✔ POST /auth/login returns the matching user (62.951542ms)\n  ✔ POST /auth/social creates a user and identity from local fallback payload (4.494666ms)\n  ✔ POST /auth/login includes pending invitations for the authenticated email (62.67375ms)\n  ✔ GET /auth/oauth/google/start redirects to Google's consent screen (4.039167ms)\n  ✔ verifyOAuthState returns the signed callback payload (0.166542ms)\n  ✔ forgot password request stores a reset code and returns debugCode in local dev (36.060333ms)\n  ✔ forgot password verify/reset updates password (93.094375ms)\n  ✔ forgot password reset revokes previously issued access tokens (120.977958ms)\n✔ auth routes (509.764792ms)\n▶ deliverTaskNotification\n  ✔ r",
+    "durationMs": 1090,
+    "stdoutPreview": "\n> careloop-api@0.1.0 test\n> node --test test/sprint2.test.js\n\n▶ auth routes\n  ✔ POST /auth/signup creates a password-backed user (64.148ms)\n  ✔ POST /auth/login rejects wrong password (65.538ms)\n  ✔ POST /auth/login returns the matching user (64.438834ms)\n  ✔ POST /auth/social creates a user and identity from local fallback payload (4.114292ms)\n  ✔ POST /auth/login includes pending invitations for the authenticated email (63.123833ms)\n  ✔ GET /auth/oauth/google/start redirects to Google's consent screen (3.914666ms)\n  ✔ verifyOAuthState returns the signed callback payload (0.173834ms)\n  ✔ forgot password request stores a reset code and returns debugCode in local dev (36.05325ms)\n  ✔ forgot password verify/reset updates password (92.769875ms)\n  ✔ forgot password reset revokes previously issued access tokens (121.373583ms)\n✔ auth routes (516.481625ms)\n▶ deliverTaskNotification\n  ✔ returns",
     "stderrPreview": "",
-    "outputHash": "edd14ca421b9d837",
+    "outputHash": "e8b6de0bfeff3772",
     "mutationDetected": false,
     "mutatedPaths": [],
     "warnings": [],

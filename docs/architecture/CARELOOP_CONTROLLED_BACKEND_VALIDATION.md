@@ -2,7 +2,11 @@
 
 ## Overview
 
-P30-LOCAL implements the first controlled execution of a backend validation command through the NEXUS governed local execution path. The command `npm test` runs inside `projects/careloop` under strict NEXUS governance: no mutation, no dependency install, no provider/network/DB calls, with output captured, redacted, and hashed.
+P30-LOCAL implements the first controlled execution of a backend validation
+command through the NEXUS governed local execution path. The command `npm test`
+runs inside `projects/careloop` under strict NEXUS governance: no mutation, no
+dependency install, no provider/network/DB calls, with output captured,
+redacted, and hashed.
 
 ## Files
 
@@ -115,6 +119,13 @@ P31-LOCAL investigated the one failing test (`GET /circles/:id/insights/completi
 `totals.completed: 0 !== 2`) and identified a `date_window_boundary_bug` with
 high confidence. A 1-line fix was applied: `new Date()` → `new Date(Date.now())`
 in the completion insights route. All 58 tests now pass (`npm test` exit 0).
+
+## P32 Follow-on
+
+P32-LOCAL does not rerun tests from the dashboard. Instead, it exposes this
+governed backend validation history through a generated local-private Command
+Center snapshot so operators can review validation state, remediation status,
+and redacted runtime records without adding API, DB, or UI mutation.
 
 ## Phase
 

@@ -6,56 +6,301 @@ export const runtimeSnapshot = {
   "snapshotVersion": "1.0",
   "source": "generated-from-local-state-runtime",
   "readOnly": true,
-  "generatedAt": "2026-05-07T21:33:54.980Z",
+  "generatedAt": "2026-05-08T09:33:26.186Z",
   "runtimeState": {
     "tasks": {
-      "total": 0,
-      "byState": {},
-      "byAgent": {},
-      "recent": []
+      "total": 16,
+      "byState": {
+        "implementation_done": 15,
+        "awaiting_approval": 1
+      },
+      "byAgent": {
+        "shepherd": 5,
+        "auditor": 7,
+        "core": 3,
+        "forge": 1
+      },
+      "recent": [
+        {
+          "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
+          "projectId": "private-project-01",
+          "targetAgent": "shepherd",
+          "state": "implementation_done",
+          "riskLevel": "medium",
+          "capabilityId": "orchestration.plan_flow",
+          "createdAt": "2026-05-08T09:32:38.524Z",
+          "updatedAt": "2026-05-08T09:32:38.526Z"
+        },
+        {
+          "taskId": "cef1de3e-e861-40fb-aa69-eebf0ee53d90",
+          "projectId": "private-project-01",
+          "targetAgent": "auditor",
+          "state": "implementation_done",
+          "riskLevel": "medium",
+          "capabilityId": "verification.code_quality_gate",
+          "createdAt": "2026-05-08T09:32:33.886Z",
+          "updatedAt": "2026-05-08T09:32:33.888Z"
+        },
+        {
+          "taskId": "8ad1bed1-f5c5-4b93-a13f-889dd63c74a1",
+          "projectId": "private-project-01",
+          "targetAgent": "auditor",
+          "state": "implementation_done",
+          "riskLevel": "medium",
+          "capabilityId": "verification.code_quality_gate",
+          "createdAt": "2026-05-08T09:32:17.731Z",
+          "updatedAt": "2026-05-08T09:32:17.734Z"
+        },
+        {
+          "taskId": "5b16a310-d6fc-403d-b57b-c55edb71c18c",
+          "projectId": "demoapp",
+          "targetAgent": "forge",
+          "state": "awaiting_approval",
+          "riskLevel": "critical",
+          "capabilityId": "platform.deploy_plan",
+          "createdAt": "2026-05-08T02:04:46.349Z",
+          "updatedAt": "2026-05-08T02:04:46.349Z"
+        },
+        {
+          "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
+          "projectId": "demoapp",
+          "targetAgent": "core",
+          "state": "implementation_done",
+          "riskLevel": "medium",
+          "capabilityId": "implementation.backend_code",
+          "createdAt": "2026-05-08T02:04:46.345Z",
+          "updatedAt": "2026-05-08T02:04:46.347Z"
+        }
+      ]
     },
     "evidence": {
-      "total": 0,
-      "byResult": {},
-      "byType": {},
-      "recent": []
+      "total": 13,
+      "byResult": {
+        "INFO": 5,
+        "PASS": 8
+      },
+      "byType": {
+        "private_project_inventory": 5,
+        "validation_planning_completed": 5,
+        "failure_analysis": 2,
+        "controlled_local_execution": 1
+      },
+      "recent": [
+        {
+          "evidenceId": "ddbf1de8-0b1c-4ec7-ade9-05dcc249b212",
+          "type": "private_project_inventory",
+          "agentId": "",
+          "result": "INFO",
+          "dataClassification": "unknown",
+          "createdAt": "2026-05-08T09:32:40.140Z"
+        },
+        {
+          "evidenceId": "a8341fe3-de15-40b9-938c-1203cf64fc65",
+          "type": "validation_planning_completed",
+          "agentId": "",
+          "result": "PASS",
+          "dataClassification": "unknown",
+          "createdAt": "2026-05-08T09:32:38.526Z"
+        },
+        {
+          "evidenceId": "f5a2a17f-fdc1-49c4-883a-2dd86f57fcf2",
+          "type": "controlled_local_execution",
+          "agentId": "core",
+          "result": "PASS",
+          "dataClassification": "internal",
+          "createdAt": "2026-05-08T02:04:46.348Z"
+        },
+        {
+          "evidenceId": "ea138fea-1055-4dcf-bc5a-b966fd5d8d6a",
+          "type": "private_project_inventory",
+          "agentId": "",
+          "result": "INFO",
+          "dataClassification": "unknown",
+          "createdAt": "2026-05-08T01:20:32.321Z"
+        },
+        {
+          "evidenceId": "cf80dc97-266f-4ddb-a2a2-4f82cccaa07a",
+          "type": "validation_planning_completed",
+          "agentId": "",
+          "result": "PASS",
+          "dataClassification": "unknown",
+          "createdAt": "2026-05-08T01:20:29.745Z"
+        }
+      ]
     },
     "audit": {
-      "total": 0,
-      "byEventType": {},
-      "recent": []
+      "total": 51,
+      "byEventType": {
+        "private_project_inventory_completed": 5,
+        "task_state_changed": 30,
+        "validation_plan_created": 5,
+        "controlled_validation_completed": 5,
+        "local_write_boundary_check": 1,
+        "test_failure_analysis_completed": 2,
+        "controlled_local_execution": 3
+      },
+      "recent": [
+        {
+          "auditId": "0569cebe-ed7e-4241-a847-d4fd598fca93",
+          "eventType": "private_project_inventory_completed",
+          "actorId": "system",
+          "taskId": "",
+          "createdAt": "2026-05-08T09:32:40.141Z"
+        },
+        {
+          "auditId": "c03d0b4c-70dd-444e-82b7-44f41936132c",
+          "eventType": "validation_plan_created",
+          "actorId": "shepherd",
+          "taskId": "",
+          "createdAt": "2026-05-08T09:32:38.527Z"
+        },
+        {
+          "auditId": "fcfeea37-775d-4555-841d-d203b84801bf",
+          "eventType": "task_state_changed",
+          "actorId": "shepherd",
+          "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
+          "createdAt": "2026-05-08T09:32:38.526Z"
+        },
+        {
+          "auditId": "a251250e-5ab7-4183-99df-0b99e17bcc31",
+          "eventType": "task_state_changed",
+          "actorId": "shepherd",
+          "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
+          "createdAt": "2026-05-08T09:32:38.525Z"
+        },
+        {
+          "auditId": "687b0b93-92b1-4343-8408-2a3f4ae9bb72",
+          "eventType": "task_state_changed",
+          "actorId": "auditor",
+          "taskId": "cef1de3e-e861-40fb-aa69-eebf0ee53d90",
+          "createdAt": "2026-05-08T09:32:33.888Z"
+        }
+      ]
     },
     "events": {
-      "total": 0,
-      "byRuntime": {},
-      "byEventType": {},
-      "recent": []
+      "total": 17,
+      "byRuntime": {
+        "local": 5,
+        "unknown": 9,
+        "node-local": 3
+      },
+      "byEventType": {
+        "governed_validation_planning_completed": 5,
+        "governed_controlled_validation_completed": 5,
+        "governed_test_failure_analysis_completed": 2,
+        "governed_command_classification_completed": 2,
+        "task_state_transition": 2,
+        "controlled_local_execution": 1
+      },
+      "recent": [
+        {
+          "eventId": "1a3c49a6-764b-4f3a-ba1a-19ddc16df723",
+          "eventType": "governed_validation_planning_completed",
+          "runtime": "local",
+          "agentId": "shepherd",
+          "taskId": "pvt-backend-validation-plan",
+          "createdAt": "2026-05-08T09:32:38.527Z"
+        },
+        {
+          "eventId": "6aa02063-3ec7-4c71-a091-7d3650cac2f6",
+          "eventType": "governed_command_classification_completed",
+          "runtime": "",
+          "agentId": "auditor",
+          "taskId": "pvt-backend-cmd-classification",
+          "createdAt": "2026-05-08T09:32:33.889Z"
+        },
+        {
+          "eventId": "32607ae3-1cdf-488f-9a8d-71118c58c68a",
+          "eventType": "governed_controlled_validation_completed",
+          "runtime": "",
+          "agentId": "auditor",
+          "taskId": "pvt-backend-controlled-validation",
+          "createdAt": "2026-05-08T09:32:17.734Z"
+        },
+        {
+          "eventId": "6e43eeed-2a2b-4aeb-8ffb-8d33740e688f",
+          "eventType": "task_state_transition",
+          "runtime": "node-local",
+          "agentId": "core",
+          "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
+          "createdAt": "2026-05-08T02:04:46.348Z"
+        },
+        {
+          "eventId": "07522af8-0cc2-42b6-b3e4-592d0155c8a9",
+          "eventType": "controlled_local_execution",
+          "runtime": "node-local",
+          "agentId": "core",
+          "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
+          "createdAt": "2026-05-08T02:04:46.348Z"
+        }
+      ]
     },
     "approvals": {
-      "total": 0,
-      "requested": 0,
+      "total": 1,
+      "requested": 1,
       "approved": 0,
       "rejected": 0,
       "expired": 0,
-      "byDecision": {},
-      "byTaskId": {},
+      "byDecision": {
+        "requested": 1
+      },
+      "byTaskId": {
+        "5b16a310-d6fc-403d-b57b-c55edb71c18c": 1
+      },
       "linkedEvidence": [],
-      "recent": []
+      "recent": [
+        {
+          "approvalId": "2943ecb2-5a89-4296-8147-2051b49bceba",
+          "type": "deploy",
+          "requestedBy": "forge",
+          "taskId": "5b16a310-d6fc-403d-b57b-c55edb71c18c",
+          "decision": "requested",
+          "riskLevel": "critical",
+          "createdAt": "2026-05-08T02:04:46.350Z",
+          "updatedAt": "2026-05-08T02:04:46.350Z",
+          "linkedEvidenceIds": []
+        }
+      ]
     },
     "incidents": {
-      "total": 0,
-      "bySeverity": {},
-      "byStatus": {},
-      "recent": []
+      "total": 1,
+      "bySeverity": {
+        "high": 1
+      },
+      "byStatus": {
+        "open": 1
+      },
+      "recent": [
+        {
+          "incidentId": "92d0ac97-1d89-4d1b-a329-cece0e04231c",
+          "type": "controlled_local_execution_block",
+          "severity": "high",
+          "status": "open",
+          "taskId": "f8bc9df7-9590-4b53-97bc-5247f64b3614",
+          "createdAt": "2026-05-08T02:04:46.350Z"
+        }
+      ]
     }
   },
   "approvalWorkflow": {
-    "total": 0,
-    "requested": 0,
+    "total": 1,
+    "requested": 1,
     "approved": 0,
     "rejected": 0,
     "expired": 0,
-    "recent": [],
+    "recent": [
+      {
+        "approvalId": "2943ecb2-5a89-4296-8147-2051b49bceba",
+        "type": "deploy",
+        "requestedBy": "forge",
+        "taskId": "5b16a310-d6fc-403d-b57b-c55edb71c18c",
+        "decision": "requested",
+        "riskLevel": "critical",
+        "createdAt": "2026-05-08T02:04:46.350Z",
+        "updatedAt": "2026-05-08T02:04:46.350Z",
+        "linkedEvidenceIds": []
+      }
+    ],
     "linkedEvidence": []
   },
   "refresh": {

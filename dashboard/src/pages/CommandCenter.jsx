@@ -18,6 +18,7 @@ const NAV_SECTIONS = [
   { id: "gates", label: "Gates" },
   { id: "evidence", label: "Evidence" },
   { id: "runtime", label: "Runtime" },
+  { id: "private-validation", label: "Private Validation" },
   { id: "traffic-plane", label: "Traffic Plane" },
   { id: "local-evidence", label: "Local Evidence" },
   { id: "batch", label: "Batch" },
@@ -243,7 +244,7 @@ function formatStatus(value) {
 function statusTone(value) {
   const normalized = (value || "").toUpperCase();
 
-  if (["PASS", "READY", "NORMAL"].includes(normalized)) {
+  if (["PASS", "READY", "NORMAL", "VALIDATED", "APPLIED", "ENABLED"].includes(normalized)) {
     return "done";
   }
 
@@ -255,7 +256,7 @@ function statusTone(value) {
     return "working";
   }
 
-  if (["NO_GO", "BLOCKED", "DENY", "ESCALATE", "FAIL", "REJECTED", "EXPIRED"].includes(normalized)) {
+  if (["NO_GO", "BLOCKED", "DENY", "ESCALATE", "FAIL", "REJECTED", "EXPIRED", "NEEDS_REMEDIATION"].includes(normalized)) {
     return "blocked";
   }
 
@@ -285,6 +286,7 @@ export default function CommandCenter({ studio }) {
   const runtimeRefresh = localReports.runtimeRefresh || {};
   const runtimeSnapshot = localReports.runtimeSnapshot || {};
   const runtimeFiles = localReports.runtimeFiles || {};
+  const privateValidation = localReports.privateValidation || {};
   const runtimeTasks = runtimeFiles.tasks || { total: 0, byState: {}, recent: [] };
   const runtimeEvidence = runtimeFiles.evidence || { total: 0, recent: [] };
   const runtimeAudit = runtimeFiles.audit || { total: 0, recent: [] };
@@ -292,8 +294,28 @@ export default function CommandCenter({ studio }) {
   const runtimeApprovals = runtimeFiles.approvals || { total: 0, recent: [] };
   const runtimeIncidents = runtimeFiles.incidents || { total: 0, recent: [] };
   const approvalEvidence = approvalWorkflow.linkedEvidence || [];
+  const privateValidationStatus = privateValidation.status || {};
+  const privateValidationTimeline = privateValidation.timeline || [];
+  const privateValidationArtifacts = privateValidation.validationArtifacts || [];
+  const privateValidationGovernance = privateValidation.governance || {};
+  const privateValidationKnownIssues = privateValidation.knownIssues || [];
+  const privateValidationProject = privateValidation.project || {};
+  const privateValidationBackend = privateValidationStatus.latestBackendValidation || {};
+  const privateValidationRemediation = privateValidationStatus.latestRemediation || {};
+  const privateValidationVisible =
+    privateValidation.readOnly === true &&
+    ["local-private", "test"].includes(privateValidation.mode);
+  const privateValidationEvidenceArtifacts = privateValidationArtifacts.filter((artifact) =>
+    ["evidence", "audit", "runtime_event"].includes(artifact.type)
+  );
+  const privateValidationLinkedReports = privateValidationArtifacts.filter((artifact) =>
+    ["report", "contract"].includes(artifact.type)
+  );
   const blockedByApprovalTasks = (runtimeTasks.recent || []).filter(
     (task) => task.state === "awaiting_approval"
+  );
+  const privateBlockedApprovalTasks = blockedByApprovalTasks.filter(
+    (task) => task.projectId === privateValidationProject.id
   );
   const approvalEvidenceCounts = approvalEvidence.reduce(
     (acc, record) => {
@@ -459,6 +481,86 @@ export default function CommandCenter({ studio }) {
       detail: "Private product execution is still disabled in this phase.",
     },
   ];
+  const privateValidationSummaryRows = [
+    {
+      label: "Overall",
+      value: privateValidationStatus.overall || "UNKNOWN",
+      detail: "Current governed private-project validation state from the generated local-private snapshot.",
+    },
+    {
+      label: "Backend tests",
+      value: `${privateValidationBackend.testsPassed || 0}/${privateValidationBackend.totalTests || 0} ${privateValidationBackend.status || "UNKNOWN"}`,
+      detail: "Latest governed backend validation result captured from generated artifacts.",
+    },
+    {
+      label: "Latest command",
+      value: privateValidationBackend.command || "npm test",
+      detail: "Command text is shown read-only. The UI does not execute it.",
+    },
+    {
+      label: "Latest remediation",
+      value: privateValidationRemediation.applied ? "Applied" : "Pending",
+      detail: "The latest remediation state is derived from the machine-readable remediation plan.",
+    },
+    {
+      label: "Root cause",
+      value: privateValidationRemediation.rootCauseCategory || "unknown",
+      detail: "Root-cause category from the latest remediation artifact.",
+    },
+    {
+      label: "UI mutation",
+      value:
+        privateValidationGovernance.mutationEnabledFromUi === false
+          ? "Disabled"
+          : "Unknown",
+      detail: "This panel is read-only. Use CLI and governed tasks for any future state changes.",
+    },
+  ];
+  const privateValidationGovernanceRows = [
+    {
+      label: "Traffic plane",
+      value: privateValidationGovernance.trafficPlane ? "Enabled" : "Unknown",
+      detail: "Private validation artifacts were generated through the governed local runtime path.",
+    },
+    {
+      label: "State machine",
+      value: privateValidationGovernance.stateMachine ? "Enabled" : "Unknown",
+      detail: "Controlled local task transitions still respect state-machine enforcement.",
+    },
+    {
+      label: "Local write boundary",
+      value: privateValidationGovernance.localWriteBoundary ? "Enabled" : "Unknown",
+      detail: "Evidence, audit, and runtime records remain append-only under local-state/runtime.",
+    },
+    {
+      label: "Provider calls",
+      value: privateValidationGovernance.providerCalls === false ? "Disabled" : "Unknown",
+      detail: "No providers were called for this private validation view.",
+    },
+    {
+      label: "Network / DB / API",
+      value:
+        privateValidationGovernance.networkCalls === false &&
+        privateValidationGovernance.dbAccess === false &&
+        privateValidationGovernance.apiServer === false
+          ? "Disabled"
+          : "Unknown",
+      detail: "Snapshot generation stays offline and does not add API or DB wiring.",
+    },
+    {
+      label: "Evidence / audit / runtime records",
+      value: privateValidationEvidenceArtifacts.length ? "Present" : "Pending",
+      detail: "Local runtime files contain redacted governed records for the private validation path.",
+    },
+  ];
+  const privateValidationRecommendation =
+    privateValidationStatus.overall === "VALIDATED"
+      ? "Prepare Command Center action bridge for governed private-project tasks."
+      : privateValidationStatus.overall === "NEEDS_REMEDIATION"
+        ? "Plan second remediation pass."
+        : privateValidationStatus.overall === "BLOCKED"
+          ? "Plan dependency readiness."
+          : "Collect missing validation artifacts before deciding the next governed step.";
 
   return (
     <div className="page page--command command-prototype" data-testid="command-center-page">
@@ -1208,6 +1310,260 @@ export default function CommandCenter({ studio }) {
                     </div>
                   )}
                 </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="private-validation">
+              <Panel
+                eyebrow="Local-private view"
+                title="Private Project Validation"
+                subtitle="Generated private validation snapshot for governed local-private work. Current backend posture is 58/58 PASS, and this panel is read-only and does not run backend tests from the UI."
+                meta={
+                  <StatusPill status={statusTone(privateValidationStatus.overall || "UNKNOWN")}>
+                    {privateValidationStatus.overall || "UNKNOWN"}
+                  </StatusPill>
+                }
+              >
+                {privateValidationVisible ? (
+                  <div className="command-prototype__detail-list">
+                    {privateValidationSummaryRows.map((item) => (
+                      <div key={item.label} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label">{item.label}</div>
+                          <div className="command-prototype__detail-copy">{item.detail}</div>
+                        </div>
+                        <strong className="mono">{item.value}</strong>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">Private validation snapshot unavailable</div>
+                    <div className="empty-state__body">
+                      Run <span className="mono">npm run generate:private-validation-snapshot</span> in local-private mode to surface the governed private-project view.
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+
+            <div id="private-validation-next">
+              <Panel
+                eyebrow="Read-only next step"
+                title="Next Recommended Step"
+                subtitle="Recommendations stay evidence-bound and do not trigger execution from the dashboard."
+              >
+                <div className="command-prototype__sample-grid">
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Recommended next</div>
+                    <strong>{privateValidationRecommendation}</strong>
+                    <div className="command-prototype__detail-copy">
+                      This is a read-only recommendation derived from the latest private validation snapshot.
+                    </div>
+                  </div>
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Snapshot mode</div>
+                    <strong>{privateValidation.mode || "demo"}</strong>
+                    <div className="command-prototype__detail-copy">
+                      Private validation content is generated only in local-private or test mode.
+                    </div>
+                  </div>
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Refresh path</div>
+                    <strong className="mono">npm run generate:private-validation-snapshot</strong>
+                    <div className="command-prototype__detail-copy">
+                      Refresh the browser-safe snapshot after new governed private validation artifacts are produced.
+                    </div>
+                  </div>
+                </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="private-validation-timeline">
+              <Panel
+                eyebrow="Governed timeline"
+                title="Validation Timeline"
+                subtitle="Inventory, planning, command classification, controlled validation, remediation, and post-fix validation stay visible as read-only milestones."
+              >
+                {privateValidationTimeline.length ? (
+                  <div className="command-prototype__detail-list">
+                    {privateValidationTimeline.map((item) => (
+                      <div key={`${item.phase}-${item.title}`} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label">
+                            {item.phase} · {item.title}
+                          </div>
+                          <div className="command-prototype__detail-copy">{item.summary}</div>
+                        </div>
+                        <StatusPill status={statusTone(item.status)}>{item.status}</StatusPill>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">Validation timeline not available</div>
+                    <div className="empty-state__body">
+                      Private validation artifacts have not been summarized into the dashboard snapshot yet.
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+
+            <div id="private-validation-evidence">
+              <Panel
+                eyebrow="Evidence and governance"
+                title="Evidence and Governance"
+                subtitle="Reports, contracts, evidence, audit, and runtime event references remain visible without exposing source snippets or mutation controls."
+              >
+                <div className="command-prototype__detail-list">
+                  {privateValidationGovernanceRows.map((item) => (
+                    <div key={item.label} className="command-prototype__detail-row">
+                      <div>
+                        <div className="command-prototype__detail-label">{item.label}</div>
+                        <div className="command-prototype__detail-copy">{item.detail}</div>
+                      </div>
+                      <strong>{item.value}</strong>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading
+                    label="Reports and contracts"
+                    meta="Linked private validation artifacts remain read-only."
+                  />
+                  {privateValidationLinkedReports.length ? (
+                    <div className="command-prototype__detail-list">
+                      {privateValidationLinkedReports.map((artifact) => (
+                        <div key={artifact.id} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label">{artifact.title}</div>
+                            <div className="command-prototype__detail-copy">{artifact.path}</div>
+                          </div>
+                          <StatusPill status={statusTone(artifact.status)}>{artifact.status}</StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-state__title">No linked validation artifacts yet</div>
+                      <div className="empty-state__body">
+                        Generate the private validation snapshot after governed private validation artifacts are available.
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading
+                    label="Evidence / audit / runtime records"
+                    meta="Redacted runtime references sourced from local-state/runtime."
+                  />
+                  {privateValidationEvidenceArtifacts.length ? (
+                    <div className="command-prototype__detail-list">
+                      {privateValidationEvidenceArtifacts.map((artifact) => (
+                        <div key={artifact.id} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label">{artifact.title}</div>
+                            <div className="command-prototype__detail-copy">{artifact.path}</div>
+                          </div>
+                          <StatusPill status={statusTone(artifact.status)}>{artifact.status}</StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <div className="empty-state">
+                      <div className="empty-state__title">No governed runtime references yet</div>
+                      <div className="empty-state__body">
+                        Controlled private validation records will appear here after snapshot refresh.
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </Panel>
+            </div>
+          </section>
+
+          <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="private-validation-hygiene">
+              <Panel
+                eyebrow="Read-only hygiene"
+                title="Known Validation Hygiene"
+                subtitle="Private branch validation keeps public/demo safety strict and documents the one known non-blocking report-baseline step."
+              >
+                <div className="command-prototype__detail-list">
+                  {privateValidationKnownIssues.length ? (
+                    privateValidationKnownIssues.map((issue) => (
+                      <div key={issue.id} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label">{issue.id}</div>
+                          <div className="command-prototype__detail-copy">{issue.summary}</div>
+                        </div>
+                        <StatusPill status={issue.blocking ? "blocked" : "working"}>
+                          {issue.blocking ? "blocking" : "non-blocking"}
+                        </StatusPill>
+                      </div>
+                    ))
+                  ) : null}
+                  <div className="command-prototype__detail-row">
+                    <div>
+                      <div className="command-prototype__detail-label">Hygiene note</div>
+                      <div className="command-prototype__detail-copy">
+                        public/demo safety remains strict even when private validation artifacts exist locally.
+                      </div>
+                    </div>
+                  </div>
+                  <div className="command-prototype__detail-row">
+                    <div>
+                      <div className="command-prototype__detail-label">Public/demo safety</div>
+                      <div className="command-prototype__detail-copy">
+                        Public/demo surfaces remain DemoApp-only or generic private-project wording only.
+                      </div>
+                    </div>
+                    <strong>Strict</strong>
+                  </div>
+                </div>
+              </Panel>
+            </div>
+
+            <div id="private-validation-approval-block">
+              <Panel
+                eyebrow="Approval dependency"
+                title="Blocked by Approval"
+                subtitle="Private validation stays read-only in the dashboard. No UI mutation yet."
+              >
+                {privateBlockedApprovalTasks.length ? (
+                  <div className="command-prototype__detail-list">
+                    {privateBlockedApprovalTasks.map((task) => (
+                      <div key={task.taskId} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label mono">
+                            {task.taskId}
+                          </div>
+                          <div className="command-prototype__detail-copy">
+                            {task.targetAgent || "unknown"} · {task.capabilityId || "no capability"} ·{" "}
+                            {task.riskLevel || "medium"}
+                          </div>
+                        </div>
+                        <StatusPill status={taskTone(task.state || "awaiting_approval")}>
+                          {formatStatus(task.state || "awaiting_approval")}
+                        </StatusPill>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">No private validation tasks are waiting on approval</div>
+                    <div className="empty-state__body">
+                      UI mutation is Disabled. Use CLI if a future governed private-project task requires approval.
+                    </div>
+                  </div>
+                )}
               </Panel>
             </div>
           </section>

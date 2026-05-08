@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T00:43:33.260Z
-- Validation branch: arch/careloop-command-classification
-- Validation HEAD: eeda5ef
+- Generated at: 2026-05-08T09:32:53.256Z
+- Validation branch: arch/command-center-private-validation-view
+- Validation HEAD: ed0f66c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS
@@ -14,11 +14,11 @@ Mode resolution: PASS
 Access rules: PASS
 Scanner behavior: PASS
 Public safety integration: PASS
-Repo safety: PASS
+Repo safety: FAIL
 Formatting/readability: PASS
 
 ## Failures
 
-- None
+- Forbidden paths were modified by the private-mode phase.
 
-Result: PASS
+Result: FAIL

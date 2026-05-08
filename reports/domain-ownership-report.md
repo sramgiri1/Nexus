@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-06T21:33:48.986Z
-- Validation branch: arch/domain-ownership-policy
-- Validation HEAD: d188ca5
+- Generated at: 2026-05-08T09:33:34.361Z
+- Validation branch: arch/command-center-private-validation-view
+- Validation HEAD: ed0f66c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Required docs: PASS

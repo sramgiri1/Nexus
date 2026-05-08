@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-06T20:27:06.215Z
-- Validation branch: arch/capability-model
-- Validation HEAD: 75bf475
+- Generated at: 2026-05-08T09:33:37.604Z
+- Validation branch: arch/command-center-private-validation-view
+- Validation HEAD: ed0f66c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary

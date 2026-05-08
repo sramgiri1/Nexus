@@ -1,0 +1,245 @@
+{
+  "snapshotVersion": "1.0",
+  "mode": "local-private",
+  "source": "generated-private-validation-snapshot",
+  "readOnly": true,
+  "generatedAt": "2026-05-08T09:32:10.065Z",
+  "project": {
+    "id": "private-project-01",
+    "label": "Private Project",
+    "private": true,
+    "publicSafe": false
+  },
+  "status": {
+    "overall": "VALIDATED",
+    "backendReadiness": "READY_FOR_VALIDATION",
+    "iosReadiness": "READY_FOR_XCODE_INVENTORY",
+    "latestBackendValidation": {
+      "status": "PASS",
+      "testsPassed": 58,
+      "testsFailed": 0,
+      "totalTests": 58,
+      "command": "npm test"
+    },
+    "latestRemediation": {
+      "applied": true,
+      "rootCauseCategory": "date_window_boundary_bug",
+      "confidence": "high",
+      "resultAfterFix": "PASS"
+    }
+  },
+  "timeline": [
+    {
+      "phase": "P27",
+      "title": "Inventory and readiness",
+      "status": "PASS",
+      "summary": "READY_FOR_NEXT_GOVERNED_TASK"
+    },
+    {
+      "phase": "P28",
+      "title": "Validation plan",
+      "status": "PASS",
+      "summary": "Governed validation planning recorded through the local task path."
+    },
+    {
+      "phase": "P29",
+      "title": "Command classification",
+      "status": "PASS",
+      "summary": "test"
+    },
+    {
+      "phase": "P30",
+      "title": "Controlled backend validation",
+      "status": "PASS",
+      "summary": "Governed backend validation completed through the local-private path."
+    },
+    {
+      "phase": "P31",
+      "title": "Remediation",
+      "status": "PASS",
+      "summary": "date_window_boundary_bug"
+    },
+    {
+      "phase": "P31",
+      "title": "Post-fix validation",
+      "status": "PASS",
+      "summary": "Post-fix validation completed with a clean governed backend pass."
+    }
+  ],
+  "validationArtifacts": [
+    {
+      "id": "p27-inventory",
+      "type": "report",
+      "title": "Inventory and readiness",
+      "status": "PASS",
+      "path": "reports/careloop-inventory.json",
+      "redacted": true
+    },
+    {
+      "id": "p28-validation-plan",
+      "type": "report",
+      "title": "Governed validation plan",
+      "status": "PASS",
+      "path": "reports/careloop-validation-plan.json",
+      "redacted": true
+    },
+    {
+      "id": "p29-command-classification",
+      "type": "report",
+      "title": "Command classification",
+      "status": "PASS",
+      "path": "reports/careloop-command-classification.json",
+      "redacted": true
+    },
+    {
+      "id": "p30-backend-validation",
+      "type": "report",
+      "title": "Controlled backend validation",
+      "status": "PASS",
+      "path": "reports/careloop-backend-validation.json",
+      "redacted": true
+    },
+    {
+      "id": "p31-failure-analysis",
+      "type": "report",
+      "title": "Test failure analysis",
+      "status": "PASS",
+      "path": "reports/careloop-test-failure-analysis.json",
+      "redacted": true
+    },
+    {
+      "id": "p31-remediation",
+      "type": "report",
+      "title": "Remediation plan",
+      "status": "PASS",
+      "path": "reports/careloop-remediation-plan.json",
+      "redacted": true
+    },
+    {
+      "id": "contract-backend-validation-task",
+      "type": "contract",
+      "title": "Backend validation task contract",
+      "status": "INFO",
+      "path": "contracts/careloop/backend-validation-task-contract.json",
+      "redacted": true
+    },
+    {
+      "id": "contract-command-classification",
+      "type": "contract",
+      "title": "Backend command classification contract",
+      "status": "INFO",
+      "path": "contracts/careloop/backend-command-classification-contract.json",
+      "redacted": true
+    },
+    {
+      "id": "contract-controlled-validation",
+      "type": "contract",
+      "title": "Backend controlled validation contract",
+      "status": "INFO",
+      "path": "contracts/careloop/backend-controlled-validation-contract.json",
+      "redacted": true
+    },
+    {
+      "id": "contract-remediation",
+      "type": "contract",
+      "title": "Completion insights remediation contract",
+      "status": "INFO",
+      "path": "contracts/careloop/completion-insights-remediation-contract.json",
+      "redacted": true
+    },
+    {
+      "id": "ea138fea-1055-4dcf-bc5a-b966fd5d8d6a",
+      "type": "evidence",
+      "title": "Private project inventory snapshot generated",
+      "status": "INFO",
+      "path": "local-state/runtime/evidence.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "cf80dc97-266f-4ddb-a2a2-4f82cccaa07a",
+      "type": "evidence",
+      "title": "Governed validation planning task completed",
+      "status": "PASS",
+      "path": "local-state/runtime/evidence.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "2358d052-0ff3-49b7-8537-7a2ef869ba97",
+      "type": "evidence",
+      "title": "Failure analysis: date_window_boundary_bug (high)",
+      "status": "PASS",
+      "path": "local-state/runtime/evidence.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "f3970261-9572-4ee5-9578-40d4d908071d",
+      "type": "audit",
+      "title": "Private project inventory snapshot generated",
+      "status": "INFO",
+      "path": "local-state/runtime/audit.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "4321fe2a-bf12-43ec-a55a-ad9d22b8d1cc",
+      "type": "audit",
+      "title": "Governed validation planning task completed",
+      "status": "INFO",
+      "path": "local-state/runtime/audit.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "fcf7016c-4dc9-42a7-8f56-c28541cf58db",
+      "type": "audit",
+      "title": "Task 6e6e9601-6bbb-4747-bc67-13199840aa98 state changed from running to implementation_done.",
+      "status": "INFO",
+      "path": "local-state/runtime/audit.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "c2f4e0ed-5958-4ea5-a37e-aff0fbcaa86c",
+      "type": "runtime_event",
+      "title": "Governed validation planning completed",
+      "status": "INFO",
+      "path": "local-state/runtime/events.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "32786620-8931-45a5-a708-a696ac2ddd05",
+      "type": "runtime_event",
+      "title": "governed_command_classification_completed",
+      "status": "INFO",
+      "path": "local-state/runtime/events.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "7c7b782a-dcfa-456a-8281-cdf4f64c66fd",
+      "type": "runtime_event",
+      "title": "governed_controlled_validation_completed",
+      "status": "INFO",
+      "path": "local-state/runtime/events.jsonl",
+      "redacted": true
+    }
+  ],
+  "governance": {
+    "privateMode": true,
+    "trafficPlane": true,
+    "stateMachine": true,
+    "localWriteBoundary": true,
+    "approvalRequired": false,
+    "providerCalls": false,
+    "networkCalls": false,
+    "dbAccess": false,
+    "apiServer": false,
+    "mutationEnabledFromUi": false
+  },
+  "knownIssues": [
+    {
+      "id": "private-branch-public-safety-report-hygiene",
+      "summary": "On private branches, public safety report regeneration may include private branch names; restore the public-safety report baseline before guarded-task checks.",
+      "severity": "low",
+      "blocking": false
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}

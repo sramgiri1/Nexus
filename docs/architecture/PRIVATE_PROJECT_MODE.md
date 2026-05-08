@@ -54,6 +54,7 @@ the list (such as `shiftpay`) remain blocked regardless of mode.
 | `private-mode/privateMode.js` | Mode resolution helpers |
 | `private-mode/privateProjectPolicy.js` | Allowlist loading and access validation |
 | `private-mode/privateProjectScanner.js` | Top-level inventory scanning and leakage check |
+| `private-mode/privateValidationSnapshot.js` | Generated snapshot builder for read-only private validation views |
 | `private-mode/index.js` | Re-exports all exports |
 
 ## Policy Files
@@ -98,3 +99,8 @@ calls were made. Public/demo mode continues to block all private project access.
 P29-LOCAL classified CareLoop backend package scripts by execution safety. The AUDITOR
 `verification.code_quality_gate` task ran under `local-private` mode. No commands were
 executed. `test` is the recommended first controlled validation command (P30).
+
+P32-LOCAL adds a generated private validation snapshot for the Command Center.
+It reads only generated private reports, contracts, and local runtime records.
+The dashboard remains read-only and still does not add API, DB, provider, or
+test execution from the UI.

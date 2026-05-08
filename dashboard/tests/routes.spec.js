@@ -43,6 +43,16 @@ test("home route renders command center with local read-only wiring", async ({ p
   await expect(page.locator("#runtime-governance")).toContainText("Approval Workflow");
   await expect(page.locator("#runtime-snapshot")).toContainText("Runtime Refresh");
   await expect(page.locator("#approvals")).toContainText("Blocked by Approval");
+  await expect(page.locator("#private-validation")).toContainText("Private Project Validation");
+  await expect(page.locator("#private-validation")).toContainText("Backend tests");
+  await expect(page.locator("#private-validation")).toContainText("58/58");
+  await expect(page.locator("#private-validation-timeline")).toContainText("Validation Timeline");
+  await expect(page.locator("#private-validation-evidence")).toContainText("Evidence and Governance");
+  await expect(page.locator("#private-validation-hygiene")).toContainText("Known Validation Hygiene");
+  await expect(page.locator("#private-validation-hygiene")).toContainText("public/demo safety remains strict");
+  await expect(page.locator("#private-validation-next")).toContainText("Prepare Command Center action bridge for governed private-project tasks.");
+  await expect(page.locator("#private-validation")).toContainText("UI mutation");
+  await expect(page.locator("#private-validation")).toContainText("Disabled");
   await expect(page.locator("#demo-mode")).toContainText("Not Wired Yet");
   await expect(page.locator("#demo-mode")).toContainText("No live API");
   await expect(page.locator("#approvals")).toContainText("No UI mutation yet");

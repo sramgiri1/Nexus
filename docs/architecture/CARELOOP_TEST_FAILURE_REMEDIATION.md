@@ -121,6 +121,18 @@ All records use abstract IDs to satisfy the write-guard constraint:
 `check:careloop-backend-validation` shows `Execution: PASS`.
 Next phase: Command Center private project validation view integration.
 
+## P32 Follow-on
+
+P32-LOCAL surfaces this remediation sequence in a generated local-private
+Command Center view. The UI remains read-only and does not run tests, apply
+fixes, or mutate private project files.
+
+Known non-blocking validation hygiene note:
+
+- if `reports/public-safety-report.md` is regenerated on a private branch and
+  records a private branch name in metadata, restore the committed public-safe
+  baseline before guarded-task checks
+
 ## If Not Fixed
 
 Analysis report documents root cause and why fix was not applied. Next step

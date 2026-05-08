@@ -1,1 +1,2 @@
 
+{"incidentId":"92d0ac97-1d89-4d1b-a329-cece0e04231c","type":"controlled_local_execution_block","severity":"high","projectId":"demoapp","taskId":"f8bc9df7-9590-4b53-97bc-5247f64b3614","summary":"Blocked controlled local execution for ai.integration_blocked_review: Secret data is blocked for this traffic path.","status":"open","createdAt":"2026-05-08T02:04:46.350Z","redacted":true}

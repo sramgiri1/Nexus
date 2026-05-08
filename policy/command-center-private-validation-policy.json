@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "modeRequired": "local-private",
+  "readOnly": true,
+  "generatedSnapshotRequired": true,
+  "browserFilesystemReadAllowed": false,
+  "apiServerRequired": false,
+  "apiServerAllowed": false,
+  "dbAccessAllowed": false,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "testExecutionAllowed": false,
+  "mutationAllowedFromUi": false,
+  "privateProjectSourceReadAllowed": false,
+  "sourceSnippetAllowed": false,
+  "evidenceDisplayAllowed": true,
+  "auditDisplayAllowed": true,
+  "runtimeDisplayAllowed": true,
+  "publicDemoOutputAllowed": false,
+  "publicSafetyMustRemainStrict": true
+}

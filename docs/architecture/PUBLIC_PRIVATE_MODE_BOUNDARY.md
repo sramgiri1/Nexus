@@ -48,11 +48,17 @@ itself. They are not public surfaces:
 
 - `docs/architecture/PRIVATE_PROJECT_MODE.md` (this file)
 - `docs/architecture/PUBLIC_PRIVATE_MODE_BOUNDARY.md` (this file)
+- `docs/architecture/COMMAND_CENTER_PRIVATE_PROJECT_VIEW.md`
 - `private-mode/` — all modules
 - `policy/private-project-mode-policy.json`
 - `policy/private-project-allowlist.json`
+- `policy/command-center-private-validation-policy.json`
 - `scripts/check-private-project-mode.js`
+- `scripts/generate-private-validation-snapshot.js`
+- `scripts/check-command-center-private-validation.js`
 - `reports/private-project-mode-report.md`
+- `reports/private-validation-snapshot.json`
+- `reports/command-center-private-validation-report.md`
 - `docs/PRIVATE_PROJECT_BOUNDARY.md`
 
 ## Enforcement
@@ -78,3 +84,8 @@ Run `npm run check:private-project-mode` after any changes to private-mode modul
 the private boundary documentation.
 
 Both checks must pass before committing work that touches either surface.
+
+When private-branch validation regenerates `reports/public-safety-report.md`,
+restore the committed public-safe baseline before guarded-task checks if the
+report metadata leaks private branch names. This is a validation hygiene step,
+not a relaxation of the public boundary.

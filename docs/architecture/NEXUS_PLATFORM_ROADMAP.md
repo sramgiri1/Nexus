@@ -62,46 +62,46 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 31-LOCAL — Private Project Test Failure Remediation
+### Phase 32-LOCAL — Command Center Private Validation View
 
 Goal:
 
-- investigate and remediate the one failing test surfaced by P30 controlled
-  validation
+- surface private-project validation status in Command Center through a
+  generated local-private snapshot without adding API, DB, or UI mutation
 
 Deliverables:
 
-- failure analysis module with root-cause classification
-- remediation plan module with optional narrow-fix execution
-- task contract with `mutationAllowed: true`, `mutationScope: narrow_fix_only`
-- machine-readable analysis and plan JSON/markdown reports
-- narrow 1-line source patch (applied, high confidence)
-- re-validation through governed `npm test` path (PASS, 58/58)
-- local task record routed through governed path
-- redacted evidence, audit, and runtime event records
+- local-private private validation snapshot builder
+- generated browser-safe dashboard data module
+- Command Center private validation summary and timeline
+- evidence, audit, and runtime reference visibility
+- known validation hygiene note for restoring the public-safety baseline before
+  guarded-task checks when private branch metadata leaks into the generated
+  report
 - mode boundary: `local-private` or `test` only
 
 Non-goals:
 
-- no broad refactor
-- no schema changes, no dependency changes, no migrations
-- no server startup
-- no provider, network, DB, or API calls
-- no iOS project modification
+- no live API
+- no DB
+- no UI mutation
+- no provider or network calls
+- no test execution from the UI
+- no private project mutation
 
 Validation checks:
 
-- root cause category and confidence in analysis report
-- plan strategy matches confidence level
-- no private project tree mutation from checker itself
-- safety flags all false for install/provider/network/DB/API/migration
-- fix limited to allowed roots in the private-project backend source
-- checker snapshots and restores runtime files during mode boundary tests
-- public/demo surfaces remain DemoApp-only or "private project" wording
+- snapshot generation succeeds in `local-private` mode
+- Command Center shows private validation panels with read-only language
+- backend validation status remains 58/58 PASS in the generated view
+- evidence, audit, and runtime references remain redacted
+- public/demo surfaces remain DemoApp-only or generic private-project wording
+- no private project tree mutation from the checker
+- public-safety baseline remains restorable when private branch metadata leaks
 
 Risk level:
 
-- medium
+- low
 
 ---
 
