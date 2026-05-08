@@ -241,9 +241,9 @@ const PIPELINE_STEPS = [
 ];
 
 const COST_PROVIDERS = [
-  { name: "Anthropic (direct)", type: "realtime", amount: "$94", pct: 51 },
-  { name: "OpenAI (direct)", type: "realtime", amount: "$72", pct: 39 },
-  { name: "OpenRouter", type: "fallback", amount: "$20", pct: 11 },
+  { name: "direct_anthropic", type: "realtime", amount: "$94", pct: 51 },
+  { name: "direct_openai", type: "realtime", amount: "$72", pct: 39 },
+  { name: "openrouter", type: "fallback", amount: "$20", pct: 11 },
 ];
 
 function taskTone(state) {
