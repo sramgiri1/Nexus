@@ -81,6 +81,9 @@ test("home route renders command center with local read-only wiring", async ({ p
   await expect(page.locator("#private-validation")).toContainText("Run Backend Validation");
   await expect(page.getByText("Release Readiness", { exact: true })).toBeVisible();
 
+  // P33.7 — screenshot parity assertions
+  await expect(page.getByText("Founder Intent")).toBeVisible();
+
   expect(errors).toEqual([]);
 });
 

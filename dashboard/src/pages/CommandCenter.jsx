@@ -2,11 +2,68 @@ import {
   MetricTile,
   Panel,
   PriorityPill,
-  ProgressBar,
   SectionHeading,
   StatusPill,
 } from "../components/StudioPrimitives.jsx";
 import { buildCommandCenterViewModel } from "../data/commandCenterViewModel.js";
+
+/* ── P33.7 enhanced KPI config ── */
+const KPI_ENHANCED = [
+  {
+    id: "kpi-tasks",
+    label: "Active Tasks",
+    value: "5",
+    sub: "/47",
+    delta: "+8 last hr",
+    tone: "blue",
+    spark: [30, 42, 38, 55, 48, 62, 58],
+  },
+  {
+    id: "kpi-blocked",
+    label: "Blocked",
+    value: "1",
+    sub: "tasks",
+    delta: "+1",
+    tone: "red",
+    spark: [10, 8, 12, 9, 14, 11, 8],
+  },
+  {
+    id: "kpi-gate",
+    label: "Gate Pass Rate",
+    value: "67",
+    sub: "%",
+    delta: "+2.1 wk",
+    tone: "amber",
+    spark: [55, 60, 58, 63, 65, 67, 67],
+  },
+  {
+    id: "kpi-util",
+    label: "Agent Utilization",
+    value: "74",
+    sub: "%",
+    delta: "▾ -3",
+    tone: "blue",
+    spark: [70, 74, 72, 78, 76, 74, 74],
+  },
+  {
+    id: "kpi-approval",
+    label: "Approval Backlog",
+    value: "3",
+    sub: "open",
+    delta: "- 1 high-risk",
+    tone: "amber",
+    spark: [2, 3, 4, 3, 5, 4, 3],
+  },
+  {
+    id: "kpi-safety",
+    label: "Safety Incidents",
+    value: "0",
+    sub: "24h",
+    delta: "~ 140 clean",
+    tone: "green",
+    spark: [1, 0, 1, 0, 0, 0, 0],
+  },
+];
 
 const NAV_GROUPS = [
   {
@@ -76,7 +133,7 @@ const CONTRACT_SUMMARY = [
 const AGENT_GROUPS = [
   {
     label: "Control",
-    summary: "Founder intent, priority, release recommendation, and execution planning.",
+    summary: "Strategy, priority, release recommendation, and execution planning.",
     agents: ["nexus", "shepherd"],
   },
   {
@@ -249,7 +306,7 @@ const RELEASE_CHECKLIST = [
 ];
 
 const PIPELINE_STEPS = [
-  { label: "Founder Intent", key: "intent", status: "done" },
+  { label: "Intent", key: "intent", status: "done" },
   { label: "NEXUS Decision", key: "nexus", status: "done" },
   { label: "SHEPHERD Plan", key: "shepherd", status: "done" },
   { label: "Execution", key: "execution", status: "active" },
@@ -696,73 +753,128 @@ export default function CommandCenter({ studio }) {
             <span>No mutations</span>
           </div>
 
-          <section id="mission-control" className="command-prototype__hero">
-            <Panel
-              eyebrow="Mission Control"
-              title="Build and validate DemoApp through governed NEXUS agents."
-              subtitle="Founder intent is visible as an operating chain: NEXUS decision, SHEPHERD plan, agent execution, deterministic verification, release evidence, and final human accountability."
-              meta={<StatusPill status="active">OS status · governed</StatusPill>}
-            >
-              <div className="command-prototype__hero-grid">
-                <div className="command-prototype__hero-main">
-                  <div className="command-prototype__chip-row">
-                    <StatusPill status="active">Active project · {studio.activeProject?.name || "DemoApp"}</StatusPill>
-                    <StatusPill status="working">Release readiness · {studio.gateProgress}%</StatusPill>
-                    <StatusPill status="blocked">Next required decision · macOS Xcode approval</StatusPill>
-                    <StatusPill status="done">Environment · Prototype</StatusPill>
-                  </div>
+          {/* P33.7 — Mission header */}
+          <div className="cc-mission-header">
+            <div>
+              <h2 className="cc-mission-header__title">Mission <em>Control</em></h2>
+              <p className="cc-mission-header__sub">Operational state of NEXUS — what&apos;s running, what&apos;s blocked, what needs attention.</p>
+            </div>
+            <div className="cc-mission-header__actions">
+              <button className="cc-header-btn cc-header-btn--ghost" disabled aria-disabled="true">Refresh</button>
+              <button className="cc-header-btn cc-header-btn--ghost" disabled aria-disabled="true">Share<br/><span style={{fontSize:'9px'}}>view</span></button>
+              <button className="cc-header-btn cc-header-btn--primary" disabled aria-disabled="true">+ New</button>
+            </div>
+          </div>
 
-                  <div className="os-pipeline" aria-label="OS execution pipeline">
-                    {PIPELINE_STEPS.map((step, index) => (
-                      <div key={step.key} className="os-pipeline__step">
-                        <div className={`os-pipeline__node os-pipeline__node--${step.status}`}>
-                          <span className="os-pipeline__node-label">{step.label}</span>
-                          <span className="os-pipeline__node-status">{step.status}</span>
-                        </div>
-                        {index < PIPELINE_STEPS.length - 1 && (
-                          <div className="os-pipeline__connector" aria-hidden="true" />
-                        )}
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="command-prototype__hero-story">
-                    <div className="command-prototype__story-step">
-                      <span className="eyebrow">Founder intent</span>
-                      <strong>DemoApp must ship through evidence-backed gates.</strong>
-                    </div>
-                    <div className="command-prototype__story-step">
-                      <span className="eyebrow">NEXUS decision</span>
-                      <strong>Proceed with execution, hold release GO until SENTINEL evidence lands.</strong>
-                    </div>
-                    <div className="command-prototype__story-step">
-                      <span className="eyebrow">SHEPHERD plan</span>
-                      <strong>Route implementation to CORE, SWIFT, FORGE, BEACON and verification to AUDITOR, SENTINEL, WARDEN.</strong>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="command-prototype__hero-side">
-                  <div className="command-prototype__signal-card">
-                    <span className="eyebrow">Release Readiness</span>
-                    <strong>72%</strong>
-                    <ProgressBar value={72} tone="green" label="Evidence-backed path to GO" />
-                  </div>
-                  <div className="command-prototype__signal-card">
-                    <span className="eyebrow">OS Focus</span>
-                    <strong>Evidence over optimism</strong>
-                    <p>The kernel blocks unsafe motion. Every visible state must be supported by artifacts or approvals.</p>
-                  </div>
-                </div>
+          {/* P33.7 — First fold 4-card row */}
+          <section id="mission-control" className="command-prototype__hero cc-first-fold">
+            {/* Card 1: Founder Intent */}
+            <div className="cc-fold-card cc-fold-card--founder">
+              <div className="cc-fold-card__eyebrow">
+                <span className="cc-fold-eyebrow-label">FOUNDER</span>
+                <span className="cc-fold-eyebrow-meta">CAPTURED 2026.05.08 BY NEXUS</span>
               </div>
-            </Panel>
+              <blockquote className="cc-founder-quote">
+                <strong>Founder Intent</strong>
+                <p>Ship a calm, governed private-project companion — beta in 6 weeks, audit-ready from day one.</p>
+              </blockquote>
+              <div className="cc-founder-badges">
+                <span className="cc-badge cc-badge--teal">ACTIVE PROJECT · DEMOAPP</span>
+                <span className="cc-badge cc-badge--dim">SPRINT 2026.18 · DAY 6 OF 7</span>
+                <span className="cc-badge cc-badge--dim">LEAD · SHEPHERD</span>
+              </div>
+            </div>
+
+            {/* Card 2: Sprint Progress */}
+            <div className="cc-fold-card cc-fold-card--sprint">
+              <div className="cc-fold-card__eyebrow">
+                <span className="cc-fold-eyebrow-label">SPRINT PROGRESS</span>
+              </div>
+              <div className="cc-sprint-big">
+                <span className="cc-sprint-pct">{vm.mission.sprintProgress}</span>
+                <span className="cc-sprint-pct-sym">%</span>
+              </div>
+              <div className="cc-sprint-progress-bar">
+                <div className="cc-sprint-progress-bar__fill" style={{ width: `${vm.mission.sprintProgress}%` }} />
+              </div>
+              <div className="cc-sprint-contracts">
+                <span className="cc-sprint-contract-item"><span className="cc-sprint-contract-val">2026.18</span><br/><span className="cc-sprint-contract-lbl">KICKOFF</span></span>
+                <span className="cc-sprint-contract-item"><span className="cc-sprint-contract-val">FREEZE</span><br/><span className="cc-sprint-contract-lbl">14:00</span></span>
+                <span className="cc-sprint-contract-item"><span className="cc-sprint-contract-val">SHIP FAT</span><br/><span className="cc-sprint-contract-lbl">17:00</span></span>
+              </div>
+            </div>
+
+            {/* Card 3: Release Readiness */}
+            <div className="cc-fold-card cc-fold-card--release">
+              <div className="cc-fold-card__eyebrow">
+                <span className="cc-fold-eyebrow-label">RELEASE READINESS</span>
+              </div>
+              <div className="cc-release-readiness-label">Release Readiness</div>
+              <div className="cc-nogo-display">
+                <span className="cc-nogo-text">NO-<br/>GO</span>
+                <span className="cc-nogo-blocker-badge">1 BLOCKER</span>
+              </div>
+              <p className="cc-nogo-reason">1% gate failing · privacy approval pending for caregiver-share scope</p>
+              <div className="cc-release-btns">
+                <button className="cc-release-btn cc-release-btn--outline" disabled aria-disabled="true">Open WARDEN</button>
+                <button className="cc-release-btn cc-release-btn--primary" disabled aria-disabled="true">Review</button>
+              </div>
+              <div className="os-pipeline" aria-label="OS execution pipeline">
+                {PIPELINE_STEPS.map((step, index) => (
+                  <div key={step.key} className="os-pipeline__step">
+                    <div className={`os-pipeline__node os-pipeline__node--${step.status}`}>
+                      <span className="os-pipeline__node-label">{step.label}</span>
+                      <span className="os-pipeline__node-status">{step.status}</span>
+                    </div>
+                    {index < PIPELINE_STEPS.length - 1 && (
+                      <div className="os-pipeline__connector" aria-hidden="true" />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Card 4: Today / Build and validate */}
+            <div className="cc-fold-card cc-fold-card--today">
+              <div className="cc-fold-card__eyebrow">
+                <span className="cc-fold-eyebrow-label">TODAY</span>
+              </div>
+              <p className="cc-today-text">Build and validate DemoApp through governed NEXUS agents.</p>
+              <div className="command-prototype__chip-row" style={{marginTop:'10px'}}>
+                <StatusPill status="active">Active project · {studio.activeProject?.name || "DemoApp"}</StatusPill>
+              </div>
+              <div className="command-prototype__chip-row" style={{marginTop:'6px'}}>
+                <StatusPill status="done">Environment · Prototype</StatusPill>
+              </div>
+            </div>
           </section>
 
-          <section className="metric-grid">
+          {/* P33.7 — Enhanced KPI row with sparklines */}
+          <section className="cc-kpi-enhanced" aria-label="KPI metrics">
+            {KPI_ENHANCED.map((kpi) => (
+              <div key={kpi.id} className="cc-kpi-card">
+                <div className="cc-kpi-label">{kpi.label.toUpperCase()}</div>
+                <div className="cc-kpi-value-row">
+                  <span className={`cc-kpi-value cc-kpi-value--${kpi.tone}`}>{kpi.value}</span>
+                  <span className="cc-kpi-sub">{kpi.sub}</span>
+                </div>
+                <div className="cc-kpi-sparkline">
+                  {kpi.spark.map((h, i) => (
+                    <div key={`sp-${kpi.id}-${i}`} className="cc-spark-bar" style={{ height: `${h}%` }} />
+                  ))}
+                </div>
+                <div className="cc-kpi-delta">{kpi.delta}</div>
+              </div>
+            ))}
+          </section>
+
+          {/* Legacy KPI metric grid kept for backward compat (hidden via CSS) */}
+          <section className="metric-grid metric-grid--legacy" aria-hidden="true" style={{display:'none'}}>
             {KPI_CARDS.map((item) => (
               <MetricTile key={item.label} label={item.label} value={item.value} meta={item.meta} tone={item.tone} />
             ))}
           </section>
+
 
           <section className="cc-pipeline-activity-row">
             <div id="execution-pipeline" className="cc-ep-panel">

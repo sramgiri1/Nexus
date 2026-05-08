@@ -8,7 +8,7 @@ export const privateValidationSnapshot = {
   "mode": "local-private",
   "source": "generated-private-validation-snapshot",
   "readOnly": true,
-  "generatedAt": "2026-05-08T10:00:44.530Z",
+  "generatedAt": "2026-05-08T11:34:13.363Z",
   "project": {
     "id": "private-project-01",
     "label": "Private Project",
