@@ -81,3 +81,11 @@ Later phases can extend the same guard pattern to:
 - batch lifecycle commits
 - dispatch-time transition requests
 - Command Center read surfaces for blocked transition summaries
+
+## P28 — CareLoop first governed validation task
+
+P28-LOCAL exercised the state machine enforcement layer for the first governed
+CareLoop task. The validation planning task transitioned `queued → running →
+implementation_done` via `validateLocalTaskTransition` and `updateTaskState`.
+The WORKER_AGENTS block on `running → completed` was confirmed not to apply to
+shepherd, allowing the full transition sequence.

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-06T21:14:11.243Z
-- Validation branch: arch/demo-showcase-mode
-- Validation HEAD: 505e309
+- Generated at: 2026-05-08T00:26:29.653Z
+- Validation branch: arch/careloop-first-governed-validation-task
+- Validation HEAD: 2e61b5a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Required files: PASS

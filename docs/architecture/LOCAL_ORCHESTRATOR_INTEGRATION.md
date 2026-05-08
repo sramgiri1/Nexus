@@ -127,3 +127,11 @@ Guarded local agent-task execution now proves:
 - governed evidence, audit, and runtime records are emitted for successful
   checks
 - blocked local actions stay inside the same bounded runtime path
+
+## P28 — First governed private-project validation task
+
+P28-LOCAL created the first governed private-project task through NEXUS in
+`local-private` mode. A SHEPHERD validation plan was routed through the local
+identity, capability, and state machine layers and transitioned `queued →
+running → implementation_done`. No source mutation, build/test execution, or
+provider/network/DB calls were made.

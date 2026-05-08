@@ -94,6 +94,13 @@ state-machine validation, local evidence, audit, runtime events, and Command
 Center snapshot refresh. This still does not add providers, external tools,
 project mutation, API, or DB execution.
 
+Phases 26–28-LOCAL add the private project mode boundary and the first governed
+private-project task. Phase 26 blocks public and demo mode from all private
+project access. Phase 27 produces a readiness snapshot of the private projects.
+Phase 28 routes the first governed SHEPHERD validation plan through the local
+identity, capability, state machine, and write boundary layers without source
+mutation, build/test execution, or provider/network/DB calls.
+
 After local approval or execution changes, refresh the browser-safe snapshot
 with `npm run generate:command-center-snapshot`.
 

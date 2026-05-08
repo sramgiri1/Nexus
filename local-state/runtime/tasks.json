@@ -3,7 +3,7 @@
   "source": "local-runtime-prototype",
   "tasks": [
     {
-      "taskId": "1d2174c6-01b6-46cb-929d-ba79b633e3de",
+      "taskId": "5823197b-4c94-4050-a4c5-c5e748002ef9",
       "projectId": "private-project-01",
       "sourceAgent": "nexus",
       "targetAgent": "shepherd",
@@ -17,15 +17,15 @@
       "contractId": "",
       "evidenceIds": [],
       "auditEventIds": [
-        "9211cee9-8a1c-4d16-8145-097ca755931d",
-        "39727145-0867-45ac-bcbf-959f9653273c"
+        "408b372e-a737-4e62-b82f-121c6a8a959c",
+        "7d0d89f6-d54f-4b4b-bb32-487e6976c43b"
       ],
-      "createdAt": "2026-05-07T23:45:15.079Z",
-      "updatedAt": "2026-05-07T23:45:15.080Z",
+      "createdAt": "2026-05-08T00:03:02.107Z",
+      "updatedAt": "2026-05-08T00:03:02.108Z",
       "redacted": true
     },
     {
-      "taskId": "e83597da-50eb-4dca-bfc6-3d65f9e65ecd",
+      "taskId": "947fcd8f-33ca-4452-8931-01bc50d794a6",
       "projectId": "private-project-01",
       "sourceAgent": "nexus",
       "targetAgent": "shepherd",
@@ -39,11 +39,11 @@
       "contractId": "",
       "evidenceIds": [],
       "auditEventIds": [
-        "e9e4b45e-e602-43e6-ac61-19d12ce9d020",
-        "ef55eb38-4da9-412b-a179-e20c92c39c79"
+        "44464680-144a-4ec5-9803-ff1a676ce505",
+        "8921d0e1-9381-45ff-a500-10b6e4856712"
       ],
-      "createdAt": "2026-05-07T23:46:39.074Z",
-      "updatedAt": "2026-05-07T23:46:39.075Z",
+      "createdAt": "2026-05-08T00:17:57.023Z",
+      "updatedAt": "2026-05-08T00:17:57.025Z",
       "redacted": true
     }
   ]

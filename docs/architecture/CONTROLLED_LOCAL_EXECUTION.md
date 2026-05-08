@@ -86,3 +86,11 @@ Later phases can build on this mode by:
 - introducing controlled tool execution
 - introducing controlled provider execution
 - exposing read endpoints backed by the same local runtime state
+
+## P28 — First governed private-project validation task
+
+P28-LOCAL used the controlled local execution path to route the first governed
+private-project task through the local write boundary. The SHEPHERD validation
+plan task was committed to tasks.json, with evidence, audit, and event records
+appended through the same write-guarded runtime path. No source mutation or
+execution occurred.

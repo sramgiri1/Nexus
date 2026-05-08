@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-07T21:59:04.584Z
-- Validation branch: arch/guarded-local-agent-task-execution
-- Validation HEAD: 7960010
+- Generated at: 2026-05-08T00:24:54.741Z
+- Validation branch: arch/careloop-first-governed-validation-task
+- Validation HEAD: 2e61b5a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

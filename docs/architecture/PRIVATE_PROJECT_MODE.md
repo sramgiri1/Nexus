@@ -85,3 +85,12 @@ if (isLocalPrivateMode(mode)) {
   // private access allowed
 }
 ```
+
+## P27 and P28 Status
+
+P27-LOCAL produced a readiness snapshot confirming CareLoop backend is `READY_FOR_VALIDATION`
+and iOS is `READY_FOR_XCODE_INVENTORY`.
+
+P28-LOCAL created the first governed CareLoop task through NEXUS — a SHEPHERD validation plan
+for the CareLoop backend. No source mutation, build/test execution, or provider/network/DB
+calls were made. Public/demo mode continues to block all private project access.

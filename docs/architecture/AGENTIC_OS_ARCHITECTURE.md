@@ -690,3 +690,20 @@ DemoApp showcase execution should not begin until agents have been confirmed as
 contract-aware, state-machine-aware, model-aware, batch-aware, skill-aware, and
 evidence-aware. The agent enablement layer is the prerequisite to governed
 parallel execution, not an optional add-on.
+
+## 10. Private Project Mode and First Governed Task
+
+Phase 26-LOCAL created the `local-private` mode boundary. Public and demo mode
+surfaces block all private project access. In `local-private` mode, private
+projects are accessible under an explicit allowlist with `inventory` and `read`
+purposes only.
+
+Phase 27-LOCAL produced a readiness snapshot of the private project backend and
+iOS projects without reading source contents, .env files, or private business
+details.
+
+Phase 28-LOCAL created the first governed private-project task through NEXUS. A
+SHEPHERD validation plan was routed through the local identity, capability, state
+machine, and write boundary layers and transitioned `queued → running →
+implementation_done`. No source mutation, build/test execution, or
+provider/network/DB calls were made.

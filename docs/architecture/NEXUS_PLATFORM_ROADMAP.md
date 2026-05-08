@@ -50,42 +50,45 @@ belongs in separate private repos.
 - Phase 22-LOCAL State machine enforcement in local executor
 - Phase 23-LOCAL Approval workflow wiring for local execution
 - Phase 24-LOCAL Command Center approval and runtime refresh
+- Phase 25-LOCAL Guarded local agent task execution
+- Phase 26-LOCAL Private project mode boundary
+- Phase 27-LOCAL Private project inventory and readiness snapshot
+- Phase 28-LOCAL Private project first governed validation task
 
 ---
 
 ## Current Phase
 
-### Phase 25-LOCAL — Guarded Local Agent Task Execution
+### Phase 28-LOCAL — Private Project First Governed Validation Task
 
 Goal:
 
-- execute deterministic local agent-task checks through the governed NEXUS
-  path without providers, external tools, project mutation, API, or DB layers
+- create the first governed private-project task through NEXUS in local-private
+  mode without source mutation, build/test execution, or provider/network/DB calls
 
 Deliverables:
 
-- guarded local agent-task executor
-- deterministic local task plan covering verification and runtime checks
-- governed evidence, audit, and runtime-event writes for guarded local tasks
-- blocked-path handling for unknown local actions
-- validation and reporting for guarded local execution
+- Private project backend validation task contract (NEXUS → SHEPHERD)
+- validation plan artifact with safe-next-checks and blocked-now list
+- local task record routed through identity, capability, state machine, and
+  write boundary (queued → running → implementation_done)
+- redacted evidence, audit, and runtime event records
+- validation and reporting
 
 Non-goals:
 
-- no API server
-- no DB
-- no provider calls
-- no external tool execution
-- no project mutation
-- no private product execution
+- no source mutation
+- no build or test execution
+- no provider, network, DB, or API calls
+- no private project product details in public surfaces
 
 Validation checks:
 
-- guarded task plan executes with four PASS results and one BLOCKED result
-- deterministic local actions flow through identity, capability, traffic plane,
-  state machine, local writes, evidence, audit, and runtime events
-- runtime files remain restorable after validation
-- existing local execution and Command Center checks remain green
+- task contract has all execution flags false
+- validation plan safeNextChecks all have executionNow false
+- local task reaches implementation_done via state machine
+- checker snapshots and restores runtime files during mode boundary tests
+- public/demo surfaces remain DemoApp-only
 
 Risk level:
 

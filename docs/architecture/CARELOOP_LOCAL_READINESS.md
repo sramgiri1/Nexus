@@ -78,6 +78,7 @@ The inventory CLI appends safe, redacted evidence and audit records to the local
 - `local-state/runtime/audit.jsonl`
 
 Records contain:
+
 - `type: "private_project_inventory"` or `eventType: "private_project_inventory_completed"`
 - `redacted: true`
 - `classification: "internal"`
@@ -99,15 +100,24 @@ NEXUS_MODE=local-private npm run careloop:inventory
 npm run check:careloop-readiness
 ```
 
+## P28 Status
+
+P28-LOCAL (CareLoop First Governed Validation Task) is complete. A SHEPHERD validation plan
+was created for the CareLoop backend without source mutation, build/test execution, or
+provider/network/DB calls. The task contract (`contracts/careloop/backend-validation-task-contract.json`)
+and validation plan (`reports/careloop-validation-plan.json`) were produced and the task
+transitioned through `queued -> running -> implementation_done` in the local state machine.
+
 ## Next Phase
 
-The next phase is the first governed CareLoop validation task — a SHEPHERD execution plan or
-AUDITOR code quality gate. Mutation, build, and test execution are not allowed until that
-governed task has been approved and verified through the NEXUS gate sequence.
+The next phase classifies CareLoop backend validation commands for controlled execution
+(P29). The AUDITOR `verification.code_quality_gate` task will determine which backend
+scripts are safe to run under the NEXUS command allowlist.
 
 ## Public / Demo Surfaces
 
 Public and demo mode surfaces remain DemoApp-only. CareLoop is not referenced in:
+
 - README.md public sections
 - dashboard demo data
 - demo artifacts

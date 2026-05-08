@@ -3,7 +3,7 @@
   "projectId": "careloop",
   "privateProject": true,
   "mode": "local-private",
-  "createdAt": "2026-05-07T23:45:15.078Z",
+  "createdAt": "2026-05-08T00:17:57.022Z",
   "ownerAgent": "shepherd",
   "capabilityId": "orchestration.plan_flow",
   "mutationAllowed": false,
@@ -85,7 +85,7 @@
     "apiServer": false
   },
   "taskRecord": {
-    "taskId": "1d2174c6-01b6-46cb-929d-ba79b633e3de",
+    "taskId": "947fcd8f-33ca-4452-8931-01bc50d794a6",
     "finalState": "implementation_done",
     "transitions": [
       {
@@ -101,10 +101,10 @@
     ]
   },
   "evidenceIds": [
-    "3ba4d2eb-b167-4fae-8a25-a4a7999ef567"
+    "84cdc371-41ae-49af-afbf-8c7e8125600e"
   ],
   "auditIds": [
-    "36095ce6-af28-4578-93f1-f9ea4f732bf0"
+    "65a8bffe-ad8d-4ba6-aa2d-0cbde7371903"
   ],
   "warnings": [],
   "errors": []

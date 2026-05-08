@@ -18,6 +18,13 @@ const REQUIRED_EXPORTS = [
   "writeCareLoopValidationPlanReports",
 ];
 
+const RUNTIME_FILES = [
+  "local-state/runtime/tasks.json",
+  "local-state/runtime/evidence.jsonl",
+  "local-state/runtime/audit.jsonl",
+  "local-state/runtime/events.jsonl",
+];
+
 function exists(relativePath) {
   return fs.existsSync(path.join(ROOT, relativePath));
 }
@@ -28,6 +35,27 @@ function readFile(relativePath) {
 
 function readJson(relativePath) {
   return JSON.parse(readFile(relativePath));
+}
+
+function snapshotRuntimeFiles() {
+  const snapshot = {};
+  for (const rel of RUNTIME_FILES) {
+    const abs = path.join(ROOT, rel);
+    snapshot[rel] = fs.existsSync(abs) ? fs.readFileSync(abs, "utf8") : null;
+  }
+  return snapshot;
+}
+
+function restoreRuntimeFiles(snapshot) {
+  for (const [rel, content] of Object.entries(snapshot)) {
+    const abs = path.join(ROOT, rel);
+    if (content === null) {
+      if (fs.existsSync(abs)) fs.unlinkSync(abs);
+    } else {
+      fs.mkdirSync(path.dirname(abs), { recursive: true });
+      fs.writeFileSync(abs, content, "utf8");
+    }
+  }
 }
 
 function getMetadata() {
@@ -338,18 +366,23 @@ async function main() {
     }
   }
 
-  // 7. Mode boundary
+  // 7. Mode boundary — snapshot/restore runtime files around mutating test calls
   if (validationPlanModule.runCareLoopGovernedValidationPlanning) {
-    const demoResult = validationPlanModule.runCareLoopGovernedValidationPlanning({ mode: "demo" });
-    if (demoResult.ok !== false || demoResult.errors.length === 0) {
-      sections.modeBoundary = false;
-      failures.push("Demo mode must block CareLoop validation planning.");
-    }
+    const runtimeSnapshot = snapshotRuntimeFiles();
+    try {
+      const demoResult = validationPlanModule.runCareLoopGovernedValidationPlanning({ mode: "demo" });
+      if (demoResult.ok !== false || demoResult.errors.length === 0) {
+        sections.modeBoundary = false;
+        failures.push("Demo mode must block CareLoop validation planning.");
+      }
 
-    const testResult = validationPlanModule.runCareLoopGovernedValidationPlanning({ mode: "test" });
-    if (testResult.errors.some((e) => e.includes("does not allow"))) {
-      sections.modeBoundary = false;
-      failures.push("test mode should allow CareLoop validation planning.");
+      const testResult = validationPlanModule.runCareLoopGovernedValidationPlanning({ mode: "test" });
+      if (testResult.errors.some((e) => e.includes("does not allow"))) {
+        sections.modeBoundary = false;
+        failures.push("test mode should allow CareLoop validation planning.");
+      }
+    } finally {
+      restoreRuntimeFiles(runtimeSnapshot);
     }
   }
 
