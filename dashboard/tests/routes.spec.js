@@ -74,6 +74,12 @@ test("home route renders command center with local read-only wiring", async ({ p
   await expect(page.locator("#release")).toContainText("Release Control");
   await expect(page.locator("#demo-mode")).toContainText("No real provider calls");
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
+  await expect(page.getByText("NEXUS OS")).toBeVisible();
+  await expect(page.locator("#execution-pipeline")).toContainText("Execution Pipeline");
+  await expect(page.locator("#activity-stream")).toContainText("Activity Stream");
+  await expect(page.getByRole("link", { name: /Safety Center/i })).toBeVisible();
+  await expect(page.locator("#private-validation")).toContainText("Run Backend Validation");
+  await expect(page.getByText("Release Readiness", { exact: true })).toBeVisible();
 
   expect(errors).toEqual([]);
 });

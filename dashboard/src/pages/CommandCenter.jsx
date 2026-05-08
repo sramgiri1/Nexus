@@ -6,28 +6,45 @@ import {
   SectionHeading,
   StatusPill,
 } from "../components/StudioPrimitives.jsx";
+import { buildCommandCenterViewModel } from "../data/commandCenterViewModel.js";
 
-const NAV_SECTIONS = [
-  { id: "mission-control", label: "Mission Control" },
-  { id: "local-os", label: "Local OS" },
-  { id: "validation", label: "Validation" },
-  { id: "projects", label: "Projects" },
-  { id: "tasks", label: "Tasks" },
-  { id: "agents", label: "Agent Fleet" },
-  { id: "contracts", label: "Contracts" },
-  { id: "gates", label: "Gates" },
-  { id: "evidence", label: "Evidence" },
-  { id: "runtime", label: "Runtime" },
-  { id: "private-validation", label: "Private Validation" },
-  { id: "governed-actions", label: "Governed Actions" },
-  { id: "traffic-plane", label: "Traffic Plane" },
-  { id: "local-evidence", label: "Local Evidence" },
-  { id: "batch", label: "Batch" },
-  { id: "cost", label: "Cost" },
-  { id: "safety", label: "Safety" },
-  { id: "approvals", label: "Approvals" },
-  { id: "release", label: "Release" },
-  { id: "demo-mode", label: "Read-only" },
+const NAV_GROUPS = [
+  {
+    group: "OPERATIONS",
+    items: [
+      { id: "mission-control", label: "Mission Control", badge: "LIVE" },
+      { id: "tasks", label: "Task Queue" },
+      { id: "agents", label: "Agent Fleet" },
+      { id: "approvals", label: "Approvals" },
+    ],
+  },
+  {
+    group: "GOVERNANCE",
+    items: [
+      { id: "gates", label: "Verification Gates" },
+      { id: "contracts", label: "Contracts" },
+      { id: "evidence", label: "Evidence" },
+      { id: "safety", label: "Safety Center" },
+    ],
+  },
+  {
+    group: "DELIVERY",
+    items: [
+      { id: "release", label: "Release Control" },
+      { id: "projects", label: "Projects" },
+    ],
+  },
+  {
+    group: "COMPUTE",
+    items: [
+      { id: "batch", label: "Batch Queue" },
+      { id: "cost", label: "Cost Center" },
+    ],
+  },
+  {
+    group: "SHOWCASE",
+    items: [{ id: "demo-mode", label: "Demo Mode" }],
+  },
 ];
 
 const KPI_CARDS = [
@@ -246,6 +263,15 @@ const COST_PROVIDERS = [
   { name: "openrouter", type: "fallback", amount: "$20", pct: 11 },
 ];
 
+const ACTIVITY_STREAM = [
+  { time: "09:47", agent: "AUDITOR", text: "code.diff_review completed — 0 gate-stopping defects found", status: "done" },
+  { time: "09:44", agent: "CORE", text: "TASK-201 entered running state — backend task graph live", status: "active" },
+  { time: "09:41", agent: "SHEPHERD", text: "Sprint 2026.18 dispatch plan written and routed to execution agents", status: "done" },
+  { time: "09:38", agent: "NEXUS", text: "Priority ranking completed — 7 tasks queued with dependsOn links", status: "done" },
+  { time: "09:35", agent: "SENTINEL", text: "qa.simulator.run blocked — macOS Xcode runtime not attached", status: "blocked" },
+  { time: "09:31", agent: "WARDEN", text: "compliance.privacy.check PASS — DemoApp privacy handling validated", status: "done" },
+];
+
 function taskTone(state) {
   if (state === "blocked") return "blocked";
   if (state === "queued" || state === "awaiting_verification" || state === "implementation_done" || state === "deferred_batch") return "working";
@@ -293,6 +319,7 @@ function formatDateValue(value) {
 }
 
 export default function CommandCenter({ studio }) {
+  const vm = buildCommandCenterViewModel(studio);
   const privateExecutionKey = ["care", "loop", "ExecutionEnabled"].join("");
   const agentMap = Object.fromEntries(studio.agentEntries.map((agent) => [agent.id, agent]));
   const localReports = studio.localReports || {};
@@ -620,13 +647,10 @@ export default function CommandCenter({ studio }) {
   return (
     <div className="page page--command command-prototype" data-testid="command-center-page">
       <div className="command-prototype__layout">
-        <aside className="command-prototype__sidebar">
-          <div className="command-prototype__sidebar-head">
-            <div className="eyebrow">Operator Console</div>
-            <div className="command-prototype__sidebar-title">Mission Map</div>
-            <p className="command-prototype__sidebar-copy">
-              Founder intent flows through contracts, runtimes, evidence, and approvals before NEXUS can recommend release.
-            </p>
+        <aside className="command-prototype__sidebar cc-sidebar">
+          <div className="cc-sidebar__header">
+            <div className="eyebrow">NEXUS OS</div>
+            <div className="command-prototype__sidebar-title">Command Center</div>
             <div className="command-prototype__sidebar-mode">
               <span className="command-prototype__sidebar-mode-dot" aria-hidden="true" />
               <span>local-private</span>
@@ -634,21 +658,26 @@ export default function CommandCenter({ studio }) {
           </div>
 
           <nav className="command-prototype__nav" aria-label="Command Center sections">
-            {NAV_SECTIONS.map((item, index) => (
-              <a key={item.id} href={`#${item.id}`} className="command-prototype__nav-link">
-                <span className="command-prototype__nav-index">{String(index + 1).padStart(2, "0")}</span>
-                <span>{item.label}</span>
-              </a>
+            {NAV_GROUPS.map((group) => (
+              <div key={group.group} className="cc-nav-group">
+                <div className="cc-nav-group__label">{group.group}</div>
+                {group.items.map((item) => (
+                  <a key={item.id} href={`#${item.id}`} className="command-prototype__nav-link cc-nav-item">
+                    <span>{item.label}</span>
+                    {item.badge && <span className="cc-nav-badge">{item.badge}</span>}
+                  </a>
+                ))}
+              </div>
             ))}
           </nav>
 
-          <div className="command-prototype__sidebar-foot">
+          <div className="cc-operator-card">
             <div className="command-prototype__sidebar-stat">
               <span className="eyebrow">OS Status</span>
               <strong>Governed</strong>
             </div>
             <div className="command-prototype__sidebar-stat">
-              <span className="eyebrow">Next human decision</span>
+              <span className="eyebrow">Next decision</span>
               <strong>Approve macOS/Xcode path</strong>
             </div>
           </div>
@@ -733,6 +762,65 @@ export default function CommandCenter({ studio }) {
             {KPI_CARDS.map((item) => (
               <MetricTile key={item.label} label={item.label} value={item.value} meta={item.meta} tone={item.tone} />
             ))}
+          </section>
+
+          <section className="cc-pipeline-activity-row">
+            <div id="execution-pipeline" className="cc-ep-panel">
+              <div className="cc-ep-header">
+                <span className="eyebrow">Execution Pipeline</span>
+                <StatusPill status="working">{vm.mission.sprintId}</StatusPill>
+              </div>
+              <div className="cc-ep-states">
+                <div className="cc-ep-state cc-ep-state--done">
+                  <span className="cc-ep-state-count">{vm.pipeline.done}</span>
+                  <span className="command-prototype__detail-label">Done</span>
+                </div>
+                <div className="cc-ep-state cc-ep-state--running">
+                  <span className="cc-ep-state-count">{vm.pipeline.running}</span>
+                  <span className="command-prototype__detail-label">Running</span>
+                </div>
+                <div className="cc-ep-state">
+                  <span className="cc-ep-state-count">{vm.pipeline.verifying}</span>
+                  <span className="command-prototype__detail-label">Verifying</span>
+                </div>
+                <div className="cc-ep-state cc-ep-state--blocked">
+                  <span className="cc-ep-state-count">{vm.pipeline.blocked}</span>
+                  <span className="command-prototype__detail-label">Blocked</span>
+                </div>
+                <div className="cc-ep-state">
+                  <span className="cc-ep-state-count">{vm.pipeline.queued}</span>
+                  <span className="command-prototype__detail-label">Queued</span>
+                </div>
+              </div>
+              <div className="cc-throughput">
+                <span className="eyebrow">Throughput</span>
+                <div className="cc-throughput-bars">
+                  {[72, 58, 85, 64, 90, 73, 80].map((h, i) => (
+                    <div
+                      key={`bar-${h}-${i}`}
+                      className={`cc-throughput-bar${h >= 85 ? " cc-throughput-bar--peak" : ""}`}
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            <div id="activity-stream" className="cc-activity-stream">
+              <div className="cc-ep-header">
+                <span className="eyebrow">Activity Stream</span>
+                <span className="command-prototype__detail-copy">last 6 events</span>
+              </div>
+              {ACTIVITY_STREAM.map((event, i) => (
+                <div key={`activity-${i}`} className="cc-activity-event">
+                  <span className="cc-activity-time">{event.time}</span>
+                  <StatusPill status={event.status === "done" ? "done" : event.status === "blocked" ? "blocked" : "active"}>
+                    {event.agent}
+                  </StatusPill>
+                  <span className="cc-activity-text">{event.text}</span>
+                </div>
+              ))}
+            </div>
           </section>
 
           <section className="command-prototype__grid command-prototype__grid--duo">
@@ -1447,17 +1535,25 @@ export default function CommandCenter({ studio }) {
                 }
               >
                 {privateValidationVisible ? (
-                  <div className="command-prototype__detail-list">
-                    {privateValidationSummaryRows.map((item) => (
-                      <div key={item.label} className="command-prototype__detail-row">
-                        <div>
-                          <div className="command-prototype__detail-label">{item.label}</div>
-                          <div className="command-prototype__detail-copy">{item.detail}</div>
+                  <>
+                    <div className="command-prototype__detail-list">
+                      {privateValidationSummaryRows.map((item) => (
+                        <div key={item.label} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label">{item.label}</div>
+                            <div className="command-prototype__detail-copy">{item.detail}</div>
+                          </div>
+                          <strong className="mono">{item.value}</strong>
                         </div>
-                        <strong className="mono">{item.value}</strong>
-                      </div>
-                    ))}
-                  </div>
+                      ))}
+                    </div>
+                    <div className="cc-action-row">
+                      <button className="cc-action-btn cc-action-btn--disabled" disabled aria-disabled="true">
+                        Run Backend Validation
+                      </button>
+                      <span className="command-prototype__detail-copy">Requires governed action bridge</span>
+                    </div>
+                  </>
                 ) : (
                   <div className="empty-state">
                     <div className="empty-state__title">Private validation snapshot unavailable</div>
