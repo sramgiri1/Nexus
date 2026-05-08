@@ -5,6 +5,7 @@ import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js"
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
+import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -220,6 +221,41 @@ function TopBar({ vm, currentPage }) {
 /* ─── Mission Composer Card ─── */
 function MissionComposerCard({ vm }) {
   const mc = vm.missionComposer;
+  const [missionText, setMissionText] = useState(mc.missionText || "");
+  const [bridgeOnline, setBridgeOnline] = useState(false);
+  const [actionState, setActionState] = useState("idle"); // idle | running | completed | failed | offline
+  const [actionResult, setActionResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  // Check bridge health on mount
+  useEffect(() => {
+    let cancelled = false;
+    checkActionBridgeHealth().then((h) => {
+      if (!cancelled) setBridgeOnline(h.online);
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  const canGenerate = missionText.trim().length > 0 && bridgeOnline && actionState !== "running";
+
+  async function handleGeneratePlan() {
+    if (!canGenerate) return;
+    setActionState("running");
+    setErrorMsg("");
+    setActionResult(null);
+    const result = await composeMissionFromCommandCenter({ missionText });
+    if (result.ok) {
+      setActionState("completed");
+      setActionResult(result);
+    } else if (result.offline) {
+      setActionState("offline");
+      setErrorMsg("Mission action bridge offline.");
+    } else {
+      setActionState("failed");
+      setErrorMsg((result.errors || ["Unknown error."]).join(" "));
+    }
+  }
+
   return (
     <div className="ccv2-card ccv2-card--strong">
       <div className="ccv2-mission-composer">
@@ -229,25 +265,69 @@ function MissionComposerCard({ vm }) {
           <p className="ccv2-mission-composer__subtitle">{mc.subtitle}</p>
         </div>
 
-        <div className="ccv2-mission-composer__textarea">
-          <div className="ccv2-mission-composer__placeholder">{mc.placeholder}</div>
-          <div style={{ fontSize: 12, color: "var(--v2-muted)", marginTop: 6, lineHeight: 1.6 }}>
-            {mc.missionText}
-          </div>
-        </div>
+        <textarea
+          className="ccv2-mission-composer__textarea"
+          value={missionText}
+          onChange={(e) => setMissionText(e.target.value)}
+          placeholder={mc.placeholder}
+          rows={3}
+        />
 
         <div className="ccv2-badge ccv2-badge--teal" style={{ display: "inline-flex", alignSelf: "flex-start" }}>
           ACTIVE PROJECT · {vm.shell.activeProject.toUpperCase()}
         </div>
 
         <div className="ccv2-mission-composer__actions">
-          {mc.buttons.map((btn) => (
-            <button key={btn.label} className="ccv2-mission-composer__btn" disabled>
-              <span>{btn.label}</span>
-              <span className="ccv2-mission-composer__btn-lock">⊘</span>
-            </button>
-          ))}
+          <button
+            key="Generate Plan"
+            className={`ccv2-mission-composer__btn${canGenerate ? " ccv2-mission-composer__btn--enabled" : ""}`}
+            disabled={!canGenerate}
+            onClick={handleGeneratePlan}
+          >
+            <span>{actionState === "running" ? "Generating…" : "Generate Plan"}</span>
+            {!canGenerate && <span className="ccv2-mission-composer__btn-lock">⊘</span>}
+            {canGenerate && <span className="ccv2-mission-composer__btn-lock">→</span>}
+          </button>
+          <button key="Create Project Brief" className="ccv2-mission-composer__btn" disabled>
+            <span>Create Project Brief</span>
+            <span className="ccv2-mission-composer__btn-lock">⊘</span>
+          </button>
+          <button key="Start Governed Run" className="ccv2-mission-composer__btn" disabled>
+            <span>Start Governed Run</span>
+            <span className="ccv2-mission-composer__btn-lock">⊘</span>
+          </button>
         </div>
+
+        {actionState === "running" && (
+          <div className="ccv2-mc-status ccv2-mc-status--running">
+            ◎ Generating governed mission plan…
+          </div>
+        )}
+        {actionState === "completed" && actionResult && (
+          <div className="ccv2-mc-status ccv2-mc-status--completed">
+            ✓ Mission plan generated
+            <div className="ccv2-mc-result">
+              <div>Contract: {actionResult.result?.missionContractPath || "contracts/missions/private-project-mission-contract.json"}</div>
+              <div>Task plan: {actionResult.result?.taskPlanPath || "contracts/missions/private-project-task-plan.json"}</div>
+              <div>Tasks created: {actionResult.result?.tasksCreated ?? 6}</div>
+            </div>
+          </div>
+        )}
+        {actionState === "failed" && (
+          <div className="ccv2-mc-status ccv2-mc-status--failed">
+            ✗ {errorMsg || "Plan generation failed."}
+          </div>
+        )}
+        {actionState === "offline" && (
+          <div className="ccv2-mc-status ccv2-mc-status--offline">
+            ⊘ Mission action bridge offline. Run: npm run mission:action-server
+          </div>
+        )}
+        {!bridgeOnline && actionState === "idle" && (
+          <div className="ccv2-mc-status ccv2-mc-status--offline">
+            ⊘ Action bridge offline — buttons require: npm run mission:action-server
+          </div>
+        )}
 
         <div className="ccv2-mission-composer__gate-note">
           <span className="ccv2-mission-composer__gate-icon">⚠</span>

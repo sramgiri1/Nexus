@@ -83,6 +83,15 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       incidents: 0,
       lastClean: "24h",
     },
+    actions: {
+      missionComposer: {
+        available: true,
+        status: "idle",
+        lastActionId: "",
+        lastResult: null,
+        disabledReason: "Requires mission action server (npm run mission:action-server)",
+      },
+    },
   };
 }
 
