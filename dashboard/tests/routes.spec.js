@@ -41,6 +41,11 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.getByText("Safety Center")).toBeVisible();
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
+  // V1 rail must NOT be visible on V2 routes
+  await expect(page.locator(".nav-rail")).toHaveCount(0);
+  await expect(page.getByText("HOME", { exact: true })).toHaveCount(0);
+  await expect(page.getByText("VERSE", { exact: true })).toHaveCount(0);
+
   expect(errors).toEqual([]);
 });
 
@@ -165,5 +170,74 @@ test("traction route renders investor room and economics surfaces", async ({ pag
   await expect(page.getByText("Traction Score")).toBeVisible();
   await expect(page.getByText("Editable business model")).toBeVisible();
 
+  expect(errors).toEqual([]);
+});
+
+test("V2 Task Queue page shows task data", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/tasks");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Task Queue");
+  await expect(page.locator(".nav-rail")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("V2 Agent Fleet page shows agents", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/agents");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Agent Fleet");
+  await expect(page.locator(".nav-rail")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("V2 Evidence page shows evidence ledger", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/evidence");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Evidence Ledger");
+  await expect(page.locator(".nav-rail")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("V2 sidebar navigation changes route and content", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/");
+
+  // Navigate to Safety Center
+  await page.getByRole("link", { name: /Safety Center/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/safety/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Safety Center");
+
+  // Navigate to Release Control
+  await page.getByRole("link", { name: /Release Control/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/release/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Release Control");
+
+  // Navigate to Evidence
+  await page.getByRole("link", { name: /Evidence/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/evidence/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Evidence Ledger");
+
+  // Navigate to Approvals
+  await page.getByRole("link", { name: /Approvals/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/approvals/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Approvals");
+
+  // Navigate to Contracts
+  await page.getByRole("link", { name: /Contracts/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/contracts/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Contracts");
+
+  expect(errors).toEqual([]);
+});
+
+test("V2 Verification Gates page shows gate status", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/gates");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Verification Gates");
+  await expect(page.locator(".ccv2-gate-card__name").first()).toBeVisible();
+  await expect(page.locator(".nav-rail")).toHaveCount(0);
   expect(errors).toEqual([]);
 });

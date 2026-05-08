@@ -121,10 +121,11 @@ export default function App() {
   const studio = useStudioData();
   const location = useLocation();
   const [now, setNow] = useState(new Date());
-  const isV2Route = location.pathname === "/";
+
+  const isV2Route = location.pathname === "/" || location.pathname.startsWith("/command-center");
   const isLegacyRoute = location.pathname === "/legacy-command-center";
-  const isHomeView = isV2Route || isLegacyRoute;
   const isVerseView = location.pathname === "/constellation";
+  const isHomeView = isV2Route || isLegacyRoute;
 
   useEffect(() => {
     const interval = setInterval(() => setNow(new Date()), 1000);
@@ -135,6 +136,16 @@ export default function App() {
     () => NAV_ITEMS.find((item) => item.path === location.pathname) || NAV_ITEMS[0],
     [location.pathname]
   );
+
+  // V2 routes: full viewport, no V1 shell
+  if (isV2Route) {
+    return (
+      <Routes>
+        <Route path="/" element={<CommandCenterV2 studio={studio} />} />
+        <Route path="/command-center/*" element={<CommandCenterV2 studio={studio} />} />
+      </Routes>
+    );
+  }
 
   return (
     <div className="studio-app">
@@ -282,7 +293,6 @@ export default function App() {
         <div className={`shell-main${isVerseView || isHomeView ? " shell-main--full" : ""}`}>
           <main className={`shell-content${isVerseView ? " shell-content--verse" : ""}`}>
             <Routes>
-              <Route path="/" element={<CommandCenterV2 studio={studio} />} />
               <Route path="/legacy-command-center" element={<CommandCenter studio={studio} />} />
               <Route path="/constellation" element={<Constellation studio={studio} />} />
               <Route path="/skills" element={<Skills studio={studio} />} />

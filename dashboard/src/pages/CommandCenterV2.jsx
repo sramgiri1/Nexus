@@ -1,8 +1,35 @@
 import { useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { buildCommandCenterViewModelV2 } from "../data/commandCenterViewModel.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
+import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
+import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
 import "../styles-command-center-v2.css";
+
+/* ─── Page label map ─── */
+const PAGE_LABELS = {
+  mission: "Mission Control",
+  tasks: "Task Queue",
+  agents: "Agent Fleet",
+  approvals: "Approvals",
+  gates: "Verification Gates",
+  contracts: "Contracts",
+  evidence: "Evidence",
+  safety: "Safety Center",
+  release: "Release Control",
+  projects: "Projects",
+  batch: "Batch Queue",
+  cost: "Cost Center",
+  demo: "Demo Mode",
+};
+
+/* ─── Route resolver ─── */
+function resolveV2Page(pathname) {
+  if (["/", "/command-center", "/command-center/mission"].includes(pathname)) return "mission";
+  const m = pathname.match(/^\/command-center\/([a-z-]+)/);
+  return m ? m[1] : "mission";
+}
 
 /* ─── Sparkline ─── */
 const SPARK_DATA = {
@@ -42,52 +69,63 @@ function MetricCard({ metric }) {
   );
 }
 
-/* ─── Sidebar ─── */
+/* ─── Nav Groups ─── */
 const NAV_GROUPS_V2 = [
   {
     group: "OPERATIONS",
     items: [
-      { label: "Mission Control", icon: "⬡", badge: "LIVE", active: true },
-      { label: "Task Queue", icon: "≡", count: "47" },
-      { label: "Agent Fleet", icon: "◈", count: "20" },
-      { label: "Approvals", icon: "✓", count: "3", countTone: "red" },
+      { label: "Mission Control", icon: "⬡", badge: "LIVE", path: "/command-center/mission" },
+      { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
+      { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
+      { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
   },
   {
     group: "GOVERNANCE",
     items: [
-      { label: "Verification Gates", icon: "⬛" },
-      { label: "Contracts", icon: "◻" },
-      { label: "Evidence", icon: "◇", count: "1.2k" },
-      { label: "Safety Center", icon: "⚑" },
+      { label: "Verification Gates", icon: "⬛", path: "/command-center/gates" },
+      { label: "Contracts", icon: "◻", path: "/command-center/contracts" },
+      { label: "Evidence", icon: "◇", count: "1.2k", path: "/command-center/evidence" },
+      { label: "Safety Center", icon: "⚑", path: "/command-center/safety" },
     ],
   },
   {
     group: "DELIVERY",
     items: [
-      { label: "Release Control", icon: "⬆" },
-      { label: "Projects", icon: "⬤", count: "4" },
+      { label: "Release Control", icon: "⬆", path: "/command-center/release" },
+      { label: "Projects", icon: "⬤", count: "4", path: "/command-center/projects" },
     ],
   },
   {
     group: "OPERATIONS · COMPUTE",
     items: [
-      { label: "Batch Queue", icon: "⊞" },
-      { label: "Cost Center", icon: "$" },
+      { label: "Batch Queue", icon: "⊞", path: "/command-center/batch" },
+      { label: "Cost Center", icon: "$", path: "/command-center/cost" },
     ],
   },
   {
     group: "SHOWCASE",
     items: [
-      { label: "Demo Mode", icon: "▶" },
+      { label: "Demo Mode", icon: "▶", path: "/command-center/demo" },
     ],
   },
 ];
 
-function Sidebar({ vm }) {
+/* ─── Sidebar ─── */
+function Sidebar({ vm, location }) {
+  const navigate = useNavigate();
+  const missionPaths = new Set(["/", "/command-center", "/command-center/mission"]);
+
   return (
     <aside className="ccv2-sidebar">
-      <div className="ccv2-sidebar__brand">
+      <div
+        className="ccv2-sidebar__brand"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate("/command-center/mission")}
+        role="button"
+        tabIndex={0}
+        onKeyDown={(e) => e.key === "Enter" && navigate("/command-center/mission")}
+      >
         <div className="ccv2-sidebar__brand-mark">N</div>
         <div className="ccv2-sidebar__brand-name">{vm.shell.productName}</div>
         <div className="ccv2-sidebar__brand-ver">v4.7</div>
@@ -97,26 +135,33 @@ function Sidebar({ vm }) {
         {NAV_GROUPS_V2.map((group) => (
           <div key={group.group} className="ccv2-nav-group">
             <div className="ccv2-nav-group__label">{group.group}</div>
-            {group.items.map((item) => (
-              <a
-                key={item.label}
-                role="link"
-                href="#"
-                className={`ccv2-nav-item${item.active ? " ccv2-nav-item--active" : ""}`}
-                onClick={(e) => e.preventDefault()}
-              >
-                <span className="ccv2-nav-item__icon">{item.icon}</span>
-                <span className="ccv2-nav-item__label">{item.label}</span>
-                {item.badge && (
-                  <span className="ccv2-nav-item__badge">{item.badge}</span>
-                )}
-                {item.count && (
-                  <span className={`ccv2-nav-item__count${item.countTone === "red" ? " ccv2-nav-item__count--red" : ""}`}>
-                    {item.count}
-                  </span>
-                )}
-              </a>
-            ))}
+            {group.items.map((item) => {
+              const isMissionItem = item.label === "Mission Control";
+              const isMissionActive = isMissionItem && missionPaths.has(location.pathname);
+
+              return (
+                <NavLink
+                  key={item.label}
+                  to={item.path}
+                  end={isMissionItem}
+                  className={({ isActive }) => {
+                    const active = isMissionItem ? isMissionActive : isActive;
+                    return `ccv2-nav-item${active ? " ccv2-nav-item--active" : ""}`;
+                  }}
+                >
+                  <span className="ccv2-nav-item__icon">{item.icon}</span>
+                  <span className="ccv2-nav-item__label">{item.label}</span>
+                  {item.badge && (
+                    <span className="ccv2-nav-item__badge">{item.badge}</span>
+                  )}
+                  {item.count && (
+                    <span className={`ccv2-nav-item__count${item.countTone === "red" ? " ccv2-nav-item__count--red" : ""}`}>
+                      {item.count}
+                    </span>
+                  )}
+                </NavLink>
+              );
+            })}
           </div>
         ))}
       </nav>
@@ -135,13 +180,14 @@ function Sidebar({ vm }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm }) {
+function TopBar({ vm, currentPage }) {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const iv = setInterval(() => setNow(new Date()), 1000);
     return () => clearInterval(iv);
   }, []);
   const timeStr = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
+  const pageLabel = PAGE_LABELS[currentPage] || "Mission Control";
 
   return (
     <header className="ccv2-topbar">
@@ -150,7 +196,7 @@ function TopBar({ vm }) {
         <span className="ccv2-topbar__breadcrumb-sep">/</span>
         <span>Operations</span>
         <span className="ccv2-topbar__breadcrumb-sep">/</span>
-        <span className="ccv2-topbar__breadcrumb-current">Mission Control</span>
+        <span className="ccv2-topbar__breadcrumb-current">{pageLabel}</span>
       </div>
 
       <div className="ccv2-topbar__mission-badge">
@@ -492,37 +538,670 @@ function ReleaseSection({ vm }) {
   );
 }
 
-/* ─── Command Center V2 Shell ─── */
+/* ═══════════════════════════════════════════════════════
+   PAGE COMPONENTS
+   ═══════════════════════════════════════════════════════ */
+
+/* ─── Mission Control Page ─── */
+function MissionControlPage({ vm }) {
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-first-fold">
+        <MissionComposerCard vm={vm} />
+        <MissionHeroCard vm={vm} />
+        <SprintProgressCard vm={vm} />
+        <ReleaseReadinessCard vm={vm} />
+      </div>
+
+      <div className="ccv2-kpi-row">
+        {vm.metrics.map((m) => (
+          <MetricCard key={m.label} metric={m} />
+        ))}
+      </div>
+
+      <div className="ccv2-pipeline-stream">
+        <ExecutionPipeline vm={vm} />
+        <ActivityStream vm={vm} />
+      </div>
+
+      <PrivateValidationPanel vm={vm} />
+      <EvidenceGovernanceSection vm={vm} />
+      <ReleaseSection vm={vm} />
+    </div>
+  );
+}
+
+/* ─── Task Queue Page ─── */
+function TaskQueuePage({ vm }) {
+  const tasks = runtimeSnapshot.runtimeState?.tasks || {};
+  const recent = tasks.recent || [];
+  const byState = tasks.byState || {};
+  const total = tasks.total || 0;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Task Queue</div>
+          <div className="ccv2-page-head__sub">Real-time task state from runtime snapshot</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Total</div>
+            <div className="ccv2-stat-chip__value">{total}</div>
+          </div>
+          {Object.entries(byState).map(([state, count]) => (
+            <div key={state} className="ccv2-stat-chip">
+              <div className="ccv2-stat-chip__label">{state.replace(/_/g, " ")}</div>
+              <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${state === "awaiting_approval" ? "amber" : state === "blocked" ? "red" : "green"}`}>
+                {count}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
+          <table className="ccv2-table">
+            <thead>
+              <tr>
+                <th>Task ID</th>
+                <th>Agent</th>
+                <th>State</th>
+                <th>Risk</th>
+                <th>Capability</th>
+                <th>Created</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recent.map((task) => (
+                <tr key={task.taskId}>
+                  <td className="ccv2-mono" style={{ fontSize: 11, color: "var(--v2-muted)" }}>{task.taskId.slice(0, 8)}</td>
+                  <td style={{ fontWeight: 600 }}>{task.targetAgent?.toUpperCase()}</td>
+                  <td>
+                    <span className={`ccv2-pill ccv2-pill--${task.state === "implementation_done" ? "pass" : task.state === "awaiting_approval" ? "pending" : "fail"}`}>
+                      {task.state.replace(/_/g, " ")}
+                    </span>
+                  </td>
+                  <td>
+                    <span className={`ccv2-pill ccv2-pill--${task.riskLevel === "critical" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`}>
+                      {task.riskLevel}
+                    </span>
+                  </td>
+                  <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{task.capabilityId}</td>
+                  <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{new Date(task.createdAt).toLocaleTimeString()}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Agent Fleet Page ─── */
+function AgentFleetPage({ vm, studio }) {
+  const agents = studio?.agentEntries || [];
+
+  function statusDotClass(status) {
+    if (status === "active") return "ccv2-agent-status-dot--active";
+    if (status === "working") return "ccv2-agent-status-dot--working";
+    if (status === "blocked") return "ccv2-agent-status-dot--blocked";
+    if (status === "done") return "ccv2-agent-status-dot--done";
+    return "ccv2-agent-status-dot--idle";
+  }
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Agent Fleet</div>
+          <div className="ccv2-page-head__sub">{agents.length} agents · live status from memory snapshot</div>
+        </div>
+
+        <div className="ccv2-agent-grid">
+          {agents.map((agent) => (
+            <div key={agent.id} className="ccv2-agent-card">
+              <div className="ccv2-agent-card__header">
+                <div className={`ccv2-agent-status-dot ${statusDotClass(agent.status)}`} />
+                <div className="ccv2-agent-card__name">{agent.name}</div>
+              </div>
+              <div className="ccv2-agent-card__role">{agent.role} · {agent.team}</div>
+              {agent.task && (
+                <div className="ccv2-agent-card__task">{agent.task}</div>
+              )}
+              {typeof agent.progress === "number" && agent.progress > 0 && (
+                <div style={{ marginTop: 6, height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{ height: "100%", width: `${agent.progress}%`, background: "var(--v2-teal)", borderRadius: 2 }} />
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Approvals Page ─── */
+function ApprovalsPage({ vm, studio }) {
+  const approvalWorkflow = studio?.localReports?.approvalWorkflow || {};
+  const total = approvalWorkflow.total || 0;
+  const requested = approvalWorkflow.requested || 0;
+  const approved = approvalWorkflow.approved || 0;
+  const rejected = (approvalWorkflow.rejected || 0) + (approvalWorkflow.expired || 0);
+  const recent = approvalWorkflow.recent || [];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Approvals</div>
+          <div className="ccv2-page-head__sub">Action controls require governed action bridge</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Total</div>
+            <div className="ccv2-stat-chip__value">{total}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Pending</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">{requested}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Approved</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--green">{approved}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Rejected / Expired</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--red">{rejected}</div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Recent Approvals</div>
+          {recent.length === 0 ? (
+            <div className="ccv2-empty">No recent approvals</div>
+          ) : (
+            <div style={{ display: "flex", flexDirection: "column", gap: 8, marginTop: 8 }}>
+              {recent.map((item) => (
+                <div key={item.approvalId} className="ccv2-contract-row">
+                  <div style={{ flex: 1 }}>
+                    <div style={{ fontSize: 12, fontWeight: 600, color: "var(--v2-text)" }}>{item.type} · {item.requestedBy?.toUpperCase()}</div>
+                    <div style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>Task: {item.taskId?.slice(0, 8)} · Risk: {item.riskLevel}</div>
+                  </div>
+                  <span className={`ccv2-pill ccv2-pill--${item.decision === "approved" ? "pass" : item.decision === "requested" ? "pending" : "fail"}`}>
+                    {item.decision}
+                  </span>
+                  <button className="ccv2-release-card__action-btn" disabled>Review</button>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Verification Gates Page ─── */
+function VerificationGatesPage({ vm }) {
+  const gates = vm.mission.gates;
+  const pv = vm.privateValidation;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Verification Gates</div>
+          <div className="ccv2-page-head__sub">Blocking gates run after every build phase</div>
+        </div>
+
+        <div className="ccv2-gate-grid">
+          {Object.entries(gates).map(([gate, status]) => (
+            <div key={gate} className="ccv2-gate-card">
+              <div className="ccv2-gate-card__name">{gate}</div>
+              <div className={`ccv2-gate-card__status ccv2-gate-card__status--${status === "PASS" ? "pass" : status === "PENDING" ? "pending" : "fail"}`}>
+                {status}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Private Validation</div>
+          <div style={{ marginTop: 8 }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+              <span style={{ fontSize: 13, color: "var(--v2-text)", fontWeight: 600 }}>Backend tests</span>
+              <span className="ccv2-mono" style={{ fontSize: 16, color: "var(--v2-green)", fontWeight: 700 }}>{pv.backendTests} PASS</span>
+            </div>
+            <div style={{ fontSize: 11, color: "var(--v2-muted)" }}>Overall: {pv.overall} · Status: {pv.backendStatus}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Contracts Page ─── */
+function ContractsPage({ vm }) {
+  const reports = LOCAL_REPORT_SNAPSHOT.validation?.reports || [];
+  const mc = vm.missionComposer;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Contracts</div>
+          <div className="ccv2-page-head__sub">Mission contracts, task plans, and validation reports</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Mission Contract</div>
+          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+            <div className="ccv2-contract-row">
+              <div className="ccv2-contract-row__name">Mission Contract</div>
+              <div className="ccv2-contract-row__path">{mc.contractPath}</div>
+              <span className="ccv2-pill ccv2-pill--pass">ACTIVE</span>
+            </div>
+            <div className="ccv2-contract-row">
+              <div className="ccv2-contract-row__name">Task Plan</div>
+              <div className="ccv2-contract-row__path">{mc.taskPlanPath}</div>
+              <span className="ccv2-pill ccv2-pill--pass">ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Validation Reports ({reports.length})</div>
+          <div className="ccv2-contract-list" style={{ marginTop: 8 }}>
+            {reports.map((report) => (
+              <div key={report.id} className="ccv2-contract-row">
+                <div className="ccv2-contract-row__name">{report.name}</div>
+                <div className="ccv2-contract-row__path">{report.path}</div>
+                <span className={`ccv2-pill ccv2-pill--${report.status === "PASS" ? "pass" : report.status === "FAIL" ? "fail" : "pending"}`}>
+                  {report.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Evidence Page ─── */
+function EvidencePage({ vm }) {
+  const evidence = runtimeSnapshot.runtimeState?.evidence || {};
+  const recent = evidence.recent || [];
+  const byResult = evidence.byResult || {};
+  const byType = evidence.byType || {};
+  const total = evidence.total || 0;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Evidence Ledger</div>
+          <div className="ccv2-page-head__sub">Immutable evidence records from governed execution</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Total</div>
+            <div className="ccv2-stat-chip__value">{total}</div>
+          </div>
+          {Object.entries(byResult).map(([result, count]) => (
+            <div key={result} className="ccv2-stat-chip">
+              <div className="ccv2-stat-chip__label">{result}</div>
+              <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${result === "PASS" ? "green" : result === "FAIL" ? "red" : "teal"}`}>
+                {count}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="ccv2-two-col">
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">By Type</div>
+            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+              {Object.entries(byType).map(([type, count]) => (
+                <div key={type} style={{ display: "flex", justifyContent: "space-between", padding: "4px 0", fontSize: 12, borderBottom: "1px solid rgba(136,255,235,0.05)" }}>
+                  <span style={{ color: "var(--v2-muted)" }}>{type.replace(/_/g, " ")}</span>
+                  <span style={{ color: "var(--v2-text)", fontWeight: 600 }}>{count}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Recent Evidence</div>
+            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+              {recent.slice(0, 5).map((ev) => (
+                <div key={ev.evidenceId} style={{ fontSize: 11, padding: "6px 0", borderBottom: "1px solid rgba(136,255,235,0.05)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span className="ccv2-mono" style={{ color: "var(--v2-muted-2)" }}>{ev.evidenceId?.slice(0, 8)}</span>
+                    <span className={`ccv2-pill ccv2-pill--${ev.result === "PASS" ? "pass" : ev.result === "FAIL" ? "fail" : "pending"}`}>{ev.result}</span>
+                  </div>
+                  <div style={{ color: "var(--v2-muted)", marginTop: 2 }}>{ev.type?.replace(/_/g, " ")} · {ev.agentId || "system"}</div>
+                  <div style={{ color: "var(--v2-muted-2)", marginTop: 1 }}>{ev.dataClassification}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Safety Center Page ─── */
+function SafetyCenterPage({ vm }) {
+  const ab = actionBridgeSnapshot;
+  const governance = ab.governance || {};
+  const bridgeReadiness = ab.bridgeReadiness || {};
+
+  const rows = [
+    { label: "Mode", value: ab.mode || "local-private", valueClass: "ready" },
+    { label: "Provider calls", value: governance.providerCallsAllowed ? "Enabled" : "Disabled", valueClass: governance.providerCallsAllowed ? "ready" : "disabled" },
+    { label: "Network calls", value: governance.networkCallsAllowed ? "Enabled" : "Disabled", valueClass: governance.networkCallsAllowed ? "ready" : "disabled" },
+    { label: "DB access", value: governance.dbAccessAllowed ? "Enabled" : "Disabled", valueClass: governance.dbAccessAllowed ? "ready" : "disabled" },
+    { label: "UI mutations", value: governance.mutationEnabledFromUi ? "Enabled" : "Disabled", valueClass: governance.mutationEnabledFromUi ? "ready" : "disabled" },
+    { label: "Traffic plane", value: bridgeReadiness.trafficPlane ? "READY" : "NOT READY", valueClass: bridgeReadiness.trafficPlane ? "ready" : "disabled" },
+    { label: "Public safety", value: vm.safety.incidents === 0 ? "PASS" : "FAIL", valueClass: vm.safety.incidents === 0 ? "pass" : "disabled" },
+  ];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Safety Center</div>
+          <div className="ccv2-page-head__sub">Governance boundary enforcement · local-private mode</div>
+        </div>
+
+        <div className="ccv2-safety-grid">
+          {rows.map((row) => (
+            <div key={row.label} className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">{row.label}</span>
+              <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Boundary Note</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            No private project source details in public surface. All action controls are disabled in local-private mode. Safety incidents: {vm.safety.incidents} · Last clean: {vm.safety.lastClean}.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Release Control Page ─── */
+function ReleaseControlPage({ vm }) {
+  const r = vm.release;
+  const gates = vm.mission.gates;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Release Control</div>
+          <div className="ccv2-page-head__sub">Release decision · governed gate status</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-eyebrow">Release Decision</div>
+          <div className="ccv2-nogo-big">{r.status}</div>
+          <div style={{ fontSize: 13, color: "var(--v2-muted)", marginTop: 4 }}>Readiness: {r.readiness}%</div>
+          <div style={{ height: 8, background: "rgba(255,255,255,0.07)", borderRadius: 4, overflow: "hidden", margin: "12px 0" }}>
+            <div style={{ height: "100%", width: `${r.readiness}%`, background: "linear-gradient(90deg, var(--v2-amber), var(--v2-yellow))", borderRadius: 4 }} />
+          </div>
+        </div>
+
+        <div className="ccv2-gate-grid">
+          {Object.entries(gates).map(([gate, status]) => (
+            <div key={gate} className="ccv2-gate-card">
+              <div className="ccv2-gate-card__name">{gate}</div>
+              <div className={`ccv2-gate-card__status ccv2-gate-card__status--${status === "PASS" ? "pass" : status === "PENDING" ? "pending" : "fail"}`}>
+                {status}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Blocker</div>
+          <div style={{ marginTop: 8, padding: "10px 12px", background: "rgba(255,92,122,0.07)", border: "1px solid rgba(255,92,122,0.2)", borderRadius: 6, fontSize: 12, color: "var(--v2-muted)" }}>
+            {r.blocker}
+          </div>
+          <div style={{ display: "flex", gap: 8, marginTop: 12 }}>
+            <button className="ccv2-release-card__action-btn" disabled>Submit for Release</button>
+            <button className="ccv2-release-card__action-btn" disabled>Override Gate</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Projects Page ─── */
+function ProjectsPage({ vm, studio }) {
+  const pv = privateValidationSnapshot;
+  const pvStatus = pv?.status || {};
+  const pvBackend = pvStatus.latestBackendValidation || {};
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Projects</div>
+          <div className="ccv2-page-head__sub">Active project overview · local-private mode</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-eyebrow">Active Project</div>
+          <div style={{ fontSize: 18, fontWeight: 700, color: "var(--v2-text)", margin: "6px 0" }}>
+            {studio?.activeProject?.name || "DemoApp"}
+          </div>
+          <div style={{ display: "flex", gap: 8, flexWrap: "wrap", marginTop: 4 }}>
+            <span className="ccv2-pill ccv2-pill--live">local-private mode</span>
+            <span className="ccv2-pill ccv2-pill--pass">VALIDATED</span>
+          </div>
+        </div>
+
+        <div className="ccv2-two-col">
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Private Project Validation</div>
+            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Overall</span>
+                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--v2-green)" }}>{pvStatus.overall || "VALIDATED"}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Backend tests</span>
+                <span className="ccv2-mono" style={{ fontSize: 12, fontWeight: 700, color: "var(--v2-green)" }}>
+                  {pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS
+                </span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Backend readiness</span>
+                <span style={{ fontSize: 12, color: "var(--v2-teal)" }}>{pvStatus.backendReadiness || "READY_FOR_VALIDATION"}</span>
+              </div>
+              <div style={{ display: "flex", justifyContent: "space-between" }}>
+                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>iOS readiness</span>
+                <span style={{ fontSize: 12, color: "var(--v2-teal)" }}>{pvStatus.iosReadiness || "READY_FOR_XCODE_INVENTORY"}</span>
+              </div>
+            </div>
+          </div>
+
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Boundary Note</div>
+            <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+              No source file details exposed in public surface. Private project data is scoped to local-private mode only.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Batch Queue Page ─── */
+function BatchQueuePage({ vm }) {
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Batch Queue</div>
+          <div className="ccv2-page-head__sub">Async batch processing status</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Batch API Status</div>
+          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Real OpenAI Batch API</span>
+              <span className="ccv2-safety-row__value--disabled">Disabled</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Real Anthropic Message Batches</span>
+              <span className="ccv2-safety-row__value--disabled">Disabled</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Dry-run queueing</span>
+              <span className="ccv2-safety-row__value--ready">Available</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Note</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            Batch cannot pass gates — gates require real execution. Dry-run queueing is available for planning only.
+            Enable flags <span className="ccv2-mono">ENABLE_REAL_OPENAI_BATCH</span> and <span className="ccv2-mono">ENABLE_REAL_ANTHROPIC_BATCH</span> to activate real batch submission.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Cost Center Page ─── */
+function CostCenterPage({ vm, studio }) {
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Cost Center</div>
+          <div className="ccv2-page-head__sub">Budget limits · no live provider spend in local-private mode</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Provider Status</div>
+          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Provider calls</span>
+              <span className="ccv2-safety-row__value--disabled">Disabled in local-private mode</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Live spend data</span>
+              <span className="ccv2-safety-row__value--disabled">Not available</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Note</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            No live provider spend available in local-private mode. Budget limits are configured in <span className="ccv2-mono">guardrails/budget.json</span> but no real API calls are made.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Demo Mode Page ─── */
+function DemoModePage({ vm }) {
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Demo Mode</div>
+          <div className="ccv2-page-head__sub">Zero-key public-safe demo surface</div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Demo Status</div>
+          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Zero-key demo</span>
+              <span className="ccv2-safety-row__value--pass">Active</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Public-safe artifacts</span>
+              <span className="ccv2-safety-row__value--ready">Dashboard · Constellation · Skills</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Provider calls</span>
+              <span className="ccv2-safety-row__value--disabled">Disabled</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">DB access</span>
+              <span className="ccv2-safety-row__value--disabled">Disabled</span>
+            </div>
+            <div className="ccv2-safety-row">
+              <span className="ccv2-safety-row__label">Private project data</span>
+              <span className="ccv2-safety-row__value--disabled">Not exposed</span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Public Boundary</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            Demo mode does not expose private project validation data. No private project source, no provider calls, no DB. Public surfaces: dashboard, constellation, skills.
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ═══════════════════════════════════════════════════════
+   MAIN COMPONENT
+   ═══════════════════════════════════════════════════════ */
+
 export default function CommandCenterV2({ studio }) {
   const vm = buildCommandCenterViewModelV2(studio, privateValidationSnapshot, actionBridgeSnapshot);
+  const location = useLocation();
+  const currentPage = resolveV2Page(location.pathname);
 
   return (
     <div className="ccv2-shell">
-      <Sidebar vm={vm} />
+      <Sidebar vm={vm} location={location} />
       <div className="ccv2-main">
-        <TopBar vm={vm} />
-        <div className="ccv2-content">
-          <div className="ccv2-first-fold">
-            <MissionComposerCard vm={vm} />
-            <MissionHeroCard vm={vm} />
-            <SprintProgressCard vm={vm} />
-            <ReleaseReadinessCard vm={vm} />
-          </div>
-
-          <div className="ccv2-kpi-row">
-            {vm.metrics.map((m) => (
-              <MetricCard key={m.label} metric={m} />
-            ))}
-          </div>
-
-          <div className="ccv2-pipeline-stream">
-            <ExecutionPipeline vm={vm} />
-            <ActivityStream vm={vm} />
-          </div>
-
-          <PrivateValidationPanel vm={vm} />
-          <EvidenceGovernanceSection vm={vm} />
-          <ReleaseSection vm={vm} />
+        <TopBar vm={vm} currentPage={currentPage} />
+        <div className="ccv2-content-wrapper">
+          {currentPage === "mission" && <MissionControlPage vm={vm} />}
+          {currentPage === "tasks" && <TaskQueuePage vm={vm} />}
+          {currentPage === "agents" && <AgentFleetPage vm={vm} studio={studio} />}
+          {currentPage === "approvals" && <ApprovalsPage vm={vm} studio={studio} />}
+          {currentPage === "gates" && <VerificationGatesPage vm={vm} />}
+          {currentPage === "contracts" && <ContractsPage vm={vm} />}
+          {currentPage === "evidence" && <EvidencePage vm={vm} />}
+          {currentPage === "safety" && <SafetyCenterPage vm={vm} />}
+          {currentPage === "release" && <ReleaseControlPage vm={vm} />}
+          {currentPage === "projects" && <ProjectsPage vm={vm} studio={studio} />}
+          {currentPage === "batch" && <BatchQueuePage vm={vm} />}
+          {currentPage === "cost" && <CostCenterPage vm={vm} studio={studio} />}
+          {currentPage === "demo" && <DemoModePage vm={vm} />}
         </div>
       </div>
     </div>

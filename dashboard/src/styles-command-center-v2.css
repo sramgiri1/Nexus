@@ -25,9 +25,9 @@
 /* ─── Shell Layout ─── */
 
 .ccv2-shell {
+  position: fixed;
+  inset: 0;
   display: flex;
-  width: 100%;
-  height: 100%;
   background: var(--v2-bg-0);
   color: var(--v2-text);
   font-family: "DM Sans", system-ui, sans-serif;
@@ -1302,4 +1302,285 @@
 .ccv2-mono {
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-variant-numeric: tabular-nums;
+}
+
+/* ─── Content Wrapper (for non-mission pages) ─── */
+
+.ccv2-content-wrapper {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+/* ─── V2 Page Layout ─── */
+
+.ccv2-page {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ccv2-page-head {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.ccv2-page-head__title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--v2-text);
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+}
+
+.ccv2-page-head__sub {
+  font-size: 12px;
+  color: var(--v2-muted);
+}
+
+/* ─── Stats row ─── */
+
+.ccv2-stats-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ccv2-stat-chip {
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  padding: 10px 16px;
+  min-width: 100px;
+}
+
+.ccv2-stat-chip__label {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+  margin-bottom: 4px;
+}
+
+.ccv2-stat-chip__value {
+  font-size: 22px;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--v2-text);
+}
+
+.ccv2-stat-chip__value--green { color: var(--v2-green); }
+.ccv2-stat-chip__value--amber { color: var(--v2-amber); }
+.ccv2-stat-chip__value--red { color: var(--v2-red); }
+.ccv2-stat-chip__value--teal { color: var(--v2-teal); }
+
+/* ─── Data Table ─── */
+
+.ccv2-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12px;
+}
+
+.ccv2-table th {
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v2-muted-2);
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--v2-border);
+}
+
+.ccv2-table td {
+  padding: 8px 12px;
+  color: var(--v2-text);
+  border-bottom: 1px solid rgba(136, 255, 235, 0.05);
+  vertical-align: top;
+}
+
+.ccv2-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ─── Agent cards ─── */
+
+.ccv2-agent-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 10px;
+}
+
+.ccv2-agent-card {
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.ccv2-agent-card__header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.ccv2-agent-card__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--v2-text);
+  font-variant-numeric: tabular-nums;
+}
+
+.ccv2-agent-card__role {
+  font-size: 11px;
+  color: var(--v2-muted);
+}
+
+.ccv2-agent-card__task {
+  font-size: 11px;
+  color: var(--v2-muted);
+  line-height: 1.5;
+  margin-top: 4px;
+  max-height: 2.5em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.ccv2-agent-status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.ccv2-agent-status-dot--active { background: var(--v2-teal); }
+.ccv2-agent-status-dot--working { background: var(--v2-amber); }
+.ccv2-agent-status-dot--blocked { background: var(--v2-red); }
+.ccv2-agent-status-dot--done { background: var(--v2-green); }
+.ccv2-agent-status-dot--idle { background: var(--v2-muted-2); }
+
+/* ─── Gate cards ─── */
+
+.ccv2-gate-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.ccv2-gate-card {
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 10px;
+  padding: 16px;
+}
+
+.ccv2-gate-card__name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--v2-muted);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+.ccv2-gate-card__status {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+.ccv2-gate-card__status--pass { color: var(--v2-green); }
+.ccv2-gate-card__status--pending { color: var(--v2-amber); }
+.ccv2-gate-card__status--fail { color: var(--v2-red); }
+
+/* ─── Contract rows ─── */
+
+.ccv2-contract-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ccv2-contract-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.ccv2-contract-row__name {
+  flex: 1;
+  color: var(--v2-text);
+  font-weight: 500;
+}
+
+.ccv2-contract-row__path {
+  font-size: 11px;
+  color: var(--v2-muted-2);
+  font-family: monospace;
+}
+
+/* ─── Safety rows ─── */
+
+.ccv2-safety-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+}
+
+.ccv2-safety-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  font-size: 12px;
+}
+
+.ccv2-safety-row__label {
+  color: var(--v2-muted);
+}
+
+.ccv2-safety-row__value--pass { color: var(--v2-green); font-weight: 600; }
+.ccv2-safety-row__value--disabled { color: var(--v2-amber); font-weight: 600; }
+.ccv2-safety-row__value--ready { color: var(--v2-teal); font-weight: 600; }
+
+/* ─── No-go release ─── */
+
+.ccv2-nogo-big {
+  font-size: 40px;
+  font-weight: 900;
+  color: var(--v2-red);
+  line-height: 1;
+  margin: 8px 0;
+}
+
+/* ─── Empty state ─── */
+
+.ccv2-empty {
+  padding: 24px;
+  text-align: center;
+  color: var(--v2-muted);
+  font-size: 13px;
+}
+
+/* ─── Two-col layout ─── */
+
+.ccv2-two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
 }
