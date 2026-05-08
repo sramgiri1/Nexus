@@ -86,7 +86,7 @@ if (isLocalPrivateMode(mode)) {
 }
 ```
 
-## P27 and P28 Status
+## P27, P28, and P29 Status
 
 P27-LOCAL produced a readiness snapshot confirming CareLoop backend is `READY_FOR_VALIDATION`
 and iOS is `READY_FOR_XCODE_INVENTORY`.
@@ -94,3 +94,7 @@ and iOS is `READY_FOR_XCODE_INVENTORY`.
 P28-LOCAL created the first governed CareLoop task through NEXUS — a SHEPHERD validation plan
 for the CareLoop backend. No source mutation, build/test execution, or provider/network/DB
 calls were made. Public/demo mode continues to block all private project access.
+
+P29-LOCAL classified CareLoop backend package scripts by execution safety. The AUDITOR
+`verification.code_quality_gate` task ran under `local-private` mode. No commands were
+executed. `test` is the recommended first controlled validation command (P30).

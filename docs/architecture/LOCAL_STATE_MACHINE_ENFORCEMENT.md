@@ -82,10 +82,16 @@ Later phases can extend the same guard pattern to:
 - dispatch-time transition requests
 - Command Center read surfaces for blocked transition summaries
 
-## P28 — CareLoop first governed validation task
+## P28 — First governed private-project validation task
 
 P28-LOCAL exercised the state machine enforcement layer for the first governed
-CareLoop task. The validation planning task transitioned `queued → running →
-implementation_done` via `validateLocalTaskTransition` and `updateTaskState`.
-The WORKER_AGENTS block on `running → completed` was confirmed not to apply to
-shepherd, allowing the full transition sequence.
+private-project task. The validation planning task transitioned `queued →
+running → implementation_done` via `validateLocalTaskTransition` and
+`updateTaskState`. The WORKER_AGENTS block on `running → completed` was
+confirmed not to apply to shepherd, allowing the full transition sequence.
+
+## P29 — Private-project backend command classification
+
+P29-LOCAL ran the AUDITOR command classification task through the same state
+machine enforcement layer. The `command_classification` task transitioned
+`queued → running → implementation_done`. No commands were executed.

@@ -45,6 +45,28 @@
       "createdAt": "2026-05-08T00:17:57.023Z",
       "updatedAt": "2026-05-08T00:17:57.025Z",
       "redacted": true
+    },
+    {
+      "taskId": "3d3c671b-5a9a-4cc5-b12c-b6851722133c",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "validation_planning",
+      "objective": "Governed validation planning task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "orchestration.plan_flow",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "ab29f9d4-7c9a-4567-8cd5-16068c05a2a6",
+        "8f3ce798-a33c-457c-b3c8-dc279792231a"
+      ],
+      "createdAt": "2026-05-08T00:43:26.036Z",
+      "updatedAt": "2026-05-08T00:43:26.038Z",
+      "redacted": true
     }
   ]
 }

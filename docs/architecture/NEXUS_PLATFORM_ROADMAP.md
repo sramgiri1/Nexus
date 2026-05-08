@@ -54,41 +54,44 @@ belongs in separate private repos.
 - Phase 26-LOCAL Private project mode boundary
 - Phase 27-LOCAL Private project inventory and readiness snapshot
 - Phase 28-LOCAL Private project first governed validation task
+- Phase 29-LOCAL Private project backend command classification
 
 ---
 
 ## Current Phase
 
-### Phase 28-LOCAL — Private Project First Governed Validation Task
+### Phase 29-LOCAL — Private Project Backend Command Classification
 
 Goal:
 
-- create the first governed private-project task through NEXUS in local-private
-  mode without source mutation, build/test execution, or provider/network/DB calls
+- classify private-project backend package scripts by execution safety without
+  executing any command
 
 Deliverables:
 
-- Private project backend validation task contract (NEXUS → SHEPHERD)
-- validation plan artifact with safe-next-checks and blocked-now list
-- local task record routed through identity, capability, state machine, and
-  write boundary (queued → running → implementation_done)
+- command classification module (AUDITOR `verification.code_quality_gate`)
+- machine-readable command classification JSON and markdown report
+- task contract with all execution flags false
+- recommended first controlled validation command (`test`, phase P30)
+- local task record routed through governed path
 - redacted evidence, audit, and runtime event records
-- validation and reporting
+- mode boundary: `local-private` or `test` only
 
 Non-goals:
 
-- no source mutation
-- no build or test execution
+- no command execution
+- no npm install, npm test, or Prisma commands
+- no server startup
 - no provider, network, DB, or API calls
-- no private project product details in public surfaces
+- no private project source mutation
 
 Validation checks:
 
-- task contract has all execution flags false
-- validation plan safeNextChecks all have executionNow false
-- local task reaches implementation_done via state machine
+- all command `executionAllowedNow` values false
+- all command `mutationAllowed` values false
+- safety flags all false
 - checker snapshots and restores runtime files during mode boundary tests
-- public/demo surfaces remain DemoApp-only
+- public/demo surfaces remain DemoApp-only or "private project" wording
 
 Risk level:
 

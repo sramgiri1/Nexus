@@ -1,0 +1,166 @@
+{
+  "classificationVersion": "1.0",
+  "mode": "local-private",
+  "projectId": "careloop",
+  "privateProject": true,
+  "generatedAt": "2026-05-08T00:43:20.329Z",
+  "readOnly": true,
+  "sourceArtifacts": {
+    "inventory": "reports/careloop-inventory.json",
+    "validationPlan": "reports/careloop-validation-plan.json"
+  },
+  "commands": [
+    {
+      "name": "dev",
+      "category": "blocked_for_now",
+      "riskLevel": "high",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Starts server process; long-running and requires DB and full dependency stack."
+    },
+    {
+      "name": "start",
+      "category": "blocked_for_now",
+      "riskLevel": "high",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Starts runtime process; requires full dependency and DB stack."
+    },
+    {
+      "name": "migrate",
+      "category": "requires_db",
+      "riskLevel": "critical",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Database schema mutation risk; must never run without explicit DB readiness approval."
+    },
+    {
+      "name": "generate",
+      "category": "requires_dependency_install",
+      "riskLevel": "medium",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": false,
+      "requiresDb": false,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "P31",
+      "reason": "Likely Prisma client generation; safe when dependencies are installed but must be verified first."
+    },
+    {
+      "name": "studio",
+      "category": "blocked_for_now",
+      "riskLevel": "high",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Starts local UI/server and accesses DB; blocked until DB readiness is approved."
+    },
+    {
+      "name": "qa:reset",
+      "category": "requires_db",
+      "riskLevel": "critical",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Likely destructive database reset operation; must never run without explicit approval."
+    },
+    {
+      "name": "qa:seed:sprint1",
+      "category": "requires_db",
+      "riskLevel": "high",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": true,
+      "requiresDb": true,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Writes seed data to DB; blocked until DB readiness and approval gate."
+    },
+    {
+      "name": "test",
+      "category": "safe_to_run_later",
+      "riskLevel": "medium",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": false,
+      "requiresDb": false,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "P30",
+      "reason": "Safest validation candidate; no DB or network required. P30 must first verify dependency availability and command allowlist."
+    },
+    {
+      "name": "test:watch",
+      "category": "blocked_for_now",
+      "riskLevel": "medium",
+      "executionAllowedNow": false,
+      "mutationAllowed": false,
+      "requiresApproval": false,
+      "requiresDb": false,
+      "requiresNetwork": false,
+      "requiresDependencyInstall": true,
+      "recommendedPhase": "later",
+      "reason": "Long-running watch mode; not suitable for governed single-run execution."
+    }
+  ],
+  "summary": {
+    "total": 9,
+    "safeToInspect": 0,
+    "safeToRunLater": 1,
+    "requiresApproval": 6,
+    "requiresDb": 6,
+    "requiresNetwork": 0,
+    "requiresDependencyInstall": 9,
+    "blockedForNow": 7
+  },
+  "recommendedFirstExecution": {
+    "command": "test",
+    "phase": "P30",
+    "reason": "Existing test script is the safest validation candidate; no DB or network requirement detected.",
+    "preconditions": [
+      "dependencies are installed or install is explicitly approved",
+      "command allowlist permits npm test",
+      "no DB/network requirement detected",
+      "execution is run through controlled local execution path",
+      "output is captured as evidence",
+      "no project mutation"
+    ]
+  },
+  "safety": {
+    "commandsExecuted": false,
+    "projectMutation": false,
+    "providerCalls": false,
+    "networkCalls": false,
+    "dbAccess": false,
+    "apiServer": false,
+    "dependencyInstall": false
+  },
+  "evidence": [],
+  "warnings": [],
+  "errors": []
+}

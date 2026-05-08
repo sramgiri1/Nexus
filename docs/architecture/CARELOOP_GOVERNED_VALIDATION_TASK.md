@@ -87,11 +87,16 @@ audit requirements.
 - `reports/careloop-validation-plan.json` — structured plan for NEXUS consumption
 - `contracts/careloop/backend-validation-task-contract.json` — typed task contract
 
+## P29 Status
+
+P29-LOCAL classified CareLoop backend package scripts by execution safety without executing
+any command. The AUDITOR `verification.code_quality_gate` task produced a machine-readable
+command classification report. Recommended first execution: `test` in P30.
+
 ## Next Phase
 
-P29 will classify the CareLoop backend validation commands (from the observed scripts list)
-against the NEXUS command allowlist to determine which can run under controlled local execution.
-This is the AUDITOR `verification.code_quality_gate` task recommended by the validation plan.
+P30-LOCAL will execute the `test` script through the controlled local execution path after
+verifying dependency availability and confirming the command is in the NEXUS command allowlist.
 
 ## Public / Demo Surfaces
 

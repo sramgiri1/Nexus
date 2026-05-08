@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T00:21:42.837Z
-- Validation branch: arch/careloop-first-governed-validation-task
-- Validation HEAD: 2e61b5a
+- Generated at: 2026-05-08T00:45:11.005Z
+- Validation branch: arch/careloop-command-classification
+- Validation HEAD: eeda5ef
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 124
+- Files checked: 127
 
 ## Warnings
 

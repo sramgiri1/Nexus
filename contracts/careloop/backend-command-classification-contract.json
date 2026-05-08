@@ -1,0 +1,54 @@
+{
+  "contractVersion": "1.0",
+  "contractType": "task",
+  "projectId": "careloop",
+  "privateProject": true,
+  "mode": "local-private",
+  "taskId": "careloop-backend-command-classification",
+  "title": "Classify CareLoop backend validation commands for controlled execution",
+  "objective": "Classify existing backend package scripts by execution safety without running them.",
+  "sourceAgent": "shepherd",
+  "targetAgent": "auditor",
+  "capabilityId": "verification.code_quality_gate",
+  "riskLevel": "medium",
+  "dataClassification": "confidential",
+  "mutationAllowed": false,
+  "executionAllowed": false,
+  "buildExecutionAllowed": false,
+  "testExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "allowedRoots": [
+    "projects/careloop"
+  ],
+  "forbiddenActions": [
+    "modify private project source files",
+    "run npm install",
+    "run npm test",
+    "run Prisma commands",
+    "start server",
+    "start studio",
+    "call providers",
+    "call network",
+    "access DB",
+    "read .env"
+  ],
+  "acceptanceCriteria": [
+    "Backend package scripts are classified",
+    "No backend commands are executed",
+    "No private project files are modified",
+    "No provider/API/DB/network calls are made",
+    "Recommended first controlled validation command is identified",
+    "Evidence and audit records are redacted and linked"
+  ],
+  "requiredEvidence": [
+    "careloop_inventory_snapshot",
+    "careloop_validation_plan",
+    "command_classification_artifact",
+    "local_task_record",
+    "audit_event",
+    "runtime_event"
+  ],
+  "createdAt": "2026-05-08T00:43:20.325Z"
+}

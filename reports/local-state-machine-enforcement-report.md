@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-07T20:38:42.147Z
-- Validation branch: arch/local-state-machine-enforcement
-- Validation HEAD: 9da72e4
+- Generated at: 2026-05-08T00:44:52.836Z
+- Validation branch: arch/careloop-command-classification
+- Validation HEAD: eeda5ef
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

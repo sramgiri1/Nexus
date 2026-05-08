@@ -135,3 +135,10 @@ P28-LOCAL created the first governed private-project task through NEXUS in
 identity, capability, and state machine layers and transitioned `queued →
 running → implementation_done`. No source mutation, build/test execution, or
 provider/network/DB calls were made.
+
+## P29 — Private-project backend command classification
+
+P29-LOCAL classified private-project backend package scripts by execution safety
+in `local-private` mode. The AUDITOR `verification.code_quality_gate` task was
+routed through the same governed local path. No commands were executed.
+Recommended first controlled validation command: `test` (P30).

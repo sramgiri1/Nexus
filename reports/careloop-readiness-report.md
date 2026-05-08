@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T00:20:23.732Z
-- Validation branch: arch/careloop-first-governed-validation-task
-- Validation HEAD: 2e61b5a
+- Generated at: 2026-05-08T00:43:33.068Z
+- Validation branch: arch/careloop-command-classification
+- Validation HEAD: eeda5ef
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

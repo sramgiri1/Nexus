@@ -1,3 +1,4 @@
 
 {"eventId":"41881fa7-d04a-427d-b94e-998d26bc53dc","eventType":"governed_validation_planning_completed","projectId":"private-project-01","taskId":"pvt-backend-validation-plan","agentId":"shepherd","runtime":"local","summary":"Governed validation planning completed","createdAt":"2026-05-08T00:03:02.109Z","redacted":true}
 {"eventId":"88492540-8eb2-46d6-bbe0-1f47b2e1413b","eventType":"governed_validation_planning_completed","projectId":"private-project-01","taskId":"pvt-backend-validation-plan","agentId":"shepherd","runtime":"local","summary":"Governed validation planning completed","createdAt":"2026-05-08T00:17:57.026Z","redacted":true}
+{"eventId":"bd183693-41f4-476d-99af-f36cd5651e20","eventType":"governed_validation_planning_completed","projectId":"private-project-01","taskId":"pvt-backend-validation-plan","agentId":"shepherd","runtime":"local","summary":"Governed validation planning completed","createdAt":"2026-05-08T00:43:26.038Z","redacted":true}

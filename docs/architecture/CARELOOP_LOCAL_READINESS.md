@@ -108,11 +108,16 @@ provider/network/DB calls. The task contract (`contracts/careloop/backend-valida
 and validation plan (`reports/careloop-validation-plan.json`) were produced and the task
 transitioned through `queued -> running -> implementation_done` in the local state machine.
 
+## P29 Status
+
+P29-LOCAL classified CareLoop backend package scripts by execution safety. No commands
+were executed. The AUDITOR task produced a command classification report identifying
+`test` as the recommended first controlled validation command (P30).
+
 ## Next Phase
 
-The next phase classifies CareLoop backend validation commands for controlled execution
-(P29). The AUDITOR `verification.code_quality_gate` task will determine which backend
-scripts are safe to run under the NEXUS command allowlist.
+P30-LOCAL will execute the `test` script through the controlled local execution path
+after verifying dependency availability and confirming the command allowlist.
 
 ## Public / Demo Surfaces
 

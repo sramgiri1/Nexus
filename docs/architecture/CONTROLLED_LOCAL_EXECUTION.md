@@ -94,3 +94,10 @@ private-project task through the local write boundary. The SHEPHERD validation
 plan task was committed to tasks.json, with evidence, audit, and event records
 appended through the same write-guarded runtime path. No source mutation or
 execution occurred.
+
+## P29 — Private-project backend command classification
+
+P29-LOCAL used the same controlled local execution path for the AUDITOR command
+classification task. Backend package scripts were classified by safety category
+without executing any of them. Evidence, audit, and runtime event records were
+appended through the write-guarded path. No commands were executed.
