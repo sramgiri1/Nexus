@@ -3,6 +3,7 @@ import { NavLink, Route, Routes, useLocation } from "react-router-dom";
 import { NAV_ITEMS } from "./data/studio.js";
 import { useStudioData } from "./hooks/useStudioData.js";
 import CommandCenter from "./pages/CommandCenter.jsx";
+import CommandCenterV2 from "./pages/CommandCenterV2.jsx";
 import Constellation from "./pages/Constellation.jsx";
 import Skills from "./pages/Skills.jsx";
 import Traction from "./pages/Traction.jsx";
@@ -120,7 +121,9 @@ export default function App() {
   const studio = useStudioData();
   const location = useLocation();
   const [now, setNow] = useState(new Date());
-  const isHomeView = location.pathname === "/";
+  const isV2Route = location.pathname === "/";
+  const isLegacyRoute = location.pathname === "/legacy-command-center";
+  const isHomeView = isV2Route || isLegacyRoute;
   const isVerseView = location.pathname === "/constellation";
 
   useEffect(() => {
@@ -179,7 +182,9 @@ export default function App() {
       <div className="studio-shell">
         <header
           className={`shell-topbar${
-            isVerseView ? " shell-topbar--compact shell-topbar--verse" : isHomeView ? " shell-topbar--command-lite" : ""
+            isVerseView ? " shell-topbar--compact shell-topbar--verse"
+            : isLegacyRoute ? " shell-topbar--command-lite"
+            : ""
           }`}
         >
           {isVerseView ? (
@@ -193,7 +198,7 @@ export default function App() {
                 //
               </span>
             </div>
-          ) : isHomeView ? (
+          ) : isLegacyRoute ? (
             <>
               <div className="shell-topbar__prototype">
                 <div className="shell-topbar__prototype-title">
@@ -277,7 +282,8 @@ export default function App() {
         <div className={`shell-main${isVerseView || isHomeView ? " shell-main--full" : ""}`}>
           <main className={`shell-content${isVerseView ? " shell-content--verse" : ""}`}>
             <Routes>
-              <Route path="/" element={<CommandCenter studio={studio} />} />
+              <Route path="/" element={<CommandCenterV2 studio={studio} />} />
+              <Route path="/legacy-command-center" element={<CommandCenter studio={studio} />} />
               <Route path="/constellation" element={<Constellation studio={studio} />} />
               <Route path="/skills" element={<Skills studio={studio} />} />
               <Route path="/traction" element={<Traction studio={studio} />} />

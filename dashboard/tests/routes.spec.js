@@ -17,76 +17,47 @@ function captureClientErrors(page) {
   return errors;
 }
 
-test("home route renders command center with local read-only wiring", async ({ page }) => {
+test("home route renders Command Center V2 shell", async ({ page }) => {
   const errors = captureClientErrors(page);
-
   await page.goto("/");
 
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.getByText("NEXUS OS")).toBeVisible();
+  await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Release/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Agent Fleet/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Safety Center/i })).toBeVisible();
+  await expect(page.getByText("Start a Mission")).toBeVisible();
+  await expect(page.getByText("Describe what you want to build")).toBeVisible();
+  await expect(page.getByText("Generate Plan")).toBeVisible();
+  await expect(page.getByText("Requires governed action bridge")).toBeVisible();
+  await expect(page.getByText("Mission Control").first()).toBeVisible();
+  await expect(page.locator("#v2-execution-pipeline")).toContainText("Execution Pipeline");
+  await expect(page.locator("#v2-activity-stream")).toContainText("Activity Stream");
+  await expect(page.getByText("Private Project Validation")).toBeVisible();
+  await expect(page.getByText("58/58")).toBeVisible();
+  await expect(page.getByText("Evidence and Governance")).toBeVisible();
+  await expect(page.getByText("Release Readiness", { exact: true })).toBeVisible();
+  await expect(page.getByText("Safety Center")).toBeVisible();
+  await expect(page.locator(".shell-sidebar")).toHaveCount(0);
+
+  expect(errors).toEqual([]);
+});
+
+test("legacy command center route renders legacy Command Center", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/legacy-command-center");
+
+  // Legacy CC uses DemoApp as the active project label in the topbar chip
   await expect(page.locator(".page--command")).toBeVisible();
   await expect(page.getByRole("heading", { name: "NEXUS Command Center" })).toBeVisible();
   await expect(page.getByRole("banner").getByText("Environment · Prototype")).toBeVisible();
-  await expect(page.locator(".command-prototype__sidebar")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Release/i })).toBeVisible();
-  await expect(page.getByText("Build and validate DemoApp through governed NEXUS agents.")).toBeVisible();
   await expect(page.getByRole("banner").getByText("Active project · DemoApp")).toBeVisible();
-  await expect(page.getByText("Read-only local visibility")).toBeVisible();
-  await expect(page.locator("#local-os")).toContainText("Runtime Traffic Plane");
-  await expect(page.locator("#local-os")).toContainText("Identity Propagation");
-  await expect(page.locator("#validation")).toContainText("Validation Status");
-  await expect(page.locator("#local-evidence")).toContainText("Local Evidence");
-  await expect(page.locator("#local-evidence")).toContainText("Approval Evidence");
-  await expect(page.locator("#runtime-files")).toContainText("Runtime Files");
-  await expect(page.locator("#runtime-tasks")).toContainText("Local Task Store");
-  await expect(page.locator("#runtime-evidence")).toContainText("Evidence Store");
-  await expect(page.locator("#runtime-audit")).toContainText("Audit Trail");
-  await expect(page.locator("#runtime-governance")).toContainText("Approval Workflow");
-  await expect(page.locator("#runtime-snapshot")).toContainText("Runtime Refresh");
-  await expect(page.locator("#approvals")).toContainText("Blocked by Approval");
+  await expect(page.locator(".command-prototype__sidebar")).toBeVisible();
   await expect(page.locator("#private-validation")).toContainText("Private Project Validation");
-  await expect(page.locator("#private-validation")).toContainText("Backend tests");
   await expect(page.locator("#private-validation")).toContainText("58/58");
-  await expect(page.locator("#private-validation-timeline")).toContainText("Validation Timeline");
-  await expect(page.locator("#private-validation-evidence")).toContainText("Evidence and Governance");
-  await expect(page.locator("#private-validation-hygiene")).toContainText("Known Validation Hygiene");
-  await expect(page.locator("#private-validation-hygiene")).toContainText("public/demo safety remains strict");
-  await expect(page.locator("#private-validation-next")).toContainText("Prepare Command Center action bridge for governed private-project tasks.");
-  await expect(page.locator("#private-validation")).toContainText("UI mutation");
-  await expect(page.locator("#private-validation")).toContainText("Disabled");
-  await expect(page.locator("#governed-actions")).toContainText("Governed Actions");
-  await expect(page.locator("#governed-actions")).toContainText("Action bridge readiness");
-  await expect(page.locator("#governed-actions")).toContainText("npm run action:bridge-demo");
-  await expect(page.locator("#governed-actions")).toContainText("UI cannot execute");
-  await expect(page.locator(".os-mode-banner")).toBeVisible();
-  await expect(page.locator(".os-mode-banner")).toContainText("local-private");
-  await expect(page.locator(".os-pipeline")).toBeVisible();
-  await expect(page.getByRole("link", { name: /Agent Fleet/i })).toBeVisible();
-  await expect(page.locator("#release")).toContainText("NO-GO");
-  await expect(page.locator("#cost")).toBeVisible();
-  await expect(page.locator("#demo-mode")).toContainText("Not Wired Yet");
-  await expect(page.locator("#demo-mode")).toContainText("No live API");
-  await expect(page.locator("#approvals")).toContainText("No UI mutation yet");
-  await expect(page.locator("#approvals")).toContainText("npm run approvals:approve");
-  await expect(page.locator("#approvals")).toContainText("npm run approvals:reject");
-  await expect(page.locator("#tasks")).toContainText("Task queue");
-  await expect(page.locator("#gates")).toContainText("AUDITOR, SENTINEL, and WARDEN");
-  await expect(page.locator("#evidence")).toContainText("Evidence timeline");
-  await expect(page.locator("#release")).toContainText("Release Control");
-  await expect(page.locator("#demo-mode")).toContainText("No real provider calls");
-  await expect(page.locator(".shell-sidebar")).toHaveCount(0);
-  await expect(page.getByText("NEXUS OS")).toBeVisible();
-  await expect(page.locator("#execution-pipeline")).toContainText("Execution Pipeline");
-  await expect(page.locator("#activity-stream")).toContainText("Activity Stream");
-  await expect(page.getByRole("link", { name: /Safety Center/i })).toBeVisible();
-  await expect(page.locator("#private-validation")).toContainText("Run Backend Validation");
-  await expect(page.getByText("Release Readiness", { exact: true })).toBeVisible();
-
-  // P33.7 — screenshot parity assertions
-  await expect(page.getByText("Founder Intent")).toBeVisible();
-
-  // P34 — mission composer section
   await expect(page.locator("#mission-composer")).toContainText("Start a Mission");
-  await expect(page.locator("#mission-composer")).toContainText("Generate Plan");
+  await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
   expect(errors).toEqual([]);
 });

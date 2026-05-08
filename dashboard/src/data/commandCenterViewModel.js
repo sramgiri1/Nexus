@@ -1,3 +1,91 @@
+export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
+  const pvStatus = pvSnapshot?.status || {};
+  const pvBackend = pvStatus.latestBackendValidation || {};
+  const pvRemediation = pvStatus.latestRemediation || {};
+  const pvGovernance = pvSnapshot?.governance || {};
+
+  return {
+    shell: {
+      productName: "NEXUS OS",
+      mode: "local-private",
+      environment: "Local",
+      operator: "Founder",
+      activeProject: studio.activeProject?.name || "DemoApp",
+    },
+    missionComposer: {
+      title: "Start a Mission",
+      subtitle: "Tell NEXUS what you want to build. The OS turns it into governed tasks for agents.",
+      placeholder: "Describe what you want to build...",
+      missionText: "Build the private project through governed planning, validation, privacy review, and controlled implementation.",
+      projectLabel: "Private Project",
+      mode: "local-private",
+      bridgeReady: abSnapshot?.bridgeReadiness?.status === "READY",
+      buttons: [
+        { label: "Generate Plan", enabled: false, reason: "Requires governed action bridge" },
+        { label: "Create Project Brief", enabled: false, reason: "Requires governed action bridge" },
+        { label: "Start Governed Run", enabled: false, reason: "Requires governed action bridge" },
+      ],
+      contractPath: "contracts/missions/private-project-mission-contract.json",
+      taskPlanPath: "contracts/missions/private-project-task-plan.json",
+      taskCount: 6,
+      nextAction: "Create governed project brief from mission composer",
+    },
+    mission: {
+      founderIntent: "Build and validate DemoApp through governed NEXUS agents.",
+      quote: "Ship a calm, governed private-project companion — beta in 6 weeks, audit-ready from day one.",
+      sprintId: "Sprint 2026.18",
+      sprintDay: "Day 6 of 7",
+      lead: "SHEPHERD",
+      sprintProgress: studio.gateProgress || 62,
+      releaseStatus: "NO-GO",
+      releaseBlocker: "SENTINEL gate pending · approval evidence missing",
+      gates: { AUDITOR: "PASS", SENTINEL: "PENDING", WARDEN: "PASS" },
+    },
+    pipeline: {
+      queued: studio.pendingQueue?.length ?? 2,
+      running: studio.runningQueue?.length ?? 5,
+      verifying: 3,
+      blocked: studio.statusCounts?.blocked ?? 1,
+      done: 3,
+    },
+    metrics: [
+      { label: "Active Tasks", value: String((studio.pendingQueue?.length ?? 0) + (studio.runningQueue?.length ?? 0) || 5), delta: "+8 last hr", tone: "blue" },
+      { label: "Blocked", value: String(studio.statusCounts?.blocked || 1), delta: "+1", tone: "red" },
+      { label: "Gate Pass Rate", value: `${studio.gateProgress || 67}%`, delta: "+2.1 wk", tone: "amber" },
+      { label: "Agent Utilization", value: "74%", delta: "▾ -3", tone: "blue" },
+      { label: "Approval Backlog", value: "3", delta: "- 1 high-risk", tone: "amber" },
+      { label: "Safety Incidents", value: "0", delta: "~ 140 clean", tone: "green" },
+    ],
+    activity: [
+      { time: "09:47", agent: "SENTINEL", text: "verified synthetic E2E suite passed", status: "done" },
+      { time: "09:41", agent: "SHEPHERD", text: "dispatched task T-1042 → PIXEL", status: "done" },
+      { time: "09:38", agent: "NEXUS", text: "Governor denied SWIFT: capability not in contract", status: "blocked" },
+      { time: "09:33", agent: "WARDEN", text: "requesting human approval: privacy review", status: "working" },
+      { time: "09:27", agent: "AUDITOR", text: "static analysis clean — 0 findings", status: "done" },
+      { time: "09:21", agent: "FORGE", text: "applied migration 2026_M5_01_rls.sql", status: "done" },
+    ],
+    privateValidation: {
+      overall: pvStatus.overall || "VALIDATED",
+      backendTests: `${pvBackend.testsPassed ?? 58}/${pvBackend.totalTests ?? 58}`,
+      backendStatus: pvBackend.status || "PASS",
+      latestCommand: pvBackend.command || "npm test",
+      remediationApplied: pvRemediation.applied !== false,
+      rootCause: pvRemediation.rootCauseCategory || "date_window_boundary_bug",
+      uiMutation: pvGovernance.mutationEnabledFromUi === false ? "Disabled" : "Unknown",
+      timeline: pvSnapshot?.timeline || [],
+    },
+    release: {
+      status: "NO-GO",
+      readiness: studio.gateProgress || 72,
+      blocker: "SENTINEL gate pending · approval evidence missing",
+    },
+    safety: {
+      incidents: 0,
+      lastClean: "24h",
+    },
+  };
+}
+
 export function buildCommandCenterViewModel(studio) {
   const localReports = studio.localReports || {};
   const validation = localReports.validation || {};
