@@ -142,3 +142,10 @@ P29-LOCAL classified private-project backend package scripts by execution safety
 in `local-private` mode. The AUDITOR `verification.code_quality_gate` task was
 routed through the same governed local path. No commands were executed.
 Recommended first controlled validation command: `test` (P30).
+
+## P30 — Private-project backend controlled validation
+
+P30-LOCAL executed the first approved backend command in `local-private` mode.
+The AUDITOR `verification.code_quality_gate` task ran `npm test` through the
+controlled local execution path: allowlist check → preflight → `spawnSync` with
+minimal env. Output was captured, redacted, and hashed. No mutation detected.

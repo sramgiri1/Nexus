@@ -1,0 +1,60 @@
+{
+  "validationVersion": "1.0",
+  "mode": "local-private",
+  "projectId": "careloop",
+  "privateProject": true,
+  "generatedAt": "2026-05-08T01:00:06.761Z",
+  "command": {
+    "commandId": "careloop-backend-npm-test",
+    "command": "npm",
+    "args": [
+      "test"
+    ],
+    "workingDirectory": "projects/careloop"
+  },
+  "preflight": {
+    "status": "WARNING",
+    "scriptExists": true,
+    "nodeModulesPresent": true,
+    "lockfilePresent": true,
+    "dependencyReadiness": "READY",
+    "dbRequirementDetected": false,
+    "networkRequirementDetected": false,
+    "warnings": [
+      "Forbidden environment variables present (will be ignored by command): ANTHROPIC_API_KEY"
+    ],
+    "errors": []
+  },
+  "execution": {
+    "status": "FAIL",
+    "exitCode": 1,
+    "durationMs": 1065,
+    "stdoutPreview": "\n> careloop-api@0.1.0 test\n> node --test test/sprint2.test.js\n\n▶ auth routes\n  ✔ POST /auth/signup creates a password-backed user (59.789917ms)\n  ✔ POST /auth/login rejects wrong password (75.863792ms)\n  ✔ POST /auth/login returns the matching user (64.202167ms)\n  ✔ POST /auth/social creates a user and identity from local fallback payload (4.334208ms)\n  ✔ POST /auth/login includes pending invitations for the authenticated email (63.696958ms)\n  ✔ GET /auth/oauth/google/start redirects to Google's consent screen (3.969ms)\n  ✔ verifyOAuthState returns the signed callback payload (0.159167ms)\n  ✔ forgot password request stores a reset code and returns debugCode in local dev (36.17375ms)\n  ✔ forgot password verify/reset updates password (94.480625ms)\n  ✔ forgot password reset revokes previously issued access tokens (120.917208ms)\n✔ auth routes (524.4335ms)\n▶ deliverTaskNotification\n  ✔ return",
+    "stderrPreview": "",
+    "outputHash": "a8659e8802a0fe88",
+    "mutationDetected": false,
+    "mutatedPaths": [],
+    "warnings": [],
+    "errors": []
+  },
+  "governance": {
+    "identityContext": true,
+    "agentContext": true,
+    "trafficDecision": "allowed",
+    "stateMachine": true,
+    "localWriteBoundary": true
+  },
+  "safety": {
+    "providerCalls": false,
+    "networkCalls": false,
+    "dbAccess": false,
+    "apiServer": false,
+    "dependencyInstall": false,
+    "projectMutation": false
+  },
+  "evidence": [],
+  "warnings": [
+    "Forbidden environment variables present (will be ignored by command): ANTHROPIC_API_KEY"
+  ],
+  "errors": []
+}

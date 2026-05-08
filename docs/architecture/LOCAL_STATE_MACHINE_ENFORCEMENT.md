@@ -95,3 +95,10 @@ confirmed not to apply to shepherd, allowing the full transition sequence.
 P29-LOCAL ran the AUDITOR command classification task through the same state
 machine enforcement layer. The `command_classification` task transitioned
 `queued → running → implementation_done`. No commands were executed.
+
+## P30 — Private-project backend controlled validation
+
+P30-LOCAL ran the AUDITOR controlled validation task through the same state
+machine enforcement layer. The `controlled_validation` task transitioned
+`queued → running → implementation_done`. The first approved backend command
+(`npm test`) executed under NEXUS governance. No mutation detected.

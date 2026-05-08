@@ -102,12 +102,16 @@ All records use abstract IDs (`private-project-01`) to satisfy write guards.
 | `reports/careloop-command-classification.md` | Human-readable classification summary |
 | `contracts/careloop/backend-command-classification-contract.json` | AUDITOR task contract |
 
+## P30 Status
+
+P30-LOCAL executed `npm test` (the P30-recommended command from this classification).
+Allowlist check, preflight, and controlled execution all passed governance checks.
+Output captured, redacted, and hashed. No mutation. Exit code 1 (test result).
+
 ## Next Phase
 
-P30-LOCAL: Controlled backend validation execution. The `test` script is the
-recommended first command. P30 must first verify dependency availability and
-confirm the command is in the NEXUS command allowlist before executing through
-the controlled local execution path.
+P31-LOCAL: Prisma `generate` execution. Requires dependency install approval before
+running through the controlled local execution path.
 
 ## Public and Demo Surfaces
 

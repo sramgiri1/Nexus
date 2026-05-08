@@ -101,3 +101,11 @@ P29-LOCAL used the same controlled local execution path for the AUDITOR command
 classification task. Backend package scripts were classified by safety category
 without executing any of them. Evidence, audit, and runtime event records were
 appended through the write-guarded path. No commands were executed.
+
+## P30 — Private-project backend controlled validation
+
+P30-LOCAL executed the first approved backend command through the controlled
+local execution path. The command runner uses `spawnSync` with a minimal env
+(no secrets inherited), output redaction, and before/after project tree
+comparison. Evidence, audit, and runtime event records were appended through
+the write-guarded path. No mutation detected.

@@ -60,7 +60,9 @@
     "careloop:validation-plan": "NEXUS_MODE=local-private node scripts/careloop-validation-plan.js",
     "check:careloop-validation-plan": "node scripts/check-careloop-validation-plan.js",
     "careloop:command-classify": "NEXUS_MODE=local-private node scripts/careloop-command-classify.js",
-    "check:careloop-command-classification": "node scripts/check-careloop-command-classification.js"
+    "check:careloop-command-classification": "node scripts/check-careloop-command-classification.js",
+    "careloop:backend-validate": "NEXUS_MODE=local-private node scripts/careloop-backend-validate.js",
+    "check:careloop-backend-validation": "node scripts/check-careloop-backend-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

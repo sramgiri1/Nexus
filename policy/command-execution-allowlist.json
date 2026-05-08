@@ -1,0 +1,44 @@
+{
+  "version": "1.0",
+  "modeRequired": "local-private",
+  "defaultCommandExecution": "deny",
+  "allowedCommands": [
+    {
+      "projectId": "careloop",
+      "root": "projects/careloop",
+      "commandId": "careloop-backend-npm-test",
+      "command": "npm",
+      "args": ["test"],
+      "workingDirectory": "projects/careloop",
+      "allowedPhase": "P30",
+      "riskLevel": "medium",
+      "requiresApproval": false,
+      "requiresDb": false,
+      "requiresNetwork": false,
+      "mutationAllowed": false,
+      "timeoutSeconds": 120,
+      "captureOutput": true,
+      "redactOutput": true
+    }
+  ],
+  "blockedCommands": [
+    "npm install",
+    "npm run dev",
+    "npm start",
+    "npm run start",
+    "npm run migrate",
+    "npm run studio",
+    "npm run qa:reset",
+    "npm run qa:seed:sprint1",
+    "npm run test:watch",
+    "npx prisma migrate",
+    "npx prisma db",
+    "xcodebuild"
+  ],
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "apiServerAllowed": false,
+  "projectMutationAllowed": false,
+  "sourceMutationAllowed": false
+}

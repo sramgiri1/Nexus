@@ -93,10 +93,17 @@ P29-LOCAL classified CareLoop backend package scripts by execution safety withou
 any command. The AUDITOR `verification.code_quality_gate` task produced a machine-readable
 command classification report. Recommended first execution: `test` in P30.
 
+## P30 Status
+
+P30-LOCAL executed `npm test` in the private-project backend through the NEXUS controlled
+local execution path. Allowlist check, preflight, and `spawnSync` with minimal env all passed.
+Output was captured, redacted, and hashed. No mutation detected. Exit code 1 (test result —
+not a governance failure). All governance machinery passed.
+
 ## Next Phase
 
-P30-LOCAL will execute the `test` script through the controlled local execution path after
-verifying dependency availability and confirming the command is in the NEXUS command allowlist.
+P31-LOCAL will run the Prisma `generate` command (dependency install required; needs
+explicit NEXUS approval before execution).
 
 ## Public / Demo Surfaces
 

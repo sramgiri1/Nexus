@@ -1,0 +1,60 @@
+{
+  "contractVersion": "1.0",
+  "contractType": "task",
+  "projectId": "careloop",
+  "privateProject": true,
+  "mode": "local-private",
+  "taskId": "careloop-backend-controlled-validation",
+  "title": "Run CareLoop backend controlled validation through NEXUS",
+  "objective": "Run the first approved backend validation command through the governed NEXUS local execution path.",
+  "sourceAgent": "auditor",
+  "targetAgent": "auditor",
+  "capabilityId": "verification.code_quality_gate",
+  "riskLevel": "medium",
+  "dataClassification": "confidential",
+  "commandId": "careloop-backend-npm-test",
+  "command": "npm",
+  "args": [
+    "test"
+  ],
+  "workingDirectory": "projects/careloop",
+  "mutationAllowed": false,
+  "buildExecutionAllowed": false,
+  "testExecutionAllowed": true,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "dependencyInstallAllowed": false,
+  "allowedRoots": [
+    "projects/careloop"
+  ],
+  "forbiddenActions": [
+    "modify private project source files",
+    "run npm install",
+    "run dev/start/studio/watch commands",
+    "run Prisma migrate/reset/seed",
+    "call providers",
+    "call network",
+    "access DB",
+    "read .env"
+  ],
+  "acceptanceCriteria": [
+    "Command allowlist permits npm test",
+    "Preflight passes or blocks safely",
+    "No dependency install is performed",
+    "No provider/API/DB/network calls are made",
+    "No private project files are modified",
+    "Command output is captured and redacted",
+    "Evidence and audit records are linked"
+  ],
+  "requiredEvidence": [
+    "command_classification_artifact",
+    "command_allowlist_decision",
+    "preflight_result",
+    "controlled_command_result",
+    "local_task_record",
+    "audit_event",
+    "runtime_event"
+  ],
+  "createdAt": "2026-05-08T01:00:05.688Z"
+}

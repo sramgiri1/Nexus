@@ -94,11 +94,12 @@ state-machine validation, local evidence, audit, runtime events, and Command
 Center snapshot refresh. This still does not add providers, external tools,
 project mutation, API, or DB execution.
 
-Phases 26–29-LOCAL add the private project mode boundary, readiness snapshot,
-first governed validation task, and backend command classification. Phase 29
-classifies private-project backend package scripts by execution safety without
-executing any command. The recommended first controlled validation command is
-identified for Phase 30. All phases run only under `local-private` mode.
+Phases 26–30-LOCAL add the private project mode boundary, readiness snapshot,
+first governed validation task, backend command classification, and the first
+controlled backend execution. Phase 30 runs `npm test` in the private-project
+backend through the NEXUS governed local execution path: command allowlist,
+preflight, `spawnSync` with minimal env, output redaction, and mutation
+detection. All phases run only under `local-private` mode.
 
 After local approval or execution changes, refresh the browser-safe snapshot
 with `npm run generate:command-center-snapshot`.

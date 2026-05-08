@@ -712,3 +712,9 @@ Phase 29-LOCAL classified private-project backend package scripts by execution
 safety via the AUDITOR `verification.code_quality_gate` task in `local-private`
 mode. No commands were executed. The recommended first controlled validation
 command (`test`) was identified for P30.
+
+Phase 30-LOCAL executed the first approved backend command through the NEXUS
+controlled local execution path. The AUDITOR `verification.code_quality_gate`
+task ran `npm test` with a command allowlist check, preflight, and `spawnSync`
+with minimal env (no secrets inherited). Output was captured, redacted, and
+hashed. No mutation detected.

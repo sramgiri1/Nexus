@@ -67,6 +67,50 @@
       "createdAt": "2026-05-08T00:43:26.036Z",
       "updatedAt": "2026-05-08T00:43:26.038Z",
       "redacted": true
+    },
+    {
+      "taskId": "804e4971-dd8b-4e3c-b4f0-14e965b506b9",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "auditor",
+      "taskType": "controlled_validation",
+      "objective": "Governed controlled validation task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "028a212e-b915-4ab2-954f-eff226fe6572",
+        "d91de125-87b0-49b5-ab4f-158ff705e2cb"
+      ],
+      "createdAt": "2026-05-08T00:54:35.723Z",
+      "updatedAt": "2026-05-08T00:54:35.726Z",
+      "redacted": true
+    },
+    {
+      "taskId": "3f9ea3f4-9aa5-4f6b-a74a-ccea59799333",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "auditor",
+      "taskType": "controlled_validation",
+      "objective": "Governed controlled validation task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "2d865ef8-1cae-4fb2-8c43-f113773d124b",
+        "d132d1b7-f7e5-4df0-9e19-63eb15b50cb2"
+      ],
+      "createdAt": "2026-05-08T01:00:06.758Z",
+      "updatedAt": "2026-05-08T01:00:06.760Z",
+      "redacted": true
     }
   ]
 }
