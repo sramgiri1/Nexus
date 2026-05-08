@@ -3,7 +3,7 @@
   "mode": "local-private",
   "source": "generated-private-validation-snapshot",
   "readOnly": true,
-  "generatedAt": "2026-05-08T09:32:10.065Z",
+  "generatedAt": "2026-05-08T10:00:44.530Z",
   "project": {
     "id": "private-project-01",
     "label": "Private Project",
@@ -148,73 +148,73 @@
       "redacted": true
     },
     {
-      "id": "ea138fea-1055-4dcf-bc5a-b966fd5d8d6a",
+      "id": "ac8c469b-f0ef-4d65-8dac-958aa4de576b",
       "type": "evidence",
-      "title": "Private project inventory snapshot generated",
-      "status": "INFO",
-      "path": "local-state/runtime/evidence.jsonl",
-      "redacted": true
-    },
-    {
-      "id": "cf80dc97-266f-4ddb-a2a2-4f82cccaa07a",
-      "type": "evidence",
-      "title": "Governed validation planning task completed",
+      "title": "Action bridge routing: private_project_backend_validation_request → validated",
       "status": "PASS",
       "path": "local-state/runtime/evidence.jsonl",
       "redacted": true
     },
     {
-      "id": "2358d052-0ff3-49b7-8537-7a2ef869ba97",
+      "id": "fb5535a5-c246-4e36-9cd3-ae1b75d9009b",
       "type": "evidence",
-      "title": "Failure analysis: date_window_boundary_bug (high)",
+      "title": "Action bridge routing: private_project_backend_validation_request → validated",
       "status": "PASS",
       "path": "local-state/runtime/evidence.jsonl",
       "redacted": true
     },
     {
-      "id": "f3970261-9572-4ee5-9578-40d4d908071d",
+      "id": "2e833bce-f3ea-451f-964f-4b26f801f2d1",
+      "type": "evidence",
+      "title": "Action bridge routing: private_project_backend_validation_request → validated",
+      "status": "PASS",
+      "path": "local-state/runtime/evidence.jsonl",
+      "redacted": true
+    },
+    {
+      "id": "cb048f24-1e87-4577-8435-d493d0a50887",
       "type": "audit",
-      "title": "Private project inventory snapshot generated",
+      "title": "Action bridge: private_project_backend_validation_request evaluated, status=validated",
       "status": "INFO",
       "path": "local-state/runtime/audit.jsonl",
       "redacted": true
     },
     {
-      "id": "4321fe2a-bf12-43ec-a55a-ad9d22b8d1cc",
+      "id": "337da02b-a3b4-4ce7-ad39-e3715d9c637c",
       "type": "audit",
-      "title": "Governed validation planning task completed",
+      "title": "Action bridge: private_project_backend_validation_request evaluated, status=validated",
       "status": "INFO",
       "path": "local-state/runtime/audit.jsonl",
       "redacted": true
     },
     {
-      "id": "fcf7016c-4dc9-42a7-8f56-c28541cf58db",
+      "id": "3a66f7df-a0da-45c9-88b6-4918f63c4301",
       "type": "audit",
-      "title": "Task 6e6e9601-6bbb-4747-bc67-13199840aa98 state changed from running to implementation_done.",
+      "title": "Action bridge: private_project_backend_validation_request evaluated, status=validated",
       "status": "INFO",
       "path": "local-state/runtime/audit.jsonl",
       "redacted": true
     },
     {
-      "id": "c2f4e0ed-5958-4ea5-a37e-aff0fbcaa86c",
+      "id": "db844010-5847-4cff-adf9-b838a875e4e4",
       "type": "runtime_event",
-      "title": "Governed validation planning completed",
+      "title": "Action request private_project_backend_validation_request routed through governance",
       "status": "INFO",
       "path": "local-state/runtime/events.jsonl",
       "redacted": true
     },
     {
-      "id": "32786620-8931-45a5-a708-a696ac2ddd05",
+      "id": "5f6bd56f-6b21-4f69-8243-6aa603dee688",
       "type": "runtime_event",
-      "title": "governed_command_classification_completed",
+      "title": "Action request private_project_backend_validation_request routed through governance",
       "status": "INFO",
       "path": "local-state/runtime/events.jsonl",
       "redacted": true
     },
     {
-      "id": "7c7b782a-dcfa-456a-8281-cdf4f64c66fd",
+      "id": "922510c3-d5cb-4c3c-91e7-cdfe71da1f76",
       "type": "runtime_event",
-      "title": "governed_controlled_validation_completed",
+      "title": "Action request private_project_backend_validation_request routed through governance",
       "status": "INFO",
       "path": "local-state/runtime/events.jsonl",
       "redacted": true

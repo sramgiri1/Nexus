@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "modeRequired": "local-private",
+  "readOnly": true,
+  "directCommandExecutionAllowed": false,
+  "browserFilesystemWriteAllowed": false,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "mutationAllowedFromUi": false,
+  "npmTestExecutionAllowed": false,
+  "approvalBypassAllowed": false,
+  "privateProjectSourceReadAllowed": false,
+  "sourceSnippetAllowed": false,
+  "publicDemoOutputAllowed": false,
+  "publicSafetyMustRemainStrict": true,
+  "actionStorageAllowed": true,
+  "actionStoreFile": "local-state/runtime/actions.jsonl",
+  "allowedActionTypes": [
+    "private_project_backend_validation_request",
+    "refresh_private_validation_snapshot",
+    "demo_noop"
+  ],
+  "approvalRequiredActionTypes": [
+    "private_project_backend_validation_request"
+  ]
+}

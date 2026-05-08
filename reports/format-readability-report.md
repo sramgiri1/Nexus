@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T09:33:38.795Z
-- Validation branch: arch/command-center-private-validation-view
-- Validation HEAD: ed0f66c
+- Generated at: 2026-05-08T10:00:55.680Z
+- Validation branch: arch/command-center-governed-action-bridge
+- Validation HEAD: 710e003
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 136
+- Files checked: 138
 
 ## Warnings
 

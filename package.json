@@ -66,7 +66,9 @@
     "careloop:analyze-test-failure": "NEXUS_MODE=local-private node scripts/careloop-analyze-test-failure.js",
     "check:careloop-test-remediation": "node scripts/check-careloop-test-remediation.js",
     "generate:private-validation-snapshot": "NEXUS_MODE=local-private node scripts/generate-private-validation-snapshot.js",
-    "check:command-center-private-validation": "node scripts/check-command-center-private-validation.js"
+    "check:command-center-private-validation": "node scripts/check-command-center-private-validation.js",
+    "action:bridge-demo": "NEXUS_MODE=local-private node scripts/action-bridge-demo.js",
+    "check:action-bridge": "node scripts/check-action-bridge.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -68,6 +68,7 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
   const runtimeRefresh = runtimeFilesSnapshot.refresh || {};
   const demo = localStateSnapshot.demo || {};
   const privateValidation = localStateSnapshot.privateValidation || {};
+  const actionBridge = localStateSnapshot.actionBridge || {};
 
   return {
     validation: {
@@ -122,6 +123,7 @@ function buildCommandCenterLocalReports(localStateSnapshot) {
     runtimeFiles,
     runtimeSnapshot: runtimeFilesSnapshot,
     privateValidation,
+    actionBridge,
     reports: (validation.reports || []).map((report) => ({
       id: report.id,
       name: report.name,

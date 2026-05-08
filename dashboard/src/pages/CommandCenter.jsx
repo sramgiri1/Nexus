@@ -19,6 +19,7 @@ const NAV_SECTIONS = [
   { id: "evidence", label: "Evidence" },
   { id: "runtime", label: "Runtime" },
   { id: "private-validation", label: "Private Validation" },
+  { id: "governed-actions", label: "Governed Actions" },
   { id: "traffic-plane", label: "Traffic Plane" },
   { id: "local-evidence", label: "Local Evidence" },
   { id: "batch", label: "Batch" },
@@ -287,6 +288,7 @@ export default function CommandCenter({ studio }) {
   const runtimeSnapshot = localReports.runtimeSnapshot || {};
   const runtimeFiles = localReports.runtimeFiles || {};
   const privateValidation = localReports.privateValidation || {};
+  const actionBridge = localReports.actionBridge || {};
   const runtimeTasks = runtimeFiles.tasks || { total: 0, byState: {}, recent: [] };
   const runtimeEvidence = runtimeFiles.evidence || { total: 0, recent: [] };
   const runtimeAudit = runtimeFiles.audit || { total: 0, recent: [] };
@@ -561,6 +563,44 @@ export default function CommandCenter({ studio }) {
         : privateValidationStatus.overall === "BLOCKED"
           ? "Plan dependency readiness."
           : "Collect missing validation artifacts before deciding the next governed step.";
+
+  const actionBridgeReadiness = actionBridge.bridgeReadiness || {};
+  const actionBridgeLastDemo = actionBridge.lastDemoAction || {};
+  const actionBridgeRecentActions = actionBridge.recentActions || [];
+  const actionBridgeGovernance = actionBridge.governance || {};
+  const actionBridgeVisible = actionBridge.readOnly === true;
+  const actionBridgeRows = [
+    {
+      label: "Action bridge readiness",
+      value: actionBridgeReadiness.status || "PENDING",
+      detail: "Schema, governance, traffic-plane, and local write boundary are validated before any action is recorded.",
+    },
+    {
+      label: "Last demo action type",
+      value: actionBridgeLastDemo.actionType || "none",
+      detail: "Action type from the last governed demo run.",
+    },
+    {
+      label: "Last action status",
+      value: actionBridgeLastDemo.status || "none",
+      detail: "Routing result from the last action bridge demo.",
+    },
+    {
+      label: "Approval required",
+      value: actionBridgeLastDemo.approvalRequired ? "Yes" : "No",
+      detail: "Private backend validation actions always require approval before execution.",
+    },
+    {
+      label: "Command executed",
+      value: actionBridgeLastDemo.commandExecuted === false ? "No" : "Unknown",
+      detail: "The action bridge never executes commands directly.",
+    },
+    {
+      label: "UI cannot execute",
+      value: actionBridgeGovernance.directCommandExecutionAllowed === false ? "Confirmed" : "Unknown",
+      detail: "Direct command execution from the browser UI is not allowed.",
+    },
+  ];
 
   return (
     <div className="page page--command command-prototype" data-testid="command-center-page">
@@ -1569,6 +1609,71 @@ export default function CommandCenter({ studio }) {
           </section>
 
           <section className="command-prototype__grid command-prototype__grid--duo">
+            <div id="governed-actions">
+              <Panel
+                eyebrow="Local-private action bridge"
+                title="Governed Actions"
+                subtitle="Action requests are validated through mode, schema, capability, and governance checks before being recorded. UI cannot execute commands directly."
+                meta={
+                  <StatusPill status={statusTone(actionBridgeReadiness.status || "UNKNOWN")}>
+                    {actionBridgeReadiness.status || "PENDING"}
+                  </StatusPill>
+                }
+              >
+                {actionBridgeVisible ? (
+                  <div className="command-prototype__detail-list">
+                    {actionBridgeRows.map((item) => (
+                      <div key={item.label} className="command-prototype__detail-row">
+                        <div>
+                          <div className="command-prototype__detail-label">{item.label}</div>
+                          <div className="command-prototype__detail-copy">{item.detail}</div>
+                        </div>
+                        <strong>{item.value}</strong>
+                      </div>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="empty-state">
+                    <div className="empty-state__title">Action bridge snapshot unavailable</div>
+                    <div className="empty-state__body">
+                      Run <span className="mono">npm run action:bridge-demo</span> in local-private mode to generate the action bridge snapshot.
+                    </div>
+                  </div>
+                )}
+                <div className="command-prototype__stack-gap">
+                  <SectionHeading label="CLI command" meta="Run locally — not from the browser." />
+                  <div className="command-prototype__sample-card">
+                    <div className="command-prototype__detail-label">Refresh action bridge</div>
+                    <strong className="mono">npm run action:bridge-demo</strong>
+                    <div className="command-prototype__detail-copy">
+                      Creates one governed action request and routes it through local governance.
+                      Does not execute backend tests.
+                    </div>
+                  </div>
+                </div>
+                {actionBridgeRecentActions.length > 0 && (
+                  <div className="command-prototype__stack-gap">
+                    <SectionHeading label="Recent action requests" meta="Read-only." />
+                    <div className="command-prototype__detail-list">
+                      {actionBridgeRecentActions.map((record) => (
+                        <div key={record.actionId} className="command-prototype__detail-row">
+                          <div>
+                            <div className="command-prototype__detail-label mono">
+                              {record.actionId.slice(0, 8)}
+                            </div>
+                            <div className="command-prototype__detail-copy">
+                              {record.actionType} · {record.mode}
+                            </div>
+                          </div>
+                          <StatusPill status={statusTone(record.status)}>{record.status}</StatusPill>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </Panel>
+            </div>
+
             <div id="safety">
               <Panel
                 eyebrow="Safety Center"

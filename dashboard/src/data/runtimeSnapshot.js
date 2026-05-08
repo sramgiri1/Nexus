@@ -6,7 +6,7 @@ export const runtimeSnapshot = {
   "snapshotVersion": "1.0",
   "source": "generated-from-local-state-runtime",
   "readOnly": true,
-  "generatedAt": "2026-05-08T09:33:26.186Z",
+  "generatedAt": "2026-05-08T10:00:50.385Z",
   "runtimeState": {
     "tasks": {
       "total": 16,
@@ -74,18 +74,51 @@ export const runtimeSnapshot = {
       ]
     },
     "evidence": {
-      "total": 13,
+      "total": 17,
       "byResult": {
         "INFO": 5,
-        "PASS": 8
+        "PASS": 12
       },
       "byType": {
         "private_project_inventory": 5,
         "validation_planning_completed": 5,
         "failure_analysis": 2,
-        "controlled_local_execution": 1
+        "controlled_local_execution": 1,
+        "action_bridge_routing": 4
       },
       "recent": [
+        {
+          "evidenceId": "ac8c469b-f0ef-4d65-8dac-958aa4de576b",
+          "type": "action_bridge_routing",
+          "agentId": "system",
+          "result": "PASS",
+          "dataClassification": "confidential",
+          "createdAt": "2026-05-08T10:00:40.256Z"
+        },
+        {
+          "evidenceId": "fb5535a5-c246-4e36-9cd3-ae1b75d9009b",
+          "type": "action_bridge_routing",
+          "agentId": "system",
+          "result": "PASS",
+          "dataClassification": "confidential",
+          "createdAt": "2026-05-08T10:00:09.039Z"
+        },
+        {
+          "evidenceId": "2e833bce-f3ea-451f-964f-4b26f801f2d1",
+          "type": "action_bridge_routing",
+          "agentId": "system",
+          "result": "PASS",
+          "dataClassification": "confidential",
+          "createdAt": "2026-05-08T09:59:23.423Z"
+        },
+        {
+          "evidenceId": "71865430-e003-4aba-ba4a-d5a6027f34ae",
+          "type": "action_bridge_routing",
+          "agentId": "system",
+          "result": "PASS",
+          "dataClassification": "confidential",
+          "createdAt": "2026-05-08T09:54:39.561Z"
+        },
         {
           "evidenceId": "ddbf1de8-0b1c-4ec7-ade9-05dcc249b212",
           "type": "private_project_inventory",
@@ -93,43 +126,11 @@ export const runtimeSnapshot = {
           "result": "INFO",
           "dataClassification": "unknown",
           "createdAt": "2026-05-08T09:32:40.140Z"
-        },
-        {
-          "evidenceId": "a8341fe3-de15-40b9-938c-1203cf64fc65",
-          "type": "validation_planning_completed",
-          "agentId": "",
-          "result": "PASS",
-          "dataClassification": "unknown",
-          "createdAt": "2026-05-08T09:32:38.526Z"
-        },
-        {
-          "evidenceId": "f5a2a17f-fdc1-49c4-883a-2dd86f57fcf2",
-          "type": "controlled_local_execution",
-          "agentId": "core",
-          "result": "PASS",
-          "dataClassification": "internal",
-          "createdAt": "2026-05-08T02:04:46.348Z"
-        },
-        {
-          "evidenceId": "ea138fea-1055-4dcf-bc5a-b966fd5d8d6a",
-          "type": "private_project_inventory",
-          "agentId": "",
-          "result": "INFO",
-          "dataClassification": "unknown",
-          "createdAt": "2026-05-08T01:20:32.321Z"
-        },
-        {
-          "evidenceId": "cf80dc97-266f-4ddb-a2a2-4f82cccaa07a",
-          "type": "validation_planning_completed",
-          "agentId": "",
-          "result": "PASS",
-          "dataClassification": "unknown",
-          "createdAt": "2026-05-08T01:20:29.745Z"
         }
       ]
     },
     "audit": {
-      "total": 51,
+      "total": 55,
       "byEventType": {
         "private_project_inventory_completed": 5,
         "task_state_changed": 30,
@@ -137,51 +138,52 @@ export const runtimeSnapshot = {
         "controlled_validation_completed": 5,
         "local_write_boundary_check": 1,
         "test_failure_analysis_completed": 2,
-        "controlled_local_execution": 3
+        "controlled_local_execution": 3,
+        "action_bridge_routing_evaluated": 4
       },
       "recent": [
+        {
+          "auditId": "cb048f24-1e87-4577-8435-d493d0a50887",
+          "eventType": "action_bridge_routing_evaluated",
+          "actorId": "system",
+          "taskId": "pvt-action-bridge-e32b6d70",
+          "createdAt": "2026-05-08T10:00:40.256Z"
+        },
+        {
+          "auditId": "337da02b-a3b4-4ce7-ad39-e3715d9c637c",
+          "eventType": "action_bridge_routing_evaluated",
+          "actorId": "system",
+          "taskId": "pvt-action-bridge-194580f2",
+          "createdAt": "2026-05-08T10:00:09.039Z"
+        },
+        {
+          "auditId": "3a66f7df-a0da-45c9-88b6-4918f63c4301",
+          "eventType": "action_bridge_routing_evaluated",
+          "actorId": "system",
+          "taskId": "pvt-action-bridge-f571fc3e",
+          "createdAt": "2026-05-08T09:59:23.423Z"
+        },
+        {
+          "auditId": "e54e4cfd-e2ca-425a-8b8a-c802bf8d6260",
+          "eventType": "action_bridge_routing_evaluated",
+          "actorId": "system",
+          "taskId": "pvt-action-bridge-dad7e62c",
+          "createdAt": "2026-05-08T09:54:39.561Z"
+        },
         {
           "auditId": "0569cebe-ed7e-4241-a847-d4fd598fca93",
           "eventType": "private_project_inventory_completed",
           "actorId": "system",
           "taskId": "",
           "createdAt": "2026-05-08T09:32:40.141Z"
-        },
-        {
-          "auditId": "c03d0b4c-70dd-444e-82b7-44f41936132c",
-          "eventType": "validation_plan_created",
-          "actorId": "shepherd",
-          "taskId": "",
-          "createdAt": "2026-05-08T09:32:38.527Z"
-        },
-        {
-          "auditId": "fcfeea37-775d-4555-841d-d203b84801bf",
-          "eventType": "task_state_changed",
-          "actorId": "shepherd",
-          "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
-          "createdAt": "2026-05-08T09:32:38.526Z"
-        },
-        {
-          "auditId": "a251250e-5ab7-4183-99df-0b99e17bcc31",
-          "eventType": "task_state_changed",
-          "actorId": "shepherd",
-          "taskId": "6230ba2b-ad89-4c50-9bec-dd7dab546bb7",
-          "createdAt": "2026-05-08T09:32:38.525Z"
-        },
-        {
-          "auditId": "687b0b93-92b1-4343-8408-2a3f4ae9bb72",
-          "eventType": "task_state_changed",
-          "actorId": "auditor",
-          "taskId": "cef1de3e-e861-40fb-aa69-eebf0ee53d90",
-          "createdAt": "2026-05-08T09:32:33.888Z"
         }
       ]
     },
     "events": {
-      "total": 17,
+      "total": 21,
       "byRuntime": {
         "local": 5,
-        "unknown": 9,
+        "unknown": 13,
         "node-local": 3
       },
       "byEventType": {
@@ -190,9 +192,42 @@ export const runtimeSnapshot = {
         "governed_test_failure_analysis_completed": 2,
         "governed_command_classification_completed": 2,
         "task_state_transition": 2,
-        "controlled_local_execution": 1
+        "controlled_local_execution": 1,
+        "action_bridge_request_routed": 4
       },
       "recent": [
+        {
+          "eventId": "db844010-5847-4cff-adf9-b838a875e4e4",
+          "eventType": "action_bridge_request_routed",
+          "runtime": "",
+          "agentId": "system",
+          "taskId": "pvt-action-bridge-e32b6d70",
+          "createdAt": "2026-05-08T10:00:40.257Z"
+        },
+        {
+          "eventId": "5f6bd56f-6b21-4f69-8243-6aa603dee688",
+          "eventType": "action_bridge_request_routed",
+          "runtime": "",
+          "agentId": "system",
+          "taskId": "pvt-action-bridge-194580f2",
+          "createdAt": "2026-05-08T10:00:09.040Z"
+        },
+        {
+          "eventId": "922510c3-d5cb-4c3c-91e7-cdfe71da1f76",
+          "eventType": "action_bridge_request_routed",
+          "runtime": "",
+          "agentId": "system",
+          "taskId": "pvt-action-bridge-f571fc3e",
+          "createdAt": "2026-05-08T09:59:23.423Z"
+        },
+        {
+          "eventId": "f7f86bae-feb7-4d70-a7c6-c17a4e88301b",
+          "eventType": "action_bridge_request_routed",
+          "runtime": "",
+          "agentId": "system",
+          "taskId": "pvt-action-bridge-dad7e62c",
+          "createdAt": "2026-05-08T09:54:39.562Z"
+        },
         {
           "eventId": "1a3c49a6-764b-4f3a-ba1a-19ddc16df723",
           "eventType": "governed_validation_planning_completed",
@@ -200,38 +235,6 @@ export const runtimeSnapshot = {
           "agentId": "shepherd",
           "taskId": "pvt-backend-validation-plan",
           "createdAt": "2026-05-08T09:32:38.527Z"
-        },
-        {
-          "eventId": "6aa02063-3ec7-4c71-a091-7d3650cac2f6",
-          "eventType": "governed_command_classification_completed",
-          "runtime": "",
-          "agentId": "auditor",
-          "taskId": "pvt-backend-cmd-classification",
-          "createdAt": "2026-05-08T09:32:33.889Z"
-        },
-        {
-          "eventId": "32607ae3-1cdf-488f-9a8d-71118c58c68a",
-          "eventType": "governed_controlled_validation_completed",
-          "runtime": "",
-          "agentId": "auditor",
-          "taskId": "pvt-backend-controlled-validation",
-          "createdAt": "2026-05-08T09:32:17.734Z"
-        },
-        {
-          "eventId": "6e43eeed-2a2b-4aeb-8ffb-8d33740e688f",
-          "eventType": "task_state_transition",
-          "runtime": "node-local",
-          "agentId": "core",
-          "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
-          "createdAt": "2026-05-08T02:04:46.348Z"
-        },
-        {
-          "eventId": "07522af8-0cc2-42b6-b3e4-592d0155c8a9",
-          "eventType": "controlled_local_execution",
-          "runtime": "node-local",
-          "agentId": "core",
-          "taskId": "df5808e3-6e66-44e7-b613-7d572a1660e0",
-          "createdAt": "2026-05-08T02:04:46.348Z"
         }
       ]
     },
