@@ -84,6 +84,10 @@ test("home route renders command center with local read-only wiring", async ({ p
   // P33.7 — screenshot parity assertions
   await expect(page.getByText("Founder Intent")).toBeVisible();
 
+  // P34 — mission composer section
+  await expect(page.locator("#mission-composer")).toContainText("Start a Mission");
+  await expect(page.locator("#mission-composer")).toContainText("Generate Plan");
+
   expect(errors).toEqual([]);
 });
 

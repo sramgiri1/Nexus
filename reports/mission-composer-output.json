@@ -1,0 +1,49 @@
+{
+  "reportVersion": "1.0",
+  "mode": "local-private",
+  "projectId": "private-project-01",
+  "projectLabel": "Private Project",
+  "missionText": "Build the private project through governed planning, validation, privacy review, and controlled implementation.",
+  "generatedAt": "2026-05-08T20:21:08.730Z",
+  "source": "command_center_mission_composer",
+  "ownerAgent": "nexus",
+  "plannerAgent": "shepherd",
+  "contract": {
+    "contractId": "0b3a3a9e-c621-4cee-a22c-c0f71199d5a3",
+    "path": "contracts/missions/private-project-mission-contract.json"
+  },
+  "taskPlan": {
+    "taskCount": 6,
+    "path": "contracts/missions/private-project-task-plan.json"
+  },
+  "localRecords": {
+    "task": {
+      "taskId": "df4fee07-6780-4d4a-983f-b76be3b7dc19"
+    },
+    "evidence": {
+      "evidenceId": "fbfc60b4-dc80-4343-8123-a9f2435d5fa9"
+    },
+    "audit": {
+      "auditId": "1295154f-122b-42da-a3ff-b3c1d8858f46"
+    },
+    "runtimeEvent": {
+      "eventId": "b0f34f35-a5f4-4078-9f46-06462d7d5b64"
+    }
+  },
+  "governance": {
+    "mutationAllowed": false,
+    "providerCallsAllowed": false,
+    "networkCallsAllowed": false,
+    "dbAccessAllowed": false,
+    "buildExecutionAllowed": false,
+    "testExecutionAllowed": false,
+    "localTaskRecordAllowed": true,
+    "evidenceAllowed": true,
+    "auditAllowed": true,
+    "runtimeEventAllowed": true
+  },
+  "result": "PASS",
+  "errors": [],
+  "warnings": [],
+  "nextAction": "Create governed project brief from mission composer"
+}

@@ -849,6 +849,46 @@ export default function CommandCenter({ studio }) {
             </div>
           </section>
 
+          {/* P34 — Mission Composer */}
+          <section id="mission-composer" className="cc-mission-composer">
+            <div className="cc-mc-header">
+              <div>
+                <div className="cc-mc-header__title">Start a Mission</div>
+                <div className="cc-mc-header__sub">Describe what you want to build — the governed OS will generate a plan.</div>
+              </div>
+              <div className="cc-mc-metadata">
+                <span className="cc-mc-meta-item">Contract: contracts/missions/private-project-mission-contract.json</span>
+                <span className="cc-mc-meta-sep">·</span>
+                <span className="cc-mc-meta-item">Plan: contracts/missions/private-project-task-plan.json</span>
+                <span className="cc-mc-meta-sep">·</span>
+                <span className="cc-mc-meta-item">6 tasks generated</span>
+              </div>
+            </div>
+
+            <div className="cc-mc-input-area">
+              <div className="cc-mc-input-label">Mission</div>
+              <div className="cc-mc-input-display">
+                Build the private project through governed planning, validation, privacy review, and controlled implementation.
+              </div>
+            </div>
+
+            <div className="cc-mc-buttons">
+              <button className="cc-mc-btn cc-mc-btn--disabled" disabled aria-disabled="true">
+                Generate Plan
+              </button>
+              <button className="cc-mc-btn cc-mc-btn--disabled" disabled aria-disabled="true">
+                Create Project Brief
+              </button>
+              <button className="cc-mc-btn cc-mc-btn--disabled" disabled aria-disabled="true">
+                Start Governed Run
+              </button>
+            </div>
+
+            <div className="cc-mc-footer-note">
+              Requires governed action bridge · Next: Create governed project brief from mission composer
+            </div>
+          </section>
+
           {/* P33.7 — Enhanced KPI row with sparklines */}
           <section className="cc-kpi-enhanced" aria-label="KPI metrics">
             {KPI_ENHANCED.map((kpi) => (

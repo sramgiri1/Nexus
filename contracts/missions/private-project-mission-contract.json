@@ -1,0 +1,38 @@
+{
+  "contractId": "0b3a3a9e-c621-4cee-a22c-c0f71199d5a3",
+  "contractVersion": "1.0",
+  "contractType": "mission",
+  "ownerAgent": "nexus",
+  "plannerAgent": "shepherd",
+  "projectId": "private-project-01",
+  "projectLabel": "Private Project",
+  "missionText": "Build the private project through governed planning, validation, privacy review, and controlled implementation.",
+  "requestedBy": {
+    "userId": "local-operator",
+    "role": "founder",
+    "authType": "local"
+  },
+  "mode": "local-private",
+  "source": "command_center_mission_composer",
+  "createdAt": "2026-05-08T20:21:08.725Z",
+  "constraints": {
+    "mutationAllowed": false,
+    "providerCallsAllowed": false,
+    "networkCallsAllowed": false,
+    "dbAccessAllowed": false,
+    "buildExecutionAllowed": false,
+    "testExecutionAllowed": false
+  },
+  "governance": {
+    "localTaskRecordAllowed": true,
+    "evidenceAllowed": true,
+    "auditAllowed": true,
+    "runtimeEventAllowed": true,
+    "requiresPrivateProjectMode": true,
+    "requiresTrafficPlane": true,
+    "requiresStateMachine": true,
+    "requiresLocalWriteBoundary": true
+  },
+  "privateProject": true,
+  "redacted": true
+}

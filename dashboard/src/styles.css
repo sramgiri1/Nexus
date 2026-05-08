@@ -4265,3 +4265,108 @@ a {
     grid-template-columns: minmax(0, 1fr);
   }
 }
+
+/* ── P34 Mission Composer ── */
+.cc-mission-composer {
+  background: rgba(10, 22, 38, 0.82);
+  border: 1px solid rgba(116, 226, 221, 0.28);
+  border-radius: var(--radius-md);
+  padding: 20px 24px 16px;
+  margin: 0 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.cc-mc-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.cc-mc-header__title {
+  font-family: "Bricolage Grotesque", system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--teal);
+  letter-spacing: -0.01em;
+  margin-bottom: 3px;
+}
+
+.cc-mc-header__sub {
+  font-size: 12px;
+  color: var(--text-dim);
+  max-width: 520px;
+}
+
+.cc-mc-metadata {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+}
+
+.cc-mc-meta-item {
+  font-size: 10px;
+  font-family: "IBM Plex Mono", monospace;
+  color: var(--text-faint);
+}
+
+.cc-mc-meta-sep {
+  font-size: 10px;
+  color: var(--text-faint);
+  opacity: 0.5;
+}
+
+.cc-mc-input-area {
+  background: rgba(7, 13, 24, 0.72);
+  border: 1px solid rgba(112, 146, 208, 0.14);
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+}
+
+.cc-mc-input-label {
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--text-faint);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 6px;
+}
+
+.cc-mc-input-display {
+  font-size: 13px;
+  color: var(--text-soft);
+  line-height: 1.55;
+}
+
+.cc-mc-buttons {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.cc-mc-btn {
+  background: rgba(116, 226, 221, 0.08);
+  border: 1px solid rgba(116, 226, 221, 0.22);
+  border-radius: 8px;
+  color: var(--teal);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 7px 14px;
+  cursor: default;
+  letter-spacing: 0.01em;
+}
+
+.cc-mc-btn--disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.cc-mc-footer-note {
+  font-size: 11px;
+  color: var(--text-faint);
+  font-style: italic;
+}
