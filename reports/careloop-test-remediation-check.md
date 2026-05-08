@@ -1,27 +1,26 @@
-# NEXUS CareLoop Backend Validation Check
+# NEXUS CareLoop Test Remediation Check
 
 ## Metadata
 
-- Generated at: 2026-05-08T01:18:05.041Z
+- Generated at: 2026-05-08T01:17:35.652Z
 - Validation branch: arch/careloop-completion-insights-remediation
 - Validation HEAD: d007ac4
 - Note: Validation HEAD is the commit checked out when the report was generated.
 
 Modules: PASS
 Exports: PASS
-Policies: PASS
+Policy: PASS
 Contract: PASS
-Allowlist: PASS
-Preflight: PASS
-Execution: PASS
-Reports: PASS
+Failure analysis: PASS
+Remediation plan: PASS
 Governed local path: PASS
+Optional fix safety: PASS
 Public safety: PASS
-No forbidden changes: FAIL
+No forbidden changes: PASS
 Formatting/readability: PASS
 
 ## Failures
 
-- Private project files were modified.
+- None
 
-Result: FAIL
+Result: PASS

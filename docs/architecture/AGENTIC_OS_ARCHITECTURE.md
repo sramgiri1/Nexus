@@ -718,3 +718,8 @@ controlled local execution path. The AUDITOR `verification.code_quality_gate`
 task ran `npm test` with a command allowlist check, preflight, and `spawnSync`
 with minimal env (no secrets inherited). Output was captured, redacted, and
 hashed. No mutation detected.
+
+Phase 31-LOCAL investigated and remediated one failing test surfaced by P30.
+Root cause was classified as a `date_window_boundary_bug` (high confidence).
+A narrow 1-line patch was applied to the private-project backend. All 58 tests
+pass after the fix was validated through the same governed execution path.

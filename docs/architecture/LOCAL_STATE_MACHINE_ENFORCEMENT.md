@@ -102,3 +102,10 @@ P30-LOCAL ran the AUDITOR controlled validation task through the same state
 machine enforcement layer. The `controlled_validation` task transitioned
 `queued → running → implementation_done`. The first approved backend command
 (`npm test`) executed under NEXUS governance. No mutation detected.
+
+## P31 — Private-project test failure remediation
+
+P31-LOCAL ran the AUDITOR remediation task through the state machine layer.
+The `test_failure_remediation` task transitioned `queued → running →
+implementation_done`. A narrow source fix was applied and validated. All
+58 tests pass.

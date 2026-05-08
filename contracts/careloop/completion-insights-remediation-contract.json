@@ -1,0 +1,62 @@
+{
+  "contractVersion": "1.0",
+  "contractType": "task",
+  "projectId": "careloop",
+  "privateProject": true,
+  "mode": "local-private",
+  "taskId": "careloop-completion-insights-remediation",
+  "title": "Investigate CareLoop completion insights test failure",
+  "objective": "Analyze and remediate the failing completion insights backend test through NEXUS governance.",
+  "sourceAgent": "auditor",
+  "targetAgent": "core",
+  "capabilityId": "implementation.backend_code",
+  "riskLevel": "medium",
+  "dataClassification": "confidential",
+  "mutationAllowed": true,
+  "mutationScope": "narrow_fix_only",
+  "buildExecutionAllowed": false,
+  "testExecutionAllowed": true,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "dependencyInstallAllowed": false,
+  "allowedRoots": [
+    "projects/careloop/src",
+    "projects/careloop/test"
+  ],
+  "forbiddenActions": [
+    "modify private project schema",
+    "run npm install",
+    "run Prisma migrate/reset/seed",
+    "start server",
+    "call providers",
+    "call network",
+    "access external DB",
+    "read .env",
+    "modify iOS project"
+  ],
+  "acceptanceCriteria": [
+    "Failure root cause is classified",
+    "Remediation plan is produced",
+    "No broad rewrite is performed",
+    "If a fix is applied, it is narrow and evidence-backed",
+    "npm test result is captured through governed validation path",
+    "Evidence and audit records are redacted and linked"
+  ],
+  "requiredEvidence": [
+    "backend_validation_failure",
+    "failure_analysis",
+    "remediation_plan",
+    "optional_patch_summary",
+    "controlled_test_result",
+    "audit_event",
+    "runtime_event"
+  ],
+  "appliedFix": {
+    "files": [
+      "projects/careloop/src/routes/circles.js"
+    ],
+    "summary": "Replace new Date() with new Date(Date.now()) in completion insights route to respect Date.now mock in tests."
+  },
+  "createdAt": "2026-05-08T01:17:30.846Z"
+}

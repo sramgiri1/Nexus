@@ -111,6 +111,138 @@
       "createdAt": "2026-05-08T01:00:06.758Z",
       "updatedAt": "2026-05-08T01:00:06.760Z",
       "redacted": true
+    },
+    {
+      "taskId": "e9d0eb23-469a-4c53-9ada-89f428f63e27",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "core",
+      "taskType": "test_failure_remediation",
+      "objective": "Governed test failure analysis task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "implementation.backend_code",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "f0bdb972-f3a3-410c-9737-5cd18e10c93d",
+        "4eb2748d-0c0f-4a37-884a-a6f7c566f60d"
+      ],
+      "createdAt": "2026-05-08T01:17:02.013Z",
+      "updatedAt": "2026-05-08T01:17:02.018Z",
+      "redacted": true
+    },
+    {
+      "taskId": "41cd1041-2f8c-4bae-84cf-a7e7c3b4c995",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "core",
+      "taskType": "test_failure_remediation",
+      "objective": "Governed test failure analysis task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "implementation.backend_code",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "a65dbfb4-394f-48f8-8b43-326fda2f5fca",
+        "e125676e-0f79-4f3a-b10b-b3d86753d496"
+      ],
+      "createdAt": "2026-05-08T01:17:30.841Z",
+      "updatedAt": "2026-05-08T01:17:30.844Z",
+      "redacted": true
+    },
+    {
+      "taskId": "a2300e2d-f4e1-4bd6-bde9-bae0f3c3dad7",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "auditor",
+      "taskType": "controlled_validation",
+      "objective": "Governed controlled validation task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "e4f1b910-abca-4fac-843f-194215046628",
+        "d60bc6a3-7037-48f3-be03-cbd5a985954a"
+      ],
+      "createdAt": "2026-05-08T01:17:32.041Z",
+      "updatedAt": "2026-05-08T01:17:32.042Z",
+      "redacted": true
+    },
+    {
+      "taskId": "c2c52eea-4c71-496f-baad-2cec7fdc80c6",
+      "projectId": "private-project-01",
+      "sourceAgent": "auditor",
+      "targetAgent": "auditor",
+      "taskType": "controlled_validation",
+      "objective": "Governed controlled validation task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "b42ed1b5-dd35-47fe-9a61-d90c3e54235c",
+        "5eb91395-21f4-45bf-8eca-cbae17fc544a"
+      ],
+      "createdAt": "2026-05-08T01:17:59.050Z",
+      "updatedAt": "2026-05-08T01:17:59.052Z",
+      "redacted": true
+    },
+    {
+      "taskId": "3314edc2-5ada-4de8-b5b0-e86deef5060b",
+      "projectId": "private-project-01",
+      "sourceAgent": "shepherd",
+      "targetAgent": "auditor",
+      "taskType": "command_classification",
+      "objective": "Governed command classification task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "verification.code_quality_gate",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "699945ae-b2d1-4466-a108-14d40c980c13",
+        "39e28667-4385-47e9-8d2c-411cd52d3081"
+      ],
+      "createdAt": "2026-05-08T01:20:26.462Z",
+      "updatedAt": "2026-05-08T01:20:26.466Z",
+      "redacted": true
+    },
+    {
+      "taskId": "6e6e9601-6bbb-4747-bc67-13199840aa98",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "validation_planning",
+      "objective": "Governed validation planning task",
+      "state": "implementation_done",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "orchestration.plan_flow",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [
+        "dc69545b-586d-44d6-8b3a-f6b7993e68af",
+        "fcf7016c-4dc9-42a7-8f56-c28541cf58db"
+      ],
+      "createdAt": "2026-05-08T01:20:29.743Z",
+      "updatedAt": "2026-05-08T01:20:29.745Z",
+      "redacted": true
     }
   ]
 }

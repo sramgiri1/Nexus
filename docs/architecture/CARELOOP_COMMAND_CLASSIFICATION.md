@@ -108,10 +108,11 @@ P30-LOCAL executed `npm test` (the P30-recommended command from this classificat
 Allowlist check, preflight, and controlled execution all passed governance checks.
 Output captured, redacted, and hashed. No mutation. Exit code 1 (test result).
 
-## Next Phase
+## P31 Status
 
-P31-LOCAL: Prisma `generate` execution. Requires dependency install approval before
-running through the controlled local execution path.
+P31-LOCAL remediated the one failing test from P30 controlled validation. Root
+cause: `date_window_boundary_bug` in the completion insights route. Fix applied.
+All 58 tests pass. Next: Command Center private project validation view.
 
 ## Public and Demo Surfaces
 

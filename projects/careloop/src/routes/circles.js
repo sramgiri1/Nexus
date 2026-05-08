@@ -126,7 +126,7 @@ export default async function circles(app) {
       if (!recipient) return reply.code(404).send({ error: "Recipient not found" });
     }
 
-    const now = new Date();
+    const now = new Date(Date.now());
     const since = new Date(now);
     since.setUTCHours(0, 0, 0, 0);
     since.setUTCDate(since.getUTCDate() - (periodDays - 1));

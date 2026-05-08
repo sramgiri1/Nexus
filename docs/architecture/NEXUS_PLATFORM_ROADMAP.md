@@ -56,44 +56,46 @@ belongs in separate private repos.
 - Phase 28-LOCAL Private project first governed validation task
 - Phase 29-LOCAL Private project backend command classification
 - Phase 30-LOCAL Private project backend controlled validation
+- Phase 31-LOCAL Private project test failure remediation
 
 ---
 
 ## Current Phase
 
-### Phase 30-LOCAL — Private Project Backend Controlled Validation
+### Phase 31-LOCAL — Private Project Test Failure Remediation
 
 Goal:
 
-- execute the first approved backend command through the NEXUS governed local
-  execution path
+- investigate and remediate the one failing test surfaced by P30 controlled
+  validation
 
 Deliverables:
 
-- command execution allowlist (`policy/command-execution-allowlist.json`)
-- command preflight module (script exists, deps, env check)
-- controlled command runner (`spawnSync`, minimal env, output redaction)
-- controlled validation module (allowlist → preflight → execute)
-- task contract with `testExecutionAllowed: true`
-- machine-readable JSON and markdown execution reports
+- failure analysis module with root-cause classification
+- remediation plan module with optional narrow-fix execution
+- task contract with `mutationAllowed: true`, `mutationScope: narrow_fix_only`
+- machine-readable analysis and plan JSON/markdown reports
+- narrow 1-line source patch (applied, high confidence)
+- re-validation through governed `npm test` path (PASS, 58/58)
 - local task record routed through governed path
 - redacted evidence, audit, and runtime event records
 - mode boundary: `local-private` or `test` only
 
 Non-goals:
 
-- no npm install, Prisma migrate/reset/seed, or dev/start/studio commands
+- no broad refactor
+- no schema changes, no dependency changes, no migrations
 - no server startup
 - no provider, network, DB, or API calls
-- no private project source mutation
+- no iOS project modification
 
 Validation checks:
 
-- allowlist permits only `npm test` in the private-project backend directory
-- preflight blocks if project root or deps missing
-- safety flags all false
-- output redaction strips keys/tokens/URLs
-- no mutation detected after execution
+- root cause category and confidence in analysis report
+- plan strategy matches confidence level
+- no private project tree mutation from checker itself
+- safety flags all false for install/provider/network/DB/API/migration
+- fix limited to allowed roots in the private-project backend source
 - checker snapshots and restores runtime files during mode boundary tests
 - public/demo surfaces remain DemoApp-only or "private project" wording
 

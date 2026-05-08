@@ -1,0 +1,75 @@
+{
+  "reportVersion": "1.0",
+  "mode": "local-private",
+  "projectId": "careloop",
+  "privateProject": true,
+  "generatedAt": "2026-05-08T01:17:32.044Z",
+  "rootCauseCategory": "date_window_boundary_bug",
+  "confidence": "high",
+  "strategy": "apply_narrow_fix",
+  "fixApplied": true,
+  "fixDetails": {
+    "changedFile": "projects/careloop/src/routes/circles.js",
+    "from": "const now = new Date();",
+    "to": "const now = new Date(Date.now());"
+  },
+  "validationAfterFix": {
+    "status": "PASS",
+    "exitCode": 0,
+    "durationMs": 1190,
+    "mutationDetected": false
+  },
+  "remediation": {
+    "strategy": "apply_narrow_fix",
+    "summary": "Replace new Date() with new Date(Date.now()) in completion insights route to respect Date.now mock in tests.",
+    "targetFiles": [
+      "projects/careloop/src/routes/circles.js"
+    ],
+    "allowedActions": [
+      "read private project source files",
+      "write narrow single-file patch if confidence is high",
+      "run npm test through controlled validation path",
+      "emit evidence/audit/runtime records"
+    ],
+    "forbiddenActions": [
+      "npm install",
+      "Prisma migrate/reset/seed",
+      "start server",
+      "call providers",
+      "call network",
+      "access external DB",
+      "read .env",
+      "modify iOS project",
+      "broad refactor",
+      "add dependencies",
+      "change schema"
+    ],
+    "validationCommands": [
+      "NEXUS_MODE=local-private npm run careloop:backend-validate"
+    ]
+  },
+  "risk": {
+    "level": "low",
+    "reasons": [
+      "1-line change",
+      "well-scoped to date window source",
+      "no schema/dependency change"
+    ]
+  },
+  "safety": {
+    "providerCalls": false,
+    "networkCalls": false,
+    "dbAccess": false,
+    "apiServer": false,
+    "dependencyInstall": false,
+    "migration": false
+  },
+  "recommendedNextStep": {
+    "title": "Verify fix with controlled npm test",
+    "phase": "P31",
+    "command": "NEXUS_MODE=local-private npm run careloop:backend-validate",
+    "requiresApproval": false
+  },
+  "warnings": [],
+  "errors": []
+}

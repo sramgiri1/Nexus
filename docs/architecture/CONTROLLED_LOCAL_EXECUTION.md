@@ -109,3 +109,10 @@ local execution path. The command runner uses `spawnSync` with a minimal env
 (no secrets inherited), output redaction, and before/after project tree
 comparison. Evidence, audit, and runtime event records were appended through
 the write-guarded path. No mutation detected.
+
+## P31 — Private-project test failure remediation
+
+P31-LOCAL applied a narrow source fix after high-confidence root-cause analysis.
+The fix was validated by re-running the controlled execution path. All tests
+now pass. The controlled execution path proved it can surface bugs and confirm
+their resolution without provider calls, DB access, or broad refactoring.

@@ -149,3 +149,11 @@ P30-LOCAL executed the first approved backend command in `local-private` mode.
 The AUDITOR `verification.code_quality_gate` task ran `npm test` through the
 controlled local execution path: allowlist check → preflight → `spawnSync` with
 minimal env. Output was captured, redacted, and hashed. No mutation detected.
+
+## P31 — Private-project test failure remediation
+
+P31-LOCAL investigated and remediated one failing test from P30. Root cause
+was classified as a `date_window_boundary_bug` with high confidence. A narrow
+1-line patch was applied to the private-project backend source. All tests now
+pass (58/58). Evidence, audit, and runtime event records appended through
+write-guarded path.

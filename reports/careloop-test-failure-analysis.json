@@ -1,0 +1,37 @@
+{
+  "reportVersion": "1.0",
+  "mode": "local-private",
+  "projectId": "careloop",
+  "privateProject": true,
+  "generatedAt": "2026-05-08T01:17:30.845Z",
+  "failure": {
+    "testFile": "projects/careloop/test/sprint2.test.js",
+    "line": 1888,
+    "route": "GET /circles/:id/insights/completion",
+    "expected": 2,
+    "actual": 0
+  },
+  "rootCauseCategory": "date_window_boundary_bug",
+  "confidence": "high",
+  "evidence": [
+    "Route uses new Date() which ignores Date.now mock",
+    "Test mocks Date.now to 2026-04-29T18:00:00Z",
+    "Real current date (~2026-05-08) places tasks outside 7-day window",
+    "completedAt filter correct; status filter correct; bug is time source only"
+  ],
+  "suspectFiles": [
+    "projects/careloop/src/routes/circles.js"
+  ],
+  "recommendedFix": {
+    "type": "implementation",
+    "files": [
+      "projects/careloop/src/routes/circles.js"
+    ],
+    "summary": "In projects/careloop/src/routes/circles.js line ~129: change 'const now = new Date()' to 'const now = new Date(Date.now())'",
+    "riskLevel": "low",
+    "mutationAllowed": true
+  },
+  "safeToApplyFixNow": true,
+  "warnings": [],
+  "errors": []
+}

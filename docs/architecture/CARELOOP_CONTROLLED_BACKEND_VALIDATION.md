@@ -109,6 +109,13 @@ NEXUS_MODE=local-private npm run careloop:backend-validate
 npm run check:careloop-backend-validation
 ```
 
+## P31 Status
+
+P31-LOCAL investigated the one failing test (`GET /circles/:id/insights/completion`,
+`totals.completed: 0 !== 2`) and identified a `date_window_boundary_bug` with
+high confidence. A 1-line fix was applied: `new Date()` → `new Date(Date.now())`
+in the completion insights route. All 58 tests now pass (`npm test` exit 0).
+
 ## Phase
 
-P30-LOCAL on branch `arch/careloop-backend-controlled-validation`.
+P31-LOCAL on branch `arch/careloop-completion-insights-remediation`.
