@@ -37,7 +37,7 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.locator("#v2-execution-pipeline")).toContainText("Execution Pipeline");
   await expect(page.locator("#v2-activity-stream")).toContainText("Activity Stream");
   await expect(page.getByText("Private Project Validation")).toBeVisible();
-  await expect(page.getByText("58/58")).toBeVisible();
+  await expect(page.locator("#v2-private-validation .ccv2-pv-stat__value").first()).toBeVisible();
   await expect(page.getByText("Evidence and Governance")).toBeVisible();
   await expect(page.getByText("Release Readiness", { exact: true })).toBeVisible();
   await expect(page.getByText("Safety Center")).toBeVisible();
@@ -241,5 +241,77 @@ test("V2 Verification Gates page shows gate status", async ({ page }) => {
   await expect(page.locator(".ccv2-page-head__title")).toContainText("Verification Gates");
   await expect(page.locator(".ccv2-gate-card__name").first()).toBeVisible();
   await expect(page.locator(".nav-rail")).toHaveCount(0);
+  expect(errors).toEqual([]);
+});
+
+test("V2 OS Roadmap page shows both tracks", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+  await expect(page.getByText("Track A")).toBeVisible();
+  await expect(page.getByText("NEXUS OS · P26 → P45")).toBeVisible();
+  await expect(page.getByText("Track B")).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Mission Control page shows private project product progress card", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/");
+  await expect(page.locator(".ccv2-product-card")).toBeVisible();
+  await expect(page.getByText("Product Progress")).toBeVisible();
+  await expect(page.locator(".ccv2-product-card__name")).toBeVisible();
+  await expect(page.getByText("PRD v1.6")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Projects page shows PRD sprint board", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/projects");
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Projects");
+  await expect(page.locator(".ccv2-sprint-board")).toBeVisible();
+  await expect(page.locator(".ccv2-sprint-tile__id").filter({ hasText: "Sprint 1" })).toBeVisible();
+  await expect(page.locator(".ccv2-sprint-tile__id").filter({ hasText: "Sprint 2" })).toBeVisible();
+  await expect(page.getByText("Auth + Onboarding")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Verification Gates page shows PRD-linked gates", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/gates");
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Verification Gates");
+  await expect(page.locator(".ccv2-section-heading").filter({ hasText: "Product Gates" })).toBeVisible();
+  await expect(page.getByText("Backend tests (58/58)")).toBeVisible();
+  await expect(page.getByText("Physical device push")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Safety Center page shows FTC compliance row", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/safety");
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Safety Center");
+  await expect(page.locator(".ccv2-section-heading").filter({ hasText: "Compliance" })).toBeVisible();
+  await expect(page.getByText("FTC Health Breach Notification Rule")).toBeVisible();
+  await expect(page.getByText("PERMANENTLY OFF")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap nav link navigates to roadmap route", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/");
+  await page.getByRole("link", { name: /OS Roadmap/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/roadmap/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+  expect(errors).toEqual([]);
+});
+
+test("private project roadmap shows correct sprint statuses", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "Sprint 1" })).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "Sprint 2" })).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase .ccv2-pill--pass").first()).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase .ccv2-pill--pending").first()).toBeVisible();
   expect(errors).toEqual([]);
 });

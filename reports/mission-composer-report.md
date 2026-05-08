@@ -2,13 +2,13 @@
 
 ## Metadata
 
-- Branch: arch/mission-composer-governed-kickoff
-- HEAD: 74ccc08
-- Generated at: 2026-05-08T20:21:08.730Z
+- Branch: arch/command-center-mission-action-bridge
+- HEAD: 661ea83
+- Generated at: 2026-05-08T22:41:39.614Z
 
 ## Mission
 
-Build the private project through governed planning, validation, privacy review, and controlled implementation.
+Check mission action bridge validation run.
 
 ## Governance
 
@@ -35,10 +35,10 @@ Agents assigned:
 
 ## Local Records
 
-- Local task: df4fee07-6780-4d4a-983f-b76be3b7dc19
-- Evidence: fbfc60b4-dc80-4343-8123-a9f2435d5fa9
-- Audit: 1295154f-122b-42da-a3ff-b3c1d8858f46
-- Runtime event: b0f34f35-a5f4-4078-9f46-06462d7d5b64
+- Local task: 7a3ac280-6151-4503-a742-57b2d7910600
+- Evidence: a5722a71-a448-44c1-9f6f-7202b3db6adc
+- Audit: 71abec1a-2022-4bed-acf0-2f57367be4ea
+- Runtime event: e4654284-99bf-4a5b-b569-ddec3da0d5fe
 
 ## Warnings
 

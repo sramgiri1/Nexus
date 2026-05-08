@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T10:00:44.737Z
-- Validation branch: arch/command-center-governed-action-bridge
-- Validation HEAD: 710e003
+- Generated at: 2026-05-08T22:41:40.031Z
+- Validation branch: arch/command-center-mission-action-bridge
+- Validation HEAD: 661ea83
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

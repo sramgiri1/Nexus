@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-06T21:14:11.561Z
-- Validation branch: arch/demo-showcase-mode
-- Validation HEAD: 505e309
+- Generated at: 2026-05-08T22:41:40.112Z
+- Validation branch: arch/command-center-mission-action-bridge
+- Validation HEAD: 661ea83
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:

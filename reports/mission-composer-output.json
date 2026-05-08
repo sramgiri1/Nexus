@@ -3,13 +3,13 @@
   "mode": "local-private",
   "projectId": "private-project-01",
   "projectLabel": "Private Project",
-  "missionText": "Build the private project through governed planning, validation, privacy review, and controlled implementation.",
-  "generatedAt": "2026-05-08T20:21:08.730Z",
+  "missionText": "Check mission action bridge validation run.",
+  "generatedAt": "2026-05-08T22:41:39.614Z",
   "source": "command_center_mission_composer",
   "ownerAgent": "nexus",
   "plannerAgent": "shepherd",
   "contract": {
-    "contractId": "0b3a3a9e-c621-4cee-a22c-c0f71199d5a3",
+    "contractId": "0816c249-5575-4ec6-a9b9-291d4aa8c0af",
     "path": "contracts/missions/private-project-mission-contract.json"
   },
   "taskPlan": {
@@ -18,16 +18,16 @@
   },
   "localRecords": {
     "task": {
-      "taskId": "df4fee07-6780-4d4a-983f-b76be3b7dc19"
+      "taskId": "7a3ac280-6151-4503-a742-57b2d7910600"
     },
     "evidence": {
-      "evidenceId": "fbfc60b4-dc80-4343-8123-a9f2435d5fa9"
+      "evidenceId": "a5722a71-a448-44c1-9f6f-7202b3db6adc"
     },
     "audit": {
-      "auditId": "1295154f-122b-42da-a3ff-b3c1d8858f46"
+      "auditId": "71abec1a-2022-4bed-acf0-2f57367be4ea"
     },
     "runtimeEvent": {
-      "eventId": "b0f34f35-a5f4-4078-9f46-06462d7d5b64"
+      "eventId": "e4654284-99bf-4a5b-b569-ddec3da0d5fe"
     }
   },
   "governance": {

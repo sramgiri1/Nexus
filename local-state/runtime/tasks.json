@@ -350,6 +350,44 @@
       "createdAt": "2026-05-08T09:32:38.524Z",
       "updatedAt": "2026-05-08T09:32:38.526Z",
       "redacted": true
+    },
+    {
+      "taskId": "8ff703f6-54e3-431a-bdea-9fee3d336299",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "orchestration.mission_kickoff",
+      "objective": "Governed mission kickoff via mission composer",
+      "state": "queued",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [],
+      "createdAt": "2026-05-08T22:36:18.637Z",
+      "updatedAt": "2026-05-08T22:36:18.637Z",
+      "redacted": true
+    },
+    {
+      "taskId": "7a3ac280-6151-4503-a742-57b2d7910600",
+      "projectId": "private-project-01",
+      "sourceAgent": "nexus",
+      "targetAgent": "shepherd",
+      "taskType": "orchestration.mission_kickoff",
+      "objective": "Governed mission kickoff via mission composer",
+      "state": "queued",
+      "riskLevel": "medium",
+      "blocking": false,
+      "dependsOn": [],
+      "capabilityId": "",
+      "contractId": "",
+      "evidenceIds": [],
+      "auditEventIds": [],
+      "createdAt": "2026-05-08T22:41:39.613Z",
+      "updatedAt": "2026-05-08T22:41:39.613Z",
+      "redacted": true
     }
   ]
 }

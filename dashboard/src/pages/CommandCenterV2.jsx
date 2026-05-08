@@ -20,6 +20,7 @@ const PAGE_LABELS = {
   safety: "Safety Center",
   release: "Release Control",
   projects: "Projects",
+  roadmap: "OS Roadmap",
   batch: "Batch Queue",
   cost: "Cost Center",
   demo: "Demo Mode",
@@ -95,6 +96,7 @@ const NAV_GROUPS_V2 = [
     items: [
       { label: "Release Control", icon: "⬆", path: "/command-center/release" },
       { label: "Projects", icon: "⬤", count: "4", path: "/command-center/projects" },
+      { label: "OS Roadmap", icon: "◈", path: "/command-center/roadmap" },
     ],
   },
   {
@@ -622,8 +624,68 @@ function ReleaseSection({ vm }) {
    PAGE COMPONENTS
    ═══════════════════════════════════════════════════════ */
 
+/* ─── CareLoop Progress Card ─── */
+function CareLoopProgressCard({ clp }) {
+  if (!clp) return null;
+  const sprint1 = clp.sprints[0];
+  return (
+    <div className="ccv2-card ccv2-product-card">
+      <div className="ccv2-product-card__header">
+        <div>
+          <div className="ccv2-eyebrow">Product Progress</div>
+          <div className="ccv2-product-card__name">{clp.productName}</div>
+          <div className="ccv2-product-card__lang">{clp.productLanguage}</div>
+        </div>
+        <div className="ccv2-product-card__badges">
+          <span className="ccv2-pill ccv2-pill--live">PRD {clp.prdStatus.version}</span>
+          {clp.prdStatus.locked && <span className="ccv2-pill ccv2-pill--pass">LOCKED</span>}
+        </div>
+      </div>
+
+      <div className="ccv2-product-card__validation">
+        <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Backend tests</span>
+        <span className="ccv2-mono" style={{ fontSize: 18, fontWeight: 700, color: "var(--v2-green)" }}>
+          {clp.backendValidation.testsPassed}/{clp.backendValidation.totalTests}
+        </span>
+        <span className={`ccv2-pill ccv2-pill--${clp.backendValidation.status === "PASS" ? "pass" : "fail"}`}>
+          {clp.backendValidation.status}
+        </span>
+      </div>
+
+      <div className="ccv2-product-card__sprint-summary">
+        <div className="ccv2-eyebrow" style={{ marginBottom: 4 }}>Current sprint</div>
+        {clp.sprints.map((s) => (
+          <div key={s.id} className={`ccv2-sprint-row ccv2-sprint-row--${s.status.toLowerCase().replace("_", "-")}`}>
+            <span className="ccv2-sprint-row__id">{s.id}</span>
+            <span className="ccv2-sprint-row__focus">{s.focus}</span>
+            <span className="ccv2-sprint-row__status">{s.status}</span>
+            {s.tests !== "—" && <span className="ccv2-mono ccv2-sprint-row__tests">{s.tests}</span>}
+          </div>
+        ))}
+      </div>
+
+      <div className="ccv2-product-card__gaps">
+        <div className="ccv2-eyebrow" style={{ marginBottom: 4 }}>Open gaps</div>
+        {clp.gaps.map((g) => (
+          <div key={g} className="ccv2-gap-row">
+            <span className="ccv2-gap-row__dot" />
+            {g}
+          </div>
+        ))}
+      </div>
+
+      <div style={{ fontSize: 11, color: "var(--v2-muted-2)", marginTop: 8, paddingTop: 8, borderTop: "1px solid rgba(136,255,235,0.06)" }}>
+        Compliance: {clp.compliance.framework} · Clinic integration: {clp.compliance.clinicIntegration}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Mission Control Page ─── */
 function MissionControlPage({ vm }) {
+  const clp = vm.careloopProductProgress;
+  const isLocalPrivate = vm.shell.mode === "local-private";
+
   return (
     <div className="ccv2-content">
       <div className="ccv2-first-fold">
@@ -632,6 +694,8 @@ function MissionControlPage({ vm }) {
         <SprintProgressCard vm={vm} />
         <ReleaseReadinessCard vm={vm} />
       </div>
+
+      {isLocalPrivate && clp && <CareLoopProgressCard clp={clp} />}
 
       <div className="ccv2-kpi-row">
         {vm.metrics.map((m) => (
@@ -830,6 +894,16 @@ function ApprovalsPage({ vm, studio }) {
 function VerificationGatesPage({ vm }) {
   const gates = vm.mission.gates;
   const pv = vm.privateValidation;
+  const clp = vm.careloopProductProgress;
+  const isLocalPrivate = vm.shell.mode === "local-private";
+
+  const prdGates = clp ? [
+    { name: "Backend tests (58/58)", status: "PASS", detail: "AUDITOR · npm test" },
+    { name: "Physical device push", status: "OPEN", detail: "Sprint 2 · pending" },
+    { name: "Public invite hardening", status: "OPEN", detail: "Sprint 4 planned" },
+    { name: "Paid entitlement gate", status: "OPEN", detail: "Post-launch" },
+    { name: "Privacy incident response", status: "IN_PROGRESS", detail: "Playbook in progress" },
+  ] : [];
 
   return (
     <div className="ccv2-content">
@@ -860,6 +934,23 @@ function VerificationGatesPage({ vm }) {
             <div style={{ fontSize: 11, color: "var(--v2-muted)" }}>Overall: {pv.overall} · Status: {pv.backendStatus}</div>
           </div>
         </div>
+
+        {isLocalPrivate && prdGates.length > 0 && (
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Product Gates · CareLoop PRD {clp.prdStatus.version}</div>
+            <div className="ccv2-prd-gate-list" style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+              {prdGates.map((g) => (
+                <div key={g.name} className="ccv2-prd-gate-row">
+                  <div className="ccv2-prd-gate-row__name">{g.name}</div>
+                  <div className="ccv2-prd-gate-row__detail">{g.detail}</div>
+                  <span className={`ccv2-pill ccv2-pill--${g.status === "PASS" ? "pass" : g.status === "IN_PROGRESS" ? "pending" : "fail"}`}>
+                    {g.status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -983,6 +1074,8 @@ function SafetyCenterPage({ vm }) {
   const ab = actionBridgeSnapshot;
   const governance = ab.governance || {};
   const bridgeReadiness = ab.bridgeReadiness || {};
+  const clp = vm.careloopProductProgress;
+  const isLocalPrivate = vm.shell.mode === "local-private";
 
   const rows = [
     { label: "Mode", value: ab.mode || "local-private", valueClass: "ready" },
@@ -993,6 +1086,14 @@ function SafetyCenterPage({ vm }) {
     { label: "Traffic plane", value: bridgeReadiness.trafficPlane ? "READY" : "NOT READY", valueClass: bridgeReadiness.trafficPlane ? "ready" : "disabled" },
     { label: "Public safety", value: vm.safety.incidents === 0 ? "PASS" : "FAIL", valueClass: vm.safety.incidents === 0 ? "pass" : "disabled" },
   ];
+
+  const complianceRows = clp ? [
+    { label: "Compliance framework", value: clp.compliance.framework, valueClass: "ready" },
+    { label: "HIPAA scope", value: clp.compliance.hipaa === "OFF" ? "Not in scope (OFF)" : clp.compliance.hipaa, valueClass: "disabled" },
+    { label: "Clinic / EHR integration", value: `PERMANENTLY ${clp.compliance.clinicIntegration}`, valueClass: "disabled" },
+    { label: "Structured health fields", value: "None stored", valueClass: "pass" },
+    { label: "Incident response playbook", value: "In progress", valueClass: "pending" },
+  ] : [];
 
   return (
     <div className="ccv2-content">
@@ -1010,6 +1111,20 @@ function SafetyCenterPage({ vm }) {
             </div>
           ))}
         </div>
+
+        {isLocalPrivate && complianceRows.length > 0 && (
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Compliance · {clp.productName}</div>
+            <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+              {complianceRows.map((row) => (
+                <div key={row.label} className="ccv2-safety-row">
+                  <span className="ccv2-safety-row__label">{row.label}</span>
+                  <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Boundary Note</div>
@@ -1075,6 +1190,8 @@ function ProjectsPage({ vm, studio }) {
   const pv = privateValidationSnapshot;
   const pvStatus = pv?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
+  const clp = vm.careloopProductProgress;
+  const isLocalPrivate = vm.shell.mode === "local-private";
 
   return (
     <div className="ccv2-content">
@@ -1127,6 +1244,54 @@ function ProjectsPage({ vm, studio }) {
             </p>
           </div>
         </div>
+
+        {isLocalPrivate && clp && (
+          <>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">PRD Progress · {clp.productName} {clp.prdStatus.version}</div>
+              <div style={{ fontSize: 12, color: "var(--v2-muted)", margin: "4px 0 12px" }}>{clp.productLanguage}</div>
+
+              <div className="ccv2-sprint-board">
+                {clp.sprints.map((s) => (
+                  <div key={s.id} className={`ccv2-sprint-tile ccv2-sprint-tile--${s.status.toLowerCase().replace("_", "-")}`}>
+                    <div className="ccv2-sprint-tile__id">{s.id}</div>
+                    <div className="ccv2-sprint-tile__focus">{s.focus}</div>
+                    <div className="ccv2-sprint-tile__status">{s.status.replace("_", " ")}</div>
+                    {s.tests !== "—" && <div className="ccv2-mono ccv2-sprint-tile__tests">{s.tests}</div>}
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="ccv2-two-col">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Open Gaps</div>
+                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+                  {clp.gaps.map((g) => (
+                    <div key={g} className="ccv2-gap-row">
+                      <span className="ccv2-gap-row__dot" />
+                      <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>{g}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Locked Decisions</div>
+                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+                  {clp.lockedDecisions.map((d) => (
+                    <div key={d} style={{ fontSize: 11, color: "var(--v2-muted-2)", padding: "4px 0", borderBottom: "1px solid rgba(136,255,235,0.05)", lineHeight: 1.5 }}>
+                      {d}
+                    </div>
+                  ))}
+                </div>
+                <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted-2)" }}>
+                  Compliance: {clp.compliance.framework}
+                </div>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );
@@ -1254,6 +1419,91 @@ function DemoModePage({ vm }) {
   );
 }
 
+/* ─── OS Roadmap Page ─── */
+function OSRoadmapPage({ vm }) {
+  const clp = vm.careloopProductProgress;
+  const isLocalPrivate = vm.shell.mode === "local-private";
+
+  const nexusTrack = [
+    { phase: "P26–P30", label: "Agentic OS foundation", status: "COMPLETE", detail: "Skills, hooks, governor, sprint orchestration" },
+    { phase: "P31–P33", label: "Command Center V1", status: "COMPLETE", detail: "Studio shell, constellation, traction surfaces" },
+    { phase: "P34–P35", label: "Command Center V2 + Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission action bridge" },
+    { phase: "P36", label: "CareLoop PRD integration", status: "IN_PROGRESS", detail: "Product progress source, PRD-linked gates, roadmap view" },
+    { phase: "P37–P40", label: "Governed CI/CD pipeline", status: "PLANNED", detail: "FORGE deploy gates, Xcode build, automated release" },
+    { phase: "P41–P45", label: "Multi-project orchestration", status: "PLANNED", detail: "ShiftPay + HomeLog resume, portfolio-level gates" },
+  ];
+
+  const careloopTrack = clp ? clp.sprints.map((s) => ({
+    phase: s.id,
+    label: s.focus,
+    status: s.status,
+    detail: s.tests !== "—" ? `Tests: ${s.tests}` : "—",
+  })) : [];
+
+  const statusClass = (s) =>
+    s === "COMPLETE" ? "pass" : s === "IN_PROGRESS" ? "pending" : s === "PLANNED" ? "disabled" : "fail";
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">OS Roadmap</div>
+          <div className="ccv2-page-head__sub">NEXUS OS phases · CareLoop sprint board</div>
+        </div>
+
+        <div className="ccv2-roadmap-track">
+          <div className="ccv2-roadmap-track__header">
+            <div className="ccv2-eyebrow">Track A</div>
+            <div className="ccv2-roadmap-track__title">NEXUS OS · P26 → P45</div>
+          </div>
+          <div className="ccv2-roadmap-phases">
+            {nexusTrack.map((row) => (
+              <div key={row.phase} className={`ccv2-roadmap-phase ccv2-roadmap-phase--${statusClass(row.status)}`}>
+                <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
+                <div className="ccv2-roadmap-phase__label">{row.label}</div>
+                <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
+                <span className={`ccv2-pill ccv2-pill--${statusClass(row.status)}`}>{row.status.replace("_", " ")}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {isLocalPrivate && clp && (
+          <div className="ccv2-roadmap-track">
+            <div className="ccv2-roadmap-track__header">
+              <div className="ccv2-eyebrow">Track B</div>
+              <div className="ccv2-roadmap-track__title">{clp.productName} · Sprint 1 → 4</div>
+              <span className="ccv2-pill ccv2-pill--live" style={{ marginLeft: 8 }}>PRD {clp.prdStatus.version}</span>
+            </div>
+            <div className="ccv2-roadmap-phases">
+              {careloopTrack.map((row) => (
+                <div key={row.phase} className={`ccv2-roadmap-phase ccv2-roadmap-phase--${statusClass(row.status)}`}>
+                  <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
+                  <div className="ccv2-roadmap-phase__label">{row.label}</div>
+                  <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
+                  <span className={`ccv2-pill ccv2-pill--${statusClass(row.status)}`}>{row.status.replace("_", " ")}</span>
+                </div>
+              ))}
+            </div>
+
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Open Gaps</div>
+              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+                {clp.gaps.map((g) => (
+                  <div key={g} className="ccv2-gap-row">
+                    <span className="ccv2-gap-row__dot" />
+                    <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>{g}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 /* ═══════════════════════════════════════════════════════
    MAIN COMPONENT
    ═══════════════════════════════════════════════════════ */
@@ -1279,6 +1529,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "safety" && <SafetyCenterPage vm={vm} />}
           {currentPage === "release" && <ReleaseControlPage vm={vm} />}
           {currentPage === "projects" && <ProjectsPage vm={vm} studio={studio} />}
+          {currentPage === "roadmap" && <OSRoadmapPage vm={vm} />}
           {currentPage === "batch" && <BatchQueuePage vm={vm} />}
           {currentPage === "cost" && <CostCenterPage vm={vm} studio={studio} />}
           {currentPage === "demo" && <DemoModePage vm={vm} />}
