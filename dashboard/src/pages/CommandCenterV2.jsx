@@ -6,6 +6,7 @@ import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
+import { activateMissionTask } from "../api/taskActions.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -754,8 +755,8 @@ function WorkspaceBand({ vm }) {
             <div className="ccv2-workspace-band__nba-title">{nba.title}</div>
             <div className="ccv2-workspace-band__nba-desc">{nba.description}</div>
             {nba.enabled ? (
-              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/workspace")}>
-                Start
+              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate(nba.action?.replace("navigate:", "") || "/command-center/tasks")}>
+                Activate Next Task
               </button>
             ) : (
               <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
@@ -812,69 +813,222 @@ function MissionControlPage({ vm }) {
 }
 
 /* ─── Task Queue Page ─── */
+function MissionTaskRow({ task, bridgeOnline, onActivate, activating, activationResult }) {
+  const isActivating = activating === task.planTaskId;
+  const isActivated = activationResult?.planTaskId === task.planTaskId && activationResult?.ok;
+  const currentState = isActivated ? "activated" : task.state;
+
+  function stateClass(s) {
+    if (s === "activated" || s === "queued") return "pass";
+    if (s === "activating") return "pending";
+    if (s === "blocked" || s === "failed") return "fail";
+    return "disabled";
+  }
+
+  function riskClass(r) {
+    if (r === "high") return "fail";
+    if (r === "medium") return "pending";
+    return "pass";
+  }
+
+  function renderButton() {
+    if (isActivating) {
+      return <button className="ccv2-task-activate-btn ccv2-task-activate-btn--loading" disabled>Activating…</button>;
+    }
+    if (isActivated) {
+      return <button className="ccv2-task-activate-btn ccv2-task-activate-btn--done" disabled>Activated</button>;
+    }
+    if (!task.activationEnabled) {
+      return (
+        <button className="ccv2-task-activate-btn ccv2-task-activate-btn--blocked" disabled title={task.activationDisabledReason}>
+          {task.activationDisabledReason || "Blocked"}
+        </button>
+      );
+    }
+    if (!bridgeOnline) {
+      return (
+        <button className="ccv2-task-activate-btn ccv2-task-activate-btn--disabled" disabled title="Requires governed action bridge">
+          Requires governed action bridge
+        </button>
+      );
+    }
+    return (
+      <button className="ccv2-task-activate-btn ccv2-task-activate-btn--enabled" onClick={() => onActivate(task.planTaskId)}>
+        Activate
+      </button>
+    );
+  }
+
+  return (
+    <tr className={`ccv2-task-row ccv2-task-row--${currentState}`}>
+      <td>
+        <div className="ccv2-task-row__title">{task.title}</div>
+        {isActivated && activationResult?.runtimeTaskId && (
+          <div className="ccv2-task-row__runtime-id ccv2-mono">RT: {activationResult.runtimeTaskId.slice(0, 8)}</div>
+        )}
+      </td>
+      <td><span className="ccv2-task-row__agent">{task.targetAgent}</span></td>
+      <td><span className={`ccv2-pill ccv2-pill--${stateClass(currentState)}`}>{currentState}</span></td>
+      <td><span className={`ccv2-pill ccv2-pill--${riskClass(task.riskLevel)}`}>{task.riskLevel}</span></td>
+      <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{task.capabilityId.replace(/_/g, " ")}</td>
+      <td style={{ fontSize: 11 }}>{renderButton()}</td>
+    </tr>
+  );
+}
+
 function TaskQueuePage({ vm }) {
-  const tasks = runtimeSnapshot.runtimeState?.tasks || {};
-  const recent = tasks.recent || [];
-  const byState = tasks.byState || {};
-  const total = tasks.total || 0;
+  const ta = vm.taskActivation || {};
+  const missionTasks = ta.missionTasks || [];
+  const runtimeTasks = runtimeSnapshot.runtimeState?.tasks || {};
+  const recent = runtimeTasks.recent || [];
+  const byState = runtimeTasks.byState || {};
+  const total = runtimeTasks.total || 0;
+
+  const [bridgeOnline, setBridgeOnline] = useState(false);
+  const [activating, setActivating] = useState(null);
+  const [activationResults, setActivationResults] = useState({});
+
+  useEffect(() => {
+    checkActionBridgeHealth().then((r) => setBridgeOnline(r.online));
+  }, []);
+
+  async function handleActivate(planTaskId) {
+    setActivating(planTaskId);
+    const result = await activateMissionTask({ planTaskId });
+    setActivationResults((prev) => ({ ...prev, [planTaskId]: result }));
+    setActivating(null);
+  }
 
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Task Queue</div>
-          <div className="ccv2-page-head__sub">Real-time task state from runtime snapshot</div>
+          <div className="ccv2-page-head__sub">
+            Mission tasks from Private Project plan · Activate to move from planned to queued
+          </div>
         </div>
 
         <div className="ccv2-stats-row">
           <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Total</div>
+            <div className="ccv2-stat-chip__label">Planned</div>
+            <div className="ccv2-stat-chip__value">{missionTasks.length}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Activated</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--green">{Object.values(activationResults).filter((r) => r?.ok).length + ta.activatedCount}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Runtime total</div>
             <div className="ccv2-stat-chip__value">{total}</div>
           </div>
-          {Object.entries(byState).map(([state, count]) => (
-            <div key={state} className="ccv2-stat-chip">
-              <div className="ccv2-stat-chip__label">{state.replace(/_/g, " ")}</div>
-              <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${state === "awaiting_approval" ? "amber" : state === "blocked" ? "red" : "green"}`}>
-                {count}
-              </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Action bridge</div>
+            <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${bridgeOnline ? "green" : "amber"}`}>
+              {bridgeOnline ? "Online" : "Offline"}
             </div>
-          ))}
+          </div>
         </div>
 
+        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Tasks — Private Project</div>
         <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
-          <table className="ccv2-table">
+          <table className="ccv2-table ccv2-mission-tasks-table">
             <thead>
               <tr>
-                <th>Task ID</th>
+                <th>Task</th>
                 <th>Agent</th>
                 <th>State</th>
                 <th>Risk</th>
                 <th>Capability</th>
-                <th>Created</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {recent.map((task) => (
-                <tr key={task.taskId}>
-                  <td className="ccv2-mono" style={{ fontSize: 11, color: "var(--v2-muted)" }}>{task.taskId.slice(0, 8)}</td>
-                  <td style={{ fontWeight: 600 }}>{task.targetAgent?.toUpperCase()}</td>
-                  <td>
-                    <span className={`ccv2-pill ccv2-pill--${task.state === "implementation_done" ? "pass" : task.state === "awaiting_approval" ? "pending" : "fail"}`}>
-                      {task.state.replace(/_/g, " ")}
-                    </span>
-                  </td>
-                  <td>
-                    <span className={`ccv2-pill ccv2-pill--${task.riskLevel === "critical" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`}>
-                      {task.riskLevel}
-                    </span>
-                  </td>
-                  <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{task.capabilityId}</td>
-                  <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{new Date(task.createdAt).toLocaleTimeString()}</td>
-                </tr>
+              {missionTasks.map((task) => (
+                <MissionTaskRow
+                  key={task.planTaskId}
+                  task={task}
+                  bridgeOnline={bridgeOnline}
+                  onActivate={handleActivate}
+                  activating={activating}
+                  activationResult={activationResults[task.planTaskId]}
+                />
               ))}
             </tbody>
           </table>
         </div>
+
+        {Object.values(activationResults).some((r) => r?.ok) && (
+          <div className="ccv2-card ccv2-activation-result-card">
+            <div className="ccv2-section-heading">Activation Records</div>
+            {Object.entries(activationResults).filter(([, r]) => r?.ok).map(([planTaskId, result]) => (
+              <div key={planTaskId} className="ccv2-activation-record">
+                <div className="ccv2-activation-record__row">
+                  <span className="ccv2-activation-record__label">Runtime task ID</span>
+                  <span className="ccv2-mono ccv2-activation-record__value">{result.runtimeTaskId?.slice(0, 12)}</span>
+                </div>
+                <div className="ccv2-activation-record__row">
+                  <span className="ccv2-activation-record__label">State</span>
+                  <span className="ccv2-pill ccv2-pill--pass">queued</span>
+                </div>
+                <div className="ccv2-activation-record__row">
+                  <span className="ccv2-activation-record__label">Evidence</span>
+                  <span className={`ccv2-pill ccv2-pill--${result.result?.evidenceCreated ? "pass" : "disabled"}`}>{result.result?.evidenceCreated ? "Created" : "—"}</span>
+                </div>
+                <div className="ccv2-activation-record__row">
+                  <span className="ccv2-activation-record__label">Audit</span>
+                  <span className={`ccv2-pill ccv2-pill--${result.result?.auditCreated ? "pass" : "disabled"}`}>{result.result?.auditCreated ? "Created" : "—"}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+
+        {recent.length > 0 && (
+          <>
+            <div className="ccv2-section-heading" style={{ marginTop: 24, marginBottom: 8 }}>Runtime Task Records</div>
+            <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
+              <table className="ccv2-table">
+                <thead>
+                  <tr>
+                    <th>Task ID</th>
+                    <th>Agent</th>
+                    <th>State</th>
+                    <th>Risk</th>
+                    <th>Capability</th>
+                    <th>Created</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {recent.map((task) => (
+                    <tr key={task.taskId}>
+                      <td className="ccv2-mono" style={{ fontSize: 11, color: "var(--v2-muted)" }}>{task.taskId.slice(0, 8)}</td>
+                      <td style={{ fontWeight: 600 }}>{task.targetAgent?.toUpperCase()}</td>
+                      <td>
+                        <span className={`ccv2-pill ccv2-pill--${task.state === "implementation_done" ? "pass" : task.state === "awaiting_approval" ? "pending" : "disabled"}`}>
+                          {task.state.replace(/_/g, " ")}
+                        </span>
+                      </td>
+                      <td><span className={`ccv2-pill ccv2-pill--${task.riskLevel === "high" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`}>{task.riskLevel}</span></td>
+                      <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{task.capabilityId}</td>
+                      <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{new Date(task.createdAt).toLocaleTimeString()}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </>
+        )}
+
+        {!bridgeOnline && (
+          <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
+            <span className="ccv2-info-banner__icon">ℹ</span>
+            <span className="ccv2-info-banner__text">
+              Task activation requires the governed action bridge.
+              Start it with: <code>NEXUS_MODE=local-private npm run mission:action-server</code>
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );
@@ -883,6 +1037,13 @@ function TaskQueuePage({ vm }) {
 /* ─── Agent Fleet Page ─── */
 function AgentFleetPage({ vm, studio }) {
   const agents = studio?.agentEntries || [];
+  const missionTasks = vm.taskActivation?.missionTasks || [];
+
+  const MISSION_AGENTS = ["SHEPHERD", "AUDITOR", "PRISM", "SENTINEL", "WARDEN", "CORE"];
+
+  function plannedTasksForAgent(agentName) {
+    return missionTasks.filter((t) => t.targetAgent === agentName);
+  }
 
   function statusDotClass(status) {
     if (status === "active") return "ccv2-agent-status-dot--active";
@@ -900,24 +1061,65 @@ function AgentFleetPage({ vm, studio }) {
           <div className="ccv2-page-head__sub">{agents.length} agents · live status from memory snapshot</div>
         </div>
 
+        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Task Assignments — Private Project</div>
+        <div className="ccv2-card" style={{ padding: 0, overflow: "hidden", marginBottom: 20 }}>
+          <table className="ccv2-table">
+            <thead>
+              <tr>
+                <th>Agent</th>
+                <th>Planned Tasks</th>
+                <th>Activated</th>
+                <th>Next Queued Task</th>
+                <th>Capability</th>
+              </tr>
+            </thead>
+            <tbody>
+              {MISSION_AGENTS.map((agentName) => {
+                const tasks = plannedTasksForAgent(agentName);
+                const nextTask = tasks[0];
+                return (
+                  <tr key={agentName}>
+                    <td style={{ fontWeight: 700 }}>{agentName}</td>
+                    <td>{tasks.length}</td>
+                    <td><span className="ccv2-pill ccv2-pill--disabled">0</span></td>
+                    <td style={{ fontSize: 12 }}>{nextTask ? nextTask.title : <span style={{ color: "var(--v2-muted-2)" }}>—</span>}</td>
+                    <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{nextTask ? nextTask.capabilityId : "—"}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>All Agents</div>
         <div className="ccv2-agent-grid">
-          {agents.map((agent) => (
-            <div key={agent.id} className="ccv2-agent-card">
-              <div className="ccv2-agent-card__header">
-                <div className={`ccv2-agent-status-dot ${statusDotClass(agent.status)}`} />
-                <div className="ccv2-agent-card__name">{agent.name}</div>
-              </div>
-              <div className="ccv2-agent-card__role">{agent.role} · {agent.team}</div>
-              {agent.task && (
-                <div className="ccv2-agent-card__task">{agent.task}</div>
-              )}
-              {typeof agent.progress === "number" && agent.progress > 0 && (
-                <div style={{ marginTop: 6, height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2, overflow: "hidden" }}>
-                  <div style={{ height: "100%", width: `${agent.progress}%`, background: "var(--v2-teal)", borderRadius: 2 }} />
+          {agents.map((agent) => {
+            const agentName = agent.name?.toUpperCase();
+            const agentTasks = plannedTasksForAgent(agentName);
+            return (
+              <div key={agent.id} className="ccv2-agent-card">
+                <div className="ccv2-agent-card__header">
+                  <div className={`ccv2-agent-status-dot ${statusDotClass(agent.status)}`} />
+                  <div className="ccv2-agent-card__name">{agent.name}</div>
                 </div>
-              )}
-            </div>
-          ))}
+                <div className="ccv2-agent-card__role">{agent.role} · {agent.team}</div>
+                {agentTasks.length > 0 && (
+                  <div className="ccv2-agent-card__mission-tasks">
+                    <span className="ccv2-pill ccv2-pill--pending">{agentTasks.length} planned task{agentTasks.length > 1 ? "s" : ""}</span>
+                    <span style={{ fontSize: 11, color: "var(--v2-muted)", marginLeft: 4 }}>{agentTasks[0]?.title}</span>
+                  </div>
+                )}
+                {agent.task && (
+                  <div className="ccv2-agent-card__task">{agent.task}</div>
+                )}
+                {typeof agent.progress === "number" && agent.progress > 0 && (
+                  <div style={{ marginTop: 6, height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2, overflow: "hidden" }}>
+                    <div style={{ height: "100%", width: `${agent.progress}%`, background: "var(--v2-teal)", borderRadius: 2 }} />
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>
@@ -1540,11 +1742,11 @@ function WorkspacePage({ vm }) {
             <div className="ccv2-workspace-nba__desc">{nba.description}</div>
             <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap", alignItems: "center" }}>
               <span className={`ccv2-pill ccv2-pill--${nba.enabled ? "pass" : "disabled"}`}>
-                {nba.enabled ? "Available" : `Requires ${nba.targetPhase}`}
+                {nba.enabled ? "P37 Available" : `Requires ${nba.targetPhase}`}
               </span>
               {nba.enabled ? (
-                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/workspace")}>
-                  Start
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate(nba.action?.replace("navigate:", "") || "/command-center/tasks")}>
+                  Go to Task Queue
                 </button>
               ) : (
                 <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
@@ -1561,7 +1763,7 @@ function WorkspacePage({ vm }) {
             <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
               <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Mission ready</span><span className={`ccv2-safety-row__value--${status.missionReady ? "pass" : "disabled"}`}>{status.missionReady ? "YES" : "NO"}</span></div>
               <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Plan ready</span><span className={`ccv2-safety-row__value--${status.planReady ? "pass" : "disabled"}`}>{status.planReady ? "YES — 6 tasks" : "NO"}</span></div>
-              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Tasks activated</span><span className={`ccv2-safety-row__value--${status.tasksActivated ? "pass" : "disabled"}`}>{status.tasksActivated ? "YES" : "NO — requires P37"}</span></div>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Tasks activated</span><span className={`ccv2-safety-row__value--${status.tasksActivated ? "pass" : "disabled"}`}>{status.tasksActivated ? "YES" : "NO — activate from Task Queue"}</span></div>
               <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Backend validated</span><span className={`ccv2-safety-row__value--${status.backendValidated ? "pass" : "disabled"}`}>{status.tests}</span></div>
               <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Ready for task activation</span><span className={`ccv2-safety-row__value--${status.readyForTaskActivation ? "pass" : "disabled"}`}>{status.readyForTaskActivation ? "YES" : "NO"}</span></div>
             </div>
@@ -1599,8 +1801,8 @@ function OSRoadmapPage({ vm }) {
     { phase: "P26–P30", label: "Agentic OS foundation", status: "COMPLETE", detail: "Skills, hooks, governor, sprint orchestration" },
     { phase: "P31–P33", label: "Command Center V1", status: "COMPLETE", detail: "Studio shell, constellation, traction surfaces" },
     { phase: "P34–P35", label: "Command Center V2 + Mission Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission composer, PRD awareness" },
-    { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "IN_PROGRESS", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
-    { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "PLANNED", detail: "Select task → activate → runtime queue → evidence" },
+    { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "COMPLETE", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
+    { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "IN_PROGRESS", detail: "Select task → activate → runtime queue → evidence" },
     { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "PLANNED", detail: "Agent workbench, approval-aware execution, review surfaces" },
     { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "PLANNED", detail: "Governed end-to-end build workflow through Command Center" },
     { phase: "P40", label: "Live Local API Backend for Command Center", status: "PLANNED", detail: "Real-time data via local API — no more snapshots" },

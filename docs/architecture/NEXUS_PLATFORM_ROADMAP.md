@@ -145,6 +145,48 @@ Risk level:
 
 ---
 
+### Phase 37-LOCAL — Task Activation + Agent Assignment from UI
+
+Goal:
+
+- allow the operator to activate planned mission tasks from the Command Center UI, converting them into governed runtime tasks without executing agents
+
+Deliverables:
+
+- `task-actions/taskActivationBridge.js` — validates, activates, and records mission tasks
+- `task-actions/taskActivationStore.js` — append-only store for activation action records
+- `task-actions/index.js` — re-exports all task activation functions
+- `policy/task-activation-bridge-policy.json` — P37 boundary (execution: false, agent dispatch: false)
+- `dashboard/src/api/taskActions.js` — browser API client for task activation
+- Task Queue page: 6 planned mission tasks with per-task Activate buttons and state display
+- Agent Fleet page: mission task assignments table (planned/activated counts per agent)
+- Mission Control: NBA updated to point to task activation in Task Queue
+- OS Roadmap: P36 COMPLETE, P37 IN_PROGRESS
+- `scripts/check-task-activation-bridge.js` — 12-section validator
+- `docs/architecture/TASK_ACTIVATION_AND_AGENT_ASSIGNMENT.md` — architecture doc
+
+Non-goals:
+
+- no agent execution in P37
+- no provider calls, network calls, or command execution
+- no project mutation
+
+Validation checks:
+
+- `npm run check:task-activation-bridge` passes 12/12 sections
+- 30/30 E2E route tests pass
+- runtime task created with state=queued, redacted=true
+- evidence, audit, runtime event records created per activation
+- duplicate activation returns idempotent response
+- action bridge offline → buttons disabled with clear reason
+- no private project file mutations
+
+Risk level:
+
+- low
+
+---
+
 ## Upcoming
 
 ### Phase 15 — Containerization and Worker Scaling

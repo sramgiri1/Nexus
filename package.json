@@ -73,7 +73,8 @@
     "check:mission-composer": "node scripts/check-mission-composer.js",
     "mission:action-server": "NEXUS_MODE=local-private node scripts/mission-action-server.js",
     "check:mission-action-bridge": "node scripts/check-mission-action-bridge.js",
-    "check:agentic-workspace": "node scripts/check-agentic-workspace.js"
+    "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
+    "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -378,12 +378,13 @@ test("Disabled workflow cards show disabled button", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("OS Roadmap shows P36 current, P37 and P45 planned", async ({ page }) => {
+test("OS Roadmap shows P36 done, P37 current, P45 planned", async ({ page }) => {
   const errors = captureClientErrors(page);
   await page.goto("/command-center/roadmap");
   await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P36" })).toBeVisible();
   await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P37" })).toBeVisible();
   await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P45" })).toBeVisible();
+  await expect(page.locator("text=Task Activation + Agent Assignment from UI")).toBeVisible();
   expect(errors).toEqual([]);
 });
 
@@ -392,6 +393,58 @@ test("Workspace mission status shows plan ready and tasks not activated", async 
   await page.goto("/command-center/workspace");
   await expect(page.getByText("Mission Status")).toBeVisible();
   await expect(page.getByText("YES — 6 tasks")).toBeVisible();
-  await expect(page.getByText("NO — requires P37")).toBeVisible();
+  await expect(page.getByText("NO — activate from Task Queue")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Task Queue page shows mission tasks with agent assignments", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/tasks");
+  await expect(page.locator(".ccv2-page-head__title").filter({ hasText: "Task Queue" })).toBeVisible();
+  await expect(page.getByText("Mission Tasks — Private Project")).toBeVisible();
+  await expect(page.getByText("Project Brief")).toBeVisible();
+  await expect(page.locator(".ccv2-task-row__agent").filter({ hasText: "SHEPHERD" }).first()).toBeVisible();
+  await expect(page.locator(".ccv2-task-row__agent").filter({ hasText: "AUDITOR" }).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Task Queue shows 6 planned mission tasks with capabilities", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/tasks");
+  await expect(page.getByText("Backend Validation Follow-up")).toBeVisible();
+  await expect(page.getByText("UX Product Flow Planning")).toBeVisible();
+  await expect(page.getByText("Privacy Compliance Review")).toBeVisible();
+  await expect(page.getByText("iOS Readiness Planning")).toBeVisible();
+  await expect(page.getByText("First Controlled Implementation Candidate")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Task Queue Activate buttons show disabled state when bridge offline", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/tasks");
+  // Bridge is offline in test environment — buttons must show disabled state with clear reason
+  const disabledBtns = page.locator(".ccv2-task-activate-btn--disabled");
+  await expect(disabledBtns.first()).toBeVisible();
+  const btnText = await disabledBtns.first().textContent();
+  expect(btnText).toContain("Requires governed action bridge");
+  expect(errors).toEqual([]);
+});
+
+test("Agent Fleet shows mission task assignments per agent", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/agents");
+  await expect(page.getByText("Mission Task Assignments — Private Project")).toBeVisible();
+  await expect(page.locator("table").getByText("SHEPHERD")).toBeVisible();
+  await expect(page.locator("table").getByText("AUDITOR")).toBeVisible();
+  await expect(page.locator("table").getByText("WARDEN")).toBeVisible();
+  await expect(page.locator("table").getByText("CORE")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Mission Control Next Best Action points to task activation", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.getByText("Activate First Mission Task")).toBeVisible();
+  await expect(page.getByText("Activate Next Task")).toBeVisible();
   expect(errors).toEqual([]);
 });

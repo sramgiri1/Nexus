@@ -14,6 +14,12 @@ import {
   listMissionActions,
   getMissionActionResult,
 } from "../mission-actions/missionActionBridge.js";
+import {
+  createTaskActivationRequest,
+  runTaskActivationRequest,
+  listTaskActivationActions,
+  getTaskActivationResult,
+} from "../task-actions/taskActivationBridge.js";
 
 const PORT = 3748;
 const HOST = "127.0.0.1"; // localhost only — never 0.0.0.0
@@ -113,6 +119,37 @@ const server = http.createServer(async (req, res) => {
     return json(res, 200, { ok: true, record });
   }
 
+  // ── POST /actions/task/activate ──
+  if (method === "POST" && url === "/actions/task/activate") {
+    const body = await readBody(req);
+    const reqObj = createTaskActivationRequest({
+      actionType: "task.activate",
+      mode: process.env.NEXUS_MODE || "local-private",
+      projectId: "private-project-01",
+      missionId: "private-project-governed-build-mission",
+      planTaskId: body.planTaskId || "",
+      requestedBy: { userId: "local-operator", role: "founder", authType: "local" },
+      source: "command_center_v2",
+    });
+    if (!reqObj.ok) return json(res, 400, { ok: false, errors: reqObj.errors });
+    const result = await runTaskActivationRequest(reqObj.request);
+    return json(res, result.ok ? 200 : 422, result);
+  }
+
+  // ── GET /actions/task ──
+  if (method === "GET" && url === "/actions/task") {
+    const result = listTaskActivationActions();
+    return json(res, 200, { ok: true, records: result.records || [] });
+  }
+
+  // ── GET /actions/task/:actionId ──
+  if (method === "GET" && url.startsWith("/actions/task/") && url !== "/actions/task/") {
+    const actionId = url.replace("/actions/task/", "");
+    const result = getTaskActivationResult(actionId);
+    if (!result.ok) return json(res, 404, { ok: false, errors: result.errors });
+    return json(res, 200, { ok: true, record: result.record });
+  }
+
   return json(res, 404, { ok: false, error: "not found" });
 });
 
@@ -124,4 +161,7 @@ server.listen(PORT, HOST, () => {
   console.log(`  POST http://${HOST}:${PORT}/actions/mission/compose`);
   console.log(`  GET  http://${HOST}:${PORT}/actions`);
   console.log(`  GET  http://${HOST}:${PORT}/actions/:actionId`);
+  console.log(`  POST http://${HOST}:${PORT}/actions/task/activate`);
+  console.log(`  GET  http://${HOST}:${PORT}/actions/task`);
+  console.log(`  GET  http://${HOST}:${PORT}/actions/task/:actionId`);
 });
