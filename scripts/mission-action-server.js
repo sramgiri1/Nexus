@@ -25,8 +25,8 @@ import {
   runReviewRequest,
   listReviewRecords,
   getReviewResult,
-  listReviewsForTask,
 } from "../workbench/reviewBridge.js";
+import { listReviewsForTask } from "../workbench/reviewStore.js";
 import { loadTaskWorkbench, listAgentWorkbenchItems } from "../workbench/agentWorkbench.js";
 import {
   createImplementationRequest,
