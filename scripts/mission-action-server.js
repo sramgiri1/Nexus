@@ -28,6 +28,12 @@ import {
   listReviewsForTask,
 } from "../workbench/reviewBridge.js";
 import { loadTaskWorkbench, listAgentWorkbenchItems } from "../workbench/agentWorkbench.js";
+import {
+  createImplementationRequest,
+  runImplementationRequest,
+  listImplementationActions,
+  getImplementationResult,
+} from "../implementation-actions/implementationBridge.js";
 
 const PORT = 3748;
 const HOST = "127.0.0.1"; // localhost only — never 0.0.0.0
@@ -196,6 +202,60 @@ const server = http.createServer(async (req, res) => {
     const taskId = url.split("/")[2];
     const result = listReviewsForTask(taskId);
     return json(res, 200, { ok: true, records: result.records || [] });
+  }
+
+  // ── POST /actions/implementation/propose ──
+  if (method === "POST" && url === "/actions/implementation/propose") {
+    const body = await readBody(req);
+    const reqObj = createImplementationRequest({
+      actionType: "implementation.propose",
+      mode: process.env.NEXUS_MODE || "local-private",
+      projectId: "private-project-01",
+      missionId: "private-project-governed-build-mission",
+      runtimeTaskId: body.runtimeTaskId || "",
+      targetAgent: "CORE",
+      capabilityId: "implementation.backend_code",
+      implementationType: body.implementationType || "documentation_readiness_log",
+      requestedBy: { userId: "local-operator", role: "founder", authType: "local" },
+      source: "command_center_v2",
+    });
+    if (!reqObj.ok) return json(res, 400, { ok: false, errors: reqObj.errors });
+    const result = await runImplementationRequest(reqObj.request);
+    return json(res, result.ok ? 200 : 422, result);
+  }
+
+  // ── POST /actions/implementation/apply ──
+  if (method === "POST" && url === "/actions/implementation/apply") {
+    const body = await readBody(req);
+    const reqObj = createImplementationRequest({
+      actionType: "implementation.apply",
+      mode: process.env.NEXUS_MODE || "local-private",
+      projectId: "private-project-01",
+      missionId: "private-project-governed-build-mission",
+      runtimeTaskId: body.runtimeTaskId || "",
+      targetAgent: "CORE",
+      capabilityId: "implementation.backend_code",
+      implementationType: body.implementationType || "documentation_readiness_log",
+      requestedBy: { userId: "local-operator", role: "founder", authType: "local" },
+      source: "command_center_v2",
+    });
+    if (!reqObj.ok) return json(res, 400, { ok: false, errors: reqObj.errors });
+    const result = await runImplementationRequest(reqObj.request);
+    return json(res, result.ok ? 200 : 422, result);
+  }
+
+  // ── GET /actions/implementation ──
+  if (method === "GET" && url === "/actions/implementation") {
+    const result = listImplementationActions();
+    return json(res, 200, { ok: true, records: result.records || [] });
+  }
+
+  // ── GET /actions/implementation/:actionId ──
+  if (method === "GET" && url.startsWith("/actions/implementation/") && url !== "/actions/implementation/") {
+    const actionId = url.replace("/actions/implementation/", "");
+    const result = getImplementationResult(actionId);
+    if (!result.ok) return json(res, 404, { ok: false, errors: result.errors });
+    return json(res, 200, { ok: true, record: result.record });
   }
 
   return json(res, 404, { ok: false, error: "not found" });

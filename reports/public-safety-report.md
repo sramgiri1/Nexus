@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T22:41:40.112Z
-- Validation branch: arch/command-center-mission-action-bridge
-- Validation HEAD: 661ea83
+- Generated at: 2026-05-09T02:26:18.417Z
+- Validation branch: arch/first-controlled-implementation-ui
+- Validation HEAD: 5920f20
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:
@@ -45,7 +45,7 @@ Banned project terms:
 - None
 
 Secret patterns:
-- None
+- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → OpenAI key prefix (sk-activation)
 
 Private data patterns:
 - None
@@ -54,4 +54,4 @@ Dashboard data: PASS
 Demo artifacts: PASS
 README navigation: PASS
 
-Result: PASS
+Result: FAIL

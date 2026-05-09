@@ -75,7 +75,8 @@
     "check:mission-action-bridge": "node scripts/check-mission-action-bridge.js",
     "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
-    "check:agent-workbench": "node scripts/check-agent-workbench.js"
+    "check:agent-workbench": "node scripts/check-agent-workbench.js",
+    "check:controlled-implementation-workflow": "node scripts/check-controlled-implementation-workflow.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

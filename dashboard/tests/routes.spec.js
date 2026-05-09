@@ -499,3 +499,49 @@ test("OS Roadmap shows P37 COMPLETE and P38 IN PROGRESS", async ({ page }) => {
   await expect(page.getByText("Agent Workbench + Human Review Loop")).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("Implementation Workflow nav item appears in sidebar", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-nav-item").filter({ hasText: "Implementation" }).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Implementation Workflow page renders with correct header", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/implementation");
+  await expect(page.locator(".ccv2-page-head__title").filter({ hasText: "Implementation Workflow" })).toBeVisible();
+  await expect(page.getByText(/First controlled implementation/i).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Implementation Workflow shows offline state with action bridge offline", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/implementation");
+  await page.waitForTimeout(1800);
+  await expect(page.getByText(/bridge offline/i)).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Implementation Workflow shows P39 stats chip", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/implementation");
+  await expect(page.locator(".ccv2-stat-chip").filter({ hasText: "P39-LOCAL" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Implementation Workflow shows CORE agent and allowed path", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/implementation");
+  await expect(page.locator(".ccv2-stat-chip__value--teal").filter({ hasText: "CORE" })).toBeVisible();
+  await expect(page.getByText(/NEXUS_IMPLEMENTATION_LOG/i).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap shows P38 COMPLETE and P39 IN PROGRESS", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.getByText("Agent Workbench + Human Review Loop")).toBeVisible();
+  await expect(page.getByText("First Controlled Implementation Workflow from UI")).toBeVisible();
+  expect(errors).toEqual([]);
+});

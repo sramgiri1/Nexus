@@ -2247,3 +2247,28 @@
 .ccv2-wb-review-btn--disabled {
   opacity: 0.4; cursor: not-allowed;
 }
+
+/* ─── P39 Implementation Workflow ───────────────────────────────────────────── */
+
+.ccv2-impl-task-item {
+  padding: 10px 12px; border-radius: 6px; cursor: pointer;
+  border: 1px solid rgba(255,255,255,0.06); margin-bottom: 4px;
+  background: rgba(255,255,255,0.02); transition: background 0.15s, border-color 0.15s;
+}
+.ccv2-impl-task-item:hover { background: rgba(255,255,255,0.05); }
+.ccv2-impl-task-item--selected {
+  background: rgba(136,255,235,0.06); border-color: rgba(136,255,235,0.2);
+}
+
+.ccv2-impl-notice {
+  padding: 10px 14px; border-radius: 6px; font-size: 12px;
+  background: rgba(244,191,117,0.06); border: 1px solid rgba(244,191,117,0.2);
+  color: var(--v2-amber); margin-top: 8px;
+}
+
+.ccv2-impl-action-row {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 12px;
+}
+
+.ccv2-stat-chip__value--teal { color: #3de8b0; }
+.ccv2-stat-chip__value--green { color: var(--v2-green); }

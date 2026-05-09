@@ -230,6 +230,49 @@ Risk level:
 
 ---
 
+### P39-LOCAL — First Controlled Implementation Workflow from UI
+
+Goal:
+
+- UI-driven workflow that applies a narrow, governed source change via the action bridge
+- Target: `projects/careloop/docs/NEXUS_IMPLEMENTATION_LOG.md` (documentation only)
+- CORE agent applies a governance log entry with proposal → apply → evidence/audit/runtime records
+- Command Center shows patch summary, rollback note, validation result, and next action
+
+Deliverables:
+
+- `policy/controlled-implementation-workflow-policy.json` — P39 boundary (documentationMutationAllowed: true, sourceMutationAllowed: false)
+- `implementation-actions/implementationStore.js` — append-only implementation action store
+- `implementation-actions/implementationPlan.js` — createImplementationProposal, createPatchPlan, createRollbackPlan, writeImplementationProposalReports
+- `implementation-actions/implementationBridge.js` — validate → propose → patch → evidence → audit → runtime event; validationStatus: SKIPPED for doc-only
+- `implementation-actions/index.js` — re-exports all implementation functions
+- Action server routes: POST /actions/implementation/propose, POST /actions/implementation/apply, GET /actions/implementation, GET /actions/implementation/:actionId
+- `dashboard/src/api/implementationActions.js` — browser fetch-only client
+- Implementation Workflow page at /command-center/implementation: task selector, proposal details, action buttons, result panels
+- OS Roadmap: P38 COMPLETE, P39 IN_PROGRESS
+- `scripts/check-controlled-implementation-workflow.js` — 15-section validator (87/87 checks)
+
+Non-goals:
+
+- no source, test, schema, iOS, or production code mutations in P39
+- no provider calls, network calls, or DB access
+- validation deferred (SKIPPED status) — doc-only change does not require backend validation gate
+
+Validation checks:
+
+- `npm run check:controlled-implementation-workflow` passes 87/87 checks
+- 42/42 E2E route tests pass
+- Propose → apply → evidence + audit + runtime event recorded
+- Action bridge offline → action buttons disabled with clear message
+- Forbidden paths include src/, test/, prisma/, ios/ (multi-layer enforcement)
+- Patch summary, rollback note, and validation status shown in result panels
+
+Risk level:
+
+- low
+
+---
+
 ## Upcoming
 
 ### Phase 15 — Containerization and Worker Scaling

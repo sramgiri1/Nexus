@@ -8,6 +8,7 @@ import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
+import { proposeImplementation, applyImplementation } from "../api/implementationActions.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -24,6 +25,7 @@ const PAGE_LABELS = {
   release: "Release Control",
   projects: "Projects",
   workbench: "Agent Workbench",
+  implementation: "Implementation Workflow",
   roadmap: "OS Roadmap",
   batch: "Batch Queue",
   cost: "Cost Center",
@@ -84,6 +86,7 @@ const NAV_GROUPS_V2 = [
       { label: "Workspace", icon: "⊹", path: "/command-center/workspace" },
       { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
       { label: "Agent Workbench", icon: "⬡", badge: "P38", path: "/command-center/workbench" },
+      { label: "Implementation", icon: "▲", badge: "P39", path: "/command-center/implementation" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
@@ -1802,6 +1805,312 @@ function WorkspacePage({ vm }) {
   );
 }
 
+/* ─── Implementation Workflow Page ─── */
+function ImplementationPage({ vm }) {
+  const navigate = useNavigate();
+  const ci = vm.controlledImplementation || {};
+
+  const [bridgeOnline, setBridgeOnline] = useState(false);
+  const [wbItems, setWbItems] = useState([]);
+  const [selectedTaskId, setSelectedTaskId] = useState("");
+  const [actionState, setActionState] = useState("idle"); // idle | proposing | proposed | applying | applied | failed | blocked
+  const [proposalResult, setProposalResult] = useState(null);
+  const [applyResult, setApplyResult] = useState(null);
+  const [errorMsg, setErrorMsg] = useState("");
+
+  useEffect(() => {
+    let cancelled = false;
+    checkActionBridgeHealth().then((r) => {
+      if (cancelled) return;
+      setBridgeOnline(r.online);
+      if (r.online) {
+        listWorkbenchItems().then((res) => {
+          if (!cancelled) setWbItems(res.ok ? res.items || [] : []);
+        });
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  async function handlePropose() {
+    if (!bridgeOnline || actionState === "proposing") return;
+    setActionState("proposing");
+    setErrorMsg("");
+    setApplyResult(null);
+    const result = await proposeImplementation({ runtimeTaskId: selectedTaskId, implementationType: "documentation_readiness_log" });
+    if (result.ok) {
+      setProposalResult(result);
+      setActionState("proposed");
+    } else if (result.offline) {
+      setActionState("idle");
+      setErrorMsg("Governed implementation bridge offline.");
+    } else {
+      setActionState("failed");
+      setErrorMsg((result.errors || ["Proposal failed."]).join(" "));
+    }
+  }
+
+  async function handleApply() {
+    if (!bridgeOnline || !["proposed", "idle"].includes(actionState)) return;
+    if (actionState === "applying") return;
+    setActionState("applying");
+    setErrorMsg("");
+    const result = await applyImplementation({ runtimeTaskId: selectedTaskId, implementationType: "documentation_readiness_log" });
+    if (result.ok) {
+      setApplyResult(result);
+      setActionState("applied");
+    } else if (result.offline) {
+      setActionState("proposed");
+      setErrorMsg("Governed implementation bridge offline.");
+    } else {
+      setActionState("failed");
+      setErrorMsg((result.errors || ["Apply failed."]).join(" "));
+    }
+  }
+
+  const canPropose = bridgeOnline && actionState === "idle";
+  const canApply = bridgeOnline && (actionState === "proposed" || actionState === "idle");
+  const isRunning = actionState === "proposing" || actionState === "applying";
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Implementation Workflow</div>
+          <div className="ccv2-page-head__sub">First controlled implementation · CORE agent · documentation-only · governed by policy</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Phase</div>
+            <div className="ccv2-stat-chip__value">{ci.policyPhase || "P39-LOCAL"}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Agent</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{ci.targetAgent || "CORE"}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Risk</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--green">{ci.riskLevel || "low"}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Bridge</div>
+            <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${bridgeOnline ? "green" : "amber"}`}>
+              {bridgeOnline ? "Online" : "Offline"}
+            </div>
+          </div>
+        </div>
+
+        {/* Task Selector */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">1 · Select Implementation Task</div>
+          {wbItems.length > 0 ? (
+            <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 6 }}>
+              {wbItems.map((item) => (
+                <div
+                  key={item.runtimeTaskId}
+                  className={`ccv2-impl-task-item${selectedTaskId === item.runtimeTaskId ? " ccv2-impl-task-item--selected" : ""}`}
+                  onClick={() => { setSelectedTaskId(item.runtimeTaskId); setActionState("idle"); setProposalResult(null); setApplyResult(null); setErrorMsg(""); }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && setSelectedTaskId(item.runtimeTaskId)}
+                >
+                  <span className="ccv2-impl-task-item__title">{item.title}</span>
+                  <span className="ccv2-impl-task-item__agent">{item.assignedAgent}</span>
+                  <span className={`ccv2-pill ccv2-pill--${item.riskLevel === "high" ? "fail" : item.riskLevel === "medium" ? "pending" : "pass"}`}>{item.riskLevel}</span>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <div className="ccv2-impl-notice">
+              {bridgeOnline
+                ? <><span className="ccv2-impl-notice__text">No activated tasks. Activate tasks from Task Queue first.</span><button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" style={{ marginTop: 8 }} onClick={() => navigate("/command-center/tasks")}>Go to Task Queue</button></>
+                : <span className="ccv2-impl-notice__text">Action bridge offline — activate tasks and start bridge to see them here.</span>}
+            </div>
+          )}
+          {!bridgeOnline && (
+            <div className="ccv2-impl-notice" style={{ marginTop: 8 }}>
+              <span className="ccv2-impl-notice__text">⊘ Requires action bridge: <code>NEXUS_MODE=local-private npm run mission:action-server</code></span>
+            </div>
+          )}
+        </div>
+
+        {/* Proposal Details */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">2 · Implementation Proposal</div>
+          <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Assigned agent</span><span className="ccv2-wb-meta-value" style={{ fontWeight: 700 }}>{ci.targetAgent || "CORE"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Capability</span><span className="ccv2-wb-meta-value">{ci.capabilityId?.replace(/\./g, " · ") || "implementation · backend_code"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Implementation type</span><span className="ccv2-wb-meta-value">{ci.implementationType || "documentation_readiness_log"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Allowed path</span><span className="ccv2-mono ccv2-wb-meta-value" style={{ fontSize: 10 }}>{ci.allowedPath}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Risk level</span><span className="ccv2-pill ccv2-pill--pass">{ci.riskLevel || "low"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Mutation allowed</span><span className="ccv2-safety-row__value--ready">YES — docs only</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Source mutation</span><span className="ccv2-safety-row__value--disabled">NO</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Provider/network/DB</span><span className="ccv2-safety-row__value--disabled">NO</span></div>
+          </div>
+          <div style={{ marginTop: 12, padding: "10px 12px", background: "rgba(136,255,235,0.03)", border: "1px solid rgba(136,255,235,0.08)", borderRadius: 6 }}>
+            <div style={{ fontSize: 12, fontWeight: 600, color: "var(--v2-text)", marginBottom: 4 }}>Change summary</div>
+            <div style={{ fontSize: 12, color: "var(--v2-muted)" }}>{ci.proposal?.changeSummary}</div>
+          </div>
+          <div style={{ marginTop: 8, display: "flex", gap: 12, flexWrap: "wrap" }}>
+            <div style={{ flex: 1, minWidth: 200, padding: "10px 12px", background: "rgba(61,232,176,0.04)", border: "1px solid rgba(61,232,176,0.12)", borderRadius: 6 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: "var(--v2-green)", marginBottom: 4 }}>Validation plan</div>
+              <div style={{ fontSize: 11, color: "var(--v2-muted)" }}>{ci.proposal?.validationPlan}</div>
+            </div>
+            <div style={{ flex: 1, minWidth: 200, padding: "10px 12px", background: "rgba(244,191,117,0.05)", border: "1px solid rgba(244,191,117,0.15)", borderRadius: 6 }}>
+              <div style={{ fontSize: 11, fontWeight: 600, color: "var(--v2-amber)", marginBottom: 4 }}>Rollback plan</div>
+              <div style={{ fontSize: 11, color: "var(--v2-muted)" }}>{ci.proposal?.rollbackPlan}</div>
+            </div>
+          </div>
+        </div>
+
+        {/* Actions */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">3 · Apply Controlled Change</div>
+          <div className="ccv2-impl-action-row" style={{ marginTop: 12 }}>
+            <button
+              className={`ccv2-wb-review-btn ccv2-wb-review-btn--changes${!canPropose || isRunning ? " ccv2-wb-review-btn--disabled" : ""}`}
+              disabled={!canPropose || isRunning}
+              onClick={handlePropose}
+              title={!bridgeOnline ? "Requires governed implementation bridge" : ""}
+            >
+              {actionState === "proposing" ? "Proposing…" : "Propose Implementation"}
+            </button>
+            <button
+              className={`ccv2-wb-review-btn ccv2-wb-review-btn--approve${!canApply || isRunning ? " ccv2-wb-review-btn--disabled" : ""}`}
+              disabled={!canApply || isRunning}
+              onClick={handleApply}
+              title={!bridgeOnline ? "Requires governed implementation bridge" : ""}
+            >
+              {actionState === "applying" ? "Applying…" : "Apply Controlled Change"}
+            </button>
+            <button
+              className="ccv2-wb-review-btn"
+              style={{ borderColor: "rgba(112,181,255,0.3)", color: "var(--v2-blue)", background: "rgba(112,181,255,0.08)" }}
+              onClick={() => navigate("/command-center/evidence")}
+            >
+              Open Evidence
+            </button>
+          </div>
+
+          {!bridgeOnline && (
+            <div style={{ marginTop: 8, fontSize: 11, color: "var(--v2-muted-2)" }}>
+              ⊘ Buttons require action bridge: <code>NEXUS_MODE=local-private npm run mission:action-server</code>
+            </div>
+          )}
+
+          {/* Status feedback */}
+          {actionState === "proposed" && proposalResult?.ok && (
+            <div className="ccv2-mc-status ccv2-mc-status--running" style={{ marginTop: 10 }}>
+              ◎ Proposal created — ready to apply controlled change
+              <div style={{ fontSize: 10, marginTop: 4, fontFamily: "monospace", color: "var(--v2-muted)" }}>
+                ID: {proposalResult.actionId?.slice(0, 12)}
+              </div>
+            </div>
+          )}
+          {actionState === "applied" && applyResult?.ok && (
+            <div className="ccv2-mc-status ccv2-mc-status--completed" style={{ marginTop: 10 }}>
+              ✓ Controlled change applied
+              <div className="ccv2-mc-result">
+                <div>File: {applyResult.result?.changedFiles?.[0]}</div>
+                <div>Patch: {applyResult.result?.patchSummary}</div>
+                <div>Validation: {applyResult.result?.validationStatus}</div>
+                <div>Evidence: {applyResult.result?.evidenceCreated ? "Created" : "—"}</div>
+                <div>Audit: {applyResult.result?.auditCreated ? "Created" : "—"}</div>
+              </div>
+            </div>
+          )}
+          {actionState === "failed" && (
+            <div className="ccv2-mc-status ccv2-mc-status--failed" style={{ marginTop: 10 }}>
+              ✗ {errorMsg || "Implementation failed."}
+            </div>
+          )}
+          {errorMsg && actionState !== "failed" && (
+            <div className="ccv2-mc-status ccv2-mc-status--offline" style={{ marginTop: 10 }}>
+              ⊘ {errorMsg}
+            </div>
+          )}
+        </div>
+
+        {/* Result details after apply */}
+        {actionState === "applied" && applyResult?.ok && applyResult.result && (
+          <>
+            <div className="ccv2-two-col">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Patch Summary</div>
+                <div style={{ marginTop: 8, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                  {applyResult.result.patchSummary}
+                </div>
+                <div style={{ marginTop: 8, fontSize: 11, fontFamily: "monospace", color: "var(--v2-muted-2)" }}>
+                  {applyResult.result.changedFiles?.map((f) => <div key={f}>+ {f}</div>)}
+                </div>
+              </div>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Rollback Note</div>
+                <div style={{ marginTop: 8, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                  {applyResult.result.rollbackNote || applyResult.result.rollbackPlan}
+                </div>
+              </div>
+            </div>
+
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Validation Result</div>
+              <div style={{ marginTop: 8 }}>
+                <div className="ccv2-wb-meta-row">
+                  <span className="ccv2-wb-meta-label">Validation status</span>
+                  <span className={`ccv2-pill ccv2-pill--${applyResult.result.validationStatus === "PASS" ? "pass" : applyResult.result.validationStatus === "FAIL" ? "fail" : "disabled"}`}>
+                    {applyResult.result.validationStatus || "SKIPPED"}
+                  </span>
+                </div>
+                {applyResult.result.validationNote && (
+                  <div style={{ fontSize: 11, color: "var(--v2-muted-2)", marginTop: 6 }}>{applyResult.result.validationNote}</div>
+                )}
+              </div>
+            </div>
+
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Evidence &amp; Audit</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence created</span><span className={`ccv2-pill ccv2-pill--${applyResult.result.evidenceCreated ? "pass" : "disabled"}`}>{applyResult.result.evidenceCreated ? "Yes" : "No"}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Audit created</span><span className={`ccv2-pill ccv2-pill--${applyResult.result.auditCreated ? "pass" : "disabled"}`}>{applyResult.result.auditCreated ? "Yes" : "No"}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Runtime event</span><span className={`ccv2-pill ccv2-pill--${applyResult.result.runtimeEventCreated ? "pass" : "disabled"}`}>{applyResult.result.runtimeEventCreated ? "Yes" : "No"}</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Next Recommended Actions</div>
+              <div style={{ marginTop: 10, display: "flex", gap: 10, flexWrap: "wrap" }}>
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/workbench")}>
+                  Open Agent Workbench Review
+                </button>
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/evidence")}>
+                  View Evidence Ledger
+                </button>
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/tasks")}>
+                  Next Implementation Task
+                </button>
+              </div>
+            </div>
+          </>
+        )}
+
+        {/* Safety boundary note */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Safety Boundary</div>
+          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+            {Object.entries(ci.safety || {}).map(([key, val]) => (
+              <div key={key} className="ccv2-safety-row">
+                <span className="ccv2-safety-row__label">{key.replace(/([A-Z])/g, " $1").toLowerCase()}</span>
+                <span className={`ccv2-safety-row__value--${val === false ? "disabled" : "ready"}`}>{val === false ? "Disabled" : String(val)}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Agent Workbench Page ─── */
 function WorkbenchPage({ vm }) {
   const navigate = useNavigate();
@@ -2143,8 +2452,8 @@ function OSRoadmapPage({ vm }) {
     { phase: "P34–P35", label: "Command Center V2 + Mission Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission composer, PRD awareness" },
     { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "COMPLETE", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
     { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "COMPLETE", detail: "Select task → activate → runtime queue → evidence" },
-    { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "IN_PROGRESS", detail: "Agent workbench, human review loop, approve/reject/request_changes" },
-    { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "PLANNED", detail: "Governed end-to-end build workflow through Command Center" },
+    { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "COMPLETE", detail: "Agent workbench, human review loop, approve/reject/request_changes" },
+    { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "IN_PROGRESS", detail: "Governed doc-only implementation, CORE agent, patch + rollback + evidence" },
     { phase: "P40", label: "Live Local API Backend for Command Center", status: "PLANNED", detail: "Real-time data via local API — no more snapshots" },
     { phase: "P41", label: "DB Foundation + Durable State", status: "PLANNED", detail: "Persistent task, evidence, audit storage" },
     { phase: "P42", label: "DB-backed Command Center + Live Refresh", status: "PLANNED", detail: "Command Center reads from live DB" },
@@ -2242,6 +2551,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "mission" && <MissionControlPage vm={vm} />}
           {currentPage === "workspace" && <WorkspacePage vm={vm} />}
           {currentPage === "tasks" && <TaskQueuePage vm={vm} />}
+          {currentPage === "implementation" && <ImplementationPage vm={vm} />}
           {currentPage === "workbench" && <WorkbenchPage vm={vm} />}
           {currentPage === "agents" && <AgentFleetPage vm={vm} studio={studio} />}
           {currentPage === "approvals" && <ApprovalsPage vm={vm} studio={studio} />}
