@@ -20,6 +20,7 @@ import { handleContracts } from "./routes/contracts.js";
 import { handleProjects } from "./routes/projects.js";
 import { handleRoadmap } from "./routes/roadmap.js";
 import { handleListActions, handleGetAction } from "./routes/actions.js";
+import { handleDb } from "./routes/db.js";
 
 const DEFAULT_PORT = 4321;
 const DEFAULT_HOST = "127.0.0.1";
@@ -77,6 +78,7 @@ function route(req, res, config) {
   if (method === "GET" && url.startsWith("/actions/") && url !== "/actions/") {
     return handleGetAction(req, res, { ...ctx, actionId: decodeURIComponent(url.replace("/actions/", "")) });
   }
+  if (method === "GET" && url === "/db") return handleDb(req, res, ctx);
 
   sendError(res, 404, "not_found", `Route ${method} ${url} not found.`, null);
 }

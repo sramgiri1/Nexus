@@ -1,0 +1,192 @@
+{
+  "phase": "P41-LOCAL",
+  "generatedAt": "2026-05-09T09:51:43.440Z",
+  "dbWritesEnabled": false,
+  "dryRunOnly": true,
+  "totalEntities": 18,
+  "sourcesAvailable": 17,
+  "sourcesMissing": 1,
+  "importReady": 17,
+  "entries": [
+    {
+      "entity": "projects",
+      "sourceFile": "contracts/missions/private-project-mission-contract.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "missions",
+      "sourceFile": "contracts/missions/private-project-mission-contract.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "mission_tasks",
+      "sourceFile": "contracts/missions/private-project-task-plan.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "runtime_tasks",
+      "sourceFile": "local-state/runtime/tasks.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "actions",
+      "sourceFile": "local-state/runtime/actions.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 4,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "agents",
+      "sourceFile": "memory/agent-status.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "capabilities",
+      "sourceFile": "guardrails/agent-permissions.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "contracts",
+      "sourceFile": "contracts/missions/private-project-mission-contract.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "evidence",
+      "sourceFile": "local-state/runtime/evidence.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 17,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "audit_events",
+      "sourceFile": "local-state/runtime/audit.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 55,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "runtime_events",
+      "sourceFile": "local-state/runtime/events.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 21,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "approvals",
+      "sourceFile": "local-state/runtime/approvals.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "incidents",
+      "sourceFile": "local-state/runtime/incidents.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "roadmap_phases",
+      "sourceFile": "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      "format": "markdown",
+      "sourceExists": true,
+      "estimatedRows": 0,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "workflow_templates",
+      "sourceFile": "dashboard/src/data/commandCenterViewModel.js",
+      "format": "js",
+      "sourceExists": true,
+      "estimatedRows": 0,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "implementation_records",
+      "sourceFile": "local-state/runtime/actions.jsonl",
+      "format": "jsonl",
+      "sourceExists": true,
+      "estimatedRows": 4,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    },
+    {
+      "entity": "review_records",
+      "sourceFile": "local-state/runtime/reviews.jsonl",
+      "format": "jsonl",
+      "sourceExists": false,
+      "estimatedRows": 0,
+      "importReady": false,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_MISSING"
+    },
+    {
+      "entity": "validation_results",
+      "sourceFile": "reports/careloop-backend-validation.json",
+      "format": "json",
+      "sourceExists": true,
+      "estimatedRows": 1,
+      "importReady": true,
+      "dbWritesEnabled": false,
+      "status": "SOURCE_AVAILABLE"
+    }
+  ]
+}

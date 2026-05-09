@@ -608,3 +608,49 @@ test("OS Roadmap shows P39 COMPLETE and P40 IN PROGRESS", async ({ page }) => {
   await expect(page.getByText("Live Local API Backend for Command Center")).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("Durable State nav item appears in sidebar", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-nav-item").filter({ hasText: "Durable State" }).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Durable State page renders with P41 header", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/database");
+  await expect(page.getByText("Durable State").first()).toBeVisible();
+  await expect(page.getByText(/P41-LOCAL/i).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Durable State page shows DB disabled policy", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/database");
+  await expect(page.getByText("Policy Boundary · db-foundation-policy.json")).toBeVisible();
+  await expect(page.getByText("dbWritesEnabled")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Safety Center shows DB Foundation Boundary section", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/safety");
+  await expect(page.getByText(/DB Foundation Boundary/i)).toBeVisible();
+  await expect(page.getByText("P41-LOCAL").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap shows P40 COMPLETE and P41 IN PROGRESS", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.getByText("Live Local API Backend for Command Center")).toBeVisible();
+  await expect(page.getByText("DB Foundation + Durable State")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Top bar shows persistence badge", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-persistence-badge").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});

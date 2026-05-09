@@ -2322,3 +2322,16 @@
 }
 .ccv2-source-bar__hint { font-size: 11px; color: var(--v2-muted); }
 .ccv2-source-bar__hint code { color: var(--v2-teal); font-family: monospace; }
+
+/* ── P41 Persistence badge ── */
+.ccv2-persistence-badge {
+  font-size: 10px;
+  font-weight: 500;
+  padding: 2px 8px;
+  border-radius: 4px;
+  background: rgba(100, 220, 180, 0.08);
+  color: var(--v2-teal);
+  border: 1px solid rgba(100, 220, 180, 0.18);
+  white-space: nowrap;
+  letter-spacing: 0.02em;
+}

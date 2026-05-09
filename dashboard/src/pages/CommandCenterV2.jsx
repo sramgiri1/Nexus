@@ -9,7 +9,7 @@ import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api
 import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
 import { proposeImplementation, applyImplementation } from "../api/implementationActions.js";
-import { getLocalApiHealth, getLocalStatus, getTasks, getEvidence, getProjects, getRoadmap, buildApiState } from "../api/localApiClient.js";
+import { getLocalApiHealth, getLocalStatus, getTasks, getEvidence, getProjects, getRoadmap, getDbStatus, buildApiState } from "../api/localApiClient.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -28,6 +28,7 @@ const PAGE_LABELS = {
   workbench: "Agent Workbench",
   implementation: "Implementation Workflow",
   liveapi: "Live API Status",
+  database: "Durable State",
   roadmap: "OS Roadmap",
   batch: "Batch Queue",
   cost: "Cost Center",
@@ -90,6 +91,7 @@ const NAV_GROUPS_V2 = [
       { label: "Agent Workbench", icon: "⬡", badge: "P38", path: "/command-center/workbench" },
       { label: "Implementation", icon: "▲", badge: "P39", path: "/command-center/implementation" },
       { label: "Live API", icon: "◎", badge: "P40", path: "/command-center/liveapi" },
+      { label: "Durable State", icon: "⬟", badge: "P41", path: "/command-center/database" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
@@ -237,6 +239,8 @@ function TopBar({ vm, currentPage, apiState, onRefresh }) {
           title="Refresh API status"
         >⟳</button>
       </div>
+
+      <span className="ccv2-persistence-badge">DB: file-backed · P41</span>
 
       <div className="ccv2-topbar__modes">
         <span className="ccv2-mode-pill ccv2-mode-pill--active">Desktop</span>
@@ -1479,6 +1483,25 @@ function SafetyCenterPage({ vm }) {
           </div>
         </div>
 
+        <div className="ccv2-card" style={{ marginTop: 8 }}>
+          <div className="ccv2-section-heading">DB Foundation Boundary · P41-LOCAL</div>
+          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+            {[
+              { label: "DB writes enabled", value: "NO", valueClass: "disabled" },
+              { label: "Production DB allowed", value: "NO", valueClass: "disabled" },
+              { label: "External DB allowed", value: "NO", valueClass: "disabled" },
+              { label: "File fallback required", value: "YES", valueClass: "ready" },
+              { label: "Schema artifacts", value: "Defined (18 entities)", valueClass: "ready" },
+              { label: "Dry-run import mapping", value: "Enabled", valueClass: "ready" },
+            ].map(row => (
+              <div key={row.label} className="ccv2-safety-row">
+                <span className="ccv2-safety-row__label">{row.label}</span>
+                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
         {isLocalPrivate && complianceRows.length > 0 && (
           <div className="ccv2-card">
             <div className="ccv2-section-heading">Compliance · {clp.productName}</div>
@@ -2517,6 +2540,7 @@ function LiveApiPage({ vm, onRefresh }) {
     { path: "/projects", label: "Projects", live: "live-backed" },
     { path: "/roadmap", label: "Roadmap", live: "live-backed" },
     { path: "/actions", label: "Actions", live: "live-backed" },
+    { path: "/db", label: "DB Foundation (P41)", live: "live-backed" },
   ];
 
   const safetyRows = [
@@ -2655,6 +2679,117 @@ function LiveApiPage({ vm, onRefresh }) {
   );
 }
 
+/* ─── Durable State Page ─── */
+function DurableStatePage({ vm }) {
+  const dbData = vm.liveData?.db;
+  const online = vm.liveApi?.liveApiOnline;
+  const dbFoundation = vm.dbFoundation || {};
+
+  const entities = dbData?.entities || dbFoundation.entities || [];
+  const importPlan = dbData?.importPlan || dbFoundation.importPlan || {};
+  const entityCount = dbData?.entityCount ?? dbFoundation.entityCount ?? 18;
+  const sourcesAvailable = importPlan.sourcesAvailable ?? "—";
+  const totalEntities = importPlan.totalEntities ?? entityCount;
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Durable State</div>
+          <div className="ccv2-page-head__sub">P41-LOCAL · DB disabled · file-backed fallback · schema foundation only</div>
+        </div>
+
+        <div className="ccv2-stat-chips" style={{ marginBottom: 16 }}>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Phase</span><span className="ccv2-stat-chip__value">P41-LOCAL</span></div>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB Mode</span><span className="ccv2-stat-chip__value">Disabled</span></div>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Entities</span><span className="ccv2-stat-chip__value">{entityCount}</span></div>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Sources Mapped</span><span className="ccv2-stat-chip__value">{sourcesAvailable} / {totalEntities}</span></div>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Writes</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">Disabled</span></div>
+          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Live data</span><span className="ccv2-stat-chip__value">{online ? "API" : "Snapshot"}</span></div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Policy Boundary · db-foundation-policy.json</div>
+          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+            {[
+              { label: "dbWritesEnabled", value: "false", valueClass: "disabled" },
+              { label: "productionDbAllowed", value: "false", valueClass: "disabled" },
+              { label: "externalDbAllowed", value: "false", valueClass: "disabled" },
+              { label: "fileFallbackRequired", value: "true", valueClass: "ready" },
+              { label: "schemaArtifactsAllowed", value: "true", valueClass: "ready" },
+              { label: "dryRunMappingAllowed", value: "true", valueClass: "ready" },
+              { label: "nextPhase", value: "P42-LOCAL", valueClass: "pending" },
+            ].map(row => (
+              <div key={row.label} className="ccv2-safety-row">
+                <span className="ccv2-safety-row__label">{row.label}</span>
+                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="ccv2-card" style={{ marginTop: 8 }}>
+          <div className="ccv2-section-heading">Import Plan · Dry-run Only</div>
+          <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
+            {online
+              ? `${sourcesAvailable} of ${totalEntities} entity sources available. DB writes disabled — no data has been written to any database.`
+              : "Local API offline. Import plan data unavailable — start local API to see live mapping."}
+          </div>
+        </div>
+
+        {entities.length > 0 && (
+          <div className="ccv2-card" style={{ marginTop: 8 }}>
+            <div className="ccv2-section-heading">Entity Registry · {entities.length} Entities</div>
+            <div style={{ overflowX: "auto", marginTop: 8 }}>
+              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                <thead>
+                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
+                    {["Entity", "Primary Key", "Fields", "PII Risk", "Retention", "File Source"].map(h => (
+                      <th key={h} style={{ textAlign: "left", padding: "4px 8px", color: "var(--v2-text-dim)", fontWeight: 500 }}>{h}</th>
+                    ))}
+                  </tr>
+                </thead>
+                <tbody>
+                  {entities.map(e => (
+                    <tr key={e.name} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                      <td style={{ padding: "5px 8px", color: "var(--v2-text)", fontFamily: "monospace" }}>{e.name}</td>
+                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontFamily: "monospace" }}>{e.primaryKey}</td>
+                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)" }}>{e.fieldCount}</td>
+                      <td style={{ padding: "5px 8px", color: e.piiRisk === "none" ? "var(--v2-green)" : "var(--v2-amber)" }}>{e.piiRisk}</td>
+                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontSize: 11 }}>{e.retentionClass}</td>
+                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontSize: 10, fontFamily: "monospace", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.fileFallbackSource}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        )}
+
+        {entities.length === 0 && (
+          <div className="ccv2-card" style={{ marginTop: 8 }}>
+            <div className="ccv2-section-heading">Entity Registry · 18 Entities (schema.json)</div>
+            <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
+              {online ? "Entity data loading…" : "Start local API (npm run local-api:start) to see live entity registry."}
+            </div>
+            <div style={{ fontSize: 11, color: "var(--v2-text-dim)", marginTop: 4 }}>
+              Entities: projects · missions · mission_tasks · runtime_tasks · actions · agents · capabilities · contracts · evidence · audit_events · runtime_events · approvals · incidents · roadmap_phases · workflow_templates · implementation_records · review_records · validation_results
+            </div>
+          </div>
+        )}
+
+        <div className="ccv2-card" style={{ marginTop: 8 }}>
+          <div className="ccv2-section-heading">Next Phase</div>
+          <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
+            <strong style={{ color: "var(--v2-text)" }}>P42-LOCAL</strong> — DB-backed Command Center + Live Refresh.
+            Enable DB writes, run entity migration from file-backed sources, and switch Command Center reads from JSON/JSONL to live DB queries.
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -2668,8 +2803,8 @@ function OSRoadmapPage({ vm }) {
     { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "COMPLETE", detail: "Select task → activate → runtime queue → evidence" },
     { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "COMPLETE", detail: "Agent workbench, human review loop, approve/reject/request_changes" },
     { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "COMPLETE", detail: "Governed doc-only implementation, CORE agent, patch + rollback + evidence" },
-    { phase: "P40", label: "Live Local API Backend for Command Center", status: "IN_PROGRESS", detail: "Real-time data via local API · port 4321 · no DB · no providers" },
-    { phase: "P41", label: "DB Foundation + Durable State", status: "PLANNED", detail: "Persistent task, evidence, audit storage" },
+    { phase: "P40", label: "Live Local API Backend for Command Center", status: "COMPLETE", detail: "Real-time data via local API · port 4321 · no DB · no providers" },
+    { phase: "P41", label: "DB Foundation + Durable State", status: "IN_PROGRESS", detail: "Schema, health, repository, import plan — DB disabled, file fallback active" },
     { phase: "P42", label: "DB-backed Command Center + Live Refresh", status: "PLANNED", detail: "Command Center reads from live DB" },
     { phase: "P43", label: "Worker Queue + Runtime Engine", status: "PLANNED", detail: "Async task execution engine with governed worker queue" },
     { phase: "P44", label: "Provider/Tool Dispatch Through Governance", status: "PLANNED", detail: "Real provider calls through governor and approval gates" },
@@ -2771,8 +2906,8 @@ export default function CommandCenterV2({ studio }) {
       const state = buildApiState(health);
       setApiState(state);
       if (state.liveApiOnline) {
-        Promise.all([getTasks(), getEvidence(), getProjects()]).then(([tasks, evidence, projects]) => {
-          setLiveData({ tasks: tasks.ok ? tasks.data : null, evidence: evidence.ok ? evidence.data : null, projects: projects.ok ? projects.data : null });
+        Promise.all([getTasks(), getEvidence(), getProjects(), getDbStatus()]).then(([tasks, evidence, projects, db]) => {
+          setLiveData({ tasks: tasks.ok ? tasks.data : null, evidence: evidence.ok ? evidence.data : null, projects: projects.ok ? projects.data : null, db: db.ok ? db.data : null });
         }).catch(() => {});
       }
     }).catch(() => {
@@ -2805,6 +2940,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}
+          {currentPage === "database" && <DurableStatePage vm={vmWithApi} />}
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}

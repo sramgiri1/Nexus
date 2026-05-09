@@ -1,0 +1,366 @@
+{
+  "schemaVersion": "1.0",
+  "phase": "P41-LOCAL",
+  "description": "NEXUS durable state entity definitions. DB writes are disabled in P41 — this schema is the foundation for P42+.",
+  "dbWritesEnabled": false,
+  "fileFallbackRequired": true,
+  "entities": [
+    {
+      "name": "projects",
+      "purpose": "Active NEXUS projects with governance state and metadata.",
+      "primaryKey": "projectId",
+      "fields": {
+        "projectId": "string",
+        "label": "string",
+        "mode": "string",
+        "active": "boolean",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": ["projectId", "label", "mode"],
+      "indexes": ["mode", "active"],
+      "sourceMapping": ["contracts/missions/private-project-mission-contract.json"],
+      "piiRisk": "low",
+      "retentionClass": "project_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "contracts/missions/private-project-mission-contract.json"
+    },
+    {
+      "name": "missions",
+      "purpose": "Governed mission contracts created by the mission composer.",
+      "primaryKey": "contractId",
+      "fields": {
+        "contractId": "string",
+        "projectId": "string",
+        "missionText": "string",
+        "mode": "string",
+        "source": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["contractId", "projectId", "missionText"],
+      "indexes": ["projectId", "mode", "source"],
+      "sourceMapping": ["contracts/missions/private-project-mission-contract.json", "reports/mission-composer-output.json"],
+      "piiRisk": "low",
+      "retentionClass": "mission_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "contracts/missions/private-project-mission-contract.json"
+    },
+    {
+      "name": "mission_tasks",
+      "purpose": "Planned mission tasks from the mission composer task plan.",
+      "primaryKey": "taskId",
+      "fields": {
+        "taskId": "string",
+        "missionId": "string",
+        "projectId": "string",
+        "title": "string",
+        "targetAgent": "string",
+        "capabilityId": "string",
+        "riskLevel": "string",
+        "state": "string",
+        "mutationAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["taskId", "projectId", "title", "state"],
+      "indexes": ["projectId", "missionId", "targetAgent", "state"],
+      "sourceMapping": ["contracts/missions/private-project-task-plan.json"],
+      "piiRisk": "low",
+      "retentionClass": "mission_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "contracts/missions/private-project-task-plan.json"
+    },
+    {
+      "name": "runtime_tasks",
+      "purpose": "Durable task state for activated and executing NEXUS tasks.",
+      "primaryKey": "taskId",
+      "fields": {
+        "taskId": "string",
+        "missionId": "string",
+        "projectId": "string",
+        "title": "string",
+        "targetAgent": "string",
+        "capabilityId": "string",
+        "riskLevel": "string",
+        "state": "string",
+        "mutationAllowed": "boolean",
+        "executionAllowed": "boolean",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": ["taskId", "projectId", "title", "state"],
+      "indexes": ["projectId", "missionId", "state", "targetAgent", "capabilityId"],
+      "sourceMapping": ["local-state/runtime/tasks.json", "contracts/missions/private-project-task-plan.json"],
+      "piiRisk": "low",
+      "retentionClass": "runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/tasks.json"
+    },
+    {
+      "name": "actions",
+      "purpose": "All governed action records: mission, task activation, review, implementation.",
+      "primaryKey": "actionId",
+      "fields": {
+        "actionId": "string",
+        "actionType": "string",
+        "projectId": "string",
+        "taskId": "string",
+        "status": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["actionId", "actionType", "status"],
+      "indexes": ["actionType", "projectId", "taskId", "status"],
+      "sourceMapping": ["local-state/runtime/actions.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "action_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/actions.jsonl"
+    },
+    {
+      "name": "agents",
+      "purpose": "Agent definitions, roles, capabilities, and readiness state.",
+      "primaryKey": "agentId",
+      "fields": {
+        "agentId": "string",
+        "role": "string",
+        "tier": "string",
+        "capabilities": "array",
+        "active": "boolean"
+      },
+      "requiredFields": ["agentId", "role"],
+      "indexes": ["tier", "active"],
+      "sourceMapping": ["memory/agent-status.json"],
+      "piiRisk": "none",
+      "retentionClass": "config",
+      "redactionRequired": false,
+      "fileFallbackSource": "memory/agent-status.json"
+    },
+    {
+      "name": "capabilities",
+      "purpose": "Agent capability registry with ownership and skill mappings.",
+      "primaryKey": "capabilityId",
+      "fields": {
+        "capabilityId": "string",
+        "agentId": "string",
+        "skillId": "string",
+        "description": "string"
+      },
+      "requiredFields": ["capabilityId", "agentId"],
+      "indexes": ["agentId"],
+      "sourceMapping": ["guardrails/agent-permissions.json"],
+      "piiRisk": "none",
+      "retentionClass": "config",
+      "redactionRequired": false,
+      "fileFallbackSource": "guardrails/agent-permissions.json"
+    },
+    {
+      "name": "contracts",
+      "purpose": "All governance contracts: mission, task plan, validation, implementation.",
+      "primaryKey": "contractId",
+      "fields": {
+        "contractId": "string",
+        "contractType": "string",
+        "projectId": "string",
+        "targetAgent": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["contractId", "contractType"],
+      "indexes": ["contractType", "projectId", "targetAgent"],
+      "sourceMapping": ["contracts/missions/private-project-mission-contract.json", "contracts/missions/private-project-task-plan.json"],
+      "piiRisk": "low",
+      "retentionClass": "mission_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "contracts/missions/private-project-mission-contract.json"
+    },
+    {
+      "name": "evidence",
+      "purpose": "Immutable evidence records from all governed execution steps.",
+      "primaryKey": "evidenceId",
+      "fields": {
+        "evidenceId": "string",
+        "taskId": "string",
+        "type": "string",
+        "result": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["evidenceId", "type", "result"],
+      "indexes": ["taskId", "type", "result"],
+      "sourceMapping": ["local-state/runtime/evidence.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "evidence_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/evidence.jsonl"
+    },
+    {
+      "name": "audit_events",
+      "purpose": "Append-only audit trail for all governed actions and state transitions.",
+      "primaryKey": "auditId",
+      "fields": {
+        "auditId": "string",
+        "taskId": "string",
+        "eventType": "string",
+        "agent": "string",
+        "timestamp": "datetime"
+      },
+      "requiredFields": ["auditId", "eventType"],
+      "indexes": ["taskId", "eventType", "agent"],
+      "sourceMapping": ["local-state/runtime/audit.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "audit_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/audit.jsonl"
+    },
+    {
+      "name": "runtime_events",
+      "purpose": "Runtime state transition events from the local event bus.",
+      "primaryKey": "eventId",
+      "fields": {
+        "eventId": "string",
+        "taskId": "string",
+        "eventType": "string",
+        "timestamp": "datetime"
+      },
+      "requiredFields": ["eventId", "eventType"],
+      "indexes": ["taskId", "eventType"],
+      "sourceMapping": ["local-state/runtime/events.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/events.jsonl"
+    },
+    {
+      "name": "approvals",
+      "purpose": "Approval records for governed actions requiring human sign-off.",
+      "primaryKey": "approvalId",
+      "fields": {
+        "approvalId": "string",
+        "taskId": "string",
+        "decision": "string",
+        "requestedBy": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["approvalId", "decision"],
+      "indexes": ["taskId", "decision"],
+      "sourceMapping": ["local-state/runtime/approvals.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "approval_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/approvals.jsonl"
+    },
+    {
+      "name": "incidents",
+      "purpose": "Safety incidents and governor blocks from the safety event log.",
+      "primaryKey": "incidentId",
+      "fields": {
+        "incidentId": "string",
+        "type": "string",
+        "severity": "string",
+        "agent": "string",
+        "timestamp": "datetime"
+      },
+      "requiredFields": ["incidentId", "type"],
+      "indexes": ["type", "severity", "agent"],
+      "sourceMapping": ["local-state/runtime/incidents.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "safety_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/incidents.jsonl"
+    },
+    {
+      "name": "roadmap_phases",
+      "purpose": "NEXUS OS roadmap phase definitions and current/next markers.",
+      "primaryKey": "phase",
+      "fields": {
+        "phase": "string",
+        "label": "string",
+        "status": "string",
+        "current": "boolean",
+        "next": "boolean"
+      },
+      "requiredFields": ["phase", "label", "status"],
+      "indexes": ["status", "current", "next"],
+      "sourceMapping": ["docs/architecture/NEXUS_PLATFORM_ROADMAP.md"],
+      "piiRisk": "none",
+      "retentionClass": "config",
+      "redactionRequired": false,
+      "fileFallbackSource": "docs/architecture/NEXUS_PLATFORM_ROADMAP.md"
+    },
+    {
+      "name": "workflow_templates",
+      "purpose": "Agentic workflow template definitions from the workspace.",
+      "primaryKey": "workflowId",
+      "fields": {
+        "workflowId": "string",
+        "label": "string",
+        "category": "string",
+        "enabledNow": "boolean"
+      },
+      "requiredFields": ["workflowId", "label"],
+      "indexes": ["category", "enabledNow"],
+      "sourceMapping": ["dashboard/src/data/commandCenterViewModel.js"],
+      "piiRisk": "none",
+      "retentionClass": "config",
+      "redactionRequired": false,
+      "fileFallbackSource": "dashboard/src/data/commandCenterViewModel.js"
+    },
+    {
+      "name": "implementation_records",
+      "purpose": "Controlled implementation records from the governed implementation workflow.",
+      "primaryKey": "actionId",
+      "fields": {
+        "actionId": "string",
+        "taskId": "string",
+        "implementationType": "string",
+        "allowedPath": "string",
+        "validationStatus": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["actionId", "implementationType"],
+      "indexes": ["taskId", "implementationType", "validationStatus"],
+      "sourceMapping": ["reports/implementation-result.json", "local-state/runtime/actions.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "action_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/implementation-result.json"
+    },
+    {
+      "name": "review_records",
+      "purpose": "Human review decisions from the agent workbench review loop.",
+      "primaryKey": "reviewId",
+      "fields": {
+        "reviewId": "string",
+        "taskId": "string",
+        "decision": "string",
+        "requestedBy": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["reviewId", "decision"],
+      "indexes": ["taskId", "decision"],
+      "sourceMapping": ["local-state/runtime/reviews.jsonl"],
+      "piiRisk": "low",
+      "retentionClass": "review_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "local-state/runtime/reviews.jsonl"
+    },
+    {
+      "name": "validation_results",
+      "purpose": "Backend validation results from controlled validation runs.",
+      "primaryKey": "validationId",
+      "fields": {
+        "validationId": "string",
+        "projectId": "string",
+        "total": "integer",
+        "pass": "integer",
+        "status": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["validationId", "status"],
+      "indexes": ["projectId", "status"],
+      "sourceMapping": ["reports/careloop-backend-validation.json"],
+      "piiRisk": "low",
+      "retentionClass": "validation_log",
+      "redactionRequired": true,
+      "fileFallbackSource": "reports/careloop-backend-validation.json"
+    }
+  ]
+}

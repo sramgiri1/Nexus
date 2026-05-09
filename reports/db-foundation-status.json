@@ -1,0 +1,87 @@
+{
+  "phase": "P41-LOCAL",
+  "generatedAt": "2026-05-09T09:51:43.443Z",
+  "dbWritesEnabled": false,
+  "schemaDefined": true,
+  "entityCount": 11,
+  "recordsMapped": 128,
+  "summary": [
+    {
+      "entity": "projects",
+      "recordCount": 1,
+      "wouldInsert": 1,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "missions",
+      "recordCount": 1,
+      "wouldInsert": 1,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "mission_tasks",
+      "recordCount": 6,
+      "wouldInsert": 6,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "runtime_tasks",
+      "recordCount": 18,
+      "wouldInsert": 18,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "agents",
+      "recordCount": 2,
+      "wouldInsert": 2,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "evidence",
+      "recordCount": 17,
+      "wouldInsert": 17,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "audit_events",
+      "recordCount": 55,
+      "wouldInsert": 55,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "runtime_events",
+      "recordCount": 21,
+      "wouldInsert": 21,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "contracts",
+      "recordCount": 2,
+      "wouldInsert": 2,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "actions",
+      "recordCount": 4,
+      "wouldInsert": 4,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    },
+    {
+      "entity": "validation_results",
+      "recordCount": 1,
+      "wouldInsert": 1,
+      "dbWritesEnabled": false,
+      "status": "DRY_RUN"
+    }
+  ]
+}

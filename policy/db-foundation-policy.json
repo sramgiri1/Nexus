@@ -1,0 +1,20 @@
+{
+  "phase": "P41-LOCAL",
+  "description": "DB Foundation and Durable State boundary policy. DB disabled in P41 — schema artifacts only.",
+  "dbWritesEnabled": false,
+  "dbReadsEnabled": false,
+  "fileFallbackRequired": true,
+  "productionDbAllowed": false,
+  "externalDbAllowed": false,
+  "schemaArtifactsAllowed": true,
+  "dryRunMappingAllowed": true,
+  "sourceMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "allowedDbModes": ["disabled", "file-backed"],
+  "forbiddenDbModes": ["postgres", "mysql", "sqlite", "production"],
+  "requiresFileFallback": true,
+  "requiresSafeResponseLayer": true,
+  "nextPhase": "P42-LOCAL",
+  "nextPhaseUnlocks": "DB writes and live entity migration"
+}

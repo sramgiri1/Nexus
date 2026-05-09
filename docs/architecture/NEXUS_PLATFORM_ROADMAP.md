@@ -60,6 +60,20 @@ belongs in separate private repos.
 
 ---
 
+## Completed (LOCAL phases continued)
+
+- Phase 32-LOCAL Command Center Private Validation View
+- Phase 33-LOCAL Command Center V2 Shell + Mission Action Bridge
+- Phase 34-LOCAL Mission Composer Governed Kickoff
+- Phase 35-LOCAL Mission Action Bridge
+- Phase 36-LOCAL Agentic Workspace Home + Workflow Templates
+- Phase 37-LOCAL Task Activation + Agent Assignment from UI
+- Phase 38-LOCAL Agent Workbench + Human Review Loop
+- Phase 39-LOCAL First Controlled Implementation Workflow from UI
+- Phase 40-LOCAL Live Local API Backend for Command Center
+
+---
+
 ## Current Phase
 
 ### Phase 32-LOCAL — Command Center Private Validation View
@@ -311,6 +325,58 @@ Validation checks:
 - All 11 read endpoints return ok with metadata envelope
 - Health endpoint returns dbBacked:false, providerCallsEnabled:false, externalNetworkEnabled:false
 - Action routes delegate to existing governed bridges only
+
+Risk level:
+
+- low
+
+---
+
+### P41-LOCAL — DB Foundation + Durable State
+
+Goal:
+
+- Introduce a local DB-backed state layer, additive to the working file-backed state
+- DB is disabled-by-default in P41 — schema artifacts only, no real DB connections
+- File fallback remains the source of truth throughout P41
+- `db/` module defines schema, health, repository, import plan, snapshot mapper
+
+Deliverables:
+
+- `db/schema.json` — 18 NEXUS durable state entity definitions
+- `db/schema.sql` — portable SQL schema artifact (not executed in P41)
+- `db/dbConfig.js` — loadDbConfig, validateDbConfig, getDbMode (defaults to "disabled")
+- `db/dbHealth.js` — getDbHealth, getDbReadiness, summarizeDbStatus
+- `db/dbRepository.js` — file-backed reads for all 18 entities; writeNotSupportedYet
+- `db/dbImportPlan.js` — buildDbImportPlan, validateDbImportPlan, summarizeImportReadiness, writeImportPlanReport
+- `db/dbSnapshotMapper.js` — mapLocalStateToDbEntities, createDbSeedPreview, writeDbFoundationStatus
+- `db/index.js` — re-exports all db functions
+- `policy/db-foundation-policy.json` — P41 boundary (dbWritesEnabled: false, productionDbAllowed: false)
+- `local-api/routes/db.js` — GET /db returns DB health, entity list, import plan
+- `local-api/server.js` — GET /db route added
+- `dashboard/src/api/localApiClient.js` — getDbStatus() added
+- DurableStatePage at /command-center/database: DB mode, entity table, import plan, next phase
+- Durable State nav item with P41 badge
+- DB Foundation Boundary in Safety Center
+- Persistence badge in TopBar
+- /db in Live API Status endpoint list
+- OS Roadmap: P40 COMPLETE, P41 IN_PROGRESS, P42 PLANNED/next
+- `scripts/check-db-foundation.js` — 13-section validator
+- `scripts/db-foundation-status.js` — status printer with import plan
+
+Non-goals:
+
+- no DB writes in P41
+- no real DB connections or migrations
+- no provider calls, network calls, or source mutations
+
+Validation checks:
+
+- `npm run check:db-foundation` passes all checks
+- GET /db returns ok with dbBacked: false, entityCount: 18, fileFallbackRequired: true
+- All 18 entity sources mapped in import plan
+- Policy enforces dbWritesEnabled: false and productionDbAllowed: false
+- No DB connections in any P41 module
 
 Risk level:
 
