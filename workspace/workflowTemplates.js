@@ -1,10 +1,11 @@
 /**
  * workflowTemplates.js
- * NEXUS Agentic Workspace — P36-LOCAL
+ * NEXUS Agentic Workspace
  *
- * Defines the 8 governed workflow templates available from the Command Center.
- * Templates are metadata only in P36. No workflow execution occurs here.
- * Execution bridges arrive in P37+.
+ * Workflow template metadata for the Command Center.
+ * Templates declare capability-based readiness — not phase-gating labels.
+ * Execution bridges (task activation, workbench, implementation) are all live
+ * as of the current local OS. Phase numbers belong in OS Roadmap only.
  */
 
 const WORKFLOW_TEMPLATES = [
@@ -18,9 +19,10 @@ const WORKFLOW_TEMPLATES = [
     evidenceCreated: ["mission_contract", "task_plan", "implementation_evidence", "validation_result"],
     approvalRequired: "conditional",
     riskLevel: "high",
-    enabledNow: false,
-    disabledReason: "Requires task activation and implementation bridge",
-    nextPhase: "P37",
+    enabledNow: true,
+    requiredCapability: "taskActivation",
+    userFacingRequirement: "Planning, task activation, workbench, and scoped implementation are available. Broad autonomous execution requires worker runtime and provider dispatch.",
+    internalPhase: "P37",
     recommendedForCurrentMission: true,
   },
   {
@@ -33,9 +35,10 @@ const WORKFLOW_TEMPLATES = [
     evidenceCreated: ["failure_analysis", "remediation_plan", "patch_summary", "validation_result"],
     approvalRequired: "conditional",
     riskLevel: "medium",
-    enabledNow: false,
-    disabledReason: "Requires task activation bridge",
-    nextPhase: "P37",
+    enabledNow: true,
+    requiredCapability: "controlledImplementation",
+    userFacingRequirement: "Available for scoped remediation. Requires failing validation evidence.",
+    internalPhase: "P37",
     recommendedForCurrentMission: false,
   },
   {
@@ -48,9 +51,10 @@ const WORKFLOW_TEMPLATES = [
     evidenceCreated: ["command_allowlist_decision", "preflight_result", "controlled_command_result"],
     approvalRequired: false,
     riskLevel: "low",
-    enabledNow: false,
-    disabledReason: "Requires backend validation action bridge",
-    nextPhase: "P37",
+    enabledNow: true,
+    requiredCapability: "taskActivation",
+    userFacingRequirement: "Available. Uses controlled runner and evidence capture.",
+    internalPhase: "P37",
     recommendedForCurrentMission: true,
   },
   {
@@ -64,8 +68,9 @@ const WORKFLOW_TEMPLATES = [
     approvalRequired: true,
     riskLevel: "high",
     enabledNow: false,
-    disabledReason: "Requires release action bridge",
-    nextPhase: "P39",
+    requiredCapability: "releaseActionBridge",
+    userFacingRequirement: "Requires release action bridge. All verification gates must be complete.",
+    internalPhase: "P39",
     recommendedForCurrentMission: false,
   },
   {
@@ -78,9 +83,10 @@ const WORKFLOW_TEMPLATES = [
     evidenceCreated: ["sprint_plan", "task_plan", "risk_review"],
     approvalRequired: false,
     riskLevel: "low",
-    enabledNow: false,
-    disabledReason: "Requires task activation bridge",
-    nextPhase: "P37",
+    enabledNow: true,
+    requiredCapability: "taskActivation",
+    userFacingRequirement: "Available for planning. Task activation bridge is ready.",
+    internalPhase: "P37",
     recommendedForCurrentMission: true,
   },
   {
@@ -93,9 +99,10 @@ const WORKFLOW_TEMPLATES = [
     evidenceCreated: ["privacy_review", "data_classification", "safety_decision"],
     approvalRequired: "conditional",
     riskLevel: "medium",
-    enabledNow: false,
-    disabledReason: "Requires WARDEN review bridge",
-    nextPhase: "P38",
+    enabledNow: true,
+    requiredCapability: "agentWorkbench",
+    userFacingRequirement: "Available for review planning and workbench inspection. Full automated execution requires WARDEN review bridge.",
+    internalPhase: "P38",
     recommendedForCurrentMission: true,
   },
   {
@@ -109,8 +116,9 @@ const WORKFLOW_TEMPLATES = [
     approvalRequired: false,
     riskLevel: "medium",
     enabledNow: false,
-    disabledReason: "Requires iOS/Xcode runner bridge",
-    nextPhase: "P38",
+    requiredCapability: "iosRunner",
+    userFacingRequirement: "Requires iOS/Xcode runner.",
+    internalPhase: "P38",
     recommendedForCurrentMission: true,
   },
   {
@@ -124,34 +132,21 @@ const WORKFLOW_TEMPLATES = [
     approvalRequired: false,
     riskLevel: "low",
     enabledNow: true,
-    disabledReason: "",
-    nextPhase: "P36",
+    requiredCapability: "agentWorkbench",
+    userFacingRequirement: "",
+    internalPhase: "P36",
     recommendedForCurrentMission: true,
   },
 ];
 
-/**
- * Return all workflow templates.
- * @returns {object[]}
- */
 export function getWorkflowTemplates() {
   return WORKFLOW_TEMPLATES;
 }
 
-/**
- * Find a template by id.
- * @param {string} id
- * @returns {object|null}
- */
 export function getWorkflowTemplateById(id) {
   return WORKFLOW_TEMPLATES.find((t) => t.id === id) || null;
 }
 
-/**
- * Validate that the template list is internally consistent.
- * @param {object[]} templates
- * @returns {{ valid: boolean, errors: string[], warnings: string[] }}
- */
 export function validateWorkflowTemplates(templates = []) {
   const errors = [];
   const warnings = [];
@@ -168,11 +163,8 @@ export function validateWorkflowTemplates(templates = []) {
       errors.push(`Duplicate template id: ${t.id}`);
     }
     if (t.id) seenIds.add(t.id);
-    if (t.enabledNow && !t.disabledReason) {
-      // Fine — enabled with no reason is valid
-    }
-    if (!t.enabledNow && !t.disabledReason) {
-      warnings.push(`Template "${t.id}" is disabled but has no disabledReason`);
+    if (!t.enabledNow && !t.userFacingRequirement && !t.requiredCapability) {
+      warnings.push(`Template "${t.id}" is disabled but has no userFacingRequirement`);
     }
   }
 

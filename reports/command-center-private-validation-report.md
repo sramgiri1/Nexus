@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-08T22:41:40.031Z
-- Validation branch: arch/command-center-mission-action-bridge
-- Validation HEAD: 661ea83
+- Generated at: 2026-05-09T10:41:15.071Z
+- Validation branch: fix/command-center-capability-state-ux
+- Validation HEAD: 1827e31
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Modules: PASS

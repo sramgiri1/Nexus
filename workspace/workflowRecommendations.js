@@ -1,18 +1,14 @@
 /**
  * workflowRecommendations.js
- * NEXUS Agentic Workspace — P36-LOCAL
+ * NEXUS Agentic Workspace
  *
  * Derives next-best action and recommended workflows from current OS context.
  * No execution. No provider calls. No mutations. Read-only recommendation logic.
+ * Uses capability-based language — phase numbers are OS Roadmap metadata only.
  */
 
 import { getWorkflowTemplates } from "./workflowTemplates.js";
 
-/**
- * Build workspace status from context.
- * @param {object} context
- * @returns {object}
- */
 function buildWorkspaceStatus(context = {}) {
   const missionReady = !!(context.missionExists);
   const planReady = !!(context.taskPlanExists && context.taskCount > 0);
@@ -31,11 +27,6 @@ function buildWorkspaceStatus(context = {}) {
   };
 }
 
-/**
- * Determine which workflows are recommended given context.
- * @param {object} context
- * @returns {object[]} recommended templates (with contextual enabledNow override)
- */
 export function recommendWorkflows(context = {}) {
   const status = buildWorkspaceStatus(context);
   const templates = getWorkflowTemplates();
@@ -44,34 +35,26 @@ export function recommendWorkflows(context = {}) {
     .filter((t) => t.recommendedForCurrentMission)
     .map((t) => {
       let contextualEnabled = t.enabledNow;
-      let contextualReason = t.disabledReason;
+      let contextualRequirement = t.userFacingRequirement;
 
-      // govern-agent-work is always available as a navigation action
       if (t.id === "govern-agent-work") {
         contextualEnabled = true;
-        contextualReason = "";
+        contextualRequirement = "";
       }
 
-      // validate-backend: available if backend is not yet validated
       if (t.id === "validate-backend" && !status.backendValidated) {
-        contextualReason = "Backend not yet validated — run controlled backend validation";
+        contextualRequirement = "Backend not yet validated — run controlled backend validation.";
       }
 
-      return { ...t, enabledNow: contextualEnabled, disabledReason: contextualReason };
+      return { ...t, enabledNow: contextualEnabled, userFacingRequirement: contextualRequirement };
     })
     .sort((a, b) => {
-      // Enabled first, then by risk (low → high)
       if (a.enabledNow !== b.enabledNow) return a.enabledNow ? -1 : 1;
       const riskOrder = { low: 0, medium: 1, high: 2 };
       return (riskOrder[a.riskLevel] ?? 1) - (riskOrder[b.riskLevel] ?? 1);
     });
 }
 
-/**
- * Compute the single next-best action for the operator.
- * @param {object} context
- * @returns {object}
- */
 export function getNextBestAction(context = {}) {
   const status = buildWorkspaceStatus(context);
 
@@ -81,18 +64,20 @@ export function getNextBestAction(context = {}) {
       description: "Use the Mission Composer to define your mission. NEXUS will generate a governed 6-task plan.",
       workflowId: "build-product",
       enabled: true,
-      disabledReason: "",
-      targetPhase: "P35",
+      userFacingRequirement: "",
+      requiredCapability: "missionComposer",
+      targetPhase: "P37",
     };
   }
 
   if (status.missionReady && status.planReady && !status.tasksActivated) {
     return {
       title: "Activate First Mission Task",
-      description: "Mission plan is ready. Activate the first task to move from planned to queued state in the runtime.",
+      description: "Mission plan is ready. Activate the first task to move it from planned to queued state in the runtime.",
       workflowId: "govern-agent-work",
-      enabled: false,
-      disabledReason: "Requires P37 task activation bridge",
+      enabled: true,
+      userFacingRequirement: "",
+      requiredCapability: "taskActivation",
       targetPhase: "P37",
     };
   }
@@ -102,8 +87,9 @@ export function getNextBestAction(context = {}) {
       title: "Validate Backend",
       description: "Run controlled backend validation to confirm tests pass before the implementation workflow.",
       workflowId: "validate-backend",
-      enabled: false,
-      disabledReason: "Requires backend validation action bridge",
+      enabled: true,
+      userFacingRequirement: "Uses controlled runner and evidence capture.",
+      requiredCapability: "taskActivation",
       targetPhase: "P37",
     };
   }
@@ -113,8 +99,9 @@ export function getNextBestAction(context = {}) {
       title: "Plan Next Sprint",
       description: "PRD gaps exist. Convert open gaps into a governed sprint plan with agents, gates, and evidence requirements.",
       workflowId: "plan-sprint",
-      enabled: false,
-      disabledReason: "Requires task activation bridge",
+      enabled: true,
+      userFacingRequirement: "",
+      requiredCapability: "taskActivation",
       targetPhase: "P37",
     };
   }
@@ -124,16 +111,12 @@ export function getNextBestAction(context = {}) {
     description: "Inspect active tasks, agent states, evidence, and governance posture from the Command Center.",
     workflowId: "govern-agent-work",
     enabled: true,
-    disabledReason: "",
+    userFacingRequirement: "",
+    requiredCapability: "agentWorkbench",
     targetPhase: "P36",
   };
 }
 
-/**
- * Build the complete workspace summary for the Command Center view model.
- * @param {object} context
- * @returns {object}
- */
 export function buildWorkspaceSummary(context = {}) {
   const status = buildWorkspaceStatus(context);
   const recommendedWorkflows = recommendWorkflows(context);
@@ -155,11 +138,10 @@ export function buildWorkspaceSummary(context = {}) {
     nextBestAction,
     workspaceStatus: status,
     currentLimitations: [
-      "Workflow execution not available in P36 — arrives in P37 (task activation bridge)",
-      "Task activation requires P37 task activation bridge",
-      "Agent dispatch requires P39 implementation workflow bridge",
-      "Live API backend requires P40",
-      "DB-backed state requires P41",
+      "Broad autonomous build requires worker runtime and provider dispatch.",
+      "Release review requires release action bridge.",
+      "iOS validation requires iOS/Xcode runner.",
+      "DB writes not enabled — DB foundation is read-only (file-backed).",
     ],
   };
 }

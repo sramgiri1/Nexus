@@ -88,10 +88,10 @@ const NAV_GROUPS_V2 = [
       { label: "Mission Control", icon: "⬡", badge: "LIVE", path: "/command-center/mission" },
       { label: "Workspace", icon: "⊹", path: "/command-center/workspace" },
       { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
-      { label: "Agent Workbench", icon: "⬡", badge: "P38", path: "/command-center/workbench" },
-      { label: "Implementation", icon: "▲", badge: "P39", path: "/command-center/implementation" },
-      { label: "Live API", icon: "◎", badge: "P40", path: "/command-center/liveapi" },
-      { label: "Durable State", icon: "⬟", badge: "P41", path: "/command-center/database" },
+      { label: "Agent Workbench", icon: "⬡", badge: "Ready", path: "/command-center/workbench" },
+      { label: "Implementation", icon: "▲", badge: "Ready", path: "/command-center/implementation" },
+      { label: "Live API", icon: "◎", badge: "Live", path: "/command-center/liveapi" },
+      { label: "Durable State", icon: "⬟", badge: "Read-only", path: "/command-center/database" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
@@ -240,7 +240,7 @@ function TopBar({ vm, currentPage, apiState, onRefresh }) {
         >⟳</button>
       </div>
 
-      <span className="ccv2-persistence-badge">DB: file-backed · P41</span>
+      <span className="ccv2-persistence-badge">Durable State: read-only</span>
 
       <div className="ccv2-topbar__modes">
         <span className="ccv2-mode-pill ccv2-mode-pill--active">Desktop</span>
@@ -720,7 +720,7 @@ function CareLoopProgressCard({ clp }) {
    Govern Agent Work
 ─── */
 function WorkflowCard({ wf, navigate }) {
-  const statusLabel = wf.enabledNow ? "Available" : wf.nextPhase === "P36" ? "Coming soon" : `Requires ${wf.nextPhase}`;
+  const statusLabel = wf.enabledNow ? "Available" : "Not available";
   const statusClass = wf.enabledNow ? "pass" : "disabled";
 
   return (
@@ -741,6 +741,9 @@ function WorkflowCard({ wf, navigate }) {
           <span key={e} className="ccv2-wf-card__evidence-tag">{e.replace(/_/g, " ")}</span>
         ))}
       </div>
+      {wf.userFacingRequirement && (
+        <div className="ccv2-wf-card__requirement">{wf.userFacingRequirement}</div>
+      )}
       <div className="ccv2-wf-card__footer">
         <span className="ccv2-wf-card__approval">
           {wf.approvalRequired === true ? "Approval required" : wf.approvalRequired === "conditional" ? "Conditional approval" : "No approval"}
@@ -753,8 +756,8 @@ function WorkflowCard({ wf, navigate }) {
             Start Workflow
           </button>
         ) : (
-          <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled title={wf.disabledReason}>
-            {wf.disabledReason || "Not available"}
+          <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled title={wf.userFacingRequirement}>
+            {wf.userFacingRequirement || "Not available"}
           </button>
         )}
       </div>
@@ -790,7 +793,7 @@ function WorkspaceBand({ vm }) {
               </button>
             ) : (
               <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
-                {nba.disabledReason}
+                {nba.userFacingRequirement || "Not available"}
               </button>
             )}
           </div>
@@ -1834,7 +1837,7 @@ function WorkspacePage({ vm }) {
             <div className="ccv2-workspace-nba__desc">{nba.description}</div>
             <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap", alignItems: "center" }}>
               <span className={`ccv2-pill ccv2-pill--${nba.enabled ? "pass" : "disabled"}`}>
-                {nba.enabled ? "P37 Available" : `Requires ${nba.targetPhase}`}
+                {nba.enabled ? "Available" : "Not available"}
               </span>
               {nba.enabled ? (
                 <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate(nba.action?.replace("navigate:", "") || "/command-center/tasks")}>
@@ -1842,7 +1845,7 @@ function WorkspacePage({ vm }) {
                 </button>
               ) : (
                 <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
-                  {nba.disabledReason}
+                  {nba.userFacingRequirement || "Not available"}
                 </button>
               )}
             </div>

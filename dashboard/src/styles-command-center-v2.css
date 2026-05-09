@@ -1983,6 +1983,13 @@
   text-transform: capitalize;
 }
 
+.ccv2-wf-card__requirement {
+  font-size: 11px;
+  color: var(--v2-text-dim);
+  padding: 6px 0 2px;
+  line-height: 1.5;
+}
+
 .ccv2-wf-card__footer {
   display: flex;
   justify-content: space-between;

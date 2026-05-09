@@ -370,11 +370,12 @@ test("Govern Agent Work workflow card has Start Workflow button enabled", async 
   expect(errors).toEqual([]);
 });
 
-test("Disabled workflow cards show disabled button", async ({ page }) => {
+test("Disabled workflow cards show disabled button for unavailable capabilities", async ({ page }) => {
   const errors = captureClientErrors(page);
   await page.goto("/command-center/workspace");
-  const buildCard = page.locator(".ccv2-wf-card").filter({ hasText: "Build Product" });
-  await expect(buildCard.getByRole("button")).toBeDisabled();
+  // Review Release is still disabled (requires release action bridge — not yet available)
+  const releaseCard = page.locator(".ccv2-wf-card").filter({ hasText: "Review Release" });
+  await expect(releaseCard.getByRole("button")).toBeDisabled();
   expect(errors).toEqual([]);
 });
 
@@ -652,5 +653,124 @@ test("Top bar shows persistence badge", async ({ page }) => {
   const errors = captureClientErrors(page);
   await page.goto("/command-center/mission");
   await expect(page.locator(".ccv2-persistence-badge").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+// ── P41.5 Capability-State UX ─────────────────────────────────────────────
+
+test("Mission Control does not show stale Requires P37/P38/P39 labels", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  const body = await page.locator("body").innerText();
+  expect(body).not.toMatch(/Requires P3[0-9]/);
+  expect(body).not.toMatch(/Requires P4[0-9]/);
+  expect(errors).toEqual([]);
+});
+
+test("Workspace does not show stale Requires P37/P38/P39 labels", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const body = await page.locator("body").innerText();
+  expect(body).not.toMatch(/Requires P3[0-9]/);
+  expect(body).not.toMatch(/Requires P4[0-9]/);
+  expect(errors).toEqual([]);
+});
+
+test("Sidebar shows Agent Workbench with capability badge not phase badge", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  const workbenchItem = page.locator(".ccv2-nav-item").filter({ hasText: "Agent Workbench" }).first();
+  await expect(workbenchItem).toBeVisible();
+  const itemText = await workbenchItem.innerText();
+  expect(itemText).not.toContain("P38");
+  expect(errors).toEqual([]);
+});
+
+test("Sidebar shows Implementation with capability badge not phase badge", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  const implItem = page.locator(".ccv2-nav-item").filter({ hasText: "Implementation" }).first();
+  await expect(implItem).toBeVisible();
+  const itemText = await implItem.innerText();
+  expect(itemText).not.toContain("P39");
+  expect(errors).toEqual([]);
+});
+
+test("Sidebar still shows Live API and Durable State nav items", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-nav-item").filter({ hasText: "Live API" }).first()).toBeVisible();
+  await expect(page.locator(".ccv2-nav-item").filter({ hasText: "Durable State" }).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Govern Agent Work workflow card shows Available", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const governCard = page.locator(".ccv2-wf-card").filter({ hasText: "Govern Agent Work" });
+  await expect(governCard).toBeVisible();
+  await expect(governCard.getByText("Available")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Review Release workflow card shows capability-based reason", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const releaseCard = page.locator(".ccv2-wf-card").filter({ hasText: "Review Release" });
+  await expect(releaseCard).toBeVisible();
+  const cardText = await releaseCard.innerText();
+  expect(cardText).not.toMatch(/Requires P3[0-9]/);
+  expect(cardText).not.toMatch(/Requires P4[0-9]/);
+  expect(cardText).toMatch(/release action bridge/i);
+  expect(errors).toEqual([]);
+});
+
+test("iOS Validation workflow card shows capability-based reason", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const iosCard = page.locator(".ccv2-wf-card").filter({ hasText: "Prepare iOS Validation" });
+  await expect(iosCard).toBeVisible();
+  const cardText = await iosCard.innerText();
+  expect(cardText).not.toMatch(/Requires P3[0-9]/);
+  expect(cardText).toMatch(/iOS\/Xcode runner/i);
+  expect(errors).toEqual([]);
+});
+
+test("Top bar persistence badge shows Durable State not phase number", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  const badge = page.locator(".ccv2-persistence-badge").first();
+  await expect(badge).toBeVisible();
+  const badgeText = await badge.innerText();
+  expect(badgeText).not.toContain("P41");
+  expect(badgeText).toMatch(/Durable State|Persistence|file-backed/i);
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap still shows P37 P38 P39 P40 P41 P42 phase numbers", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  const body = await page.locator("body").innerText();
+  expect(body).toContain("P37");
+  expect(body).toContain("P38");
+  expect(body).toContain("P39");
+  expect(body).toContain("P40");
+  expect(body).toContain("P41");
+  expect(body).toContain("P42");
+  expect(errors).toEqual([]);
+});
+
+test("Demo Mode page still renders DemoApp content", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/demo");
+  await expect(page.getByText(/Demo Mode/i).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Local-private Mission Control does not show DEMOAPP ACTIVE", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DEMOAPP ACTIVE");
   expect(errors).toEqual([]);
 });
