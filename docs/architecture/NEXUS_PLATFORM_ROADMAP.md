@@ -105,6 +105,46 @@ Risk level:
 
 ---
 
+---
+
+### Phase 36-LOCAL — Agentic Workspace Home + Workflow Templates
+
+Goal:
+
+- transform Command Center from a reports dashboard into an Agentic Workspace where the founder chooses what NEXUS should do next
+
+Deliverables:
+
+- `workspace/workflowTemplates.js` — 8 workflow template metadata objects
+- `workspace/workflowRecommendations.js` — next-best action and workspace summary logic
+- `workspace/index.js` — re-exports all workspace functions
+- `policy/agentic-workspace-policy.json` — P36 boundary (execution: false)
+- WorkflowCard, WorkspaceBand, WorkspacePage components in CommandCenterV2.jsx
+- `agenticWorkspace` field in commandCenterViewModel.js with full workspace state
+- Granular OSRoadmap entries P36–P45 + Enterprise Release Candidate
+- `scripts/check-agentic-workspace.js` — 12-section workspace validator
+
+Non-goals:
+
+- no workflow execution in P36
+- no task activation (arrives in P37)
+- no provider calls, network calls, or project mutation
+
+Validation checks:
+
+- `npm run check:agentic-workspace` passes 12/12 sections
+- 25/25 E2E route tests pass
+- all 8 workflow template IDs present and structurally valid
+- nextBestAction targets P37 (task activation)
+- public-safety baseline unchanged
+- no private project file mutations
+
+Risk level:
+
+- low
+
+---
+
 ## Upcoming
 
 ### Phase 15 — Containerization and Worker Scaling

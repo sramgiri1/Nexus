@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "phase": "P36-LOCAL",
+  "purpose": "agentic_workspace_home",
+  "workflowExecutionAllowed": false,
+  "workflowTemplatesAllowed": true,
+  "workflowRecommendationsAllowed": true,
+  "commandCenterUiRequired": true,
+  "providerCallsAllowed": false,
+  "networkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "projectMutationAllowed": false,
+  "commandExecutionAllowed": false,
+  "taskActivationAllowed": false,
+  "sourceMutationAllowed": false,
+  "publicDemoOutputAllowed": false,
+  "requiresModeAwareness": true,
+  "requiresMissionAwareness": true,
+  "requiresRoadmapUpdate": true,
+  "requiresUxCompletionRule": true
+}

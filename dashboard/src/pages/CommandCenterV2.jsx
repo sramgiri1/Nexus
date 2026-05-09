@@ -11,6 +11,7 @@ import "../styles-command-center-v2.css";
 /* ─── Page label map ─── */
 const PAGE_LABELS = {
   mission: "Mission Control",
+  workspace: "Workspace",
   tasks: "Task Queue",
   agents: "Agent Fleet",
   approvals: "Approvals",
@@ -77,6 +78,7 @@ const NAV_GROUPS_V2 = [
     group: "OPERATIONS",
     items: [
       { label: "Mission Control", icon: "⬡", badge: "LIVE", path: "/command-center/mission" },
+      { label: "Workspace", icon: "⊹", path: "/command-center/workspace" },
       { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
@@ -681,6 +683,98 @@ function CareLoopProgressCard({ clp }) {
   );
 }
 
+/* ─── Workflow Card ───
+   Template labels: Build Product | Fix Failing Test | Validate Backend |
+   Review Release | Plan Sprint | Run Privacy Review | Prepare iOS Validation |
+   Govern Agent Work
+─── */
+function WorkflowCard({ wf, navigate }) {
+  const statusLabel = wf.enabledNow ? "Available" : wf.nextPhase === "P36" ? "Coming soon" : `Requires ${wf.nextPhase}`;
+  const statusClass = wf.enabledNow ? "pass" : "disabled";
+
+  return (
+    <div className={`ccv2-wf-card ccv2-wf-card--${wf.category}`}>
+      <div className="ccv2-wf-card__header">
+        <div className="ccv2-wf-card__label">{wf.label}</div>
+        <span className={`ccv2-pill ccv2-pill--${statusClass}`}>{statusLabel}</span>
+      </div>
+      <div className="ccv2-wf-card__desc">{wf.description}</div>
+      <div className="ccv2-wf-card__agents">
+        {wf.primaryAgents.slice(0, 4).map((a) => (
+          <span key={a} className="ccv2-wf-card__agent-chip">{a}</span>
+        ))}
+        {wf.primaryAgents.length > 4 && <span className="ccv2-wf-card__agent-chip">+{wf.primaryAgents.length - 4}</span>}
+      </div>
+      <div className="ccv2-wf-card__evidence">
+        {wf.evidenceCreated.map((e) => (
+          <span key={e} className="ccv2-wf-card__evidence-tag">{e.replace(/_/g, " ")}</span>
+        ))}
+      </div>
+      <div className="ccv2-wf-card__footer">
+        <span className="ccv2-wf-card__approval">
+          {wf.approvalRequired === true ? "Approval required" : wf.approvalRequired === "conditional" ? "Conditional approval" : "No approval"}
+        </span>
+        {wf.enabledNow ? (
+          <button
+            className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled"
+            onClick={() => navigate && navigate("/command-center/workspace")}
+          >
+            Start Workflow
+          </button>
+        ) : (
+          <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled title={wf.disabledReason}>
+            {wf.disabledReason || "Not available"}
+          </button>
+        )}
+      </div>
+    </div>
+  );
+}
+
+/* ─── Workspace Band ─── */
+function WorkspaceBand({ vm }) {
+  const navigate = useNavigate();
+  const ws = vm.agenticWorkspace;
+  if (!ws) return null;
+
+  const templates = ws.workflowTemplates || [];
+  const nba = ws.nextBestAction;
+
+  return (
+    <div className="ccv2-workspace-band">
+      <div className="ccv2-workspace-band__header">
+        <div>
+          <div className="ccv2-eyebrow">Agentic Workspace</div>
+          <div className="ccv2-workspace-band__title">What do you want NEXUS to do?</div>
+          <div className="ccv2-workspace-band__sub">Choose a workflow. NEXUS will assign agents, collect evidence, and govern execution.</div>
+        </div>
+        {nba && (
+          <div className="ccv2-workspace-band__nba">
+            <div className="ccv2-eyebrow">Next best action</div>
+            <div className="ccv2-workspace-band__nba-title">{nba.title}</div>
+            <div className="ccv2-workspace-band__nba-desc">{nba.description}</div>
+            {nba.enabled ? (
+              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/workspace")}>
+                Start
+              </button>
+            ) : (
+              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
+                {nba.disabledReason}
+              </button>
+            )}
+          </div>
+        )}
+      </div>
+
+      <div className="ccv2-wf-grid">
+        {templates.map((wf) => (
+          <WorkflowCard key={wf.id} wf={wf} navigate={navigate} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ─── Mission Control Page ─── */
 function MissionControlPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -696,6 +790,8 @@ function MissionControlPage({ vm }) {
       </div>
 
       {isLocalPrivate && clp && <CareLoopProgressCard clp={clp} />}
+
+      <WorkspaceBand vm={vm} />
 
       <div className="ccv2-kpi-row">
         {vm.metrics.map((m) => (
@@ -1419,6 +1515,81 @@ function DemoModePage({ vm }) {
   );
 }
 
+/* ─── Workspace Page ─── */
+function WorkspacePage({ vm }) {
+  const navigate = useNavigate();
+  const ws = vm.agenticWorkspace;
+  const nba = ws?.nextBestAction;
+  const templates = ws?.workflowTemplates || [];
+  const status = ws?.workspaceStatus || {};
+  const limitations = ws?.currentLimitations || [];
+  const isLocalPrivate = vm.shell.mode === "local-private";
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Workspace</div>
+          <div className="ccv2-page-head__sub">Choose what you want NEXUS to do — agents, evidence, and governance follow</div>
+        </div>
+
+        {nba && (
+          <div className="ccv2-card ccv2-workspace-nba">
+            <div className="ccv2-eyebrow">Next best action</div>
+            <div className="ccv2-workspace-nba__title">{nba.title}</div>
+            <div className="ccv2-workspace-nba__desc">{nba.description}</div>
+            <div style={{ display: "flex", gap: 8, marginTop: 10, flexWrap: "wrap", alignItems: "center" }}>
+              <span className={`ccv2-pill ccv2-pill--${nba.enabled ? "pass" : "disabled"}`}>
+                {nba.enabled ? "Available" : `Requires ${nba.targetPhase}`}
+              </span>
+              {nba.enabled ? (
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/workspace")}>
+                  Start
+                </button>
+              ) : (
+                <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
+                  {nba.disabledReason}
+                </button>
+              )}
+            </div>
+          </div>
+        )}
+
+        {isLocalPrivate && (
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Mission Status</div>
+            <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Mission ready</span><span className={`ccv2-safety-row__value--${status.missionReady ? "pass" : "disabled"}`}>{status.missionReady ? "YES" : "NO"}</span></div>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Plan ready</span><span className={`ccv2-safety-row__value--${status.planReady ? "pass" : "disabled"}`}>{status.planReady ? "YES — 6 tasks" : "NO"}</span></div>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Tasks activated</span><span className={`ccv2-safety-row__value--${status.tasksActivated ? "pass" : "disabled"}`}>{status.tasksActivated ? "YES" : "NO — requires P37"}</span></div>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Backend validated</span><span className={`ccv2-safety-row__value--${status.backendValidated ? "pass" : "disabled"}`}>{status.tests}</span></div>
+              <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Ready for task activation</span><span className={`ccv2-safety-row__value--${status.readyForTaskActivation ? "pass" : "disabled"}`}>{status.readyForTaskActivation ? "YES" : "NO"}</span></div>
+            </div>
+          </div>
+        )}
+
+        <div className="ccv2-wf-grid">
+          {templates.map((wf) => (
+            <WorkflowCard key={wf.id} wf={wf} navigate={navigate} />
+          ))}
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Current Limitations</div>
+          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+            {limitations.map((l) => (
+              <div key={l} className="ccv2-gap-row">
+                <span className="ccv2-gap-row__dot" style={{ background: "var(--v2-muted-2)" }} />
+                <span style={{ fontSize: 12, color: "var(--v2-muted-2)" }}>{l}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -1427,10 +1598,17 @@ function OSRoadmapPage({ vm }) {
   const nexusTrack = [
     { phase: "P26–P30", label: "Agentic OS foundation", status: "COMPLETE", detail: "Skills, hooks, governor, sprint orchestration" },
     { phase: "P31–P33", label: "Command Center V1", status: "COMPLETE", detail: "Studio shell, constellation, traction surfaces" },
-    { phase: "P34–P35", label: "Command Center V2 + Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission action bridge" },
-    { phase: "P36", label: "CareLoop PRD integration", status: "IN_PROGRESS", detail: "Product progress source, PRD-linked gates, roadmap view" },
-    { phase: "P37–P40", label: "Governed CI/CD pipeline", status: "PLANNED", detail: "FORGE deploy gates, Xcode build, automated release" },
-    { phase: "P41–P45", label: "Multi-project orchestration", status: "PLANNED", detail: "ShiftPay + HomeLog resume, portfolio-level gates" },
+    { phase: "P34–P35", label: "Command Center V2 + Mission Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission composer, PRD awareness" },
+    { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "IN_PROGRESS", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
+    { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "PLANNED", detail: "Select task → activate → runtime queue → evidence" },
+    { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "PLANNED", detail: "Agent workbench, approval-aware execution, review surfaces" },
+    { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "PLANNED", detail: "Governed end-to-end build workflow through Command Center" },
+    { phase: "P40", label: "Live Local API Backend for Command Center", status: "PLANNED", detail: "Real-time data via local API — no more snapshots" },
+    { phase: "P41", label: "DB Foundation + Durable State", status: "PLANNED", detail: "Persistent task, evidence, audit storage" },
+    { phase: "P42", label: "DB-backed Command Center + Live Refresh", status: "PLANNED", detail: "Command Center reads from live DB" },
+    { phase: "P43", label: "Worker Queue + Runtime Engine", status: "PLANNED", detail: "Async task execution engine with governed worker queue" },
+    { phase: "P44", label: "Provider/Tool Dispatch Through Governance", status: "PLANNED", detail: "Real provider calls through governor and approval gates" },
+    { phase: "P45", label: "Enterprise Release Candidate", status: "PLANNED", detail: "Multi-project, compliance, investor-ready OS" },
   ];
 
   const careloopTrack = clp ? clp.sprints.map((s) => ({
@@ -1520,6 +1698,7 @@ export default function CommandCenterV2({ studio }) {
         <TopBar vm={vm} currentPage={currentPage} />
         <div className="ccv2-content-wrapper">
           {currentPage === "mission" && <MissionControlPage vm={vm} />}
+          {currentPage === "workspace" && <WorkspacePage vm={vm} />}
           {currentPage === "tasks" && <TaskQueuePage vm={vm} />}
           {currentPage === "agents" && <AgentFleetPage vm={vm} studio={studio} />}
           {currentPage === "approvals" && <ApprovalsPage vm={vm} studio={studio} />}

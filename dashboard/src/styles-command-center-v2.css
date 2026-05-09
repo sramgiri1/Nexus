@@ -1903,3 +1903,201 @@
   min-width: 200px;
   text-align: right;
 }
+
+/* ─── Workflow Cards ─── */
+.ccv2-wf-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.ccv2-wf-card {
+  background: var(--v2-card-bg);
+  border: 1px solid var(--v2-border);
+  border-radius: 10px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: border-color 0.15s;
+}
+
+.ccv2-wf-card--build { border-left: 3px solid var(--v2-blue); }
+.ccv2-wf-card--fix { border-left: 3px solid var(--v2-red); }
+.ccv2-wf-card--validate { border-left: 3px solid var(--v2-teal); }
+.ccv2-wf-card--release { border-left: 3px solid var(--v2-amber); }
+.ccv2-wf-card--plan { border-left: 3px solid var(--v2-green); }
+.ccv2-wf-card--govern { border-left: 3px solid rgba(136,255,235,0.4); }
+
+.ccv2-wf-card__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.ccv2-wf-card__label {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+
+.ccv2-wf-card__desc {
+  font-size: 11px;
+  color: var(--v2-muted);
+  line-height: 1.5;
+  flex: 1;
+}
+
+.ccv2-wf-card__agents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.ccv2-wf-card__agent-chip {
+  font-size: 10px;
+  font-weight: 600;
+  padding: 2px 6px;
+  border-radius: 3px;
+  background: rgba(136, 255, 235, 0.08);
+  color: var(--v2-teal);
+  border: 1px solid rgba(136, 255, 235, 0.15);
+  letter-spacing: 0.04em;
+}
+
+.ccv2-wf-card__evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.ccv2-wf-card__evidence-tag {
+  font-size: 9px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  background: rgba(5, 6, 8, 0.6);
+  color: var(--v2-muted-2);
+  border: 1px solid rgba(136, 255, 235, 0.06);
+  text-transform: capitalize;
+}
+
+.ccv2-wf-card__footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 8px;
+  border-top: 1px solid rgba(136, 255, 235, 0.06);
+}
+
+.ccv2-wf-card__approval {
+  font-size: 10px;
+  color: var(--v2-muted-2);
+}
+
+.ccv2-wf-card__btn {
+  font-size: 11px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
+  max-width: 160px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ccv2-wf-card__btn--enabled {
+  background: rgba(69, 240, 208, 0.15);
+  color: var(--v2-teal);
+  border: 1px solid rgba(69, 240, 208, 0.3);
+}
+
+.ccv2-wf-card__btn--enabled:hover {
+  background: rgba(69, 240, 208, 0.25);
+}
+
+.ccv2-wf-card__btn--disabled {
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--v2-muted-2);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  cursor: not-allowed;
+}
+
+/* ─── Workspace Band ─── */
+.ccv2-workspace-band {
+  background: linear-gradient(135deg, rgba(5, 6, 8, 0.9) 0%, rgba(15, 20, 28, 0.95) 100%);
+  border: 1px solid var(--v2-border);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.ccv2-workspace-band__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  margin-bottom: 16px;
+}
+
+.ccv2-workspace-band__title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--v2-text);
+  margin: 6px 0 4px;
+}
+
+.ccv2-workspace-band__sub {
+  font-size: 12px;
+  color: var(--v2-muted);
+  max-width: 480px;
+}
+
+.ccv2-workspace-band__nba {
+  min-width: 220px;
+  max-width: 280px;
+  background: rgba(69, 240, 208, 0.04);
+  border: 1px solid rgba(69, 240, 208, 0.12);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ccv2-workspace-band__nba-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--v2-text);
+  margin: 4px 0 2px;
+}
+
+.ccv2-workspace-band__nba-desc {
+  font-size: 11px;
+  color: var(--v2-muted);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+/* ─── Workspace NBA Card ─── */
+.ccv2-workspace-nba {
+  margin-bottom: 12px;
+}
+
+.ccv2-workspace-nba__title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--v2-text);
+  margin: 6px 0 4px;
+}
+
+.ccv2-workspace-nba__desc {
+  font-size: 12px;
+  color: var(--v2-muted);
+  line-height: 1.6;
+}

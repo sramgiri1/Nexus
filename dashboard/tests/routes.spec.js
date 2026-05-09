@@ -14,6 +14,8 @@ function captureClientErrors(page) {
     // Action bridge health check fails when server is not running during tests — expected
     if (text.includes("ERR_CONNECTION_REFUSED")) return;
     if (text.includes("net::ERR_")) return;
+    // CORS error from action bridge health check — expected when server CORS origin differs from test origin
+    if (text.includes("has been blocked by CORS policy")) return;
     errors.push(`console: ${text}`);
   });
 
@@ -313,5 +315,83 @@ test("private project roadmap shows correct sprint statuses", async ({ page }) =
   await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "Sprint 2" })).toBeVisible();
   await expect(page.locator(".ccv2-roadmap-phase .ccv2-pill--pass").first()).toBeVisible();
   await expect(page.locator(".ccv2-roadmap-phase .ccv2-pill--pending").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Workspace page renders workflow cards and next-best action", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  await expect(page.locator(".ccv2-shell")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Workspace");
+  await expect(page.locator(".ccv2-wf-grid")).toBeVisible();
+  await expect(page.locator(".ccv2-wf-card").first()).toBeVisible();
+  await expect(page.getByText("Next best action")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Workspace page shows all 8 workflow cards", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  await expect(page.getByText("Build Product")).toBeVisible();
+  await expect(page.getByText("Fix Failing Test")).toBeVisible();
+  await expect(page.getByText("Validate Backend")).toBeVisible();
+  await expect(page.getByText("Review Release")).toBeVisible();
+  await expect(page.getByText("Plan Sprint")).toBeVisible();
+  await expect(page.getByText("Run Privacy Review")).toBeVisible();
+  await expect(page.getByText("Prepare iOS Validation")).toBeVisible();
+  await expect(page.getByText("Govern Agent Work")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Mission Control shows workspace band with workflow choices", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/");
+  await expect(page.locator(".ccv2-workspace-band")).toBeVisible();
+  await expect(page.getByText("What do you want NEXUS to do?")).toBeVisible();
+  await expect(page.locator(".ccv2-wf-card").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Workspace sidebar nav link navigates to workspace route", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/");
+  await page.locator("a.ccv2-nav-item", { hasText: "Workspace" }).first().click();
+  await expect(page).toHaveURL(/\/command-center\/workspace/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Workspace");
+  expect(errors).toEqual([]);
+});
+
+test("Govern Agent Work workflow card has Start Workflow button enabled", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const governCard = page.locator(".ccv2-wf-card").filter({ hasText: "Govern Agent Work" });
+  await expect(governCard).toBeVisible();
+  await expect(governCard.getByRole("button", { name: "Start Workflow" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Disabled workflow cards show disabled button", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  const buildCard = page.locator(".ccv2-wf-card").filter({ hasText: "Build Product" });
+  await expect(buildCard.getByRole("button")).toBeDisabled();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap shows P36 current, P37 and P45 planned", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P36" })).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P37" })).toBeVisible();
+  await expect(page.locator(".ccv2-roadmap-phase__phase").filter({ hasText: "P45" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Workspace mission status shows plan ready and tasks not activated", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workspace");
+  await expect(page.getByText("Mission Status")).toBeVisible();
+  await expect(page.getByText("YES — 6 tasks")).toBeVisible();
+  await expect(page.getByText("NO — requires P37")).toBeVisible();
   expect(errors).toEqual([]);
 });
