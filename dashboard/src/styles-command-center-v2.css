@@ -2272,3 +2272,53 @@
 
 .ccv2-stat-chip__value--teal { color: #3de8b0; }
 .ccv2-stat-chip__value--green { color: var(--v2-green); }
+.ccv2-stat-chip__value--amber { color: var(--v2-amber); }
+.ccv2-stat-chip__value--red { color: var(--v2-red); }
+
+/* ─── P40 Live API Status ─────────────────────────────────────────────────── */
+
+.ccv2-api-status {
+  display: flex; align-items: center; gap: 6px; font-size: 12px;
+  padding: 4px 10px; border-radius: 20px;
+  background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+  margin-right: 8px;
+}
+.ccv2-api-dot {
+  width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0;
+}
+.ccv2-api-dot--online { background: var(--v2-green); box-shadow: 0 0 5px var(--v2-green); }
+.ccv2-api-dot--offline { background: var(--v2-amber); }
+.ccv2-api-label { color: var(--v2-text); font-weight: 600; white-space: nowrap; }
+.ccv2-api-fallback { color: var(--v2-muted); font-size: 11px; }
+.ccv2-api-refreshing { color: var(--v2-teal); animation: spin 1s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.ccv2-api-refresh-btn {
+  background: none; border: none; color: var(--v2-muted); cursor: pointer;
+  font-size: 14px; padding: 0 2px; line-height: 1;
+  transition: color 0.15s;
+}
+.ccv2-api-refresh-btn:hover:not(:disabled) { color: var(--v2-teal); }
+.ccv2-api-refresh-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+/* ─── Source badges ────────────────────────────────────────────────────────── */
+
+.ccv2-source-badge {
+  display: inline-block; font-size: 10px; font-weight: 700; letter-spacing: 0.04em;
+  padding: 2px 7px; border-radius: 10px; margin-left: 8px; vertical-align: middle;
+}
+.ccv2-source-badge--live {
+  background: rgba(61,232,176,0.12); color: var(--v2-green);
+  border: 1px solid rgba(61,232,176,0.25);
+}
+.ccv2-source-badge--snapshot {
+  background: rgba(244,191,117,0.1); color: var(--v2-amber);
+  border: 1px solid rgba(244,191,117,0.2);
+}
+.ccv2-source-bar {
+  display: flex; align-items: center; gap: 10px;
+  padding: 8px 16px; margin: 0 0 8px;
+  background: rgba(255,255,255,0.02); border-radius: 6px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+.ccv2-source-bar__hint { font-size: 11px; color: var(--v2-muted); }
+.ccv2-source-bar__hint code { color: var(--v2-teal); font-family: monospace; }

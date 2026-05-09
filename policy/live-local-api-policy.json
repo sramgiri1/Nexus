@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "phase": "P40-LOCAL",
+  "purpose": "live_local_api_backend",
+  "description": "Local-only read/action API for Command Center. Exposes runtime JSON/JSONL/report artifacts through a safe response layer. All writes go through existing governed bridges only.",
+  "modeRequired": "local-private",
+  "localOnly": true,
+  "bindHost": "127.0.0.1",
+  "port": 4321,
+  "dbBacked": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "arbitraryFileReadAllowed": false,
+  "arbitraryCommandExecutionAllowed": false,
+  "projectMutationAllowed": "governed_actions_only",
+  "sourceMutationAllowed": false,
+  "sourceContentExtractionAllowed": false,
+  "secretsReadAllowed": false,
+  "envReadAllowed": false,
+  "readEndpointsAllowed": true,
+  "actionEndpointsAllowed": "governed_bridges_only",
+  "browserFilesystemReadAllowed": false,
+  "generatedSnapshotFallbackAllowed": true,
+  "publicDemoOutputAllowed": false,
+  "requiresSafeResponseLayer": true,
+  "requiresModeAwareness": true,
+  "requiresCommandCenterUxCompletion": true,
+  "allowedReadPaths": [
+    "local-state/runtime",
+    "reports",
+    "contracts/missions",
+    "policy",
+    "docs/architecture"
+  ],
+  "blockedReadPaths": [
+    "projects/careloop",
+    "projects/careloop-ios",
+    "projects/shiftpay",
+    ".env",
+    ".env.local",
+    "node_modules",
+    ".git"
+  ],
+  "allowedActionBridges": [
+    "mission-actions/missionActionBridge.js",
+    "task-actions/taskActivationBridge.js",
+    "workbench/reviewBridge.js",
+    "implementation-actions/implementationBridge.js"
+  ]
+}

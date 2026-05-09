@@ -9,6 +9,7 @@ import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api
 import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
 import { proposeImplementation, applyImplementation } from "../api/implementationActions.js";
+import { getLocalApiHealth, getLocalStatus, getTasks, getEvidence, getProjects, getRoadmap, buildApiState } from "../api/localApiClient.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -26,6 +27,7 @@ const PAGE_LABELS = {
   projects: "Projects",
   workbench: "Agent Workbench",
   implementation: "Implementation Workflow",
+  liveapi: "Live API Status",
   roadmap: "OS Roadmap",
   batch: "Batch Queue",
   cost: "Cost Center",
@@ -87,6 +89,7 @@ const NAV_GROUPS_V2 = [
       { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
       { label: "Agent Workbench", icon: "⬡", badge: "P38", path: "/command-center/workbench" },
       { label: "Implementation", icon: "▲", badge: "P39", path: "/command-center/implementation" },
+      { label: "Live API", icon: "◎", badge: "P40", path: "/command-center/liveapi" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
@@ -192,7 +195,7 @@ function Sidebar({ vm, location }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm, currentPage }) {
+function TopBar({ vm, currentPage, apiState, onRefresh }) {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const iv = setInterval(() => setNow(new Date()), 1000);
@@ -200,6 +203,8 @@ function TopBar({ vm, currentPage }) {
   }, []);
   const timeStr = now.toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false });
   const pageLabel = PAGE_LABELS[currentPage] || "Mission Control";
+  const liveOnline = apiState?.liveApiOnline;
+  const refreshStatus = apiState?.lastRefreshStatus || "idle";
 
   return (
     <header className="ccv2-topbar">
@@ -217,6 +222,21 @@ function TopBar({ vm, currentPage }) {
       </div>
 
       <div className="ccv2-topbar__spacer" />
+
+      <div className="ccv2-api-status">
+        <span className={`ccv2-api-dot ccv2-api-dot--${liveOnline ? "online" : "offline"}`} />
+        <span className="ccv2-api-label">
+          {liveOnline ? "Local API: Online" : "Local API: Offline"}
+        </span>
+        {!liveOnline && <span className="ccv2-api-fallback">· snapshot fallback</span>}
+        {refreshStatus === "refreshing" && <span className="ccv2-api-refreshing">↻</span>}
+        <button
+          className="ccv2-api-refresh-btn"
+          onClick={onRefresh}
+          disabled={refreshStatus === "refreshing"}
+          title="Refresh API status"
+        >⟳</button>
+      </div>
 
       <div className="ccv2-topbar__modes">
         <span className="ccv2-mode-pill ccv2-mode-pill--active">Desktop</span>
@@ -786,9 +806,18 @@ function WorkspaceBand({ vm }) {
 function MissionControlPage({ vm }) {
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
+  const liveOnline = vm.liveApi?.liveApiOnline;
 
   return (
     <div className="ccv2-content">
+      {liveOnline !== undefined && (
+        <div className="ccv2-source-bar">
+          <span className={`ccv2-source-badge ccv2-source-badge--${liveOnline ? "live" : "snapshot"}`}>
+            {liveOnline ? "Live local API" : "Snapshot fallback"}
+          </span>
+          {!liveOnline && <span className="ccv2-source-bar__hint">Run <code>npm run local-api:start</code> for live data</span>}
+        </div>
+      )}
       <div className="ccv2-first-fold">
         <MissionComposerCard vm={vm} />
         <MissionHeroCard vm={vm} />
@@ -1317,18 +1346,25 @@ function ContractsPage({ vm }) {
 
 /* ─── Evidence Page ─── */
 function EvidencePage({ vm }) {
-  const evidence = runtimeSnapshot.runtimeState?.evidence || {};
+  const liveEvidence = vm.liveData?.evidence;
+  const liveOnline = vm.liveApi?.liveApiOnline;
+  const evidence = liveEvidence || runtimeSnapshot.runtimeState?.evidence || {};
   const recent = evidence.recent || [];
   const byResult = evidence.byResult || {};
   const byType = evidence.byType || {};
-  const total = evidence.total || 0;
+  const total = liveEvidence?.totalCount ?? evidence.total ?? 0;
 
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Evidence Ledger</div>
-          <div className="ccv2-page-head__sub">Immutable evidence records from governed execution</div>
+          <div className="ccv2-page-head__sub">
+            Immutable evidence records from governed execution
+            <span className={`ccv2-source-badge ccv2-source-badge--${liveOnline ? "live" : "snapshot"}`}>
+              {liveOnline ? "Live API" : "Snapshot fallback"}
+            </span>
+          </div>
         </div>
 
         <div className="ccv2-stats-row">
@@ -1406,6 +1442,14 @@ function SafetyCenterPage({ vm }) {
     { label: "Incident response playbook", value: "In progress", valueClass: "pending" },
   ] : [];
 
+  const apiRows = [
+    { label: "Local API (P40)", value: "Enabled", valueClass: "ready" },
+    { label: "Local API: DB backed", value: "NO", valueClass: "disabled" },
+    { label: "Local API: provider calls", value: "NO", valueClass: "disabled" },
+    { label: "Local API: external network", value: "NO", valueClass: "disabled" },
+    { label: "Local API: bind host", value: "127.0.0.1", valueClass: "ready" },
+  ];
+
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
@@ -1421,6 +1465,18 @@ function SafetyCenterPage({ vm }) {
               <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
             </div>
           ))}
+        </div>
+
+        <div className="ccv2-card" style={{ marginTop: 12 }}>
+          <div className="ccv2-section-heading">Local API Boundary · P40-LOCAL</div>
+          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+            {apiRows.map(row => (
+              <div key={row.label} className="ccv2-safety-row">
+                <span className="ccv2-safety-row__label">{row.label}</span>
+                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+              </div>
+            ))}
+          </div>
         </div>
 
         {isLocalPrivate && complianceRows.length > 0 && (
@@ -2441,6 +2497,164 @@ function WorkbenchPage({ vm }) {
   );
 }
 
+/* ─── Live API Status Page ─── */
+function LiveApiPage({ vm, onRefresh }) {
+  const api = vm.liveApi || {};
+  const online = api.liveApiOnline;
+  const refreshStatus = api.lastRefreshStatus || "idle";
+  const liveData = vm.liveData || {};
+
+  const endpoints = [
+    { path: "/health", label: "Health", live: "always" },
+    { path: "/status", label: "Status", live: "live-backed" },
+    { path: "/missions", label: "Missions", live: "live-backed" },
+    { path: "/tasks", label: "Tasks", live: "live-backed" },
+    { path: "/agents", label: "Agents", live: "live-backed" },
+    { path: "/evidence", label: "Evidence", live: "live-backed" },
+    { path: "/audit", label: "Audit", live: "live-backed" },
+    { path: "/runtime", label: "Runtime", live: "live-backed" },
+    { path: "/contracts", label: "Contracts", live: "live-backed" },
+    { path: "/projects", label: "Projects", live: "live-backed" },
+    { path: "/roadmap", label: "Roadmap", live: "live-backed" },
+    { path: "/actions", label: "Actions", live: "live-backed" },
+  ];
+
+  const safetyRows = [
+    { label: "DB backed", value: api.dbBacked ? "YES" : "NO", ok: !api.dbBacked },
+    { label: "Provider calls", value: api.providerCallsEnabled ? "YES" : "NO", ok: !api.providerCallsEnabled },
+    { label: "External network", value: api.externalNetworkEnabled ? "YES" : "NO", ok: !api.externalNetworkEnabled },
+    { label: "Local only", value: "YES", ok: true },
+    { label: "Bind host", value: "127.0.0.1", ok: true },
+    { label: "Port", value: "4321", ok: true },
+  ];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Live API Status</div>
+          <div className="ccv2-page-head__sub">P40-LOCAL · Local-only read/action API · no DB · no providers</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Phase</div>
+            <div className="ccv2-stat-chip__value">P40-LOCAL</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Status</div>
+            <div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--green" : "ccv2-stat-chip__value--amber"}`}>
+              {online ? "Online" : "Offline"}
+            </div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Data source</div>
+            <div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--teal" : "ccv2-stat-chip__value--amber"}`}>
+              {online ? "Live API" : "Snapshot fallback"}
+            </div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Refresh</div>
+            <div className="ccv2-stat-chip__value">{refreshStatus}</div>
+          </div>
+        </div>
+
+        {/* Connection status */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Connection</div>
+          {online ? (
+            <div style={{ marginTop: 10, color: "var(--v2-green)", fontSize: 13, fontWeight: 600 }}>
+              ✓ Local API is online at http://localhost:4321
+            </div>
+          ) : (
+            <div style={{ marginTop: 10 }}>
+              <div style={{ color: "var(--v2-amber)", fontSize: 13, fontWeight: 600 }}>⊘ Local API is offline</div>
+              <div style={{ color: "var(--v2-muted)", fontSize: 12, marginTop: 6 }}>
+                All Command Center pages are using generated snapshot fallback. To enable live data:
+              </div>
+              <div className="ccv2-code-block" style={{ marginTop: 8, padding: "8px 12px", background: "rgba(255,255,255,0.04)", borderRadius: 6, fontFamily: "monospace", fontSize: 11, color: "var(--v2-text)" }}>
+                NEXUS_MODE=local-private npm run local-api:start
+              </div>
+              <button className="ccv2-wb-review-btn ccv2-wb-review-btn--changes" style={{ marginTop: 10 }} onClick={onRefresh}>
+                Retry connection
+              </button>
+            </div>
+          )}
+        </div>
+
+        {/* Endpoints */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Read Endpoints ({endpoints.length})</div>
+          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4 }}>
+            {endpoints.map(ep => (
+              <div key={ep.path} style={{ display: "flex", gap: 12, alignItems: "center", padding: "6px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                <span className="ccv2-mono" style={{ fontSize: 12, color: "var(--v2-teal)", width: 140 }}>{ep.path}</span>
+                <span style={{ fontSize: 11, color: "var(--v2-muted)", flex: 1 }}>{ep.label}</span>
+                <span className={`ccv2-pill ccv2-pill--${online || ep.live === "always" ? "pass" : "disabled"}`} style={{ fontSize: 10 }}>
+                  {online || ep.live === "always" ? "live" : "offline"}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Live data sample */}
+        {online && liveData.tasks && (
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Live Task Data</div>
+            <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Planned tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.planned ?? "—"}</span></div>
+              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Runtime tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.runtime ?? "—"}</span></div>
+              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence records</span><span className="ccv2-wb-meta-value">{liveData.evidence?.totalCount ?? "—"}</span></div>
+            </div>
+          </div>
+        )}
+
+        {/* Safety boundary */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Safety Boundary</div>
+          <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+            {safetyRows.map(r => (
+              <div key={r.label} className="ccv2-wb-meta-row">
+                <span className="ccv2-wb-meta-label">{r.label}</span>
+                <span className={`ccv2-safety-row__value--${r.ok ? "disabled" : "ready"}`}>{r.value}</span>
+              </div>
+            ))}
+          </div>
+          <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted)" }}>
+            P41 will add DB-backed durable state. P40 is read-only local JSON/JSONL.
+          </div>
+        </div>
+
+        {/* Page coverage */}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Page Coverage</div>
+          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4 }}>
+            {[
+              { page: "Mission Control", backed: online },
+              { page: "Task Queue", backed: online },
+              { page: "Agent Fleet", backed: false, note: "snapshot" },
+              { page: "Evidence", backed: online },
+              { page: "Safety Center", backed: online },
+              { page: "Projects", backed: online },
+              { page: "OS Roadmap", backed: online },
+              { page: "Agent Workbench", backed: false, note: "action bridge" },
+              { page: "Implementation Workflow", backed: false, note: "action bridge" },
+            ].map(p => (
+              <div key={p.page} style={{ display: "flex", gap: 12, alignItems: "center", padding: "5px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                <span style={{ fontSize: 12, color: "var(--v2-text)", flex: 1 }}>{p.page}</span>
+                <span className={`ccv2-pill ccv2-pill--${p.backed ? "pass" : "disabled"}`} style={{ fontSize: 10 }}>
+                  {p.backed ? "live" : (p.note || "snapshot")}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -2453,8 +2667,8 @@ function OSRoadmapPage({ vm }) {
     { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "COMPLETE", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
     { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "COMPLETE", detail: "Select task → activate → runtime queue → evidence" },
     { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "COMPLETE", detail: "Agent workbench, human review loop, approve/reject/request_changes" },
-    { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "IN_PROGRESS", detail: "Governed doc-only implementation, CORE agent, patch + rollback + evidence" },
-    { phase: "P40", label: "Live Local API Backend for Command Center", status: "PLANNED", detail: "Real-time data via local API — no more snapshots" },
+    { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "COMPLETE", detail: "Governed doc-only implementation, CORE agent, patch + rollback + evidence" },
+    { phase: "P40", label: "Live Local API Backend for Command Center", status: "IN_PROGRESS", detail: "Real-time data via local API · port 4321 · no DB · no providers" },
     { phase: "P41", label: "DB Foundation + Durable State", status: "PLANNED", detail: "Persistent task, evidence, audit storage" },
     { phase: "P42", label: "DB-backed Command Center + Live Refresh", status: "PLANNED", detail: "Command Center reads from live DB" },
     { phase: "P43", label: "Worker Queue + Runtime Engine", status: "PLANNED", detail: "Async task execution engine with governed worker queue" },
@@ -2542,29 +2756,58 @@ export default function CommandCenterV2({ studio }) {
   const location = useLocation();
   const currentPage = resolveV2Page(location.pathname);
 
+  const [apiState, setApiState] = useState({
+    liveApiOnline: false,
+    usingSnapshotFallback: true,
+    lastRefreshStatus: "idle",
+    lastRefreshAt: null,
+    apiError: null,
+  });
+  const [liveData, setLiveData] = useState({});
+
+  const refreshApiState = () => {
+    setApiState(prev => ({ ...prev, lastRefreshStatus: "refreshing" }));
+    getLocalApiHealth().then(health => {
+      const state = buildApiState(health);
+      setApiState(state);
+      if (state.liveApiOnline) {
+        Promise.all([getTasks(), getEvidence(), getProjects()]).then(([tasks, evidence, projects]) => {
+          setLiveData({ tasks: tasks.ok ? tasks.data : null, evidence: evidence.ok ? evidence.data : null, projects: projects.ok ? projects.data : null });
+        }).catch(() => {});
+      }
+    }).catch(() => {
+      setApiState(prev => ({ ...prev, lastRefreshStatus: "failed", liveApiOnline: false, usingSnapshotFallback: true }));
+    });
+  };
+
+  useEffect(() => { refreshApiState(); }, []);
+
+  const vmWithApi = { ...vm, liveApi: { ...vm.liveApi, ...apiState }, liveData };
+
   return (
     <div className="ccv2-shell">
-      <Sidebar vm={vm} location={location} />
+      <Sidebar vm={vmWithApi} location={location} />
       <div className="ccv2-main">
-        <TopBar vm={vm} currentPage={currentPage} />
+        <TopBar vm={vmWithApi} currentPage={currentPage} apiState={apiState} onRefresh={refreshApiState} />
         <div className="ccv2-content-wrapper">
-          {currentPage === "mission" && <MissionControlPage vm={vm} />}
-          {currentPage === "workspace" && <WorkspacePage vm={vm} />}
-          {currentPage === "tasks" && <TaskQueuePage vm={vm} />}
-          {currentPage === "implementation" && <ImplementationPage vm={vm} />}
-          {currentPage === "workbench" && <WorkbenchPage vm={vm} />}
-          {currentPage === "agents" && <AgentFleetPage vm={vm} studio={studio} />}
-          {currentPage === "approvals" && <ApprovalsPage vm={vm} studio={studio} />}
-          {currentPage === "gates" && <VerificationGatesPage vm={vm} />}
-          {currentPage === "contracts" && <ContractsPage vm={vm} />}
-          {currentPage === "evidence" && <EvidencePage vm={vm} />}
-          {currentPage === "safety" && <SafetyCenterPage vm={vm} />}
-          {currentPage === "release" && <ReleaseControlPage vm={vm} />}
-          {currentPage === "projects" && <ProjectsPage vm={vm} studio={studio} />}
-          {currentPage === "roadmap" && <OSRoadmapPage vm={vm} />}
-          {currentPage === "batch" && <BatchQueuePage vm={vm} />}
-          {currentPage === "cost" && <CostCenterPage vm={vm} studio={studio} />}
-          {currentPage === "demo" && <DemoModePage vm={vm} />}
+          {currentPage === "mission" && <MissionControlPage vm={vmWithApi} />}
+          {currentPage === "workspace" && <WorkspacePage vm={vmWithApi} />}
+          {currentPage === "tasks" && <TaskQueuePage vm={vmWithApi} />}
+          {currentPage === "implementation" && <ImplementationPage vm={vmWithApi} />}
+          {currentPage === "workbench" && <WorkbenchPage vm={vmWithApi} />}
+          {currentPage === "agents" && <AgentFleetPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "approvals" && <ApprovalsPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "gates" && <VerificationGatesPage vm={vmWithApi} />}
+          {currentPage === "contracts" && <ContractsPage vm={vmWithApi} />}
+          {currentPage === "evidence" && <EvidencePage vm={vmWithApi} />}
+          {currentPage === "safety" && <SafetyCenterPage vm={vmWithApi} />}
+          {currentPage === "release" && <ReleaseControlPage vm={vmWithApi} />}
+          {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
+          {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}
+          {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
+          {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
         </div>
       </div>
     </div>

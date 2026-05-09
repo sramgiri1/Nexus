@@ -76,7 +76,9 @@
     "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
     "check:agent-workbench": "node scripts/check-agent-workbench.js",
-    "check:controlled-implementation-workflow": "node scripts/check-controlled-implementation-workflow.js"
+    "check:controlled-implementation-workflow": "node scripts/check-controlled-implementation-workflow.js",
+    "local-api:start": "NEXUS_MODE=local-private node scripts/start-local-api.js",
+    "check:live-local-api": "node scripts/check-live-local-api.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

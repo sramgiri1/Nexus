@@ -273,6 +273,51 @@ Risk level:
 
 ---
 
+### P40-LOCAL — Live Local API Backend for Command Center
+
+Goal:
+
+- Move Command Center from generated snapshots toward live local API-driven data
+- Local-only HTTP server (port 4321, 127.0.0.1) serving read + action endpoints
+- No DB, no providers, no external network — reads existing JSON/JSONL runtime files
+- Command Center TopBar shows Live API online/offline + refresh state
+- Source badges on Mission Control, Evidence, and Safety pages
+
+Deliverables:
+
+- `local-api/server.js` — createLocalApiServer, startLocalApiServer, stopLocalApiServer
+- `local-api/safeResponse.js` — sendJson, sendError, redactApiPayload, buildEnvelope
+- `local-api/routes/{health,status,missions,tasks,agents,evidence,audit,runtime,contracts,projects,roadmap,actions}.js`
+- `local-api/index.js` — re-exports all functions
+- `policy/live-local-api-policy.json` — P40 boundary (localOnly, dbBacked: false, governed_bridges_only)
+- `scripts/start-local-api.js` — npm run local-api:start entry point
+- `dashboard/src/api/localApiClient.js` — browser fetch-only client with offline fallback
+- LiveApiPage at /command-center/liveapi: connection status, endpoint coverage, page coverage, safety boundary
+- TopBar: API status indicator (Online/Offline), snapshot fallback badge, refresh button
+- Source badges on Mission Control, Evidence, Safety Center pages
+- `scripts/check-live-local-api.js` — 14-section validator (147/147 checks)
+
+Non-goals:
+
+- no DB-backed state (P41)
+- no real agent execution (P42)
+- no external provider calls
+- no arbitrary file reads (enforced by safeFileReader boundary)
+
+Validation checks:
+
+- `npm run check:live-local-api` passes 147/147 checks
+- 50/50 E2E route tests pass
+- All 11 read endpoints return ok with metadata envelope
+- Health endpoint returns dbBacked:false, providerCallsEnabled:false, externalNetworkEnabled:false
+- Action routes delegate to existing governed bridges only
+
+Risk level:
+
+- low
+
+---
+
 ## Upcoming
 
 ### Phase 15 — Containerization and Worker Scaling

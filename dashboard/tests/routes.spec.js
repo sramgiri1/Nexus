@@ -545,3 +545,66 @@ test("OS Roadmap shows P38 COMPLETE and P39 IN PROGRESS", async ({ page }) => {
   await expect(page.getByText("First Controlled Implementation Workflow from UI")).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("Live API nav item appears in sidebar", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-nav-item").filter({ hasText: "Live API" }).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Live API page renders with P40 header", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/liveapi");
+  await expect(page.locator(".ccv2-page-head__title").filter({ hasText: "Live API Status" })).toBeVisible();
+  await expect(page.getByText(/P40-LOCAL/i).first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Live API page shows offline state and snapshot fallback", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/liveapi");
+  await page.waitForTimeout(1800);
+  await expect(page.getByText(/Local API is offline/i)).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Live API page shows safety boundary rows", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/liveapi");
+  await expect(page.getByText("Safety Boundary")).toBeVisible();
+  await expect(page.getByText("DB backed").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Top bar shows Local API status indicator", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.locator(".ccv2-api-status")).toBeVisible();
+  await expect(page.locator(".ccv2-api-label")).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Top bar shows offline state when API unavailable", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await page.waitForTimeout(1800);
+  await expect(page.locator(".ccv2-api-label").filter({ hasText: /Offline/i })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Safety Center shows Local API boundary section", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/safety");
+  await expect(page.getByText(/Local API Boundary/i)).toBeVisible();
+  await expect(page.getByText("P40-LOCAL").first()).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap shows P39 COMPLETE and P40 IN PROGRESS", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.getByText("First Controlled Implementation Workflow from UI")).toBeVisible();
+  await expect(page.getByText("Live Local API Backend for Command Center")).toBeVisible();
+  expect(errors).toEqual([]);
+});
