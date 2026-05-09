@@ -20,6 +20,14 @@ import {
   listTaskActivationActions,
   getTaskActivationResult,
 } from "../task-actions/taskActivationBridge.js";
+import {
+  createReviewRequest,
+  runReviewRequest,
+  listReviewRecords,
+  getReviewResult,
+  listReviewsForTask,
+} from "../workbench/reviewBridge.js";
+import { loadTaskWorkbench, listAgentWorkbenchItems } from "../workbench/agentWorkbench.js";
 
 const PORT = 3748;
 const HOST = "127.0.0.1"; // localhost only — never 0.0.0.0
@@ -148,6 +156,46 @@ const server = http.createServer(async (req, res) => {
     const result = getTaskActivationResult(actionId);
     if (!result.ok) return json(res, 404, { ok: false, errors: result.errors });
     return json(res, 200, { ok: true, record: result.record });
+  }
+
+  // ── POST /actions/workbench/review ──
+  if (method === "POST" && url === "/actions/workbench/review") {
+    const body = await readBody(req);
+    const reqObj = createReviewRequest({
+      actionType: "task.review",
+      mode: process.env.NEXUS_MODE || "local-private",
+      projectId: "private-project-01",
+      missionId: "private-project-governed-build-mission",
+      runtimeTaskId: body.runtimeTaskId || "",
+      decision: body.decision || "",
+      reason: body.reason || "",
+      requestedBy: { userId: "local-operator", role: "founder", authType: "local" },
+      source: "command_center_v2",
+    });
+    if (!reqObj.ok) return json(res, 400, { ok: false, errors: reqObj.errors });
+    const result = await runReviewRequest(reqObj.request);
+    return json(res, result.ok ? 200 : 422, result);
+  }
+
+  // ── GET /workbench ──
+  if (method === "GET" && url === "/workbench") {
+    const result = listAgentWorkbenchItems();
+    return json(res, 200, { ok: true, items: result.items || [] });
+  }
+
+  // ── GET /workbench/:taskId ──
+  if (method === "GET" && url.startsWith("/workbench/") && url !== "/workbench/") {
+    const taskId = url.replace("/workbench/", "");
+    const result = loadTaskWorkbench(taskId);
+    if (!result.ok) return json(res, 404, { ok: false, errors: result.errors });
+    return json(res, 200, { ok: true, view: result.view });
+  }
+
+  // ── GET /workbench/:taskId/reviews ──
+  if (method === "GET" && url.match(/^\/workbench\/[^/]+\/reviews$/)) {
+    const taskId = url.split("/")[2];
+    const result = listReviewsForTask(taskId);
+    return json(res, 200, { ok: true, records: result.records || [] });
   }
 
   return json(res, 404, { ok: false, error: "not found" });

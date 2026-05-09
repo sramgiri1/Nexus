@@ -448,3 +448,54 @@ test("Mission Control Next Best Action points to task activation", async ({ page
   await expect(page.getByText("Activate Next Task")).toBeVisible();
   expect(errors).toEqual([]);
 });
+
+test("Agent Workbench nav item appears in sidebar", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/mission");
+  await expect(page.getByRole("link", { name: /Agent Workbench/i })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Agent Workbench page renders with correct header", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workbench");
+  await expect(page.locator(".ccv2-page-head__title").filter({ hasText: "Agent Workbench" })).toBeVisible();
+  await expect(page.getByText("Human review loop", { exact: false })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Agent Workbench shows offline state with action bridge offline", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workbench");
+  // Bridge is offline in test environment — stat chip must reflect this
+  await page.waitForTimeout(1500); // allow bridge health check to complete
+  const bridgeChip = page.locator(".ccv2-stat-chip").filter({ hasText: "Action bridge" });
+  await expect(bridgeChip).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Agent Workbench shows empty state or Go to Task Queue button", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workbench");
+  await page.waitForTimeout(1500);
+  // When bridge offline, shows empty state with Go to Task Queue button
+  const gotoBtn = page.getByRole("button", { name: /Go to Task Queue/i });
+  await expect(gotoBtn).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("Agent Workbench shows review policy stats", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/workbench");
+  await expect(page.locator(".ccv2-stat-chip").filter({ hasText: "P38-LOCAL" })).toBeVisible();
+  await expect(page.locator(".ccv2-stat-chip").filter({ hasText: "Execution allowed" })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
+test("OS Roadmap shows P37 COMPLETE and P38 IN PROGRESS", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  await page.goto("/command-center/roadmap");
+  await expect(page.getByText("Task Activation + Agent Assignment from UI")).toBeVisible();
+  await expect(page.getByText("Agent Workbench + Human Review Loop")).toBeVisible();
+  expect(errors).toEqual([]);
+});

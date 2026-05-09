@@ -2151,3 +2151,99 @@
 }
 .ccv2-info-banner__icon { font-size: 14px; color: var(--v2-teal); flex-shrink: 0; margin-top: 1px; }
 .ccv2-info-banner__text code { font-family: monospace; background: rgba(0,0,0,0.3); padding: 1px 5px; border-radius: 3px; color: var(--v2-teal); }
+
+/* ─── Task Activate Workbench Button (P38) ─── */
+
+.ccv2-task-activate-btn--workbench {
+  padding: 4px 10px; border-radius: 5px; font-size: 11px; font-weight: 600; cursor: pointer;
+  border: 1px solid rgba(143, 124, 255, 0.4);
+  background: rgba(143,124,255,0.1); color: var(--v2-purple);
+  transition: background 0.15s;
+}
+.ccv2-task-activate-btn--workbench:hover { background: rgba(143,124,255,0.2); }
+
+/* ─── Agent Workbench Page (P38) ─── */
+
+.ccv2-wb-empty-card { display: flex; justify-content: center; align-items: center; min-height: 200px; }
+
+.ccv2-wb-empty {
+  display: flex; flex-direction: column; align-items: center; gap: 10px;
+  padding: 32px 24px; text-align: center;
+}
+.ccv2-wb-empty__title { font-size: 15px; font-weight: 600; color: var(--v2-text); }
+.ccv2-wb-empty__desc { font-size: 12px; color: var(--v2-muted); max-width: 340px; line-height: 1.6; }
+
+.ccv2-wb-layout {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.ccv2-wb-sidebar {
+  display: flex; flex-direction: column; gap: 6px;
+  position: sticky; top: 0;
+}
+
+.ccv2-wb-task-item {
+  padding: 10px 12px;
+  background: var(--v2-panel);
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  cursor: pointer;
+  transition: border-color 0.15s, background 0.15s;
+}
+.ccv2-wb-task-item:hover { border-color: rgba(136,255,235,0.25); background: rgba(136,255,235,0.05); }
+.ccv2-wb-task-item--selected { border-color: var(--v2-teal); background: rgba(69,240,208,0.06); }
+
+.ccv2-wb-task-item__title { font-size: 12px; font-weight: 600; color: var(--v2-text); margin-bottom: 6px; line-height: 1.4; }
+.ccv2-wb-task-item__meta { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.ccv2-wb-task-item__agent { font-size: 10px; font-weight: 700; color: var(--v2-teal); letter-spacing: 0.05em; }
+
+.ccv2-wb-main { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+
+.ccv2-wb-title {
+  font-size: 16px; font-weight: 700; color: var(--v2-text);
+  margin: 6px 0 12px;
+}
+
+.ccv2-wb-meta-grid { display: flex; flex-direction: column; gap: 6px; }
+
+.ccv2-wb-meta-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 6px 0; border-bottom: 1px solid rgba(136,255,235,0.05); font-size: 12px;
+}
+.ccv2-wb-meta-label { color: var(--v2-muted); flex-shrink: 0; margin-right: 12px; }
+.ccv2-wb-meta-value { color: var(--v2-text); text-align: right; word-break: break-all; }
+
+.ccv2-wb-output-box {
+  margin-top: 8px; padding: 12px 14px;
+  background: rgba(136,255,235,0.03); border: 1px solid rgba(136,255,235,0.08);
+  border-radius: 6px;
+}
+
+.ccv2-wb-review-panel { }
+
+.ccv2-wb-review-actions {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+}
+
+.ccv2-wb-review-btn {
+  padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  cursor: pointer; border: 1px solid transparent; transition: background 0.15s, opacity 0.15s;
+}
+.ccv2-wb-review-btn--approve {
+  background: rgba(61,232,176,0.12); border-color: rgba(61,232,176,0.3); color: var(--v2-green);
+}
+.ccv2-wb-review-btn--approve:hover:not(:disabled) { background: rgba(61,232,176,0.22); }
+.ccv2-wb-review-btn--changes {
+  background: rgba(244,191,117,0.1); border-color: rgba(244,191,117,0.3); color: var(--v2-amber);
+}
+.ccv2-wb-review-btn--changes:hover:not(:disabled) { background: rgba(244,191,117,0.2); }
+.ccv2-wb-review-btn--reject {
+  background: rgba(255,92,122,0.1); border-color: rgba(255,92,122,0.3); color: var(--v2-red);
+}
+.ccv2-wb-review-btn--reject:hover:not(:disabled) { background: rgba(255,92,122,0.2); }
+.ccv2-wb-review-btn--disabled {
+  opacity: 0.4; cursor: not-allowed;
+}

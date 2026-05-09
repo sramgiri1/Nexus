@@ -110,6 +110,24 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       plannedCount: 6,
       activationPolicy: { allowed: true, requiresBridge: true, disabledReason: "Requires governed action bridge (npm run mission:action-server)" },
     },
+    agentWorkbench: {
+      policyPhase: "P38-LOCAL",
+      bridgeEndpoint: "http://localhost:3748",
+      workbenchItems: [],
+      reviewPolicy: {
+        allowedDecisions: ["approve", "reject", "request_changes"],
+        taskExecutionAllowed: false,
+        agentExecutionAllowed: false,
+        requiresActivatedTask: true,
+        requiresBridge: true,
+      },
+      nextBestAction: {
+        title: "Review an Activated Task",
+        description: "Open an activated task in the Agent Workbench — inspect agent assignment, capability, risk, evidence, and record your approval decision.",
+        enabled: true,
+        action: "navigate:/command-center/workbench",
+      },
+    },
     agenticWorkspace: {
       activeMode: "local-private",
       activeProject: "Private Project",

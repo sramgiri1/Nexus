@@ -7,6 +7,7 @@ import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
+import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
 import "../styles-command-center-v2.css";
 
 /* ─── Page label map ─── */
@@ -22,6 +23,7 @@ const PAGE_LABELS = {
   safety: "Safety Center",
   release: "Release Control",
   projects: "Projects",
+  workbench: "Agent Workbench",
   roadmap: "OS Roadmap",
   batch: "Batch Queue",
   cost: "Cost Center",
@@ -81,6 +83,7 @@ const NAV_GROUPS_V2 = [
       { label: "Mission Control", icon: "⬡", badge: "LIVE", path: "/command-center/mission" },
       { label: "Workspace", icon: "⊹", path: "/command-center/workspace" },
       { label: "Task Queue", icon: "≡", count: "47", path: "/command-center/tasks" },
+      { label: "Agent Workbench", icon: "⬡", badge: "P38", path: "/command-center/workbench" },
       { label: "Agent Fleet", icon: "◈", count: "20", path: "/command-center/agents" },
       { label: "Approvals", icon: "✓", count: "3", countTone: "red", path: "/command-center/approvals" },
     ],
@@ -813,7 +816,7 @@ function MissionControlPage({ vm }) {
 }
 
 /* ─── Task Queue Page ─── */
-function MissionTaskRow({ task, bridgeOnline, onActivate, activating, activationResult }) {
+function MissionTaskRow({ task, bridgeOnline, onActivate, activating, activationResult, navigate }) {
   const isActivating = activating === task.planTaskId;
   const isActivated = activationResult?.planTaskId === task.planTaskId && activationResult?.ok;
   const currentState = isActivated ? "activated" : task.state;
@@ -836,7 +839,12 @@ function MissionTaskRow({ task, bridgeOnline, onActivate, activating, activation
       return <button className="ccv2-task-activate-btn ccv2-task-activate-btn--loading" disabled>Activating…</button>;
     }
     if (isActivated) {
-      return <button className="ccv2-task-activate-btn ccv2-task-activate-btn--done" disabled>Activated</button>;
+      return (
+        <div style={{ display: "flex", gap: 6 }}>
+          <button className="ccv2-task-activate-btn ccv2-task-activate-btn--done" disabled>Activated</button>
+          <button className="ccv2-task-activate-btn ccv2-task-activate-btn--workbench" onClick={() => navigate && navigate("/command-center/workbench")}>Open Workbench</button>
+        </div>
+      );
     }
     if (!task.activationEnabled) {
       return (
@@ -877,6 +885,7 @@ function MissionTaskRow({ task, bridgeOnline, onActivate, activating, activation
 }
 
 function TaskQueuePage({ vm }) {
+  const navigate = useNavigate();
   const ta = vm.taskActivation || {};
   const missionTasks = ta.missionTasks || [];
   const runtimeTasks = runtimeSnapshot.runtimeState?.tasks || {};
@@ -952,6 +961,7 @@ function TaskQueuePage({ vm }) {
                   onActivate={handleActivate}
                   activating={activating}
                   activationResult={activationResults[task.planTaskId]}
+                  navigate={navigate}
                 />
               ))}
             </tbody>
@@ -1792,6 +1802,336 @@ function WorkspacePage({ vm }) {
   );
 }
 
+/* ─── Agent Workbench Page ─── */
+function WorkbenchPage({ vm }) {
+  const navigate = useNavigate();
+  const wb = vm.agentWorkbench || {};
+
+  const [bridgeOnline, setBridgeOnline] = useState(false);
+  const [workbenchItems, setWorkbenchItems] = useState([]);
+  const [loadingItems, setLoadingItems] = useState(true);
+  const [selectedTaskId, setSelectedTaskId] = useState(null);
+  const [workbenchView, setWorkbenchView] = useState(null);
+  const [loadingView, setLoadingView] = useState(false);
+  const [reviewState, setReviewState] = useState("idle"); // idle | submitting | submitted | failed
+  const [reviewDecision, setReviewDecision] = useState("");
+  const [reviewReason, setReviewReason] = useState("");
+  const [reviewResult, setReviewResult] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+    checkActionBridgeHealth().then((r) => {
+      if (cancelled) return;
+      setBridgeOnline(r.online);
+      if (r.online) {
+        listWorkbenchItems().then((res) => {
+          if (!cancelled) {
+            setWorkbenchItems(res.ok ? res.items || [] : []);
+            setLoadingItems(false);
+          }
+        });
+      } else {
+        setLoadingItems(false);
+      }
+    });
+    return () => { cancelled = true; };
+  }, []);
+
+  async function handleSelectTask(runtimeTaskId) {
+    if (selectedTaskId === runtimeTaskId) return;
+    setSelectedTaskId(runtimeTaskId);
+    setWorkbenchView(null);
+    setLoadingView(true);
+    setReviewState("idle");
+    setReviewDecision("");
+    setReviewReason("");
+    setReviewResult(null);
+    const result = await loadWorkbenchView(runtimeTaskId);
+    setLoadingView(false);
+    if (result.ok) setWorkbenchView(result.view);
+  }
+
+  async function handleReview(decision) {
+    if (!selectedTaskId || reviewState === "submitting") return;
+    setReviewDecision(decision);
+    setReviewState("submitting");
+    const result = await reviewTask({ runtimeTaskId: selectedTaskId, decision, reason: reviewReason });
+    setReviewResult(result);
+    setReviewState(result.ok ? "submitted" : "failed");
+  }
+
+  function reviewStatusPillClass(status) {
+    if (status === "approved") return "pass";
+    if (status === "rejected") return "fail";
+    if (status === "changes_requested") return "pending";
+    return "disabled";
+  }
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Agent Workbench</div>
+          <div className="ccv2-page-head__sub">Human review loop · inspect agent work · approve / reject / request changes</div>
+        </div>
+
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Phase</div>
+            <div className="ccv2-stat-chip__value">{wb.policyPhase || "P38-LOCAL"}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Action bridge</div>
+            <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${bridgeOnline ? "green" : "amber"}`}>
+              {loadingItems ? "Checking…" : bridgeOnline ? "Online" : "Offline"}
+            </div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Activated tasks</div>
+            <div className="ccv2-stat-chip__value">{workbenchItems.length}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Execution allowed</div>
+            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">NO</div>
+          </div>
+        </div>
+
+        {!bridgeOnline && !loadingItems && (
+          <div className="ccv2-info-banner" style={{ marginBottom: 16 }}>
+            <span className="ccv2-info-banner__icon">ℹ</span>
+            <span className="ccv2-info-banner__text">
+              Workbench requires the action bridge.
+              Start it with: <code>NEXUS_MODE=local-private npm run mission:action-server</code>
+            </span>
+          </div>
+        )}
+
+        {workbenchItems.length === 0 && !loadingItems ? (
+          <div className="ccv2-card ccv2-wb-empty-card">
+            <div className="ccv2-wb-empty">
+              <div className="ccv2-wb-empty__title">{bridgeOnline ? "No activated tasks" : "Action bridge offline"}</div>
+              <div className="ccv2-wb-empty__desc">
+                {bridgeOnline
+                  ? "Activate mission tasks from Task Queue to see them in the workbench."
+                  : "Start the action bridge to see activated tasks here."}
+              </div>
+              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => navigate("/command-center/tasks")}>
+                Go to Task Queue
+              </button>
+            </div>
+          </div>
+        ) : workbenchItems.length > 0 ? (
+          <div className="ccv2-wb-layout">
+            <div className="ccv2-wb-sidebar">
+              <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Activated Tasks</div>
+              {workbenchItems.map((item) => (
+                <div
+                  key={item.runtimeTaskId}
+                  className={`ccv2-wb-task-item${selectedTaskId === item.runtimeTaskId ? " ccv2-wb-task-item--selected" : ""}`}
+                  onClick={() => handleSelectTask(item.runtimeTaskId)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && handleSelectTask(item.runtimeTaskId)}
+                >
+                  <div className="ccv2-wb-task-item__title">{item.title}</div>
+                  <div className="ccv2-wb-task-item__meta">
+                    <span className="ccv2-wb-task-item__agent">{item.assignedAgent}</span>
+                    <span className={`ccv2-pill ccv2-pill--${reviewStatusPillClass(item.reviewStatus)}`}>
+                      {item.reviewStatus.replace(/_/g, " ")}
+                    </span>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="ccv2-wb-main">
+              {!selectedTaskId && (
+                <div className="ccv2-card">
+                  <div className="ccv2-wb-empty">
+                    <div className="ccv2-wb-empty__title">Select a task</div>
+                    <div className="ccv2-wb-empty__desc">Click a task on the left to open its workbench view.</div>
+                  </div>
+                </div>
+              )}
+
+              {selectedTaskId && loadingView && (
+                <div className="ccv2-card">
+                  <div style={{ padding: "24px 0", textAlign: "center", color: "var(--v2-muted)", fontSize: 13 }}>
+                    Loading workbench view…
+                  </div>
+                </div>
+              )}
+
+              {selectedTaskId && !loadingView && workbenchView && (
+                <>
+                  <div className="ccv2-card">
+                    <div className="ccv2-eyebrow">Task Workbench · {wb.policyPhase}</div>
+                    <div className="ccv2-wb-title">{workbenchView.title}</div>
+                    <div className="ccv2-wb-meta-grid">
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Runtime ID</span><span className="ccv2-mono ccv2-wb-meta-value">{workbenchView.runtimeTaskId?.slice(0, 12)}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Source plan task</span><span className="ccv2-mono ccv2-wb-meta-value">{workbenchView.sourcePlanTaskId?.slice(0, 8) || "—"}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Assigned agent</span><span className="ccv2-wb-meta-value" style={{ fontWeight: 700 }}>{workbenchView.assignedAgent}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Capability</span><span className="ccv2-wb-meta-value">{workbenchView.capabilityId?.replace(/\./g, " · ")}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Risk level</span><span className={`ccv2-pill ccv2-pill--${workbenchView.riskLevel === "high" ? "fail" : workbenchView.riskLevel === "medium" ? "pending" : "pass"}`}>{workbenchView.riskLevel}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">State</span><span className={`ccv2-pill ccv2-pill--${workbenchView.state === "queued" ? "pass" : workbenchView.state === "running" ? "pending" : "disabled"}`}>{workbenchView.state?.replace(/_/g, " ")}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Mutation allowed</span><span className={`ccv2-safety-row__value--${workbenchView.mutationAllowed ? "ready" : "disabled"}`}>{workbenchView.mutationAllowed ? "YES" : "NO"}</span></div>
+                      <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Execution allowed</span><span className={`ccv2-safety-row__value--${workbenchView.executionAllowed ? "ready" : "disabled"}`}>{workbenchView.executionAllowed ? "YES" : "NO"}</span></div>
+                    </div>
+                  </div>
+
+                  <div className="ccv2-card">
+                    <div className="ccv2-section-heading">Expected Output</div>
+                    <div className="ccv2-wb-output-box">
+                      <div style={{ fontSize: 12, color: "var(--v2-muted)", marginBottom: 4 }}>
+                        Type: <span style={{ color: "var(--v2-teal)" }}>{workbenchView.agentExpectedOutput?.outputType}</span>
+                      </div>
+                      <div style={{ fontSize: 12, color: "var(--v2-muted)", marginBottom: 4 }}>{workbenchView.agentExpectedOutput?.summary}</div>
+                      <div style={{ fontSize: 11, color: "var(--v2-muted-2)", fontStyle: "italic" }}>{workbenchView.agentExpectedOutput?.reason}</div>
+                      <span className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8, display: "inline-flex" }}>Execution not enabled</span>
+                    </div>
+                  </div>
+
+                  {workbenchView.contract && (
+                    <div className="ccv2-card">
+                      <div className="ccv2-section-heading">Contract</div>
+                      <div className="ccv2-wb-meta-grid" style={{ marginTop: 8 }}>
+                        <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Path</span><span className="ccv2-mono ccv2-wb-meta-value" style={{ fontSize: 10 }}>{workbenchView.contract.path || "—"}</span></div>
+                        <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Type</span><span className="ccv2-wb-meta-value">{workbenchView.contract.type || "mission"}</span></div>
+                        {workbenchView.contract.requiredEvidence?.length > 0 && (
+                          <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Required evidence</span><span className="ccv2-wb-meta-value">{workbenchView.contract.requiredEvidence.join(", ")}</span></div>
+                        )}
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="ccv2-two-col">
+                    <div className="ccv2-card">
+                      <div className="ccv2-section-heading">Evidence ({workbenchView.evidence?.length || 0})</div>
+                      {workbenchView.evidence?.length > 0 ? (
+                        <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+                          {workbenchView.evidence.map((id) => (
+                            <div key={id} className="ccv2-mono" style={{ fontSize: 10, color: "var(--v2-muted-2)", padding: "3px 0", borderBottom: "1px solid rgba(136,255,235,0.04)" }}>{id}</div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: 11, color: "var(--v2-muted-2)", marginTop: 8 }}>No evidence records yet</div>
+                      )}
+                    </div>
+                    <div className="ccv2-card">
+                      <div className="ccv2-section-heading">Audit Events ({workbenchView.audit?.length || 0})</div>
+                      {workbenchView.audit?.length > 0 ? (
+                        <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+                          {workbenchView.audit.map((id) => (
+                            <div key={id} className="ccv2-mono" style={{ fontSize: 10, color: "var(--v2-muted-2)", padding: "3px 0", borderBottom: "1px solid rgba(136,255,235,0.04)" }}>{id}</div>
+                          ))}
+                        </div>
+                      ) : (
+                        <div style={{ fontSize: 11, color: "var(--v2-muted-2)", marginTop: 8 }}>No audit events yet</div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="ccv2-card ccv2-wb-review-panel">
+                    <div className="ccv2-section-heading">Human Review</div>
+
+                    {workbenchView.review?.decision && (
+                      <div style={{ marginTop: 8, marginBottom: 12, padding: "8px 10px", background: "rgba(136,255,235,0.03)", border: "1px solid rgba(136,255,235,0.08)", borderRadius: 6 }}>
+                        <div className="ccv2-eyebrow" style={{ marginBottom: 4 }}>Last review</div>
+                        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                          <span className={`ccv2-pill ccv2-pill--${workbenchView.review.decision === "approve" ? "pass" : workbenchView.review.decision === "reject" ? "fail" : "pending"}`}>
+                            {workbenchView.review.decision}
+                          </span>
+                          <span style={{ fontSize: 11, color: "var(--v2-muted)" }}>by {workbenchView.review.reviewer}</span>
+                        </div>
+                        {workbenchView.review.reason && (
+                          <div style={{ fontSize: 11, color: "var(--v2-muted-2)", marginTop: 4 }}>{workbenchView.review.reason}</div>
+                        )}
+                      </div>
+                    )}
+
+                    {reviewState === "submitted" && reviewResult?.ok ? (
+                      <div className="ccv2-mc-status ccv2-mc-status--completed" style={{ marginTop: 8 }}>
+                        ✓ Review recorded: {reviewDecision}
+                        {reviewResult.reviewId && (
+                          <div className="ccv2-mono" style={{ fontSize: 10, marginTop: 4 }}>ID: {reviewResult.reviewId?.slice(0, 12)}</div>
+                        )}
+                      </div>
+                    ) : reviewState === "failed" ? (
+                      <div className="ccv2-mc-status ccv2-mc-status--failed" style={{ marginTop: 8 }}>
+                        ✗ {(reviewResult?.errors || ["Review failed."]).join(" ")}
+                      </div>
+                    ) : (
+                      <>
+                        <div style={{ marginTop: 10 }}>
+                          <label style={{ fontSize: 11, color: "var(--v2-muted)", display: "block", marginBottom: 4 }}>Reason (optional)</label>
+                          <textarea
+                            className="ccv2-mission-composer__textarea"
+                            value={reviewReason}
+                            onChange={(e) => setReviewReason(e.target.value)}
+                            placeholder="Add review notes..."
+                            rows={2}
+                            style={{ marginBottom: 10 }}
+                          />
+                        </div>
+                        <div className="ccv2-wb-review-actions">
+                          <button
+                            className={`ccv2-wb-review-btn ccv2-wb-review-btn--approve${!bridgeOnline || reviewState === "submitting" ? " ccv2-wb-review-btn--disabled" : ""}`}
+                            disabled={!bridgeOnline || reviewState === "submitting"}
+                            onClick={() => handleReview("approve")}
+                            title={!bridgeOnline ? "Requires governed action bridge" : ""}
+                          >
+                            {reviewState === "submitting" && reviewDecision === "approve" ? "Submitting…" : "Approve"}
+                          </button>
+                          <button
+                            className={`ccv2-wb-review-btn ccv2-wb-review-btn--changes${!bridgeOnline || reviewState === "submitting" ? " ccv2-wb-review-btn--disabled" : ""}`}
+                            disabled={!bridgeOnline || reviewState === "submitting"}
+                            onClick={() => handleReview("request_changes")}
+                            title={!bridgeOnline ? "Requires governed action bridge" : ""}
+                          >
+                            {reviewState === "submitting" && reviewDecision === "request_changes" ? "Submitting…" : "Request Changes"}
+                          </button>
+                          <button
+                            className={`ccv2-wb-review-btn ccv2-wb-review-btn--reject${!bridgeOnline || reviewState === "submitting" ? " ccv2-wb-review-btn--disabled" : ""}`}
+                            disabled={!bridgeOnline || reviewState === "submitting"}
+                            onClick={() => handleReview("reject")}
+                            title={!bridgeOnline ? "Requires governed action bridge" : ""}
+                          >
+                            {reviewState === "submitting" && reviewDecision === "reject" ? "Submitting…" : "Reject"}
+                          </button>
+                        </div>
+                        {!bridgeOnline && (
+                          <div style={{ marginTop: 8, fontSize: 11, color: "var(--v2-muted-2)" }}>
+                            ⊘ Review buttons require action bridge: <code>NEXUS_MODE=local-private npm run mission:action-server</code>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+
+                  {workbenchView.nextActions?.length > 0 && (
+                    <div className="ccv2-card">
+                      <div className="ccv2-section-heading">Next Actions</div>
+                      <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+                        {workbenchView.nextActions.map((na, i) => (
+                          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, flexWrap: "wrap" }}>
+                            <span style={{ fontSize: 12, color: "var(--v2-text)" }}>{na.label}</span>
+                            {na.reason && <span style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>— {na.reason}</span>}
+                            <span className={`ccv2-pill ccv2-pill--${na.enabled ? "pass" : "disabled"}`}>{na.enabled ? "Available" : "Blocked"}</span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  )}
+                </>
+              )}
+            </div>
+          </div>
+        ) : null}
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -1802,8 +2142,8 @@ function OSRoadmapPage({ vm }) {
     { phase: "P31–P33", label: "Command Center V1", status: "COMPLETE", detail: "Studio shell, constellation, traction surfaces" },
     { phase: "P34–P35", label: "Command Center V2 + Mission Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission composer, PRD awareness" },
     { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "COMPLETE", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
-    { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "IN_PROGRESS", detail: "Select task → activate → runtime queue → evidence" },
-    { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "PLANNED", detail: "Agent workbench, approval-aware execution, review surfaces" },
+    { phase: "P37", label: "Task Activation + Agent Assignment from UI", status: "COMPLETE", detail: "Select task → activate → runtime queue → evidence" },
+    { phase: "P38", label: "Agent Workbench + Human Review Loop", status: "IN_PROGRESS", detail: "Agent workbench, human review loop, approve/reject/request_changes" },
     { phase: "P39", label: "First Controlled Implementation Workflow from UI", status: "PLANNED", detail: "Governed end-to-end build workflow through Command Center" },
     { phase: "P40", label: "Live Local API Backend for Command Center", status: "PLANNED", detail: "Real-time data via local API — no more snapshots" },
     { phase: "P41", label: "DB Foundation + Durable State", status: "PLANNED", detail: "Persistent task, evidence, audit storage" },
@@ -1902,6 +2242,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "mission" && <MissionControlPage vm={vm} />}
           {currentPage === "workspace" && <WorkspacePage vm={vm} />}
           {currentPage === "tasks" && <TaskQueuePage vm={vm} />}
+          {currentPage === "workbench" && <WorkbenchPage vm={vm} />}
           {currentPage === "agents" && <AgentFleetPage vm={vm} studio={studio} />}
           {currentPage === "approvals" && <ApprovalsPage vm={vm} studio={studio} />}
           {currentPage === "gates" && <VerificationGatesPage vm={vm} />}

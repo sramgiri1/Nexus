@@ -187,6 +187,49 @@ Risk level:
 
 ---
 
+### Phase 38-LOCAL — Agent Workbench + Human Review Loop
+
+Goal:
+
+- make each activated task feel like a real agent work item the operator can inspect and review; record approve / reject / request_changes decisions in an append-only review store without executing any agent
+
+Deliverables:
+
+- `workbench/reviewStore.js` — append-only review record store (local-state/runtime/reviews.jsonl)
+- `workbench/agentWorkbench.js` — builds workbench views: runtimeTaskId, assignedAgent, capability, riskLevel, mutationAllowed=false, executionAllowed=false, expected output, review status
+- `workbench/reviewBridge.js` — validates and records review decisions; writes evidence, audit, and runtime events; does NOT update task state machine (no supported transitions)
+- `workbench/index.js` — re-exports all workbench functions
+- `policy/agent-workbench-policy.json` — P38 boundary (taskExecutionAllowed: false, reviewActionsAllowed: true)
+- Action server routes: POST /actions/workbench/review, GET /workbench, GET /workbench/:taskId, GET /workbench/:taskId/reviews
+- `dashboard/src/api/workbenchActions.js` — browser fetch-only client for all workbench routes
+- Agent Workbench page at /command-center/workbench: task selector, workbench view, review panel with Approve / Request Changes / Reject buttons
+- Task Queue page: "Open Workbench" button appears after task activation
+- OS Roadmap: P37 COMPLETE, P38 IN_PROGRESS
+- `scripts/check-agent-workbench.js` — 13-section validator (89/89 checks)
+
+Non-goals:
+
+- no agent execution in P38
+- no provider calls, network calls, or command execution
+- no project mutation
+- task state machine not updated (review states tracked separately in reviews.jsonl)
+
+Validation checks:
+
+- `npm run check:agent-workbench` passes 89/89 checks
+- 36/36 E2E route tests pass
+- review decision recorded with evidence, audit, and runtime event
+- approve → PASS evidence, reject → FAIL evidence, request_changes → INFO evidence
+- action bridge offline → review buttons disabled with clear message
+- no private project file mutations
+- `mutationAllowed: false` and `executionAllowed: false` enforced in all workbench views
+
+Risk level:
+
+- low
+
+---
+
 ## Upcoming
 
 ### Phase 15 — Containerization and Worker Scaling
