@@ -1788,9 +1788,51 @@
   color: var(--v2-muted);
 }
 
+.ccv2-page-summary-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ccv2-page-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px 16px;
+}
+
+.ccv2-page-summary-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+}
+
+.ccv2-page-summary-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--v2-muted-2);
+}
+
+.ccv2-page-summary-value {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--v2-text);
+}
+
 /* ─── Stats row ─── */
 
 .ccv2-stats-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ccv2-stat-chips {
   display: flex;
   gap: 12px;
   flex-wrap: wrap;
@@ -1979,6 +2021,49 @@
   font-size: 12px;
   line-height: 1.6;
   color: var(--nexus-muted);
+}
+
+.ccv2-list-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--v2-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 82%, transparent);
+}
+
+.ccv2-list-row__primary {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+  flex: 1;
+}
+
+.ccv2-list-row__title {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+
+.ccv2-list-row__meta {
+  font-size: 11px;
+  line-height: 1.45;
+  color: var(--v2-muted);
+}
+
+.ccv2-list-row__secondary {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.ccv2-list-row__detail {
+  font-size: 10px;
+  color: var(--v2-muted-2);
 }
 
 .ccv2-safety-approval-grid,
@@ -2178,6 +2263,25 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 16px;
+}
+
+@media (max-width: 960px) {
+  .ccv2-page-summary-grid,
+  .ccv2-state-summary-grid,
+  .ccv2-wb-task-summary,
+  .ccv2-two-col {
+    grid-template-columns: 1fr;
+  }
+
+  .ccv2-list-row,
+  .ccv2-wf-card__meta-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .ccv2-list-row__secondary {
+    align-items: flex-start;
+  }
 }
 
 /* ─── Mission Composer Status ─── */
@@ -2545,6 +2649,29 @@
   flex: 1;
 }
 
+.ccv2-wf-card__meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ccv2-wf-card__meta-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 11px;
+  color: var(--v2-text);
+}
+
+.ccv2-wf-card__meta-label {
+  color: var(--v2-muted);
+}
+
+.ccv2-wf-card__meta-value {
+  color: var(--v2-text);
+  text-align: right;
+}
+
 .ccv2-wf-card__agents {
   display: flex;
   flex-wrap: wrap;
@@ -2704,6 +2831,58 @@
   line-height: 1.6;
 }
 
+.ccv2-workflow-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ccv2-workflow-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ccv2-workflow-group__empty {
+  padding: 14px 16px;
+  font-size: 12px;
+  color: var(--v2-muted);
+}
+
+.ccv2-state-summary-card {
+  margin-bottom: 4px;
+}
+
+.ccv2-state-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.ccv2-state-summary-pill {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 88%, transparent);
+}
+
+.ccv2-state-summary-pill__label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted-2);
+}
+
+.ccv2-state-summary-pill__value {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--v2-text);
+}
+
 /* ─── Task Activation UI (P37) ─── */
 .ccv2-mission-tasks-table th:last-child,
 .ccv2-mission-tasks-table td:last-child { width: 200px; }
@@ -2818,6 +2997,36 @@
 .ccv2-wb-meta-label { color: var(--v2-muted); flex-shrink: 0; margin-right: 12px; }
 .ccv2-wb-meta-value { color: var(--v2-text); text-align: right; word-break: break-all; }
 
+.ccv2-wb-task-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ccv2-wb-task-summary__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 84%, transparent);
+}
+
+.ccv2-wb-task-summary__label {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--v2-muted-2);
+}
+
+.ccv2-wb-task-summary__value {
+  font-size: 12px;
+  color: var(--v2-text);
+  line-height: 1.5;
+}
+
 .ccv2-wb-output-box {
   margin-top: 8px; padding: 12px 14px;
   background: rgba(136,255,235,0.03); border: 1px solid rgba(136,255,235,0.08);
@@ -2828,6 +3037,14 @@
 
 .ccv2-wb-review-actions {
   display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px;
+}
+
+.ccv2-wb-review-shortcuts {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  margin-bottom: 12px;
 }
 
 .ccv2-wb-review-btn {

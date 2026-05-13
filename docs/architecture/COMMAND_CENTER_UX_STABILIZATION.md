@@ -144,3 +144,42 @@ OS Roadmap remains the only Command Center route where roadmap phase labels are 
 ### Next Subphase
 
 - P41.5.4 — Page-Specific UX Cleanup for Agent Workbench, Implementation, Live API, Durable State, Workspace, and related routes
+
+## P41.5.4 — Page-Specific UX Cleanup
+
+This subphase brings the major Command Center routes up to the same user-facing standard as Mission Control without changing backend behavior.
+
+Pages cleaned:
+
+- Workspace
+- Task Queue
+- Agent Workbench
+- Implementation Workflow
+- Live API Status
+- Durable State
+- Evidence
+- Safety Center
+- Projects
+
+### UX Rules
+
+- Each page explains purpose, current state, next action, and capability posture in plain language.
+- Empty states stay honest and actionable instead of leaving large blank surfaces.
+- Disabled actions show user-facing reasons.
+- Raw policy keys, raw payloads, and raw log dumps do not appear in primary UX.
+
+### Theme Compatibility
+
+The cleaned pages continue to use the shared System / Dark / Light theme tokens and remain covered by the existing route-wide theme tests.
+
+### Copy Rules
+
+- Stale P37 / P38 / P39 / P40 / P41 labels remain absent from primary UX.
+- Product-facing states such as Available, Read-only, Disabled by policy, and Not enabled remain the preferred language.
+- Public/demo boundaries remain strict.
+
+### Next Subphase
+
+- P41.5.5 — Screenshot UX Audit
+- Route screenshots in dark/light
+- Visual regression and readability review

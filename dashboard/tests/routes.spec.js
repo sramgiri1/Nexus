@@ -504,6 +504,134 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("workspace shows grouped governed workflows and clear availability states", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workspace");
+
+    for (const label of ["Workspace Summary", "Plan", "Build", "Validate", "Govern", "Release"]) {
+      await expect(page.getByText(label, { exact: false }).first()).toBeVisible();
+    }
+    await expect(page.locator("body")).toContainText("Available for planning");
+    await expect(page.locator("body")).toContainText("Requires iOS/Xcode runner");
+    await expect(page.locator("body")).toContainText("Requires release action bridge");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("task queue shows planned and runtime task states with user-facing next actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tasks");
+
+    await expect(page.getByText("Queue Summary", { exact: false })).toBeVisible();
+    await expect(page.getByText("Task State Summary", { exact: false })).toBeVisible();
+    await expect(page.getByText("Planned Tasks", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText(/Activate a planned task|No activated tasks yet|Activated Runtime Tasks/);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("agent workbench shows review summary and helpful empty or selected task state", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workbench");
+
+    await expect(page.getByText("Workbench Summary", { exact: false })).toBeVisible();
+    const body = await page.locator("body").innerText();
+    expect(body).toContain("Agent Workbench");
+    expect(body).not.toContain("P38-LOCAL");
+    expect(
+      body.includes("No activated tasks yet. Activate a planned task from Task Queue to open it in Agent Workbench.")
+      || body.includes("Task Workbench")
+    ).toBe(true);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("implementation workflow shows user-facing status summary and developer details split", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/implementation");
+
+    await expect(page.getByText("Implementation Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Documentation-only");
+    await expect(page.locator("body")).toContainText("Source mutation");
+    await expect(page.locator("body")).toContainText("Disabled");
+    await expect(page.locator("body")).toContainText("Developer Details");
+    expect(await page.locator("body").innerText()).not.toContain("Project Briefshepherd");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("live api page groups endpoints by business purpose", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/liveapi");
+
+    for (const label of ["API Summary", "Mission Data", "Task Data", "Evidence Ledger", "Runtime State", "Durable State", "Developer Details"]) {
+      await expect(page.getByText(label, { exact: false }).first()).toBeVisible();
+    }
+    expect(await page.locator("body").innerText()).not.toContain("P40-LOCAL");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("durable state page shows file-backed posture without failure framing", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/database");
+
+    await expect(page.getByText("Durable State Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("File-backed");
+    await expect(page.locator("body")).toContainText("DB writes");
+    await expect(page.locator("body")).toContainText("Disabled by policy");
+    expect(await page.locator("body").innerText()).not.toContain("P41-LOCAL");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/evidence");
+
+    await expect(page.getByText("Evidence Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText(/Evidence Timeline|Evidence appears after governed actions complete\./);
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("payload");
+    expect(body).not.toContain("{\"");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("safety center shows plain-language safety posture without raw policy keys", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/safety");
+
+    await expect(page.getByText("Safety Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Public/demo boundary");
+    await expect(page.locator("body")).toContainText("Private project boundary");
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("dbWritesEnabled");
+    expect(body).not.toContain("productionDbAllowed");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("projects page shows active project summary and future adapter note", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/projects");
+
+    await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework is planned for P42.");
+    await expect(page.locator("body")).toContainText(/private project|Private Project/);
+
+    expect(errors).toEqual([]);
+  });
+
   test("demo boundary keeps DemoApp on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 

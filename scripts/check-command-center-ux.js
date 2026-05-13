@@ -12,6 +12,7 @@ const sections = {
   themeTokens: true,
   themeControl: true,
   missionControlLayout: true,
+  pageSpecificUx: true,
   sidebarLabels: true,
   workflowLabels: true,
   pageCopy: true,
@@ -292,9 +293,9 @@ for (const forbidden of forbiddenUiLabels) {
 for (const expected of [
   "Mission Control",
   "Evidence",
-  "Available for scoped implementation",
-  "Current persistence: file-backed",
-  "DB writes disabled by policy",
+  "Implementation Summary",
+  "Durable State Summary",
+  "Disabled by policy",
   "Local API: Online",
   "Local API: Offline",
   "Select a task to review agent output, evidence, blockers, and next actions.",
@@ -353,6 +354,43 @@ for (const expectedTest of [
 check(!commandCenterSource.includes("Requires P37"), "missionControlLayout", "Mission Control must not include stale P37 requirement");
 check(!commandCenterSource.includes("P38-LOCAL"), "missionControlLayout", "Mission Control must not include stale P38-LOCAL label");
 
+// Page-specific UX
+for (const expected of [
+  "Workspace Summary",
+  "Queue Summary",
+  "Task State Summary",
+  "Workbench Summary",
+  "Implementation Summary",
+  "API Summary",
+  "Durable State Summary",
+  "Evidence Summary",
+  "Safety Summary",
+  "Project Summary",
+  "Developer Details",
+  "Documentation-only update",
+  "DB writes disabled by policy",
+  "Evidence proves what governed actions produced.",
+  "Project Registry + Adapter Framework is planned for P42.",
+]) {
+  check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);
+}
+for (const forbidden of ["Project Briefshepherd", "mutation allowed YES", "DEMOAPP ACTIVE"]) {
+  check(!commandCenterNonRoadmapSource.includes(forbidden), "pageSpecificUx", `Page-specific UX contains forbidden copy: ${forbidden}`);
+}
+for (const expectedTest of [
+  "workspace shows grouped governed workflows and clear availability states",
+  "task queue shows planned and runtime task states with user-facing next actions",
+  "agent workbench shows review summary and helpful empty or selected task state",
+  "implementation workflow shows user-facing status summary and developer details split",
+  "live api page groups endpoints by business purpose",
+  "durable state page shows file-backed posture without failure framing",
+  "evidence page shows summary and avoids raw payload dumps",
+  "safety center shows plain-language safety posture without raw policy keys",
+  "projects page shows active project summary and future adapter note",
+]) {
+  check(routeTestSource.includes(expectedTest), "pageSpecificUx", `Page-specific UX tests missing: ${expectedTest}`);
+}
+
 // OS Roadmap preservation
 for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
@@ -402,6 +440,7 @@ console.log(`Theme hook: ${sections.themeHook ? "PASS" : "FAIL"}`);
 console.log(`Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}`);
 console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
+console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
 console.log(`Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}`);
 console.log(`Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}`);
@@ -428,6 +467,7 @@ const report = `# Command Center UX Report
 - Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}
 - Theme control: ${sections.themeControl ? "PASS" : "FAIL"}
 - Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
+- Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}
 - Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}
 - Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}

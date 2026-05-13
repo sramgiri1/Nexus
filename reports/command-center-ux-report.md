@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T10:01:10.114Z
-- Validation branch: fix/mission-control-enterprise-layout
-- Validation HEAD: f5ecf94
+- Generated at: 2026-05-13T10:25:07.556Z
+- Validation branch: fix/command-center-page-specific-ux
+- Validation HEAD: 755b5c1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -15,6 +15,7 @@
 - Theme tokens: PASS
 - Theme control: PASS
 - Mission Control layout: PASS
+- Page-specific UX: PASS
 - Sidebar labels: PASS
 - Workflow labels: PASS
 - Page copy: PASS
