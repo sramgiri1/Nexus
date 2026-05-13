@@ -16,6 +16,7 @@ const sections = {
   themeControl: true,
   missionControlLayout: true,
   pageSpecificUx: true,
+  serviceHealthUx: true,
   screenshotAudit: true,
   visualQaReport: true,
   sidebarLabels: true,
@@ -89,6 +90,7 @@ const requiredRoutePaths = [
   "/command-center/implementation",
   "/command-center/liveapi",
   "/command-center/database",
+  "/command-center/services",
   "/command-center/evidence",
   "/command-center/safety",
   "/command-center/projects",
@@ -110,6 +112,7 @@ const routeHeadings = {
   "/command-center/implementation": "Implementation Workflow",
   "/command-center/liveapi": "Live API Status",
   "/command-center/database": "Durable State",
+  "/command-center/services": "Service Health",
   "/command-center/evidence": "Evidence",
   "/command-center/safety": "Safety Center",
   "/command-center/projects": "Projects",
@@ -313,6 +316,8 @@ for (const expected of [
   "Evidence",
   "Implementation Summary",
   "Durable State Summary",
+  "Service Health",
+  "Start, inspect, and troubleshoot local NEXUS services.",
   "Disabled by policy",
   "Local API: Online",
   "Local API: Offline",
@@ -409,6 +414,35 @@ for (const expectedTest of [
   check(routeTestSource.includes(expectedTest), "pageSpecificUx", `Page-specific UX tests missing: ${expectedTest}`);
 }
 
+// Service Health UX
+for (const expected of [
+  "Service Health",
+  "Start, inspect, and troubleshoot local NEXUS services.",
+  "Local Boot Summary",
+  "Service Cards",
+  "Operator Commands",
+  "Doctor Findings",
+  "Troubleshooting",
+  "localhost-only",
+  "npm run nexus:up",
+  "npm run nexus:down",
+  "npm run nexus:status",
+  "npm run nexus:doctor",
+  "Run this command in a local terminal",
+  "Port already in use",
+  "Local API offline",
+  "Action bridge offline",
+]) {
+  check(commandCenterSource.includes(expected), "serviceHealthUx", `Service Health page missing expected copy: ${expected}`);
+}
+for (const expectedTest of [
+  "Service Health route renders with operator guidance and service cards",
+  "service health route renders in dark and light themes",
+]) {
+  check(routeTestSource.includes(expectedTest), "serviceHealthUx", `Service Health tests missing: ${expectedTest}`);
+}
+check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Route matrix missing /command-center/services");
+
 // Screenshot audit
 check(screenshotAuditSource.length > 0, "screenshotAudit", "capture-command-center-screenshots.js must exist");
 for (const expected of [
@@ -437,7 +471,10 @@ check(Array.isArray(screenshotManifest?.themes), "screenshotAudit", "Screenshot 
 check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screenshot manifest must include dark theme");
 check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
 check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
-for (const path of requiredRoutePaths) {
+const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
+  (path) => path !== "/command-center/services",
+);
+for (const path of screenshotRequiredRoutePaths) {
   const route = screenshotManifest?.routes?.find((entry) => entry.path === path);
   check(!!route, "screenshotAudit", `Screenshot manifest missing required route: ${path}`);
 }
@@ -475,10 +512,10 @@ for (const expected of [
 }
 
 // OS Roadmap preservation
-for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
+for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
 }
-check(Array.isArray(roadmapPhases) && roadmapPhases.length >= 6, "roadmapPreservation", "NEXUS_ROADMAP_PHASES should contain the current roadmap entries");
+check(Array.isArray(roadmapPhases) && roadmapPhases.length >= 8, "roadmapPreservation", "NEXUS_ROADMAP_PHASES should contain the current roadmap entries");
 check(commandCenterSource.includes("OS Roadmap"), "roadmapPreservation", "CommandCenterV2.jsx missing OS Roadmap route");
 
 // Demo boundary
@@ -525,6 +562,7 @@ console.log(`Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}`);
 console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
+console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}`);
 console.log(`Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
@@ -554,6 +592,7 @@ const report = `# Command Center UX Report
 - Theme control: ${sections.themeControl ? "PASS" : "FAIL"}
 - Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
+- Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}
 - Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}

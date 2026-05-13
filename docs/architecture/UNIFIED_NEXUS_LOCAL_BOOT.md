@@ -102,6 +102,59 @@ They are represented in the manifest for future orchestration, but `nexus:up` mu
 - If a required port is already in use, inspect the existing local process before retrying
 - If `nexus:down` skips a process, it was not started by NEXUS
 
+## P41.6.3 — Command Center Service Health UX
+
+P41.6.3 adds a read-only Command Center Service Health route so operators can see what the local boot system is responsible for without executing service commands from the browser.
+
+### Purpose
+
+- expose the current local service model in product-grade UI
+- distinguish online, offline, disabled, not enabled, planned, and unknown states
+- connect `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor` to clear operator guidance
+
+### Service Cards
+
+The Service Health page summarizes:
+
+- Command Center
+- Live Local API
+- Governed Action Bridge
+- Durable State Foundation
+- Worker Runtime
+- MCP / Tool Gateway
+- Provider Dispatch
+- Batch Jobs
+
+Each card shows purpose, requirement level, configured port, health URL where relevant, current state, operator guidance, and a safety note.
+
+### Operator Guidance
+
+The page shows copy-only command guidance for:
+
+- `npm run nexus:up`
+- `npm run nexus:down`
+- `npm run nexus:status`
+- `npm run nexus:doctor`
+
+UI execution is intentionally disabled in this phase. Operators must run those commands in a local terminal until a later governed action path exists.
+
+### Planned vs Offline vs Disabled
+
+- `Online` and `Offline` are used only when the current service state can be determined from existing status data or safe live checks.
+- `Not enabled` is used for intentionally unavailable future services.
+- `Planned` is used for future placeholders that should not be mistaken for runtime failures.
+- `Disabled by policy` is used for Durable State posture where DB writes remain off and file-backed fallback remains active.
+
+### Localhost-Only Safety
+
+Service Health reinforces the P41.6 local boot boundary:
+
+- localhost-only bindings
+- no provider calls
+- no external network
+- DB writes disabled
+- no project mutation from the UI
+
 ## Next Subphase
 
-P41.6.3 adds Command Center Service Health UX.
+P41.6.4 adds the NEXUS command palette plus simple operator actions.

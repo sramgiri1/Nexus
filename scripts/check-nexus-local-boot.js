@@ -4,16 +4,15 @@ import { execFileSync } from "node:child_process";
 import process from "node:process";
 
 const ROOT = process.cwd();
-const REPORT_PATH = join(ROOT, "reports", "nexus-boot-report.md");
+const REPORT_PATH = join(ROOT, "reports", "nexus-local-boot-report.md");
 
 const sections = {
   manifest: true,
-  localOnlyBoundary: true,
+  statusCommand: true,
+  doctorCommand: true,
   processManager: true,
-  nexusUp: true,
-  nexusDown: true,
-  statusIntegration: true,
-  doctorIntegration: true,
+  serviceHealthUx: true,
+  osPhaseStatus: true,
   policy: true,
   dryRun: true,
   docs: true,
@@ -68,6 +67,9 @@ const requiredFiles = [
   "policy/nexus-local-boot-policy.json",
   "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md",
   "reports/nexus-service-status-report.md",
+  "reports/os-phase-status-report.md",
+  "os-roadmap/nexus-phases.json",
+  "os-roadmap/phase-status.json",
 ];
 for (const file of requiredFiles) {
   check(existsSync(join(ROOT, file)), "processManager", `Missing required file: ${file}`);
@@ -85,7 +87,7 @@ for (const id of ["command-center", "local-api", "action-bridge", "db", "workers
 }
 for (const service of manifest?.services || []) {
   if (service.enabled === true && service.port !== null) {
-    check(service.host === "127.0.0.1" || service.host === "localhost", "localOnlyBoundary", `Enabled service ${service.id} must be localhost-only`);
+    check(service.host === "127.0.0.1" || service.host === "localhost", "manifest", `Enabled service ${service.id} must be localhost-only`);
   }
 }
 for (const id of ["workers", "mcp-gateway", "provider-gateway"]) {
@@ -125,8 +127,8 @@ try {
 } catch (error) {
   fail("dryRun", `nexus:up --dry-run failed: ${error.message}`);
 }
-check(dryRunOutput.includes("NEXUS OS Local Boot"), "nexusUp", "nexus:up dry-run missing heading");
-check(dryRunOutput.includes("Bind address: 127.0.0.1"), "localOnlyBoundary", "nexus:up dry-run must show bind address");
+check(dryRunOutput.includes("NEXUS OS Local Boot"), "processManager", "nexus:up dry-run missing heading");
+check(dryRunOutput.includes("Bind address: 127.0.0.1"), "manifest", "nexus:up dry-run must show bind address");
 
 let downOutput = "";
 try {
@@ -135,9 +137,9 @@ try {
     encoding: "utf8",
   });
 } catch (error) {
-  fail("nexusDown", `nexus:down failed: ${error.message}`);
+  fail("processManager", `nexus:down failed: ${error.message}`);
 }
-check(downOutput.includes("NEXUS OS Local Shutdown"), "nexusDown", "nexus:down missing heading");
+check(downOutput.includes("NEXUS OS Local Shutdown"), "processManager", "nexus:down missing heading");
 
 let doctorOutput = "";
 let statusOutput = "";
@@ -147,7 +149,7 @@ try {
     encoding: "utf8",
   });
 } catch (error) {
-  fail("doctorIntegration", `nexus:doctor failed: ${error.message}`);
+  fail("doctorCommand", `nexus:doctor failed: ${error.message}`);
 }
 try {
   statusOutput = execFileSync("npm", ["run", "nexus:status"], {
@@ -155,10 +157,10 @@ try {
     encoding: "utf8",
   });
 } catch (error) {
-  fail("statusIntegration", `nexus:status failed: ${error.message}`);
+  fail("statusCommand", `nexus:status failed: ${error.message}`);
 }
-check(doctorOutput.includes("NEXUS Local Doctor"), "doctorIntegration", "nexus:doctor missing heading");
-check(statusOutput.includes("NEXUS Local Service Status"), "statusIntegration", "nexus:status missing heading");
+check(doctorOutput.includes("NEXUS Local Doctor"), "doctorCommand", "nexus:doctor missing heading");
+check(statusOutput.includes("NEXUS Local Service Status"), "statusCommand", "nexus:status missing heading");
 
 let policy = null;
 try {
@@ -172,8 +174,8 @@ check(policy?.managedPidOnlyShutdown === true, "policy", "Policy must enforce ma
 
 const docsToCheck = {
   "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md": ["nexus:up", "nexus:down", "nexus:status", "nexus:doctor", "P41.6.3"],
-  "docs/usage/RUNNING_NEXUS_LOCALLY.md": ["npm run nexus:up", "npm run nexus:down", "npm run nexus:status", "npm run nexus:doctor"],
-  "README.md": ["Local boot commands", "nexus:up", "nexus:down"],
+  "docs/usage/RUNNING_NEXUS_LOCALLY.md": ["/command-center/services", "npm run nexus:up", "npm run nexus:down", "npm run nexus:status", "npm run nexus:doctor"],
+  "README.md": ["Service Health", "nexus:up", "nexus:down"],
 };
 for (const [file, expectedStrings] of Object.entries(docsToCheck)) {
   const content = read(file);
@@ -183,7 +185,52 @@ for (const [file, expectedStrings] of Object.entries(docsToCheck)) {
   }
 }
 
-check(read("service-runtime/serviceProcessManager.js").includes("managedByNexus"), "nexusDown", "Shutdown must be managed-PID-only by contract");
+check(read("service-runtime/serviceProcessManager.js").includes("managedByNexus"), "processManager", "Shutdown must be managed-PID-only by contract");
+
+const routeSource = read("dashboard/src/data/commandCenterRoutes.js");
+const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
+const routeTestSource = read("dashboard/tests/routes.spec.js");
+const roadmapSource = read("dashboard/src/data/nexusRoadmap.js");
+
+check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Service Health route must be registered");
+for (const expected of [
+  "Service Health",
+  "Start, inspect, and troubleshoot local NEXUS services.",
+  "Service Cards",
+  "Operator Commands",
+  "Doctor Findings",
+  "Troubleshooting",
+  "npm run nexus:up",
+  "npm run nexus:doctor",
+]) {
+  check(commandCenterSource.includes(expected), "serviceHealthUx", `Command Center missing Service Health copy: ${expected}`);
+}
+for (const expected of [
+  "Service Health route renders with operator guidance and service cards",
+  "service health route renders in dark and light themes",
+]) {
+  check(routeTestSource.includes(expected), "serviceHealthUx", `Route tests missing Service Health coverage: ${expected}`);
+}
+
+let phaseStatus = null;
+try {
+  phaseStatus = JSON.parse(read("os-roadmap/phase-status.json"));
+} catch (error) {
+  fail("osPhaseStatus", `Could not parse os-roadmap/phase-status.json: ${error.message}`);
+}
+check(Array.isArray(phaseStatus?.phases), "osPhaseStatus", "OS phase status registry missing phases array");
+check(
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.3" && entry.status === "COMPLETE"),
+  "osPhaseStatus",
+  "P41.6.3 must be recorded as complete",
+);
+check(
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.4" && entry.status === "PLANNED"),
+  "osPhaseStatus",
+  "P41.6.4 must be recorded as planned",
+);
+check(roadmapSource.includes("P41.6.3"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.3");
+check(roadmapSource.includes("P41.6.4"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.4");
 
 try {
   const privateDiff = gitOutput(["diff", "--name-only", "--", "projects/careloop", "projects/careloop-ios"]);
@@ -205,6 +252,9 @@ for (const relativePath of [
   "service-runtime/serviceHealth.js",
   "service-runtime/servicePorts.js",
   "service-runtime/index.js",
+  "dashboard/src/data/commandCenterRoutes.js",
+  "dashboard/src/pages/CommandCenterV2.jsx",
+  "dashboard/tests/routes.spec.js",
   "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md",
   "docs/usage/RUNNING_NEXUS_LOCALLY.md",
   "README.md",
@@ -214,12 +264,11 @@ for (const relativePath of [
 
 const result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 console.log(`Service manifest: ${sections.manifest ? "PASS" : "FAIL"}`);
-console.log(`Local-only boundary: ${sections.localOnlyBoundary ? "PASS" : "FAIL"}`);
+console.log(`Status command: ${sections.statusCommand ? "PASS" : "FAIL"}`);
+console.log(`Doctor command: ${sections.doctorCommand ? "PASS" : "FAIL"}`);
 console.log(`Process manager: ${sections.processManager ? "PASS" : "FAIL"}`);
-console.log(`nexus:up: ${sections.nexusUp ? "PASS" : "FAIL"}`);
-console.log(`nexus:down: ${sections.nexusDown ? "PASS" : "FAIL"}`);
-console.log(`Status integration: ${sections.statusIntegration ? "PASS" : "FAIL"}`);
-console.log(`Doctor integration: ${sections.doctorIntegration ? "PASS" : "FAIL"}`);
+console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
+console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Dry run: ${sections.dryRun ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
@@ -239,12 +288,11 @@ const report = `# NEXUS Local Boot Report
 ## Checks
 
 - Service manifest: ${sections.manifest ? "PASS" : "FAIL"}
-- Local-only boundary: ${sections.localOnlyBoundary ? "PASS" : "FAIL"}
+- Status command: ${sections.statusCommand ? "PASS" : "FAIL"}
+- Doctor command: ${sections.doctorCommand ? "PASS" : "FAIL"}
 - Process manager: ${sections.processManager ? "PASS" : "FAIL"}
-- nexus:up: ${sections.nexusUp ? "PASS" : "FAIL"}
-- nexus:down: ${sections.nexusDown ? "PASS" : "FAIL"}
-- Status integration: ${sections.statusIntegration ? "PASS" : "FAIL"}
-- Doctor integration: ${sections.doctorIntegration ? "PASS" : "FAIL"}
+- Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
+- OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Dry run: ${sections.dryRun ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}

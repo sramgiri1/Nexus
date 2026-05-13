@@ -95,6 +95,7 @@ const ROUTE_ICONS = {
   agents: "◈",
   liveapi: "◎",
   database: "⬟",
+  services: "☍",
   batch: "⊞",
   cost: "$",
   roadmap: "◈",
@@ -3726,6 +3727,378 @@ function DurableStatePage({ vm }) {
   );
 }
 
+/* ─── Service Health Page ─── */
+function ServiceHealthPage({ vm }) {
+  const serviceHealth = vm.serviceHealth || {};
+  const cards = serviceHealth.cards || [];
+  const [bridgeOnline, setBridgeOnline] = useState(null);
+
+  useEffect(() => {
+    let cancelled = false;
+
+    checkActionBridgeHealth()
+      .then((result) => {
+        if (!cancelled) {
+          setBridgeOnline(Boolean(result?.online));
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setBridgeOnline(false);
+        }
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  const liveApiOnline = vm.liveApi?.liveApiOnline;
+  const sourceLabel = liveApiOnline
+    ? "service manifest + local status snapshot"
+    : serviceHealth.sourceLabel || "service manifest / status snapshot / fallback";
+
+  const resolvedCards = cards.map((card) => {
+    if (card.id === "command-center") {
+      return {
+        ...card,
+        currentStatus: "Online",
+        statusTone: "pass",
+        operatorGuidance:
+          "The Command Center shell is currently serving this page on localhost.",
+      };
+    }
+
+    if (card.id === "local-api") {
+      return {
+        ...card,
+        currentStatus: liveApiOnline ? "Online" : "Offline",
+        statusTone: liveApiOnline ? "pass" : "fail",
+      };
+    }
+
+    if (card.id === "action-bridge" && bridgeOnline !== null) {
+      return {
+        ...card,
+        currentStatus: bridgeOnline ? "Online" : "Offline",
+        statusTone: bridgeOnline ? "pass" : "fail",
+      };
+    }
+
+    return card;
+  });
+
+  const doctorSummary = serviceHealth.doctorSummary || {};
+  const bootCommands = serviceHealth.commands?.length
+    ? serviceHealth.commands
+    : [
+        "npm run nexus:up",
+        "npm run nexus:down",
+        "npm run nexus:status",
+        "npm run nexus:doctor",
+      ];
+  const troubleshootingItems = [
+    {
+      title: "Port already in use",
+      detail:
+        "Run npm run nexus:doctor to identify local port conflicts. Stop the conflicting localhost process before retrying nexus:up.",
+    },
+    {
+      title: "Local API offline",
+      detail:
+        "If the API card shows Offline, use npm run nexus:status for the current snapshot and restart the local API with nexus:up or npm run local-api:start in a terminal.",
+    },
+    {
+      title: "Action bridge offline",
+      detail:
+        "Governed actions, task activation, and implementation review remain blocked until the action bridge is healthy. Run npm run nexus:doctor and then start it from a local terminal.",
+    },
+    {
+      title: "Dashboard offline",
+      detail:
+        "If the shell is unavailable, start the Command Center with npm run nexus:up or npm run dashboard on localhost only.",
+    },
+    {
+      title: "DB writes disabled by policy",
+      detail:
+        "Durable State remains file-backed and read-only in this phase. This is a safety boundary, not a runtime failure.",
+    },
+    {
+      title: "Worker runtime not enabled yet",
+      detail:
+        "Worker Runtime, MCP Gateway, Tool access, and Provider Dispatch are future capabilities. They should appear as Not enabled or Planned, not as broken services.",
+    },
+  ];
+
+  const commandCards = bootCommands.map((command) => ({
+    command,
+    label: command.replace("npm run ", ""),
+  }));
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Service Health</div>
+          <div className="ccv2-page-head__sub">
+            Start, inspect, and troubleshoot local NEXUS services.
+          </div>
+        </div>
+
+        <div className="ccv2-card ccv2-page-summary-card">
+          <div className="ccv2-section-heading">Service Health Summary</div>
+          <div className="ccv2-page-summary-grid">
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Current mode</span>
+              <span className="ccv2-page-summary-value">
+                {serviceHealth.mode || vm.shell.mode || "unknown"}
+              </span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Source</span>
+              <span className="ccv2-page-summary-value">{sourceLabel}</span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Service manifest</span>
+              <span className="ccv2-page-summary-value">
+                {serviceHealth.manifestPath || "nexus.services.json"}
+              </span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Status snapshot</span>
+              <span className="ccv2-page-summary-value">
+                {serviceHealth.statusPath || "Run npm run nexus:status"}
+              </span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Doctor report</span>
+              <span className="ccv2-page-summary-value">
+                {serviceHealth.doctorReportPath || "Run npm run nexus:doctor"}
+              </span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Safety</span>
+              <span className="ccv2-page-summary-value">
+                localhost-only binding. External network and DB writes remain disabled.
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-stat-chips">
+          <div className="ccv2-stat-chip">
+            <span className="ccv2-stat-chip__label">Boot</span>
+            <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">
+              nexus:up available
+            </span>
+          </div>
+          <div className="ccv2-stat-chip">
+            <span className="ccv2-stat-chip__label">Shutdown</span>
+            <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">
+              nexus:down available
+            </span>
+          </div>
+          <div className="ccv2-stat-chip">
+            <span className="ccv2-stat-chip__label">Status</span>
+            <span className="ccv2-stat-chip__value ccv2-stat-chip__value--green">
+              nexus:status available
+            </span>
+          </div>
+          <div className="ccv2-stat-chip">
+            <span className="ccv2-stat-chip__label">Doctor</span>
+            <span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">
+              nexus:doctor available
+            </span>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Local Boot Summary</div>
+          <div className="ccv2-service-health__summary-list">
+            <div className="ccv2-list-row">
+              <div className="ccv2-list-row__primary">
+                <span className="ccv2-list-row__title">nexus:up</span>
+                <span className="ccv2-list-row__meta">
+                  Starts enabled localhost-only services declared in the service manifest.
+                </span>
+              </div>
+              <div className="ccv2-list-row__secondary">
+                <span className="ccv2-pill ccv2-pill--pass">Available</span>
+              </div>
+            </div>
+            <div className="ccv2-list-row">
+              <div className="ccv2-list-row__primary">
+                <span className="ccv2-list-row__title">nexus:down</span>
+                <span className="ccv2-list-row__meta">
+                  Stops only NEXUS-managed PIDs. Unmanaged local services are never killed by this command.
+                </span>
+              </div>
+              <div className="ccv2-list-row__secondary">
+                <span className="ccv2-pill ccv2-pill--pass">Available</span>
+              </div>
+            </div>
+            <div className="ccv2-list-row">
+              <div className="ccv2-list-row__primary">
+                <span className="ccv2-list-row__title">Localhost-only reminder</span>
+                <span className="ccv2-list-row__meta">
+                  All enabled services stay on 127.0.0.1 or localhost. UI execution is not enabled yet.
+                </span>
+              </div>
+              <div className="ccv2-list-row__secondary">
+                <span className="ccv2-pill ccv2-pill--disabled">localhost-only</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Service Cards</div>
+          <div className="ccv2-service-health__grid">
+            {resolvedCards.map((card) => (
+              <article key={card.id} className="ccv2-service-card">
+                <div className="ccv2-card-header-row">
+                  <div>
+                    <div className="ccv2-service-card__title">{card.label}</div>
+                    <div className="ccv2-service-card__meta">{card.id}</div>
+                  </div>
+                  <span className={`ccv2-pill ccv2-pill--${card.statusTone}`}>
+                    {card.currentStatus}
+                  </span>
+                </div>
+                <p className="ccv2-service-card__role">{card.role}</p>
+                <div className="ccv2-page-summary-grid ccv2-service-card__details">
+                  <div className="ccv2-page-summary-row">
+                    <span className="ccv2-page-summary-label">Requirement</span>
+                    <span className="ccv2-page-summary-value">{card.requiredLabel}</span>
+                  </div>
+                  <div className="ccv2-page-summary-row">
+                    <span className="ccv2-page-summary-label">Configured port</span>
+                    <span className="ccv2-page-summary-value">{card.configuredPort}</span>
+                  </div>
+                  <div className="ccv2-page-summary-row">
+                    <span className="ccv2-page-summary-label">Health URL</span>
+                    <span className="ccv2-page-summary-value">{card.healthUrl}</span>
+                  </div>
+                  <div className="ccv2-page-summary-row">
+                    <span className="ccv2-page-summary-label">Safety note</span>
+                    <span className="ccv2-page-summary-value">{card.safetyNote}</span>
+                  </div>
+                </div>
+                <div className="ccv2-service-card__guidance">
+                  <span className="ccv2-page-summary-label">Operator guidance</span>
+                  <span className="ccv2-page-summary-value">
+                    {card.operatorGuidance}
+                  </span>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Operator Commands</div>
+          <div className="ccv2-service-health__command-grid">
+            {commandCards.map((card) => (
+              <div key={card.command} className="ccv2-service-health__command-card">
+                <div className="ccv2-code-block">{card.command}</div>
+                <button
+                  type="button"
+                  className="ccv2-mission-composer__btn"
+                  disabled
+                  title="UI execution is not enabled yet. Run this command in a local terminal."
+                >
+                  <span>{card.label}</span>
+                  <span className="ccv2-mission-composer__btn-lock">⊘</span>
+                </button>
+                <div className="ccv2-service-health__command-note">
+                  UI execution is not enabled yet. Run this command in a local terminal.
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="ccv2-service-health__two-column">
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Doctor Findings</div>
+            {doctorSummary.available ? (
+              <>
+                <div className="ccv2-stat-chips">
+                  <div className="ccv2-stat-chip">
+                    <span className="ccv2-stat-chip__label">Passed checks</span>
+                    <span className="ccv2-stat-chip__value ccv2-stat-chip__value--green">
+                      {doctorSummary.passCount}
+                    </span>
+                  </div>
+                  <div className="ccv2-stat-chip">
+                    <span className="ccv2-stat-chip__label">Warnings</span>
+                    <span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">
+                      {doctorSummary.warningCount}
+                    </span>
+                  </div>
+                  <div className="ccv2-stat-chip">
+                    <span className="ccv2-stat-chip__label">Failures</span>
+                    <span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">
+                      {doctorSummary.failureCount}
+                    </span>
+                  </div>
+                </div>
+                <div className="ccv2-empty-state">
+                  Recommended fix: {doctorSummary.recommendedFix}
+                </div>
+                <div className="ccv2-service-health__findings">
+                  {(doctorSummary.warnings?.length
+                    ? doctorSummary.warnings
+                    : ["No active warnings in the current doctor snapshot."]).map((item) => (
+                    <div key={item} className="ccv2-list-row">
+                      <div className="ccv2-list-row__primary">
+                        <span className="ccv2-list-row__title">{item}</span>
+                        <span className="ccv2-list-row__meta">
+                          Refresh the doctor report any time with npm run nexus:doctor.
+                        </span>
+                      </div>
+                      <div className="ccv2-list-row__secondary">
+                        <span
+                          className={`ccv2-pill ccv2-pill--${
+                            doctorSummary.warningCount > 0 ? "pending" : "pass"
+                          }`}
+                        >
+                          {doctorSummary.warningCount > 0 ? "Warning" : "Pass"}
+                        </span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </>
+            ) : (
+              <div className="ccv2-empty-state">
+                Run npm run nexus:doctor to generate a local diagnostic report.
+              </div>
+            )}
+          </div>
+
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Troubleshooting</div>
+            <div className="ccv2-service-health__findings">
+              {troubleshootingItems.map((item) => (
+                <div key={item.title} className="ccv2-list-row">
+                  <div className="ccv2-list-row__primary">
+                    <span className="ccv2-list-row__title">{item.title}</span>
+                    <span className="ccv2-list-row__meta">{item.detail}</span>
+                  </div>
+                  <div className="ccv2-list-row__secondary">
+                    <span className="ccv2-pill ccv2-pill--disabled">Guidance</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
@@ -3913,6 +4286,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}
           {currentPage === "database" && <DurableStatePage vm={vmWithApi} />}
+          {currentPage === "services" && <ServiceHealthPage vm={vmWithApi} />}
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}

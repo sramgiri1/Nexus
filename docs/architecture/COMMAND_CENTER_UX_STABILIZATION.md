@@ -261,6 +261,28 @@ During capture, the audit verifies baseline rendered UX rules:
 
 - P41.5.6 — Usage Docs + Codebase Docs + README Finalization
 
+## P41.6.3 — Command Center Service Health UX
+
+The P41.6 local boot work now has a Command Center surface for operators.
+
+This subphase adds:
+
+- a dedicated Service Health route
+- read-only service cards for current and future local services
+- command guidance for `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor`
+- doctor findings and troubleshooting in the same UI language as the rest of Command Center
+
+The Service Health page preserves:
+
+- dark / light / system theme support
+- stale phase-label cleanup
+- public/private-safe copy
+- no browser-side service execution
+
+Next phase:
+
+- P41.6.4 — NEXUS Command Palette + Simple Operator Actions
+
 ## P41.5.6 — Usage Docs + Codebase Docs + README Finalization
 
 This subphase completes the first Command Center UX stabilization arc by adding the documentation layer around the UX work.

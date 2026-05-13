@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T10:41:13.632Z
-- Validation branch: test/command-center-screenshot-ux-audit
-- Validation HEAD: 8102725
+- Generated at: 2026-05-13T21:13:01.418Z
+- Validation branch: feat/command-center-service-health-ux
+- Validation HEAD: e87aee5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -16,6 +16,7 @@
 - Theme control: PASS
 - Mission Control layout: PASS
 - Page-specific UX: PASS
+- Service Health UX: PASS
 - Screenshot audit: PASS
 - Visual QA report: PASS
 - Sidebar labels: PASS

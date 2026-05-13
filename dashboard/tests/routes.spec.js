@@ -15,6 +15,7 @@ const PRIMARY_ROUTE_KEYS = [
   "implementation",
   "liveapi",
   "database",
+  "services",
   "evidence",
   "safety",
   "projects",
@@ -23,6 +24,11 @@ const PRIMARY_ROUTE_KEYS = [
 ];
 
 const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
+  (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
+).filter(Boolean);
+
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => key !== "services");
+const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
@@ -221,7 +227,7 @@ test.describe("Command Center route-wide UX", () => {
   test("screenshot audit script contract exists and manifest is compatible when generated", async () => {
     expect(existsSync(SCREENSHOT_AUDIT_SCRIPT)).toBe(true);
 
-    for (const route of PRIMARY_COMMAND_CENTER_ROUTES) {
+    for (const route of SCREENSHOT_AUDIT_ROUTES) {
       expect(COMMAND_CENTER_ROUTES.some((entry) => entry.path === route.path)).toBe(true);
     }
 
@@ -232,7 +238,7 @@ test.describe("Command Center route-wide UX", () => {
       expect(manifest.themes).toEqual(expect.arrayContaining(["dark", "light"]));
       expect(Array.isArray(manifest.routes)).toBe(true);
 
-      for (const route of PRIMARY_COMMAND_CENTER_ROUTES) {
+      for (const route of SCREENSHOT_AUDIT_ROUTES) {
         expect(manifest.routes.some((entry) => entry.path === route.path)).toBe(true);
       }
     }
@@ -320,6 +326,33 @@ test.describe("Command Center route-wide UX", () => {
       await expect(page.getByRole("link", { name: new RegExp(route.name, "i") }).first()).toBeVisible();
       await expect(page.locator(".ccv2-page-head__title").first()).toContainText(route.expectedHeading);
     }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Service Health route renders with operator guidance and service cards", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/services");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Service Health");
+    await expect(page.locator("body")).toContainText(
+      "Start, inspect, and troubleshoot local NEXUS services.",
+    );
+    await expect(page.locator("body")).toContainText("Command Center");
+    await expect(page.locator("body")).toContainText("Live Local API");
+    await expect(page.locator("body")).toContainText("Governed Action Bridge");
+    await expect(page.locator("body")).toContainText(/Durable State Foundation|DB Foundation/);
+    await expect(page.locator("body")).toContainText("Worker Runtime");
+    await expect(page.locator("body")).toContainText(/MCP Gateway|Tool\/MCP Gateway/);
+    await expect(page.locator("body")).toContainText("npm run nexus:up");
+    await expect(page.locator("body")).toContainText("npm run nexus:down");
+    await expect(page.locator("body")).toContainText("npm run nexus:status");
+    await expect(page.locator("body")).toContainText("npm run nexus:doctor");
+    await expect(page.locator("body")).toContainText("Run this command in a local terminal");
+    await expect(page.locator("body")).toContainText("Port already in use");
+    await expect(page.locator("body")).toContainText("Local API offline");
+    await expect(page.locator("body")).toContainText("Action bridge offline");
 
     expect(errors).toEqual([]);
   });
@@ -468,7 +501,7 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
+    for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4"]) {
       expect(body).toContain(phase);
     }
     for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
@@ -489,6 +522,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await expect(page.locator("body")).toContainText("P41");
+    await expect(page.locator("body")).toContainText("P41.6.3");
 
     expect(errors).toEqual([]);
   });
@@ -598,6 +632,28 @@ test.describe("Command Center route-wide UX", () => {
       await expect(page.getByText(label, { exact: false }).first()).toBeVisible();
     }
     expect(await page.locator("body").innerText()).not.toContain("P40-LOCAL");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("service health route renders in dark and light themes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/services");
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Service Health");
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.locator("body")).toContainText("Doctor Findings");
+
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Service Health");
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.locator("body")).toContainText("Troubleshooting");
+
+    const body = await page.locator("body").innerText();
+    for (const label of FORBIDDEN_PHASE_LABELS) {
+      expect(body).not.toContain(label);
+    }
 
     expect(errors).toEqual([]);
   });

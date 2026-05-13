@@ -2,8 +2,7 @@
 
 ## Current Local Run Model
 
-NEXUS currently runs as a set of local services and validation scripts. P41.6.2 adds one-command local boot and shutdown for the current enabled service set.
-Earlier docs described this as “Unified boot is planned for P41.6”; P41.6.2 is the first concrete delivery of that plan.
+NEXUS currently runs as a set of local services and validation scripts. P41.6.2 adds one-command local boot and shutdown for the current enabled service set, and P41.6.3 adds a Command Center Service Health page for read-only operator visibility.
 
 ## Available Commands
 
@@ -19,6 +18,21 @@ From `package.json`:
 - Screenshot audit: `npm run command-center:screenshot-audit`
 
 You can also inspect `package.json` directly for the latest supported commands.
+
+## Service Health Page
+
+Open:
+
+- `/command-center/services`
+
+The Service Health route explains:
+
+- what each local service does
+- which services are online, offline, disabled, or planned
+- which commands to run in a terminal
+- current doctor findings and troubleshooting guidance
+
+This page is read-only. UI execution for service commands is not enabled yet.
 
 ## Current Service Posture
 
@@ -41,6 +55,28 @@ P41.6.2 adds:
 `nexus:down` stops only NEXUS-managed PIDs.
 `nexus:status` and `nexus:doctor` remain read-focused inspection commands.
 
+### Command Center Service Health (P41.6.3)
+
+P41.6.3 adds a Service Health route to Command Center so operators can inspect:
+
+- Command Center dashboard
+- Live Local API
+- Governed Action Bridge
+- Durable State Foundation
+- Worker Runtime placeholder
+- MCP / Tool gateway placeholder
+- Provider Dispatch placeholder
+- Batch Jobs placeholder
+
+Use it to understand whether a service is:
+
+- Online
+- Offline
+- Disabled by policy
+- Not enabled
+- Planned
+- Unknown
+
 ### How To Read Status Output
 
 - `running, managed PID ...`: started by NEXUS and tracked in local service state
@@ -50,7 +86,7 @@ P41.6.2 adds:
 
 ### What Comes Next
 
-- service health UI in Command Center is planned for P41.6.3
+- command palette and simple operator actions are planned for P41.6.4
 
 ## Durable State Status
 
@@ -71,6 +107,9 @@ P41.6.2 adds:
 - `nexus:doctor` fails: verify required scripts exist in `package.json`, the service-state directory is writable, and localhost ports are valid
 - If a required port is already in use by an unhealthy process, stop that process or pick a different local environment before retrying `nexus:up`
 - Disabled-by-design services in this phase include workers, MCP Gateway, and Provider Gateway
+- Service Health shows `Unknown`: refresh local service artifacts with `npm run nexus:status`
+- Service Health shows `Offline`: run `npm run nexus:doctor`, then start or restart the service from a local terminal
+- Service Health command buttons are disabled: this is expected; browser-side service execution is not enabled yet
 
 ## Notes
 

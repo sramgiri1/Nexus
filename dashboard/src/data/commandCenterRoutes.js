@@ -156,6 +156,17 @@ export const COMMAND_CENTER_ROUTES = [
     helpDoc: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
   },
   {
+    key: "services",
+    path: "/command-center/services",
+    name: "Service Health",
+    section: "PLATFORM",
+    allowPhaseLabels: false,
+    expectedHeading: "Service Health",
+    status: "implemented",
+    badge: "Ready",
+    helpDoc: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
+  },
+  {
     key: "batch",
     path: "/command-center/batch",
     name: "Batch Queue",

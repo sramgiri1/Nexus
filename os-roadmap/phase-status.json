@@ -1,0 +1,74 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-05-13T21:45:00.000Z",
+  "phases": [
+    {
+      "phaseId": "P41.6.1",
+      "title": "Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor",
+      "status": "COMPLETE",
+      "branch": "feat/nexus-service-manifest-status-doctor",
+      "commit": "889a8fc",
+      "summary": "Introduced the service manifest plus read-only nexus:status and nexus:doctor commands.",
+      "checksRun": [
+        "npm run nexus:status",
+        "npm run nexus:doctor",
+        "npm run check:nexus-service-orchestration"
+      ],
+      "knownLimitations": [
+        "No process management in this phase."
+      ],
+      "nextPhase": "P41.6.2",
+      "commandCenterVisible": false
+    },
+    {
+      "phaseId": "P41.6.2",
+      "title": "Unified NEXUS Local Boot Process Manager",
+      "status": "COMPLETE",
+      "branch": "feat/nexus-local-boot-process-manager",
+      "commit": "e87aee5",
+      "summary": "Added nexus:up and nexus:down with localhost-only process management and managed PID tracking.",
+      "checksRun": [
+        "npm run check:nexus-local-boot",
+        "npm run nexus:doctor",
+        "npm run nexus:status",
+        "npm run nexus:up -- --dry-run"
+      ],
+      "knownLimitations": [
+        "Service health UI was deferred to P41.6.3."
+      ],
+      "nextPhase": "P41.6.3",
+      "commandCenterVisible": false
+    },
+    {
+      "phaseId": "P41.6.3",
+      "title": "Command Center Service Health UX",
+      "status": "COMPLETE",
+      "branch": "feat/command-center-service-health-ux",
+      "commit": "pending-final-commit",
+      "summary": "Adds a read-only Service Health route with service cards, command guidance, doctor findings, and troubleshooting.",
+      "checksRun": [
+        "npm run check:nexus-local-boot",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "UI execution of nexus:up, nexus:down, nexus:status, and nexus:doctor is not enabled yet.",
+        "check:public-safety still has known pre-existing roadmap false positives."
+      ],
+      "nextPhase": "P41.6.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.6.4",
+      "title": "NEXUS Command Palette + Simple Operator Actions",
+      "status": "PLANNED",
+      "branch": "",
+      "commit": "",
+      "summary": "Planned next phase for simple operator actions after Service Health visibility is complete.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "",
+      "commandCenterVisible": false
+    }
+  ]
+}

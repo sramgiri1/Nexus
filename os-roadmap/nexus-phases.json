@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "phases": [
+    {
+      "phaseId": "P41.6.1",
+      "title": "Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor"
+    },
+    {
+      "phaseId": "P41.6.2",
+      "title": "Unified NEXUS Local Boot Process Manager"
+    },
+    {
+      "phaseId": "P41.6.3",
+      "title": "Command Center Service Health UX"
+    },
+    {
+      "phaseId": "P41.6.4",
+      "title": "NEXUS Command Palette + Simple Operator Actions"
+    }
+  ]
+}

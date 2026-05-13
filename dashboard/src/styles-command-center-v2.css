@@ -2016,6 +2016,18 @@
   color: var(--nexus-text-strong);
 }
 
+.ccv2-code-block {
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--v2-border);
+  background: var(--nexus-code-bg);
+  color: var(--v2-text);
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+  font-size: 11px;
+  line-height: 1.5;
+  overflow-x: auto;
+}
+
 .ccv2-empty-state {
   padding: 14px 0 4px;
   font-size: 12px;
@@ -2064,6 +2076,85 @@
 .ccv2-list-row__detail {
   font-size: 10px;
   color: var(--v2-muted-2);
+}
+
+.ccv2-service-health__summary-list,
+.ccv2-service-health__findings {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ccv2-service-health__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ccv2-service-card {
+  padding: 14px;
+  border: 1px solid var(--v2-border);
+  border-radius: 12px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ccv2-service-card__title {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-service-card__meta {
+  font-size: 11px;
+  color: var(--nexus-muted);
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+}
+
+.ccv2-service-card__role {
+  margin: 0;
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--nexus-text);
+}
+
+.ccv2-service-card__guidance {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.ccv2-service-health__command-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+  margin-top: 10px;
+}
+
+.ccv2-service-health__command-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px;
+  border: 1px solid var(--v2-border);
+  border-radius: 10px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+}
+
+.ccv2-service-health__command-note {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--nexus-muted);
+}
+
+.ccv2-service-health__two-column {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
 }
 
 .ccv2-safety-approval-grid,
@@ -2269,7 +2360,10 @@
   .ccv2-page-summary-grid,
   .ccv2-state-summary-grid,
   .ccv2-wb-task-summary,
-  .ccv2-two-col {
+  .ccv2-two-col,
+  .ccv2-service-health__grid,
+  .ccv2-service-health__command-grid,
+  .ccv2-service-health__two-column {
     grid-template-columns: 1fr;
   }
 

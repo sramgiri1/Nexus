@@ -1,5 +1,81 @@
 import { CAPABILITY_READINESS } from "./capabilityReadiness.js";
 import { buildWorkspaceSummary } from "../../../workspace/workflowRecommendations.js";
+import serviceManifest from "../../../nexus.services.json";
+import serviceState from "../../../local-state/runtime/services/service-state.json";
+import doctorReport from "../../../reports/nexus-doctor-report.json";
+
+const SERVICE_ROLE_COPY = {
+  "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
+  "local-api": "Read-only local API for live task, evidence, project, and durable-state summaries.",
+  "action-bridge": "Governed action endpoint for mission, task, workbench, and implementation actions.",
+  db: "Durable State foundation while runtime remains file-backed and DB writes stay disabled.",
+  workers: "Future worker runtime for governed background execution once intentionally enabled.",
+  "mcp-gateway": "Planned MCP and tool access boundary for future governed integrations.",
+  "provider-gateway": "Planned provider dispatch boundary. Provider execution remains disabled in this phase.",
+  "batch-jobs": "Future batch execution surface for scheduled or deferred governed jobs.",
+};
+
+const SERVICE_DISPLAY_LABELS = {
+  "mcp-gateway": "Tool/MCP Gateway",
+  "provider-gateway": "Provider Dispatch",
+};
+
+const SERVICE_GUIDANCE = {
+  "command-center": "Use npm run nexus:up to start the Command Center, or npm run nexus:status to confirm current local service state.",
+  "local-api": "Use npm run nexus:status for the current snapshot. If the API is offline, run npm run nexus:up or npm run local-api:start in a local terminal.",
+  "action-bridge": "Run npm run nexus:doctor if actions remain offline, then start the bridge with npm run nexus:up or npm run mission:action-server in a local terminal.",
+  db: "DB writes remain disabled by policy. Use file-backed state and Durable State inspection until a governed DB write phase is delivered.",
+  workers: "Worker runtime is intentionally not enabled yet. No governed background execution is available in this phase.",
+  "mcp-gateway": "MCP and tool gateways remain planned. They are represented here so operators can distinguish planned services from failures.",
+  "provider-gateway": "Provider dispatch is intentionally disabled. No provider-backed execution can be started from NEXUS right now.",
+  "batch-jobs": "Batch jobs remain a future platform capability. Use Task Queue and Mission Control for current operator work.",
+};
+
+function getServiceStateEntry(serviceId) {
+  return serviceState?.services?.find((entry) => entry.id === serviceId) || null;
+}
+
+function deriveConfiguredServiceStatus(service) {
+  if (!service) {
+    return { value: "Unknown", tone: "disabled" };
+  }
+
+  if (service.enabled === false) {
+    if (service.currentPhaseBehavior === "file_backed_read_only") {
+      return { value: "Disabled by policy", tone: "disabled" };
+    }
+    return { value: "Not enabled", tone: "disabled" };
+  }
+
+  const state = getServiceStateEntry(service.id);
+  if (state?.status === "running") return { value: "Running", tone: "pass" };
+  if (state?.status === "starting") return { value: "Starting", tone: "pending" };
+  if (state?.status === "failed") return { value: "Offline", tone: "fail" };
+  if (state?.status === "stopped") return { value: "Offline", tone: "fail" };
+  return { value: "Unknown", tone: "disabled" };
+}
+
+function buildServiceCard(service) {
+  const status = deriveConfiguredServiceStatus(service);
+
+  return {
+    id: service.id,
+    label: SERVICE_DISPLAY_LABELS[service.id] || service.label,
+    role: SERVICE_ROLE_COPY[service.id] || "Local NEXUS service",
+    requiredLabel: service.required ? "Required" : "Optional",
+    configuredPort: service.port ?? "Not applicable",
+    healthUrl: service.healthUrl || "Not applicable",
+    currentStatus: status.value,
+    statusTone: status.tone,
+    operatorGuidance:
+      SERVICE_GUIDANCE[service.id]
+      || "Run npm run nexus:status for the latest local service snapshot.",
+    safetyNote:
+      service.externalNetworkAllowed === false
+        ? "Localhost-only. External network disabled."
+        : "Inspect service policy before use.",
+  };
+}
 
 export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const pvStatus = pvSnapshot?.status || {};
@@ -48,6 +124,31 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     missionId: "private-project-governed-build-mission",
     prdGaps: ["Physical device push (open)"],
   });
+  const manifestServices = Array.isArray(serviceManifest?.services)
+    ? serviceManifest.services
+    : [];
+  const configuredServiceCards = manifestServices.map(buildServiceCard);
+  const batchJobsCard = {
+    id: "batch-jobs",
+    label: "Batch Jobs",
+    role: SERVICE_ROLE_COPY["batch-jobs"],
+    requiredLabel: "Optional",
+    configuredPort: "Not applicable",
+    healthUrl: "Not applicable",
+    currentStatus: "Planned",
+    statusTone: "disabled",
+    operatorGuidance: SERVICE_GUIDANCE["batch-jobs"],
+    safetyNote: "Planned capability. No UI or runtime execution is enabled yet.",
+  };
+  const doctorChecks = Object.values(doctorReport?.checks || {});
+  const doctorWarnings = Array.isArray(doctorReport?.warnings)
+    ? doctorReport.warnings
+    : [];
+  const doctorFailures = Array.isArray(doctorReport?.errors)
+    ? doctorReport.errors
+    : [];
+  const doctorPassCount = doctorChecks.filter((entry) => entry?.ok).length;
+  const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
 
   return {
     shell: {
@@ -257,6 +358,32 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         description: "Run `NEXUS_MODE=local-private npm run local-api:start` to enable live data for Command Center.",
         enabled: true,
         action: "shell:npm run local-api:start",
+      },
+    },
+    serviceHealth: {
+      mode: "local-private",
+      sourceLabel: "service manifest + status snapshot",
+      manifestPath: "nexus.services.json",
+      statusPath: "local-state/runtime/services/service-state.json",
+      doctorReportPath: "reports/nexus-doctor-report.json",
+      commands: [
+        "npm run nexus:up",
+        "npm run nexus:down",
+        "npm run nexus:status",
+        "npm run nexus:doctor",
+      ],
+      cards: [...configuredServiceCards, batchJobsCard],
+      doctorSummary: {
+        available: Boolean(doctorReport?.checks),
+        passCount: doctorPassCount,
+        warningCount: doctorWarnings.length,
+        failureCount: doctorFailureCount,
+        warnings: doctorWarnings,
+        failures: doctorFailures,
+        recommendedFix:
+          doctorWarnings[0]
+          || doctorFailures[0]
+          || "Run npm run nexus:doctor to refresh diagnostics.",
       },
     },
     capabilityReadiness: CAPABILITY_READINESS,

@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.5
+## Current Status Through P41.6.3
 
-P41.5 is now complete. The Command Center surface has:
+P41.5 is complete, and P41.6.1 through P41.6.3 are now in place. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -41,6 +41,9 @@ P41.5 is now complete. The Command Center surface has:
 - Mission Control enterprise cockpit layout
 - page-specific UX cleanup across major routes
 - route-wide screenshot and visual QA audit under `reports/ui-audit/`
+- service manifest, status, and doctor foundation
+- localhost-only one-command local boot and shutdown
+- a read-only Service Health route for operator guidance
 
 ## Command Center Overview
 
@@ -72,14 +75,13 @@ Command Center is the current operator surface for:
 
 ## What Is Not Enabled Yet
 
-- unified boot
 - worker runtime
 - governed provider dispatch
 - DB-backed runtime writes
 - release/deploy action bridge
 - broad autonomous source mutation
 
-Unified boot is planned for P41.6. Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
+Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
 
 ## Local boot commands
 
@@ -92,6 +94,8 @@ manifest foundation:
 - `npm run nexus:doctor`
 
 Services remain local/private, localhost-only, and DB writes remain disabled.
+
+Command Center now includes a read-only **Service Health** route at `/command-center/services` so operators can inspect service state, doctor findings, and troubleshooting guidance without executing services from the UI.
 
 ## Local Development and Running Current Services
 
@@ -136,6 +140,7 @@ Public-facing README sections use “private project” wording. Private-project
 
 - P41.5: Command Center UX, theme, screenshot audit, and docs finalization
 - P41.6: Unified NEXUS Local Boot / Service Orchestration
+- P41.6.4: Command palette + simple operator actions
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 
