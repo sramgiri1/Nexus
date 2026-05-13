@@ -100,7 +100,7 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Workspace/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
   await expect(page.locator(".ccv2-page-head__title")).toContainText("Mission Control");
-  await expect(page.getByText("Start a Mission")).toBeVisible();
+  await expect(page.locator("#v2-mission-hero")).toBeVisible();
   await expect(page.locator(".nav-rail")).toHaveCount(0);
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
@@ -331,6 +331,92 @@ test.describe("Command Center route-wide UX", () => {
           expect(body).not.toContain(label);
         }
       }
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control renders enterprise cockpit sections", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    for (const section of [
+      "Mission Control",
+      "Next Best Action",
+      "System Status",
+      "Execution Pipeline",
+      "Activity Stream",
+      "Verification Gates",
+      "Active Mission Tasks",
+      "Project Progress",
+      "Evidence Timeline",
+      "Safety / Approval",
+      "Release Readiness",
+      "Cost Snapshot",
+    ]) {
+      await expect(page.getByText(section, { exact: false }).first()).toBeVisible();
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Hero shows mission, scope, actions, and disabled reasons", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    const missionHero = page.locator("#v2-mission-hero");
+
+    await expect(missionHero).toBeVisible();
+    await expect(
+      missionHero.getByText("enterprise command surface for governed agentic work", { exact: false }),
+    ).toBeVisible();
+    await expect(missionHero.getByText("Active Project", { exact: false }).first()).toBeVisible();
+    await expect(missionHero.getByText("Active Mission", { exact: false }).first()).toBeVisible();
+    await expect(missionHero.getByRole("button", { name: /Generate Plan/i })).toBeVisible();
+    await expect(missionHero.getByRole("button", { name: /Create Project Brief/i })).toBeVisible();
+    await expect(missionHero.getByRole("button", { name: /Start Governed Run/i })).toBeVisible();
+    await expect(page.locator("#v2-mission-hero")).toContainText(/Requires governed action bridge|mission:action-server/);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control status strip shows key platform states", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    const statusStrip = page.locator("#v2-system-status");
+    await expect(statusStrip).toBeVisible();
+    await expect(statusStrip).toContainText("Local API");
+    await expect(statusStrip).toContainText("Durable State");
+    await expect(statusStrip).toContainText("DB Writes");
+    await expect(statusStrip).toContainText("Disabled by policy");
+    await expect(statusStrip).toContainText("Worker Runtime");
+    await expect(statusStrip).toContainText(/Not enabled|Requires worker runtime/);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control renders in dark and light themes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await pickTheme(page, "dark");
+    await expect(page.locator("#v2-mission-hero")).toBeVisible();
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.locator("#v2-next-best-action")).toBeVisible();
+    await expect(page.locator("#v2-execution-pipeline")).toBeVisible();
+
+    await pickTheme(page, "light");
+    await expect(page.locator("#v2-mission-hero")).toBeVisible();
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.locator("#v2-activity-stream")).toBeVisible();
+
+    const body = await page.locator("body").innerText();
+    for (const label of FORBIDDEN_PHASE_LABELS) {
+      expect(body).not.toContain(label);
     }
 
     expect(errors).toEqual([]);

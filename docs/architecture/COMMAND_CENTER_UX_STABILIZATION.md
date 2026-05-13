@@ -99,3 +99,48 @@ Playwright coverage now validates:
 Next subphase:
 
 - P41.5.3 — Mission Control Enterprise Dashboard Layout
+
+## P41.5.3 — Mission Control Enterprise Dashboard Layout
+
+Mission Control now acts as the primary NEXUS enterprise cockpit rather than a loose collection of cards.
+
+The cockpit includes:
+
+- Mission Hero
+- Next Best Action
+- System Status
+- KPI Cards
+- Execution Pipeline
+- Activity Stream
+- Verification Gates
+- Active Mission Tasks
+- Project Progress
+- Evidence Timeline
+- Safety / Approval
+- Release Readiness
+- Cost Snapshot
+
+### Data Honesty Rule
+
+Mission Control must use existing view-model, runtime snapshot, and local report data where available. If a source is not available yet, the UI must show a clear empty state or “not enabled yet” message instead of inventing precise runtime numbers.
+
+### Theme Compatibility
+
+Mission Control uses the shared `--nexus-*` tokens from P41.5.2 and must remain readable in:
+
+- System
+- Dark
+- Light
+
+### Copy Rules
+
+Mission Control primary UX does not reintroduce stale phase labels such as:
+
+- Requires P37 / P38 / P39 / P40 / P41
+- P38-LOCAL / P39-LOCAL / P40-LOCAL / P41-LOCAL
+
+OS Roadmap remains the only Command Center route where roadmap phase labels are expected.
+
+### Next Subphase
+
+- P41.5.4 — Page-Specific UX Cleanup for Agent Workbench, Implementation, Live API, Durable State, Workspace, and related routes

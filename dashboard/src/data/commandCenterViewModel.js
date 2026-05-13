@@ -6,6 +6,28 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};
   const pvGovernance = pvSnapshot?.governance || {};
+  const runtimeSnapshot = studio.runtimeSnapshot || {};
+  const runtimeState = runtimeSnapshot.runtimeState || {};
+  const runtimeTasks = runtimeState.tasks || {};
+  const runtimeEvidence = runtimeState.evidence || {};
+  const runtimeIncidents = runtimeState.incidents || {};
+  const runtimeApprovals =
+    studio.localReports?.approvalWorkflow
+    || runtimeSnapshot.approvalWorkflow
+    || {};
+  const runtimeTaskStates = runtimeTasks.byState || {};
+  const gateStatuses = { AUDITOR: "PASS", SENTINEL: "PENDING", WARDEN: "PASS" };
+  const gatePassCount = Object.values(gateStatuses).filter((status) => status === "PASS").length;
+  const activeTaskCount =
+    (runtimeTaskStates.queued || 0)
+    + (runtimeTaskStates.running || 0)
+    + (runtimeTaskStates.awaiting_verification || 0)
+    + (runtimeTaskStates.implementation_done || 0);
+  const blockedTaskCount =
+    (runtimeTaskStates.blocked || 0)
+    + (runtimeTaskStates.awaiting_approval || 0);
+  const activeAgentCount = studio.currentLoad?.length || 0;
+  const totalAgentCount = studio.agentEntries?.length || AGENT_DIRECTORY.length;
   const workspaceSummary = buildWorkspaceSummary({
     missionExists: true,
     taskPlanExists: true,
@@ -54,7 +76,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       sprintProgress: studio.gateProgress || 62,
       releaseStatus: "NO-GO",
       releaseBlocker: "SENTINEL gate pending · approval evidence missing",
-      gates: { AUDITOR: "PASS", SENTINEL: "PENDING", WARDEN: "PASS" },
+      gates: gateStatuses,
     },
     pipeline: {
       queued: studio.pendingQueue?.length ?? 2,
@@ -64,12 +86,42 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       done: 3,
     },
     metrics: [
-      { label: "Active Tasks", value: String((studio.pendingQueue?.length ?? 0) + (studio.runningQueue?.length ?? 0) || 5), delta: "+8 last hr", tone: "blue" },
-      { label: "Blocked", value: String(studio.statusCounts?.blocked || 1), delta: "+1", tone: "red" },
-      { label: "Gate Pass Rate", value: `${studio.gateProgress || 67}%`, delta: "+2.1 wk", tone: "amber" },
-      { label: "Agent Utilization", value: "74%", delta: "▾ -3", tone: "blue" },
-      { label: "Approval Backlog", value: "3", delta: "- 1 high-risk", tone: "amber" },
-      { label: "Safety Incidents", value: "0", delta: "~ 140 clean", tone: "green" },
+      {
+        label: "Active Tasks",
+        value: String(activeTaskCount),
+        delta: activeTaskCount > 0 ? `${activeTaskCount} in governed runtime` : "No activated tasks yet",
+        tone: "blue",
+      },
+      {
+        label: "Blocked",
+        value: String(blockedTaskCount),
+        delta: blockedTaskCount > 0 ? "Needs review or approval" : "No active blockers",
+        tone: "red",
+      },
+      {
+        label: "Gate Pass Rate",
+        value: `${Math.round((gatePassCount / Object.keys(gateStatuses).length) * 100)}%`,
+        delta: `${gatePassCount}/${Object.keys(gateStatuses).length} verification gates passing`,
+        tone: "amber",
+      },
+      {
+        label: "Agent Utilization",
+        value: activeAgentCount > 0 ? `${activeAgentCount}/${totalAgentCount}` : "Not available yet",
+        delta: activeAgentCount > 0 ? `${activeAgentCount} agents engaged` : "Runtime engagement required",
+        tone: "blue",
+      },
+      {
+        label: "Approval Backlog",
+        value: String(runtimeApprovals.requested || 0),
+        delta: runtimeApprovals.requested > 0 ? `${runtimeApprovals.requested} awaiting decision` : "No pending approvals",
+        tone: "amber",
+      },
+      {
+        label: "Safety Incidents",
+        value: String(runtimeIncidents.total || 0),
+        delta: (runtimeIncidents.total || 0) > 0 ? `${runtimeIncidents.total} incidents open` : "No incidents reported",
+        tone: "green",
+      },
     ],
     activity: [
       { time: "09:47", agent: "SENTINEL", text: "verified synthetic E2E suite passed", status: "done" },

@@ -260,6 +260,42 @@ function MissionComposerCard({ vm }) {
   const [actionState, setActionState] = useState("idle"); // idle | running | completed | failed | offline
   const [actionResult, setActionResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const isLocalPrivate = vm.shell.mode === "local-private";
+  const activeScopeLabel = isLocalPrivate ? "Active Project" : "NEXUS OS";
+  const activeMissionRaw = vm.agenticWorkspace?.activeMission || vm.taskActivation?.missionId || vm.mission.sprintId;
+  const activeMission = typeof activeMissionRaw === "string"
+    ? activeMissionRaw
+    : activeMissionRaw?.id || activeMissionRaw?.name || activeMissionRaw?.title || vm.mission.sprintId;
+  const sourceLabel = vm.liveApi?.liveApiOnline
+    ? "Live local API"
+    : vm.dbFoundation?.fileFallbackRequired
+      ? "Snapshot fallback"
+      : "File-backed";
+  const actionButtons = [
+    {
+      id: "generate-plan",
+      label: actionState === "running" ? "Generating…" : "Generate Plan",
+      enabled: missionText.trim().length > 0 && bridgeOnline && actionState !== "running",
+      reason: missionText.trim().length === 0
+        ? "Provide mission intent to generate a plan"
+        : bridgeOnline
+          ? "Available"
+          : "Requires governed action bridge",
+      onClick: handleGeneratePlan,
+    },
+    {
+      id: "create-project-brief",
+      label: "Create Project Brief",
+      enabled: false,
+      reason: mc.buttons?.[1]?.reason || "Requires governed action bridge",
+    },
+    {
+      id: "start-governed-run",
+      label: "Start Governed Run",
+      enabled: false,
+      reason: mc.buttons?.[2]?.reason || "Requires worker runtime",
+    },
+  ];
 
   // Check bridge health on mount
   useEffect(() => {
@@ -291,84 +327,134 @@ function MissionComposerCard({ vm }) {
   }
 
   return (
-    <div className="ccv2-card ccv2-card--strong">
-      <div className="ccv2-mission-composer">
+    <section className="ccv2-card ccv2-card--strong ccv2-mission-cockpit" id="v2-mission-hero">
+      <div className="ccv2-mission-cockpit__header">
         <div>
-          <div className="ccv2-eyebrow">Founder · {new Date().toLocaleDateString("en-US", { month: "short", day: "2-digit", year: "numeric" })}</div>
-          <h2 className="ccv2-mission-composer__title">{mc.title}</h2>
-          <p className="ccv2-mission-composer__subtitle">{mc.subtitle}</p>
+          <div className="ccv2-eyebrow">Mission Hero</div>
+          <h2 className="ccv2-mission-cockpit__title">Mission Control</h2>
+          <p className="ccv2-mission-cockpit__subtitle">
+            enterprise command surface for governed agentic work
+          </p>
         </div>
-
-        <textarea
-          className="ccv2-mission-composer__textarea"
-          value={missionText}
-          onChange={(e) => setMissionText(e.target.value)}
-          placeholder={mc.placeholder}
-          rows={3}
-        />
-
-        <div className="ccv2-badge ccv2-badge--teal" style={{ display: "inline-flex", alignSelf: "flex-start" }}>
-          ACTIVE PROJECT · {vm.shell.activeProject.toUpperCase()}
-        </div>
-
-        <div className="ccv2-mission-composer__actions">
-          <button
-            key="Generate Plan"
-            className={`ccv2-mission-composer__btn${canGenerate ? " ccv2-mission-composer__btn--enabled" : ""}`}
-            disabled={!canGenerate}
-            onClick={handleGeneratePlan}
-          >
-            <span>{actionState === "running" ? "Generating…" : "Generate Plan"}</span>
-            {!canGenerate && <span className="ccv2-mission-composer__btn-lock">⊘</span>}
-            {canGenerate && <span className="ccv2-mission-composer__btn-lock">→</span>}
-          </button>
-          <button key="Create Project Brief" className="ccv2-mission-composer__btn" disabled>
-            <span>Create Project Brief</span>
-            <span className="ccv2-mission-composer__btn-lock">⊘</span>
-          </button>
-          <button key="Start Governed Run" className="ccv2-mission-composer__btn" disabled>
-            <span>Start Governed Run</span>
-            <span className="ccv2-mission-composer__btn-lock">⊘</span>
-          </button>
-        </div>
-
-        {actionState === "running" && (
-          <div className="ccv2-mc-status ccv2-mc-status--running">
-            ◎ Generating governed mission plan…
-          </div>
-        )}
-        {actionState === "completed" && actionResult && (
-          <div className="ccv2-mc-status ccv2-mc-status--completed">
-            ✓ Mission plan generated
-            <div className="ccv2-mc-result">
-              <div>Contract: {actionResult.result?.missionContractPath || "contracts/missions/private-project-mission-contract.json"}</div>
-              <div>Task plan: {actionResult.result?.taskPlanPath || "contracts/missions/private-project-task-plan.json"}</div>
-              <div>Tasks created: {actionResult.result?.tasksCreated ?? 6}</div>
-            </div>
-          </div>
-        )}
-        {actionState === "failed" && (
-          <div className="ccv2-mc-status ccv2-mc-status--failed">
-            ✗ {errorMsg || "Plan generation failed."}
-          </div>
-        )}
-        {actionState === "offline" && (
-          <div className="ccv2-mc-status ccv2-mc-status--offline">
-            ⊘ Mission action bridge offline. Run: npm run mission:action-server
-          </div>
-        )}
-        {!bridgeOnline && actionState === "idle" && (
-          <div className="ccv2-mc-status ccv2-mc-status--offline">
-            ⊘ Action bridge offline — buttons require: npm run mission:action-server
-          </div>
-        )}
-
-        <div className="ccv2-mission-composer__gate-note">
-          <span className="ccv2-mission-composer__gate-icon">⚠</span>
-          Requires governed action bridge
+        <div className="ccv2-mission-cockpit__badges">
+          <span className="ccv2-badge ccv2-badge--teal">{activeScopeLabel}</span>
+          <span className="ccv2-badge">{vm.shell.activeProject}</span>
+          <span className="ccv2-badge ccv2-badge--blue">{vm.shell.mode}</span>
+          <span className={`ccv2-badge ${vm.liveApi?.liveApiOnline ? "ccv2-badge--green" : ""}`}>
+            {sourceLabel}
+          </span>
         </div>
       </div>
-    </div>
+
+      <div className="ccv2-mission-cockpit__summary-grid">
+        <div className="ccv2-mission-cockpit__summary-cell">
+          <span className="ccv2-mission-cockpit__summary-label">{activeScopeLabel}</span>
+          <span className="ccv2-mission-cockpit__summary-value">{vm.shell.activeProject}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__summary-cell">
+          <span className="ccv2-mission-cockpit__summary-label">Active Mission</span>
+          <span className="ccv2-mission-cockpit__summary-value">{activeMission}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__summary-cell">
+          <span className="ccv2-mission-cockpit__summary-label">Mission Lead</span>
+          <span className="ccv2-mission-cockpit__summary-value">{vm.mission.lead}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__summary-cell">
+          <span className="ccv2-mission-cockpit__summary-label">Source</span>
+          <span className="ccv2-mission-cockpit__summary-value">{sourceLabel}</span>
+        </div>
+      </div>
+
+      <div className="ccv2-mission-cockpit__body">
+        <div className="ccv2-mission-cockpit__narrative">
+          <div className="ccv2-mission-cockpit__intent-label">Mission Intent</div>
+          <p className="ccv2-mission-cockpit__intent">{vm.mission.founderIntent}</p>
+          <blockquote className="ccv2-mission-cockpit__quote">{vm.mission.quote}</blockquote>
+
+          <label className="ccv2-mission-cockpit__prompt-label" htmlFor="mission-control-text">
+            Governed mission prompt
+          </label>
+          <textarea
+            id="mission-control-text"
+            className="ccv2-mission-composer__textarea"
+            value={missionText}
+            onChange={(e) => setMissionText(e.target.value)}
+            placeholder={mc.placeholder}
+            rows={4}
+          />
+
+          <div className="ccv2-mission-cockpit__mission-meta">
+            <span className="ccv2-pill ccv2-pill--pass">{vm.mission.sprintId}</span>
+            <span className="ccv2-pill ccv2-pill--pending">{vm.mission.sprintDay}</span>
+            <span className="ccv2-pill ccv2-pill--disabled">
+              {vm.liveApi?.liveApiOnline ? "Available" : "Requires governed action bridge"}
+            </span>
+          </div>
+        </div>
+
+        <div className="ccv2-mission-cockpit__actions">
+          <div className="ccv2-mission-cockpit__actions-heading">Primary Actions</div>
+          <div className="ccv2-mission-cockpit__action-list">
+            {actionButtons.map((button) => (
+              <div key={button.id} className="ccv2-mission-cockpit__action-row">
+                <button
+                  type="button"
+                  className={`ccv2-mission-composer__btn${button.enabled ? " ccv2-mission-composer__btn--enabled" : ""}`}
+                  disabled={!button.enabled}
+                  onClick={button.enabled ? button.onClick : undefined}
+                >
+                  <span>{button.label}</span>
+                  <span className="ccv2-mission-composer__btn-lock">{button.enabled ? "→" : "⊘"}</span>
+                </button>
+                {!button.enabled && (
+                  <div className="ccv2-mission-cockpit__action-reason">{button.reason}</div>
+                )}
+              </div>
+            ))}
+          </div>
+
+          <div className="ccv2-mission-cockpit__availability">
+            <div className="ccv2-mission-cockpit__availability-label">Current state</div>
+            <div className="ccv2-mission-cockpit__availability-value">
+              {bridgeOnline ? "Governed action bridge available" : "Requires governed action bridge"}
+            </div>
+            <div className="ccv2-mission-cockpit__availability-label">Next action</div>
+            <div className="ccv2-mission-cockpit__availability-value">{mc.nextAction}</div>
+          </div>
+        </div>
+      </div>
+
+      {actionState === "running" && (
+        <div className="ccv2-mc-status ccv2-mc-status--running">
+          ◎ Generating governed mission plan…
+        </div>
+      )}
+      {actionState === "completed" && actionResult && (
+        <div className="ccv2-mc-status ccv2-mc-status--completed">
+          ✓ Mission plan generated
+          <div className="ccv2-mc-result">
+            <div>Contract: {actionResult.result?.missionContractPath || "contracts/missions/private-project-mission-contract.json"}</div>
+            <div>Task plan: {actionResult.result?.taskPlanPath || "contracts/missions/private-project-task-plan.json"}</div>
+            <div>Tasks created: {actionResult.result?.tasksCreated ?? 6}</div>
+          </div>
+        </div>
+      )}
+      {actionState === "failed" && (
+        <div className="ccv2-mc-status ccv2-mc-status--failed">
+          ✗ {errorMsg || "Plan generation failed."}
+        </div>
+      )}
+      {actionState === "offline" && (
+        <div className="ccv2-mc-status ccv2-mc-status--offline">
+          ⊘ Mission action bridge offline. Run: npm run mission:action-server
+        </div>
+      )}
+      {!bridgeOnline && actionState === "idle" && (
+        <div className="ccv2-mc-status ccv2-mc-status--offline">
+          ⊘ Action bridge offline — buttons require: npm run mission:action-server
+        </div>
+      )}
+    </section>
   );
 }
 
@@ -439,6 +525,65 @@ function SprintProgressCard({ vm }) {
   );
 }
 
+/* ─── System Status Strip ─── */
+function SystemStatusStrip({ vm }) {
+  const readiness = vm.capabilityReadiness || {};
+  const statuses = [
+    {
+      label: "Local API",
+      value: vm.liveApi?.liveApiOnline ? "Online" : "Snapshot fallback",
+      tone: vm.liveApi?.liveApiOnline ? "pass" : "pending",
+    },
+    {
+      label: "Durable State",
+      value: vm.dbFoundation?.fileFallbackRequired ? "Read-only" : "Available",
+      tone: "info",
+    },
+    {
+      label: "Task Activation",
+      value: vm.taskActivation?.activationPolicy?.allowed ? "Ready" : readiness.taskActivation?.userFacingState || "Not enabled",
+      tone: vm.taskActivation?.activationPolicy?.allowed ? "pass" : "pending",
+    },
+    {
+      label: "Agent Workbench",
+      value: readiness.agentWorkbench?.status === "ready" ? "Ready" : readiness.agentWorkbench?.userFacingState || "Not enabled",
+      tone: readiness.agentWorkbench?.status === "ready" ? "pass" : "pending",
+    },
+    {
+      label: "Implementation Bridge",
+      value: readiness.controlledImplementation?.status === "ready_scoped" ? "Scoped" : readiness.controlledImplementation?.userFacingState || "Not enabled",
+      tone: "pending",
+    },
+    {
+      label: "DB Writes",
+      value: "Disabled by policy",
+      tone: "disabled",
+    },
+    {
+      label: "Worker Runtime",
+      value: readiness.workerRuntime?.userFacingState || "Not enabled",
+      tone: "disabled",
+    },
+  ];
+
+  return (
+    <section className="ccv2-card ccv2-status-strip" id="v2-system-status">
+      <div className="ccv2-card-header-row">
+        <div className="ccv2-eyebrow">System Status</div>
+        <span className="ccv2-pill ccv2-pill--disabled">Read-only posture</span>
+      </div>
+      <div className="ccv2-status-strip__grid">
+        {statuses.map((status) => (
+          <div key={status.label} className={`ccv2-status-strip__item ccv2-status-strip__item--${status.tone}`}>
+            <span className="ccv2-status-strip__label">{status.label}</span>
+            <span className="ccv2-status-strip__value">{status.value}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 /* ─── Release Readiness Card ─── */
 function ReleaseReadinessCard({ vm }) {
   const r = vm.release;
@@ -471,79 +616,146 @@ const BAR_HEIGHTS = [18, 25, 22, 30, 28, 20, 35, 40, 42, 55, 48, 60, 52, 45, 50,
 const X_LABELS = ["09:00", "10:00", "11:00", "now\n13:42"];
 
 function ExecutionPipeline({ vm }) {
-  const p = vm.pipeline;
-  const maxH = Math.max(...BAR_HEIGHTS);
+  const taskState = runtimeSnapshot.runtimeState?.tasks || {};
+  const byState = taskState.byState || {};
   const cols = [
-    { key: "queued",    label: "QUEUED",    value: p.queued,    meta: `next: ${vm.shell.activeProject} · ${vm.mission.lead}` },
-    { key: "running",   label: "RUNNING",   value: p.running,   meta: `${p.running} agents engaged` },
-    { key: "verifying", label: "VERIFYING", value: p.verifying, meta: "AUDITOR · SENTINEL" },
-    { key: "blocked",   label: "BLOCKED",   value: p.blocked,   meta: "1 governor deny" },
-    { key: "done",      label: "DONE · 5H", value: p.done,      meta: "90% first-pass" },
+    {
+      key: "queued",
+      label: "Queued",
+      value: byState.queued ?? 0,
+      meta: "Planned tasks activated and waiting for governed execution.",
+    },
+    {
+      key: "running",
+      label: "Running",
+      value: byState.running ?? 0,
+      meta: "Work in progress under current local runtime limits.",
+    },
+    {
+      key: "verifying",
+      label: "Verifying",
+      value: (byState.awaiting_verification ?? 0) + (byState.implementation_done ?? 0),
+      meta: "Awaiting AUDITOR, SENTINEL, or WARDEN verification evidence.",
+    },
+    {
+      key: "blocked",
+      label: "Blocked",
+      value: (byState.blocked ?? 0) + (byState.awaiting_approval ?? 0),
+      meta: "Blocked by approvals, safety policy, or missing verification.",
+    },
+    {
+      key: "done",
+      label: "Done",
+      value: byState.completed ?? byState.done ?? 0,
+      meta: "Completed or fully validated governed work.",
+    },
   ];
+  const totalTracked = cols.reduce((sum, col) => sum + Number(col.value || 0), 0);
 
   return (
     <div id="v2-execution-pipeline" className="ccv2-card ccv2-pipeline">
       <div className="ccv2-pipeline__header">
         <div className="ccv2-pipeline__title">Execution Pipeline</div>
-        <span className="ccv2-pipeline__live-badge">LIVE</span>
+        <span className={`ccv2-pill ccv2-pill--${vm.liveApi?.liveApiOnline ? "pass" : "disabled"}`}>
+          {vm.liveApi?.liveApiOnline ? "Live local API" : "Snapshot fallback"}
+        </span>
       </div>
 
-      <div className="ccv2-pipeline__cols">
-        {cols.map((col) => (
-          <div key={col.key} className="ccv2-pipeline__col">
-            <div className={`ccv2-pipeline__col-label ccv2-pipeline__col-label--${col.key}`}>{col.label}</div>
-            <div className={`ccv2-pipeline__col-count ccv2-pipeline__col-count--${col.key}`}>{col.value}</div>
-            <div className="ccv2-pipeline__col-meta">{col.meta}</div>
-          </div>
-        ))}
-      </div>
-
-      <div className="ccv2-pipeline__chart-area">
-        <div className="ccv2-pipeline__chart-label">Throughput · Last 24h (Tasks completed / hour)</div>
-        <div className="ccv2-bar-chart">
-          {BAR_HEIGHTS.map((h, i) => (
-            <div
-              key={i}
-              className="ccv2-bar-chart__bar"
-              style={{ height: `${Math.max(4, Math.round((h / maxH) * 60))}px` }}
-            />
+      {totalTracked > 0 ? (
+        <div className="ccv2-pipeline__cols">
+          {cols.map((col) => (
+            <div key={col.key} className="ccv2-pipeline__col">
+              <div className={`ccv2-pipeline__col-label ccv2-pipeline__col-label--${col.key}`}>{col.label}</div>
+              <div className={`ccv2-pipeline__col-count ccv2-pipeline__col-count--${col.key}`}>{col.value}</div>
+              <div className="ccv2-pipeline__col-meta">{col.meta}</div>
+            </div>
           ))}
         </div>
-        <div className="ccv2-bar-chart__x-labels">
-          {X_LABELS.map((l, i) => (
-            <span key={i} className="ccv2-bar-chart__x-label">{l}</span>
-          ))}
+      ) : (
+        <div className="ccv2-empty-state">
+          No active runtime jobs yet. Activate a planned task to populate the pipeline.
         </div>
-      </div>
+      )}
     </div>
   );
 }
 
 /* ─── Activity Stream ─── */
 function ActivityStream({ vm }) {
+  const eventRows = [];
+  const runtimeEvents = runtimeSnapshot.runtimeState?.events?.recent || [];
+  const auditEvents = runtimeSnapshot.runtimeState?.audit?.recent || [];
+  const evidenceEvents = runtimeSnapshot.runtimeState?.evidence?.recent || [];
+
+  runtimeEvents.forEach((event) => {
+    eventRows.push({
+      createdAt: event.createdAt,
+      agent: (event.agentId || event.runtime || "SYSTEM").toUpperCase(),
+      summary: event.summary || event.eventType || "runtime event",
+      status: "active",
+      badge: event.eventType || "runtime",
+    });
+  });
+  auditEvents.forEach((event) => {
+    eventRows.push({
+      createdAt: event.createdAt,
+      agent: (event.actorId || event.actorType || "SYSTEM").toUpperCase(),
+      summary: event.summary || event.eventType || "audit event",
+      status: "working",
+      badge: event.auditId || "audit",
+    });
+  });
+  evidenceEvents.forEach((event) => {
+    eventRows.push({
+      createdAt: event.createdAt,
+      agent: (event.agentId || event.type || "SYSTEM").toUpperCase(),
+      summary: event.summary || event.type || "evidence record",
+      status: event.result === "PASS" ? "done" : event.result === "FAIL" ? "blocked" : "working",
+      badge: event.evidenceId || event.result || "evidence",
+    });
+  });
+
+  const activityItems = eventRows
+    .sort((left, right) => new Date(right.createdAt || 0) - new Date(left.createdAt || 0))
+    .slice(0, 8)
+    .map((item) => ({
+      ...item,
+      time: item.createdAt
+        ? new Date(item.createdAt).toLocaleTimeString("en-US", {
+            hour: "2-digit",
+            minute: "2-digit",
+            hour12: false,
+          })
+        : "—",
+    }));
+
+  const rows = activityItems;
+
   return (
     <div id="v2-activity-stream" className="ccv2-card ccv2-stream">
       <div className="ccv2-stream__header">
         <div className="ccv2-stream__title">Activity Stream</div>
-        <div className="ccv2-stream__count ccv2-mono">10 / 00</div>
+        <div className="ccv2-stream__count ccv2-mono">{rows.length} recent</div>
       </div>
 
-      <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 4 }}>
-        <span className="ccv2-label">AGENT</span>
-        <span className="ccv2-label">EVENTS</span>
-      </div>
-
-      <div className="ccv2-stream__events">
-        {vm.activity.map((ev, i) => (
-          <div key={i} className="ccv2-stream__event">
-            <span className="ccv2-stream__event-time ccv2-mono">{ev.time}</span>
-            <span className={`ccv2-stream__event-agent ccv2-stream__event-agent--${ev.status}`}>
-              {ev.agent}
-            </span>
-            <span className="ccv2-stream__event-text">{ev.text}</span>
-          </div>
-        ))}
-      </div>
+      {rows.length > 0 ? (
+        <div className="ccv2-stream__events">
+          {rows.map((ev, i) => (
+            <div key={`${ev.agent}-${ev.time}-${i}`} className="ccv2-stream__event">
+              <span className="ccv2-stream__event-time ccv2-mono">{ev.time}</span>
+              <span className={`ccv2-stream__event-agent ccv2-stream__event-agent--${ev.status}`}>
+                {ev.agent}
+              </span>
+              <span className="ccv2-stream__event-text">{ev.summary}</span>
+              <span className="ccv2-pill ccv2-pill--disabled" style={{ fontSize: 10 }}>{ev.badge}</span>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="ccv2-empty-state">
+          No activity yet. Mission activity will appear here after task activation or review.
+        </div>
+      )}
     </div>
   );
 }
@@ -605,11 +817,17 @@ function PrivateValidationPanel({ vm }) {
 
 /* ─── Evidence and Governance Section ─── */
 function EvidenceGovernanceSection({ vm }) {
+  const reports = LOCAL_REPORT_SNAPSHOT.validation?.reports || [];
+  const runtimeEvidence = runtimeSnapshot.runtimeState?.evidence || {};
+  const approvalWorkflow = runtimeSnapshot.approvalWorkflow || {};
+  const incidents = runtimeSnapshot.runtimeState?.incidents || {};
+  const gatePassCount = Object.values(vm.mission.gates || {}).filter((status) => status === "PASS").length;
+  const gateTotal = Object.keys(vm.mission.gates || {}).length || 0;
   const stats = [
-    { label: "Artifacts", value: "1,217", tone: "teal" },
-    { label: "Gate Pass Rate", value: `${vm.mission.sprintProgress}%`, tone: "green" },
-    { label: "Approval Backlog", value: "3 open", tone: "amber" },
-    { label: "Safety Incidents", value: `${vm.safety.incidents} · ${vm.safety.lastClean}`, tone: "" },
+    { label: "Validation Artifacts", value: String(reports.length + (runtimeEvidence.total || 0)), tone: "teal" },
+    { label: "Gate Pass Rate", value: gateTotal > 0 ? `${Math.round((gatePassCount / gateTotal) * 100)}%` : "Not available yet", tone: "green" },
+    { label: "Approval Backlog", value: approvalWorkflow.requested > 0 ? `${approvalWorkflow.requested} open` : "No pending approvals", tone: "amber" },
+    { label: "Safety Incidents", value: incidents.total > 0 ? String(incidents.total) : "No incidents reported", tone: "" },
   ];
   return (
     <div className="ccv2-card ccv2-evidence">
@@ -631,41 +849,84 @@ function EvidenceGovernanceSection({ vm }) {
 /* ─── Next Best Action Panel ─── */
 function NextBestActionPanel({ vm }) {
   const navigate = useNavigate();
-  const nba = vm.agenticWorkspace?.nextBestAction;
-  if (!nba) return null;
+  const activatedTasks = (runtimeSnapshot.runtimeState?.tasks?.recent || []).filter((task) =>
+    ["queued", "running", "implementation_done", "awaiting_verification", "blocked", "awaiting_approval"].includes(task.state),
+  );
+  const recentEvidence = runtimeSnapshot.runtimeState?.evidence?.recent || [];
+  const nextTask = vm.taskActivation?.nextTask;
+  const recommendation = activatedTasks.length > 0
+    ? {
+        title: "Review Activated Mission Task",
+        why: "A governed runtime task is active and needs review, evidence follow-through, or next action assignment.",
+        owner: activatedTasks[0].targetAgent || activatedTasks[0].sourceAgent || "AUDITOR",
+        risk: activatedTasks[0].riskLevel || "medium",
+        impact: "Moves active work through review, evidence capture, and verification.",
+        prerequisite: "Requires agent workbench and current runtime evidence.",
+        state: "Available",
+        buttonLabel: "Open Agent Workbench",
+        buttonRoute: "/command-center/workbench",
+        enabled: true,
+        evidenceLink: recentEvidence[0]?.evidenceId || "No evidence yet",
+      }
+    : nextTask
+      ? {
+          title: "Activate Next Governed Task",
+          why: "The mission plan exists and the next planned task is ready to enter the local runtime queue.",
+          owner: nextTask.targetAgent || "SHEPHERD",
+          risk: nextTask.riskLevel || "medium",
+          impact: "Populates the runtime pipeline and starts governed execution tracking.",
+          prerequisite: "Requires task activation bridge.",
+          state: vm.taskActivation?.activationPolicy?.requiresBridge ? "Requires governed action bridge" : "Available",
+          buttonLabel: "Open Task Queue",
+          buttonRoute: "/command-center/tasks",
+          enabled: true,
+          evidenceLink: "No evidence yet",
+        }
+      : null;
+
+  if (!recommendation) return null;
+
   return (
     <div className="ccv2-card ccv2-nba-panel" id="v2-next-best-action">
       <div className="ccv2-eyebrow">Next Best Action</div>
-      <div className="ccv2-nba-panel__title">{nba.title}</div>
-      <div className="ccv2-nba-panel__desc">{nba.description}</div>
+      <div className="ccv2-nba-panel__title">{recommendation.title}</div>
+      <div className="ccv2-nba-panel__desc">{recommendation.why}</div>
       <div className="ccv2-nba-panel__meta">
         <div className="ccv2-nba-panel__meta-row">
           <span className="ccv2-nba-panel__meta-label">Owner</span>
-          <span className="ccv2-nba-panel__meta-value">NEXUS / SHEPHERD</span>
+          <span className="ccv2-nba-panel__meta-value">{String(recommendation.owner).toUpperCase()}</span>
         </div>
         <div className="ccv2-nba-panel__meta-row">
-          <span className="ccv2-nba-panel__meta-label">Capability</span>
-          <span className="ccv2-nba-panel__meta-value">{nba.requiredCapability || "taskActivation"}</span>
+          <span className="ccv2-nba-panel__meta-label">Risk</span>
+          <span className="ccv2-nba-panel__meta-value">{recommendation.risk}</span>
         </div>
         <div className="ccv2-nba-panel__meta-row">
-          <span className="ccv2-nba-panel__meta-label">Effort</span>
-          <span className="ccv2-nba-panel__meta-value">Low</span>
+          <span className="ccv2-nba-panel__meta-label">Expected impact</span>
+          <span className="ccv2-nba-panel__meta-value">{recommendation.impact}</span>
         </div>
         <div className="ccv2-nba-panel__meta-row">
-          <span className="ccv2-nba-panel__meta-label">Impact</span>
-          <span className="ccv2-nba-panel__meta-value">High</span>
+          <span className="ccv2-nba-panel__meta-label">Prerequisite</span>
+          <span className="ccv2-nba-panel__meta-value">{recommendation.prerequisite}</span>
+        </div>
+        <div className="ccv2-nba-panel__meta-row">
+          <span className="ccv2-nba-panel__meta-label">Action state</span>
+          <span className="ccv2-nba-panel__meta-value">{recommendation.state}</span>
+        </div>
+        <div className="ccv2-nba-panel__meta-row">
+          <span className="ccv2-nba-panel__meta-label">Evidence</span>
+          <span className="ccv2-nba-panel__meta-value">{recommendation.evidenceLink}</span>
         </div>
       </div>
-      {nba.enabled ? (
+      {recommendation.enabled ? (
         <button
           className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled"
-          onClick={() => navigate(nba.action?.replace("navigate:", "") || "/command-center/tasks")}
+          onClick={() => navigate(recommendation.buttonRoute)}
         >
-          {nba.title}
+          {recommendation.buttonLabel}
         </button>
       ) : (
         <button className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled>
-          {nba.userFacingRequirement || "Not available"}
+          {recommendation.state || "Not available"}
         </button>
       )}
     </div>
@@ -675,10 +936,20 @@ function NextBestActionPanel({ vm }) {
 /* ─── Verification Gates Summary (Mission Control) ─── */
 function VerificationGatesSummary({ vm }) {
   const gates = vm.mission.gates;
+  const evidence = runtimeSnapshot.runtimeState?.evidence?.recent || [];
   const detailMap = {
-    AUDITOR:  "code quality · lint · diff",
-    SENTINEL: "QA · simulator · security",
-    WARDEN:   "privacy · permissions · compliance",
+    AUDITOR:  {
+      summary: "Code quality, diff review, and validation evidence.",
+      nextRequirement: "Maintain current validation evidence.",
+    },
+    SENTINEL: {
+      summary: "Backend and QA gate validation before release readiness.",
+      nextRequirement: "Resolve pending validation or complete runner coverage.",
+    },
+    WARDEN:   {
+      summary: "Privacy, compliance, and governed safety posture.",
+      nextRequirement: "Retain approval and privacy evidence for release.",
+    },
   };
   return (
     <div className="ccv2-card" id="v2-verification-gates">
@@ -688,9 +959,11 @@ function VerificationGatesSummary({ vm }) {
           <div key={gate} className="ccv2-gate-card">
             <div className="ccv2-gate-card__name">{gate}</div>
             <div className={`ccv2-gate-card__status ccv2-gate-card__status--${status === "PASS" ? "pass" : status === "PENDING" ? "pending" : "fail"}`}>
-              {status}
+              {status === "PASS" ? "Pass" : status === "PENDING" ? "Pending" : "Blocked"}
             </div>
-            <div className="ccv2-gate-card__detail">{detailMap[gate] || ""}</div>
+            <div className="ccv2-gate-card__detail">{detailMap[gate]?.summary || ""}</div>
+            <div className="ccv2-gate-card__detail">Evidence: {evidence.filter((item) => (item.agentId || "").toUpperCase() === gate).length || "No evidence yet"}</div>
+            <div className="ccv2-gate-card__detail">Next: {detailMap[gate]?.nextRequirement || "Not run"}</div>
           </div>
         ))}
       </div>
@@ -702,21 +975,28 @@ function VerificationGatesSummary({ vm }) {
 function SafetyApprovalSummary({ vm }) {
   const safety = vm.safety;
   const governance = actionBridgeSnapshot.governance || {};
+  const approvalWorkflow = runtimeSnapshot.approvalWorkflow || {};
+  const incidents = runtimeSnapshot.runtimeState?.incidents || {};
+  const activeHighRisk = (runtimeSnapshot.runtimeState?.tasks?.recent || []).filter((task) => task.riskLevel === "high" || task.riskLevel === "critical").length;
+  const policyBlocks = (runtimeSnapshot.runtimeState?.tasks?.byState?.blocked || 0) + (runtimeSnapshot.runtimeState?.tasks?.byState?.awaiting_approval || 0);
   return (
     <div className="ccv2-card" id="v2-safety-approval">
       <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Safety / Approval</div>
       <div className="ccv2-safety-approval-grid">
         <div className="ccv2-safety-approval-stat">
-          <div style={{ fontSize: 11, color: "var(--nexus-muted)", marginBottom: 4 }}>Safety incidents</div>
-          <div className="ccv2-safety-approval-stat__num">{safety.incidents}</div>
-          <div style={{ fontSize: 11, color: "var(--nexus-muted)" }}>Last clean: {safety.lastClean}</div>
+          <div style={{ fontSize: 11, color: "var(--nexus-muted)", marginBottom: 4 }}>Pending approvals</div>
+          <div className="ccv2-safety-approval-stat__num">{approvalWorkflow.requested || 0}</div>
+          <div style={{ fontSize: 11, color: "var(--nexus-muted)" }}>High-risk actions: {activeHighRisk}</div>
         </div>
         <div>
           <div style={{ fontSize: 11, color: "var(--nexus-muted)", marginBottom: 6 }}>Policy status</div>
           {[
+            { label: "Policy blocks", ok: policyBlocks === 0, value: policyBlocks > 0 ? `${policyBlocks} active` : "None" },
             { label: "Provider calls", ok: !governance.providerCallsAllowed, value: governance.providerCallsAllowed ? "Enabled" : "Disabled" },
-            { label: "DB access", ok: !governance.dbAccessAllowed, value: governance.dbAccessAllowed ? "Enabled" : "Disabled" },
-            { label: "UI mutations", ok: !governance.mutationEnabledFromUi, value: governance.mutationEnabledFromUi ? "Enabled" : "Disabled" },
+            { label: "DB writes", ok: false, value: "Disabled by policy" },
+            { label: "Project mutation", ok: false, value: "Governed only" },
+            { label: "Worker runtime", ok: false, value: "Not enabled" },
+            { label: "Safety incidents", ok: (incidents.total || 0) === 0, value: incidents.total || safety.incidents || 0 },
           ].map((r) => (
             <div key={r.label} className="ccv2-safety-policy-row">
               <span style={{ color: "var(--nexus-muted)" }}>{r.label}</span>
@@ -732,37 +1012,55 @@ function SafetyApprovalSummary({ vm }) {
 /* ─── Active Mission Tasks Summary (Mission Control) ─── */
 function ActiveMissionTasksSummary({ vm }) {
   const navigate = useNavigate();
-  const tasks = vm.taskActivation?.missionTasks || [];
+  const activeStates = new Set(["queued", "running", "implementation_done", "awaiting_verification", "awaiting_approval", "blocked"]);
+  const tasks = (runtimeSnapshot.runtimeState?.tasks?.recent || []).filter((task) => activeStates.has(task.state));
+  const nextActionMap = {
+    queued: "Activate runtime",
+    running: "Open Agent Workbench",
+    implementation_done: "Send to verification",
+    awaiting_verification: "Collect verification evidence",
+    awaiting_approval: "Approve or reject",
+    blocked: "Resolve blocker",
+  };
+
   return (
     <div className="ccv2-card" id="v2-active-mission-tasks">
       <div className="ccv2-card-header-row">
         <div className="ccv2-eyebrow">Active Mission Tasks</div>
         <button className="ccv2-link-btn" onClick={() => navigate("/command-center/tasks")}>View all →</button>
       </div>
-      <div style={{ overflowX: "auto", marginTop: 4 }}>
-        <table className="ccv2-table ccv2-table--compact">
-          <thead>
-            <tr>
-              <th>Task</th>
-              <th>Agent</th>
-              <th>Status</th>
-              <th>Risk</th>
-              <th>Evidence</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tasks.map((task) => (
-              <tr key={task.planTaskId}>
-                <td style={{ fontSize: 12 }}>{task.title}</td>
-                <td style={{ fontWeight: 700, fontSize: 11 }}>{task.targetAgent}</td>
-                <td><span className={`ccv2-pill ccv2-pill--${task.state === "queued" || task.state === "activated" ? "pass" : "disabled"}`} style={{ fontSize: 10 }}>{task.state}</span></td>
-                <td><span className={`ccv2-pill ccv2-pill--${task.riskLevel === "high" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`} style={{ fontSize: 10 }}>{task.riskLevel}</span></td>
-                <td style={{ fontSize: 10, color: "var(--nexus-muted)" }}>—</td>
+      {tasks.length > 0 ? (
+        <div style={{ overflowX: "auto", marginTop: 4 }}>
+          <table className="ccv2-table ccv2-table--compact">
+            <thead>
+              <tr>
+                <th>Task</th>
+                <th>Owner Agent</th>
+                <th>State</th>
+                <th>Risk</th>
+                <th>Evidence</th>
+                <th>Next Action</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {tasks.map((task) => (
+                <tr key={task.taskId}>
+                  <td style={{ fontSize: 12 }}>{task.objective || task.taskType || task.taskId}</td>
+                  <td style={{ fontWeight: 700, fontSize: 11 }}>{(task.targetAgent || task.sourceAgent || "NEXUS").toUpperCase()}</td>
+                  <td><span className={`ccv2-pill ccv2-pill--${task.state === "blocked" ? "fail" : task.state === "running" ? "pending" : "pass"}`} style={{ fontSize: 10 }}>{task.state}</span></td>
+                  <td><span className={`ccv2-pill ccv2-pill--${task.riskLevel === "high" || task.riskLevel === "critical" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`} style={{ fontSize: 10 }}>{task.riskLevel || "unknown"}</span></td>
+                  <td style={{ fontSize: 10, color: "var(--nexus-muted)" }}>{Array.isArray(task.evidenceIds) && task.evidenceIds.length > 0 ? task.evidenceIds.length : "No evidence yet"}</td>
+                  <td style={{ fontSize: 10, color: "var(--nexus-text)" }}>{nextActionMap[task.state] || "Monitor"}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <div className="ccv2-empty-state">
+          No activated tasks yet. Create a mission plan or activate a planned task.
+        </div>
+      )}
     </div>
   );
 }
@@ -770,12 +1068,35 @@ function ActiveMissionTasksSummary({ vm }) {
 /* ─── Project Progress (Mission Control) ─── */
 function ProjectProgressRings({ vm }) {
   const clp = vm.careloopProductProgress;
-  if (!clp) return null;
+  const privacyStatus = vm.mission.gates.WARDEN === "PASS" ? "Complete" : "Pending";
+  const releaseStatus = vm.capabilityReadiness?.releaseActionBridge?.status === "not_enabled" ? "Not enabled" : "Pending";
   const items = [
-    { label: "Backend Validation", value: clp.backendValidation.status === "PASS" ? 100 : 50, status: clp.backendValidation.status === "PASS" ? `${clp.backendValidation.testsPassed}/${clp.backendValidation.totalTests} PASS` : "In progress", color: "var(--nexus-success)" },
-    { label: "iOS Validation",     value: 0,   status: "Pending iOS/Xcode runner", color: "var(--nexus-muted)" },
-    { label: "Privacy Review",     value: 20,  status: "In progress",              color: "var(--nexus-warning)" },
-    { label: "Release Prep",       value: 0,   status: "Not started",              color: "var(--nexus-muted)" },
+    {
+      label: "Backend Validation",
+      value: clp?.backendValidation?.status === "PASS" ? 100 : 0,
+      status: clp?.backendValidation?.status === "PASS"
+        ? `${clp.backendValidation.testsPassed}/${clp.backendValidation.totalTests} PASS`
+        : "Pending backend validation evidence",
+      color: clp?.backendValidation?.status === "PASS" ? "var(--nexus-success)" : "var(--nexus-warning)",
+    },
+    {
+      label: "iOS Validation",
+      value: 0,
+      status: "Requires iOS/Xcode runner",
+      color: "var(--nexus-muted)",
+    },
+    {
+      label: "Privacy Review",
+      value: vm.mission.gates.WARDEN === "PASS" ? 100 : 35,
+      status: privacyStatus,
+      color: vm.mission.gates.WARDEN === "PASS" ? "var(--nexus-success)" : "var(--nexus-warning)",
+    },
+    {
+      label: "Release Prep",
+      value: releaseStatus === "Not enabled" ? 0 : 25,
+      status: releaseStatus,
+      color: releaseStatus === "Not enabled" ? "var(--nexus-muted)" : "var(--nexus-info)",
+    },
   ];
   return (
     <div className="ccv2-card" id="v2-project-progress">
@@ -799,36 +1120,36 @@ function ProjectProgressRings({ vm }) {
 function EvidenceTimeline({ vm }) {
   const evidence = runtimeSnapshot.runtimeState?.evidence || {};
   const recent = evidence.recent || [];
-  const items = recent.length > 0
-    ? recent.slice(0, 6).map((ev) => ({
-        time: new Date(ev.createdAt || Date.now()).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
-        agent: (ev.agentId || "system").toUpperCase(),
-        text: (ev.type || "evidence").replace(/_/g, " "),
-        result: ev.result || "INFO",
-      }))
-    : vm.activity.slice(0, 5).map((ev) => ({
-        time: ev.time,
-        agent: ev.agent,
-        text: ev.text,
-        result: ev.status === "done" ? "PASS" : ev.status === "blocked" ? "FAIL" : "INFO",
-      }));
+  const items = recent.slice(0, 6).map((ev) => ({
+    time: new Date(ev.createdAt || Date.now()).toLocaleTimeString("en-US", { hour: "2-digit", minute: "2-digit", hour12: false }),
+    agent: (ev.agentId || "system").toUpperCase(),
+    text: (ev.type || "evidence").replace(/_/g, " "),
+    result: ev.result || "INFO",
+    linkedTask: ev.taskId || "No linked task",
+    redacted: ev.redacted !== false,
+  }));
 
   return (
     <div className="ccv2-card" id="v2-evidence-timeline">
       <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Evidence Timeline</div>
-      <div className="ccv2-evidence-timeline">
-        {items.map((item, i) => (
-          <div key={i} className="ccv2-evidence-timeline__entry">
-            <div className="ccv2-evidence-timeline__time ccv2-mono">{item.time}</div>
-            <div className={`ccv2-evidence-timeline__dot ccv2-evidence-timeline__dot--${item.result === "PASS" ? "pass" : item.result === "FAIL" ? "fail" : "info"}`} />
-            <div className="ccv2-evidence-timeline__content">
-              <span className="ccv2-evidence-timeline__agent">{item.agent}</span>
-              <span className="ccv2-evidence-timeline__text">{item.text}</span>
+      {items.length > 0 ? (
+        <div className="ccv2-evidence-timeline">
+          {items.map((item, i) => (
+            <div key={i} className="ccv2-evidence-timeline__entry">
+              <div className="ccv2-evidence-timeline__time ccv2-mono">{item.time}</div>
+              <div className={`ccv2-evidence-timeline__dot ccv2-evidence-timeline__dot--${item.result === "PASS" ? "pass" : item.result === "FAIL" ? "fail" : "info"}`} />
+              <div className="ccv2-evidence-timeline__content">
+                <span className="ccv2-evidence-timeline__agent">{item.agent}</span>
+                <span className="ccv2-evidence-timeline__text">{item.text}</span>
+                <span className="ccv2-evidence-timeline__meta">Task: {item.linkedTask} · Redacted: {item.redacted ? "Yes" : "No"}</span>
+              </div>
+              <span className={`ccv2-pill ccv2-pill--${item.result === "PASS" ? "pass" : item.result === "FAIL" ? "fail" : "pending"}`} style={{ fontSize: 10 }}>{item.result}</span>
             </div>
-            <span className={`ccv2-pill ccv2-pill--${item.result === "PASS" ? "pass" : item.result === "FAIL" ? "fail" : "pending"}`} style={{ fontSize: 10 }}>{item.result}</span>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      ) : (
+        <div className="ccv2-empty-state">Evidence appears after governed actions complete.</div>
+      )}
     </div>
   );
 }
@@ -837,16 +1158,16 @@ function EvidenceTimeline({ vm }) {
 function CostCenterSummary({ vm }) {
   return (
     <div className="ccv2-card" id="v2-cost-center">
-      <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Cost Center</div>
+      <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Cost Snapshot</div>
       <div style={{ fontSize: 12, color: "var(--nexus-muted)", marginBottom: 10, lineHeight: 1.5 }}>
-        Cost enforcement not enabled yet. Provider calls and real-time billing tracking require governed provider dispatch.
+        Cost enforcement is not enabled yet. This cockpit shows policy posture only until governed provider dispatch is available.
       </div>
       <div className="ccv2-cost-rows">
         {[
-          { label: "Provider dispatch", value: "Not enabled", color: "var(--nexus-warning)" },
-          { label: "Budget tracking",   value: "Not enabled", color: "var(--nexus-warning)" },
-          { label: "Risk profile",      value: "Low — file-backed only", color: "var(--nexus-success)" },
-          { label: "Safety incidents",  value: `${vm.safety.incidents} · ${vm.safety.lastClean}`, color: "var(--nexus-success)" },
+          { label: "Cost enforcement", value: "Not enabled yet", color: "var(--nexus-warning)" },
+          { label: "Budget enforcement", value: "Not enabled yet", color: "var(--nexus-warning)" },
+          { label: "Provider spend", value: "No provider dispatch", color: "var(--nexus-info)" },
+          { label: "Batch jobs", value: "Not enabled yet", color: "var(--nexus-muted)" },
         ].map((r) => (
           <div key={r.label} className="ccv2-cost-row">
             <span style={{ color: "var(--nexus-muted)" }}>{r.label}</span>
@@ -861,22 +1182,45 @@ function CostCenterSummary({ vm }) {
 /* ─── Release Section ─── */
 function ReleaseSection({ vm }) {
   const r = vm.release;
+  const releaseBridge = vm.capabilityReadiness?.releaseActionBridge;
+  const requiredGates = Object.entries(vm.mission.gates).map(([gate, status]) => ({
+    gate,
+    status,
+  }));
+  const readyToGo = releaseBridge?.status === "ready" && requiredGates.every((gate) => gate.status === "PASS");
   return (
-    <div className="ccv2-card ccv2-release-section">
+    <div className="ccv2-card ccv2-release-section" id="v2-release-readiness">
       <div className="ccv2-release-section__header">
-        <h3 className="ccv2-release-section__title">Release Control</h3>
-        <span className="ccv2-mono" style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>
-          {r.readiness}% ready
+        <h3 className="ccv2-release-section__title">Release Readiness</h3>
+        <span className={`ccv2-pill ccv2-pill--${readyToGo ? "pass" : "pending"}`}>
+          {readyToGo ? "GO" : "Not ready"}
         </span>
+      </div>
+
+      <div className="ccv2-release-section__blocker">
+        <div className="ccv2-release-section__blocker-label">Reason</div>
+        {readyToGo
+          ? "Verification gates are complete and the release bridge is available."
+          : "Requires release action bridge and complete verification gates."}
       </div>
 
       <div className="ccv2-release-section__track">
         <div className="ccv2-release-section__fill" style={{ width: `${r.readiness}%` }} />
       </div>
 
-      <div className="ccv2-release-section__blocker">
-        <div className="ccv2-release-section__blocker-label">Blocker</div>
-        {r.blocker}
+      <div className="ccv2-release-section__requirements">
+        {requiredGates.map((gate) => (
+          <div key={gate.gate} className="ccv2-release-section__requirement">
+            <span>{gate.gate}</span>
+            <span className={`ccv2-pill ccv2-pill--${gate.status === "PASS" ? "pass" : gate.status === "PENDING" ? "pending" : "fail"}`}>
+              {gate.status === "PASS" ? "Pass" : gate.status === "PENDING" ? "Pending" : "Blocked"}
+            </span>
+          </div>
+        ))}
+        <div className="ccv2-release-section__requirement">
+          <span>Release action bridge</span>
+          <span className="ccv2-pill ccv2-pill--disabled">{releaseBridge?.userFacingState || "Requires release action bridge"}</span>
+        </div>
       </div>
     </div>
   );
@@ -1045,7 +1389,7 @@ function MissionControlPage({ vm }) {
   const liveOnline = vm.liveApi?.liveApiOnline;
 
   return (
-    <div className="ccv2-content">
+    <div className="ccv2-content ccv2-mission-control">
       {liveOnline !== undefined && (
         <div className="ccv2-source-bar">
           <span className={`ccv2-source-badge ccv2-source-badge--${liveOnline ? "live" : "snapshot"}`}>
@@ -1057,61 +1401,60 @@ function MissionControlPage({ vm }) {
 
       <div className="ccv2-page-head">
         <div className="ccv2-page-head__title">Mission Control</div>
-        <div className="ccv2-page-head__sub">Active mission, governed runtime posture, and next best action</div>
+        <div className="ccv2-page-head__sub">enterprise command surface for governed agentic work</div>
       </div>
 
-      {/* C. Mission Hero — what mission is active */}
-      <div className="ccv2-first-fold">
-        <MissionComposerCard vm={vm} />
-        <MissionHeroCard vm={vm} />
-        <SprintProgressCard vm={vm} />
-        <ReleaseReadinessCard vm={vm} />
+      {/* A. Mission Hero */}
+      <MissionComposerCard vm={vm} />
+
+      {/* B. Next Best Action + C. System Status Strip */}
+      <div className="ccv2-mission-control__lead-grid">
+        <NextBestActionPanel vm={vm} />
+        <SystemStatusStrip vm={vm} />
       </div>
 
-      {/* D. Next Best Action — what to do next */}
-      <NextBestActionPanel vm={vm} />
-
-      {/* E. KPI Cards — active / blocked / pass rate / utilization */}
+      {/* D. KPI Cards */}
       <div className="ccv2-kpi-row">
         {vm.metrics.map((m) => (
           <MetricCard key={m.label} metric={m} />
         ))}
       </div>
 
-      {/* F+G. Execution Pipeline + Activity Stream */}
+      {/* E + F. Execution Pipeline + Activity Stream */}
       <div className="ccv2-pipeline-stream">
         <ExecutionPipeline vm={vm} />
         <ActivityStream vm={vm} />
       </div>
 
-      {/* H. Verification Gates */}
-      <VerificationGatesSummary vm={vm} />
+      {/* G + H. Verification Gates + Active Mission Tasks */}
+      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+        <VerificationGatesSummary vm={vm} />
+        <ActiveMissionTasksSummary vm={vm} />
+      </div>
 
-      {/* I. Release Readiness */}
-      <ReleaseSection vm={vm} />
+      {/* I + J. Project Progress + Evidence Timeline */}
+      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+        <ProjectProgressRings vm={vm} />
+        <EvidenceTimeline vm={vm} />
+      </div>
 
-      {/* J. Safety / Approval */}
-      <SafetyApprovalSummary vm={vm} />
+      {/* K + L + M. Safety / Approval + Release Readiness + Cost Snapshot */}
+      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--three">
+        <SafetyApprovalSummary vm={vm} />
+        <ReleaseSection vm={vm} />
+        <CostCenterSummary vm={vm} />
+      </div>
 
-      {/* K. Active Mission Tasks */}
-      <ActiveMissionTasksSummary vm={vm} />
+      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+        <PrivateValidationPanel vm={vm} />
+        <EvidenceGovernanceSection vm={vm} />
+      </div>
 
-      {/* L. Project Progress */}
-      {isLocalPrivate && clp && <ProjectProgressRings vm={vm} />}
-
-      {/* M. Evidence Timeline */}
-      <EvidenceTimeline vm={vm} />
-
-      {/* N. Cost Center */}
-      <CostCenterSummary vm={vm} />
-
-      {/* Workspace workflow band */}
-      <WorkspaceBand vm={vm} />
-
-      {/* Private Validation + Evidence + Product Progress */}
-      <PrivateValidationPanel vm={vm} />
-      <EvidenceGovernanceSection vm={vm} />
-      {isLocalPrivate && clp && <CareLoopProgressCard clp={clp} />}
+      {isLocalPrivate && clp && (
+        <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--single">
+          <CareLoopProgressCard clp={clp} />
+        </div>
+      )}
     </div>
   );
 }

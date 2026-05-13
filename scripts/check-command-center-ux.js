@@ -11,6 +11,7 @@ const sections = {
   themeHook: true,
   themeTokens: true,
   themeControl: true,
+  missionControlLayout: true,
   sidebarLabels: true,
   workflowLabels: true,
   pageCopy: true,
@@ -323,6 +324,35 @@ for (const expectedTest of [
   check(routeTestSource.includes(expectedTest), "themeControl", `Route tests missing theme coverage: ${expectedTest}`);
 }
 
+// Mission Control layout
+for (const expected of [
+  "Mission Hero",
+  "Next Best Action",
+  "System Status",
+  "Execution Pipeline",
+  "Activity Stream",
+  "Verification Gates",
+  "Active Mission Tasks",
+  "Project Progress",
+  "Evidence Timeline",
+  "Safety / Approval",
+  "Release Readiness",
+  "Cost Snapshot",
+  "enterprise command surface for governed agentic work",
+]) {
+  check(commandCenterSource.includes(expected), "missionControlLayout", `Mission Control missing required section or copy: ${expected}`);
+}
+for (const expectedTest of [
+  "Mission Control renders enterprise cockpit sections",
+  "Mission Hero shows mission, scope, actions, and disabled reasons",
+  "Mission Control status strip shows key platform states",
+  "Mission Control renders in dark and light themes",
+]) {
+  check(routeTestSource.includes(expectedTest), "missionControlLayout", `Mission Control test coverage missing: ${expectedTest}`);
+}
+check(!commandCenterSource.includes("Requires P37"), "missionControlLayout", "Mission Control must not include stale P37 requirement");
+check(!commandCenterSource.includes("P38-LOCAL"), "missionControlLayout", "Mission Control must not include stale P38-LOCAL label");
+
 // OS Roadmap preservation
 for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
@@ -347,6 +377,7 @@ try {
 for (const relativePath of [
   "dashboard/src/data/commandCenterRoutes.js",
   "dashboard/src/data/capabilityReadiness.js",
+  "dashboard/src/data/commandCenterViewModel.js",
   "dashboard/src/data/nexusRoadmap.js",
   "dashboard/src/hooks/useNexusTheme.js",
   "dashboard/src/styles-command-center-v2.css",
@@ -370,6 +401,7 @@ console.log(`Capability readiness: ${sections.capabilityReadiness ? "PASS" : "FA
 console.log(`Theme hook: ${sections.themeHook ? "PASS" : "FAIL"}`);
 console.log(`Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}`);
 console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
+console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
 console.log(`Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}`);
 console.log(`Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}`);
@@ -395,6 +427,7 @@ const report = `# Command Center UX Report
 - Theme hook: ${sections.themeHook ? "PASS" : "FAIL"}
 - Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}
 - Theme control: ${sections.themeControl ? "PASS" : "FAIL"}
+- Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}
 - Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}
 - Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}
