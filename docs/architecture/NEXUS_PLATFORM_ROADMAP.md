@@ -71,53 +71,66 @@ belongs in separate private repos.
 - Phase 38-LOCAL Agent Workbench + Human Review Loop
 - Phase 39-LOCAL First Controlled Implementation Workflow from UI
 - Phase 40-LOCAL Live Local API Backend for Command Center
+- Phase 41 DB foundation for durable state
+- Phase 41.5 Command Center UX stabilization and docs finalization
 
 ---
 
 ## Current Phase
 
-### Phase 32-LOCAL — Command Center Private Validation View
+### Phase 41.6.1 — Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor
 
 Goal:
 
-- surface private-project validation status in Command Center through a
-  generated local-private snapshot without adding API, DB, or UI mutation
+- define a declarative local service manifest and read-only local diagnostics
+  without starting or stopping services yet
 
 Deliverables:
 
-- local-private private validation snapshot builder
-- generated browser-safe dashboard data module
-- Command Center private validation summary and timeline
-- evidence, audit, and runtime reference visibility
-- known validation hygiene note for restoring the public-safety baseline before
-  guarded-task checks when private branch metadata leaks into the generated
-  report
-- mode boundary: `local-private` or `test` only
+- `nexus.services.json` declarative manifest
+- service-orchestration loader, validator, status, and doctor modules
+- `npm run nexus:status`
+- `npm run nexus:doctor`
+- `npm run check:nexus-service-orchestration`
+- service status and doctor report artifacts
+- localhost-only binding policy
+- usage and architecture docs for the local service foundation
 
 Non-goals:
 
-- no live API
-- no DB
-- no UI mutation
-- no provider or network calls
-- no test execution from the UI
+- no `nexus:up` process manager yet
+- no `nexus:down` cleanup yet
+- no background service spawning
+- no Command Center service health UI yet
+- no provider or external network calls
+- no DB writes
 - no private project mutation
 
 Validation checks:
 
-- snapshot generation succeeds in `local-private` mode
-- Command Center shows private validation panels with read-only language
-- backend validation status remains 58/58 PASS in the generated view
-- evidence, audit, and runtime references remain redacted
-- public/demo surfaces remain DemoApp-only or generic private-project wording
+- `npm run nexus:status` succeeds and writes a report
+- `npm run nexus:doctor` succeeds and writes a report
+- manifest parses and contains the required service inventory
+- enabled network services use `127.0.0.1`
+- future services remain explicitly disabled and described
 - no private project tree mutation from the checker
-- public-safety baseline remains restorable when private branch metadata leaks
 
 Risk level:
 
 - low
 
 ---
+
+## Next Phases
+
+- Phase 41.6.2 — `nexus:up` / `nexus:down` process manager
+- Phase 41.6.3 — Command Center service health UI
+- Phase 41.7 — follow-on documentation and operator workflow tightening if
+  still needed after unified boot lands
+- Phase 41.8 — Centralized Activity Log + Observability Ledger
+- Phase 41.9 — README and architecture diagram registry follow-up if further
+  refinement is still needed
+- Phase 42 — Project Registry + Adapter Framework
 
 ---
 

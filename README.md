@@ -81,6 +81,12 @@ Command Center is the current operator surface for:
 
 Unified boot is planned for P41.6. Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
 
+## P41.6.1 Service Foundation
+
+P41.6.1 adds a read-only local service manifest, `nexus:status`, and
+`nexus:doctor`. Single-command boot comes next in P41.6.2. Services remain
+local/private and manually started in this phase.
+
 ## Local Development and Running Current Services
 
 Use the existing commands in `package.json`. Common entry points include:

@@ -43,6 +43,8 @@ Unified boot is planned for P41.6. Until then, use the existing dashboard, local
 - Dashboard: `npm run dashboard`
 - Local API: `npm run local-api:start`
 - Mission action bridge: `npm run mission:action-server`
+- Service status: `npm run nexus:status`
+- Service doctor: `npm run nexus:doctor`
 
 See [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md) for more detail.
 

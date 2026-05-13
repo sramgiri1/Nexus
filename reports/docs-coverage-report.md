@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T11:10:43.052Z
-- Validation branch: docs/command-center-usage-codebase-finalization
-- Validation HEAD: 824fdda
+- Generated at: 2026-05-13T11:30:53.431Z
+- Validation branch: feat/nexus-service-manifest-status-doctor
+- Validation HEAD: ba1bed5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

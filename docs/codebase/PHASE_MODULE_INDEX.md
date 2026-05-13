@@ -52,8 +52,18 @@
 - `docs/usage/*`
 - `docs/codebase/*`
 
+## P41.6.1 — Service Manifest, Status, and Doctor
+
+- `nexus.services.json`
+- `service-orchestration/*`
+- `scripts/nexus-status.js`
+- `scripts/nexus-doctor.js`
+- `scripts/check-nexus-service-orchestration.js`
+- `docs/architecture/NEXUS_SERVICE_ORCHESTRATION.md`
+
 ## Planned Follow-on Phases
 
-- P41.6 — Unified NEXUS Local Boot / Service Orchestration
+- P41.6.2 — `nexus:up` / `nexus:down` process manager
+- P41.6.3 — Command Center service health UI
 - P41.8 — Centralized Activity Log + Observability Ledger
 - P42 — Project Registry + Adapter Framework

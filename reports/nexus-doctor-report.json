@@ -1,0 +1,242 @@
+{
+  "doctorVersion": "1.0",
+  "phase": "P41.6.1",
+  "generatedAt": "2026-05-13T11:30:53.899Z",
+  "mode": "local-private",
+  "checks": {
+    "nodeRuntime": {
+      "ok": true,
+      "message": "Node 24.14.1"
+    },
+    "packageScripts": {
+      "ok": true,
+      "message": "Required scripts present",
+      "missing": []
+    },
+    "serviceManifest": {
+      "ok": true,
+      "message": "Service manifest valid",
+      "warnings": [],
+      "manifest": {
+        "version": "1.0",
+        "phase": "P41.6.1",
+        "mode": "local-private",
+        "hostDefault": "127.0.0.1",
+        "startupCommandPlanned": "npm run nexus:up",
+        "shutdownCommandPlanned": "npm run nexus:down",
+        "services": [
+          {
+            "id": "dashboard",
+            "label": "Command Center",
+            "type": "ui",
+            "required": true,
+            "enabled": true,
+            "host": "127.0.0.1",
+            "port": 5173,
+            "cwd": "dashboard",
+            "command": "npm run dev",
+            "healthUrl": "http://127.0.0.1:5173/",
+            "startManagedInPhase": "P41.6.2",
+            "currentPhaseBehavior": "described_only"
+          },
+          {
+            "id": "local-api",
+            "label": "Live Local API",
+            "type": "api",
+            "required": true,
+            "enabled": true,
+            "host": "127.0.0.1",
+            "port": 4321,
+            "cwd": ".",
+            "command": "npm run local-api:start",
+            "healthUrl": "http://127.0.0.1:4321/health",
+            "startManagedInPhase": "P41.6.2",
+            "currentPhaseBehavior": "described_only"
+          },
+          {
+            "id": "action-bridge",
+            "label": "Governed Action Bridge",
+            "type": "bridge",
+            "required": true,
+            "enabled": true,
+            "host": "127.0.0.1",
+            "port": 3748,
+            "cwd": ".",
+            "command": "npm run mission:action-server",
+            "healthUrl": "http://127.0.0.1:3748/health",
+            "startManagedInPhase": "P41.6.2",
+            "currentPhaseBehavior": "described_only"
+          },
+          {
+            "id": "db-foundation",
+            "label": "Durable State Foundation",
+            "type": "persistence",
+            "required": false,
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": null,
+            "cwd": ".",
+            "command": null,
+            "healthUrl": null,
+            "currentPhaseBehavior": "file_backed_read_only",
+            "dbWritesEnabled": false
+          },
+          {
+            "id": "worker-runtime",
+            "label": "Worker Runtime",
+            "type": "runtime",
+            "required": false,
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": null,
+            "cwd": ".",
+            "command": null,
+            "healthUrl": null,
+            "currentPhaseBehavior": "not_enabled",
+            "plannedPhase": "P60"
+          },
+          {
+            "id": "tool-gateway",
+            "label": "Governed Tool Gateway",
+            "type": "tools",
+            "required": false,
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": null,
+            "cwd": ".",
+            "command": null,
+            "healthUrl": null,
+            "currentPhaseBehavior": "not_enabled",
+            "plannedPhase": "P52/P63"
+          },
+          {
+            "id": "mcp-gateway",
+            "label": "MCP Gateway",
+            "type": "tools",
+            "required": false,
+            "enabled": false,
+            "host": "127.0.0.1",
+            "port": null,
+            "cwd": ".",
+            "command": null,
+            "healthUrl": null,
+            "currentPhaseBehavior": "not_enabled",
+            "plannedPhase": "P52"
+          }
+        ]
+      }
+    },
+    "localhostBindingPolicy": {
+      "ok": true,
+      "message": "Localhost-only binding policy satisfied"
+    },
+    "knownPorts": {
+      "ok": true,
+      "message": "Known ports inspected locally",
+      "ports": [
+        {
+          "id": "dashboard",
+          "host": "127.0.0.1",
+          "port": 5173,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": 5173,
+            "state": "in_use",
+            "error": null
+          }
+        },
+        {
+          "id": "local-api",
+          "host": "127.0.0.1",
+          "port": 4321,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": 4321,
+            "state": "in_use",
+            "error": null
+          }
+        },
+        {
+          "id": "action-bridge",
+          "host": "127.0.0.1",
+          "port": 3748,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": 3748,
+            "state": "in_use",
+            "error": null
+          }
+        },
+        {
+          "id": "db-foundation",
+          "host": "127.0.0.1",
+          "port": null,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": null,
+            "state": "not_applicable",
+            "error": null
+          }
+        },
+        {
+          "id": "worker-runtime",
+          "host": "127.0.0.1",
+          "port": null,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": null,
+            "state": "not_applicable",
+            "error": null
+          }
+        },
+        {
+          "id": "tool-gateway",
+          "host": "127.0.0.1",
+          "port": null,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": null,
+            "state": "not_applicable",
+            "error": null
+          }
+        },
+        {
+          "id": "mcp-gateway",
+          "host": "127.0.0.1",
+          "port": null,
+          "result": {
+            "ok": true,
+            "host": "127.0.0.1",
+            "port": null,
+            "state": "not_applicable",
+            "error": null
+          }
+        }
+      ]
+    },
+    "secretExposure": {
+      "ok": true,
+      "message": "Manifest contains no obvious secret markers"
+    },
+    "futureServicesDisabled": {
+      "ok": true,
+      "message": "Future services remain disabled by design"
+    },
+    "noServiceStartAttempted": {
+      "ok": true,
+      "message": "No service start attempted"
+    }
+  },
+  "warnings": [
+    "dashboard port 5173 is currently in use.",
+    "local-api port 4321 is currently in use.",
+    "action-bridge port 3748 is currently in use."
+  ],
+  "errors": []
+}

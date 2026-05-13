@@ -1,0 +1,122 @@
+{
+  "statusVersion": "1.0",
+  "phase": "P41.6.1",
+  "generatedAt": "2026-05-13T11:30:53.734Z",
+  "mode": "local-private",
+  "services": [
+    {
+      "id": "dashboard",
+      "label": "Command Center",
+      "enabled": true,
+      "required": true,
+      "host": "127.0.0.1",
+      "port": 5173,
+      "currentPhaseBehavior": "described_only",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "described",
+      "warnings": [
+        "Port currently in use."
+      ],
+      "errors": []
+    },
+    {
+      "id": "local-api",
+      "label": "Live Local API",
+      "enabled": true,
+      "required": true,
+      "host": "127.0.0.1",
+      "port": 4321,
+      "currentPhaseBehavior": "described_only",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "described",
+      "warnings": [
+        "Port currently in use."
+      ],
+      "errors": []
+    },
+    {
+      "id": "action-bridge",
+      "label": "Governed Action Bridge",
+      "enabled": true,
+      "required": true,
+      "host": "127.0.0.1",
+      "port": 3748,
+      "currentPhaseBehavior": "described_only",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "described",
+      "warnings": [
+        "Port currently in use."
+      ],
+      "errors": []
+    },
+    {
+      "id": "db-foundation",
+      "label": "Durable State Foundation",
+      "enabled": false,
+      "required": false,
+      "host": "127.0.0.1",
+      "port": null,
+      "currentPhaseBehavior": "file_backed_read_only",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "described",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "id": "worker-runtime",
+      "label": "Worker Runtime",
+      "enabled": false,
+      "required": false,
+      "host": "127.0.0.1",
+      "port": null,
+      "currentPhaseBehavior": "not_enabled",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "not_enabled",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "id": "tool-gateway",
+      "label": "Governed Tool Gateway",
+      "enabled": false,
+      "required": false,
+      "host": "127.0.0.1",
+      "port": null,
+      "currentPhaseBehavior": "not_enabled",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "not_enabled",
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "id": "mcp-gateway",
+      "label": "MCP Gateway",
+      "enabled": false,
+      "required": false,
+      "host": "127.0.0.1",
+      "port": null,
+      "currentPhaseBehavior": "not_enabled",
+      "managedByNexusUp": false,
+      "healthCheckAttempted": false,
+      "status": "not_enabled",
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "summary": {
+    "servicesTotal": 7,
+    "enabledServices": 3,
+    "requiredServices": 3,
+    "managedNow": 0,
+    "managedLater": 3,
+    "disabledFutureServices": 4
+  },
+  "warnings": [],
+  "errors": []
+}

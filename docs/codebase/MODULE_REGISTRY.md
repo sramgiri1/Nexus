@@ -69,6 +69,19 @@ These modules provide live local read surfaces without enabling provider calls o
 
 This family defines the durable-state foundation while runtime remains file-backed.
 
+## Service Orchestration Foundation
+
+- `nexus.services.json`
+- `service-orchestration/serviceManifest.js`
+- `service-orchestration/serviceStatus.js`
+- `service-orchestration/serviceDoctor.js`
+- `service-orchestration/servicePorts.js`
+- `scripts/nexus-status.js`
+- `scripts/nexus-doctor.js`
+- `scripts/check-nexus-service-orchestration.js`
+
+These modules define the unified local boot foundation for P41.6.1 without starting or stopping services yet.
+
 ## Command Execution / Controlled Runner
 
 - `orchestrator/localExecutor.js`

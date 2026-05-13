@@ -113,11 +113,24 @@ Mission Control enterprise layout, page-specific UX cleanup, screenshot audit,
 and a split between operator-facing usage guides and contributor-facing
 codebase guides.
 
+Phase 41.6.1 starts unified local boot foundation work without orchestrating
+processes yet. It adds a declarative local service manifest plus read-only
+`nexus:status` and `nexus:doctor` commands so operators can inspect current
+service posture and validate localhost-only service assumptions before
+single-command boot arrives.
+
 The documentation layer is now intentionally separated:
 
 - `docs/usage/` for operators and local users
 - `docs/codebase/` for contributors, maintainers, and coding agents
 - `docs/architecture/` for system-model and roadmap references
+
+The service foundation follows that same split:
+
+- `docs/usage/` explains how to read `nexus:status` and `nexus:doctor`
+- `docs/codebase/` indexes the service-orchestration modules
+- `docs/architecture/` defines why process orchestration is deferred to later
+  phases
 
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),

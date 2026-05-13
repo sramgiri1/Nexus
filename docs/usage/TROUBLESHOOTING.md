@@ -16,6 +16,33 @@
 - run `npm run mission:action-server`
 - review button states in Mission Control, Task Queue, or Agent Workbench for bridge-related disabled reasons
 
+## Missing Service Manifest
+
+- confirm `nexus.services.json` exists at repo root
+- run `npm run nexus:doctor`
+
+## Invalid Service Manifest
+
+- run `npm run nexus:status`
+- run `npm run nexus:doctor`
+- fix malformed JSON or missing required service fields
+
+## Port In Use
+
+- `npm run nexus:doctor` can report a known service port as already in use
+- this does not automatically mean failure for current local work, but it may indicate another local process already owns the port
+
+## Missing Package Script
+
+- run `npm run nexus:doctor`
+- compare the current `package.json` scripts with the documented commands
+
+## Service Disabled By Design
+
+- some manifest entries are intentionally disabled in P41.6.1
+- examples include worker runtime, tool gateway, and MCP gateway
+- disabled by design is not the same as broken
+
 ## Snapshot Fallback Visible
 
 This means the UI is using generated or file-backed data rather than live local API data. That is expected when the local API is offline or when a page is intentionally read-only.
