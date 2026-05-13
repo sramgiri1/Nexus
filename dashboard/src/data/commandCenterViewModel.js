@@ -1,8 +1,23 @@
+import { CAPABILITY_READINESS } from "./capabilityReadiness.js";
+import { buildWorkspaceSummary } from "../../../workspace/workflowRecommendations.js";
+
 export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const pvStatus = pvSnapshot?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};
   const pvGovernance = pvSnapshot?.governance || {};
+  const workspaceSummary = buildWorkspaceSummary({
+    missionExists: true,
+    taskPlanExists: true,
+    taskCount: 6,
+    activatedTaskCount: 0,
+    backendTestsPassed: pvBackend.testsPassed ?? 58,
+    backendTestsTotal: pvBackend.totalTests ?? 58,
+    mode: "local-private",
+    activeProject: "Private Project",
+    missionId: "private-project-governed-build-mission",
+    prdGaps: ["Physical device push (open)"],
+  });
 
   return {
     shell: {
@@ -10,7 +25,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       mode: "local-private",
       environment: "Local",
       operator: "Founder",
-      activeProject: studio.activeProject?.name || "DemoApp",
+      activeProject: studio.activeProject?.name || "Private Project",
     },
     missionComposer: {
       title: "Start a Mission",
@@ -31,7 +46,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       nextAction: "Create governed project brief from mission composer",
     },
     mission: {
-      founderIntent: "Build and validate DemoApp through governed NEXUS agents.",
+      founderIntent: "Build and validate the active mission through governed NEXUS agents.",
       quote: "Ship a calm, governed private-project companion — beta in 6 weeks, audit-ready from day one.",
       sprintId: "Sprint 2026.18",
       sprintDay: "Day 6 of 7",
@@ -157,49 +172,19 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       },
     },
     agenticWorkspace: {
-      activeMode: "local-private",
-      activeProject: "Private Project",
-      activeMission: {
-        id: "private-project-governed-build-mission",
-        exists: true,
-        planReady: true,
-        taskCount: 6,
-      },
+      activeMode: workspaceSummary.activeMode,
+      activeProject: workspaceSummary.activeProject,
+      activeMission: workspaceSummary.activeMission,
+      workflowTemplates: workspaceSummary.workflowTemplates,
       nextBestAction: {
-        title: "Activate First Mission Task",
-        description: "Mission plan is ready. Click Activate on the Project Brief task in the Task Queue to move it from planned to queued state.",
-        workflowId: "govern-agent-work",
-        enabled: true,
-        userFacingRequirement: "",
-        requiredCapability: "taskActivation",
-        targetPhase: "P37",
+        ...workspaceSummary.nextBestAction,
+        description:
+          "Mission plan is ready. Activate the first task to move it from planned to queued state in the runtime.",
         action: "navigate:/command-center/tasks",
       },
-      workflowTemplates: [
-        { id: "build-product", label: "Build Product", description: "Turn a product idea into governed tasks across planning, design, backend, iOS, privacy, and verification.", category: "build", primaryAgents: ["SHEPHERD", "PRISM", "CORE", "SWIFT", "SENTINEL", "WARDEN", "AUDITOR"], evidenceCreated: ["mission_contract", "task_plan", "implementation_evidence", "validation_result"], approvalRequired: "conditional", riskLevel: "high", enabledNow: true, userFacingRequirement: "Planning, task activation, workbench, and scoped implementation are available. Broad autonomous execution requires worker runtime and provider dispatch.", requiredCapability: "taskActivation", internalPhase: "P37" },
-        { id: "fix-failing-test", label: "Fix Failing Test", description: "Analyze a failing validation result, classify root cause, apply narrow fix if safe, and re-run controlled validation.", category: "fix", primaryAgents: ["AUDITOR", "CORE", "SENTINEL"], evidenceCreated: ["failure_analysis", "remediation_plan", "patch_summary", "validation_result"], approvalRequired: "conditional", riskLevel: "medium", enabledNow: true, userFacingRequirement: "Available for scoped remediation. Requires failing validation evidence.", requiredCapability: "controlledImplementation", internalPhase: "P37" },
-        { id: "validate-backend", label: "Validate Backend", description: "Run allowlisted backend validation through preflight, controlled execution, redaction, and evidence capture.", category: "validate", primaryAgents: ["AUDITOR", "SENTINEL"], evidenceCreated: ["command_allowlist_decision", "preflight_result", "controlled_command_result"], approvalRequired: false, riskLevel: "low", enabledNow: true, userFacingRequirement: "Available. Uses controlled runner and evidence capture.", requiredCapability: "taskActivation", internalPhase: "P37" },
-        { id: "review-release", label: "Review Release", description: "Collect gates, blockers, evidence, approvals, and release readiness into a NO-GO/GO decision.", category: "release", primaryAgents: ["NEXUS", "AUDITOR", "SENTINEL", "WARDEN"], evidenceCreated: ["release_gate_summary", "release_decision"], approvalRequired: true, riskLevel: "high", enabledNow: false, userFacingRequirement: "Requires release action bridge. All verification gates must be complete.", requiredCapability: "releaseActionBridge", internalPhase: "P39" },
-        { id: "plan-sprint", label: "Plan Sprint", description: "Convert PRD/product gaps into a sprint plan with tasks, owners, gates, and validation requirements.", category: "plan", primaryAgents: ["SHEPHERD", "PRISM", "AUDITOR"], evidenceCreated: ["sprint_plan", "task_plan", "risk_review"], approvalRequired: false, riskLevel: "low", enabledNow: true, userFacingRequirement: "Available for planning. Task activation bridge is ready.", requiredCapability: "taskActivation", internalPhase: "P37" },
-        { id: "privacy-review", label: "Run Privacy Review", description: "Review private project data, PRD compliance constraints, public/demo boundary, and incident response readiness.", category: "govern", primaryAgents: ["WARDEN", "AUDITOR"], evidenceCreated: ["privacy_review", "data_classification", "safety_decision"], approvalRequired: "conditional", riskLevel: "medium", enabledNow: true, userFacingRequirement: "Available for review planning and workbench inspection. Full automated execution requires WARDEN review bridge.", requiredCapability: "agentWorkbench", internalPhase: "P38" },
-        { id: "ios-validation", label: "Prepare iOS Validation", description: "Prepare iOS/Xcode validation path, simulator/device requirements, SENTINEL gates, and app readiness evidence.", category: "validate", primaryAgents: ["SWIFT", "SENTINEL"], evidenceCreated: ["ios_readiness_plan", "xcode_validation_plan"], approvalRequired: false, riskLevel: "medium", enabledNow: false, userFacingRequirement: "Requires iOS/Xcode runner.", requiredCapability: "iosRunner", internalPhase: "P38" },
-        { id: "govern-agent-work", label: "Govern Agent Work", description: "Inspect active tasks, agent assignments, capabilities, approvals, evidence, and policy blocks.", category: "govern", primaryAgents: ["NEXUS", "SHEPHERD", "AUDITOR", "WARDEN"], evidenceCreated: ["governance_summary", "audit_review"], approvalRequired: false, riskLevel: "low", enabledNow: true, userFacingRequirement: "", requiredCapability: "agentWorkbench", internalPhase: "P36" },
-      ],
       recommendedWorkflows: ["govern-agent-work", "plan-sprint", "build-product"],
-      workspaceStatus: {
-        missionReady: true,
-        planReady: true,
-        tasksActivated: false,
-        backendValidated: true,
-        tests: `${pvBackend.testsPassed ?? 58}/${pvBackend.totalTests ?? 58} PASS`,
-        readyForTaskActivation: true,
-      },
-      currentLimitations: [
-        "Broad autonomous build requires worker runtime and provider dispatch.",
-        "Release review requires release action bridge.",
-        "iOS validation requires iOS/Xcode runner.",
-        "DB writes not enabled — DB foundation is read-only (file-backed).",
-      ],
+      workspaceStatus: workspaceSummary.workspaceStatus,
+      currentLimitations: workspaceSummary.currentLimitations,
     },
     liveApi: {
       policyPhase: "P40-LOCAL",
@@ -221,21 +206,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         action: "shell:npm run local-api:start",
       },
     },
-    capabilityReadiness: {
-      missionComposer:          { status: "ready",          userFacingState: "Available" },
-      missionActionBridge:      { status: "ready",          userFacingState: "Available" },
-      taskActivation:           { status: "ready",          userFacingState: "Available" },
-      agentWorkbench:           { status: "ready",          userFacingState: "Available" },
-      humanReview:              { status: "ready",          userFacingState: "Available" },
-      controlledImplementation: { status: "ready",          userFacingState: "Available for scoped implementation" },
-      liveLocalApi:             { status: "ready",          userFacingState: "Available" },
-      dbFoundationCap:          { status: "ready_read_only", userFacingState: "DB foundation ready; DB writes disabled" },
-      dbWrites:                 { status: "not_enabled",    userFacingState: "DB writes not enabled" },
-      workerRuntime:            { status: "not_enabled",    userFacingState: "Requires worker runtime" },
-      providerDispatch:         { status: "not_enabled",    userFacingState: "Requires governed provider dispatch" },
-      iosRunner:                { status: "not_enabled",    userFacingState: "Requires iOS/Xcode runner" },
-      releaseActionBridge:      { status: "not_enabled",    userFacingState: "Requires release action bridge" },
-    },
+    capabilityReadiness: CAPABILITY_READINESS,
     dbFoundation: {
       phase: "P41-LOCAL",
       mode: "disabled",
@@ -254,7 +225,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       },
       entities: [],
       nextPhase: "P42-LOCAL",
-      nextPhaseAction: "Enable DB writes and migrate file-backed state to DB",
+      nextPhaseAction: "Enable DB writes and migrate file-backed state to DB when policy allows it.",
     },
     careloopProductProgress: {
       productName: "CareLoop",
@@ -308,10 +279,10 @@ export function buildCommandCenterViewModel(studio) {
     shell: {
       mode: "local-private",
       environment: "Prototype",
-      activeProject: studio.activeProject?.name || "DemoApp",
+      activeProject: studio.activeProject?.name || "Private Project",
     },
     mission: {
-      founderIntent: "Build and validate DemoApp through governed NEXUS agents.",
+      founderIntent: "Build and validate the active mission through governed NEXUS agents.",
       sprintId: "Sprint 2026.18",
       lead: "SHEPHERD",
       sprintProgress: studio.gateProgress || 62,

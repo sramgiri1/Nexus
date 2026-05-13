@@ -43,7 +43,7 @@ export function recommendWorkflows(context = {}) {
       }
 
       if (t.id === "validate-backend" && !status.backendValidated) {
-        contextualRequirement = "Backend not yet validated — run controlled backend validation.";
+        contextualRequirement = "Uses controlled runner and evidence capture.";
       }
 
       return { ...t, enabledNow: contextualEnabled, userFacingRequirement: contextualRequirement };
@@ -66,6 +66,7 @@ export function getNextBestAction(context = {}) {
       enabled: true,
       userFacingRequirement: "",
       requiredCapability: "missionComposer",
+      userFacingState: "Available",
       targetPhase: "P37",
     };
   }
@@ -78,6 +79,7 @@ export function getNextBestAction(context = {}) {
       enabled: true,
       userFacingRequirement: "",
       requiredCapability: "taskActivation",
+      userFacingState: "Available",
       targetPhase: "P37",
     };
   }
@@ -90,6 +92,7 @@ export function getNextBestAction(context = {}) {
       enabled: true,
       userFacingRequirement: "Uses controlled runner and evidence capture.",
       requiredCapability: "taskActivation",
+      userFacingState: "Available",
       targetPhase: "P37",
     };
   }
@@ -102,6 +105,7 @@ export function getNextBestAction(context = {}) {
       enabled: true,
       userFacingRequirement: "",
       requiredCapability: "taskActivation",
+      userFacingState: "Available for planning",
       targetPhase: "P37",
     };
   }
@@ -113,6 +117,7 @@ export function getNextBestAction(context = {}) {
     enabled: true,
     userFacingRequirement: "",
     requiredCapability: "agentWorkbench",
+    userFacingState: "Available",
     targetPhase: "P36",
   };
 }

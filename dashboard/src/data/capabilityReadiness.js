@@ -1,74 +1,68 @@
-/**
- * capabilityReadiness.js — P41-LOCAL
- * Derives operator-facing capability state from completed phases.
- * Phase numbers stay in OS Roadmap data. Primary UX uses capability labels.
- */
-
 export const CAPABILITY_READINESS = {
   missionComposer: {
     status: "ready",
-    label: "Mission composer ready",
     userFacingState: "Available",
+    description: "Mission planning is available.",
   },
   missionActionBridge: {
     status: "ready",
-    label: "Mission action bridge ready",
     userFacingState: "Available",
+    description: "Governed mission actions are available.",
   },
   taskActivation: {
     status: "ready",
-    label: "Task activation ready",
     userFacingState: "Available",
+    description: "Planned tasks can be activated into runtime.",
   },
   agentWorkbench: {
     status: "ready",
-    label: "Agent workbench ready",
     userFacingState: "Available",
+    description: "Activated tasks can be inspected and reviewed.",
   },
   humanReview: {
     status: "ready",
-    label: "Human review loop ready",
     userFacingState: "Available",
+    description: "Human review decisions can be captured.",
   },
   controlledImplementation: {
-    status: "ready",
-    label: "Controlled implementation ready",
+    status: "ready_scoped",
     userFacingState: "Available for scoped implementation",
+    description: "Documentation-only controlled implementation is available.",
   },
   liveLocalApi: {
     status: "ready",
-    label: "Live local API ready",
     userFacingState: "Available",
+    description: "Local API read endpoints are available.",
   },
   dbFoundation: {
     status: "ready_read_only",
-    label: "DB foundation ready",
-    userFacingState: "DB foundation ready; DB writes disabled",
+    userFacingState: "Durable State foundation ready; DB writes disabled",
+    description: "DB schema and read model exist. Runtime remains file-backed.",
   },
   dbWrites: {
     status: "not_enabled",
-    label: "DB writes not enabled",
     userFacingState: "DB writes not enabled",
+    description: "DB writes are intentionally disabled.",
   },
   workerRuntime: {
     status: "not_enabled",
-    label: "Worker runtime not enabled",
     userFacingState: "Requires worker runtime",
+    description: "Background execution is not enabled yet.",
   },
   providerDispatch: {
     status: "not_enabled",
-    label: "Provider dispatch not enabled",
     userFacingState: "Requires governed provider dispatch",
+    description: "Provider/tool dispatch is not enabled yet.",
   },
   iosRunner: {
     status: "not_enabled",
-    label: "iOS/Xcode runner not enabled",
     userFacingState: "Requires iOS/Xcode runner",
+    description: "iOS validation runner is not enabled yet.",
   },
   releaseActionBridge: {
     status: "not_enabled",
-    label: "Release action bridge not enabled",
     userFacingState: "Requires release action bridge",
+    description: "Release/deploy actions are not enabled yet.",
   },
 };
 
@@ -82,5 +76,7 @@ export function getCapabilityState(capabilityId) {
 
 export function isCapabilityReady(capabilityId) {
   const cap = CAPABILITY_READINESS[capabilityId];
-  return cap ? cap.status === "ready" || cap.status === "ready_read_only" : false;
+  return cap
+    ? ["ready", "ready_read_only", "ready_scoped"].includes(cap.status)
+    : false;
 }
