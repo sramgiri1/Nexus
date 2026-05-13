@@ -81,11 +81,17 @@ Command Center is the current operator surface for:
 
 Unified boot is planned for P41.6. Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
 
-## P41.6.1 Service Foundation
+## Local boot commands
 
-P41.6.1 adds a read-only local service manifest, `nexus:status`, and
-`nexus:doctor`. Single-command boot comes next in P41.6.2. Services remain
-local/private and manually started in this phase.
+P41.6.2 adds one-command local boot and shutdown on top of the service
+manifest foundation:
+
+- `npm run nexus:up`
+- `npm run nexus:down`
+- `npm run nexus:status`
+- `npm run nexus:doctor`
+
+Services remain local/private, localhost-only, and DB writes remain disabled.
 
 ## Local Development and Running Current Services
 
@@ -97,7 +103,14 @@ npm run local-api:start
 npm run mission:action-server
 ```
 
-There is no unified boot command yet.
+Common local boot commands now include:
+
+```bash
+npm run nexus:up
+npm run nexus:status
+npm run nexus:doctor
+npm run nexus:down
+```
 
 ## Documentation Map
 

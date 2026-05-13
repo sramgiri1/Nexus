@@ -84,9 +84,13 @@
     "check:live-local-api": "node scripts/check-live-local-api.js",
     "db:status": "node scripts/db-foundation-status.js",
     "check:db-foundation": "node scripts/check-db-foundation.js",
+    "nexus:up": "node scripts/nexus-up.js",
+    "nexus:dev": "node scripts/nexus-up.js --dev",
+    "nexus:down": "node scripts/nexus-down.js",
     "nexus:status": "node scripts/nexus-status.js",
     "nexus:doctor": "node scripts/nexus-doctor.js",
-    "check:nexus-service-orchestration": "node scripts/check-nexus-service-orchestration.js"
+    "check:nexus-service-orchestration": "node scripts/check-nexus-service-orchestration.js",
+    "check:nexus-local-boot": "node scripts/check-nexus-local-boot.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

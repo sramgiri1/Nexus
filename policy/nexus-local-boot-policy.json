@@ -1,0 +1,27 @@
+{
+  "version": "1.0",
+  "phase": "P41.6.2",
+  "purpose": "unified_local_boot_process_manager",
+  "modeRequired": "local-private",
+  "localOnly": true,
+  "bindHostAllowed": [
+    "127.0.0.1",
+    "localhost"
+  ],
+  "externalNetworkAllowed": false,
+  "providerCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "productionDbAllowed": false,
+  "arbitraryCommandAllowed": false,
+  "manifestCommandsOnly": true,
+  "processStateDirectory": "local-state/runtime/services",
+  "managedPidOnlyShutdown": true,
+  "dashboardRequired": true,
+  "localApiRequired": true,
+  "actionBridgeRequired": true,
+  "disabledByDefault": [
+    "workers",
+    "mcp-gateway",
+    "provider-gateway"
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "stateVersion": "1.0",
+  "updatedAt": "2026-05-13T20:44:13.209Z",
+  "mode": "local-private",
+  "services": [
+    {
+      "id": "local-api",
+      "label": "Live Local API",
+      "status": "stopped",
+      "pid": null,
+      "port": 4321,
+      "host": "127.0.0.1",
+      "startedAt": null,
+      "stoppedAt": "2026-05-13T20:44:13.208Z",
+      "healthUrl": "http://127.0.0.1:4321/health",
+      "logPath": "",
+      "lastError": "",
+      "managedByNexus": false
+    },
+    {
+      "id": "action-bridge",
+      "label": "Governed Action Bridge",
+      "status": "stopped",
+      "pid": null,
+      "port": 3748,
+      "host": "127.0.0.1",
+      "startedAt": null,
+      "stoppedAt": "2026-05-13T20:44:13.209Z",
+      "healthUrl": "http://127.0.0.1:3748/health",
+      "logPath": "",
+      "lastError": "",
+      "managedByNexus": false
+    },
+    {
+      "id": "command-center",
+      "label": "Command Center",
+      "status": "stopped",
+      "pid": null,
+      "port": 5173,
+      "host": "127.0.0.1",
+      "startedAt": null,
+      "stoppedAt": "2026-05-13T20:44:13.209Z",
+      "healthUrl": "http://127.0.0.1:5173/",
+      "logPath": "",
+      "lastError": "",
+      "managedByNexus": false
+    }
+  ]
+}
