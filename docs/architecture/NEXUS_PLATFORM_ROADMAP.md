@@ -386,6 +386,55 @@ Risk level:
 
 ## Upcoming
 
+### P41.5 — Command Center UX Stabilization Complete
+
+P41.5 is now complete. It covers:
+
+- route-wide stale phase-label cleanup
+- capability-state cleanup
+- System / Dark / Light theme support
+- Mission Control enterprise layout
+- page-specific Command Center UX cleanup
+- route-wide screenshot audit
+- usage docs, codebase docs, README finalization, and docs coverage checks
+
+### P41.6 — Unified NEXUS Local Boot / Service Orchestration
+
+Goal:
+
+- provide a clean local boot flow for the dashboard, local API, and action bridge
+
+Notes:
+
+- this follows P41.5
+- current manual service start commands remain the supported model until P41.6 lands
+
+### P41.7 — Documentation System Follow-through
+
+Most usage/codebase documentation goals are now partially satisfied by P41.5.6.
+Any future P41.7 work should focus on reuse audits, drift reduction, and doc
+maintenance patterns rather than rebuilding the basic docs set.
+
+### P41.8 — Centralized Activity Log + Observability Ledger
+
+Goal:
+
+- unify evidence, audit, runtime events, and operator activity surfaces
+
+### P41.9 — README + Architecture Diagram Registry Follow-through
+
+Goal:
+
+- extend the diagram registry and any remaining architecture visualization
+  follow-through that was not finished during P41.5.6
+
+### P42 — Project Registry + Adapter Framework
+
+Goal:
+
+- formalize project registration and adapter posture after the current runtime,
+  governance, and operator layers stabilize
+
 ### Phase 15 — Containerization and Worker Scaling
 
 Goal:

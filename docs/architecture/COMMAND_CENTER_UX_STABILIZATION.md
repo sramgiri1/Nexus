@@ -260,3 +260,29 @@ During capture, the audit verifies baseline rendered UX rules:
 ### Next Phase
 
 - P41.5.6 — Usage Docs + Codebase Docs + README Finalization
+
+## P41.5.6 — Usage Docs + Codebase Docs + README Finalization
+
+This subphase completes the first Command Center UX stabilization arc by adding the documentation layer around the UX work.
+
+It adds:
+
+- operator-facing usage guides under `docs/usage/`
+- contributor-facing codebase guides under `docs/codebase/`
+- README cleanup and documentation map updates
+- a diagram registry placeholder
+- a docs coverage checker and report
+
+### Purpose
+
+The goal is to make the current P41.5 Command Center surface understandable without reading source code or phase-by-phase implementation notes.
+
+### Remaining Limitations
+
+- public-safety false positives in the roadmap doc still remain a known issue
+- screenshot audit remains a route-wide baseline, not a pixel-diff regression system
+- planned Command Center routes remain intentionally skipped rather than fabricated
+
+### Next Phase
+
+- P41.6 — Unified NEXUS Local Boot / Service Orchestration

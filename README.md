@@ -31,6 +31,102 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
+## Current Status Through P41.5
+
+P41.5 is now complete. The Command Center surface has:
+
+- route-wide stale phase-label cleanup
+- capability-based state messaging
+- System / Dark / Light theme support
+- Mission Control enterprise cockpit layout
+- page-specific UX cleanup across major routes
+- route-wide screenshot and visual QA audit under `reports/ui-audit/`
+
+## Command Center Overview
+
+Command Center is the current operator surface for:
+
+- Mission Control
+- Workspace
+- Task Queue
+- Agent Workbench
+- Implementation Workflow
+- Live API Status
+- Durable State
+- Evidence
+- Safety Center
+- Projects
+- OS Roadmap
+- supporting governance and platform routes
+
+## Current Capabilities
+
+- governed local planning and task activation
+- human review through Agent Workbench
+- evidence, audit, and runtime record visibility
+- local approval workflow
+- controlled implementation summaries
+- live local API read surfaces
+- durable state foundation with file-backed persistence
+- visual QA screenshots and route-wide UX checks
+
+## What Is Not Enabled Yet
+
+- unified boot
+- worker runtime
+- governed provider dispatch
+- DB-backed runtime writes
+- release/deploy action bridge
+- broad autonomous source mutation
+
+Unified boot is planned for P41.6. Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
+
+## Local Development and Running Current Services
+
+Use the existing commands in `package.json`. Common entry points include:
+
+```bash
+npm run dashboard
+npm run local-api:start
+npm run mission:action-server
+```
+
+There is no unified boot command yet.
+
+## Documentation Map
+
+- Usage guides: [docs/usage](docs/usage/README.md)
+- Codebase guides: [docs/codebase](docs/codebase/README.md)
+- Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
+- Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
+- Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
+
+## Safety and Governance Boundaries
+
+- public/demo surfaces remain public-safe
+- local-private work stays governed and redacted
+- DB writes remain disabled by policy
+- provider calls are not enabled
+- project mutation remains governed and intentionally constrained
+
+## Project / Private Data Boundary
+
+Public-facing README sections use “private project” wording. Private-project implementation details stay out of the public-safe operator and docs surfaces unless a private-mode-only artifact explicitly requires them.
+
+## Roadmap Summary
+
+- P41.5: Command Center UX, theme, screenshot audit, and docs finalization
+- P41.6: Unified NEXUS Local Boot / Service Orchestration
+- P41.8: Centralized Activity Log + Observability Ledger
+- P42: Project Registry + Adapter Framework
+
+## Known Limitations
+
+- `check:public-safety` still has known pre-existing roadmap-doc false positives
+- screenshot audit is a visual baseline, not a pixel-diff regression system
+- planned routes are intentionally marked skipped, not fabricated
+- the dashboard can use snapshot/file-backed fallbacks when live services are offline
+
 ## Zero-Key Demo
 
 ```bash

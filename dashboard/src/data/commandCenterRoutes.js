@@ -9,6 +9,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Mission Control",
     status: "implemented",
     badge: "Live",
+    helpDoc: "docs/usage/STARTING_A_MISSION.md",
   },
   {
     key: "workspace",
@@ -18,6 +19,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Workspace",
     status: "implemented",
+    helpDoc: "docs/usage/STARTING_A_MISSION.md",
   },
   {
     key: "tasks",
@@ -27,6 +29,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Task Queue",
     status: "implemented",
+    helpDoc: "docs/usage/ACTIVATING_TASKS.md",
   },
   {
     key: "workbench",
@@ -37,6 +40,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Agent Workbench",
     status: "implemented",
     badge: "Ready",
+    helpDoc: "docs/usage/USING_AGENT_WORKBENCH.md",
   },
   {
     key: "projects",
@@ -46,6 +50,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Projects",
     status: "implemented",
+    helpDoc: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
   },
   {
     key: "gates",
@@ -55,6 +60,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Verification Gates",
     status: "implemented",
+    helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
   {
     key: "contracts",
@@ -64,6 +70,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Contracts",
     status: "implemented",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "evidence",
@@ -73,6 +80,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Evidence",
     status: "implemented",
+    helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
   {
     key: "safety",
@@ -82,6 +90,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Safety Center",
     status: "implemented",
+    helpDoc: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
   },
   {
     key: "approvals",
@@ -91,6 +100,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Approvals",
     status: "implemented",
+    helpDoc: "docs/usage/USING_AGENT_WORKBENCH.md",
   },
   {
     key: "implementation",
@@ -101,6 +111,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Implementation Workflow",
     status: "implemented",
     badge: "Ready",
+    helpDoc: "docs/usage/CONTROLLED_IMPLEMENTATION.md",
   },
   {
     key: "release",
@@ -110,6 +121,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Release Control",
     status: "implemented",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "agents",
@@ -119,6 +131,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Agent Fleet",
     status: "implemented",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "liveapi",
@@ -129,6 +142,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Live API Status",
     status: "implemented",
     badge: "Live",
+    helpDoc: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
   },
   {
     key: "database",
@@ -139,6 +153,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Durable State",
     status: "implemented",
     badge: "Read-only",
+    helpDoc: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
   },
   {
     key: "batch",
@@ -148,6 +163,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Batch Queue",
     status: "implemented",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "cost",
@@ -157,6 +173,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Cost Center",
     status: "implemented",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "roadmap",
@@ -166,6 +183,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: true,
     expectedHeading: "OS Roadmap",
     status: "implemented",
+    helpDoc: "docs/usage/GETTING_STARTED.md",
   },
   {
     key: "activity",
@@ -176,6 +194,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Activity Log",
     status: "planned",
     badge: "Planned",
+    helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
   {
     key: "docs",
@@ -186,6 +205,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Docs & Guides",
     status: "planned",
     badge: "Planned",
+    helpDoc: "docs/usage/README.md",
   },
   {
     key: "settings",
@@ -196,6 +216,7 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Settings",
     status: "planned",
     badge: "Planned",
+    helpDoc: "docs/usage/TROUBLESHOOTING.md",
   },
   {
     key: "demo",
@@ -205,6 +226,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Demo Mode",
     status: "implemented",
+    helpDoc: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
   },
 ];
 

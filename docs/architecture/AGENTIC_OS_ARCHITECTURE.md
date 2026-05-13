@@ -107,6 +107,18 @@ local-private snapshot that summarizes private-project validation status,
 governance posture, and redacted runtime records without adding API, DB, or
 provider wiring.
 
+Phase 41.5 completes the first full Command Center UX stabilization loop:
+route-wide copy cleanup, capability-state cleanup, global theme support,
+Mission Control enterprise layout, page-specific UX cleanup, screenshot audit,
+and a split between operator-facing usage guides and contributor-facing
+codebase guides.
+
+The documentation layer is now intentionally separated:
+
+- `docs/usage/` for operators and local users
+- `docs/codebase/` for contributors, maintainers, and coding agents
+- `docs/architecture/` for system-model and roadmap references
+
 See also [`DOMAIN_OWNERSHIP_POLICY.md`](DOMAIN_OWNERSHIP_POLICY.md),
 [`AGENT_AUTHORITY_MATRIX.md`](AGENT_AUTHORITY_MATRIX.md),
 [`HANDOFF_OWNERSHIP_MODEL.md`](HANDOFF_OWNERSHIP_MODEL.md), and

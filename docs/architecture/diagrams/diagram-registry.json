@@ -1,0 +1,94 @@
+{
+  "version": "1.0",
+  "owner": "NEXUS",
+  "diagrams": [
+    {
+      "id": "nexus-enterprise-architecture",
+      "title": "NEXUS Enterprise Architecture",
+      "purpose": "High-level OS architecture view.",
+      "status": "existing",
+      "sourcePath": "docs/images/nexus-architecture.svg",
+      "imagePath": "docs/images/nexus-architecture.svg",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "nexus-roadmap",
+      "title": "NEXUS Roadmap",
+      "purpose": "Roadmap and phase progression view.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "command-center-flow",
+      "title": "Command Center Flow",
+      "purpose": "Operator surface and route relationship diagram.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "project-os-boundary",
+      "title": "Project OS Boundary",
+      "purpose": "Public-safe vs local-private project boundary view.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "agent-governance",
+      "title": "Agent Governance",
+      "purpose": "Agent roles, approvals, and verification boundary map.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "runtime-self-healing",
+      "title": "Runtime Self-Healing",
+      "purpose": "Future runtime recovery and resilience view.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "agent-a2a-a2h-interaction",
+      "title": "Agent A2A and A2H Interaction",
+      "purpose": "Agent-to-agent and agent-to-human interaction map.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    },
+    {
+      "id": "sentinel-agent-flow",
+      "title": "Sentinel Agent Flow",
+      "purpose": "Sentinel verification and governance flow.",
+      "status": "planned",
+      "sourcePath": "",
+      "imagePath": "",
+      "owner": "NEXUS",
+      "publicSafe": true,
+      "lastUpdatedPhase": "P41.5"
+    }
+  ]
+}
