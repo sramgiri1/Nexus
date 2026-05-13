@@ -4,6 +4,9 @@ import { execFileSync } from "node:child_process";
 
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports/command-center-ux-report.md");
+const SCREENSHOT_AUDIT_SCRIPT_PATH = "scripts/capture-command-center-screenshots.js";
+const SCREENSHOT_MANIFEST_PATH = "reports/ui-audit/manifest.json";
+const VISUAL_QA_REPORT_PATH = "reports/ui-audit/visual-qa-report.md";
 
 const sections = {
   routeMatrix: true,
@@ -13,6 +16,8 @@ const sections = {
   themeControl: true,
   missionControlLayout: true,
   pageSpecificUx: true,
+  screenshotAudit: true,
+  visualQaReport: true,
   sidebarLabels: true,
   workflowLabels: true,
   pageCopy: true,
@@ -134,10 +139,13 @@ const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js")
 const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
 const themeCssSource = readFile("dashboard/src/styles-command-center-v2.css");
 const routeTestSource = readFile("dashboard/tests/routes.spec.js");
+const screenshotAuditSource = readFile(SCREENSHOT_AUDIT_SCRIPT_PATH);
+const visualQaReportSource = readFile(VISUAL_QA_REPORT_PATH);
 
 let routeMatrix = [];
 let capabilityReadiness = {};
 let roadmapPhases = [];
+let screenshotManifest = null;
 
 try {
   ({ COMMAND_CENTER_ROUTES: routeMatrix } = await import("../dashboard/src/data/commandCenterRoutes.js"));
@@ -155,6 +163,16 @@ try {
   ({ NEXUS_ROADMAP_PHASES: roadmapPhases } = await import("../dashboard/src/data/nexusRoadmap.js"));
 } catch (error) {
   fail("roadmapPreservation", `Could not import nexusRoadmap.js: ${error.message}`);
+}
+
+try {
+  if (!existsSync(join(ROOT, SCREENSHOT_MANIFEST_PATH))) {
+    fail("screenshotAudit", "Screenshot manifest is missing");
+  } else {
+    screenshotManifest = JSON.parse(readFile(SCREENSHOT_MANIFEST_PATH));
+  }
+} catch (error) {
+  fail("screenshotAudit", `Could not parse screenshot manifest: ${error.message}`);
 }
 
 // Route matrix
@@ -391,6 +409,71 @@ for (const expectedTest of [
   check(routeTestSource.includes(expectedTest), "pageSpecificUx", `Page-specific UX tests missing: ${expectedTest}`);
 }
 
+// Screenshot audit
+check(screenshotAuditSource.length > 0, "screenshotAudit", "capture-command-center-screenshots.js must exist");
+for (const expected of [
+  "reports/ui-audit",
+  "manifest.json",
+  "visual-qa-report.md",
+  "dark",
+  "light",
+  "staleLabelsAbsent",
+  "rawDumpAbsent",
+  "themeControlVisible",
+]) {
+  check(screenshotAuditSource.includes(expected), "screenshotAudit", `Screenshot audit script missing expected contract marker: ${expected}`);
+}
+for (const expectedTest of [
+  "screenshot audit script contract exists and manifest is compatible when generated",
+  "implemented routes render in dark and light themes",
+  "every primary route has a heading, state block, and no raw JSON dump",
+]) {
+  check(routeTestSource.includes(expectedTest), "screenshotAudit", `Route tests missing screenshot/theme audit coverage: ${expectedTest}`);
+}
+check(!!screenshotManifest, "screenshotAudit", "Screenshot manifest must parse");
+check(screenshotManifest?.auditVersion === "1.0", "screenshotAudit", "Screenshot manifest auditVersion must be 1.0");
+check(screenshotManifest?.phase === "P41.5.5", "screenshotAudit", "Screenshot manifest phase must be P41.5.5");
+check(Array.isArray(screenshotManifest?.themes), "screenshotAudit", "Screenshot manifest themes must be an array");
+check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screenshot manifest must include dark theme");
+check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
+check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
+for (const path of requiredRoutePaths) {
+  const route = screenshotManifest?.routes?.find((entry) => entry.path === path);
+  check(!!route, "screenshotAudit", `Screenshot manifest missing required route: ${path}`);
+}
+for (const route of screenshotManifest?.routes || []) {
+  if (route.status === "captured") {
+    check(!!route.screenshots?.dark, "screenshotAudit", `Captured route missing dark screenshot path: ${route.path}`);
+    check(!!route.screenshots?.light, "screenshotAudit", `Captured route missing light screenshot path: ${route.path}`);
+    if (route.screenshots?.dark) {
+      check(existsSync(join(ROOT, route.screenshots.dark)), "screenshotAudit", `Dark screenshot file missing: ${route.screenshots.dark}`);
+    }
+    if (route.screenshots?.light) {
+      check(existsSync(join(ROOT, route.screenshots.light)), "screenshotAudit", `Light screenshot file missing: ${route.screenshots.light}`);
+    }
+  }
+  if (route.status === "skipped") {
+    check(route.implemented === false || route.warnings?.length > 0, "screenshotAudit", `Skipped route should be marked planned/unavailable with a reason: ${route.path}`);
+  }
+}
+
+// Visual QA report
+check(visualQaReportSource.length > 0, "visualQaReport", "Visual QA report must exist");
+for (const expected of [
+  "# NEXUS Command Center Visual QA Report",
+  "## Metadata",
+  "Validation branch:",
+  "Validation HEAD:",
+  "## Scope",
+  "## Summary",
+  "## Route Coverage Table",
+  "## UX Checks",
+  "## Known Limitations",
+  "## Next Phase",
+]) {
+  check(visualQaReportSource.includes(expected), "visualQaReport", `Visual QA report missing expected section: ${expected}`);
+}
+
 // OS Roadmap preservation
 for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
@@ -421,6 +504,7 @@ for (const relativePath of [
   "dashboard/src/styles-command-center-v2.css",
   "workspace/workflowTemplates.js",
   "workspace/workflowRecommendations.js",
+  SCREENSHOT_AUDIT_SCRIPT_PATH,
   "scripts/check-command-center-ux.js",
   "docs/architecture/COMMAND_CENTER_UX_STABILIZATION.md",
 ]) {
@@ -441,6 +525,8 @@ console.log(`Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}`);
 console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
+console.log(`Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}`);
+console.log(`Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
 console.log(`Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}`);
 console.log(`Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}`);
@@ -468,6 +554,8 @@ const report = `# Command Center UX Report
 - Theme control: ${sections.themeControl ? "PASS" : "FAIL"}
 - Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
+- Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}
+- Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}
 - Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}
 - Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}

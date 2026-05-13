@@ -183,3 +183,80 @@ The cleaned pages continue to use the shared System / Dark / Light theme tokens 
 - P41.5.5 — Screenshot UX Audit
 - Route screenshots in dark/light
 - Visual regression and readability review
+
+## P41.5.5 — Route-Wide Screenshot UX Audit + Visual QA Report
+
+This subphase adds a generated visual QA layer on top of the existing route-wide UX and theme checks.
+
+Purpose:
+
+- capture implemented Command Center routes as screenshots
+- validate dark and light theme coverage
+- record rendered-DOM UX checks in a manifest
+- generate a readable visual QA report under `reports/ui-audit/`
+
+### Screenshot Routes
+
+The audit uses the Command Center route matrix and captures every implemented route. Planned routes remain in the audit output as skipped entries rather than being silently ignored.
+
+### Dark / Light Capture
+
+The audit sets `localStorage["nexus-theme"]` deterministically and captures:
+
+- dark
+- light
+
+System theme remains covered by the route-wide interaction tests from P41.5.2.
+
+### Manifest
+
+The screenshot script writes:
+
+- `reports/ui-audit/manifest.json`
+
+The manifest records:
+
+- route coverage
+- captured screenshot paths
+- skipped/planned routes
+- heading visibility
+- theme control visibility
+- sidebar visibility
+- stale-label checks
+- raw dump checks
+
+### Visual QA Report
+
+The audit also writes:
+
+- `reports/ui-audit/visual-qa-report.md`
+
+This report summarizes:
+
+- expected vs captured routes
+- skipped/planned routes
+- screenshot counts
+- route coverage table
+- UX rule status
+- current limitations
+
+### Rendered DOM Checks
+
+During capture, the audit verifies baseline rendered UX rules:
+
+- heading visible
+- theme control visible
+- sidebar visible
+- stale phase labels absent from non-roadmap routes
+- no raw JSON/log dumps in primary UX
+- DemoApp boundary preserved outside Demo Mode
+
+### Limitations
+
+- The audit uses the dashboard's local Vite server and snapshot/file-backed UI fallbacks.
+- It does not require the local API to be online.
+- It is a route-wide readability audit, not a pixel-perfect visual regression system.
+
+### Next Phase
+
+- P41.5.6 — Usage Docs + Codebase Docs + README Finalization

@@ -1,6 +1,11 @@
+import { existsSync, readFileSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
 import { COMMAND_CENTER_ROUTES } from "../src/data/commandCenterRoutes.js";
 import { NEXUS_ROADMAP_PHASES } from "../src/data/nexusRoadmap.js";
+
+const SCREENSHOT_AUDIT_SCRIPT = fileURLToPath(new URL("../../scripts/capture-command-center-screenshots.js", import.meta.url));
+const SCREENSHOT_MANIFEST = fileURLToPath(new URL("../../reports/ui-audit/manifest.json", import.meta.url));
 
 const PRIMARY_ROUTE_KEYS = [
   "mission",
@@ -213,6 +218,26 @@ test("traction route renders investor room and economics surfaces", async ({ pag
 });
 
 test.describe("Command Center route-wide UX", () => {
+  test("screenshot audit script contract exists and manifest is compatible when generated", async () => {
+    expect(existsSync(SCREENSHOT_AUDIT_SCRIPT)).toBe(true);
+
+    for (const route of PRIMARY_COMMAND_CENTER_ROUTES) {
+      expect(COMMAND_CENTER_ROUTES.some((entry) => entry.path === route.path)).toBe(true);
+    }
+
+    if (existsSync(SCREENSHOT_MANIFEST)) {
+      const manifest = JSON.parse(readFileSync(SCREENSHOT_MANIFEST, "utf8"));
+      expect(manifest.auditVersion).toBe("1.0");
+      expect(manifest.phase).toBe("P41.5.5");
+      expect(manifest.themes).toEqual(expect.arrayContaining(["dark", "light"]));
+      expect(Array.isArray(manifest.routes)).toBe(true);
+
+      for (const route of PRIMARY_COMMAND_CENTER_ROUTES) {
+        expect(manifest.routes.some((entry) => entry.path === route.path)).toBe(true);
+      }
+    }
+  });
+
   test("theme switcher exists globally", async ({ page }) => {
     const errors = captureClientErrors(page);
 

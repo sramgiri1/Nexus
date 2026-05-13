@@ -1,0 +1,459 @@
+{
+  "auditVersion": "1.0",
+  "phase": "P41.5.5",
+  "generatedAt": "2026-05-13T10:40:03.340Z",
+  "branch": "test/command-center-screenshot-ux-audit",
+  "head": "8102725",
+  "themes": [
+    "dark",
+    "light"
+  ],
+  "summary": {
+    "routesExpected": 22,
+    "routesCaptured": 19,
+    "routesSkipped": 3,
+    "screenshotsCaptured": 38,
+    "failures": 0
+  },
+  "routes": [
+    {
+      "path": "/command-center",
+      "name": "Mission Control",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/command-center.png",
+        "light": "reports/ui-audit/light/command-center.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/workspace",
+      "name": "Workspace",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/workspace.png",
+        "light": "reports/ui-audit/light/workspace.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/tasks",
+      "name": "Task Queue",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/tasks.png",
+        "light": "reports/ui-audit/light/tasks.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/workbench",
+      "name": "Agent Workbench",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/workbench.png",
+        "light": "reports/ui-audit/light/workbench.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/projects",
+      "name": "Projects",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/projects.png",
+        "light": "reports/ui-audit/light/projects.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/gates",
+      "name": "Verification Gates",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/gates.png",
+        "light": "reports/ui-audit/light/gates.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/contracts",
+      "name": "Contracts",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/contracts.png",
+        "light": "reports/ui-audit/light/contracts.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/evidence",
+      "name": "Evidence",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/evidence.png",
+        "light": "reports/ui-audit/light/evidence.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/safety",
+      "name": "Safety Center",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/safety.png",
+        "light": "reports/ui-audit/light/safety.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/approvals",
+      "name": "Approvals",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/approvals.png",
+        "light": "reports/ui-audit/light/approvals.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/implementation",
+      "name": "Implementation",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/implementation.png",
+        "light": "reports/ui-audit/light/implementation.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/release",
+      "name": "Release Control",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/release.png",
+        "light": "reports/ui-audit/light/release.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/agents",
+      "name": "Agent Fleet",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/agents.png",
+        "light": "reports/ui-audit/light/agents.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/liveapi",
+      "name": "Live API",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/liveapi.png",
+        "light": "reports/ui-audit/light/liveapi.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/database",
+      "name": "Durable State",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/database.png",
+        "light": "reports/ui-audit/light/database.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/batch",
+      "name": "Batch Queue",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/batch.png",
+        "light": "reports/ui-audit/light/batch.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/cost",
+      "name": "Cost Center",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/cost.png",
+        "light": "reports/ui-audit/light/cost.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/roadmap",
+      "name": "OS Roadmap",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": true,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/roadmap.png",
+        "light": "reports/ui-audit/light/roadmap.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    },
+    {
+      "path": "/command-center/activity",
+      "name": "Activity Log",
+      "status": "skipped",
+      "implemented": false,
+      "allowPhaseLabels": false,
+      "screenshots": {},
+      "checks": {
+        "headingVisible": false,
+        "themeControlVisible": false,
+        "sidebarVisible": false,
+        "staleLabelsAbsent": false,
+        "rawDumpAbsent": false
+      },
+      "warnings": [
+        "Route is marked planned in commandCenterRoutes.js."
+      ],
+      "errors": []
+    },
+    {
+      "path": "/command-center/docs",
+      "name": "Docs & Guides",
+      "status": "skipped",
+      "implemented": false,
+      "allowPhaseLabels": false,
+      "screenshots": {},
+      "checks": {
+        "headingVisible": false,
+        "themeControlVisible": false,
+        "sidebarVisible": false,
+        "staleLabelsAbsent": false,
+        "rawDumpAbsent": false
+      },
+      "warnings": [
+        "Route is marked planned in commandCenterRoutes.js."
+      ],
+      "errors": []
+    },
+    {
+      "path": "/command-center/settings",
+      "name": "Settings",
+      "status": "skipped",
+      "implemented": false,
+      "allowPhaseLabels": false,
+      "screenshots": {},
+      "checks": {
+        "headingVisible": false,
+        "themeControlVisible": false,
+        "sidebarVisible": false,
+        "staleLabelsAbsent": false,
+        "rawDumpAbsent": false
+      },
+      "warnings": [
+        "Route is marked planned in commandCenterRoutes.js."
+      ],
+      "errors": []
+    },
+    {
+      "path": "/command-center/demo",
+      "name": "Demo Mode",
+      "status": "captured",
+      "implemented": true,
+      "allowPhaseLabels": false,
+      "screenshots": {
+        "dark": "reports/ui-audit/dark/demo.png",
+        "light": "reports/ui-audit/light/demo.png"
+      },
+      "checks": {
+        "headingVisible": true,
+        "themeControlVisible": true,
+        "sidebarVisible": true,
+        "staleLabelsAbsent": true,
+        "rawDumpAbsent": true
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "warnings": [],
+  "errors": []
+}
