@@ -74,6 +74,7 @@
     "mission:action-server": "NEXUS_MODE=local-private node scripts/mission-action-server.js",
     "check:mission-action-bridge": "node scripts/check-mission-action-bridge.js",
     "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
+    "check:command-center-ux": "node scripts/check-command-center-ux.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
     "check:agent-workbench": "node scripts/check-agent-workbench.js",
     "check:controlled-implementation-workflow": "node scripts/check-controlled-implementation-workflow.js",

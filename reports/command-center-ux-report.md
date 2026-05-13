@@ -2,15 +2,18 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T01:23:46.128Z
-- Validation branch: fix/command-center-visual-alignment
-- Validation HEAD: 5d7364b
+- Generated at: 2026-05-13T01:39:43.545Z
+- Validation branch: fix/command-center-theme-switcher
+- Validation HEAD: 105d841
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
 
 - Route matrix: PASS
 - Capability readiness: PASS
+- Theme hook: PASS
+- Theme tokens: PASS
+- Theme control: PASS
 - Sidebar labels: PASS
 - Workflow labels: PASS
 - Page copy: PASS

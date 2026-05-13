@@ -68,3 +68,34 @@ The sidebar no longer shows stale P37/P38/P39/P40/P41 labels.
 - P41.5.5 adds screenshot audit
 
 This subphase does not include theme work, layout redesign, screenshot audit, or backend execution changes.
+
+## P41.5.2 — Global Theme Switcher + Route-Wide Theme Validation
+
+Command Center now supports three themes:
+
+- System
+- Dark
+- Light
+
+Theme preference is stored in local storage under:
+
+- `nexus-theme`
+
+Command Center applies theme state through root attributes:
+
+- `data-nexus-theme="system|dark|light"`
+- `data-nexus-resolved-theme="dark|light"`
+
+The stylesheet is token-based. Command Center components read shared `--nexus-*` theme tokens and route rendering is validated under dark and light across the implemented route matrix.
+
+Playwright coverage now validates:
+
+- global theme switcher visibility
+- theme persistence across reloads
+- system theme resolution
+- route-wide dark/light rendering
+- stale phase-label absence after theme changes
+
+Next subphase:
+
+- P41.5.3 — Mission Control Enterprise Dashboard Layout

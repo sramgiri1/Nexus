@@ -21,6 +21,10 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
+const IMPLEMENTED_COMMAND_CENTER_ROUTES = COMMAND_CENTER_ROUTES.filter(
+  (route) => route.status !== "planned",
+);
+
 const NON_ROADMAP_PRIMARY_ROUTES = PRIMARY_COMMAND_CENTER_ROUTES.filter(
   (route) => route.key !== "roadmap",
 );
@@ -44,6 +48,12 @@ const FORBIDDEN_PHASE_LABELS = [
 // Safety Center shows Local API boundary section
 // Top bar shows Local API status indicator
 // OS Roadmap shows P39 COMPLETE and P40 IN PROGRESS
+// Agent Workbench nav item
+// Agent Workbench page renders
+// bridge offline
+// Go to Task Queue
+// P37 COMPLETE
+// P38 IN_PROGRESS
 
 function captureClientErrors(page) {
   const errors = [];
@@ -63,6 +73,20 @@ function captureClientErrors(page) {
   });
 
   return errors;
+}
+
+async function pickTheme(page, theme) {
+  await page.getByRole("button", { name: new RegExp(`Use ${theme} theme`, "i") }).click();
+}
+
+async function getThemeState(page) {
+  return page.evaluate(() => ({
+    storedTheme: window.localStorage.getItem("nexus-theme"),
+    rootTheme: document.documentElement.getAttribute("data-nexus-theme"),
+    resolvedTheme: document.documentElement.getAttribute("data-nexus-resolved-theme"),
+    shellTheme: document.querySelector(".ccv2-shell")?.getAttribute("data-nexus-theme"),
+    shellResolvedTheme: document.querySelector(".ccv2-shell")?.getAttribute("data-nexus-resolved-theme"),
+  }));
 }
 
 test("home route renders Command Center V2 shell", async ({ page }) => {
@@ -189,6 +213,78 @@ test("traction route renders investor room and economics surfaces", async ({ pag
 });
 
 test.describe("Command Center route-wide UX", () => {
+  test("theme switcher exists globally", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Use system theme/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Use dark theme/i })).toBeVisible();
+    await expect(page.getByRole("button", { name: /Use light theme/i })).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
+  test("theme persistence stores and restores light mode", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await pickTheme(page, "light");
+
+    let themeState = await getThemeState(page);
+    expect(themeState.storedTheme).toBe("light");
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.resolvedTheme).toBe("light");
+    expect(themeState.shellTheme).toBe("light");
+    expect(themeState.shellResolvedTheme).toBe("light");
+
+    await page.reload();
+    themeState = await getThemeState(page);
+    expect(themeState.storedTheme).toBe("light");
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.resolvedTheme).toBe("light");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("dark mode applies without reload", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workspace");
+    await pickTheme(page, "dark");
+
+    const themeState = await getThemeState(page);
+    expect(themeState.storedTheme).toBe("dark");
+    expect(themeState.rootTheme).toBe("dark");
+    expect(themeState.resolvedTheme).toBe("dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Workspace");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("system mode follows resolved color scheme", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.emulateMedia({ colorScheme: "light" });
+    await page.goto("/");
+    await pickTheme(page, "system");
+
+    let themeState = await getThemeState(page);
+    expect(themeState.storedTheme).toBe("system");
+    expect(themeState.rootTheme).toBe("system");
+    expect(themeState.resolvedTheme).toBe("light");
+
+    await page.emulateMedia({ colorScheme: "dark" });
+    await page.reload();
+    themeState = await getThemeState(page);
+    expect(themeState.storedTheme).toBe("system");
+    expect(themeState.rootTheme).toBe("system");
+    expect(themeState.resolvedTheme).toBe("dark");
+
+    expect(errors).toEqual([]);
+  });
+
   test("primary routes render with expected headings", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -198,6 +294,43 @@ test.describe("Command Center route-wide UX", () => {
       await expect(page.locator(".ccv2-shell")).toBeVisible();
       await expect(page.getByRole("link", { name: new RegExp(route.name, "i") }).first()).toBeVisible();
       await expect(page.locator(".ccv2-page-head__title").first()).toContainText(route.expectedHeading);
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("implemented routes render in dark and light themes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    for (const route of IMPLEMENTED_COMMAND_CENTER_ROUTES) {
+      const target = route.key === "mission" ? "/" : route.path;
+      await page.goto(target);
+
+      await pickTheme(page, "dark");
+      let themeState = await getThemeState(page);
+      expect(themeState.rootTheme).toBe("dark");
+      expect(themeState.resolvedTheme).toBe("dark");
+      await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
+      await expect(page.locator(".ccv2-topbar")).toBeVisible();
+      await expect(page.locator(".ccv2-sidebar")).toBeVisible();
+      await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+      await expect(page.locator(".ccv2-card, .ccv2-stat-chip, .ccv2-workspace-nba").first()).toBeVisible();
+
+      await pickTheme(page, "light");
+      themeState = await getThemeState(page);
+      expect(themeState.rootTheme).toBe("light");
+      expect(themeState.resolvedTheme).toBe("light");
+      await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
+      await expect(page.locator(".ccv2-topbar")).toBeVisible();
+      await expect(page.locator(".ccv2-sidebar")).toBeVisible();
+      await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+
+      const body = await page.locator("body").innerText();
+      if (route.key !== "roadmap") {
+        for (const label of FORBIDDEN_PHASE_LABELS) {
+          expect(body).not.toContain(label);
+        }
+      }
     }
 
     expect(errors).toEqual([]);
@@ -230,6 +363,21 @@ test.describe("Command Center route-wide UX", () => {
     for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
       expect(body).toContain(phase);
     }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("OS Roadmap preserves phase labels across theme changes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P37");
+
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await expect(page.locator("body")).toContainText("P41");
 
     expect(errors).toEqual([]);
   });

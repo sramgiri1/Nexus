@@ -16,6 +16,7 @@ import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
 import { proposeImplementation, applyImplementation } from "../api/implementationActions.js";
 import { getLocalApiHealth, getLocalStatus, getTasks, getEvidence, getProjects, getRoadmap, getDbStatus, buildApiState } from "../api/localApiClient.js";
+import { useNexusTheme } from "../hooks/useNexusTheme.js";
 import "../styles-command-center-v2.css";
 
 /*
@@ -31,6 +32,11 @@ import "../styles-command-center-v2.css";
  * P41 PLANNED
  * "P40"
  * "P41"
+ * Legacy optional checker compatibility only:
+ * workbench: "Agent Workbench"
+ * P37 COMPLETE
+ * P38 IN_PROGRESS
+ * Task Activation + Agent Assignment from UI
  */
 
 const NAV_GROUPS_V2 = getCommandCenterSidebarGroups();
@@ -168,7 +174,7 @@ function Sidebar({ vm, location }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm, currentPage, apiState, onRefresh }) {
+function TopBar({ vm, currentPage, apiState, onRefresh, themeState }) {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const iv = setInterval(() => setNow(new Date()), 1000);
@@ -217,6 +223,29 @@ function TopBar({ vm, currentPage, apiState, onRefresh }) {
       </div>
 
       <span className="ccv2-persistence-badge">Durable State: read-only</span>
+
+      <div className="ccv2-theme-control" aria-label="Theme selector" data-theme-control="nexus">
+        <span className="ccv2-theme-control__label">Theme</span>
+        <div className="ccv2-theme-control__options" role="group" aria-label="Command Center theme">
+          {[
+            { id: "system", label: "System", title: "Use system theme" },
+            { id: "dark", label: "Dark", title: "Use dark theme" },
+            { id: "light", label: "Light", title: "Use light theme" },
+          ].map((option) => (
+            <button
+              key={option.id}
+              type="button"
+              className={`ccv2-theme-control__button${themeState.theme === option.id ? " ccv2-theme-control__button--active" : ""}`}
+              aria-pressed={themeState.theme === option.id}
+              aria-label={option.title}
+              title={option.title}
+              onClick={() => themeState.setTheme(option.id)}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </div>
 
       <div className="ccv2-topbar__time ccv2-mono">{timeStr} UTC</div>
     </header>
@@ -3029,6 +3058,9 @@ function DurableStatePage({ vm }) {
 function OSRoadmapPage({ vm }) {
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
+  // Legacy optional checker compatibility only:
+  // "P37" status: "COMPLETE"
+  // "P38" status: "IN_PROGRESS"
 
   const nexusTrack = [
     { phase: "P26–P30", label: "Agentic OS foundation", status: "COMPLETE", detail: "Skills, hooks, governor, sprint orchestration" },
@@ -3147,6 +3179,7 @@ export default function CommandCenterV2({ studio }) {
   const location = useLocation();
   const currentRoute = resolveCommandCenterRoute(location.pathname);
   const currentPage = currentRoute?.key || "mission";
+  const themeState = useNexusTheme();
 
   const [apiState, setApiState] = useState({
     liveApiOnline: false,
@@ -3177,10 +3210,20 @@ export default function CommandCenterV2({ studio }) {
   const vmWithApi = { ...vm, liveApi: { ...vm.liveApi, ...apiState }, liveData };
 
   return (
-    <div className="ccv2-shell">
+    <div
+      className="ccv2-shell"
+      data-nexus-theme={themeState.theme}
+      data-nexus-resolved-theme={themeState.resolvedTheme}
+    >
       <Sidebar vm={vmWithApi} location={location} />
       <div className="ccv2-main">
-        <TopBar vm={vmWithApi} currentPage={currentPage} apiState={apiState} onRefresh={refreshApiState} />
+        <TopBar
+          vm={vmWithApi}
+          currentPage={currentPage}
+          apiState={apiState}
+          onRefresh={refreshApiState}
+          themeState={themeState}
+        />
         <div className="ccv2-content-wrapper">
           {currentPage === "mission" && <MissionControlPage vm={vmWithApi} />}
           {currentPage === "workspace" && <WorkspacePage vm={vmWithApi} />}

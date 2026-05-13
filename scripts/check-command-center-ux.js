@@ -8,6 +8,9 @@ const REPORT_PATH = join(ROOT, "reports/command-center-ux-report.md");
 const sections = {
   routeMatrix: true,
   capabilityReadiness: true,
+  themeHook: true,
+  themeTokens: true,
+  themeControl: true,
   sidebarLabels: true,
   workflowLabels: true,
   pageCopy: true,
@@ -126,6 +129,9 @@ const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
 const readinessSource = readFile("dashboard/src/data/capabilityReadiness.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
+const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
+const themeCssSource = readFile("dashboard/src/styles-command-center-v2.css");
+const routeTestSource = readFile("dashboard/tests/routes.spec.js");
 
 let routeMatrix = [];
 let capabilityReadiness = {};
@@ -190,6 +196,70 @@ for (const [capability, label] of Object.entries(requiredCapabilities)) {
 }
 check(readinessSource.includes("ready_scoped"), "capabilityReadiness", "controlledImplementation should use ready_scoped");
 
+// Theme hook
+check(themeHookSource.length > 0, "themeHook", "useNexusTheme.js must exist");
+for (const expectedExport of [
+  "export function useNexusTheme",
+  "export function getStoredNexusTheme",
+  "export function resolveNexusTheme",
+  "export function applyNexusTheme",
+]) {
+  check(themeHookSource.includes(expectedExport), "themeHook", `Theme hook missing export: ${expectedExport}`);
+}
+for (const expectedToken of [
+  "nexus-theme",
+  "data-nexus-theme",
+  "data-nexus-resolved-theme",
+  "prefers-color-scheme: dark",
+  "system",
+  "dark",
+  "light",
+]) {
+  check(themeHookSource.includes(expectedToken), "themeHook", `Theme hook missing behavior token: ${expectedToken}`);
+}
+
+// Theme tokens
+for (const token of [
+  "--nexus-bg",
+  "--nexus-bg-soft",
+  "--nexus-panel",
+  "--nexus-panel-soft",
+  "--nexus-panel-strong",
+  "--nexus-text",
+  "--nexus-text-strong",
+  "--nexus-muted",
+  "--nexus-border",
+  "--nexus-border-strong",
+  "--nexus-accent",
+  "--nexus-accent-soft",
+  "--nexus-success",
+  "--nexus-success-soft",
+  "--nexus-warning",
+  "--nexus-warning-soft",
+  "--nexus-danger",
+  "--nexus-danger-soft",
+  "--nexus-info",
+  "--nexus-info-soft",
+  "--nexus-shadow",
+  "--nexus-code-bg",
+  "--nexus-input-bg",
+  "--nexus-button-bg",
+  "--nexus-button-text",
+]) {
+  check(themeCssSource.includes(token), "themeTokens", `Missing theme token: ${token}`);
+}
+check(
+  themeCssSource.includes(':root[data-nexus-resolved-theme="dark"]')
+    || themeCssSource.includes(":root,\n:root[data-nexus-resolved-theme=\"dark\"]"),
+  "themeTokens",
+  "Missing dark theme selector",
+);
+check(
+  themeCssSource.includes(':root[data-nexus-resolved-theme="light"]'),
+  "themeTokens",
+  "Missing light theme selector",
+);
+
 // Sidebar labels
 for (const forbidden of ["Agent Workbench P38", "Implementation P39", "Live API P40", "Durable State P41"]) {
   check(!commandCenterSource.includes(forbidden), "sidebarLabels", `Sidebar contains stale label: ${forbidden}`);
@@ -231,6 +301,28 @@ for (const expected of [
   check(commandCenterSource.includes(expected), "pageCopy", `CommandCenterV2.jsx missing expected copy: ${expected}`);
 }
 
+// Theme control
+for (const expected of [
+  "ccv2-theme-control",
+  "Theme selector",
+  "Use system theme",
+  "Use dark theme",
+  "Use light theme",
+  "data-nexus-theme",
+  "data-nexus-resolved-theme",
+]) {
+  check(commandCenterSource.includes(expected), "themeControl", `CommandCenterV2.jsx missing theme control marker: ${expected}`);
+}
+for (const expectedTest of [
+  "theme switcher exists globally",
+  "theme persistence stores and restores light mode",
+  "dark mode applies without reload",
+  "system mode follows resolved color scheme",
+  "implemented routes render in dark and light themes",
+]) {
+  check(routeTestSource.includes(expectedTest), "themeControl", `Route tests missing theme coverage: ${expectedTest}`);
+}
+
 // OS Roadmap preservation
 for (const phase of ["P37", "P38", "P39", "P40", "P41"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
@@ -256,6 +348,8 @@ for (const relativePath of [
   "dashboard/src/data/commandCenterRoutes.js",
   "dashboard/src/data/capabilityReadiness.js",
   "dashboard/src/data/nexusRoadmap.js",
+  "dashboard/src/hooks/useNexusTheme.js",
+  "dashboard/src/styles-command-center-v2.css",
   "workspace/workflowTemplates.js",
   "workspace/workflowRecommendations.js",
   "scripts/check-command-center-ux.js",
@@ -273,6 +367,9 @@ const result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 
 console.log(`Route matrix: ${sections.routeMatrix ? "PASS" : "FAIL"}`);
 console.log(`Capability readiness: ${sections.capabilityReadiness ? "PASS" : "FAIL"}`);
+console.log(`Theme hook: ${sections.themeHook ? "PASS" : "FAIL"}`);
+console.log(`Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}`);
+console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
 console.log(`Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}`);
 console.log(`Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}`);
@@ -295,6 +392,9 @@ const report = `# Command Center UX Report
 
 - Route matrix: ${sections.routeMatrix ? "PASS" : "FAIL"}
 - Capability readiness: ${sections.capabilityReadiness ? "PASS" : "FAIL"}
+- Theme hook: ${sections.themeHook ? "PASS" : "FAIL"}
+- Theme tokens: ${sections.themeTokens ? "PASS" : "FAIL"}
+- Theme control: ${sections.themeControl ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}
 - Workflow labels: ${sections.workflowLabels ? "PASS" : "FAIL"}
 - Page copy: ${sections.pageCopy ? "PASS" : "FAIL"}

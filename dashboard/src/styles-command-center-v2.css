@@ -1,25 +1,103 @@
 /* ─── Command Center V2 — styles-command-center-v2.css ─── */
 /* All class names use ccv2- prefix to avoid conflicts with styles.css */
 
-:root {
-  --v2-bg-0: #050608;
-  --v2-bg-1: #090d12;
-  --v2-bg-2: #0d131b;
-  --v2-panel: rgba(13, 19, 27, 0.82);
-  --v2-panel-strong: rgba(16, 24, 34, 0.94);
-  --v2-border: rgba(136, 255, 235, 0.12);
-  --v2-border-strong: rgba(136, 255, 235, 0.22);
-  --v2-text: #e8f4f2;
-  --v2-muted: #7d8c93;
-  --v2-muted-2: #536169;
-  --v2-teal: #45f0d0;
-  --v2-teal-soft: rgba(69, 240, 208, 0.12);
+:root,
+:root[data-nexus-resolved-theme="dark"] {
+  color-scheme: dark;
+
+  --nexus-bg: #050608;
+  --nexus-bg-soft: #090d12;
+  --nexus-panel: rgba(13, 19, 27, 0.88);
+  --nexus-panel-soft: rgba(16, 23, 31, 0.74);
+  --nexus-panel-strong: rgba(16, 24, 34, 0.96);
+  --nexus-text: #d6e3e5;
+  --nexus-text-strong: #f2fbfa;
+  --nexus-muted: #8a99a1;
+  --nexus-border: rgba(136, 255, 235, 0.12);
+  --nexus-border-strong: rgba(136, 255, 235, 0.24);
+  --nexus-accent: #45f0d0;
+  --nexus-accent-soft: rgba(69, 240, 208, 0.16);
+  --nexus-success: #3de8b0;
+  --nexus-success-soft: rgba(61, 232, 176, 0.16);
+  --nexus-warning: #f4bf75;
+  --nexus-warning-soft: rgba(244, 191, 117, 0.16);
+  --nexus-danger: #ff5c7a;
+  --nexus-danger-soft: rgba(255, 92, 122, 0.16);
+  --nexus-info: #70b5ff;
+  --nexus-info-soft: rgba(112, 181, 255, 0.16);
+  --nexus-shadow: 0 16px 44px rgba(0, 0, 0, 0.35);
+  --nexus-code-bg: rgba(255, 255, 255, 0.04);
+  --nexus-input-bg: rgba(255, 255, 255, 0.04);
+  --nexus-button-bg: rgba(255, 255, 255, 0.05);
+  --nexus-button-text: #f2fbfa;
+
+  --v2-bg-0: var(--nexus-bg);
+  --v2-bg-1: var(--nexus-bg-soft);
+  --v2-bg-2: var(--nexus-panel);
+  --v2-panel: var(--nexus-panel);
+  --v2-panel-strong: var(--nexus-panel-strong);
+  --v2-border: var(--nexus-border);
+  --v2-border-strong: var(--nexus-border-strong);
+  --v2-text: var(--nexus-text);
+  --v2-muted: var(--nexus-muted);
+  --v2-muted-2: #60717a;
+  --v2-teal: var(--nexus-accent);
+  --v2-teal-soft: var(--nexus-accent-soft);
   --v2-yellow: #f6c453;
-  --v2-red: #ff5c7a;
+  --v2-red: var(--nexus-danger);
   --v2-purple: #8f7cff;
-  --v2-green: #3de8b0;
-  --v2-blue: #70b5ff;
-  --v2-amber: #f4bf75;
+  --v2-green: var(--nexus-success);
+  --v2-blue: var(--nexus-info);
+  --v2-amber: var(--nexus-warning);
+}
+
+:root[data-nexus-resolved-theme="light"] {
+  color-scheme: light;
+
+  --nexus-bg: #eef3f7;
+  --nexus-bg-soft: #f8fbfd;
+  --nexus-panel: rgba(255, 255, 255, 0.94);
+  --nexus-panel-soft: rgba(247, 250, 253, 0.92);
+  --nexus-panel-strong: rgba(255, 255, 255, 0.98);
+  --nexus-text: #24323a;
+  --nexus-text-strong: #10171d;
+  --nexus-muted: #5d6f7a;
+  --nexus-border: rgba(29, 61, 82, 0.12);
+  --nexus-border-strong: rgba(29, 61, 82, 0.2);
+  --nexus-accent: #0b8c80;
+  --nexus-accent-soft: rgba(11, 140, 128, 0.12);
+  --nexus-success: #0a9361;
+  --nexus-success-soft: rgba(10, 147, 97, 0.12);
+  --nexus-warning: #b96f00;
+  --nexus-warning-soft: rgba(185, 111, 0, 0.12);
+  --nexus-danger: #d43d63;
+  --nexus-danger-soft: rgba(212, 61, 99, 0.12);
+  --nexus-info: #2d6fcb;
+  --nexus-info-soft: rgba(45, 111, 203, 0.12);
+  --nexus-shadow: 0 18px 44px rgba(26, 46, 61, 0.12);
+  --nexus-code-bg: rgba(16, 23, 29, 0.05);
+  --nexus-input-bg: rgba(16, 23, 29, 0.04);
+  --nexus-button-bg: rgba(16, 23, 29, 0.05);
+  --nexus-button-text: #10171d;
+
+  --v2-bg-0: var(--nexus-bg);
+  --v2-bg-1: var(--nexus-bg-soft);
+  --v2-bg-2: var(--nexus-panel);
+  --v2-panel: var(--nexus-panel);
+  --v2-panel-strong: var(--nexus-panel-strong);
+  --v2-border: var(--nexus-border);
+  --v2-border-strong: var(--nexus-border-strong);
+  --v2-text: var(--nexus-text);
+  --v2-muted: var(--nexus-muted);
+  --v2-muted-2: #768894;
+  --v2-teal: var(--nexus-accent);
+  --v2-teal-soft: var(--nexus-accent-soft);
+  --v2-yellow: #b96f00;
+  --v2-red: var(--nexus-danger);
+  --v2-purple: #6751d8;
+  --v2-green: var(--nexus-success);
+  --v2-blue: var(--nexus-info);
+  --v2-amber: var(--nexus-warning);
 }
 
 /* ─── Shell Layout ─── */
@@ -28,8 +106,10 @@
   position: fixed;
   inset: 0;
   display: flex;
-  background: var(--v2-bg-0);
-  color: var(--v2-text);
+  background:
+    radial-gradient(circle at top left, var(--nexus-accent-soft), transparent 30%),
+    linear-gradient(180deg, var(--v2-bg-1) 0%, var(--v2-bg-0) 100%);
+  color: var(--nexus-text);
   font-family: "DM Sans", system-ui, sans-serif;
   overflow: hidden;
 }
@@ -40,7 +120,7 @@
   width: 200px;
   min-width: 200px;
   height: 100%;
-  background: var(--v2-bg-1);
+  background: color-mix(in srgb, var(--v2-bg-1) 92%, var(--nexus-panel-strong) 8%);
   border-right: 1px solid var(--v2-border);
   display: flex;
   flex-direction: column;
@@ -224,13 +304,61 @@
 
 .ccv2-topbar {
   height: 48px;
-  background: var(--v2-bg-1);
+  background: color-mix(in srgb, var(--v2-bg-1) 90%, var(--nexus-panel-strong) 10%);
   border-bottom: 1px solid var(--v2-border);
   display: flex;
   align-items: center;
   padding: 0 16px;
   gap: 12px;
   flex-shrink: 0;
+}
+
+.ccv2-theme-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-panel-soft);
+  box-shadow: var(--nexus-shadow);
+}
+
+.ccv2-theme-control__label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.ccv2-theme-control__options {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.ccv2-theme-control__button {
+  border: 1px solid transparent;
+  border-radius: 999px;
+  background: transparent;
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px 10px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.ccv2-theme-control__button:hover {
+  color: var(--nexus-text-strong);
+  background: var(--nexus-input-bg);
+}
+
+.ccv2-theme-control__button--active {
+  color: var(--nexus-button-text);
+  background: var(--nexus-button-bg);
+  border-color: var(--nexus-border-strong);
 }
 
 .ccv2-topbar__breadcrumb {
