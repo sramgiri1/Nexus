@@ -4,9 +4,9 @@
 
 NEXUS is a local-first agentic operating system that separates mission planning, task activation, review, validation, evidence, approvals, and safety into explicit governed layers.
 
-## Current Completed Foundation Through P41.5
+## Current Completed Foundation Through P41.6.4
 
-Through P41.5, NEXUS includes:
+Through P41.6.4, NEXUS includes:
 
 - Command Center route-wide UX stabilization
 - System, Dark, and Light themes
@@ -16,6 +16,9 @@ Through P41.5, NEXUS includes:
 - local runtime records with evidence, audit, approvals, and runtime events
 - read-only live local API surfaces
 - durable state foundation with file-backed fallback
+- localhost-only unified local boot commands
+- Service Health visibility in Command Center
+- a governed command palette for Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain
 
 ## What Command Center Can Do Now
 
@@ -25,18 +28,18 @@ Through P41.5, NEXUS includes:
 - inspect tasks in Agent Workbench
 - review controlled implementation state
 - inspect evidence, approvals, safety posture, local API status, and durable state posture
+- open the Command Palette for Plan / Review / QA / Explain and other governed operator actions
 - display screenshot audit and roadmap progress
 
 ## What Is Not Enabled Yet
 
-- unified boot
 - provider dispatch
 - worker runtime
 - live DB writes
 - real release/deploy actions
 - unrestricted source mutation
 
-Unified boot is planned for P41.6. Until then, use the existing dashboard, local API, and action bridge commands documented in `package.json`.
+Unified boot is planned for P41.6 and was delivered in P41.6.2. Boot docs and final validation tightening continue in P41.6.5. Until then, use the existing dashboard, local API, action bridge, and `nexus:*` commands documented in `package.json`.
 
 ## Safe Ways to Run NEXUS Locally
 
@@ -45,6 +48,7 @@ Unified boot is planned for P41.6. Until then, use the existing dashboard, local
 - Mission action bridge: `npm run mission:action-server`
 - Service status: `npm run nexus:status`
 - Service doctor: `npm run nexus:doctor`
+- Command Palette: open Command Center and use `Cmd/Ctrl+K`
 
 See [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md) for more detail.
 

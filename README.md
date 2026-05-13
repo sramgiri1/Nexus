@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.6.3
+## Current Status Through P41.6.4
 
-P41.5 is complete, and P41.6.1 through P41.6.3 are now in place. The Command Center and local operator surface have:
+P41.5 is complete, and P41.6.1 through P41.6.4 are now in place. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -44,6 +44,7 @@ P41.5 is complete, and P41.6.1 through P41.6.3 are now in place. The Command Cen
 - service manifest, status, and doctor foundation
 - localhost-only one-command local boot and shutdown
 - a read-only Service Health route for operator guidance
+- a simple governed Command Palette plus Mission Control operator actions
 
 ## Command Center Overview
 
@@ -97,6 +98,8 @@ Services remain local/private, localhost-only, and DB writes remain disabled.
 
 Command Center now includes a read-only **Service Health** route at `/command-center/services` so operators can inspect service state, doctor findings, and troubleshooting guidance without executing services from the UI.
 
+Command Center now also includes a **Command Palette** for simple governed operator actions such as Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain. Commands only route to existing safe capabilities or show disabled reasons.
+
 ## Local Development and Running Current Services
 
 Use the existing commands in `package.json`. Common entry points include:
@@ -141,6 +144,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.5: Command Center UX, theme, screenshot audit, and docs finalization
 - P41.6: Unified NEXUS Local Boot / Service Orchestration
 - P41.6.4: Command palette + simple operator actions
+- P41.6.5: Boot docs, troubleshooting, and final validation
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 

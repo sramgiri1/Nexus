@@ -158,3 +158,32 @@ Service Health reinforces the P41.6 local boot boundary:
 ## Next Subphase
 
 P41.6.4 adds the NEXUS command palette plus simple operator actions.
+
+## P41.6.4 — Command Palette + Simple Operator Actions
+
+P41.6.4 complements `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor` with a simpler operator-facing surface inside Command Center.
+
+### Purpose
+
+- reduce the need to memorize internal scripts and roadmap details
+- expose simple intents such as Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain
+- keep all user-facing actions governed by the same readiness and service boundaries
+
+### How It Works
+
+- the command palette previews command intent first
+- commands map to capability readiness, local service state, and current scope
+- available commands route to existing governed pages or read-only summaries
+- disabled commands show the next missing requirement
+
+### Safety Boundary
+
+- no provider dispatch is enabled
+- no worker runtime is enabled
+- no DB writes are enabled
+- no release execution is enabled
+- no UI command bypasses governance
+
+### Next Subphase
+
+P41.6.5 focuses on boot docs, troubleshooting, and final validation.

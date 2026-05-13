@@ -16,6 +16,10 @@
     {
       "phaseId": "P41.6.4",
       "title": "NEXUS Command Palette + Simple Operator Actions"
+    },
+    {
+      "phaseId": "P41.6.5",
+      "title": "Boot Docs, Troubleshooting, and Final Validation"
     }
   ]
 }

@@ -447,6 +447,37 @@
   text-align: right;
 }
 
+.ccv2-command-palette-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text-strong);
+  padding: 6px 10px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+
+.ccv2-command-palette-trigger:hover {
+  background: var(--nexus-input-bg);
+  border-color: var(--nexus-border-strong);
+  transform: translateY(-1px);
+}
+
+.ccv2-command-palette-trigger__label {
+  letter-spacing: 0.04em;
+}
+
+.ccv2-command-palette-trigger__shortcut {
+  color: var(--nexus-muted);
+  font-size: 10px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
 /* ─── Content Area ─── */
 
 .ccv2-content {
@@ -517,6 +548,80 @@
   display: flex;
   flex-direction: column;
   gap: 12px;
+}
+
+.ccv2-operator-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ccv2-operator-actions__title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-operator-actions__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ccv2-operator-actions__group-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.ccv2-operator-actions__grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 8px;
+}
+
+.ccv2-operator-actions__item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+}
+
+.ccv2-operator-actions__button {
+  width: 100%;
+  border: 1px solid var(--nexus-border);
+  border-radius: 9px;
+  background: var(--nexus-button-bg);
+  color: var(--nexus-button-text);
+  padding: 9px 12px;
+  font-size: 12px;
+  font-weight: 700;
+  text-align: left;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.ccv2-operator-actions__button--enabled {
+  cursor: pointer;
+  opacity: 1;
+}
+
+.ccv2-operator-actions__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
+}
+
+.ccv2-operator-actions__reason {
+  font-size: 11px;
+  line-height: 1.5;
+  color: var(--nexus-muted);
 }
 
 .ccv2-mission-control__lead-grid {
@@ -989,6 +1094,254 @@
 
   .ccv2-mission-cockpit__summary-grid,
   .ccv2-status-strip__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .ccv2-command-palette-trigger__shortcut {
+    display: none;
+  }
+}
+
+.ccv2-command-palette {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.ccv2-command-palette__backdrop {
+  position: absolute;
+  inset: 0;
+  border: 0;
+  background: rgba(3, 7, 12, 0.66);
+}
+
+.ccv2-command-palette__panel {
+  position: relative;
+  z-index: 1;
+  width: min(1160px, calc(100vw - 48px));
+  max-height: calc(100vh - 48px);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px;
+  border-radius: 18px;
+  border: 1px solid var(--nexus-border-strong);
+  background:
+    radial-gradient(circle at top right, color-mix(in srgb, var(--nexus-accent) 10%, transparent) 0%, transparent 36%),
+    var(--nexus-panel-strong);
+  box-shadow: var(--nexus-shadow);
+}
+
+.ccv2-command-palette__header,
+.ccv2-command-palette__search,
+.ccv2-command-palette__item-header,
+.ccv2-command-palette__item-meta,
+.ccv2-command-palette__detail-top,
+.ccv2-command-palette__detail-badges,
+.ccv2-command-palette__actions {
+  display: flex;
+  align-items: center;
+}
+
+.ccv2-command-palette__header,
+.ccv2-command-palette__search,
+.ccv2-command-palette__detail-top,
+.ccv2-command-palette__actions {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.ccv2-command-palette__title {
+  margin: 4px 0 0;
+  font-size: 22px;
+  line-height: 1.1;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-command-palette__close {
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-button-bg);
+  color: var(--nexus-button-text);
+  padding: 8px 14px;
+  font-size: 11px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ccv2-command-palette__input {
+  flex: 1;
+  border: 1px solid var(--nexus-border);
+  border-radius: 10px;
+  background: var(--nexus-input-bg);
+  color: var(--nexus-text);
+  padding: 12px 14px;
+  font-size: 13px;
+  font-family: inherit;
+}
+
+.ccv2-command-palette__hint {
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+}
+
+.ccv2-command-palette__body {
+  display: grid;
+  grid-template-columns: minmax(320px, 0.95fr) minmax(360px, 1.05fr);
+  gap: 14px;
+  min-height: 0;
+}
+
+.ccv2-command-palette__list,
+.ccv2-command-palette__detail {
+  min-height: 0;
+  overflow: auto;
+  padding: 12px;
+  border-radius: 14px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+}
+
+.ccv2-command-palette__group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ccv2-command-palette__group + .ccv2-command-palette__group {
+  margin-top: 12px;
+}
+
+.ccv2-command-palette__group-label,
+.ccv2-command-palette__detail-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.ccv2-command-palette__item {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: transparent;
+  color: var(--nexus-text);
+  cursor: pointer;
+  text-align: left;
+}
+
+.ccv2-command-palette__item--active {
+  border-color: var(--nexus-border-strong);
+  background: var(--nexus-accent-soft);
+}
+
+.ccv2-command-palette__item-label,
+.ccv2-command-palette__detail-title {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-command-palette__item-meta {
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 11px;
+  color: var(--nexus-muted);
+}
+
+.ccv2-command-palette__item-reason,
+.ccv2-command-palette__detail-copy,
+.ccv2-command-palette__capability-desc,
+.ccv2-command-palette__terminal-note,
+.ccv2-command-palette__disabled-reason {
+  font-size: 12px;
+  line-height: 1.55;
+  color: var(--nexus-muted);
+}
+
+.ccv2-command-palette__detail {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ccv2-command-palette__detail-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ccv2-command-palette__detail-row {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-panel-soft) 88%, transparent);
+}
+
+.ccv2-command-palette__detail-value,
+.ccv2-command-palette__capability-state,
+.ccv2-command-palette__capability-name {
+  font-size: 12px;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-command-palette__capabilities {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ccv2-command-palette__capability {
+  display: grid;
+  gap: 4px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-panel-soft) 88%, transparent);
+}
+
+.ccv2-command-palette__primary {
+  border: 1px solid var(--nexus-border);
+  border-radius: 10px;
+  background: var(--nexus-button-bg);
+  color: var(--nexus-button-text);
+  padding: 10px 14px;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+.ccv2-command-palette__primary--enabled {
+  cursor: pointer;
+  opacity: 1;
+}
+
+@media (max-width: 960px) {
+  .ccv2-command-palette {
+    padding: 12px;
+  }
+
+  .ccv2-command-palette__panel {
+    width: min(100vw - 24px, 100%);
+    max-height: calc(100vh - 24px);
+  }
+
+  .ccv2-command-palette__body,
+  .ccv2-command-palette__detail-grid {
     grid-template-columns: 1fr;
   }
 }

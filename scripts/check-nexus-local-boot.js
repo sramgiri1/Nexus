@@ -12,6 +12,7 @@ const sections = {
   doctorCommand: true,
   processManager: true,
   serviceHealthUx: true,
+  commandPaletteDocs: true,
   osPhaseStatus: true,
   policy: true,
   dryRun: true,
@@ -173,9 +174,9 @@ check(policy?.localOnly === true, "policy", "Policy must enforce localOnly");
 check(policy?.managedPidOnlyShutdown === true, "policy", "Policy must enforce managedPidOnlyShutdown");
 
 const docsToCheck = {
-  "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md": ["nexus:up", "nexus:down", "nexus:status", "nexus:doctor", "P41.6.3"],
-  "docs/usage/RUNNING_NEXUS_LOCALLY.md": ["/command-center/services", "npm run nexus:up", "npm run nexus:down", "npm run nexus:status", "npm run nexus:doctor"],
-  "README.md": ["Service Health", "nexus:up", "nexus:down"],
+  "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md": ["nexus:up", "nexus:down", "nexus:status", "nexus:doctor", "P41.6.3", "P41.6.4"],
+  "docs/usage/RUNNING_NEXUS_LOCALLY.md": ["/command-center/services", "npm run nexus:up", "npm run nexus:down", "npm run nexus:status", "npm run nexus:doctor", "Command Palette"],
+  "README.md": ["Service Health", "nexus:up", "nexus:down", "Command Palette"],
 };
 for (const [file, expectedStrings] of Object.entries(docsToCheck)) {
   const content = read(file);
@@ -184,6 +185,17 @@ for (const [file, expectedStrings] of Object.entries(docsToCheck)) {
     check(content.includes(expected), "docs", `${file} missing expected text: ${expected}`);
   }
 }
+
+check(
+  read("docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md").includes("Command Palette + Simple Operator Actions"),
+  "commandPaletteDocs",
+  "UNIFIED_NEXUS_LOCAL_BOOT.md must document the command palette phase",
+);
+check(
+  read("docs/usage/RUNNING_NEXUS_LOCALLY.md").includes("Command Palette"),
+  "commandPaletteDocs",
+  "RUNNING_NEXUS_LOCALLY.md must mention Command Palette guidance",
+);
 
 check(read("service-runtime/serviceProcessManager.js").includes("managedByNexus"), "processManager", "Shutdown must be managed-PID-only by contract");
 
@@ -225,12 +237,18 @@ check(
   "P41.6.3 must be recorded as complete",
 );
 check(
-  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.4" && entry.status === "PLANNED"),
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.4" && entry.status === "COMPLETE"),
   "osPhaseStatus",
-  "P41.6.4 must be recorded as planned",
+  "P41.6.4 must be recorded as complete",
+);
+check(
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.5" && entry.status === "PLANNED"),
+  "osPhaseStatus",
+  "P41.6.5 must be recorded as planned",
 );
 check(roadmapSource.includes("P41.6.3"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.3");
 check(roadmapSource.includes("P41.6.4"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.4");
+check(roadmapSource.includes("P41.6.5"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.5");
 
 try {
   const privateDiff = gitOutput(["diff", "--name-only", "--", "projects/careloop", "projects/careloop-ios"]);
@@ -268,6 +286,7 @@ console.log(`Status command: ${sections.statusCommand ? "PASS" : "FAIL"}`);
 console.log(`Doctor command: ${sections.doctorCommand ? "PASS" : "FAIL"}`);
 console.log(`Process manager: ${sections.processManager ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
+console.log(`Command Palette docs: ${sections.commandPaletteDocs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Dry run: ${sections.dryRun ? "PASS" : "FAIL"}`);
@@ -292,6 +311,7 @@ const report = `# NEXUS Local Boot Report
 - Doctor command: ${sections.doctorCommand ? "PASS" : "FAIL"}
 - Process manager: ${sections.processManager ? "PASS" : "FAIL"}
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
+- Command Palette docs: ${sections.commandPaletteDocs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Dry run: ${sections.dryRun ? "PASS" : "FAIL"}

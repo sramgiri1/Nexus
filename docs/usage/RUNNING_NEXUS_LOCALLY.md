@@ -2,7 +2,9 @@
 
 ## Current Local Run Model
 
-NEXUS currently runs as a set of local services and validation scripts. P41.6.2 adds one-command local boot and shutdown for the current enabled service set, and P41.6.3 adds a Command Center Service Health page for read-only operator visibility.
+NEXUS currently runs as a set of local services and validation scripts. P41.6.2 adds one-command local boot and shutdown for the current enabled service set, P41.6.3 adds a Command Center Service Health page for read-only operator visibility, and P41.6.4 adds a simple Command Palette for governed operator actions.
+
+Unified boot is planned for P41.6 and is now available through the `nexus:*` local boot commands delivered in P41.6.2.
 
 ## Available Commands
 
@@ -77,6 +79,28 @@ Use it to understand whether a service is:
 - Planned
 - Unknown
 
+### Command Palette (P41.6.4)
+
+Open the Command Palette from the Command Center top bar or with `Cmd/Ctrl+K`.
+
+Use it for:
+
+- `Plan Mission`
+- `Review Work`
+- `Run QA Gate`
+- `Propose Fix`
+- `Prepare Ship`
+- `Run Retro`
+- `Guard Scope`
+- `Freeze Workspace`
+- `Explain Current State`
+
+The palette is governed and route-first:
+
+- available commands open existing governed routes or read-only summaries
+- disabled commands explain the missing capability
+- browser-side service execution is still not enabled
+
 ### How To Read Status Output
 
 - `running, managed PID ...`: started by NEXUS and tracked in local service state
@@ -86,7 +110,7 @@ Use it to understand whether a service is:
 
 ### What Comes Next
 
-- command palette and simple operator actions are planned for P41.6.4
+- boot docs, troubleshooting, and final validation land in P41.6.5
 
 ## Durable State Status
 

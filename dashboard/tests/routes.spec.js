@@ -357,6 +357,113 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Command Palette entrypoint exists and opens core commands", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
+    await expect(dialog).toBeVisible();
+
+    for (const label of [
+      "Plan Mission",
+      "Review Work",
+      "Run QA Gate",
+      "Propose Fix",
+      "Prepare Ship",
+      "Run Retro",
+      "Guard Scope",
+      "Freeze Workspace",
+      "Explain Current State",
+    ]) {
+      await expect(dialog.getByText(label, { exact: false }).first()).toBeVisible();
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Command Palette shows command details for plan and explain", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
+    await dialog.getByRole("button", { name: /Plan Mission/i }).click();
+    await expect(dialog).toContainText("Turn a goal into a governed mission plan.");
+    await expect(dialog).toContainText("Owner");
+    await expect(dialog).toContainText("Risk");
+    await expect(dialog).toContainText("Action mode");
+    await expect(dialog).toContainText("Required capabilities");
+
+    await dialog.getByRole("button", { name: /Explain Current State/i }).click();
+    await expect(dialog).toContainText("Explain what NEXUS sees, what is ready, what is blocked, and what to do next.");
+    await expect(dialog).toContainText("Read-only summary");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Command Palette disabled commands show clear reasons and do not execute", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+    const initialUrl = page.url();
+
+    const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
+    await dialog.getByRole("button", { name: /Prepare Ship/i }).click();
+    await expect(dialog).toContainText("Requires release action bridge.");
+    expect(page.url()).toBe(initialUrl);
+
+    await dialog.getByRole("button", { name: /Freeze Workspace/i }).click();
+    await expect(dialog).toContainText("Requires runtime lock controls.");
+    expect(page.url()).toBe(initialUrl);
+
+    await dialog.getByRole("button", { name: /Propose Fix/i }).click();
+    await expect(dialog).toContainText(/Requires failing validation evidence.|Requires controlled implementation bridge./);
+    expect(page.url()).toBe(initialUrl);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control shows simple operator action rows", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    const operatorActions = page.locator("#v2-operator-actions");
+    await expect(operatorActions).toBeVisible();
+    for (const label of [
+      "Plan Mission",
+      "Review Work",
+      "Run QA Gate",
+      "Explain Current State",
+    ]) {
+      await expect(operatorActions.getByRole("button", { name: new RegExp(label, "i") })).toBeVisible();
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Command Palette renders in dark and light themes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await pickTheme(page, "dark");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+    await expect(page.getByRole("dialog", { name: /NEXUS Command Palette/i })).toBeVisible();
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await page.getByRole("button", { name: /Close Command Palette/i }).click();
+
+    await pickTheme(page, "light");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+    await expect(page.getByRole("dialog", { name: /NEXUS Command Palette/i })).toBeVisible();
+    await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
   test("implemented routes render in dark and light themes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -501,7 +608,7 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4"]) {
+    for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4", "P41.6.5"]) {
       expect(body).toContain(phase);
     }
     for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
@@ -523,6 +630,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await expect(page.locator("body")).toContainText("P41");
     await expect(page.locator("body")).toContainText("P41.6.3");
+    await expect(page.locator("body")).toContainText("P41.6.4");
 
     expect(errors).toEqual([]);
   });

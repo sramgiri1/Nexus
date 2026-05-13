@@ -90,7 +90,8 @@
     "nexus:status": "node scripts/nexus-status.js",
     "nexus:doctor": "node scripts/nexus-doctor.js",
     "check:nexus-service-orchestration": "node scripts/check-nexus-service-orchestration.js",
-    "check:nexus-local-boot": "node scripts/check-nexus-local-boot.js"
+    "check:nexus-local-boot": "node scripts/check-nexus-local-boot.js",
+    "check:os-phase-status": "node scripts/check-os-phase-status.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -78,42 +78,35 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.6.1 — Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor
+### Phase 41.6.4 — NEXUS Command Palette + Simple Operator Actions
 
 Goal:
 
-- define a declarative local service manifest and read-only local diagnostics
-  without starting or stopping services yet
+- expose a simple governed operator command layer in Command Center without enabling unsafe execution or bypassing current service and capability boundaries
 
 Deliverables:
 
-- `nexus.services.json` declarative manifest
-- service-orchestration loader, validator, status, and doctor modules
-- `npm run nexus:status`
-- `npm run nexus:doctor`
-- `npm run check:nexus-service-orchestration`
-- service status and doctor report artifacts
-- localhost-only binding policy
-- usage and architecture docs for the local service foundation
+- `dashboard/src/data/nexusCommands.js`
+- Command Palette UX in Command Center
+- simple operator action row in Mission Control
+- disabled-reason mapping for high-risk or not-yet-enabled actions
+- route/test/checker/docs updates
+- OS phase status update for `P41.6.4`
 
 Non-goals:
 
-- no `nexus:up` process manager yet
-- no `nexus:down` cleanup yet
-- no background service spawning
-- no Command Center service health UI yet
-- no provider or external network calls
+- no provider dispatch
+- no worker runtime
 - no DB writes
+- no release/deploy execution
 - no private project mutation
 
 Validation checks:
 
-- `npm run nexus:status` succeeds and writes a report
-- `npm run nexus:doctor` succeeds and writes a report
-- manifest parses and contains the required service inventory
-- enabled network services use `127.0.0.1`
-- future services remain explicitly disabled and described
-- no private project tree mutation from the checker
+- `npm run check:command-center-ux`
+- `npm run check:nexus-local-boot`
+- `npm run check:os-phase-status`
+- `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
 Risk level:
 
@@ -123,8 +116,7 @@ Risk level:
 
 ## Next Phases
 
-- Phase 41.6.2 — `nexus:up` / `nexus:down` process manager
-- Phase 41.6.3 — Command Center service health UI
+- Phase 41.6.5 — Boot Docs, Troubleshooting, and Final Validation
 - Phase 41.7 — follow-on documentation and operator workflow tightening if
   still needed after unified boot lands
 - Phase 41.8 — Centralized Activity Log + Observability Ledger

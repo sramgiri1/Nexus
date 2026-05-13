@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T21:13:02.103Z
-- Validation branch: feat/command-center-service-health-ux
-- Validation HEAD: e87aee5
+- Generated at: 2026-05-13T21:35:51.503Z
+- Validation branch: feat/nexus-command-palette
+- Validation HEAD: 5d801a4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -14,6 +14,7 @@
 - Doctor command: PASS
 - Process manager: PASS
 - Service Health UX: PASS
+- Command Palette docs: PASS
 - OS phase status: PASS
 - Policy: PASS
 - Dry run: PASS

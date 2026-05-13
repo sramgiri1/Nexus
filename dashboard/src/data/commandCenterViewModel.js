@@ -386,6 +386,14 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
           || "Run npm run nexus:doctor to refresh diagnostics.",
       },
     },
+    commandPalette: {
+      title: "NEXUS Command Palette",
+      keyboardHint: "Cmd/Ctrl+K",
+      primaryActionIds: ["plan", "review", "qa", "explain"],
+      secondaryActionIds: ["fix", "ship", "guard", "freeze", "retro"],
+      summary:
+        "Use the command palette to preview governed operator actions without bypassing current safety boundaries.",
+    },
     capabilityReadiness: CAPABILITY_READINESS,
     dbFoundation: {
       phase: "P41-LOCAL",

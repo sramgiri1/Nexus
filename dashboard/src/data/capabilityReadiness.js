@@ -29,6 +29,11 @@ export const CAPABILITY_READINESS = {
     userFacingState: "Available for scoped implementation",
     description: "Documentation-only controlled implementation is available.",
   },
+  controlledValidation: {
+    status: "not_enabled",
+    userFacingState: "Requires controlled validation bridge",
+    description: "Controlled validation can be inspected, but a generic UI gate runner is not enabled yet.",
+  },
   liveLocalApi: {
     status: "ready",
     userFacingState: "Available",
@@ -64,6 +69,21 @@ export const CAPABILITY_READINESS = {
     userFacingState: "Requires release action bridge",
     description: "Release/deploy actions are not enabled yet.",
   },
+  runtimeLocks: {
+    status: "not_enabled",
+    userFacingState: "Requires runtime lock controls",
+    description: "Freeze and lock controls are not enabled yet.",
+  },
+  commandPalette: {
+    status: "ready",
+    userFacingState: "Available",
+    description: "Simple command palette summaries are available in Command Center.",
+  },
+  operatorActions: {
+    status: "ready_limited",
+    userFacingState: "Available as read-only summaries",
+    description: "Operator actions can preview governed intent, but execution stays limited to existing safe routes.",
+  },
 };
 
 export function getCapabilityReadiness() {
@@ -77,6 +97,6 @@ export function getCapabilityState(capabilityId) {
 export function isCapabilityReady(capabilityId) {
   const cap = CAPABILITY_READINESS[capabilityId];
   return cap
-    ? ["ready", "ready_read_only", "ready_scoped"].includes(cap.status)
+    ? ["ready", "ready_read_only", "ready_scoped", "ready_limited"].includes(cap.status)
     : false;
 }

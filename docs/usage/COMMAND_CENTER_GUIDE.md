@@ -4,11 +4,19 @@
 
 Command Center is the operator surface for governed local NEXUS work. It summarizes what is active, what is blocked, what evidence exists, and what is not enabled yet.
 
+## NEXUS Command Palette
+
+- Purpose: expose a simple operator command surface for governed local work without requiring operators to memorize internal scripts or roadmap phases
+- How to open it: use the `Command Palette` button in the top bar or `Cmd/Ctrl+K`
+- Available commands now: `Plan Mission`, `Review Work`, `Run Retro`, `Guard Scope`, and `Explain Current State` when the underlying local state exists
+- Disabled commands: `Run QA Gate`, `Propose Fix`, `Prepare Ship`, and `Freeze Workspace` stay disabled until their required governed capabilities exist
+- Safety rule: no unsafe action executes directly from the palette; commands either open an existing governed route, show a read-only summary, or explain why they are not enabled
+
 ## Mission Control
 
 - Purpose: enterprise cockpit for the active mission and current platform posture
 - Shows: mission hero, next best action, system status, gates, tasks, safety, evidence, and readiness
-- Available actions: mission planning and review actions when the current bridge allows them
+- Available actions: mission planning, review, explain, and operator action previews through the command palette and Mission Control action row
 - Disabled actions: show user-facing reasons such as action bridge, worker runtime, or release bridge requirements
 - Evidence/activity: summarized from runtime records and snapshots
 - Known limitations: does not execute providers or worker runtime

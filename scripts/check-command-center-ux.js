@@ -17,6 +17,8 @@ const sections = {
   missionControlLayout: true,
   pageSpecificUx: true,
   serviceHealthUx: true,
+  commandPalette: true,
+  operatorActions: true,
   screenshotAudit: true,
   visualQaReport: true,
   sidebarLabels: true,
@@ -137,6 +139,7 @@ const workflowTemplateSource = readFile("workspace/workflowTemplates.js");
 const workflowRecommendationSource = readFile("workspace/workflowRecommendations.js");
 const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
 const readinessSource = readFile("dashboard/src/data/capabilityReadiness.js");
+const commandSource = readFile("dashboard/src/data/nexusCommands.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
 const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
@@ -147,6 +150,7 @@ const visualQaReportSource = readFile(VISUAL_QA_REPORT_PATH);
 
 let routeMatrix = [];
 let capabilityReadiness = {};
+let nexusCommands = [];
 let roadmapPhases = [];
 let screenshotManifest = null;
 
@@ -160,6 +164,12 @@ try {
   ({ CAPABILITY_READINESS: capabilityReadiness } = await import("../dashboard/src/data/capabilityReadiness.js"));
 } catch (error) {
   fail("capabilityReadiness", `Could not import capabilityReadiness.js: ${error.message}`);
+}
+
+try {
+  ({ NEXUS_COMMANDS: nexusCommands } = await import("../dashboard/src/data/nexusCommands.js"));
+} catch (error) {
+  fail("commandPalette", `Could not import nexusCommands.js: ${error.message}`);
 }
 
 try {
@@ -202,6 +212,7 @@ const requiredCapabilities = {
   agentWorkbench: "Available",
   humanReview: "Available",
   controlledImplementation: "Available for scoped implementation",
+  controlledValidation: "Requires controlled validation bridge",
   liveLocalApi: "Available",
   dbFoundation: "Durable State foundation ready; DB writes disabled",
   dbWrites: "DB writes not enabled",
@@ -209,6 +220,9 @@ const requiredCapabilities = {
   providerDispatch: "Requires governed provider dispatch",
   iosRunner: "Requires iOS/Xcode runner",
   releaseActionBridge: "Requires release action bridge",
+  runtimeLocks: "Requires runtime lock controls",
+  commandPalette: "Available",
+  operatorActions: "Available as read-only summaries",
 };
 
 for (const [capability, label] of Object.entries(requiredCapabilities)) {
@@ -443,6 +457,83 @@ for (const expectedTest of [
 }
 check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Route matrix missing /command-center/services");
 
+// Command palette
+check(commandSource.includes("export const NEXUS_COMMANDS"), "commandPalette", "nexusCommands.js must export NEXUS_COMMANDS");
+check(commandSource.includes("getNexusCommandsForScope"), "commandPalette", "nexusCommands.js must export getNexusCommandsForScope");
+check(commandSource.includes("getCommandById"), "commandPalette", "nexusCommands.js must export getCommandById");
+check(Array.isArray(nexusCommands), "commandPalette", "NEXUS_COMMANDS must be an array");
+for (const commandId of ["plan", "review", "qa", "fix", "ship", "retro", "guard", "freeze", "explain"]) {
+  const command = nexusCommands.find((entry) => entry.id === commandId);
+  check(!!command, "commandPalette", `Missing required command: ${commandId}`);
+  for (const field of [
+    "label",
+    "shortLabel",
+    "category",
+    "intent",
+    "ownerAgent",
+    "riskLevel",
+    "capabilityId",
+    "requiredCapabilities",
+    "currentState",
+    "disabledReason",
+    "evidenceProduced",
+    "costMode",
+    "actionMode",
+    "routeTarget",
+    "commandCenterVisible",
+  ]) {
+    check(command && field in command, "commandPalette", `Command ${commandId} missing schema field: ${field}`);
+  }
+}
+for (const expected of [
+  "Command Palette",
+  "Plan Mission",
+  "Review Work",
+  "Run QA Gate",
+  "Propose Fix",
+  "Prepare Ship",
+  "Run Retro",
+  "Guard Scope",
+  "Freeze Workspace",
+  "Explain Current State",
+  "Requires release action bridge.",
+  "Requires runtime lock controls.",
+  "Requires failing validation evidence.",
+]) {
+  check(commandCenterSource.includes(expected) || commandSource.includes(expected), "commandPalette", `Command palette missing expected copy: ${expected}`);
+}
+for (const expectedTest of [
+  "Command Palette entrypoint exists and opens core commands",
+  "Command Palette shows command details for plan and explain",
+  "Command Palette disabled commands show clear reasons and do not execute",
+  "Command Palette renders in dark and light themes",
+]) {
+  check(routeTestSource.includes(expectedTest), "commandPalette", `Route tests missing command palette coverage: ${expectedTest}`);
+}
+
+// Operator actions
+for (const expected of [
+  "Operator Actions",
+  "Simple governed actions for the active scope",
+  "Plan Mission",
+  "Review Work",
+  "Run QA Gate",
+  "Explain Current State",
+  "Propose Fix",
+  "Prepare Ship",
+  "Guard Scope",
+  "Freeze Workspace",
+  "Run Retro",
+]) {
+  check(
+    commandCenterSource.includes(expected) || commandSource.includes(expected),
+    "operatorActions",
+    `Mission Control operator actions missing expected copy: ${expected}`,
+  );
+}
+check(commandCenterSource.includes("Read-only and route-first"), "operatorActions", "Operator actions should explain read-only and route-first posture");
+check(routeTestSource.includes("Mission Control shows simple operator action rows"), "operatorActions", "Route tests missing Mission Control operator actions coverage");
+
 // Screenshot audit
 check(screenshotAuditSource.length > 0, "screenshotAudit", "capture-command-center-screenshots.js must exist");
 for (const expected of [
@@ -512,7 +603,7 @@ for (const expected of [
 }
 
 // OS Roadmap preservation
-for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4"]) {
+for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4", "P41.6.5"]) {
   check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
 }
 check(Array.isArray(roadmapPhases) && roadmapPhases.length >= 8, "roadmapPreservation", "NEXUS_ROADMAP_PHASES should contain the current roadmap entries");
@@ -563,6 +654,8 @@ console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
+console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
+console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}`);
 console.log(`Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
@@ -593,6 +686,8 @@ const report = `# Command Center UX Report
 - Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
+- Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
+- Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}
 - Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}

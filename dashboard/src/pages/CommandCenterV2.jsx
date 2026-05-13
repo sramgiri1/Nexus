@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { buildCommandCenterViewModelV2 } from "../data/commandCenterViewModel.js";
+import { getNexusCommandsForScope } from "../data/nexusCommands.js";
 import {
   COMMAND_CENTER_ROUTE_BY_KEY,
   getCommandCenterSidebarGroups,
@@ -188,6 +189,60 @@ function summarizeTaskNextAction(task) {
   }
 }
 
+const COMMAND_CATEGORY_ORDER = [
+  "Plan",
+  "Build",
+  "Validate",
+  "Review",
+  "Govern",
+  "Release",
+  "Learn",
+  "Explain",
+];
+
+function getCommandTone(command) {
+  if (command.available) return "pass";
+  if (command.riskLevel === "high") return "fail";
+  if (command.currentState === "Planned") return "disabled";
+  return "pending";
+}
+
+function getRiskTone(riskLevel) {
+  if (riskLevel === "high") return "fail";
+  if (riskLevel === "medium") return "pending";
+  return "pass";
+}
+
+function formatActionModeLabel(actionMode) {
+  switch (actionMode) {
+    case "route_only":
+      return "Navigate to governed workflow";
+    case "read_only_summary":
+      return "Read-only summary";
+    case "existing_governed_action":
+      return "Existing governed action";
+    case "not_enabled":
+      return "Not enabled";
+    default:
+      return "Unknown";
+  }
+}
+
+function summarizeCommandCost(command) {
+  return command.costMode || "Local-only. Provider spend disabled.";
+}
+
+function buildCommandCapabilitySummary(command, capabilityReadiness) {
+  return (command.requiredCapabilities || []).map((capabilityId) => {
+    const entry = capabilityReadiness?.[capabilityId];
+    return {
+      id: capabilityId,
+      label: entry?.userFacingState || formatCapabilityLabel(capabilityId),
+      description: entry?.description || "Capability summary not available.",
+    };
+  });
+}
+
 /* ─── Sidebar ─── */
 function Sidebar({ vm, location }) {
   const navigate = useNavigate();
@@ -258,7 +313,7 @@ function Sidebar({ vm, location }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm, currentPage, apiState, onRefresh, themeState }) {
+function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenCommandPalette }) {
   const [now, setNow] = useState(new Date());
   useEffect(() => {
     const iv = setInterval(() => setNow(new Date()), 1000);
@@ -307,6 +362,16 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState }) {
       </div>
 
       <span className="ccv2-persistence-badge">Durable State: read-only</span>
+
+      <button
+        type="button"
+        className="ccv2-command-palette-trigger"
+        onClick={onOpenCommandPalette}
+        aria-label="Open Command Palette"
+      >
+        <span className="ccv2-command-palette-trigger__label">Command Palette</span>
+        <span className="ccv2-command-palette-trigger__shortcut">Cmd/Ctrl+K</span>
+      </button>
 
       <div className="ccv2-theme-control" aria-label="Theme selector" data-theme-control="nexus">
         <span className="ccv2-theme-control__label">Theme</span>
@@ -1017,6 +1082,263 @@ function NextBestActionPanel({ vm }) {
   );
 }
 
+function OperatorActionsPanel({ commands, onSelectCommand }) {
+  const primaryCommands = commands.filter((command) =>
+    ["plan", "review", "qa", "explain"].includes(command.id),
+  );
+  const secondaryCommands = commands.filter((command) =>
+    ["fix", "ship", "guard", "freeze", "retro"].includes(command.id),
+  );
+
+  function renderCommandButton(command) {
+    return (
+      <div key={command.id} className="ccv2-operator-actions__item">
+        <button
+          type="button"
+          className={`ccv2-operator-actions__button${command.available ? " ccv2-operator-actions__button--enabled" : ""}`}
+          onClick={command.available ? () => onSelectCommand(command.id) : undefined}
+          disabled={!command.available}
+          title={command.available ? command.intent : command.disabledReason}
+        >
+          {command.label}
+        </button>
+        <div className="ccv2-operator-actions__meta">
+          <span className={`ccv2-pill ccv2-pill--${getCommandTone(command)}`}>{command.currentState}</span>
+          <span className="ccv2-operator-actions__reason">
+            {command.available ? formatActionModeLabel(command.actionMode) : command.disabledReason}
+          </span>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <section className="ccv2-card ccv2-operator-actions" id="v2-operator-actions">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Operator Actions</div>
+          <div className="ccv2-operator-actions__title">Simple governed actions for the active scope</div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Read-only and route-first</span>
+      </div>
+
+      <div className="ccv2-operator-actions__group">
+        <div className="ccv2-operator-actions__group-label">Primary</div>
+        <div className="ccv2-operator-actions__grid">
+          {primaryCommands.map(renderCommandButton)}
+        </div>
+      </div>
+
+      <div className="ccv2-operator-actions__group">
+        <div className="ccv2-operator-actions__group-label">Advanced</div>
+        <div className="ccv2-operator-actions__grid">
+          {secondaryCommands.map(renderCommandButton)}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand, onClose, onExecuteCommand }) {
+  const [searchText, setSearchText] = useState("");
+
+  useEffect(() => {
+    if (!open) {
+      setSearchText("");
+    }
+  }, [open]);
+
+  useEffect(() => {
+    if (!open) return undefined;
+
+    function handleKeyDown(event) {
+      if (event.key === "Escape") {
+        event.preventDefault();
+        onClose();
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [open, onClose]);
+
+  if (!open) return null;
+
+  const filteredCommands = commands.filter((command) => {
+    const haystack = [
+      command.label,
+      command.shortLabel,
+      command.category,
+      command.intent,
+      command.ownerAgent,
+      command.currentState,
+      command.disabledReason,
+    ]
+      .join(" ")
+      .toLowerCase();
+    return haystack.includes(searchText.trim().toLowerCase());
+  });
+
+  const selectedCommand = filteredCommands.find((command) => command.id === selectedCommandId)
+    || commands.find((command) => command.id === selectedCommandId)
+    || filteredCommands[0]
+    || commands[0];
+  const capabilities = selectedCommand
+    ? buildCommandCapabilitySummary(selectedCommand, vm.capabilityReadiness)
+    : [];
+  const commandsByCategory = COMMAND_CATEGORY_ORDER.map((category) => ({
+    category,
+    commands: filteredCommands.filter((command) => command.category === category),
+  })).filter((group) => group.commands.length > 0);
+
+  return (
+    <div className="ccv2-command-palette" role="dialog" aria-modal="true" aria-label="NEXUS Command Palette">
+      <button type="button" className="ccv2-command-palette__backdrop" aria-label="Dismiss Command Palette overlay" onClick={onClose} />
+      <div className="ccv2-command-palette__panel">
+        <div className="ccv2-command-palette__header">
+          <div>
+            <div className="ccv2-eyebrow">Command Palette</div>
+            <h2 className="ccv2-command-palette__title">Simple operator actions for governed local work</h2>
+          </div>
+          <button
+            type="button"
+            className="ccv2-command-palette__close"
+            aria-label="Close Command Palette"
+            onClick={onClose}
+          >
+            Close
+          </button>
+        </div>
+
+        <div className="ccv2-command-palette__search">
+          <input
+            autoFocus
+            className="ccv2-command-palette__input"
+            value={searchText}
+            onChange={(event) => setSearchText(event.target.value)}
+            placeholder="Search commands, intent, or owner"
+            aria-label="Search commands"
+          />
+          <span className="ccv2-command-palette__hint">{vm.commandPalette?.keyboardHint || "Cmd/Ctrl+K"}</span>
+        </div>
+
+        <div className="ccv2-command-palette__body">
+          <div className="ccv2-command-palette__list" aria-label="Command list">
+            {commandsByCategory.map((group) => (
+              <div key={group.category} className="ccv2-command-palette__group">
+                <div className="ccv2-command-palette__group-label">{group.category}</div>
+                {group.commands.map((command) => (
+                  <button
+                    key={command.id}
+                    type="button"
+                    className={`ccv2-command-palette__item${selectedCommand?.id === command.id ? " ccv2-command-palette__item--active" : ""}`}
+                    onClick={() => onSelectCommand(command.id)}
+                  >
+                    <div className="ccv2-command-palette__item-header">
+                      <span className="ccv2-command-palette__item-label">{command.label}</span>
+                      <span className={`ccv2-pill ccv2-pill--${getCommandTone(command)}`}>{command.currentState}</span>
+                    </div>
+                    <div className="ccv2-command-palette__item-meta">
+                      <span>{command.ownerAgent}</span>
+                      <span className={`ccv2-pill ccv2-pill--${getRiskTone(command.riskLevel)}`}>{command.riskLevel}</span>
+                    </div>
+                    {!command.available && (
+                      <div className="ccv2-command-palette__item-reason">{command.disabledReason}</div>
+                    )}
+                  </button>
+                ))}
+              </div>
+            ))}
+          </div>
+
+          {selectedCommand && (
+            <div className="ccv2-command-palette__detail">
+              <div className="ccv2-command-palette__detail-top">
+                <div>
+                  <div className="ccv2-eyebrow">{selectedCommand.category}</div>
+                  <div className="ccv2-command-palette__detail-title">{selectedCommand.label}</div>
+                </div>
+                <div className="ccv2-command-palette__detail-badges">
+                  <span className={`ccv2-pill ccv2-pill--${getCommandTone(selectedCommand)}`}>{selectedCommand.currentState}</span>
+                  <span className={`ccv2-pill ccv2-pill--${getRiskTone(selectedCommand.riskLevel)}`}>{selectedCommand.riskLevel}</span>
+                </div>
+              </div>
+
+              <div className="ccv2-command-palette__detail-copy">{selectedCommand.intent}</div>
+
+              <div className="ccv2-command-palette__detail-grid">
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Active scope</span>
+                  <span className="ccv2-command-palette__detail-value">{selectedCommand.activeScope}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Owner</span>
+                  <span className="ccv2-command-palette__detail-value">{selectedCommand.ownerAgent}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Risk</span>
+                  <span className="ccv2-command-palette__detail-value">{selectedCommand.riskLevel}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Action mode</span>
+                  <span className="ccv2-command-palette__detail-value">{formatActionModeLabel(selectedCommand.actionMode)}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Expected evidence</span>
+                  <span className="ccv2-command-palette__detail-value">{selectedCommand.evidenceProduced}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Cost status</span>
+                  <span className="ccv2-command-palette__detail-value">{summarizeCommandCost(selectedCommand)}</span>
+                </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Service state</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    Local API: {selectedCommand.serviceState?.liveApi} · Action Bridge: {selectedCommand.serviceState?.actionBridge}
+                  </span>
+                </div>
+              </div>
+
+              <div className="ccv2-command-palette__capabilities">
+                <div className="ccv2-command-palette__detail-label">Required capabilities</div>
+                {capabilities.map((capability) => (
+                  <div key={capability.id} className="ccv2-command-palette__capability">
+                    <span className="ccv2-command-palette__capability-name">{formatCapabilityLabel(capability.id)}</span>
+                    <span className="ccv2-command-palette__capability-state">{capability.label}</span>
+                    <span className="ccv2-command-palette__capability-desc">{capability.description}</span>
+                  </div>
+                ))}
+              </div>
+
+              {!selectedCommand.available && selectedCommand.disabledReason && (
+                <div className="ccv2-command-palette__disabled-reason">
+                  Next requirement: {selectedCommand.disabledReason}
+                </div>
+              )}
+
+              <div className="ccv2-command-palette__actions">
+                <button
+                  type="button"
+                  className={`ccv2-command-palette__primary${selectedCommand.available ? " ccv2-command-palette__primary--enabled" : ""}`}
+                  disabled={!selectedCommand.available}
+                  onClick={selectedCommand.available ? () => onExecuteCommand(selectedCommand) : undefined}
+                >
+                  {selectedCommand.available ? "Open governed route" : "Not enabled"}
+                </button>
+                {!selectedCommand.available && (
+                  <div className="ccv2-command-palette__terminal-note">
+                    {selectedCommand.disabledReason}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Verification Gates Summary (Mission Control) ─── */
 function VerificationGatesSummary({ vm }) {
   const gates = vm.mission.gates;
@@ -1489,7 +1811,7 @@ function WorkspaceBand({ vm }) {
 }
 
 /* ─── Mission Control Page ─── */
-function MissionControlPage({ vm }) {
+function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
   const liveOnline = vm.liveApi?.liveApiOnline;
@@ -1512,6 +1834,11 @@ function MissionControlPage({ vm }) {
 
       {/* A. Mission Hero */}
       <MissionComposerCard vm={vm} />
+
+      <OperatorActionsPanel
+        commands={operatorCommands}
+        onSelectCommand={onOpenCommandPalette}
+      />
 
       {/* B. Next Best Action + C. System Status Strip */}
       <div className="ccv2-mission-control__lead-grid">
@@ -4222,6 +4549,7 @@ function PlannedRoutePage({ routeKey }) {
 export default function CommandCenterV2({ studio }) {
   const vm = buildCommandCenterViewModelV2(studio, privateValidationSnapshot, actionBridgeSnapshot);
   const location = useLocation();
+  const navigate = useNavigate();
   const currentRoute = resolveCommandCenterRoute(location.pathname);
   const currentPage = currentRoute?.key || "mission";
   const themeState = useNexusTheme();
@@ -4234,6 +4562,12 @@ export default function CommandCenterV2({ studio }) {
     apiError: null,
   });
   const [liveData, setLiveData] = useState({});
+  const [bridgeState, setBridgeState] = useState({
+    online: false,
+    lastCheckedAt: null,
+  });
+  const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
+  const [selectedCommandId, setSelectedCommandId] = useState("plan");
 
   const refreshApiState = () => {
     setApiState(prev => ({ ...prev, lastRefreshStatus: "refreshing" }));
@@ -4250,9 +4584,83 @@ export default function CommandCenterV2({ studio }) {
     });
   };
 
-  useEffect(() => { refreshApiState(); }, []);
+  const refreshBridgeState = () => {
+    checkActionBridgeHealth()
+      .then((health) => {
+        setBridgeState({
+          online: health.online,
+          lastCheckedAt: new Date().toISOString(),
+        });
+      })
+      .catch(() => {
+        setBridgeState({
+          online: false,
+          lastCheckedAt: new Date().toISOString(),
+        });
+      });
+  };
 
-  const vmWithApi = { ...vm, liveApi: { ...vm.liveApi, ...apiState }, liveData };
+  useEffect(() => {
+    refreshApiState();
+    refreshBridgeState();
+  }, []);
+
+  useEffect(() => {
+    function handleKeyDown(event) {
+      const target = event.target;
+      if (target instanceof HTMLElement) {
+        const tag = target.tagName;
+        if (target.isContentEditable || tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT") {
+          return;
+        }
+      }
+
+      if ((event.metaKey || event.ctrlKey) && event.key.toLowerCase() === "k") {
+        event.preventDefault();
+        setCommandPaletteOpen(true);
+      }
+    }
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  const vmWithApi = {
+    ...vm,
+    liveApi: { ...vm.liveApi, ...apiState },
+    actionBridgeRuntime: bridgeState,
+    liveData,
+  };
+  const commandScope = {
+    activeProject: vmWithApi.shell.activeProject,
+    liveApiOnline: vmWithApi.liveApi?.liveApiOnline,
+    actionBridgeOnline: bridgeState.online,
+    activatedTaskCount: vmWithApi.taskActivation?.activatedCount || 0,
+    evidenceCount:
+      vmWithApi.liveData?.evidence?.totalCount
+      || runtimeSnapshot.runtimeState?.evidence?.total
+      || 0,
+    activityCount:
+      (runtimeSnapshot.runtimeState?.events?.recent?.length || 0)
+      + (runtimeSnapshot.runtimeState?.audit?.recent?.length || 0),
+    hasFailingEvidence:
+      (runtimeSnapshot.runtimeState?.evidence?.recent || []).some((item) => item.result === "FAIL")
+      || vmWithApi.privateValidation?.backendStatus === "FAIL",
+  };
+  const operatorCommands = getNexusCommandsForScope(commandScope, vmWithApi.capabilityReadiness);
+
+  function openCommandPalette(commandId = "plan") {
+    setSelectedCommandId(commandId);
+    setCommandPaletteOpen(true);
+  }
+
+  function handleExecuteCommand(command) {
+    if (!command?.available) return;
+    if (command.routeTarget) {
+      navigate(command.routeTarget);
+      setCommandPaletteOpen(false);
+    }
+  }
 
   return (
     <div
@@ -4268,9 +4676,16 @@ export default function CommandCenterV2({ studio }) {
           apiState={apiState}
           onRefresh={refreshApiState}
           themeState={themeState}
+          onOpenCommandPalette={() => openCommandPalette("plan")}
         />
         <div className="ccv2-content-wrapper">
-          {currentPage === "mission" && <MissionControlPage vm={vmWithApi} />}
+          {currentPage === "mission" && (
+            <MissionControlPage
+              vm={vmWithApi}
+              operatorCommands={operatorCommands}
+              onOpenCommandPalette={openCommandPalette}
+            />
+          )}
           {currentPage === "workspace" && <WorkspacePage vm={vmWithApi} />}
           {currentPage === "tasks" && <TaskQueuePage vm={vmWithApi} />}
           {currentPage === "implementation" && <ImplementationPage vm={vmWithApi} />}
@@ -4295,6 +4710,15 @@ export default function CommandCenterV2({ studio }) {
           )}
         </div>
       </div>
+      <CommandPalette
+        open={commandPaletteOpen}
+        vm={vmWithApi}
+        commands={operatorCommands}
+        selectedCommandId={selectedCommandId}
+        onSelectCommand={setSelectedCommandId}
+        onClose={() => setCommandPaletteOpen(false)}
+        onExecuteCommand={handleExecuteCommand}
+      />
     </div>
   );
 }

@@ -61,14 +61,34 @@
     {
       "phaseId": "P41.6.4",
       "title": "NEXUS Command Palette + Simple Operator Actions",
+      "status": "COMPLETE",
+      "branch": "feat/nexus-command-palette",
+      "commit": "pending-final-commit",
+      "summary": "Adds a simple governed command palette and operator action catalog for Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:nexus-local-boot",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Commands do not enable provider dispatch, worker runtime, DB writes, or release execution.",
+        "Several commands remain disabled until later governed capabilities are implemented."
+      ],
+      "nextPhase": "P41.6.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.6.5",
+      "title": "Boot Docs, Troubleshooting, and Final Validation",
       "status": "PLANNED",
       "branch": "",
       "commit": "",
-      "summary": "Planned next phase for simple operator actions after Service Health visibility is complete.",
+      "summary": "Planned follow-on phase for local boot documentation cleanup and final validation hardening.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "",
-      "commandCenterVisible": false
+      "commandCenterVisible": true
     }
   ]
 }

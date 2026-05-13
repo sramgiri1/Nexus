@@ -50,8 +50,14 @@ export const NEXUS_ROADMAP_PHASES = [
   {
     phase: "P41.6.4",
     label: "NEXUS Command Palette + Simple Operator Actions",
+    status: "COMPLETE",
+    detail: "Command Center now exposes a governed command palette and simple operator action previews without enabling unsafe execution.",
+  },
+  {
+    phase: "P41.6.5",
+    label: "Boot Docs, Troubleshooting, and Final Validation",
     status: "PLANNED",
-    detail: "Command palette and basic operator actions are planned once Service Health UX is in place.",
+    detail: "Finalize local boot operator documentation, troubleshooting guidance, and validation closure for the P41.6 sequence.",
   },
   {
     phase: "P42",
