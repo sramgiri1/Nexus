@@ -538,15 +538,18 @@ test.describe("Command Center route-wide UX", () => {
     const missionHero = page.locator("#v2-mission-hero");
 
     await expect(missionHero).toBeVisible();
-    await expect(
-      missionHero.getByText("enterprise command surface for governed agentic work", { exact: false }),
-    ).toBeVisible();
     await expect(missionHero.getByText("Active Project", { exact: false }).first()).toBeVisible();
     await expect(missionHero.getByText("Active Mission", { exact: false }).first()).toBeVisible();
+    await expect(missionHero).toContainText("Private Project Governed Build Mission");
+    await expect(missionHero).toContainText("Mission ID");
+    await expect(missionHero).toContainText("Read-only until mission edit workflow is enabled.");
     await expect(missionHero.getByRole("button", { name: /Generate Plan/i })).toBeVisible();
     await expect(missionHero.getByRole("button", { name: /Create Project Brief/i })).toBeVisible();
     await expect(missionHero.getByRole("button", { name: /Start Governed Run/i })).toBeVisible();
-    await expect(page.locator("#v2-mission-hero")).toContainText(/Requires governed action bridge|mission:action-server/);
+    await expect(missionHero).toContainText(/Requires generated mission plan|Requires governed action bridge/);
+    await expect(missionHero).toContainText(/Requires approved task plan|Governed run execution is not enabled yet|Requires governed action bridge/);
+    await expect(missionHero.getByText("Mission Control", { exact: true })).toHaveCount(0);
+    await expect(page.locator("#mission-control-text")).toHaveCount(0);
 
     expect(errors).toEqual([]);
   });
@@ -618,7 +621,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Open OS Gaps");
     await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework");
 
-    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.7", "P42"]) {
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1", "P42"]) {
       expect(body).toContain(phase);
     }
     for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
@@ -637,13 +640,13 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
     await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P41.6.5");
+    await expect(page.locator("body")).toContainText("P41.6.6");
     await expect(page.locator("body")).toContainText("Current OS Phase");
 
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await expect(page.locator("body")).toContainText("P42");
-    await expect(page.locator("body")).toContainText("P41.6.4");
+    await expect(page.locator("body")).toContainText("P41.7.1");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -683,11 +686,14 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/");
 
     const topbar = await page.locator(".ccv2-topbar").innerText();
-    expect(topbar).toContain("ENVIRONMENT");
+    expect(topbar).toContain("Environment:");
     expect(topbar).toContain("Desktop");
     expect(topbar).toContain("Local-private");
     expect(topbar).not.toContain("ENVDesktop");
     expect(topbar).not.toContain("local-");
+    expect(topbar).toContain("Command");
+    await expect(page).toHaveTitle(/NEXUS OS - Agentic Command Center/);
+    await expect(page).not.toHaveTitle(/Venture Orchestration System/);
 
     expect(errors).toEqual([]);
   });
@@ -885,6 +891,9 @@ test.describe("Command Center route-wide UX", () => {
       await page.goto(route);
       const body = await page.locator("body").innerText();
       expect(body).not.toContain("DEMOAPP ACTIVE");
+      expect(body).not.toContain("DemoApp");
+      expect(body).toContain("Private Project");
+      expect(body).toContain("Local-private");
     }
 
     expect(errors).toEqual([]);

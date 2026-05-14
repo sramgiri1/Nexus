@@ -22,6 +22,10 @@ const sections = {
   roadmapProjectSeparation: true,
   headerFormatting: true,
   sidebarPlannedBehavior: true,
+  boundaryPolish: true,
+  missionDisplay: true,
+  topBarPolish: true,
+  actionReasons: true,
   screenshotAudit: true,
   visualQaReport: true,
   sidebarLabels: true,
@@ -150,6 +154,8 @@ const themeCssSource = readFile("dashboard/src/styles-command-center-v2.css");
 const routeTestSource = readFile("dashboard/tests/routes.spec.js");
 const screenshotAuditSource = readFile(SCREENSHOT_AUDIT_SCRIPT_PATH);
 const visualQaReportSource = readFile(VISUAL_QA_REPORT_PATH);
+const uxDocSource = readFile("docs/architecture/COMMAND_CENTER_UX_STABILIZATION.md");
+const phaseStatusSource = readFile("os-roadmap/phase-status.json");
 
 let routeMatrix = [];
 let capabilityReadiness = {};
@@ -584,6 +590,67 @@ for (const expected of [
 check(commandCenterSource.includes("Read-only and route-first"), "operatorActions", "Operator actions should explain read-only and route-first posture");
 check(routeTestSource.includes("Mission Control shows simple operator action rows"), "operatorActions", "Route tests missing Mission Control operator actions coverage");
 
+// Boundary polish
+check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "boundaryPolish", "Local-private Mission Control should use a safe project display name");
+check(commandCenterSource.includes("Local Preview"), "boundaryPolish", "Sidebar should use a safe preview label instead of an arbitrary version");
+check(!commandCenterNonRoadmapSource.includes("DEMOAPP ACTIVE"), "boundaryPolish", "Primary Command Center UX should not show DEMOAPP ACTIVE");
+check(routeTestSource.includes("demo boundary keeps DemoApp on demo route only"), "boundaryPolish", "Route tests missing DemoApp boundary coverage");
+check(uxDocSource.includes("Sidebar Badge Semantics"), "boundaryPolish", "UX stabilization doc must record sidebar badge semantics");
+check(phaseStatusSource.includes('"phaseId": "P41.6.6"'), "boundaryPolish", "OS phase status registry must include P41.6.6");
+
+// Mission display
+for (const expected of [
+  "Mission ID",
+  "Mission Prompt",
+  "Read-only until mission edit workflow is enabled.",
+  "Current State",
+  "Next Action",
+  "Pipeline Snapshot",
+  "Verification Gates",
+  "Activity Pulse",
+]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "missionDisplay", `Mission display missing expected copy: ${expected}`);
+}
+check(
+  viewModelSource.includes("private-project-governed-build-mission")
+    && commandCenterSource.includes("humanizeMissionId"),
+  "missionDisplay",
+  "Mission display should derive a human-readable title from the governed mission id",
+);
+check(!commandCenterSource.includes('ccv2-mission-cockpit__title">Mission Control'), "missionDisplay", "Mission Control title should not be duplicated inside the hero");
+check(!commandCenterSource.includes("Venture Orchestration System"), "missionDisplay", "Old Venture Orchestration System wording should not remain in primary UX");
+check(commandCenterSource.includes("NEXUS OS - Agentic Command Center"), "missionDisplay", "Command Center should set the updated browser/app title");
+check(routeTestSource.includes("Mission Hero shows mission, scope, actions, and disabled reasons"), "missionDisplay", "Mission display tests missing updated hero coverage");
+
+// Top bar polish
+for (const expected of [
+  "Environment:",
+  "Command",
+  "Cmd/Ctrl+K",
+  "Theme:",
+  "Local API: Online",
+  "Durable State: read-only",
+]) {
+  check(commandCenterSource.includes(expected), "topBarPolish", `Top bar missing polished copy: ${expected}`);
+}
+check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
+check(routeTestSource.includes("top header uses clean environment formatting"), "topBarPolish", "Route tests missing top-bar polish coverage");
+
+// Action reasons
+check(commandCenterSource.includes("Requires generated mission plan"), "actionReasons", "Mission Control should explain generated-plan prerequisites");
+check(commandCenterSource.includes("Requires approved task plan"), "actionReasons", "Mission Control should explain approved-task-plan prerequisites");
+check(
+  !commandCenterSource.includes('mc.buttons?.[1]?.reason || "Requires governed action bridge"'),
+  "actionReasons",
+  "Create Project Brief should not default to a governed action bridge reason in source",
+);
+check(
+  !commandCenterSource.includes('mc.buttons?.[2]?.reason || "Requires worker runtime"'),
+  "actionReasons",
+  "Start Governed Run should not default to a worker-runtime reason in source",
+);
+check(routeTestSource.includes("Mission Hero shows mission, scope, actions, and disabled reasons"), "actionReasons", "Route tests missing action-reason coverage");
+
 // Screenshot audit
 check(screenshotAuditSource.length > 0, "screenshotAudit", "capture-command-center-screenshots.js must exist");
 for (const expected of [
@@ -653,7 +720,7 @@ for (const expected of [
 }
 
 // OS Roadmap preservation
-for (const phase of ["P26-P41", "P41.5.1", "P41.5.6", "P41.6.4", "P41.6.5", "P41.7", "P42", "P78"]) {
+for (const phase of ["P26-P41", "P41.5.1", "P41.5.6", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1", "P42", "P78"]) {
   check(
     Array.isArray(roadmapPhases) && roadmapPhases.some((entry) => entry.phase === phase),
     "roadmapPreservation",
@@ -672,7 +739,7 @@ for (const expectedTest of [
 // Demo boundary
 check(!commandCenterSource.includes("DEMOAPP ACTIVE"), "demoBoundary", "CommandCenterV2.jsx should not contain DEMOAPP ACTIVE");
 check(!viewModelSource.includes('activeProject: studio.activeProject?.name || "DemoApp"'), "demoBoundary", "V2 view model should not default to DemoApp");
-check(viewModelSource.includes('activeProject: studio.activeProject?.name || "Private Project"'), "demoBoundary", "V2 view model should default to Private Project in local-private mode");
+check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "demoBoundary", "V2 view model should use a safe local-private project label");
 
 // No forbidden changes
 try {
@@ -719,6 +786,10 @@ console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
 console.log(`Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}`);
 console.log(`Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}`);
+console.log(`Boundary polish: ${sections.boundaryPolish ? "PASS" : "FAIL"}`);
+console.log(`Mission display: ${sections.missionDisplay ? "PASS" : "FAIL"}`);
+console.log(`Top bar polish: ${sections.topBarPolish ? "PASS" : "FAIL"}`);
+console.log(`Action reasons: ${sections.actionReasons ? "PASS" : "FAIL"}`);
 console.log(`Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}`);
 console.log(`Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
@@ -754,6 +825,10 @@ const report = `# Command Center UX Report
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}
 - Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}
 - Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}
+- Boundary polish: ${sections.boundaryPolish ? "PASS" : "FAIL"}
+- Mission display: ${sections.missionDisplay ? "PASS" : "FAIL"}
+- Top bar polish: ${sections.topBarPolish ? "PASS" : "FAIL"}
+- Action reasons: ${sections.actionReasons ? "PASS" : "FAIL"}
 - Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}
 - Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}

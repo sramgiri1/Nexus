@@ -123,6 +123,45 @@ const WORKFLOW_GROUPS = [
   { key: "release", label: "Release" },
 ];
 
+const SIDEBAR_BADGE_SEMANTICS = {
+  Live: {
+    tone: "live",
+    title: "LIVE: actively connected to a live local service or runtime surface.",
+  },
+  Ready: {
+    tone: "ready",
+    title: "READY: capability is available for local operator use.",
+  },
+  "Read-only": {
+    tone: "read-only",
+    title: "READ-ONLY: data is available while writes remain disabled by policy.",
+  },
+  Planned: {
+    tone: "planned",
+    title: "PLANNED: route or capability placeholder for a future phase.",
+  },
+  Offline: {
+    tone: "offline",
+    title: "OFFLINE: service or capability is currently unavailable.",
+  },
+  Blocked: {
+    tone: "blocked",
+    title: "BLOCKED: capability is unavailable because a prerequisite or policy boundary is unmet.",
+  },
+};
+
+function humanizeMissionId(missionId) {
+  if (!missionId || typeof missionId !== "string") {
+    return "Active Mission";
+  }
+
+  return missionId
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 const TASK_STATE_LABELS = {
   planned: "Not started",
   queued: "Queued",
@@ -269,7 +308,7 @@ function Sidebar({ vm, location }) {
       >
         <div className="ccv2-sidebar__brand-mark">N</div>
         <div className="ccv2-sidebar__brand-name">{vm.shell.productName}</div>
-        <div className="ccv2-sidebar__brand-ver">v4.7</div>
+        <div className="ccv2-sidebar__brand-ver">{vm.shell.previewLabel || "Local Preview"}</div>
       </div>
 
       <nav className="ccv2-nav-groups">
@@ -279,6 +318,7 @@ function Sidebar({ vm, location }) {
             {group.items.map((item) => {
               const isMissionItem = item.key === "mission";
               const isMissionActive = isMissionItem && missionPaths.has(location.pathname);
+              const badgeMeta = SIDEBAR_BADGE_SEMANTICS[item.badge] || null;
 
               return (
                 <NavLink
@@ -294,7 +334,12 @@ function Sidebar({ vm, location }) {
                   <span className="ccv2-nav-item__icon">{ROUTE_ICONS[item.key] || "•"}</span>
                   <span className="ccv2-nav-item__label">{item.name}</span>
                   {item.badge && (
-                    <span className="ccv2-nav-item__badge">{item.badge}</span>
+                    <span
+                      className={`ccv2-nav-item__badge${badgeMeta ? ` ccv2-nav-item__badge--${badgeMeta.tone}` : ""}`}
+                      title={badgeMeta?.title || item.badge}
+                    >
+                      {item.badge}
+                    </span>
                   )}
                   {item.count && (
                     <span className={`ccv2-nav-item__count${item.countTone === "red" ? " ccv2-nav-item__count--red" : ""}`}>
@@ -349,10 +394,10 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenComman
       </div>
 
       <div className="ccv2-topbar__env-badge">
-        <span className="ccv2-topbar__env-label">Environment</span>
-        <span className="ccv2-topbar__env-value">Desktop</span>
-        <span className="ccv2-topbar__env-sep">|</span>
-        <span className="ccv2-topbar__env-value">Local-private</span>
+        <span className="ccv2-topbar__env-label">Environment:</span>
+        <span className="ccv2-topbar__env-value">{vm.shell.environment || "Desktop"}</span>
+        <span className="ccv2-topbar__env-sep">·</span>
+        <span className="ccv2-topbar__env-value">{vm.shell.mode === "local-private" ? "Local-private" : vm.shell.mode}</span>
       </div>
 
       <div className="ccv2-topbar__spacer" />
@@ -380,12 +425,12 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenComman
         onClick={onOpenCommandPalette}
         aria-label="Open Command Palette"
       >
-        <span className="ccv2-command-palette-trigger__label">Command Palette</span>
+        <span className="ccv2-command-palette-trigger__label">Command</span>
         <span className="ccv2-command-palette-trigger__shortcut">Cmd/Ctrl+K</span>
       </button>
 
       <div className="ccv2-theme-control" aria-label="Theme selector" data-theme-control="nexus">
-        <span className="ccv2-theme-control__label">Theme</span>
+        <span className="ccv2-theme-control__label">Theme:</span>
         <div className="ccv2-theme-control__options" role="group" aria-label="Command Center theme">
           {[
             { id: "system", label: "System", title: "Use system theme" },
@@ -415,7 +460,7 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenComman
 /* ─── Mission Composer Card ─── */
 function MissionComposerCard({ vm }) {
   const mc = vm.missionComposer;
-  const [missionText, setMissionText] = useState(mc.missionText || "");
+  const [missionText] = useState(mc.missionText || "");
   const [bridgeOnline, setBridgeOnline] = useState(false);
   const [actionState, setActionState] = useState("idle"); // idle | running | completed | failed | offline
   const [actionResult, setActionResult] = useState(null);
@@ -423,14 +468,50 @@ function MissionComposerCard({ vm }) {
   const isLocalPrivate = vm.shell.mode === "local-private";
   const activeScopeLabel = isLocalPrivate ? "Active Project" : "NEXUS OS";
   const activeMissionRaw = vm.agenticWorkspace?.activeMission || vm.taskActivation?.missionId || vm.mission.sprintId;
-  const activeMission = typeof activeMissionRaw === "string"
+  const activeMissionId = typeof activeMissionRaw === "string"
     ? activeMissionRaw
     : activeMissionRaw?.id || activeMissionRaw?.name || activeMissionRaw?.title || vm.mission.sprintId;
+  const activeMissionDisplayName = mc.missionDisplayName || humanizeMissionId(activeMissionId);
   const sourceLabel = vm.liveApi?.liveApiOnline
     ? "Live local API"
     : vm.dbFoundation?.fileFallbackRequired
       ? "Snapshot fallback"
       : "File-backed";
+  const generatedPlanReady = actionState === "completed" || mc.generatedPlanReady === true;
+  const approvedTaskPlanReady = mc.approvedTaskPlanReady === true;
+  const bridgeReason = "Requires governed action bridge";
+  const projectBriefReason = !bridgeOnline
+    ? bridgeReason
+    : generatedPlanReady
+      ? "Project brief action remains route-guided until project-brief execution is enabled."
+      : "Requires generated mission plan";
+  const governedRunReason = !bridgeOnline
+    ? bridgeReason
+    : approvedTaskPlanReady
+      ? "Governed run execution is not enabled yet."
+      : generatedPlanReady
+        ? "Requires approved task plan"
+        : "Requires generated mission plan";
+  const currentStateLabel = !bridgeOnline
+    ? "Governed action bridge offline"
+    : generatedPlanReady
+      ? "Mission plan generated and ready for brief review"
+      : "Governed action bridge available";
+  const nextActionLabel = !bridgeOnline
+    ? "Restore the governed action bridge in a local terminal"
+    : !generatedPlanReady
+      ? "Generate plan from the read-only mission prompt"
+      : !approvedTaskPlanReady
+        ? "Create governed project brief from the generated mission plan"
+        : "Review the approved task plan before enabling runtime work";
+  const latestActivity = vm.activity?.[0];
+  const pipelineSummary = `${vm.pipeline?.queued || 0} queued · ${vm.pipeline?.running || 0} running · ${vm.pipeline?.blocked || 0} blocked`;
+  const gateSummary = Object.entries(vm.mission?.gates || {})
+    .map(([gate, status]) => `${gate} ${status}`)
+    .join(" · ");
+  const activitySummary = latestActivity
+    ? `${latestActivity.agent} · ${latestActivity.text}`
+    : "No activity yet. Mission activity appears after task activation or review.";
   const actionButtons = [
     {
       id: "generate-plan",
@@ -447,13 +528,13 @@ function MissionComposerCard({ vm }) {
       id: "create-project-brief",
       label: "Create Project Brief",
       enabled: false,
-      reason: mc.buttons?.[1]?.reason || "Requires governed action bridge",
+      reason: projectBriefReason,
     },
     {
       id: "start-governed-run",
       label: "Start Governed Run",
       enabled: false,
-      reason: mc.buttons?.[2]?.reason || "Requires worker runtime",
+      reason: governedRunReason,
     },
   ];
 
@@ -490,11 +571,15 @@ function MissionComposerCard({ vm }) {
     <section className="ccv2-card ccv2-card--strong ccv2-mission-cockpit" id="v2-mission-hero">
       <div className="ccv2-mission-cockpit__header">
         <div>
-          <div className="ccv2-eyebrow">Mission Hero</div>
-          <h2 className="ccv2-mission-cockpit__title">Mission Control</h2>
+          <div className="ccv2-eyebrow">Active Mission</div>
+          <h2 className="ccv2-mission-cockpit__title">{activeMissionDisplayName}</h2>
           <p className="ccv2-mission-cockpit__subtitle">
-            enterprise command surface for governed agentic work
+            {mc.subtitle}
           </p>
+          <div className="ccv2-mission-cockpit__meta-line">
+            <span className="ccv2-mission-cockpit__meta-label">Mission ID</span>
+            <span className="ccv2-mission-cockpit__meta-value ccv2-mono">{activeMissionId}</span>
+          </div>
         </div>
         <div className="ccv2-mission-cockpit__badges">
           <span className="ccv2-badge ccv2-badge--teal">{activeScopeLabel}</span>
@@ -513,7 +598,8 @@ function MissionComposerCard({ vm }) {
         </div>
         <div className="ccv2-mission-cockpit__summary-cell">
           <span className="ccv2-mission-cockpit__summary-label">Active Mission</span>
-          <span className="ccv2-mission-cockpit__summary-value">{activeMission}</span>
+          <span className="ccv2-mission-cockpit__summary-value">{activeMissionDisplayName}</span>
+          <span className="ccv2-mission-cockpit__summary-meta ccv2-mono">{activeMissionId}</span>
         </div>
         <div className="ccv2-mission-cockpit__summary-cell">
           <span className="ccv2-mission-cockpit__summary-label">Mission Lead</span>
@@ -525,29 +611,50 @@ function MissionComposerCard({ vm }) {
         </div>
       </div>
 
+      <div className="ccv2-mission-cockpit__signal-grid">
+        <div className="ccv2-mission-cockpit__signal-card ccv2-mission-cockpit__signal-card--accent">
+          <span className="ccv2-mission-cockpit__signal-label">Current State</span>
+          <span className="ccv2-mission-cockpit__signal-value">{currentStateLabel}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__signal-card ccv2-mission-cockpit__signal-card--accent">
+          <span className="ccv2-mission-cockpit__signal-label">Next Action</span>
+          <span className="ccv2-mission-cockpit__signal-value">{nextActionLabel}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__signal-card">
+          <span className="ccv2-mission-cockpit__signal-label">Pipeline Snapshot</span>
+          <span className="ccv2-mission-cockpit__signal-value">{pipelineSummary}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__signal-card">
+          <span className="ccv2-mission-cockpit__signal-label">Verification Gates</span>
+          <span className="ccv2-mission-cockpit__signal-value">{gateSummary}</span>
+        </div>
+        <div className="ccv2-mission-cockpit__signal-card">
+          <span className="ccv2-mission-cockpit__signal-label">Activity Pulse</span>
+          <span className="ccv2-mission-cockpit__signal-value">{activitySummary}</span>
+        </div>
+      </div>
+
       <div className="ccv2-mission-cockpit__body">
         <div className="ccv2-mission-cockpit__narrative">
           <div className="ccv2-mission-cockpit__intent-label">Mission Intent</div>
           <p className="ccv2-mission-cockpit__intent">{vm.mission.founderIntent}</p>
           <blockquote className="ccv2-mission-cockpit__quote">{vm.mission.quote}</blockquote>
 
-          <label className="ccv2-mission-cockpit__prompt-label" htmlFor="mission-control-text">
-            Governed mission prompt
-          </label>
-          <textarea
-            id="mission-control-text"
-            className="ccv2-mission-composer__textarea"
-            value={missionText}
-            onChange={(e) => setMissionText(e.target.value)}
-            placeholder={mc.placeholder}
-            rows={4}
-          />
+          <div className="ccv2-mission-cockpit__prompt-label">Mission Prompt</div>
+          <div
+            className="ccv2-mission-cockpit__prompt-panel"
+            role="note"
+            aria-label="Mission prompt read-only panel"
+          >
+            <div className="ccv2-mission-cockpit__prompt-text">{missionText}</div>
+            <div className="ccv2-mission-cockpit__prompt-note">{mc.readOnlyNote}</div>
+          </div>
 
           <div className="ccv2-mission-cockpit__mission-meta">
             <span className="ccv2-pill ccv2-pill--pass">{vm.mission.sprintId}</span>
             <span className="ccv2-pill ccv2-pill--pending">{vm.mission.sprintDay}</span>
-            <span className="ccv2-pill ccv2-pill--disabled">
-              {vm.liveApi?.liveApiOnline ? "Available" : "Requires governed action bridge"}
+            <span className={`ccv2-pill ${bridgeOnline ? "ccv2-pill--pass" : "ccv2-pill--disabled"}`}>
+              {bridgeOnline ? "Action bridge online" : "Action bridge offline"}
             </span>
           </div>
         </div>
@@ -576,10 +683,10 @@ function MissionComposerCard({ vm }) {
           <div className="ccv2-mission-cockpit__availability">
             <div className="ccv2-mission-cockpit__availability-label">Current state</div>
             <div className="ccv2-mission-cockpit__availability-value">
-              {bridgeOnline ? "Governed action bridge available" : "Requires governed action bridge"}
+              {currentStateLabel}
             </div>
             <div className="ccv2-mission-cockpit__availability-label">Next action</div>
-            <div className="ccv2-mission-cockpit__availability-value">{mc.nextAction}</div>
+            <div className="ccv2-mission-cockpit__availability-value">{nextActionLabel}</div>
           </div>
         </div>
       </div>
@@ -2728,6 +2835,9 @@ function ProjectsPage({ vm, studio }) {
   const pvBackend = pvStatus.latestBackendValidation || {};
   const projectProgress = vm.projectProgress || vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
+  const projectSummaryName = isLocalPrivate
+    ? (projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project")
+    : (studio?.activeProject?.name || "Private Project");
 
   return (
     <div className="ccv2-content">
@@ -2740,7 +2850,7 @@ function ProjectsPage({ vm, studio }) {
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Summary</div>
           <div className="ccv2-page-summary-grid">
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{studio?.activeProject?.name || "Private Project"}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project state</span><span className="ccv2-page-summary-value">{isLocalPrivate ? "Active · private · local-private" : "Active · public-safe"}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Backend validation</span><span className="ccv2-page-summary-value">{pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">iOS readiness</span><span className="ccv2-page-summary-value">{pvStatus.iosReadiness || "Requires iOS/Xcode runner"}</span></div>
@@ -4661,6 +4771,7 @@ export default function CommandCenterV2({ studio }) {
   const navigate = useNavigate();
   const currentRoute = resolveCommandCenterRoute(location.pathname);
   const currentPage = currentRoute?.key || "mission";
+  const pageLabel = currentRoute?.expectedHeading || "Agentic Command Center";
   const themeState = useNexusTheme();
 
   const [apiState, setApiState] = useState({
@@ -4713,6 +4824,12 @@ export default function CommandCenterV2({ studio }) {
     refreshApiState();
     refreshBridgeState();
   }, []);
+
+  useEffect(() => {
+    document.title = currentPage === "mission"
+      ? "NEXUS OS - Agentic Command Center"
+      : `NEXUS OS - ${pageLabel}`;
+  }, [currentPage, pageLabel]);
 
   useEffect(() => {
     function handleKeyDown(event) {

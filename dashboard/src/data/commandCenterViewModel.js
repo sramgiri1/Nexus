@@ -32,6 +32,18 @@ const SERVICE_GUIDANCE = {
   "batch-jobs": "Batch jobs remain a future platform capability. Use Task Queue and Mission Control for current operator work.",
 };
 
+function humanizeMissionId(missionId) {
+  if (!missionId || typeof missionId !== "string") {
+    return "Active Mission";
+  }
+
+  return missionId
+    .split("-")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
 function getServiceStateEntry(serviceId) {
   return serviceState?.services?.find((entry) => entry.id === serviceId) || null;
 }
@@ -79,6 +91,10 @@ function buildServiceCard(service) {
 }
 
 export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
+  const shellMode = "local-private";
+  const safeProjectDisplayName = shellMode === "local-private"
+    ? "Private Project"
+    : (studio.activeProject?.name || "DemoApp");
   const pvStatus = pvSnapshot?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};
@@ -151,32 +167,42 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const doctorPassCount = doctorChecks.filter((entry) => entry?.ok).length;
   const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
+  const activeMissionId = "private-project-governed-build-mission";
+  const activeMissionDisplayName = humanizeMissionId(activeMissionId);
 
   return {
     shell: {
       productName: "NEXUS OS",
-      mode: "local-private",
-      environment: "Local",
+      productTitle: "NEXUS OS - Agentic Command Center",
+      mode: shellMode,
+      environment: "Desktop",
+      previewLabel: "Local Preview",
       operator: "Founder",
-      activeProject: studio.activeProject?.name || "Private Project",
+      activeProject: safeProjectDisplayName,
     },
     missionComposer: {
-      title: "Start a Mission",
-      subtitle: "Tell NEXUS what you want to build. The OS turns it into governed tasks for agents.",
+      title: "Active Mission",
+      subtitle: "Review the governed mission summary and move the current scope through planning, review, and validation.",
       placeholder: "Describe what you want to build...",
       missionText: "Build the private project through governed planning, validation, privacy review, and controlled implementation.",
-      projectLabel: "Private Project",
-      mode: "local-private",
+      missionDisplayName: activeMissionDisplayName,
+      missionId: activeMissionId,
+      projectLabel: safeProjectDisplayName,
+      mode: shellMode,
+      readOnly: true,
+      readOnlyNote: "Read-only until mission edit workflow is enabled.",
+      generatedPlanReady: false,
+      approvedTaskPlanReady: false,
       bridgeReady: abSnapshot?.bridgeReadiness?.status === "READY",
       buttons: [
         { label: "Generate Plan", enabled: false, reason: "Requires governed action bridge" },
-        { label: "Create Project Brief", enabled: false, reason: "Requires governed action bridge" },
-        { label: "Start Governed Run", enabled: false, reason: "Requires governed action bridge" },
+        { label: "Create Project Brief", enabled: false, reason: "Requires generated mission plan" },
+        { label: "Start Governed Run", enabled: false, reason: "Requires approved task plan" },
       ],
       contractPath: "contracts/missions/private-project-mission-contract.json",
       taskPlanPath: "contracts/missions/private-project-task-plan.json",
       taskCount: 6,
-      nextAction: "Create governed project brief from mission composer",
+      nextAction: "Generate plan from the read-only mission prompt",
     },
     mission: {
       founderIntent: "Build and validate the active mission through governed NEXUS agents.",
@@ -363,7 +389,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       },
     },
     serviceHealth: {
-      mode: "local-private",
+      mode: shellMode,
       sourceLabel: "service manifest + status snapshot",
       manifestPath: "nexus.services.json",
       statusPath: "local-state/runtime/services/service-state.json",

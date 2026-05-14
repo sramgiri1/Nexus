@@ -159,9 +159,11 @@
 
 .ccv2-sidebar__brand-ver {
   font-size: 9px;
-  color: var(--v2-muted-2);
+  color: var(--nexus-accent);
   margin-left: auto;
-  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
 .ccv2-nav-groups {
@@ -231,10 +233,37 @@
   letter-spacing: 0.06em;
   padding: 1px 5px;
   border-radius: 3px;
-  background: var(--v2-teal-soft);
-  color: var(--v2-teal);
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-muted);
   border: 1px solid var(--v2-border-strong);
   text-transform: uppercase;
+  flex-shrink: 0;
+}
+
+.ccv2-nav-item__badge--live {
+  background: var(--nexus-info-soft);
+  color: var(--nexus-info);
+}
+
+.ccv2-nav-item__badge--ready {
+  background: var(--nexus-success-soft);
+  color: var(--nexus-success);
+}
+
+.ccv2-nav-item__badge--read-only {
+  background: var(--nexus-accent-soft);
+  color: var(--nexus-accent);
+}
+
+.ccv2-nav-item__badge--planned {
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-muted);
+}
+
+.ccv2-nav-item__badge--offline,
+.ccv2-nav-item__badge--blocked {
+  background: var(--nexus-danger-soft);
+  color: var(--nexus-danger);
 }
 
 .ccv2-nav-item__count {
@@ -309,27 +338,24 @@
   display: flex;
   align-items: center;
   padding: 0 16px;
-  gap: 12px;
+  gap: 10px;
   flex-shrink: 0;
 }
 
 .ccv2-theme-control {
   display: flex;
   align-items: center;
-  gap: 8px;
-  padding: 4px 8px;
+  gap: 6px;
+  padding: 3px 6px;
   border: 1px solid var(--nexus-border);
   border-radius: 999px;
   background: var(--nexus-panel-soft);
-  box-shadow: var(--nexus-shadow);
 }
 
 .ccv2-theme-control__label {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 700;
-  color: var(--nexus-text-strong);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+  color: var(--nexus-muted);
 }
 
 .ccv2-theme-control__options {
@@ -343,9 +369,9 @@
   border-radius: 999px;
   background: transparent;
   color: var(--nexus-muted);
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
-  padding: 4px 10px;
+  padding: 3px 8px;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
@@ -413,8 +439,8 @@
 .ccv2-topbar__env-badge {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 10px;
+  gap: 5px;
+  padding: 3px 9px;
   border-radius: 999px;
   border: 1px solid var(--nexus-border);
   background: var(--nexus-panel-soft);
@@ -423,21 +449,19 @@
 }
 
 .ccv2-topbar__env-label {
-  font-size: 9px;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--nexus-accent);
+  font-size: 10px;
+  color: var(--nexus-muted);
   font-weight: 700;
 }
 
 .ccv2-topbar__env-value {
-  font-size: 11px;
+  font-size: 10px;
   font-weight: 600;
   color: var(--nexus-text-strong);
 }
 
 .ccv2-topbar__env-sep {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--nexus-muted);
 }
 
@@ -481,13 +505,13 @@
 .ccv2-command-palette-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
   border: 1px solid var(--nexus-border);
   border-radius: 999px;
   background: var(--nexus-panel-soft);
   color: var(--nexus-text-strong);
-  padding: 6px 10px;
-  font-size: 11px;
+  padding: 4px 9px;
+  font-size: 10px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
@@ -500,12 +524,12 @@
 }
 
 .ccv2-command-palette-trigger__label {
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
 }
 
 .ccv2-command-palette-trigger__shortcut {
   color: var(--nexus-muted);
-  font-size: 10px;
+  font-size: 9px;
   font-family: "JetBrains Mono", "Fira Code", monospace;
 }
 
@@ -704,7 +728,7 @@
 
 .ccv2-mission-cockpit__title {
   margin: 0;
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1;
   letter-spacing: -0.03em;
   color: var(--nexus-text-strong);
@@ -716,6 +740,28 @@
   font-size: 13px;
   line-height: 1.5;
   color: var(--nexus-muted);
+}
+
+.ccv2-mission-cockpit__meta-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+
+.ccv2-mission-cockpit__meta-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.ccv2-mission-cockpit__meta-value {
+  font-size: 11px;
+  color: var(--nexus-text);
+  word-break: break-word;
 }
 
 .ccv2-mission-cockpit__badges {
@@ -754,7 +800,52 @@
   font-weight: 700;
   color: var(--nexus-text-strong);
   line-height: 1.45;
-  word-break: break-word;
+  word-break: normal;
+  overflow-wrap: anywhere;
+}
+
+.ccv2-mission-cockpit__summary-meta {
+  font-size: 10px;
+  color: var(--nexus-muted);
+  line-height: 1.4;
+  overflow-wrap: anywhere;
+}
+
+.ccv2-mission-cockpit__signal-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ccv2-mission-cockpit__signal-card {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-panel-soft) 86%, transparent);
+  min-height: 84px;
+}
+
+.ccv2-mission-cockpit__signal-card--accent {
+  border-color: var(--nexus-border-strong);
+  background: color-mix(in srgb, var(--nexus-accent-soft) 72%, var(--nexus-panel-soft));
+}
+
+.ccv2-mission-cockpit__signal-label {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.ccv2-mission-cockpit__signal-value {
+  font-size: 13px;
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
 }
 
 .ccv2-mission-cockpit__body {
@@ -828,10 +919,15 @@
 .ccv2-mission-cockpit__availability {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 6px;
   margin-top: auto;
   padding-top: 10px;
   border-top: 1px solid var(--nexus-border);
+}
+
+.ccv2-mission-cockpit__availability-value {
+  font-size: 12px;
+  color: var(--nexus-text-strong);
 }
 
 .ccv2-mission-composer {
@@ -856,16 +952,23 @@
 }
 
 .ccv2-mission-composer__textarea {
-  background: var(--nexus-input-bg);
+  width: 100%;
+  background: color-mix(in srgb, var(--nexus-code-bg) 82%, transparent);
   border: 1px solid var(--nexus-border);
   border-radius: 8px;
   padding: 10px 12px;
   font-size: 12px;
   color: var(--nexus-text);
   line-height: 1.6;
-  min-height: 70px;
+  min-height: 60px;
   font-family: inherit;
-  resize: none;
+  resize: vertical;
+  box-sizing: border-box;
+}
+
+.ccv2-mission-composer__textarea:focus {
+  outline: none;
+  border-color: var(--nexus-accent);
 }
 
 .ccv2-mission-composer__placeholder {
@@ -873,6 +976,27 @@
   color: var(--v2-muted-2);
   font-style: italic;
   padding: 2px 0;
+}
+
+.ccv2-mission-cockpit__prompt-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 12px;
+  border-radius: 10px;
+  border: 1px solid var(--nexus-border);
+  background: color-mix(in srgb, var(--nexus-code-bg) 82%, transparent);
+}
+
+.ccv2-mission-cockpit__prompt-text {
+  font-size: 12px;
+  line-height: 1.7;
+  color: var(--nexus-text);
+}
+
+.ccv2-mission-cockpit__prompt-note {
+  font-size: 11px;
+  color: var(--nexus-muted);
 }
 
 .ccv2-mission-composer__actions {
@@ -1105,6 +1229,7 @@
 
 @media (max-width: 960px) {
   .ccv2-mission-cockpit__summary-grid,
+  .ccv2-mission-cockpit__signal-grid,
   .ccv2-status-strip__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -1124,11 +1249,13 @@
   }
 
   .ccv2-mission-cockpit__summary-grid,
+  .ccv2-mission-cockpit__signal-grid,
   .ccv2-status-strip__grid {
     grid-template-columns: 1fr;
   }
 
-  .ccv2-command-palette-trigger__shortcut {
+  .ccv2-command-palette-trigger__shortcut,
+  .ccv2-topbar__env-sep {
     display: none;
   }
 }
@@ -2768,26 +2895,6 @@
   border-color: var(--v2-teal);
   color: var(--v2-teal);
   cursor: pointer;
-}
-
-.ccv2-mission-composer__textarea {
-  width: 100%;
-  background: rgba(5, 6, 8, 0.5);
-  border: 1px solid var(--v2-border);
-  border-radius: 6px;
-  color: var(--v2-text);
-  font-size: 12px;
-  line-height: 1.6;
-  padding: 10px 12px;
-  resize: vertical;
-  min-height: 60px;
-  font-family: inherit;
-  box-sizing: border-box;
-}
-
-.ccv2-mission-composer__textarea:focus {
-  outline: none;
-  border-color: var(--v2-teal);
 }
 
 .ccv2-mc-status {

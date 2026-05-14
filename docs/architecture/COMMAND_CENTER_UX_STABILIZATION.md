@@ -326,3 +326,47 @@ The goal is to make the current P41.5 Command Center surface understandable with
 ### Next Phase
 
 - P41.6 — Unified NEXUS Local Boot / Service Orchestration
+
+## P41.6.6 — Command Center Boundary Polish + Mission Control Consistency
+
+This polish subphase closes the remaining Mission Control boundary and consistency gaps before the P41.7 documentation-system work starts.
+
+It adds:
+
+- local-private versus demo badge consistency in Mission Control
+- a human-readable active mission display name with the raw mission ID demoted to secondary text
+- a compact top bar for Command, Theme, and Environment controls
+- a read-only Mission Prompt panel instead of a misleading editable textarea
+- corrected primary-action disabled reasons that no longer contradict action-bridge availability
+- denser above-the-fold cockpit summaries for current state, next action, pipeline, gates, and recent activity
+
+### Boundary Rules
+
+- local-private Mission Control and Workspace must not show DemoApp as the active project
+- demo-specific wording is only allowed on the Demo route
+- private-project wording remains the default public-safe label until a governed Project Registry exists
+
+### Sidebar Badge Semantics
+
+- `LIVE` means the route is attached to an actively connected live local service or runtime surface
+- `READY` means the capability is available for operator use
+- `READ-ONLY` means the surface is available while writes remain disabled by policy
+- `PLANNED` means the route or capability is a placeholder for a future phase
+- `OFFLINE` means the related service is currently unavailable
+- `BLOCKED` means a policy or prerequisite currently prevents use
+
+### Top Bar and Mission Display Rules
+
+- use `Environment: Desktop · Local-private` formatting rather than mechanical badge prefixes
+- keep Command Palette and Theme controls compact while preserving keyboard and theme behavior
+- do not repeat `Mission Control` as both the page title and hero title
+- mission prompts are read-only until a governed mission-edit workflow exists
+
+### Action Reason Rules
+
+- only use `Requires governed action bridge` when the bridge is actually offline
+- use capability-specific prerequisites such as `Requires generated mission plan` and `Requires approved task plan` when the bridge is available but later steps are not ready
+
+### Next Phase
+
+- P41.7.1 — Codebase Documentation Standard + Module Registry

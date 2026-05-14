@@ -111,6 +111,24 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P41.6.6",
+      "title": "Command Center Boundary Polish + Mission Control Consistency",
+      "track": "NEXUS_OS",
+      "order": 12.5,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Fixes local-private versus demo boundary leakage, Mission Control title and prompt behavior, top-bar compactness, and badge consistency.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.1",
+      "title": "Codebase Documentation Standard + Module Registry",
+      "track": "NEXUS_OS",
+      "order": 12.75,
+      "group": "Planned OS Phases",
+      "summary": "Establish the codebase documentation standard, module registry, and the first structured P41.7 documentation-system slice.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.7",
       "title": "Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "track": "NEXUS_OS",

@@ -211,7 +211,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/os-roadmap-project-separation-boot-docs",
-      "commit": "pending-final-commit",
+      "commit": "c0b0afb",
       "completedAt": "",
       "summary": "Separates NEXUS OS roadmap tracking from project progress, strengthens roadmap readability, and finalizes local boot operator guidance.",
       "checksRun": [
@@ -224,7 +224,43 @@
         "Project Registry remains planned for P42, so project progress is still a temporary local-private example rather than a dynamic registry.",
         "Known public-safety roadmap-doc false positives may still remain until explicitly resolved."
       ],
+      "nextPhase": "P41.6.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.6.6",
+      "title": "Command Center Boundary Polish + Mission Control Consistency",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/command-center-boundary-polish",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Fixes local-private versus demo boundary leakage, improves Mission Control readability, compacts top-bar controls, and aligns badge semantics.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:db-foundation",
+        "npm run check:live-local-api",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Action execution remains governed and route-first; this phase does not enable provider dispatch, worker runtime, DB writes, or release execution.",
+        "Known public-safety roadmap-doc false positives may still remain until explicitly resolved."
+      ],
       "nextPhase": "P41.7.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.1",
+      "title": "Codebase Documentation Standard + Module Registry",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned first P41.7 documentation-system subphase covering codebase documentation standards and module registry alignment.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.7",
       "commandCenterVisible": true
     },
     {

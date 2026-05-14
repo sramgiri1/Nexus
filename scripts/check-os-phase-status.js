@@ -96,6 +96,7 @@ for (const phaseId of [
   "P41.6.2",
   "P41.6.3",
   "P41.6.4",
+  "P41.6.5",
 ]) {
   const entry = statusById.get(phaseId);
   check(!!entry, "completedPhases", `Missing completed phase entry: ${phaseId}`);
@@ -107,22 +108,23 @@ for (const phaseId of [
 const phase164 = statusById.get("P41.6.4");
 check(phase164?.branch === "feat/nexus-command-palette", "completedPhases", "P41.6.4 branch must be feat/nexus-command-palette");
 check(phase164?.commit === "dd2a601", "completedPhases", "P41.6.4 commit must be dd2a601");
+const phase165 = statusById.get("P41.6.5");
+check(phase165?.branch === "fix/os-roadmap-project-separation-boot-docs", "completedPhases", "P41.6.5 branch must be fix/os-roadmap-project-separation-boot-docs");
+check(phase165?.commit === "c0b0afb", "completedPhases", "P41.6.5 commit must be c0b0afb");
 
-const currentPhase = statusById.get("P41.6.5");
-check(!!currentPhase, "currentPhase", "P41.6.5 must exist");
-check(
-  currentPhase?.status === "in_progress" || currentPhase?.status === "complete",
-  "currentPhase",
-  "P41.6.5 must be in_progress or complete",
-);
-check(Boolean(currentPhase?.branch), "currentPhase", "P41.6.5 must record a branch");
-check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.6.5 must record a nextPhase");
+const currentPhase = statusById.get("P41.6.6");
+check(!!currentPhase, "currentPhase", "P41.6.6 must exist");
+check(currentPhase?.status === "complete", "currentPhase", "P41.6.6 must be complete");
+check(Boolean(currentPhase?.branch), "currentPhase", "P41.6.6 must record a branch");
+check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.6.6 must record a nextPhase");
+check(currentPhase?.nextPhase === "P41.7.1", "currentPhase", "P41.6.6 nextPhase must be P41.7.1");
+check(statusById.get("P41.7.1")?.status === "planned", "nextPhase", "P41.7.1 must be planned");
 
 const nextPhase = indexById.get("P42");
 check(!!nextPhase, "nextPhase", "P42 must exist in the phase index");
 check(nextPhase?.title === "Project Registry + Adapter Framework", "nextPhase", "P42 must be Project Registry + Adapter Framework");
 
-for (const plannedPhaseId of ["P41.7", "P41.8", "P41.9", "P42"]) {
+for (const plannedPhaseId of ["P41.7.1", "P41.7", "P41.8", "P41.9", "P42"]) {
   const entry = statusById.get(plannedPhaseId);
   check(!!entry, "nextPhase", `Missing planned phase entry: ${plannedPhaseId}`);
   check(entry?.status === "planned", "nextPhase", `${plannedPhaseId} must be planned`);
@@ -147,6 +149,8 @@ for (const expected of [
 
 check(!commandCenterSource.includes("CareLoop · Sprint 1 → 4"), "commandCenterSync", "Command Center roadmap should not include CareLoop as an OS phase track");
 check(dashboardRoadmap.some((entry) => entry.phase === "P41.6.5"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.6.5");
+check(dashboardRoadmap.some((entry) => entry.phase === "P41.6.6"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.6.6");
+check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.1"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.1");
 check(
   dashboardRoadmap.some(
     (entry) => entry.phase === "P42" && entry.label === "Project Registry + Adapter Framework",
@@ -188,9 +192,9 @@ const report = `# NEXUS OS Phase Status Report
 ## Completion Checks
 
 - P41.5.1 through P41.5.6: complete
-- P41.6.1 through P41.6.4: complete
-- P41.6.5: ${currentPhase?.status || "unknown"}
-- P41.7 / P41.8 / P41.9: planned
+- P41.6.1 through P41.6.5: complete
+- P41.6.6: ${currentPhase?.status || "unknown"}
+- P41.7.1 / P41.7 / P41.8 / P41.9: planned
 - P42: Project Registry + Adapter Framework
 
 ## Roadmap Separation

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T11:22:30.149Z
-- Validation branch: fix/os-roadmap-project-separation-boot-docs
-- Validation HEAD: dd2a601
+- Generated at: 2026-05-14T11:48:44.039Z
+- Validation branch: fix/command-center-boundary-polish
+- Validation HEAD: c0b0afb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -22,6 +22,10 @@
 - OS Roadmap / Project Progress separation: PASS
 - Header environment formatting: PASS
 - Sidebar label completeness/planned behavior: PASS
+- Boundary polish: PASS
+- Mission display: PASS
+- Top bar polish: PASS
+- Action reasons: PASS
 - Screenshot audit: PASS
 - Visual QA report: PASS
 - Sidebar labels: PASS

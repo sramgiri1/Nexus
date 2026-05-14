@@ -8,7 +8,6 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Mission Control",
     status: "implemented",
-    badge: "Live",
     helpDoc: "docs/usage/STARTING_A_MISSION.md",
   },
   {
