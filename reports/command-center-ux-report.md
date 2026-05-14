@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T17:20:25.330Z
-- Validation branch: ui/page-tab-rollout-core-operations
-- Validation HEAD: 4892a18
+- Generated at: 2026-05-14T17:57:30.014Z
+- Validation branch: ui/page-tab-rollout-platform-governance
+- Validation HEAD: a989e08
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

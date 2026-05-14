@@ -103,6 +103,7 @@ for (const phaseId of [
   "P41.7.3",
   "P41.7.3A",
   "P41.7.3B",
+  "P41.7.3C",
 ]) {
   const entry = statusById.get(phaseId);
   check(!!entry, "completedPhases", `Missing completed phase entry: ${phaseId}`);
@@ -139,21 +140,25 @@ const phase173b = statusById.get("P41.7.3B");
 check(phase173b?.branch === "ui/mission-control-tabbed-cockpit", "completedPhases", "P41.7.3B branch must be ui/mission-control-tabbed-cockpit");
 check(phase173b?.commit === "4892a18", "completedPhases", "P41.7.3B commit must be 4892a18");
 
-const currentPhase = statusById.get("P41.7.3C");
-check(!!currentPhase, "currentPhase", "P41.7.3C must exist");
-check(currentPhase?.status === "complete", "currentPhase", "P41.7.3C must be complete");
-check(Boolean(currentPhase?.branch), "currentPhase", "P41.7.3B must record a branch");
-check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.7.3B must record a nextPhase");
-check(currentPhase?.nextPhase === "P41.7.3D", "currentPhase", "P41.7.3C nextPhase must be P41.7.3D");
-check(currentPhase?.branch === "ui/page-tab-rollout-core-operations", "currentPhase", "P41.7.3C branch must be ui/page-tab-rollout-core-operations");
-check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.3C must record a commit or pending-final-commit placeholder");
-check(statusById.get("P41.7.3D")?.status === "planned", "nextPhase", "P41.7.3D must be planned");
+const phase173c = statusById.get("P41.7.3C");
+check(phase173c?.branch === "ui/page-tab-rollout-core-operations", "completedPhases", "P41.7.3C branch must be ui/page-tab-rollout-core-operations");
+check(phase173c?.commit === "a989e08", "completedPhases", "P41.7.3C commit must be a989e08");
+
+const currentPhase = statusById.get("P41.7.3D");
+check(!!currentPhase, "currentPhase", "P41.7.3D must exist");
+check(currentPhase?.status === "complete", "currentPhase", "P41.7.3D must be complete");
+check(Boolean(currentPhase?.branch), "currentPhase", "P41.7.3D must record a branch");
+check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.7.3D must record a nextPhase");
+check(currentPhase?.nextPhase === "P41.7.3E", "currentPhase", "P41.7.3D nextPhase must be P41.7.3E");
+check(currentPhase?.branch === "ui/page-tab-rollout-platform-governance", "currentPhase", "P41.7.3D branch must be ui/page-tab-rollout-platform-governance");
+check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.3D must record a commit or pending-final-commit placeholder");
+check(statusById.get("P41.7.3E")?.status === "planned", "nextPhase", "P41.7.3E must be planned");
 
 const nextPhase = indexById.get("P42");
 check(!!nextPhase, "nextPhase", "P42 must exist in the phase index");
 check(nextPhase?.title === "Project Registry + Adapter Framework", "nextPhase", "P42 must be Project Registry + Adapter Framework");
 
-for (const plannedPhaseId of ["P41.7.3D", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
+for (const plannedPhaseId of ["P41.7.3E", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
   const entry = statusById.get(plannedPhaseId);
   check(!!entry, "nextPhase", `Missing planned phase entry: ${plannedPhaseId}`);
   check(entry?.status === "planned", "nextPhase", `${plannedPhaseId} must be planned`);
@@ -235,8 +240,9 @@ const report = `# NEXUS OS Phase Status Report
 - P41.7.3: complete
 - P41.7.3A: complete
 - P41.7.3B: complete
-- P41.7.3C: ${currentPhase?.status || "unknown"}
-- P41.7.3D through P41.7.6 / P41.7 / P41.8 / P41.9: planned
+- P41.7.3C: complete
+- P41.7.3D: ${currentPhase?.status || "unknown"}
+- P41.7.3E through P41.7.6 / P41.7 / P41.8 / P41.9: planned
 - P42: Project Registry + Adapter Framework
 
 ## Roadmap Separation

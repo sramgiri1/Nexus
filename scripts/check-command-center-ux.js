@@ -22,6 +22,7 @@ const sections = {
   commandCenterTabs: true,
   missionControlTabs: true,
   tabbedCorePages: true,
+  tabbedPlatformPages: true,
   scopeSwitcher: true,
   multiProjectShell: true,
   roadmapProjectSeparation: true,
@@ -623,6 +624,21 @@ for (const tabSet of [
     check(commandTabsSource.includes(`id: "${tabId}"`), "tabbedCorePages", `${tabSet.exportName} missing tab id: ${tabId}`);
   }
 }
+for (const tabSet of [
+  { exportName: "LIVE_API_TABS", ids: ["overview", "endpoints", "action-bridges", "diagnostics"] },
+  { exportName: "DURABLE_STATE_TABS", ids: ["overview", "entities", "import-plan", "fallback", "developer-details"] },
+  { exportName: "EVIDENCE_TABS", ids: ["timeline", "by-task", "by-agent", "by-project", "developer-details"] },
+  { exportName: "SAFETY_CENTER_TABS", ids: ["posture", "policy-blocks", "approvals", "data-privacy", "developer-details"] },
+  { exportName: "PROJECTS_TABS", ids: ["portfolio", "active-project", "adapter", "milestones", "gaps"] },
+  { exportName: "OS_ROADMAP_TABS", ids: ["current", "completed", "planned", "blocked-risks", "history"] },
+  { exportName: "COST_CENTER_TABS", ids: ["overview", "budgets", "by-project", "by-agent", "provider-spend"] },
+  { exportName: "BATCH_QUEUE_TABS", ids: ["overview", "jobs", "results", "cost"] },
+]) {
+  check(commandTabsSource.includes(`export const ${tabSet.exportName}`), "tabbedPlatformPages", `Missing tab config export: ${tabSet.exportName}`);
+  for (const tabId of tabSet.ids) {
+    check(commandTabsSource.includes(`id: "${tabId}"`), "tabbedPlatformPages", `${tabSet.exportName} missing tab id: ${tabId}`);
+  }
+}
 for (const expected of [
   "tabs={WORKSPACE_TABS}",
   "tabs={TASK_QUEUE_TABS}",
@@ -630,6 +646,24 @@ for (const expected of [
   "tabs={IMPLEMENTATION_TABS}",
 ]) {
   check(commandCenterSource.includes(expected), "tabbedCorePages", `Operational page must reuse CommandTabs foundation: ${expected}`);
+}
+for (const expected of [
+  "tabs={LIVE_API_TABS}",
+  "tabs={DURABLE_STATE_TABS}",
+  "tabs={EVIDENCE_TABS}",
+  "tabs={SAFETY_CENTER_TABS}",
+  "tabs={PROJECTS_TABS}",
+  "tabs={OS_ROADMAP_TABS}",
+  "tabs={COST_CENTER_TABS}",
+  "tabs={BATCH_QUEUE_TABS}",
+]) {
+  check(commandCenterSource.includes(expected), "tabbedPlatformPages", `Platform/governance page must reuse CommandTabs foundation: ${expected}`);
+}
+for (const expectedTest of [
+  "platform and governance pages render reusable tabs",
+  "platform tabbed pages preserve theme readability and roadmap separation",
+]) {
+  check(routeTestSource.includes(expectedTest), "tabbedPlatformPages", `Route tests missing platform tab coverage: ${expectedTest}`);
 }
 for (const expectedTest of [
   "Workspace tabs route users through recommended, grouped, and all workflows",
@@ -871,6 +905,7 @@ console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
 console.log(`Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}`);
 console.log(`Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}`);
+console.log(`Tabbed platform/governance pages: ${sections.tabbedPlatformPages ? "PASS" : "FAIL"}`);
 console.log(`Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}`);
 console.log(`Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);

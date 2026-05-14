@@ -987,6 +987,72 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("platform and governance pages render reusable tabs", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    const tabbedRoutes = [
+      ["/command-center/liveapi", ["Overview", "Endpoints", "Action Bridges", "Diagnostics"]],
+      ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"]],
+      ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
+      ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
+      ["/command-center/projects", ["Portfolio", "Active Project", "Adapter", "Milestones", "Gaps"]],
+      ["/command-center/roadmap", ["Current", "Completed", "Planned", "Blocked / Risks", "History"]],
+      ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
+      ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
+    ];
+
+    for (const [path, labels] of tabbedRoutes) {
+      await page.goto(path);
+      for (const label of labels) {
+        await expect(commandTab(page, label)).toBeVisible();
+      }
+      await expect(commandTab(page, labels[0])).toHaveAttribute("aria-selected", "true");
+      await commandTab(page, labels[1]).click();
+      await expect(activeCommandTabPanel(page)).toContainText(new RegExp(labels[1].replace(/s$/, "s?"), "i"));
+
+      const body = await page.locator("body").innerText();
+      expect(body).not.toContain("DemoApp");
+      if (path !== "/command-center/roadmap") {
+        for (const label of FORBIDDEN_PHASE_LABELS) {
+          expect(body).not.toContain(label);
+        }
+      }
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("platform tabbed pages preserve theme readability and roadmap separation", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    for (const path of [
+      "/command-center/liveapi",
+      "/command-center/database",
+      "/command-center/evidence",
+      "/command-center/safety",
+      "/command-center/projects",
+    ]) {
+      await page.goto(path);
+      await pickTheme(page, "dark");
+      await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
+      await pickTheme(page, "light");
+      await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
+    }
+
+    await page.goto("/command-center/projects");
+    await expect(page.locator("body")).toContainText("Project Registry is planned for P42");
+    await commandTab(page, "Milestones").click();
+    await expect(page.locator("body")).toContainText("Project milestones live here");
+
+    await page.goto("/command-center/roadmap");
+    const roadmapText = await page.locator("body").innerText();
+    expect(roadmapText).toMatch(/NEXUS OS Platform Progress/i);
+    expect(roadmapText).not.toContain("Track B");
+    expect(roadmapText).not.toContain("DemoApp");
+
+    expect(errors).toEqual([]);
+  });
+
   test("Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -1036,8 +1102,11 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/liveapi");
+    await expect(page.locator("body")).toContainText("API Summary");
+    await expect(page.locator("body")).toContainText("Developer Details");
+    await commandTab(page, "Endpoints").click();
 
-    for (const label of ["API Summary", "Mission Data", "Task Data", "Evidence Ledger", "Runtime State", "Durable State", "Developer Details"]) {
+    for (const label of ["Mission Data", "Task Data", "Evidence Ledger", "Runtime State", "Durable State"]) {
       await expect(page.getByText(label, { exact: false }).first()).toBeVisible();
     }
     expect(await page.locator("body").innerText()).not.toContain("P40-LOCAL");

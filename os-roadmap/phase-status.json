@@ -365,7 +365,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/page-tab-rollout-core-operations",
-      "commit": "pending-final-commit",
+      "commit": "a989e08",
       "completedAt": "",
       "summary": "Rolls the reusable CommandTabs foundation onto Workspace, Task Queue, Agent Workbench, and Implementation Workflow without backend behavior changes.",
       "checksRun": [
@@ -385,11 +385,33 @@
       "phaseId": "P41.7.3D",
       "title": "Page Tab Rollout - Live API / Durable State / Evidence / Safety / Projects / Roadmap / Cost / Batch",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "ui/page-tab-rollout-platform-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Rolls the reusable CommandTabs foundation onto Live API, Durable State, Evidence, Safety Center, Projects, OS Roadmap, Cost Center, and Batch Queue without backend behavior changes.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Project Registry remains planned for P42, so portfolio and adapter views use safe placeholders.",
+        "Cost Center and Batch Queue remain planned/read-only; no provider dispatch, worker runtime, or spend tracking was enabled."
+      ],
+      "nextPhase": "P41.7.3E",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3E",
+      "title": "Tabbed UX Tests, Docs, and OS Phase Status Finalization",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tab rollout for remaining Command Center operational and governance pages.",
+      "summary": "Planned final validation for tabbed Command Center route coverage, docs, and OS phase status consistency.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P41.7.4",

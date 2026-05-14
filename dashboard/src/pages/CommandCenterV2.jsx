@@ -5,8 +5,16 @@ import { CommandTabs, CommandTabPanel } from "../components/command-center-v2/Co
 import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher.jsx";
 import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
 import {
+  BATCH_QUEUE_TABS,
+  COST_CENTER_TABS,
+  DURABLE_STATE_TABS,
+  EVIDENCE_TABS,
   IMPLEMENTATION_TABS,
+  LIVE_API_TABS,
   MISSION_CONTROL_TABS,
+  OS_ROADMAP_TABS,
+  PROJECTS_TABS,
+  SAFETY_CENTER_TABS,
   TASK_QUEUE_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
@@ -3015,6 +3023,9 @@ function EvidencePage({ vm }) {
   const total = liveEvidence?.totalCount ?? evidence.total ?? 0;
   const redactedCount = recent.filter((item) => item.redacted !== false).length;
   const latestEvidence = recent[0];
+  const [activeTab, setActiveTab] = useState("timeline");
+  const taskGroups = [...new Set(recent.map((item) => item.taskId || "No linked task"))];
+  const agentGroups = [...new Set(recent.map((item) => formatAgentLabel(item.agentId || item.agent || "NEXUS")))];
 
   return (
     <div className="ccv2-content">
@@ -3035,62 +3046,68 @@ function EvidencePage({ vm }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Total evidence records</span><span className="ccv2-page-summary-value">{total}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Redacted records</span><span className="ccv2-page-summary-value">{redactedCount}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Latest evidence</span><span className="ccv2-page-summary-value">{latestEvidence ? `${latestEvidence.type?.replace(/_/g, " ")} · ${latestEvidence.result}` : "Not available yet"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Linked task</span><span className="ccv2-page-summary-value">{latestEvidence?.taskId || "No linked task yet"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{total > 0 ? "Evidence records available for review." : "Evidence appears after governed actions complete."}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Data source</span><span className="ccv2-page-summary-value">{liveOnline ? "Live local API" : "File-backed snapshot fallback"}</span></div>
           </div>
         </div>
-
-        <div className="ccv2-stats-row">
-          <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Total</div>
-            <div className="ccv2-stat-chip__value">{total}</div>
-          </div>
-          {Object.entries(byResult).map(([result, count]) => (
-            <div key={result} className="ccv2-stat-chip">
-              <div className="ccv2-stat-chip__label">{result}</div>
-              <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${result === "PASS" ? "green" : result === "FAIL" ? "red" : "teal"}`}>
-                {count}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <div className="ccv2-two-col">
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">By Type</div>
-            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
-              {Object.entries(byType).map(([type, count]) => (
-                <div key={type} style={{ display: "flex", justifyContent: "space-between", padding: "4px 0", fontSize: 12, borderBottom: "1px solid rgba(136,255,235,0.05)" }}>
-                  <span style={{ color: "var(--v2-muted)" }}>{type.replace(/_/g, " ")}</span>
-                  <span style={{ color: "var(--v2-text)", fontWeight: 600 }}>{count}</span>
+        <CommandTabs tabs={EVIDENCE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Evidence sections">
+          <CommandTabPanel tabId="timeline" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Evidence Timeline</div>
+              {recent.length > 0 ? (
+                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
+                  {recent.slice(0, 6).map((ev) => (
+                    <div key={ev.evidenceId} className="ccv2-list-row">
+                      <div className="ccv2-list-row__primary">
+                        <span className="ccv2-list-row__title">{ev.type?.replace(/_/g, " ") || "Evidence"}</span>
+                        <span className="ccv2-list-row__meta">Task: {ev.taskId || "No linked task"} · {new Date(ev.createdAt || Date.now()).toLocaleString()}</span>
+                      </div>
+                      <div className="ccv2-list-row__secondary">
+                        <span className={`ccv2-pill ccv2-pill--${ev.result === "PASS" ? "pass" : ev.result === "FAIL" ? "fail" : "pending"}`}>{ev.result}</span>
+                        <span className="ccv2-list-row__detail">Redacted: {ev.redacted !== false ? "Yes" : "No"}</span>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-              ))}
+              ) : (
+                <div className="ccv2-empty-state">Evidence appears after governed actions complete.</div>
+              )}
             </div>
-          </div>
-
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Evidence Timeline</div>
-            {recent.length > 0 ? (
-              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                {recent.slice(0, 6).map((ev) => (
-                  <div key={ev.evidenceId} className="ccv2-list-row">
-                    <div className="ccv2-list-row__primary">
-                      <span className="ccv2-list-row__title">{ev.type?.replace(/_/g, " ") || "Evidence"}</span>
-                      <span className="ccv2-list-row__meta">Task: {ev.taskId || "No linked task"} · {new Date(ev.createdAt || Date.now()).toLocaleString()}</span>
-                    </div>
-                    <div className="ccv2-list-row__secondary">
-                      <span className={`ccv2-pill ccv2-pill--${ev.result === "PASS" ? "pass" : ev.result === "FAIL" ? "fail" : "pending"}`}>{ev.result}</span>
-                      <span className="ccv2-list-row__detail">Redacted: {ev.redacted !== false ? "Yes" : "No"}</span>
-                    </div>
-                  </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="by-task" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">By Task</div>
+              {taskGroups.length > 0 ? taskGroups.map((taskId) => (
+                <div key={taskId} className="ccv2-list-row"><span className="ccv2-list-row__title">{taskId}</span><span className="ccv2-pill ccv2-pill--pending">{recent.filter((item) => (item.taskId || "No linked task") === taskId).length} records</span></div>
+              )) : <div className="ccv2-empty-state">No task-linked evidence yet.</div>}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="by-agent" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">By Agent</div>
+              {agentGroups.length > 0 ? agentGroups.map((agent) => (
+                <div key={agent} className="ccv2-list-row"><span className="ccv2-list-row__title">{agent}</span><span className="ccv2-pill ccv2-pill--pending">{recent.filter((item) => formatAgentLabel(item.agentId || item.agent || "NEXUS") === agent).length} records</span></div>
+              )) : <div className="ccv2-empty-state">No agent evidence yet.</div>}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="by-project" activeTab={activeTab}>
+            <ProjectContextCard vm={vm} surface="project-scoped evidence" />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence IDs</span><span className="ccv2-page-summary-value">{recent.length ? "Available as linked references only" : "No IDs available yet"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Raw payloads</span><span className="ccv2-page-summary-value">Not shown in primary UI</span></div>
+                {Object.entries(byType).map(([type, count]) => (
+                  <div key={type} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{type.replace(/_/g, " ")}</span><span className="ccv2-page-summary-value">{count}</span></div>
+                ))}
+                {Object.entries(byResult).map(([result, count]) => (
+                  <div key={result} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{result}</span><span className="ccv2-page-summary-value">{count}</span></div>
                 ))}
               </div>
-            ) : (
-              <div className="ccv2-empty-state">Evidence appears after governed actions complete.</div>
-            )}
-          </div>
-        </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3103,6 +3120,7 @@ function SafetyCenterPage({ vm }) {
   const bridgeReadiness = ab.bridgeReadiness || {};
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
+  const [activeTab, setActiveTab] = useState("posture");
 
   const rows = [
     { label: "Mode", value: ab.mode || "local-private", valueClass: "ready" },
@@ -3145,78 +3163,60 @@ function SafetyCenterPage({ vm }) {
           <div className="ccv2-page-head__sub">Understand current safety boundaries, policy posture, and what is blocked by governance.</div>
         </div>
 
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Safety Summary</div>
-          <div className="ccv2-page-summary-grid">
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Public/demo boundary</span><span className="ccv2-page-summary-value">Strict public-safe separation remains active.</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Private project boundary</span><span className="ccv2-page-summary-value">{isLocalPrivate ? "Local-private boundary active" : "Private project data not exposed"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current risk posture</span><span className="ccv2-page-summary-value">{riskPosture}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approvals</span><span className="ccv2-page-summary-value">{runtimeSnapshot.approvalWorkflow?.requested ? `${runtimeSnapshot.approvalWorkflow.requested} pending approval${runtimeSnapshot.approvalWorkflow.requested > 1 ? "s" : ""}` : "No pending approvals"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">DB writes disabled by policy</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">Governed only</span></div>
-          </div>
-        </div>
-
-        <div className="ccv2-safety-grid">
-          {rows.map((row) => (
-            <div key={row.label} className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">{row.label}</span>
-              <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
-            </div>
-          ))}
-        </div>
-
-        <div className="ccv2-card" style={{ marginTop: 12 }}>
-          <div className="ccv2-section-heading">Local API Boundary</div>
-          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
-            {apiRows.map(row => (
-              <div key={row.label} className="ccv2-safety-row">
-                <span className="ccv2-safety-row__label">{row.label}</span>
-                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+        <CommandTabs tabs={SAFETY_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Safety Center sections">
+          <CommandTabPanel tabId="posture" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Safety Summary</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Public/demo boundary</span><span className="ccv2-page-summary-value">Strict public-safe separation remains active.</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Private project boundary</span><span className="ccv2-page-summary-value">{isLocalPrivate ? "Local-private boundary active" : "Private project data not exposed"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current risk posture</span><span className="ccv2-page-summary-value">{riskPosture}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approvals</span><span className="ccv2-page-summary-value">{runtimeSnapshot.approvalWorkflow?.requested ? `${runtimeSnapshot.approvalWorkflow.requested} pending approval${runtimeSnapshot.approvalWorkflow.requested > 1 ? "s" : ""}` : "No pending approvals"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">DB writes disabled by policy</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">Governed only</span></div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="ccv2-card" style={{ marginTop: 8 }}>
-          <div className="ccv2-section-heading">DB Foundation Boundary</div>
-          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
-            {[
-              { label: "DB writes", value: "DB writes disabled by policy", valueClass: "disabled" },
-              { label: "Project mutation", value: "Governed only", valueClass: "pending" },
-              { label: "Approval gates", value: runtimeSnapshot.approvalWorkflow?.requested ? "Pending approvals present" : "No pending approvals", valueClass: runtimeSnapshot.approvalWorkflow?.requested ? "pending" : "ready" },
-              { label: "File fallback", value: "Active", valueClass: "ready" },
-              { label: "Policy blocks", value: (runtimeSnapshot.runtimeState?.tasks?.byState?.blocked || 0) > 0 ? "Active" : "None", valueClass: (runtimeSnapshot.runtimeState?.tasks?.byState?.blocked || 0) > 0 ? "pending" : "ready" },
-              { label: "Network policy", value: governance.networkCallsAllowed ? "Enabled" : "Disabled", valueClass: governance.networkCallsAllowed ? "pending" : "disabled" },
-            ].map(row => (
-              <div key={row.label} className="ccv2-safety-row">
-                <span className="ccv2-safety-row__label">{row.label}</span>
-                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {isLocalPrivate && complianceRows.length > 0 && (
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Compliance · {clp.productName}</div>
-            <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
-              {complianceRows.map((row) => (
-                <div key={row.label} className="ccv2-safety-row">
-                  <span className="ccv2-safety-row__label">{row.label}</span>
-                  <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
-                </div>
-              ))}
             </div>
-          </div>
-        )}
-
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Boundary Note</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            No private project source details appear in public/demo surfaces. Safety policies stay active even in local-private mode, and provider calls, DB writes, and direct runtime mutation remain blocked or governed. Safety incidents: {vm.safety.incidents} · Last clean: {vm.safety.lastClean}.
-          </p>
-        </div>
+            <div className="ccv2-safety-grid">{rows.map((row) => <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>)}</div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="policy-blocks" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Policy Blocks</div>
+              <div className="ccv2-section-heading" style={{ marginTop: 10 }}>DB Foundation Boundary</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                {[
+                  { label: "Provider calls", value: "Disabled", valueClass: "disabled" },
+                  { label: "External network", value: "Disabled", valueClass: "disabled" },
+                  { label: "DB writes", value: "DB writes disabled by policy", valueClass: "disabled" },
+                  { label: "Project mutation", value: "Governed only", valueClass: "pending" },
+                  { label: "Worker runtime", value: "Not enabled", valueClass: "disabled" },
+                ].map((row) => <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>)}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="approvals" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Approvals</div>
+              <div className="ccv2-empty-state">{runtimeSnapshot.approvalWorkflow?.requested ? `${runtimeSnapshot.approvalWorkflow.requested} approvals pending.` : "No pending approvals."}</div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="data-privacy" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Data & Privacy</div>
+              <div className="ccv2-section-heading" style={{ marginTop: 10 }}>Local API Boundary</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                {apiRows.map((row) => <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>)}
+                {isLocalPrivate && complianceRows.map((row) => <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>)}
+              </div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>No private project source details appear in public/demo surfaces. Demo data stays separate from local-private project context.</p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-empty-state">Policy identifiers and boundary summaries are available here. Raw policy JSON is not shown in primary UI.</div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3280,6 +3280,7 @@ function ProjectsPage({ vm, studio }) {
   const projectSummaryName = isLocalPrivate
     ? (projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project")
     : (studio?.activeProject?.name || "Private Project");
+  const [activeTab, setActiveTab] = useState("portfolio");
 
   return (
     <div className="ccv2-content">
@@ -3300,6 +3301,42 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">Project Registry + Adapter Framework is planned for P42.</span></div>
           </div>
         </div>
+
+        <CommandTabs tabs={PROJECTS_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Projects sections">
+          <CommandTabPanel tabId="portfolio" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Portfolio</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Project Registry is planned for P42. Portfolio summaries remain placeholders until cross-project adapters are available.
+              </p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="active-project" activeTab={activeTab}>
+            <ProjectContextCard vm={vm} surface="Projects" />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="adapter" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Adapter</div>
+              <div className="ccv2-empty-state">Project adapter status is planned with Project Registry + Adapter Framework in P42.</div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="milestones" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Milestones</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Project milestones live here. NEXUS OS phases remain separate on the OS Roadmap.
+              </p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="gaps" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Gaps</div>
+              {projectProgress?.gaps?.length ? projectProgress.gaps.map((gap) => (
+                <div key={gap} className="ccv2-list-row"><span className="ccv2-list-row__title">{gap}</span><span className="ccv2-pill ccv2-pill--pending">Open</span></div>
+              )) : <div className="ccv2-empty-state">No project gaps are available for this scope yet.</div>}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
 
         <div className="ccv2-two-col">
           <div className="ccv2-card">
@@ -3400,6 +3437,7 @@ function ProjectsPage({ vm, studio }) {
 
 /* ─── Batch Queue Page ─── */
 function BatchQueuePage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
@@ -3408,31 +3446,22 @@ function BatchQueuePage({ vm }) {
           <div className="ccv2-page-head__sub">Async batch processing status</div>
         </div>
 
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Batch API Status</div>
-          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
-            <div className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">Real OpenAI Batch API</span>
-              <span className="ccv2-safety-row__value--disabled">Disabled</span>
+        <CommandTabs tabs={BATCH_QUEUE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Batch Queue sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Batch API Status</div>
+              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Real OpenAI Batch API</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Real Anthropic Message Batches</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Dry-run queueing</span><span className="ccv2-safety-row__value--ready">Available</span></div>
+              </div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>Batch is not enabled for real execution. Worker runtime and governed provider dispatch are required before real batch jobs can run.</p>
             </div>
-            <div className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">Real Anthropic Message Batches</span>
-              <span className="ccv2-safety-row__value--disabled">Disabled</span>
-            </div>
-            <div className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">Dry-run queueing</span>
-              <span className="ccv2-safety-row__value--ready">Available</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Note</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            Batch cannot pass gates — gates require real execution. Dry-run queueing is available for planning only.
-            Enable flags <span className="ccv2-mono">ENABLE_REAL_OPENAI_BATCH</span> and <span className="ccv2-mono">ENABLE_REAL_ANTHROPIC_BATCH</span> to activate real batch submission.
-          </p>
-        </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="jobs" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Jobs</div><div className="ccv2-empty-state">Future batch job list. Batch execution is not enabled yet.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="results" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Results</div><div className="ccv2-empty-state">Future results and reconciliation will appear after batch runtime is enabled.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="cost" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Cost</div><div className="ccv2-empty-state">Future batch savings and cost status. Do not fake spend before provider dispatch exists.</div></div></CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3440,6 +3469,7 @@ function BatchQueuePage({ vm }) {
 
 /* ─── Cost Center Page ─── */
 function CostCenterPage({ vm, studio }) {
+  const [activeTab, setActiveTab] = useState("overview");
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
@@ -3448,26 +3478,22 @@ function CostCenterPage({ vm, studio }) {
           <div className="ccv2-page-head__sub">Budget limits · no live provider spend in local-private mode</div>
         </div>
 
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Provider Status</div>
-          <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 8 }}>
-            <div className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">Provider calls</span>
-              <span className="ccv2-safety-row__value--disabled">Disabled in local-private mode</span>
+        <CommandTabs tabs={COST_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Cost Center sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Cost Enforcement Status</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Cost enforcement</span><span className="ccv2-safety-row__value--disabled">Not enabled yet</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Provider calls</span><span className="ccv2-safety-row__value--disabled">Disabled in local-private mode</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Live spend data</span><span className="ccv2-safety-row__value--disabled">Not available</span></div>
+              </div>
             </div>
-            <div className="ccv2-safety-row">
-              <span className="ccv2-safety-row__label">Live spend data</span>
-              <span className="ccv2-safety-row__value--disabled">Not available</span>
-            </div>
-          </div>
-        </div>
-
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Note</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            No live provider spend available in local-private mode. Budget limits are configured in <span className="ccv2-mono">guardrails/budget.json</span> but no real API calls are made.
-          </p>
-        </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="budgets" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Budgets</div><div className="ccv2-empty-state">Project, agent, and tool budgets are placeholders until Cost Center enforcement is implemented.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="by-project" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">By Project</div><div className="ccv2-empty-state">Project cost breakdown is planned. Project Registry arrives in P42.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="by-agent" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">By Agent</div><div className="ccv2-empty-state">Agent cost breakdown is planned. No spend is fabricated.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="provider-spend" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Provider Spend</div><div className="ccv2-empty-state">Provider dispatch not enabled. No provider spend is available.</div></div></CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -4605,6 +4631,7 @@ function LiveApiPage({ vm, onRefresh }) {
   const online = api.liveApiOnline;
   const refreshStatus = api.lastRefreshStatus || "idle";
   const liveData = vm.liveData || {};
+  const [activeTab, setActiveTab] = useState("overview");
   const endpointGroups = [
     { name: "Mission Data", status: online ? "Online" : "Snapshot fallback", pages: "Mission Control, Workspace", endpoints: ["/missions", "/status"] },
     { name: "Task Data", status: online ? "Online" : "Snapshot fallback", pages: "Task Queue, Agent Workbench", endpoints: ["/tasks", "/actions"] },
@@ -4624,6 +4651,12 @@ function LiveApiPage({ vm, onRefresh }) {
     { label: "Bind host", value: "127.0.0.1", ok: true },
     { label: "Port", value: "4321", ok: true },
   ];
+  const bridgeRows = [
+    { label: "Mission Action Bridge", value: actionBridgeSnapshot.bridgeReadiness?.missionComposer ? "Available" : "Offline or snapshot fallback" },
+    { label: "Task Activation Bridge", value: actionBridgeSnapshot.bridgeReadiness?.taskActivation ? "Available" : "Requires task activation bridge" },
+    { label: "Human Review Bridge", value: actionBridgeSnapshot.bridgeReadiness?.humanReview ? "Available" : "Requires review bridge" },
+    { label: "Implementation Bridge", value: actionBridgeSnapshot.bridgeReadiness?.controlledImplementation ? "Available" : "Requires implementation bridge" },
+  ];
 
   return (
     <div className="ccv2-content">
@@ -4633,122 +4666,88 @@ function LiveApiPage({ vm, onRefresh }) {
           <div className="ccv2-page-head__sub">Track local API availability, live vs snapshot data, and which business surfaces depend on each endpoint group.</div>
         </div>
 
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">API Summary</div>
-          <div className="ccv2-page-summary-grid">
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Local API</span><span className="ccv2-page-summary-value">{online ? "Online" : "Offline"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mode</span><span className="ccv2-page-summary-value">{vm.shell.mode}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Data source</span><span className="ccv2-page-summary-value">{online ? "Live local API" : "Snapshot fallback"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Last refresh</span><span className="ccv2-page-summary-value">{api.lastRefreshAt ? new Date(api.lastRefreshAt).toLocaleString() : "Not refreshed yet"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{online ? "Live read endpoints available." : "Start the local API or use snapshot fallback."}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">{online ? "Refresh data to confirm current endpoint health." : "Unified boot is planned for P41.6."}</span></div>
-          </div>
-        </div>
-
-        <div className="ccv2-stats-row">
-          <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Availability</div>
-            <div className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">Available</div>
-          </div>
-          <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Status</div>
-            <div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--green" : "ccv2-stat-chip__value--amber"}`}>
-              {online ? "Online" : "Offline"}
-            </div>
-          </div>
-          <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Data source</div>
-            <div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--teal" : "ccv2-stat-chip__value--amber"}`}>
-              {online ? "Live API" : "Snapshot fallback"}
-            </div>
-          </div>
-          <div className="ccv2-stat-chip">
-            <div className="ccv2-stat-chip__label">Refresh</div>
-            <div className="ccv2-stat-chip__value">{refreshStatus}</div>
-          </div>
-        </div>
-
-        {/* Connection status */}
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Connection</div>
-          {online ? (
-            <div style={{ marginTop: 10, color: "var(--v2-green)", fontSize: 13, fontWeight: 600 }}>
-              ✓ Local API is online at http://localhost:4321
-            </div>
-          ) : (
-            <div style={{ marginTop: 10 }}>
-              <div style={{ color: "var(--v2-amber)", fontSize: 13, fontWeight: 600 }}>⊘ Local API is offline</div>
-              <div style={{ color: "var(--v2-muted)", fontSize: 12, marginTop: 6 }}>
-                All Command Center pages are using generated snapshot fallback. To enable live data:
+        <CommandTabs tabs={LIVE_API_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live API sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">API Summary</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Local API</span><span className="ccv2-page-summary-value">{online ? "Online" : "Offline"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mode</span><span className="ccv2-page-summary-value">{vm.shell.mode}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Data source</span><span className="ccv2-page-summary-value">{online ? "Live local API" : "Snapshot fallback"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Last refresh</span><span className="ccv2-page-summary-value">{api.lastRefreshAt ? new Date(api.lastRefreshAt).toLocaleString() : "Not refreshed yet"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{online ? "Live read endpoints available." : "Start the local API or use snapshot fallback."}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">{online ? "Refresh data to confirm current endpoint health." : "Run npm run nexus:up, then retry the connection."}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Developer Details</span><span className="ccv2-page-summary-value">Diagnostics tab shows localhost, port, and endpoint references.</span></div>
               </div>
-              <div className="ccv2-code-block" style={{ marginTop: 8, padding: "8px 12px", background: "rgba(255,255,255,0.04)", borderRadius: 6, fontFamily: "monospace", fontSize: 11, color: "var(--v2-text)" }}>
-                NEXUS_MODE=local-private npm run local-api:start
-              </div>
-              <button className="ccv2-wb-review-btn ccv2-wb-review-btn--changes" style={{ marginTop: 10 }} onClick={onRefresh}>
-                Retry connection
-              </button>
             </div>
-          )}
-        </div>
-
-        {/* Endpoints */}
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Endpoint Groups</div>
-          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
-            {endpointGroups.map((group) => (
-              <div key={group.name} className="ccv2-list-row">
-                <div className="ccv2-list-row__primary">
-                  <span className="ccv2-list-row__title">{group.name}</span>
-                  <span className="ccv2-list-row__meta">{group.endpoints.length} endpoints · Pages: {group.pages}</span>
+            <div className="ccv2-stats-row">
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Availability</div><div className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">Available</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Status</div><div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--green" : "ccv2-stat-chip__value--amber"}`}>{online ? "Online" : "Offline"}</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Data source</div><div className={`ccv2-stat-chip__value ${online ? "ccv2-stat-chip__value--teal" : "ccv2-stat-chip__value--amber"}`}>{online ? "Live API" : "Snapshot fallback"}</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Refresh</div><div className="ccv2-stat-chip__value">{refreshStatus}</div></div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Connection</div>
+              {online ? (
+                <div style={{ marginTop: 10, color: "var(--v2-green)", fontSize: 13, fontWeight: 600 }}>Local API is online at http://127.0.0.1:4321</div>
+              ) : (
+                <div style={{ marginTop: 10 }}>
+                  <div style={{ color: "var(--v2-amber)", fontSize: 13, fontWeight: 600 }}>Local API is offline</div>
+                  <div style={{ color: "var(--v2-muted)", fontSize: 12, marginTop: 6 }}>Command Center is using snapshot fallback. Run unified local boot to recover.</div>
+                  <div className="ccv2-code-block" style={{ marginTop: 8 }}>npm run nexus:up</div>
+                  <button className="ccv2-wb-review-btn ccv2-wb-review-btn--changes" style={{ marginTop: 10 }} onClick={onRefresh}>Retry connection</button>
                 </div>
-                <div className="ccv2-list-row__secondary">
-                  <span className={`ccv2-pill ccv2-pill--${online ? "pass" : "disabled"}`}>{group.status}</span>
+              )}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="endpoints" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Endpoint Groups</div>
+              <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 8 }}>
+                {endpointGroups.map((group) => (
+                  <div key={group.name} className="ccv2-list-row">
+                    <div className="ccv2-list-row__primary">
+                      <span className="ccv2-list-row__title">{group.name}</span>
+                      <span className="ccv2-list-row__meta">{group.endpoints.length} endpoints · Pages: {group.pages}</span>
+                    </div>
+                    <div className="ccv2-list-row__secondary"><span className={`ccv2-pill ccv2-pill--${online ? "pass" : "disabled"}`}>{group.status}</span></div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="action-bridges" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Action Bridges</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+                {bridgeRows.map((row) => (
+                  <div key={row.label} className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">{row.label}</span><span className="ccv2-wb-meta-value">{row.value}</span></div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="diagnostics" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Diagnostics</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+                {safetyRows.map((r) => (
+                  <div key={r.label} className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">{r.label}</span><span className={`ccv2-safety-row__value--${r.ok ? "disabled" : "ready"}`}>{r.value}</span></div>
+                ))}
+              </div>
+              <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted)" }}>Local API reads are available when online. Durable State stays file-backed and DB writes remain disabled by policy.</div>
+            </div>
+            {online && liveData.tasks && (
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Live Task Data</div>
+                <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Planned tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.planned ?? "—"}</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Runtime tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.runtime ?? "—"}</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence records</span><span className="ccv2-wb-meta-value">{liveData.evidence?.totalCount ?? "—"}</span></div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Live data sample */}
-        {online && liveData.tasks && (
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Live Task Data</div>
-            <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
-              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Planned tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.planned ?? "—"}</span></div>
-              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Runtime tasks</span><span className="ccv2-wb-meta-value">{liveData.tasks?.counts?.runtime ?? "—"}</span></div>
-              <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence records</span><span className="ccv2-wb-meta-value">{liveData.evidence?.totalCount ?? "—"}</span></div>
-            </div>
-          </div>
-        )}
-
-        {/* Safety boundary */}
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Safety Boundary</div>
-          <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
-            {safetyRows.map(r => (
-              <div key={r.label} className="ccv2-wb-meta-row">
-                <span className="ccv2-wb-meta-label">{r.label}</span>
-                <span className={`ccv2-safety-row__value--${r.ok ? "disabled" : "ready"}`}>{r.value}</span>
-              </div>
-            ))}
-          </div>
-          <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted)" }}>
-            Local API reads are available. Durable State foundation is ready, DB writes remain disabled by policy, and file-backed persistence stays active.
-          </div>
-        </div>
-
-        {/* Page coverage */}
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Developer Details</div>
-          <div style={{ marginTop: 10, display: "flex", flexDirection: "column", gap: 4 }}>
-            {endpointGroups.flatMap((group) => group.endpoints.map((endpoint) => ({ group: group.name, endpoint }))).map((item) => (
-              <div key={`${item.group}-${item.endpoint}`} style={{ display: "flex", gap: 12, alignItems: "center", padding: "5px 0", borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                <span style={{ fontSize: 12, color: "var(--v2-text)", flex: 1 }}>{item.group}</span>
-                <span className="ccv2-mono" style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{item.endpoint}</span>
-              </div>
-            ))}
-          </div>
-        </div>
+            )}
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -4759,6 +4758,7 @@ function DurableStatePage({ vm }) {
   const dbData = vm.liveData?.db;
   const online = vm.liveApi?.liveApiOnline;
   const dbFoundation = vm.dbFoundation || {};
+  const [activeTab, setActiveTab] = useState("overview");
 
   const entities = dbData?.entities || dbFoundation.entities || [];
   const importPlan = dbData?.importPlan || dbFoundation.importPlan || {};
@@ -4775,113 +4775,86 @@ function DurableStatePage({ vm }) {
           <div className="ccv2-page-head__sub">Understand current persistence, DB foundation readiness, and what remains intentionally disabled by policy.</div>
         </div>
 
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Durable State Summary</div>
-          <div className="ccv2-page-summary-grid">
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current persistence</span><span className="ccv2-page-summary-value">File-backed</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB foundation</span><span className="ccv2-page-summary-value">Ready</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">File fallback</span><span className="ccv2-page-summary-value">Active</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime DB primary</span><span className="ccv2-page-summary-value">Not enabled yet</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">DB-backed runtime primary is planned later after runtime and governance stabilize.</span></div>
-          </div>
-        </div>
-
-        <div className="ccv2-stat-chips" style={{ marginBottom: 16 }}>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Persistence</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">File-backed</span></div>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB foundation</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">Ready</span></div>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Entities</span><span className="ccv2-stat-chip__value">{entityCount}</span></div>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Sources Mapped</span><span className="ccv2-stat-chip__value">{sourcesAvailable} / {totalEntities}</span></div>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB Writes</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">Disabled by policy</span></div>
-          <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Live data</span><span className="ccv2-stat-chip__value">{online ? "API" : "Snapshot"}</span></div>
-        </div>
-
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Import Preview</div>
-          <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Entity count</span><span className="ccv2-page-summary-value">{entityCount}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mapped sources</span><span className="ccv2-page-summary-value">{sourcesAvailable} / {totalEntities}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unmapped sources</span><span className="ccv2-page-summary-value">{sourcesMissing}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Import preview</span><span className="ccv2-page-summary-value">{online ? "Available from live API" : "Requires local API for live mapping"}</span></div>
-          </div>
-        </div>
-
-        <div className="ccv2-card">
-          <div className="ccv2-section-heading">Developer Details</div>
-          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
-            {[
-              { label: "dbWritesEnabled", value: "false", valueClass: "disabled" },
-              { label: "productionDbAllowed", value: "false", valueClass: "disabled" },
-              { label: "externalDbAllowed", value: "false", valueClass: "disabled" },
-              { label: "fileFallbackRequired", value: "true", valueClass: "ready" },
-              { label: "schemaArtifactsAllowed", value: "true", valueClass: "ready" },
-              { label: "dryRunMappingAllowed", value: "true", valueClass: "ready" },
-              { label: "DB foundation", value: "ready", valueClass: "ready" },
-            ].map(row => (
-              <div key={row.label} className="ccv2-safety-row">
-                <span className="ccv2-safety-row__label">{row.label}</span>
-                <span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span>
+        <CommandTabs tabs={DURABLE_STATE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Durable State sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Durable State Summary</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current persistence</span><span className="ccv2-page-summary-value">File-backed</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB foundation</span><span className="ccv2-page-summary-value">Ready</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">File fallback</span><span className="ccv2-page-summary-value">Active</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime DB primary</span><span className="ccv2-page-summary-value">Not enabled yet</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">DB-backed runtime primary is planned after runtime and governance stabilize.</span></div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="ccv2-card" style={{ marginTop: 8 }}>
-          <div className="ccv2-section-heading">Import Plan · Dry-run Only</div>
-          <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
-            {online
-              ? `${sourcesAvailable} of ${totalEntities} entity sources available. DB writes disabled — no data has been written to any database.`
-              : "Local API offline. Import plan data unavailable — start local API to see live mapping."}
-          </div>
-        </div>
-
-        {entities.length > 0 && (
-          <div className="ccv2-card" style={{ marginTop: 8 }}>
-            <div className="ccv2-section-heading">Entity Registry · {entities.length} Entities</div>
-            <div style={{ overflowX: "auto", marginTop: 8 }}>
-              <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
-                <thead>
-                  <tr style={{ borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-                    {["Entity", "Primary Key", "Fields", "PII Risk", "Retention", "File Source"].map(h => (
-                      <th key={h} style={{ textAlign: "left", padding: "4px 8px", color: "var(--v2-text-dim)", fontWeight: 500 }}>{h}</th>
-                    ))}
-                  </tr>
-                </thead>
-                <tbody>
-                  {entities.map(e => (
-                    <tr key={e.name} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
-                      <td style={{ padding: "5px 8px", color: "var(--v2-text)", fontFamily: "monospace" }}>{e.name}</td>
-                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontFamily: "monospace" }}>{e.primaryKey}</td>
-                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)" }}>{e.fieldCount}</td>
-                      <td style={{ padding: "5px 8px", color: e.piiRisk === "none" ? "var(--v2-green)" : "var(--v2-amber)" }}>{e.piiRisk}</td>
-                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontSize: 11 }}>{e.retentionClass}</td>
-                      <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)", fontSize: 10, fontFamily: "monospace", maxWidth: 180, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{e.fileFallbackSource}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
             </div>
-          </div>
-        )}
-
-        {entities.length === 0 && (
-          <div className="ccv2-card" style={{ marginTop: 8 }}>
-            <div className="ccv2-section-heading">Entity Registry · 18 Entities (schema.json)</div>
-            <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
-              {online ? "Entity data loading…" : "Start local API (npm run local-api:start) to see live entity registry."}
+            <div className="ccv2-stat-chips" style={{ marginBottom: 16 }}>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Persistence</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">File-backed</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB foundation</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">Ready</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Entities</span><span className="ccv2-stat-chip__value">{entityCount}</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Sources Mapped</span><span className="ccv2-stat-chip__value">{sourcesAvailable} / {totalEntities}</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB Writes</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">Disabled by policy</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Live data</span><span className="ccv2-stat-chip__value">{online ? "API" : "Snapshot"}</span></div>
             </div>
-            <div style={{ fontSize: 11, color: "var(--v2-text-dim)", marginTop: 4 }}>
-              Entities: projects · missions · mission_tasks · runtime_tasks · actions · agents · capabilities · contracts · evidence · audit_events · runtime_events · approvals · incidents · roadmap_phases · workflow_templates · implementation_records · review_records · validation_results
+          </CommandTabPanel>
+          <CommandTabPanel tabId="entities" activeTab={activeTab}>
+            <div className="ccv2-card" style={{ marginTop: 8 }}>
+              <div className="ccv2-section-heading">Entity Registry · {entities.length || entityCount} Entities</div>
+              {entities.length > 0 ? (
+                <div style={{ overflowX: "auto", marginTop: 8 }}>
+                  <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 12 }}>
+                    <tbody>
+                      {entities.map((e) => (
+                        <tr key={e.name} style={{ borderBottom: "1px solid rgba(255,255,255,0.04)" }}>
+                          <td style={{ padding: "5px 8px", color: "var(--v2-text)", fontFamily: "monospace" }}>{e.name}</td>
+                          <td style={{ padding: "5px 8px", color: "var(--v2-text-dim)" }}>{e.fieldCount} fields</td>
+                          <td style={{ padding: "5px 8px", color: e.piiRisk === "none" ? "var(--v2-green)" : "var(--v2-amber)" }}>{e.piiRisk}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">Start local API with npm run nexus:up to see live entity coverage. Schema coverage includes projects, missions, tasks, evidence, audit events, approvals, incidents, roadmap phases, and validation results.</div>
+              )}
             </div>
-          </div>
-        )}
-
-        <div className="ccv2-card" style={{ marginTop: 8 }}>
-          <div className="ccv2-section-heading">Next Capability</div>
-          <div style={{ padding: "8px 0", fontSize: 12, color: "var(--v2-text-dim)" }}>
-            Durable State foundation is ready. DB writes remain disabled by policy until a governed write path is intentionally enabled.
-          </div>
-        </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="import-plan" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Import Plan · Dry-run Only</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mapped sources</span><span className="ccv2-page-summary-value">{sourcesAvailable} / {totalEntities}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unmapped sources</span><span className="ccv2-page-summary-value">{sourcesMissing}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Import preview</span><span className="ccv2-page-summary-value">{online ? "Available from live API" : "Requires local API for live mapping"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Write posture</span><span className="ccv2-page-summary-value">DB writes disabled by policy; no data is written to any database.</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="fallback" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Fallback</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                File fallback and snapshot fallback remain active. DB primary runtime is not enabled yet, and DB disabled is a safety boundary rather than a runtime error.
+              </p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                {[
+                  { label: "DB writes", value: "Disabled by policy", valueClass: "disabled" },
+                  { label: "Production DB", value: "Not allowed", valueClass: "disabled" },
+                  { label: "External DB", value: "Not allowed", valueClass: "disabled" },
+                  { label: "File fallback", value: "Required", valueClass: "ready" },
+                  { label: "Dry-run mapping", value: "Allowed", valueClass: "ready" },
+                ].map((row) => (
+                  <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -5262,6 +5235,7 @@ function ServiceHealthPage({ vm }) {
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   void vm;
+  const [activeTab, setActiveTab] = useState("current");
 
   const summarizePhase = (phase) => {
     if (!phase) return "Not available";
@@ -5279,6 +5253,54 @@ function OSRoadmapPage({ vm }) {
           <div className="ccv2-page-head__title">OS Roadmap</div>
           <div className="ccv2-page-head__sub">NEXUS OS platform phases, current platform gaps, and the next governed capabilities on deck.</div>
         </div>
+
+        <CommandTabs tabs={OS_ROADMAP_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="OS Roadmap sections">
+          <CommandTabPanel tabId="current" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Current</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current OS Phase</span><span className="ccv2-page-summary-value">{summarizePhase(currentPhase)}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Previous completed</span><span className="ccv2-page-summary-value">{summarizePhase(previousPhase)}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next OS Phase</span><span className="ccv2-page-summary-value">{summarizePhase(nextPhase)}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Separation rule</span><span className="ccv2-page-summary-value">Project roadmap belongs under Projects; OS Roadmap shows NEXUS platform phases only.</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="completed" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Completed</div>
+              {NEXUS_COMPLETED_OS_PHASES.slice(-12).map((row) => (
+                <div key={row.phase} className="ccv2-list-row"><span className="ccv2-list-row__title">{row.phase} · {row.label}</span><span className="ccv2-pill ccv2-pill--pass">Complete</span></div>
+              ))}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="planned" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Planned</div>
+              {[currentPhase, ...NEXUS_PLANNED_OS_PHASES].filter(Boolean).slice(0, 14).map((row) => (
+                <div key={row.phase} className="ccv2-list-row"><span className="ccv2-list-row__title">{row.phase} · {row.label}</span><span className={`ccv2-pill ccv2-pill--${row.isCurrent ? "pending" : "disabled"}`}>{row.isCurrent ? "Current" : "Planned"}</span></div>
+              ))}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="blocked-risks" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Blocked / Risks</div>
+              {NEXUS_OS_OPEN_GAPS.map((gap) => (
+                <div key={gap.title} className="ccv2-list-row"><span className="ccv2-list-row__title">{gap.title}</span><span className="ccv2-list-row__meta">{gap.detail}</span></div>
+              ))}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="history" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">History</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Branch</span><span className="ccv2-page-summary-value">{currentPhase?.branch || "Recorded in phase status registry"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Commit</span><span className="ccv2-page-summary-value">{currentPhase?.commit || "Recorded after final validation"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Checks</span><span className="ccv2-page-summary-value">{currentPhase?.checksRun?.join(" · ") || "Validation report pending"}</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
 
         <div className="ccv2-roadmap-summary-grid">
           <div className="ccv2-roadmap-summary-card ccv2-roadmap-summary-card--current">

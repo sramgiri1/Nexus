@@ -453,3 +453,31 @@ Pages converted:
 ### Next Phase
 
 - P41.7.3D — Page Tab Rollout for Live API, Durable State, Evidence, Safety, Projects, OS Roadmap, Cost, and Batch
+
+## P41.7.3D — Page Tab Rollout: Platform, Governance, Projects
+
+This subphase applies the existing `CommandTabs` foundation to the remaining high-density Command Center pages without adding backend behavior.
+
+Pages converted:
+
+- Live API: Overview, Endpoints, Action Bridges, Diagnostics
+- Durable State: Overview, Entities, Import Plan, Fallback, Developer Details
+- Evidence: Timeline, By Task, By Agent, By Project, Developer Details
+- Safety Center: Posture, Policy Blocks, Approvals, Data & Privacy, Developer Details
+- Projects: Portfolio, Active Project, Adapter, Milestones, Gaps
+- OS Roadmap: Current, Completed, Planned, Blocked / Risks, History
+- Cost Center: Overview, Budgets, By Project, By Agent, Provider Spend
+- Batch Queue: Overview, Jobs, Results, Cost
+
+### Rules Preserved
+
+- All converted pages reuse the shared `CommandTabs` component.
+- DemoApp remains limited to Demo Mode.
+- OS Roadmap remains NEXUS OS-only; project milestones remain under Projects.
+- Cost Center and Batch Queue are honest planned/read-only surfaces and do not fake spend, jobs, workers, or provider dispatch.
+- Durable State frames file-backed persistence and DB writes disabled by policy as intentional safety posture.
+- No backend execution, provider calls, DB writes, worker runtime, local API behavior change, or action bridge behavior change is added.
+
+### Next Phase
+
+- P41.7.3E — Tabbed UX Tests, Docs, and OS Phase Status Finalization
