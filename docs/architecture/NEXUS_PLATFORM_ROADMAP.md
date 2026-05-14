@@ -544,6 +544,15 @@ does not instrument runtime paths, add logger writes, add Activity Log UI, add
 activity API routes, call providers, start workers, write to a DB, or mutate
 project source.
 
+#### P41.8.2 — Central Activity Logger
+
+P41.8.2 adds a central activity logger, append-only local JSONL store at
+`local-state/runtime/activity.jsonl`, dry-run logging, redaction before
+persistence, and activity/correlation lookup helpers. It intentionally stops
+short of broad runtime instrumentation, Command Center Activity Log UI,
+`/activity` API routes, provider/tool/worker logging, DB-backed activity
+storage, and project mutation.
+
 ### P41.9 — README + Architecture Diagram Registry Follow-through
 
 Goal:

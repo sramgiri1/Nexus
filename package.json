@@ -80,6 +80,7 @@
     "check:reuse-audit": "node scripts/check-reuse-audit.js",
     "check:shared-helper-catalog": "node scripts/check-shared-helper-catalog.js",
     "check:activity-event-schema": "node scripts/check-activity-event-schema.js",
+    "check:central-activity-logger": "node scripts/check-central-activity-logger.js",
     "command-center:screenshot-audit": "node scripts/capture-command-center-screenshots.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
     "check:agent-workbench": "node scripts/check-agent-workbench.js",

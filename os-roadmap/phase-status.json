@@ -540,18 +540,19 @@
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "observability/activity-event-schema",
+      "branch": "observability/central-activity-logger",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway with an activity event schema and correlation model foundation.",
+      "summary": "Centralized observability track is underway with an activity event schema, correlation model, and central append-only activity logger.",
       "checksRun": [
+        "npm run check:central-activity-logger",
         "npm run check:activity-event-schema",
         "npm run check:os-phase-status"
       ],
       "knownLimitations": [
-        "Activity capture, logger writes, Activity Log UI, trace views, provider/tool dispatch, worker runtime, and DB writes remain out of scope."
+        "Broad activity capture, Activity Log UI, trace views, provider/tool dispatch, worker runtime, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.1",
+      "nextPhase": "P41.8.2",
       "commandCenterVisible": true
     },
     {
@@ -560,7 +561,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-event-schema",
-      "commit": "pending-final-commit",
+      "commit": "30c3bea",
       "completedAt": "",
       "summary": "Defines the redaction-safe activity event schema, correlation ID model, event type taxonomy, policy, checker, and architecture docs.",
       "checksRun": [
@@ -581,13 +582,23 @@
       "phaseId": "P41.8.2",
       "title": "Central Activity Logger",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "observability/central-activity-logger",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned central logger for schema-compliant activity records.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds a central activity logger, append-only local JSONL activity store, dry-run logging, redaction before persistence, and correlation lookup helpers.",
+      "checksRun": [
+        "npm run check:central-activity-logger",
+        "npm run check:activity-event-schema",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:command-center-ux",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No broad runtime instrumentation, Command Center Activity Log UI, /activity API endpoint, provider/tool/worker logging, DB-backed activity storage, or project mutation is enabled."
+      ],
       "nextPhase": "P41.8.3",
       "commandCenterVisible": true
     },
@@ -1195,8 +1206,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T21:20:00.000Z",
-  "currentPhase": "P41.8.1",
-  "previousPhase": "P41.7.7",
-  "nextPhase": "P41.8.2"
+  "updatedAt": "2026-05-14T21:55:00.000Z",
+  "currentPhase": "P41.8.2",
+  "previousPhase": "P41.8.1",
+  "nextPhase": "P41.8.3"
 }

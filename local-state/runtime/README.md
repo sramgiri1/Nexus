@@ -7,7 +7,8 @@ Rules:
 
 - files here are safe local demo and prototype state, not production storage
 - append-only JSONL files are used for evidence, audit, approvals, incidents,
-  and runtime events
+  runtime events, and centralized activity events
+- `activity.jsonl` is the append-only P41.8.2 activity logger store
 - `tasks.json` is the local task store prototype
 - no secrets or private project data belong here
 - this is not DB primary mode
