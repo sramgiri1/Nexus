@@ -124,8 +124,53 @@
       "title": "Codebase Documentation Standard + Module Registry",
       "track": "NEXUS_OS",
       "order": 12.75,
-      "group": "Planned OS Phases",
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "summary": "Establish the codebase documentation standard, module registry, and the first structured P41.7 documentation-system slice.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.2",
+      "title": "Reuse Audit + Refactor Candidate Report",
+      "track": "NEXUS_OS",
+      "order": 12.8,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Identify duplicated helpers, drifted module patterns, and safe refactor candidates without changing runtime behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3",
+      "title": "Shared Helper Inventory",
+      "track": "NEXUS_OS",
+      "order": 12.81,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Catalog the shared helpers that should anchor later consolidation work across scripts, policies, reports, and runtime boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.4",
+      "title": "OS Usage Documentation System",
+      "track": "NEXUS_OS",
+      "order": 12.82,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Tighten usage-doc structure, update operator guidance, and reduce drift between Command Center behavior and written instructions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.5",
+      "title": "Command Center Help Links",
+      "track": "NEXUS_OS",
+      "order": 12.83,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Map stabilized Command Center routes to the relevant usage and codebase documentation surfaces.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.6",
+      "title": "Docs Coverage Checker + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 12.84,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Finish the P41.7 track with validation coverage, drift checks, and final documentation-system verification.",
       "commandCenterVisible": true
     },
     {

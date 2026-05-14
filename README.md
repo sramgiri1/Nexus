@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.6.5
+## Current Status Through P41.7.1
 
-P41.5 is complete, and P41.6.1 through P41.6.5 are now in place. The Command Center and local operator surface have:
+P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 now adds the first durable codebase-documentation foundation. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -46,6 +46,7 @@ P41.5 is complete, and P41.6.1 through P41.6.5 are now in place. The Command Cen
 - a read-only Service Health route for operator guidance
 - a simple governed Command Palette plus Mission Control operator actions
 - OS roadmap vs project-progress separation, with platform phases tracked separately from private-project progress
+- a codebase documentation standard, module registry, and phase module index for future maintainers and coding agents
 
 ## Command Center Overview
 
@@ -137,6 +138,12 @@ npm run nexus:down
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
+## Codebase Documentation
+
+- [Codebase docs landing page](docs/codebase/README.md)
+- [Module registry](docs/codebase/MODULE_REGISTRY.md)
+- [Phase module index](docs/codebase/PHASE_MODULE_INDEX.md)
+
 ## Safety and Governance Boundaries
 
 - public/demo surfaces remain public-safe
@@ -155,6 +162,9 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.6: Unified NEXUS Local Boot / Service Orchestration
 - P41.6.4: Command palette + simple operator actions
 - P41.6.5: OS roadmap/project-progress separation, boot docs, troubleshooting, and final validation
+- P41.6.6: Command Center boundary polish and Mission Control consistency
+- P41.7.1: codebase documentation standard + module registry
+- P41.7.2: reuse audit + refactor candidate report
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 

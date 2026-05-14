@@ -78,40 +78,40 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.6.5 — OS Roadmap / Project Roadmap Separation, Boot Docs, Troubleshooting, and Final Validation
+### Phase 41.7.1 — Codebase Documentation Standard + Module Registry
 
 Goal:
 
-- separate NEXUS OS roadmap tracking from project progress
-- tighten operator guidance for `nexus:up`, `nexus:down`, `nexus:status`, and
-  `nexus:doctor`
-- improve roadmap readability, header formatting, and planned-route behavior in
-  Command Center
-- complete final validation for the P41.6 local boot sequence
+- establish a durable codebase documentation standard for future maintainers and
+  coding agents
+- create a human-readable module registry for the major NEXUS module families
+- create a phase module index that maps capability phases to the files they
+  introduced or changed
+- keep Command Center OS roadmap status synchronized with the phase registry
 
 Deliverables:
 
-- OS phase status registry becomes the Command Center roadmap source of truth
-- OS Roadmap shows platform phases only
-- Projects route owns local-private project progress
-- boot docs and troubleshooting are updated
-- route/test/checker/report updates for roadmap separation and boot finalization
+- `docs/codebase/CODE_DOCUMENTATION_STANDARD.md`
+- `docs/codebase/MODULE_REGISTRY.md`
+- `docs/codebase/PHASE_MODULE_INDEX.md`
+- `docs/codebase/README.md`
+- `scripts/check-docs-coverage.js` updates for the codebase-docs foundation
+- roadmap/status data updates for `P41.7.1`
 
 Non-goals:
 
-- no provider dispatch
-- no worker runtime
+- no refactor execution
+- no shared-helper extraction yet
+- no usage-doc expansion yet
 - no DB writes
-- no release/deploy execution
+- no provider dispatch
 - no private project source mutation
 
 Validation checks:
 
+- `npm run check:docs-coverage`
 - `npm run check:os-phase-status`
-- `npm run check:nexus-boot`
 - `npm run check:command-center-ux`
-- `npm run nexus:status`
-- `npm run nexus:doctor`
 - `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
 Risk level:
@@ -130,7 +130,14 @@ Risk level:
   - `P41.6.3` complete
   - `P41.6.4` complete
   - `P41.6.5` complete
-- `P41.7` Documentation System, Usage Guides, Reuse Audit, Refactor Foundation
+  - `P41.6.6` complete
+- `P41.7` Documentation System, Usage Guides, Reuse Audit, Refactor Foundation:
+  - `P41.7.1` complete
+  - `P41.7.2` planned
+  - `P41.7.3` planned
+  - `P41.7.4` planned
+  - `P41.7.5` planned
+  - `P41.7.6` planned
 - `P41.8` Centralized Activity Log + Observability Ledger
 - `P41.9` README + Architecture Diagram Registry
 - `P42` Project Registry + Adapter Framework
@@ -176,7 +183,11 @@ Risk level:
 
 ## Next Phases
 
-- Phase 41.7.1 — Codebase Documentation Standard + Module Registry
+- Phase 41.7.2 — Reuse Audit + Refactor Candidate Report
+- Phase 41.7.3 — Shared Helper Inventory
+- Phase 41.7.4 — OS Usage Documentation System
+- Phase 41.7.5 — Command Center Help Links
+- Phase 41.7.6 — Docs Coverage Checker + Final Validation
 - Phase 41.8 — Centralized Activity Log + Observability Ledger
 - Phase 41.9 — README + Architecture Diagram Registry
 - Phase 42 — Project Registry + Adapter Framework
@@ -471,11 +482,19 @@ Notes:
 - this follows P41.5
 - current manual service start commands remain the supported model until P41.6 lands
 
-### P41.7 — Documentation System Follow-through
+### P41.7 — Documentation System, Usage Guides, Reuse Audit, and Refactor Foundation
 
-Most usage/codebase documentation goals are now partially satisfied by P41.5.6.
-Any future P41.7 work should focus on reuse audits, drift reduction, and doc
-maintenance patterns rather than rebuilding the basic docs set.
+P41.7 now breaks down into explicit documentation-system subphases:
+
+- `P41.7.1` — Codebase Documentation Standard + Module Registry
+- `P41.7.2` — Reuse Audit + Refactor Candidate Report
+- `P41.7.3` — Shared Helper Inventory
+- `P41.7.4` — OS Usage Documentation System
+- `P41.7.5` — Command Center Help Links
+- `P41.7.6` — Docs Coverage Checker + Final Validation
+
+The goal of the track is to improve repo understanding, reduce documentation
+drift, and prepare later safe refactor work without expanding runtime scope.
 
 ### P41.8 — Centralized Activity Log + Observability Ledger
 

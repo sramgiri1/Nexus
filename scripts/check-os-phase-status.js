@@ -97,6 +97,8 @@ for (const phaseId of [
   "P41.6.3",
   "P41.6.4",
   "P41.6.5",
+  "P41.6.6",
+  "P41.7.1",
 ]) {
   const entry = statusById.get(phaseId);
   check(!!entry, "completedPhases", `Missing completed phase entry: ${phaseId}`);
@@ -111,20 +113,25 @@ check(phase164?.commit === "dd2a601", "completedPhases", "P41.6.4 commit must be
 const phase165 = statusById.get("P41.6.5");
 check(phase165?.branch === "fix/os-roadmap-project-separation-boot-docs", "completedPhases", "P41.6.5 branch must be fix/os-roadmap-project-separation-boot-docs");
 check(phase165?.commit === "c0b0afb", "completedPhases", "P41.6.5 commit must be c0b0afb");
+const phase166 = statusById.get("P41.6.6");
+check(phase166?.branch === "fix/command-center-boundary-polish", "completedPhases", "P41.6.6 branch must be fix/command-center-boundary-polish");
+check(phase166?.commit === "a4c7016", "completedPhases", "P41.6.6 commit must be a4c7016");
 
-const currentPhase = statusById.get("P41.6.6");
-check(!!currentPhase, "currentPhase", "P41.6.6 must exist");
-check(currentPhase?.status === "complete", "currentPhase", "P41.6.6 must be complete");
-check(Boolean(currentPhase?.branch), "currentPhase", "P41.6.6 must record a branch");
-check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.6.6 must record a nextPhase");
-check(currentPhase?.nextPhase === "P41.7.1", "currentPhase", "P41.6.6 nextPhase must be P41.7.1");
-check(statusById.get("P41.7.1")?.status === "planned", "nextPhase", "P41.7.1 must be planned");
+const currentPhase = statusById.get("P41.7.1");
+check(!!currentPhase, "currentPhase", "P41.7.1 must exist");
+check(currentPhase?.status === "complete", "currentPhase", "P41.7.1 must be complete");
+check(Boolean(currentPhase?.branch), "currentPhase", "P41.7.1 must record a branch");
+check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.7.1 must record a nextPhase");
+check(currentPhase?.nextPhase === "P41.7.2", "currentPhase", "P41.7.1 nextPhase must be P41.7.2");
+check(currentPhase?.branch === "docs/codebase-module-registry-foundation", "currentPhase", "P41.7.1 branch must be docs/codebase-module-registry-foundation");
+check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.1 must record a commit or pending-final-commit placeholder");
+check(statusById.get("P41.7.2")?.status === "planned", "nextPhase", "P41.7.2 must be planned");
 
 const nextPhase = indexById.get("P42");
 check(!!nextPhase, "nextPhase", "P42 must exist in the phase index");
 check(nextPhase?.title === "Project Registry + Adapter Framework", "nextPhase", "P42 must be Project Registry + Adapter Framework");
 
-for (const plannedPhaseId of ["P41.7.1", "P41.7", "P41.8", "P41.9", "P42"]) {
+for (const plannedPhaseId of ["P41.7.2", "P41.7.3", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
   const entry = statusById.get(plannedPhaseId);
   check(!!entry, "nextPhase", `Missing planned phase entry: ${plannedPhaseId}`);
   check(entry?.status === "planned", "nextPhase", `${plannedPhaseId} must be planned`);
@@ -158,7 +165,8 @@ check(
   "commandCenterSync",
   "dashboard/src/data/nexusRoadmap.js must include the correct P42 title",
 );
-check(roadmapDocSource.includes("P41.6.5"), "commandCenterSync", "NEXUS platform roadmap doc must mention P41.6.5");
+check(roadmapDocSource.includes("P41.7.1"), "commandCenterSync", "NEXUS platform roadmap doc must mention P41.7.1");
+check(roadmapDocSource.includes("P41.7.2"), "commandCenterSync", "NEXUS platform roadmap doc must mention P41.7.2");
 
 const result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 
@@ -192,9 +200,9 @@ const report = `# NEXUS OS Phase Status Report
 ## Completion Checks
 
 - P41.5.1 through P41.5.6: complete
-- P41.6.1 through P41.6.5: complete
-- P41.6.6: ${currentPhase?.status || "unknown"}
-- P41.7.1 / P41.7 / P41.8 / P41.9: planned
+- P41.6.1 through P41.6.6: complete
+- P41.7.1: ${currentPhase?.status || "unknown"}
+- P41.7.2 through P41.7.6 / P41.7 / P41.8 / P41.9: planned
 - P42: Project Registry + Adapter Framework
 
 ## Roadmap Separation
