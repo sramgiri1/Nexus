@@ -47,11 +47,8 @@ const roadmapPhases = (phaseIndex?.phases || [])
   .sort((a, b) => (a.order || 0) - (b.order || 0));
 
 const currentInProgressPhase = roadmapPhases.find((entry) => entry.status === "in_progress");
-const fallbackCurrentPhase = [...roadmapPhases]
-  .filter((entry) => entry.status === "complete")
-  .at(-1);
 
-export const NEXUS_CURRENT_OS_PHASE = currentInProgressPhase || fallbackCurrentPhase || null;
+export const NEXUS_CURRENT_OS_PHASE = currentInProgressPhase || null;
 
 export const NEXUS_ROADMAP_PHASES = roadmapPhases.map((entry) => {
   if (entry.phase === NEXUS_CURRENT_OS_PHASE?.phase) {
@@ -68,12 +65,17 @@ export const NEXUS_ROADMAP_PHASES = roadmapPhases.map((entry) => {
 export const NEXUS_PREVIOUS_COMPLETED_PHASE = [...NEXUS_ROADMAP_PHASES]
   .filter(
     (entry) => entry.status === "complete"
-      && (entry.order || 0) < (NEXUS_CURRENT_OS_PHASE?.order || Number.MAX_SAFE_INTEGER),
   )
   .at(-1);
 
-export const NEXUS_NEXT_OS_PHASE = NEXUS_ROADMAP_PHASES.find(
-  (entry) => (entry.order || 0) > (NEXUS_CURRENT_OS_PHASE?.order || 0) && entry.status === "planned",
+export const NEXUS_NEXT_OS_PHASE = NEXUS_ROADMAP_PHASES.find((entry) => entry.phase === "P41.8.1")
+  || NEXUS_ROADMAP_PHASES.find(
+    (entry) => (entry.order || 0) > (NEXUS_CURRENT_OS_PHASE?.order || 0) && entry.status === "planned",
+  )
+  || NEXUS_ROADMAP_PHASES.find((entry) => entry.status === "planned");
+
+export const NEXUS_IN_PROGRESS_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(
+  (entry) => entry.status === "in_progress",
 );
 
 export const NEXUS_COMPLETED_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(

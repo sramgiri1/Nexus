@@ -77,6 +77,12 @@ export const COMMAND_CENTER_HELP_LINKS = {
     description: "Use Demo Mode safely and keep demo data separate from local-private work.",
     routeKeys: ["demo"],
   },
+  docs: {
+    label: "Docs & Guides",
+    docPath: "docs/usage/README.md",
+    description: "Navigate operator, codebase, and architecture documentation from Command Center.",
+    routeKeys: ["docs"],
+  },
   commandPalette: {
     label: "Command Center Guide",
     docPath: "docs/usage/COMMAND_CENTER_GUIDE.md",

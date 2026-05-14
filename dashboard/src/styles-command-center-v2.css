@@ -332,30 +332,35 @@
 /* ─── Top Command Bar ─── */
 
 .ccv2-topbar {
-  height: 48px;
-  background: color-mix(in srgb, var(--v2-bg-1) 90%, var(--nexus-panel-strong) 10%);
+  min-height: 46px;
+  background: color-mix(in srgb, var(--v2-bg-1) 94%, var(--nexus-panel-strong) 6%);
   border-bottom: 1px solid var(--v2-border);
   display: flex;
   align-items: center;
   padding: 0 16px;
-  gap: 10px;
+  gap: 8px;
   flex-shrink: 0;
 }
 
 .ccv2-theme-control {
   display: flex;
   align-items: center;
-  gap: 6px;
-  padding: 3px 6px;
+  gap: 4px;
+  padding: 2px 5px;
   border: 1px solid var(--nexus-border);
   border-radius: 999px;
   background: var(--nexus-panel-soft);
 }
 
-.ccv2-theme-control__label {
-  font-size: 10px;
-  font-weight: 700;
+.ccv2-theme-control__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
   color: var(--nexus-muted);
+  font-size: 11px;
 }
 
 .ccv2-theme-control__options {
@@ -369,9 +374,11 @@
   border-radius: 999px;
   background: transparent;
   color: var(--nexus-muted);
-  font-size: 10px;
+  font-size: 9px;
   font-weight: 600;
-  padding: 3px 8px;
+  min-width: 18px;
+  height: 18px;
+  padding: 0 5px;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
@@ -393,6 +400,8 @@
   gap: 6px;
   font-size: 12px;
   color: var(--v2-muted);
+  min-width: 0;
+  white-space: nowrap;
 }
 
 .ccv2-topbar__breadcrumb-sep {
@@ -403,6 +412,38 @@
 .ccv2-topbar__breadcrumb-current {
   color: var(--v2-text);
   font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ccv2-topbar__scope-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 260px;
+  padding: 3px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--nexus-border);
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  white-space: nowrap;
+}
+
+.ccv2-topbar__scope-label {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-muted);
+}
+
+.ccv2-topbar__scope-value {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
 }
 
 .ccv2-topbar__mission-badge {
@@ -472,14 +513,26 @@
 .ccv2-help-link {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
-  max-width: 260px;
-  padding: 4px 9px;
+  gap: 4px;
+  padding: 4px 8px;
   border: 1px solid var(--nexus-border);
   border-radius: 999px;
   background: var(--nexus-panel-soft);
   color: var(--nexus-text);
   white-space: nowrap;
+}
+
+.ccv2-help-link__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: var(--nexus-input-bg);
+  color: var(--nexus-text-strong);
+  font-size: 10px;
+  font-weight: 800;
 }
 
 .ccv2-help-link__eyebrow {
@@ -491,17 +544,19 @@
 }
 
 .ccv2-help-link__label {
-  font-size: 10px;
-  font-weight: 700;
-  color: var(--nexus-text-strong);
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
 }
 
 .ccv2-help-link__path {
-  max-width: 120px;
+  position: absolute;
+  width: 1px;
+  height: 1px;
   overflow: hidden;
-  text-overflow: ellipsis;
-  font-size: 10px;
-  color: var(--nexus-muted);
+  clip: rect(0 0 0 0);
 }
 
 .ccv2-help-link__description {
@@ -548,13 +603,15 @@
 .ccv2-command-palette-trigger {
   display: inline-flex;
   align-items: center;
-  gap: 6px;
+  justify-content: center;
   border: 1px solid var(--nexus-border);
   border-radius: 999px;
   background: var(--nexus-panel-soft);
   color: var(--nexus-text-strong);
-  padding: 4px 9px;
-  font-size: 10px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 13px;
   font-weight: 700;
   cursor: pointer;
   transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
@@ -3171,6 +3228,7 @@
   .ccv2-state-summary-grid,
   .ccv2-wb-task-summary,
   .ccv2-two-col,
+  .ccv2-docs-grid,
   .ccv2-service-health__grid,
   .ccv2-service-health__command-grid,
   .ccv2-service-health__two-column {
@@ -3552,6 +3610,88 @@
   margin-top: 6px;
   font-size: 12px;
   color: var(--nexus-muted);
+}
+
+.ccv2-roadmap-note {
+  margin: 0 0 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.ccv2-docs-intro {
+  margin-bottom: 12px;
+}
+
+.ccv2-docs-intro__copy {
+  margin: 8px 0 0;
+  color: var(--nexus-text);
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.ccv2-docs-section {
+  margin-top: 14px;
+  padding: 16px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 16px;
+  background: var(--nexus-panel);
+  box-shadow: var(--nexus-shadow);
+}
+
+.ccv2-docs-section__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.ccv2-docs-section__description {
+  margin-top: 4px;
+  color: var(--nexus-muted);
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.ccv2-docs-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.ccv2-doc-card {
+  min-height: 124px;
+  padding: 14px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 14px;
+  background: var(--nexus-panel-soft);
+}
+
+.ccv2-doc-card__title {
+  color: var(--nexus-text-strong);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ccv2-doc-card__detail {
+  margin-top: 8px;
+  color: var(--nexus-text);
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.ccv2-doc-card__path {
+  margin-top: 10px;
+  color: var(--nexus-muted);
+  font-family: "JetBrains Mono", "Fira Code", monospace;
+  font-size: 10px;
+  line-height: 1.4;
+  overflow-wrap: anywhere;
 }
 
 .ccv2-roadmap-track--hero {

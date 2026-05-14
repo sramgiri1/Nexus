@@ -201,7 +201,7 @@ console.log("\nDashboard UI:");
   check("liveapi route wired", content?.includes('currentPage === "liveapi"'));
   check("Live API nav item in sidebar", content?.includes('"Live API"'));
   check("P40 badge on nav item", content?.includes('"P40"'));
-  check("TopBar shows API status (ccv2-api-status)", content?.includes("ccv2-api-status"));
+  check("Live API page owns API status after compact top bar", content?.includes("function LiveApiPage") && content?.includes("Local API is online"));
   check("apiState passed to TopBar", content?.includes("apiState={apiState}"));
   check("onRefresh passed to TopBar", content?.includes("onRefresh={refreshApiState}"));
   check("Source badge in Evidence page", content?.includes("ccv2-source-badge"));

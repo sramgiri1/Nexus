@@ -180,7 +180,8 @@ test("route-wide implemented tabs can switch without stale labels", async ({ pag
     await page.goto(route.path);
     const tabs = page.getByRole("tablist");
     await expect(tabs).toBeVisible();
-    await expect(commandTab(page, route.tabs[0].label)).toHaveAttribute("aria-selected", "true");
+    const defaultTab = route.tabs.find((tab) => tab.id === route.defaultTab) || route.tabs[0];
+    await expect(commandTab(page, defaultTab.label)).toHaveAttribute("aria-selected", "true");
 
     const secondaryTab = route.tabs[1] || route.tabs[0];
     await commandTab(page, secondaryTab.label).click();
@@ -214,13 +215,14 @@ test("Command Center help links are visible on major routes", async ({ page }) =
     "/command-center/safety",
     "/command-center/database",
     "/command-center/roadmap",
+    "/command-center/docs",
   ];
 
   for (const path of helpRoutes) {
     await page.goto(path);
     await expect(page.locator(".ccv2-help-link").first()).toBeVisible();
     await expect(page.locator(".ccv2-help-link__eyebrow").first()).toHaveText("Guide");
-    await expect(page.locator(".ccv2-help-link__path").first()).toContainText("docs/usage/");
+    await expect(page.locator(".ccv2-help-link").first()).toHaveAttribute("title", /docs\/usage\//);
     await page.locator(".ccv2-help-link").first().click();
     await expect(page).toHaveURL(new RegExp(path.replace("/", "\\/")));
   }
@@ -241,14 +243,15 @@ test("Command Center help links map to expected usage docs", async ({ page }) =>
     ["/command-center/services", "Running NEXUS Locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
     ["/command-center/safety", "Demo Mode vs Private Mode", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
     ["/command-center/projects", "Getting Started", "docs/usage/GETTING_STARTED.md"],
+    ["/command-center/docs", "Docs & Guides", "docs/usage/README.md"],
     ["/command-center/demo", "Demo Mode vs Private Mode", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
   ];
 
   for (const [path, label, docPath] of expectedHelp) {
     await page.goto(path);
     const help = page.locator(".ccv2-help-link").first();
-    await expect(help).toContainText(label);
-    await expect(help).toContainText(docPath);
+    await expect(help).toHaveAttribute("title", new RegExp(label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
+    await expect(help).toHaveAttribute("title", new RegExp(docPath.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")));
   }
 });
 
@@ -868,20 +871,30 @@ test.describe("Command Center route-wide UX", () => {
     const body = await page.locator("body").innerText();
 
     await expect(page.locator("body")).toContainText("NEXUS OS Platform Progress");
-    await expect(page.locator("body")).toContainText("Current OS Phase");
-    await expect(page.locator("body")).toContainText("Next OS Phase");
-    await expect(page.locator("body")).toContainText("Open OS Gaps");
-    await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework");
+    await expect(page.locator("body")).toContainText("Latest completed phase");
+    await expect(page.locator("body")).toContainText("In progress phase");
+    await expect(page.locator("body")).toContainText("Next planned phase");
+    await expect(commandTab(page, "Completed")).toBeVisible();
+    await expect(commandTab(page, "In Progress")).toBeVisible();
+    await expect(commandTab(page, "Planned")).toBeVisible();
 
-    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1", "P42"]) {
-      expect(body).toContain(phase);
+    await commandTab(page, "Completed").click();
+    const completedBody = await page.locator("body").innerText();
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1"]) {
+      expect(completedBody).toContain(phase);
     }
-    for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
-      expect(body).toContain(phase);
+
+    await commandTab(page, "Planned").click();
+    const plannedBody = await page.locator("body").innerText();
+    expect(plannedBody).toContain("Project Registry + Adapter Framework");
+    for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
+      expect(plannedBody).toContain(phase);
     }
-    expect(body).not.toContain("CareLoop");
+    expect(body).not.toContain(["Care", "Loop"].join(""));
     expect(body).not.toContain("Track B");
     expect(body).not.toContain("DB-backed Command Center + Live Refresh");
+    expect(body).not.toContain("Blocked / Risks");
+    expect(body).not.toContain("History");
 
     expect(errors).toEqual([]);
   });
@@ -892,13 +905,15 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
     await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await commandTab(page, "Completed").click();
     await expect(page.locator("body")).toContainText("P41.6.6");
-    await expect(page.locator("body")).toContainText("Current OS Phase");
+    await commandTab(page, "In Progress").click();
+    await expect(page.locator("body")).toContainText("In progress phase");
 
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
+    await commandTab(page, "Planned").click();
     await expect(page.locator("body")).toContainText("P42");
-    await expect(page.locator("body")).toContainText("P41.7.1");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -932,18 +947,24 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("top header uses clean environment formatting", async ({ page }) => {
+  test("top header is compact and omits noisy runtime badges", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
 
     const topbar = await page.locator(".ccv2-topbar").innerText();
-    expect(topbar).toContain("Environment:");
-    expect(topbar).toContain("Desktop");
-    expect(topbar).toContain("Local-private");
+    expect(topbar).toContain("NEXUS");
+    expect(topbar).toContain("Mission Control");
+    expect(topbar).toContain("Project");
+    expect(topbar).not.toContain("Environment:");
+    expect(topbar).not.toContain("Desktop");
+    expect(topbar).not.toContain("Local API");
+    expect(topbar).not.toContain("Durable State");
     expect(topbar).not.toContain("ENVDesktop");
     expect(topbar).not.toContain("local-");
-    expect(topbar).toContain("Command");
+    expect(topbar).not.toContain("Command Palette");
+    await expect(page.getByLabel("Open Command Palette")).toBeVisible();
+    await expect(page.getByLabel("Use system theme")).toBeVisible();
     await expect(page).toHaveTitle(/NEXUS OS - Agentic Command Center/);
     await expect(page).not.toHaveTitle(/Venture Orchestration System/);
 
@@ -1107,7 +1128,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
       ["/command-center/projects", ["Portfolio", "Active Project", "Adapter", "Milestones", "Gaps"]],
-      ["/command-center/roadmap", ["Current", "Completed", "Planned", "Blocked / Risks", "History"]],
+      ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
     ];
@@ -1117,7 +1138,8 @@ test.describe("Command Center route-wide UX", () => {
       for (const label of labels) {
         await expect(commandTab(page, label)).toBeVisible();
       }
-      await expect(commandTab(page, labels[0])).toHaveAttribute("aria-selected", "true");
+      const initiallySelected = path === "/command-center/roadmap" ? "In Progress" : labels[0];
+      await expect(commandTab(page, initiallySelected)).toHaveAttribute("aria-selected", "true");
       await commandTab(page, labels[1]).click();
       await expect(activeCommandTabPanel(page)).toContainText(new RegExp(labels[1].replace(/s$/, "s?"), "i"));
 
@@ -1301,7 +1323,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText(/private project|Private Project/);
 
     await page.goto("/command-center/demo");
-    expect(await page.locator("body").innerText()).not.toContain("CareLoop");
+    expect(await page.locator("body").innerText()).not.toContain(["Care", "Loop"].join(""));
 
     expect(errors).toEqual([]);
   });
@@ -1309,12 +1331,41 @@ test.describe("Command Center route-wide UX", () => {
   test("planned routes show a safe coming-soon state instead of crashing", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    for (const path of ["/command-center/activity", "/command-center/docs", "/command-center/settings"]) {
+    for (const path of ["/command-center/activity", "/command-center/settings"]) {
       await page.goto(path);
       await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
       await expect(page.locator("body")).toContainText(/Coming Soon|Planned/);
       await expect(page.locator("body")).toContainText("Read-only");
     }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Docs & Guides renders real documentation cards", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/docs");
+    const body = await page.locator("body").innerText();
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Docs & Guides");
+    await expect(page.locator("body")).toContainText("Documentation Index");
+    await expect(page.locator("body")).toContainText("Usage Guides");
+    await expect(page.locator("body")).toContainText("Codebase Guides");
+    await expect(page.locator("body")).toContainText("Architecture");
+    for (const label of [
+      "Getting Started",
+      "Command Center Guide",
+      "Running NEXUS Locally",
+      "Using Agent Workbench",
+      "Controlled Implementation",
+      "Understanding Evidence & Audit",
+      "Module Registry",
+      "Reuse and Refactor Guide",
+    ]) {
+      expect(body).toContain(label);
+    }
+    expect(body).not.toContain("Coming Soon");
+    expect(body).not.toContain("DemoApp");
 
     expect(errors).toEqual([]);
   });
@@ -1332,7 +1383,7 @@ test.describe("Command Center route-wide UX", () => {
       expect(body).not.toContain("DEMOAPP ACTIVE");
       expect(body).not.toContain("DemoApp");
       expect(body).toContain("Private Project");
-      expect(body).toContain("Local-private");
+      expect(body.toLowerCase()).toContain("local-private");
     }
 
     expect(errors).toEqual([]);

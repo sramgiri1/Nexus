@@ -31,6 +31,9 @@ release execution are not enabled yet.
 - [Controlled Implementation](CONTROLLED_IMPLEMENTATION.md)
 - [Understanding Evidence, Audit, and Runtime Events](UNDERSTANDING_EVIDENCE_AUDIT.md)
 
+The Command Center `Docs & Guides` route now acts as the local documentation
+index for these usage docs plus the codebase and architecture references.
+
 ## Operating Sequence
 
 1. Start or inspect local services with [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md).

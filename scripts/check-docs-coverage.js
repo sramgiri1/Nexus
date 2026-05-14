@@ -119,6 +119,7 @@ const moduleRegistry = read("docs/codebase/MODULE_REGISTRY.md");
 const phaseModuleIndex = read("docs/codebase/PHASE_MODULE_INDEX.md");
 const helpLinksSource = read("dashboard/src/data/commandCenterHelpLinks.js");
 const routeSource = read("dashboard/src/data/commandCenterRoutes.js");
+const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
 
 for (const expected of [
   "docs/usage",
@@ -140,7 +141,7 @@ for (const expected of [
   assertContains(moduleRegistry, expected, "codebaseDocs", `Module registry missing family: ${expected}`);
 }
 
-for (const expected of ["P41.7.4", "P41.7.5", "P41.7.6"]) {
+for (const expected of ["P41.7.4", "P41.7.5", "P41.7.6", "P41.7.7"]) {
   assertContains(phaseModuleIndex, expected, "codebaseDocs", `Phase module index missing entry: ${expected}`);
 }
 
@@ -225,13 +226,27 @@ for (const expected of [
   "database",
   "services",
   "roadmap",
+  "docs",
   "commandPalette",
 ]) {
   assertContains(helpLinksSource, `${expected}:`, "helpLinks", `Help-link map missing route/capability key: ${expected}`);
 }
 
-for (const expected of ["mission", "workspace", "tasks", "workbench", "implementation", "evidence", "safety", "projects", "liveapi", "database", "services", "roadmap"]) {
+for (const expected of ["mission", "workspace", "tasks", "workbench", "implementation", "evidence", "safety", "projects", "liveapi", "database", "services", "roadmap", "docs"]) {
   assertContains(routeSource, `key: "${expected}"`, "helpLinks", `Route matrix missing help-covered route: ${expected}`);
+}
+
+for (const expected of [
+  "DocsGuidesPage",
+  "Documentation Index",
+  "Usage Guides",
+  "Codebase Guides",
+  "Architecture",
+  "Command Center Guide",
+  "Module Registry",
+  "Architecture Diagrams",
+]) {
+  assertContains(commandCenterSource, expected, "helpLinks", `Docs & Guides page missing expected copy: ${expected}`);
 }
 
 for (const match of helpLinksSource.matchAll(/docPath: "([^"]+)"/g)) {

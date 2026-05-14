@@ -676,3 +676,41 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Existing public-safety false positives outside the docs coverage checker may
   still need a dedicated cleanup phase.
+
+## P41.7.7 — Command Center Header, OS Roadmap, and Docs Page Polish
+
+- Primary capability:
+  Polish the Command Center global header, OS Roadmap tabs, and Docs & Guides
+  route before the P41.8 observability track.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/components/command-center-v2/HelpLink.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterHelpLinks.js`,
+  `dashboard/src/data/nexusRoadmap.js`,
+  `dashboard/src/styles-command-center-v2.css`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`,
+  `os-roadmap/nexus-phases.json`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`,
+  `reports/docs-coverage-report.md`,
+  `reports/os-phase-status-report.md`
+- Command Center impact:
+  Simplifies the global top bar, reduces planned/read-only badge noise, makes
+  OS Roadmap use Completed / In Progress / Planned, and turns Docs & Guides
+  into a real documentation index.
+- Safety impact:
+  UI/docs/checker polish only; no backend execution, provider calls, DB writes,
+  worker runtime, local API behavior changes, action bridge behavior changes,
+  or private project mutation are introduced.
+- Known limitations:
+  Docs remain local file references. Served docs navigation and observability
+  activity logs remain future work.

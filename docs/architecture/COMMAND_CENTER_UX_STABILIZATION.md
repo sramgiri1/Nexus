@@ -604,3 +604,44 @@ help-link, and OS phase-status validation.
   runtime, local API behavior change, or action bridge behavior change is added.
 - DemoApp remains limited to Demo Mode; local-private docs and UI continue to
   use Private Project or no-project guidance.
+
+## P41.7.7 — Command Center Header, OS Roadmap, and Docs Page Polish
+
+This polish subphase tightens the operator shell after P41.7 docs validation.
+
+### Header Polish
+
+- The global top bar now keeps a concise `NEXUS / <Current Page>` breadcrumb.
+- Scope and project context remain visible as a compact chip.
+- Help, command palette, and theme controls are compact icon-style affordances.
+- Environment, Local API, Durable State, current time, and large theme text are
+  intentionally removed from the global top bar because those details belong on
+  their dedicated pages.
+
+### OS Roadmap Polish
+
+- OS Roadmap uses exactly three primary tabs: Completed, In Progress, and
+  Planned.
+- Project progress, demo project data, and private project milestones remain
+  outside the OS roadmap.
+- P41.7.7 is recorded as the final Command Center/docs polish phase before the
+  P41.8 activity and observability track.
+
+### Docs & Guides Polish
+
+- Docs & Guides is now a real documentation index rather than a planned route.
+- The page groups usage docs, codebase docs, and architecture docs into
+  operator-friendly cards.
+- The page avoids primary Coming Soon / Planned / Read-only language and avoids
+  raw docs dumps.
+
+### Boundary Rules Preserved
+
+- No backend execution, provider calls, DB writes, worker runtime, local API
+  behavior change, action bridge behavior change, or private project mutation is
+  added.
+- DemoApp remains limited to Demo Mode.
+
+### Next Phase
+
+- P41.8.1 — Centralized Activity Log + Observability Ledger Foundation

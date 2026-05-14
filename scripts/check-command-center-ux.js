@@ -132,7 +132,7 @@ const requiredTabbedRoutes = {
   "/command-center/evidence": "timeline",
   "/command-center/safety": "posture",
   "/command-center/projects": "portfolio",
-  "/command-center/roadmap": "current",
+  "/command-center/roadmap": "in-progress",
   "/command-center/cost": "overview",
   "/command-center/batch": "overview",
 };
@@ -166,6 +166,7 @@ const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 
 const commandCenterSource = readFile("dashboard/src/pages/CommandCenterV2.jsx");
 const commandCenterNonRoadmapSource = stripRoadmapBlock(commandCenterSource);
+const topBarSource = commandCenterSource.match(/function TopBar[\s\S]*?\/\* ─── Mission Composer Card ─── \*\//)?.[0] || "";
 const workflowTemplateSource = readFile("workspace/workflowTemplates.js");
 const workflowRecommendationSource = readFile("workspace/workflowRecommendations.js");
 const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
@@ -239,11 +240,14 @@ for (const path of requiredRoutePaths) {
     );
   }
 }
-for (const path of ["/command-center/activity", "/command-center/docs", "/command-center/settings"]) {
+for (const path of ["/command-center/activity", "/command-center/settings"]) {
   const route = routeMatrix.find((entry) => entry.path === path);
   check(!!route, "routeMatrix", `Missing planned route matrix entry: ${path}`);
   check(route?.status === "planned", "routeMatrix", `Planned route should be marked planned: ${path}`);
 }
+const docsRoute = routeMatrix.find((entry) => entry.path === "/command-center/docs");
+check(!!docsRoute, "routeMatrix", "Missing docs route matrix entry");
+check(docsRoute?.status === "implemented", "routeMatrix", "Docs & Guides route should be implemented");
 
 for (const [path, defaultTab] of Object.entries(requiredTabbedRoutes)) {
   const route = routeMatrix.find((entry) => entry.path === path);
@@ -387,12 +391,12 @@ for (const expected of [
 // OS Roadmap / project separation
 for (const expected of [
   "NEXUS OS Platform Progress",
-  "Current OS Phase",
-  "Next OS Phase",
-  "Completed OS Phases",
-  "Planned OS Phases",
-  "Blocked OS Phases",
-  "Open OS Gaps",
+  "Latest completed phase",
+  "In progress phase",
+  "Next planned phase",
+  "Completed",
+  "In Progress",
+  "Planned",
   "Project Progress",
 ]) {
   check(commandCenterSource.includes(expected), "roadmapProjectSeparation", `Roadmap / project separation missing expected copy: ${expected}`);
@@ -401,6 +405,8 @@ for (const forbidden of [
   "CareLoop sprint board",
   "Track B",
   "DB-backed Command Center + Live Refresh",
+  "Blocked / Risks",
+  "History",
 ]) {
   check(!commandCenterSource.includes(forbidden), "roadmapProjectSeparation", `Roadmap / project separation contains forbidden mixed-roadmap copy: ${forbidden}`);
 }
@@ -412,11 +418,13 @@ for (const expectedTest of [
 }
 
 // Header environment formatting
-check(commandCenterSource.includes("Environment"), "headerFormatting", "Top bar should include Environment label");
-check(commandCenterSource.includes("Desktop"), "headerFormatting", "Top bar should include Desktop environment value");
-check(commandCenterSource.includes("Local-private"), "headerFormatting", "Top bar should include Local-private mode value");
-check(!commandCenterSource.includes(">ENV<"), "headerFormatting", "Top bar should not use the old ENV badge copy");
-check(routeTestSource.includes("top header uses clean environment formatting"), "headerFormatting", "Route tests missing header formatting coverage");
+check(topBarSource.includes("ccv2-topbar__breadcrumb"), "headerFormatting", "Top bar should include concise breadcrumb markup");
+check(topBarSource.includes("ccv2-topbar__scope-chip"), "headerFormatting", "Top bar should include compact scope/project chip");
+check(!topBarSource.includes("Environment:"), "headerFormatting", "Top bar should not show Environment text");
+check(!topBarSource.includes("Local API:"), "headerFormatting", "Top bar should not show Local API text");
+check(!topBarSource.includes("Durable State:"), "headerFormatting", "Top bar should not show Durable State text");
+check(!topBarSource.includes(">ENV<"), "headerFormatting", "Top bar should not use the old ENV badge copy");
+check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "headerFormatting", "Route tests missing compact header coverage");
 
 // Sidebar label completeness / planned behavior
 check(commandCenterSource.includes("title={item.name}"), "sidebarPlannedBehavior", "Sidebar links should preserve full labels through title attributes");
@@ -441,10 +449,10 @@ for (const expected of [
   "Service Health",
   "Start, inspect, and troubleshoot local NEXUS services.",
   "Disabled by policy",
-  "Local API: Online",
-  "Local API: Offline",
-  "Environment",
+  "Local API",
+  "http://127.0.0.1:4321",
   "Coming Soon",
+  "Docs & Guides",
   "Select a task to review agent output, evidence, blockers, and next actions.",
 ]) {
   check(commandCenterSource.includes(expected), "pageCopy", `CommandCenterV2.jsx missing expected copy: ${expected}`);
@@ -728,7 +736,7 @@ for (const expected of [
   "tabs={EVIDENCE_TABS}",
   "tabs={SAFETY_CENTER_TABS}",
   "tabs={PROJECTS_TABS}",
-  "tabs={OS_ROADMAP_TABS}",
+  "tabs={roadmapTabs}",
   "tabs={COST_CENTER_TABS}",
   "tabs={BATCH_QUEUE_TABS}",
 ]) {
@@ -818,17 +826,21 @@ check(routeTestSource.includes("Mission Hero shows mission, scope, actions, and 
 
 // Top bar polish
 for (const expected of [
-  "Environment:",
-  "Command",
-  "Cmd/Ctrl+K",
-  "Theme:",
-  "Local API: Online",
-  "Durable State: read-only",
+  "NEXUS",
+  "ccv2-topbar__scope-chip",
+  "Open Command Palette",
+  "Use system theme",
+  "Use dark theme",
+  "Use light theme",
 ]) {
-  check(commandCenterSource.includes(expected), "topBarPolish", `Top bar missing polished copy: ${expected}`);
+  check(topBarSource.includes(expected), "topBarPolish", `Top bar missing polished copy: ${expected}`);
 }
+for (const forbidden of ["Environment:", "Cmd/Ctrl+K", "THEME", "Local API:", "Durable State:"]) {
+  check(!topBarSource.includes(forbidden), "topBarPolish", `Top bar still contains noisy copy: ${forbidden}`);
+}
+check(commandCenterSource.includes("DocsGuidesPage"), "topBarPolish", "Docs & Guides route should render a real docs page");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
-check(routeTestSource.includes("top header uses clean environment formatting"), "topBarPolish", "Route tests missing top-bar polish coverage");
+check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
 
 // Action reasons
 check(commandCenterSource.includes("Requires generated mission plan"), "actionReasons", "Mission Control should explain generated-plan prerequisites");
@@ -914,7 +926,7 @@ for (const expected of [
 }
 
 // OS Roadmap preservation
-for (const phase of ["P26-P41", "P41.5.1", "P41.5.6", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1", "P42", "P78"]) {
+for (const phase of ["P26-P41", "P41.5.1", "P41.5.6", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1", "P41.7.7", "P41.8.1", "P42", "P78"]) {
   check(
     Array.isArray(roadmapPhases) && roadmapPhases.some((entry) => entry.phase === phase),
     "roadmapPreservation",

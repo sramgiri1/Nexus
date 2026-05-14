@@ -221,7 +221,7 @@ console.log("\nDashboard UI:");
   check("P40 COMPLETE in OS Roadmap", content?.includes("P40") && content?.includes("COMPLETE"));
   check("P41 IN_PROGRESS in OS Roadmap", content?.includes("P41") && content?.includes("IN_PROGRESS"));
   check("DB Foundation Boundary in Safety Center", content?.includes("DB Foundation Boundary"));
-  check("persistence badge in TopBar", content?.includes("ccv2-persistence-badge"));
+  check("Durable State page owns persistence posture after compact top bar", content?.includes("function DurableStatePage") && content?.includes("Durable State Summary"));
   check("/db in Live API endpoints", content?.includes('"/db"'));
   check("getDbStatus imported", content?.includes("getDbStatus"));
 }

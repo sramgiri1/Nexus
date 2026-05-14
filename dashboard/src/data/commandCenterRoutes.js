@@ -6,13 +6,18 @@ import {
   IMPLEMENTATION_TABS,
   LIVE_API_TABS,
   MISSION_CONTROL_TABS,
-  OS_ROADMAP_TABS,
   PROJECTS_TABS,
   SAFETY_CENTER_TABS,
   TASK_QUEUE_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "./commandCenterTabs.js";
+
+const POLISHED_OS_ROADMAP_TABS = [
+  { id: "completed", label: "Completed", description: "Completed OS phases and subphases", badge: "Ready" },
+  { id: "in-progress", label: "In Progress", description: "Current OS phase, latest completed, and next planned" },
+  { id: "planned", label: "Planned", description: "Planned OS phases and subphases" },
+];
 
 export const COMMAND_CENTER_ROUTES = [
   {
@@ -199,7 +204,6 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Durable State",
     status: "implemented",
-    badge: "Read-only",
     scope: "platform",
     tabs: DURABLE_STATE_TABS,
     defaultTab: "overview",
@@ -252,8 +256,8 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "OS Roadmap",
     status: "implemented",
     scope: "os",
-    tabs: OS_ROADMAP_TABS,
-    defaultTab: "current",
+    tabs: POLISHED_OS_ROADMAP_TABS,
+    defaultTab: "in-progress",
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
@@ -264,7 +268,6 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Activity Log",
     status: "planned",
-    badge: "Planned",
     scope: "os",
     helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
@@ -275,8 +278,7 @@ export const COMMAND_CENTER_ROUTES = [
     section: "OS",
     allowPhaseLabels: false,
     expectedHeading: "Docs & Guides",
-    status: "planned",
-    badge: "Planned",
+    status: "implemented",
     scope: "os",
     helpDoc: "docs/usage/README.md",
   },
@@ -288,7 +290,6 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Settings",
     status: "planned",
-    badge: "Planned",
     scope: "platform",
     helpDoc: "docs/usage/TROUBLESHOOTING.md",
   },

@@ -287,8 +287,15 @@ if (!v2Src.includes("Demo Mode") || !v2Src.includes("DemoModePage")) {
 // ─── 9. Roadmap ─────────────────────────────────────────────────────────────
 
 const roadmapChecks = ["P36", "P37", "P38", "P39", "P40", "P41", "P45", "Enterprise Release Candidate"];
+const roadmapSources = [
+  v2Src,
+  readFile("dashboard/src/data/nexusRoadmap.js"),
+  readFile("os-roadmap/nexus-phases.json"),
+  readFile("os-roadmap/phase-status.json"),
+  readFile("docs/architecture/NEXUS_PLATFORM_ROADMAP.md"),
+].join("\n");
 for (const item of roadmapChecks) {
-  if (!v2Src.includes(item)) {
+  if (!roadmapSources.includes(item)) {
     sections.roadmap = false;
     failures.push(`Roadmap missing: ${item}`);
   }

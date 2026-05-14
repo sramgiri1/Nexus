@@ -155,13 +155,25 @@ not enabled yet.
 ## OS Roadmap
 
 - Purpose: track NEXUS OS platform capability only
-- Shows: current OS phase, previous completed phase, next OS phase,
-  completed/planned/blocked counts, completed and planned phase lists, and open
-  OS gaps
+- Shows: three primary tabs for Completed, In Progress, and Planned OS phases
 - Available actions: inspection only
 - Disabled actions: no mutations
 - Evidence/activity: roadmap only; project progress stays on the Projects route
 - Known limitations: phase labels belong here, not on primary product pages, and project-specific milestones do not belong in the OS roadmap
+
+## Docs & Guides
+
+- Purpose: provide one local index for current usage, codebase, and architecture docs
+- Shows: usage guides, codebase documentation references, and architecture references as readable cards
+- Available actions: local documentation navigation only
+- Disabled actions: no command execution, provider calls, DB writes, or project mutation
+- Known limitations: docs are file-backed references; they do not replace future contextual help or searchable docs
+
+## Header and Global Controls
+
+- The global header is intentionally compact: `NEXUS / <Current Page>`, a scope/project chip, Guide, command palette icon, and compact theme control.
+- Environment, Local API, Durable State, service details, and local boot posture live on their dedicated pages instead of crowding every page.
+- Theme support remains System, Dark, and Light.
 
 ## Demo Mode
 

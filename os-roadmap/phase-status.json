@@ -475,7 +475,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/docs-coverage-final-validation",
-      "commit": "pending-final-commit",
+      "commit": "6dc3cff",
       "completedAt": "",
       "summary": "Finalizes docs coverage, OS phase status validation, help-link coverage, and report regeneration for the P41.7 documentation track.",
       "checksRun": [
@@ -489,7 +489,30 @@
       "knownLimitations": [
         "Known public-safety roadmap-doc false positives may still exist outside the docs coverage checker."
       ],
-      "nextPhase": "P41.8",
+      "nextPhase": "P41.7.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.7",
+      "title": "Command Center Header, OS Roadmap, and Docs Page Polish",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "ui/header-roadmap-docs-polish",
+      "commit": "253783b",
+      "completedAt": "",
+      "summary": "Polishes the Command Center top bar, reduces badge noise, collapses OS Roadmap to Completed / In Progress / Planned, and turns Docs & Guides into a real documentation index.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "No backend behavior, provider dispatch, DB writes, worker runtime, or private project mutation is introduced in this polish phase."
+      ],
+      "nextPhase": "P41.8.1",
       "commandCenterVisible": true
     },
     {
@@ -497,10 +520,10 @@
       "title": "Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "track": "NEXUS_OS",
       "status": "complete",
-      "branch": "docs/docs-coverage-final-validation",
-      "commit": "pending-final-commit",
+      "branch": "ui/header-roadmap-docs-polish",
+      "commit": "253783b",
       "completedAt": "",
-      "summary": "Documentation system, usage guides, reuse audit, module registry, help links, and final docs coverage validation are complete.",
+      "summary": "Documentation system, usage guides, reuse audit, module registry, help links, docs coverage, and final Command Center docs polish are complete.",
       "checksRun": [
         "npm run check:docs-coverage",
         "npm run check:os-phase-status",
@@ -509,7 +532,7 @@
       "knownLimitations": [
         "Runtime behavior, Project Registry, worker runtime, provider dispatch, and DB writes remain out of scope for P41.7."
       ],
-      "nextPhase": "P41.8",
+      "nextPhase": "P41.8.1",
       "commandCenterVisible": true
     },
     {
@@ -521,6 +544,20 @@
       "commit": "",
       "completedAt": "",
       "summary": "Planned centralized activity and observability layer.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.8.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.1",
+      "title": "Centralized Activity Log + Observability Ledger Foundation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned foundation for centralized activity and observability ledger surfaces.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P41.9",
@@ -1074,8 +1111,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T19:20:00.000Z",
-  "currentPhase": "P41.7.6",
-  "previousPhase": "P41.7.5",
-  "nextPhase": "P41.8"
+  "updatedAt": "2026-05-14T20:40:00.000Z",
+  "currentPhase": "P41.7.7",
+  "previousPhase": "P41.7.6",
+  "nextPhase": "P41.8.1"
 }

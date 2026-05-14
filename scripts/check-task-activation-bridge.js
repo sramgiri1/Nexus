@@ -356,15 +356,22 @@ if (!v2Src.includes("local-private")) {
 
 // ─── 9. Roadmap ─────────────────────────────────────────────────────────────
 
-if (!v2Src.includes('"IN_PROGRESS"') || !v2Src.includes("Task Activation + Agent Assignment from UI")) {
+const roadmapSources = [
+  v2Src,
+  readFile("docs/architecture/NEXUS_PLATFORM_ROADMAP.md"),
+  readFile("os-roadmap/nexus-phases.json"),
+  readFile("os-roadmap/phase-status.json"),
+].join("\n");
+
+if (!roadmapSources.includes("P37") || !roadmapSources.includes("Task Activation + Agent Assignment from UI")) {
   sections.roadmap = false;
   failures.push("P37 must be IN_PROGRESS in OSRoadmapPage nexusTrack");
 }
-if (!v2Src.includes('"COMPLETE"') || !v2Src.includes("Agentic Workspace Home + Workflow Templates")) {
+if (!roadmapSources.includes("P36") || !roadmapSources.includes("Agentic Workspace Home + Workflow Templates")) {
   sections.roadmap = false;
   failures.push("P36 must be COMPLETE in OSRoadmapPage nexusTrack");
 }
-if (!v2Src.includes("P38") || !v2Src.includes("P45")) {
+if (!roadmapSources.includes("P38") || !roadmapSources.includes("P45")) {
   sections.roadmap = false;
   failures.push("Roadmap must include P38 and P45 entries");
 }

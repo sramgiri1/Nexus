@@ -139,6 +139,8 @@ Risk level:
   - `P41.7.4` complete
   - `P41.7.5` complete
   - `P41.7.6` complete
+  - `P41.7.7` complete
+- `P41.8.1` Centralized Activity Log + Observability Ledger Foundation
 - `P41.8` Centralized Activity Log + Observability Ledger
 - `P41.9` README + Architecture Diagram Registry
 - `P42` Project Registry + Adapter Framework
@@ -496,12 +498,23 @@ P41.7 now breaks down into explicit documentation-system subphases:
 - `P41.7.4` — OS Usage Documentation Foundation
 - `P41.7.5` — Command Center Help Links + Docs Navigation
 - `P41.7.6` — Docs Coverage Checker + Final Validation
+- `P41.7.7` — Command Center Header, OS Roadmap, and Docs Page Polish
 
-P41.7 is complete after the final validation sweep. The track now includes
-codebase documentation standards, module and phase registries, reuse/refactor
-planning, route-wide tab documentation, operator usage guides, route-aware local
-help links, docs coverage checks, and OS phase status validation. P41.8 is the
-next NEXUS OS phase.
+P41.7 is complete after the final docs and Command Center polish sweep. The
+track now includes codebase documentation standards, module and phase
+registries, reuse/refactor planning, route-wide tab documentation, operator
+usage guides, route-aware local help links, docs coverage checks, OS phase
+status validation, a compact Command Center header, a three-tab OS Roadmap, and
+a real Docs & Guides index. P41.8.1 is the next NEXUS OS subphase.
+
+#### P41.7.7 — Command Center Header, OS Roadmap, and Docs Page Polish
+
+P41.7.7 simplifies the Command Center top bar, reduces read-only/planned badge
+noise, collapses OS Roadmap to Completed / In Progress / Planned, and makes
+Docs & Guides a real usage/codebase/architecture documentation index. It does
+not add backend execution, provider dispatch, DB writes, worker runtime, local
+API behavior changes, action bridge behavior changes, or private project
+mutation.
 
 The goal of the track is to improve repo understanding, reduce documentation
 drift, and prepare later safe refactor work without expanding runtime scope.

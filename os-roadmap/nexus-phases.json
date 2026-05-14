@@ -219,6 +219,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P41.7.7",
+      "title": "Command Center Header, OS Roadmap, and Docs Page Polish",
+      "track": "NEXUS_OS",
+      "order": 12.85,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Polish Command Center top-bar density, OS Roadmap tabs, and Docs & Guides navigation before P41.8 observability work.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.7",
       "title": "Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "track": "NEXUS_OS",
@@ -234,6 +243,15 @@
       "order": 14,
       "group": "Planned OS Phases",
       "summary": "Add centralized activity, observability, and cross-surface audit visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.1",
+      "title": "Centralized Activity Log + Observability Ledger Foundation",
+      "track": "NEXUS_OS",
+      "order": 14.1,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Start the activity log and observability ledger foundation after Command Center docs polish.",
       "commandCenterVisible": true
     },
     {

@@ -58,7 +58,7 @@ export function CommandTabList({
             }}
           >
             <span className="ccv2-command-tabs__label">{tab.label}</span>
-            {tab.badge && <span className="ccv2-command-tabs__badge">{tab.badge}</span>}
+            {tab.badge && !["Read-only", "Planned"].includes(tab.badge) && <span className="ccv2-command-tabs__badge">{tab.badge}</span>}
             {tab.disabled && <span className="ccv2-command-tabs__reason">{tab.disabledReason}</span>}
           </button>
         );

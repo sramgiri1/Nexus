@@ -7,7 +7,12 @@ export function HelpLink({ routeKey, label, docPath, description }) {
   const resolvedDescription = description || help.description || "Read local operator guidance for this page.";
 
   return (
-    <div className="ccv2-help-link" title={`${resolvedLabel}: ${resolvedDocPath}`}>
+    <div
+      className="ccv2-help-link"
+      aria-label={`Guide: ${resolvedLabel} (${resolvedDocPath})`}
+      title={`${resolvedLabel}: ${resolvedDocPath}`}
+    >
+      <span className="ccv2-help-link__icon" aria-hidden="true">?</span>
       <span className="ccv2-help-link__eyebrow">Guide</span>
       <span className="ccv2-help-link__label">{resolvedLabel}</span>
       <span className="ccv2-help-link__path">{resolvedDocPath}</span>
