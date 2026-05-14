@@ -1,0 +1,32 @@
+flowchart TB
+  subgraph os[NEXUS OS Platform]
+    roadmap[OS Roadmap]
+    policies[Policies]
+    commandCenter[Command Center]
+    services[Local Services]
+    activity[Activity Ledger]
+  end
+
+  subgraph project[Private Project Workspace]
+    profile[Project Profile]
+    tasks[Project Tasks]
+    evidence[Project Evidence]
+    progress[Project Progress]
+  end
+
+  subgraph demo[Demo Mode]
+    demoData[Demo-Safe Fixtures]
+  end
+
+  commandCenter --> roadmap
+  commandCenter --> profile
+  profile --> tasks
+  tasks --> evidence
+  evidence --> progress
+  policies --> commandCenter
+  services --> commandCenter
+  activity --> commandCenter
+  demoData -. demo route only .-> commandCenter
+
+  roadmap -. OS phases only .-> commandCenter
+  progress -. project pages only .-> commandCenter

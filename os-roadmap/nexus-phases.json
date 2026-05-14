@@ -667,6 +667,24 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.1",
+      "title": "Architecture Diagram Registry Foundation",
+      "track": "NEXUS_OS",
+      "order": 15.1,
+      "group": "P41.9 README + Architecture Diagram Registry",
+      "summary": "Adds the maintained diagram registry, source-only Mermaid diagrams, diagram checker, and README/docs links.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.2",
+      "title": "Architecture Diagram Rendering + README Follow-through",
+      "track": "NEXUS_OS",
+      "order": 15.2,
+      "group": "P41.9 README + Architecture Diagram Registry",
+      "summary": "Planned phase for safe rendered diagram artifacts and README visual follow-through.",
+      "commandCenterVisible": true
     }
   ]
 }

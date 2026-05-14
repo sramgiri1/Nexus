@@ -1,0 +1,28 @@
+flowchart TB
+  inputs[Operator Inputs and Project Signals]
+  registry[Project Registry and Adapter Framework]
+  context[Trusted Context Layer]
+  commandCenter[Command Center]
+  kernel[NEXUS Kernel and Policy Boundary]
+  agents[Governed Agent Layer]
+  gateway[Governed Tool Gateway]
+  runtime[Local Runtime and Workers]
+  state[Durable State and Evidence]
+  security[Security and Governance]
+  observability[Activity and Observability]
+
+  inputs --> commandCenter
+  registry --> context
+  context --> commandCenter
+  commandCenter --> kernel
+  kernel --> agents
+  kernel --> gateway
+  kernel --> runtime
+  agents --> state
+  gateway --> state
+  runtime --> state
+  security --> kernel
+  security --> gateway
+  state --> observability
+  commandCenter --> observability
+  observability --> commandCenter

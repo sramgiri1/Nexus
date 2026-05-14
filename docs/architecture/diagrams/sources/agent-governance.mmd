@@ -1,0 +1,24 @@
+flowchart LR
+  operator[Operator Intent]
+  shepherd[SHEPHERD Planning]
+  core[CORE Implementation]
+  auditor[AUDITOR Review]
+  sentinel[SENTINEL Validation]
+  warden[WARDEN Policy Boundary]
+  evidence[Evidence Records]
+  approvals[Approvals]
+  result[Governed Result]
+
+  operator --> shepherd
+  shepherd --> approvals
+  approvals --> core
+  core --> auditor
+  auditor --> sentinel
+  sentinel --> warden
+  warden --> result
+  shepherd --> evidence
+  core --> evidence
+  auditor --> evidence
+  sentinel --> evidence
+  warden --> evidence
+  evidence --> result

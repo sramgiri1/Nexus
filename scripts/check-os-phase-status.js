@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P41.8", "P41.8.6"]);
+const CURRENT_PHASE_IDS = new Set(["P41.9", "P41.9.1"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P41.8.6", "currentPhase", "currentPhase must be P41.8.6");
-check(phaseStatus.previousPhase === "P41.8.5", "previousPhase", "previousPhase must be P41.8.5");
-check(phaseStatus.nextPhase === "P41.9", "nextPhase", "nextPhase must be P41.9");
+check(phaseStatus.currentPhase === "P41.9.1", "currentPhase", "currentPhase must be P41.9.1");
+check(phaseStatus.previousPhase === "P41.8.6", "previousPhase", "previousPhase must be P41.8.6");
+check(phaseStatus.nextPhase === "P41.9.2", "nextPhase", "nextPhase must be P41.9.2");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -111,6 +111,9 @@ for (const phaseId of [
   "P41.8.4",
   "P41.8.5",
   "P41.8.6",
+  "P41.9",
+  "P41.9.1",
+  "P41.9.2",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
   check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);
@@ -149,7 +152,8 @@ check(p417?.nextPhase === "P41.8.1", "nextPhase", "P41.7 parent nextPhase must b
 const p418 = statusById.get("P41.8");
 check(p418?.status === "complete", "currentPhase", "P41.8 must be complete");
 check(p418?.title === "Centralized Activity Log + Observability Ledger", "nextPhase", "P41.8 title mismatch");
-check(p418?.nextPhase === "P41.9", "nextPhase", "P41.8 parent nextPhase must be P41.9");
+check(p418?.commit === "867d899", "completedPhaseCommits", "P41.8 parent commit must be 867d899");
+check(p418?.nextPhase === "P41.9.1", "nextPhase", "P41.8 parent nextPhase must be P41.9.1");
 
 const p4181 = statusById.get("P41.8.1");
 check(p4181?.status === "complete", "previousPhase", "P41.8.1 must be complete");
@@ -201,15 +205,27 @@ check(p4185?.commit === "a473bc0", "completedPhaseCommits", "P41.8.5 commit must
 check(p4185?.nextPhase === "P41.8.6", "nextPhase", "P41.8.5 nextPhase must be P41.8.6");
 
 const p4186 = statusById.get("P41.8.6");
-check(p4186?.status === "complete" || p4186?.status === "in_progress", "currentPhase", "P41.8.6 must be current or complete");
-check(p4186?.title === "Activity Tests + Docs + Final Validation", "currentPhase", "P41.8.6 title mismatch");
-check(p4186?.branch === "observability/activity-final-validation", "currentPhase", "P41.8.6 branch mismatch");
-check(Boolean(p4186?.commit), "currentPhase", "P41.8.6 must have a commit or pending-final-commit placeholder");
-check(p4186?.nextPhase === "P41.9", "nextPhase", "P41.8.6 nextPhase must be P41.9");
+check(p4186?.status === "complete", "previousPhase", "P41.8.6 must be complete");
+check(p4186?.title === "Activity Tests + Docs + Final Validation", "previousPhase", "P41.8.6 title mismatch");
+check(p4186?.branch === "observability/activity-final-validation", "previousPhase", "P41.8.6 branch mismatch");
+check(p4186?.commit === "867d899", "completedPhaseCommits", "P41.8.6 commit must be 867d899");
+check(p4186?.nextPhase === "P41.9.1", "nextPhase", "P41.8.6 nextPhase must be P41.9.1");
 
 const p419 = statusById.get("P41.9");
-check(p419?.status === "planned", "nextPhase", "P41.9 must be planned");
+check(p419?.status === "in_progress", "currentPhase", "P41.9 must be in_progress");
 check(p419?.title === "README + Architecture Diagram Registry", "nextPhase", "P41.9 title mismatch");
+check(p419?.nextPhase === "P41.9.1", "nextPhase", "P41.9 nextPhase must be P41.9.1");
+
+const p4191 = statusById.get("P41.9.1");
+check(p4191?.status === "complete" || p4191?.status === "in_progress", "currentPhase", "P41.9.1 must be current or complete");
+check(p4191?.title === "Architecture Diagram Registry Foundation", "currentPhase", "P41.9.1 title mismatch");
+check(p4191?.branch === "docs/architecture-diagram-registry-foundation", "currentPhase", "P41.9.1 branch mismatch");
+check(Boolean(p4191?.commit), "currentPhase", "P41.9.1 must have a commit or pending-final-commit placeholder");
+check(p4191?.nextPhase === "P41.9.2", "nextPhase", "P41.9.1 nextPhase must be P41.9.2");
+
+const p4192 = statusById.get("P41.9.2");
+check(p4192?.status === "planned", "nextPhase", "P41.9.2 must be planned");
+check(p4192?.title === "Architecture Diagram Rendering + README Follow-through", "nextPhase", "P41.9.2 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

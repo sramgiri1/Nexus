@@ -1,0 +1,24 @@
+flowchart LR
+  operator[Operator]
+  mission[Mission Control]
+  palette[Command Palette]
+  services[Service Health]
+  activity[Activity Log]
+  docs[Docs and Guides]
+  roadmap[OS Roadmap]
+  actions[Governed Action Bridge]
+  status[Local Status and Doctor]
+  evidence[Evidence and Reports]
+
+  operator --> mission
+  mission --> palette
+  mission --> services
+  mission --> activity
+  mission --> docs
+  mission --> roadmap
+  palette --> actions
+  services --> status
+  actions --> evidence
+  status --> evidence
+  evidence --> activity
+  activity --> mission

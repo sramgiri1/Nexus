@@ -1,94 +1,84 @@
 {
-  "version": "1.0",
-  "owner": "NEXUS",
+  "registryVersion": "1.0",
+  "updatedAt": "2026-05-14T23:26:36.000Z",
+  "phase": "P41.9.1",
+  "purpose": "Track NEXUS architecture diagrams, their sources, rendered outputs, status, and public/private safety.",
   "diagrams": [
     {
-      "id": "nexus-enterprise-architecture",
+      "diagramId": "nexus-enterprise-architecture",
       "title": "NEXUS Enterprise Architecture",
-      "purpose": "High-level OS architecture view.",
-      "status": "existing",
-      "sourcePath": "docs/images/nexus-architecture.svg",
-      "imagePath": "docs/images/nexus-architecture.svg",
-      "owner": "NEXUS",
+      "status": "source_available",
+      "audience": ["operator", "developer", "enterprise"],
+      "sourcePath": "docs/architecture/diagrams/sources/nexus-enterprise-architecture.mmd",
+      "renderedPath": "docs/architecture/diagrams/nexus-enterprise-architecture.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability."
     },
     {
-      "id": "nexus-roadmap",
-      "title": "NEXUS Roadmap",
-      "purpose": "Roadmap and phase progression view.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
-      "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
-    },
-    {
-      "id": "command-center-flow",
+      "diagramId": "command-center-flow",
       "title": "Command Center Flow",
-      "purpose": "Operator surface and route relationship diagram.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
+      "status": "source_available",
+      "audience": ["operator", "developer"],
+      "sourcePath": "docs/architecture/diagrams/sources/command-center-flow.mmd",
+      "renderedPath": "docs/architecture/diagrams/command-center-flow.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "Command Center navigation and operator flow across Mission Control, Activity Log, Docs, Service Health, roadmap, and governed actions."
     },
     {
-      "id": "project-os-boundary",
-      "title": "Project OS Boundary",
-      "purpose": "Public-safe vs local-private project boundary view.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
+      "diagramId": "project-os-boundary",
+      "title": "Project / OS Boundary",
+      "status": "source_available",
+      "audience": ["operator", "developer", "enterprise"],
+      "sourcePath": "docs/architecture/diagrams/sources/project-os-boundary.mmd",
+      "renderedPath": "docs/architecture/diagrams/project-os-boundary.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "Boundary diagram showing how NEXUS OS platform state stays separate from private project progress and demo data."
     },
     {
-      "id": "agent-governance",
+      "diagramId": "agent-governance",
       "title": "Agent Governance",
-      "purpose": "Agent roles, approvals, and verification boundary map.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
+      "status": "source_available",
+      "audience": ["developer", "enterprise"],
+      "sourcePath": "docs/architecture/diagrams/sources/agent-governance.mmd",
+      "renderedPath": "docs/architecture/diagrams/agent-governance.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "Governed agent layer showing planning, implementation, review, safety, evidence, and approval boundaries."
     },
     {
-      "id": "runtime-self-healing",
+      "diagramId": "runtime-self-healing",
       "title": "Runtime Self-Healing",
-      "purpose": "Future runtime recovery and resilience view.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
+      "status": "source_available",
+      "audience": ["developer", "enterprise"],
+      "sourcePath": "docs/architecture/diagrams/sources/runtime-self-healing.mmd",
+      "renderedPath": "docs/architecture/diagrams/runtime-self-healing.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "Future self-healing loop showing runtime events, validation, recovery, policy, and operator review."
     },
     {
-      "id": "agent-a2a-a2h-interaction",
-      "title": "Agent A2A and A2H Interaction",
-      "purpose": "Agent-to-agent and agent-to-human interaction map.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
+      "diagramId": "nexus-roadmap",
+      "title": "NEXUS Roadmap",
+      "status": "source_available",
+      "audience": ["operator", "developer", "enterprise"],
+      "sourcePath": "docs/architecture/diagrams/sources/nexus-roadmap.mmd",
+      "renderedPath": "docs/architecture/diagrams/nexus-roadmap.png",
+      "readmeReferenced": true,
       "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
-    },
-    {
-      "id": "sentinel-agent-flow",
-      "title": "Sentinel Agent Flow",
-      "purpose": "Sentinel verification and governance flow.",
-      "status": "planned",
-      "sourcePath": "",
-      "imagePath": "",
-      "owner": "NEXUS",
-      "publicSafe": true,
-      "lastUpdatedPhase": "P41.5"
+      "privateProjectDetailsAllowed": false,
+      "description": "Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram."
     }
-  ]
+  ],
+  "warnings": [
+    "Rendered PNG outputs are planned and intentionally not generated in P41.9.1."
+  ],
+  "errors": []
 }

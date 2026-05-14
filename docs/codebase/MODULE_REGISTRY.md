@@ -552,6 +552,40 @@ updated as new module families or entry points are added.
 - Status:
   active
 
+## Architecture Diagram Registry
+
+- Purpose:
+  Track source diagrams, planned rendered artifacts, public-safe diagram
+  metadata, and architecture visualization validation.
+- Primary files:
+  `docs/architecture/diagrams/README.md`,
+  `docs/architecture/diagrams/diagram-registry.json`,
+  `docs/architecture/diagrams/sources/*.mmd`,
+  `scripts/check-architecture-diagrams.js`,
+  `reports/architecture-diagram-registry-report.md`
+- Public entry points:
+  `docs/architecture/diagrams/README.md`,
+  `README.md`
+- Inputs/outputs:
+  Mermaid source diagrams and registry JSON in; public-safe architecture
+  diagram inventory and validation report out.
+- Side effects:
+  The checker writes `reports/architecture-diagram-registry-report.md`.
+- Safety boundary:
+  Diagram sources must not expose private project names, secrets, raw logs, raw
+  policy payloads, or private project source paths. Rendered artifacts are not
+  generated in P41.9.1.
+- Reuse notes:
+  Add future diagrams to `diagram-registry.json` before linking or rendering
+  them from primary docs.
+- Tests/checkers:
+  `scripts/check-architecture-diagrams.js`
+- Known limitations:
+  P41.9.1 adds source-only placeholders. PNG/SVG rendering is planned for a
+  later phase after a safe local rendering workflow is selected.
+- Status:
+  foundation
+
 ## Planned or Not Found
 
 - Controlled implementation folder:

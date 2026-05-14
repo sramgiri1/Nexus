@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-14T09:30:00.000Z",
+  "generatedAt": "2026-05-14T23:26:36.000Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -541,8 +541,8 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-final-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "867d899",
+      "completedAt": "2026-05-14T23:26:36.000Z",
       "summary": "Completes the centralized activity log track with schema, central logger, selected capture wiring, Activity Log UI, trace drilldown, final docs, and validation reports.",
       "checksRun": [
         "npm run check:activity-observability-final",
@@ -558,7 +558,7 @@
       "knownLimitations": [
         "Provider/tool dispatch, worker runtime, DB-backed activity, retention, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.9",
+      "nextPhase": "P41.9.1",
       "commandCenterVisible": true
     },
     {
@@ -752,8 +752,8 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-final-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "867d899",
+      "completedAt": "2026-05-14T23:26:36.000Z",
       "summary": "Finalizes P41.8 with consolidated activity observability checks, refreshed reports, operator docs, codebase docs, and OS phase status repair.",
       "checksRun": [
         "npm run check:activity-observability-final",
@@ -775,21 +775,23 @@
         "DB-backed activity storage, retention, export, telemetry, and SLOs remain future phases.",
         "Public-safety may still report known pre-existing roadmap-doc false positives."
       ],
-      "nextPhase": "P41.9",
+      "nextPhase": "P41.9.1",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P41.9",
       "title": "README + Architecture Diagram Registry",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "docs/architecture-diagram-registry-foundation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned final README and architecture-diagram registry hardening phase.",
+      "summary": "Maintains README and architecture diagram registry foundations as a governed documentation surface. Previous completed phase: P41.8.6 - Activity Tests + Docs + Final Validation.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P42",
+      "knownLimitations": [
+        "Rendered diagram artifacts are not generated until a safe local rendering workflow is selected."
+      ],
+      "nextPhase": "P41.9.1",
       "commandCenterVisible": true
     },
     {
@@ -1323,11 +1325,50 @@
       "knownLimitations": [],
       "nextPhase": "",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.1",
+      "title": "Architecture Diagram Registry Foundation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "docs/architecture-diagram-registry-foundation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-14T23:26:36.000Z",
+      "summary": "Adds a public-safe architecture diagram registry, source-only Mermaid placeholders, diagram validation checker, and README/docs references.",
+      "checksRun": [
+        "npm run check:architecture-diagrams",
+        "npm run check-os-phase-status",
+        "npm run check:activity-observability-final",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Rendered PNG outputs are planned and intentionally not generated in P41.9.1.",
+        "Diagram sources are foundation-level placeholders pending a later rendering workflow."
+      ],
+      "nextPhase": "P41.9.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.2",
+      "title": "Architecture Diagram Rendering + README Follow-through",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned follow-through for safe rendered diagram outputs and README architecture visual polish.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P42",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-14T23:03:20.000Z",
-  "currentPhase": "P41.8.6",
-  "previousPhase": "P41.8.5",
-  "nextPhase": "P41.9"
+  "currentPhase": "P41.9.1",
+  "previousPhase": "P41.8.6",
+  "nextPhase": "P41.9.2"
 }

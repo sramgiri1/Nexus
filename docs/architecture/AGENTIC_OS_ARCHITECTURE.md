@@ -783,3 +783,20 @@ Phase 31-LOCAL investigated and remediated one failing test surfaced by P30.
 Root cause was classified as a `date_window_boundary_bug` (high confidence).
 A narrow 1-line patch was applied to the private-project backend. All 58 tests
 pass after the fix was validated through the same governed execution path.
+
+## 11. Architecture Diagram Registry
+
+NEXUS architecture diagrams are tracked through the maintained registry at
+[docs/architecture/diagrams/diagram-registry.json](diagrams/diagram-registry.json)
+and documented in [docs/architecture/diagrams/README.md](diagrams/README.md).
+
+P41.9.1 adds source-only Mermaid diagrams for the enterprise architecture,
+Command Center flow, project/OS boundary, agent governance, runtime
+self-healing, and grouped NEXUS roadmap. Rendered image artifacts are planned
+and intentionally not generated in this foundation phase.
+
+The diagram registry is public-safe by default. Diagrams may describe private
+project boundaries generically, but they must not include private project names,
+source paths, secrets, raw logs, or raw policy payloads. The enterprise
+architecture diagram must stay architectural; the full roadmap belongs in the
+separate roadmap diagram and roadmap documents.

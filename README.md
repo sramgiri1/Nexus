@@ -146,6 +146,7 @@ npm run nexus:down
 - Command Center help links: route-aware local guide pointers in the Command Center top bar
 - Codebase guides: [docs/codebase](docs/codebase/README.md)
 - Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
+- Architecture diagrams: [docs/architecture/diagrams](docs/architecture/diagrams/README.md)
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
@@ -154,6 +155,17 @@ npm run nexus:down
 - [Codebase docs landing page](docs/codebase/README.md)
 - [Module registry](docs/codebase/MODULE_REGISTRY.md)
 - [Phase module index](docs/codebase/PHASE_MODULE_INDEX.md)
+
+## Architecture Diagrams
+
+- [Diagram registry guide](docs/architecture/diagrams/README.md)
+- [Machine-readable diagram registry](docs/architecture/diagrams/diagram-registry.json)
+- Enterprise Architecture: source available, rendered output planned.
+- Command Center Flow: source available, rendered output planned.
+- Project / OS Boundary: source available, rendered output planned.
+- Roadmap: source available, rendered output planned.
+
+Rendered diagram images are not linked until the generated artifacts exist.
 
 ## Safety and Governance Boundaries
 
@@ -1094,7 +1106,11 @@ file-backed, redacted, and read-focused in the UI. Provider/tool/worker
 instrumentation, DB-backed activity storage, retention, export, telemetry, SLOs,
 and production observability remain future work.
 
-Next phase: P41.9 - README + Architecture Diagram Registry.
+P41.9.1 starts the README and architecture diagram registry follow-through. It
+adds source-only Mermaid diagram entries, a registry validation checker, and
+public-safe diagram documentation. Rendered PNG outputs remain planned.
+
+Next phase: P41.9.2 - Architecture Diagram Rendering + README Follow-through.
 
 ---
 

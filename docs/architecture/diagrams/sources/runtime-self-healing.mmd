@@ -1,0 +1,25 @@
+flowchart TB
+  event[Runtime Event]
+  activity[Activity Logger]
+  correlate[Correlation Model]
+  validate[Validation Gate]
+  diagnose[Failure Diagnosis]
+  recovery[Recovery Candidate]
+  policy[Policy Review]
+  operator[Operator Approval]
+  apply[Controlled Recovery]
+  evidence[Evidence Update]
+
+  event --> activity
+  activity --> correlate
+  correlate --> validate
+  validate --> diagnose
+  diagnose --> recovery
+  recovery --> policy
+  policy --> operator
+  operator --> apply
+  apply --> evidence
+  evidence --> activity
+
+  policy -. blocks unsafe recovery .-> diagnose
+  operator -. rejects or defers .-> evidence

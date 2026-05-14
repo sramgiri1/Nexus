@@ -861,3 +861,32 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Retention, export, telemetry, SLOs, provider/tool/worker traces, and DB-backed
   storage remain future phases.
+
+## P41.9.1 — Architecture Diagram Registry Foundation
+
+- Primary capability:
+  Adds a maintained architecture diagram registry, source-only Mermaid diagrams,
+  README/docs references, and diagram validation.
+- Main files/folders touched:
+  `docs/architecture/diagrams/README.md`,
+  `docs/architecture/diagrams/diagram-registry.json`,
+  `docs/architecture/diagrams/sources/*.mmd`,
+  `scripts/check-architecture-diagrams.js`,
+  `reports/architecture-diagram-registry-report.md`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-architecture-diagrams.js`,
+  `scripts/check-os-phase-status.js`
+- Main report(s):
+  `reports/architecture-diagram-registry-report.md`,
+  `reports/os-phase-status-report.md`
+- Command Center impact:
+  Repairs OS phase status so P41.9.1 appears as the current diagram-registry
+  foundation phase and P41.9.2 appears as next.
+- Safety impact:
+  Documentation and validation only. No rendered diagram generation, runtime
+  behavior changes, provider calls, DB writes, backend changes, or private
+  project mutation.
+- Known limitations:
+  Rendered PNG/SVG artifacts are planned and intentionally not generated in
+  P41.9.1.

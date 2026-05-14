@@ -143,6 +143,8 @@ Risk level:
 - `P41.8.1` Centralized Activity Log + Observability Ledger Foundation
 - `P41.8` Centralized Activity Log + Observability Ledger
 - `P41.9` README + Architecture Diagram Registry
+  - `P41.9.1` Architecture Diagram Registry Foundation
+  - `P41.9.2` Architecture Diagram Rendering + README Follow-through
 - `P42` Project Registry + Adapter Framework
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
@@ -567,6 +569,24 @@ Goal:
 
 - extend the diagram registry and any remaining architecture visualization
   follow-through that was not finished during P41.5.6
+
+Subphases:
+
+- `P41.9.1` — Architecture Diagram Registry Foundation
+- `P41.9.2` — Architecture Diagram Rendering + README Follow-through
+
+#### P41.9.1 — Architecture Diagram Registry Foundation
+
+P41.9.1 adds a maintained machine-readable diagram registry, source-only
+Mermaid diagrams, registry documentation, README links, and a validation
+checker. The phase is documentation and validation only: it does not generate
+final PNG artifacts, redesign Command Center, change local API or action bridge
+behavior, call providers, write to a database, or mutate project source.
+
+#### P41.9.2 — Architecture Diagram Rendering + README Follow-through
+
+P41.9.2 is planned for safe rendered diagram artifacts and README visual
+follow-through after the diagram source model and validation rules are stable.
 
 ### P42 — Project Registry + Adapter Framework
 
