@@ -135,22 +135,25 @@ check(phase173?.commit === "81a73c1", "completedPhases", "P41.7.3 commit must be
 const phase173a = statusById.get("P41.7.3A");
 check(phase173a?.branch === "ui/command-center-tab-system-foundation", "completedPhases", "P41.7.3A branch must be ui/command-center-tab-system-foundation");
 check(phase173a?.commit === "af37414", "completedPhases", "P41.7.3A commit must be af37414");
+const phase173b = statusById.get("P41.7.3B");
+check(phase173b?.branch === "ui/mission-control-tabbed-cockpit", "completedPhases", "P41.7.3B branch must be ui/mission-control-tabbed-cockpit");
+check(phase173b?.commit === "4892a18", "completedPhases", "P41.7.3B commit must be 4892a18");
 
-const currentPhase = statusById.get("P41.7.3B");
-check(!!currentPhase, "currentPhase", "P41.7.3B must exist");
-check(currentPhase?.status === "complete", "currentPhase", "P41.7.3B must be complete");
+const currentPhase = statusById.get("P41.7.3C");
+check(!!currentPhase, "currentPhase", "P41.7.3C must exist");
+check(currentPhase?.status === "complete", "currentPhase", "P41.7.3C must be complete");
 check(Boolean(currentPhase?.branch), "currentPhase", "P41.7.3B must record a branch");
 check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.7.3B must record a nextPhase");
-check(currentPhase?.nextPhase === "P41.7.3C", "currentPhase", "P41.7.3B nextPhase must be P41.7.3C");
-check(currentPhase?.branch === "ui/mission-control-tabbed-cockpit", "currentPhase", "P41.7.3B branch must be ui/mission-control-tabbed-cockpit");
-check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.3B must record a commit or pending-final-commit placeholder");
-check(statusById.get("P41.7.3C")?.status === "planned", "nextPhase", "P41.7.3C must be planned");
+check(currentPhase?.nextPhase === "P41.7.3D", "currentPhase", "P41.7.3C nextPhase must be P41.7.3D");
+check(currentPhase?.branch === "ui/page-tab-rollout-core-operations", "currentPhase", "P41.7.3C branch must be ui/page-tab-rollout-core-operations");
+check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.3C must record a commit or pending-final-commit placeholder");
+check(statusById.get("P41.7.3D")?.status === "planned", "nextPhase", "P41.7.3D must be planned");
 
 const nextPhase = indexById.get("P42");
 check(!!nextPhase, "nextPhase", "P42 must exist in the phase index");
 check(nextPhase?.title === "Project Registry + Adapter Framework", "nextPhase", "P42 must be Project Registry + Adapter Framework");
 
-for (const plannedPhaseId of ["P41.7.3C", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
+for (const plannedPhaseId of ["P41.7.3D", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
   const entry = statusById.get(plannedPhaseId);
   check(!!entry, "nextPhase", `Missing planned phase entry: ${plannedPhaseId}`);
   check(entry?.status === "planned", "nextPhase", `${plannedPhaseId} must be planned`);
@@ -181,6 +184,8 @@ check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.2"), "commandCente
 check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3");
 check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3A"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3A");
 check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3B"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3B");
+check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3C"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3C");
+check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3D"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3D");
 check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.4"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.4");
 check(
   dashboardRoadmap.some(
@@ -229,8 +234,9 @@ const report = `# NEXUS OS Phase Status Report
 - P41.7.2: complete
 - P41.7.3: complete
 - P41.7.3A: complete
-- P41.7.3B: ${currentPhase?.status || "unknown"}
-- P41.7.3C through P41.7.6 / P41.7 / P41.8 / P41.9: planned
+- P41.7.3B: complete
+- P41.7.3C: ${currentPhase?.status || "unknown"}
+- P41.7.3D through P41.7.6 / P41.7 / P41.8 / P41.9: planned
 - P42: Project Registry + Adapter Framework
 
 ## Roadmap Separation

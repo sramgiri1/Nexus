@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T14:49:35.709Z
-- Validation branch: ui/mission-control-tabbed-cockpit
-- Validation HEAD: af37414
+- Generated at: 2026-05-14T17:20:25.330Z
+- Validation branch: ui/page-tab-rollout-core-operations
+- Validation HEAD: 4892a18
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -21,6 +21,7 @@
 - Operator actions: PASS
 - Command Center tabs: PASS
 - Mission Control tabs: PASS
+- Tabbed core pages: PASS
 - Scope switcher: PASS
 - Multi-project shell: PASS
 - OS Roadmap / Project Progress separation: PASS

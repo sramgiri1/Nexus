@@ -132,8 +132,9 @@ Risk level:
   - `P41.7.2` complete
   - `P41.7.3` complete
   - `P41.7.3A` complete
-  - `P41.7.3B` current
-  - `P41.7.3C` planned
+  - `P41.7.3B` complete
+  - `P41.7.3C` current
+  - `P41.7.3D` planned
   - `P41.7.4` planned
   - `P41.7.5` planned
   - `P41.7.6` planned
@@ -489,6 +490,7 @@ P41.7 now breaks down into explicit documentation-system subphases:
 - `P41.7.3A` — Command Center Tab System Foundation + Multi-Project Scope Shell
 - `P41.7.3B` — Mission Control Tabbed Cockpit
 - `P41.7.3C` — Page Tab Rollout - Workspace / Tasks / Workbench / Implementation
+- `P41.7.3D` — Page Tab Rollout - Live API / Durable State / Evidence / Safety / Projects / Roadmap / Cost / Batch
 - `P41.7.4` — OS Usage Documentation Foundation
 - `P41.7.5` — Command Center Help Links
 - `P41.7.6` — Docs Coverage Checker + Final Validation

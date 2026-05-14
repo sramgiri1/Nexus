@@ -21,6 +21,7 @@ const sections = {
   operatorActions: true,
   commandCenterTabs: true,
   missionControlTabs: true,
+  tabbedCorePages: true,
   scopeSwitcher: true,
   multiProjectShell: true,
   roadmapProjectSeparation: true,
@@ -611,6 +612,44 @@ for (const expected of [
 ]) {
   check(commandCenterSource.includes(expected), "missionControlTabs", `Mission Control tabbed cockpit missing: ${expected}`);
 }
+for (const tabSet of [
+  { exportName: "WORKSPACE_TABS", ids: ["recommended", "plan", "build", "validate", "govern", "release", "all"] },
+  { exportName: "TASK_QUEUE_TABS", ids: ["planned", "active", "review", "blocked", "completed", "all-projects"] },
+  { exportName: "WORKBENCH_TABS", ids: ["task", "review", "evidence", "activity", "context"] },
+  { exportName: "IMPLEMENTATION_TABS", ids: ["proposal", "apply", "validation", "rollback", "activity", "developer-details"] },
+]) {
+  check(commandTabsSource.includes(`export const ${tabSet.exportName}`), "tabbedCorePages", `Missing tab config export: ${tabSet.exportName}`);
+  for (const tabId of tabSet.ids) {
+    check(commandTabsSource.includes(`id: "${tabId}"`), "tabbedCorePages", `${tabSet.exportName} missing tab id: ${tabId}`);
+  }
+}
+for (const expected of [
+  "tabs={WORKSPACE_TABS}",
+  "tabs={TASK_QUEUE_TABS}",
+  "tabs={WORKBENCH_TABS}",
+  "tabs={IMPLEMENTATION_TABS}",
+]) {
+  check(commandCenterSource.includes(expected), "tabbedCorePages", `Operational page must reuse CommandTabs foundation: ${expected}`);
+}
+for (const expectedTest of [
+  "Workspace tabs route users through recommended, grouped, and all workflows",
+  "Task Queue tabs separate planned, active, review, blocked, completed, and all projects",
+  "Agent Workbench tabs separate task, review, evidence, activity, and context",
+  "Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details",
+  "core operational pages prioritize active project context and keep DemoApp out",
+]) {
+  check(routeTestSource.includes(expectedTest), "tabbedCorePages", `Route tests missing operational tab coverage: ${expectedTest}`);
+}
+for (const expected of [
+  "Active Project Context",
+  "No project selected",
+  "Create or import a project",
+  "Add a project profile",
+  "Define stack and test commands",
+]) {
+  check(commandCenterSource.includes(expected), "tabbedCorePages", `Active project/no-project guidance missing: ${expected}`);
+}
+check(!commandCenterSource.includes("function OperationalTabs"), "tabbedCorePages", "Do not introduce a duplicate one-off tab component");
 for (const expected of [
   "<ScopeSwitcher",
   "Portfolio view is planned with Project Registry in P42",
@@ -831,6 +870,7 @@ console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
 console.log(`Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}`);
+console.log(`Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}`);
 console.log(`Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}`);
 console.log(`Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
@@ -874,6 +914,7 @@ const report = `# Command Center UX Report
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
 - Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}
+- Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}
 - Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}
 - Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}

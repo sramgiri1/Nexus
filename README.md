@@ -168,6 +168,8 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.7.3: shared helper catalog + refactor candidate plan
 - P41.7.3A: Command Center tab foundation + multi-project scope shell
 - P41.7.3B: Mission Control tabbed cockpit
+- P41.7.3C: tabbed Workspace, Task Queue, Agent Workbench, and Implementation pages
+- P41.7.3D: remaining Command Center page tab rollout
 - P41.7.4: OS usage documentation foundation
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework

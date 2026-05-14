@@ -561,3 +561,30 @@ state and should be verified again during future docs audits.
   Mission Control, and no backend/runtime behavior changes are introduced.
 - Known limitations:
   Portfolio aggregation is placeholder-only until P42 Project Registry.
+
+## P41.7.3C — Page Tab Rollout: Workspace, Task Queue, Agent Workbench, Implementation
+
+- Primary capability:
+  Roll the reusable CommandTabs foundation onto the core operational pages.
+- Main files/folders touched:
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-ux.js`,
+  `os-roadmap/nexus-phases.json`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`,
+  `reports/os-phase-status-report.md`
+- Command Center impact:
+  Workspace, Task Queue, Agent Workbench, and Implementation Workflow now use
+  tabbed layouts with active project context and no-project guidance.
+- Safety impact:
+  No backend execution, provider dispatch, DB writes, local API behavior
+  changes, action bridge behavior changes, or private project mutation are
+  introduced.
+- Known limitations:
+  Remaining page tab rollout for Live API, Durable State, Evidence, Safety,
+  Projects, OS Roadmap, Cost, and Batch is deferred to P41.7.3D.
