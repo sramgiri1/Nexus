@@ -244,7 +244,11 @@ try {
   check(statusById.get("P41.8.1")?.commit === "30c3bea", "osPhaseStatus", "P41.8.1 commit must be 30c3bea");
   check(statusById.get("P41.8.2")?.branch === "observability/central-activity-logger", "osPhaseStatus", "P41.8.2 branch mismatch");
   check(["complete", "in_progress"].includes(statusById.get("P41.8.2")?.status), "osPhaseStatus", "P41.8.2 must be current or complete");
-  check(statusById.get("P41.8.3")?.status === "planned", "osPhaseStatus", "P41.8.3 must be planned");
+  check(
+    ["planned", "in_progress", "complete"].includes(statusById.get("P41.8.3")?.status),
+    "osPhaseStatus",
+    "P41.8.3 must be planned, current, or complete"
+  );
   check(phaseIndexSource.includes('"phaseId": "P41.8.3"'), "osPhaseStatus", "P41.8.3 must be indexed");
 
   const docs = read("docs/architecture/CENTRALIZED_ACTIVITY_LOG.md");
@@ -276,10 +280,12 @@ try {
     "tools/",
     "state-machine/",
     "command-execution/",
-    "local-api/",
     "db/",
   ];
-  if (currentPhase !== "P41.8.2A") {
+  if (currentPhase !== "P41.8.3") {
+    forbiddenPrefixes.push("local-api/");
+  }
+  if (!["P41.8.2A", "P41.8.3"].includes(currentPhase)) {
     forbiddenPrefixes.push("dashboard/");
   }
   for (const changedFile of changedFiles) {

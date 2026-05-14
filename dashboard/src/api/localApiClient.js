@@ -81,6 +81,10 @@ export async function getDbStatus() {
   return apiFetch("/db");
 }
 
+export async function getActivity(limit = 50) {
+  return apiFetch(`/activity?limit=${encodeURIComponent(limit)}`);
+}
+
 // ─── Action endpoints (delegate to governed bridges via action server) ─────────
 // These POST to the mission action server (port 3748) which delegates to bridges.
 // The local API (port 4321) is read-focused; writes go through the action bridge.

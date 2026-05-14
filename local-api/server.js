@@ -21,6 +21,8 @@ import { handleProjects } from "./routes/projects.js";
 import { handleRoadmap } from "./routes/roadmap.js";
 import { handleListActions, handleGetAction } from "./routes/actions.js";
 import { handleDb } from "./routes/db.js";
+import { handleActivity } from "./routes/activity.js";
+import { recordApiActivity, recordActivityFailure } from "../observability/index.js";
 
 const DEFAULT_PORT = 4321;
 const DEFAULT_HOST = "127.0.0.1";
@@ -50,36 +52,121 @@ async function readBody(req) {
 
 // ─── Router ──────────────────────────────────────────────────────────────────
 
+function captureApiRead(req, ctx, routeName, handler) {
+  const startedAt = Date.now();
+  const correlationId = req.headers["x-nexus-correlation-id"];
+  try {
+    const result = handler();
+    recordApiActivity({
+      correlationId,
+      mode: ctx.mode,
+      scope: "NEXUS_OS_CHANGE",
+      eventType: "local_api_request_completed",
+      status: "success",
+      summary: `Local API read completed: ${routeName}`,
+      durationMs: Date.now() - startedAt,
+      metadata: {
+        method: req.method,
+        route: routeName,
+      },
+    });
+    return result;
+  } catch (error) {
+    recordActivityFailure({
+      correlationId,
+      mode: ctx.mode,
+      scope: "NEXUS_OS_CHANGE",
+      category: "api",
+      source: "local_api",
+      eventType: "local_api_request_failed",
+      summary: `Local API read failed: ${routeName}`,
+      error,
+      durationMs: Date.now() - startedAt,
+      metadata: {
+        method: req.method,
+        route: routeName,
+      },
+    });
+    throw error;
+  }
+}
+
 function route(req, res, config) {
   const { method, url } = req;
   const ctx = { mode: config.mode };
 
   res.setHeader("Access-Control-Allow-Origin", DASHBOARD_ORIGIN);
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, X-NEXUS-Correlation-ID");
 
   if (method === "OPTIONS") { res.writeHead(204); res.end(); return; }
 
-  if (method === "GET" && url === "/health") return handleHealth(req, res, ctx);
-  if (method === "GET" && url === "/status") return handleStatus(req, res, ctx);
-  if (method === "GET" && url === "/missions") return handleMissions(req, res, ctx);
-  if (method === "GET" && url === "/tasks") return handleTasks(req, res, ctx);
+  if (method === "GET" && url === "/health") {
+    return captureApiRead(req, ctx, "/health", () => handleHealth(req, res, ctx));
+  }
+  if (method === "GET" && url === "/status") {
+    return captureApiRead(req, ctx, "/status", () => handleStatus(req, res, ctx));
+  }
+  if (method === "GET" && url === "/missions") {
+    return captureApiRead(req, ctx, "/missions", () => handleMissions(req, res, ctx));
+  }
+  if (method === "GET" && url === "/tasks") {
+    return captureApiRead(req, ctx, "/tasks", () => handleTasks(req, res, ctx));
+  }
   if (method === "GET" && url.startsWith("/tasks/") && url !== "/tasks/") {
-    return handleTaskById(req, res, { ...ctx, taskId: decodeURIComponent(url.replace("/tasks/", "")) });
+    return captureApiRead(req, ctx, "/tasks/:id", () => handleTaskById(req, res, {
+      ...ctx,
+      taskId: decodeURIComponent(url.replace("/tasks/", "")),
+    }));
   }
-  if (method === "GET" && url === "/agents") return handleAgents(req, res, ctx);
-  if (method === "GET" && url === "/evidence") return handleEvidence(req, res, ctx);
-  if (method === "GET" && url === "/audit") return handleAudit(req, res, ctx);
-  if (method === "GET" && url === "/runtime") return handleRuntime(req, res, ctx);
-  if (method === "GET" && url === "/contracts") return handleContracts(req, res, ctx);
-  if (method === "GET" && url === "/projects") return handleProjects(req, res, ctx);
-  if (method === "GET" && url === "/roadmap") return handleRoadmap(req, res, ctx);
-  if (method === "GET" && url === "/actions") return handleListActions(req, res, ctx);
+  if (method === "GET" && url === "/agents") {
+    return captureApiRead(req, ctx, "/agents", () => handleAgents(req, res, ctx));
+  }
+  if (method === "GET" && url === "/evidence") {
+    return captureApiRead(req, ctx, "/evidence", () => handleEvidence(req, res, ctx));
+  }
+  if (method === "GET" && url === "/audit") {
+    return captureApiRead(req, ctx, "/audit", () => handleAudit(req, res, ctx));
+  }
+  if (method === "GET" && url === "/runtime") {
+    return captureApiRead(req, ctx, "/runtime", () => handleRuntime(req, res, ctx));
+  }
+  if (method === "GET" && url === "/contracts") {
+    return captureApiRead(req, ctx, "/contracts", () => handleContracts(req, res, ctx));
+  }
+  if (method === "GET" && url === "/projects") {
+    return captureApiRead(req, ctx, "/projects", () => handleProjects(req, res, ctx));
+  }
+  if (method === "GET" && url === "/roadmap") {
+    return captureApiRead(req, ctx, "/roadmap", () => handleRoadmap(req, res, ctx));
+  }
+  if (method === "GET" && url === "/actions") {
+    return captureApiRead(req, ctx, "/actions", () => handleListActions(req, res, ctx));
+  }
   if (method === "GET" && url.startsWith("/actions/") && url !== "/actions/") {
-    return handleGetAction(req, res, { ...ctx, actionId: decodeURIComponent(url.replace("/actions/", "")) });
+    return captureApiRead(req, ctx, "/actions/:id", () => handleGetAction(req, res, {
+      ...ctx,
+      actionId: decodeURIComponent(url.replace("/actions/", "")),
+    }));
   }
-  if (method === "GET" && url === "/db") return handleDb(req, res, ctx);
+  if (method === "GET" && url === "/db") {
+    return captureApiRead(req, ctx, "/db", () => handleDb(req, res, ctx));
+  }
+  if (method === "GET" && url.startsWith("/activity")) {
+    return captureApiRead(req, ctx, "/activity", () => handleActivity(req, res, ctx));
+  }
 
+  recordActivityFailure({
+    mode: ctx.mode,
+    scope: "NEXUS_OS_CHANGE",
+    category: "api",
+    source: "local_api",
+    eventType: "local_api_request_failed",
+    summary: `Local API route not found: ${method} ${url}`,
+    errorCode: "not_found",
+    error: `Route ${method} ${url} not found.`,
+    metadata: { method, route: url },
+  });
   sendError(res, 404, "not_found", `Route ${method} ${url} not found.`, null);
 }
 

@@ -287,7 +287,7 @@
       "track": "NEXUS_OS",
       "order": 14.3,
       "group": "P41.8 Centralized Activity Log + Observability Ledger",
-      "summary": "Planned read-safe capture points across existing governed surfaces.",
+      "summary": "Selected read-safe capture points across local API, Command Center, and governed action bridge surfaces.",
       "commandCenterVisible": true
     },
     {

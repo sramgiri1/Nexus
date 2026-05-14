@@ -23,6 +23,7 @@ import { readTasks } from "../local-state/taskStore.js";
 import { appendEvidence } from "../local-state/appendEvidence.js";
 import { appendAuditEvent } from "../local-state/appendAuditEvent.js";
 import { writeLocalStateEvent } from "../local-state/writeLocalState.js";
+import { withActivityCapture } from "../observability/index.js";
 import { getNexusMode } from "../private-mode/privateMode.js";
 
 const ROOT = process.cwd();
@@ -113,7 +114,7 @@ export function validateImplementationRequest(request = {}) {
 
 // ─── runImplementationRequest ─────────────────────────────────────────────────
 
-export async function runImplementationRequest(request = {}) {
+async function runImplementationRequestInner(request = {}) {
   // 1. Validate request
   const validation = validateImplementationRequest(request);
   if (!validation.valid) {
@@ -334,6 +335,22 @@ export async function runImplementationRequest(request = {}) {
       runtimeEventCreated: eventResult.ok,
     },
   });
+}
+
+export async function runImplementationRequest(request = {}) {
+  return withActivityCapture({
+    actionId: request.actionId,
+    actionType: request.actionType || "implementation.apply",
+    projectId: request.projectId || "private-project-01",
+    missionId: request.missionId || "private-project-governed-build-mission",
+    taskId: request.runtimeTaskId || null,
+    agentId: request.targetAgent || ALLOWED_TARGET,
+    capabilityId: request.capabilityId || ALLOWED_CAPABILITY,
+    mode: request.mode || "local-private",
+    scope: "PROJECT_CHANGE",
+    source: request.source || "command_center",
+    requestSummary: "Controlled implementation action requested.",
+  }, () => runImplementationRequestInner(request));
 }
 
 // ─── getImplementationResult ──────────────────────────────────────────────────

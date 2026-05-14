@@ -13,6 +13,7 @@ import { readTasks } from "../local-state/taskStore.js";
 import { appendEvidence } from "../local-state/appendEvidence.js";
 import { appendAuditEvent } from "../local-state/appendAuditEvent.js";
 import { writeLocalStateEvent } from "../local-state/writeLocalState.js";
+import { withActivityCapture } from "../observability/index.js";
 import { getNexusMode } from "../private-mode/privateMode.js";
 
 const ALLOWED_ACTION_TYPES = new Set(["task.review"]);
@@ -107,7 +108,7 @@ export function validateReviewRequest(request = {}) {
 
 // ─── runReviewRequest ─────────────────────────────────────────────────────────
 
-export async function runReviewRequest(request = {}) {
+async function runReviewRequestInner(request = {}) {
   // 1. Validate request
   const validation = validateReviewRequest(request);
   if (!validation.valid) {
@@ -235,6 +236,20 @@ export async function runReviewRequest(request = {}) {
       runtimeEventCreated: eventResult.ok,
     },
   });
+}
+
+export async function runReviewRequest(request = {}) {
+  return withActivityCapture({
+    actionId: request.reviewId,
+    actionType: "task.review",
+    projectId: request.projectId || "private-project-01",
+    missionId: request.missionId || "private-project-governed-build-mission",
+    taskId: request.runtimeTaskId || null,
+    mode: request.mode || "local-private",
+    scope: "PROJECT_CHANGE",
+    source: request.source || "command_center",
+    requestSummary: "Human review action requested.",
+  }, () => runReviewRequestInner(request));
 }
 
 // ─── getReviewResult ──────────────────────────────────────────────────────────

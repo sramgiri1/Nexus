@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T20:58:34.839Z
-- Validation branch: observability/central-activity-logger
-- Validation HEAD: 30c3bea
+- Generated at: 2026-05-14T21:59:47.811Z
+- Validation branch: observability/activity-capture-wiring
+- Validation HEAD: e2e7c88
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

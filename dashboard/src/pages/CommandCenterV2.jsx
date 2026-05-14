@@ -41,7 +41,17 @@ import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api
 import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
 import { proposeImplementation, applyImplementation } from "../api/implementationActions.js";
-import { getLocalApiHealth, getLocalStatus, getTasks, getEvidence, getProjects, getRoadmap, getDbStatus, buildApiState } from "../api/localApiClient.js";
+import {
+  getActivity,
+  getLocalApiHealth,
+  getLocalStatus,
+  getTasks,
+  getEvidence,
+  getProjects,
+  getRoadmap,
+  getDbStatus,
+  buildApiState,
+} from "../api/localApiClient.js";
 import { useNexusTheme } from "../hooks/useNexusTheme.js";
 import "../styles-command-center-v2.css";
 
@@ -5667,20 +5677,24 @@ function DocsGuidesPage() {
   );
 }
 
-function ActivityLogPage() {
+function ActivityLogPage({ vm }) {
+  const activity = vm?.liveData?.activity || null;
+  const records = Array.isArray(activity?.records) ? activity.records : [];
+  const categories = activity?.categories || {};
+  const sourceLabel = activity ? "Live local API / activity store" : "Snapshot fallback";
   const readiness = [
     { label: "Activity schema", status: "Ready", tone: "pass" },
     { label: "Correlation ID model", status: "Ready", tone: "pass" },
     { label: "Central logger", status: "Ready", tone: "pass" },
     { label: "Local activity store", status: "Ready", tone: "pass" },
-    { label: "UI/API/action instrumentation", status: "Not wired yet", tone: "disabled" },
+    { label: "UI/API/action instrumentation", status: "Capture wired", tone: "pass" },
     { label: "Trace view", status: "Planned", tone: "disabled" },
   ];
 
   const futureEvents = [
-    "User actions",
-    "API requests",
-    "Action bridge events",
+    "UI operator actions",
+    "Local API read requests",
+    "Governed action bridge events",
     "Task transitions",
     "Agent decisions",
     "Policy decisions",
@@ -5701,19 +5715,69 @@ function ActivityLogPage() {
         <div className="ccv2-activity-readiness">
           <section className="ccv2-card ccv2-activity-readiness__hero">
             <div className="ccv2-section-heading">Observability Readiness</div>
-            <h2>Infrastructure ready; instrumentation pending.</h2>
+            <h2>Capture wired for local operator paths.</h2>
             <p>
-              P41.8.1 defined the activity event schema and correlation model. P41.8.2 added the central logger and local
-              append-only activity store. P41.8.3 will wire UI, API, and action bridge capture points.
+              P41.8.3 records redacted local API reads and governed action bridge outcomes into the append-only
+              activity store. Command Center shows captured records when the local API is online, and falls back to
+              readiness guidance when it is offline.
             </p>
             <div className="ccv2-activity-next">
-              <span className="ccv2-pill ccv2-pill--read">Next phase</span>
-              <span>P41.8.3 - API / UI / Action Bridge Activity Capture</span>
+              <span className="ccv2-pill ccv2-pill--read">Source</span>
+              <span>{sourceLabel}</span>
             </div>
           </section>
 
           <section className="ccv2-card">
-            <div className="ccv2-section-heading">Current Status</div>
+            <div className="ccv2-section-heading">Capture Summary</div>
+            <div className="ccv2-activity-summary">
+              <div>
+                <span className="ccv2-activity-summary__value">{activity?.totalCount ?? 0}</span>
+                <span className="ccv2-activity-summary__label">Stored records</span>
+              </div>
+              <div>
+                <span className="ccv2-activity-summary__value">{records.length}</span>
+                <span className="ccv2-activity-summary__label">Shown here</span>
+              </div>
+              <div>
+                <span className="ccv2-activity-summary__value">{Object.keys(categories).length}</span>
+                <span className="ccv2-activity-summary__label">Categories</span>
+              </div>
+            </div>
+            {records.length === 0 && (
+              <p className="ccv2-activity-copy">
+                No captured activity records are available from the local API yet. Run Command Center against the local
+                API, call <code>npm run nexus:status</code>, or trigger a governed action to populate the local activity store.
+              </p>
+            )}
+          </section>
+
+          <section className="ccv2-card">
+            <div className="ccv2-section-heading">Recent Captured Activity</div>
+            {records.length > 0 ? (
+              <div className="ccv2-activity-list">
+                {records.slice(0, 12).map((record) => (
+                  <div key={record.activityId} className="ccv2-activity-record">
+                    <div>
+                      <div className="ccv2-activity-record__title">{record.summary}</div>
+                      <div className="ccv2-activity-record__meta">
+                        {record.category} · {record.eventType} · {record.shortCorrelationId || "no correlation"}
+                      </div>
+                    </div>
+                    <span className={`ccv2-pill ccv2-pill--${record.status === "failed" ? "blocked" : "read"}`}>
+                      {record.status}
+                    </span>
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="ccv2-empty-state">
+                Activity capture is ready. Records appear here after local API reads or governed bridge actions.
+              </div>
+            )}
+          </section>
+
+          <section className="ccv2-card">
+            <div className="ccv2-section-heading">Capture Status</div>
             <div className="ccv2-activity-status-grid">
               {readiness.map((item) => (
                 <div key={item.label} className="ccv2-activity-status">
@@ -5736,7 +5800,7 @@ function ActivityLogPage() {
           <section className="ccv2-card">
             <div className="ccv2-section-heading">Correlation ID Model</div>
             <p className="ccv2-activity-copy">
-              Each operator action will link UI, API, action bridge, evidence, audit, and runtime records. Correlation IDs
+              Each operator action links UI, API, action bridge, evidence, audit, and runtime records. Correlation IDs
               keep related records traceable without exposing raw payloads, secrets, or private project content.
             </p>
             <div className="ccv2-activity-boundaries">
@@ -5814,8 +5878,14 @@ export default function CommandCenterV2({ studio }) {
       const state = buildApiState(health);
       setApiState(state);
       if (state.liveApiOnline) {
-        Promise.all([getTasks(), getEvidence(), getProjects(), getDbStatus()]).then(([tasks, evidence, projects, db]) => {
-          setLiveData({ tasks: tasks.ok ? tasks.data : null, evidence: evidence.ok ? evidence.data : null, projects: projects.ok ? projects.data : null, db: db.ok ? db.data : null });
+        Promise.all([getTasks(), getEvidence(), getProjects(), getDbStatus(), getActivity()]).then(([tasks, evidence, projects, db, activity]) => {
+          setLiveData({
+            tasks: tasks.ok ? tasks.data : null,
+            evidence: evidence.ok ? evidence.data : null,
+            projects: projects.ok ? projects.data : null,
+            db: db.ok ? db.data : null,
+            activity: activity.ok ? activity.data : null,
+          });
         }).catch(() => {});
       }
     }).catch(() => {
@@ -5951,7 +6021,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
-          {currentPage === "activity" && <ActivityLogPage />}
+          {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}
           {currentPage === "settings" && (
             <PlannedRoutePage routeKey={currentPage} />
           )}

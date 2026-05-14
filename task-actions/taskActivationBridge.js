@@ -16,6 +16,7 @@ import { addTask } from "../local-state/taskStore.js";
 import { appendEvidence } from "../local-state/appendEvidence.js";
 import { appendAuditEvent } from "../local-state/appendAuditEvent.js";
 import { writeLocalStateEvent } from "../local-state/writeLocalState.js";
+import { withActivityCapture } from "../observability/index.js";
 import { getNexusMode } from "../private-mode/privateMode.js";
 
 const ROOT = process.cwd();
@@ -113,7 +114,7 @@ export function validateTaskActivationRequest(request = {}) {
 
 // ─── runTaskActivationRequest ─────────────────────────────────────────────────
 
-export async function runTaskActivationRequest(request = {}) {
+async function runTaskActivationRequestInner(request = {}) {
   // 1. Validate request
   const validation = validateTaskActivationRequest(request);
   if (!validation.valid) {
@@ -362,4 +363,18 @@ export function buildTaskActivationResponse(opts = {}) {
     warnings: Array.isArray(opts.warnings) ? opts.warnings : [],
     errors: Array.isArray(opts.errors) ? opts.errors : [],
   };
+}
+
+export async function runTaskActivationRequest(request = {}) {
+  return withActivityCapture({
+    actionId: request.actionId,
+    actionType: "task.activate",
+    projectId: request.projectId || "private-project-01",
+    missionId: request.missionId || "private-project-governed-build-mission",
+    taskId: request.planTaskId || null,
+    mode: request.mode || "local-private",
+    scope: "PROJECT_CHANGE",
+    source: request.source || "command_center",
+    requestSummary: "Task activation action requested.",
+  }, () => runTaskActivationRequestInner(request));
 }

@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "phase": "P41.8.3",
+  "purpose": "api_ui_action_bridge_activity_capture",
+  "modeRequired": "local-private",
+  "activityWritesAllowed": true,
+  "appendOnly": true,
+  "redactionRequired": true,
+  "captureScope": [
+    "local-api-read-requests",
+    "governed-action-bridge-requests",
+    "command-center-ui-intent-model"
+  ],
+  "activityApiAllowed": "local_read_only",
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "toolRuntimeAllowed": false,
+  "projectMutationAllowed": false,
+  "rawPayloadLoggingAllowed": false,
+  "rawPromptLoggingAllowed": false,
+  "rawPolicyLoggingAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "storePath": "local-state/runtime/activity.jsonl",
+  "requiredOutputs": [
+    "observability/activityCapture.js",
+    "local-api/routes/activity.js",
+    "reports/activity-capture-report.md"
+  ],
+  "knownLimitations": [
+    "Browser-only UI clicks are represented by a safe capture helper until a governed client capture endpoint exists.",
+    "Trace drilldown remains planned for P41.8.5.",
+    "Provider, tool, worker, and DB-backed activity capture remain disabled."
+  ]
+}

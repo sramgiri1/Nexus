@@ -167,6 +167,39 @@ It does not claim provider/tool/worker logging, DB-backed activity, or full
 activity UI instrumentation exists. P41.8.3 remains responsible for adding
 capture points across the UI, local API, and governed action bridge.
 
+## P41.8.3 - API / UI / Action Bridge Activity Capture
+
+P41.8.3 wires selected capture points into the existing activity logger without
+changing provider, worker, tool, DB, or project mutation behavior.
+
+Captured now:
+
+- Local API read requests and failures are captured through redacted activity
+  events.
+- `GET /activity` exposes a local read-only summary of recent activity records.
+- Governed action bridge requests and outcomes are captured for mission compose,
+  task activation, human review, and controlled implementation.
+- Command Center Activity Log reads summarized records from the local API when
+  it is online and shows safe empty-state guidance when it is offline.
+
+The capture helper lives in `observability/activityCapture.js`. It provides
+shared helpers for UI intent records, local API records, governed action bridge
+records, and failure records. All records still pass through schema validation
+and redaction before append.
+
+The `/activity` route returns summarized records only. It does not expose raw
+JSONL lines, raw payloads, raw policies, raw logs, secrets, stack traces, or
+private project source details.
+
+Still deferred:
+
+- Browser-only UI click persistence without a governed capture endpoint.
+- Provider/tool/worker capture.
+- DB-backed activity storage.
+- Full trace drilldown by correlation ID.
+
+Next phase: P41.8.4 - Command Center Activity Log Page.
+
 ## Future Phases
 
 - P41.8.2 - Central Activity Logger

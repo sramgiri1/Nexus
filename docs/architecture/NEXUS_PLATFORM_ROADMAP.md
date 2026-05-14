@@ -553,6 +553,14 @@ short of broad runtime instrumentation, Command Center Activity Log UI,
 `/activity` API routes, provider/tool/worker logging, DB-backed activity
 storage, and project mutation.
 
+#### P41.8.3 — API / UI / Action Bridge Activity Capture
+
+P41.8.3 adds selected redacted capture points for local API reads and governed
+action bridge outcomes. It also exposes a local read-only `/activity` endpoint
+for summarized records and lets Command Center show captured activity when the
+local API is online. Browser-only UI click persistence, provider/tool/worker
+capture, DB-backed activity, and trace drilldown remain future work.
+
 ### P41.9 — README + Architecture Diagram Registry Follow-through
 
 Goal:

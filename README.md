@@ -1072,6 +1072,11 @@ before persistence, and correlation lookup. It still does not add broad runtime
 instrumentation, Activity Log UI, `/activity` API routes, provider/tool/worker
 logging, DB-backed storage, or project mutation.
 
+P41.8.3 adds selected activity capture for local API reads and governed action
+bridge outcomes, plus a local read-only `/activity` endpoint for summarized
+records. Provider, tool, worker, DB-backed activity, and release/deploy
+execution remain disabled.
+
 ---
 
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.

@@ -35,10 +35,18 @@ Primary Command Center pages are designed for safe operator visibility.
 Raw evidence payloads and raw logs can leak details or create unreadable UX,
 so they stay out of primary surfaces.
 
-## Future Activity Model
+## Activity Capture
 
-A centralized activity log is planned for P41.8 to unify evidence, audit, and runtime visibility further.
+A centralized activity log is underway in P41.8 to unify evidence, audit,
+runtime, API, UI, and governed action bridge visibility.
 
-Until P41.8, pages may show evidence, audit, and runtime events as separate
-summaries. That separation is intentional and keeps proof, governance, and
-runtime signals distinct.
+P41.8.3 adds redacted local API and governed action bridge records to
+`local-state/runtime/activity.jsonl`. Command Center can read those records
+through the local-only `/activity` endpoint and show summarized activity without
+exposing raw payloads, raw logs, raw policies, secrets, or private project
+source details.
+
+Until the full Activity Log and trace view are complete, pages may show
+evidence, audit, activity, and runtime events as separate summaries. That
+separation is intentional and keeps proof, governance, and runtime signals
+distinct.

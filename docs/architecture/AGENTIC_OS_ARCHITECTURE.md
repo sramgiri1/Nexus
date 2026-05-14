@@ -132,6 +132,12 @@ still does not add broad runtime instrumentation, Activity Log UI, activity API
 routes, provider/tool/worker logging, DB-backed activity storage, or project
 mutation.
 
+Phase 41.8.3 adds selected capture wiring for local API reads and governed
+action bridge outcomes. It keeps activity records redacted and local-only,
+exposes a read-only `/activity` summary endpoint, and leaves provider/tool/
+worker logging, DB-backed activity storage, and trace drilldown for later
+subphases.
+
 The documentation layer is now intentionally separated:
 
 - `docs/usage/` for operators and local users

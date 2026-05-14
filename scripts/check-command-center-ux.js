@@ -847,9 +847,10 @@ check(commandCenterSource.includes("Operator Guides"), "topBarPolish", "Docs & G
 check(commandCenterSource.includes("navigate(`/command-center/docs/${guide.id}`)"), "topBarPolish", "Docs & Guides cards should navigate to guide panels");
 check(!commandCenterSource.includes("ccv2-doc-card__path"), "topBarPolish", "Docs cards should not render raw paths as primary text");
 check(!commandCenterSource.includes("ccv2-doc-card__action"), "topBarPolish", "Docs cards should not render separate Open guide links");
-check(commandCenterSource.includes("ActivityLogPage"), "topBarPolish", "Activity Log should render an observability readiness page");
-check(commandCenterSource.includes("Infrastructure ready; instrumentation pending."), "topBarPolish", "Activity Log readiness copy missing");
-check(commandCenterSource.includes("UI/API/action instrumentation"), "topBarPolish", "Activity Log should identify instrumentation as not wired yet");
+check(commandCenterSource.includes("ActivityLogPage"), "topBarPolish", "Activity Log should render an observability page");
+check(commandCenterSource.includes("Capture wired for local operator paths."), "topBarPolish", "Activity Log capture copy missing");
+check(commandCenterSource.includes("Recent Captured Activity"), "topBarPolish", "Activity Log should show captured activity records");
+check(commandCenterSource.includes("UI/API/action instrumentation"), "topBarPolish", "Activity Log should identify instrumentation status");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
 check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
 

@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P41.8", "P41.8.2A"]);
+const CURRENT_PHASE_IDS = new Set(["P41.8", "P41.8.3"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P41.8.2A", "currentPhase", "currentPhase must be P41.8.2A");
-check(phaseStatus.previousPhase === "P41.8.2", "previousPhase", "previousPhase must be P41.8.2");
-check(phaseStatus.nextPhase === "P41.8.3", "nextPhase", "nextPhase must be P41.8.3");
+check(phaseStatus.currentPhase === "P41.8.3", "currentPhase", "currentPhase must be P41.8.3");
+check(phaseStatus.previousPhase === "P41.8.2A", "previousPhase", "previousPhase must be P41.8.2A");
+check(phaseStatus.nextPhase === "P41.8.4", "nextPhase", "nextPhase must be P41.8.4");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -147,7 +147,7 @@ check(p417?.nextPhase === "P41.8.1", "nextPhase", "P41.7 parent nextPhase must b
 const p418 = statusById.get("P41.8");
 check(p418?.status === "in_progress", "currentPhase", "P41.8 must be in_progress");
 check(p418?.title === "Centralized Activity Log + Observability Ledger", "nextPhase", "P41.8 title mismatch");
-check(p418?.nextPhase === "P41.8.2A", "nextPhase", "P41.8 parent nextPhase must be P41.8.2A");
+check(p418?.nextPhase === "P41.8.3", "nextPhase", "P41.8 parent nextPhase must be P41.8.3");
 
 const p4181 = statusById.get("P41.8.1");
 check(p4181?.status === "complete", "previousPhase", "P41.8.1 must be complete");
@@ -171,15 +171,18 @@ check(p4182?.commit === "3a63789", "completedPhaseCommits", "P41.8.2 commit must
 check(p4182?.nextPhase === "P41.8.2A", "nextPhase", "P41.8.2 nextPhase must be P41.8.2A");
 
 const p4182a = statusById.get("P41.8.2A");
-check(p4182a?.status === "complete" || p4182a?.status === "in_progress", "currentPhase", "P41.8.2A must be current or complete");
-check(p4182a?.title === "Docs & Guides Interaction + Activity Log Placeholder Polish", "currentPhase", "P41.8.2A title mismatch");
-check(p4182a?.branch === "fix/docs-guides-activity-log-polish", "currentPhase", "P41.8.2A branch mismatch");
-check(Boolean(p4182a?.commit), "currentPhase", "P41.8.2A must have a commit or pending-final-commit placeholder");
+check(p4182a?.status === "complete", "previousPhase", "P41.8.2A must be complete");
+check(p4182a?.title === "Docs & Guides Interaction + Activity Log Placeholder Polish", "previousPhase", "P41.8.2A title mismatch");
+check(p4182a?.branch === "fix/docs-guides-activity-log-polish", "previousPhase", "P41.8.2A branch mismatch");
+check(p4182a?.commit === "e2e7c88", "completedPhaseCommits", "P41.8.2A commit must be e2e7c88");
 check(p4182a?.nextPhase === "P41.8.3", "nextPhase", "P41.8.2A nextPhase must be P41.8.3");
 
 const p4183 = statusById.get("P41.8.3");
-check(p4183?.status === "planned", "nextPhase", "P41.8.3 must be planned");
-check(p4183?.title === "API/UI/Action Bridge Activity Capture", "nextPhase", "P41.8.3 title mismatch");
+check(p4183?.status === "complete" || p4183?.status === "in_progress", "currentPhase", "P41.8.3 must be current or complete");
+check(p4183?.title === "API/UI/Action Bridge Activity Capture", "currentPhase", "P41.8.3 title mismatch");
+check(p4183?.branch === "observability/activity-capture-wiring", "currentPhase", "P41.8.3 branch mismatch");
+check(Boolean(p4183?.commit), "currentPhase", "P41.8.3 must have a commit or pending-final-commit placeholder");
+check(p4183?.nextPhase === "P41.8.4", "nextPhase", "P41.8.3 nextPhase must be P41.8.4");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

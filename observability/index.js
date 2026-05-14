@@ -10,3 +10,12 @@ export {
   logActivityDryRun,
   validateActivityForLogging,
 } from "./activityLogger.js";
+export {
+  buildActivitySummary,
+  createActivityContext,
+  recordActionBridgeActivity,
+  recordActivityFailure,
+  recordApiActivity,
+  recordUiActivity,
+  withActivityCapture,
+} from "./activityCapture.js";

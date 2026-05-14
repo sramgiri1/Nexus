@@ -1395,7 +1395,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Activity Log shows observability readiness instead of a generic placeholder", async ({ page }) => {
+  test("Activity Log shows captured activity surface instead of a generic placeholder", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/activity");
@@ -1408,9 +1408,12 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Central logger");
     await expect(page.locator("body")).toContainText("Local activity store");
     await expect(page.locator("body")).toContainText("UI/API/action instrumentation");
-    await expect(page.locator("body")).toContainText("Not wired yet");
-    await expect(page.locator("body")).toContainText("P41.8.3 - API / UI / Action Bridge Activity Capture");
-    await expect(page.locator("body")).toContainText("Each operator action will link UI, API, action bridge, evidence, audit, and runtime records.");
+    await expect(page.locator("body")).toContainText("Capture wired");
+    await expect(page.locator("body")).toContainText("Recent Captured Activity");
+    await expect(page.locator("body")).toContainText("Stored records");
+    await expect(page.locator("body")).toContainText("Local API read requests");
+    await expect(page.locator("body")).toContainText("Governed action bridge events");
+    await expect(page.locator("body")).toContainText("Each operator action links UI, API, action bridge, evidence, audit, and runtime records.");
     expect(body).not.toContain("Coming Soon · planned Command Center surface");
     expect(body).not.toContain("DemoApp");
 

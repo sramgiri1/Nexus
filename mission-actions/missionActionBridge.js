@@ -10,6 +10,7 @@
 import { randomUUID } from "node:crypto";
 import { appendAction, readActions, readRecentActions } from "../action-bridge/actionStore.js";
 import { runMissionComposer } from "../mission-composer/missionComposer.js";
+import { withActivityCapture } from "../observability/index.js";
 import { getNexusMode } from "../private-mode/privateMode.js";
 
 const ALLOWED_ACTION_TYPES = new Set(["mission.compose"]);
@@ -116,7 +117,7 @@ export function validateMissionActionRequest(request = {}) {
  * @param {object} request
  * @returns {Promise<object>}
  */
-export async function runMissionActionRequest(request = {}) {
+async function runMissionActionRequestInner(request = {}) {
   // 1. Validate request
   const validation = validateMissionActionRequest(request);
   if (!validation.valid) {
@@ -259,6 +260,19 @@ export async function runMissionActionRequest(request = {}) {
       localTaskId: composerResult.localTask?.taskId || null,
     },
   });
+}
+
+export async function runMissionActionRequest(request = {}) {
+  return withActivityCapture({
+    actionId: request.actionId,
+    actionType: "mission.compose",
+    projectId: "private-project-01",
+    missionId: request.missionId || null,
+    mode: request.mode || "local-private",
+    scope: "PROJECT_CHANGE",
+    source: request.source || "command_center",
+    requestSummary: "Mission compose action requested.",
+  }, () => runMissionActionRequestInner(request));
 }
 
 // ─── getMissionActionResult ─────────────────────────────────────────────────────

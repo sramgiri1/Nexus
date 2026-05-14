@@ -3859,10 +3859,48 @@
 }
 
 .ccv2-activity-next {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
   margin-top: 12px;
   color: var(--nexus-text-strong);
   font-size: 13px;
   font-weight: 750;
+}
+
+.ccv2-activity-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ccv2-activity-summary > div {
+  padding: 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 14px;
+  background: var(--nexus-panel-soft);
+}
+
+.ccv2-activity-summary__value,
+.ccv2-activity-summary__label {
+  display: block;
+}
+
+.ccv2-activity-summary__value {
+  color: var(--nexus-text-strong);
+  font-size: 22px;
+  font-weight: 850;
+  letter-spacing: -0.03em;
+}
+
+.ccv2-activity-summary__label {
+  margin-top: 3px;
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 750;
+  text-transform: uppercase;
 }
 
 .ccv2-activity-status-grid,
@@ -3897,6 +3935,42 @@
   background: var(--nexus-panel-soft);
   color: var(--nexus-text);
   font-size: 13px;
+}
+
+.ccv2-activity-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ccv2-activity-record {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 14px;
+  background: var(--nexus-panel-soft);
+}
+
+.ccv2-activity-record__title {
+  color: var(--nexus-text-strong);
+  font-size: 13px;
+  font-weight: 800;
+}
+
+.ccv2-activity-record__meta {
+  margin-top: 4px;
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.ccv2-activity-copy {
+  color: var(--nexus-text);
+  font-size: 13px;
+  line-height: 1.6;
 }
 
 .ccv2-roadmap-track--hero {
