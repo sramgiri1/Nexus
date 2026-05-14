@@ -430,9 +430,9 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/os-usage-foundation",
-      "commit": "pending-final-commit",
+      "commit": "88d1a4b",
       "completedAt": "",
-      "summary": "Adds operator-facing usage docs for tabbed Command Center operation, no-project state, demo/private boundaries, local boot, missions, tasks, workbench review, controlled implementation, and evidence/audit posture.",
+      "summary": "Created operator-facing usage documentation foundation and docs coverage checks.",
       "checksRun": [
         "npm run check:docs-coverage",
         "npm run check:command-center-ux",
@@ -448,15 +448,24 @@
     },
     {
       "phaseId": "P41.7.5",
-      "title": "Command Center Help Links",
+      "title": "Command Center Help Links + Docs Navigation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/command-center-help-links-navigation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned route-to-doc help-link mapping for stabilized Command Center surfaces.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Expose usage documentation from Command Center routes and repair docs/phase status quality gaps.",
+      "checksRun": [
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Known public-safety roadmap-doc false positives may still exist outside docs checker."
+      ],
       "nextPhase": "P41.7.6",
       "commandCenterVisible": true
     },
@@ -1048,5 +1057,10 @@
       "nextPhase": "",
       "commandCenterVisible": true
     }
-  ]
+  ],
+  "track": "NEXUS_OS",
+  "updatedAt": "2026-05-14T18:45:00.000Z",
+  "currentPhase": "P41.7.5",
+  "previousPhase": "P41.7.4",
+  "nextPhase": "P41.7.6"
 }

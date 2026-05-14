@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T18:14:50.426Z
-- Validation branch: test/tabbed-command-center-final-validation
-- Validation HEAD: 1c28921
+- Generated at: 2026-05-14T18:54:15.859Z
+- Validation branch: docs/command-center-help-links-navigation
+- Validation HEAD: 88d1a4b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -18,6 +18,7 @@
 - Page-specific UX: PASS
 - Service Health UX: PASS
 - Command palette: PASS
+- Command Center help links: PASS
 - Operator actions: PASS
 - Command Center tabs: PASS
 - Route-wide tab contract: PASS

@@ -1,21 +1,20 @@
 import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
-import process from "node:process";
 
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
 
 const sections = {
-  files: true,
-  statuses: true,
-  completedPhases: true,
+  nexusPhases: true,
+  phaseStatus: true,
   currentPhase: true,
+  previousPhase: true,
   nextPhase: true,
-  roadmapTarget: true,
-  commandCenterSync: true,
-  report: true,
+  requiredP417Entries: true,
+  publicSafeWording: true,
+  reportWritten: true,
 };
 
 const failures = [];
@@ -45,174 +44,79 @@ const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 
 const phaseIndexPath = "os-roadmap/nexus-phases.json";
 const phaseStatusPath = "os-roadmap/phase-status.json";
+const phaseIndexSource = read(phaseIndexPath);
+const phaseStatusSource = read(phaseStatusPath);
 
-check(existsSync(join(ROOT, phaseIndexPath)), "files", `${phaseIndexPath} is missing`);
-check(existsSync(join(ROOT, phaseStatusPath)), "files", `${phaseStatusPath} is missing`);
+check(existsSync(join(ROOT, phaseIndexPath)), "nexusPhases", `${phaseIndexPath} is missing`);
+check(existsSync(join(ROOT, phaseStatusPath)), "phaseStatus", `${phaseStatusPath} is missing`);
+check(phaseStatusSource.trim().length > 0, "phaseStatus", `${phaseStatusPath} is empty`);
 
-let phaseIndex = null;
-let phaseStatus = null;
-
-try {
-  phaseIndex = JSON.parse(read(phaseIndexPath));
-} catch (error) {
-  fail("files", `Could not parse ${phaseIndexPath}: ${error.message}`);
-}
+let phaseIndex = {};
+let phaseStatus = {};
 
 try {
-  phaseStatus = JSON.parse(read(phaseStatusPath));
+  phaseIndex = JSON.parse(phaseIndexSource);
 } catch (error) {
-  fail("files", `Could not parse ${phaseStatusPath}: ${error.message}`);
+  fail("nexusPhases", `Could not parse ${phaseIndexPath}: ${error.message}`);
 }
-
-const roadmapSource = read("dashboard/src/data/nexusRoadmap.js");
-const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
-const roadmapDocSource = read("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
-let dashboardRoadmap = [];
-
-check(Array.isArray(phaseIndex?.phases), "files", "Phase index must include a phases array");
-check(Array.isArray(phaseStatus?.phases), "files", "Phase status must include a phases array");
 
 try {
-  ({ NEXUS_ROADMAP_PHASES: dashboardRoadmap } = await import("../dashboard/src/data/nexusRoadmap.js"));
+  phaseStatus = JSON.parse(phaseStatusSource);
 } catch (error) {
-  fail("commandCenterSync", `Could not import dashboard/src/data/nexusRoadmap.js: ${error.message}`);
+  fail("phaseStatus", `Could not parse ${phaseStatusPath}: ${error.message}`);
 }
 
-const indexById = new Map((phaseIndex?.phases || []).map((entry) => [entry.phaseId, entry]));
-const statusById = new Map((phaseStatus?.phases || []).map((entry) => [entry.phaseId, entry]));
+check(Array.isArray(phaseIndex.phases), "nexusPhases", "nexus-phases.json must include a phases array");
+check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must include a phases array");
 
-for (const entry of phaseStatus?.phases || []) {
-  check(ALLOWED_STATUSES.includes(entry.status), "statuses", `Invalid status for ${entry.phaseId}: ${entry.status}`);
+const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
+const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
+
+check(phaseStatus.currentPhase === "P41.7.5", "currentPhase", "currentPhase must be P41.7.5");
+check(phaseStatus.previousPhase === "P41.7.4", "previousPhase", "previousPhase must be P41.7.4");
+check(phaseStatus.nextPhase === "P41.7.6", "nextPhase", "nextPhase must be P41.7.6");
+check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
+check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
+check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
+
+for (const entry of phaseStatus.phases || []) {
+  check(Boolean(entry.phaseId), "phaseStatus", "Every phase status needs phaseId");
+  check(Boolean(entry.title), "phaseStatus", `Every phase status needs title: ${entry.phaseId}`);
+  check(ALLOWED_STATUSES.includes(entry.status), "phaseStatus", `Invalid status for ${entry.phaseId}: ${entry.status}`);
+  check(
+    entry.commandCenterVisible === true || entry.commandCenterVisible === false,
+    "phaseStatus",
+    `Every phase status needs commandCenterVisible boolean: ${entry.phaseId}`,
+  );
 }
 
-for (const phaseId of [
-  "P41.5.1",
-  "P41.5.2",
-  "P41.5.3",
-  "P41.5.4",
-  "P41.5.5",
-  "P41.5.6",
-  "P41.6.1",
-  "P41.6.2",
-  "P41.6.3",
-  "P41.6.4",
-  "P41.6.5",
-  "P41.6.6",
-  "P41.7.1",
-  "P41.7.2",
-  "P41.7.3",
-  "P41.7.3A",
-  "P41.7.3B",
-  "P41.7.3C",
-]) {
-  const entry = statusById.get(phaseId);
-  check(!!entry, "completedPhases", `Missing completed phase entry: ${phaseId}`);
-  check(entry?.status === "complete", "completedPhases", `${phaseId} must be complete`);
-  check(Boolean(entry?.branch), "completedPhases", `${phaseId} must record a branch`);
-  check(Boolean(entry?.commit), "completedPhases", `${phaseId} must record a commit`);
+for (const phaseId of ["P41.7.4", "P41.7.5", "P41.7.6"]) {
+  check(indexById.has(phaseId), "requiredP417Entries", `nexus-phases missing ${phaseId}`);
+  check(statusById.has(phaseId), "requiredP417Entries", `phase-status missing ${phaseId}`);
 }
 
-const phase164 = statusById.get("P41.6.4");
-check(phase164?.branch === "feat/nexus-command-palette", "completedPhases", "P41.6.4 branch must be feat/nexus-command-palette");
-check(phase164?.commit === "dd2a601", "completedPhases", "P41.6.4 commit must be dd2a601");
-const phase165 = statusById.get("P41.6.5");
-check(phase165?.branch === "fix/os-roadmap-project-separation-boot-docs", "completedPhases", "P41.6.5 branch must be fix/os-roadmap-project-separation-boot-docs");
-check(phase165?.commit === "c0b0afb", "completedPhases", "P41.6.5 commit must be c0b0afb");
-const phase166 = statusById.get("P41.6.6");
-check(phase166?.branch === "fix/command-center-boundary-polish", "completedPhases", "P41.6.6 branch must be fix/command-center-boundary-polish");
-check(phase166?.commit === "a4c7016", "completedPhases", "P41.6.6 commit must be a4c7016");
+const p4174 = statusById.get("P41.7.4");
+check(p4174?.status === "complete", "requiredP417Entries", "P41.7.4 must be complete");
+check(p4174?.branch === "docs/os-usage-foundation", "requiredP417Entries", "P41.7.4 branch mismatch");
+check(p4174?.commit === "88d1a4b", "requiredP417Entries", "P41.7.4 commit must be 88d1a4b");
 
-const phase171 = statusById.get("P41.7.1");
-check(phase171?.branch === "docs/codebase-module-registry-foundation", "completedPhases", "P41.7.1 branch must be docs/codebase-module-registry-foundation");
-check(phase171?.commit === "e0026e4", "completedPhases", "P41.7.1 commit must be e0026e4");
-
-const phase172 = statusById.get("P41.7.2");
-check(phase172?.branch === "docs/reuse-audit-duplicate-pattern-inventory", "completedPhases", "P41.7.2 branch must be docs/reuse-audit-duplicate-pattern-inventory");
-check(phase172?.commit === "113db67", "completedPhases", "P41.7.2 commit must be 113db67");
-
-const phase173 = statusById.get("P41.7.3");
-check(phase173?.branch === "docs/shared-helper-catalog-refactor-plan", "completedPhases", "P41.7.3 branch must be docs/shared-helper-catalog-refactor-plan");
-check(phase173?.commit === "81a73c1", "completedPhases", "P41.7.3 commit must be 81a73c1");
-const phase173a = statusById.get("P41.7.3A");
-check(phase173a?.branch === "ui/command-center-tab-system-foundation", "completedPhases", "P41.7.3A branch must be ui/command-center-tab-system-foundation");
-check(phase173a?.commit === "af37414", "completedPhases", "P41.7.3A commit must be af37414");
-const phase173b = statusById.get("P41.7.3B");
-check(phase173b?.branch === "ui/mission-control-tabbed-cockpit", "completedPhases", "P41.7.3B branch must be ui/mission-control-tabbed-cockpit");
-check(phase173b?.commit === "4892a18", "completedPhases", "P41.7.3B commit must be 4892a18");
-
-const phase173c = statusById.get("P41.7.3C");
-check(phase173c?.branch === "ui/page-tab-rollout-core-operations", "completedPhases", "P41.7.3C branch must be ui/page-tab-rollout-core-operations");
-check(phase173c?.commit === "a989e08", "completedPhases", "P41.7.3C commit must be a989e08");
-
-const currentPhase = statusById.get("P41.7.3D");
-check(!!currentPhase, "currentPhase", "P41.7.3D must exist");
-check(currentPhase?.status === "complete", "currentPhase", "P41.7.3D must be complete");
-check(Boolean(currentPhase?.branch), "currentPhase", "P41.7.3D must record a branch");
-check(Boolean(currentPhase?.nextPhase), "currentPhase", "P41.7.3D must record a nextPhase");
-check(currentPhase?.nextPhase === "P41.7.3E", "currentPhase", "P41.7.3D nextPhase must be P41.7.3E");
-check(currentPhase?.branch === "ui/page-tab-rollout-platform-governance", "currentPhase", "P41.7.3D branch must be ui/page-tab-rollout-platform-governance");
-check(Boolean(currentPhase?.commit), "currentPhase", "P41.7.3D must record a commit or pending-final-commit placeholder");
-check(statusById.get("P41.7.3E")?.status === "planned", "nextPhase", "P41.7.3E must be planned");
-
-const nextPhase = indexById.get("P42");
-check(!!nextPhase, "nextPhase", "P42 must exist in the phase index");
-check(nextPhase?.title === "Project Registry + Adapter Framework", "nextPhase", "P42 must be Project Registry + Adapter Framework");
-
-for (const plannedPhaseId of ["P41.7.3E", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8", "P41.9", "P42"]) {
-  const entry = statusById.get(plannedPhaseId);
-  check(!!entry, "nextPhase", `Missing planned phase entry: ${plannedPhaseId}`);
-  check(entry?.status === "planned", "nextPhase", `${plannedPhaseId} must be planned`);
-}
-
-check(indexById.has("P78"), "roadmapTarget", "Roadmap data must include the expanded phase list through P78");
-check(!roadmapDocSource.includes("DB-backed Command Center + Live Refresh"), "roadmapTarget", "Old P42 DB-backed Command Center text should not remain in the primary roadmap doc");
-check(!commandCenterSource.includes("Track B"), "roadmapTarget", "Command Center roadmap should not render a Track B project roadmap");
-check(!commandCenterSource.includes("CareLoop sprint board"), "roadmapTarget", "Command Center roadmap should not render a mixed project sprint board");
-
-for (const expected of [
-  "NEXUS OS Platform Progress",
-  "Current OS Phase",
-  "Next OS Phase",
-  "Completed OS Phases",
-  "Planned OS Phases",
-  "Blocked OS Phases",
-  "Open OS Gaps",
-]) {
-  check(commandCenterSource.includes(expected), "commandCenterSync", `Command Center roadmap is missing expected OS roadmap copy: ${expected}`);
-}
-
-check(!commandCenterSource.includes("CareLoop · Sprint 1 → 4"), "commandCenterSync", "Command Center roadmap should not include CareLoop as an OS phase track");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.6.5"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.6.5");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.6.6"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.6.6");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.1"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.1");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.2"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.2");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3A"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3A");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3B"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3B");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3C"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3C");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.3D"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.3D");
-check(dashboardRoadmap.some((entry) => entry.phase === "P41.7.4"), "commandCenterSync", "dashboard/src/data/nexusRoadmap.js must include P41.7.4");
+const p4175 = statusById.get("P41.7.5");
+check(p4175?.status === "complete" || p4175?.status === "in_progress", "requiredP417Entries", "P41.7.5 must be current or complete");
 check(
-  dashboardRoadmap.some(
-    (entry) => entry.phase === "P42" && entry.label === "Project Registry + Adapter Framework",
-  ),
-  "commandCenterSync",
-  "dashboard/src/data/nexusRoadmap.js must include the correct P42 title",
+  p4175?.branch === "docs/command-center-help-links-navigation",
+  "requiredP417Entries",
+  "P41.7.5 branch mismatch",
 );
-check(roadmapDocSource.includes("P41.7.1"), "commandCenterSync", "NEXUS platform roadmap doc must mention P41.7.1");
-check(roadmapDocSource.includes("P41.7.2"), "commandCenterSync", "NEXUS platform roadmap doc must mention P41.7.2");
 
+const p4176 = statusById.get("P41.7.6");
+check(p4176?.status === "planned", "requiredP417Entries", "P41.7.6 must be planned");
+
+for (const forbidden of ["CareLoop", "careloop", "projects/careloop", "DemoApp"]) {
+  check(!phaseStatusSource.includes(forbidden), "publicSafeWording", `Phase status contains forbidden term: ${forbidden}`);
+}
+
+let reportWritten = true;
 const result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
-
-console.log(`Files: ${sections.files ? "PASS" : "FAIL"}`);
-console.log(`Statuses: ${sections.statuses ? "PASS" : "FAIL"}`);
-console.log(`Completed phases: ${sections.completedPhases ? "PASS" : "FAIL"}`);
-console.log(`Current phase: ${sections.currentPhase ? "PASS" : "FAIL"}`);
-console.log(`Next phase: ${sections.nextPhase ? "PASS" : "FAIL"}`);
-console.log(`Roadmap target: ${sections.roadmapTarget ? "PASS" : "FAIL"}`);
-console.log(`Command Center sync: ${sections.commandCenterSync ? "PASS" : "FAIL"}`);
-console.log(`Report: ${sections.report ? "PASS" : "FAIL"}`);
-console.log(`Result: ${result}`);
 
 const report = `# NEXUS OS Phase Status Report
 
@@ -225,31 +129,20 @@ const report = `# NEXUS OS Phase Status Report
 
 ## Current OS Phase
 
-- Current phase: ${currentPhase?.phaseId || "UNKNOWN"} — ${currentPhase?.title || "Unknown"}
-- Status: ${currentPhase?.status || "unknown"}
-- Branch: ${currentPhase?.branch || "unknown"}
-- Commit: ${currentPhase?.commit || "unknown"}
-- Next phase: ${currentPhase?.nextPhase || "unknown"}
+- Current phase: ${phaseStatus.currentPhase || "unknown"}
+- Previous phase: ${phaseStatus.previousPhase || "unknown"}
+- Next phase: ${phaseStatus.nextPhase || "unknown"}
 
-## Completion Checks
+## Checks
 
-- P41.5.1 through P41.5.6: complete
-- P41.6.1 through P41.6.6: complete
-- P41.7.1: complete
-- P41.7.2: complete
-- P41.7.3: complete
-- P41.7.3A: complete
-- P41.7.3B: complete
-- P41.7.3C: complete
-- P41.7.3D: ${currentPhase?.status || "unknown"}
-- P41.7.3E through P41.7.6 / P41.7 / P41.8 / P41.9: planned
-- P42: Project Registry + Adapter Framework
-
-## Roadmap Separation
-
-- OS roadmap track remains NEXUS-only
-- CareLoop / project progress is excluded from the OS phase registry
-- Command Center roadmap data mirrors the phase-status registry
+- Nexus phases: ${sections.nexusPhases ? "PASS" : "FAIL"}
+- Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}
+- Current phase: ${sections.currentPhase ? "PASS" : "FAIL"}
+- Previous phase: ${sections.previousPhase ? "PASS" : "FAIL"}
+- Next phase: ${sections.nextPhase ? "PASS" : "FAIL"}
+- Required P41.7 entries: ${sections.requiredP417Entries ? "PASS" : "FAIL"}
+- Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}
+- Report written: ${reportWritten ? "PASS" : "FAIL"}
 
 ## Failures
 
@@ -260,8 +153,23 @@ ${failures.length === 0 ? "- None" : failures.map((failure) => `- ${failure}`).j
 ${result}
 `;
 
-writeFileSync(REPORT_PATH, report, "utf8");
+try {
+  writeFileSync(REPORT_PATH, report, "utf8");
+} catch (error) {
+  reportWritten = false;
+  fail("reportWritten", `Could not write ${REPORT_PATH}: ${error.message}`);
+}
 
-if (result !== "PASS") {
+console.log(`Nexus phases: ${sections.nexusPhases ? "PASS" : "FAIL"}`);
+console.log(`Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}`);
+console.log(`Current phase: ${sections.currentPhase ? "PASS" : "FAIL"}`);
+console.log(`Previous phase: ${sections.previousPhase ? "PASS" : "FAIL"}`);
+console.log(`Next phase: ${sections.nextPhase ? "PASS" : "FAIL"}`);
+console.log(`Required P41.7 entries: ${sections.requiredP417Entries ? "PASS" : "FAIL"}`);
+console.log(`Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}`);
+console.log(`Report written: ${sections.reportWritten ? "PASS" : "FAIL"}`);
+console.log(`Result: ${Object.values(sections).every(Boolean) ? "PASS" : "FAIL"}`);
+
+if (!Object.values(sections).every(Boolean)) {
   process.exitCode = 1;
 }

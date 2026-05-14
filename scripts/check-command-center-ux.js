@@ -18,6 +18,7 @@ const sections = {
   pageSpecificUx: true,
   serviceHealthUx: true,
   commandPalette: true,
+  commandCenterHelpLinks: true,
   operatorActions: true,
   commandCenterTabs: true,
   routeWideTabContract: true,
@@ -170,6 +171,7 @@ const workflowRecommendationSource = readFile("workspace/workflowRecommendations
 const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
 const readinessSource = readFile("dashboard/src/data/capabilityReadiness.js");
 const commandSource = readFile("dashboard/src/data/nexusCommands.js");
+const helpLinksSource = readFile("dashboard/src/data/commandCenterHelpLinks.js");
 const commandTabsSource = readFile("dashboard/src/data/commandCenterTabs.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
@@ -565,6 +567,29 @@ for (const expectedTest of [
 }
 check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Route matrix missing /command-center/services");
 
+// Command Center help links
+check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
+check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
+check(commandCenterSource.includes('<HelpLink routeKey={currentPage}'), "commandCenterHelpLinks", "HelpLink should be route-aware");
+for (const expected of [
+  "Starting a Mission",
+  "Command Center Guide",
+  "Activating Tasks",
+  "Using Agent Workbench",
+  "Controlled Implementation",
+  "Understanding Evidence and Audit",
+  "Running NEXUS Locally",
+  "Demo Mode vs Private Mode",
+]) {
+  check(helpLinksSource.includes(expected), "commandCenterHelpLinks", `Help links missing expected label: ${expected}`);
+}
+for (const expectedTest of [
+  "Command Center help links are visible on major routes",
+  "Command Center help links map to expected usage docs",
+]) {
+  check(routeTestSource.includes(expectedTest), "commandCenterHelpLinks", `Route tests missing help-link coverage: ${expectedTest}`);
+}
+
 // Command palette
 check(commandSource.includes("export const NEXUS_COMMANDS"), "commandPalette", "nexusCommands.js must export NEXUS_COMMANDS");
 check(commandSource.includes("getNexusCommandsForScope"), "commandPalette", "nexusCommands.js must export getNexusCommandsForScope");
@@ -946,6 +971,7 @@ console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : 
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
+console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
 console.log(`Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" : "FAIL"}`);
@@ -992,6 +1018,7 @@ const report = `# Command Center UX Report
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
+- Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
 - Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" : "FAIL"}

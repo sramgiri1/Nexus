@@ -545,3 +545,40 @@ This subphase adds the operator-facing documentation foundation for the stabiliz
 ### Next Phase
 
 - P41.7.5 — Command Center Help Links + Docs Navigation
+
+## P41.7.5 — Command Center Help Links + Docs Navigation
+
+This subphase connects stabilized Command Center routes to the operator usage
+docs introduced in P41.7.4 and repairs the phase-status registry checks used by
+the OS Roadmap.
+
+### Help Link Model
+
+- Command Center renders a compact route-aware `Guide` affordance in the top bar.
+- Help links point to local `docs/usage/*` paths and do not execute actions,
+  call providers, or open external network resources.
+- Route coverage includes Mission Control, Workspace, Task Queue, Agent
+  Workbench, Implementation, Evidence, Live API, Service Health, Projects,
+  Safety, OS Roadmap, and Demo Mode.
+- Missing route mappings fall back to the Command Center guide instead of
+  exposing raw internal data.
+
+### Docs and Status Validation
+
+- Usage docs are checked for required coverage, local links, mode-boundary
+  wording, route-to-doc help mappings, and readability.
+- `os-roadmap/phase-status.json` is validated as a non-empty NEXUS OS-only
+  registry with P41.7.4 complete, P41.7.5 current/complete, and P41.7.6 next.
+- DemoApp remains demo mode only; local-private pages use Private Project or
+  no-project guidance.
+
+### Boundary Rules Preserved
+
+- No backend execution, provider calls, DB writes, worker runtime, local API
+  behavior change, or action bridge behavior change is added.
+- Help-link UI is guidance-only and does not mutate project, runtime, or private
+  files.
+
+### Next Phase
+
+- P41.7.6 — Docs Coverage Checker + Final Validation

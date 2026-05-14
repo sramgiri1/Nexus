@@ -198,6 +198,57 @@ test("route-wide implemented tabs can switch without stale labels", async ({ pag
   expect(errors).toEqual([]);
 });
 
+test("Command Center help links are visible on major routes", async ({ page }) => {
+  const errors = captureClientErrors(page);
+  const helpRoutes = [
+    "/command-center",
+    "/command-center/workspace",
+    "/command-center/tasks",
+    "/command-center/workbench",
+    "/command-center/implementation",
+    "/command-center/evidence",
+    "/command-center/liveapi",
+    "/command-center/services",
+    "/command-center/demo",
+    "/command-center/projects",
+    "/command-center/safety",
+    "/command-center/database",
+    "/command-center/roadmap",
+  ];
+
+  for (const path of helpRoutes) {
+    await page.goto(path);
+    await expect(page.locator(".ccv2-help-link").first()).toBeVisible();
+    await expect(page.locator(".ccv2-help-link__eyebrow").first()).toHaveText("Guide");
+    await expect(page.locator(".ccv2-help-link__path").first()).toContainText("docs/usage/");
+    await page.locator(".ccv2-help-link").first().click();
+    await expect(page).toHaveURL(new RegExp(path.replace("/", "\\/")));
+  }
+
+  expect(errors).toEqual([]);
+});
+
+test("Command Center help links map to expected usage docs", async ({ page }) => {
+  const expectedHelp = [
+    ["/command-center", "Starting a Mission", "docs/usage/STARTING_A_MISSION.md"],
+    ["/command-center/workspace", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
+    ["/command-center/tasks", "Activating Tasks", "docs/usage/ACTIVATING_TASKS.md"],
+    ["/command-center/workbench", "Using Agent Workbench", "docs/usage/USING_AGENT_WORKBENCH.md"],
+    ["/command-center/implementation", "Controlled Implementation", "docs/usage/CONTROLLED_IMPLEMENTATION.md"],
+    ["/command-center/evidence", "Understanding Evidence and Audit", "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md"],
+    ["/command-center/liveapi", "Running NEXUS Locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
+    ["/command-center/services", "Running NEXUS Locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
+    ["/command-center/demo", "Demo Mode vs Private Mode", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
+  ];
+
+  for (const [path, label, docPath] of expectedHelp) {
+    await page.goto(path);
+    const help = page.locator(".ccv2-help-link").first();
+    await expect(help).toContainText(label);
+    await expect(help).toContainText(docPath);
+  }
+});
+
 test("ai verse route renders constellation and popup interaction works", async ({ page }) => {
   const errors = captureClientErrors(page);
 

@@ -2,7 +2,8 @@
 
 ## What NEXUS Is
 
-NEXUS is a governed Agentic OS for planning, reviewing, validating, and tracking agentic work through contracts, approvals, evidence, and safety boundaries.
+NEXUS is a governed Agentic OS for planning, reviewing, validating, and tracking
+agentic work through contracts, approvals, evidence, and safety boundaries.
 
 ## Who Should Read These Docs
 
@@ -12,7 +13,13 @@ NEXUS is a governed Agentic OS for planning, reviewing, validating, and tracking
 
 ## Current Local Usage Status
 
-NEXUS currently supports a local operator workflow through Command Center, local snapshots, the local API read layer, governed task activation, Agent Workbench review, controlled implementation review, approvals, visual QA artifacts, and localhost-only `nexus:*` boot commands. Broad autonomous execution, provider dispatch, worker runtime, DB writes, and release execution are not enabled yet.
+NEXUS currently supports a local operator workflow through Command Center,
+local snapshots, the local API read layer, governed task activation, Agent
+Workbench review, controlled implementation review, approvals, visual QA
+artifacts, and localhost-only `nexus:*` boot commands.
+
+Broad autonomous execution, provider dispatch, worker runtime, DB writes, and
+release execution are not enabled yet.
 
 ## Command Center Guides
 

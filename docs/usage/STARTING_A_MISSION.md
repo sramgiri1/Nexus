@@ -2,7 +2,9 @@
 
 ## Mission Control
 
-Mission Control is the primary entry point for starting governed work. It answers what mission is active, what should happen next, and what evidence or safety posture already exists.
+Mission Control is the primary entry point for starting governed work.
+It answers what mission is active, what should happen next, and what evidence
+or safety posture already exists.
 
 Mission Control is tabbed:
 
@@ -17,7 +19,9 @@ Mission Control is tabbed:
 
 ## Mission Composer
 
-Mission composition is available through the current local action and planning surfaces. It is designed to turn intent into a governed plan rather than immediately executing work.
+Mission composition is available through the current local action and planning
+surfaces. It is designed to turn intent into a governed plan rather than
+immediately executing work.
 
 If no project is selected, start with project setup instead of using demo data:
 

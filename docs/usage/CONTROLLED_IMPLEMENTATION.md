@@ -2,7 +2,8 @@
 
 ## Purpose
 
-Controlled Implementation is the governed implementation workflow for local NEXUS work. It is intentionally narrower than broad autonomous coding.
+Controlled Implementation is the governed implementation workflow for local
+NEXUS work. It is intentionally narrower than broad autonomous coding.
 
 ## Current Boundary
 
@@ -48,4 +49,5 @@ Implementation is not just “apply change.” It must also show:
 - whether rollback is available, not needed, or unavailable
 - whether production behavior changed
 
-Current limitation: broad autonomous implementation, provider dispatch, worker runtime, release execution, and live DB writes remain disabled.
+Current limitation: broad autonomous implementation, provider dispatch, worker
+runtime, release execution, and live DB writes remain disabled.

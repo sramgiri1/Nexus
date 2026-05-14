@@ -106,6 +106,13 @@ function validateLinksInFile(relativePath) {
   }
 }
 
+function getLongLineFailures(relativePath) {
+  return read(relativePath)
+    .split("\n")
+    .map((line, index) => ({ line, lineNumber: index + 1 }))
+    .filter((entry) => entry.line.length > 1000);
+}
+
 console.log("\nNEXUS Docs Coverage Check\n=========================\n");
 
 const branch = gitOutput(["branch", "--show-current"]);
@@ -128,6 +135,8 @@ const gettingStarted = read("docs/usage/GETTING_STARTED.md");
 const demoModeGuide = read("docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md");
 const troubleshootingGuide = read("docs/usage/TROUBLESHOOTING.md");
 const helpLinksSource = read("dashboard/src/data/commandCenterHelpLinks.js");
+const routeSource = read("dashboard/src/data/commandCenterRoutes.js");
+const phaseStatusSource = read("os-roadmap/phase-status.json");
 
 for (const requiredField of [
   "Purpose",
@@ -270,8 +279,47 @@ for (const expected of [
   check(helpLinksSource.includes(expected), "helpLinks", `Help-link map missing: ${expected}`);
 }
 
+for (const expected of [
+  "safety",
+  "projects",
+  "roadmap",
+  "troubleshooting",
+  "faq",
+]) {
+  check(helpLinksSource.includes(`${expected}:`), "helpLinks", `Help-link map missing route key: ${expected}`);
+}
+
+const helpDocPathMatches = [...helpLinksSource.matchAll(/docPath: "([^"]+)"/g)];
+for (const match of helpDocPathMatches) {
+  check(existsSync(join(ROOT, match[1])), "helpLinks", `Help-link docPath does not exist: ${match[1]}`);
+}
+
+for (const expectedRouteKey of [
+  "mission",
+  "workspace",
+  "tasks",
+  "workbench",
+  "implementation",
+  "evidence",
+  "liveapi",
+  "services",
+  "safety",
+  "projects",
+  "roadmap",
+  "demo",
+]) {
+  check(routeSource.includes(`key: "${expectedRouteKey}"`), "helpLinks", `Route matrix missing help-covered route: ${expectedRouteKey}`);
+}
+
+check(phaseStatusSource.trim().length > 0, "usageDocs", "phase-status.json must be non-empty");
+
 for (const file of requiredUsageDocs) {
   const content = read(file);
+  const lines = content.split("\n");
+  check(lines.length >= 8, "usageDocs", `Usage doc appears too compressed: ${file}`);
+  for (const longLine of getLongLineFailures(file)) {
+    fail("usageDocs", `${file}:${longLine.lineNumber} exceeds 1000 characters`);
+  }
   if (file.endsWith("DEMO_MODE_VS_PRIVATE_MODE.md")) continue;
   const demoMentions = content.match(/DemoApp/g) || [];
   const hasSafeBoundaryCopy = content.includes("DemoApp is demo mode only")

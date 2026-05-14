@@ -2,15 +2,24 @@
 
 ## Purpose
 
-Command Center is the operator surface for governed local NEXUS work. It summarizes what is active, what is blocked, what evidence exists, and what is not enabled yet.
+Command Center is the operator surface for governed local NEXUS work.
+It summarizes what is active, what is blocked, what evidence exists, and what is
+not enabled yet.
 
 ## NEXUS Command Palette
 
-- Purpose: expose a simple operator command surface for governed local work without requiring operators to memorize internal scripts or roadmap phases
+- Purpose: expose a simple operator command surface for governed local work
+  without requiring operators to memorize internal scripts or roadmap phases
 - How to open it: use the `Command Palette` button in the top bar or `Cmd/Ctrl+K`
-- Available commands now: `Plan Mission`, `Review Work`, `Run Retro`, `Guard Scope`, and `Explain Current State` when the underlying local state exists
-- Disabled commands: `Run QA Gate`, `Propose Fix`, `Prepare Ship`, and `Freeze Workspace` stay disabled until their required governed capabilities exist
-- Safety rule: no unsafe action executes directly from the palette; commands either open an existing governed route, show a read-only summary, or explain why they are not enabled
+- Available commands now: `Plan Mission`, `Review Work`, `Run Retro`,
+  `Guard Scope`, and `Explain Current State` when the underlying local state
+  exists
+- Disabled commands: `Run QA Gate`, `Propose Fix`, `Prepare Ship`, and
+  `Freeze Workspace` stay disabled until their required governed capabilities
+  exist
+- Safety rule: no unsafe action executes directly from the palette; commands
+  either open an existing governed route, show a read-only summary, or explain
+  why they are not enabled
 
 ## Using Command Center Tabs
 
@@ -26,7 +35,9 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 - Project scope shows the active project, active mission, project tasks, evidence, gates, and cost posture when available.
 - Portfolio scope is a placeholder until Project Registry is implemented in P42.
 - NEXUS OS scope is for platform progress, service posture, docs/tests readiness, and roadmap status.
-- If no project is selected, Command Center should guide the operator to create or import a project, add a project profile, define stack and test commands, create a mission, generate a plan, and activate the first task.
+- If no project is selected, Command Center should guide the operator to create
+  or import a project, add a project profile, define stack and test commands,
+  create a mission, generate a plan, and activate the first task.
 - DemoApp is demo mode only and must not be treated as the local-private fallback.
 
 ## Roadmap Separation
@@ -39,7 +50,8 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 
 - Purpose: enterprise cockpit for the active mission and current platform posture
 - Shows: mission hero, next best action, system status, gates, tasks, safety, evidence, and readiness
-- Available actions: mission planning, review, explain, and operator action previews through the command palette and Mission Control action row
+- Available actions: mission planning, review, explain, and operator action
+  previews through the command palette and Mission Control action row
 - Disabled actions: show user-facing reasons such as action bridge, worker runtime, or release bridge requirements
 - Evidence/activity: summarized from runtime records and snapshots
 - Known limitations: does not execute providers or worker runtime
@@ -119,11 +131,14 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 ## Projects
 
 - Purpose: summarize current project or private-project state
-- Shows: active scope, backend validation, iOS readiness, release readiness, adapter posture, and local-private project progress when available
+- Shows: active scope, backend validation, iOS readiness, release readiness,
+  adapter posture, and local-private project progress when available
 - Available actions: inspection only
 - Disabled actions: project registry and adapter framework are not complete yet
 - Evidence/activity: validation posture and readiness context
-- Known limitations: Project Registry + Adapter Framework is planned for P42, so project progress is still a temporary local-private example rather than a dynamic registry
+- Known limitations: Project Registry + Adapter Framework is planned for P42,
+  so project progress is still a temporary local-private example rather than a
+  dynamic registry
 
 ## Service Health
 
@@ -137,7 +152,9 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 ## OS Roadmap
 
 - Purpose: track NEXUS OS platform capability only
-- Shows: current OS phase, previous completed phase, next OS phase, completed/planned/blocked counts, completed and planned phase lists, and open OS gaps
+- Shows: current OS phase, previous completed phase, next OS phase,
+  completed/planned/blocked counts, completed and planned phase lists, and open
+  OS gaps
 - Available actions: inspection only
 - Disabled actions: no mutations
 - Evidence/activity: roadmap only; project progress stays on the Projects route

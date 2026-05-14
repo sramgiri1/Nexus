@@ -7,7 +7,9 @@
 
 ## Task Activation Bridge
 
-Task activation depends on the task activation bridge. When it is available, a planned task can be activated into runtime without bypassing governance.
+Task activation depends on the task activation bridge.
+When it is available, a planned task can be activated into runtime without
+bypassing governance.
 
 ## What You See in Task Queue
 

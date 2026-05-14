@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T18:21:29.048Z
-- Validation branch: docs/os-usage-foundation
-- Validation HEAD: 5d80435
+- Generated at: 2026-05-14T18:54:56.324Z
+- Validation branch: docs/command-center-help-links-navigation
+- Validation HEAD: 88d1a4b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

@@ -31,9 +31,11 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.7.4
+## Current Status Through P41.7.5
 
-P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.4 now add the codebase documentation foundation, finalized tabbed Command Center validation layer, and operator-facing usage documentation foundation. The Command Center and local operator surface have:
+P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.5 now add the codebase documentation foundation,
+finalized tabbed Command Center validation layer, operator-facing usage documentation foundation, and route-aware Command Center help
+links. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -49,6 +51,7 @@ P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41
 - a codebase documentation standard, module registry, and phase module index for future maintainers and coding agents
 - route-wide tab metadata and validation for Mission Control, operational pages, platform pages, governance pages, Projects, OS Roadmap, Cost Center, and Batch Queue
 - usage guides for local boot, tabbed Command Center operation, mission start, task activation, Agent Workbench review, controlled implementation, evidence/audit, demo/private mode, troubleshooting, and FAQ
+- compact route-aware Command Center help links that point operators to the relevant local usage guide without executing actions
 
 ## Command Center Overview
 
@@ -136,6 +139,7 @@ npm run nexus:down
 
 - Usage guides: [docs/usage](docs/usage/README.md)
 - Command Center guide: [docs/usage/COMMAND_CENTER_GUIDE.md](docs/usage/COMMAND_CENTER_GUIDE.md)
+- Command Center help links: route-aware local guide pointers in the Command Center top bar
 - Codebase guides: [docs/codebase](docs/codebase/README.md)
 - Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
@@ -175,6 +179,8 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.7.3D: remaining Command Center page tab rollout
 - P41.7.3E: route-wide tab tests, docs, and OS phase status finalization
 - P41.7.4: OS usage documentation foundation
+- P41.7.5: Command Center help links + docs navigation
+- P41.7.6: docs coverage checker + final validation
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 

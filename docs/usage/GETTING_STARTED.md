@@ -2,7 +2,9 @@
 
 ## What NEXUS OS Is
 
-NEXUS is a local-first agentic operating system that separates mission planning, task activation, review, validation, evidence, approvals, and safety into explicit governed layers.
+NEXUS is a local-first agentic operating system that separates mission planning,
+task activation, review, validation, evidence, approvals, and safety into
+explicit governed layers.
 
 ## Current Completed Foundation Through P41.7.4
 
@@ -42,7 +44,9 @@ Through P41.6.4, NEXUS includes:
 - real release/deploy actions
 - unrestricted source mutation
 
-Unified boot was delivered in P41.6.2 and finalized through P41.6.5. Use the dashboard, local API, action bridge, and `nexus:*` commands documented in `package.json` and [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md).
+Unified boot was delivered in P41.6.2 and finalized through P41.6.5.
+Use the dashboard, local API, action bridge, and `nexus:*` commands documented
+in `package.json` and [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md).
 
 ## Safe Ways to Run NEXUS Locally
 

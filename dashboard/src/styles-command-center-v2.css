@@ -469,6 +469,49 @@
   flex: 1;
 }
 
+.ccv2-help-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  max-width: 260px;
+  padding: 4px 9px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  white-space: nowrap;
+}
+
+.ccv2-help-link__eyebrow {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--nexus-info);
+}
+
+.ccv2-help-link__label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--nexus-text-strong);
+}
+
+.ccv2-help-link__path {
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 10px;
+  color: var(--nexus-muted);
+}
+
+.ccv2-help-link__description {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
 .ccv2-topbar__modes {
   display: flex;
   align-items: center;

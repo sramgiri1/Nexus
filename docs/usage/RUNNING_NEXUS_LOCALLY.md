@@ -106,7 +106,9 @@ The page is read-only. Browser-side execution of `nexus:up`, `nexus:down`,
 - Projects shows project progress and start-project guidance.
 - OS Roadmap shows NEXUS OS phase progress only.
 
-If the local API is offline, Command Center may still show snapshot or file-backed fallback data. That is an intentional degraded mode, not automatic evidence of corruption.
+If the local API is offline, Command Center may still show snapshot or
+file-backed fallback data. That is an intentional degraded mode, not automatic
+evidence of corruption.
 
 ## Command Palette and Service Health
 

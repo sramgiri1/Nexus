@@ -2,40 +2,27 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T18:35:00.000Z
-- Validation branch: docs/os-usage-foundation
-- Validation HEAD: 5d80435
+- Generated at: 2026-05-14T18:54:08.822Z
+- Validation branch: docs/command-center-help-links-navigation
+- Validation HEAD: 88d1a4b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P41.7.4 — OS Usage Documentation Foundation
-- Status: complete
-- Branch: docs/os-usage-foundation
-- Commit: pending-final-commit
-- Next phase: P41.7.5
+- Current phase: P41.7.5
+- Previous phase: P41.7.4
+- Next phase: P41.7.6
 
-## Completion Checks
+## Checks
 
-- P41.5.1 through P41.5.6: complete
-- P41.6.1 through P41.6.6: complete
-- P41.7.1: complete
-- P41.7.2: complete
-- P41.7.3: complete
-- P41.7.3A: complete
-- P41.7.3B: complete
-- P41.7.3C: complete
-- P41.7.3D: complete
-- P41.7.3E: complete
-- P41.7.4: complete
-- P41.7.5 through P41.7.6 / P41.8 / P41.9: planned
-- P42: Project Registry + Adapter Framework
-
-## Roadmap Separation
-
-- OS roadmap track remains NEXUS-only
-- CareLoop / project progress is excluded from the OS phase registry
-- Command Center roadmap data mirrors the phase-status registry
+- Nexus phases: PASS
+- Phase status: PASS
+- Current phase: PASS
+- Previous phase: PASS
+- Next phase: PASS
+- Required P41.7 entries: PASS
+- Public-safe wording: PASS
+- Report written: PASS
 
 ## Failures
 

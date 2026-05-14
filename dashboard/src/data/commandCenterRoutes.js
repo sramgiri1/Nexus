@@ -27,7 +27,7 @@ export const COMMAND_CENTER_ROUTES = [
     scope: "project",
     tabs: MISSION_CONTROL_TABS,
     defaultTab: "overview",
-    helpDoc: "docs/usage/STARTING_A_MISSION.md",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "workspace",
@@ -80,7 +80,7 @@ export const COMMAND_CENTER_ROUTES = [
     scope: "portfolio",
     tabs: PROJECTS_TABS,
     defaultTab: "portfolio",
-    helpDoc: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
+    helpDoc: "docs/usage/GETTING_STARTED.md",
   },
   {
     key: "gates",
@@ -254,7 +254,7 @@ export const COMMAND_CENTER_ROUTES = [
     scope: "os",
     tabs: OS_ROADMAP_TABS,
     defaultTab: "current",
-    helpDoc: "docs/usage/GETTING_STARTED.md",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
     key: "activity",

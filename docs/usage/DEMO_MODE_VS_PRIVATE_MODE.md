@@ -19,7 +19,9 @@ Public-facing surfaces should stay:
 
 ## Private Project Wording
 
-In public-safe docs and broad operator messaging, use “private project” wording rather than exposing product internals unless a private-mode-only artifact explicitly requires it.
+In public-safe docs and broad operator messaging, use “private project” wording
+rather than exposing product internals unless a private-mode-only artifact
+explicitly requires it.
 
 ## DemoApp Boundary
 
@@ -31,7 +33,8 @@ Allowed DemoApp locations:
 - demo-only fixtures
 - demo-only tests that explicitly validate Demo Mode
 
-Local-private pages must show `Private Project`, an approved selected project label, or a no-project state. They must not use DemoApp as fallback data.
+Local-private pages must show `Private Project`, an approved selected project
+label, or a no-project state. They must not use DemoApp as fallback data.
 
 ## No Private Project Leakage Rule
 

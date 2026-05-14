@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { buildCommandCenterViewModelV2 } from "../data/commandCenterViewModel.js";
 import { CommandTabs, CommandTabPanel } from "../components/command-center-v2/CommandTabs.jsx";
+import { HelpLink } from "../components/command-center-v2/HelpLink.jsx";
 import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher.jsx";
 import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
 import {
@@ -494,6 +495,8 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenComman
       </div>
 
       <span className="ccv2-persistence-badge">Durable State: read-only</span>
+
+      <HelpLink routeKey={currentPage} />
 
       <button
         type="button"
