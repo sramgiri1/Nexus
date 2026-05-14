@@ -645,3 +645,38 @@ This polish subphase tightens the operator shell after P41.7 docs validation.
 ### Next Phase
 
 - P41.8.1 — Centralized Activity Log + Observability Ledger Foundation
+
+## P41.8.1A — Docs & Guides Usability + Header Simplification
+
+This targeted polish subphase improves the documentation hub and removes
+remaining global header noise before central activity logger work continues.
+
+### Docs & Guides Hub
+
+- Docs & Guides now behaves as an operator documentation hub.
+- Cards are accessible links to local usage, codebase, and architecture docs.
+- Primary card copy uses enterprise-friendly titles and descriptions.
+- Raw file paths are kept out of the primary card body and are available only as
+  link metadata.
+- The page no longer presents itself as planned, coming soon, or read-only.
+
+### Header Simplification
+
+- The global header keeps the page breadcrumb and scope/project summary.
+- Environment, Local API, Durable State, command text, and current time are not
+  shown in the global top bar.
+- Runtime/service details remain available on Service Health, Live API, Durable
+  State, and Settings surfaces.
+- Theme selection uses a compact icon menu while preserving System, Dark, and
+  Light behavior.
+
+### Boundary Rules Preserved
+
+- No backend execution, provider calls, DB writes, worker runtime, local API
+  behavior change, action bridge behavior change, activity instrumentation, or
+  private project mutation is added.
+- DemoApp remains limited to Demo Mode.
+
+### Next Phase
+
+- P41.8.2 — Central Activity Logger

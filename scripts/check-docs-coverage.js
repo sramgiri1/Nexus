@@ -239,12 +239,13 @@ for (const expected of ["mission", "workspace", "tasks", "workbench", "implement
 for (const expected of [
   "DocsGuidesPage",
   "Documentation Index",
-  "Usage Guides",
-  "Codebase Guides",
-  "Architecture",
+  "Operator Guides",
+  "Developer / Contributor Guides",
+  "Architecture References",
   "Command Center Guide",
   "Module Registry",
-  "Architecture Diagrams",
+  "Open guide",
+  "Operator, architecture, and contributor guidance",
 ]) {
   assertContains(commandCenterSource, expected, "helpLinks", `Docs & Guides page missing expected copy: ${expected}`);
 }
@@ -252,6 +253,21 @@ for (const expected of [
 for (const match of helpLinksSource.matchAll(/docPath: "([^"]+)"/g)) {
   check(existsSync(join(ROOT, match[1])), "helpLinks", `Help-link docPath does not exist: ${match[1]}`);
 }
+
+for (const expected of [
+  "href={`/${item.path}`}",
+  "aria-label={`Open guide: ${item.title}`}",
+  "First-run guide for launching NEXUS",
+  "Troubleshoot local boot, service health, docs links, and Command Center state.",
+]) {
+  assertContains(commandCenterSource, expected, "helpLinks", `Docs hub missing clickable/polished card behavior: ${expected}`);
+}
+
+check(
+  !commandCenterSource.includes("ccv2-doc-card__path"),
+  "helpLinks",
+  "Docs cards should not render raw file paths as primary UX",
+);
 
 for (const file of ["README.md", ...requiredUsageDocs, ...requiredCodebaseDocs]) {
   validateLinksInFile(file);

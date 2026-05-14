@@ -91,6 +91,10 @@ function captureClientErrors(page) {
 }
 
 async function pickTheme(page, theme) {
+  const button = page.getByRole("button", { name: new RegExp(`Use ${theme} theme`, "i") });
+  if (!(await button.isVisible().catch(() => false))) {
+    await page.getByRole("button", { name: /Open theme menu/i }).click();
+  }
   await page.getByRole("button", { name: new RegExp(`Use ${theme} theme`, "i") }).click();
 }
 
@@ -373,6 +377,8 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/");
 
     await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Open theme menu/i })).toBeVisible();
+    await page.getByRole("button", { name: /Open theme menu/i }).click();
     await expect(page.getByRole("button", { name: /Use system theme/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /Use dark theme/i })).toBeVisible();
     await expect(page.getByRole("button", { name: /Use light theme/i })).toBeVisible();
@@ -964,7 +970,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(topbar).not.toContain("local-");
     expect(topbar).not.toContain("Command Palette");
     await expect(page.getByLabel("Open Command Palette")).toBeVisible();
-    await expect(page.getByLabel("Use system theme")).toBeVisible();
+    await expect(page.getByRole("button", { name: /Open theme menu/i })).toBeVisible();
     await expect(page).toHaveTitle(/NEXUS OS - Agentic Command Center/);
     await expect(page).not.toHaveTitle(/Venture Orchestration System/);
 
@@ -1348,14 +1354,17 @@ test.describe("Command Center route-wide UX", () => {
     const body = await page.locator("body").innerText();
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Docs & Guides");
+    await expect(page.locator(".ccv2-page-head__sub")).toContainText("Operator, architecture, and contributor guidance");
     await expect(page.locator("body")).toContainText("Documentation Index");
-    await expect(page.locator("body")).toContainText("Usage Guides");
-    await expect(page.locator("body")).toContainText("Codebase Guides");
-    await expect(page.locator("body")).toContainText("Architecture");
+    await expect(page.locator("body")).toContainText("Operator Guides");
+    await expect(page.locator("body")).toContainText("Developer / Contributor Guides");
+    await expect(page.locator("body")).toContainText("Architecture References");
     for (const label of [
       "Getting Started",
       "Command Center Guide",
       "Running NEXUS Locally",
+      "Starting a Mission",
+      "Activating Tasks",
       "Using Agent Workbench",
       "Controlled Implementation",
       "Understanding Evidence & Audit",
@@ -1364,6 +1373,14 @@ test.describe("Command Center route-wide UX", () => {
     ]) {
       expect(body).toContain(label);
     }
+    await expect(page.getByRole("link", { name: /Open guide: Getting Started/i })).toHaveAttribute("href", /docs\/usage\/GETTING_STARTED\.md/);
+    await expect(page.getByRole("link", { name: /Open guide: Command Center Guide/i })).toHaveAttribute("href", /docs\/usage\/COMMAND_CENTER_GUIDE\.md/);
+    await expect(page.getByRole("link", { name: /Open guide: Running NEXUS Locally/i })).toHaveAttribute("href", /docs\/usage\/RUNNING_NEXUS_LOCALLY\.md/);
+    await expect(page.getByRole("link", { name: /Open guide: Understanding Evidence & Audit/i })).toHaveAttribute("href", /docs\/usage\/UNDERSTANDING_EVIDENCE_AUDIT\.md/);
+    expect(body).toContain("First-run guide for launching NEXUS");
+    expect(body).toContain("Troubleshoot local boot, service health, docs links, and Command Center state.");
+    expect(body).not.toContain("docs/usage/GETTING_STARTED.md");
+    expect(body).not.toContain("planned surface");
     expect(body).not.toContain("Coming Soon");
     expect(body).not.toContain("DemoApp");
 

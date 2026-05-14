@@ -829,6 +829,7 @@ for (const expected of [
   "NEXUS",
   "ccv2-topbar__scope-chip",
   "Open Command Palette",
+  "Open theme menu",
   "Use system theme",
   "Use dark theme",
   "Use light theme",
@@ -839,6 +840,9 @@ for (const forbidden of ["Environment:", "Cmd/Ctrl+K", "THEME", "Local API:", "D
   check(!topBarSource.includes(forbidden), "topBarPolish", `Top bar still contains noisy copy: ${forbidden}`);
 }
 check(commandCenterSource.includes("DocsGuidesPage"), "topBarPolish", "Docs & Guides route should render a real docs page");
+check(commandCenterSource.includes("Operator Guides"), "topBarPolish", "Docs & Guides should use operator-focused docs copy");
+check(commandCenterSource.includes("href={`/${item.path}`}"), "topBarPolish", "Docs & Guides cards should be clickable links");
+check(!commandCenterSource.includes("ccv2-doc-card__path"), "topBarPolish", "Docs cards should not render raw paths as primary text");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
 check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
 

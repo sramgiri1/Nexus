@@ -164,16 +164,16 @@ not enabled yet.
 ## Docs & Guides
 
 - Purpose: provide one local index for current usage, codebase, and architecture docs
-- Shows: usage guides, codebase documentation references, and architecture references as readable cards
-- Available actions: local documentation navigation only
+- Shows: operator guides, developer/contributor guides, and architecture references as clickable cards with polished summaries
+- Available actions: open local documentation references from each card
 - Disabled actions: no command execution, provider calls, DB writes, or project mutation
-- Known limitations: docs are file-backed references; they do not replace future contextual help or searchable docs
+- Known limitations: docs are file-backed links; an in-app markdown viewer and searchable docs remain future work
 
 ## Header and Global Controls
 
-- The global header is intentionally compact: `NEXUS / <Current Page>`, a scope/project chip, Guide, command palette icon, and compact theme control.
+- The global header is intentionally compact: `NEXUS / <Current Page>`, a scope/project chip, help icon, command palette icon, and compact theme menu.
 - Environment, Local API, Durable State, service details, and local boot posture live on their dedicated pages instead of crowding every page.
-- Theme support remains System, Dark, and Light.
+- Theme support remains System, Dark, and Light through the compact theme menu.
 
 ## Demo Mode
 

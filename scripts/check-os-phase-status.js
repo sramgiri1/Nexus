@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P41.8", "P41.8.1"]);
+const CURRENT_PHASE_IDS = new Set(["P41.8", "P41.8.1A"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,8 +75,8 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P41.8.1", "currentPhase", "currentPhase must be P41.8.1");
-check(phaseStatus.previousPhase === "P41.7.7", "previousPhase", "previousPhase must be P41.7.7");
+check(phaseStatus.currentPhase === "P41.8.1A", "currentPhase", "currentPhase must be P41.8.1A");
+check(phaseStatus.previousPhase === "P41.8.1", "previousPhase", "previousPhase must be P41.8.1");
 check(phaseStatus.nextPhase === "P41.8.2", "nextPhase", "nextPhase must be P41.8.2");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
@@ -104,6 +104,7 @@ for (const phaseId of [
   "P41.7",
   "P41.8",
   "P41.8.1",
+  "P41.8.1A",
   "P41.8.2",
   "P41.8.6",
 ]) {
@@ -144,13 +145,21 @@ check(p417?.nextPhase === "P41.8.1", "nextPhase", "P41.7 parent nextPhase must b
 const p418 = statusById.get("P41.8");
 check(p418?.status === "in_progress", "currentPhase", "P41.8 must be in_progress");
 check(p418?.title === "Centralized Activity Log + Observability Ledger", "nextPhase", "P41.8 title mismatch");
+check(p418?.nextPhase === "P41.8.1A", "nextPhase", "P41.8 parent nextPhase must be P41.8.1A");
 
 const p4181 = statusById.get("P41.8.1");
-check(p4181?.status === "complete" || p4181?.status === "in_progress", "currentPhase", "P41.8.1 must be current or complete");
-check(p4181?.title === "Activity Event Schema + Correlation ID Model", "currentPhase", "P41.8.1 title mismatch");
-check(p4181?.branch === "observability/activity-event-schema", "currentPhase", "P41.8.1 branch mismatch");
-check(Boolean(p4181?.commit), "currentPhase", "P41.8.1 must have a commit or pending-final-commit placeholder");
-check(p4181?.nextPhase === "P41.8.2", "nextPhase", "P41.8.1 nextPhase must be P41.8.2");
+check(p4181?.status === "complete", "previousPhase", "P41.8.1 must be complete");
+check(p4181?.title === "Activity Event Schema + Correlation ID Model", "previousPhase", "P41.8.1 title mismatch");
+check(p4181?.branch === "observability/activity-event-schema", "previousPhase", "P41.8.1 branch mismatch");
+check(p4181?.commit === "30c3bea", "completedPhaseCommits", "P41.8.1 commit must be 30c3bea");
+check(p4181?.nextPhase === "P41.8.1A", "nextPhase", "P41.8.1 nextPhase must be P41.8.1A");
+
+const p4181a = statusById.get("P41.8.1A");
+check(p4181a?.status === "complete" || p4181a?.status === "in_progress", "currentPhase", "P41.8.1A must be current or complete");
+check(p4181a?.title === "Docs & Guides Usability + Header Simplification", "currentPhase", "P41.8.1A title mismatch");
+check(p4181a?.branch === "fix/docs-guides-header-polish", "currentPhase", "P41.8.1A branch mismatch");
+check(Boolean(p4181a?.commit), "currentPhase", "P41.8.1A must have a commit or pending-final-commit placeholder");
+check(p4181a?.nextPhase === "P41.8.2", "nextPhase", "P41.8.1A nextPhase must be P41.8.2");
 
 const p4182 = statusById.get("P41.8.2");
 check(p4182?.status === "planned", "nextPhase", "P41.8.2 must be planned");

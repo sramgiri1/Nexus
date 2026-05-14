@@ -442,6 +442,7 @@ function Sidebar({ vm, location }) {
 
 /* ─── Top Command Bar ─── */
 function TopBar({ vm, currentPage, themeState, onOpenCommandPalette }) {
+  const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const route = COMMAND_CENTER_ROUTE_BY_KEY[currentPage] || COMMAND_CENTER_ROUTE_BY_KEY.mission;
   const pageLabel = COMMAND_CENTER_ROUTE_BY_KEY[currentPage]?.expectedHeading || "Mission Control";
   const scopeLabel = route.scope === "os"
@@ -486,26 +487,41 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette }) {
       </button>
 
       <div className="ccv2-theme-control" aria-label="Theme selector" data-theme-control="nexus">
-        <span className="ccv2-theme-control__icon" aria-hidden="true">◐</span>
-        <div className="ccv2-theme-control__options" role="group" aria-label="Command Center theme">
-          {[
-            { id: "system", label: "S", title: "Use system theme" },
-            { id: "dark", label: "D", title: "Use dark theme" },
-            { id: "light", label: "L", title: "Use light theme" },
-          ].map((option) => (
-            <button
-              key={option.id}
-              type="button"
-              className={`ccv2-theme-control__button${themeState.theme === option.id ? " ccv2-theme-control__button--active" : ""}`}
-              aria-pressed={themeState.theme === option.id}
-              aria-label={option.title}
-              title={option.title}
-              onClick={() => themeState.setTheme(option.id)}
-            >
-              {option.label}
-            </button>
-          ))}
-        </div>
+        <button
+          type="button"
+          className="ccv2-theme-control__trigger"
+          aria-label={`Theme: ${themeState.theme}. Open theme menu`}
+          aria-haspopup="menu"
+          aria-expanded={themeMenuOpen}
+          title={`Theme: ${themeState.theme}`}
+          onClick={() => setThemeMenuOpen((open) => !open)}
+        >
+          <span className="ccv2-theme-control__icon" aria-hidden="true">◐</span>
+        </button>
+        {themeMenuOpen && (
+          <div className="ccv2-theme-control__menu" role="menu" aria-label="Command Center theme">
+            {[
+              { id: "system", label: "System", title: "Use system theme" },
+              { id: "dark", label: "Dark", title: "Use dark theme" },
+              { id: "light", label: "Light", title: "Use light theme" },
+            ].map((option) => (
+              <button
+                key={option.id}
+                type="button"
+                className={`ccv2-theme-control__menu-item${themeState.theme === option.id ? " ccv2-theme-control__menu-item--active" : ""}`}
+                aria-pressed={themeState.theme === option.id}
+                aria-label={option.title}
+                title={option.title}
+                onClick={() => {
+                  themeState.setTheme(option.id);
+                  setThemeMenuOpen(false);
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
+          </div>
+        )}
       </div>
     </header>
   );
@@ -5329,44 +5345,116 @@ function OSRoadmapPage({ vm }) {
 
 const DOCS_GUIDE_GROUPS = [
   {
-    title: "Usage Guides",
-    description: "Operator-facing guidance for running NEXUS and using Command Center safely.",
+    title: "Operator Guides",
+    description: "Launch, operate, and troubleshoot NEXUS through safe local workflows.",
     items: [
-      ["Getting Started", "First-run path for local NEXUS operators.", "docs/usage/GETTING_STARTED.md"],
-      ["Command Center Guide", "Primary guide for Command Center surfaces and operator flow.", "docs/usage/COMMAND_CENTER_GUIDE.md"],
-      ["Running NEXUS Locally", "Local boot, status, doctor, and shutdown commands.", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
-      ["Starting a Mission", "How goals become governed mission plans.", "docs/usage/STARTING_A_MISSION.md"],
-      ["Activating Tasks", "How planned tasks move into governed activation.", "docs/usage/ACTIVATING_TASKS.md"],
-      ["Using Agent Workbench", "Review, evidence, and operator approval guidance.", "docs/usage/USING_AGENT_WORKBENCH.md"],
-      ["Controlled Implementation", "Scoped implementation workflow and validation expectations.", "docs/usage/CONTROLLED_IMPLEMENTATION.md"],
-      ["Understanding Evidence & Audit", "How evidence, audit records, and redaction are presented.", "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md"],
-      ["Mode Boundary Guide", "How private mode differs from demo-safe surfaces.", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
-      ["Troubleshooting", "Port conflicts, offline services, and local recovery steps.", "docs/usage/TROUBLESHOOTING.md"],
-      ["FAQ", "Short answers for common local operator questions.", "docs/usage/FAQ.md"],
+      {
+        title: "Getting Started",
+        description: "First-run guide for launching NEXUS, understanding the Command Center, and choosing your first governed action.",
+        path: "docs/usage/GETTING_STARTED.md",
+      },
+      {
+        title: "Command Center Guide",
+        description: "Operate missions, tasks, tabs, service health, command palette actions, and docs navigation from one cockpit.",
+        path: "docs/usage/COMMAND_CENTER_GUIDE.md",
+      },
+      {
+        title: "Running NEXUS Locally",
+        description: "Start, inspect, troubleshoot, and stop local NEXUS services with status and doctor commands.",
+        path: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
+      },
+      {
+        title: "Starting a Mission",
+        description: "Understand how goals become governed plans, tasks, evidence, and approvals.",
+        path: "docs/usage/STARTING_A_MISSION.md",
+      },
+      {
+        title: "Activating Tasks",
+        description: "Move planned work into governed task activation with clear prerequisites and evidence expectations.",
+        path: "docs/usage/ACTIVATING_TASKS.md",
+      },
+      {
+        title: "Using Agent Workbench",
+        description: "Review agent-owned work, operator decisions, evidence summaries, and blocker status.",
+        path: "docs/usage/USING_AGENT_WORKBENCH.md",
+      },
+      {
+        title: "Controlled Implementation",
+        description: "Use scoped implementation guidance without bypassing validation, rollback, or source-mutation boundaries.",
+        path: "docs/usage/CONTROLLED_IMPLEMENTATION.md",
+      },
+      {
+        title: "Understanding Evidence & Audit",
+        description: "Learn how NEXUS records proof, decisions, redaction, and traceability for governed work.",
+        path: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
+      },
+      {
+        title: "Demo vs Private Mode",
+        description: "Learn how NEXUS separates demo, local-private, and public-safe surfaces.",
+        path: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
+      },
+      {
+        title: "Troubleshooting",
+        description: "Troubleshoot local boot, service health, docs links, and Command Center state.",
+        path: "docs/usage/TROUBLESHOOTING.md",
+      },
+      {
+        title: "FAQ",
+        description: "Get concise answers to common operator questions about current NEXUS capabilities and limits.",
+        path: "docs/usage/FAQ.md",
+      },
     ],
   },
   {
-    title: "Codebase Guides",
-    description: "Maintainer-facing references for modules, reuse, and phase ownership.",
+    title: "Developer / Contributor Guides",
+    description: "Maintainable codebase references for contributors, Codex, and future agent work.",
     items: [
-      ["Code Documentation Standard", "Required fields and update rules for new module docs.", "docs/codebase/CODE_DOCUMENTATION_STANDARD.md"],
-      ["Module Registry", "Human-readable inventory of NEXUS module families.", "docs/codebase/MODULE_REGISTRY.md"],
-      ["Phase Module Index", "Phase-to-module map for future Codex and maintainer work.", "docs/codebase/PHASE_MODULE_INDEX.md"],
-      ["Reuse and Refactor Guide", "Reuse-first rules and refactor safety boundaries.", "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md"],
-      ["Shared Helper Catalog", "Catalog of planned and existing shared helper patterns.", "docs/codebase/SHARED_HELPER_CATALOG.md"],
-      ["Refactor Candidate Plan", "Risk-ranked plan for future helper extraction.", "docs/codebase/REFACTOR_CANDIDATE_PLAN.md"],
+      {
+        title: "Code Documentation Standard",
+        description: "Documentation rules every new module must satisfy before future reuse or refactor work.",
+        path: "docs/codebase/CODE_DOCUMENTATION_STANDARD.md",
+      },
+      {
+        title: "Module Registry",
+        description: "Canonical inventory of NEXUS module families, responsibilities, boundaries, and checkers.",
+        path: "docs/codebase/MODULE_REGISTRY.md",
+      },
+      {
+        title: "Reuse and Refactor Guide",
+        description: "Reuse-first guidance for avoiding duplicate helpers and deferring high-risk refactors.",
+        path: "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md",
+      },
+      {
+        title: "Phase Module Index",
+        description: "Phase-to-module map that explains which capabilities introduced or changed each area.",
+        path: "docs/codebase/PHASE_MODULE_INDEX.md",
+      },
     ],
   },
   {
-    title: "Architecture",
-    description: "Platform architecture, roadmap, local boot, and governance references.",
+    title: "Architecture References",
+    description: "System architecture, roadmap, local boot, durable state, and Command Center design references.",
     items: [
-      ["Agentic OS Architecture", "High-level architecture for the NEXUS operating model.", "docs/architecture/AGENTIC_OS_ARCHITECTURE.md"],
-      ["NEXUS Platform Roadmap", "NEXUS OS phase sequence and upcoming platform capabilities.", "docs/architecture/NEXUS_PLATFORM_ROADMAP.md"],
-      ["Command Center UX Stabilization", "Command Center design, route, tab, and polish history.", "docs/architecture/COMMAND_CENTER_UX_STABILIZATION.md"],
-      ["Unified NEXUS Local Boot", "Service manifest, status, doctor, up/down, and safety posture.", "docs/architecture/UNIFIED_NEXUS_LOCAL_BOOT.md"],
-      ["DB Foundation and Durable State", "Durable state architecture and read/write boundary posture.", "docs/architecture/DB_FOUNDATION_AND_DURABLE_STATE.md"],
-      ["Architecture Diagrams", "Diagram registry and architecture visual index.", "docs/architecture/diagrams/README.md"],
+      {
+        title: "Agentic OS Architecture",
+        description: "High-level operating model for authority, governance, evidence, runtime boundaries, and safety.",
+        path: "docs/architecture/AGENTIC_OS_ARCHITECTURE.md",
+      },
+      {
+        title: "NEXUS Platform Roadmap",
+        description: "Current and planned NEXUS OS phases, including documentation, boot, and observability tracks.",
+        path: "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+      },
+      {
+        title: "Command Center UX Stabilization",
+        description: "Design history for route cleanup, tabs, theme support, docs navigation, and header polish.",
+        path: "docs/architecture/COMMAND_CENTER_UX_STABILIZATION.md",
+      },
+      {
+        title: "DB Foundation and Durable State",
+        description: "Durable state architecture and read/write boundary posture for file-backed operation.",
+        path: "docs/architecture/DB_FOUNDATION_AND_DURABLE_STATE.md",
+      },
     ],
   },
 ];
@@ -5377,13 +5465,13 @@ function DocsGuidesPage() {
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Docs & Guides</div>
-          <div className="ccv2-page-head__sub">Operator, codebase, and architecture references for local NEXUS work.</div>
+          <div className="ccv2-page-head__sub">Operator, architecture, and contributor guidance for running NEXUS safely.</div>
         </div>
 
         <div className="ccv2-card ccv2-docs-intro">
           <div className="ccv2-section-heading">Documentation Index</div>
           <p className="ccv2-docs-intro__copy">
-            Use this page as the local navigation surface for current Command Center guidance. Docs remain file-backed and public-safe;
+            Use this page as the local documentation hub for current Command Center guidance. Cards open local repo references;
             project-specific progress stays under Projects, not inside the OS roadmap.
           </p>
         </div>
@@ -5398,12 +5486,19 @@ function DocsGuidesPage() {
               <span className="ccv2-pill ccv2-pill--pass">Available</span>
             </div>
             <div className="ccv2-docs-grid">
-              {group.items.map(([title, detail, path]) => (
-                <div key={path} className="ccv2-doc-card">
-                  <div className="ccv2-doc-card__title">{title}</div>
-                  <div className="ccv2-doc-card__detail">{detail}</div>
-                  <div className="ccv2-doc-card__path">{path}</div>
-                </div>
+              {group.items.map((item) => (
+                <a
+                  key={item.path}
+                  className="ccv2-doc-card"
+                  href={`/${item.path}`}
+                  title={item.path}
+                  aria-label={`Open guide: ${item.title}`}
+                >
+                  <span className="ccv2-doc-card__chip">{group.title}</span>
+                  <span className="ccv2-doc-card__title">{item.title}</span>
+                  <span className="ccv2-doc-card__detail">{item.description}</span>
+                  <span className="ccv2-doc-card__action">Open guide</span>
+                </a>
               ))}
             </div>
           </div>

@@ -540,18 +540,19 @@
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "observability/activity-event-schema",
+      "branch": "fix/docs-guides-header-polish",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway with an activity event schema and correlation model foundation.",
+      "summary": "Centralized observability track is underway; the current polish subphase improves Docs & Guides usability and simplifies the Command Center header before central logger work.",
       "checksRun": [
-        "npm run check:activity-event-schema",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
         "npm run check:os-phase-status"
       ],
       "knownLimitations": [
         "Activity capture, logger writes, Activity Log UI, trace views, provider/tool dispatch, worker runtime, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.1",
+      "nextPhase": "P41.8.1A",
       "commandCenterVisible": true
     },
     {
@@ -560,7 +561,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-event-schema",
-      "commit": "pending-final-commit",
+      "commit": "30c3bea",
       "completedAt": "",
       "summary": "Defines the redaction-safe activity event schema, correlation ID model, event type taxonomy, policy, checker, and architecture docs.",
       "checksRun": [
@@ -573,6 +574,30 @@
       ],
       "knownLimitations": [
         "No runtime instrumentation, central logger writes, Activity Log UI, activity API endpoint, provider/tool dispatch, worker runtime, DB writes, or project mutation is enabled."
+      ],
+      "nextPhase": "P41.8.1A",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.1A",
+      "title": "Docs & Guides Usability + Header Simplification",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/docs-guides-header-polish",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Makes Docs & Guides a clickable operator documentation hub with polished card copy and simplifies the global Command Center header with compact controls.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Docs cards link to local repository docs; a rich in-app markdown viewer remains future work.",
+        "No backend behavior, activity instrumentation, provider dispatch, DB writes, or project mutation is introduced."
       ],
       "nextPhase": "P41.8.2",
       "commandCenterVisible": true
@@ -1196,7 +1221,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-14T21:20:00.000Z",
-  "currentPhase": "P41.8.1",
-  "previousPhase": "P41.7.7",
+  "currentPhase": "P41.8.1A",
+  "previousPhase": "P41.8.1",
   "nextPhase": "P41.8.2"
 }

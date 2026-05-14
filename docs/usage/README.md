@@ -32,7 +32,9 @@ release execution are not enabled yet.
 - [Understanding Evidence, Audit, and Runtime Events](UNDERSTANDING_EVIDENCE_AUDIT.md)
 
 The Command Center `Docs & Guides` route now acts as the local documentation
-index for these usage docs plus the codebase and architecture references.
+hub for these usage docs plus codebase and architecture references. Its cards
+are clickable local documentation references with operator-focused titles and
+descriptions; raw file paths are kept out of the primary card copy.
 
 ## Operating Sequence
 

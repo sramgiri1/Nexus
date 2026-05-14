@@ -255,6 +255,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P41.8.1A",
+      "title": "Docs & Guides Usability + Header Simplification",
+      "track": "NEXUS_OS",
+      "order": 14.15,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Polish Docs & Guides as an operator documentation hub and simplify the global Command Center header.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.8.2",
       "title": "Central Activity Logger",
       "track": "NEXUS_OS",
