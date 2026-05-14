@@ -1933,6 +1933,232 @@ function WorkspaceBand({ vm }) {
 }
 
 /* ─── Mission Control Page ─── */
+function ScopeSummaryCards({ vm, activeScope }) {
+  const portfolio = vm.scopeModel?.portfolioSummary || {};
+  const os = vm.scopeModel?.osSummary || {};
+  const cards = activeScope === "portfolio"
+    ? [
+      { label: "Total Projects", value: portfolio.totalProjects ?? 1, meta: "Project Registry planned for P42" },
+      { label: "Active Projects", value: portfolio.activeProjects ?? 1, meta: "Local-private project context" },
+      { label: "Blocked Projects", value: portfolio.blockedProjects ?? 0, meta: "Projects needing review" },
+      { label: "Pending Approvals", value: portfolio.pendingApprovals ?? 0, meta: "Across available project summaries" },
+    ]
+    : activeScope === "os"
+      ? [
+        { label: "Current OS Phase", value: os.currentPhase || "Current phase tracked", meta: "NEXUS OS platform scope" },
+        { label: "Next OS Phase", value: os.nextPhase || "Next phase tracked", meta: "Roadmap remains OS-only" },
+        { label: "Service Health", value: os.serviceHealth || "Status snapshot available", meta: "Use Service Health for details" },
+        { label: "Docs / Tests", value: os.docsStatus || "Docs status available", meta: os.roadmapStatus || "Roadmap registry synced" },
+      ]
+      : [
+        { label: "Active Project", value: vm.scopeModel?.selectedProjectLabel || vm.shell.activeProject, meta: "Project scope" },
+        { label: "Active Mission", value: vm.missionComposer.missionDisplayName, meta: "Read-only mission summary" },
+        { label: "Active Tasks", value: vm.taskActivation?.activatedCount || 0, meta: `${vm.taskActivation?.plannedCount || 0} planned tasks` },
+        { label: "Gate Status", value: `${Object.values(vm.mission.gates).filter((status) => status === "PASS").length}/3 passing`, meta: "AUDITOR / SENTINEL / WARDEN" },
+      ];
+
+  return (
+    <div className="ccv2-scope-summary-grid">
+      {cards.map((card) => (
+        <div key={card.label} className="ccv2-scope-summary-card">
+          <div className="ccv2-scope-summary-card__label">{card.label}</div>
+          <div className="ccv2-scope-summary-card__value">{card.value}</div>
+          <div className="ccv2-scope-summary-card__meta">{card.meta}</div>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function PortfolioProjectCards({ vm }) {
+  const projects = vm.scopeModel?.projectSummaries || [];
+
+  return (
+    <div className="ccv2-card">
+      <div className="ccv2-card-header-row">
+        <div className="ccv2-eyebrow">Portfolio Project Cards</div>
+        <span className="ccv2-pill ccv2-pill--pending">Project Registry planned</span>
+      </div>
+      <div className="ccv2-portfolio-project-grid">
+        {projects.map((project) => (
+          <div key={project.projectId} className="ccv2-portfolio-project-card">
+            <div className="ccv2-portfolio-project-card__title">{project.label}</div>
+            <div className="ccv2-portfolio-project-card__meta">{project.status} · {project.mode}</div>
+            <div className="ccv2-portfolio-project-card__row"><span>Active tasks</span><strong>{project.activeTasks}</strong></div>
+            <div className="ccv2-portfolio-project-card__row"><span>Blocked tasks</span><strong>{project.blockedTasks}</strong></div>
+            <div className="ccv2-portfolio-project-card__row"><span>Gates</span><strong>{project.gateStatus}</strong></div>
+            <div className="ccv2-portfolio-project-card__row"><span>Cost</span><strong>{project.costStatus}</strong></div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-empty-state">
+        Project Registry will enable cross-project task aggregation, approvals, and cost status.
+      </div>
+    </div>
+  );
+}
+
+function MissionControlOverviewTab({ vm, activeScope, operatorCommands, onOpenCommandPalette }) {
+  if (activeScope === "portfolio") {
+    return (
+      <>
+        <ScopeSummaryCards vm={vm} activeScope={activeScope} />
+        <PortfolioProjectCards vm={vm} />
+        <div className="ccv2-mission-control__lead-grid">
+          <NextBestActionPanel vm={vm} />
+          <SystemStatusStrip vm={vm} />
+        </div>
+      </>
+    );
+  }
+
+  if (activeScope === "os") {
+    return (
+      <>
+        <ScopeSummaryCards vm={vm} activeScope={activeScope} />
+        <div className="ccv2-mission-control__lead-grid">
+          <SystemStatusStrip vm={vm} />
+          <div className="ccv2-card">
+            <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>NEXUS OS Readiness</div>
+            <div className="ccv2-status-strip__grid">
+              <div className="ccv2-status-strip__item ccv2-status-strip__item--pass">
+                <span className="ccv2-status-strip__label">Roadmap</span>
+                <span className="ccv2-status-strip__value">{vm.scopeModel?.osSummary?.roadmapStatus}</span>
+              </div>
+              <div className="ccv2-status-strip__item ccv2-status-strip__item--pending">
+                <span className="ccv2-status-strip__label">Docs</span>
+                <span className="ccv2-status-strip__value">{vm.scopeModel?.osSummary?.docsStatus}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </>
+    );
+  }
+
+  return (
+    <>
+      <MissionComposerCard vm={vm} />
+
+      <OperatorActionsPanel
+        commands={operatorCommands}
+        onSelectCommand={onOpenCommandPalette}
+      />
+
+      <div className="ccv2-mission-control__lead-grid">
+        <NextBestActionPanel vm={vm} />
+        <SystemStatusStrip vm={vm} />
+      </div>
+
+      <div className="ccv2-kpi-row">
+        {vm.metrics.map((m) => (
+          <MetricCard key={m.label} metric={m} />
+        ))}
+      </div>
+
+      <div className="ccv2-pipeline-stream">
+        <ExecutionPipeline vm={vm} />
+        <ActivityStream vm={vm} />
+      </div>
+    </>
+  );
+}
+
+function MissionControlWorkflowsTab({ vm, operatorCommands, onOpenCommandPalette, activeScope }) {
+  const scopeCopy = activeScope === "portfolio"
+    ? "Portfolio workflows are read-only until Project Registry enables cross-project operations."
+    : activeScope === "os"
+      ? "NEXUS OS workflows route to platform readiness, docs, service health, and roadmap work."
+      : "Project workflows use capability-based readiness for planning, review, validation, governance, and release.";
+
+  return (
+    <>
+      <div className="ccv2-info-banner">{scopeCopy}</div>
+      <OperatorActionsPanel commands={operatorCommands} onSelectCommand={onOpenCommandPalette} />
+      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+        <SystemStatusStrip vm={vm} />
+        <div className="ccv2-card">
+          <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Capability-Based Workflow States</div>
+          <div className="ccv2-cost-rows">
+            {[
+              ["Plan", "Available"],
+              ["Build", "Ready"],
+              ["Validate", "Requires controlled validation bridge"],
+              ["Review", "Requires agent workbench"],
+              ["Govern", "Read-only"],
+              ["Release", "Requires release action bridge"],
+              ["Guard / Freeze", "Requires runtime lock controls"],
+            ].map(([label, state]) => (
+              <div key={label} className="ccv2-cost-row">
+                <span>{label}</span>
+                <strong>{state}</strong>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function MissionControlTasksTab({ vm, activeScope }) {
+  if (activeScope === "portfolio") {
+    return (
+      <>
+        <ScopeSummaryCards vm={vm} activeScope={activeScope} />
+        <div className="ccv2-empty-state">
+          Project Registry will enable cross-project task aggregation. Current project tasks remain available in Project scope.
+        </div>
+      </>
+    );
+  }
+  if (activeScope === "os") {
+    return (
+      <div className="ccv2-card">
+        <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>NEXUS OS Tasks</div>
+        <div className="ccv2-empty-state">
+          OS phase task tracking is represented by the phase-status registry until centralized activity logging is enabled.
+        </div>
+      </div>
+    );
+  }
+  return <ActiveMissionTasksSummary vm={vm} />;
+}
+
+function MissionControlAgentsTab({ vm, activeScope }) {
+  const plannedTasks = vm.taskActivation?.missionTasks || [];
+  const agentRows = ["SHEPHERD", "CORE", "AUDITOR", "WARDEN", "SENTINEL", "PRISM", "SWIFT", "NEXUS"].map((agent) => {
+    const assigned = plannedTasks.filter((task) => task.targetAgent === agent);
+    return {
+      agent,
+      planned: assigned.length,
+      activated: 0,
+      nextTask: assigned[0]?.title || (activeScope === "os" ? "OS platform work as assigned" : "No queued task"),
+      status: assigned.length > 0 ? "Assigned" : "Available",
+    };
+  });
+
+  return (
+    <div className="ccv2-card">
+      <div className="ccv2-card-header-row">
+        <div className="ccv2-eyebrow">Agent Assignments</div>
+        <span className="ccv2-pill ccv2-pill--disabled">{activeScope === "portfolio" ? "Cross-project placeholder" : "Read-only"}</span>
+      </div>
+      <div className="ccv2-agent-assignment-grid">
+        {agentRows.map((row) => (
+          <div key={row.agent} className="ccv2-agent-assignment-card">
+            <div className="ccv2-agent-assignment-card__agent">{row.agent}</div>
+            <div className="ccv2-agent-assignment-card__status">{row.status}</div>
+            <div className="ccv2-agent-assignment-card__meta">Planned tasks: {row.planned}</div>
+            <div className="ccv2-agent-assignment-card__meta">Activated tasks: {row.activated}</div>
+            <div className="ccv2-agent-assignment-card__next">{row.nextTask}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
@@ -1991,54 +2217,29 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
         ariaLabel="Mission Control sections"
       >
         <CommandTabPanel tabId="overview" activeTab={activeTab}>
-          <MissionComposerCard vm={vm} />
-
-          <OperatorActionsPanel
-            commands={operatorCommands}
-            onSelectCommand={onOpenCommandPalette}
+          <MissionControlOverviewTab
+            vm={vm}
+            activeScope={activeScope}
+            operatorCommands={operatorCommands}
+            onOpenCommandPalette={onOpenCommandPalette}
           />
-
-          <div className="ccv2-mission-control__lead-grid">
-            <NextBestActionPanel vm={vm} />
-            <SystemStatusStrip vm={vm} />
-          </div>
-
-          <div className="ccv2-kpi-row">
-            {vm.metrics.map((m) => (
-              <MetricCard key={m.label} metric={m} />
-            ))}
-          </div>
-
-          <div className="ccv2-pipeline-stream">
-            <ExecutionPipeline vm={vm} />
-            <ActivityStream vm={vm} />
-          </div>
         </CommandTabPanel>
 
         <CommandTabPanel tabId="workflows" activeTab={activeTab}>
-          <OperatorActionsPanel
-            commands={operatorCommands}
-            onSelectCommand={onOpenCommandPalette}
+          <MissionControlWorkflowsTab
+            vm={vm}
+            operatorCommands={operatorCommands}
+            onOpenCommandPalette={onOpenCommandPalette}
+            activeScope={activeScope}
           />
-          <div className="ccv2-info-banner">
-            Workspace drilldowns will move here in P41.7.3B. Use the command palette or Workspace route for now.
-          </div>
         </CommandTabPanel>
 
         <CommandTabPanel tabId="tasks" activeTab={activeTab}>
-          <ActiveMissionTasksSummary vm={vm} />
+          <MissionControlTasksTab vm={vm} activeScope={activeScope} />
         </CommandTabPanel>
 
         <CommandTabPanel tabId="agents" activeTab={activeTab}>
-          <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
-            <SystemStatusStrip vm={vm} />
-            <div className="ccv2-card">
-              <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Agent Assignments</div>
-              <div className="ccv2-empty-state">
-                Agent assignment drilldown is planned for the next Mission Control tab refinement.
-              </div>
-            </div>
-          </div>
+          <MissionControlAgentsTab vm={vm} activeScope={activeScope} />
         </CommandTabPanel>
 
         <CommandTabPanel tabId="gates" activeTab={activeTab}>
@@ -2067,7 +2268,7 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
         </CommandTabPanel>
       </CommandTabs>
 
-      {isLocalPrivate && clp && activeTab === "overview" && (
+      {isLocalPrivate && clp && activeTab === "overview" && activeScope === "project" && (
         <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--single">
           <CareLoopProgressCard clp={clp} />
         </div>

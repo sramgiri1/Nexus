@@ -393,3 +393,37 @@ It adds:
 ### Next Phase
 
 - P41.7.3B — Mission Control Tab Content Refinement
+
+## P41.7.3B — Mission Control Tabbed Cockpit
+
+This subphase converts Mission Control from a long cockpit into a scope-aware tabbed cockpit.
+
+Mission Control tabs:
+
+- Overview
+- Workflows
+- Tasks
+- Agents
+- Gates
+- Evidence
+- Risks / Approvals
+- Cost
+
+### Scope Model
+
+Mission Control now distinguishes:
+
+- Portfolio: read-only multi-project shell and Project Registry placeholder.
+- Project: active local-private project and mission cockpit.
+- NEXUS OS: platform phase, service, docs, test, and roadmap posture.
+
+### Boundary Rules
+
+- DemoApp remains limited to Demo Mode.
+- Local-private Mission Control uses `Private Project`.
+- OS Roadmap remains NEXUS OS-only.
+- Project progress stays in project-scoped surfaces and Projects.
+
+### Next Phase
+
+- P41.7.3C — Page Tab Rollout - Workspace / Tasks / Workbench / Implementation

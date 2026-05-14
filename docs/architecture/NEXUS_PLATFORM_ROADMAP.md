@@ -78,25 +78,23 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.7.3A — Command Center Tab System Foundation + Multi-Project Scope Shell
+### Phase 41.7.3B — Mission Control Tabbed Cockpit
 
 Goal:
 
-- introduce reusable Command Center tab components
-- add the Mission Control tab shell without migrating every page
-- add Portfolio / Project / NEXUS OS scope controls
+- convert Mission Control from a long cockpit into tabbed sections
+- add scope-aware Portfolio, Project, and NEXUS OS Mission Control views
+- keep project progress separate from OS roadmap state
 - preserve local-private project boundaries and DemoApp isolation
 - keep Command Center OS roadmap status synchronized with the phase registry
 
 Deliverables:
 
-- `dashboard/src/components/command-center-v2/CommandTabs.jsx`
-- `dashboard/src/components/command-center-v2/ScopeSwitcher.jsx`
-- `dashboard/src/components/command-center-v2/ProjectSwitcher.jsx`
-- `dashboard/src/data/commandCenterTabs.js`
-- `docs/architecture/COMMAND_CENTER_TABBED_NAVIGATION.md`
-- `scripts/check-command-center-tabs.js`
-- `reports/command-center-tabs-report.md`
+- scope-aware Mission Control Overview, Workflows, Tasks, Agents, Gates, Evidence, Risks / Approvals, and Cost tabs
+- Portfolio project cards and cross-project placeholder states
+- NEXUS OS phase, service, docs, and roadmap summary states
+- updated Playwright coverage for tabs, scope switching, and DemoApp boundaries
+- updated `scripts/check-command-center-ux.js`
 
 Non-goals:
 
@@ -109,7 +107,6 @@ Non-goals:
 
 Validation checks:
 
-- `npm run check:command-center-tabs`
 - `npm run check:command-center-ux`
 - `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
@@ -134,8 +131,9 @@ Risk level:
   - `P41.7.1` complete
   - `P41.7.2` complete
   - `P41.7.3` complete
-  - `P41.7.3A` current
-  - `P41.7.3B` planned
+  - `P41.7.3A` complete
+  - `P41.7.3B` current
+  - `P41.7.3C` planned
   - `P41.7.4` planned
   - `P41.7.5` planned
   - `P41.7.6` planned
@@ -489,7 +487,8 @@ P41.7 now breaks down into explicit documentation-system subphases:
 - `P41.7.2` — Reuse Audit + Duplicate Pattern Inventory
 - `P41.7.3` — Shared Helper Catalog + Refactor Candidate Plan
 - `P41.7.3A` — Command Center Tab System Foundation + Multi-Project Scope Shell
-- `P41.7.3B` — Mission Control Tab Content Refinement
+- `P41.7.3B` — Mission Control Tabbed Cockpit
+- `P41.7.3C` — Page Tab Rollout - Workspace / Tasks / Workbench / Implementation
 - `P41.7.4` — OS Usage Documentation Foundation
 - `P41.7.5` — Command Center Help Links
 - `P41.7.6` — Docs Coverage Checker + Final Validation

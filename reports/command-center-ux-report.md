@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T14:27:11.928Z
-- Validation branch: ui/command-center-tab-system-foundation
-- Validation HEAD: 81a73c1
+- Generated at: 2026-05-14T14:49:35.709Z
+- Validation branch: ui/mission-control-tabbed-cockpit
+- Validation HEAD: af37414
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -20,6 +20,9 @@
 - Command palette: PASS
 - Operator actions: PASS
 - Command Center tabs: PASS
+- Mission Control tabs: PASS
+- Scope switcher: PASS
+- Multi-project shell: PASS
 - OS Roadmap / Project Progress separation: PASS
 - Header environment formatting: PASS
 - Sidebar label completeness/planned behavior: PASS

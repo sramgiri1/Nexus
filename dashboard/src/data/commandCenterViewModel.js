@@ -169,6 +169,36 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
   const activeMissionId = "private-project-governed-build-mission";
   const activeMissionDisplayName = humanizeMissionId(activeMissionId);
+  const projectSummaries = [
+    {
+      projectId: "private-project-01",
+      label: safeProjectDisplayName,
+      mode: shellMode,
+      status: blockedTaskCount > 0 ? "Needs review" : "Active",
+      activeMissionId,
+      activeTasks: activeTaskCount,
+      blockedTasks: blockedTaskCount,
+      gateStatus: `${gatePassCount}/${Object.keys(gateStatuses).length} gates passing`,
+      releaseStatus: "Not ready",
+      costStatus: "Cost enforcement not enabled yet",
+    },
+  ];
+  const portfolioSummary = {
+    totalProjects: projectSummaries.length,
+    activeProjects: projectSummaries.filter((project) => project.status === "Active" || project.status === "Needs review").length,
+    blockedProjects: projectSummaries.filter((project) => project.blockedTasks > 0).length,
+    pendingApprovals: runtimeApprovals.requested || 0,
+    activeTasks: activeTaskCount,
+  };
+  const osSummary = {
+    currentPhase: "P41.7.3B - Mission Control Tabbed Cockpit",
+    nextPhase: "P41.7.3C - Page Tab Rollout - Workspace / Tasks / Workbench / Implementation",
+    serviceHealth: configuredServiceCards.some((service) => service.currentStatus === "Running")
+      ? "Some local services running"
+      : "Status snapshot available",
+    docsStatus: "Codebase docs and reuse catalog available",
+    roadmapStatus: "OS roadmap tracked separately from project progress",
+  };
 
   return {
     shell: {
@@ -182,6 +212,19 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       defaultScope: "project",
       availableScopes: ["portfolio", "project", "os"],
       projectRegistryStatus: "planned",
+      workspaceScope: "project",
+      selectedProjectId: "private-project-01",
+      selectedProjectLabel: safeProjectDisplayName,
+      pinnedProjectIds: ["private-project-01"],
+    },
+    scopeModel: {
+      workspaceScope: "project",
+      selectedProjectId: "private-project-01",
+      selectedProjectLabel: safeProjectDisplayName,
+      pinnedProjectIds: ["private-project-01"],
+      projectSummaries,
+      portfolioSummary,
+      osSummary,
     },
     missionComposer: {
       title: "Active Mission",

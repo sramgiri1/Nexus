@@ -157,11 +157,20 @@
     },
     {
       "phaseId": "P41.7.3B",
-      "title": "Mission Control Tab Content Refinement",
+      "title": "Mission Control Tabbed Cockpit",
       "track": "NEXUS_OS",
       "order": 12.816,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
-      "summary": "Planned refinement of Mission Control tab content and drilldown density.",
+      "summary": "Convert Mission Control into a scope-aware tabbed cockpit for Portfolio, Project, and NEXUS OS views.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3C",
+      "title": "Page Tab Rollout - Workspace / Tasks / Workbench / Implementation",
+      "track": "NEXUS_OS",
+      "order": 12.817,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Planned tab rollout for Workspace, Task Queue, Agent Workbench, and Implementation pages.",
       "commandCenterVisible": true
     },
     {

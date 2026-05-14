@@ -534,3 +534,30 @@ state and should be verified again during future docs audits.
   Full tab rollout for Workspace, Task Queue, Workbench, Implementation, Live
   API, Durable State, Evidence, Safety, Projects, and OS Roadmap is deferred to
   later P41.7.3 subphases.
+
+## P41.7.3B — Mission Control Tabbed Cockpit
+
+- Primary capability:
+  Convert Mission Control into a scope-aware tabbed cockpit with Portfolio,
+  Project, and NEXUS OS views.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterViewModel.js`,
+  `dashboard/src/styles-command-center-v2.css`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-ux.js`,
+  `os-roadmap/nexus-phases.json`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Mission Control tabs now show overview, workflows, tasks, agents, gates,
+  evidence, risks / approvals, and cost with scope-aware Portfolio, Project,
+  and NEXUS OS content.
+- Safety impact:
+  Project Registry remains a placeholder, DemoApp stays out of local-private
+  Mission Control, and no backend/runtime behavior changes are introduced.
+- Known limitations:
+  Portfolio aggregation is placeholder-only until P42 Project Registry.

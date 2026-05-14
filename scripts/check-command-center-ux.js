@@ -20,6 +20,9 @@ const sections = {
   commandPalette: true,
   operatorActions: true,
   commandCenterTabs: true,
+  missionControlTabs: true,
+  scopeSwitcher: true,
+  multiProjectShell: true,
   roadmapProjectSeparation: true,
   headerFormatting: true,
   sidebarPlannedBehavior: true,
@@ -597,19 +600,38 @@ check(commandTabsSource.includes("export const MISSION_CONTROL_TABS"), "commandC
 check(commandTabsSource.includes("export const PAGE_TAB_PLANS"), "commandCenterTabs", "commandCenterTabs.js must export PAGE_TAB_PLANS");
 for (const tabId of ["overview", "workflows", "tasks", "agents", "gates", "evidence", "risks", "cost"]) {
   check(commandTabsSource.includes(`id: "${tabId}"`), "commandCenterTabs", `Mission Control tab missing: ${tabId}`);
+  check(commandTabsSource.includes(`id: "${tabId}"`), "missionControlTabs", `Mission Control tab missing: ${tabId}`);
 }
 for (const expected of [
   "<CommandTabs",
-  "<ScopeSwitcher",
-  "<ProjectSwitcher",
-  "Portfolio view is planned with Project Registry in P42",
+  "MissionControlOverviewTab",
+  "MissionControlWorkflowsTab",
+  "MissionControlTasksTab",
+  "MissionControlAgentsTab",
 ]) {
-  check(commandCenterSource.includes(expected), "commandCenterTabs", `Mission Control tab/scope shell missing: ${expected}`);
+  check(commandCenterSource.includes(expected), "missionControlTabs", `Mission Control tabbed cockpit missing: ${expected}`);
+}
+for (const expected of [
+  "<ScopeSwitcher",
+  "Portfolio view is planned with Project Registry in P42",
+  "NEXUS OS scope is available through the OS Roadmap",
+]) {
+  check(commandCenterSource.includes(expected), "scopeSwitcher", `Scope switcher missing expected copy: ${expected}`);
+}
+for (const expected of [
+  "<ProjectSwitcher",
+  "projectSummaries",
+  "portfolioSummary",
+  "osSummary",
+  "Project Registry will enable cross-project task aggregation",
+]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "multiProjectShell", `Multi-project shell missing: ${expected}`);
 }
 for (const expectedTest of [
   "Mission Control tab shell renders required tabs",
   "Mission Control tab navigation shows drilldown panels",
   "Mission Control scope shell shows project, portfolio, and OS context",
+  "Mission Control scope-aware tabs show portfolio, project, and OS content",
 ]) {
   check(routeTestSource.includes(expectedTest), "commandCenterTabs", `Route tests missing tab coverage: ${expectedTest}`);
 }
@@ -808,6 +830,9 @@ console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
+console.log(`Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}`);
+console.log(`Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}`);
+console.log(`Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
 console.log(`Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}`);
 console.log(`Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}`);
@@ -848,6 +873,9 @@ const report = `# Command Center UX Report
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
+- Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}
+- Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}
+- Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}
 - Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}
 - Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}

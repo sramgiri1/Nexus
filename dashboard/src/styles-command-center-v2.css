@@ -683,6 +683,84 @@
   border-style: dashed;
 }
 
+.ccv2-scope-summary-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.ccv2-scope-summary-card,
+.ccv2-portfolio-project-card,
+.ccv2-agent-assignment-card {
+  border: 1px solid var(--nexus-border);
+  border-radius: 14px;
+  background: color-mix(in srgb, var(--nexus-panel-soft) 88%, transparent);
+  padding: 12px;
+}
+
+.ccv2-scope-summary-card__label,
+.ccv2-portfolio-project-card__meta,
+.ccv2-agent-assignment-card__meta {
+  color: var(--nexus-muted);
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.ccv2-scope-summary-card__label {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.ccv2-scope-summary-card__value,
+.ccv2-portfolio-project-card__title,
+.ccv2-agent-assignment-card__agent {
+  color: var(--nexus-text-strong);
+  font-size: 15px;
+  font-weight: 900;
+  line-height: 1.25;
+  margin-top: 5px;
+}
+
+.ccv2-scope-summary-card__meta,
+.ccv2-agent-assignment-card__next {
+  color: var(--nexus-muted);
+  font-size: 12px;
+  line-height: 1.45;
+  margin-top: 6px;
+}
+
+.ccv2-portfolio-project-grid,
+.ccv2-agent-assignment-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.ccv2-portfolio-project-card__row {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  border-top: 1px solid var(--nexus-border);
+  color: var(--nexus-muted);
+  font-size: 12px;
+  padding-top: 7px;
+  margin-top: 7px;
+}
+
+.ccv2-portfolio-project-card__row strong,
+.ccv2-agent-assignment-card__status {
+  color: var(--nexus-text-strong);
+  font-size: 12px;
+}
+
+.ccv2-agent-assignment-card__status {
+  margin-top: 4px;
+  color: var(--nexus-accent);
+  font-weight: 800;
+}
+
 .ccv2-command-tabs {
   display: flex;
   flex-direction: column;
@@ -761,6 +839,10 @@
     grid-template-columns: 1fr;
   }
 
+  .ccv2-scope-summary-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .ccv2-scope-switcher,
   .ccv2-project-switcher {
     align-items: flex-start;
@@ -770,6 +852,12 @@
   .ccv2-scope-switcher__options,
   .ccv2-project-switcher__chips {
     justify-content: flex-start;
+  }
+}
+
+@media (max-width: 720px) {
+  .ccv2-scope-summary-grid {
+    grid-template-columns: 1fr;
   }
 }
 

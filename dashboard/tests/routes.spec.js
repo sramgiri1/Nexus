@@ -477,7 +477,7 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center");
 
     const expectations = [
-      ["Workflows", "Workspace drilldowns will move here"],
+      ["Workflows", "Capability-Based Workflow States"],
       ["Tasks", "Active Mission Tasks"],
       ["Agents", "Agent Assignments"],
       ["Gates", "Verification Gates"],
@@ -514,6 +514,37 @@ test.describe("Command Center route-wide UX", () => {
 
     await scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true }).click();
     await expect(page.getByLabel("Project context")).toContainText("NEXUS OS");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control scope-aware tabs show portfolio, project, and OS content", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center");
+    const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
+
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Active Mission");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Next Best Action");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("System Status");
+
+    await scopeSelector.getByRole("button", { name: "Portfolio", exact: true }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Portfolio Project Cards");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Project Registry will enable cross-project task aggregation");
+    await page.getByRole("tab", { name: /Tasks/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Project Registry will enable cross-project task aggregation");
+
+    await scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true }).click();
+    await page.getByRole("tab", { name: /Overview/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Current OS Phase");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("NEXUS OS Readiness");
+    await page.getByRole("tab", { name: /Tasks/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("NEXUS OS Tasks");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("Requires P37");
+    expect(body).not.toContain("P38-LOCAL");
 
     expect(errors).toEqual([]);
   });

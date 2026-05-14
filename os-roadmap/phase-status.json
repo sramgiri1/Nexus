@@ -320,7 +320,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/command-center-tab-system-foundation",
-      "commit": "pending-final-commit",
+      "commit": "af37414",
       "completedAt": "",
       "summary": "Adds reusable tab components, Mission Control tab shell, and a Portfolio / Project / NEXUS OS scope shell without enabling Project Registry or runtime changes.",
       "checksRun": [
@@ -339,16 +339,38 @@
     },
     {
       "phaseId": "P41.7.3B",
-      "title": "Mission Control Tab Content Refinement",
+      "title": "Mission Control Tabbed Cockpit",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "ui/mission-control-tabbed-cockpit",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Converts Mission Control into a scope-aware tabbed cockpit with Portfolio, Project, and NEXUS OS views while preserving local-private boundaries.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Project Registry is not implemented yet, so Portfolio aggregation uses safe placeholders.",
+        "Only Mission Control receives the scope-aware tabbed cockpit in this subphase."
+      ],
+      "nextPhase": "P41.7.3C",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3C",
+      "title": "Page Tab Rollout - Workspace / Tasks / Workbench / Implementation",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned refinement of Mission Control tab content and drilldown density.",
+      "summary": "Planned tab rollout for Workspace, Task Queue, Agent Workbench, and Implementation pages.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P41.7.3C",
+      "nextPhase": "P41.7.4",
       "commandCenterVisible": true
     },
     {
