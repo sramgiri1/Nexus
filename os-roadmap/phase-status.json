@@ -343,7 +343,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/mission-control-tabbed-cockpit",
-      "commit": "pending-final-commit",
+      "commit": "4892a18",
       "completedAt": "",
       "summary": "Converts Mission Control into a scope-aware tabbed cockpit with Portfolio, Project, and NEXUS OS views while preserving local-private boundaries.",
       "checksRun": [
@@ -363,11 +363,33 @@
       "phaseId": "P41.7.3C",
       "title": "Page Tab Rollout - Workspace / Tasks / Workbench / Implementation",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "ui/page-tabs-workspace-tasks-workbench-implementation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Rolls the reusable CommandTabs foundation onto Workspace, Task Queue, Agent Workbench, and Implementation Workflow without backend behavior changes.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Live API, Durable State, Evidence, Safety, and Projects tab rollout remains deferred to P41.7.3D.",
+        "Project Registry and real multi-project backend remain planned for P42."
+      ],
+      "nextPhase": "P41.7.3D",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3D",
+      "title": "Page Tab Rollout - Live API / Durable State / Evidence / Safety / Projects",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tab rollout for Workspace, Task Queue, Agent Workbench, and Implementation pages.",
+      "summary": "Planned tab rollout for remaining Command Center operational and governance pages.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P41.7.4",

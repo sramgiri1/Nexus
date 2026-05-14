@@ -4,7 +4,13 @@ import { buildCommandCenterViewModelV2 } from "../data/commandCenterViewModel.js
 import { CommandTabs, CommandTabPanel } from "../components/command-center-v2/CommandTabs.jsx";
 import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher.jsx";
 import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
-import { MISSION_CONTROL_TABS } from "../data/commandCenterTabs.js";
+import {
+  IMPLEMENTATION_TABS,
+  MISSION_CONTROL_TABS,
+  TASK_QUEUE_TABS,
+  WORKBENCH_TABS,
+  WORKSPACE_TABS,
+} from "../data/commandCenterTabs.js";
 import { getNexusCommandsForScope } from "../data/nexusCommands.js";
 import {
   COMMAND_CENTER_ROUTE_BY_KEY,
@@ -2363,6 +2369,7 @@ function TaskQueuePage({ vm }) {
   const [bridgeOnline, setBridgeOnline] = useState(false);
   const [activating, setActivating] = useState(null);
   const [activationResults, setActivationResults] = useState({});
+  const [activeTaskTab, setActiveTaskTab] = useState("planned");
   const plannedCount = missionTasks.length;
   const activatedCount = Object.values(activationResults).filter((r) => r?.ok).length + (ta.activatedCount || 0);
   const runtimeStateSummary = [
@@ -2428,6 +2435,13 @@ function TaskQueuePage({ vm }) {
           </div>
         </div>
 
+        <CommandTabs
+          tabs={TASK_QUEUE_TABS}
+          activeTab={activeTaskTab}
+          onTabChange={setActiveTaskTab}
+          ariaLabel="Task Queue sections"
+        >
+          <CommandTabPanel tabId="planned" activeTab={activeTaskTab}>
         <div className="ccv2-card ccv2-state-summary-card">
           <div className="ccv2-section-heading">Task State Summary</div>
           <div className="ccv2-state-summary-grid">
@@ -2440,7 +2454,8 @@ function TaskQueuePage({ vm }) {
           </div>
         </div>
 
-        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Planned Tasks</div>
+        <div className="ccv2-eyebrow" style={{ marginBottom: 4 }}>Planned Tasks</div>
+        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Tasks — Private Project</div>
         <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
           {missionTasks.length > 0 ? (
             <table className="ccv2-table ccv2-mission-tasks-table">
@@ -2556,6 +2571,106 @@ function TaskQueuePage({ vm }) {
             </span>
           </div>
         )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="active" activeTab={activeTaskTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Active Runtime Tasks</div>
+              <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                Queued, running, and active runtime tasks appear here with owner agent, capability, evidence count, and next action.
+              </p>
+            </div>
+            {recent.length > 0 ? (
+              <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
+                <table className="ccv2-table">
+                  <thead>
+                    <tr>
+                      <th>Task</th>
+                      <th>Owner Agent</th>
+                      <th>State</th>
+                      <th>Risk</th>
+                      <th>Evidence</th>
+                      <th>Next Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {recent.map((task) => (
+                      <tr key={task.taskId}>
+                        <td style={{ fontSize: 11, color: "var(--nexus-text)" }}>{task.objective || task.taskType || task.taskId.slice(0, 8)}</td>
+                        <td style={{ fontWeight: 600 }}>{formatAgentLabel(task.targetAgent || task.sourceAgent)}</td>
+                        <td><span className={`ccv2-pill ccv2-pill--${getTaskStateTone(task.state)}`}>{formatTaskStateLabel(task.state)}</span></td>
+                        <td><span className={`ccv2-pill ccv2-pill--${task.riskLevel === "high" ? "fail" : task.riskLevel === "medium" ? "pending" : "pass"}`}>{task.riskLevel}</span></td>
+                        <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{countEvidenceForTask(task.taskId) || "No evidence yet"}</td>
+                        <td style={{ fontSize: 11, color: "var(--nexus-text)" }}>{summarizeTaskNextAction(task)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            ) : (
+              <div className="ccv2-card">
+                <div className="ccv2-empty-state">
+                  No active runtime tasks yet. Activate a planned task to start governed execution.
+                </div>
+              </div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="review" activeTab={activeTaskTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Review Queue</div>
+              <div className="ccv2-empty-state">
+                No tasks are waiting for review. Activated tasks will link to Agent Workbench when review evidence exists.
+              </div>
+              <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" style={{ marginTop: 10 }} onClick={() => navigate("/command-center/workbench")}>
+                Open Agent Workbench
+              </button>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="blocked" activeTab={activeTaskTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Blocked Tasks</div>
+              {(byState.blocked || byState.awaiting_approval) ? (
+                <div className="ccv2-empty-state">
+                  Blocked runtime tasks are present. Review policy, approval, and validation blockers before continuing.
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">No blocked tasks.</div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="completed" activeTab={activeTaskTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Completed Tasks</div>
+              {(byState.completed || 0) > 0 ? (
+                <div className="ccv2-empty-state">
+                  {byState.completed} completed task{byState.completed > 1 ? "s" : ""} recorded in runtime snapshot.
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">No completed tasks yet.</div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="all" activeTab={activeTaskTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">All Tasks</div>
+              <div className="ccv2-state-summary-grid" style={{ marginTop: 10 }}>
+                {runtimeStateSummary.map((item) => (
+                  <div key={item.label} className="ccv2-state-summary-pill">
+                    <span className="ccv2-state-summary-pill__label">{item.label}</span>
+                    <span className="ccv2-state-summary-pill__value">{item.value}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-empty-state" style={{ marginTop: 12 }}>
+                Unified task filters are planned. Use Planned, Active, Review, Blocked, and Completed tabs for the current operational view.
+              </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3354,6 +3469,7 @@ function WorkspacePage({ vm }) {
   const status = ws?.workspaceStatus || {};
   const limitations = ws?.currentLimitations || [];
   const isLocalPrivate = vm.shell.mode === "local-private";
+  const [activeWorkspaceTab, setActiveWorkspaceTab] = useState("recommended");
   const groupedTemplates = WORKFLOW_GROUPS.map((group) => ({
     ...group,
     items: templates.filter((template) => template.category === group.key),
@@ -3382,6 +3498,13 @@ function WorkspacePage({ vm }) {
           </div>
         </div>
 
+        <CommandTabs
+          tabs={WORKSPACE_TABS}
+          activeTab={activeWorkspaceTab}
+          onTabChange={setActiveWorkspaceTab}
+          ariaLabel="Workspace workflow sections"
+        >
+          <CommandTabPanel tabId="recommended" activeTab={activeWorkspaceTab}>
         {nba && (
           <div className="ccv2-card ccv2-workspace-nba">
             <div className="ccv2-eyebrow">Next best action</div>
@@ -3417,35 +3540,16 @@ function WorkspacePage({ vm }) {
           </div>
         )}
 
-        {templates.length > 0 ? (
-          <div className="ccv2-workflow-groups">
-            {groupedTemplates.map((group) => (
-              <div key={group.key} className="ccv2-workflow-group">
-                <div className="ccv2-card-header-row">
-                  <div className="ccv2-section-heading">{group.label}</div>
-                  <span className="ccv2-pill ccv2-pill--disabled">{group.items.length}</span>
-                </div>
-                {group.items.length > 0 ? (
-                  <div className="ccv2-wf-grid">
-                    {group.items.map((wf) => (
-                      <WorkflowCard key={wf.id} wf={wf} navigate={navigate} />
-                    ))}
-                  </div>
-                ) : (
-                  <div className="ccv2-card ccv2-workflow-group__empty">
-                    No workflows in this group yet.
-                  </div>
-                )}
-              </div>
-            ))}
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Workflow Availability Snapshot</div>
+          <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+            <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Plan</span><span className="ccv2-safety-row__value--ready">AVAILABLE · Available for planning</span></div>
+            <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Build</span><span className="ccv2-safety-row__value--ready">Requires implementation bridge for scoped execution</span></div>
+            <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Validate</span><span className="ccv2-safety-row__value--disabled">Requires iOS/Xcode runner</span></div>
+            <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Release</span><span className="ccv2-safety-row__value--disabled">Requires release action bridge</span></div>
+            <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Runtime</span><span className="ccv2-safety-row__value--disabled">Requires worker runtime and governed provider dispatch</span></div>
           </div>
-        ) : (
-          <div className="ccv2-card">
-            <div className="ccv2-empty-state">
-              No workflows are available for this scope yet. Create a mission plan or select a project adapter.
-            </div>
-          </div>
-        )}
+        </div>
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Current Limitations</div>
@@ -3458,6 +3562,73 @@ function WorkspacePage({ vm }) {
             ))}
           </div>
         </div>
+          </CommandTabPanel>
+
+          {WORKFLOW_GROUPS.map((group) => {
+            const groupItems = groupedTemplates.find((entry) => entry.key === group.key)?.items || [];
+            return (
+              <CommandTabPanel key={group.key} tabId={group.key} activeTab={activeWorkspaceTab}>
+                <div className="ccv2-card">
+                  <div className="ccv2-section-heading">{group.label}</div>
+                  <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                    {group.label} workflows for the active project scope. Disabled cards explain the missing capability in user-facing terms.
+                  </p>
+                </div>
+                {groupItems.length > 0 ? (
+                  <div className="ccv2-wf-grid">
+                    {groupItems.map((wf) => (
+                      <WorkflowCard key={wf.id} wf={wf} navigate={navigate} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="ccv2-card">
+                    <div className="ccv2-empty-state">
+                      No workflows available for this scope yet. Select a project or create a mission plan.
+                    </div>
+                  </div>
+                )}
+              </CommandTabPanel>
+            );
+          })}
+
+          <CommandTabPanel tabId="all" activeTab={activeWorkspaceTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">All Workflows</div>
+              <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                All workflow cards grouped by operator intent for the active scope.
+              </p>
+            </div>
+            {templates.length > 0 ? (
+              <div className="ccv2-workflow-groups">
+                {groupedTemplates.map((group) => (
+                  <div key={group.key} className="ccv2-workflow-group">
+                    <div className="ccv2-card-header-row">
+                      <div className="ccv2-section-heading">{group.label}</div>
+                      <span className="ccv2-pill ccv2-pill--disabled">{group.items.length}</span>
+                    </div>
+                    {group.items.length > 0 ? (
+                      <div className="ccv2-wf-grid">
+                        {group.items.map((wf) => (
+                          <WorkflowCard key={wf.id} wf={wf} navigate={navigate} />
+                        ))}
+                      </div>
+                    ) : (
+                      <div className="ccv2-card ccv2-workflow-group__empty">
+                        No workflows in this group yet.
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <div className="ccv2-card">
+                <div className="ccv2-empty-state">
+                  No workflows are available for this scope yet. Create a mission plan or select a project adapter.
+                </div>
+              </div>
+            )}
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3475,6 +3646,7 @@ function ImplementationPage({ vm }) {
   const [proposalResult, setProposalResult] = useState(null);
   const [applyResult, setApplyResult] = useState(null);
   const [errorMsg, setErrorMsg] = useState("");
+  const [activeImplementationTab, setActiveImplementationTab] = useState("overview");
 
   useEffect(() => {
     let cancelled = false;
@@ -3577,6 +3749,19 @@ function ImplementationPage({ vm }) {
           </div>
         </div>
 
+        <CommandTabs
+          tabs={IMPLEMENTATION_TABS}
+          activeTab={activeImplementationTab}
+          onTabChange={setActiveImplementationTab}
+          ariaLabel="Implementation Workflow sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeImplementationTab}>
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Overview</div>
+          <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+            Implementation status, scope, owner, production behavior posture, validation, and next action for this controlled workflow.
+          </p>
+        </div>
         {/* Task Selector */}
         <div className="ccv2-card">
           <div className="ccv2-section-heading">1 · Select Implementation Task</div>
@@ -3790,6 +3975,101 @@ function ImplementationPage({ vm }) {
             <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Bridge endpoint</span><span className="ccv2-mono ccv2-wb-meta-value">{ci.bridgeEndpoint || "Not configured"}</span></div>
           </div>
         </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="proposal" activeTab={activeImplementationTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Proposal Summary</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Owner agent</span><span className="ccv2-wb-meta-value">{formatAgentLabel(ci.targetAgent || "CORE")}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Implementation type</span><span className="ccv2-wb-meta-value">Documentation-only update</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Risk level</span><span className="ccv2-pill ccv2-pill--pass">{ci.riskLevel || "low"}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Source mutation</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+              </div>
+              <div style={{ marginTop: 12, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                {ci.proposal?.changeSummary || "No proposal has been generated yet. Use the Apply tab only when a governed implementation bridge is available."}
+              </div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Allowed path</span><span className="ccv2-mono ccv2-wb-meta-value" style={{ fontSize: 10 }}>{ci.allowedPath || "Not configured"}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Implementation type key</span><span className="ccv2-wb-meta-value">{ci.implementationType || "documentation_readiness_log"}</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="apply" activeTab={activeImplementationTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Apply Controlled Change</div>
+              <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                Controlled apply remains guarded. No fake execution is shown, and buttons stay disabled when the governed implementation bridge is offline.
+              </p>
+              <div className="ccv2-impl-action-row" style={{ marginTop: 12 }}>
+                <button
+                  className={`ccv2-wb-review-btn ccv2-wb-review-btn--changes${!canPropose || isRunning ? " ccv2-wb-review-btn--disabled" : ""}`}
+                  disabled={!canPropose || isRunning}
+                  onClick={handlePropose}
+                  title={!bridgeOnline ? "Requires governed implementation bridge" : ""}
+                >
+                  {actionState === "proposing" ? "Proposing…" : "Propose Implementation"}
+                </button>
+                <button
+                  className={`ccv2-wb-review-btn ccv2-wb-review-btn--approve${!canApply || isRunning ? " ccv2-wb-review-btn--disabled" : ""}`}
+                  disabled={!canApply || isRunning}
+                  onClick={handleApply}
+                  title={!bridgeOnline ? "Requires governed implementation bridge" : ""}
+                >
+                  {actionState === "applying" ? "Applying…" : "Apply Controlled Change"}
+                </button>
+              </div>
+              {!bridgeOnline && (
+                <div style={{ marginTop: 8, fontSize: 11, color: "var(--v2-muted-2)" }}>
+                  Requires governed implementation bridge. Start the local action bridge before applying controlled changes.
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="validation" activeTab={activeImplementationTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Validation</div>
+              <div className="ccv2-wb-meta-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Validation status</span><span className={`ccv2-pill ccv2-pill--${validationStatus === "PASS" ? "pass" : validationStatus === "FAIL" ? "fail" : "disabled"}`}>{validationStatus || "Not run"}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Validation plan</span><span className="ccv2-wb-meta-value">{ci.proposal?.validationPlan || "Validation plan appears after a proposal is available."}</span></div>
+                <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence</span><span className="ccv2-wb-meta-value">{applyResult?.result?.evidenceCreated ? "Created" : "No evidence yet"}</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="rollback" activeTab={activeImplementationTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Rollback</div>
+              <div style={{ marginTop: 8, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                {applyResult?.result?.rollbackNote || ci.proposal?.rollbackPlan || "Recovery layer is not built yet. Rollback instructions appear after a governed proposal or apply result exists."}
+              </div>
+              <span className={`ccv2-pill ccv2-pill--${rollbackStatus === "Available" ? "pass" : "disabled"}`} style={{ marginTop: 10, display: "inline-flex" }}>
+                {rollbackStatus}
+              </span>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="activity" activeTab={activeImplementationTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Implementation Activity</div>
+              <div className="ccv2-empty-state">
+                Implementation events, evidence, and audit summaries appear after a governed proposal or apply result exists.
+              </div>
+              {actionState === "applied" && applyResult?.ok && (
+                <div className="ccv2-mc-result" style={{ marginTop: 10 }}>
+                  <div>Patch: {applyResult.result?.patchSummary}</div>
+                  <div>Validation: {applyResult.result?.validationStatus}</div>
+                  <div>Evidence: {applyResult.result?.evidenceCreated ? "Created" : "Not created"}</div>
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -3810,6 +4090,7 @@ function WorkbenchPage({ vm }) {
   const [reviewDecision, setReviewDecision] = useState("");
   const [reviewReason, setReviewReason] = useState("");
   const [reviewResult, setReviewResult] = useState(null);
+  const [activeWorkbenchTab, setActiveWorkbenchTab] = useState("task");
 
   useEffect(() => {
     let cancelled = false;
@@ -3912,6 +4193,19 @@ function WorkbenchPage({ vm }) {
           </div>
         </div>
 
+        <CommandTabs
+          tabs={WORKBENCH_TABS}
+          activeTab={activeWorkbenchTab}
+          onTabChange={setActiveWorkbenchTab}
+          ariaLabel="Agent Workbench sections"
+        >
+          <CommandTabPanel tabId="task" activeTab={activeWorkbenchTab}>
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Task</div>
+          <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+            Select an activated task to inspect owner agent, state, risk, capability, blockers, and next action.
+          </p>
+        </div>
         {!bridgeOnline && !loadingItems && (
           <div className="ccv2-info-banner" style={{ marginBottom: 16 }}>
             <span className="ccv2-info-banner__icon">ℹ</span>
@@ -4161,6 +4455,79 @@ function WorkbenchPage({ vm }) {
             </div>
           </div>
         ) : null}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="review" activeTab={activeWorkbenchTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Review</div>
+              <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+                Approve, request changes, or reject controls are available only for a selected activated task and a live governed action bridge.
+              </p>
+              {workbenchView ? (
+                <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Selected task</span><span className="ccv2-wb-meta-value">{workbenchView.title}</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Review status</span><span className={`ccv2-pill ccv2-pill--${reviewStatusPillClass(workbenchView.review?.decision || "pending")}`}>{workbenchView.review?.decision ? workbenchView.review.decision.replace(/_/g, " ") : "Pending review"}</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Next action</span><span className="ccv2-wb-meta-value">{bridgeOnline ? "Record a human review decision." : "Requires governed action bridge"}</span></div>
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">
+                  No selected task. Select an activated task from the Task tab to review it.
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence" activeTab={activeWorkbenchTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Evidence</div>
+              {workbenchView?.evidence?.length > 0 ? (
+                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+                  {workbenchView.evidence.map((id) => (
+                    <div key={id} className="ccv2-mono" style={{ fontSize: 10, color: "var(--v2-muted-2)" }}>{id}</div>
+                  ))}
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">
+                  No evidence records yet. Evidence appears after governed task actions produce proof records.
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="activity" activeTab={activeWorkbenchTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Activity</div>
+              {workbenchView?.audit?.length > 0 ? (
+                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 4 }}>
+                  {workbenchView.audit.map((id) => (
+                    <div key={id} className="ccv2-mono" style={{ fontSize: 10, color: "var(--v2-muted-2)" }}>{id}</div>
+                  ))}
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">
+                  No task activity yet. Centralized activity logging is planned for a later phase.
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="context" activeTab={activeWorkbenchTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Context</div>
+              {workbenchView?.contract ? (
+                <div className="ccv2-wb-meta-grid" style={{ marginTop: 8 }}>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Contract type</span><span className="ccv2-wb-meta-value">{workbenchView.contract.type || "mission"}</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Allowed scope</span><span className="ccv2-wb-meta-value">Selected task context only</span></div>
+                  <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Forbidden scope</span><span className="ccv2-wb-meta-value">Provider calls, DB writes, and broad source mutation remain disabled.</span></div>
+                </div>
+              ) : (
+                <div className="ccv2-empty-state">
+                  Select an activated task to see its contract, allowed scope, and context summary.
+                </div>
+              )}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );

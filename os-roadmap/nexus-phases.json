@@ -170,14 +170,23 @@
       "track": "NEXUS_OS",
       "order": 12.817,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
-      "summary": "Planned tab rollout for Workspace, Task Queue, Agent Workbench, and Implementation pages.",
+      "summary": "Roll out reusable tabs to Workspace, Task Queue, Agent Workbench, and Implementation Workflow.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3D",
+      "title": "Page Tab Rollout - Live API / Durable State / Evidence / Safety / Projects",
+      "track": "NEXUS_OS",
+      "order": 12.818,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Planned tab rollout for the remaining Command Center operational and governance pages.",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P41.7.4",
       "title": "OS Usage Documentation Foundation",
       "track": "NEXUS_OS",
-      "order": 12.82,
+      "order": 12.83,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "summary": "Tighten usage-doc structure, update operator guidance, and reduce drift between Command Center behavior and written instructions.",
       "commandCenterVisible": true

@@ -427,3 +427,27 @@ Mission Control now distinguishes:
 ### Next Phase
 
 - P41.7.3C — Page Tab Rollout - Workspace / Tasks / Workbench / Implementation
+
+## P41.7.3C — Page Tab Rollout: Workspace, Task Queue, Agent Workbench, Implementation
+
+This subphase applies the reusable `CommandTabs` foundation to the first set of high-traffic operational pages.
+
+Pages converted:
+
+- Workspace: Recommended, Plan, Build, Validate, Govern, Release, All Workflows
+- Task Queue: Planned, Active, Review, Blocked, Completed, All Tasks
+- Agent Workbench: Task, Review, Evidence, Activity, Context
+- Implementation Workflow: Overview, Proposal, Apply, Validation, Rollback, Activity
+
+### Rules Preserved
+
+- The existing shared tab component remains the only tab implementation.
+- Each tab has a clear heading, state summary, useful content or honest empty state, and next action guidance.
+- Scope/project shell behavior remains local-private safe, with `Private Project` used outside Demo Mode.
+- Dark, light, and system theme behavior is preserved through existing theme tokens.
+- Stale phase labels such as `Requires P38` and `P39-LOCAL` remain excluded from primary operational UX.
+- No backend execution, provider dispatch, DB writes, worker runtime, local API behavior change, or action bridge behavior change is added.
+
+### Next Phase
+
+- P41.7.3D — Page Tab Rollout for Live API, Durable State, Evidence, Safety, and Projects

@@ -100,6 +100,15 @@ async function getThemeState(page) {
   }));
 }
 
+function commandTab(page, label) {
+  const escaped = label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return page.getByRole("tab", { name: new RegExp(`^${escaped}\\b`, "i") });
+}
+
+function activeCommandTabPanel(page) {
+  return page.locator(".ccv2-command-tabs__panel:not([hidden])");
+}
+
 test("home route renders Command Center V2 shell", async ({ page }) => {
   const errors = captureClientErrors(page);
 
@@ -860,6 +869,32 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Workspace tabs route users through recommended, grouped, and all workflows", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workspace");
+    for (const label of ["Recommended", "Plan", "Build", "Validate", "Govern", "Release", "All Workflows"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+
+    await expect(commandTab(page, "Recommended")).toHaveAttribute("aria-selected", "true");
+    for (const label of ["Plan", "Build", "Validate", "Govern", "Release", "All Workflows"]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toContainText(label === "All Workflows" ? "All Workflows" : label);
+    }
+
+    const body = await page.locator("body").innerText();
+    for (const label of FORBIDDEN_PHASE_LABELS) {
+      expect(body).not.toContain(label);
+    }
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Recommended")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "All Workflows")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
   test("task queue shows planned and runtime task states with user-facing next actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -870,6 +905,33 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.getByText("Planned Tasks", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText(/Activate a planned task|No activated tasks yet|Activated Runtime Tasks/);
 
+    expect(errors).toEqual([]);
+  });
+
+  test("Task Queue tabs separate planned, active, review, blocked, completed, and all tasks", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tasks");
+    for (const label of ["Planned", "Active", "Review", "Blocked", "Completed", "All Tasks"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toContainText(label);
+      if (label === "Active") {
+        await expect(activeCommandTabPanel(page)).toContainText(/No active runtime tasks yet|Active Runtime Tasks/);
+      }
+      if (label === "Blocked") {
+        await expect(activeCommandTabPanel(page)).toContainText(/No blocked tasks|Blocked Tasks/);
+      }
+    }
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Planned")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "All Tasks")).toBeVisible();
+
+    const body = await page.locator("body").innerText();
+    for (const label of FORBIDDEN_PHASE_LABELS) {
+      expect(body).not.toContain(label);
+    }
     expect(errors).toEqual([]);
   });
 
@@ -890,6 +952,26 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Agent Workbench tabs separate task, review, evidence, activity, and context", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workbench");
+    for (const label of ["Task", "Review", "Evidence", "Activity", "Context"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toContainText(label);
+    }
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("P38-LOCAL");
+    expect(body).toMatch(/No activated tasks yet|Select an activated task|Task Workbench|Action bridge offline/);
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Task")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "Context")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
   test("implementation workflow shows user-facing status summary and developer details split", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -901,6 +983,27 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Disabled");
     await expect(page.locator("body")).toContainText("Developer Details");
     expect(await page.locator("body").innerText()).not.toContain("Project Briefshepherd");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Implementation Workflow tabs separate overview, proposal, apply, validation, rollback, and activity", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/implementation");
+    for (const label of ["Overview", "Proposal", "Apply", "Validation", "Rollback", "Activity"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toContainText(label);
+    }
+    const body = await page.locator("body").innerText();
+    expect(body).toContain("Documentation-only");
+    expect(body).not.toContain("P39-LOCAL");
+    expect(body).not.toContain("Project Briefshepherd");
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Overview")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "Activity")).toBeVisible();
 
     expect(errors).toEqual([]);
   });
