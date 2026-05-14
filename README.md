@@ -166,6 +166,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.7.1: codebase documentation standard + module registry
 - P41.7.2: reuse audit + duplicate pattern inventory
 - P41.7.3: shared helper catalog + refactor candidate plan
+- P41.7.4: OS usage documentation foundation
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 

@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "phase": "P41.7.3",
+  "purpose": "shared_helper_catalog_refactor_candidate_plan",
+  "broadRefactorsAllowed": false,
+  "runtimeBehaviorChangesAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "highRiskRefactorsBlocked": true,
+  "allowedOutputs": [
+    "docs/codebase",
+    "codebase catalog modules",
+    "reports",
+    "policy",
+    "roadmap status"
+  ],
+  "requiresCodebaseDocs": true,
+  "requiresReuseAuditLinkage": true,
+  "requiresOSPhaseStatusUpdate": true
+}

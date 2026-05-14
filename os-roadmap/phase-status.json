@@ -276,7 +276,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/reuse-audit-duplicate-pattern-inventory",
-      "commit": "pending-final-commit",
+      "commit": "113db67",
       "completedAt": "",
       "summary": "Adds an audit-only duplicate pattern inventory, refactor candidate plan, policy, checker, and reuse-audit reports.",
       "checksRun": [
@@ -296,19 +296,27 @@
       "phaseId": "P41.7.3",
       "title": "Shared Helper Catalog + Refactor Candidate Plan",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/shared-helper-catalog-refactor-plan",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned shared-helper inventory for later consolidation work.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds the shared helper catalog, adoption guide, and risk-ranked refactor candidate plan without implementing refactors.",
+      "checksRun": [
+        "npm run check:shared-helper-catalog",
+        "npm run check:docs-coverage",
+        "npm run check:command-center-ux",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No broad refactors are implemented in this subphase.",
+        "High-risk helpers remain blocked until dedicated refactor phases."
+      ],
       "nextPhase": "P41.7.4",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P41.7.4",
-      "title": "OS Usage Documentation System",
+      "title": "OS Usage Documentation Foundation",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",

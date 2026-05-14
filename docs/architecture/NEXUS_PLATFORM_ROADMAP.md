@@ -78,30 +78,29 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.7.1 — Codebase Documentation Standard + Module Registry
+### Phase 41.7.3 — Shared Helper Catalog + Refactor Candidate Plan
 
 Goal:
 
-- establish a durable codebase documentation standard for future maintainers and
-  coding agents
-- create a human-readable module registry for the major NEXUS module families
-- create a phase module index that maps capability phases to the files they
-  introduced or changed
+- catalog existing and proposed shared helpers
+- map duplicate patterns to future helper modules
+- classify refactor candidates by risk and priority
+- document which helpers should be reused by future phases
 - keep Command Center OS roadmap status synchronized with the phase registry
 
 Deliverables:
 
-- `docs/codebase/CODE_DOCUMENTATION_STANDARD.md`
-- `docs/codebase/MODULE_REGISTRY.md`
-- `docs/codebase/PHASE_MODULE_INDEX.md`
-- `docs/codebase/README.md`
-- `scripts/check-docs-coverage.js` updates for the codebase-docs foundation
-- roadmap/status data updates for `P41.7.1`
+- `codebase/sharedHelperCatalog.js`
+- `codebase/refactorCandidatePlan.js`
+- `docs/codebase/SHARED_HELPER_CATALOG.md`
+- `docs/codebase/REFACTOR_CANDIDATE_PLAN.md`
+- `docs/codebase/SHARED_HELPER_ADOPTION_GUIDE.md`
+- `scripts/check-shared-helper-catalog.js`
+- `reports/refactor-candidate-plan.json`
 
 Non-goals:
 
 - no refactor execution
-- no shared-helper extraction yet
 - no usage-doc expansion yet
 - no DB writes
 - no provider dispatch
@@ -109,8 +108,9 @@ Non-goals:
 
 Validation checks:
 
-- `npm run check:docs-coverage`
+- `npm run check:shared-helper-catalog`
 - `npm run check:os-phase-status`
+- `npm run check:docs-coverage`
 - `npm run check:command-center-ux`
 - `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
@@ -133,8 +133,8 @@ Risk level:
   - `P41.6.6` complete
 - `P41.7` Documentation System, Usage Guides, Reuse Audit, Refactor Foundation:
   - `P41.7.1` complete
-  - `P41.7.2` planned
-  - `P41.7.3` planned
+  - `P41.7.2` complete
+  - `P41.7.3` complete
   - `P41.7.4` planned
   - `P41.7.5` planned
   - `P41.7.6` planned
@@ -183,9 +183,7 @@ Risk level:
 
 ## Next Phases
 
-- Phase 41.7.2 — Reuse Audit + Refactor Candidate Report
-- Phase 41.7.3 — Shared Helper Inventory
-- Phase 41.7.4 — OS Usage Documentation System
+- Phase 41.7.4 — OS Usage Documentation Foundation
 - Phase 41.7.5 — Command Center Help Links
 - Phase 41.7.6 — Docs Coverage Checker + Final Validation
 - Phase 41.8 — Centralized Activity Log + Observability Ledger
@@ -487,9 +485,9 @@ Notes:
 P41.7 now breaks down into explicit documentation-system subphases:
 
 - `P41.7.1` — Codebase Documentation Standard + Module Registry
-- `P41.7.2` — Reuse Audit + Refactor Candidate Report
-- `P41.7.3` — Shared Helper Inventory
-- `P41.7.4` — OS Usage Documentation System
+- `P41.7.2` — Reuse Audit + Duplicate Pattern Inventory
+- `P41.7.3` — Shared Helper Catalog + Refactor Candidate Plan
+- `P41.7.4` — OS Usage Documentation Foundation
 - `P41.7.5` — Command Center Help Links
 - `P41.7.6` — Docs Coverage Checker + Final Validation
 

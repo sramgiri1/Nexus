@@ -387,6 +387,42 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Shared Helper Catalog and Refactor Plan
+
+- Purpose:
+  Define the planned and existing shared helpers that future phases should
+  reuse, plus the risk-ranked plan for later helper extraction.
+- Primary files:
+  `codebase/sharedHelperCatalog.js`,
+  `codebase/refactorCandidatePlan.js`,
+  `docs/codebase/SHARED_HELPER_CATALOG.md`,
+  `docs/codebase/REFACTOR_CANDIDATE_PLAN.md`,
+  `docs/codebase/SHARED_HELPER_ADOPTION_GUIDE.md`,
+  `policy/shared-helper-catalog-policy.json`,
+  `scripts/check-shared-helper-catalog.js`,
+  `reports/shared-helper-catalog-report.md`,
+  `reports/refactor-candidate-plan.json`
+- Public entry points:
+  `codebase/index.js`,
+  `scripts/check-shared-helper-catalog.js`
+- Inputs/outputs:
+  Consumes the P41.7.2 reuse audit and helper definitions; outputs a
+  machine-readable refactor candidate plan and markdown validation report.
+- Side effects:
+  Writes shared-helper catalog reports only.
+- Safety boundary:
+  Planning-only. Broad refactors, runtime behavior changes, DB writes, provider
+  calls, local API changes, and protected project mutations remain forbidden.
+- Reuse notes:
+  Future phases should consult this catalog before adding helpers or duplicating
+  report, checker, policy, route, or runtime patterns.
+- Tests/checkers:
+  `scripts/check-shared-helper-catalog.js`
+- Known limitations:
+  No helper extraction is implemented in P41.7.3.
+- Status:
+  foundation
+
 ## Architecture and Usage Docs
 
 - Purpose:

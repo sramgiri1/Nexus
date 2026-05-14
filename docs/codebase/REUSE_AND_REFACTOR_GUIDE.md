@@ -10,6 +10,20 @@ P41.7.2 adds an audit-only duplicate pattern inventory. It introduces
 The audit identifies repeated patterns and recommends future shared helpers. It
 does not perform refactors or change runtime behavior.
 
+## P41.7.3 shared helper catalog
+
+P41.7.3 turns the audit into a concrete catalog and candidate plan:
+
+- [Shared Helper Catalog](SHARED_HELPER_CATALOG.md)
+- [Refactor Candidate Plan](REFACTOR_CANDIDATE_PLAN.md)
+- [Shared Helper Adoption Guide](SHARED_HELPER_ADOPTION_GUIDE.md)
+
+Use these after the [Code Documentation Standard](CODE_DOCUMENTATION_STANDARD.md),
+[Module Registry](MODULE_REGISTRY.md), and [Phase Module Index](PHASE_MODULE_INDEX.md).
+The intended order is documentation standard, module registry, phase module
+index, reuse audit, shared helper catalog, refactor candidate plan, and adoption
+guide.
+
 ## Reuse-First Rule
 
 Before adding a new helper, check whether the repo already has a module for:
@@ -102,3 +116,6 @@ These areas are correctness-sensitive and can break multiple validation phases a
 
 P41.7.2 is audit-only. Any extraction of helpers must happen in a later scoped
 phase after the candidate has been validated against the affected checkers.
+
+P41.7.3 is also planning-only. It defines the catalog and plan, but broad
+refactors remain blocked until a future scoped refactor phase.

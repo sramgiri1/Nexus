@@ -472,3 +472,34 @@ state and should be verified again during future docs audits.
 - Known limitations:
   The audit is pattern-based. P41.7.3 must convert recommendations into a
   shared helper catalog and concrete refactor plan before implementation work.
+
+## P41.7.3 — Shared Helper Catalog + Refactor Candidate Plan
+
+- Primary capability:
+  Convert duplicate-pattern findings into a shared helper catalog, adoption
+  guide, and risk-ranked refactor candidate plan.
+- Main files/folders touched:
+  `codebase/sharedHelperCatalog.js`,
+  `codebase/refactorCandidatePlan.js`,
+  `docs/codebase/SHARED_HELPER_CATALOG.md`,
+  `docs/codebase/REFACTOR_CANDIDATE_PLAN.md`,
+  `docs/codebase/SHARED_HELPER_ADOPTION_GUIDE.md`,
+  `policy/shared-helper-catalog-policy.json`,
+  `scripts/check-shared-helper-catalog.js`,
+  `reports/shared-helper-catalog-report.md`,
+  `reports/refactor-candidate-plan.json`
+- Main checker(s):
+  `scripts/check-shared-helper-catalog.js`,
+  `scripts/check-os-phase-status.js`
+- Main report(s):
+  `reports/shared-helper-catalog-report.md`,
+  `reports/refactor-candidate-plan.json`,
+  `reports/os-phase-status-report.md`
+- Command Center impact:
+  Updates OS roadmap status so `P41.7.2` is complete, `P41.7.3` is the current
+  completed catalog phase, and `P41.7.4` is next.
+- Safety impact:
+  Keeps all refactors blocked and documents high-risk helper boundaries before
+  future implementation work.
+- Known limitations:
+  No shared helper extraction or runtime behavior change is implemented.
