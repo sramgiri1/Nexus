@@ -305,7 +305,7 @@
       "track": "NEXUS_OS",
       "order": 14.5,
       "group": "P41.8 Centralized Activity Log + Observability Ledger",
-      "summary": "Planned trace view for connected activity by correlation ID.",
+      "summary": "Redacted trace drilldown by correlation ID across linked activity events.",
       "commandCenterVisible": true
     },
     {

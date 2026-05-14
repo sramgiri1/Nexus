@@ -1,6 +1,8 @@
 import {
+  buildActivityTrace,
   findActivityByCorrelationId,
   readRecentActivityEvents,
+  summarizeActivityTrace,
   summarizeActivityStore,
 } from "../../observability/index.js";
 import { sendJson, buildEnvelope } from "../safeResponse.js";
@@ -44,6 +46,27 @@ function summarizeRecord(event = {}) {
   };
 }
 
+function buildCorrelationSummaries(events = []) {
+  const groups = events.reduce((acc, event) => {
+    if (!event.correlationId) return acc;
+    if (!acc[event.correlationId]) acc[event.correlationId] = [];
+    acc[event.correlationId].push(event);
+    return acc;
+  }, {});
+
+  return Object.entries(groups)
+    .map(([correlationId, groupEvents]) => summarizeActivityTrace(buildActivityTrace(groupEvents, correlationId)))
+    .sort((left, right) => {
+      const leftTime = Date.parse(left.endedAt || left.startedAt || "");
+      const rightTime = Date.parse(right.endedAt || right.startedAt || "");
+      if (Number.isNaN(leftTime) && Number.isNaN(rightTime)) return 0;
+      if (Number.isNaN(leftTime)) return 1;
+      if (Number.isNaN(rightTime)) return -1;
+      return rightTime - leftTime;
+    })
+    .slice(0, 10);
+}
+
 function filterRecords(records, query) {
   return records.filter((record) => {
     if (query.get("category") && record.category !== query.get("category")) return false;
@@ -56,7 +79,11 @@ function filterRecords(records, query) {
 export function handleActivity(req, res, { mode }) {
   const url = new URL(req.url, "http://127.0.0.1");
   const limit = normalizeLimit(url.searchParams.get("limit"));
-  const correlationId = url.searchParams.get("correlationId");
+  const pathCorrelationId = url.pathname.startsWith("/activity/")
+    ? decodeURIComponent(url.pathname.replace("/activity/", ""))
+    : "";
+  const correlationId = pathCorrelationId || url.searchParams.get("correlationId");
+  const traceRequested = Boolean(pathCorrelationId) || url.searchParams.get("view") === "trace";
   const storeResult = correlationId
     ? findActivityByCorrelationId(correlationId)
     : readRecentActivityEvents(limit);
@@ -64,6 +91,32 @@ export function handleActivity(req, res, { mode }) {
   const rawRecords = correlationId ? storeResult.events : storeResult.events;
   const filtered = filterRecords(rawRecords || [], url.searchParams).slice(-limit).reverse();
   const summary = summarizeActivityStore({ limit: 500 });
+  const correlationSummaries = buildCorrelationSummaries(readRecentActivityEvents(500).events || []);
+
+  if (traceRequested) {
+    const trace = buildActivityTrace(rawRecords || [], correlationId || "");
+    sendJson(res, 200, buildEnvelope({
+      ok: true,
+      source: "live-local-api",
+      mode,
+      data: {
+        activityCaptureEnabled: true,
+        traceViewEnabled: true,
+        storePath: summary.storePath,
+        generatedAt: new Date().toISOString(),
+        correlationId: trace.correlationId || correlationId || "",
+        trace,
+        summary: summarizeActivityTrace(trace),
+        records: filtered.map(summarizeRecord),
+        providerLoggingEnabled: false,
+        workerLoggingEnabled: false,
+        dbBackedActivityEnabled: false,
+        redacted: true,
+      },
+      warnings: [...(summary.warnings || []), ...(storeResult.warnings || []), ...(trace.warnings || [])],
+    }));
+    return;
+  }
 
   sendJson(res, 200, buildEnvelope({
     ok: true,
@@ -78,6 +131,10 @@ export function handleActivity(req, res, { mode }) {
       totalCount: summary.eventCount,
       warningCount: (summary.warnings || []).length + (storeResult.warnings || []).length,
       categories: summary.categories || {},
+      correlationSummaries,
+      tracesAvailableCount: correlationSummaries.length,
+      failedTraceCount: correlationSummaries.filter((trace) => trace.status === "failed").length,
+      blockedTraceCount: correlationSummaries.filter((trace) => trace.status === "blocked").length,
       latestActivityId: summary.latestActivityId,
       latestCorrelationId: summary.latestCorrelationId,
       records: filtered.map(summarizeRecord),

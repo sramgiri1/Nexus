@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:20:32.530Z
-- Validation branch: observability/activity-log-command-center-page
-- Validation HEAD: adcc916
+- Generated at: 2026-05-14T22:51:21.872Z
+- Validation branch: observability/activity-trace-view
+- Validation HEAD: 5c6b80d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,10 +28,10 @@ P41.8.3 - API / UI / Action Bridge Activity Capture
 
 ## Capture Summary
 
-- UI capture helper dry-run event: act_0f1b9654273cc751
-- API capture helper dry-run event: act_6afe03b760e10b31
-- Action bridge capture helper dry-run event: act_969973df6b8febaf
-- Failure capture helper dry-run event: act_e59b35dccaa29968
+- UI capture helper dry-run event: act_ebfaddcfc92645f3
+- API capture helper dry-run event: act_50ec31f5503d633d
+- Action bridge capture helper dry-run event: act_bd8a073e91dde0a8
+- Failure capture helper dry-run event: act_cd075dd9851809db
 - Local activity API: GET /activity, read-only, summarized records only
 
 ## Captured Now
@@ -45,7 +45,7 @@ P41.8.3 - API / UI / Action Bridge Activity Capture
 - Browser-only UI click persistence without a governed capture endpoint.
 - Provider/tool/worker activity capture.
 - DB-backed activity storage.
-- Full trace drilldown by correlation ID.
+- Retention/export for correlation trace records.
 
 ## Failures
 

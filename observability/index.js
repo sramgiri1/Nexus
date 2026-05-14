@@ -1,5 +1,6 @@
 export * from "./activitySchema.js";
 export * from "./activityStore.js";
+export * from "./activityTrace.js";
 export * from "./activityTypes.js";
 export * from "./correlation.js";
 export * from "./redactionPolicy.js";

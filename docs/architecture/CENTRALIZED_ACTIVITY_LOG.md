@@ -220,6 +220,43 @@ The page provides:
 Full trace replay and correlation drilldown remain P41.8.5. Provider, tool,
 worker, and DB-backed activity remain disabled.
 
+## P41.8.5 - Trace View by Correlation ID
+
+P41.8.5 adds redacted trace drilldown for correlation-linked activity records.
+The trace model lives in `observability/activityTrace.js` and turns activity
+events into a safe timeline with status, duration, category counts, related task
+IDs, related agents, evidence IDs, and audit IDs.
+
+Activity list versus trace view:
+
+- The Activity Log list shows individual summarized records, filters, and
+  grouped views across recent activity.
+- The trace view starts from one correlation ID and shows the connected timeline
+  for that operator flow.
+- `GET /activity/:correlationId` returns a local-only read envelope with
+  `trace` and `summary` fields.
+- `GET /activity` includes recent correlation summaries and trace counts for the
+  Activity Log page.
+
+Trace safety rules:
+
+- Trace view is read-only.
+- Trace timeline entries use redacted summaries only.
+- Raw JSONL records, raw logs, raw payloads, secrets, stack traces, and private
+  project content are not exposed in primary UX.
+- Missing timestamps and empty correlation IDs produce safe empty traces rather
+  than runtime failures.
+
+Still not wired:
+
+- Provider/tool/worker traces.
+- DB-backed activity storage.
+- Activity retention policy.
+- Telemetry, SLOs, exports, and cross-process trace stitching beyond captured
+  local activity records.
+
+Next phase: P41.8.6 - Activity Tests + Docs + Final Validation.
+
 ## Future Phases
 
 - P41.8.2 - Central Activity Logger

@@ -59,7 +59,23 @@ failures, API/actions, and correlation ID previews. It does not replace the
 Evidence or Audit pages; it gives operators one place to see how those signals
 connect.
 
-Until the full Activity Log and trace view are complete, pages may show
-evidence, audit, activity, and runtime events as separate summaries. That
-separation is intentional and keeps proof, governance, and runtime signals
-distinct.
+## Trace View by Correlation ID
+
+P41.8.5 adds trace drilldown from the Activity Log. A correlation ID links the
+UI event, local API read, governed action bridge event, task reference, evidence
+reference, and audit reference for one operator flow when those records exist.
+
+Use trace view when you need to answer:
+
+- What happened during this specific operator action?
+- Which task, agent, evidence record, or audit record was linked?
+- Did the flow succeed, fail, block, or require approval?
+- Where did the flow stop?
+
+Trace view is still a safe operator summary. It shows timestamps, categories,
+sources, event types, redacted summaries, status, and related IDs. It does not
+show raw JSONL records, raw logs, raw payloads, secrets, stack traces, or private
+project content.
+
+Provider/tool/worker traces, DB-backed activity storage, retention policy,
+exports, and telemetry remain future work.

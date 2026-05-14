@@ -5732,8 +5732,53 @@ const ACTIVITY_LOG_TABS = [
   {
     id: "correlations",
     label: "Correlations",
-    description: "Correlation IDs and linked event counts",
-    badge: "Preview",
+    description: "Correlation IDs, linked event counts, and trace drilldown",
+    badge: "Ready",
+  },
+];
+
+const TRACE_VIEW_TEST_RECORDS = [
+  {
+    activityId: "act_traceview001",
+    shortActivityId: "act_traceview...",
+    correlationId: "corr_traceview001",
+    shortCorrelationId: "corr_traceview...",
+    timestamp: "2026-05-14T12:00:00.000Z",
+    category: "ui",
+    eventType: "operator_action_requested",
+    source: "command_center",
+    scope: "NEXUS_OS_CHANGE",
+    mode: "local-private",
+    status: "success",
+    decision: "ALLOW",
+    summary: "Operator opened Activity Log trace view.",
+    taskId: "task-trace-001",
+    agentId: "NEXUS",
+    durationMs: 12,
+    redacted: true,
+    evidenceCount: 1,
+    auditCount: 1,
+  },
+  {
+    activityId: "act_traceview002",
+    shortActivityId: "act_traceview...",
+    correlationId: "corr_traceview001",
+    shortCorrelationId: "corr_traceview...",
+    timestamp: "2026-05-14T12:00:03.000Z",
+    category: "api",
+    eventType: "local_api_request_completed",
+    source: "local_api",
+    scope: "NEXUS_OS_CHANGE",
+    mode: "local-private",
+    status: "success",
+    decision: "ALLOW",
+    summary: "Local API returned redacted activity trace.",
+    taskId: "task-trace-001",
+    agentId: "NEXUS",
+    durationMs: 18,
+    redacted: true,
+    evidenceCount: 1,
+    auditCount: 1,
   },
 ];
 
@@ -5796,7 +5841,78 @@ function activityMatchesSearch(record, search) {
   return haystack.includes(search.toLowerCase());
 }
 
-function ActivityRecordCard({ record }) {
+function normalizeTraceCategory(category) {
+  if (category === "action_bridge") return "action";
+  if (["ui", "api", "task", "policy", "evidence", "audit", "error", "runtime"].includes(category)) return category;
+  return "ui";
+}
+
+function buildClientActivityTrace(records, correlationId) {
+  const linkedRecords = records
+    .filter((record) => record.correlationId === correlationId)
+    .sort((left, right) => Date.parse(left.timestamp || "") - Date.parse(right.timestamp || ""));
+  const categories = ["ui", "api", "action", "task", "policy", "evidence", "audit", "error", "runtime"].reduce((acc, key) => ({ ...acc, [key]: 0 }), {});
+  const timeline = linkedRecords.map((record) => {
+    const category = normalizeTraceCategory(record.category);
+    categories[category] = (categories[category] || 0) + 1;
+    return {
+      activityId: record.activityId,
+      timestamp: record.timestamp,
+      category,
+      eventType: record.eventType,
+      source: record.source,
+      agentId: record.agentId || null,
+      taskId: record.taskId || null,
+      status: record.status || "unknown",
+      summary: record.summary || "Activity event captured.",
+      evidenceIds: [],
+      auditIds: [],
+      redacted: true,
+    };
+  });
+  const hasFailure = linkedRecords.some((record) => ["failed", "blocked"].includes(record.status));
+  const hasBlock = linkedRecords.some((record) => ["DENY", "REQUIRE_APPROVAL"].includes(record.decision));
+  const hasSuccess = linkedRecords.some((record) => record.status === "success");
+  const startedAt = timeline[0]?.timestamp || "";
+  const endedAt = timeline.at(-1)?.timestamp || "";
+  const durationMs = Date.parse(endedAt || "") >= Date.parse(startedAt || "")
+    ? Date.parse(endedAt) - Date.parse(startedAt)
+    : 0;
+
+  return {
+    traceVersion: "1.0",
+    correlationId,
+    status: hasFailure && hasSuccess ? "partial" : hasFailure ? "failed" : hasBlock ? "blocked" : hasSuccess ? "success" : "unknown",
+    startedAt,
+    endedAt,
+    durationMs: Number.isFinite(durationMs) ? durationMs : 0,
+    eventCount: linkedRecords.length,
+    categories,
+    timeline,
+    related: {
+      taskIds: [...new Set(linkedRecords.map((record) => record.taskId).filter(Boolean))],
+      agentIds: [...new Set(linkedRecords.map((record) => record.agentId).filter(Boolean))],
+      evidenceIds: [],
+      auditIds: [],
+      actionIds: [],
+    },
+    warnings: linkedRecords.length === 0 ? ["No local records matched this correlation ID."] : [],
+    errors: [],
+  };
+}
+
+async function fetchActivityTrace(correlationId) {
+  try {
+    const response = await fetch(`http://localhost:4321/activity/${encodeURIComponent(correlationId)}`, {
+      signal: AbortSignal.timeout(5000),
+    });
+    return response.json();
+  } catch {
+    return { ok: false, source: "offline" };
+  }
+}
+
+function ActivityRecordCard({ record, onSelectCorrelation }) {
   const category = ACTIVITY_CATEGORY_LABELS[record.category] || cleanActivityValue(record.category, "Activity");
   const status = normalizeActivityStatus(record.status, record.decision);
   const linkedTask = record.taskId || record.missionId || record.projectId;
@@ -5813,7 +5929,16 @@ function ActivityRecordCard({ record }) {
         <div className="ccv2-activity-record__meta">
           {cleanActivityValue(record.eventType, "event type pending")} · {cleanActivityValue(record.source, "source pending")}
           {" · "}
-          {record.correlationId ? `Correlation ${record.shortCorrelationId || record.correlationId}` : "Correlation not linked yet"}
+          {record.correlationId ? (
+            <button
+              type="button"
+              className="ccv2-link-button"
+              onClick={() => onSelectCorrelation?.(record.correlationId)}
+              title={`Open trace for ${record.correlationId}`}
+            >
+              Trace {record.shortCorrelationId || record.correlationId}
+            </button>
+          ) : "Correlation not linked yet"}
           {" · "}
           {linkedTask ? `Linked ${linkedTask}` : "Not linked yet"}
         </div>
@@ -5828,17 +5953,23 @@ function ActivityEmptyState({ message = "No matching activity records." }) {
       <strong>{message}</strong>
       <span>
         Local API reads and governed action bridge outcomes are wired now. Provider, tool, worker, DB-backed activity,
-        and full trace drilldown remain future phases.
+        retention, and cross-process activity capture remain future phases.
       </span>
     </div>
   );
 }
 
-function ActivityRecordList({ records, emptyMessage }) {
+function ActivityRecordList({ records, emptyMessage, onSelectCorrelation }) {
   if (records.length === 0) return <ActivityEmptyState message={emptyMessage} />;
   return (
     <div className="ccv2-activity-list">
-      {records.map((record) => <ActivityRecordCard key={record.activityId} record={record} />)}
+      {records.map((record) => (
+        <ActivityRecordCard
+          key={record.activityId}
+          record={record}
+          onSelectCorrelation={onSelectCorrelation}
+        />
+      ))}
     </div>
   );
 }
@@ -5890,8 +6021,113 @@ function ActivityFilterBar({ filters, onChange, categories, statuses, sources })
   );
 }
 
+function ActivityTracePanel({ trace, selectedCorrelationId, traceSource, onClear }) {
+  const timeline = Array.isArray(trace?.timeline) ? trace.timeline : [];
+  const related = trace?.related || {};
+  const categories = trace?.categories || {};
+  const copyCorrelation = () => {
+    if (selectedCorrelationId && navigator.clipboard?.writeText) {
+      navigator.clipboard.writeText(selectedCorrelationId);
+    }
+  };
+
+  return (
+    <section className="ccv2-card ccv2-activity-trace-panel" aria-label="Trace Details">
+      <div className="ccv2-activity-trace-panel__head">
+        <div>
+          <div className="ccv2-section-heading">Trace Details</div>
+          <h3>{selectedCorrelationId ? "Correlation trace" : "Select a correlation ID"}</h3>
+        </div>
+        <div className="ccv2-activity-trace-panel__actions">
+          {selectedCorrelationId && (
+            <button type="button" className="ccv2-button ccv2-button--ghost" onClick={copyCorrelation}>
+              Copy correlation ID
+            </button>
+          )}
+          {selectedCorrelationId && (
+            <button type="button" className="ccv2-button ccv2-button--ghost" onClick={onClear}>
+              Clear selection
+            </button>
+          )}
+        </div>
+      </div>
+
+      {!selectedCorrelationId ? (
+        <p className="ccv2-activity-copy">
+          Select a correlation ID from the activity list to inspect the full trace. The trace view shows summarized,
+          redacted events only and never exposes raw payloads, raw logs, secrets, or private content.
+        </p>
+      ) : (
+        <>
+          <div className="ccv2-activity-trace-summary">
+            <div>
+              <span className="ccv2-activity-summary__label">Correlation ID</span>
+              <span className="ccv2-activity-trace-id">{selectedCorrelationId}</span>
+            </div>
+            <div>
+              <span className="ccv2-activity-summary__label">Status</span>
+              <span className={`ccv2-pill ccv2-pill--${activityStatusTone(trace?.status)}`}>{trace?.status || "unknown"}</span>
+            </div>
+            <div>
+              <span className="ccv2-activity-summary__label">Events</span>
+              <span>{trace?.eventCount ?? timeline.length}</span>
+            </div>
+            <div>
+              <span className="ccv2-activity-summary__label">Duration</span>
+              <span>{trace?.durationMs ? `${trace.durationMs}ms` : "Not measured"}</span>
+            </div>
+            <div>
+              <span className="ccv2-activity-summary__label">Source</span>
+              <span>{traceSource || "Local records"}</span>
+            </div>
+          </div>
+
+          <div className="ccv2-activity-trace-related">
+            {Object.entries(categories).filter(([, count]) => count > 0).map(([category, count]) => (
+              <span key={category} className="ccv2-pill ccv2-pill--read">{category}: {count}</span>
+            ))}
+            {(related.taskIds || []).map((taskId) => <span key={taskId} className="ccv2-pill ccv2-pill--planned">Task {taskId}</span>)}
+            {(related.agentIds || []).map((agentId) => <span key={agentId} className="ccv2-pill ccv2-pill--planned">{agentId}</span>)}
+            {(related.evidenceIds || []).map((evidenceId) => <span key={evidenceId} className="ccv2-pill ccv2-pill--read">Evidence {evidenceId}</span>)}
+            {(related.auditIds || []).map((auditId) => <span key={auditId} className="ccv2-pill ccv2-pill--read">Audit {auditId}</span>)}
+          </div>
+
+          {timeline.length === 0 ? (
+            <ActivityEmptyState message="No events matched this correlation ID." />
+          ) : (
+            <ol className="ccv2-activity-trace-timeline">
+              {timeline.map((event) => (
+                <li key={event.activityId} className="ccv2-activity-trace-event">
+                  <div className="ccv2-activity-record__topline">
+                    <span className="ccv2-activity-record__time">{formatActivityTimestamp(event.timestamp)}</span>
+                    <span className="ccv2-activity-category">{event.category}</span>
+                    <span className={`ccv2-pill ccv2-pill--${activityStatusTone(event.status)}`}>{event.status}</span>
+                    {event.redacted && <span className="ccv2-pill ccv2-pill--disabled">redacted</span>}
+                  </div>
+                  <div className="ccv2-activity-record__title">{cleanActivityValue(event.summary, "Activity event captured.")}</div>
+                  <div className="ccv2-activity-record__meta">
+                    {cleanActivityValue(event.eventType, "event type pending")} · {cleanActivityValue(event.source, "source pending")}
+                    {event.taskId ? ` · Task ${event.taskId}` : ""}
+                    {event.agentId ? ` · ${event.agentId}` : ""}
+                  </div>
+                </li>
+              ))}
+            </ol>
+          )}
+
+          {(trace?.warnings || []).length > 0 && (
+            <p className="ccv2-activity-copy">Trace warning: {trace.warnings[0]}</p>
+          )}
+        </>
+      )}
+    </section>
+  );
+}
+
 function ActivityLogPage({ vm }) {
   const [activeTab, setActiveTab] = useState("overview");
+  const [selectedCorrelationId, setSelectedCorrelationId] = useState("");
+  const [liveTrace, setLiveTrace] = useState(null);
   const [filters, setFilters] = useState({
     search: "",
     category: "",
@@ -5899,7 +6135,18 @@ function ActivityLogPage({ vm }) {
     source: "",
     scope: "",
   });
-  const activity = vm?.liveData?.activity || null;
+  const useTraceFixture = typeof window !== "undefined"
+    && new URLSearchParams(window.location.search).get("activityFixture") === "trace-view-test";
+  const liveActivity = vm?.liveData?.activity || null;
+  const fixtureActivity = useTraceFixture ? {
+    totalCount: TRACE_VIEW_TEST_RECORDS.length,
+    categories: { ui: 1, api: 1 },
+    tracesAvailableCount: 1,
+    failedTraceCount: 0,
+    blockedTraceCount: 0,
+    records: TRACE_VIEW_TEST_RECORDS,
+  } : null;
+  const activity = liveActivity || fixtureActivity;
   const records = Array.isArray(activity?.records) ? activity.records : [];
   const categories = activity?.categories || {};
   const sourceLabel = activity ? "Live local API / activity store" : "Snapshot fallback";
@@ -5922,13 +6169,39 @@ function ActivityLogPage({ vm }) {
   const taskGroups = buildActivityGroups(filteredRecords, (record) => record.taskId || record.missionId || record.projectId || "Not linked yet");
   const correlationGroups = buildActivityGroups(filteredRecords, (record) => record.correlationId || "No correlation ID");
   const latestHighlight = filteredRecords[0];
+  const selectedTrace = liveTrace?.trace || buildClientActivityTrace(records, selectedCorrelationId);
+  const traceSource = liveTrace?.trace ? "Live local API / activity trace" : "Local record summary";
+
+  useEffect(() => {
+    let cancelled = false;
+    if (!selectedCorrelationId) {
+      setLiveTrace(null);
+      return () => { cancelled = true; };
+    }
+    fetchActivityTrace(selectedCorrelationId).then((result) => {
+      if (cancelled) return;
+      if (result?.ok && result?.data?.trace) {
+        setLiveTrace(result.data);
+      } else {
+        setLiveTrace(null);
+      }
+    });
+    return () => { cancelled = true; };
+  }, [selectedCorrelationId]);
+
+  function selectCorrelationId(correlationId) {
+    if (!correlationId || correlationId === "No correlation ID") return;
+    setSelectedCorrelationId(correlationId);
+    setActiveTab("correlations");
+  }
+
   const readiness = [
     { label: "Activity schema", status: "Ready", tone: "pass" },
     { label: "Correlation ID model", status: "Ready", tone: "pass" },
     { label: "Central logger", status: "Ready", tone: "pass" },
     { label: "Local activity store", status: "Ready", tone: "pass" },
     { label: "UI/API/action instrumentation", status: "Capture wired", tone: "pass" },
-    { label: "Trace view", status: "Planned", tone: "disabled" },
+    { label: "Trace view", status: "Ready", tone: "pass" },
   ];
 
   const futureEvents = [
@@ -5957,14 +6230,13 @@ function ActivityLogPage({ vm }) {
             <div className="ccv2-section-heading">Operator Activity</div>
             <h2>Activity Log is ready for summarized local records.</h2>
             <p>
-              P41.8.4 turns the central activity ledger into a usable read-only Command Center page. Records are
-              summarized, redacted, grouped, and filterable without exposing raw logs, unredacted payload dumps,
-              secrets, or private payloads.
+              P41.8.5 links local activity records by correlation ID so operators can inspect a complete redacted
+              trace without exposing raw logs, unredacted payload dumps, secrets, or private payloads.
             </p>
             <div className="ccv2-activity-next">
               <span className="ccv2-pill ccv2-pill--read">Source</span>
               <span>{sourceLabel}</span>
-              <span className="ccv2-pill ccv2-pill--disabled">Trace drilldown in P41.8.5</span>
+              <span className="ccv2-pill ccv2-pill--read">Trace drilldown available</span>
             </div>
           </section>
 
@@ -5984,8 +6256,12 @@ function ActivityLogPage({ vm }) {
                 <span className="ccv2-activity-summary__label">Categories</span>
               </div>
               <div>
-                <span className="ccv2-activity-summary__value">{Object.keys(correlationGroups).length}</span>
+                <span className="ccv2-activity-summary__value">{activity?.tracesAvailableCount ?? Object.keys(correlationGroups).length}</span>
                 <span className="ccv2-activity-summary__label">Correlation IDs</span>
+              </div>
+              <div>
+                <span className="ccv2-activity-summary__value">{activity?.failedTraceCount ?? 0}</span>
+                <span className="ccv2-activity-summary__label">Failed traces</span>
               </div>
             </div>
             {records.length === 0 && (
@@ -6017,6 +6293,13 @@ function ActivityLogPage({ vm }) {
           sources={sourceOptions}
         />
 
+        <ActivityTracePanel
+          trace={selectedTrace}
+          selectedCorrelationId={selectedCorrelationId}
+          traceSource={traceSource}
+          onClear={() => setSelectedCorrelationId("")}
+        />
+
         <CommandTabs
           tabs={ACTIVITY_LOG_TABS}
           activeTab={activeTab}
@@ -6027,7 +6310,7 @@ function ActivityLogPage({ vm }) {
             <div className="ccv2-activity-tab-grid">
               <section className="ccv2-card">
                 <div className="ccv2-section-heading">Recent Highlights</div>
-                {latestHighlight ? <ActivityRecordCard record={latestHighlight} /> : <ActivityEmptyState message="No activity records yet." />}
+                {latestHighlight ? <ActivityRecordCard record={latestHighlight} onSelectCorrelation={selectCorrelationId} /> : <ActivityEmptyState message="No activity records yet." />}
               </section>
               <section className="ccv2-card">
                 <div className="ccv2-section-heading">Capture Coverage</div>
@@ -6039,7 +6322,7 @@ function ActivityLogPage({ vm }) {
                 <div className="ccv2-section-heading">Boundary</div>
                 <p className="ccv2-activity-copy">
                   Each operator action links UI, API, action bridge, evidence, audit, and runtime records by correlation ID.
-                  Full trace replay is intentionally deferred to P41.8.5.
+                  Trace drilldown is read-only and summarizes redacted records by correlation ID.
                 </p>
                 <div className="ccv2-activity-boundaries">
                   <span className="ccv2-pill ccv2-pill--disabled">Provider logging not enabled</span>
@@ -6050,7 +6333,7 @@ function ActivityLogPage({ vm }) {
             </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="timeline" activeTab={activeTab}>
-            <ActivityRecordList records={filteredRecords} emptyMessage="No matching activity records." />
+            <ActivityRecordList records={filteredRecords} emptyMessage="No matching activity records." onSelectCorrelation={selectCorrelationId} />
           </CommandTabPanel>
           <CommandTabPanel tabId="by-agent" activeTab={activeTab}>
             <div className="ccv2-activity-group-list">
@@ -6058,7 +6341,7 @@ function ActivityLogPage({ vm }) {
               {Object.entries(agentGroups).map(([group, groupRecords]) => (
                 <section key={group} className="ccv2-card">
                   <div className="ccv2-section-heading">{group}</div>
-                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." />
+                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." onSelectCorrelation={selectCorrelationId} />
                 </section>
               ))}
             </div>
@@ -6069,16 +6352,16 @@ function ActivityLogPage({ vm }) {
               {Object.entries(taskGroups).map(([group, groupRecords]) => (
                 <section key={group} className="ccv2-card">
                   <div className="ccv2-section-heading">{group}</div>
-                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." />
+                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." onSelectCorrelation={selectCorrelationId} />
                 </section>
               ))}
             </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="failures" activeTab={activeTab}>
-            <ActivityRecordList records={failureRecords} emptyMessage="No failed, blocked, denied, redacted, or approval-required records." />
+            <ActivityRecordList records={failureRecords} emptyMessage="No failed, blocked, denied, redacted, or approval-required records." onSelectCorrelation={selectCorrelationId} />
           </CommandTabPanel>
           <CommandTabPanel tabId="api-actions" activeTab={activeTab}>
-            <ActivityRecordList records={apiActionRecords} emptyMessage="No local API or governed action bridge records match the current filters." />
+            <ActivityRecordList records={apiActionRecords} emptyMessage="No local API or governed action bridge records match the current filters." onSelectCorrelation={selectCorrelationId} />
           </CommandTabPanel>
           <CommandTabPanel tabId="correlations" activeTab={activeTab}>
             <div className="ccv2-activity-correlation-grid">
@@ -6088,8 +6371,11 @@ function ActivityLogPage({ vm }) {
                   <div className="ccv2-section-heading">{correlationId}</div>
                   <div className="ccv2-activity-record__title">{groupRecords.length} linked event{groupRecords.length === 1 ? "" : "s"}</div>
                   <p className="ccv2-activity-copy">
-                    Preview only. Full trace drilldown by correlation ID is planned for P41.8.5.
+                    Open a redacted trace timeline for this correlation ID.
                   </p>
+                  <button type="button" className="ccv2-button" onClick={() => selectCorrelationId(correlationId)}>
+                    Open trace
+                  </button>
                 </section>
               ))}
             </div>

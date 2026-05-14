@@ -1397,8 +1397,136 @@ test.describe("Command Center route-wide UX", () => {
 
   test("Activity Log shows tabbed filters and summarized activity instead of a placeholder", async ({ page }) => {
     const errors = captureClientErrors(page);
+    const traceRecords = [
+      {
+        activityId: "act_traceview001",
+        shortActivityId: "act_traceview...",
+        correlationId: "corr_traceview001",
+        shortCorrelationId: "corr_traceview...",
+        timestamp: "2026-05-14T12:00:00.000Z",
+        category: "ui",
+        eventType: "operator_action_requested",
+        source: "command_center",
+        scope: "NEXUS_OS_CHANGE",
+        mode: "local-private",
+        status: "success",
+        decision: "ALLOW",
+        summary: "Operator opened Activity Log trace view.",
+        taskId: "task-trace-001",
+        agentId: "NEXUS",
+        durationMs: 12,
+        redacted: true,
+        evidenceCount: 1,
+        auditCount: 1,
+      },
+      {
+        activityId: "act_traceview002",
+        shortActivityId: "act_traceview...",
+        correlationId: "corr_traceview001",
+        shortCorrelationId: "corr_traceview...",
+        timestamp: "2026-05-14T12:00:03.000Z",
+        category: "api",
+        eventType: "local_api_request_completed",
+        source: "local_api",
+        scope: "NEXUS_OS_CHANGE",
+        mode: "local-private",
+        status: "success",
+        decision: "ALLOW",
+        summary: "Local API returned redacted activity trace.",
+        taskId: "task-trace-001",
+        agentId: "NEXUS",
+        durationMs: 18,
+        redacted: true,
+        evidenceCount: 1,
+        auditCount: 1,
+      },
+    ];
+    await page.route(/^http:\/\/(localhost|127\.0\.0\.1):4321\/activity/, async (route) => {
+      if (route.request().url().includes("/activity/corr_traceview001")) {
+        await route.fulfill({
+          status: 200,
+          contentType: "application/json",
+          body: JSON.stringify({
+            ok: true,
+            source: "live-local-api",
+            data: {
+              traceViewEnabled: true,
+              correlationId: "corr_traceview001",
+              trace: {
+                traceVersion: "1.0",
+                correlationId: "corr_traceview001",
+                status: "success",
+                startedAt: "2026-05-14T12:00:00.000Z",
+                endedAt: "2026-05-14T12:00:03.000Z",
+                durationMs: 3000,
+                eventCount: 2,
+                categories: { ui: 1, api: 1, action: 0, task: 0, evidence: 0, audit: 0, error: 0 },
+                timeline: traceRecords.map((record) => ({
+                  activityId: record.activityId,
+                  timestamp: record.timestamp,
+                  category: record.category,
+                  eventType: record.eventType,
+                  source: record.source,
+                  agentId: record.agentId,
+                  taskId: record.taskId,
+                  status: record.status,
+                  summary: record.summary,
+                  evidenceIds: ["ev_trace_001"],
+                  auditIds: ["audit_trace_001"],
+                  redacted: true,
+                })),
+                related: {
+                  taskIds: ["task-trace-001"],
+                  agentIds: ["NEXUS"],
+                  evidenceIds: ["ev_trace_001"],
+                  auditIds: ["audit_trace_001"],
+                  actionIds: [],
+                },
+                warnings: [],
+                errors: [],
+              },
+              redacted: true,
+            },
+            warnings: [],
+            errors: [],
+          }),
+        });
+        return;
+      }
+      await route.fulfill({
+        status: 200,
+        contentType: "application/json",
+        body: JSON.stringify({
+          ok: true,
+          source: "live-local-api",
+          data: {
+            activityCaptureEnabled: true,
+            storePath: "local-state/runtime/activity.jsonl",
+            generatedAt: "2026-05-14T12:00:04.000Z",
+            count: traceRecords.length,
+            limit: 50,
+            totalCount: traceRecords.length,
+            warningCount: 0,
+            categories: { ui: 1, api: 1 },
+            correlationSummaries: [{ correlationId: "corr_traceview001", status: "success", eventCount: 2, redacted: true }],
+            tracesAvailableCount: 1,
+            failedTraceCount: 0,
+            blockedTraceCount: 0,
+            latestActivityId: "act_traceview002",
+            latestCorrelationId: "corr_traceview001",
+            records: traceRecords,
+            providerLoggingEnabled: false,
+            workerLoggingEnabled: false,
+            dbBackedActivityEnabled: false,
+            redacted: true,
+          },
+          warnings: [],
+          errors: [],
+        }),
+      });
+    });
 
-    await page.goto("/command-center/activity");
+    await page.goto("/command-center/activity?activityFixture=trace-view-test");
     const body = await page.locator("body").innerText();
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
@@ -1409,6 +1537,8 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Local activity store");
     await expect(page.locator("body")).toContainText("UI/API/action instrumentation");
     await expect(page.locator("body")).toContainText("Capture wired");
+    await expect(page.locator("body")).toContainText("Trace view");
+    await expect(page.locator("body")).toContainText("Trace drilldown available");
     await expect(page.locator("body")).toContainText("Stored records");
     await expect(page.locator("body")).toContainText("Local API read requests");
     await expect(page.locator("body")).toContainText("Governed action bridge events");
@@ -1417,14 +1547,21 @@ test.describe("Command Center route-wide UX", () => {
       await expect(commandTab(page, label)).toBeVisible();
     }
     await expect(page.getByPlaceholder("Search summary, event type, task, source, or correlation ID")).toBeVisible();
+    await expect(page.getByLabel("Trace Details")).toContainText("Select a correlation ID");
     await commandTab(page, "Timeline").click();
-    await expect(page.locator("body")).toContainText(/No matching activity records|Correlation|Activity event/i);
+    await expect(page.locator("body")).toContainText(/corr_traceview001|Trace corr_traceview|Activity event/i);
+    await page.getByRole("button", { name: /Trace corr_traceview/i }).first().click();
+    await expect(page.getByLabel("Trace Details")).toContainText("corr_traceview001");
+    await expect(page.getByLabel("Trace Details")).toContainText("Correlation trace");
+    await expect(page.getByLabel("Trace Details")).toContainText("Local API returned redacted activity trace.");
+    await expect(page.getByRole("button", { name: /Copy correlation ID/i })).toBeVisible();
+    await commandTab(page, "Timeline").click();
     await page.getByPlaceholder("Search summary, event type, task, source, or correlation ID").fill("no-such-activity-record");
     await expect(page.locator("body")).toContainText("No matching activity records");
     await commandTab(page, "Failures & Blocks").click();
     await expect(page.locator("body")).toContainText(/No failed, blocked, denied, redacted, or approval-required records|failed|blocked/i);
     await commandTab(page, "Correlations").click();
-    await expect(page.locator("body")).toContainText(/P41.8.5|No correlation IDs are available yet|linked event/i);
+    await expect(page.locator("body")).toContainText(/Open a redacted trace timeline|No correlation IDs are available yet|linked event/i);
     expect(body).not.toContain("Coming Soon · planned Command Center surface");
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("{");
@@ -1438,16 +1575,16 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks P41.8.4 Activity Log page and P41.8.5 next", async ({ page }) => {
+  test("OS Roadmap tracks P41.8.5 Trace View and P41.8.6 next", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P41.8.4");
-    expect(body).toContain("Command Center Activity Log Page");
     expect(body).toContain("P41.8.5");
     expect(body).toContain("Trace View by Correlation ID");
+    expect(body).toContain("P41.8.6");
+    expect(body).toContain("Activity Tests + Docs + Final Validation");
     expect(body).not.toContain("DemoApp");
 
     expect(errors).toEqual([]);

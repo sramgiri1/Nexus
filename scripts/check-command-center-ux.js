@@ -854,6 +854,10 @@ for (const label of ["Overview", "Timeline", "By Agent", "By Task", "Failures & 
 }
 check(commandCenterSource.includes("ActivityFilterBar"), "topBarPolish", "Activity Log should include filter controls");
 check(commandCenterSource.includes("UI/API/action instrumentation"), "topBarPolish", "Activity Log should identify instrumentation status");
+check(commandCenterSource.includes("ActivityTracePanel"), "topBarPolish", "Activity Log should include trace details panel");
+check(commandCenterSource.includes("Trace drilldown available"), "topBarPolish", "Activity Log should show trace readiness");
+check(commandCenterSource.includes("Copy correlation ID"), "topBarPolish", "Activity Log should include trace copy action");
+check(routeTestSource.includes("corr_traceview001"), "topBarPolish", "Route tests should cover trace drilldown fixture");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
 check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
 

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:20:32.489Z
-- Validation branch: observability/activity-log-command-center-page
-- Validation HEAD: adcc916
+- Generated at: 2026-05-14T22:52:07.823Z
+- Validation branch: observability/activity-trace-view
+- Validation HEAD: 5c6b80d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

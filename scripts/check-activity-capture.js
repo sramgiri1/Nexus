@@ -281,7 +281,7 @@ P41.8.3 - API / UI / Action Bridge Activity Capture
 - Browser-only UI click persistence without a governed capture endpoint.
 - Provider/tool/worker activity capture.
 - DB-backed activity storage.
-- Full trace drilldown by correlation ID.
+- Retention/export for correlation trace records.
 
 ## Failures
 

@@ -3871,7 +3871,7 @@
 
 .ccv2-activity-summary {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -3992,6 +3992,35 @@
   font-weight: 700;
 }
 
+.ccv2-link-button {
+  border: 0;
+  background: transparent;
+  color: var(--nexus-accent);
+  cursor: pointer;
+  font: inherit;
+  font-weight: 850;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.ccv2-button {
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-accent-soft);
+  color: var(--nexus-text-strong);
+  cursor: pointer;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 850;
+  padding: 8px 12px;
+}
+
+.ccv2-button--ghost {
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+}
+
 .ccv2-activity-copy {
   color: var(--nexus-text);
   font-size: 13px;
@@ -4058,6 +4087,84 @@
   display: grid;
   gap: 6px;
   text-align: left;
+}
+
+.ccv2-activity-trace-panel {
+  display: grid;
+  gap: 14px;
+  margin: 14px 0;
+}
+
+.ccv2-activity-trace-panel__head,
+.ccv2-activity-trace-panel__actions,
+.ccv2-activity-trace-related {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ccv2-activity-trace-panel__head {
+  justify-content: space-between;
+}
+
+.ccv2-activity-trace-panel h3 {
+  margin: 4px 0 0;
+  color: var(--nexus-text-strong);
+  font-size: 18px;
+  letter-spacing: -0.02em;
+}
+
+.ccv2-activity-trace-summary {
+  display: grid;
+  grid-template-columns: 1.4fr repeat(4, minmax(120px, 1fr));
+  gap: 10px;
+}
+
+.ccv2-activity-trace-summary > div {
+  display: grid;
+  gap: 5px;
+  padding: 10px 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.ccv2-activity-trace-id {
+  color: var(--nexus-text-strong);
+  font-family: "JetBrains Mono", "SFMono-Regular", ui-monospace, monospace;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.ccv2-activity-trace-timeline {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.ccv2-activity-trace-event {
+  position: relative;
+  padding: 12px 12px 12px 18px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 14px;
+  background: var(--nexus-panel-soft);
+}
+
+.ccv2-activity-trace-event::before {
+  content: "";
+  position: absolute;
+  top: 16px;
+  left: 7px;
+  width: 5px;
+  height: calc(100% - 28px);
+  border-radius: 999px;
+  background: var(--nexus-accent-soft);
 }
 
 .ccv2-roadmap-track--hero {

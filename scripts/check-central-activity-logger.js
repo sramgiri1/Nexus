@@ -282,10 +282,10 @@ try {
     "command-execution/",
     "db/",
   ];
-  if (!["P41.8.3", "P41.8.4"].includes(currentPhase)) {
+  if (!["P41.8.3", "P41.8.4", "P41.8.5"].includes(currentPhase)) {
     forbiddenPrefixes.push("local-api/");
   }
-  if (!["P41.8.2A", "P41.8.3", "P41.8.4"].includes(currentPhase)) {
+  if (!["P41.8.2A", "P41.8.3", "P41.8.4", "P41.8.5"].includes(currentPhase)) {
     forbiddenPrefixes.push("dashboard/");
   }
   for (const changedFile of changedFiles) {
@@ -354,8 +354,8 @@ P41.8.2 - Central Activity Logger
 ## Explicit Non-Goals
 
 - No broad runtime instrumentation was added.
-- No Command Center Activity Log UI was added.
-- No /activity API endpoint was added.
+- P41.8.2 itself did not add Command Center Activity Log UI.
+- P41.8.2 itself did not add the /activity API endpoint.
 - No provider, tool, worker, DB, or project mutation path was enabled.
 
 ## Failures

@@ -1079,7 +1079,12 @@ execution remain disabled.
 
 P41.8.4 adds the Command Center Activity Log page with tabs, filters, grouped
 views, status cards, and correlation previews for summarized local activity
-records. Full trace drilldown remains planned for P41.8.5.
+records.
+
+P41.8.5 adds redacted trace drilldown by correlation ID. Activity Log operators
+can open a trace timeline for connected UI/API/action/evidence/audit records
+without exposing raw logs, raw payloads, secrets, or private project content.
+Provider/tool/worker traces and DB-backed activity storage remain disabled.
 
 ---
 

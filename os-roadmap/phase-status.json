@@ -540,10 +540,10 @@
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "observability/activity-log-command-center-page",
+      "branch": "observability/activity-trace-view",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway with schema, central logger, selected capture wiring, and a tabbed Activity Log page.",
+      "summary": "Centralized observability track is underway with schema, central logger, selected capture wiring, Activity Log UI, and trace drilldown.",
       "checksRun": [
         "npm run check:command-center-ux",
         "npm run check:docs-coverage",
@@ -552,9 +552,9 @@
         "npm run check:os-phase-status"
       ],
       "knownLimitations": [
-        "Full trace views, provider/tool dispatch, worker runtime, DB-backed activity, and DB writes remain out of scope."
+        "Provider/tool dispatch, worker runtime, DB-backed activity, retention, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.4",
+      "nextPhase": "P41.8.5",
       "commandCenterVisible": true
     },
     {
@@ -691,7 +691,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-log-command-center-page",
-      "commit": "pending-final-commit",
+      "commit": "5c6b80d",
       "completedAt": "",
       "summary": "Adds a real tabbed Command Center Activity Log page with timeline, grouping, filters, status cards, and correlation previews.",
       "checksRun": [
@@ -706,7 +706,7 @@
         "cd dashboard && npm run test:pages"
       ],
       "knownLimitations": [
-        "Full trace drilldown by correlation ID remains planned for P41.8.5.",
+        "Trace drilldown by correlation ID is implemented in P41.8.5.",
         "Provider, tool, worker, and DB-backed activity capture remain disabled.",
         "Browser-only UI click persistence waits for a governed capture endpoint."
       ],
@@ -717,13 +717,28 @@
       "phaseId": "P41.8.5",
       "title": "Trace View by Correlation ID",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "observability/activity-trace-view",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned trace view for connected activity by correlation ID.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds redacted activity trace helpers, a read-only correlation trace endpoint, and Command Center trace drilldown.",
+      "checksRun": [
+        "npm run check:activity-trace-view",
+        "npm run check:activity-capture",
+        "npm run check:central-activity-logger",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Trace view is read-only and uses redacted summaries only.",
+        "Worker/provider/tool/DB-backed activity traces remain disabled.",
+        "Retention, export, telemetry, and SLO behavior remain future work."
+      ],
       "nextPhase": "P41.8.6",
       "commandCenterVisible": true
     },
@@ -1289,8 +1304,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T23:55:00.000Z",
-  "currentPhase": "P41.8.4",
-  "previousPhase": "P41.8.3",
-  "nextPhase": "P41.8.5"
+  "updatedAt": "2026-05-14T22:44:04.000Z",
+  "currentPhase": "P41.8.5",
+  "previousPhase": "P41.8.4",
+  "nextPhase": "P41.8.6"
 }

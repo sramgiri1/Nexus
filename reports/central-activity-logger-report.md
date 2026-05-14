@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:20:32.530Z
-- Validation branch: observability/activity-log-command-center-page
-- Validation HEAD: adcc916
+- Generated at: 2026-05-14T22:51:22.085Z
+- Validation branch: observability/activity-trace-view
+- Validation HEAD: 5c6b80d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,8 +37,8 @@ P41.8.2 - Central Activity Logger
 ## Explicit Non-Goals
 
 - No broad runtime instrumentation was added.
-- No Command Center Activity Log UI was added.
-- No /activity API endpoint was added.
+- P41.8.2 itself did not add Command Center Activity Log UI.
+- P41.8.2 itself did not add the /activity API endpoint.
 - No provider, tool, worker, DB, or project mutation path was enabled.
 
 ## Failures
