@@ -31,11 +31,12 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.7.5
+## Current Status Through P41.7.6
 
-P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.5 now add the codebase documentation foundation,
+P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.6 now add the codebase documentation foundation,
 finalized tabbed Command Center validation layer, operator-facing usage documentation foundation, and route-aware Command Center help
-links. The Command Center and local operator surface have:
+links. The P41.7 documentation track is complete, with docs coverage and OS phase status checks part of the validation surface. The
+Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -52,6 +53,7 @@ links. The Command Center and local operator surface have:
 - route-wide tab metadata and validation for Mission Control, operational pages, platform pages, governance pages, Projects, OS Roadmap, Cost Center, and Batch Queue
 - usage guides for local boot, tabbed Command Center operation, mission start, task activation, Agent Workbench review, controlled implementation, evidence/audit, demo/private mode, troubleshooting, and FAQ
 - compact route-aware Command Center help links that point operators to the relevant local usage guide without executing actions
+- final docs coverage and OS phase status validation for the P41.7 documentation track
 
 ## Command Center Overview
 
@@ -181,7 +183,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.7.4: OS usage documentation foundation
 - P41.7.5: Command Center help links + docs navigation
 - P41.7.6: docs coverage checker + final validation
-- P41.8: Centralized Activity Log + Observability Ledger
+- P41.8: Centralized Activity Log + Observability Ledger (next)
 - P42: Project Registry + Adapter Framework
 
 ## Known Limitations

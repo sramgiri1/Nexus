@@ -582,3 +582,25 @@ the OS Roadmap.
 ### Next Phase
 
 - P41.7.6 — Docs Coverage Checker + Final Validation
+
+## P41.7.6 — Docs Coverage Checker + Final Validation
+
+This subphase closes the P41.7 documentation track with final docs coverage,
+help-link, and OS phase-status validation.
+
+### Final Validation Scope
+
+- P41.7.5 phase status is repaired to the real final commit `49c09bd`.
+- P41.7.6 is recorded as the final documentation-track validation phase.
+- The parent P41.7 phase is marked complete once docs coverage, help links,
+  usage docs, codebase docs, and phase status checks pass.
+- P41.8 remains the next OS phase: Centralized Activity Log + Observability
+  Ledger.
+
+### Boundary Rules Preserved
+
+- Command Center help links remain route-aware local guide references.
+- No new UI feature, backend execution, provider calls, DB writes, worker
+  runtime, local API behavior change, or action bridge behavior change is added.
+- DemoApp remains limited to Demo Mode; local-private docs and UI continue to
+  use Private Project or no-project guidance.

@@ -5,14 +5,17 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
+const CURRENT_PHASE_IDS = new Set(["P41.7", "P41.7.6"]);
 
 const sections = {
   nexusPhases: true,
   phaseStatus: true,
+  p417Entries: true,
+  completedPhaseCommits: true,
   currentPhase: true,
   previousPhase: true,
   nextPhase: true,
-  requiredP417Entries: true,
+  commandCenterVisibility: true,
   publicSafeWording: true,
   reportWritten: true,
 };
@@ -72,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P41.7.5", "currentPhase", "currentPhase must be P41.7.5");
-check(phaseStatus.previousPhase === "P41.7.4", "previousPhase", "previousPhase must be P41.7.4");
-check(phaseStatus.nextPhase === "P41.7.6", "nextPhase", "nextPhase must be P41.7.6");
+check(phaseStatus.currentPhase === "P41.7.6", "currentPhase", "currentPhase must be P41.7.6");
+check(phaseStatus.previousPhase === "P41.7.5", "previousPhase", "previousPhase must be P41.7.5");
+check(phaseStatus.nextPhase === "P41.8", "nextPhase", "nextPhase must be P41.8");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -85,38 +88,63 @@ for (const entry of phaseStatus.phases || []) {
   check(ALLOWED_STATUSES.includes(entry.status), "phaseStatus", `Invalid status for ${entry.phaseId}: ${entry.status}`);
   check(
     entry.commandCenterVisible === true || entry.commandCenterVisible === false,
-    "phaseStatus",
+    "commandCenterVisibility",
     `Every phase status needs commandCenterVisible boolean: ${entry.phaseId}`,
   );
 }
 
-for (const phaseId of ["P41.7.4", "P41.7.5", "P41.7.6"]) {
-  check(indexById.has(phaseId), "requiredP417Entries", `nexus-phases missing ${phaseId}`);
-  check(statusById.has(phaseId), "requiredP417Entries", `phase-status missing ${phaseId}`);
+for (const phaseId of ["P41.7.1", "P41.7.2", "P41.7.3", "P41.7.4", "P41.7.5", "P41.7.6", "P41.7", "P41.8"]) {
+  check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
+  check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);
 }
 
-const p4174 = statusById.get("P41.7.4");
-check(p4174?.status === "complete", "requiredP417Entries", "P41.7.4 must be complete");
-check(p4174?.branch === "docs/os-usage-foundation", "requiredP417Entries", "P41.7.4 branch mismatch");
-check(p4174?.commit === "88d1a4b", "requiredP417Entries", "P41.7.4 commit must be 88d1a4b");
+for (const phaseId of ["P41.7.1", "P41.7.2", "P41.7.3", "P41.7.4", "P41.7.5"]) {
+  const entry = statusById.get(phaseId);
+  check(entry?.status === "complete", "p417Entries", `${phaseId} must be complete`);
+  check(Boolean(entry?.branch), "completedPhaseCommits", `${phaseId} must have a branch`);
+  check(Boolean(entry?.commit), "completedPhaseCommits", `${phaseId} must have a commit`);
+  check(entry?.commit !== "pending-final-commit", "completedPhaseCommits", `${phaseId} must have a real commit`);
+}
 
 const p4175 = statusById.get("P41.7.5");
-check(p4175?.status === "complete" || p4175?.status === "in_progress", "requiredP417Entries", "P41.7.5 must be current or complete");
-check(
-  p4175?.branch === "docs/command-center-help-links-navigation",
-  "requiredP417Entries",
-  "P41.7.5 branch mismatch",
-);
+check(p4175?.branch === "docs/command-center-help-links-navigation", "p417Entries", "P41.7.5 branch mismatch");
+check(p4175?.commit === "49c09bd", "completedPhaseCommits", "P41.7.5 commit must be 49c09bd");
 
 const p4176 = statusById.get("P41.7.6");
-check(p4176?.status === "planned", "requiredP417Entries", "P41.7.6 must be planned");
+check(p4176?.status === "complete" || p4176?.status === "in_progress", "currentPhase", "P41.7.6 must be current or complete");
+check(p4176?.branch === "docs/docs-coverage-final-validation", "currentPhase", "P41.7.6 branch mismatch");
+check(Boolean(p4176?.commit), "currentPhase", "P41.7.6 must have a commit or pending-final-commit placeholder");
+check(p4176?.nextPhase === "P41.8", "nextPhase", "P41.7.6 nextPhase must be P41.8");
+
+const p417 = statusById.get("P41.7");
+check(p417?.status === "complete", "p417Entries", "P41.7 parent phase must be complete");
+check(p417?.branch === "docs/docs-coverage-final-validation", "p417Entries", "P41.7 parent branch mismatch");
+check(Boolean(p417?.commit), "p417Entries", "P41.7 parent must have a commit or pending-final-commit placeholder");
+check(p417?.nextPhase === "P41.8", "nextPhase", "P41.7 parent nextPhase must be P41.8");
+
+const p418 = statusById.get("P41.8");
+check(p418?.status === "planned", "nextPhase", "P41.8 must be planned");
+check(p418?.title === "Centralized Activity Log + Observability Ledger", "nextPhase", "P41.8 title mismatch");
+
+for (const entry of phaseStatus.phases || []) {
+  if (entry.status !== "complete") continue;
+  check(Boolean(entry.branch), "completedPhaseCommits", `Completed phase missing branch: ${entry.phaseId}`);
+  check(Boolean(entry.commit), "completedPhaseCommits", `Completed phase missing commit: ${entry.phaseId}`);
+  check(Boolean(entry.summary), "completedPhaseCommits", `Completed phase missing summary: ${entry.phaseId}`);
+  check(Array.isArray(entry.checksRun), "completedPhaseCommits", `Completed phase missing checksRun: ${entry.phaseId}`);
+  check(Array.isArray(entry.knownLimitations), "completedPhaseCommits", `Completed phase missing knownLimitations: ${entry.phaseId}`);
+  check(Boolean(entry.nextPhase), "completedPhaseCommits", `Completed phase missing nextPhase: ${entry.phaseId}`);
+  check(entry.commandCenterVisible === true, "commandCenterVisibility", `Completed phase must be Command Center visible: ${entry.phaseId}`);
+  if (!CURRENT_PHASE_IDS.has(entry.phaseId)) {
+    check(entry.commit !== "pending-final-commit", "completedPhaseCommits", `Completed prior phase has pending commit: ${entry.phaseId}`);
+  }
+}
 
 for (const forbidden of ["CareLoop", "careloop", "projects/careloop", "DemoApp"]) {
   check(!phaseStatusSource.includes(forbidden), "publicSafeWording", `Phase status contains forbidden term: ${forbidden}`);
 }
 
-let reportWritten = true;
-const result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
+let result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 
 const report = `# NEXUS OS Phase Status Report
 
@@ -137,12 +165,14 @@ const report = `# NEXUS OS Phase Status Report
 
 - Nexus phases: ${sections.nexusPhases ? "PASS" : "FAIL"}
 - Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}
+- P41.7 entries: ${sections.p417Entries ? "PASS" : "FAIL"}
+- Completed phase commits: ${sections.completedPhaseCommits ? "PASS" : "FAIL"}
 - Current phase: ${sections.currentPhase ? "PASS" : "FAIL"}
 - Previous phase: ${sections.previousPhase ? "PASS" : "FAIL"}
 - Next phase: ${sections.nextPhase ? "PASS" : "FAIL"}
-- Required P41.7 entries: ${sections.requiredP417Entries ? "PASS" : "FAIL"}
+- Command Center visibility: ${sections.commandCenterVisibility ? "PASS" : "FAIL"}
 - Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}
-- Report written: ${reportWritten ? "PASS" : "FAIL"}
+- Report written: ${sections.reportWritten ? "PASS" : "FAIL"}
 
 ## Failures
 
@@ -156,20 +186,23 @@ ${result}
 try {
   writeFileSync(REPORT_PATH, report, "utf8");
 } catch (error) {
-  reportWritten = false;
   fail("reportWritten", `Could not write ${REPORT_PATH}: ${error.message}`);
 }
 
+result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
+
 console.log(`Nexus phases: ${sections.nexusPhases ? "PASS" : "FAIL"}`);
 console.log(`Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}`);
+console.log(`P41.7 entries: ${sections.p417Entries ? "PASS" : "FAIL"}`);
+console.log(`Completed phase commits: ${sections.completedPhaseCommits ? "PASS" : "FAIL"}`);
 console.log(`Current phase: ${sections.currentPhase ? "PASS" : "FAIL"}`);
 console.log(`Previous phase: ${sections.previousPhase ? "PASS" : "FAIL"}`);
 console.log(`Next phase: ${sections.nextPhase ? "PASS" : "FAIL"}`);
-console.log(`Required P41.7 entries: ${sections.requiredP417Entries ? "PASS" : "FAIL"}`);
+console.log(`Command Center visibility: ${sections.commandCenterVisibility ? "PASS" : "FAIL"}`);
 console.log(`Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}`);
 console.log(`Report written: ${sections.reportWritten ? "PASS" : "FAIL"}`);
-console.log(`Result: ${Object.values(sections).every(Boolean) ? "PASS" : "FAIL"}`);
+console.log(`Result: ${result}`);
 
-if (!Object.values(sections).every(Boolean)) {
+if (result !== "PASS") {
   process.exitCode = 1;
 }

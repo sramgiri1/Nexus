@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T18:54:15.859Z
-- Validation branch: docs/command-center-help-links-navigation
-- Validation HEAD: 88d1a4b
+- Generated at: 2026-05-14T19:11:54.664Z
+- Validation branch: docs/docs-coverage-final-validation
+- Validation HEAD: 49c09bd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

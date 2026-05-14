@@ -237,7 +237,10 @@ test("Command Center help links map to expected usage docs", async ({ page }) =>
     ["/command-center/implementation", "Controlled Implementation", "docs/usage/CONTROLLED_IMPLEMENTATION.md"],
     ["/command-center/evidence", "Understanding Evidence and Audit", "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md"],
     ["/command-center/liveapi", "Running NEXUS Locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
+    ["/command-center/database", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/services", "Running NEXUS Locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
+    ["/command-center/safety", "Demo Mode vs Private Mode", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
+    ["/command-center/projects", "Getting Started", "docs/usage/GETTING_STARTED.md"],
     ["/command-center/demo", "Demo Mode vs Private Mode", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
   ];
 

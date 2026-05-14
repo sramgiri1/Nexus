@@ -2,27 +2,22 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T18:54:56.324Z
-- Validation branch: docs/command-center-help-links-navigation
-- Validation HEAD: 88d1a4b
+- Generated at: 2026-05-14T19:11:41.259Z
+- Validation branch: docs/docs-coverage-final-validation
+- Validation HEAD: 49c09bd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
 
-- Codebase docs folder: PASS
-- Documentation standard: PASS
-- Module registry: PASS
-- Phase module index: PASS
-- README links: PASS
-- Required module families: PASS
-- Required phase entries: PASS
-- Public-safe wording: PASS
 - Usage docs: PASS
-- No-project guidance: PASS
-- Mode guidance: PASS
-- Tabbed Command Center: PASS
+- Codebase docs: PASS
+- README links: PASS
 - Help links: PASS
 - Local links: PASS
+- Mode guidance: PASS
+- No-project guidance: PASS
+- Tabbed Command Center guidance: PASS
+- Public-safe wording: PASS
 - Report written: PASS
 
 ## Warnings

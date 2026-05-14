@@ -134,11 +134,11 @@ Risk level:
   - `P41.7.3A` complete
   - `P41.7.3B` complete
   - `P41.7.3C` complete
-  - `P41.7.3D` current
-  - `P41.7.3E` planned
-  - `P41.7.4` planned
-  - `P41.7.5` planned
-  - `P41.7.6` planned
+  - `P41.7.3D` complete
+  - `P41.7.3E` complete
+  - `P41.7.4` complete
+  - `P41.7.5` complete
+  - `P41.7.6` complete
 - `P41.8` Centralized Activity Log + Observability Ledger
 - `P41.9` README + Architecture Diagram Registry
 - `P42` Project Registry + Adapter Framework
@@ -494,8 +494,14 @@ P41.7 now breaks down into explicit documentation-system subphases:
 - `P41.7.3D` — Page Tab Rollout - Live API / Durable State / Evidence / Safety / Projects / Roadmap / Cost / Batch
 - `P41.7.3E` — Tabbed UX Tests, Docs, and OS Phase Status Finalization
 - `P41.7.4` — OS Usage Documentation Foundation
-- `P41.7.5` — Command Center Help Links
+- `P41.7.5` — Command Center Help Links + Docs Navigation
 - `P41.7.6` — Docs Coverage Checker + Final Validation
+
+P41.7 is complete after the final validation sweep. The track now includes
+codebase documentation standards, module and phase registries, reuse/refactor
+planning, route-wide tab documentation, operator usage guides, route-aware local
+help links, docs coverage checks, and OS phase status validation. P41.8 is the
+next NEXUS OS phase.
 
 The goal of the track is to improve repo understanding, reduce documentation
 drift, and prepare later safe refactor work without expanding runtime scope.

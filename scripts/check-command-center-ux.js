@@ -580,8 +580,13 @@ for (const expected of [
   "Understanding Evidence and Audit",
   "Running NEXUS Locally",
   "Demo Mode vs Private Mode",
+  "Troubleshooting",
+  "FAQ",
 ]) {
   check(helpLinksSource.includes(expected), "commandCenterHelpLinks", `Help links missing expected label: ${expected}`);
+}
+for (const expected of ["database", "services", "commandPalette"]) {
+  check(helpLinksSource.includes(`${expected}:`), "commandCenterHelpLinks", `Help links missing route/capability key: ${expected}`);
 }
 for (const expectedTest of [
   "Command Center help links are visible on major routes",

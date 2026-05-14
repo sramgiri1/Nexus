@@ -588,3 +588,91 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Remaining page tab rollout for Live API, Durable State, Evidence, Safety,
   Projects, OS Roadmap, Cost, and Batch is deferred to P41.7.3D.
+
+## P41.7.4 — OS Usage Documentation Foundation
+
+- Primary capability:
+  Add operator-facing usage documentation for local boot, tabbed Command
+  Center operation, missions, tasks, workbench review, implementation,
+  evidence, mode boundaries, troubleshooting, and FAQ.
+- Main files/folders touched:
+  `docs/usage/*`,
+  `scripts/check-docs-coverage.js`,
+  `reports/docs-coverage-report.md`,
+  `README.md`
+- Main checker(s):
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/docs-coverage-report.md`,
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Establishes the usage docs that Command Center help links can reference.
+- Safety impact:
+  Documents local-private/demo boundaries and no-project guidance without
+  changing runtime behavior.
+- Known limitations:
+  Help links are added in P41.7.5, not this foundation phase.
+
+## P41.7.5 — Command Center Help Links + Docs Navigation
+
+- Primary capability:
+  Map stabilized Command Center routes to local usage guides through a compact
+  route-aware help-link affordance.
+- Main files/folders touched:
+  `dashboard/src/data/commandCenterHelpLinks.js`,
+  `dashboard/src/components/command-center-v2/HelpLink.jsx`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`
+- Main checker(s):
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`,
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/docs-coverage-report.md`,
+  `reports/os-phase-status-report.md`,
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Adds local guide references for Mission Control, Workspace, Task Queue,
+  Agent Workbench, Implementation, Evidence, Live API, Durable State, Service
+  Health, Projects, Safety, OS Roadmap, and Demo Mode.
+- Safety impact:
+  Help links are guidance-only and do not execute commands, call providers,
+  write DB state, or mutate project files.
+- Known limitations:
+  Help links display local docs paths; they do not yet route to a served docs
+  reader.
+
+## P41.7.6 — Docs Coverage Checker + Final Validation
+
+- Primary capability:
+  Finalize the P41.7 documentation track by repairing phase status, hardening
+  docs coverage checks, and regenerating final validation reports.
+- Main files/folders touched:
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`,
+  `os-roadmap/phase-status.json`,
+  `reports/docs-coverage-report.md`,
+  `reports/os-phase-status-report.md`,
+  `reports/command-center-ux-report.md`,
+  `docs/architecture/NEXUS_PLATFORM_ROADMAP.md`
+- Main checker(s):
+  `scripts/check-docs-coverage.js`,
+  `scripts/check-os-phase-status.js`,
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/docs-coverage-report.md`,
+  `reports/os-phase-status-report.md`,
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Marks the P41.7 documentation track complete and keeps P41.8 as the next
+  NEXUS OS phase in the roadmap/status data.
+- Safety impact:
+  Final validation only; no UI feature expansion, backend execution, provider
+  calls, DB writes, local API behavior changes, action bridge behavior changes,
+  or private project mutation are introduced.
+- Known limitations:
+  Existing public-safety false positives outside the docs coverage checker may
+  still need a dedicated cleanup phase.

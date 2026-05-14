@@ -452,7 +452,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/command-center-help-links-navigation",
-      "commit": "pending-final-commit",
+      "commit": "49c09bd",
       "completedAt": "",
       "summary": "Expose usage documentation from Command Center routes and repair docs/phase status quality gaps.",
       "checksRun": [
@@ -473,13 +473,22 @@
       "phaseId": "P41.7.6",
       "title": "Docs Coverage Checker + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/docs-coverage-final-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned final validation sweep for the P41.7 documentation-system track.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Finalizes docs coverage, OS phase status validation, help-link coverage, and report regeneration for the P41.7 documentation track.",
+      "checksRun": [
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Known public-safety roadmap-doc false positives may still exist outside the docs coverage checker."
+      ],
       "nextPhase": "P41.8",
       "commandCenterVisible": true
     },
@@ -487,13 +496,19 @@
       "phaseId": "P41.7",
       "title": "Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/docs-coverage-final-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned documentation-system and reuse/refactor hardening phase.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Documentation system, usage guides, reuse audit, module registry, help links, and final docs coverage validation are complete.",
+      "checksRun": [
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux"
+      ],
+      "knownLimitations": [
+        "Runtime behavior, Project Registry, worker runtime, provider dispatch, and DB writes remain out of scope for P41.7."
+      ],
       "nextPhase": "P41.8",
       "commandCenterVisible": true
     },
@@ -1059,8 +1074,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T18:45:00.000Z",
-  "currentPhase": "P41.7.5",
-  "previousPhase": "P41.7.4",
-  "nextPhase": "P41.7.6"
+  "updatedAt": "2026-05-14T19:20:00.000Z",
+  "currentPhase": "P41.7.6",
+  "previousPhase": "P41.7.5",
+  "nextPhase": "P41.8"
 }

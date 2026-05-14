@@ -41,6 +41,12 @@ export const COMMAND_CENTER_HELP_LINKS = {
     description: "Start, inspect, and troubleshoot local NEXUS services.",
     routeKeys: ["liveapi"],
   },
+  database: {
+    label: "Command Center Guide",
+    docPath: "docs/usage/COMMAND_CENTER_GUIDE.md",
+    description: "Understand Durable State, file-backed posture, and DB-write-disabled guidance.",
+    routeKeys: ["database"],
+  },
   services: {
     label: "Running NEXUS Locally",
     docPath: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
@@ -70,6 +76,12 @@ export const COMMAND_CENTER_HELP_LINKS = {
     docPath: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
     description: "Use Demo Mode safely and keep demo data separate from local-private work.",
     routeKeys: ["demo"],
+  },
+  commandPalette: {
+    label: "Command Center Guide",
+    docPath: "docs/usage/COMMAND_CENTER_GUIDE.md",
+    description: "Review governed command palette actions and disabled reason guidance.",
+    routeKeys: ["mission"],
   },
   troubleshooting: {
     label: "Troubleshooting",

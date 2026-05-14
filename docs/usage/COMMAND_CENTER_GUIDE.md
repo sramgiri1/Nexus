@@ -32,6 +32,8 @@ not enabled yet.
 
 ## Scope and Project Shell
 
+- Active Project is the primary work context when a project is selected; mode
+  and environment badges are secondary metadata.
 - Project scope shows the active project, active mission, project tasks, evidence, gates, and cost posture when available.
 - Portfolio scope is a placeholder until Project Registry is implemented in P42.
 - NEXUS OS scope is for platform progress, service posture, docs/tests readiness, and roadmap status.
@@ -52,7 +54,8 @@ not enabled yet.
 - Shows: mission hero, next best action, system status, gates, tasks, safety, evidence, and readiness
 - Available actions: mission planning, review, explain, and operator action
   previews through the command palette and Mission Control action row
-- Disabled actions: show user-facing reasons such as action bridge, worker runtime, or release bridge requirements
+- Disabled actions: show user-facing reasons such as `Requires governed action bridge`, worker runtime requirements, or
+  `Requires release action bridge`
 - Evidence/activity: summarized from runtime records and snapshots
 - Known limitations: does not execute providers or worker runtime
 
