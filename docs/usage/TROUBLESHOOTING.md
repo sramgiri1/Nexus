@@ -112,6 +112,28 @@ Do not expect DemoApp to appear in local-private mode. DemoApp is demo mode only
 - rerun `npm run nexus:doctor`
 - refresh `/command-center/services`
 
+## Activity Log Has No Records
+
+- confirm the local API is running with `npm run nexus:status`
+- open `/command-center/activity`
+- run a governed local action or local API read to create a captured activity
+  event
+- remember that provider/tool/worker traces are not enabled yet
+- if the page shows snapshot fallback, the local API is offline or unavailable
+
+Activity is local and file-backed in P41.8. It is stored under
+`local-state/runtime/activity.jsonl` and displayed as redacted summaries.
+
+## Trace Details Shows No Events
+
+- copy the correlation ID and search the Activity Log for it
+- clear filters that may hide matching records
+- check whether the event was captured before P41.8.5 trace support
+- use Timeline first if you are unsure which correlation ID to inspect
+
+The trace view is intentionally read-only. It does not expose raw JSONL rows,
+raw logs, raw payloads, secrets, stack traces, or private project source.
+
 ## DB Writes Disabled
 
 This is expected. Durable State is still file-backed with DB foundation ready,

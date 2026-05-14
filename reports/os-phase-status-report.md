@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:51:22.445Z
-- Validation branch: observability/activity-trace-view
-- Validation HEAD: 5c6b80d
+- Generated at: 2026-05-14T23:11:32.459Z
+- Validation branch: observability/activity-final-validation
+- Validation HEAD: a473bc0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P41.8.5
-- Previous phase: P41.8.4
-- Next phase: P41.8.6
+- Current phase: P41.8.6
+- Previous phase: P41.8.5
+- Next phase: P41.9
 
 ## Checks
 

@@ -464,6 +464,62 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Observability Activity Modules
+
+- Purpose:
+  Provide the local, redaction-safe activity schema, logger, capture helpers,
+  store, API summaries, and trace view used by the Command Center Activity Log.
+- Primary files:
+  `observability/activitySchema.js`,
+  `observability/activityTypes.js`,
+  `observability/correlation.js`,
+  `observability/redactionPolicy.js`,
+  `observability/activityLogger.js`,
+  `observability/activityStore.js`,
+  `observability/activityCapture.js`,
+  `observability/activityTrace.js`,
+  `observability/index.js`,
+  `local-api/routes/activity.js`
+- Public entry points:
+  `createActivityEvent`,
+  `validateActivityEvent`,
+  `createTraceContext`,
+  `logActivityDryRun`,
+  `appendActivityEvent`,
+  `readActivityEvents`,
+  `recordUiActivity`,
+  `recordApiActivity`,
+  `recordActionBridgeActivity`,
+  `recordActivityFailure`,
+  `buildActivityTrace`
+- Inputs/outputs:
+  Consumes redacted activity input from local UI/API/action bridge surfaces and
+  outputs schema-compliant activity events, local JSONL records, summarized
+  `/activity` responses, and correlation trace summaries.
+- Side effects:
+  The central logger can append to `local-state/runtime/activity.jsonl` through
+  governed helper calls. The local API route and Command Center Activity Log are
+  read-only.
+- Safety boundary:
+  No provider calls, external network calls, worker instrumentation, DB writes,
+  DB-backed activity storage, raw payload logging, raw log display, or private
+  project source exposure.
+- Reuse notes:
+  Future instrumentation must reuse the schema, correlation, redaction, logger,
+  and trace helpers instead of writing ad hoc activity records.
+- Tests/checkers:
+  `scripts/check-activity-event-schema.js`,
+  `scripts/check-central-activity-logger.js`,
+  `scripts/check-activity-capture.js`,
+  `scripts/check-activity-trace-view.js`,
+  `scripts/check-activity-observability-final.js`,
+  `dashboard/tests/routes.spec.js`
+- Known limitations:
+  Provider/tool/worker traces, DB-backed storage, retention, export, telemetry,
+  SLOs, and production observability integrations remain future phases.
+- Status:
+  active
+
 ## Architecture and Usage Docs
 
 - Purpose:

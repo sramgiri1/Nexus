@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:51:22.085Z
-- Validation branch: observability/activity-trace-view
-- Validation HEAD: 5c6b80d
+- Generated at: 2026-05-14T23:11:31.875Z
+- Validation branch: observability/activity-final-validation
+- Validation HEAD: a473bc0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

@@ -714,3 +714,150 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Docs remain local file references. Served docs navigation and observability
   activity logs remain future work.
+
+## P41.8.1 — Activity Event Schema + Correlation ID Model
+
+- Primary capability:
+  Defines the redaction-safe activity event schema, activity type taxonomy,
+  correlation IDs, trace context, and redaction policy.
+- Main files/folders touched:
+  `observability/activitySchema.js`,
+  `observability/activityTypes.js`,
+  `observability/correlation.js`,
+  `observability/redactionPolicy.js`,
+  `policy/activity-event-schema-policy.json`
+- Main checker(s):
+  `scripts/check-activity-event-schema.js`
+- Main report(s):
+  `reports/activity-event-schema-report.md`
+- Command Center impact:
+  Establishes the data model later used by Activity Log and trace views.
+- Safety impact:
+  Model-only foundation. No runtime instrumentation, provider calls, DB writes,
+  worker runtime, or project mutation.
+- Known limitations:
+  No logger writes or Activity Log UI in this phase.
+
+## P41.8.2 — Central Activity Logger
+
+- Primary capability:
+  Adds the central logger and append-only local JSONL activity store.
+- Main files/folders touched:
+  `observability/activityLogger.js`,
+  `observability/activityStore.js`,
+  `local-state/runtime/activity.jsonl`,
+  `policy/central-activity-logger-policy.json`
+- Main checker(s):
+  `scripts/check-central-activity-logger.js`
+- Main report(s):
+  `reports/central-activity-logger-report.md`
+- Command Center impact:
+  Provides the local store that Activity Log later reads.
+- Safety impact:
+  Appends only schema-compliant redacted records to a safe local runtime path.
+- Known limitations:
+  No broad runtime instrumentation or Activity Log route in this phase.
+
+## P41.8.3 — API/UI/Action Bridge Activity Capture
+
+- Primary capability:
+  Wires selected capture helpers into local API and governed action bridge
+  surfaces.
+- Main files/folders touched:
+  `observability/activityCapture.js`,
+  `local-api/server.js`,
+  `local-api/routes/activity.js`,
+  action bridge modules,
+  `policy/activity-capture-policy.json`
+- Main checker(s):
+  `scripts/check-activity-capture.js`
+- Main report(s):
+  `reports/activity-capture-report.md`
+- Command Center impact:
+  Enables summarized local activity records to appear in Activity Log.
+- Safety impact:
+  Capture is redacted and scoped. Provider/tool/worker and DB-backed activity
+  remain disabled.
+- Known limitations:
+  Full trace drilldown remains future work.
+
+## P41.8.4 — Command Center Activity Log Page
+
+- Primary capability:
+  Adds the operator-facing Activity Log page with tabs, filters, grouping,
+  summary cards, and safe empty states.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/styles-command-center-v2.css`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-ux.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-activity-capture.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`,
+  `reports/activity-capture-report.md`
+- Command Center impact:
+  Makes Activity Log a real implemented route instead of readiness copy.
+- Safety impact:
+  Displays summarized redacted records only. No raw JSONL rows or raw logs.
+- Known limitations:
+  Correlation trace drilldown remains P41.8.5.
+
+## P41.8.5 — Trace View by Correlation ID
+
+- Primary capability:
+  Adds redacted trace model helpers, a read-only `/activity/:correlationId`
+  endpoint, and Command Center Trace Details drilldown.
+- Main files/folders touched:
+  `observability/activityTrace.js`,
+  `local-api/routes/activity.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-activity-trace-view.js`
+- Main checker(s):
+  `scripts/check-activity-trace-view.js`
+- Main report(s):
+  `reports/activity-trace-view-report.md`
+- Command Center impact:
+  Lets operators open a correlation ID and inspect a redacted timeline.
+- Safety impact:
+  Trace view is read-only and never exposes raw logs, payloads, secrets, stack
+  traces, or private project source.
+- Known limitations:
+  Provider/tool/worker and DB-backed traces remain disabled.
+
+## P41.8.6 — Activity Tests + Docs + Final Validation
+
+- Primary capability:
+  Finalizes P41.8 with consolidated checker coverage, refreshed reports,
+  operator docs, codebase docs, and phase-status repair.
+- Main files/folders touched:
+  `scripts/check-activity-observability-final.js`,
+  `docs/architecture/CENTRALIZED_ACTIVITY_LOG.md`,
+  `docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md`,
+  `docs/usage/COMMAND_CENTER_GUIDE.md`,
+  `docs/codebase/MODULE_REGISTRY.md`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-activity-observability-final.js`,
+  `scripts/check-activity-trace-view.js`,
+  `scripts/check-activity-capture.js`,
+  `scripts/check-central-activity-logger.js`,
+  `scripts/check-activity-event-schema.js`
+- Main report(s):
+  `reports/activity-observability-final-report.md`,
+  `reports/activity-trace-view-report.md`,
+  `reports/activity-capture-report.md`,
+  `reports/central-activity-logger-report.md`,
+  `reports/activity-event-schema-report.md`
+- Command Center impact:
+  Confirms Activity Log is the operator-facing observability surface for local
+  file-backed activity and correlation traces.
+- Safety impact:
+  Final validation only. No provider/tool/worker instrumentation, DB-backed
+  storage, DB writes, production observability stack, or private project
+  mutation.
+- Known limitations:
+  Retention, export, telemetry, SLOs, provider/tool/worker traces, and DB-backed
+  storage remain future phases.

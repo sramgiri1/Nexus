@@ -79,3 +79,50 @@ project content.
 
 Provider/tool/worker traces, DB-backed activity storage, retention policy,
 exports, and telemetry remain future work.
+
+## Evidence vs Audit vs Activity
+
+- Evidence records show proof produced or referenced by governed work.
+- Audit records explain review, policy, approval, or governance decisions.
+- Activity records show the operator/runtime timeline across UI, local API, and
+  governed action bridge surfaces.
+
+Use Evidence when you need proof. Use Audit when you need a decision trail. Use
+Activity Log when you need to understand what happened across surfaces and how
+records connect by correlation ID.
+
+## How to Use the Activity Log
+
+Open Command Center and go to `Activity Log`. The page shows summary cards,
+tabs, filters, activity categories, correlation IDs, and a Trace Details panel.
+
+Recommended workflow:
+
+1. Start with Overview to confirm the local activity store and capture posture.
+2. Use Timeline for recent events.
+3. Use By Agent or By Task to group events by source, task, mission, or project.
+4. Use Failures & Blocks to find failed, blocked, denied, redacted, or
+   approval-required events.
+5. Use API & Actions to focus on local API and governed action bridge events.
+6. Use Correlations to open a redacted trace for one operator flow.
+
+## How to Use Correlation Traces
+
+Click a correlation ID or Open trace action. Trace Details shows status,
+duration, event count, categories, related tasks, related agents, related
+evidence/audit IDs, and a redacted timeline.
+
+If no records exist for a correlation ID, the page shows a safe empty state
+instead of a raw debug dump.
+
+## What Is Redacted
+
+Primary UX does not show raw JSONL rows, raw logs, raw payloads, raw policy JSON,
+secrets, stack traces, or private project source. Summaries and IDs are intended
+to be sufficient for operator debugging without leaking sensitive content.
+
+## What Is Not Yet Captured
+
+Provider/tool/worker instrumentation, DB-backed activity storage, retention,
+exports, telemetry, SLOs, and production observability integrations are not
+enabled in P41.8. Activity is local and file-backed in this phase.

@@ -171,12 +171,13 @@ not enabled yet.
 
 ## Activity Log
 
-- Purpose: show observability readiness and explain how future activity traces will connect UI, API, action bridge, evidence, audit, and runtime records by correlation ID
-- Shows: activity schema, correlation ID model, central logger, and local activity store as ready
-- Shows as pending: UI/API/action bridge instrumentation and trace views
-- Available actions: inspection only
-- Disabled actions: no provider/tool/worker logging, DB-backed activity, or broad instrumentation in this phase
-- Next phase: P41.8.3 - API / UI / Action Bridge Activity Capture
+- Purpose: inspect local, file-backed activity records across Command Center UI, Live Local API, governed action bridge, evidence, audit, failures, and blocked work.
+- Shows: summary cards, tabs, filters, activity categories, source/agent grouping, task/project grouping, correlation IDs, and Trace Details by correlation ID.
+- Available actions: filter, search, open a correlation trace, copy a correlation ID, and clear trace selection.
+- How it helps debugging: use Timeline for recent events, Failures & Blocks for stoppages, API & Actions for local API/action bridge flow, and Correlations to inspect one redacted operator trace.
+- Safety posture: Activity Log is read-only and displays redacted summaries only. It does not expose raw JSONL rows, raw logs, raw payloads, raw policy JSON, secrets, stack traces, or private project source.
+- Disabled/not enabled: provider/tool/worker instrumentation, DB-backed activity storage, retention, export, telemetry, SLOs, and production observability stack.
+- Current scope: UI/API/action bridge activity is captured; provider/tool/worker traces are not enabled yet; activity is file-backed/local in P41.8.
 
 ## Header and Global Controls
 

@@ -1575,16 +1575,16 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks P41.8.5 Trace View and P41.8.6 next", async ({ page }) => {
+  test("OS Roadmap tracks P41.8.6 final validation and P41.9 next", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P41.8.5");
-    expect(body).toContain("Trace View by Correlation ID");
     expect(body).toContain("P41.8.6");
     expect(body).toContain("Activity Tests + Docs + Final Validation");
+    expect(body).toContain("P41.9");
+    expect(body).toContain("README + Architecture Diagram Registry");
     expect(body).not.toContain("DemoApp");
 
     expect(errors).toEqual([]);

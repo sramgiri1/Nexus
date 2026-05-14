@@ -83,6 +83,7 @@
     "check:central-activity-logger": "node scripts/check-central-activity-logger.js",
     "check:activity-capture": "node scripts/check-activity-capture.js",
     "check:activity-trace-view": "node scripts/check-activity-trace-view.js",
+    "check:activity-observability-final": "node scripts/check-activity-observability-final.js",
     "check-central-activity-logger": "node scripts/check-central-activity-logger.js",
     "check-activity-capture": "node scripts/check-activity-capture.js",
     "command-center:screenshot-audit": "node scripts/capture-command-center-screenshots.js",

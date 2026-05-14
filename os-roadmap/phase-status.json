@@ -539,22 +539,26 @@
       "phaseId": "P41.8",
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
-      "status": "in_progress",
-      "branch": "observability/activity-trace-view",
+      "status": "complete",
+      "branch": "observability/activity-final-validation",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway with schema, central logger, selected capture wiring, Activity Log UI, and trace drilldown.",
+      "summary": "Completes the centralized activity log track with schema, central logger, selected capture wiring, Activity Log UI, trace drilldown, final docs, and validation reports.",
       "checksRun": [
-        "npm run check:command-center-ux",
-        "npm run check:docs-coverage",
+        "npm run check:activity-observability-final",
+        "npm run check:activity-trace-view",
+        "npm run check:activity-capture",
         "npm run check:central-activity-logger",
         "npm run check:activity-event-schema",
-        "npm run check:os-phase-status"
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:format-readability"
       ],
       "knownLimitations": [
         "Provider/tool dispatch, worker runtime, DB-backed activity, retention, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.5",
+      "nextPhase": "P41.9",
       "commandCenterVisible": true
     },
     {
@@ -719,7 +723,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-trace-view",
-      "commit": "pending-final-commit",
+      "commit": "a473bc0",
       "completedAt": "",
       "summary": "Adds redacted activity trace helpers, a read-only correlation trace endpoint, and Command Center trace drilldown.",
       "checksRun": [
@@ -746,13 +750,31 @@
       "phaseId": "P41.8.6",
       "title": "Activity Tests + Docs + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "observability/activity-final-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned validation and documentation closeout for the activity ledger track.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Finalizes P41.8 with consolidated activity observability checks, refreshed reports, operator docs, codebase docs, and OS phase status repair.",
+      "checksRun": [
+        "npm run check:activity-observability-final",
+        "npm run check:activity-trace-view",
+        "npm run check:activity-capture",
+        "npm run check:central-activity-logger",
+        "npm run check:activity-event-schema",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Provider/tool/worker instrumentation remains disabled.",
+        "DB-backed activity storage, retention, export, telemetry, and SLOs remain future phases.",
+        "Public-safety may still report known pre-existing roadmap-doc false positives."
+      ],
       "nextPhase": "P41.9",
       "commandCenterVisible": true
     },
@@ -1304,8 +1326,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T22:44:04.000Z",
-  "currentPhase": "P41.8.5",
-  "previousPhase": "P41.8.4",
-  "nextPhase": "P41.8.6"
+  "updatedAt": "2026-05-14T23:03:20.000Z",
+  "currentPhase": "P41.8.6",
+  "previousPhase": "P41.8.5",
+  "nextPhase": "P41.9"
 }

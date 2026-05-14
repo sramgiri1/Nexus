@@ -257,6 +257,39 @@ Still not wired:
 
 Next phase: P41.8.6 - Activity Tests + Docs + Final Validation.
 
+## P41.8.6 - Activity Tests + Docs + Final Validation
+
+P41.8.6 closes the P41.8 activity-log track. It does not add new runtime
+instrumentation. It finalizes validation, documentation, reports, and phase
+status for the activity schema, central logger, capture helpers, Activity Log
+page, and trace view by correlation ID.
+
+Finalized surfaces:
+
+- Activity event schema and correlation ID model from P41.8.1.
+- Central logger and local append-only JSONL store from P41.8.2.
+- Selected UI/API/action bridge capture helpers from P41.8.3.
+- Command Center Activity Log page from P41.8.4.
+- Correlation trace helper and read-only trace endpoint from P41.8.5.
+- Final observability checker and report for the whole P41.8 track.
+
+The operator-facing Activity Log remains intentionally scoped. It shows
+file-backed local records, redacted summaries, tabs, filters, correlation IDs,
+trace details, and useful empty states. It does not claim provider/tool/worker
+instrumentation, DB-backed activity storage, retention, export, telemetry, or
+SLO support.
+
+Non-goals preserved:
+
+- No provider calls.
+- No tool or MCP runtime instrumentation.
+- No worker runtime instrumentation.
+- No DB writes or DB-backed activity storage.
+- No production observability stack.
+- No private project file mutation.
+
+Next phase: P41.9 - README + Architecture Diagram Registry.
+
 ## Future Phases
 
 - P41.8.2 - Central Activity Logger
@@ -265,6 +298,7 @@ Next phase: P41.8.6 - Activity Tests + Docs + Final Validation.
 - P41.8.4 - Command Center Activity Log Page
 - P41.8.5 - Trace View by Correlation ID
 - P41.8.6 - Activity Tests + Docs + Final Validation
+- P41.9 - README + Architecture Diagram Registry
 
 Future instrumentation must use the schema, preserve redaction requirements, and
 route writes through a dedicated activity logger rather than ad hoc appenders.

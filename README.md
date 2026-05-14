@@ -1086,6 +1086,16 @@ can open a trace timeline for connected UI/API/action/evidence/audit records
 without exposing raw logs, raw payloads, secrets, or private project content.
 Provider/tool/worker traces and DB-backed activity storage remain disabled.
 
+P41.8 complete: the centralized activity log track now has schema/correlation
+modeling, a central local logger, selected UI/API/action bridge capture,
+Command Center Activity Log, correlation trace drilldown, final observability
+checks, refreshed reports, and operator/codebase docs. Activity remains local,
+file-backed, redacted, and read-focused in the UI. Provider/tool/worker
+instrumentation, DB-backed activity storage, retention, export, telemetry, SLOs,
+and production observability remain future work.
+
+Next phase: P41.9 - README + Architecture Diagram Registry.
+
 ---
 
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
