@@ -18,6 +18,17 @@ Task activation depends on the task activation bridge. When it is available, a p
 - evidence count
 - next action
 
+Task Queue is tabbed:
+
+- Planned: planned mission tasks and activation readiness
+- Active: queued, running, and verifying tasks
+- Review: tasks awaiting operator or auditor review
+- Blocked: policy, approval, validation, or capability blockers
+- Completed: completed work and evidence summaries
+- All Projects: placeholder until Project Registry supports cross-project aggregation
+
+If no project is selected, Task Queue should show start-project guidance instead of demo fallback data.
+
 ## Common States
 
 - Planned
@@ -40,3 +51,5 @@ Blocked or disabled activation should explain why in user-facing terms. Examples
 ## Evidence Expectations
 
 Activated tasks should accumulate evidence, audit records, and runtime events as governed actions progress.
+
+Use Agent Workbench after activation to inspect the selected task, evidence, review status, context, and activity.

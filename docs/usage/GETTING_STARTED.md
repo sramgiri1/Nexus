@@ -4,7 +4,7 @@
 
 NEXUS is a local-first agentic operating system that separates mission planning, task activation, review, validation, evidence, approvals, and safety into explicit governed layers.
 
-## Current Completed Foundation Through P41.6.4
+## Current Completed Foundation Through P41.7.4
 
 Through P41.6.4, NEXUS includes:
 
@@ -19,6 +19,9 @@ Through P41.6.4, NEXUS includes:
 - localhost-only unified local boot commands
 - Service Health visibility in Command Center
 - a governed command palette for Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain
+- reusable tabs across Mission Control, core operations, platform, governance, Projects, OS Roadmap, Cost Center, and Batch Queue
+- route metadata that separates OS, project, portfolio, platform, and demo scopes
+- operator-facing usage docs for local boot, missions, tasks, workbench review, implementation, evidence, and mode boundaries
 
 ## What Command Center Can Do Now
 
@@ -39,7 +42,7 @@ Through P41.6.4, NEXUS includes:
 - real release/deploy actions
 - unrestricted source mutation
 
-Unified boot is planned for P41.6 and was delivered in P41.6.2. Boot docs and final validation tightening continue in P41.6.5. Until then, use the existing dashboard, local API, action bridge, and `nexus:*` commands documented in `package.json`.
+Unified boot was delivered in P41.6.2 and finalized through P41.6.5. Use the dashboard, local API, action bridge, and `nexus:*` commands documented in `package.json` and [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md).
 
 ## Safe Ways to Run NEXUS Locally
 
@@ -58,6 +61,18 @@ See [Running NEXUS Locally](RUNNING_NEXUS_LOCALLY.md) for more detail.
 - local-private: private project access stays governed and redacted
 
 See [Demo Mode vs Private Mode](DEMO_MODE_VS_PRIVATE_MODE.md).
+
+## No Project Selected
+
+If Command Center does not have an active project, do not use demo data as a fallback. The operator flow is:
+
+1. create, import, or select a project
+2. define or load a project profile
+3. define stack and test commands
+4. create a mission
+5. generate a plan
+6. activate the first task
+7. review output and evidence
 
 ## Runtime Record Locations
 

@@ -515,3 +515,33 @@ Phase labels remain allowed only on OS Roadmap. Non-roadmap pages continue to us
 ### Next Phase
 
 - P41.7.4 — OS Usage Documentation Foundation
+
+## P41.7.4 — OS Usage Documentation Foundation
+
+This subphase adds the operator-facing documentation foundation for the stabilized local Command Center workflow.
+
+### Usage Docs Covered
+
+- Getting started with the local NEXUS workflow
+- Running NEXUS locally with `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor`
+- Using the tabbed Command Center and scope/project shell
+- Starting a mission
+- Activating tasks
+- Reviewing work in Agent Workbench
+- Understanding controlled implementation boundaries
+- Understanding evidence, audit, and runtime events
+- Demo Mode versus local-private mode
+- Troubleshooting local boot, tabs, no-project states, and service posture
+- FAQ for current operator limitations
+
+### Boundary Rules Preserved
+
+- DemoApp remains demo mode only.
+- Local-private pages use Private Project or no-project guidance.
+- No-project state guides operators to create/import/select a project, add a profile, define stack/test commands, create a mission, generate a plan, and activate the first task.
+- OS Roadmap remains separate from project progress.
+- No backend execution, provider calls, DB writes, worker runtime, local API behavior change, or action bridge behavior change is added.
+
+### Next Phase
+
+- P41.7.5 — Command Center Help Links + Docs Navigation

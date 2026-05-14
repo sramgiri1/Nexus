@@ -4,6 +4,8 @@
 
 Evidence records prove what governed actions produced. Evidence is the operator-facing proof layer.
 
+Evidence appears in Command Center as timeline, task, agent, project, and developer-details views. Primary tabs summarize evidence without raw confidential payloads.
+
 ## Audit
 
 Audit records explain who did what, when, and why in a governed path.
@@ -32,3 +34,5 @@ Primary Command Center pages are designed for safe operator visibility. Raw evid
 ## Future Activity Model
 
 A centralized activity log is planned for P41.8 to unify evidence, audit, and runtime visibility further.
+
+Until P41.8, pages may show evidence, audit, and runtime events as separate summaries. That separation is intentional and keeps proof, governance, and runtime signals distinct.

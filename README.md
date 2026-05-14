@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.7.3E
+## Current Status Through P41.7.4
 
-P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.3E now add the codebase documentation foundation plus the finalized tabbed Command Center validation layer. The Command Center and local operator surface have:
+P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.4 now add the codebase documentation foundation, finalized tabbed Command Center validation layer, and operator-facing usage documentation foundation. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -48,6 +48,7 @@ P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41
 - OS roadmap vs project-progress separation, with platform phases tracked separately from private-project progress
 - a codebase documentation standard, module registry, and phase module index for future maintainers and coding agents
 - route-wide tab metadata and validation for Mission Control, operational pages, platform pages, governance pages, Projects, OS Roadmap, Cost Center, and Batch Queue
+- usage guides for local boot, tabbed Command Center operation, mission start, task activation, Agent Workbench review, controlled implementation, evidence/audit, demo/private mode, troubleshooting, and FAQ
 
 ## Command Center Overview
 
@@ -134,6 +135,7 @@ npm run nexus:down
 ## Documentation Map
 
 - Usage guides: [docs/usage](docs/usage/README.md)
+- Command Center guide: [docs/usage/COMMAND_CENTER_GUIDE.md](docs/usage/COMMAND_CENTER_GUIDE.md)
 - Codebase guides: [docs/codebase](docs/codebase/README.md)
 - Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)

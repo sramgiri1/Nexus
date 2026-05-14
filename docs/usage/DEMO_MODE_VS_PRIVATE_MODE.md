@@ -25,6 +25,14 @@ In public-safe docs and broad operator messaging, use “private project” word
 
 DemoApp content belongs on Demo Mode surfaces. It should not leak into local-private Mission Control or Workspace primary UX.
 
+Allowed DemoApp locations:
+
+- `/command-center/demo`
+- demo-only fixtures
+- demo-only tests that explicitly validate Demo Mode
+
+Local-private pages must show `Private Project`, an approved selected project label, or a no-project state. They must not use DemoApp as fallback data.
+
 ## No Private Project Leakage Rule
 
 Public/demo docs and surfaces must not leak:
@@ -33,3 +41,16 @@ Public/demo docs and surfaces must not leak:
 - private source snippets
 - private evidence payloads
 - raw `.env` or secrets
+
+## No-Project State
+
+When no project is selected, the safe local-private path is:
+
+1. create, import, or select a project
+2. add or generate a project profile
+3. define stack and test commands
+4. create a mission
+5. generate a plan
+6. activate the first task
+
+Opening Demo Mode is allowed for public-safe demonstration, but Demo Mode is not the active project fallback.

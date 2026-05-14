@@ -17,10 +17,11 @@ You can use NEXUS today for governed local planning, review, evidence, approval,
 
 ## What is still planned?
 
-- unified boot in P41.6
 - centralized activity log in P41.8
 - Project Registry + Adapter Framework in P42
 - worker runtime, provider dispatch, and broader governed execution
+
+Unified boot exists for enabled localhost-only services through `npm run nexus:up` and `npm run nexus:down`.
 
 ## Why are some buttons disabled?
 
@@ -30,9 +31,17 @@ Because the capability they depend on is not enabled yet or requires a governed 
 
 Because DB foundation is ready, but DB writes remain disabled by policy and runtime still uses file-backed persistence.
 
-## Why does unified boot not exist yet?
+## Why does Service Health say a service is disabled?
 
-It is planned for P41.6. Current local usage still depends on separate commands from `package.json`.
+Disabled services are usually intentional placeholders for future runtime capabilities such as workers, provider dispatch, or DB-primary writes. Use `npm run nexus:doctor` and `/command-center/services` to distinguish disabled-by-policy from broken.
+
+## Why do pages have tabs?
+
+Tabs keep high-density operator pages readable. Overview tabs show the next safe action; drilldown tabs show tasks, evidence, gates, policy, diagnostics, and developer details without changing backend behavior.
+
+## What happens if no project is selected?
+
+Command Center should show a start-project empty state. Create, import, or select a project, add a profile, define stack/test commands, create a mission, generate a plan, and activate the first task. DemoApp is not the local-private fallback.
 
 ## Where are screenshots and reports?
 

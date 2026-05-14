@@ -197,7 +197,7 @@
       "track": "NEXUS_OS",
       "order": 12.83,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
-      "summary": "Tighten usage-doc structure, update operator guidance, and reduce drift between Command Center behavior and written instructions.",
+      "summary": "Create the operator-facing usage documentation foundation for local boot, tabbed Command Center operation, no-project state, demo/private boundaries, missions, tasks, workbench review, controlled implementation, and evidence/audit posture.",
       "commandCenterVisible": true
     },
     {

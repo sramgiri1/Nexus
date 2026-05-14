@@ -409,7 +409,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "test/tabbed-command-center-final-validation",
-      "commit": "pending-final-commit",
+      "commit": "5d80435",
       "completedAt": "",
       "summary": "Finalizes route-wide tab metadata, Playwright coverage, documentation, and OS phase status consistency for the tabbed Command Center rollout.",
       "checksRun": [
@@ -428,13 +428,21 @@
       "phaseId": "P41.7.4",
       "title": "OS Usage Documentation Foundation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/os-usage-foundation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned usage-doc system improvements and operator-guidance drift reduction.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds operator-facing usage docs for tabbed Command Center operation, no-project state, demo/private boundaries, local boot, missions, tasks, workbench review, controlled implementation, and evidence/audit posture.",
+      "checksRun": [
+        "npm run check:docs-coverage",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "This phase is documentation-focused and does not add backend execution, Project Registry, worker runtime, provider dispatch, or DB writes."
+      ],
       "nextPhase": "P41.7.5",
       "commandCenterVisible": true
     },

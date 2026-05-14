@@ -14,6 +14,11 @@ const sections = {
   requiredModuleFamilies: true,
   requiredPhaseEntries: true,
   publicSafeWording: true,
+  usageDocs: true,
+  noProjectGuidance: true,
+  modeGuidance: true,
+  tabbedCommandCenter: true,
+  helpLinks: true,
   localLinks: true,
   reportWritten: true,
 };
@@ -39,6 +44,21 @@ const requiredModuleFamilies = [
 ];
 
 const requiredPhaseEntries = ["P41.6.6", "P41.7.1", "P41.7.2"];
+
+const requiredUsageDocs = [
+  "docs/usage/README.md",
+  "docs/usage/GETTING_STARTED.md",
+  "docs/usage/COMMAND_CENTER_GUIDE.md",
+  "docs/usage/RUNNING_NEXUS_LOCALLY.md",
+  "docs/usage/STARTING_A_MISSION.md",
+  "docs/usage/ACTIVATING_TASKS.md",
+  "docs/usage/USING_AGENT_WORKBENCH.md",
+  "docs/usage/CONTROLLED_IMPLEMENTATION.md",
+  "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
+  "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
+  "docs/usage/TROUBLESHOOTING.md",
+  "docs/usage/FAQ.md",
+];
 
 function read(relativePath) {
   const fullPath = join(ROOT, relativePath);
@@ -94,11 +114,20 @@ const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 for (const file of requiredCodebaseDocs) {
   check(existsSync(join(ROOT, file)), "codebaseDocsFolder", `Missing codebase doc: ${file}`);
 }
+for (const file of requiredUsageDocs) {
+  check(existsSync(join(ROOT, file)), "usageDocs", `Missing usage doc: ${file}`);
+}
 
 const standardDoc = read("docs/codebase/CODE_DOCUMENTATION_STANDARD.md");
 const moduleRegistryDoc = read("docs/codebase/MODULE_REGISTRY.md");
 const phaseIndexDoc = read("docs/codebase/PHASE_MODULE_INDEX.md");
 const readme = read("README.md");
+const usageReadme = read("docs/usage/README.md");
+const commandCenterGuide = read("docs/usage/COMMAND_CENTER_GUIDE.md");
+const gettingStarted = read("docs/usage/GETTING_STARTED.md");
+const demoModeGuide = read("docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md");
+const troubleshootingGuide = read("docs/usage/TROUBLESHOOTING.md");
+const helpLinksSource = read("dashboard/src/data/commandCenterHelpLinks.js");
 
 for (const requiredField of [
   "Purpose",
@@ -136,6 +165,11 @@ check(
   "readmeLinks",
   "README must link to the codebase docs landing page or module registry",
 );
+check(
+  readme.includes("docs/usage") && readme.includes("COMMAND_CENTER_GUIDE"),
+  "readmeLinks",
+  "README must link to usage docs and the Command Center guide",
+);
 
 check(
   moduleRegistryDoc.includes("Status:"),
@@ -152,6 +186,9 @@ check(
 for (const file of ["README.md", ...requiredCodebaseDocs]) {
   validateLinksInFile(file);
 }
+for (const file of requiredUsageDocs) {
+  validateLinksInFile(file);
+}
 
 for (const file of requiredCodebaseDocs) {
   const content = read(file).toLowerCase();
@@ -162,6 +199,89 @@ for (const file of requiredCodebaseDocs) {
       `Codebase doc contains private-project detail (${forbidden}): ${file}`,
     );
   }
+}
+
+for (const expected of [
+  "Getting Started",
+  "Command Center Guide",
+  "Running NEXUS Locally",
+  "Demo Mode vs Private Mode",
+  "Troubleshooting",
+  "FAQ",
+]) {
+  check(usageReadme.includes(expected), "usageDocs", `Usage README missing link or section: ${expected}`);
+}
+
+for (const expected of [
+  "create, import, or select a project",
+  "add a project profile",
+  "define stack and test commands",
+  "create a mission",
+  "generate a plan",
+  "activate the first task",
+]) {
+  check(
+    `${usageReadme}\n${gettingStarted}\n${troubleshootingGuide}`.toLowerCase().includes(expected.toLowerCase()),
+    "noProjectGuidance",
+    `No-project guidance missing: ${expected}`,
+  );
+}
+
+for (const expected of [
+  "DemoApp is demo mode only",
+  "Local-private",
+  "Private Project",
+  "must not use DemoApp as fallback",
+]) {
+  check(
+    `${demoModeGuide}\n${commandCenterGuide}`.includes(expected),
+    "modeGuidance",
+    `Mode guidance missing: ${expected}`,
+  );
+}
+
+for (const expected of [
+  "Using Command Center Tabs",
+  "Scope and Project Shell",
+  "Roadmap Separation",
+  "Mission Control is tabbed",
+  "Task Queue is tabbed",
+  "Agent Workbench is tabbed",
+  "Implementation Workflow is tabbed",
+]) {
+  check(
+    `${commandCenterGuide}\n${gettingStarted}\n${read("docs/usage/STARTING_A_MISSION.md")}\n${read("docs/usage/ACTIVATING_TASKS.md")}\n${read("docs/usage/USING_AGENT_WORKBENCH.md")}\n${read("docs/usage/CONTROLLED_IMPLEMENTATION.md")}`.includes(expected),
+    "tabbedCommandCenter",
+    `Tabbed Command Center docs missing: ${expected}`,
+  );
+}
+
+for (const expected of [
+  "COMMAND_CENTER_HELP_LINKS",
+  "STARTING_A_MISSION.md",
+  "COMMAND_CENTER_GUIDE.md",
+  "ACTIVATING_TASKS.md",
+  "USING_AGENT_WORKBENCH.md",
+  "CONTROLLED_IMPLEMENTATION.md",
+  "UNDERSTANDING_EVIDENCE_AUDIT.md",
+  "RUNNING_NEXUS_LOCALLY.md",
+  "DEMO_MODE_VS_PRIVATE_MODE.md",
+]) {
+  check(helpLinksSource.includes(expected), "helpLinks", `Help-link map missing: ${expected}`);
+}
+
+for (const file of requiredUsageDocs) {
+  const content = read(file);
+  if (file.endsWith("DEMO_MODE_VS_PRIVATE_MODE.md")) continue;
+  const demoMentions = content.match(/DemoApp/g) || [];
+  const hasSafeBoundaryCopy = content.includes("DemoApp is demo mode only")
+    || content.includes("DemoApp-only public-safe")
+    || content.includes("DemoApp-safe");
+  check(
+    demoMentions.length === 0 || hasSafeBoundaryCopy,
+    "publicSafeWording",
+    `DemoApp mention must be explicitly demo-safe in ${file}`,
+  );
 }
 
 warnings.push(
@@ -178,6 +298,11 @@ console.log(`README links: ${sections.readmeLinks ? "PASS" : "FAIL"}`);
 console.log(`Required module families: ${sections.requiredModuleFamilies ? "PASS" : "FAIL"}`);
 console.log(`Required phase entries: ${sections.requiredPhaseEntries ? "PASS" : "FAIL"}`);
 console.log(`Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}`);
+console.log(`Usage docs: ${sections.usageDocs ? "PASS" : "FAIL"}`);
+console.log(`No-project guidance: ${sections.noProjectGuidance ? "PASS" : "FAIL"}`);
+console.log(`Mode guidance: ${sections.modeGuidance ? "PASS" : "FAIL"}`);
+console.log(`Tabbed Command Center: ${sections.tabbedCommandCenter ? "PASS" : "FAIL"}`);
+console.log(`Help links: ${sections.helpLinks ? "PASS" : "FAIL"}`);
 console.log(`Local links: ${sections.localLinks ? "PASS" : "FAIL"}`);
 console.log(`Report written: ${sections.reportWritten ? "PASS" : "FAIL"}`);
 console.log(`\nResult: ${result}`);
@@ -201,6 +326,11 @@ const report = `# NEXUS Docs Coverage Report
 - Required module families: ${sections.requiredModuleFamilies ? "PASS" : "FAIL"}
 - Required phase entries: ${sections.requiredPhaseEntries ? "PASS" : "FAIL"}
 - Public-safe wording: ${sections.publicSafeWording ? "PASS" : "FAIL"}
+- Usage docs: ${sections.usageDocs ? "PASS" : "FAIL"}
+- No-project guidance: ${sections.noProjectGuidance ? "PASS" : "FAIL"}
+- Mode guidance: ${sections.modeGuidance ? "PASS" : "FAIL"}
+- Tabbed Command Center: ${sections.tabbedCommandCenter ? "PASS" : "FAIL"}
+- Help links: ${sections.helpLinks ? "PASS" : "FAIL"}
 - Local links: ${sections.localLinks ? "PASS" : "FAIL"}
 - Report written: ${sections.reportWritten ? "PASS" : "FAIL"}
 

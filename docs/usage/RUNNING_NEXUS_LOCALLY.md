@@ -97,6 +97,17 @@ The Service Health route explains:
 The page is read-only. Browser-side execution of `nexus:up`, `nexus:down`,
 `nexus:status`, and `nexus:doctor` is not enabled yet.
 
+## How This Relates To Command Center Tabs
+
+- Service Health explains local boot and service state.
+- Live API shows endpoint and bridge readiness.
+- Durable State explains file-backed persistence and DB write policy.
+- Safety Center summarizes provider, network, DB write, and mutation boundaries.
+- Projects shows project progress and start-project guidance.
+- OS Roadmap shows NEXUS OS phase progress only.
+
+If the local API is offline, Command Center may still show snapshot or file-backed fallback data. That is an intentional degraded mode, not automatic evidence of corruption.
+
 ## Command Palette and Service Health
 
 The Command Palette uses current service and capability posture to explain why

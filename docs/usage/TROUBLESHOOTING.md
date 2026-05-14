@@ -86,6 +86,26 @@ This means the UI is using generated or file-backed data rather than live local
 API data. That is expected when the local API is offline or when a page is
 intentionally read-only.
 
+## No Project Selected
+
+If Workspace, Task Queue, Agent Workbench, Implementation, Evidence, or Projects shows a no-project state:
+
+1. create, import, or select a project
+2. add a project profile
+3. define stack and test commands
+4. create a mission
+5. generate a plan
+6. activate the first task
+
+Do not expect DemoApp to appear in local-private mode. DemoApp is demo mode only.
+
+## Tabs Missing Or Not Switching
+
+- refresh the page and retry the tab
+- run `cd dashboard && npm run test:pages` if validating locally
+- confirm the route is implemented, not a planned Coming Soon route
+- use the first tab as the safe overview if a drilldown tab has no data yet
+
 ## Service Health Shows `Unknown`
 
 - run `npm run nexus:status`
