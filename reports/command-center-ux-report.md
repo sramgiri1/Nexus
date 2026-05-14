@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T17:57:30.014Z
-- Validation branch: ui/page-tab-rollout-platform-governance
-- Validation HEAD: a989e08
+- Generated at: 2026-05-14T18:14:50.426Z
+- Validation branch: test/tabbed-command-center-final-validation
+- Validation HEAD: 1c28921
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -20,6 +20,7 @@
 - Command palette: PASS
 - Operator actions: PASS
 - Command Center tabs: PASS
+- Route-wide tab contract: PASS
 - Mission Control tabs: PASS
 - Tabbed core pages: PASS
 - Scope switcher: PASS

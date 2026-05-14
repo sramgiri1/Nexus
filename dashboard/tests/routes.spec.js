@@ -40,6 +40,10 @@ const NON_ROADMAP_PRIMARY_ROUTES = PRIMARY_COMMAND_CENTER_ROUTES.filter(
   (route) => route.key !== "roadmap",
 );
 
+const TABBED_COMMAND_CENTER_ROUTES = COMMAND_CENTER_ROUTES.filter(
+  (route) => route.status === "implemented" && Array.isArray(route.tabs) && route.tabs.length > 0,
+);
+
 const FORBIDDEN_PHASE_LABELS = [
   "Requires P37",
   "Requires P38",
@@ -137,6 +141,59 @@ test("legacy command center route renders legacy Command Center", async ({ page 
   await expect(page.getByRole("banner").getByText("Environment · Prototype")).toBeVisible();
   await expect(page.getByRole("banner").getByText("Active project · DemoApp")).toBeVisible();
   await expect(page.locator("#private-validation")).toContainText("Private Project Validation");
+
+  expect(errors).toEqual([]);
+});
+
+test("route metadata declares tab contracts for implemented tabbed routes", async () => {
+  const expectedTabbedRoutes = [
+    "mission",
+    "workspace",
+    "tasks",
+    "workbench",
+    "implementation",
+    "liveapi",
+    "database",
+    "evidence",
+    "safety",
+    "projects",
+    "roadmap",
+    "cost",
+    "batch",
+  ];
+
+  for (const key of expectedTabbedRoutes) {
+    const route = COMMAND_CENTER_ROUTES.find((entry) => entry.key === key);
+    expect(route, `route ${key} exists`).toBeTruthy();
+    expect(route.status, `route ${key} status`).toBe("implemented");
+    expect(route.tabs?.length, `route ${key} tabs`).toBeGreaterThan(0);
+    expect(route.tabs?.some((tab) => tab.id === route.defaultTab), `route ${key} default tab`).toBe(true);
+    expect(["os", "project", "portfolio", "platform", "demo"]).toContain(route.scope);
+    expect(route.allowPhaseLabels).toBe(key === "roadmap");
+  }
+});
+
+test("route-wide implemented tabs can switch without stale labels", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  for (const route of TABBED_COMMAND_CENTER_ROUTES) {
+    await page.goto(route.path);
+    const tabs = page.getByRole("tablist");
+    await expect(tabs).toBeVisible();
+    await expect(commandTab(page, route.tabs[0].label)).toHaveAttribute("aria-selected", "true");
+
+    const secondaryTab = route.tabs[1] || route.tabs[0];
+    await commandTab(page, secondaryTab.label).click();
+    await expect(activeCommandTabPanel(page)).toBeVisible();
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DEMOAPP ACTIVE");
+    if (route.key !== "roadmap") {
+      for (const label of FORBIDDEN_PHASE_LABELS) {
+        expect(body).not.toContain(label);
+      }
+    }
+  }
 
   expect(errors).toEqual([]);
 });

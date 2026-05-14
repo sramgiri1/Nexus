@@ -481,3 +481,37 @@ Pages converted:
 ### Next Phase
 
 - P41.7.3E — Tabbed UX Tests, Docs, and OS Phase Status Finalization
+
+## P41.7.3E — Tabbed UX Tests, Docs, and OS Phase Status Finalization
+
+This subphase finalizes the tabbed Command Center rollout by making tab metadata part of the route contract and validating the route-wide behavior added across P41.7.3A through P41.7.3D.
+
+### Tabbed Rollout Summary
+
+- P41.7.3A introduced the reusable `CommandTabs` foundation and scope/project shell.
+- P41.7.3B converted Mission Control into a scope-aware tabbed cockpit.
+- P41.7.3C converted Workspace, Task Queue, Agent Workbench, and Implementation Workflow.
+- P41.7.3D converted Live API, Durable State, Evidence, Safety Center, Projects, OS Roadmap, Cost Center, and Batch Queue.
+
+### Route-Wide Tab Contract
+
+Implemented tabbed routes now declare:
+
+- route path and page name
+- implemented/planned status
+- scope: OS, project, portfolio, platform, or demo
+- tab list and default tab
+- whether phase labels are allowed
+
+Phase labels remain allowed only on OS Roadmap. Non-roadmap pages continue to use capability and readiness language instead of internal phase blockers.
+
+### Boundary Rules Preserved
+
+- DemoApp remains limited to Demo Mode routes and demo-safe tests.
+- OS Roadmap remains NEXUS OS-only.
+- Project milestones and private project progress remain under Projects, not OS Roadmap.
+- No backend execution, provider calls, DB writes, worker runtime, local API behavior change, or action bridge behavior change is added.
+
+### Next Phase
+
+- P41.7.4 — OS Usage Documentation Foundation

@@ -20,6 +20,7 @@ const sections = {
   commandPalette: true,
   operatorActions: true,
   commandCenterTabs: true,
+  routeWideTabContract: true,
   missionControlTabs: true,
   tabbedCorePages: true,
   tabbedPlatformPages: true,
@@ -119,6 +120,22 @@ const requiredRoutePaths = [
   "/command-center/batch",
 ];
 
+const requiredTabbedRoutes = {
+  "/command-center": "overview",
+  "/command-center/workspace": "recommended",
+  "/command-center/tasks": "planned",
+  "/command-center/workbench": "task",
+  "/command-center/implementation": "proposal",
+  "/command-center/liveapi": "overview",
+  "/command-center/database": "overview",
+  "/command-center/evidence": "timeline",
+  "/command-center/safety": "posture",
+  "/command-center/projects": "portfolio",
+  "/command-center/roadmap": "current",
+  "/command-center/cost": "overview",
+  "/command-center/batch": "overview",
+};
+
 const routeHeadings = {
   "/command-center": "Mission Control",
   "/command-center/workspace": "Workspace",
@@ -212,12 +229,40 @@ for (const path of requiredRoutePaths) {
   if (route) {
     check(route.allowPhaseLabels === (path === "/command-center/roadmap"), "routeMatrix", `allowPhaseLabels mismatch for ${path}`);
     check(route.expectedHeading === routeHeadings[path], "routeMatrix", `expectedHeading mismatch for ${path}`);
+    check(["implemented", "planned"].includes(route.status), "routeWideTabContract", `Route status must be normalized for ${path}`);
+    check(
+      ["os", "project", "portfolio", "platform", "demo"].includes(route.scope),
+      "routeWideTabContract",
+      `Route scope must be normalized for ${path}`,
+    );
   }
 }
 for (const path of ["/command-center/activity", "/command-center/docs", "/command-center/settings"]) {
   const route = routeMatrix.find((entry) => entry.path === path);
   check(!!route, "routeMatrix", `Missing planned route matrix entry: ${path}`);
   check(route?.status === "planned", "routeMatrix", `Planned route should be marked planned: ${path}`);
+}
+
+for (const [path, defaultTab] of Object.entries(requiredTabbedRoutes)) {
+  const route = routeMatrix.find((entry) => entry.path === path);
+  check(Array.isArray(route?.tabs), "routeWideTabContract", `Tabbed route missing tab list: ${path}`);
+  check(route?.tabs?.length > 0, "routeWideTabContract", `Tabbed route has empty tab list: ${path}`);
+  check(route?.defaultTab === defaultTab, "routeWideTabContract", `Tabbed route default tab mismatch: ${path}`);
+  check(
+    route?.tabs?.some((tab) => tab.id === defaultTab),
+    "routeWideTabContract",
+    `Default tab is not present in tab list: ${path}`,
+  );
+  for (const tab of route?.tabs || []) {
+    check(typeof tab.label === "string" && tab.label.length > 0, "routeWideTabContract", `Tab missing label on ${path}`);
+    check(!forbiddenUiLabels.some((label) => tab.label.includes(label)), "routeWideTabContract", `Tab label contains stale phase copy on ${path}`);
+  }
+}
+for (const expectedTest of [
+  "route metadata declares tab contracts for implemented tabbed routes",
+  "route-wide implemented tabs can switch without stale labels",
+]) {
+  check(routeTestSource.includes(expectedTest), "routeWideTabContract", `Route tests missing route-wide tab contract coverage: ${expectedTest}`);
 }
 
 // Capability readiness
@@ -903,6 +948,7 @@ console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
+console.log(`Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" : "FAIL"}`);
 console.log(`Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}`);
 console.log(`Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}`);
 console.log(`Tabbed platform/governance pages: ${sections.tabbedPlatformPages ? "PASS" : "FAIL"}`);
@@ -948,6 +994,7 @@ const report = `# Command Center UX Report
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
+- Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" : "FAIL"}
 - Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}
 - Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}
 - Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}

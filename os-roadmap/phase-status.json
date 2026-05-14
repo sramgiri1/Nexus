@@ -387,7 +387,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/page-tab-rollout-platform-governance",
-      "commit": "pending-final-commit",
+      "commit": "1c28921",
       "completedAt": "",
       "summary": "Rolls the reusable CommandTabs foundation onto Live API, Durable State, Evidence, Safety Center, Projects, OS Roadmap, Cost Center, and Batch Queue without backend behavior changes.",
       "checksRun": [
@@ -407,13 +407,20 @@
       "phaseId": "P41.7.3E",
       "title": "Tabbed UX Tests, Docs, and OS Phase Status Finalization",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "test/tabbed-command-center-final-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned final validation for tabbed Command Center route coverage, docs, and OS phase status consistency.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Finalizes route-wide tab metadata, Playwright coverage, documentation, and OS phase status consistency for the tabbed Command Center rollout.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "This phase hardens the tabbed UX contract only; it does not add new UI architecture, backend execution, Project Registry, worker runtime, provider dispatch, or DB writes."
+      ],
       "nextPhase": "P41.7.4",
       "commandCenterVisible": true
     },

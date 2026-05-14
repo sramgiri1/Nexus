@@ -179,7 +179,7 @@
       "track": "NEXUS_OS",
       "order": 12.818,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
-      "summary": "Planned tab rollout for the remaining Command Center operational and governance pages.",
+      "summary": "Roll out reusable tabs to the remaining Command Center operational, platform, governance, project, roadmap, cost, and batch pages.",
       "commandCenterVisible": true
     },
     {

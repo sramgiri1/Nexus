@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.7.1
+## Current Status Through P41.7.3E
 
-P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 now adds the first durable codebase-documentation foundation. The Command Center and local operator surface have:
+P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.3E now add the codebase documentation foundation plus the finalized tabbed Command Center validation layer. The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -47,6 +47,7 @@ P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 now adds th
 - a simple governed Command Palette plus Mission Control operator actions
 - OS roadmap vs project-progress separation, with platform phases tracked separately from private-project progress
 - a codebase documentation standard, module registry, and phase module index for future maintainers and coding agents
+- route-wide tab metadata and validation for Mission Control, operational pages, platform pages, governance pages, Projects, OS Roadmap, Cost Center, and Batch Queue
 
 ## Command Center Overview
 
@@ -170,6 +171,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.7.3B: Mission Control tabbed cockpit
 - P41.7.3C: tabbed Workspace, Task Queue, Agent Workbench, and Implementation pages
 - P41.7.3D: remaining Command Center page tab rollout
+- P41.7.3E: route-wide tab tests, docs, and OS phase status finalization
 - P41.7.4: OS usage documentation foundation
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework

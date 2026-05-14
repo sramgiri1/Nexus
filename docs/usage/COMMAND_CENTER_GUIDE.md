@@ -12,6 +12,29 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 - Disabled commands: `Run QA Gate`, `Propose Fix`, `Prepare Ship`, and `Freeze Workspace` stay disabled until their required governed capabilities exist
 - Safety rule: no unsafe action executes directly from the palette; commands either open an existing governed route, show a read-only summary, or explain why they are not enabled
 
+## Using Command Center Tabs
+
+- Tabs split high-density routes into focused operator sections without changing backend behavior.
+- The first tab on each route is the default overview or recommended action surface.
+- Secondary tabs expose drilldowns such as tasks, evidence, gates, diagnostics, policy blocks, and developer details.
+- Non-roadmap tabs use capability language such as `Ready`, `Read-only`, `Not enabled`, or `Disabled by policy`.
+- OS phase labels belong only on OS Roadmap.
+- If a tab shows an empty state, follow its next-action guidance instead of assuming the service or project is broken.
+
+## Scope and Project Shell
+
+- Project scope shows the active project, active mission, project tasks, evidence, gates, and cost posture when available.
+- Portfolio scope is a placeholder until Project Registry is implemented in P42.
+- NEXUS OS scope is for platform progress, service posture, docs/tests readiness, and roadmap status.
+- If no project is selected, Command Center should guide the operator to create or import a project, add a project profile, define stack and test commands, create a mission, generate a plan, and activate the first task.
+- DemoApp is demo mode only and must not be treated as the local-private fallback.
+
+## Roadmap Separation
+
+- OS Roadmap tracks NEXUS OS phases and subphases only.
+- Project progress, project milestones, adapters, and open project gaps belong on the Projects route.
+- Project Registry is planned for P42; until then, multi-project views use honest placeholders instead of fabricated live project data.
+
 ## Mission Control
 
 - Purpose: enterprise cockpit for the active mission and current platform posture
