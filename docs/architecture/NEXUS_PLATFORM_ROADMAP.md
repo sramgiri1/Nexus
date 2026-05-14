@@ -505,7 +505,8 @@ track now includes codebase documentation standards, module and phase
 registries, reuse/refactor planning, route-wide tab documentation, operator
 usage guides, route-aware local help links, docs coverage checks, OS phase
 status validation, a compact Command Center header, a three-tab OS Roadmap, and
-a real Docs & Guides index. P41.8.1 is the next NEXUS OS subphase.
+a real Docs & Guides index. P41.8.1 starts the NEXUS OS activity and
+observability track.
 
 #### P41.7.7 — Command Center Header, OS Roadmap, and Docs Page Polish
 
@@ -524,6 +525,24 @@ drift, and prepare later safe refactor work without expanding runtime scope.
 Goal:
 
 - unify evidence, audit, runtime events, and operator activity surfaces
+
+Planned subphases:
+
+- `P41.8.1` — Activity Event Schema + Correlation ID Model
+- `P41.8.2` — Central Activity Logger
+- `P41.8.3` — API/UI/Action Bridge Activity Capture
+- `P41.8.4` — Command Center Activity Log Page
+- `P41.8.5` — Trace View by Correlation ID
+- `P41.8.6` — Activity Tests + Docs + Final Validation
+
+#### P41.8.1 — Activity Event Schema + Correlation ID Model
+
+P41.8.1 defines a redaction-safe activity event schema, activity categories,
+correlation IDs, parent/child activity linkage, validation helpers, and the
+first centralized activity log architecture document. It is foundation-only: it
+does not instrument runtime paths, add logger writes, add Activity Log UI, add
+activity API routes, call providers, start workers, write to a DB, or mutate
+project source.
 
 ### P41.9 — README + Architecture Diagram Registry Follow-through
 

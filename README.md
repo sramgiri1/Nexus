@@ -1058,5 +1058,15 @@ not authoritative Git release metadata.
 
 ---
 
+## Activity Observability Foundation
+
+P41.8.1 adds the first centralized activity log foundation: a redaction-safe
+activity event schema, correlation ID model, event type taxonomy, policy, and
+checker. This is schema/model work only. It does not instrument runtime paths,
+write activity records, add an Activity Log UI, call providers, enable worker
+runtime, write to a DB, or mutate project source.
+
+---
+
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.
 > See [REFERENCE.md](REFERENCE.md) for portfolio status and token cost estimates.

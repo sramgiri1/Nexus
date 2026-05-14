@@ -119,6 +119,12 @@ processes yet. It adds a declarative local service manifest plus read-only
 service posture and validate localhost-only service assumptions before
 single-command boot arrives.
 
+Phase 41.8.1 starts the centralized activity and observability ledger foundation.
+It defines a redaction-safe activity event schema, correlation ID model,
+activity categories, validation helpers, and architecture docs. It does not add
+runtime instrumentation, provider calls, worker execution, DB writes, activity
+API routes, Activity Log UI, or project mutation.
+
 The documentation layer is now intentionally separated:
 
 - `docs/usage/` for operators and local users

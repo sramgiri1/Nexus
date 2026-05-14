@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "phase": "P41.8.1",
+  "purpose": "activity_event_schema_correlation_model",
+  "foundationOnly": true,
+  "instrumentationAllowed": false,
+  "activityCaptureAllowed": false,
+  "activityUiAllowed": false,
+  "activityApiAllowed": false,
+  "runtimeBehaviorChangesAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "modeRequired": "local-private",
+  "redactedPayloadsRequired": true,
+  "correlationIdRequired": true,
+  "activityIdRequired": true,
+  "allowedOutputs": [
+    "observability",
+    "policy/activity-event-schema-policy.json",
+    "scripts/check-activity-event-schema.js",
+    "reports/activity-event-schema-report.md",
+    "docs/architecture/CENTRALIZED_ACTIVITY_LOG.md",
+    "os-roadmap",
+    "docs/architecture",
+    "README.md",
+    "package.json"
+  ],
+  "forbiddenOutputs": [
+    "projects/careloop",
+    "projects/careloop-ios",
+    "providers",
+    "tools",
+    "agents",
+    "orchestrator",
+    "local-api",
+    "db",
+    "command-execution"
+  ],
+  "requiredExports": [
+    "createActivityEvent",
+    "validateActivityEvent",
+    "normalizeActivityEvent",
+    "createTraceContext",
+    "validateTraceContext",
+    "sanitizeActivityPayload"
+  ],
+  "nextPhase": "P41.8.2 - Central Activity Logger"
+}

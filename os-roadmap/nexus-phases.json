@@ -247,11 +247,56 @@
     },
     {
       "phaseId": "P41.8.1",
-      "title": "Centralized Activity Log + Observability Ledger Foundation",
+      "title": "Activity Event Schema + Correlation ID Model",
       "track": "NEXUS_OS",
       "order": 14.1,
       "group": "P41.8 Centralized Activity Log + Observability Ledger",
-      "summary": "Start the activity log and observability ledger foundation after Command Center docs polish.",
+      "summary": "Define activity event schema, correlation IDs, redaction-safe payload rules, and validation helpers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.2",
+      "title": "Central Activity Logger",
+      "track": "NEXUS_OS",
+      "order": 14.2,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Planned central logger for schema-compliant activity records.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.3",
+      "title": "API/UI/Action Bridge Activity Capture",
+      "track": "NEXUS_OS",
+      "order": 14.3,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Planned read-safe capture points across existing governed surfaces.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.4",
+      "title": "Command Center Activity Log Page",
+      "track": "NEXUS_OS",
+      "order": 14.4,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Planned operator-facing activity log view in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.5",
+      "title": "Trace View by Correlation ID",
+      "track": "NEXUS_OS",
+      "order": 14.5,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Planned trace view for connected activity by correlation ID.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.6",
+      "title": "Activity Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 14.6,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Planned validation and documentation closeout for the P41.8 observability track.",
       "commandCenterVisible": true
     },
     {

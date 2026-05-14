@@ -498,7 +498,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/header-roadmap-docs-polish",
-      "commit": "253783b",
+      "commit": "b9d101a",
       "completedAt": "",
       "summary": "Polishes the Command Center top bar, reduces badge noise, collapses OS Roadmap to Completed / In Progress / Planned, and turns Docs & Guides into a real documentation index.",
       "checksRun": [
@@ -521,7 +521,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "ui/header-roadmap-docs-polish",
-      "commit": "253783b",
+      "commit": "b9d101a",
       "completedAt": "",
       "summary": "Documentation system, usage guides, reuse audit, module registry, help links, docs coverage, and final Command Center docs polish are complete.",
       "checksRun": [
@@ -539,25 +539,109 @@
       "phaseId": "P41.8",
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "observability/activity-event-schema",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned centralized activity and observability layer.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Centralized observability track is underway with an activity event schema and correlation model foundation.",
+      "checksRun": [
+        "npm run check:activity-event-schema",
+        "npm run check:os-phase-status"
+      ],
+      "knownLimitations": [
+        "Activity capture, logger writes, Activity Log UI, trace views, provider/tool dispatch, worker runtime, and DB writes remain out of scope."
+      ],
       "nextPhase": "P41.8.1",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P41.8.1",
-      "title": "Centralized Activity Log + Observability Ledger Foundation",
+      "title": "Activity Event Schema + Correlation ID Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "observability/activity-event-schema",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Defines the redaction-safe activity event schema, correlation ID model, event type taxonomy, policy, checker, and architecture docs.",
+      "checksRun": [
+        "npm run check:activity-event-schema",
+        "npm run check:docs-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No runtime instrumentation, central logger writes, Activity Log UI, activity API endpoint, provider/tool dispatch, worker runtime, DB writes, or project mutation is enabled."
+      ],
+      "nextPhase": "P41.8.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.2",
+      "title": "Central Activity Logger",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned foundation for centralized activity and observability ledger surfaces.",
+      "summary": "Planned central logger for schema-compliant activity records.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.8.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.3",
+      "title": "API/UI/Action Bridge Activity Capture",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned read-safe capture points across existing governed surfaces.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.8.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.4",
+      "title": "Command Center Activity Log Page",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned Command Center page for activity event review.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.8.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.5",
+      "title": "Trace View by Correlation ID",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned trace view for connected activity by correlation ID.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.8.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.6",
+      "title": "Activity Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned validation and documentation closeout for the activity ledger track.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P41.9",
@@ -1111,8 +1195,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T20:40:00.000Z",
-  "currentPhase": "P41.7.7",
-  "previousPhase": "P41.7.6",
-  "nextPhase": "P41.8.1"
+  "updatedAt": "2026-05-14T21:20:00.000Z",
+  "currentPhase": "P41.8.1",
+  "previousPhase": "P41.7.7",
+  "nextPhase": "P41.8.2"
 }
