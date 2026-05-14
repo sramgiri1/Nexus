@@ -130,7 +130,7 @@
     },
     {
       "phaseId": "P41.7.2",
-      "title": "Reuse Audit + Refactor Candidate Report",
+      "title": "Reuse Audit + Duplicate Pattern Inventory",
       "track": "NEXUS_OS",
       "order": 12.8,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
@@ -139,7 +139,7 @@
     },
     {
       "phaseId": "P41.7.3",
-      "title": "Shared Helper Inventory",
+      "title": "Shared Helper Catalog + Refactor Candidate Plan",
       "track": "NEXUS_OS",
       "order": 12.81,
       "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",

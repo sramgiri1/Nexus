@@ -442,3 +442,33 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Reuse audit, shared-helper inventory, and broader usage-doc expansion are
   intentionally deferred to later P41.7 subphases.
+
+## P41.7.2 — Reuse Audit + Duplicate Pattern Inventory
+
+- Primary capability:
+  Inventory duplicate implementation patterns and prioritize safe, medium-risk,
+  and high-risk refactor candidates without changing runtime behavior.
+- Main files/folders touched:
+  `codebase/reuseAudit.js`,
+  `codebase/refactorCandidates.js`,
+  `codebase/index.js`,
+  `policy/reuse-audit-policy.json`,
+  `scripts/check-reuse-audit.js`,
+  `reports/reuse-audit.json`,
+  `reports/reuse-audit-report.md`
+- Main checker(s):
+  `scripts/check-reuse-audit.js`,
+  `scripts/check-os-phase-status.js`
+- Main report(s):
+  `reports/reuse-audit.json`,
+  `reports/reuse-audit-report.md`,
+  `reports/os-phase-status-report.md`
+- Command Center impact:
+  Updates OS roadmap status so `P41.7.1` is complete, `P41.7.2` is the current
+  completed audit phase, and `P41.7.3` is next.
+- Safety impact:
+  Explicitly keeps refactors deferred and forbids runtime behavior changes,
+  provider calls, DB writes, and protected project mutations.
+- Known limitations:
+  The audit is pattern-based. P41.7.3 must convert recommendations into a
+  shared helper catalog and concrete refactor plan before implementation work.

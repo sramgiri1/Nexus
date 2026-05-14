@@ -1,0 +1,45 @@
+{
+  "version": "1.0",
+  "phase": "P41.7.2",
+  "purpose": "reuse_audit_duplicate_pattern_inventory",
+  "auditOnly": true,
+  "riskyRefactorsAllowed": false,
+  "runtimeBehaviorChangesAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "allowedScanAreas": [
+    "mission-actions",
+    "task-actions",
+    "workbench",
+    "implementation-actions",
+    "workspace",
+    "careloop-readiness",
+    "command-execution",
+    "local-api",
+    "db",
+    "local-state",
+    "scripts/check-*.js",
+    "scripts/*report*.js",
+    "dashboard/src/data",
+    "dashboard/src/hooks",
+    "dashboard/src/pages/CommandCenterV2.jsx",
+    "dashboard/src/pages/command-center-v2",
+    "docs/codebase"
+  ],
+  "forbiddenScanAreas": [
+    "node_modules",
+    ".git",
+    ".env",
+    "projects/careloop",
+    "projects/careloop-ios"
+  ],
+  "requiredOutputs": [
+    "reports/reuse-audit.json",
+    "reports/reuse-audit-report.md"
+  ],
+  "commandCenterRoadmapUpdateRequired": true,
+  "osPhaseStatusUpdateRequired": true
+}

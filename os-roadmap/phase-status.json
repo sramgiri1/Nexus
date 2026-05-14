@@ -255,7 +255,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/codebase-module-registry-foundation",
-      "commit": "pending-final-commit",
+      "commit": "e0026e4",
       "completedAt": "",
       "summary": "Adds the codebase documentation standard, module registry, and phase module index so future work can reuse existing NEXUS modules safely.",
       "checksRun": [
@@ -272,21 +272,29 @@
     },
     {
       "phaseId": "P41.7.2",
-      "title": "Reuse Audit + Refactor Candidate Report",
+      "title": "Reuse Audit + Duplicate Pattern Inventory",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "docs/reuse-audit-duplicate-pattern-inventory",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned reuse audit for duplicated helpers, module drift, and refactor candidates.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds an audit-only duplicate pattern inventory, refactor candidate plan, policy, checker, and reuse-audit reports.",
+      "checksRun": [
+        "npm run check:reuse-audit",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No refactors are implemented in this subphase.",
+        "Shared helper extraction is deferred to P41.7.3."
+      ],
       "nextPhase": "P41.7.3",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P41.7.3",
-      "title": "Shared Helper Inventory",
+      "title": "Shared Helper Catalog + Refactor Candidate Plan",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",

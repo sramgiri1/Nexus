@@ -76,6 +76,7 @@
     "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
     "check:command-center-ux": "node scripts/check-command-center-ux.js",
     "check:docs-coverage": "node scripts/check-docs-coverage.js",
+    "check:reuse-audit": "node scripts/check-reuse-audit.js",
     "command-center:screenshot-audit": "node scripts/capture-command-center-screenshots.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
     "check:agent-workbench": "node scripts/check-agent-workbench.js",

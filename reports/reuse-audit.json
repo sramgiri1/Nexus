@@ -1,0 +1,2453 @@
+{
+  "auditVersion": "1.0",
+  "phase": "P41.7.2",
+  "generatedAt": "2026-05-14T13:41:05.743Z",
+  "areasScanned": 15,
+  "patterns": [
+    {
+      "patternId": "policy-loading-parsing",
+      "category": "policy",
+      "title": "Repeated policy JSON loading and parsing",
+      "keywords": [
+        "policy/",
+        "JSON.parse",
+        "readFileSync"
+      ],
+      "risk": "low",
+      "priority": "high",
+      "recommendedSharedModule": "shared/policyLoader.js",
+      "recommendation": "Create a shared policy JSON loader with parse errors, path labeling, and schema hooks.",
+      "occurrences": [
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopInventory.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "policy/",
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "local-api/routes/db.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "local-api/server.js",
+          "matchedKeywords": [
+            "JSON.parse"
+          ]
+        },
+        {
+          "path": "db/dbImportPlan.js",
+          "matchedKeywords": [
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "db/dbRepository.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "db/dbSnapshotMapper.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "local-state/normalizeRuntimeFiles.js",
+          "matchedKeywords": [
+            "JSON.parse"
+          ]
+        },
+        {
+          "path": "local-state/normalizeRuntimeStatus.js",
+          "matchedKeywords": [
+            "policy/"
+          ]
+        },
+        {
+          "path": "local-state/safeFileReader.js",
+          "matchedKeywords": [
+            "JSON.parse",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "local-state/stateStore.js",
+          "matchedKeywords": [
+            "JSON.parse"
+          ]
+        },
+        {
+          "path": "scripts/batch-poll-openai.js",
+          "matchedKeywords": [
+            "JSON.parse"
+          ]
+        },
+        {
+          "path": "scripts/batch-reconcile-openai.js",
+          "matchedKeywords": [
+            "JSON.parse"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "mode-guards",
+      "category": "safety",
+      "title": "Repeated local-private and mode guard checks",
+      "keywords": [
+        "NEXUS_MODE",
+        "local-private",
+        "validateApiMode"
+      ],
+      "risk": "medium",
+      "priority": "high",
+      "recommendedSharedModule": "shared/modeGuards.js",
+      "recommendation": "Create a shared mode guard for local-private, demo, and test-only checks.",
+      "occurrences": [
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "NEXUS_MODE",
+            "local-private"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workspace/workflowRecommendations.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopInventory.js",
+          "matchedKeywords": [
+            "NEXUS_MODE"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopIosInventory.js",
+          "matchedKeywords": [
+            "NEXUS_MODE"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "NEXUS_MODE"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "NEXUS_MODE",
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "NEXUS_MODE",
+            "local-private"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "report-metadata-writing",
+      "category": "reporting",
+      "title": "Repeated report metadata and Validation HEAD wording",
+      "keywords": [
+        "Validation branch",
+        "Validation HEAD",
+        "writeFileSync"
+      ],
+      "risk": "low",
+      "priority": "high",
+      "recommendedSharedModule": "shared/reportWriter.js",
+      "recommendation": "Create a shared report writer for metadata, failures, warnings, and result blocks.",
+      "occurrences": [
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "db/dbImportPlan.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "db/dbSnapshotMapper.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "local-state/normalizeReports.js",
+          "matchedKeywords": [
+            "Validation HEAD"
+          ]
+        },
+        {
+          "path": "local-state/taskStore.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/action-bridge-demo.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/capture-command-center-screenshots.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-action-bridge.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-agent-context.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-agent-os-readiness.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-agentic-workspace.js",
+          "matchedKeywords": [
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-capabilities.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        },
+        {
+          "path": "scripts/check-careloop-backend-validation.js",
+          "matchedKeywords": [
+            "Validation branch",
+            "Validation HEAD",
+            "writeFileSync"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "checker-formatting",
+      "category": "checking",
+      "title": "Repeated checker PASS/FAIL formatting",
+      "keywords": [
+        "PASS",
+        "FAIL",
+        "Result:"
+      ],
+      "risk": "low",
+      "priority": "high",
+      "recommendedSharedModule": "shared/checkResultFormatter.js",
+      "recommendation": "Create a shared checker result formatter for sections, failures, and exit codes.",
+      "occurrences": [
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "workspace/workflowRecommendations.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL",
+            "Result:"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL",
+            "Result:"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "Result:"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL",
+            "Result:"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL",
+            "Result:"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "command-execution/controlledCommandRunner.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        {
+          "path": "local-api/routes/projects.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "local-api/routes/status.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "local-state/appendEvidence.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL"
+          ]
+        },
+        {
+          "path": "local-state/approvalStore.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "local-state/normalizeDemoArtifacts.js",
+          "matchedKeywords": [
+            "PASS"
+          ]
+        },
+        {
+          "path": "local-state/normalizeReports.js",
+          "matchedKeywords": [
+            "PASS",
+            "FAIL",
+            "Result:"
+          ]
+        },
+        {
+          "path": "local-state/normalizeRuntimeFiles.js",
+          "matchedKeywords": [
+            "Result:"
+          ]
+        },
+        {
+          "path": "scripts/careloop-analyze-test-failure.js",
+          "matchedKeywords": [
+            "PASS",
+            "Result:"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "redaction-helpers",
+      "category": "safety",
+      "title": "Repeated redaction and safe payload shaping",
+      "keywords": [
+        "redact",
+        "safeResponse",
+        "public-safe"
+      ],
+      "risk": "medium",
+      "priority": "high",
+      "recommendedSharedModule": "shared/redaction.js",
+      "recommendation": "Centralize common redaction and safe payload shaping rules.",
+      "occurrences": [
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "mission-actions/missionActionStore.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "workspace/workflowTemplates.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "command-execution/controlledCommandRunner.js",
+          "matchedKeywords": [
+            "redact"
+          ]
+        },
+        {
+          "path": "local-api/index.js",
+          "matchedKeywords": [
+            "redact",
+            "safeResponse"
+          ]
+        },
+        {
+          "path": "local-api/routes/actions.js",
+          "matchedKeywords": [
+            "safeResponse"
+          ]
+        },
+        {
+          "path": "local-api/routes/agents.js",
+          "matchedKeywords": [
+            "safeResponse"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "safe-response-envelopes",
+      "category": "api",
+      "title": "Repeated safe response envelope handling",
+      "keywords": [
+        "sendJson",
+        "sendError",
+        "ok: false"
+      ],
+      "risk": "low",
+      "priority": "medium",
+      "recommendedSharedModule": "local-api/safeResponse.js",
+      "recommendation": "Reuse and extend the existing safe response helper instead of adding route-local envelopes.",
+      "occurrences": [
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "mission-actions/missionActionStore.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "command-execution/controlledCommandRunner.js",
+          "matchedKeywords": [
+            "ok: false"
+          ]
+        },
+        {
+          "path": "local-api/index.js",
+          "matchedKeywords": [
+            "sendJson",
+            "sendError"
+          ]
+        },
+        {
+          "path": "local-api/routes/actions.js",
+          "matchedKeywords": [
+            "sendJson",
+            "sendError"
+          ]
+        },
+        {
+          "path": "local-api/routes/agents.js",
+          "matchedKeywords": [
+            "sendJson",
+            "sendError"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "safe-file-read-helpers",
+      "category": "state",
+      "title": "Repeated safe local file read helpers",
+      "keywords": [
+        "existsSync",
+        "readFileSync",
+        "safeFileReader"
+      ],
+      "risk": "medium",
+      "priority": "medium",
+      "recommendedSharedModule": "local-state/safeFileReader.js",
+      "recommendation": "Route local file reads through the existing safe file reader or a shared wrapper.",
+      "occurrences": [
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "existsSync"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopInventory.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopIosInventory.js",
+          "matchedKeywords": [
+            "existsSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync",
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "command-execution/controlledCommandRunner.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "local-api/routes/agents.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "local-api/routes/contracts.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        },
+        {
+          "path": "local-api/routes/db.js",
+          "matchedKeywords": [
+            "existsSync",
+            "readFileSync"
+          ]
+        },
+        {
+          "path": "local-api/routes/missions.js",
+          "matchedKeywords": [
+            "safeFileReader"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "runtime-snapshot-helpers",
+      "category": "state",
+      "title": "Repeated runtime snapshot normalization",
+      "keywords": [
+        "normalizeRuntime",
+        "snapshot",
+        "generatedAt"
+      ],
+      "risk": "medium",
+      "priority": "medium",
+      "recommendedSharedModule": "local-state/runtimeSnapshot.js",
+      "recommendation": "Create a shared runtime snapshot read/normalize helper in a later refactor subphase.",
+      "occurrences": [
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "snapshot",
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "snapshot",
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "snapshot"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "snapshot"
+          ]
+        },
+        {
+          "path": "command-execution/controlledCommandRunner.js",
+          "matchedKeywords": [
+            "snapshot"
+          ]
+        },
+        {
+          "path": "local-api/routes/agents.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        },
+        {
+          "path": "local-api/routes/audit.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        },
+        {
+          "path": "local-api/routes/evidence.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        },
+        {
+          "path": "local-api/routes/projects.js",
+          "matchedKeywords": [
+            "snapshot"
+          ]
+        },
+        {
+          "path": "local-api/routes/runtime.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        },
+        {
+          "path": "local-api/routes/status.js",
+          "matchedKeywords": [
+            "normalizeRuntime",
+            "snapshot"
+          ]
+        },
+        {
+          "path": "local-api/routes/tasks.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        },
+        {
+          "path": "local-api/safeResponse.js",
+          "matchedKeywords": [
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "db/dbImportPlan.js",
+          "matchedKeywords": [
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "db/dbRepository.js",
+          "matchedKeywords": [
+            "snapshot"
+          ]
+        },
+        {
+          "path": "db/dbSnapshotMapper.js",
+          "matchedKeywords": [
+            "snapshot",
+            "generatedAt"
+          ]
+        },
+        {
+          "path": "local-state/index.js",
+          "matchedKeywords": [
+            "normalizeRuntime"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "action-result-envelopes",
+      "category": "actions",
+      "title": "Repeated action request and result envelopes",
+      "keywords": [
+        "actionId",
+        "errors",
+        "warnings",
+        "result"
+      ],
+      "risk": "medium",
+      "priority": "medium",
+      "recommendedSharedModule": "shared/actionResult.js",
+      "recommendation": "Create a common action request/result envelope for bridge-style modules.",
+      "occurrences": [
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "mission-actions/missionActionStore.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors",
+            "warnings"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "errors"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "actionId",
+            "errors"
+          ]
+        },
+        {
+          "path": "workspace/workflowTemplates.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopInventory.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopIosInventory.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "errors",
+            "warnings",
+            "result"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "warnings"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "action-store-patterns",
+      "category": "actions",
+      "title": "Repeated append-only action store patterns",
+      "keywords": [
+        "append",
+        "jsonl",
+        "store"
+      ],
+      "risk": "medium",
+      "priority": "medium",
+      "recommendedSharedModule": "local-state/actionStore.js",
+      "recommendation": "Inventory action store patterns before extracting a common append-only store abstraction.",
+      "occurrences": [
+        {
+          "path": "mission-actions/index.js",
+          "matchedKeywords": [
+            "store"
+          ]
+        },
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "append",
+            "jsonl",
+            "store"
+          ]
+        },
+        {
+          "path": "mission-actions/missionActionStore.js",
+          "matchedKeywords": [
+            "append",
+            "jsonl"
+          ]
+        },
+        {
+          "path": "task-actions/index.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "append",
+            "store"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "append",
+            "jsonl",
+            "store"
+          ]
+        },
+        {
+          "path": "workbench/index.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "append",
+            "store"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "append",
+            "jsonl",
+            "store"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "append",
+            "jsonl",
+            "store"
+          ]
+        },
+        {
+          "path": "implementation-actions/index.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "append",
+            "store"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "append",
+            "store"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "store"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "append"
+          ]
+        },
+        {
+          "path": "local-api/routes/tasks.js",
+          "matchedKeywords": [
+            "jsonl"
+          ]
+        },
+        {
+          "path": "local-api/safeResponse.js",
+          "matchedKeywords": [
+            "store"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "evidence-audit-runtime-append",
+      "category": "evidence",
+      "title": "Repeated evidence, audit, and runtime append flows",
+      "keywords": [
+        "appendEvidence",
+        "appendAudit",
+        "runtime event"
+      ],
+      "risk": "medium",
+      "priority": "medium",
+      "recommendedSharedModule": "local-state/appendRuntimeRecord.js",
+      "recommendation": "Create a shared append wrapper only after preserving current write-guard semantics.",
+      "occurrences": [
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit",
+            "runtime event"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit",
+            "runtime event"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit",
+            "runtime event"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "local-state/appendAuditEvent.js",
+          "matchedKeywords": [
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "local-state/appendEvidence.js",
+          "matchedKeywords": [
+            "appendEvidence"
+          ]
+        },
+        {
+          "path": "local-state/approvalStore.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "local-state/index.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "local-state/runtime/README.md",
+          "matchedKeywords": [
+            "runtime event"
+          ]
+        },
+        {
+          "path": "local-state/taskStore.js",
+          "matchedKeywords": [
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "local-state/writeLocalState.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "scripts/careloop-backend-validate.js",
+          "matchedKeywords": [
+            "runtime event"
+          ]
+        },
+        {
+          "path": "scripts/careloop-inventory.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "scripts/check-agent-workbench.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "scripts/check-controlled-implementation-workflow.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit"
+          ]
+        },
+        {
+          "path": "scripts/check-controlled-local-execution.js",
+          "matchedKeywords": [
+            "runtime event"
+          ]
+        },
+        {
+          "path": "scripts/check-guarded-task-execution.js",
+          "matchedKeywords": [
+            "appendEvidence",
+            "appendAudit",
+            "runtime event"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "dashboard-source-badges",
+      "category": "dashboard",
+      "title": "Repeated dashboard source badge rendering and labels",
+      "keywords": [
+        "source badge",
+        "Snapshot fallback",
+        "Live local API"
+      ],
+      "risk": "low",
+      "priority": "low",
+      "recommendedSharedModule": "dashboard/src/data/sourceLabels.js",
+      "recommendation": "Move repeated source badge labels to shared dashboard metadata.",
+      "occurrences": [
+        {
+          "path": "dashboard/src/data/nexusCommands.js",
+          "matchedKeywords": [
+            "Snapshot fallback"
+          ]
+        },
+        {
+          "path": "dashboard/src/pages/CommandCenterV2.jsx",
+          "matchedKeywords": [
+            "Snapshot fallback",
+            "Live local API"
+          ]
+        },
+        {
+          "path": "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md",
+          "matchedKeywords": [
+            "source badge"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "dashboard-action-state-labels",
+      "category": "dashboard",
+      "title": "Repeated dashboard action state labels",
+      "keywords": [
+        "disabledReason",
+        "Available",
+        "Requires"
+      ],
+      "risk": "low",
+      "priority": "medium",
+      "recommendedSharedModule": "dashboard/src/data/actionStateLabels.js",
+      "recommendation": "Create shared dashboard labels for action readiness and disabled reasons.",
+      "occurrences": [
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "workspace/workflowRecommendations.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "workspace/workflowTemplates.js",
+          "matchedKeywords": [
+            "Available",
+            "Requires"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopReadiness.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "local-api/routes/db.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "local-api/routes/projects.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "db/dbImportPlan.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/capture-command-center-screenshots.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/careloop-command-classify.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/check-agentic-workspace.js",
+          "matchedKeywords": [
+            "Available",
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/check-command-center-ux.js",
+          "matchedKeywords": [
+            "disabledReason",
+            "Available",
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/check-mission-composer.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/check-nexus-local-boot.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/check-nexus-service-orchestration.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/check-task-activation-bridge.js",
+          "matchedKeywords": [
+            "Requires"
+          ]
+        },
+        {
+          "path": "scripts/db-foundation-status.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/nexus-doctor.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/nexus-status.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        },
+        {
+          "path": "scripts/skill.js",
+          "matchedKeywords": [
+            "Available"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "route-page-metadata",
+      "category": "dashboard",
+      "title": "Repeated route matrices and page metadata",
+      "keywords": [
+        "expectedHeading",
+        "COMMAND_CENTER_ROUTES",
+        "helpDoc"
+      ],
+      "risk": "low",
+      "priority": "medium",
+      "recommendedSharedModule": "dashboard/src/data/commandCenterRoutes.js",
+      "recommendation": "Keep route metadata centralized and avoid route-local duplicates.",
+      "occurrences": [
+        {
+          "path": "scripts/capture-command-center-screenshots.js",
+          "matchedKeywords": [
+            "expectedHeading",
+            "COMMAND_CENTER_ROUTES"
+          ]
+        },
+        {
+          "path": "scripts/check-command-center-ux.js",
+          "matchedKeywords": [
+            "expectedHeading",
+            "COMMAND_CENTER_ROUTES"
+          ]
+        },
+        {
+          "path": "dashboard/src/data/commandCenterRoutes.js",
+          "matchedKeywords": [
+            "expectedHeading",
+            "COMMAND_CENTER_ROUTES",
+            "helpDoc"
+          ]
+        },
+        {
+          "path": "dashboard/src/pages/CommandCenterV2.jsx",
+          "matchedKeywords": [
+            "expectedHeading"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    },
+    {
+      "patternId": "public-private-demo-boundary",
+      "category": "safety",
+      "title": "Repeated public/private/demo boundary checks",
+      "keywords": [
+        "DemoApp",
+        "private project",
+        "local-private"
+      ],
+      "risk": "high",
+      "priority": "high",
+      "recommendedSharedModule": "shared/boundaryGuards.js",
+      "recommendation": "Audit boundary checks carefully before extracting a shared boundary helper.",
+      "occurrences": [
+        {
+          "path": "mission-actions/missionActionBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "task-actions/taskActivationStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/agentWorkbench.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/reviewBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workbench/reviewStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationBridge.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationPlan.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "implementation-actions/implementationStore.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workspace/workflowRecommendations.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "workspace/workflowTemplates.js",
+          "matchedKeywords": [
+            "private project"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopCommandClassification.js",
+          "matchedKeywords": [
+            "private project",
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopControlledValidation.js",
+          "matchedKeywords": [
+            "private project",
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopInventory.js",
+          "matchedKeywords": [
+            "private project"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopIosInventory.js",
+          "matchedKeywords": [
+            "private project"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopRemediationPlan.js",
+          "matchedKeywords": [
+            "private project",
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopTestFailureAnalysis.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "careloop-readiness/careloopValidationPlan.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "command-execution/commandAllowlist.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        },
+        {
+          "path": "command-execution/commandPreflight.js",
+          "matchedKeywords": [
+            "local-private"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "High-risk boundary. Requires a dedicated refactor phase and validation plan."
+    },
+    {
+      "patternId": "phase-roadmap-updates",
+      "category": "roadmap",
+      "title": "Repeated phase status and roadmap update patterns",
+      "keywords": [
+        "phaseId",
+        "nextPhase",
+        "commandCenterVisible"
+      ],
+      "risk": "low",
+      "priority": "medium",
+      "recommendedSharedModule": "os-roadmap/phaseStatusWriter.js",
+      "recommendation": "Create a future phase-status writer or validator to reduce manual registry drift.",
+      "occurrences": [
+        {
+          "path": "local-api/routes/db.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "local-api/routes/roadmap.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "db/dbHealth.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "scripts/check-command-center-ux.js",
+          "matchedKeywords": [
+            "phaseId",
+            "commandCenterVisible"
+          ]
+        },
+        {
+          "path": "scripts/check-db-foundation.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "scripts/check-docs-coverage.js",
+          "matchedKeywords": [
+            "phaseId"
+          ]
+        },
+        {
+          "path": "scripts/check-nexus-local-boot.js",
+          "matchedKeywords": [
+            "phaseId"
+          ]
+        },
+        {
+          "path": "scripts/check-os-phase-status.js",
+          "matchedKeywords": [
+            "phaseId",
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "scripts/check-reuse-audit.js",
+          "matchedKeywords": [
+            "phaseId",
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "scripts/db-foundation-status.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "dashboard/src/data/commandCenterViewModel.js",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "dashboard/src/data/nexusCommands.js",
+          "matchedKeywords": [
+            "commandCenterVisible"
+          ]
+        },
+        {
+          "path": "dashboard/src/data/nexusRoadmap.js",
+          "matchedKeywords": [
+            "phaseId",
+            "nextPhase"
+          ]
+        },
+        {
+          "path": "dashboard/src/pages/CommandCenterV2.jsx",
+          "matchedKeywords": [
+            "nextPhase"
+          ]
+        }
+      ],
+      "doNow": false,
+      "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+    }
+  ],
+  "warnings": [
+    "Audit is pattern-based and conservative; it identifies likely duplication candidates for later review."
+  ],
+  "errors": [],
+  "summary": {
+    "areasScanned": 15,
+    "patternsFound": 16,
+    "highPriorityCandidates": 6,
+    "mediumPriorityCandidates": 9,
+    "lowPriorityCandidates": 1,
+    "safeRefactorsRecommended": 8,
+    "riskyRefactorsDeferred": 1
+  },
+  "refactorCandidatePlan": {
+    "planVersion": "1.0",
+    "phase": "P41.7.2",
+    "generatedAt": "2026-05-14T13:41:05.743Z",
+    "safeNearTerm": [
+      {
+        "patternId": "policy-loading-parsing",
+        "title": "Repeated policy JSON loading and parsing",
+        "category": "policy",
+        "priority": "high",
+        "risk": "low",
+        "recommendedSharedModule": "shared/policyLoader.js",
+        "recommendation": "Create a shared policy JSON loader with parse errors, path labeling, and schema hooks.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "report-metadata-writing",
+        "title": "Repeated report metadata and Validation HEAD wording",
+        "category": "reporting",
+        "priority": "high",
+        "risk": "low",
+        "recommendedSharedModule": "shared/reportWriter.js",
+        "recommendation": "Create a shared report writer for metadata, failures, warnings, and result blocks.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "checker-formatting",
+        "title": "Repeated checker PASS/FAIL formatting",
+        "category": "checking",
+        "priority": "high",
+        "risk": "low",
+        "recommendedSharedModule": "shared/checkResultFormatter.js",
+        "recommendation": "Create a shared checker result formatter for sections, failures, and exit codes.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "mode-guards",
+        "title": "Repeated local-private and mode guard checks",
+        "category": "safety",
+        "priority": "high",
+        "risk": "medium",
+        "recommendedSharedModule": "shared/modeGuards.js",
+        "recommendation": "Create a shared mode guard for local-private, demo, and test-only checks.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "redaction-helpers",
+        "title": "Repeated redaction and safe payload shaping",
+        "category": "safety",
+        "priority": "high",
+        "risk": "medium",
+        "recommendedSharedModule": "shared/redaction.js",
+        "recommendation": "Centralize common redaction and safe payload shaping rules.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "dashboard-action-state-labels",
+        "title": "Repeated dashboard action state labels",
+        "category": "dashboard",
+        "priority": "medium",
+        "risk": "low",
+        "recommendedSharedModule": "dashboard/src/data/actionStateLabels.js",
+        "recommendation": "Create shared dashboard labels for action readiness and disabled reasons.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "route-page-metadata",
+        "title": "Repeated route matrices and page metadata",
+        "category": "dashboard",
+        "priority": "medium",
+        "risk": "low",
+        "recommendedSharedModule": "dashboard/src/data/commandCenterRoutes.js",
+        "recommendation": "Keep route metadata centralized and avoid route-local duplicates.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "phase-roadmap-updates",
+        "title": "Repeated phase status and roadmap update patterns",
+        "category": "roadmap",
+        "priority": "medium",
+        "risk": "low",
+        "recommendedSharedModule": "os-roadmap/phaseStatusWriter.js",
+        "recommendation": "Create a future phase-status writer or validator to reduce manual registry drift.",
+        "timing": "near_term",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      }
+    ],
+    "mediumRiskLater": [
+      {
+        "patternId": "mode-guards",
+        "title": "Repeated local-private and mode guard checks",
+        "category": "safety",
+        "priority": "high",
+        "risk": "medium",
+        "recommendedSharedModule": "shared/modeGuards.js",
+        "recommendation": "Create a shared mode guard for local-private, demo, and test-only checks.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "redaction-helpers",
+        "title": "Repeated redaction and safe payload shaping",
+        "category": "safety",
+        "priority": "high",
+        "risk": "medium",
+        "recommendedSharedModule": "shared/redaction.js",
+        "recommendation": "Centralize common redaction and safe payload shaping rules.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "safe-response-envelopes",
+        "title": "Repeated safe response envelope handling",
+        "category": "api",
+        "priority": "medium",
+        "risk": "low",
+        "recommendedSharedModule": "local-api/safeResponse.js",
+        "recommendation": "Reuse and extend the existing safe response helper instead of adding route-local envelopes.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "safe-file-read-helpers",
+        "title": "Repeated safe local file read helpers",
+        "category": "state",
+        "priority": "medium",
+        "risk": "medium",
+        "recommendedSharedModule": "local-state/safeFileReader.js",
+        "recommendation": "Route local file reads through the existing safe file reader or a shared wrapper.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "runtime-snapshot-helpers",
+        "title": "Repeated runtime snapshot normalization",
+        "category": "state",
+        "priority": "medium",
+        "risk": "medium",
+        "recommendedSharedModule": "local-state/runtimeSnapshot.js",
+        "recommendation": "Create a shared runtime snapshot read/normalize helper in a later refactor subphase.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "action-result-envelopes",
+        "title": "Repeated action request and result envelopes",
+        "category": "actions",
+        "priority": "medium",
+        "risk": "medium",
+        "recommendedSharedModule": "shared/actionResult.js",
+        "recommendation": "Create a common action request/result envelope for bridge-style modules.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "action-store-patterns",
+        "title": "Repeated append-only action store patterns",
+        "category": "actions",
+        "priority": "medium",
+        "risk": "medium",
+        "recommendedSharedModule": "local-state/actionStore.js",
+        "recommendation": "Inventory action store patterns before extracting a common append-only store abstraction.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "evidence-audit-runtime-append",
+        "title": "Repeated evidence, audit, and runtime append flows",
+        "category": "evidence",
+        "priority": "medium",
+        "risk": "medium",
+        "recommendedSharedModule": "local-state/appendRuntimeRecord.js",
+        "recommendation": "Create a shared append wrapper only after preserving current write-guard semantics.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      },
+      {
+        "patternId": "dashboard-source-badges",
+        "title": "Repeated dashboard source badge rendering and labels",
+        "category": "dashboard",
+        "priority": "low",
+        "risk": "low",
+        "recommendedSharedModule": "dashboard/src/data/sourceLabels.js",
+        "recommendation": "Move repeated source badge labels to shared dashboard metadata.",
+        "timing": "later",
+        "doNow": false,
+        "reasonDeferred": "Audit-only subphase. No refactor in P41.7.2."
+      }
+    ],
+    "highRiskDeferred": [
+      {
+        "patternId": "public-private-demo-boundary",
+        "title": "Repeated public/private/demo boundary checks",
+        "category": "safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "shared/boundaryGuards.js",
+        "recommendation": "Audit boundary checks carefully before extracting a shared boundary helper.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk boundary. Requires a dedicated refactor phase and validation plan."
+      },
+      {
+        "patternId": "local-state-write-boundary",
+        "title": "local-state write boundary",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer local-state write boundary until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      },
+      {
+        "patternId": "state-machine-transitions",
+        "title": "state machine transitions",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer state machine transitions until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      },
+      {
+        "patternId": "runtime-traffic-plane-decisions",
+        "title": "runtime traffic plane decisions",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer runtime traffic plane decisions until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      },
+      {
+        "patternId": "controlled-command-runner",
+        "title": "controlled command runner",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer controlled command runner until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      },
+      {
+        "patternId": "orchestrator-runner-loop",
+        "title": "orchestrator/runner/loop",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer orchestrator/runner/loop until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      },
+      {
+        "patternId": "security-boundary-logic",
+        "title": "security boundary logic",
+        "category": "runtime-safety",
+        "priority": "high",
+        "risk": "high",
+        "recommendedSharedModule": "dedicated future refactor phase",
+        "recommendation": "Defer security boundary logic until a dedicated validation-backed refactor phase.",
+        "timing": "deferred",
+        "doNow": false,
+        "reasonDeferred": "High-risk runtime or security boundary."
+      }
+    ],
+    "nonGoals": [
+      "no runtime behavior changed",
+      "no action bridge rewrite",
+      "no local API behavior change",
+      "no DB behavior change",
+      "no project source mutation"
+    ]
+  }
+}

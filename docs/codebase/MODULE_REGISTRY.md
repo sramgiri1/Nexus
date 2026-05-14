@@ -352,6 +352,41 @@ updated as new module families or entry points are added.
 - Status:
   active
 
+## Reuse Audit and Refactor Candidate Inventory
+
+- Purpose:
+  Inventory duplicate patterns and recommend future shared helper candidates
+  before risky refactors are attempted.
+- Primary files:
+  `codebase/reuseAudit.js`,
+  `codebase/refactorCandidates.js`,
+  `codebase/index.js`,
+  `policy/reuse-audit-policy.json`,
+  `scripts/check-reuse-audit.js`,
+  `reports/reuse-audit.json`,
+  `reports/reuse-audit-report.md`
+- Public entry points:
+  `codebase/index.js`,
+  `scripts/check-reuse-audit.js`
+- Inputs/outputs:
+  Consumes allowed repo scan areas and policy metadata; outputs a JSON audit,
+  markdown report, and prioritized refactor candidate plan.
+- Side effects:
+  Writes reuse-audit reports only.
+- Safety boundary:
+  Audit-only. Must not modify runtime behavior, action bridges, local API, DB
+  behavior, protected project files, providers, or orchestrator runtime paths.
+- Reuse notes:
+  Use the audit output before introducing shared helpers or refactoring repeated
+  checker, policy, report, redaction, or state patterns.
+- Tests/checkers:
+  `scripts/check-reuse-audit.js`
+- Known limitations:
+  Pattern detection is conservative and intended to guide future review, not to
+  prove semantic equivalence.
+- Status:
+  foundation
+
 ## Architecture and Usage Docs
 
 - Purpose:

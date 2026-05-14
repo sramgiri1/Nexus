@@ -120,6 +120,10 @@ Any phase that adds or materially changes module structure must update
 entry point, checker, report, or operator-facing route, the corresponding code
 documentation should be updated in the same phase.
 
+P41.7.2 adds one more trigger: if a phase introduces a repeated helper pattern
+or duplicates an existing checker/report/policy/state idiom, update the reuse
+audit or explicitly document why the duplicate is temporary.
+
 ## 8. Examples
 
 ### Example: Command Center view model module

@@ -38,7 +38,7 @@ const requiredModuleFamilies = [
   "Reports and Checkers",
 ];
 
-const requiredPhaseEntries = ["P41.6.6", "P41.7.1"];
+const requiredPhaseEntries = ["P41.6.6", "P41.7.1", "P41.7.2"];
 
 function read(relativePath) {
   const fullPath = join(ROOT, relativePath);

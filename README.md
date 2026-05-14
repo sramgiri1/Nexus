@@ -164,7 +164,8 @@ Public-facing README sections use “private project” wording. Private-project
 - P41.6.5: OS roadmap/project-progress separation, boot docs, troubleshooting, and final validation
 - P41.6.6: Command Center boundary polish and Mission Control consistency
 - P41.7.1: codebase documentation standard + module registry
-- P41.7.2: reuse audit + refactor candidate report
+- P41.7.2: reuse audit + duplicate pattern inventory
+- P41.7.3: shared helper catalog + refactor candidate plan
 - P41.8: Centralized Activity Log + Observability Ledger
 - P42: Project Registry + Adapter Framework
 
