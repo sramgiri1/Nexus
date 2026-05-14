@@ -15,7 +15,6 @@ export function HelpLink({ routeKey, label, docPath, description }) {
       <span className="ccv2-help-link__icon" aria-hidden="true">?</span>
       <span className="ccv2-help-link__eyebrow">Guide</span>
       <span className="ccv2-help-link__label">{resolvedLabel}</span>
-      <span className="ccv2-help-link__path">{resolvedDocPath}</span>
       <span className="ccv2-help-link__description">{resolvedDescription}</span>
     </div>
   );

@@ -273,6 +273,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P41.8.2A",
+      "title": "Docs & Guides Interaction + Activity Log Placeholder Polish",
+      "track": "NEXUS_OS",
+      "order": 14.25,
+      "group": "P41.8 Centralized Activity Log + Observability Ledger",
+      "summary": "Polish Docs & Guides navigation and present Activity Log as observability readiness before instrumentation.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.8.3",
       "title": "API/UI/Action Bridge Activity Capture",
       "track": "NEXUS_OS",

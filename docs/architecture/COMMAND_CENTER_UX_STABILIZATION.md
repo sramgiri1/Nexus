@@ -680,3 +680,42 @@ remaining global header noise before central activity logger work continues.
 ### Next Phase
 
 - P41.8.2 — Central Activity Logger
+
+## P41.8.2A — Docs & Guides Interaction + Activity Log Placeholder Polish
+
+This focused polish phase keeps the P41.8.1A documentation hub and P41.8.2
+central logger work aligned in the Command Center.
+
+### Docs & Guides Interaction
+
+- Docs cards now select an in-app guide preview instead of navigating to raw
+  repository file paths or unrelated app routes.
+- The whole card is clickable; separate `Open guide` link text and repeated
+  category chips are removed from the primary UX.
+- Raw local file paths are shown only under Developer Details for the selected
+  guide.
+- The old Documentation Index block is replaced by a searchable documentation
+  hub grouped into Start Here, Operator Guides, Architecture, Codebase, and
+  Troubleshooting.
+
+### Activity Log Readiness
+
+- The Activity Log route now presents observability readiness instead of a
+  generic planned placeholder.
+- It accurately marks the activity schema, correlation ID model, central logger,
+  and local activity store as ready.
+- It marks UI/API/action bridge instrumentation and trace views as not wired yet
+  or planned for future phases.
+- P41.8.3 remains the next phase for API, UI, and action bridge activity
+  capture.
+
+### Boundary Rules Preserved
+
+- No backend execution, local API behavior change, action bridge behavior
+  change, provider calls, worker runtime, DB writes, broad instrumentation, or
+  private project mutation is added.
+- DemoApp remains limited to Demo Mode.
+
+### Next Phase
+
+- P41.8.3 — API / UI / Action Bridge Activity Capture

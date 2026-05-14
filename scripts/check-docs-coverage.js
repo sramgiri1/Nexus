@@ -238,13 +238,14 @@ for (const expected of ["mission", "workspace", "tasks", "workbench", "implement
 
 for (const expected of [
   "DocsGuidesPage",
-  "Documentation Index",
+  "Documentation Hub",
+  "Start Here",
   "Operator Guides",
-  "Developer / Contributor Guides",
-  "Architecture References",
+  "Architecture",
+  "Codebase",
+  "Troubleshooting",
   "Command Center Guide",
   "Module Registry",
-  "Open guide",
   "Operator, architecture, and contributor guidance",
 ]) {
   assertContains(commandCenterSource, expected, "helpLinks", `Docs & Guides page missing expected copy: ${expected}`);
@@ -255,10 +256,10 @@ for (const match of helpLinksSource.matchAll(/docPath: "([^"]+)"/g)) {
 }
 
 for (const expected of [
-  "href={`/${item.path}`}",
-  "aria-label={`Open guide: ${item.title}`}",
-  "First-run guide for launching NEXUS",
-  "Troubleshoot local boot, service health, docs links, and Command Center state.",
+  "navigate(`/command-center/docs/${guide.id}`)",
+  "aria-label={`View ${guide.title} guide`}",
+  "Launch NEXUS locally, understand the operating model",
+  "Diagnose common local boot, service health, UI fallback, and documentation navigation problems.",
 ]) {
   assertContains(commandCenterSource, expected, "helpLinks", `Docs hub missing clickable/polished card behavior: ${expected}`);
 }
@@ -268,6 +269,34 @@ check(
   "helpLinks",
   "Docs cards should not render raw file paths as primary UX",
 );
+check(
+  !commandCenterSource.includes("ccv2-doc-card__action"),
+  "helpLinks",
+  "Docs cards should not render separate Open guide links",
+);
+check(!commandCenterSource.includes("Documentation Index"), "helpLinks", "Docs & Guides should not render the old Documentation Index block");
+
+for (const expected of [
+  ["getting-started", "docs/usage/GETTING_STARTED.md"],
+  ["command-center-guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
+  ["running-nexus-locally", "docs/usage/RUNNING_NEXUS_LOCALLY.md"],
+  ["starting-a-mission", "docs/usage/STARTING_A_MISSION.md"],
+  ["activating-tasks", "docs/usage/ACTIVATING_TASKS.md"],
+  ["agent-workbench", "docs/usage/USING_AGENT_WORKBENCH.md"],
+  ["controlled-implementation", "docs/usage/CONTROLLED_IMPLEMENTATION.md"],
+  ["evidence-audit", "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md"],
+  ["demo-vs-private", "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"],
+  ["troubleshooting", "docs/usage/TROUBLESHOOTING.md"],
+  ["faq", "docs/usage/FAQ.md"],
+  ["module-registry", "docs/codebase/MODULE_REGISTRY.md"],
+  ["reuse-refactor-guide", "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md"],
+  ["code-documentation-standard", "docs/codebase/CODE_DOCUMENTATION_STANDARD.md"],
+]) {
+  const [docId, docPath] = expected;
+  assertContains(commandCenterSource, `id: "${docId}"`, "helpLinks", `Docs hub missing stable doc id: ${docId}`);
+  assertContains(commandCenterSource, `path: "${docPath}"`, "helpLinks", `Docs hub missing doc path mapping: ${docPath}`);
+  check(existsSync(join(ROOT, docPath)), "helpLinks", `Docs hub mapped file does not exist: ${docPath}`);
+}
 
 for (const file of ["README.md", ...requiredUsageDocs, ...requiredCodebaseDocs]) {
   validateLinksInFile(file);

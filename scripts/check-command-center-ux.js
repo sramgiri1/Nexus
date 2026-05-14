@@ -240,11 +240,14 @@ for (const path of requiredRoutePaths) {
     );
   }
 }
-for (const path of ["/command-center/activity", "/command-center/settings"]) {
+for (const path of ["/command-center/settings"]) {
   const route = routeMatrix.find((entry) => entry.path === path);
   check(!!route, "routeMatrix", `Missing planned route matrix entry: ${path}`);
   check(route?.status === "planned", "routeMatrix", `Planned route should be marked planned: ${path}`);
 }
+const activityRoute = routeMatrix.find((entry) => entry.path === "/command-center/activity");
+check(!!activityRoute, "routeMatrix", "Missing Activity Log route matrix entry");
+check(activityRoute?.status === "implemented", "routeMatrix", "Activity Log readiness route should be implemented");
 const docsRoute = routeMatrix.find((entry) => entry.path === "/command-center/docs");
 check(!!docsRoute, "routeMatrix", "Missing docs route matrix entry");
 check(docsRoute?.status === "implemented", "routeMatrix", "Docs & Guides route should be implemented");
@@ -841,8 +844,12 @@ for (const forbidden of ["Environment:", "Cmd/Ctrl+K", "THEME", "Local API:", "D
 }
 check(commandCenterSource.includes("DocsGuidesPage"), "topBarPolish", "Docs & Guides route should render a real docs page");
 check(commandCenterSource.includes("Operator Guides"), "topBarPolish", "Docs & Guides should use operator-focused docs copy");
-check(commandCenterSource.includes("href={`/${item.path}`}"), "topBarPolish", "Docs & Guides cards should be clickable links");
+check(commandCenterSource.includes("navigate(`/command-center/docs/${guide.id}`)"), "topBarPolish", "Docs & Guides cards should navigate to guide panels");
 check(!commandCenterSource.includes("ccv2-doc-card__path"), "topBarPolish", "Docs cards should not render raw paths as primary text");
+check(!commandCenterSource.includes("ccv2-doc-card__action"), "topBarPolish", "Docs cards should not render separate Open guide links");
+check(commandCenterSource.includes("ActivityLogPage"), "topBarPolish", "Activity Log should render an observability readiness page");
+check(commandCenterSource.includes("Infrastructure ready; instrumentation pending."), "topBarPolish", "Activity Log readiness copy missing");
+check(commandCenterSource.includes("UI/API/action instrumentation"), "topBarPolish", "Activity Log should identify instrumentation as not wired yet");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
 check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
 

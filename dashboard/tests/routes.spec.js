@@ -1337,7 +1337,7 @@ test.describe("Command Center route-wide UX", () => {
   test("planned routes show a safe coming-soon state instead of crashing", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    for (const path of ["/command-center/activity", "/command-center/settings"]) {
+    for (const path of ["/command-center/settings"]) {
       await page.goto(path);
       await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
       await expect(page.locator("body")).toContainText(/Coming Soon|Planned/);
@@ -1355,34 +1355,69 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Docs & Guides");
     await expect(page.locator(".ccv2-page-head__sub")).toContainText("Operator, architecture, and contributor guidance");
-    await expect(page.locator("body")).toContainText("Documentation Index");
+    await expect(page.locator("body")).not.toContainText("Documentation Index");
+    await expect(page.locator("body")).toContainText("Documentation Hub");
+    await expect(page.locator("body")).toContainText("Start Here");
     await expect(page.locator("body")).toContainText("Operator Guides");
-    await expect(page.locator("body")).toContainText("Developer / Contributor Guides");
-    await expect(page.locator("body")).toContainText("Architecture References");
+    await expect(page.locator("body")).toContainText("Codebase");
+    await expect(page.locator("body")).toContainText("Architecture");
+    await expect(page.getByLabel("Search documentation guides")).toBeVisible();
     for (const label of [
       "Getting Started",
       "Command Center Guide",
       "Running NEXUS Locally",
       "Starting a Mission",
       "Activating Tasks",
-      "Using Agent Workbench",
+      "Agent Workbench",
       "Controlled Implementation",
-      "Understanding Evidence & Audit",
+      "Evidence & Audit",
       "Module Registry",
       "Reuse and Refactor Guide",
     ]) {
       expect(body).toContain(label);
     }
-    await expect(page.getByRole("link", { name: /Open guide: Getting Started/i })).toHaveAttribute("href", /docs\/usage\/GETTING_STARTED\.md/);
-    await expect(page.getByRole("link", { name: /Open guide: Command Center Guide/i })).toHaveAttribute("href", /docs\/usage\/COMMAND_CENTER_GUIDE\.md/);
-    await expect(page.getByRole("link", { name: /Open guide: Running NEXUS Locally/i })).toHaveAttribute("href", /docs\/usage\/RUNNING_NEXUS_LOCALLY\.md/);
-    await expect(page.getByRole("link", { name: /Open guide: Understanding Evidence & Audit/i })).toHaveAttribute("href", /docs\/usage\/UNDERSTANDING_EVIDENCE_AUDIT\.md/);
-    expect(body).toContain("First-run guide for launching NEXUS");
-    expect(body).toContain("Troubleshoot local boot, service health, docs links, and Command Center state.");
+    await expect(page.getByRole("button", { name: /View Getting Started guide/i })).toBeVisible();
+    await page.getByRole("button", { name: /View Command Center Guide guide/i }).click();
+    await expect(page).toHaveURL(/\/command-center\/docs\/command-center-guide$/);
+    await expect(page.getByLabel("Selected documentation guide")).toContainText("Command Center Guide");
+    await page.getByRole("button", { name: /View Running NEXUS Locally guide/i }).click();
+    await expect(page).toHaveURL(/\/command-center\/docs\/running-nexus-locally$/);
+    await expect(page.getByLabel("Selected documentation guide")).toContainText("Running NEXUS Locally");
+    await page.goto("/command-center/docs/getting-started");
+    await expect(page.getByLabel("Selected documentation guide")).toContainText("Launch NEXUS locally");
+    expect(await page.locator("body").innerText()).toContain("Start, inspect, troubleshoot, and shut down local NEXUS services");
     expect(body).not.toContain("docs/usage/GETTING_STARTED.md");
+    expect(body).not.toContain("Open guide");
     expect(body).not.toContain("planned surface");
     expect(body).not.toContain("Coming Soon");
     expect(body).not.toContain("DemoApp");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Activity Log shows observability readiness instead of a generic placeholder", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/activity");
+    const body = await page.locator("body").innerText();
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
+    await expect(page.locator("body")).toContainText("Trace NEXUS actions, agent work, policy decisions, evidence, and errors by correlation ID.");
+    await expect(page.locator("body")).toContainText("Activity schema");
+    await expect(page.locator("body")).toContainText("Correlation ID model");
+    await expect(page.locator("body")).toContainText("Central logger");
+    await expect(page.locator("body")).toContainText("Local activity store");
+    await expect(page.locator("body")).toContainText("UI/API/action instrumentation");
+    await expect(page.locator("body")).toContainText("Not wired yet");
+    await expect(page.locator("body")).toContainText("P41.8.3 - API / UI / Action Bridge Activity Capture");
+    await expect(page.locator("body")).toContainText("Each operator action will link UI, API, action bridge, evidence, audit, and runtime records.");
+    expect(body).not.toContain("Coming Soon · planned Command Center surface");
+    expect(body).not.toContain("DemoApp");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
 
     expect(errors).toEqual([]);
   });

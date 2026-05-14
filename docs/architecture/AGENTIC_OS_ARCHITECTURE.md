@@ -125,6 +125,13 @@ activity categories, validation helpers, and architecture docs. It does not add
 runtime instrumentation, provider calls, worker execution, DB writes, activity
 API routes, Activity Log UI, or project mutation.
 
+Phase 41.8.2 adds the central activity logger and append-only local activity
+store at `local-state/runtime/activity.jsonl`. It supports dry-run logging,
+redaction before persistence, correlation lookup, and schema validation. It
+still does not add broad runtime instrumentation, Activity Log UI, activity API
+routes, provider/tool/worker logging, DB-backed activity storage, or project
+mutation.
+
 The documentation layer is now intentionally separated:
 
 - `docs/usage/` for operators and local users

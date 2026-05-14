@@ -540,19 +540,21 @@
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "fix/docs-guides-header-polish",
+      "branch": "fix/docs-guides-activity-log-polish",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway; the current polish subphase improves Docs & Guides usability and simplifies the Command Center header before central logger work.",
+      "summary": "Centralized observability track is underway with schema, central logger, polished docs navigation, and an Activity Log readiness surface.",
       "checksRun": [
         "npm run check:command-center-ux",
         "npm run check:docs-coverage",
+        "npm run check:central-activity-logger",
+        "npm run check:activity-event-schema",
         "npm run check:os-phase-status"
       ],
       "knownLimitations": [
-        "Activity capture, logger writes, Activity Log UI, trace views, provider/tool dispatch, worker runtime, and DB writes remain out of scope."
+        "Broad API/UI/action bridge instrumentation, trace views, provider/tool dispatch, worker runtime, DB-backed activity, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.1A",
+      "nextPhase": "P41.8.2A",
       "commandCenterVisible": true
     },
     {
@@ -584,7 +586,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/docs-guides-header-polish",
-      "commit": "pending-final-commit",
+      "commit": "ac288b0",
       "completedAt": "",
       "summary": "Makes Docs & Guides a clickable operator documentation hub with polished card copy and simplifies the global Command Center header with compact controls.",
       "checksRun": [
@@ -606,13 +608,51 @@
       "phaseId": "P41.8.2",
       "title": "Central Activity Logger",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "observability/central-activity-logger",
+      "commit": "3a63789",
       "completedAt": "",
-      "summary": "Planned central logger for schema-compliant activity records.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds a central activity logger, append-only local JSONL activity store, dry-run logging, redaction before persistence, and correlation lookup helpers.",
+      "checksRun": [
+        "npm run check:central-activity-logger",
+        "npm run check:activity-event-schema",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:command-center-ux",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No broad runtime instrumentation, Command Center Activity Log UI, /activity API endpoint, provider/tool/worker logging, DB-backed activity storage, or project mutation is enabled."
+      ],
+      "nextPhase": "P41.8.2A",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8.2A",
+      "title": "Docs & Guides Interaction + Activity Log Placeholder Polish",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/docs-guides-activity-log-polish",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Polishes Docs & Guides card navigation and presents Activity Log as observability readiness until P41.8.3 instrumentation lands.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:activity-event-schema",
+        "npm run check:central-activity-logger",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Docs guide previews are curated in-app summaries rather than full markdown rendering.",
+        "Activity Log shows readiness and boundaries only; API/UI/action bridge instrumentation begins in P41.8.3."
+      ],
       "nextPhase": "P41.8.3",
       "commandCenterVisible": true
     },
@@ -1220,8 +1260,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T21:20:00.000Z",
-  "currentPhase": "P41.8.1A",
-  "previousPhase": "P41.8.1",
-  "nextPhase": "P41.8.2"
+  "updatedAt": "2026-05-14T22:15:00.000Z",
+  "currentPhase": "P41.8.2A",
+  "previousPhase": "P41.8.2",
+  "nextPhase": "P41.8.3"
 }

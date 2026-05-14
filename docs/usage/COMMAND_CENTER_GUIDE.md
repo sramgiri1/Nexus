@@ -164,10 +164,19 @@ not enabled yet.
 ## Docs & Guides
 
 - Purpose: provide one local index for current usage, codebase, and architecture docs
-- Shows: operator guides, developer/contributor guides, and architecture references as clickable cards with polished summaries
-- Available actions: open local documentation references from each card
+- Shows: Start Here, Operator Guides, Architecture, Codebase, and Troubleshooting sections with clickable guide cards and an in-page selected guide preview
+- Available actions: select a guide card, filter docs, and open the local file from Developer Details when needed
 - Disabled actions: no command execution, provider calls, DB writes, or project mutation
-- Known limitations: docs are file-backed links; an in-app markdown viewer and searchable docs remain future work
+- Known limitations: guide previews are curated summaries; full markdown rendering remains future work
+
+## Activity Log
+
+- Purpose: show observability readiness and explain how future activity traces will connect UI, API, action bridge, evidence, audit, and runtime records by correlation ID
+- Shows: activity schema, correlation ID model, central logger, and local activity store as ready
+- Shows as pending: UI/API/action bridge instrumentation and trace views
+- Available actions: inspection only
+- Disabled actions: no provider/tool/worker logging, DB-backed activity, or broad instrumentation in this phase
+- Next phase: P41.8.3 - API / UI / Action Bridge Activity Capture
 
 ## Header and Global Controls
 

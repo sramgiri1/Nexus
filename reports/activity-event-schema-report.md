@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T20:37:13.894Z
-- Validation branch: observability/activity-event-schema
-- Validation HEAD: b9d101a
+- Generated at: 2026-05-14T20:58:41.824Z
+- Validation branch: observability/central-activity-logger
+- Validation HEAD: 30c3bea
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

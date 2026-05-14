@@ -267,7 +267,7 @@ export const COMMAND_CENTER_ROUTES = [
     section: "OS",
     allowPhaseLabels: false,
     expectedHeading: "Activity Log",
-    status: "planned",
+    status: "implemented",
     scope: "os",
     helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
@@ -311,6 +311,10 @@ export const COMMAND_CENTER_ROUTE_BY_KEY = Object.fromEntries(
 );
 
 export function resolveCommandCenterRoute(pathname = "/command-center") {
+  if (pathname.startsWith("/command-center/docs/")) {
+    return COMMAND_CENTER_ROUTE_BY_KEY.docs;
+  }
+
   return (
     COMMAND_CENTER_ROUTES.find((route) => route.path === pathname)
     || COMMAND_CENTER_ROUTES.find((route) => route.aliases?.includes(pathname))

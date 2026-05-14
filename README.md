@@ -1066,6 +1066,12 @@ checker. This is schema/model work only. It does not instrument runtime paths,
 write activity records, add an Activity Log UI, call providers, enable worker
 runtime, write to a DB, or mutate project source.
 
+P41.8.2 adds the Central Activity Logger and append-only local activity store at
+`local-state/runtime/activity.jsonl`. It supports dry-run logging, redaction
+before persistence, and correlation lookup. It still does not add broad runtime
+instrumentation, Activity Log UI, `/activity` API routes, provider/tool/worker
+logging, DB-backed storage, or project mutation.
+
 ---
 
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.

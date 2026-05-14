@@ -3649,15 +3649,108 @@
   line-height: 1.55;
 }
 
-.ccv2-docs-intro {
-  margin-bottom: 12px;
+.ccv2-docs-shell {
+  display: grid;
+  grid-template-columns: minmax(280px, 0.9fr) minmax(0, 1.5fr);
+  gap: 14px;
+  align-items: start;
 }
 
-.ccv2-docs-intro__copy {
+.ccv2-docs-reader {
+  position: sticky;
+  top: 14px;
+}
+
+.ccv2-docs-reader__meta,
+.ccv2-activity-boundaries,
+.ccv2-activity-next {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.ccv2-docs-reader__title {
+  margin-top: 12px;
+  color: var(--nexus-text-strong);
+  font-size: 24px;
+  font-weight: 850;
+  letter-spacing: -0.03em;
+}
+
+.ccv2-docs-reader__description {
   margin: 8px 0 0;
+  color: var(--nexus-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.ccv2-docs-reader__section {
+  margin-top: 12px;
+  color: var(--nexus-muted);
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ccv2-docs-reader__preview {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--nexus-border);
+}
+
+.ccv2-docs-reader__preview p,
+.ccv2-activity-copy {
+  margin: 0 0 10px;
   color: var(--nexus-text);
   font-size: 13px;
   line-height: 1.65;
+}
+
+.ccv2-docs-developer-details {
+  margin-top: 14px;
+  color: var(--nexus-muted);
+  font-size: 12px;
+}
+
+.ccv2-docs-developer-details summary {
+  cursor: pointer;
+  color: var(--nexus-text);
+  font-weight: 800;
+}
+
+.ccv2-docs-developer-details a {
+  color: var(--nexus-info);
+  font-weight: 800;
+}
+
+.ccv2-docs-toolbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.ccv2-docs-search {
+  display: grid;
+  gap: 6px;
+  min-width: 220px;
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ccv2-docs-search input {
+  width: 100%;
+  padding: 9px 10px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 10px;
+  background: var(--nexus-input-bg);
+  color: var(--nexus-text-strong);
 }
 
 .ccv2-docs-section {
@@ -3693,6 +3786,7 @@
 .ccv2-doc-card {
   display: flex;
   flex-direction: column;
+  text-align: left;
   gap: 8px;
   min-height: 124px;
   padding: 14px;
@@ -3700,7 +3794,8 @@
   border-radius: 14px;
   background: var(--nexus-panel-soft);
   color: inherit;
-  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
   transition: border-color 0.15s ease, transform 0.15s ease, background 0.15s ease;
 }
 
@@ -3712,16 +3807,9 @@
   outline: none;
 }
 
-.ccv2-doc-card__chip {
-  width: fit-content;
-  padding: 3px 8px;
-  border: 1px solid var(--nexus-border);
-  border-radius: 999px;
-  color: var(--nexus-muted);
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.ccv2-doc-card--active {
+  border-color: color-mix(in srgb, var(--nexus-accent) 50%, var(--nexus-border) 50%);
+  background: color-mix(in srgb, var(--nexus-accent-soft) 54%, var(--nexus-panel) 46%);
 }
 
 .ccv2-doc-card__title {
@@ -3738,12 +3826,77 @@
   line-height: 1.55;
 }
 
-.ccv2-doc-card__action {
+.ccv2-doc-card__meta {
   display: block;
   margin-top: auto;
-  color: var(--nexus-info);
+  color: var(--nexus-muted);
   font-size: 11px;
   font-weight: 800;
+}
+
+.ccv2-activity-readiness {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+  gap: 14px;
+}
+
+.ccv2-activity-readiness__hero {
+  grid-column: 1 / -1;
+}
+
+.ccv2-activity-readiness__hero h2 {
+  margin: 10px 0 8px;
+  color: var(--nexus-text-strong);
+  font-size: 24px;
+  letter-spacing: -0.03em;
+}
+
+.ccv2-activity-readiness__hero p {
+  max-width: 860px;
+  color: var(--nexus-text);
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.ccv2-activity-next {
+  margin-top: 12px;
+  color: var(--nexus-text-strong);
+  font-size: 13px;
+  font-weight: 750;
+}
+
+.ccv2-activity-status-grid,
+.ccv2-activity-event-grid {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.ccv2-activity-status {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.ccv2-activity-event-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ccv2-activity-event {
+  padding: 10px 12px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  font-size: 13px;
 }
 
 .ccv2-roadmap-track--hero {

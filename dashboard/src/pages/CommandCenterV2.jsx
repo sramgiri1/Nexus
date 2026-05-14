@@ -5343,123 +5343,244 @@ function OSRoadmapPage({ vm }) {
   );
 }
 
-const DOCS_GUIDE_GROUPS = [
+const DOCS_GUIDES = [
   {
-    title: "Operator Guides",
-    description: "Launch, operate, and troubleshoot NEXUS through safe local workflows.",
-    items: [
-      {
-        title: "Getting Started",
-        description: "First-run guide for launching NEXUS, understanding the Command Center, and choosing your first governed action.",
-        path: "docs/usage/GETTING_STARTED.md",
-      },
-      {
-        title: "Command Center Guide",
-        description: "Operate missions, tasks, tabs, service health, command palette actions, and docs navigation from one cockpit.",
-        path: "docs/usage/COMMAND_CENTER_GUIDE.md",
-      },
-      {
-        title: "Running NEXUS Locally",
-        description: "Start, inspect, troubleshoot, and stop local NEXUS services with status and doctor commands.",
-        path: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
-      },
-      {
-        title: "Starting a Mission",
-        description: "Understand how goals become governed plans, tasks, evidence, and approvals.",
-        path: "docs/usage/STARTING_A_MISSION.md",
-      },
-      {
-        title: "Activating Tasks",
-        description: "Move planned work into governed task activation with clear prerequisites and evidence expectations.",
-        path: "docs/usage/ACTIVATING_TASKS.md",
-      },
-      {
-        title: "Using Agent Workbench",
-        description: "Review agent-owned work, operator decisions, evidence summaries, and blocker status.",
-        path: "docs/usage/USING_AGENT_WORKBENCH.md",
-      },
-      {
-        title: "Controlled Implementation",
-        description: "Use scoped implementation guidance without bypassing validation, rollback, or source-mutation boundaries.",
-        path: "docs/usage/CONTROLLED_IMPLEMENTATION.md",
-      },
-      {
-        title: "Understanding Evidence & Audit",
-        description: "Learn how NEXUS records proof, decisions, redaction, and traceability for governed work.",
-        path: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
-      },
-      {
-        title: "Demo vs Private Mode",
-        description: "Learn how NEXUS separates demo, local-private, and public-safe surfaces.",
-        path: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
-      },
-      {
-        title: "Troubleshooting",
-        description: "Troubleshoot local boot, service health, docs links, and Command Center state.",
-        path: "docs/usage/TROUBLESHOOTING.md",
-      },
-      {
-        title: "FAQ",
-        description: "Get concise answers to common operator questions about current NEXUS capabilities and limits.",
-        path: "docs/usage/FAQ.md",
-      },
+    id: "getting-started",
+    title: "Getting Started",
+    section: "Start Here",
+    audience: "Operator",
+    status: "Available",
+    description: "Launch NEXUS locally, understand the operating model, and run your first governed workflow.",
+    path: "docs/usage/GETTING_STARTED.md",
+    preview: [
+      "Use this guide for first-run setup, local operating posture, and the safest path from project context to governed work.",
+      "It explains how Command Center, local boot, mode boundaries, and operator actions fit together without requiring internal phase knowledge.",
     ],
   },
   {
-    title: "Developer / Contributor Guides",
-    description: "Maintainable codebase references for contributors, Codex, and future agent work.",
-    items: [
-      {
-        title: "Code Documentation Standard",
-        description: "Documentation rules every new module must satisfy before future reuse or refactor work.",
-        path: "docs/codebase/CODE_DOCUMENTATION_STANDARD.md",
-      },
-      {
-        title: "Module Registry",
-        description: "Canonical inventory of NEXUS module families, responsibilities, boundaries, and checkers.",
-        path: "docs/codebase/MODULE_REGISTRY.md",
-      },
-      {
-        title: "Reuse and Refactor Guide",
-        description: "Reuse-first guidance for avoiding duplicate helpers and deferring high-risk refactors.",
-        path: "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md",
-      },
-      {
-        title: "Phase Module Index",
-        description: "Phase-to-module map that explains which capabilities introduced or changed each area.",
-        path: "docs/codebase/PHASE_MODULE_INDEX.md",
-      },
+    id: "command-center-guide",
+    title: "Command Center Guide",
+    section: "Start Here",
+    audience: "Operator",
+    status: "Available",
+    description: "Navigate missions, tasks, evidence, service health, and operator actions from the NEXUS cockpit.",
+    path: "docs/usage/COMMAND_CENTER_GUIDE.md",
+    preview: [
+      "Use this as the cockpit manual for Mission Control, tabbed pages, scope/project context, Docs & Guides, and Service Health.",
+      "It focuses on what an operator can inspect now and which actions remain disabled until governed capabilities are wired.",
     ],
   },
   {
-    title: "Architecture References",
-    description: "System architecture, roadmap, local boot, durable state, and Command Center design references.",
-    items: [
-      {
-        title: "Agentic OS Architecture",
-        description: "High-level operating model for authority, governance, evidence, runtime boundaries, and safety.",
-        path: "docs/architecture/AGENTIC_OS_ARCHITECTURE.md",
-      },
-      {
-        title: "NEXUS Platform Roadmap",
-        description: "Current and planned NEXUS OS phases, including documentation, boot, and observability tracks.",
-        path: "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
-      },
-      {
-        title: "Command Center UX Stabilization",
-        description: "Design history for route cleanup, tabs, theme support, docs navigation, and header polish.",
-        path: "docs/architecture/COMMAND_CENTER_UX_STABILIZATION.md",
-      },
-      {
-        title: "DB Foundation and Durable State",
-        description: "Durable state architecture and read/write boundary posture for file-backed operation.",
-        path: "docs/architecture/DB_FOUNDATION_AND_DURABLE_STATE.md",
-      },
+    id: "running-nexus-locally",
+    title: "Running NEXUS Locally",
+    section: "Start Here",
+    audience: "Operator",
+    status: "Available",
+    description: "Start, inspect, troubleshoot, and shut down local NEXUS services using the unified boot workflow.",
+    path: "docs/usage/RUNNING_NEXUS_LOCALLY.md",
+    preview: [
+      "Covers nexus:up, nexus:down, nexus:status, nexus:doctor, local-only bindings, and service-state files.",
+      "Use it when a service is offline, a port is busy, or Command Center is reading from a snapshot fallback.",
+    ],
+  },
+  {
+    id: "starting-a-mission",
+    title: "Starting a Mission",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Turn a project goal into a governed mission plan with agents, evidence, and approval points.",
+    path: "docs/usage/STARTING_A_MISSION.md",
+    preview: [
+      "Explains how goals become scoped mission plans and how NEXUS keeps planning separate from unsafe autonomous execution.",
+      "Use it before generating a plan or when mission context, agents, and expected evidence need clarification.",
+    ],
+  },
+  {
+    id: "activating-tasks",
+    title: "Activating Tasks",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Move planned work into governed runtime state while preserving scope, ownership, and evidence expectations.",
+    path: "docs/usage/ACTIVATING_TASKS.md",
+    preview: [
+      "Covers task states, activation prerequisites, ownership, and why a task may be blocked or awaiting review.",
+      "Use it when moving from plan review into the Agent Workbench flow.",
+    ],
+  },
+  {
+    id: "agent-workbench",
+    title: "Agent Workbench",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Review assigned agent work, blockers, evidence, and human decisions from a task-centered workspace.",
+    path: "docs/usage/USING_AGENT_WORKBENCH.md",
+    preview: [
+      "Explains task-centered review, evidence summaries, operator decisions, and disabled states when bridges are offline.",
+      "Use it when auditing assigned work or deciding whether to approve, reject, or request changes.",
+    ],
+  },
+  {
+    id: "controlled-implementation",
+    title: "Controlled Implementation",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Understand how NEXUS applies scoped changes, records evidence, and preserves rollback posture.",
+    path: "docs/usage/CONTROLLED_IMPLEMENTATION.md",
+    preview: [
+      "Describes proposal, apply, validation, rollback, and developer-details boundaries for controlled implementation.",
+      "Use it to distinguish documentation-only work from governed source mutation.",
+    ],
+  },
+  {
+    id: "evidence-audit",
+    title: "Evidence & Audit",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Trace what happened, why it was allowed, which agent acted, and what proof was produced.",
+    path: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
+    preview: [
+      "Explains evidence records, audit posture, redaction, and how future activity traces will connect related work.",
+      "Use it when reviewing proof, blockers, policy decisions, or activity-readiness status.",
+    ],
+  },
+  {
+    id: "demo-vs-private",
+    title: "Demo vs Private Mode",
+    section: "Operator Guides",
+    audience: "Operator",
+    status: "Available",
+    description: "Understand what appears in demo mode, what stays private, and how NEXUS prevents data leakage.",
+    path: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
+    preview: [
+      "Clarifies demo-safe data, local-private surfaces, and why DemoApp never appears in primary local-private UX.",
+      "Use it when validating public-safe boundaries or reviewing screenshots.",
+    ],
+  },
+  {
+    id: "agentic-os-architecture",
+    title: "Agentic OS Architecture",
+    section: "Architecture",
+    audience: "Architect",
+    status: "Available",
+    description: "Understand the NEXUS operating model for authority, governance, evidence, runtime boundaries, and safety.",
+    path: "docs/architecture/AGENTIC_OS_ARCHITECTURE.md",
+    preview: [
+      "Use this for the platform-level architecture behind agents, gates, policies, evidence, and local-private execution.",
+      "It is a reference for future OS phases rather than a project roadmap.",
+    ],
+  },
+  {
+    id: "nexus-platform-roadmap",
+    title: "NEXUS Platform Roadmap",
+    section: "Architecture",
+    audience: "Architect",
+    status: "Available",
+    description: "Review current and planned NEXUS OS phases without mixing in project-specific progress.",
+    path: "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+    preview: [
+      "Use this for long-range OS capability sequencing, not private project status.",
+      "Command Center OS Roadmap mirrors the structured phase-status registry.",
+    ],
+  },
+  {
+    id: "module-registry",
+    title: "Module Registry",
+    section: "Codebase",
+    audience: "Developer",
+    status: "Available",
+    description: "Find the canonical inventory of NEXUS module families, responsibilities, boundaries, and checkers.",
+    path: "docs/codebase/MODULE_REGISTRY.md",
+    preview: [
+      "Use this before adding or changing modules so future agents and contributors can reuse existing surfaces.",
+      "It maps major module families to tests, safety boundaries, and known limitations.",
+    ],
+  },
+  {
+    id: "reuse-refactor-guide",
+    title: "Reuse and Refactor Guide",
+    section: "Codebase",
+    audience: "Developer",
+    status: "Available",
+    description: "Apply reuse-first guidance before introducing duplicate helpers or risky refactors.",
+    path: "docs/codebase/REUSE_AND_REFACTOR_GUIDE.md",
+    preview: [
+      "Use this to decide whether a helper should be reused, cataloged, or deferred to a dedicated refactor phase.",
+      "It explicitly protects high-risk runtime, redaction, safe-file, and governance boundaries.",
+    ],
+  },
+  {
+    id: "code-documentation-standard",
+    title: "Code Documentation Standard",
+    section: "Codebase",
+    audience: "Developer",
+    status: "Available",
+    description: "Document module purpose, inputs, outputs, side effects, safety boundaries, and reuse guidance.",
+    path: "docs/codebase/CODE_DOCUMENTATION_STANDARD.md",
+    preview: [
+      "Use this as the required standard for new module families and major files.",
+      "It keeps future maintainers and agentic coding loops aligned on module ownership and safety posture.",
+    ],
+  },
+  {
+    id: "troubleshooting",
+    title: "Troubleshooting",
+    section: "Troubleshooting",
+    audience: "Operator",
+    status: "Available",
+    description: "Diagnose common local boot, service health, UI fallback, and documentation navigation problems.",
+    path: "docs/usage/TROUBLESHOOTING.md",
+    preview: [
+      "Use this when routes, docs cards, local services, activity readiness, or snapshot fallbacks are confusing.",
+      "It gives operator-safe recovery steps without changing backend behavior.",
+    ],
+  },
+  {
+    id: "faq",
+    title: "FAQ",
+    section: "Troubleshooting",
+    audience: "Operator",
+    status: "Available",
+    description: "Answer common operator questions about current NEXUS capabilities, limits, and safe next steps.",
+    path: "docs/usage/FAQ.md",
+    preview: [
+      "Use this for quick answers before opening deeper operator or architecture guides.",
+      "It summarizes common constraints such as disabled provider dispatch, DB writes, and runtime automation.",
     ],
   },
 ];
 
+const DOCS_GUIDE_SECTIONS = ["Start Here", "Operator Guides", "Architecture", "Codebase", "Troubleshooting"];
+const DOCS_GUIDE_BY_ID = Object.fromEntries(DOCS_GUIDES.map((guide) => [guide.id, guide]));
+const DOCS_SECTION_DESCRIPTIONS = {
+  "Start Here": "First-run and cockpit orientation for local operators.",
+  "Operator Guides": "Task, mission, evidence, implementation, and mode-boundary guidance.",
+  Architecture: "Platform design references for NEXUS OS capabilities and phase sequencing.",
+  Codebase: "Contributor references for module ownership, reuse, and documentation standards.",
+  Troubleshooting: "Recovery guidance for local boot, docs navigation, and operator confusion.",
+};
+
+function getSelectedDocsGuide(pathname) {
+  const docId = pathname.startsWith("/command-center/docs/")
+    ? pathname.replace("/command-center/docs/", "").split("/")[0]
+    : "getting-started";
+  return DOCS_GUIDE_BY_ID[docId] || DOCS_GUIDE_BY_ID["getting-started"];
+}
+
 function DocsGuidesPage() {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const [filter, setFilter] = useState("");
+  const selectedGuide = getSelectedDocsGuide(location.pathname);
+  const normalizedFilter = filter.trim().toLowerCase();
+  const visibleGuides = normalizedFilter
+    ? DOCS_GUIDES.filter((guide) => `${guide.title} ${guide.description} ${guide.section}`.toLowerCase().includes(normalizedFilter))
+    : DOCS_GUIDES;
+
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
@@ -5468,41 +5589,163 @@ function DocsGuidesPage() {
           <div className="ccv2-page-head__sub">Operator, architecture, and contributor guidance for running NEXUS safely.</div>
         </div>
 
-        <div className="ccv2-card ccv2-docs-intro">
-          <div className="ccv2-section-heading">Documentation Index</div>
-          <p className="ccv2-docs-intro__copy">
-            Use this page as the local documentation hub for current Command Center guidance. Cards open local repo references;
-            project-specific progress stays under Projects, not inside the OS roadmap.
-          </p>
-        </div>
-
-        {DOCS_GUIDE_GROUPS.map((group) => (
-          <div key={group.title} className="ccv2-docs-section">
-            <div className="ccv2-docs-section__header">
-              <div>
-                <div className="ccv2-section-heading">{group.title}</div>
-                <div className="ccv2-docs-section__description">{group.description}</div>
-              </div>
-              <span className="ccv2-pill ccv2-pill--pass">Available</span>
+        <div className="ccv2-docs-shell">
+          <section className="ccv2-card ccv2-docs-reader" aria-label="Selected documentation guide">
+            <div className="ccv2-docs-reader__meta">
+              <span className="ccv2-pill ccv2-pill--pass">{selectedGuide.status}</span>
+              <span className="ccv2-pill ccv2-pill--read">{selectedGuide.audience}</span>
             </div>
-            <div className="ccv2-docs-grid">
-              {group.items.map((item) => (
-                <a
-                  key={item.path}
-                  className="ccv2-doc-card"
-                  href={`/${item.path}`}
-                  title={item.path}
-                  aria-label={`Open guide: ${item.title}`}
-                >
-                  <span className="ccv2-doc-card__chip">{group.title}</span>
-                  <span className="ccv2-doc-card__title">{item.title}</span>
-                  <span className="ccv2-doc-card__detail">{item.description}</span>
-                  <span className="ccv2-doc-card__action">Open guide</span>
-                </a>
+            <div className="ccv2-docs-reader__title">{selectedGuide.title}</div>
+            <p className="ccv2-docs-reader__description">{selectedGuide.description}</p>
+            <div className="ccv2-docs-reader__section">Section: {selectedGuide.section}</div>
+            <div className="ccv2-docs-reader__preview">
+              {selectedGuide.preview.map((line) => (
+                <p key={line}>{line}</p>
               ))}
             </div>
+            <details className="ccv2-docs-developer-details">
+              <summary>Developer Details</summary>
+              <div>Local file: {selectedGuide.path}</div>
+              <a href={`/${selectedGuide.path}`}>Open local file</a>
+            </details>
+          </section>
+
+          <section className="ccv2-docs-browser" aria-label="Documentation guide browser">
+            <div className="ccv2-docs-toolbar">
+              <div>
+                <div className="ccv2-section-heading">Documentation Hub</div>
+                <div className="ccv2-docs-section__description">
+                  Select a guide to preview it in Command Center. File paths stay in Developer Details.
+                </div>
+              </div>
+              <label className="ccv2-docs-search">
+                <span>Search docs</span>
+                <input
+                  value={filter}
+                  onChange={(event) => setFilter(event.target.value)}
+                  placeholder="Search guides"
+                  aria-label="Search documentation guides"
+                />
+              </label>
+            </div>
+
+            {DOCS_GUIDE_SECTIONS.map((section) => {
+              const sectionGuides = visibleGuides.filter((guide) => guide.section === section);
+              if (!sectionGuides.length) return null;
+              return (
+                <div key={section} className="ccv2-docs-section">
+                  <div className="ccv2-docs-section__header">
+                    <div>
+                      <div className="ccv2-section-heading">{section}</div>
+                      <div className="ccv2-docs-section__description">{DOCS_SECTION_DESCRIPTIONS[section]}</div>
+                    </div>
+                    <span className="ccv2-pill ccv2-pill--pass">Available</span>
+                  </div>
+                  <div className="ccv2-docs-grid">
+                    {sectionGuides.map((guide) => (
+                      <button
+                        key={guide.id}
+                        type="button"
+                        className={`ccv2-doc-card${selectedGuide.id === guide.id ? " ccv2-doc-card--active" : ""}`}
+                        aria-label={`View ${guide.title} guide`}
+                        aria-current={selectedGuide.id === guide.id ? "page" : undefined}
+                        onClick={() => navigate(`/command-center/docs/${guide.id}`)}
+                      >
+                        <span className="ccv2-doc-card__title">{guide.title}</span>
+                        <span className="ccv2-doc-card__detail">{guide.description}</span>
+                        <span className="ccv2-doc-card__meta">{guide.status} · {guide.audience}</span>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </section>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ActivityLogPage() {
+  const readiness = [
+    { label: "Activity schema", status: "Ready", tone: "pass" },
+    { label: "Correlation ID model", status: "Ready", tone: "pass" },
+    { label: "Central logger", status: "Ready", tone: "pass" },
+    { label: "Local activity store", status: "Ready", tone: "pass" },
+    { label: "UI/API/action instrumentation", status: "Not wired yet", tone: "disabled" },
+    { label: "Trace view", status: "Planned", tone: "disabled" },
+  ];
+
+  const futureEvents = [
+    "User actions",
+    "API requests",
+    "Action bridge events",
+    "Task transitions",
+    "Agent decisions",
+    "Policy decisions",
+    "Evidence creation",
+    "Errors and blocked actions",
+  ];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Activity Log</div>
+          <div className="ccv2-page-head__sub">
+            Trace NEXUS actions, agent work, policy decisions, evidence, and errors by correlation ID.
           </div>
-        ))}
+        </div>
+
+        <div className="ccv2-activity-readiness">
+          <section className="ccv2-card ccv2-activity-readiness__hero">
+            <div className="ccv2-section-heading">Observability Readiness</div>
+            <h2>Infrastructure ready; instrumentation pending.</h2>
+            <p>
+              P41.8.1 defined the activity event schema and correlation model. P41.8.2 added the central logger and local
+              append-only activity store. P41.8.3 will wire UI, API, and action bridge capture points.
+            </p>
+            <div className="ccv2-activity-next">
+              <span className="ccv2-pill ccv2-pill--read">Next phase</span>
+              <span>P41.8.3 - API / UI / Action Bridge Activity Capture</span>
+            </div>
+          </section>
+
+          <section className="ccv2-card">
+            <div className="ccv2-section-heading">Current Status</div>
+            <div className="ccv2-activity-status-grid">
+              {readiness.map((item) => (
+                <div key={item.label} className="ccv2-activity-status">
+                  <span>{item.label}</span>
+                  <span className={`ccv2-pill ccv2-pill--${item.tone}`}>{item.status}</span>
+                </div>
+              ))}
+            </div>
+          </section>
+
+          <section className="ccv2-card">
+            <div className="ccv2-section-heading">What Will Appear Here</div>
+            <div className="ccv2-activity-event-grid">
+              {futureEvents.map((item) => (
+                <div key={item} className="ccv2-activity-event">{item}</div>
+              ))}
+            </div>
+          </section>
+
+          <section className="ccv2-card">
+            <div className="ccv2-section-heading">Correlation ID Model</div>
+            <p className="ccv2-activity-copy">
+              Each operator action will link UI, API, action bridge, evidence, audit, and runtime records. Correlation IDs
+              keep related records traceable without exposing raw payloads, secrets, or private project content.
+            </p>
+            <div className="ccv2-activity-boundaries">
+              <span className="ccv2-pill ccv2-pill--disabled">Provider logging not enabled</span>
+              <span className="ccv2-pill ccv2-pill--disabled">Worker logging not enabled</span>
+              <span className="ccv2-pill ccv2-pill--disabled">DB-backed activity not enabled</span>
+            </div>
+          </section>
+        </div>
       </div>
     </div>
   );
@@ -5708,7 +5951,8 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
-          {["activity", "settings"].includes(currentPage) && (
+          {currentPage === "activity" && <ActivityLogPage />}
+          {currentPage === "settings" && (
             <PlannedRoutePage routeKey={currentPage} />
           )}
         </div>

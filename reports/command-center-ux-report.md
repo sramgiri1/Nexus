@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T21:09:01.245Z
-- Validation branch: fix/docs-guides-header-polish
-- Validation HEAD: 30c3bea
+- Generated at: 2026-05-14T21:38:39.628Z
+- Validation branch: fix/docs-guides-activity-log-polish
+- Validation HEAD: ac288b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

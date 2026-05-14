@@ -84,9 +84,93 @@ The P41.8.1 foundation is read/model-only. It permits event construction and
 validation in memory, report generation by the checker, and documentation/status
 updates. It does not capture live runtime events or write activity records.
 
+## P41.8.2 - Central Activity Logger
+
+P41.8.2 adds the first central activity logger and append-only local activity
+store. The logger normalizes activity input through the P41.8.1 schema, applies
+redaction before persistence, validates the final event, and then appends one
+JSON event per line to `local-state/runtime/activity.jsonl`.
+
+### Logger Module
+
+The logger lives in `observability/activityLogger.js` and provides:
+
+- `createActivityLogger(options)` for scoped logger instances
+- `createActivityEvent(input)` for normalized schema-compliant events
+- `validateActivityForLogging(event)` for redaction-safe validation
+- `logActivity(input, options)` for append-only persistence
+- `logActivityDryRun(input, options)` for no-write validation
+- `buildActivityLoggerSummary(options)` for store posture summaries
+
+### Activity Store
+
+The activity store lives in `observability/activityStore.js` and provides safe
+read/append helpers for `local-state/runtime/activity.jsonl`.
+
+Store rules:
+
+- append-only JSONL
+- one event per line
+- blank lines ignored on read
+- malformed lines reported as warnings, not crashes
+- no deletes or in-place mutation helpers
+- default path is fixed under `local-state/runtime`
+- absolute paths and path traversal are blocked
+
+### Dry-run vs append
+
+Dry-run logging returns the same normalized event shape as append logging but
+does not write to `activity.jsonl`. Checkers use dry-run for validation where
+possible and snapshot/restore the store when append behavior must be verified.
+
+### Redaction before persistence
+
+The logger sanitizes metadata and error fields before validation and
+persistence. Secret-like keys, API-key-like values, authorization/cookie/token
+fields, stack traces, and large source-like snippets are redacted before any
+event can be appended.
+
+### Correlation lookup
+
+Activity records keep both `activityId` and `correlationId`. The store supports
+lookup by activity ID and lookup of all events sharing a correlation ID. P41.8.2
+does not add a trace UI; it only establishes the local lookup helpers.
+
+### Not implemented in P41.8.2
+
+- broad runtime instrumentation
+- Command Center Activity Log UI
+- `/activity` API endpoint
+- provider/tool/worker logging
+- DB-backed activity storage
+- project source mutation
+
+Next phase: P41.8.3 - API / UI / Action Bridge Activity Capture.
+
+## P41.8.2A - Activity Log Readiness UX
+
+P41.8.2A adds a Command Center Activity Log readiness page without adding broad
+instrumentation. The page explains that the schema, correlation model, central
+logger, and local activity store are ready, while UI/API/action bridge capture
+and trace views are still pending.
+
+The Activity Log page uses operator-facing readiness language:
+
+- Activity schema: Ready
+- Correlation ID model: Ready
+- Central logger: Ready
+- Local activity store: Ready
+- UI/API/action instrumentation: Not wired yet
+- Trace view: Planned
+
+It does not claim provider/tool/worker logging, DB-backed activity, or full
+activity UI instrumentation exists. P41.8.3 remains responsible for adding
+capture points across the UI, local API, and governed action bridge.
+
 ## Future Phases
 
 - P41.8.2 - Central Activity Logger
+- P41.8.2A - Docs & Guides Interaction + Activity Log Placeholder Polish
 - P41.8.3 - API/UI/Action Bridge Activity Capture
 - P41.8.4 - Command Center Activity Log Page
 - P41.8.5 - Trace View by Correlation ID
