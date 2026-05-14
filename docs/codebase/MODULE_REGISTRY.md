@@ -423,6 +423,47 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Command Center Tab System Foundation
+
+- Purpose:
+  Provide reusable tab and scope-shell components so dense Command Center pages
+  can move from long single-page dashboards to focused drilldown surfaces.
+- Primary files:
+  `dashboard/src/components/command-center-v2/CommandTabs.jsx`,
+  `dashboard/src/components/command-center-v2/ScopeSwitcher.jsx`,
+  `dashboard/src/components/command-center-v2/ProjectSwitcher.jsx`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `scripts/check-command-center-tabs.js`,
+  `docs/architecture/COMMAND_CENTER_TABBED_NAVIGATION.md`
+- Public entry points:
+  `CommandTabs`,
+  `CommandTabList`,
+  `CommandTabPanel`,
+  `ScopeSwitcher`,
+  `ProjectSwitcher`,
+  `getTabsForPage`
+- Inputs/outputs:
+  Consumes tab configuration, active tab state, active scope, current mode, and
+  safe project label metadata. Outputs accessible tab UI and a scope context
+  shell.
+- Side effects:
+  Browser UI state only. No backend writes, provider calls, Project Registry
+  mutation, or runtime execution.
+- Safety boundary:
+  DemoApp is not used in local-private primary Command Center pages. Portfolio
+  and multi-project behavior are placeholders until P42.
+- Reuse notes:
+  Future page tab rollout should reuse `CommandTabs` and `PAGE_TAB_PLANS`
+  instead of creating page-local tab systems.
+- Tests/checkers:
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-tabs.js`,
+  `scripts/check-command-center-ux.js`
+- Known limitations:
+  Only Mission Control receives the initial tab shell in P41.7.3A.
+- Status:
+  foundation
+
 ## Architecture and Usage Docs
 
 - Purpose:

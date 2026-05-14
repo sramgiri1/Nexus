@@ -19,6 +19,7 @@ const sections = {
   serviceHealthUx: true,
   commandPalette: true,
   operatorActions: true,
+  commandCenterTabs: true,
   roadmapProjectSeparation: true,
   headerFormatting: true,
   sidebarPlannedBehavior: true,
@@ -147,6 +148,7 @@ const workflowRecommendationSource = readFile("workspace/workflowRecommendations
 const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
 const readinessSource = readFile("dashboard/src/data/capabilityReadiness.js");
 const commandSource = readFile("dashboard/src/data/nexusCommands.js");
+const commandTabsSource = readFile("dashboard/src/data/commandCenterTabs.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
 const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
@@ -590,6 +592,28 @@ for (const expected of [
 check(commandCenterSource.includes("Read-only and route-first"), "operatorActions", "Operator actions should explain read-only and route-first posture");
 check(routeTestSource.includes("Mission Control shows simple operator action rows"), "operatorActions", "Route tests missing Mission Control operator actions coverage");
 
+// Command Center tabs
+check(commandTabsSource.includes("export const MISSION_CONTROL_TABS"), "commandCenterTabs", "commandCenterTabs.js must export MISSION_CONTROL_TABS");
+check(commandTabsSource.includes("export const PAGE_TAB_PLANS"), "commandCenterTabs", "commandCenterTabs.js must export PAGE_TAB_PLANS");
+for (const tabId of ["overview", "workflows", "tasks", "agents", "gates", "evidence", "risks", "cost"]) {
+  check(commandTabsSource.includes(`id: "${tabId}"`), "commandCenterTabs", `Mission Control tab missing: ${tabId}`);
+}
+for (const expected of [
+  "<CommandTabs",
+  "<ScopeSwitcher",
+  "<ProjectSwitcher",
+  "Portfolio view is planned with Project Registry in P42",
+]) {
+  check(commandCenterSource.includes(expected), "commandCenterTabs", `Mission Control tab/scope shell missing: ${expected}`);
+}
+for (const expectedTest of [
+  "Mission Control tab shell renders required tabs",
+  "Mission Control tab navigation shows drilldown panels",
+  "Mission Control scope shell shows project, portfolio, and OS context",
+]) {
+  check(routeTestSource.includes(expectedTest), "commandCenterTabs", `Route tests missing tab coverage: ${expectedTest}`);
+}
+
 // Boundary polish
 check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "boundaryPolish", "Local-private Mission Control should use a safe project display name");
 check(commandCenterSource.includes("Local Preview"), "boundaryPolish", "Sidebar should use a safe preview label instead of an arbitrary version");
@@ -783,6 +807,7 @@ console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
+console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
 console.log(`Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}`);
 console.log(`Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}`);
@@ -822,6 +847,7 @@ const report = `# Command Center UX Report
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
+- Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}
 - Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}
 - Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}

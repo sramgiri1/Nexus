@@ -298,7 +298,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/shared-helper-catalog-refactor-plan",
-      "commit": "pending-final-commit",
+      "commit": "81a73c1",
       "completedAt": "",
       "summary": "Adds the shared helper catalog, adoption guide, and risk-ranked refactor candidate plan without implementing refactors.",
       "checksRun": [
@@ -311,7 +311,44 @@
         "No broad refactors are implemented in this subphase.",
         "High-risk helpers remain blocked until dedicated refactor phases."
       ],
-      "nextPhase": "P41.7.4",
+      "nextPhase": "P41.7.3A",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3A",
+      "title": "Command Center Tab System Foundation + Multi-Project Scope Shell",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "ui/command-center-tab-system-foundation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Adds reusable tab components, Mission Control tab shell, and a Portfolio / Project / NEXUS OS scope shell without enabling Project Registry or runtime changes.",
+      "checksRun": [
+        "npm run check:command-center-tabs",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Only Mission Control receives the initial tab shell in this foundation subphase.",
+        "Project Registry and real multi-project switching remain planned for P42."
+      ],
+      "nextPhase": "P41.7.3B",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3B",
+      "title": "Mission Control Tab Content Refinement",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned refinement of Mission Control tab content and drilldown density.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P41.7.3C",
       "commandCenterVisible": true
     },
     {

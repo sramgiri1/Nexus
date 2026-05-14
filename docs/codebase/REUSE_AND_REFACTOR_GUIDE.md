@@ -119,3 +119,15 @@ phase after the candidate has been validated against the affected checkers.
 
 P41.7.3 is also planning-only. It defines the catalog and plan, but broad
 refactors remain blocked until a future scoped refactor phase.
+
+## P41.7.3A Tab Foundation Reuse Rule
+
+New Command Center tab work should reuse:
+
+- `CommandTabs` for accessible tab list and tab panel behavior
+- `commandCenterTabs.js` for tab labels, IDs, and future page tab plans
+- `ScopeSwitcher` for Portfolio / Project / NEXUS OS scope display
+- `ProjectSwitcher` for safe active-project display
+
+Do not create page-local tab components unless a future phase explicitly
+documents why the shared tab system is insufficient.

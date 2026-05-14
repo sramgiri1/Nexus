@@ -147,6 +147,24 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P41.7.3A",
+      "title": "Command Center Tab System Foundation + Multi-Project Scope Shell",
+      "track": "NEXUS_OS",
+      "order": 12.815,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Introduce reusable Command Center tabs, Mission Control tab shell, and Portfolio / Project / NEXUS OS scope controls without changing runtime behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7.3B",
+      "title": "Mission Control Tab Content Refinement",
+      "track": "NEXUS_OS",
+      "order": 12.816,
+      "group": "P41.7 Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "summary": "Planned refinement of Mission Control tab content and drilldown density.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.7.4",
       "title": "OS Usage Documentation Foundation",
       "track": "NEXUS_OS",

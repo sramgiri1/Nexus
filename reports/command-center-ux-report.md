@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T11:48:44.039Z
-- Validation branch: fix/command-center-boundary-polish
-- Validation HEAD: c0b0afb
+- Generated at: 2026-05-14T14:27:11.928Z
+- Validation branch: ui/command-center-tab-system-foundation
+- Validation HEAD: 81a73c1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -19,6 +19,7 @@
 - Service Health UX: PASS
 - Command palette: PASS
 - Operator actions: PASS
+- Command Center tabs: PASS
 - OS Roadmap / Project Progress separation: PASS
 - Header environment formatting: PASS
 - Sidebar label completeness/planned behavior: PASS

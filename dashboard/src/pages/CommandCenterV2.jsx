@@ -1,6 +1,10 @@
 import { useEffect, useState } from "react";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import { buildCommandCenterViewModelV2 } from "../data/commandCenterViewModel.js";
+import { CommandTabs, CommandTabPanel } from "../components/command-center-v2/CommandTabs.jsx";
+import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher.jsx";
+import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
+import { MISSION_CONTROL_TABS } from "../data/commandCenterTabs.js";
 import { getNexusCommandsForScope } from "../data/nexusCommands.js";
 import {
   COMMAND_CENTER_ROUTE_BY_KEY,
@@ -1933,6 +1937,13 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
   const clp = vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
   const liveOnline = vm.liveApi?.liveApiOnline;
+  const [activeTab, setActiveTab] = useState("overview");
+  const [activeScope, setActiveScope] = useState(vm.shell.defaultScope || "project");
+  const scopePlaceholder = activeScope === "portfolio"
+    ? "Portfolio view is planned with Project Registry in P42. This shell does not fabricate live multi-project data."
+    : activeScope === "os"
+      ? "NEXUS OS scope is available through the OS Roadmap. Platform phases stay separate from project tasks."
+      : "";
 
   return (
     <div className="ccv2-content ccv2-mission-control">
@@ -1950,58 +1961,113 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
         <div className="ccv2-page-head__sub">enterprise command surface for governed agentic work</div>
       </div>
 
-      {/* A. Mission Hero */}
-      <MissionComposerCard vm={vm} />
-
-      <OperatorActionsPanel
-        commands={operatorCommands}
-        onSelectCommand={onOpenCommandPalette}
-      />
-
-      {/* B. Next Best Action + C. System Status Strip */}
-      <div className="ccv2-mission-control__lead-grid">
-        <NextBestActionPanel vm={vm} />
-        <SystemStatusStrip vm={vm} />
+      <div className="ccv2-scope-shell">
+        <ScopeSwitcher
+          activeScope={activeScope}
+          mode={vm.shell.mode}
+          onScopeChange={setActiveScope}
+        />
+        <ProjectSwitcher
+          activeScope={activeScope}
+          mode={vm.shell.mode}
+          activeProject={vm.shell.activeProject}
+        />
+        <div className="ccv2-scope-shell__source">
+          <span className="ccv2-scope-shell__label">Source</span>
+          <span>{liveOnline ? "Live local API" : "Snapshot fallback"}</span>
+        </div>
       </div>
 
-      {/* D. KPI Cards */}
-      <div className="ccv2-kpi-row">
-        {vm.metrics.map((m) => (
-          <MetricCard key={m.label} metric={m} />
-        ))}
-      </div>
+      {scopePlaceholder && (
+        <div className="ccv2-info-banner ccv2-scope-placeholder">
+          {scopePlaceholder}
+        </div>
+      )}
 
-      {/* E + F. Execution Pipeline + Activity Stream */}
-      <div className="ccv2-pipeline-stream">
-        <ExecutionPipeline vm={vm} />
-        <ActivityStream vm={vm} />
-      </div>
+      <CommandTabs
+        tabs={MISSION_CONTROL_TABS}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        ariaLabel="Mission Control sections"
+      >
+        <CommandTabPanel tabId="overview" activeTab={activeTab}>
+          <MissionComposerCard vm={vm} />
 
-      {/* G + H. Verification Gates + Active Mission Tasks */}
-      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
-        <VerificationGatesSummary vm={vm} />
-        <ActiveMissionTasksSummary vm={vm} />
-      </div>
+          <OperatorActionsPanel
+            commands={operatorCommands}
+            onSelectCommand={onOpenCommandPalette}
+          />
 
-      {/* I + J. Project Progress + Evidence Timeline */}
-      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
-        <ProjectProgressRings vm={vm} />
-        <EvidenceTimeline vm={vm} />
-      </div>
+          <div className="ccv2-mission-control__lead-grid">
+            <NextBestActionPanel vm={vm} />
+            <SystemStatusStrip vm={vm} />
+          </div>
 
-      {/* K + L + M. Safety / Approval + Release Readiness + Cost Snapshot */}
-      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--three">
-        <SafetyApprovalSummary vm={vm} />
-        <ReleaseSection vm={vm} />
-        <CostCenterSummary vm={vm} />
-      </div>
+          <div className="ccv2-kpi-row">
+            {vm.metrics.map((m) => (
+              <MetricCard key={m.label} metric={m} />
+            ))}
+          </div>
 
-      <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
-        <PrivateValidationPanel vm={vm} />
-        <EvidenceGovernanceSection vm={vm} />
-      </div>
+          <div className="ccv2-pipeline-stream">
+            <ExecutionPipeline vm={vm} />
+            <ActivityStream vm={vm} />
+          </div>
+        </CommandTabPanel>
 
-      {isLocalPrivate && clp && (
+        <CommandTabPanel tabId="workflows" activeTab={activeTab}>
+          <OperatorActionsPanel
+            commands={operatorCommands}
+            onSelectCommand={onOpenCommandPalette}
+          />
+          <div className="ccv2-info-banner">
+            Workspace drilldowns will move here in P41.7.3B. Use the command palette or Workspace route for now.
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="tasks" activeTab={activeTab}>
+          <ActiveMissionTasksSummary vm={vm} />
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="agents" activeTab={activeTab}>
+          <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+            <SystemStatusStrip vm={vm} />
+            <div className="ccv2-card">
+              <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Agent Assignments</div>
+              <div className="ccv2-empty-state">
+                Agent assignment drilldown is planned for the next Mission Control tab refinement.
+              </div>
+            </div>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="gates" activeTab={activeTab}>
+          <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+            <VerificationGatesSummary vm={vm} />
+            <ReleaseSection vm={vm} />
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="evidence" activeTab={activeTab}>
+          <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+            <EvidenceTimeline vm={vm} />
+            <EvidenceGovernanceSection vm={vm} />
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="risks" activeTab={activeTab}>
+          <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--two">
+            <SafetyApprovalSummary vm={vm} />
+            <PrivateValidationPanel vm={vm} />
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="cost" activeTab={activeTab}>
+          <CostCenterSummary vm={vm} />
+        </CommandTabPanel>
+      </CommandTabs>
+
+      {isLocalPrivate && clp && activeTab === "overview" && (
         <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--single">
           <CareLoopProgressCard clp={clp} />
         </div>

@@ -106,7 +106,7 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await page.goto("/");
 
   await expect(page.locator(".ccv2-shell")).toBeVisible();
-  await expect(page.getByText("NEXUS OS")).toBeVisible();
+  await expect(page.locator(".ccv2-sidebar__brand-name")).toContainText("NEXUS OS");
   await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Workspace/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
@@ -446,6 +446,78 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Mission Control tab shell renders required tabs", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center");
+
+    const tabs = page.getByRole("tablist", { name: /Mission Control sections/i });
+    await expect(tabs).toBeVisible();
+    await expect(tabs.getByRole("tab", { name: /Overview/i })).toHaveAttribute("aria-selected", "true");
+
+    for (const label of [
+      "Overview",
+      "Workflows",
+      "Tasks",
+      "Agents",
+      "Gates",
+      "Evidence",
+      "Risks / Approvals",
+      "Cost",
+    ]) {
+      await expect(tabs.getByRole("tab", { name: new RegExp(label.replace("/", "\\/"), "i") })).toBeVisible();
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control tab navigation shows drilldown panels", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center");
+
+    const expectations = [
+      ["Workflows", "Workspace drilldowns will move here"],
+      ["Tasks", "Active Mission Tasks"],
+      ["Agents", "Agent Assignments"],
+      ["Gates", "Verification Gates"],
+      ["Evidence", "Evidence Timeline"],
+      ["Risks / Approvals", "Safety / Approval"],
+      ["Cost", "Cost Snapshot"],
+    ];
+
+    for (const [tabLabel, panelText] of expectations) {
+      await page.getByRole("tab", { name: new RegExp(tabLabel.replace("/", "\\/"), "i") }).click();
+      await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText(panelText);
+    }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control scope shell shows project, portfolio, and OS context", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center");
+
+    await expect(page.getByRole("group", { name: /Scope selector/i })).toBeVisible();
+    const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
+    await expect(scopeSelector.getByRole("button", { name: "Project", exact: true })).toBeVisible();
+    await expect(scopeSelector.getByRole("button", { name: "Portfolio", exact: true })).toBeVisible();
+    await expect(scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true })).toBeVisible();
+    await expect(page.getByLabel("Project context")).toContainText("Active Project");
+    await expect(page.getByLabel("Project context")).toContainText("Private Project");
+    await expect(page.getByLabel("Project context")).toContainText("Scope: Project");
+    await expect(page.getByLabel("Project context")).toContainText("Mode: local-private");
+
+    await scopeSelector.getByRole("button", { name: "Portfolio", exact: true }).click();
+    await expect(page.locator("body")).toContainText("Portfolio view is planned with Project Registry in P42.");
+
+    await scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true }).click();
+    await expect(page.getByLabel("Project context")).toContainText("NEXUS OS");
+
+    expect(errors).toEqual([]);
+  });
+
   test("Command Palette renders in dark and light themes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -460,6 +532,26 @@ test.describe("Command Center route-wide UX", () => {
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
     await expect(page.getByRole("dialog", { name: /NEXUS Command Palette/i })).toBeVisible();
     await expect(page.locator(".ccv2-theme-control")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Mission Control tabs render in dark and light themes", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center");
+    await pickTheme(page, "dark");
+    await expect(page.getByRole("tablist", { name: /Mission Control sections/i })).toBeVisible();
+    await expect(page.getByRole("tab", { name: /Overview/i })).toHaveAttribute("aria-selected", "true");
+
+    await pickTheme(page, "light");
+    await expect(page.getByRole("tablist", { name: /Mission Control sections/i })).toBeVisible();
+    await page.getByRole("tab", { name: /Cost/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Cost Snapshot");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("Requires P37");
+    expect(body).not.toContain("P38-LOCAL");
 
     expect(errors).toEqual([]);
   });
@@ -516,16 +608,25 @@ test.describe("Command Center route-wide UX", () => {
       "System Status",
       "Execution Pipeline",
       "Activity Stream",
-      "Verification Gates",
-      "Active Mission Tasks",
-      "Project Progress",
-      "Evidence Timeline",
-      "Safety / Approval",
-      "Release Readiness",
-      "Cost Snapshot",
     ]) {
       await expect(page.getByText(section, { exact: false }).first()).toBeVisible();
     }
+
+    await page.getByRole("tab", { name: /Tasks/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Active Mission Tasks");
+
+    await page.getByRole("tab", { name: /Gates/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Verification Gates");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Release Readiness");
+
+    await page.getByRole("tab", { name: /Evidence/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Evidence Timeline");
+
+    await page.getByRole("tab", { name: /Risks/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Safety / Approval");
+
+    await page.getByRole("tab", { name: /Cost/i }).click();
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Cost Snapshot");
 
     expect(errors).toEqual([]);
   });

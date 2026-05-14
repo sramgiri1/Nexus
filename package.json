@@ -75,6 +75,7 @@
     "check:mission-action-bridge": "node scripts/check-mission-action-bridge.js",
     "check:agentic-workspace": "node scripts/check-agentic-workspace.js",
     "check:command-center-ux": "node scripts/check-command-center-ux.js",
+    "check:command-center-tabs": "node scripts/check-command-center-tabs.js",
     "check:docs-coverage": "node scripts/check-docs-coverage.js",
     "check:reuse-audit": "node scripts/check-reuse-audit.js",
     "check:shared-helper-catalog": "node scripts/check-shared-helper-catalog.js",

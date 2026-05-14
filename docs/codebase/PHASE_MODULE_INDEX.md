@@ -503,3 +503,34 @@ state and should be verified again during future docs audits.
   future implementation work.
 - Known limitations:
   No shared helper extraction or runtime behavior change is implemented.
+
+## P41.7.3A — Command Center Tab System Foundation + Multi-Project Scope Shell
+
+- Primary capability:
+  Add reusable Command Center tab components, Mission Control tab shell, and
+  Portfolio / Project / NEXUS OS scope controls.
+- Main files/folders touched:
+  `dashboard/src/components/command-center-v2/CommandTabs.jsx`,
+  `dashboard/src/components/command-center-v2/ScopeSwitcher.jsx`,
+  `dashboard/src/components/command-center-v2/ProjectSwitcher.jsx`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/styles-command-center-v2.css`,
+  `dashboard/tests/routes.spec.js`,
+  `scripts/check-command-center-tabs.js`
+- Main checker(s):
+  `scripts/check-command-center-tabs.js`,
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-tabs-report.md`,
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Mission Control gains an accessible tab shell and local-private project scope
+  context while preserving existing cockpit content.
+- Safety impact:
+  Project Registry, backend execution, provider calls, DB writes, and private
+  project mutation remain disabled.
+- Known limitations:
+  Full tab rollout for Workspace, Task Queue, Workbench, Implementation, Live
+  API, Durable State, Evidence, Safety, Projects, and OS Roadmap is deferred to
+  later P41.7.3 subphases.

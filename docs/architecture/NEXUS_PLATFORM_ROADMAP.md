@@ -78,39 +78,38 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.7.3 — Shared Helper Catalog + Refactor Candidate Plan
+### Phase 41.7.3A — Command Center Tab System Foundation + Multi-Project Scope Shell
 
 Goal:
 
-- catalog existing and proposed shared helpers
-- map duplicate patterns to future helper modules
-- classify refactor candidates by risk and priority
-- document which helpers should be reused by future phases
+- introduce reusable Command Center tab components
+- add the Mission Control tab shell without migrating every page
+- add Portfolio / Project / NEXUS OS scope controls
+- preserve local-private project boundaries and DemoApp isolation
 - keep Command Center OS roadmap status synchronized with the phase registry
 
 Deliverables:
 
-- `codebase/sharedHelperCatalog.js`
-- `codebase/refactorCandidatePlan.js`
-- `docs/codebase/SHARED_HELPER_CATALOG.md`
-- `docs/codebase/REFACTOR_CANDIDATE_PLAN.md`
-- `docs/codebase/SHARED_HELPER_ADOPTION_GUIDE.md`
-- `scripts/check-shared-helper-catalog.js`
-- `reports/refactor-candidate-plan.json`
+- `dashboard/src/components/command-center-v2/CommandTabs.jsx`
+- `dashboard/src/components/command-center-v2/ScopeSwitcher.jsx`
+- `dashboard/src/components/command-center-v2/ProjectSwitcher.jsx`
+- `dashboard/src/data/commandCenterTabs.js`
+- `docs/architecture/COMMAND_CENTER_TABBED_NAVIGATION.md`
+- `scripts/check-command-center-tabs.js`
+- `reports/command-center-tabs-report.md`
 
 Non-goals:
 
-- no refactor execution
-- no usage-doc expansion yet
+- no full page tab rollout
+- no Project Registry implementation
+- no backend execution
 - no DB writes
 - no provider dispatch
 - no private project source mutation
 
 Validation checks:
 
-- `npm run check:shared-helper-catalog`
-- `npm run check:os-phase-status`
-- `npm run check:docs-coverage`
+- `npm run check:command-center-tabs`
 - `npm run check:command-center-ux`
 - `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
@@ -135,6 +134,8 @@ Risk level:
   - `P41.7.1` complete
   - `P41.7.2` complete
   - `P41.7.3` complete
+  - `P41.7.3A` current
+  - `P41.7.3B` planned
   - `P41.7.4` planned
   - `P41.7.5` planned
   - `P41.7.6` planned
@@ -487,6 +488,8 @@ P41.7 now breaks down into explicit documentation-system subphases:
 - `P41.7.1` — Codebase Documentation Standard + Module Registry
 - `P41.7.2` — Reuse Audit + Duplicate Pattern Inventory
 - `P41.7.3` — Shared Helper Catalog + Refactor Candidate Plan
+- `P41.7.3A` — Command Center Tab System Foundation + Multi-Project Scope Shell
+- `P41.7.3B` — Mission Control Tab Content Refinement
 - `P41.7.4` — OS Usage Documentation Foundation
 - `P41.7.5` — Command Center Help Links
 - `P41.7.6` — Docs Coverage Checker + Final Validation

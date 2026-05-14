@@ -179,6 +179,9 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       previewLabel: "Local Preview",
       operator: "Founder",
       activeProject: safeProjectDisplayName,
+      defaultScope: "project",
+      availableScopes: ["portfolio", "project", "os"],
+      projectRegistryStatus: "planned",
     },
     missionComposer: {
       title: "Active Mission",

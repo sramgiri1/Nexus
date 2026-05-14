@@ -370,3 +370,26 @@ It adds:
 ### Next Phase
 
 - P41.7.1 — Codebase Documentation Standard + Module Registry
+
+## P41.7.3A — Command Center Tab System Foundation + Multi-Project Scope Shell
+
+This foundation subphase starts the tabbed Command Center UX without converting every page at once.
+
+It adds:
+
+- reusable Command Center tab components
+- a Mission Control tab shell with Overview, Workflows, Tasks, Agents, Gates, Evidence, Risks / Approvals, and Cost
+- a Portfolio / Project / NEXUS OS scope shell
+- a ProjectSwitcher placeholder that keeps local-private pages on `Private Project`
+- route tests and checker coverage for tab behavior
+
+### Scope Rules
+
+- Portfolio is a placeholder until Project Registry in P42.
+- Project is the default local-private scope.
+- NEXUS OS scope is for platform roadmap context, not project task state.
+- DemoApp remains limited to demo route or demo fixtures.
+
+### Next Phase
+
+- P41.7.3B — Mission Control Tab Content Refinement
