@@ -46,6 +46,19 @@ through the local-only `/activity` endpoint and show summarized activity without
 exposing raw payloads, raw logs, raw policies, secrets, or private project
 source details.
 
+P41.8.4 adds the Command Center Activity Log page. Use it for the centralized
+timeline and filters:
+
+- Activity Log shows summarized UI/API/action bridge activity and failures.
+- Evidence proves what governed work produced.
+- Audit explains review, policy, and governance decisions.
+- Runtime events describe local execution-stage state.
+
+The Activity Log groups records by timeline, agent/source, task/project,
+failures, API/actions, and correlation ID previews. It does not replace the
+Evidence or Audit pages; it gives operators one place to see how those signals
+connect.
+
 Until the full Activity Log and trace view are complete, pages may show
 evidence, audit, activity, and runtime events as separate summaries. That
 separation is intentional and keeps proof, governance, and runtime signals

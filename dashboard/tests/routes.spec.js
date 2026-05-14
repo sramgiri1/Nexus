@@ -1395,32 +1395,60 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Activity Log shows captured activity surface instead of a generic placeholder", async ({ page }) => {
+  test("Activity Log shows tabbed filters and summarized activity instead of a placeholder", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/activity");
     const body = await page.locator("body").innerText();
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
-    await expect(page.locator("body")).toContainText("Trace NEXUS actions, agent work, policy decisions, evidence, and errors by correlation ID.");
+    await expect(page.locator("body")).toContainText("Centralized activity timeline for UI, local API, governed actions, policy decisions, evidence, and failures.");
     await expect(page.locator("body")).toContainText("Activity schema");
     await expect(page.locator("body")).toContainText("Correlation ID model");
     await expect(page.locator("body")).toContainText("Central logger");
     await expect(page.locator("body")).toContainText("Local activity store");
     await expect(page.locator("body")).toContainText("UI/API/action instrumentation");
     await expect(page.locator("body")).toContainText("Capture wired");
-    await expect(page.locator("body")).toContainText("Recent Captured Activity");
     await expect(page.locator("body")).toContainText("Stored records");
     await expect(page.locator("body")).toContainText("Local API read requests");
     await expect(page.locator("body")).toContainText("Governed action bridge events");
-    await expect(page.locator("body")).toContainText("Each operator action links UI, API, action bridge, evidence, audit, and runtime records.");
+    await expect(page.locator("body")).toContainText("Each operator action links UI, API, action bridge, evidence, audit, and runtime records by correlation ID.");
+    for (const label of ["Overview", "Timeline", "By Agent", "By Task", "Failures & Blocks", "API & Actions", "Correlations"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+    await expect(page.getByPlaceholder("Search summary, event type, task, source, or correlation ID")).toBeVisible();
+    await commandTab(page, "Timeline").click();
+    await expect(page.locator("body")).toContainText(/No matching activity records|Correlation|Activity event/i);
+    await page.getByPlaceholder("Search summary, event type, task, source, or correlation ID").fill("no-such-activity-record");
+    await expect(page.locator("body")).toContainText("No matching activity records");
+    await commandTab(page, "Failures & Blocks").click();
+    await expect(page.locator("body")).toContainText(/No failed, blocked, denied, redacted, or approval-required records|failed|blocked/i);
+    await commandTab(page, "Correlations").click();
+    await expect(page.locator("body")).toContainText(/P41.8.5|No correlation IDs are available yet|linked event/i);
     expect(body).not.toContain("Coming Soon · planned Command Center surface");
     expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("{");
+    expect(body).not.toContain("raw JSON");
 
     await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Activity Log");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("OS Roadmap tracks P41.8.4 Activity Log page and P41.8.5 next", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+    const body = await page.locator("body").innerText();
+
+    expect(body).toContain("P41.8.4");
+    expect(body).toContain("Command Center Activity Log Page");
+    expect(body).toContain("P41.8.5");
+    expect(body).toContain("Trace View by Correlation ID");
+    expect(body).not.toContain("DemoApp");
 
     expect(errors).toEqual([]);
   });

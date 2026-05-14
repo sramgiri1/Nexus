@@ -82,6 +82,8 @@
     "check:activity-event-schema": "node scripts/check-activity-event-schema.js",
     "check:central-activity-logger": "node scripts/check-central-activity-logger.js",
     "check:activity-capture": "node scripts/check-activity-capture.js",
+    "check-central-activity-logger": "node scripts/check-central-activity-logger.js",
+    "check-activity-capture": "node scripts/check-activity-capture.js",
     "command-center:screenshot-audit": "node scripts/capture-command-center-screenshots.js",
     "check:task-activation-bridge": "node scripts/check-task-activation-bridge.js",
     "check:agent-workbench": "node scripts/check-agent-workbench.js",

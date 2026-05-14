@@ -169,7 +169,12 @@ for (const file of [
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
 const clientSource = read("dashboard/src/api/localApiClient.js");
 check(clientSource.includes("getActivity"), "commandCenterUi", "local API client must expose getActivity");
-check(commandCenterSource.includes("Recent Captured Activity"), "commandCenterUi", "Activity Log must show captured records");
+check(commandCenterSource.includes("Activity Log is ready for summarized local records."), "commandCenterUi", "Activity Log must be a real operator page");
+for (const label of ["Overview", "Timeline", "By Agent", "By Task", "Failures & Blocks", "API & Actions", "Correlations"]) {
+  check(commandCenterSource.includes(label), "commandCenterUi", `Activity Log missing tab/copy: ${label}`);
+}
+check(commandCenterSource.includes("ActivityFilterBar"), "commandCenterUi", "Activity Log must include filters");
+check(commandCenterSource.includes("No matching activity records"), "commandCenterUi", "Activity Log must include no-results empty state");
 check(commandCenterSource.includes("No captured activity records"), "commandCenterUi", "Activity Log must show useful empty state");
 check(commandCenterSource.includes("UI/API/action instrumentation"), "commandCenterUi", "Activity Log must show capture readiness");
 
@@ -182,13 +187,18 @@ try {
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P41.8.2A")?.commit === "e2e7c88", "osPhaseStatus", "P41.8.2A commit must be e2e7c88");
 check(statusById.get("P41.8.3")?.branch === "observability/activity-capture-wiring", "osPhaseStatus", "P41.8.3 branch mismatch");
-check(["in_progress", "complete"].includes(statusById.get("P41.8.3")?.status), "osPhaseStatus", "P41.8.3 must be current or complete");
+check(statusById.get("P41.8.3")?.status === "complete", "osPhaseStatus", "P41.8.3 must be complete");
+check(statusById.get("P41.8.3")?.commit === "adcc916", "osPhaseStatus", "P41.8.3 commit must be adcc916");
 check(statusById.get("P41.8.3")?.nextPhase === "P41.8.4", "osPhaseStatus", "P41.8.3 next phase must be P41.8.4");
+check(statusById.get("P41.8.4")?.branch === "observability/activity-log-command-center-page", "osPhaseStatus", "P41.8.4 branch mismatch");
+check(["in_progress", "complete"].includes(statusById.get("P41.8.4")?.status), "osPhaseStatus", "P41.8.4 must be current or complete");
+check(statusById.get("P41.8.4")?.nextPhase === "P41.8.5", "osPhaseStatus", "P41.8.4 next phase must be P41.8.5");
 
 for (const [file, expected] of [
   ["docs/architecture/CENTRALIZED_ACTIVITY_LOG.md", "P41.8.3 - API / UI / Action Bridge Activity Capture"],
+  ["docs/architecture/CENTRALIZED_ACTIVITY_LOG.md", "P41.8.4 - Command Center Activity Log Page"],
   ["docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md", "Activity Capture"],
-  ["README.md", "P41.8.3"],
+  ["README.md", "P41.8.4"],
 ]) {
   check(read(file).includes(expected), "docs", `${file} missing ${expected}`);
 }

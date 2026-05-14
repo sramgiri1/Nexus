@@ -72,6 +72,9 @@ export function handleActivity(req, res, { mode }) {
     data: {
       activityCaptureEnabled: true,
       storePath: summary.storePath,
+      generatedAt: new Date().toISOString(),
+      count: filtered.length,
+      limit,
       totalCount: summary.eventCount,
       warningCount: (summary.warnings || []).length + (storeResult.warnings || []).length,
       categories: summary.categories || {},

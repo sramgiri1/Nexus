@@ -200,6 +200,26 @@ Still deferred:
 
 Next phase: P41.8.4 - Command Center Activity Log Page.
 
+## P41.8.4 - Command Center Activity Log Page
+
+P41.8.4 turns the Activity Log from readiness copy into a real operator page.
+It remains read-only and uses summarized records from the local `/activity`
+endpoint instead of raw JSONL contents.
+
+The page provides:
+
+- status cards for logger readiness, local store readiness, `/activity`
+  endpoint readiness, captured categories, and correlation IDs
+- tabs for Overview, Timeline, By Agent, By Task, Failures & Blocks, API &
+  Actions, and Correlations
+- client-side filters for category, status, source/agent, project/scope, and
+  free-text search across summary, event type, task, source, and correlation ID
+- useful empty states when the store is empty or filters produce no matches
+- category/status badges that avoid raw internal dumps
+
+Full trace replay and correlation drilldown remain P41.8.5. Provider, tool,
+worker, and DB-backed activity remain disabled.
+
 ## Future Phases
 
 - P41.8.2 - Central Activity Logger

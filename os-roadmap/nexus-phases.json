@@ -296,7 +296,7 @@
       "track": "NEXUS_OS",
       "order": 14.4,
       "group": "P41.8 Centralized Activity Log + Observability Ledger",
-      "summary": "Planned operator-facing activity log view in Command Center.",
+      "summary": "Tabbed operator-facing activity log view in Command Center with filters and grouped summaries.",
       "commandCenterVisible": true
     },
     {

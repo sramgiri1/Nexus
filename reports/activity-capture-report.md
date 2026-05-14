@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T22:02:17.126Z
-- Validation branch: observability/activity-capture-wiring
-- Validation HEAD: e2e7c88
+- Generated at: 2026-05-14T22:20:32.530Z
+- Validation branch: observability/activity-log-command-center-page
+- Validation HEAD: adcc916
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,10 +28,10 @@ P41.8.3 - API / UI / Action Bridge Activity Capture
 
 ## Capture Summary
 
-- UI capture helper dry-run event: act_2e818389033e6456
-- API capture helper dry-run event: act_1a6b4d5ccd5ca1fd
-- Action bridge capture helper dry-run event: act_dbd68d069ed97283
-- Failure capture helper dry-run event: act_5e12e8436114454f
+- UI capture helper dry-run event: act_0f1b9654273cc751
+- API capture helper dry-run event: act_6afe03b760e10b31
+- Action bridge capture helper dry-run event: act_969973df6b8febaf
+- Failure capture helper dry-run event: act_e59b35dccaa29968
 - Local activity API: GET /activity, read-only, summarized records only
 
 ## Captured Now

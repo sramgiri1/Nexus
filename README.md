@@ -1077,6 +1077,10 @@ bridge outcomes, plus a local read-only `/activity` endpoint for summarized
 records. Provider, tool, worker, DB-backed activity, and release/deploy
 execution remain disabled.
 
+P41.8.4 adds the Command Center Activity Log page with tabs, filters, grouped
+views, status cards, and correlation previews for summarized local activity
+records. Full trace drilldown remains planned for P41.8.5.
+
 ---
 
 > See [CLAUDE.md](CLAUDE.md) for agent instructions, safety architecture, and key decisions.

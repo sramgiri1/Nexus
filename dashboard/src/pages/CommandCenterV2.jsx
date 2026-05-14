@@ -5677,11 +5677,251 @@ function DocsGuidesPage() {
   );
 }
 
+const ACTIVITY_CATEGORY_LABELS = {
+  ui: "UI",
+  api: "API",
+  action_bridge: "Action",
+  action: "Action",
+  task: "Task",
+  policy: "Policy",
+  evidence: "Evidence",
+  audit: "Audit",
+  error: "Error",
+  security: "Security",
+  runtime: "Runtime",
+  system: "System",
+};
+
+const ACTIVITY_LOG_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Readiness, capture coverage, counts, and recent highlights",
+    badge: "Ready",
+  },
+  {
+    id: "timeline",
+    label: "Timeline",
+    description: "Newest activity records with source, status, and summary",
+    badge: "Ready",
+  },
+  {
+    id: "by-agent",
+    label: "By Agent",
+    description: "Activity grouped by agent or source",
+    badge: "Read-only",
+  },
+  {
+    id: "by-task",
+    label: "By Task",
+    description: "Activity grouped by task, mission, and project links",
+    badge: "Read-only",
+  },
+  {
+    id: "failures",
+    label: "Failures & Blocks",
+    description: "Failed, blocked, denied, redacted, and approval-required events",
+    badge: "Ready",
+  },
+  {
+    id: "api-actions",
+    label: "API & Actions",
+    description: "Local API reads and governed action bridge outcomes",
+    badge: "Ready",
+  },
+  {
+    id: "correlations",
+    label: "Correlations",
+    description: "Correlation IDs and linked event counts",
+    badge: "Preview",
+  },
+];
+
+function cleanActivityValue(value, fallback = "Not linked yet") {
+  if (value === null || value === undefined || value === "") return fallback;
+  return String(value);
+}
+
+function formatActivityTimestamp(value) {
+  if (!value || Number.isNaN(Date.parse(value))) return "Time unavailable";
+  return new Intl.DateTimeFormat("en", {
+    month: "short",
+    day: "2-digit",
+    hour: "2-digit",
+    minute: "2-digit",
+  }).format(new Date(value));
+}
+
+function normalizeActivityStatus(status, decision) {
+  if (decision === "REDACT") return "redacted";
+  if (decision === "REQUIRE_APPROVAL" || status === "requires_approval") return "require approval";
+  if (status === "success") return "success";
+  if (status === "failed") return "failed";
+  if (status === "blocked") return "blocked";
+  if (status === "pending" || status === "started") return "pending";
+  return status || "info";
+}
+
+function activityStatusTone(status, decision) {
+  const normalized = normalizeActivityStatus(status, decision);
+  if (["failed", "blocked"].includes(normalized)) return "blocked";
+  if (normalized === "success") return "read";
+  if (normalized === "redacted" || normalized === "require approval") return "disabled";
+  return "planned";
+}
+
+function buildActivityGroups(records, keyFn) {
+  return records.reduce((groups, record) => {
+    const key = keyFn(record);
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(record);
+    return groups;
+  }, {});
+}
+
+function activityMatchesSearch(record, search) {
+  if (!search) return true;
+  const haystack = [
+    record.summary,
+    record.eventType,
+    record.correlationId,
+    record.taskId,
+    record.missionId,
+    record.projectId,
+    record.agentId,
+    record.source,
+    record.category,
+    record.status,
+  ].filter(Boolean).join(" ").toLowerCase();
+  return haystack.includes(search.toLowerCase());
+}
+
+function ActivityRecordCard({ record }) {
+  const category = ACTIVITY_CATEGORY_LABELS[record.category] || cleanActivityValue(record.category, "Activity");
+  const status = normalizeActivityStatus(record.status, record.decision);
+  const linkedTask = record.taskId || record.missionId || record.projectId;
+  return (
+    <div className="ccv2-activity-record">
+      <div className="ccv2-activity-record__main">
+        <div className="ccv2-activity-record__topline">
+          <span className="ccv2-activity-record__time">{formatActivityTimestamp(record.timestamp)}</span>
+          <span className="ccv2-activity-category">{category}</span>
+          <span className={`ccv2-pill ccv2-pill--${activityStatusTone(record.status, record.decision)}`}>{status}</span>
+          {record.redacted && <span className="ccv2-pill ccv2-pill--disabled">redacted</span>}
+        </div>
+        <div className="ccv2-activity-record__title">{cleanActivityValue(record.summary, "Activity event captured.")}</div>
+        <div className="ccv2-activity-record__meta">
+          {cleanActivityValue(record.eventType, "event type pending")} · {cleanActivityValue(record.source, "source pending")}
+          {" · "}
+          {record.correlationId ? `Correlation ${record.shortCorrelationId || record.correlationId}` : "Correlation not linked yet"}
+          {" · "}
+          {linkedTask ? `Linked ${linkedTask}` : "Not linked yet"}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function ActivityEmptyState({ message = "No matching activity records." }) {
+  return (
+    <div className="ccv2-empty-state ccv2-activity-empty">
+      <strong>{message}</strong>
+      <span>
+        Local API reads and governed action bridge outcomes are wired now. Provider, tool, worker, DB-backed activity,
+        and full trace drilldown remain future phases.
+      </span>
+    </div>
+  );
+}
+
+function ActivityRecordList({ records, emptyMessage }) {
+  if (records.length === 0) return <ActivityEmptyState message={emptyMessage} />;
+  return (
+    <div className="ccv2-activity-list">
+      {records.map((record) => <ActivityRecordCard key={record.activityId} record={record} />)}
+    </div>
+  );
+}
+
+function ActivityFilterBar({ filters, onChange, categories, statuses, sources }) {
+  return (
+    <section className="ccv2-card ccv2-activity-filters" aria-label="Activity filters">
+      <label>
+        <span>Search</span>
+        <input
+          type="search"
+          value={filters.search}
+          placeholder="Search summary, event type, task, source, or correlation ID"
+          onChange={(event) => onChange({ ...filters, search: event.target.value })}
+        />
+      </label>
+      <label>
+        <span>Category</span>
+        <select value={filters.category} onChange={(event) => onChange({ ...filters, category: event.target.value })}>
+          <option value="">All categories</option>
+          {categories.map((category) => <option key={category} value={category}>{ACTIVITY_CATEGORY_LABELS[category] || category}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Status</span>
+        <select value={filters.status} onChange={(event) => onChange({ ...filters, status: event.target.value })}>
+          <option value="">All statuses</option>
+          {statuses.map((status) => <option key={status} value={status}>{normalizeActivityStatus(status)}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Agent / Source</span>
+        <select value={filters.source} onChange={(event) => onChange({ ...filters, source: event.target.value })}>
+          <option value="">All sources</option>
+          {sources.map((source) => <option key={source} value={source}>{source}</option>)}
+        </select>
+      </label>
+      <label>
+        <span>Project / Scope</span>
+        <select value={filters.scope} onChange={(event) => onChange({ ...filters, scope: event.target.value })}>
+          <option value="">All scopes</option>
+          <option value="PROJECT_CHANGE">Project</option>
+          <option value="NEXUS_OS_CHANGE">NEXUS OS</option>
+          <option value="SYSTEM">System</option>
+          <option value="DEMO">Demo</option>
+        </select>
+      </label>
+    </section>
+  );
+}
+
 function ActivityLogPage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
+  const [filters, setFilters] = useState({
+    search: "",
+    category: "",
+    status: "",
+    source: "",
+    scope: "",
+  });
   const activity = vm?.liveData?.activity || null;
   const records = Array.isArray(activity?.records) ? activity.records : [];
   const categories = activity?.categories || {};
   const sourceLabel = activity ? "Live local API / activity store" : "Snapshot fallback";
+  const filteredRecords = records.filter((record) => (
+    (!filters.category || record.category === filters.category)
+    && (!filters.status || record.status === filters.status)
+    && (!filters.source || record.source === filters.source || record.agentId === filters.source)
+    && (!filters.scope || record.scope === filters.scope || record.projectId === filters.scope)
+    && activityMatchesSearch(record, filters.search)
+  ));
+  const categoryOptions = [...new Set(records.map((record) => record.category).filter(Boolean))].sort();
+  const statusOptions = [...new Set(records.map((record) => record.status).filter(Boolean))].sort();
+  const sourceOptions = [...new Set(records.flatMap((record) => [record.agentId, record.source]).filter(Boolean))].sort();
+  const failureRecords = filteredRecords.filter((record) => (
+    ["failed", "blocked", "requires_approval"].includes(record.status)
+    || ["DENY", "REDACT", "REQUIRE_APPROVAL"].includes(record.decision)
+  ));
+  const apiActionRecords = filteredRecords.filter((record) => ["api", "action_bridge"].includes(record.category));
+  const agentGroups = buildActivityGroups(filteredRecords, (record) => record.agentId || record.source || "Unassigned / system");
+  const taskGroups = buildActivityGroups(filteredRecords, (record) => record.taskId || record.missionId || record.projectId || "Not linked yet");
+  const correlationGroups = buildActivityGroups(filteredRecords, (record) => record.correlationId || "No correlation ID");
+  const latestHighlight = filteredRecords[0];
   const readiness = [
     { label: "Activity schema", status: "Ready", tone: "pass" },
     { label: "Correlation ID model", status: "Ready", tone: "pass" },
@@ -5708,27 +5948,28 @@ function ActivityLogPage({ vm }) {
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Activity Log</div>
           <div className="ccv2-page-head__sub">
-            Trace NEXUS actions, agent work, policy decisions, evidence, and errors by correlation ID.
+            Centralized activity timeline for UI, local API, governed actions, policy decisions, evidence, and failures.
           </div>
         </div>
 
-        <div className="ccv2-activity-readiness">
+        <div className="ccv2-activity-readiness ccv2-activity-readiness--page">
           <section className="ccv2-card ccv2-activity-readiness__hero">
-            <div className="ccv2-section-heading">Observability Readiness</div>
-            <h2>Capture wired for local operator paths.</h2>
+            <div className="ccv2-section-heading">Operator Activity</div>
+            <h2>Activity Log is ready for summarized local records.</h2>
             <p>
-              P41.8.3 records redacted local API reads and governed action bridge outcomes into the append-only
-              activity store. Command Center shows captured records when the local API is online, and falls back to
-              readiness guidance when it is offline.
+              P41.8.4 turns the central activity ledger into a usable read-only Command Center page. Records are
+              summarized, redacted, grouped, and filterable without exposing raw logs, unredacted payload dumps,
+              secrets, or private payloads.
             </p>
             <div className="ccv2-activity-next">
               <span className="ccv2-pill ccv2-pill--read">Source</span>
               <span>{sourceLabel}</span>
+              <span className="ccv2-pill ccv2-pill--disabled">Trace drilldown in P41.8.5</span>
             </div>
           </section>
 
           <section className="ccv2-card">
-            <div className="ccv2-section-heading">Capture Summary</div>
+            <div className="ccv2-section-heading">Status Cards</div>
             <div className="ccv2-activity-summary">
               <div>
                 <span className="ccv2-activity-summary__value">{activity?.totalCount ?? 0}</span>
@@ -5742,37 +5983,16 @@ function ActivityLogPage({ vm }) {
                 <span className="ccv2-activity-summary__value">{Object.keys(categories).length}</span>
                 <span className="ccv2-activity-summary__label">Categories</span>
               </div>
+              <div>
+                <span className="ccv2-activity-summary__value">{Object.keys(correlationGroups).length}</span>
+                <span className="ccv2-activity-summary__label">Correlation IDs</span>
+              </div>
             </div>
             {records.length === 0 && (
               <p className="ccv2-activity-copy">
                 No captured activity records are available from the local API yet. Run Command Center against the local
                 API, call <code>npm run nexus:status</code>, or trigger a governed action to populate the local activity store.
               </p>
-            )}
-          </section>
-
-          <section className="ccv2-card">
-            <div className="ccv2-section-heading">Recent Captured Activity</div>
-            {records.length > 0 ? (
-              <div className="ccv2-activity-list">
-                {records.slice(0, 12).map((record) => (
-                  <div key={record.activityId} className="ccv2-activity-record">
-                    <div>
-                      <div className="ccv2-activity-record__title">{record.summary}</div>
-                      <div className="ccv2-activity-record__meta">
-                        {record.category} · {record.eventType} · {record.shortCorrelationId || "no correlation"}
-                      </div>
-                    </div>
-                    <span className={`ccv2-pill ccv2-pill--${record.status === "failed" ? "blocked" : "read"}`}>
-                      {record.status}
-                    </span>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="ccv2-empty-state">
-                Activity capture is ready. Records appear here after local API reads or governed bridge actions.
-              </div>
             )}
           </section>
 
@@ -5787,29 +6007,94 @@ function ActivityLogPage({ vm }) {
               ))}
             </div>
           </section>
+        </div>
 
-          <section className="ccv2-card">
-            <div className="ccv2-section-heading">What Will Appear Here</div>
-            <div className="ccv2-activity-event-grid">
-              {futureEvents.map((item) => (
-                <div key={item} className="ccv2-activity-event">{item}</div>
+        <ActivityFilterBar
+          filters={filters}
+          onChange={setFilters}
+          categories={categoryOptions}
+          statuses={statusOptions}
+          sources={sourceOptions}
+        />
+
+        <CommandTabs
+          tabs={ACTIVITY_LOG_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Activity Log views"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-activity-tab-grid">
+              <section className="ccv2-card">
+                <div className="ccv2-section-heading">Recent Highlights</div>
+                {latestHighlight ? <ActivityRecordCard record={latestHighlight} /> : <ActivityEmptyState message="No activity records yet." />}
+              </section>
+              <section className="ccv2-card">
+                <div className="ccv2-section-heading">Capture Coverage</div>
+                <div className="ccv2-activity-event-grid">
+                  {futureEvents.map((item) => <div key={item} className="ccv2-activity-event">{item}</div>)}
+                </div>
+              </section>
+              <section className="ccv2-card">
+                <div className="ccv2-section-heading">Boundary</div>
+                <p className="ccv2-activity-copy">
+                  Each operator action links UI, API, action bridge, evidence, audit, and runtime records by correlation ID.
+                  Full trace replay is intentionally deferred to P41.8.5.
+                </p>
+                <div className="ccv2-activity-boundaries">
+                  <span className="ccv2-pill ccv2-pill--disabled">Provider logging not enabled</span>
+                  <span className="ccv2-pill ccv2-pill--disabled">Worker logging not enabled</span>
+                  <span className="ccv2-pill ccv2-pill--disabled">DB-backed activity not enabled</span>
+                </div>
+              </section>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="timeline" activeTab={activeTab}>
+            <ActivityRecordList records={filteredRecords} emptyMessage="No matching activity records." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="by-agent" activeTab={activeTab}>
+            <div className="ccv2-activity-group-list">
+              {Object.entries(agentGroups).length === 0 && <ActivityEmptyState message="No agent or source activity records." />}
+              {Object.entries(agentGroups).map(([group, groupRecords]) => (
+                <section key={group} className="ccv2-card">
+                  <div className="ccv2-section-heading">{group}</div>
+                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." />
+                </section>
               ))}
             </div>
-          </section>
-
-          <section className="ccv2-card">
-            <div className="ccv2-section-heading">Correlation ID Model</div>
-            <p className="ccv2-activity-copy">
-              Each operator action links UI, API, action bridge, evidence, audit, and runtime records. Correlation IDs
-              keep related records traceable without exposing raw payloads, secrets, or private project content.
-            </p>
-            <div className="ccv2-activity-boundaries">
-              <span className="ccv2-pill ccv2-pill--disabled">Provider logging not enabled</span>
-              <span className="ccv2-pill ccv2-pill--disabled">Worker logging not enabled</span>
-              <span className="ccv2-pill ccv2-pill--disabled">DB-backed activity not enabled</span>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="by-task" activeTab={activeTab}>
+            <div className="ccv2-activity-group-list">
+              {Object.entries(taskGroups).length === 0 && <ActivityEmptyState message="No task, mission, or project links yet." />}
+              {Object.entries(taskGroups).map(([group, groupRecords]) => (
+                <section key={group} className="ccv2-card">
+                  <div className="ccv2-section-heading">{group}</div>
+                  <ActivityRecordList records={groupRecords} emptyMessage="No records in this group." />
+                </section>
+              ))}
             </div>
-          </section>
-        </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="failures" activeTab={activeTab}>
+            <ActivityRecordList records={failureRecords} emptyMessage="No failed, blocked, denied, redacted, or approval-required records." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="api-actions" activeTab={activeTab}>
+            <ActivityRecordList records={apiActionRecords} emptyMessage="No local API or governed action bridge records match the current filters." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="correlations" activeTab={activeTab}>
+            <div className="ccv2-activity-correlation-grid">
+              {Object.entries(correlationGroups).length === 0 && <ActivityEmptyState message="No correlation IDs are available yet." />}
+              {Object.entries(correlationGroups).map(([correlationId, groupRecords]) => (
+                <section key={correlationId} className="ccv2-card ccv2-activity-correlation-card">
+                  <div className="ccv2-section-heading">{correlationId}</div>
+                  <div className="ccv2-activity-record__title">{groupRecords.length} linked event{groupRecords.length === 1 ? "" : "s"}</div>
+                  <p className="ccv2-activity-copy">
+                    Preview only. Full trace drilldown by correlation ID is planned for P41.8.5.
+                  </p>
+                </section>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );

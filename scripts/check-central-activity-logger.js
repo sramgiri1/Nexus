@@ -282,10 +282,10 @@ try {
     "command-execution/",
     "db/",
   ];
-  if (currentPhase !== "P41.8.3") {
+  if (!["P41.8.3", "P41.8.4"].includes(currentPhase)) {
     forbiddenPrefixes.push("local-api/");
   }
-  if (!["P41.8.2A", "P41.8.3"].includes(currentPhase)) {
+  if (!["P41.8.2A", "P41.8.3", "P41.8.4"].includes(currentPhase)) {
     forbiddenPrefixes.push("dashboard/");
   }
   for (const changedFile of changedFiles) {

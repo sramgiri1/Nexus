@@ -540,10 +540,10 @@
       "title": "Centralized Activity Log + Observability Ledger",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "observability/activity-capture-wiring",
+      "branch": "observability/activity-log-command-center-page",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Centralized observability track is underway with schema, central logger, Docs & Guides polish, and selected API/UI/action bridge capture wiring.",
+      "summary": "Centralized observability track is underway with schema, central logger, selected capture wiring, and a tabbed Activity Log page.",
       "checksRun": [
         "npm run check:command-center-ux",
         "npm run check:docs-coverage",
@@ -554,7 +554,7 @@
       "knownLimitations": [
         "Full trace views, provider/tool dispatch, worker runtime, DB-backed activity, and DB writes remain out of scope."
       ],
-      "nextPhase": "P41.8.3",
+      "nextPhase": "P41.8.4",
       "commandCenterVisible": true
     },
     {
@@ -662,7 +662,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "observability/activity-capture-wiring",
-      "commit": "pending-final-commit",
+      "commit": "adcc916",
       "completedAt": "",
       "summary": "Adds redacted capture helpers, local API read capture, governed action bridge capture, and Activity Log summaries from the local activity store.",
       "checksRun": [
@@ -689,13 +689,27 @@
       "phaseId": "P41.8.4",
       "title": "Command Center Activity Log Page",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "complete",
+      "branch": "observability/activity-log-command-center-page",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned Command Center page for activity event review.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "Adds a real tabbed Command Center Activity Log page with timeline, grouping, filters, status cards, and correlation previews.",
+      "checksRun": [
+        "npm run check:activity-capture",
+        "npm run check:central-activity-logger",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Full trace drilldown by correlation ID remains planned for P41.8.5.",
+        "Provider, tool, worker, and DB-backed activity capture remain disabled.",
+        "Browser-only UI click persistence waits for a governed capture endpoint."
+      ],
       "nextPhase": "P41.8.5",
       "commandCenterVisible": true
     },
@@ -1275,8 +1289,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T23:20:00.000Z",
-  "currentPhase": "P41.8.3",
-  "previousPhase": "P41.8.2A",
-  "nextPhase": "P41.8.4"
+  "updatedAt": "2026-05-14T23:55:00.000Z",
+  "currentPhase": "P41.8.4",
+  "previousPhase": "P41.8.3",
+  "nextPhase": "P41.8.5"
 }

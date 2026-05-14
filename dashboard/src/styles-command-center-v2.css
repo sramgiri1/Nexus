@@ -3871,7 +3871,7 @@
 
 .ccv2-activity-summary {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 10px;
   margin-top: 12px;
 }
@@ -3944,14 +3944,39 @@
 }
 
 .ccv2-activity-record {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 14px;
   padding: 12px;
   border: 1px solid var(--nexus-border);
   border-radius: 14px;
   background: var(--nexus-panel-soft);
+}
+
+.ccv2-activity-record__main {
+  display: grid;
+  gap: 5px;
+}
+
+.ccv2-activity-record__topline {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.ccv2-activity-record__time,
+.ccv2-activity-category {
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.ccv2-activity-category {
+  padding: 4px 7px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 999px;
+  background: var(--nexus-panel);
+  color: var(--nexus-text);
 }
 
 .ccv2-activity-record__title {
@@ -3971,6 +3996,68 @@
   color: var(--nexus-text);
   font-size: 13px;
   line-height: 1.6;
+}
+
+.ccv2-activity-filters {
+  display: grid;
+  grid-template-columns: 1.5fr repeat(4, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 14px 0;
+}
+
+.ccv2-activity-filters label {
+  display: grid;
+  gap: 6px;
+  color: var(--nexus-muted);
+  font-size: 11px;
+  font-weight: 850;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ccv2-activity-filters input,
+.ccv2-activity-filters select {
+  width: 100%;
+  border: 1px solid var(--nexus-border);
+  border-radius: 12px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  font: inherit;
+  font-size: 13px;
+  letter-spacing: normal;
+  outline: none;
+  padding: 10px 12px;
+  text-transform: none;
+}
+
+.ccv2-activity-tab-grid,
+.ccv2-activity-group-list,
+.ccv2-activity-correlation-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.ccv2-activity-tab-grid {
+  grid-template-columns: minmax(0, 1.1fr) minmax(280px, 0.9fr);
+}
+
+.ccv2-activity-tab-grid > .ccv2-card:last-child {
+  grid-column: 1 / -1;
+}
+
+.ccv2-activity-correlation-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.ccv2-activity-correlation-card {
+  min-height: 140px;
+}
+
+.ccv2-activity-empty {
+  align-items: flex-start;
+  display: grid;
+  gap: 6px;
+  text-align: left;
 }
 
 .ccv2-roadmap-track--hero {

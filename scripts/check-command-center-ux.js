@@ -247,7 +247,7 @@ for (const path of ["/command-center/settings"]) {
 }
 const activityRoute = routeMatrix.find((entry) => entry.path === "/command-center/activity");
 check(!!activityRoute, "routeMatrix", "Missing Activity Log route matrix entry");
-check(activityRoute?.status === "implemented", "routeMatrix", "Activity Log readiness route should be implemented");
+check(activityRoute?.status === "implemented", "routeMatrix", "Activity Log route should be implemented");
 const docsRoute = routeMatrix.find((entry) => entry.path === "/command-center/docs");
 check(!!docsRoute, "routeMatrix", "Missing docs route matrix entry");
 check(docsRoute?.status === "implemented", "routeMatrix", "Docs & Guides route should be implemented");
@@ -848,8 +848,11 @@ check(commandCenterSource.includes("navigate(`/command-center/docs/${guide.id}`)
 check(!commandCenterSource.includes("ccv2-doc-card__path"), "topBarPolish", "Docs cards should not render raw paths as primary text");
 check(!commandCenterSource.includes("ccv2-doc-card__action"), "topBarPolish", "Docs cards should not render separate Open guide links");
 check(commandCenterSource.includes("ActivityLogPage"), "topBarPolish", "Activity Log should render an observability page");
-check(commandCenterSource.includes("Capture wired for local operator paths."), "topBarPolish", "Activity Log capture copy missing");
-check(commandCenterSource.includes("Recent Captured Activity"), "topBarPolish", "Activity Log should show captured activity records");
+check(commandCenterSource.includes("Activity Log is ready for summarized local records."), "topBarPolish", "Activity Log page copy missing");
+for (const label of ["Overview", "Timeline", "By Agent", "By Task", "Failures & Blocks", "API & Actions", "Correlations"]) {
+  check(commandCenterSource.includes(label), "topBarPolish", `Activity Log missing required tab/copy: ${label}`);
+}
+check(commandCenterSource.includes("ActivityFilterBar"), "topBarPolish", "Activity Log should include filter controls");
 check(commandCenterSource.includes("UI/API/action instrumentation"), "topBarPolish", "Activity Log should identify instrumentation status");
 check(!commandCenterSource.includes("v4.7"), "topBarPolish", "Sidebar should not show arbitrary v4.7 version text");
 check(routeTestSource.includes("top header is compact and omits noisy runtime badges"), "topBarPolish", "Route tests missing top-bar polish coverage");
