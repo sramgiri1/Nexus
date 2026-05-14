@@ -1,68 +1,120 @@
-export const NEXUS_ROADMAP_PHASES = [
+import phaseIndex from "../../../os-roadmap/nexus-phases.json" with { type: "json" };
+import phaseStatus from "../../../os-roadmap/phase-status.json" with { type: "json" };
+
+const STATUS_LABELS = {
+  planned: "Planned",
+  in_progress: "In Progress",
+  complete: "Complete",
+  blocked: "Blocked",
+  skipped: "Skipped",
+};
+
+const STATUS_TONES = {
+  planned: "planned",
+  in_progress: "current",
+  complete: "pass",
+  blocked: "fail",
+  skipped: "disabled",
+};
+
+const statusById = new Map(
+  (phaseStatus?.phases || []).map((entry) => [entry.phaseId, entry]),
+);
+
+function buildRoadmapPhase(entry) {
+  const statusEntry = statusById.get(entry.phaseId) || {};
+  const status = statusEntry.status || entry.defaultStatus || "planned";
+
+  return {
+    ...entry,
+    ...statusEntry,
+    phase: entry.phaseId,
+    label: entry.title,
+    detail: statusEntry.summary || entry.summary || "",
+    status,
+    statusLabel: STATUS_LABELS[status] || status,
+    tone: STATUS_TONES[status] || "disabled",
+    isCurrent: false,
+    isComplete: status === "complete",
+    isPlanned: status === "planned",
+    isBlocked: status === "blocked",
+  };
+}
+
+const roadmapPhases = (phaseIndex?.phases || [])
+  .map(buildRoadmapPhase)
+  .filter((entry) => entry.track === "NEXUS_OS")
+  .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+const currentInProgressPhase = roadmapPhases.find((entry) => entry.status === "in_progress");
+const fallbackCurrentPhase = [...roadmapPhases]
+  .filter((entry) => entry.status === "complete")
+  .at(-1);
+
+export const NEXUS_CURRENT_OS_PHASE = currentInProgressPhase || fallbackCurrentPhase || null;
+
+export const NEXUS_ROADMAP_PHASES = roadmapPhases.map((entry) => {
+  if (entry.phase === NEXUS_CURRENT_OS_PHASE?.phase) {
+    return {
+      ...entry,
+      isCurrent: true,
+      tone: entry.status === "complete" ? "current" : entry.tone,
+      statusLabel: entry.status === "complete" ? "Current / Complete" : entry.statusLabel,
+    };
+  }
+  return entry;
+});
+
+export const NEXUS_PREVIOUS_COMPLETED_PHASE = [...NEXUS_ROADMAP_PHASES]
+  .filter(
+    (entry) => entry.status === "complete"
+      && (entry.order || 0) < (NEXUS_CURRENT_OS_PHASE?.order || Number.MAX_SAFE_INTEGER),
+  )
+  .at(-1);
+
+export const NEXUS_NEXT_OS_PHASE = NEXUS_ROADMAP_PHASES.find(
+  (entry) => (entry.order || 0) > (NEXUS_CURRENT_OS_PHASE?.order || 0) && entry.status === "planned",
+);
+
+export const NEXUS_COMPLETED_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(
+  (entry) => entry.status === "complete",
+);
+
+export const NEXUS_PLANNED_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(
+  (entry) => entry.status === "planned",
+);
+
+export const NEXUS_BLOCKED_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(
+  (entry) => entry.status === "blocked",
+);
+
+export const NEXUS_OS_OPEN_GAPS = [
   {
-    phase: "P37",
-    label: "Task Activation + Agent Assignment from UI",
-    status: "COMPLETE",
-    detail: "Select task, activate it, place it in the runtime queue, and capture evidence.",
+    priority: "Now",
+    title: "Start P41.7 documentation-system reuse and registry hardening",
+    detail:
+      "Build on the stabilized usage docs, codebase docs, boot guidance, and roadmap registry to remove duplicated documentation patterns and keep Command Center help surfaces synchronized.",
   },
   {
-    phase: "P38",
-    label: "Agent Workbench + Human Review Loop",
-    status: "COMPLETE",
-    detail: "Inspect activated tasks, review evidence, and capture human decisions.",
+    priority: "Next",
+    title: "Ship P41.7 documentation-system reuse audit",
+    detail:
+      "Formalize documentation standards, module registry reuse guidance, and refactor-ready boundaries without expanding runtime scope.",
   },
   {
-    phase: "P39",
-    label: "First Controlled Implementation Workflow from UI",
-    status: "COMPLETE",
-    detail: "Scoped documentation-only implementation flow with evidence and rollback posture.",
-  },
-  {
-    phase: "P40",
-    label: "Live Local API Backend for Command Center",
-    status: "COMPLETE",
-    detail: "Real-time local API reads are available without DB or provider dispatch.",
-  },
-  {
-    phase: "P41",
-    label: "DB Foundation + Durable State",
-    status: "COMPLETE",
-    detail: "Schema, health, repository, and import planning exist while runtime remains file-backed.",
-  },
-  {
-    phase: "P41.6.1",
-    label: "Unified NEXUS Local Boot Foundation",
-    status: "COMPLETE",
-    detail: "Service manifest, nexus:status, and nexus:doctor define the local boot foundation without process orchestration.",
-  },
-  {
-    phase: "P41.6.2",
-    label: "Unified NEXUS Local Boot Process Manager",
-    status: "COMPLETE",
-    detail: "nexus:up and nexus:down manage localhost-only services and tracked runtime state.",
-  },
-  {
-    phase: "P41.6.3",
-    label: "Command Center Service Health UX",
-    status: "COMPLETE",
-    detail: "Command Center now shows service cards, doctor findings, and operator guidance for local boot workflows.",
-  },
-  {
-    phase: "P41.6.4",
-    label: "NEXUS Command Palette + Simple Operator Actions",
-    status: "COMPLETE",
-    detail: "Command Center now exposes a governed command palette and simple operator action previews without enabling unsafe execution.",
-  },
-  {
-    phase: "P41.6.5",
-    label: "Boot Docs, Troubleshooting, and Final Validation",
-    status: "PLANNED",
-    detail: "Finalize local boot operator documentation, troubleshooting guidance, and validation closure for the P41.6 sequence.",
-  },
-  {
-    phase: "P42",
-    label: "DB-backed Command Center + Live Refresh",
-    status: "PLANNED",
-    detail: "Switch Command Center reads to durable live refresh once DB writes are intentionally enabled.",
+    priority: "Later",
+    title: "Keep runtime, provider, and DB-primary work intentionally gated",
+    detail:
+      "Worker runtime, governed provider dispatch, and DB-backed runtime primary remain planned phases rather than partial operator surfaces.",
   },
 ];
+
+export const NEXUS_OS_ROADMAP_META = {
+  track: phaseIndex?.track || "NEXUS_OS",
+  currentPhase: NEXUS_CURRENT_OS_PHASE,
+  previousCompletedPhase: NEXUS_PREVIOUS_COMPLETED_PHASE,
+  nextPhase: NEXUS_NEXT_OS_PHASE,
+  completedCount: NEXUS_COMPLETED_OS_PHASES.length,
+  plannedCount: NEXUS_PLANNED_OS_PHASES.length,
+  blockedCount: NEXUS_BLOCKED_OS_PHASES.length,
+};

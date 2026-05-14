@@ -187,3 +187,50 @@ P41.6.4 complements `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor`
 ### Next Subphase
 
 P41.6.5 focuses on boot docs, troubleshooting, and final validation.
+
+## P41.6.5 — Boot Docs, Troubleshooting, and Final Validation
+
+P41.6.5 closes the local-boot sequence by making the operator model easier to
+understand and easier to validate.
+
+### Purpose
+
+- separate NEXUS OS roadmap tracking from project progress
+- improve local boot documentation and troubleshooting
+- make Service Health and Command Palette guidance align with the actual
+  `nexus:*` command behavior
+- finish P41.6 validation coverage
+
+### Service Health Reflection
+
+Command Center Service Health remains read-only and mirrors:
+
+- `nexus.services.json`
+- `local-state/runtime/services/service-state.json`
+- `reports/nexus-doctor-report.json`
+
+It does not introduce browser-side service execution or a new backend write
+path.
+
+### Operator Workflow
+
+The expected operator loop is now:
+
+1. `npm run nexus:doctor`
+2. `npm run nexus:status`
+3. `npm run nexus:up`
+4. inspect `/command-center/services`
+5. use the Command Palette for governed route-first actions
+6. `npm run nexus:down` when the managed local session is complete
+
+### Safety Boundary
+
+- localhost-only bindings remain required
+- no provider calls are enabled
+- no external network orchestration is added
+- DB writes remain disabled
+- project mutation remains governed and out of scope
+
+### Next Subphase
+
+P41.7.1 focuses on codebase documentation standard and module registry work.

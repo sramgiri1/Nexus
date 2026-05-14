@@ -1,25 +1,483 @@
 {
-  "version": "1.0",
+  "version": "2.0",
+  "track": "NEXUS_OS",
   "phases": [
     {
+      "phaseId": "P26-P41",
+      "title": "Completed Foundation",
+      "track": "NEXUS_OS",
+      "order": 1,
+      "group": "Completed Foundation",
+      "summary": "Core NEXUS OS foundations from governed local execution through DB foundation are complete.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.1",
+      "title": "Command Center Route-Wide UX Copy + Capability State Cleanup",
+      "track": "NEXUS_OS",
+      "order": 2,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Removed stale internal phase labels and switched primary UX to capability-based readiness copy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.2",
+      "title": "Global Theme Switcher + Route-Wide Theme Validation",
+      "track": "NEXUS_OS",
+      "order": 3,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Added System, Dark, and Light theme support with route-wide validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.3",
+      "title": "Mission Control Enterprise Dashboard Layout",
+      "track": "NEXUS_OS",
+      "order": 4,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Turned Mission Control into a product-grade operator cockpit.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.4",
+      "title": "Page-Specific UX Cleanup",
+      "track": "NEXUS_OS",
+      "order": 5,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Upgraded major Command Center routes with clear state summaries, empty states, and capability language.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.5",
+      "title": "Route-Wide Screenshot UX Audit + Visual QA Report",
+      "track": "NEXUS_OS",
+      "order": 6,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Captured dark and light route baselines with screenshot manifests and visual QA reports.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.5.6",
+      "title": "Usage Docs + Codebase Docs + README Finalization",
+      "track": "NEXUS_OS",
+      "order": 7,
+      "group": "P41.5 Command Center UX Stabilization",
+      "summary": "Completed public-safe usage docs, codebase docs, README updates, and documentation coverage checks.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P41.6.1",
-      "title": "Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor"
+      "title": "Unified NEXUS Local Boot Foundation: Service Manifest, Status, and Doctor",
+      "track": "NEXUS_OS",
+      "order": 8,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Defined the declarative service manifest plus read-only status and doctor inspection commands.",
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P41.6.2",
-      "title": "Unified NEXUS Local Boot Process Manager"
+      "title": "Unified NEXUS Local Boot Process Manager",
+      "track": "NEXUS_OS",
+      "order": 9,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Added localhost-only process management through nexus:up and nexus:down.",
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P41.6.3",
-      "title": "Command Center Service Health UX"
+      "title": "Command Center Service Health UX",
+      "track": "NEXUS_OS",
+      "order": 10,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Added a read-only Service Health route that explains local services and operator guidance.",
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P41.6.4",
-      "title": "NEXUS Command Palette + Simple Operator Actions"
+      "title": "NEXUS Command Palette + Simple Operator Actions",
+      "track": "NEXUS_OS",
+      "order": 11,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Introduced a governed command palette and simple operator action intents.",
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P41.6.5",
-      "title": "Boot Docs, Troubleshooting, and Final Validation"
+      "title": "OS Roadmap / Project Roadmap Separation, Boot Docs, Troubleshooting, and Final Validation",
+      "track": "NEXUS_OS",
+      "order": 12,
+      "group": "P41.6 Unified NEXUS Local Boot / Service Orchestration",
+      "summary": "Separates OS roadmap from project progress and finalizes boot-facing operator docs, troubleshooting, and validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.7",
+      "title": "Documentation System, Usage Guides, Reuse Audit, Refactor Foundation",
+      "track": "NEXUS_OS",
+      "order": 13,
+      "group": "Planned OS Phases",
+      "summary": "Formalize documentation standards, module reuse guidance, and safe refactor foundations.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.8",
+      "title": "Centralized Activity Log + Observability Ledger",
+      "track": "NEXUS_OS",
+      "order": 14,
+      "group": "Planned OS Phases",
+      "summary": "Add centralized activity, observability, and cross-surface audit visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9",
+      "title": "README + Architecture Diagram Registry",
+      "track": "NEXUS_OS",
+      "order": 15,
+      "group": "Planned OS Phases",
+      "summary": "Finish README and architecture-diagram governance as a maintained platform surface.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42",
+      "title": "Project Registry + Adapter Framework",
+      "track": "NEXUS_OS",
+      "order": 16,
+      "group": "Planned OS Phases",
+      "summary": "Move project selection, project adapters, and project-specific dashboards into a governed registry.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43",
+      "title": "Scope Boundary + Project Packaging Safety",
+      "track": "NEXUS_OS",
+      "order": 17,
+      "group": "Planned OS Phases",
+      "summary": "Strengthen project packaging and scope boundaries before broader workspace automation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44",
+      "title": "Multi-Repo Workspace + Git/PR Lifecycle",
+      "track": "NEXUS_OS",
+      "order": 18,
+      "group": "Planned OS Phases",
+      "summary": "Support governed multi-repo workspaces and Git/PR lifecycle management.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45",
+      "title": "Agent Registry + Boundary Compiler",
+      "track": "NEXUS_OS",
+      "order": 19,
+      "group": "Planned OS Phases",
+      "summary": "Introduce a formal agent registry and compiled execution boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46",
+      "title": "Scoped Memory Architecture + Memory Center",
+      "track": "NEXUS_OS",
+      "order": 20,
+      "group": "Planned OS Phases",
+      "summary": "Add governed memory scopes and operator visibility into persistent memory behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47",
+      "title": "Trusted Context + Data Architecture Layer",
+      "track": "NEXUS_OS",
+      "order": 21,
+      "group": "Planned OS Phases",
+      "summary": "Separate trusted context assembly from project data access and redaction rules.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48",
+      "title": "Governed Agentic Mesh",
+      "track": "NEXUS_OS",
+      "order": 22,
+      "group": "Planned OS Phases",
+      "summary": "Enable governed multi-agent mesh coordination with explicit boundaries and approvals.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49",
+      "title": "Agent Definition Update Workflow",
+      "track": "NEXUS_OS",
+      "order": 23,
+      "group": "Planned OS Phases",
+      "summary": "Add governed workflows for evolving agent definitions without breaking safety guarantees.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50",
+      "title": "Skill Registry + Skill Authoring Workflow",
+      "track": "NEXUS_OS",
+      "order": 24,
+      "group": "Planned OS Phases",
+      "summary": "Create a governed registry and authoring path for reusable skills.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51",
+      "title": "Hook Registry + Safe Automation Lifecycle",
+      "track": "NEXUS_OS",
+      "order": 25,
+      "group": "Planned OS Phases",
+      "summary": "Formalize hooks and automation lifecycle controls under governance.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52",
+      "title": "Tool / MCP Registry + Tool Governance",
+      "track": "NEXUS_OS",
+      "order": 26,
+      "group": "Planned OS Phases",
+      "summary": "Register tools and MCP surfaces behind explicit governance and capability mapping.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53",
+      "title": "Trigger + Integration Gateway",
+      "track": "NEXUS_OS",
+      "order": 27,
+      "group": "Planned OS Phases",
+      "summary": "Add governed trigger and integration entrypoints for external systems.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54",
+      "title": "API + Batch Execution Adapter",
+      "track": "NEXUS_OS",
+      "order": 28,
+      "group": "Planned OS Phases",
+      "summary": "Adapt governed execution through API and batch pathways without bypassing policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55",
+      "title": "Test Suite Manager: Project + OS",
+      "track": "NEXUS_OS",
+      "order": 29,
+      "group": "Planned OS Phases",
+      "summary": "Unify test suite management across projects and the NEXUS OS itself.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P56",
+      "title": "Quality Intelligence + Test Gap Detection",
+      "track": "NEXUS_OS",
+      "order": 30,
+      "group": "Planned OS Phases",
+      "summary": "Detect quality gaps, missing test coverage, and validation blind spots.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P57",
+      "title": "Cost Center + Budget Enforcement",
+      "track": "NEXUS_OS",
+      "order": 31,
+      "group": "Planned OS Phases",
+      "summary": "Enforce governed budget posture and operator cost visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58",
+      "title": "Policy Center + Governance Admin",
+      "track": "NEXUS_OS",
+      "order": 32,
+      "group": "Planned OS Phases",
+      "summary": "Centralize governance policy administration and operator review.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59",
+      "title": "Secrets and Credential Boundary",
+      "track": "NEXUS_OS",
+      "order": 33,
+      "group": "Planned OS Phases",
+      "summary": "Isolate secrets and credential handling behind explicit access boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60",
+      "title": "Worker Queue + Runtime Engine",
+      "track": "NEXUS_OS",
+      "order": 34,
+      "group": "Planned OS Phases",
+      "summary": "Deliver governed background execution through worker queues and runtime control.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61",
+      "title": "Concurrent Execution + Work Deduplication",
+      "track": "NEXUS_OS",
+      "order": 35,
+      "group": "Planned OS Phases",
+      "summary": "Support concurrent governed execution with deduplication and conflict controls.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62",
+      "title": "Conversational NEXUS Command Interface",
+      "track": "NEXUS_OS",
+      "order": 36,
+      "group": "Planned OS Phases",
+      "summary": "Evolve the operator surface from palette commands to conversational governed control.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63",
+      "title": "AI Interaction Snapshot + Granular Recovery Layer",
+      "track": "NEXUS_OS",
+      "order": 37,
+      "group": "Planned OS Phases",
+      "summary": "Capture granular interaction snapshots and recovery points across governed execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64",
+      "title": "Provider + Tool Dispatch Through Governance",
+      "track": "NEXUS_OS",
+      "order": 38,
+      "group": "Planned OS Phases",
+      "summary": "Enable real provider and tool dispatch only through governed execution pathways.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.1",
+      "title": "Code Mode Runtime + Lazy Tool Loading",
+      "track": "NEXUS_OS",
+      "order": 39,
+      "group": "Planned OS Phases",
+      "summary": "Add code-mode runtime support with safe lazy-loading of tool capabilities.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65",
+      "title": "Batch Intelligence Jobs for Large-Scale Analysis",
+      "track": "NEXUS_OS",
+      "order": 40,
+      "group": "Planned OS Phases",
+      "summary": "Schedule large-scale governed analysis and synthesis jobs in batch form.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66",
+      "title": "Self-Healing Failure Loop",
+      "track": "NEXUS_OS",
+      "order": 41,
+      "group": "Planned OS Phases",
+      "summary": "Add governed self-healing loops for known failure classes and recovery plans.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67",
+      "title": "Controlled Source Mutation Expansion",
+      "track": "NEXUS_OS",
+      "order": 42,
+      "group": "Planned OS Phases",
+      "summary": "Expand controlled source mutation once broader governance and validation are ready.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68",
+      "title": "Self-Update Workflow for NEXUS OS",
+      "track": "NEXUS_OS",
+      "order": 43,
+      "group": "Planned OS Phases",
+      "summary": "Allow NEXUS to evolve its own platform under explicit review and safety boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69",
+      "title": "Release / Deploy Loop",
+      "track": "NEXUS_OS",
+      "order": 44,
+      "group": "Planned OS Phases",
+      "summary": "Introduce governed release and deploy flows only after validation and approval maturity.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70",
+      "title": "Deploy Monitoring + Incident Mitigation",
+      "track": "NEXUS_OS",
+      "order": 45,
+      "group": "Planned OS Phases",
+      "summary": "Monitor deployments and support governed incident mitigation once release loops exist.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71",
+      "title": "Project Shipping Boundary + Export Pipeline",
+      "track": "NEXUS_OS",
+      "order": 46,
+      "group": "Planned OS Phases",
+      "summary": "Define how NEXUS packages and exports governed project outputs safely.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72",
+      "title": "DB-backed Runtime Primary",
+      "track": "NEXUS_OS",
+      "order": 47,
+      "group": "Planned OS Phases",
+      "summary": "Switch runtime primary storage from file-backed fallback to governed DB-backed runtime.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P73",
+      "title": "Auth, RBAC, Multi-user Governance",
+      "track": "NEXUS_OS",
+      "order": 48,
+      "group": "Planned OS Phases",
+      "summary": "Add authentication, role-based access, and multi-user governance boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74",
+      "title": "Observability, Telemetry, SLOs",
+      "track": "NEXUS_OS",
+      "order": 49,
+      "group": "Planned OS Phases",
+      "summary": "Formalize telemetry, service-level objectives, and deeper platform observability.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75",
+      "title": "Backup, Restore, Disaster Recovery",
+      "track": "NEXUS_OS",
+      "order": 50,
+      "group": "Planned OS Phases",
+      "summary": "Deliver backup, restore, and disaster-recovery workflows for governed runtime state.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76",
+      "title": "Tenant / Project Isolation",
+      "track": "NEXUS_OS",
+      "order": 51,
+      "group": "Planned OS Phases",
+      "summary": "Isolate tenant and project execution boundaries for broader multi-project support.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77",
+      "title": "Compliance and Audit Pack",
+      "track": "NEXUS_OS",
+      "order": 52,
+      "group": "Planned OS Phases",
+      "summary": "Package compliance and audit evidence for enterprise-readiness workflows.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78",
+      "title": "Self-Healing Enterprise Developer Preview",
+      "track": "NEXUS_OS",
+      "order": 53,
+      "group": "Planned OS Phases",
+      "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
+      "commandCenterVisible": true
     }
   ]
 }

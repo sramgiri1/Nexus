@@ -64,7 +64,7 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 - Available actions: refresh and operator inspection only
 - Disabled actions: no API mutation flows are exposed here
 - Evidence/activity: route-level health rather than task evidence
-- Known limitations: unified boot is not available yet
+- Known limitations: the local API may still be offline, in which case Command Center falls back to snapshot or file-backed data
 
 ## Durable State
 
@@ -96,20 +96,29 @@ Command Center is the operator surface for governed local NEXUS work. It summari
 ## Projects
 
 - Purpose: summarize current project or private-project state
-- Shows: active scope, backend validation, iOS readiness, release readiness, and adapter posture
+- Shows: active scope, backend validation, iOS readiness, release readiness, adapter posture, and local-private project progress when available
 - Available actions: inspection only
 - Disabled actions: project registry and adapter framework are not complete yet
 - Evidence/activity: validation posture and readiness context
-- Known limitations: Project Registry + Adapter Framework is planned for P42
+- Known limitations: Project Registry + Adapter Framework is planned for P42, so project progress is still a temporary local-private example rather than a dynamic registry
+
+## Service Health
+
+- Purpose: show which local NEXUS services are running, offline, disabled, planned, or unknown
+- Shows: localhost-only service manifest posture, current status snapshot, operator commands, doctor findings, and troubleshooting guidance
+- Available actions: inspection only
+- Disabled actions: UI execution for `nexus:up`, `nexus:down`, `nexus:status`, and `nexus:doctor` is intentionally disabled
+- Evidence/activity: service-state and doctor-report summaries rather than task evidence
+- Known limitations: the page reflects existing manifest and local-state data; it does not create a new backend status channel
 
 ## OS Roadmap
 
-- Purpose: phase-tracking route for roadmap state
-- Shows: roadmap phases, current status, and future phase context
+- Purpose: track NEXUS OS platform capability only
+- Shows: current OS phase, previous completed phase, next OS phase, completed/planned/blocked counts, completed and planned phase lists, and open OS gaps
 - Available actions: inspection only
 - Disabled actions: no mutations
-- Evidence/activity: roadmap only
-- Known limitations: phase labels belong here, not on primary product pages
+- Evidence/activity: roadmap only; project progress stays on the Projects route
+- Known limitations: phase labels belong here, not on primary product pages, and project-specific milestones do not belong in the OS roadmap
 
 ## Demo Mode
 

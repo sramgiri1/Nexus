@@ -479,7 +479,11 @@ test.describe("Command Center route-wide UX", () => {
       await expect(page.locator(".ccv2-topbar")).toBeVisible();
       await expect(page.locator(".ccv2-sidebar")).toBeVisible();
       await expect(page.locator(".ccv2-theme-control")).toBeVisible();
-      await expect(page.locator(".ccv2-card, .ccv2-stat-chip, .ccv2-workspace-nba").first()).toBeVisible();
+      await expect(
+        page.locator(
+          ".ccv2-card, .ccv2-stat-chip, .ccv2-workspace-nba, .ccv2-roadmap-track, .ccv2-roadmap-summary-card",
+        ).first(),
+      ).toBeVisible();
 
       await pickTheme(page, "light");
       themeState = await getThemeState(page);
@@ -602,40 +606,55 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap route still shows phase labels", async ({ page }) => {
+  test("OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4", "P41.6.5"]) {
+    await expect(page.locator("body")).toContainText("NEXUS OS Platform Progress");
+    await expect(page.locator("body")).toContainText("Current OS Phase");
+    await expect(page.locator("body")).toContainText("Next OS Phase");
+    await expect(page.locator("body")).toContainText("Open OS Gaps");
+    await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework");
+
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.7", "P42"]) {
       expect(body).toContain(phase);
     }
     for (const phase of NEXUS_ROADMAP_PHASES.map((entry) => entry.phase)) {
       expect(body).toContain(phase);
     }
+    expect(body).not.toContain("CareLoop");
+    expect(body).not.toContain("Track B");
+    expect(body).not.toContain("DB-backed Command Center + Live Refresh");
 
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap preserves phase labels across theme changes", async ({ page }) => {
+  test("OS Roadmap and Projects render cleanly across theme changes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P37");
+    await expect(page.locator("body")).toContainText("P41.6.5");
+    await expect(page.locator("body")).toContainText("Current OS Phase");
 
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
-    await expect(page.locator("body")).toContainText("P41");
-    await expect(page.locator("body")).toContainText("P41.6.3");
+    await expect(page.locator("body")).toContainText("P42");
     await expect(page.locator("body")).toContainText("P41.6.4");
+
+    await page.goto("/command-center/projects");
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Projects");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Projects");
 
     expect(errors).toEqual([]);
   });
 
-  test("sidebar uses cleaned product labels", async ({ page }) => {
+  test("sidebar uses cleaned product labels and preserves full labels", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
@@ -652,6 +671,23 @@ test.describe("Command Center route-wide UX", () => {
     expect(sidebarText).not.toContain("Implementation P39");
     expect(sidebarText).not.toContain("Live API P40");
     expect(sidebarText).not.toContain("Durable State P41");
+    await expect(page.getByRole("link", { name: /Agent Workbench/i })).toHaveAttribute("title", "Agent Workbench");
+    await expect(page.getByRole("link", { name: /Docs & Guides/i })).toHaveAttribute("title", "Docs & Guides");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("top header uses clean environment formatting", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+
+    const topbar = await page.locator(".ccv2-topbar").innerText();
+    expect(topbar).toContain("ENVIRONMENT");
+    expect(topbar).toContain("Desktop");
+    expect(topbar).toContain("Local-private");
+    expect(topbar).not.toContain("ENVDesktop");
+    expect(topbar).not.toContain("local-");
 
     expect(errors).toEqual([]);
   });
@@ -809,14 +845,31 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("projects page shows active project summary and future adapter note", async ({ page }) => {
+  test("projects page keeps project progress separate from the OS roadmap", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/projects");
 
     await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Project Progress");
     await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework is planned for P42.");
     await expect(page.locator("body")).toContainText(/private project|Private Project/);
+
+    await page.goto("/command-center/demo");
+    expect(await page.locator("body").innerText()).not.toContain("CareLoop");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("planned routes show a safe coming-soon state instead of crashing", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    for (const path of ["/command-center/activity", "/command-center/docs", "/command-center/settings"]) {
+      await page.goto(path);
+      await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
+      await expect(page.locator("body")).toContainText(/Coming Soon|Planned/);
+      await expect(page.locator("body")).toContainText("Read-only");
+    }
 
     expect(errors).toEqual([]);
   });
@@ -846,7 +899,7 @@ test.describe("Command Center route-wide UX", () => {
 
       await expect(page.locator(".ccv2-page-head__title").first()).toBeVisible();
       const stateBlocks = page.locator(
-        ".ccv2-card, .ccv2-stat-chip, .ccv2-wb-empty, .ccv2-info-banner, .ccv2-workspace-nba",
+        ".ccv2-card, .ccv2-stat-chip, .ccv2-wb-empty, .ccv2-info-banner, .ccv2-workspace-nba, .ccv2-roadmap-track, .ccv2-roadmap-summary-card",
       );
       await expect(stateBlocks.first()).toBeVisible();
 

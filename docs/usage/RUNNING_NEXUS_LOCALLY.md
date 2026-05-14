@@ -2,24 +2,82 @@
 
 ## Current Local Run Model
 
-NEXUS currently runs as a set of local services and validation scripts. P41.6.2 adds one-command local boot and shutdown for the current enabled service set, P41.6.3 adds a Command Center Service Health page for read-only operator visibility, and P41.6.4 adds a simple Command Palette for governed operator actions.
+NEXUS runs as a localhost-only operator surface with a small set of governed
+local services plus read-only inspection commands.
 
-Unified boot is planned for P41.6 and is now available through the `nexus:*` local boot commands delivered in P41.6.2.
+Through P41.6.5, the operator path is:
+
+- use `npm run nexus:doctor` to confirm local prerequisites
+- use `npm run nexus:status` to inspect the current service snapshot
+- use `npm run nexus:up` to start enabled manifest services
+- use `npm run nexus:down` to stop only NEXUS-managed services
+- use `/command-center/services` to review service posture in Command Center
+
+The UI can still fall back to snapshot/file-backed data when the local API is
+offline.
+
+Historical note: "Unified boot is planned for P41.6" was the operator
+limitation before `nexus:up` and `nexus:down` landed. Unified boot is now
+available, but earlier phase docs and reports may still reference that old
+limitation.
 
 ## Available Commands
 
 From `package.json`:
 
-- Dashboard: `npm run dashboard`
-- Local API: `npm run local-api:start`
-- Mission action bridge: `npm run mission:action-server`
+- Dashboard only: `npm run dashboard`
+- Local API only: `npm run local-api:start`
+- Mission action bridge only: `npm run mission:action-server`
 - Unified boot: `npm run nexus:up`
 - Unified shutdown: `npm run nexus:down`
 - Unified status: `npm run nexus:status`
 - Unified doctor: `npm run nexus:doctor`
-- Screenshot audit: `npm run command-center:screenshot-audit`
 
-You can also inspect `package.json` directly for the latest supported commands.
+If you are unsure whether a command exists in the current repo state, inspect
+`package.json` directly.
+
+## What `nexus:up` Starts
+
+`npm run nexus:up` starts only enabled services declared in
+`nexus.services.json`.
+
+Current required enabled services:
+
+- Command Center dashboard
+- Live Local API
+- Governed Action Bridge
+
+Current disabled or not-enabled services:
+
+- Durable State DB runtime primary
+- Worker Runtime
+- MCP / Tool Gateway
+- Provider Dispatch gateway
+
+Those disabled services are represented in the manifest so operators can tell
+the difference between planned capability and runtime failure.
+
+## Expected URLs
+
+- Command Center dashboard: `http://127.0.0.1:5173/`
+- Live Local API health: `http://127.0.0.1:4321/health`
+- Governed Action Bridge health: `http://127.0.0.1:3748/health`
+
+All managed services stay on `127.0.0.1`. No NEXUS local boot command should
+bind to `0.0.0.0`.
+
+## Runtime State and PID Tracking
+
+NEXUS-managed service state is stored under:
+
+- `local-state/runtime/services/service-state.json`
+
+Per-service logs are written under:
+
+- `local-state/runtime/services/logs/`
+
+Use these files for local inspection only. They are runtime artifacts, not
+public-facing reports.
 
 ## Service Health Page
 
@@ -30,114 +88,69 @@ Open:
 The Service Health route explains:
 
 - what each local service does
-- which services are online, offline, disabled, or planned
-- which commands to run in a terminal
-- current doctor findings and troubleshooting guidance
+- whether it is online, offline, disabled, planned, or unknown
+- which command to run in a terminal
+- whether the UI is using manifest data, service-state artifacts, or fallback
+  status
+- current doctor findings and common troubleshooting guidance
 
-This page is read-only. UI execution for service commands is not enabled yet.
+The page is read-only. Browser-side execution of `nexus:up`, `nexus:down`,
+`nexus:status`, and `nexus:doctor` is not enabled yet.
 
-## Current Service Posture
+## Command Palette and Service Health
 
-- Dashboard: available
-- Local API: available as a local read layer
-- Action bridge: available for governed action flows
-- DB foundation: read-only, file-backed foundation only
-- Unified boot: available for enabled local services
+The Command Palette uses current service and capability posture to explain why
+commands are available or disabled.
 
-## Unified Local Boot (P41.6.2)
+Examples:
 
-P41.6.2 adds:
+- if the Action Bridge is offline, governed action commands explain that the
+  bridge is required
+- if the local API is offline, read-first routes can still explain snapshot
+  fallback
+- if runtime locks, release actions, or provider dispatch are not enabled, the
+  palette shows the missing capability instead of pretending to execute
 
-- `npm run nexus:up`
-- `npm run nexus:down`
-- `npm run nexus:status`
-- `npm run nexus:doctor`
+## How To Read Status Output
 
-`nexus:up` starts only enabled manifest services on `127.0.0.1`.
-`nexus:down` stops only NEXUS-managed PIDs.
-`nexus:status` and `nexus:doctor` remain read-focused inspection commands.
+- `running, managed PID ...`: started by NEXUS and tracked in the service-state
+  file
+- `running, external/unmanaged`: already running outside NEXUS management;
+  `nexus:down` will not stop it
+- `file-backed/read-only`: Durable State fallback is active, but DB writes stay
+  disabled
+- `not enabled`: intentionally unavailable in this phase
+- `planned`: future capability placeholder, not a runtime failure
+- `unknown`: run `npm run nexus:status` again or inspect Service Health for the
+  latest snapshot
 
-### Command Center Service Health (P41.6.3)
+## Recovery When Ports Are Busy
 
-P41.6.3 adds a Service Health route to Command Center so operators can inspect:
+If `nexus:doctor` or `nexus:status` reports a required port in use:
 
-- Command Center dashboard
-- Live Local API
-- Governed Action Bridge
-- Durable State Foundation
-- Worker Runtime placeholder
-- MCP / Tool gateway placeholder
-- Provider Dispatch placeholder
-- Batch Jobs placeholder
+1. check whether an existing healthy local NEXUS process already owns the port
+2. if it is a healthy unmanaged process, either keep using it or stop it
+   manually before retrying `nexus:up`
+3. if it is an unhealthy or stale process, stop it before retrying
+4. rerun `npm run nexus:doctor`
+5. rerun `npm run nexus:up`
 
-Use it to understand whether a service is:
+## Recovery When a Service Fails to Start
 
-- Online
-- Offline
-- Disabled by policy
-- Not enabled
-- Planned
-- Unknown
+- run `npm run nexus:doctor`
+- inspect `local-state/runtime/services/service-state.json`
+- inspect the relevant file under `local-state/runtime/services/logs/`
+- confirm the service command still exists in `package.json`
+- confirm the service host remains `127.0.0.1`
+- use the Service Health page to see whether Command Center is reading a live
+  state, a stale state, or fallback data
 
-### Command Palette (P41.6.4)
+## Current Limitations
 
-Open the Command Palette from the Command Center top bar or with `Cmd/Ctrl+K`.
-
-Use it for:
-
-- `Plan Mission`
-- `Review Work`
-- `Run QA Gate`
-- `Propose Fix`
-- `Prepare Ship`
-- `Run Retro`
-- `Guard Scope`
-- `Freeze Workspace`
-- `Explain Current State`
-
-The palette is governed and route-first:
-
-- available commands open existing governed routes or read-only summaries
-- disabled commands explain the missing capability
-- browser-side service execution is still not enabled
-
-### How To Read Status Output
-
-- `running, managed PID ...`: started by NEXUS and tracked in local service state
-- `running, external/unmanaged`: already running outside NEXUS management; `nexus:down` will not stop it
-- `file-backed/read-only`: the persistence layer is active through files, not live DB writes
-- `not enabled`: the service is intentionally unavailable in this phase
-
-### What Comes Next
-
-- boot docs, troubleshooting, and final validation land in P41.6.5
-
-## Durable State Status
-
-- Current persistence: file-backed
-- DB foundation: ready
-- DB writes: disabled by policy
-- Runtime DB primary: not enabled
-
-## If a Service Is Offline
-
-- Dashboard offline: run `npm run dashboard`
-- Local API offline: run `npm run local-api:start`
-- Action bridge unavailable: run `npm run mission:action-server`
-- One-command boot for enabled services: run `npm run nexus:up`
-- One-command shutdown for NEXUS-managed services: run `npm run nexus:down`
-- Snapshot fallback visible: the UI is using generated/browser-safe fallback data instead of live reads
-- `nexus:status` fails: check that `nexus.services.json` exists and parses
-- `nexus:doctor` fails: verify required scripts exist in `package.json`, the service-state directory is writable, and localhost ports are valid
-- If a required port is already in use by an unhealthy process, stop that process or pick a different local environment before retrying `nexus:up`
-- Disabled-by-design services in this phase include workers, MCP Gateway, and Provider Gateway
-- Service Health shows `Unknown`: refresh local service artifacts with `npm run nexus:status`
-- Service Health shows `Offline`: run `npm run nexus:doctor`, then start or restart the service from a local terminal
-- Service Health command buttons are disabled: this is expected; browser-side service execution is not enabled yet
-
-## Notes
-
-- Do not assume provider execution is available.
-- Do not assume worker runtime is available.
-- Do not assume release/deploy bridges are enabled.
-- DB writes remain disabled by policy.
+- local API may be offline and the UI may use snapshot/file-backed fallback
+- browser-side service execution is still disabled
+- worker runtime, provider dispatch, and release execution are not enabled
+- DB writes remain disabled by policy
+- `check:public-safety` may still fail because of known pre-existing
+  roadmap-doc false positives unless they are explicitly resolved in a later
+  phase

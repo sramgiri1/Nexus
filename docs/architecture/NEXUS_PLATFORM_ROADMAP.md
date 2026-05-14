@@ -1,7 +1,7 @@
 # NEXUS Platform Roadmap
 
-**Version:** 1.0  
-**Date:** 2026-05-06
+**Version:** 2.0
+**Date:** 2026-05-14
 
 ---
 
@@ -78,20 +78,24 @@ belongs in separate private repos.
 
 ## Current Phase
 
-### Phase 41.6.4 — NEXUS Command Palette + Simple Operator Actions
+### Phase 41.6.5 — OS Roadmap / Project Roadmap Separation, Boot Docs, Troubleshooting, and Final Validation
 
 Goal:
 
-- expose a simple governed operator command layer in Command Center without enabling unsafe execution or bypassing current service and capability boundaries
+- separate NEXUS OS roadmap tracking from project progress
+- tighten operator guidance for `nexus:up`, `nexus:down`, `nexus:status`, and
+  `nexus:doctor`
+- improve roadmap readability, header formatting, and planned-route behavior in
+  Command Center
+- complete final validation for the P41.6 local boot sequence
 
 Deliverables:
 
-- `dashboard/src/data/nexusCommands.js`
-- Command Palette UX in Command Center
-- simple operator action row in Mission Control
-- disabled-reason mapping for high-risk or not-yet-enabled actions
-- route/test/checker/docs updates
-- OS phase status update for `P41.6.4`
+- OS phase status registry becomes the Command Center roadmap source of truth
+- OS Roadmap shows platform phases only
+- Projects route owns local-private project progress
+- boot docs and troubleshooting are updated
+- route/test/checker/report updates for roadmap separation and boot finalization
 
 Non-goals:
 
@@ -99,13 +103,15 @@ Non-goals:
 - no worker runtime
 - no DB writes
 - no release/deploy execution
-- no private project mutation
+- no private project source mutation
 
 Validation checks:
 
-- `npm run check:command-center-ux`
-- `npm run check:nexus-local-boot`
 - `npm run check:os-phase-status`
+- `npm run check:nexus-boot`
+- `npm run check:command-center-ux`
+- `npm run nexus:status`
+- `npm run nexus:doctor`
 - `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
 
 Risk level:
@@ -114,14 +120,65 @@ Risk level:
 
 ---
 
+## Expanded OS Roadmap Snapshot
+
+- Completed foundation: `P26-P41`
+- Command Center UX stabilization: `P41.5.1` through `P41.5.6`
+- Unified NEXUS Local Boot / Service Orchestration:
+  - `P41.6.1` complete
+  - `P41.6.2` complete
+  - `P41.6.3` complete
+  - `P41.6.4` complete
+  - `P41.6.5` complete
+- `P41.7` Documentation System, Usage Guides, Reuse Audit, Refactor Foundation
+- `P41.8` Centralized Activity Log + Observability Ledger
+- `P41.9` README + Architecture Diagram Registry
+- `P42` Project Registry + Adapter Framework
+- `P43` Scope Boundary + Project Packaging Safety
+- `P44` Multi-Repo Workspace + Git/PR Lifecycle
+- `P45` Agent Registry + Boundary Compiler
+- `P46` Scoped Memory Architecture + Memory Center
+- `P47` Trusted Context + Data Architecture Layer
+- `P48` Governed Agentic Mesh
+- `P49` Agent Definition Update Workflow
+- `P50` Skill Registry + Skill Authoring Workflow
+- `P51` Hook Registry + Safe Automation Lifecycle
+- `P52` Tool / MCP Registry + Tool Governance
+- `P53` Trigger + Integration Gateway
+- `P54` API + Batch Execution Adapter
+- `P55` Test Suite Manager: Project + OS
+- `P56` Quality Intelligence + Test Gap Detection
+- `P57` Cost Center + Budget Enforcement
+- `P58` Policy Center + Governance Admin
+- `P59` Secrets and Credential Boundary
+- `P60` Worker Queue + Runtime Engine
+- `P61` Concurrent Execution + Work Deduplication
+- `P62` Conversational NEXUS Command Interface
+- `P63` AI Interaction Snapshot + Granular Recovery Layer
+- `P64` Provider + Tool Dispatch Through Governance
+- `P64.1` Code Mode Runtime + Lazy Tool Loading
+- `P65` Batch Intelligence Jobs for Large-Scale Analysis
+- `P66` Self-Healing Failure Loop
+- `P67` Controlled Source Mutation Expansion
+- `P68` Self-Update Workflow for NEXUS OS
+- `P69` Release / Deploy Loop
+- `P70` Deploy Monitoring + Incident Mitigation
+- `P71` Project Shipping Boundary + Export Pipeline
+- `P72` DB-backed Runtime Primary
+- `P73` Auth, RBAC, Multi-user Governance
+- `P74` Observability, Telemetry, SLOs
+- `P75` Backup, Restore, Disaster Recovery
+- `P76` Tenant / Project Isolation
+- `P77` Compliance and Audit Pack
+- `P78` Self-Healing Enterprise Developer Preview
+
+---
+
 ## Next Phases
 
-- Phase 41.6.5 — Boot Docs, Troubleshooting, and Final Validation
-- Phase 41.7 — follow-on documentation and operator workflow tightening if
-  still needed after unified boot lands
+- Phase 41.7.1 — Codebase Documentation Standard + Module Registry
 - Phase 41.8 — Centralized Activity Log + Observability Ledger
-- Phase 41.9 — README and architecture diagram registry follow-up if further
-  refinement is still needed
+- Phase 41.9 — README + Architecture Diagram Registry
 - Phase 42 — Project Registry + Adapter Framework
 
 ---

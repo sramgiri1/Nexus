@@ -7,7 +7,16 @@ import {
   getCommandCenterSidebarGroups,
   resolveCommandCenterRoute,
 } from "../data/commandCenterRoutes.js";
-import { NEXUS_ROADMAP_PHASES } from "../data/nexusRoadmap.js";
+import {
+  NEXUS_BLOCKED_OS_PHASES,
+  NEXUS_COMPLETED_OS_PHASES,
+  NEXUS_CURRENT_OS_PHASE,
+  NEXUS_NEXT_OS_PHASE,
+  NEXUS_OS_OPEN_GAPS,
+  NEXUS_OS_ROADMAP_META,
+  NEXUS_PLANNED_OS_PHASES,
+  NEXUS_PREVIOUS_COMPLETED_PHASE,
+} from "../data/nexusRoadmap.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
@@ -340,8 +349,10 @@ function TopBar({ vm, currentPage, apiState, onRefresh, themeState, onOpenComman
       </div>
 
       <div className="ccv2-topbar__env-badge">
-        <span className="ccv2-topbar__env-label">ENV</span>
-        <span className="ccv2-topbar__env-value">Desktop · Local-private</span>
+        <span className="ccv2-topbar__env-label">Environment</span>
+        <span className="ccv2-topbar__env-value">Desktop</span>
+        <span className="ccv2-topbar__env-sep">|</span>
+        <span className="ccv2-topbar__env-value">Local-private</span>
       </div>
 
       <div className="ccv2-topbar__spacer" />
@@ -2715,7 +2726,7 @@ function ProjectsPage({ vm, studio }) {
   const pv = privateValidationSnapshot;
   const pvStatus = pv?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
-  const clp = vm.careloopProductProgress;
+  const projectProgress = vm.projectProgress || vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
 
   return (
@@ -2771,14 +2782,16 @@ function ProjectsPage({ vm, studio }) {
           </div>
         </div>
 
-        {isLocalPrivate && clp && (
+        {isLocalPrivate && projectProgress && (
           <>
             <div className="ccv2-card">
-              <div className="ccv2-section-heading">PRD Progress · {clp.productName} {clp.prdStatus.version}</div>
-              <div style={{ fontSize: 12, color: "var(--v2-muted)", margin: "4px 0 12px" }}>{clp.productLanguage}</div>
+              <div className="ccv2-section-heading">Project Progress · {projectProgress.projectName} {projectProgress.prdStatus.version}</div>
+              <div style={{ fontSize: 12, color: "var(--v2-muted)", margin: "4px 0 12px" }}>
+                Local-private only · active milestone: {projectProgress.milestone || "Current sprint"} · {projectProgress.productLanguage}
+              </div>
 
               <div className="ccv2-sprint-board">
-                {clp.sprints.map((s) => (
+                {projectProgress.sprints.map((s) => (
                   <div key={s.id} className={`ccv2-sprint-tile ccv2-sprint-tile--${s.status.toLowerCase().replace("_", "-")}`}>
                     <div className="ccv2-sprint-tile__id">{s.id}</div>
                     <div className="ccv2-sprint-tile__focus">{s.focus}</div>
@@ -2791,9 +2804,9 @@ function ProjectsPage({ vm, studio }) {
 
             <div className="ccv2-two-col">
               <div className="ccv2-card">
-                <div className="ccv2-section-heading">Open Gaps</div>
+                <div className="ccv2-section-heading">Project Open Gaps</div>
                 <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                  {clp.gaps.map((g) => (
+                  {projectProgress.gaps.map((g) => (
                     <div key={g} className="ccv2-gap-row">
                       <span className="ccv2-gap-row__dot" />
                       <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>{g}</span>
@@ -2805,18 +2818,28 @@ function ProjectsPage({ vm, studio }) {
               <div className="ccv2-card">
                 <div className="ccv2-section-heading">Locked Decisions</div>
                 <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                  {clp.lockedDecisions.map((d) => (
+                  {projectProgress.lockedDecisions.map((d) => (
                     <div key={d} style={{ fontSize: 11, color: "var(--v2-muted-2)", padding: "4px 0", borderBottom: "1px solid rgba(136,255,235,0.05)", lineHeight: 1.5 }}>
                       {d}
                     </div>
                   ))}
                 </div>
                 <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted-2)" }}>
-                  Compliance: {clp.compliance.framework}
+                  Compliance: {projectProgress.compliance.framework}
                 </div>
               </div>
             </div>
           </>
+        )}
+
+        {!isLocalPrivate && (
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Project Progress</div>
+            <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+              Project progress is shown only in local-private mode until the Project Registry + Adapter Framework lands in P42.
+              Public and demo surfaces use private-project wording and do not expose the local-private roadmap for a selected project.
+            </p>
+          </div>
         )}
       </div>
     </div>
@@ -4428,89 +4451,172 @@ function ServiceHealthPage({ vm }) {
 
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
-  const clp = vm.careloopProductProgress;
-  const isLocalPrivate = vm.shell.mode === "local-private";
-  // Legacy optional checker compatibility only:
-  // "P37" status: "COMPLETE"
-  // "P38" status: "IN_PROGRESS"
+  void vm;
 
-  const nexusTrack = [
-    { phase: "P26–P30", label: "Agentic OS foundation", status: "COMPLETE", detail: "Skills, hooks, governor, sprint orchestration" },
-    { phase: "P31–P33", label: "Command Center V1", status: "COMPLETE", detail: "Studio shell, constellation, traction surfaces" },
-    { phase: "P34–P35", label: "Command Center V2 + Mission Action Bridge", status: "COMPLETE", detail: "Full-screen shell, sidebar routing, mission composer, PRD awareness" },
-    { phase: "P36", label: "Agentic Workspace Home + Workflow Templates", status: "COMPLETE", detail: "Workflow cards, next-best action, workspace page, roadmap update" },
-    ...NEXUS_ROADMAP_PHASES,
-    { phase: "P43", label: "Worker Queue + Runtime Engine", status: "PLANNED", detail: "Async task execution engine with governed worker queue" },
-    { phase: "P44", label: "Provider/Tool Dispatch Through Governance", status: "PLANNED", detail: "Real provider calls through governor and approval gates" },
-    { phase: "P45", label: "Enterprise Release Candidate", status: "PLANNED", detail: "Multi-project, compliance, investor-ready OS" },
-  ];
+  const summarizePhase = (phase) => {
+    if (!phase) return "Not available";
+    return `${phase.phase} · ${phase.label}`;
+  };
 
-  const careloopTrack = clp ? clp.sprints.map((s) => ({
-    phase: s.id,
-    label: s.focus,
-    status: s.status,
-    detail: s.tests !== "—" ? `Tests: ${s.tests}` : "—",
-  })) : [];
-
-  const statusClass = (s) =>
-    s === "COMPLETE" ? "pass" : s === "IN_PROGRESS" ? "pending" : s === "PLANNED" ? "disabled" : "fail";
+  const currentPhase = NEXUS_CURRENT_OS_PHASE;
+  const previousPhase = NEXUS_PREVIOUS_COMPLETED_PHASE;
+  const nextPhase = NEXUS_NEXT_OS_PHASE;
 
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">OS Roadmap</div>
-          <div className="ccv2-page-head__sub">NEXUS OS phases · CareLoop sprint board</div>
+          <div className="ccv2-page-head__sub">NEXUS OS platform phases, current platform gaps, and the next governed capabilities on deck.</div>
         </div>
 
-        <div className="ccv2-roadmap-track">
-          <div className="ccv2-roadmap-track__header">
-            <div className="ccv2-eyebrow">Track A</div>
-            <div className="ccv2-roadmap-track__title">NEXUS OS · P26 → P45</div>
+        <div className="ccv2-roadmap-summary-grid">
+          <div className="ccv2-roadmap-summary-card ccv2-roadmap-summary-card--current">
+            <div className="ccv2-roadmap-summary-card__label">Current OS Phase</div>
+            <div className="ccv2-roadmap-summary-card__value">{summarizePhase(currentPhase)}</div>
+            <div className="ccv2-roadmap-summary-card__meta">{currentPhase?.statusLabel || "In Progress"}</div>
           </div>
-          <div className="ccv2-roadmap-phases">
-            {nexusTrack.map((row) => (
-              <div key={row.phase} className={`ccv2-roadmap-phase ccv2-roadmap-phase--${statusClass(row.status)}`}>
-                <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
-                <div className="ccv2-roadmap-phase__label">{row.label}</div>
-                <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
-                <span className={`ccv2-pill ccv2-pill--${statusClass(row.status)}`}>{row.status.replace("_", " ")}</span>
+          <div className="ccv2-roadmap-summary-card">
+            <div className="ccv2-roadmap-summary-card__label">Previous Completed Phase</div>
+            <div className="ccv2-roadmap-summary-card__value">{summarizePhase(previousPhase)}</div>
+            <div className="ccv2-roadmap-summary-card__meta">Complete</div>
+          </div>
+          <div className="ccv2-roadmap-summary-card">
+            <div className="ccv2-roadmap-summary-card__label">Next OS Phase</div>
+            <div className="ccv2-roadmap-summary-card__value">{summarizePhase(nextPhase)}</div>
+            <div className="ccv2-roadmap-summary-card__meta">{nextPhase?.statusLabel || "Planned"}</div>
+          </div>
+          <div className="ccv2-roadmap-summary-card">
+            <div className="ccv2-roadmap-summary-card__label">Blocked Count</div>
+            <div className="ccv2-roadmap-summary-card__value">{NEXUS_OS_ROADMAP_META.blockedCount}</div>
+            <div className="ccv2-roadmap-summary-card__meta">OS gaps requiring intervention</div>
+          </div>
+          <div className="ccv2-roadmap-summary-card">
+            <div className="ccv2-roadmap-summary-card__label">Completed Count</div>
+            <div className="ccv2-roadmap-summary-card__value">{NEXUS_OS_ROADMAP_META.completedCount}</div>
+            <div className="ccv2-roadmap-summary-card__meta">Phases validated so far</div>
+          </div>
+          <div className="ccv2-roadmap-summary-card">
+            <div className="ccv2-roadmap-summary-card__label">Planned Count</div>
+            <div className="ccv2-roadmap-summary-card__value">{NEXUS_OS_ROADMAP_META.plannedCount}</div>
+            <div className="ccv2-roadmap-summary-card__meta">Future platform phases</div>
+          </div>
+        </div>
+
+        <div className="ccv2-roadmap-track ccv2-roadmap-track--hero">
+          <div className="ccv2-roadmap-track__header">
+            <div className="ccv2-eyebrow">NEXUS OS Platform Progress</div>
+            <div className="ccv2-roadmap-track__title">{currentPhase?.phase || "Current phase pending"} · {currentPhase?.label || "Roadmap status unavailable"}</div>
+            <span className="ccv2-pill ccv2-pill--pending">{currentPhase?.statusLabel?.toUpperCase() || "CURRENT"}</span>
+          </div>
+          <div className="ccv2-roadmap-track__body">
+            <p className="ccv2-roadmap-track__body-copy">{currentPhase?.detail || "Run phase-status validation to refresh current OS phase details."}</p>
+            <div className="ccv2-roadmap-track__body-grid">
+              <div>
+                <div className="ccv2-roadmap-track__meta-label">Checks run</div>
+                <div className="ccv2-roadmap-track__meta-value">
+                  {Array.isArray(currentPhase?.checksRun) && currentPhase.checksRun.length > 0
+                    ? currentPhase.checksRun.join(" · ")
+                    : "Final validation is still being collected."}
+                </div>
+              </div>
+              <div>
+                <div className="ccv2-roadmap-track__meta-label">Next requirement</div>
+                <div className="ccv2-roadmap-track__meta-value">
+                  {currentPhase?.knownLimitations?.[0] || "No additional requirement recorded."}
+                </div>
+              </div>
+              <div>
+                <div className="ccv2-roadmap-track__meta-label">Next OS phase</div>
+                <div className="ccv2-roadmap-track__meta-value">{summarizePhase(nextPhase)}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="ccv2-roadmap-gaps">
+          <div className="ccv2-roadmap-gaps__header">
+            <div className="ccv2-eyebrow">Open OS Gaps</div>
+            <div className="ccv2-roadmap-track__title">What still needs operator visibility or future platform capability</div>
+          </div>
+          <div className="ccv2-roadmap-gaps__grid">
+            {NEXUS_OS_OPEN_GAPS.map((gap) => (
+              <div key={gap.title} className="ccv2-roadmap-gap-card">
+                <span className="ccv2-pill ccv2-pill--pending">{gap.priority}</span>
+                <div className="ccv2-roadmap-gap-card__title">{gap.title}</div>
+                <div className="ccv2-roadmap-gap-card__detail">{gap.detail}</div>
               </div>
             ))}
           </div>
         </div>
 
-        {isLocalPrivate && clp && (
+        <div className="ccv2-roadmap-sections">
           <div className="ccv2-roadmap-track">
             <div className="ccv2-roadmap-track__header">
-              <div className="ccv2-eyebrow">Track B</div>
-              <div className="ccv2-roadmap-track__title">{clp.productName} · Sprint 1 → 4</div>
-              <span className="ccv2-pill ccv2-pill--live" style={{ marginLeft: 8 }}>PRD {clp.prdStatus.version}</span>
+              <div className="ccv2-eyebrow">Completed OS Phases</div>
+              <div className="ccv2-roadmap-track__title">Validated NEXUS platform capability milestones</div>
             </div>
             <div className="ccv2-roadmap-phases">
-              {careloopTrack.map((row) => (
-                <div key={row.phase} className={`ccv2-roadmap-phase ccv2-roadmap-phase--${statusClass(row.status)}`}>
+              {NEXUS_COMPLETED_OS_PHASES.map((row) => (
+                <div key={row.phase} className="ccv2-roadmap-phase ccv2-roadmap-phase--pass">
                   <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
-                  <div className="ccv2-roadmap-phase__label">{row.label}</div>
-                  <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
-                  <span className={`ccv2-pill ccv2-pill--${statusClass(row.status)}`}>{row.status.replace("_", " ")}</span>
+                  <div className="ccv2-roadmap-phase__label-wrap">
+                    <div className="ccv2-roadmap-phase__label">{row.label}</div>
+                    <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
+                  </div>
+                  <span className="ccv2-pill ccv2-pill--pass">{row.statusLabel}</span>
                 </div>
               ))}
             </div>
+          </div>
 
-            <div className="ccv2-card" style={{ marginTop: 16 }}>
-              <div className="ccv2-section-heading">Open Gaps</div>
-              <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                {clp.gaps.map((g) => (
-                  <div key={g} className="ccv2-gap-row">
-                    <span className="ccv2-gap-row__dot" />
-                    <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>{g}</span>
+          <div className="ccv2-roadmap-track">
+            <div className="ccv2-roadmap-track__header">
+              <div className="ccv2-eyebrow">Planned OS Phases</div>
+              <div className="ccv2-roadmap-track__title">Upcoming NEXUS platform capability sequence</div>
+            </div>
+            <div className="ccv2-roadmap-phases">
+              {[currentPhase, ...NEXUS_PLANNED_OS_PHASES].filter(Boolean).map((row) => (
+                <div
+                  key={row.phase}
+                  className={`ccv2-roadmap-phase ccv2-roadmap-phase--${row.tone}${row.isCurrent ? " ccv2-roadmap-phase--current" : ""}`}
+                >
+                  <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
+                  <div className="ccv2-roadmap-phase__label-wrap">
+                    <div className="ccv2-roadmap-phase__label">{row.label}</div>
+                    <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
+                  </div>
+                  <span className={`ccv2-pill ccv2-pill--${row.isCurrent ? "pending" : "disabled"}`}>
+                    {row.isCurrent ? "CURRENT" : row.statusLabel}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="ccv2-roadmap-track">
+            <div className="ccv2-roadmap-track__header">
+              <div className="ccv2-eyebrow">Blocked OS Phases</div>
+              <div className="ccv2-roadmap-track__title">Phases waiting on a later platform dependency</div>
+            </div>
+            {NEXUS_BLOCKED_OS_PHASES.length > 0 ? (
+              <div className="ccv2-roadmap-phases">
+                {NEXUS_BLOCKED_OS_PHASES.map((row) => (
+                  <div key={row.phase} className="ccv2-roadmap-phase ccv2-roadmap-phase--fail">
+                    <div className="ccv2-roadmap-phase__phase">{row.phase}</div>
+                    <div className="ccv2-roadmap-phase__label-wrap">
+                      <div className="ccv2-roadmap-phase__label">{row.label}</div>
+                      <div className="ccv2-roadmap-phase__detail">{row.detail}</div>
+                    </div>
+                    <span className="ccv2-pill ccv2-pill--fail">{row.statusLabel}</span>
                   </div>
                 ))}
               </div>
-            </div>
+            ) : (
+              <div className="ccv2-empty-state">No OS phases are currently marked blocked. Planned phases remain gated until their prerequisite platform work lands.</div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
@@ -4524,17 +4630,20 @@ function PlannedRoutePage({ routeKey }) {
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">{route?.expectedHeading || "Planned Route"}</div>
-          <div className="ccv2-page-head__sub">Planned product surface · read-only navigation placeholder</div>
+          <div className="ccv2-page-head__sub">Coming Soon · planned Command Center surface with read-only guidance until the capability is implemented.</div>
         </div>
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Current State</div>
           <div style={{ marginTop: 8, fontSize: 12, color: "var(--v2-text-dim)" }}>
-            This route is planned. Product copy, empty state behavior, and evidence wiring will arrive in a later Command Center subphase.
+            This route is planned. It stays available in navigation so operators can see upcoming Command Center surfaces without landing on a blank or broken page.
           </div>
           <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
-            <span className="ccv2-pill ccv2-pill--disabled">Planned</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Coming Soon</span>
             <span className="ccv2-pill ccv2-pill--disabled">Read-only</span>
+          </div>
+          <div style={{ marginTop: 12, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+            Expected behavior: planned surfaces should either stay disabled in the sidebar or render this safe placeholder until route wiring, evidence, and operator actions are ready.
           </div>
         </div>
       </div>

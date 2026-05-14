@@ -3,6 +3,7 @@ import { buildWorkspaceSummary } from "../../../workspace/workflowRecommendation
 import serviceManifest from "../../../nexus.services.json";
 import serviceState from "../../../local-state/runtime/services/service-state.json";
 import doctorReport from "../../../reports/nexus-doctor-report.json";
+import projectProgressExample from "../../../os-roadmap/project-progress.example.json";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -149,6 +150,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     : [];
   const doctorPassCount = doctorChecks.filter((entry) => entry?.ok).length;
   const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
+  const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
 
   return {
     shell: {
@@ -415,36 +417,35 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       nextPhase: "P42-LOCAL",
       nextPhaseAction: "Enable DB writes and migrate file-backed state to DB when policy allows it.",
     },
-    careloopProductProgress: {
-      productName: "CareLoop",
-      productLanguage: "iOS (SwiftUI) + Node.js backend",
-      prdStatus: { version: "v1.6", locked: true },
-      backendValidation: { testsPassed: 58, totalTests: 58, status: "PASS" },
-      remediation: { applied: true, rootCause: "date_window_boundary_bug" },
-      sprints: [
-        { id: "Sprint 1", status: "COMPLETE", focus: "Auth + Onboarding", tests: "58/58" },
-        { id: "Sprint 2", status: "IN_PROGRESS", focus: "Daily digest + Reminder escalation", tests: "—" },
-        { id: "Sprint 3", status: "PLANNED", focus: "Supabase JWT auth", tests: "—" },
-        { id: "Sprint 4", status: "PLANNED", focus: "Soft launch · public invite hardening", tests: "—" },
-      ],
-      gaps: [
-        "Physical device push notification (open)",
-        "Public invite hardening (Sprint 4)",
-        "Paid entitlement gate (post-launch)",
-        "Privacy incident response playbook (in progress)",
-      ],
-      lockedDecisions: [
-        "Clinic/EHR integration: PERMANENTLY OFF (HIPAA trigger)",
-        "Bundle ID: com.careloop.ios",
-        "Auth Sprint 1-2: static API key (x-api-key header)",
-        "Reminder escalation: 15 minutes",
-      ],
-      compliance: {
-        framework: "FTC Health Breach Notification Rule",
-        hipaa: "OFF",
-        clinicIntegration: "OFF",
-      },
-    },
+    projectProgress: projectProgressExampleEntry
+      ? {
+        projectName: projectProgressExampleEntry.displayName,
+        safeProjectName: projectProgressExampleEntry.safeDisplayName,
+        productLanguage: projectProgressExampleEntry.projectType,
+        prdStatus: { version: projectProgressExampleEntry.prdVersion, locked: true },
+        backendValidation: projectProgressExampleEntry.backendValidation,
+        remediation: { applied: true, rootCause: "date_window_boundary_bug" },
+        sprints: projectProgressExampleEntry.sprints,
+        gaps: projectProgressExampleEntry.openGaps,
+        lockedDecisions: projectProgressExampleEntry.lockedDecisions,
+        compliance: projectProgressExampleEntry.compliance,
+        milestone: projectProgressExampleEntry.milestone,
+      }
+      : null,
+    careloopProductProgress: projectProgressExampleEntry
+      ? {
+        productName: projectProgressExampleEntry.displayName,
+        productLanguage: projectProgressExampleEntry.projectType,
+        prdStatus: { version: projectProgressExampleEntry.prdVersion, locked: true },
+        backendValidation: projectProgressExampleEntry.backendValidation,
+        remediation: { applied: true, rootCause: "date_window_boundary_bug" },
+        sprints: projectProgressExampleEntry.sprints,
+        gaps: projectProgressExampleEntry.openGaps,
+        lockedDecisions: projectProgressExampleEntry.lockedDecisions,
+        compliance: projectProgressExampleEntry.compliance,
+        milestone: projectProgressExampleEntry.milestone,
+      }
+      : null,
   };
 }
 

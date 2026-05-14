@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T21:34:42.781Z
-- Validation branch: feat/nexus-command-palette
-- Validation HEAD: 5d801a4
+- Generated at: 2026-05-14T11:22:30.149Z
+- Validation branch: fix/os-roadmap-project-separation-boot-docs
+- Validation HEAD: dd2a601
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -19,6 +19,9 @@
 - Service Health UX: PASS
 - Command palette: PASS
 - Operator actions: PASS
+- OS Roadmap / Project Progress separation: PASS
+- Header environment formatting: PASS
+- Sidebar label completeness/planned behavior: PASS
 - Screenshot audit: PASS
 - Visual QA report: PASS
 - Sidebar labels: PASS

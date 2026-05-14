@@ -2,20 +2,20 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T20:44:13.559Z
-- Validation branch: feat/nexus-local-boot-process-manager
-- Validation HEAD: 889a8fc
+- Generated at: 2026-05-14T11:22:31.285Z
+- Validation branch: fix/os-roadmap-project-separation-boot-docs
+- Validation HEAD: dd2a601
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
 
 - Service manifest: PASS
-- Local-only boundary: PASS
+- Status command: PASS
+- Doctor command: PASS
 - Process manager: PASS
-- nexus:up: PASS
-- nexus:down: PASS
-- Status integration: PASS
-- Doctor integration: PASS
+- Service Health UX: PASS
+- Command Palette docs: PASS
+- OS phase status: PASS
 - Policy: PASS
 - Dry run: PASS
 - Docs: PASS

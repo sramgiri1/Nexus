@@ -218,6 +218,24 @@ The manifest records:
 
 - route coverage
 - captured screenshot paths
+
+## P41.6.5 — OS Roadmap / Project Roadmap Separation, Boot Docs, Troubleshooting, and Final Validation
+
+This follow-on Command Center finalization step keeps roadmap tracking honest
+after local boot and command-palette work landed.
+
+It adds:
+
+- OS roadmap data sourced from the phase-status registry
+- separate project progress on the Projects route
+- cleaner top-bar environment formatting
+- stronger roadmap hierarchy in dark and light themes
+- improved planned-route behavior and sidebar label resilience
+- boot docs and troubleshooting updates tied to `nexus:up`, `nexus:down`,
+  `nexus:status`, and `nexus:doctor`
+
+It does not add backend execution, provider dispatch, worker runtime, DB
+writes, or project mutation.
 - skipped/planned routes
 - heading visibility
 - theme control visibility

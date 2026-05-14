@@ -2,35 +2,32 @@
 
 ## Metadata
 
-- Generated at: 2026-05-13T21:35:50.611Z
-- Validation branch: feat/nexus-command-palette
-- Validation HEAD: 5d801a4
+- Generated at: 2026-05-14T11:22:30.101Z
+- Validation branch: fix/os-roadmap-project-separation-boot-docs
+- Validation HEAD: dd2a601
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
-## Phase Status
+## Current OS Phase
 
-- P41.6.1: COMPLETE
-- P41.6.2: COMPLETE
-- P41.6.3: COMPLETE
-- P41.6.4: COMPLETE
-- P41.6.5: PLANNED
+- Current phase: P41.6.5 — OS Roadmap / Project Roadmap Separation, Boot Docs, Troubleshooting, and Final Validation
+- Status: complete
+- Branch: fix/os-roadmap-project-separation-boot-docs
+- Commit: pending-final-commit
+- Next phase: P41.7.1
 
-## Summary
+## Completion Checks
 
-- P41.6.1 established the read-only service manifest, status command, and doctor command.
-- P41.6.2 added localhost-only process management with nexus:up and nexus:down.
-- P41.6.3 added the Command Center Service Health route for operator visibility.
-- P41.6.4 adds the NEXUS command palette plus simple operator actions for Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain.
+- P41.5.1 through P41.5.6: complete
+- P41.6.1 through P41.6.4: complete
+- P41.6.5: complete
+- P41.7 / P41.8 / P41.9: planned
+- P42: Project Registry + Adapter Framework
 
-## Known Limitations
+## Roadmap Separation
 
-- Commands do not enable provider dispatch, worker runtime, DB writes, or release execution.
-- Several commands remain disabled until later governed capabilities are implemented.
-- check:public-safety still has known pre-existing roadmap-doc false positives.
-
-## Next Phase
-
-- P41.6.5 — Boot Docs, Troubleshooting, and Final Validation
+- OS roadmap track remains NEXUS-only
+- CareLoop / project progress is excluded from the OS phase registry
+- Command Center roadmap data mirrors the phase-status registry
 
 ## Failures
 

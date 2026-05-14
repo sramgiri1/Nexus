@@ -19,6 +19,9 @@ const sections = {
   serviceHealthUx: true,
   commandPalette: true,
   operatorActions: true,
+  roadmapProjectSeparation: true,
+  headerFormatting: true,
+  sidebarPlannedBehavior: true,
   screenshotAudit: true,
   visualQaReport: true,
   sidebarLabels: true,
@@ -321,6 +324,51 @@ for (const expected of [
   check(workflowTemplateSource.includes(expected), "workflowLabels", `Workflow templates missing expected copy: ${expected}`);
 }
 
+// OS Roadmap / project separation
+for (const expected of [
+  "NEXUS OS Platform Progress",
+  "Current OS Phase",
+  "Next OS Phase",
+  "Completed OS Phases",
+  "Planned OS Phases",
+  "Blocked OS Phases",
+  "Open OS Gaps",
+  "Project Progress",
+]) {
+  check(commandCenterSource.includes(expected), "roadmapProjectSeparation", `Roadmap / project separation missing expected copy: ${expected}`);
+}
+for (const forbidden of [
+  "CareLoop sprint board",
+  "Track B",
+  "DB-backed Command Center + Live Refresh",
+]) {
+  check(!commandCenterSource.includes(forbidden), "roadmapProjectSeparation", `Roadmap / project separation contains forbidden mixed-roadmap copy: ${forbidden}`);
+}
+for (const expectedTest of [
+  "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage",
+  "projects page keeps project progress separate from the OS roadmap",
+]) {
+  check(routeTestSource.includes(expectedTest), "roadmapProjectSeparation", `Route tests missing roadmap/project separation coverage: ${expectedTest}`);
+}
+
+// Header environment formatting
+check(commandCenterSource.includes("Environment"), "headerFormatting", "Top bar should include Environment label");
+check(commandCenterSource.includes("Desktop"), "headerFormatting", "Top bar should include Desktop environment value");
+check(commandCenterSource.includes("Local-private"), "headerFormatting", "Top bar should include Local-private mode value");
+check(!commandCenterSource.includes(">ENV<"), "headerFormatting", "Top bar should not use the old ENV badge copy");
+check(routeTestSource.includes("top header uses clean environment formatting"), "headerFormatting", "Route tests missing header formatting coverage");
+
+// Sidebar label completeness / planned behavior
+check(commandCenterSource.includes("title={item.name}"), "sidebarPlannedBehavior", "Sidebar links should preserve full labels through title attributes");
+check(commandCenterSource.includes("Coming Soon"), "sidebarPlannedBehavior", "Planned routes should render Coming Soon copy");
+check(commandCenterSource.includes("read-only guidance"), "sidebarPlannedBehavior", "Planned routes should explain read-only guidance");
+for (const expectedTest of [
+  "sidebar uses cleaned product labels and preserves full labels",
+  "planned routes show a safe coming-soon state instead of crashing",
+]) {
+  check(routeTestSource.includes(expectedTest), "sidebarPlannedBehavior", `Route tests missing sidebar/planned-route coverage: ${expectedTest}`);
+}
+
 // Page copy
 for (const forbidden of forbiddenUiLabels) {
   check(!commandCenterNonRoadmapSource.includes(forbidden), "pageCopy", `Non-roadmap page copy contains stale label: ${forbidden}`);
@@ -335,6 +383,8 @@ for (const expected of [
   "Disabled by policy",
   "Local API: Online",
   "Local API: Offline",
+  "Environment",
+  "Coming Soon",
   "Select a task to review agent output, evidence, blockers, and next actions.",
 ]) {
   check(commandCenterSource.includes(expected), "pageCopy", `CommandCenterV2.jsx missing expected copy: ${expected}`);
@@ -423,7 +473,7 @@ for (const expectedTest of [
   "durable state page shows file-backed posture without failure framing",
   "evidence page shows summary and avoids raw payload dumps",
   "safety center shows plain-language safety posture without raw policy keys",
-  "projects page shows active project summary and future adapter note",
+  "projects page keeps project progress separate from the OS roadmap",
 ]) {
   check(routeTestSource.includes(expectedTest), "pageSpecificUx", `Page-specific UX tests missing: ${expectedTest}`);
 }
@@ -603,11 +653,21 @@ for (const expected of [
 }
 
 // OS Roadmap preservation
-for (const phase of ["P37", "P38", "P39", "P40", "P41", "P41.6.3", "P41.6.4", "P41.6.5"]) {
-  check(roadmapSource.includes(phase), "roadmapPreservation", `OS roadmap data missing phase ${phase}`);
+for (const phase of ["P26-P41", "P41.5.1", "P41.5.6", "P41.6.4", "P41.6.5", "P41.7", "P42", "P78"]) {
+  check(
+    Array.isArray(roadmapPhases) && roadmapPhases.some((entry) => entry.phase === phase),
+    "roadmapPreservation",
+    `OS roadmap data missing phase ${phase}`,
+  );
 }
-check(Array.isArray(roadmapPhases) && roadmapPhases.length >= 8, "roadmapPreservation", "NEXUS_ROADMAP_PHASES should contain the current roadmap entries");
+check(Array.isArray(roadmapPhases) && roadmapPhases.length >= 30, "roadmapPreservation", "NEXUS_ROADMAP_PHASES should contain the expanded roadmap entries");
 check(commandCenterSource.includes("OS Roadmap"), "roadmapPreservation", "CommandCenterV2.jsx missing OS Roadmap route");
+for (const expectedTest of [
+  "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage",
+  "OS Roadmap and Projects render cleanly across theme changes",
+]) {
+  check(routeTestSource.includes(expectedTest), "roadmapPreservation", `Route tests missing roadmap coverage: ${expectedTest}`);
+}
 
 // Demo boundary
 check(!commandCenterSource.includes("DEMOAPP ACTIVE"), "demoBoundary", "CommandCenterV2.jsx should not contain DEMOAPP ACTIVE");
@@ -656,6 +716,9 @@ console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
+console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
+console.log(`Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}`);
+console.log(`Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}`);
 console.log(`Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}`);
 console.log(`Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}`);
 console.log(`Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}`);
@@ -688,6 +751,9 @@ const report = `# Command Center UX Report
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
+- OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}
+- Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}
+- Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}
 - Screenshot audit: ${sections.screenshotAudit ? "PASS" : "FAIL"}
 - Visual QA report: ${sections.visualQaReport ? "PASS" : "FAIL"}
 - Sidebar labels: ${sections.sidebarLabels ? "PASS" : "FAIL"}

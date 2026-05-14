@@ -202,7 +202,13 @@ check(read("service-runtime/serviceProcessManager.js").includes("managedByNexus"
 const routeSource = read("dashboard/src/data/commandCenterRoutes.js");
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
 const routeTestSource = read("dashboard/tests/routes.spec.js");
-const roadmapSource = read("dashboard/src/data/nexusRoadmap.js");
+let roadmapPhases = [];
+
+try {
+  ({ NEXUS_ROADMAP_PHASES: roadmapPhases } = await import("../dashboard/src/data/nexusRoadmap.js"));
+} catch (error) {
+  fail("osPhaseStatus", `Could not import dashboard/src/data/nexusRoadmap.js: ${error.message}`);
+}
 
 check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Service Health route must be registered");
 for (const expected of [
@@ -232,23 +238,35 @@ try {
 }
 check(Array.isArray(phaseStatus?.phases), "osPhaseStatus", "OS phase status registry missing phases array");
 check(
-  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.3" && entry.status === "COMPLETE"),
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.3" && entry.status === "complete"),
   "osPhaseStatus",
   "P41.6.3 must be recorded as complete",
 );
 check(
-  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.4" && entry.status === "COMPLETE"),
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.4" && entry.status === "complete"),
   "osPhaseStatus",
   "P41.6.4 must be recorded as complete",
 );
 check(
-  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.5" && entry.status === "PLANNED"),
+  phaseStatus?.phases?.some((entry) => entry.phaseId === "P41.6.5" && (entry.status === "in_progress" || entry.status === "complete")),
   "osPhaseStatus",
-  "P41.6.5 must be recorded as planned",
+  "P41.6.5 must be recorded as in_progress or complete",
 );
-check(roadmapSource.includes("P41.6.3"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.3");
-check(roadmapSource.includes("P41.6.4"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.4");
-check(roadmapSource.includes("P41.6.5"), "osPhaseStatus", "Dashboard roadmap data must include P41.6.5");
+check(
+  roadmapPhases.some((entry) => entry.phase === "P41.6.3"),
+  "osPhaseStatus",
+  "Dashboard roadmap data must include P41.6.3",
+);
+check(
+  roadmapPhases.some((entry) => entry.phase === "P41.6.4"),
+  "osPhaseStatus",
+  "Dashboard roadmap data must include P41.6.4",
+);
+check(
+  roadmapPhases.some((entry) => entry.phase === "P41.6.5"),
+  "osPhaseStatus",
+  "Dashboard roadmap data must include P41.6.5",
+);
 
 try {
   const privateDiff = gitOutput(["diff", "--name-only", "--", "projects/careloop", "projects/careloop-ios"]);

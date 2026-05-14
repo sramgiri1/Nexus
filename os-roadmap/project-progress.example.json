@@ -1,0 +1,62 @@
+{
+  "version": "1.0",
+  "mode": "local-private",
+  "projects": [
+    {
+      "projectId": "private-project-careloop",
+      "displayName": "CareLoop",
+      "safeDisplayName": "Private Project",
+      "projectType": "iOS (SwiftUI) + Node.js backend",
+      "milestone": "Beta readiness",
+      "prdVersion": "v1.6",
+      "backendValidation": {
+        "testsPassed": 58,
+        "totalTests": 58,
+        "status": "PASS"
+      },
+      "sprints": [
+        {
+          "id": "Sprint 1",
+          "status": "COMPLETE",
+          "focus": "Auth + Onboarding",
+          "tests": "58/58"
+        },
+        {
+          "id": "Sprint 2",
+          "status": "IN_PROGRESS",
+          "focus": "Daily digest + Reminder escalation",
+          "tests": "—"
+        },
+        {
+          "id": "Sprint 3",
+          "status": "PLANNED",
+          "focus": "Supabase JWT auth",
+          "tests": "—"
+        },
+        {
+          "id": "Sprint 4",
+          "status": "PLANNED",
+          "focus": "Soft launch · public invite hardening",
+          "tests": "—"
+        }
+      ],
+      "openGaps": [
+        "Physical device push notification (open)",
+        "Public invite hardening (Sprint 4)",
+        "Paid entitlement gate (post-launch)",
+        "Privacy incident response playbook (in progress)"
+      ],
+      "lockedDecisions": [
+        "Clinic/EHR integration: permanently off",
+        "Bundle ID: com.careloop.ios",
+        "Auth Sprint 1-2: static API key (x-api-key header)",
+        "Reminder escalation: 15 minutes"
+      ],
+      "compliance": {
+        "framework": "FTC Health Breach Notification Rule",
+        "hipaa": "OFF",
+        "clinicIntegration": "OFF"
+      }
+    }
+  ]
+}
