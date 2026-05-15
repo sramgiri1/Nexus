@@ -42,7 +42,33 @@ Every seed tool has:
 - `externalNetworkAllowed: false`
 - `projectMutationAllowed: false`
 
+## P52.2 - MCP Registry Schema
+
+P52.2 adds disabled MCP placeholders as registry metadata only. The registry
+describes future MCP server candidates without starting servers, loading full
+schemas into context, requiring secrets, or allowing network egress.
+
+Seed MCP placeholders are disabled:
+
+- Filesystem MCP Placeholder
+- GitHub MCP Placeholder
+- Playwright MCP Placeholder
+- DB Read-only MCP Placeholder
+- Xcode MCP Placeholder
+- Android Gradle MCP Placeholder
+
+Every MCP placeholder has:
+
+- `serverEnabled: false`
+- `schemasLoadedByDefault: false`
+- `lazySchemaLoadingRequired: true`
+- `egressPolicy: none`
+- `secretsRequired: []`
+
+These records exist so future phases can evaluate tools and MCP servers through
+one governed gateway. They do not create or start MCP server runtimes.
+
 ## Next Subphase
 
-P52.2 adds the MCP registry schema as disabled placeholders only. No MCP server
-runtime is created.
+P52.3 adds the governed tool gateway decision layer. It remains metadata-only
+and does not execute tools.

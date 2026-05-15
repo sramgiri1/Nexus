@@ -1200,3 +1200,25 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Search, contracts, permissions, adapters, and Tool Gateway UX arrive in later
   P52 subphases.
+
+## P52.2 — MCP Registry Schema
+
+- Primary capability:
+  Disabled MCP placeholder registry schema and seed metadata.
+- Main files/folders touched:
+  `tool-governance/mcpRegistrySchema.js`,
+  `tool-governance/mcpRegistry.js`,
+  `tool-governance/seeds/mcp-registry.seed.json`,
+  `policy/mcp-registry-policy.json`
+- Main checker(s):
+  `scripts/check-mcp-registry.js`
+- Main report(s):
+  `reports/mcp-registry-report.md`
+- Command Center impact:
+  Prepares disabled MCP metadata for a future Tool Gateway route.
+- Safety impact:
+  MCP server runtime, schema preloading, secrets, external network, providers,
+  DB writes, workers, and project mutation remain disabled.
+- Known limitations:
+  The registry is metadata-only. The governed gateway decision layer starts in
+  P52.3.
