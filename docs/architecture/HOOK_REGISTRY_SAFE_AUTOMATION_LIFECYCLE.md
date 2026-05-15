@@ -116,6 +116,22 @@ Kill switch decisions win over all other readiness states. Re-enabling requires
 review metadata and remains preview-only in P51; no state files are modified by
 the kill switch model.
 
+## P51.6 - Command Center Hooks UX
+
+P51.6 adds a read-only Command Center Hook Registry page. Operators can inspect:
+
+- registry posture and disabled hook counts
+- hook definitions and owner agents
+- trigger previews where `wouldExecute` stays false
+- guardrail and loop-risk decisions
+- kill-switch state and re-enable review requirements
+- developer artifacts for the registry, policy, checker, and report
+
+The page does not expose execution controls. Any button or action copy must
+state that hook execution is not enabled yet and that runtime integration comes
+later.
+
 ## Next Subphase
 
-P51.6 adds a read-only Command Center Hooks registry view.
+P51.7 performs final validation and closes P51 while hook execution remains
+disabled.

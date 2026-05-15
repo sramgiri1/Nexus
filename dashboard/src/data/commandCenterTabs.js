@@ -259,6 +259,45 @@ export const SKILL_REGISTRY_TABS = [
   },
 ];
 
+export const HOOK_REGISTRY_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Hook registry posture, safety boundaries, and readiness counts",
+    badge: "Read-only",
+  },
+  {
+    id: "hooks",
+    label: "Hooks",
+    description: "Registered disabled hook definitions and owner agents",
+    badge: "Ready",
+  },
+  {
+    id: "triggers",
+    label: "Triggers",
+    description: "Manual and planned trigger definitions without runtime execution",
+    badge: "Read-only",
+  },
+  {
+    id: "guardrails",
+    label: "Guardrails",
+    description: "Rate, retry, loop-risk, and fail-closed guard decisions",
+    badge: "Ready",
+  },
+  {
+    id: "kill-switches",
+    label: "Kill Switches",
+    description: "Global, project, and hook-level safe disable model",
+    badge: "Ready",
+  },
+  {
+    id: "developer-details",
+    label: "Developer Details",
+    description: "Registry files, reports, policy, and docs references",
+    badge: "Read-only",
+  },
+];
+
 export const AGENT_ROOMS_TABS = [
   {
     id: "overview",

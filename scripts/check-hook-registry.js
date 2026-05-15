@@ -202,6 +202,7 @@ check(docs.includes("P51.2 - Trigger Definition Model"), "docs", "Architecture d
 check(docs.includes("P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model"), "docs", "Architecture doc missing P51.3 section");
 check(docs.includes("P51.4 - Loop-Risk Detector"), "docs", "Architecture doc missing P51.4 section");
 check(docs.includes("P51.5 - Kill Switch and Safe Disable Model"), "docs", "Architecture doc missing P51.5 section");
+check(docs.includes("P51.6 - Command Center Hooks UX"), "docs", "Architecture doc missing P51.6 section");
 check(docs.includes("Hook execution is not enabled"), "docs", "Architecture doc must state hook execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -221,10 +222,13 @@ check(statusById.get("P51.4")?.status === "complete", "osPhaseStatus", "P51.4 mu
 check(statusById.get("P51.4")?.commit === "0e18569", "osPhaseStatus", "P51.4 commit mismatch");
 check(statusById.get("P51.4")?.nextPhase === "P51.5", "osPhaseStatus", "P51.4 next phase must be P51.5");
 check(statusById.get("P51.5")?.status === "complete", "osPhaseStatus", "P51.5 must be complete");
+check(statusById.get("P51.5")?.commit === "aae9171", "osPhaseStatus", "P51.5 commit mismatch");
 check(statusById.get("P51.5")?.nextPhase === "P51.6", "osPhaseStatus", "P51.5 next phase must be P51.6");
-check(statusById.get("P51.6")?.status === "planned", "osPhaseStatus", "P51.6 must be planned");
-check(phaseStatus.currentPhase === "P51.5", "osPhaseStatus", "Current phase must be P51.5");
-check(phaseStatus.nextPhase === "P51.6", "osPhaseStatus", "Next phase must be P51.6");
+check(statusById.get("P51.6")?.status === "complete", "osPhaseStatus", "P51.6 must be complete");
+check(statusById.get("P51.6")?.nextPhase === "P51.7", "osPhaseStatus", "P51.6 next phase must be P51.7");
+check(statusById.get("P51.7")?.status === "planned", "osPhaseStatus", "P51.7 must be planned");
+check(phaseStatus.currentPhase === "P51.6", "osPhaseStatus", "Current phase must be P51.6");
+check(phaseStatus.nextPhase === "P51.7", "osPhaseStatus", "Next phase must be P51.7");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -265,7 +269,7 @@ const report = `# NEXUS Hook Registry Report
 
 ## Scope
 
-P51.5 - Kill Switch and Safe Disable Model
+P51.6 - Command Center Hooks UX
 
 ## Summary
 

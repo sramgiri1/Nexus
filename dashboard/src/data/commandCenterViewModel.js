@@ -35,6 +35,16 @@ import {
   summarizeSkillTemplates,
   summarizeSkillTestRequirements,
 } from "../../../skills-registry/index.js";
+import {
+  buildHookGuardDecision,
+  buildTriggerPreview,
+  detectRegistryLoopRisks,
+  evaluateKillSwitch,
+  getHookRegistry,
+  summarizeRegisteredHooks,
+  summarizeLoopRisks,
+  summarizeTriggerDefinitions,
+} from "../../../hooks/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -570,6 +580,54 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       "Skills are registry, contract, template, profile, and test metadata only in P50.",
     ],
   };
+  const registeredHooks = getHookRegistry();
+  const hookSummary = summarizeRegisteredHooks(registeredHooks);
+  const hookTriggerSummary = summarizeTriggerDefinitions();
+  const hookLoopResults = detectRegistryLoopRisks(registeredHooks);
+  const hookLoopSummary = summarizeLoopRisks(hookLoopResults);
+  const hookLoopById = new Map(hookLoopResults.map((result) => [result.hookId, result]));
+  const hookRegistryView = {
+    summary: {
+      hooks: hookSummary.hookCount,
+      enabledHooks: hookSummary.enabledCount,
+      failClosedHooks: hookSummary.failClosedCount,
+      triggerDefinitions: hookTriggerSummary.triggerCount,
+      loopRiskBlocked: hookLoopSummary.blockedCount,
+      killSwitchStates: registeredHooks.length,
+      status: "Read-only registry",
+      executionEnabled: false,
+      schedulerEnabled: false,
+      webhookRuntimeEnabled: false,
+      workerRuntimeEnabled: false,
+      providerCallsEnabled: false,
+      toolCallsEnabled: false,
+      dbWritesEnabled: false,
+      projectMutationEnabled: false,
+      nextPhase: "P52 - Tool / MCP Registry + Tool Governance",
+    },
+    hooks: registeredHooks.map((hook) => {
+      const triggerPreview = buildTriggerPreview(hook);
+      const guardDecision = buildHookGuardDecision(hook);
+      const killSwitch = evaluateKillSwitch(hook);
+      return {
+        ...hook,
+        statusLabel: hook.enabled ? "Ready" : "Not enabled",
+        disabledReason: "Hook execution is not enabled yet.",
+        triggerPreview,
+        guardDecision,
+        killSwitch,
+        loopRisk: hookLoopById.get(hook.hookId),
+      };
+    }),
+    triggerSummary: hookTriggerSummary,
+    loopRiskSummary: hookLoopSummary,
+    safetyNotes: [
+      "Hook execution is not enabled yet.",
+      "Hooks are registry/readiness only in P51.",
+      "Schedulers, cron, external webhooks, workers, provider/tool dispatch, DB writes, and project mutation remain disabled.",
+      "Worker/runtime integration comes later.",
+    ],
+  };
 
   return {
     shell: {
@@ -600,6 +658,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     scopeBoundary,
     multiRepoWorkspace,
     skillRegistry: skillRegistryView,
+    hookRegistry: hookRegistryView,
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

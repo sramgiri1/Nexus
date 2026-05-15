@@ -13,6 +13,7 @@ import {
   DATA_CONTEXT_TABS,
   DURABLE_STATE_TABS,
   EVIDENCE_TABS,
+  HOOK_REGISTRY_TABS,
   IMPLEMENTATION_TABS,
   LIVE_API_TABS,
   MEMORY_CENTER_TABS,
@@ -140,6 +141,7 @@ const ROUTE_ICONS = {
   release: "⬆",
   agents: "◈",
   skills: "✦",
+  hooks: "⌁",
   liveapi: "◎",
   database: "⬟",
   services: "☍",
@@ -4052,6 +4054,134 @@ function SkillRegistryPage({ vm }) {
   );
 }
 
+function HookRegistryPage({ vm }) {
+  const registry = vm.hookRegistry || {};
+  const [activeTab, setActiveTab] = useState("overview");
+  const hooks = registry.hooks || [];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Hook Registry</div>
+            <div className="ccv2-page-head__sub">
+              Safe automation hook readiness, triggers, guardrails, and kill switches.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+          </div>
+        </div>
+
+        <CommandTabs tabs={HOOK_REGISTRY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Hook Registry sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Hooks", value: registry.summary?.hooks ?? 0 },
+                { label: "Enabled", value: registry.summary?.enabledHooks ?? 0 },
+                { label: "Trigger Definitions", value: registry.summary?.triggerDefinitions ?? 0 },
+                { label: "Kill Switches", value: registry.summary?.killSwitchStates ?? 0 },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">Registry readiness</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Safety Posture</div>
+              <ul className="ccv2-list">
+                {(registry.safetyNotes || ["Hook execution is not enabled yet."]).map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+              <div className="ccv2-muted">Next phase guidance: {registry.summary?.nextPhase || "P52 - Tool / MCP Registry + Tool Governance"}</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="hooks" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {hooks.map((hook) => (
+                <article key={hook.hookId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{hook.label}</div>
+                  <div className="ccv2-muted">{hook.description}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill">{hook.ownerAgent}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{hook.scope}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{hook.statusLabel}</span>
+                  </div>
+                  <div className="ccv2-muted">Trigger: {hook.triggerType}</div>
+                  <div className="ccv2-muted">Disabled reason: {hook.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="triggers" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {hooks.map((hook) => (
+                <article key={hook.hookId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{hook.label}</div>
+                  <div className="ccv2-muted">Preview decision: {hook.triggerPreview?.decision}</div>
+                  <div className="ccv2-muted">Would execute: {hook.triggerPreview?.wouldExecute ? "Yes" : "No"}</div>
+                  <div className="ccv2-muted">Dry run: {hook.triggerPreview?.dryRun ? "Yes" : "No"}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="guardrails" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {hooks.map((hook) => (
+                <article key={hook.hookId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{hook.label}</div>
+                  <div className="ccv2-muted">Guard decision: {hook.guardDecision?.decision}</div>
+                  <div className="ccv2-muted">Loop-risk decision: {hook.loopRisk?.decision}</div>
+                  <div className="ccv2-muted">Loop-risk level: {hook.loopRisk?.riskLevel}</div>
+                  <div className="ccv2-muted">Fail closed: {hook.failClosed ? "Yes" : "No"}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="kill-switches" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {hooks.map((hook) => (
+                <article key={hook.hookId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{hook.killSwitchId}</div>
+                  <div className="ccv2-muted">Hook: {hook.label}</div>
+                  <div className="ccv2-muted">Decision: {hook.killSwitch?.decision}</div>
+                  <div className="ccv2-muted">Disabled levels: {(hook.killSwitch?.disabledLevels || []).join(", ") || "None"}</div>
+                  <div className="ccv2-muted">Review required to re-enable: Yes</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Registry Artifacts</div>
+              <ul className="ccv2-list">
+                <li>hooks/hookSchema.js</li>
+                <li>hooks/hookRegistry.js</li>
+                <li>hooks/triggerDefinitions.js</li>
+                <li>hooks/hookRuntimeGuard.js</li>
+                <li>hooks/loopRiskDetector.js</li>
+                <li>hooks/hookKillSwitch.js</li>
+                <li>policy/hook-registry-policy.json</li>
+                <li>reports/hook-registry-report.md</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Workspace Page ─── */
 function WorkspacePage({ vm }) {
   const navigate = useNavigate();
@@ -7627,6 +7757,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "release" && <ReleaseControlPage vm={vmWithApi} />}
           {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
           {currentPage === "skills" && <SkillRegistryPage vm={vmWithApi} />}
+          {currentPage === "hooks" && <HookRegistryPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

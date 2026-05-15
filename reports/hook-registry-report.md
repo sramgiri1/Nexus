@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:08:57.469Z
+- Generated at: 2026-05-15T22:16:11.592Z
 - Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: 0e18569
+- Validation HEAD: aae9171
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P51.5 - Kill Switch and Safe Disable Model
+P51.6 - Command Center Hooks UX
 
 ## Summary
 

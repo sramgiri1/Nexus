@@ -19,6 +19,7 @@ const PRIMARY_ROUTE_KEYS = [
   "workbench",
   "implementation",
   "skills",
+  "hooks",
   "agentRooms",
   "liveapi",
   "database",
@@ -34,7 +35,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
-const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms", "skills"].includes(key));
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms", "skills", "hooks"].includes(key));
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
@@ -230,6 +231,31 @@ test("Skill Registry route renders read-only governed skill metadata", async ({ 
   expect(body).not.toContain("DEMOAPP ACTIVE");
   expect(body).not.toContain("Execute Skill");
   expect(body).not.toContain("Run Skill");
+  expect(errors).toEqual([]);
+});
+
+test("Hook Registry route renders read-only safe automation metadata", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center/hooks");
+
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Hook Registry");
+  await expect(page.getByText("Hook execution is not enabled yet.")).toBeVisible();
+  await expect(page.getByText("Hooks are registry/readiness only in P51.")).toBeVisible();
+  await expect(page.getByText("Worker/runtime integration comes later.")).toBeVisible();
+  await expect(commandTab(page, "Overview")).toHaveAttribute("aria-selected", "true");
+
+  for (const label of ["Hooks", "Triggers", "Guardrails", "Kill Switches", "Developer Details"]) {
+    await commandTab(page, label).click();
+    await expect(activeCommandTabPanel(page)).toBeVisible();
+  }
+  await commandTab(page, "Triggers").click();
+  await expect(activeCommandTabPanel(page)).toContainText("Would execute: No");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DEMOAPP ACTIVE");
+  expect(body).not.toContain("Execute Hook");
+  expect(body).not.toContain("Run Hook");
   expect(errors).toEqual([]);
 });
 

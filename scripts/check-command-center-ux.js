@@ -19,6 +19,7 @@ const sections = {
   serviceHealthUx: true,
   agentRoomsUx: true,
   skillRegistryUx: true,
+  hookRegistryUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -120,6 +121,7 @@ const requiredRoutePaths = [
   "/command-center/demo",
   "/command-center/agents",
   "/command-center/skills",
+  "/command-center/hooks",
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
@@ -146,6 +148,7 @@ const requiredTabbedRoutes = {
   "/command-center/context": "overview",
   "/command-center/agent-rooms": "overview",
   "/command-center/skills": "overview",
+  "/command-center/hooks": "overview",
 };
 
 const routeHeadings = {
@@ -166,6 +169,7 @@ const routeHeadings = {
   "/command-center/demo": "Demo Mode",
   "/command-center/agents": "Agent Registry",
   "/command-center/skills": "Skill Registry",
+  "/command-center/hooks": "Hook Registry",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -653,6 +657,36 @@ for (const expected of [
 check(routeSource.includes("/command-center/skills"), "skillRegistryUx", "Route matrix missing /command-center/skills");
 check(routeTestSource.includes("Skill Registry route renders read-only governed skill metadata"), "skillRegistryUx", "Route tests missing Skill Registry coverage");
 
+// Hook Registry UX
+for (const expected of [
+  "Hook Registry",
+  "Safe automation hook readiness, triggers, guardrails, and kill switches.",
+  "Hook execution is not enabled yet.",
+  "Hooks are registry/readiness only in P51.",
+  "Worker/runtime integration comes later.",
+  "Kill Switches",
+  "Would execute",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "hookRegistryUx",
+    `Hook Registry UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const HOOK_REGISTRY_TABS",
+  'id: "overview"',
+  'id: "hooks"',
+  'id: "triggers"',
+  'id: "guardrails"',
+  'id: "kill-switches"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "hookRegistryUx", `Hook Registry tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/hooks"), "hookRegistryUx", "Route matrix missing /command-center/hooks");
+check(routeTestSource.includes("Hook Registry route renders read-only safe automation metadata"), "hookRegistryUx", "Route tests missing Hook Registry coverage");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1042,6 +1076,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/context",
     "/command-center/agent-rooms",
     "/command-center/skills",
+    "/command-center/hooks",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1145,6 +1180,7 @@ console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}`);
 console.log(`Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}`);
+console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1195,6 +1231,7 @@ const report = `# Command Center UX Report
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}
 - Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}
+- Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
