@@ -1050,12 +1050,13 @@
       "summary": "Defines scope boundaries and project packaging safety before project mutation, export, or adapter runtime can expand.",
       "checksRun": [
         "npm run check:scope-classification",
-        "npm run check:project-os-boundary"
+        "npm run check:project-os-boundary",
+        "npm run check:project-export-safety"
       ],
       "knownLimitations": [
         "P43 remains dry-run/read-only until final validation; mutation enforcement, export packaging, and release packaging remain disabled."
       ],
-      "nextPhase": "P43.3",
+      "nextPhase": "P43.4",
       "commandCenterVisible": true
     },
     {
@@ -1099,7 +1100,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
+      "commit": "5ae9242",
       "completedAt": "2026-05-15T12:15:00.000Z",
       "summary": "Adds dry-run project vs OS path boundary rules, mutation boundary decisions, policy, checker, and report without enabling mutation.",
       "checksRun": [
@@ -1121,13 +1122,23 @@
       "phaseId": "P43.3",
       "title": "Project Export Safety Rules",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned dry-run project export safety rules that define allowed and denied package contents before any real package is produced.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T13:00:00.000Z",
+      "summary": "Adds dry-run project export allow/deny rules, export safety evaluation, policy, checker, and report without creating a project package.",
+      "checksRun": [
+        "npm run check:project-export-safety",
+        "npm run check:project-os-boundary",
+        "npm run check:scope-classification",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Export execution and package creation remain disabled. Redacted release manifest generation is deferred to P43.4."
+      ],
       "nextPhase": "P43.4",
       "commandCenterVisible": true
     },
@@ -1634,11 +1645,53 @@
       "knownLimitations": [],
       "nextPhase": "",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.4",
+      "title": "Redacted Release Manifest",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned redacted project release manifest generation without packaging private source or NEXUS internals.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P43.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.5",
+      "title": "Command Center Scope Boundary UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned Command Center UX for project/OS boundary, export safety, and redacted manifest posture.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P43.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.6",
+      "title": "Packaging Safety Checker + Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final validation and closure for scope boundary and project packaging safety.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P44",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T12:15:00.000Z",
-  "currentPhase": "P43.2",
-  "previousPhase": "P43.1",
-  "nextPhase": "P43.3"
+  "updatedAt": "2026-05-15T13:00:00.000Z",
+  "currentPhase": "P43.3",
+  "previousPhase": "P43.2",
+  "nextPhase": "P43.4"
 }

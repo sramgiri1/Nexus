@@ -1134,10 +1134,13 @@ and tool dispatch remain disabled.
 
 P43 starts Scope Boundary + Project Packaging Safety. P43.1 adds classification
 only for NEXUS OS, project, cross-cutting, demo, and unknown changes. P43.2 adds
-dry-run project vs OS mutation boundary decisions. These phases do not enable
-mutation, packaging/export, providers, tools, workers, or DB writes.
+dry-run project vs OS mutation boundary decisions. P43.3 adds dry-run project
+export safety rules that allow-list project content and block NEXUS internals,
+raw evidence/audit/activity ledgers, local-state runtime files, secrets, and
+demo data. These phases do not enable mutation, package creation, providers,
+tools, workers, or DB writes.
 
-Next phase: P43.3 - Project Export Safety Rules.
+Next phase: P43.4 - Redacted Release Manifest.
 
 ---
 

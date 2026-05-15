@@ -84,6 +84,27 @@ The following remain disabled:
 - Worker runtime
 - DB writes
 
+## P43.3 Project Export Safety Rules
+
+P43.3 adds dry-run project export safety rules. The allow list covers
+project-owned source, project docs, project tests, project build config,
+redacted release manifests, and redacted validation summaries. The deny list
+blocks NEXUS OS internals, agents, policies, tools, providers, orchestrator
+runtime files, Command Center source, raw evidence/audit/activity ledgers,
+local-state runtime files, secrets, key material, demo data, and unredacted
+private reports.
+
+The export safety plan is intentionally non-executing:
+
+- `exportAllowed` remains false.
+- `dryRunOnly` remains true.
+- no package or archive is created.
+- project mutation remains disabled.
+- provider/tool/worker execution and DB writes remain disabled.
+
+P43.3 prepares the safety model for future packaging without shipping project
+files or exposing NEXUS control-plane internals.
+
 ## Next Subphases
 
 - P43.2 - Project vs OS Mutation Boundary

@@ -156,7 +156,8 @@ Risk level:
 - `P43` Scope Boundary + Project Packaging Safety
   - `P43.1` Scope Classification Model — complete
   - `P43.2` Project vs OS Mutation Boundary — complete
-  - `P43.3` Project Export Safety Rules — next
+  - `P43.3` Project Export Safety Rules — complete
+  - `P43.4` Redacted Release Manifest — next
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -693,6 +694,18 @@ policy, dashboard, and unknown paths.
 P43.2 keeps mutation disabled. Cross-cutting and unknown changes require review,
 but no runtime enforcement, packaging/export, provider/tool/worker execution, or
 DB writes are enabled. P43.3 is next and defines project export safety rules.
+
+#### P43.3 — Project Export Safety Rules
+
+P43.3 defines dry-run project export allow/deny rules. Project-owned source,
+docs, tests, build config, redacted manifests, and redacted validation summaries
+can be considered for future packaging. NEXUS agents, policies, tools,
+providers, orchestrator/runtime files, Command Center source, raw
+evidence/audit/activity ledgers, local-state runtime files, secrets, demo data,
+and unredacted reports are blocked.
+
+P43.3 does not create a package or enable project mutation. P43.4 is next and
+generates a redacted release manifest.
 
 ### Phase 15 — Containerization and Worker Scaling
 

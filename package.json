@@ -116,7 +116,8 @@
     "check:project-capability-matrix": "node scripts/check-project-capability-matrix.js",
     "check:project-registry-final-validation": "node scripts/check-project-registry-final-validation.js",
     "check:scope-classification": "node scripts/check-scope-classification.js",
-    "check:project-os-boundary": "node scripts/check-project-os-boundary.js"
+    "check:project-os-boundary": "node scripts/check-project-os-boundary.js",
+    "check:project-export-safety": "node scripts/check-project-export-safety.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

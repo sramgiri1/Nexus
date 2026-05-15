@@ -171,17 +171,17 @@ check(read("reports/project-os-boundary-report.md").includes("P43.3"), "report",
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3"]) {
+for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P43.2", "osPhaseStatus", "currentPhase must be P43.2");
-check(phaseStatus.previousPhase === "P43.1", "osPhaseStatus", "previousPhase must be P43.1");
-check(phaseStatus.nextPhase === "P43.3", "osPhaseStatus", "nextPhase must be P43.3");
+check(["P43.2", "P43.3"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.2 or P43.3");
+check(["P43.1", "P43.2"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.1 or P43.2");
+check(["P43.3", "P43.4"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.3 or P43.4");
 check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 must be complete");
 check(statusById.get("P43.2")?.status === "complete", "osPhaseStatus", "P43.2 must be complete");
 check(statusById.get("P43.2")?.branch === "arch/scope-boundary-packaging-safety", "osPhaseStatus", "P43.2 branch mismatch");
-check(statusById.get("P43.3")?.status === "planned", "osPhaseStatus", "P43.3 must be planned");
+check(["planned", "complete"].includes(statusById.get("P43.3")?.status), "osPhaseStatus", "P43.3 must exist");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

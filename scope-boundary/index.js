@@ -44,3 +44,19 @@ export {
   buildProjectOsBoundaryReport,
   writeProjectOsBoundaryReport,
 } from "./boundaryReport.js";
+export {
+  getProjectExportAllowRules,
+  getProjectExportDenyRules,
+  matchProjectExportRule,
+  validateExportRules,
+} from "./exportRules.js";
+export {
+  createProjectExportSafetyPlan,
+  evaluateProjectExportSafety,
+  isPathExportAllowed,
+  summarizeExportSafety,
+} from "./exportSafety.js";
+export {
+  buildProjectExportSafetyReport,
+  writeProjectExportSafetyReport,
+} from "./exportSafetyReport.js";

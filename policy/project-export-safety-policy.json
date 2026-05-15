@@ -1,0 +1,37 @@
+{
+  "version": "1.0",
+  "phase": "P43.3",
+  "purpose": "project_export_safety_rules",
+  "modeRequired": "local-private",
+  "exportExecutionEnabled": false,
+  "dryRunOnly": true,
+  "packageCreationAllowed": false,
+  "nexusInternalsAllowedInProjectPackage": false,
+  "rawEvidenceAllowed": false,
+  "rawAuditAllowed": false,
+  "rawActivityAllowed": false,
+  "localStateRuntimeAllowed": false,
+  "secretsAllowed": false,
+  "demoDataAllowed": false,
+  "redactedManifestAllowed": true,
+  "redactedValidationSummaryAllowed": true,
+  "projectMutationAllowed": false,
+  "osMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "workerRuntimeAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "allowedProjectPackageCategories": [
+    "project_source",
+    "project_docs",
+    "project_tests",
+    "project_config",
+    "redacted_release_manifest",
+    "redacted_validation_summary"
+  ],
+  "requiredOutputs": [
+    "reports/project-export-safety-report.md"
+  ],
+  "nextPhase": "P43.4 - Redacted Release Manifest"
+}

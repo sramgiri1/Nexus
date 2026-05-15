@@ -354,6 +354,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P42.1",
+      "title": "Project Registry Schema + Policy",
+      "track": "NEXUS_OS",
+      "order": 16.1,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds registry schema, project profile schema, baseline project metadata, policy, and validation checker.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.2",
+      "title": "nexus.project.json Loader + Validator",
+      "track": "NEXUS_OS",
+      "order": 16.2,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds read-only project profile loading, validation, bounded discovery, safe example profiles, and readiness reporting without enabling selection or adapter runtime.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.3",
+      "title": "Stack Profile Model",
+      "track": "NEXUS_OS",
+      "order": 16.3,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds read-only stack profile metadata, stack capability extraction, test-suite mapping, and DB access posture without executing adapters.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.4",
+      "title": "Project Onboarding Wizard / nexus:init-project",
+      "track": "NEXUS_OS",
+      "order": 16.4,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds dry-run project onboarding, proposed nexus.project.json generation, reports, and a local init command without writing project files.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.5",
+      "title": "Project Selector in Command Center",
+      "track": "NEXUS_OS",
+      "order": 16.5,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds a local UI-only Command Center project selector backed by registry metadata and localStorage without enabling adapters or project mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.6",
+      "title": "Project Capability Matrix",
+      "track": "NEXUS_OS",
+      "order": 16.6,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds a read-only selected-project capability matrix based on registry, stack profile, and existing NEXUS capability posture.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.7",
+      "title": "Project Registry Adapter Final Validation + Roadmap Closure",
+      "track": "NEXUS_OS",
+      "order": 16.7,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Validates and closes the P42 Project Registry + Adapter Framework foundation and sets P43 as the next OS phase.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P43",
       "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
@@ -387,6 +450,33 @@
       "order": 17.3,
       "group": "P43 Scope Boundary + Project Packaging Safety",
       "summary": "Defines dry-run export allow/deny rules for project packages without creating an export bundle.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.4",
+      "title": "Redacted Release Manifest",
+      "track": "NEXUS_OS",
+      "order": 17.4,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Generates a redacted project release manifest while keeping package creation disabled.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.5",
+      "title": "Command Center Scope Boundary UX",
+      "track": "NEXUS_OS",
+      "order": 17.5,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Adds Command Center visibility for scope boundaries, export safety, and release manifest readiness.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.6",
+      "title": "Packaging Safety Checker + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 17.6,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Final validation and closure for P43 scope boundary and project packaging safety.",
       "commandCenterVisible": true
     },
     {
@@ -712,69 +802,7 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.1",
-      "title": "Project Registry Schema + Policy",
-      "track": "NEXUS_OS",
-      "order": 16.1,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds registry schema, project profile schema, baseline project metadata, policy, and validation checker.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.2",
-      "title": "nexus.project.json Loader + Validator",
-      "track": "NEXUS_OS",
-      "order": 16.2,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds read-only project profile loading, validation, bounded discovery, safe example profiles, and readiness reporting without enabling selection or adapter runtime.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.3",
-      "title": "Stack Profile Model",
-      "track": "NEXUS_OS",
-      "order": 16.3,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds read-only stack profile metadata, stack capability extraction, test-suite mapping, and DB access posture without executing adapters.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.4",
-      "title": "Project Onboarding Wizard / nexus:init-project",
-      "track": "NEXUS_OS",
-      "order": 16.4,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds dry-run project onboarding, proposed nexus.project.json generation, reports, and a local init command without writing project files.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.5",
-      "title": "Project Selector in Command Center",
-      "track": "NEXUS_OS",
-      "order": 16.5,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds a local UI-only Command Center project selector backed by registry metadata and localStorage without enabling adapters or project mutation.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.6",
-      "title": "Project Capability Matrix",
-      "track": "NEXUS_OS",
-      "order": 16.6,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Adds a read-only selected-project capability matrix based on registry, stack profile, and existing NEXUS capability posture.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P42.7",
-      "title": "Project Registry Adapter Final Validation + Roadmap Closure",
-      "track": "NEXUS_OS",
-      "order": 16.7,
-      "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Validates and closes the P42 Project Registry + Adapter Framework foundation and sets P43 as the next OS phase.",
-      "commandCenterVisible": true
     }
-  ]
+  ],
+  "updatedAt": "2026-05-15T13:00:00.000Z"
 }
