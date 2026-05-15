@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T19:43:38.676Z
-- Validation branch: arch/skill-registry-authoring-workflow
-- Validation HEAD: bf0d6a8
+- Generated at: 2026-05-15T22:01:25.797Z
+- Validation branch: arch/hook-registry-safe-automation-lifecycle
+- Validation HEAD: 413c1c7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P50.7
-- Previous phase: P50.6
-- Next phase: P51
+- Current phase: P51.1
+- Previous phase: P50.7
+- Next phase: P51.2
 
 ## Checks
 

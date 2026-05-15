@@ -1416,14 +1416,17 @@
       "phaseId": "P51",
       "title": "Hook Registry + Safe Automation Lifecycle",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/hook-registry-safe-automation-lifecycle",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned hook registry and safe automation lifecycle.",
+      "summary": "Builds a governed hook registry and safe automation lifecycle without enabling hook execution.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P52",
+      "knownLimitations": [
+        "P51 is registry/readiness and dry-run preview only until future governed execution phases.",
+        "P51 does not enable schedulers, cron, webhooks, provider/tool/MCP calls, workers, DB writes, or project mutation."
+      ],
+      "nextPhase": "P51.1",
       "commandCenterVisible": true
     },
     {
@@ -2709,11 +2712,43 @@
       ],
       "nextPhase": "P51",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.1",
+      "title": "Hook Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/hook-registry-safe-automation-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T20:10:00.000Z",
+      "summary": "Adds the disabled hook registry schema, seed hooks, policy, checker, and architecture documentation.",
+      "checksRun": [
+        "npm run check:hook-registry"
+      ],
+      "knownLimitations": [
+        "Hook execution remains disabled; this subphase only defines registry schema and policy."
+      ],
+      "nextPhase": "P51.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.2",
+      "title": "Trigger Definition Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned trigger contract model for manual and future hook triggers without runtime scheduling.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P51.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T20:00:00.000Z",
-  "currentPhase": "P50.7",
-  "previousPhase": "P50.6",
-  "nextPhase": "P51"
+  "updatedAt": "2026-05-15T20:10:00.000Z",
+  "currentPhase": "P51.1",
+  "previousPhase": "P50.7",
+  "nextPhase": "P51.2"
 }

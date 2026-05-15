@@ -948,6 +948,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P51.1",
+      "title": "Hook Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 25.01,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Define the disabled hook registry schema and safe automation policy boundary.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.2",
+      "title": "Trigger Definition Model",
+      "track": "NEXUS_OS",
+      "order": 25.02,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Model manual and planned hook triggers without enabling schedulers or webhooks.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.3",
+      "title": "Rate Limits, Retry Limits, and Runtime Guard Model",
+      "track": "NEXUS_OS",
+      "order": 25.03,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Define hook limits and fail-closed runtime guard decisions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.4",
+      "title": "Loop-Risk Detector",
+      "track": "NEXUS_OS",
+      "order": 25.04,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Detect unsafe hook recursion and automation loop risks before enablement.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.5",
+      "title": "Kill Switch and Safe Disable Model",
+      "track": "NEXUS_OS",
+      "order": 25.05,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Define global, project, and hook-level kill-switch behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.6",
+      "title": "Command Center Hooks UX",
+      "track": "NEXUS_OS",
+      "order": 25.06,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Expose hook registry readiness in Command Center without execution controls.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.7",
+      "title": "Hook Registry Final Validation",
+      "track": "NEXUS_OS",
+      "order": 25.07,
+      "group": "P51 Hook Registry + Safe Automation Lifecycle",
+      "summary": "Validate and close P51 while hook execution remains disabled.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P52",
       "title": "Tool / MCP Registry + Tool Governance",
       "track": "NEXUS_OS",
