@@ -714,6 +714,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P48.1",
+      "title": "Agent Message Contract",
+      "track": "NEXUS_OS",
+      "order": 21.01,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Define typed governed mesh message contracts.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.2",
+      "title": "Agent Message Bus",
+      "track": "NEXUS_OS",
+      "order": 21.020000000000003,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Add append-only local message bus.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.3",
+      "title": "Agent Rooms",
+      "track": "NEXUS_OS",
+      "order": 21.03,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Add governed agent rooms.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.4",
+      "title": "Handoff Protocol",
+      "track": "NEXUS_OS",
+      "order": 21.040000000000003,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Add governed handoff request protocol.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.5",
+      "title": "Context Sync Through Policy",
+      "track": "NEXUS_OS",
+      "order": 21.05,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Connect mesh rooms to trusted context summaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.6",
+      "title": "Command Center Agent Rooms UX",
+      "track": "NEXUS_OS",
+      "order": 21.060000000000002,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Expose agent rooms in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.7",
+      "title": "Mesh Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 21.07,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Validate and close governed agentic mesh.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P49",
       "title": "Agent Definition Update Workflow",
       "track": "NEXUS_OS",
@@ -1047,5 +1110,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-15T16:35:59.905Z"
+  "updatedAt": "2026-05-15T16:45:13.252Z"
 }

@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "phase": "P48.1",
+  "purpose": "governed_agentic_mesh",
+  "metadataOnly": true,
+  "directAgentChatAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "workerRuntimeAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "taskStateMutationAllowed": false,
+  "rawPayloadStorageAllowed": false,
+  "rawSecretsAllowed": false,
+  "privateMessagesAllowedInDemo": false,
+  "privateMessagesAllowedInPublic": false,
+  "messagesRequireRedaction": true,
+  "messagesRequirePolicyDecision": true,
+  "messagesMayInfluenceTasks": true,
+  "messagesMayMutateTasksDirectly": false
+}

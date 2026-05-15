@@ -1358,14 +1358,16 @@
       "phaseId": "P48",
       "title": "Governed Agentic Mesh",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned governed multi-agent mesh coordination.",
+      "summary": "Adds governed message, room, handoff, and context-sync coordination for agents without free direct chat or execution.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P49",
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.1",
       "commandCenterVisible": true
     },
     {
@@ -1376,9 +1378,11 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned governed workflow for updating agent definitions.",
+      "summary": "Planned agent definition update workflow.",
       "checksRun": [],
-      "knownLimitations": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
       "nextPhase": "P50",
       "commandCenterVisible": true
     },
@@ -2241,11 +2245,123 @@
       ],
       "nextPhase": "P48",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.1",
+      "title": "Agent Message Contract",
+      "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Defines typed, scoped, redacted, policy-checked mesh messages.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.2",
+      "title": "Agent Message Bus",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Adds append-only local message store for governed mesh messages.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.3",
+      "title": "Agent Rooms",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Groups agents, tasks, messages, and evidence by governed scope.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.4",
+      "title": "Handoff Protocol",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Records governed handoff requests without task ownership mutation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.5",
+      "title": "Context Sync Through Policy",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Connects mesh rooms to trusted context packet summaries without raw data leakage.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.6",
+      "title": "Command Center Agent Rooms UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Shows governed agent rooms in Command Center.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P48.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.7",
+      "title": "Mesh Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Closes P48 and marks P49 as next.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P49",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:33:36.917Z",
-  "currentPhase": "P47.7",
-  "previousPhase": "P47.6",
-  "nextPhase": "P48"
+  "updatedAt": "2026-05-15T16:45:13.252Z",
+  "currentPhase": "P48.1",
+  "previousPhase": "P47.7",
+  "nextPhase": "P48.2"
 }
