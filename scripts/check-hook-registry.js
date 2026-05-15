@@ -11,6 +11,10 @@ import {
   detectRegistryLoopRisks,
   summarizeLoopRisks,
   validateLoopRiskResult,
+  disableHookPreview,
+  evaluateKillSwitch,
+  reenableHookPreview,
+  validateKillSwitchState,
   HOOK_GUARD_DECISIONS,
   summarizeRegisteredHooks,
   summarizeTriggerDefinitions,
@@ -27,6 +31,7 @@ const sections = {
   triggers: true,
   guards: true,
   loopRisk: true,
+  killSwitches: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -92,6 +97,7 @@ for (const file of [
   "hooks/hookLimits.js",
   "hooks/hookRuntimeGuard.js",
   "hooks/loopRiskDetector.js",
+  "hooks/hookKillSwitch.js",
   "hooks/index.js",
 ]) {
   check(existsSync(join(ROOT, file)), "modules", `Missing module: ${file}`);
@@ -143,6 +149,18 @@ const selfTriggerResult = detectHookLoopRisks({ ...hooks[0], enabled: true, trig
 check(selfTriggerResult.decision === "BLOCK", "loopRisk", "Self-trigger loop must block");
 check(selfTriggerResult.riskLevel === "critical", "loopRisk", "Self-trigger loop must be critical");
 
+for (const hook of hooks) {
+  const killSwitch = evaluateKillSwitch(hook);
+  const stateValidation = validateKillSwitchState(killSwitch.state);
+  check(stateValidation.valid, "killSwitches", `Kill switch state invalid: ${stateValidation.errors.join("; ")}`);
+  check(killSwitch.disabled === true, "killSwitches", `${hook.hookId} kill switch must block disabled hook`);
+  check(killSwitch.requiresReviewToReenable === true, "killSwitches", `${hook.hookId} must require re-enable review`);
+}
+const disablePreview = disableHookPreview(hooks[0], "Checker preview");
+const reenablePreview = reenableHookPreview(hooks[0], { approved: true, approver: "human-operator" });
+check(disablePreview.dryRun === true && disablePreview.wouldWrite === false, "killSwitches", "Disable preview must not write");
+check(reenablePreview.dryRun === true && reenablePreview.wouldWrite === false, "killSwitches", "Re-enable preview must not write");
+
 for (const hookId of [
   "test-failure-classification",
   "prd-change-test-gap-proposal",
@@ -183,6 +201,7 @@ check(docs.includes("P51.1 - Hook Registry Schema"), "docs", "Architecture doc m
 check(docs.includes("P51.2 - Trigger Definition Model"), "docs", "Architecture doc missing P51.2 section");
 check(docs.includes("P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model"), "docs", "Architecture doc missing P51.3 section");
 check(docs.includes("P51.4 - Loop-Risk Detector"), "docs", "Architecture doc missing P51.4 section");
+check(docs.includes("P51.5 - Kill Switch and Safe Disable Model"), "docs", "Architecture doc missing P51.5 section");
 check(docs.includes("Hook execution is not enabled"), "docs", "Architecture doc must state hook execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -199,10 +218,13 @@ check(statusById.get("P51.3")?.status === "complete", "osPhaseStatus", "P51.3 mu
 check(statusById.get("P51.3")?.commit === "c21218d", "osPhaseStatus", "P51.3 commit mismatch");
 check(statusById.get("P51.3")?.nextPhase === "P51.4", "osPhaseStatus", "P51.3 next phase must be P51.4");
 check(statusById.get("P51.4")?.status === "complete", "osPhaseStatus", "P51.4 must be complete");
+check(statusById.get("P51.4")?.commit === "0e18569", "osPhaseStatus", "P51.4 commit mismatch");
 check(statusById.get("P51.4")?.nextPhase === "P51.5", "osPhaseStatus", "P51.4 next phase must be P51.5");
-check(statusById.get("P51.5")?.status === "planned", "osPhaseStatus", "P51.5 must be planned");
-check(phaseStatus.currentPhase === "P51.4", "osPhaseStatus", "Current phase must be P51.4");
-check(phaseStatus.nextPhase === "P51.5", "osPhaseStatus", "Next phase must be P51.5");
+check(statusById.get("P51.5")?.status === "complete", "osPhaseStatus", "P51.5 must be complete");
+check(statusById.get("P51.5")?.nextPhase === "P51.6", "osPhaseStatus", "P51.5 next phase must be P51.6");
+check(statusById.get("P51.6")?.status === "planned", "osPhaseStatus", "P51.6 must be planned");
+check(phaseStatus.currentPhase === "P51.5", "osPhaseStatus", "Current phase must be P51.5");
+check(phaseStatus.nextPhase === "P51.6", "osPhaseStatus", "Next phase must be P51.6");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -222,6 +244,7 @@ for (const file of [
   "hooks/hookLimits.js",
   "hooks/hookRuntimeGuard.js",
   "hooks/loopRiskDetector.js",
+  "hooks/hookKillSwitch.js",
   "hooks/index.js",
   "scripts/check-hook-registry.js",
   "policy/hook-registry-policy.json",
@@ -242,7 +265,7 @@ const report = `# NEXUS Hook Registry Report
 
 ## Scope
 
-P51.4 - Loop-Risk Detector
+P51.5 - Kill Switch and Safe Disable Model
 
 ## Summary
 
@@ -253,6 +276,7 @@ P51.4 - Loop-Risk Detector
 - Runtime-enabled triggers: ${triggerSummary.runtimeEnabledCount}
 - Loop-risk blocked hooks: ${loopSummary.blockedCount}
 - Loop-risk warnings: ${loopSummary.warningCount}
+- Kill switch states: ${hooks.length}
 - Trigger types: ${Object.keys(summary.triggerCounts).join(", ")}
 - Scopes: ${Object.keys(summary.scopeCounts).join(", ")}
 
@@ -264,6 +288,7 @@ P51.4 - Loop-Risk Detector
 - Triggers: ${sections.triggers ? "PASS" : "FAIL"}
 - Guards: ${sections.guards ? "PASS" : "FAIL"}
 - Loop risk: ${sections.loopRisk ? "PASS" : "FAIL"}
+- Kill switches: ${sections.killSwitches ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -293,6 +318,7 @@ console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
 console.log(`Triggers: ${sections.triggers ? "PASS" : "FAIL"}`);
 console.log(`Guards: ${sections.guards ? "PASS" : "FAIL"}`);
 console.log(`Loop risk: ${sections.loopRisk ? "PASS" : "FAIL"}`);
+console.log(`Kill switches: ${sections.killSwitches ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);

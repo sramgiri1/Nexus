@@ -103,6 +103,19 @@ Detected risks include:
 High and critical loop risks produce a `BLOCK` decision. Low-risk findings can
 warn without enabling execution.
 
+## P51.5 - Kill Switch and Safe Disable Model
+
+P51.5 defines global, project-level, and hook-level kill switch metadata. The
+model makes disable and re-enable flows preview-only:
+
+- global kill switch: blocks all hook previews for emergency shutdown
+- project kill switch: blocks hooks for one project scope
+- hook kill switch: blocks a single hook definition
+
+Kill switch decisions win over all other readiness states. Re-enabling requires
+review metadata and remains preview-only in P51; no state files are modified by
+the kill switch model.
+
 ## Next Subphase
 
-P51.5 adds kill switch metadata and preview-only disable/re-enable decisions.
+P51.6 adds a read-only Command Center Hooks registry view.

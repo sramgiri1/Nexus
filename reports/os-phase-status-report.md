@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:07:29.877Z
+- Generated at: 2026-05-15T22:08:57.779Z
 - Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: c21218d
+- Validation HEAD: 0e18569
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P51.4
-- Previous phase: P51.3
-- Next phase: P51.5
+- Current phase: P51.5
+- Previous phase: P51.4
+- Next phase: P51.6
 
 ## Checks
 

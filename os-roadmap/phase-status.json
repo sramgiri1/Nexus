@@ -2773,7 +2773,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/hook-registry-safe-automation-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "0e18569",
       "completedAt": "2026-05-15T20:40:00.000Z",
       "summary": "Adds metadata-only loop-risk detection that blocks high and critical automation cycles before enablement.",
       "checksRun": [
@@ -2789,20 +2789,38 @@
       "phaseId": "P51.5",
       "title": "Kill Switch and Safe Disable Model",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/hook-registry-safe-automation-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T20:50:00.000Z",
+      "summary": "Adds preview-only global, project, and hook kill-switch models with review-required re-enable metadata.",
+      "checksRun": [
+        "npm run check:hook-registry"
+      ],
+      "knownLimitations": [
+        "Kill switch disable and re-enable operations are dry-run previews and do not write runtime state."
+      ],
+      "nextPhase": "P51.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.6",
+      "title": "Command Center Hooks UX",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned kill switch model for global, project, and hook-level disable controls.",
+      "summary": "Planned read-only Command Center view for hook registry readiness.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P51.6",
+      "nextPhase": "P51.7",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T20:40:00.000Z",
-  "currentPhase": "P51.4",
-  "previousPhase": "P51.3",
-  "nextPhase": "P51.5"
+  "updatedAt": "2026-05-15T20:50:00.000Z",
+  "currentPhase": "P51.5",
+  "previousPhase": "P51.4",
+  "nextPhase": "P51.6"
 }
