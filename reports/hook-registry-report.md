@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:03:30.701Z
+- Generated at: 2026-05-15T22:05:49.459Z
 - Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: 081e733
+- Validation HEAD: 81e8016
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P51.2 - Trigger Definition Model
+P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model
 
 ## Summary
 
@@ -27,6 +27,7 @@ P51.2 - Trigger Definition Model
 - Schema: PASS
 - Registry: PASS
 - Triggers: PASS
+- Guards: PASS
 - Policy: PASS
 - Docs: PASS
 - OS phase status: PASS

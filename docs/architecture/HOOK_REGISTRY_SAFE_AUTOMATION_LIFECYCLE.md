@@ -65,7 +65,26 @@ Supported trigger definitions are:
 Every trigger contract is dry-run only. Trigger previews return a decision,
 required evidence, and safety notes, but `wouldExecute` remains false.
 
+## P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model
+
+P51.3 defines limit profiles and guard decisions for future hook execution.
+The model is decision-only and does not run hooks.
+
+Guard decisions include:
+
+- `ALLOW_DRY_RUN`
+- `BLOCK_DISABLED`
+- `BLOCK_RATE_LIMIT`
+- `BLOCK_RETRY_LIMIT`
+- `REQUIRE_APPROVAL`
+- `FAIL_CLOSED`
+
+Seed hooks keep `maxRunsPerDay`, `maxRetries`, `maxRuntimeSeconds`, and cost
+limits at zero, so they remain blocked. A synthetic enabled sample may be used
+by the checker to prove the dry-run decision path, but the registry itself does
+not enable any hook.
+
 ## Next Subphase
 
-P51.3 adds rate limits, retry limits, runtime guard decisions, and fail-closed
-guard behavior. Planned trigger types remain non-executable.
+P51.4 adds loop-risk detection to block unsafe automation cycles before any
+future runtime can enable hooks.
