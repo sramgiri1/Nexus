@@ -2781,6 +2781,7 @@ function AgentRegistryPage({ vm }) {
   const registry = vm.agentRegistry || {};
   const agents = registry.agents || [];
   const envelope = registry.envelopePreview || {};
+  const definitionUpdates = registry.definitionUpdates || {};
 
   return (
     <div className="ccv2-content">
@@ -2896,6 +2897,75 @@ function AgentRegistryPage({ vm }) {
                   ))}
                 </tbody>
               </table>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="definition-updates" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Agent Definition Updates</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Proposal-first workflow for changing agent definitions. This surface is read-only and does not mutate agent files.
+              </p>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Proposal</span><span className="ccv2-page-summary-value">{definitionUpdates.proposalId}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Agent</span><span className="ccv2-page-summary-value">{definitionUpdates.selectedAgent}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Change type</span><span className="ccv2-page-summary-value">{definitionUpdates.changeType}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Risk</span><span className="ccv2-page-summary-value">{definitionUpdates.riskLevel}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Status</span><span className="ccv2-page-summary-value">{definitionUpdates.status}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Apply changes</span><span className="ccv2-page-summary-value">Disabled</span></div>
+              </div>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Boundary Diff Summary</div>
+                <div className="ccv2-list" style={{ marginTop: 10 }}>
+                  {(definitionUpdates.boundaryDiff || []).map((item) => (
+                    <div key={item.label} className="ccv2-list-row">
+                      <span className="ccv2-list-row__title">{item.label}</span>
+                      <span className="ccv2-list-row__meta">{item.value}</span>
+                      <span className={`ccv2-pill ccv2-pill--${item.tone || "pending"}`}>Reviewed</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">AUDITOR / WARDEN Review</div>
+                <div className="ccv2-list" style={{ marginTop: 10 }}>
+                  {(definitionUpdates.reviews || []).map((review) => (
+                    <div key={review.reviewer} className="ccv2-list-row">
+                      <span className="ccv2-list-row__title">{review.reviewer}</span>
+                      <span className="ccv2-list-row__meta">{review.focus}</span>
+                      <span className="ccv2-pill ccv2-pill--pending">{review.decision}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Human Approval Gate</div>
+                <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                  {definitionUpdates.approvalGate?.disabledReason}
+                </p>
+                <span className="ccv2-pill ccv2-pill--disabled">Apply disabled</span>
+              </div>
+
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Versioning + Rollback</div>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Previous version</span><span className="ccv2-page-summary-value">{definitionUpdates.versioning?.previousVersion}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Proposed version</span><span className="ccv2-page-summary-value">{definitionUpdates.versioning?.proposedVersion}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Rollback</span><span className="ccv2-page-summary-value">{definitionUpdates.versioning?.rollbackStatus}</span></div>
+                </div>
+              </div>
+            </div>
+
+            <div className="ccv2-card" style={{ marginTop: 12 }}>
+              <div className="ccv2-section-heading">Safety Boundary</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                No agent markdown files are mutated. Provider dispatch, tool dispatch, worker runtime, DB writes, and project mutation remain disabled.
+              </p>
             </div>
           </CommandTabPanel>
 

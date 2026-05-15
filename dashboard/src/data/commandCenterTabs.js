@@ -336,6 +336,12 @@ export const AGENT_REGISTRY_TABS = [
     badge: "Read-only",
   },
   {
+    id: "definition-updates",
+    label: "Definition Updates",
+    description: "Proposal-first agent definition update workflow",
+    badge: "Read-only",
+  },
+  {
     id: "developer-details",
     label: "Developer Details",
     description: "Envelope preview metadata without raw JSON dumps",

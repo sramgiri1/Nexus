@@ -1250,6 +1250,7 @@ test.describe("Command Center route-wide UX", () => {
       "Boundaries",
       "Projects",
       "Evidence Requirements",
+      "Definition Updates",
       "Developer Details",
     ]) {
       await expect(commandTab(page, label)).toBeVisible();
@@ -1268,6 +1269,28 @@ test.describe("Command Center route-wide UX", () => {
     await expect(commandTab(page, "Overview")).toBeVisible();
     await pickTheme(page, "light");
     await expect(commandTab(page, "Developer Details")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Agent Registry shows read-only agent definition update workflow", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/agents");
+    await commandTab(page, "Definition Updates").click();
+
+    await expect(activeCommandTabPanel(page)).toContainText("Agent Definition Updates");
+    await expect(activeCommandTabPanel(page)).toContainText("Proposal-first workflow");
+    await expect(activeCommandTabPanel(page)).toContainText("Boundary Diff Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("AUDITOR / WARDEN Review");
+    await expect(activeCommandTabPanel(page)).toContainText("Human Approval Gate");
+    await expect(activeCommandTabPanel(page)).toContainText("Versioning + Rollback");
+    await expect(activeCommandTabPanel(page)).toContainText("Apply disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("provider dispatch enabled");
+    expect(body).not.toContain("DB writes enabled");
 
     expect(errors).toEqual([]);
   });
