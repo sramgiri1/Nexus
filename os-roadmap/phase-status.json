@@ -2555,11 +2555,45 @@
       ],
       "nextPhase": "P50",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.1",
+      "title": "Skill Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T19:00:00.000Z",
+      "summary": "Defines the read-only skill schema, registry policy, and built-in skill placeholders with execution disabled.",
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "P50.1 does not define skill contracts, templates, stack profiles, test requirements, Command Center UX, or runtime execution."
+      ],
+      "nextPhase": "P50.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.2",
+      "title": "Skill Contract Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Define skill contracts for allowed use, forbidden use, evidence, tests, rollback, and safety notes.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P50.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T18:45:00.000Z",
-  "currentPhase": "P49.8",
-  "previousPhase": "P49.7",
-  "nextPhase": "P50"
+  "updatedAt": "2026-05-15T19:00:00.000Z",
+  "currentPhase": "P50.1",
+  "previousPhase": "P49.8",
+  "nextPhase": "P50.2"
 }

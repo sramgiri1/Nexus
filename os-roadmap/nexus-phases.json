@@ -876,6 +876,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P50.1",
+      "title": "Skill Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 24.01,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Define the read-only skill schema, registry policy, and built-in skill placeholders.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.2",
+      "title": "Skill Contract Model",
+      "track": "NEXUS_OS",
+      "order": 24.02,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Define skill contracts that describe allowed use, outputs, evidence, rollback, and safety notes.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.3",
+      "title": "Governed Skill Templates",
+      "track": "NEXUS_OS",
+      "order": 24.03,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Add governed Plan, Review, QA, Ship, Retro, Guard, and Explain templates.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.4",
+      "title": "Stack-Specific Skill Profiles",
+      "track": "NEXUS_OS",
+      "order": 24.04,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Map skills to project stack profiles without enabling adapter execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.5",
+      "title": "Skill Test Requirements",
+      "track": "NEXUS_OS",
+      "order": 24.05,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Define static, contract, UI, evidence, and future runtime test requirements for skills.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.6",
+      "title": "Command Center Skill Registry UX",
+      "track": "NEXUS_OS",
+      "order": 24.06,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Expose the read-only Skill Registry in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.7",
+      "title": "Skill Registry Final Validation",
+      "track": "NEXUS_OS",
+      "order": 24.07,
+      "group": "P50 Skill Registry + Skill Authoring Workflow",
+      "summary": "Validate and close P50 while keeping skill execution disabled.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P51",
       "title": "Hook Registry + Safe Automation Lifecycle",
       "track": "NEXUS_OS",

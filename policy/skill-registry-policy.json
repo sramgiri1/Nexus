@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "phase": "P50.1",
+  "purpose": "skill_registry_authoring_workflow",
+  "registryOnly": true,
+  "skillExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "toolCallsAllowed": false,
+  "mcpExecutionAllowed": false,
+  "workerRuntimeAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "agentDefinitionMutationAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "requiresEvidenceForAuthoring": true,
+  "requiresApprovalForHighRiskSkills": true,
+  "commandCenterReadOnly": true,
+  "demoFallbackAllowed": false,
+  "requiredOutputs": [
+    "skills-registry/skillSchema.js",
+    "skills-registry/skillRegistry.js",
+    "skills-registry/registry.json",
+    "scripts/check-skill-registry.js",
+    "reports/skill-registry-report.md"
+  ]
+}
