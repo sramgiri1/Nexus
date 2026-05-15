@@ -274,6 +274,7 @@ export const SAFETY_CENTER_TABS = [
 export const PROJECTS_TABS = [
   { id: "portfolio", label: "Portfolio", description: "Multi-project placeholder and summary", badge: "Planned" },
   { id: "active-project", label: "Active Project", description: "Selected project or Start Project guidance", badge: "Ready" },
+  { id: "packaging-safety", label: "Packaging Safety", description: "Scope boundary, export safety, and redacted manifest posture", badge: "Read-only" },
   { id: "adapter", label: "Adapter", description: "Project adapter status and P42 Project Registry plan", badge: "Planned" },
   { id: "milestones", label: "Milestones", description: "Project milestones, not OS phases", badge: "Read-only" },
   { id: "gaps", label: "Gaps", description: "Open project gaps", badge: "Read-only" },

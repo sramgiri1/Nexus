@@ -153,13 +153,13 @@ check(commandCenterSource.includes("Project Capability Matrix"), "p426", "Capabi
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7", "P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"]) {
+for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7", "P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", "P43.6"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, or P43.4");
-check(["P42.7", "P43.1", "P43.2", "P43.3"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, or P43.3");
-check(["P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, or P43.5");
+check(["P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
+check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
+check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
 for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7"]) {
   const entry = statusById.get(phaseId) || {};
   check(entry.status === "complete", "osPhaseStatus", `${phaseId} must be complete`);
@@ -175,6 +175,7 @@ check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 mu
 check(["planned", "complete"].includes(statusById.get("P43.2")?.status), "osPhaseStatus", "P43.2 must exist");
 check(["planned", "complete"].includes(statusById.get("P43.3")?.status), "osPhaseStatus", "P43.3 must exist");
 check(["planned", "complete"].includes(statusById.get("P43.4")?.status), "osPhaseStatus", "P43.4 must exist");
+check(["planned", "complete"].includes(statusById.get("P43.5")?.status), "osPhaseStatus", "P43.5 must exist");
 
 const registryValidation = validateProjectRegistry(loadProjectRegistry());
 check(registryValidation.valid === true, "projectRegistryJson", `Registry invalid: ${registryValidation.errors.join("; ")}`);

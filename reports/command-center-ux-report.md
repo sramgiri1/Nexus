@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T10:28:18.533Z
-- Validation branch: test/project-registry-final-validation
-- Validation HEAD: acbe566
+- Generated at: 2026-05-15T12:00:34.490Z
+- Validation branch: arch/scope-boundary-packaging-safety
+- Validation HEAD: 9c964a8
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -24,6 +24,7 @@
 - Route-wide tab contract: PASS
 - Mission Control tabs: PASS
 - Tabbed core pages: PASS
+- Scope boundary UX: PASS
 - Scope switcher: PASS
 - Multi-project shell: PASS
 - OS Roadmap / Project Progress separation: PASS

@@ -886,15 +886,17 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Completed").click();
     const completedBody = await page.locator("body").innerText();
-    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.7.1", "P42.2", "P42.6", "P42.7"]) {
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.7.1", "P42.2", "P42.6", "P42.7", "P43.2", "P43.5"]) {
       expect(completedBody).toContain(phase);
     }
     expect(completedBody).toContain("nexus.project.json Loader + Validator");
     expect(completedBody).toContain("Project Capability Matrix");
+    expect(completedBody).toContain("Project vs OS Mutation Boundary");
+    expect(completedBody).toContain("Command Center Scope Boundary UX");
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("Project vs OS Mutation Boundary");
+    expect(plannedBody).toContain("Packaging Safety Checker + Final Validation");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -921,7 +923,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText("P43.2");
+    await expect(page.locator("body")).toContainText("P43.6");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -1135,7 +1137,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"]],
       ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
-      ["/command-center/projects", ["Portfolio", "Active Project", "Adapter", "Milestones", "Gaps"]],
+      ["/command-center/projects", ["Portfolio", "Active Project", "Packaging Safety", "Adapter", "Milestones", "Gaps"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
@@ -1195,6 +1197,31 @@ test.describe("Command Center route-wide UX", () => {
     expect(roadmapText).toMatch(/NEXUS OS Platform Progress/i);
     expect(roadmapText).not.toContain("Track B");
     expect(roadmapText).not.toContain("DemoApp");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Projects page shows scope boundary and packaging safety", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/projects");
+    await expect(page.getByTestId("scope-boundary-packaging-panel").first()).toBeVisible();
+    await expect(page.locator("body")).toContainText("Scope Boundary & Packaging Safety");
+    await expect(page.locator("body")).toContainText("NEXUS OS is the control plane. Projects are workloads.");
+    await expect(page.locator("body")).toContainText("Project export");
+    await expect(page.locator("body")).toContainText("Dry-run only");
+    await expect(page.locator("body")).toContainText("Package bundle");
+    await expect(page.locator("body")).toContainText("Not created");
+    await expect(page.locator("body")).toContainText("Redacted manifest");
+    await expect(page.locator("body")).toContainText("Blocked From Project Package");
+    await expect(page.locator("body")).toContainText("NEXUS agents and policies");
+    await expect(page.locator("body")).toContainText("Evidence, audit, and activity ledgers");
+    await expect(page.locator("body")).toContainText("Local-state runtime files");
+    await expect(page.locator("body")).toContainText("Secrets and key material");
+    await expect(page.locator("body")).toContainText("artifacts/project-release/private-project-release-manifest.json");
+    await commandTab(page, "Packaging Safety").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Scope Boundary & Packaging Safety");
+    await expect(page.locator("body")).not.toContainText("DemoApp");
 
     expect(errors).toEqual([]);
   });
@@ -1636,22 +1663,24 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks completed P42 foundation and current P43.1 scope classification", async ({ page }) => {
+  test("OS Roadmap tracks completed P42 foundation and current P43 scope boundary work", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P43.1");
-    expect(body).toContain("Scope Classification Model");
-    expect(body).toContain("P43.2");
-    expect(body).toContain("Project vs OS Mutation Boundary");
+    await commandTab(page, "Completed").click();
+    const completedBody = await activeCommandTabPanel(page).innerText();
+    expect(completedBody).toContain("P43.1");
+    expect(completedBody).toContain("Scope Classification Model");
+    expect(completedBody).toContain("P43.2");
+    expect(completedBody).toContain("Project vs OS Mutation Boundary");
+    expect(completedBody).toContain("P43.5");
+    expect(completedBody).toContain("Command Center Scope Boundary UX");
     expect(body).toContain("P43");
     expect(body).toContain("Scope Boundary + Project Packaging Safety");
     expect(body).not.toContain("DemoApp");
 
-    await commandTab(page, "Completed").click();
-    const completedBody = await activeCommandTabPanel(page).innerText();
     expect(completedBody).toContain("P42.1");
     expect(completedBody).toContain("Project Registry Schema + Policy");
     expect(completedBody).toContain("P42.6");

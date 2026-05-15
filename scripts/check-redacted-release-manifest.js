@@ -187,17 +187,17 @@ check(read(REPORT_PATH).includes("No project archive is produced"), "report", "R
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"]) {
+for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", "P43.6"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P43.4", "osPhaseStatus", "currentPhase must be P43.4");
-check(phaseStatus.previousPhase === "P43.3", "osPhaseStatus", "previousPhase must be P43.3");
-check(phaseStatus.nextPhase === "P43.5", "osPhaseStatus", "nextPhase must be P43.5");
+check(["P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.4 or P43.5");
+check(["P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.3 or P43.4");
+check(["P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.5 or P43.6");
 check(statusById.get("P43.3")?.status === "complete", "osPhaseStatus", "P43.3 must be complete");
 check(statusById.get("P43.3")?.commit === "69dbd28", "osPhaseStatus", "P43.3 commit must be 69dbd28");
 check(statusById.get("P43.4")?.status === "complete", "osPhaseStatus", "P43.4 must be complete");
-check(statusById.get("P43.5")?.status === "planned", "osPhaseStatus", "P43.5 must be planned");
+check(["planned", "complete"].includes(statusById.get("P43.5")?.status), "osPhaseStatus", "P43.5 must exist");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

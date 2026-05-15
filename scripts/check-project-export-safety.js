@@ -169,13 +169,13 @@ check(read("reports/project-export-safety-report.md").includes("No project packa
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"]) {
+for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", "P43.6"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P43.3", "P43.4"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.3 or P43.4");
-check(["P43.2", "P43.3"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.2 or P43.3");
-check(["P43.4", "P43.5"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.4 or P43.5");
+check(["P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.3, P43.4, or P43.5");
+check(["P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.2, P43.3, or P43.4");
+check(["P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.4, P43.5, or P43.6");
 check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 must be complete");
 check(statusById.get("P43.2")?.status === "complete", "osPhaseStatus", "P43.2 must be complete");
 check(statusById.get("P43.2")?.commit === "5ae9242", "osPhaseStatus", "P43.2 commit must be 5ae9242");

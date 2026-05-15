@@ -4,6 +4,7 @@ import serviceManifest from "../../../nexus.services.json";
 import serviceState from "../../../local-state/runtime/services/service-state.json";
 import doctorReport from "../../../reports/nexus-doctor-report.json";
 import projectProgressExample from "../../../os-roadmap/project-progress.example.json";
+import redactedReleaseManifest from "../../../artifacts/project-release/private-project-release-manifest.json";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -199,6 +200,29 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     docsStatus: "Codebase docs and reuse catalog available",
     roadmapStatus: "OS roadmap tracked separately from project progress",
   };
+  const scopeBoundary = {
+    activeScope: "Project",
+    selectedProjectLabel: safeProjectDisplayName,
+    osBoundary: "NEXUS OS is the control plane",
+    projectBoundary: "Projects are workloads",
+    projectMutation: "Disabled unless governed",
+    osMutation: "Disabled unless governed",
+    crossCutting: "Review required",
+    unknown: "Review required",
+    exportSafety: "Dry-run only",
+    exportPackageCreated: false,
+    nexusInternalsBlocked: true,
+    ledgerExportBlocked: true,
+    secretsBlocked: true,
+    demoDataBlocked: true,
+    redactedManifestAvailable: Boolean(redactedReleaseManifest?.manifestVersion),
+    manifestPath: "artifacts/project-release/private-project-release-manifest.json",
+    manifestPackageCreated: redactedReleaseManifest?.releaseReadiness?.packageCreated === true,
+    manifestDryRunOnly: redactedReleaseManifest?.releaseReadiness?.exportDryRunOnly === true,
+    releaseExecutionEnabled: redactedReleaseManifest?.releaseReadiness?.releaseExecutionEnabled === true,
+    safetyCopy:
+      "NEXUS OS is the control plane. Projects are workloads. Shipping a project must not include NEXUS agents, policies, evidence ledgers, local-state runtime files, or secrets.",
+  };
 
   return {
     shell: {
@@ -226,6 +250,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       portfolioSummary,
       osSummary,
     },
+    scopeBoundary,
     missionComposer: {
       title: "Active Mission",
       subtitle: "Review the governed mission summary and move the current scope through planning, review, and validation.",

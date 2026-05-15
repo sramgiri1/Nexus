@@ -3297,6 +3297,65 @@ function ReleaseControlPage({ vm }) {
 }
 
 /* ─── Projects Page ─── */
+function ScopeBoundaryPackagingPanel({ vm }) {
+  const boundary = vm.scopeBoundary || {};
+  const rows = [
+    { label: "Active scope", value: boundary.activeScope || "Project", tone: "ready" },
+    { label: "Selected project", value: boundary.selectedProjectLabel || "Private Project", tone: "ready" },
+    { label: "Project mutation", value: boundary.projectMutation || "Disabled unless governed", tone: "disabled" },
+    { label: "OS mutation", value: boundary.osMutation || "Disabled unless governed", tone: "disabled" },
+    { label: "Cross-cutting changes", value: boundary.crossCutting || "Review required", tone: "pending" },
+    { label: "Unknown changes", value: boundary.unknown || "Review required", tone: "pending" },
+    { label: "Project export", value: boundary.exportSafety || "Dry-run only", tone: "disabled" },
+    { label: "Package bundle", value: boundary.exportPackageCreated ? "Created" : "Not created", tone: "disabled" },
+    { label: "Redacted manifest", value: boundary.redactedManifestAvailable ? "Available" : "Not generated", tone: boundary.redactedManifestAvailable ? "ready" : "pending" },
+  ];
+
+  const blockedRows = [
+    { label: "NEXUS agents and policies", blocked: boundary.nexusInternalsBlocked !== false },
+    { label: "Evidence, audit, and activity ledgers", blocked: boundary.ledgerExportBlocked !== false },
+    { label: "Local-state runtime files", blocked: true },
+    { label: "Secrets and key material", blocked: boundary.secretsBlocked !== false },
+    { label: "Demo data", blocked: boundary.demoDataBlocked !== false },
+  ];
+
+  return (
+    <div className="ccv2-card ccv2-page-summary-card" data-testid="scope-boundary-packaging-panel">
+      <div className="ccv2-section-heading">Scope Boundary & Packaging Safety</div>
+      <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+        {boundary.safetyCopy || "NEXUS OS is the control plane. Projects are workloads. Shipping a project must not include NEXUS internals or secrets."}
+      </p>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+        {rows.map((row) => (
+          <div key={row.label} className="ccv2-page-summary-row">
+            <span className="ccv2-page-summary-label">{row.label}</span>
+            <span className={`ccv2-safety-row__value--${row.tone}`}>{row.value}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-section-heading" style={{ marginTop: 14 }}>Blocked From Project Package</div>
+      <div className="ccv2-list" style={{ marginTop: 8 }}>
+        {blockedRows.map((row) => (
+          <div key={row.label} className="ccv2-list-row">
+            <span className="ccv2-list-row__title">{row.label}</span>
+            <span className="ccv2-pill ccv2-pill--disabled">{row.blocked ? "Blocked" : "Review required"}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Manifest path</span>
+          <span className="ccv2-page-summary-value">{boundary.manifestPath || "Not available"}</span>
+        </div>
+        <div className="ccv2-page-summary-row">
+          <span className="ccv2-page-summary-label">Release execution</span>
+          <span className="ccv2-safety-row__value--disabled">{boundary.releaseExecutionEnabled ? "Enabled" : "Not enabled"}</span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function ProjectsPage({ vm, studio }) {
   const pv = privateValidationSnapshot;
   const pvStatus = pv?.status || {};
@@ -3382,8 +3441,9 @@ function ProjectsPage({ vm, studio }) {
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Scope Boundary</div>
           <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P43.1 adds classification for NEXUS OS, project, cross-cutting, demo, and unknown changes. The model is
-            classification ready; enforcement not enabled yet, and packaging safety is planned for later P43 subphases.
+            P43 adds classification, project vs OS mutation boundaries, export safety, and a redacted release manifest.
+            The model is classification ready; enforcement not enabled yet. These surfaces are dry-run/read-only;
+            project packages are not created.
           </p>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">NEXUS OS changes</span><span className="ccv2-page-summary-value">classified</span></div>
@@ -3392,6 +3452,8 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unknown changes</span><span className="ccv2-page-summary-value">review required</span></div>
           </div>
         </div>
+
+        <ScopeBoundaryPackagingPanel vm={vm} />
 
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Summary</div>
@@ -3416,6 +3478,9 @@ function ProjectsPage({ vm, studio }) {
           </CommandTabPanel>
           <CommandTabPanel tabId="active-project" activeTab={activeTab}>
             <ProjectContextCard vm={vm} surface="Projects" />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="packaging-safety" activeTab={activeTab}>
+            <ScopeBoundaryPackagingPanel vm={vm} />
           </CommandTabPanel>
           <CommandTabPanel tabId="adapter" activeTab={activeTab}>
             <div className="ccv2-card">

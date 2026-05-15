@@ -122,6 +122,19 @@ The manifest explicitly keeps these boundaries:
   secrets, key material, and demo data are excluded.
 - the project display remains `Private Project` for local-private safety.
 
+## P43.5 Command Center Scope Boundary UX
+
+P43.5 surfaces the boundary model in Command Center without adding execution.
+The Projects page shows scope boundary and packaging safety posture, including
+the active scope, selected project, mutation disabled state, cross-cutting and
+unknown review requirements, export dry-run posture, blocked package content,
+and redacted manifest availability.
+
+The UI copy keeps the product boundary explicit: NEXUS OS is the control plane
+and projects are workloads. Shipping a project must not include NEXUS agents,
+policies, evidence ledgers, local-state runtime files, secrets, key material, or
+demo data.
+
 ## Next Subphases
 
 - P43.2 - Project vs OS Mutation Boundary

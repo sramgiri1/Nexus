@@ -25,6 +25,7 @@ const sections = {
   missionControlTabs: true,
   tabbedCorePages: true,
   tabbedPlatformPages: true,
+  scopeBoundaryUx: true,
   scopeSwitcher: true,
   multiProjectShell: true,
   roadmapProjectSeparation: true,
@@ -773,6 +774,25 @@ for (const expected of [
 }
 check(!commandCenterSource.includes("function OperationalTabs"), "tabbedCorePages", "Do not introduce a duplicate one-off tab component");
 for (const expected of [
+  "Scope Boundary & Packaging Safety",
+  "NEXUS OS is the control plane. Projects are workloads.",
+  "Project export",
+  "Dry-run only",
+  "Package bundle",
+  "Not created",
+  "Redacted manifest",
+  "Blocked From Project Package",
+  "NEXUS agents and policies",
+  "Evidence, audit, and activity ledgers",
+  "Local-state runtime files",
+  "Secrets and key material",
+  "artifacts/project-release/private-project-release-manifest.json",
+]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "scopeBoundaryUx", `Scope boundary UX missing: ${expected}`);
+}
+check(commandTabsSource.includes('id: "packaging-safety"'), "scopeBoundaryUx", "Projects tabs must include packaging-safety");
+check(routeTestSource.includes("Projects page shows scope boundary and packaging safety"), "scopeBoundaryUx", "Route tests missing scope boundary packaging coverage");
+for (const expected of [
   "<ScopeSwitcher",
   "Portfolio view is planned with Project Registry in P42",
   "NEXUS OS scope is available through the OS Roadmap",
@@ -1021,6 +1041,7 @@ console.log(`Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" :
 console.log(`Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}`);
 console.log(`Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}`);
 console.log(`Tabbed platform/governance pages: ${sections.tabbedPlatformPages ? "PASS" : "FAIL"}`);
+console.log(`Scope boundary UX: ${sections.scopeBoundaryUx ? "PASS" : "FAIL"}`);
 console.log(`Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}`);
 console.log(`Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
@@ -1067,6 +1088,7 @@ const report = `# Command Center UX Report
 - Route-wide tab contract: ${sections.routeWideTabContract ? "PASS" : "FAIL"}
 - Mission Control tabs: ${sections.missionControlTabs ? "PASS" : "FAIL"}
 - Tabbed core pages: ${sections.tabbedCorePages ? "PASS" : "FAIL"}
+- Scope boundary UX: ${sections.scopeBoundaryUx ? "PASS" : "FAIL"}
 - Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}
 - Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}

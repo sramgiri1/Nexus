@@ -1052,12 +1052,13 @@
         "npm run check:scope-classification",
         "npm run check:project-os-boundary",
         "npm run check:project-export-safety",
-        "npm run check:redacted-release-manifest"
+        "npm run check:redacted-release-manifest",
+        "npm run check:command-center-ux"
       ],
       "knownLimitations": [
         "P43 remains dry-run/read-only until final validation; mutation enforcement, export packaging, and release packaging remain disabled."
       ],
-      "nextPhase": "P43.5",
+      "nextPhase": "P43.6",
       "commandCenterVisible": true
     },
     {
@@ -1653,7 +1654,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
+      "commit": "9c964a8",
       "completedAt": "2026-05-15T14:00:00.000Z",
       "summary": "Adds a redacted project release manifest generator, artifact, policy, checker, and report while keeping package creation disabled.",
       "checksRun": [
@@ -1675,13 +1676,23 @@
       "phaseId": "P43.5",
       "title": "Command Center Scope Boundary UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned Command Center UX for project/OS boundary, export safety, and redacted manifest posture.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T15:00:00.000Z",
+      "summary": "Adds Command Center visibility for project/OS boundary, export safety, blocked project package content, and redacted manifest availability without enabling execution.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages",
+        "npm run check:project-export-safety",
+        "npm run check:redacted-release-manifest",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Scope boundary UX is read-only. Packaging, release execution, project mutation, providers, workers, tools, and DB writes remain disabled."
+      ],
       "nextPhase": "P43.6",
       "commandCenterVisible": true
     },
@@ -1701,8 +1712,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T14:00:00.000Z",
-  "currentPhase": "P43.4",
-  "previousPhase": "P43.3",
-  "nextPhase": "P43.5"
+  "updatedAt": "2026-05-15T15:00:00.000Z",
+  "currentPhase": "P43.5",
+  "previousPhase": "P43.4",
+  "nextPhase": "P43.6"
 }

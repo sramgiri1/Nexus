@@ -158,7 +158,8 @@ Risk level:
   - `P43.2` Project vs OS Mutation Boundary — complete
   - `P43.3` Project Export Safety Rules — complete
   - `P43.4` Redacted Release Manifest — complete
-  - `P43.5` Command Center Scope Boundary UX — next
+  - `P43.5` Command Center Scope Boundary UX — complete
+  - `P43.6` Packaging Safety Checker + Final Validation — next
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -718,6 +719,17 @@ NEXUS agents, policies, runtime files, ledgers, secrets, or demo data.
 P43.4 still creates no project package and enables no release execution. P43.5
 is next and adds Command Center visibility for scope boundary and packaging
 safety.
+
+#### P43.5 — Command Center Scope Boundary UX
+
+P43.5 adds Command Center visibility for project/OS boundaries, export safety,
+blocked package content, and redacted manifest availability. It keeps the UI
+read-only and makes clear that project export is dry-run only, project mutation
+is disabled unless governed, and NEXUS control-plane internals must not ship
+with project packages.
+
+P43.6 is next and performs final packaging safety validation and roadmap
+closure.
 
 ### Phase 15 — Containerization and Worker Scaling
 

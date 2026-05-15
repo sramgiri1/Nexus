@@ -1138,10 +1138,12 @@ dry-run project vs OS mutation boundary decisions. P43.3 adds dry-run project
 export safety rules that allow-list project content and block NEXUS internals,
 raw evidence/audit/activity ledgers, local-state runtime files, secrets, and
 demo data. P43.4 adds a redacted release manifest artifact while still creating
-no package. These phases do not enable mutation, package creation, providers,
-tools, workers, or DB writes.
+no package. P43.5 adds Command Center visibility for scope boundary, export
+safety, blocked package content, and redacted manifest availability. These
+phases do not enable mutation, package creation, providers, tools, workers, or
+DB writes.
 
-Next phase: P43.5 - Command Center Scope Boundary UX.
+Next phase: P43.6 - Packaging Safety Checker + Final Validation.
 
 ---
 
