@@ -109,6 +109,7 @@ const requiredRoutePaths = [
   "/command-center/liveapi",
   "/command-center/database",
   "/command-center/services",
+  "/command-center/memory",
   "/command-center/evidence",
   "/command-center/safety",
   "/command-center/projects",
@@ -136,6 +137,7 @@ const requiredTabbedRoutes = {
   "/command-center/roadmap": "in-progress",
   "/command-center/cost": "overview",
   "/command-center/batch": "overview",
+  "/command-center/memory": "overview",
 };
 
 const routeHeadings = {
@@ -147,6 +149,7 @@ const routeHeadings = {
   "/command-center/liveapi": "Live API Status",
   "/command-center/database": "Durable State",
   "/command-center/services": "Service Health",
+  "/command-center/memory": "Memory Center",
   "/command-center/evidence": "Evidence",
   "/command-center/safety": "Safety Center",
   "/command-center/projects": "Projects",
@@ -936,7 +939,7 @@ check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screensh
 check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
 check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
 const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
-  (path) => path !== "/command-center/services",
+  (path) => !["/command-center/services", "/command-center/memory"].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
   const route = screenshotManifest?.routes?.find((entry) => entry.path === path);

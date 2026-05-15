@@ -342,6 +342,18 @@ export const BATCH_QUEUE_TABS = [
   { id: "cost", label: "Cost", description: "Future batch savings and cost status", badge: "Planned" },
 ];
 
+export const MEMORY_CENTER_TABS = [
+  { id: "overview", label: "Overview", description: "Scoped memory posture and safety summary", badge: "Ready" },
+  { id: "os-memory", label: "OS Memory", description: "NEXUS OS scoped memory summaries", badge: "Read-only" },
+  { id: "project-memory", label: "Project Memory", description: "Active project scoped memory summaries", badge: "Read-only" },
+  { id: "agent-memory", label: "Agent Memory", description: "Agent-visible memory metadata", badge: "Read-only" },
+  { id: "task-memory", label: "Task Memory", description: "Task and evidence-linked memory", badge: "Read-only" },
+  { id: "session-memory", label: "Session Memory", description: "Temporary session memory and expiration state", badge: "Read-only" },
+  { id: "stale-memory", label: "Stale Memory", description: "Stale, expired, invalidated, or unknown memory", badge: "Ready" },
+  { id: "promotion-candidates", label: "Promotion Candidates", description: "Memory promotion proposals requiring approval", badge: "Read-only" },
+  { id: "packets", label: "Packets", description: "Scoped memory packet preview and exclusions", badge: "Read-only" },
+];
+
 export function getTabsForPage(pageId) {
   if (pageId === "mission") return MISSION_CONTROL_TABS;
   if (pageId === "workspace") return WORKSPACE_TABS;
@@ -356,6 +368,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "roadmap") return OS_ROADMAP_TABS;
   if (pageId === "cost") return COST_CENTER_TABS;
   if (pageId === "batch") return BATCH_QUEUE_TABS;
+  if (pageId === "memory") return MEMORY_CENTER_TABS;
   return (PAGE_TAB_PLANS[pageId] || []).map((label) => ({
     id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     label,

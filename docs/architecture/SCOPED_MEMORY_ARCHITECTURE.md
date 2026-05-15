@@ -113,3 +113,25 @@ Promotion candidates are also proposals and require approval.
 ## Next After P46.5
 P46.6 exposes scoped memory safely in Command Center through a read-only Memory
 Center.
+
+## P46.6 - Command Center Memory Center
+P46.6 adds `/command-center/memory` as a read-only Memory Center. It shows:
+- Overview
+- OS Memory
+- Project Memory
+- Agent Memory
+- Task Memory
+- Session Memory
+- Stale Memory
+- Promotion Candidates
+- Packets
+
+Memory Center displays summaries, source labels, freshness, classification,
+allowed agents, verification timestamps, evidence links, promotion proposals,
+and packet previews. It does not show raw source, secrets, raw prompts, raw
+logs, or raw policy dumps. It does not edit memory and does not inject memory
+into agents.
+
+## Next After P46.6
+P46.7 performs final validation, regenerates memory reports, repairs phase
+status commit placeholders, and closes P46.

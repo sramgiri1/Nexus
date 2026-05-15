@@ -1,5 +1,6 @@
 import {
   BATCH_QUEUE_TABS,
+  MEMORY_CENTER_TABS,
   AGENT_REGISTRY_TABS,
   COST_CENTER_TABS,
   DURABLE_STATE_TABS,
@@ -249,6 +250,19 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: COST_CENTER_TABS,
     defaultTab: "overview",
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
+  },
+  {
+    key: "memory",
+    path: "/command-center/memory",
+    name: "Memory Center",
+    section: "PLATFORM",
+    allowPhaseLabels: false,
+    expectedHeading: "Memory Center",
+    status: "implemented",
+    scope: "platform",
+    tabs: MEMORY_CENTER_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/SCOPED_MEMORY_ARCHITECTURE.md",
   },
   {
     key: "roadmap",

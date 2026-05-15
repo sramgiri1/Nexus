@@ -1217,7 +1217,12 @@ P46.5 adds freshness, staleness, invalidation planning, and promotion-candidate
 rules. Stale and promotion states are proposals only; no automatic memory
 rewrite or runtime injection is enabled.
 
-Next phase: P46.6 - Command Center Memory Center.
+P46.6 adds the read-only Command Center Memory Center at
+`/command-center/memory`, with scoped memory tabs, freshness summaries,
+promotion proposals, and packet previews. Memory editing and runtime injection
+remain disabled.
+
+Next phase: P46.7 - Tests + Docs + Final Validation.
 
 ---
 

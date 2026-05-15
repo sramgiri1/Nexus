@@ -181,8 +181,8 @@ Risk level:
   - `P46.3` Memory Packet Builder — complete
   - `P46.4` Memory Access Policy — complete
   - `P46.5` Memory Freshness + Staleness — complete
-  - `P46.6` Command Center Memory Center — next
-  - `P46.7` Tests + Docs + Final Validation — planned
+  - `P46.6` Command Center Memory Center — complete
+  - `P46.7` Tests + Docs + Final Validation — next
 - `P47` Trusted Context + Data Architecture Layer
 - `P48` Governed Agentic Mesh
 - `P49` Agent Definition Update Workflow

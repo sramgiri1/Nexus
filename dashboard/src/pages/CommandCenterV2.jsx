@@ -13,6 +13,7 @@ import {
   EVIDENCE_TABS,
   IMPLEMENTATION_TABS,
   LIVE_API_TABS,
+  MEMORY_CENTER_TABS,
   MISSION_CONTROL_TABS,
   PROJECTS_TABS,
   SAFETY_CENTER_TABS,
@@ -140,6 +141,7 @@ const ROUTE_ICONS = {
   services: "☍",
   batch: "⊞",
   cost: "$",
+  memory: "◌",
   roadmap: "◈",
   activity: "☰",
   docs: "☷",
@@ -6646,6 +6648,178 @@ function ActivityLogPage({ vm }) {
   );
 }
 
+function MemoryRecordList({ records, emptyMessage }) {
+  if (!records || records.length === 0) {
+    return (
+      <div className="ccv2-card">
+        <div className="ccv2-section-heading">No memory records</div>
+        <p style={{ marginTop: 8, color: "var(--v2-muted)", fontSize: 12 }}>
+          {emptyMessage}
+        </p>
+      </div>
+    );
+  }
+
+  return (
+    <div className="ccv2-grid ccv2-grid--3">
+      {records.map((item) => (
+        <article key={item.memoryId} className="ccv2-card">
+          <div className="ccv2-section-heading">{item.type}</div>
+          <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+            <span>Scope: {item.scope}</span>
+            <span>Classification: {item.classification}</span>
+            <span>Freshness: {item.freshness}</span>
+            <span>Confidence: {Math.round((item.confidence || 0) * 100)}%</span>
+            <span>Allowed agents: {(item.allowedAgents || []).join(", ") || "Not specified"}</span>
+            <span>Last verified: {item.lastVerifiedAt || "Not verified yet"}</span>
+          </div>
+          <p style={{ marginTop: 10, color: "var(--v2-text)", fontSize: 13, lineHeight: 1.55 }}>
+            {item.summary}
+          </p>
+          <div style={{ marginTop: 10, display: "flex", gap: 8, flexWrap: "wrap" }}>
+            {(item.evidenceIds || []).map((id) => (
+              <span key={id} className="ccv2-pill ccv2-pill--read-only">{id}</span>
+            ))}
+            <span className="ccv2-pill ccv2-pill--disabled">Redacted summary</span>
+          </div>
+        </article>
+      ))}
+    </div>
+  );
+}
+
+function MemoryCenterPage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
+  const memory = vm.memoryCenter || {};
+  const items = memory.memoryItems || [];
+  const byScope = (scope) => items.filter((item) => item.scope === scope);
+  const staleIds = new Set((memory.freshness || []).filter((item) => item.stale).map((item) => item.memoryId));
+  const staleItems = items.filter((item) => staleIds.has(item.memoryId) || item.freshness !== "fresh");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Memory Center</div>
+            <div className="ccv2-page-head__sub">
+              Inspect scoped memory summaries, freshness, access posture, and packet previews.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--ready">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Runtime injection disabled</span>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Memory Scope Context</div>
+          <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+            <span>Project: {memory.activeProjectLabel || vm.shell?.activeProject || "Private Project"}</span>
+            <span>Mode: {memory.mode || vm.shell?.mode || "local-private"}</span>
+            <span>Source: {memory.sourceLabel || "scoped memory snapshot"}</span>
+            <span>Provider dispatch: Disabled</span>
+            <span>DB writes: Disabled</span>
+            <span>Raw content: Hidden</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={MEMORY_CENTER_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Memory Center sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                ["Total memory", memory.overview?.totalItems ?? 0],
+                ["OS memory", memory.overview?.osItems ?? 0],
+                ["Project memory", memory.overview?.projectItems ?? 0],
+                ["Stale memory", memory.overview?.staleItems ?? 0],
+              ].map(([label, value]) => (
+                <div key={label} className="ccv2-card">
+                  <div className="ccv2-metric-card__label">{label}</div>
+                  <div className="ccv2-metric-card__value ccv2-metric-card__value--blue">{value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="ccv2-card" style={{ marginTop: 12 }}>
+              <div className="ccv2-section-heading">Safety Posture</div>
+              <ul className="ccv2-list">
+                {(memory.safetyNotes || []).map((note) => <li key={note}>{note}</li>)}
+              </ul>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="os-memory" activeTab={activeTab}>
+            <MemoryRecordList records={byScope("nexus_os")} emptyMessage="No NEXUS OS scoped memory summaries yet." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="project-memory" activeTab={activeTab}>
+            <MemoryRecordList records={byScope("project")} emptyMessage="No active project memory summaries yet." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="agent-memory" activeTab={activeTab}>
+            <MemoryRecordList records={items.filter((item) => (item.allowedAgents || []).length > 0)} emptyMessage="No agent-visible memory summaries yet." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="task-memory" activeTab={activeTab}>
+            <MemoryRecordList records={byScope("task")} emptyMessage="No task-scoped memory summaries yet." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="session-memory" activeTab={activeTab}>
+            <MemoryRecordList records={byScope("session")} emptyMessage="No session memory summaries yet." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="stale-memory" activeTab={activeTab}>
+            <MemoryRecordList records={staleItems} emptyMessage="No stale, expired, invalidated, or unknown memory is currently visible." />
+          </CommandTabPanel>
+          <CommandTabPanel tabId="promotion-candidates" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(memory.promotionCandidates || []).map((candidate) => (
+                <article key={candidate.memoryId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{candidate.memoryId}</div>
+                  <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                    <span>Current scope: {candidate.currentScope}</span>
+                    <span>Proposed scope: {candidate.proposedScope}</span>
+                    <span>Auto promoted: No</span>
+                    <span>Approval required: Yes</span>
+                  </div>
+                  <p style={{ marginTop: 10, color: "var(--v2-muted)", fontSize: 12 }}>
+                    {candidate.reason}
+                  </p>
+                </article>
+              ))}
+              {(memory.promotionCandidates || []).length === 0 && (
+                <div className="ccv2-card">No promotion candidates yet. Promotion remains proposal-only.</div>
+              )}
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="packets" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Packet Summary</div>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  <span>Included: {memory.packetSummary?.includedCount ?? 0}</span>
+                  <span>Excluded: {memory.packetSummary?.excludedCount ?? 0}</span>
+                  <span>Freshness warnings: {memory.packetSummary?.freshnessWarnings ?? 0}</span>
+                  <span>Trust warnings: {memory.packetSummary?.trustWarnings ?? 0}</span>
+                  <span>Token estimate: {memory.packetSummary?.tokenBudgetEstimate ?? 0}</span>
+                  <span>Runtime injection: Disabled</span>
+                </div>
+              </div>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Excluded Memory</div>
+                <ul className="ccv2-list">
+                  {(memory.packetPreview?.excludedMemory || []).map((entry) => (
+                    <li key={entry.memoryId}>{entry.memoryId}: {(entry.reasons || []).join(", ")}</li>
+                  ))}
+                  {(memory.packetPreview?.excludedMemory || []).length === 0 && <li>No excluded memory in this preview.</li>}
+                </ul>
+              </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function PlannedRoutePage({ routeKey }) {
   const route = COMMAND_CENTER_ROUTE_BY_KEY[routeKey];
 
@@ -6875,6 +7049,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "services" && <ServiceHealthPage vm={vmWithApi} />}
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

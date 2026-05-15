@@ -1267,6 +1267,49 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Memory Center shows read-only scoped memory tabs and packet preview", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/memory");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Memory Center");
+    await expect(page.locator("body")).toContainText("Memory Scope Context");
+    await expect(page.locator("body")).toContainText("Runtime injection disabled");
+    await expect(page.locator("body")).toContainText("Private Project");
+
+    for (const label of [
+      "Overview",
+      "OS Memory",
+      "Project Memory",
+      "Agent Memory",
+      "Task Memory",
+      "Session Memory",
+      "Stale Memory",
+      "Promotion Candidates",
+      "Packets",
+    ]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Packets").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Packet Summary");
+    await expect(activeCommandTabPanel(page)).toContainText("Excluded Memory");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("api_key");
+    expect(body).not.toContain("raw prompt");
+
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Overview")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "Packets")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
   test("Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details", async ({ page }) => {
     const errors = captureClientErrors(page);
 

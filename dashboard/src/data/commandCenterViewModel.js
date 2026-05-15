@@ -21,6 +21,10 @@ import {
   summarizeAgentCapabilityMatrix,
 } from "../../../agent-registry/agentCapabilityMatrix.js";
 import { getAgentRegistry } from "../../../agent-registry/agentRegistrySchema.js";
+import { getSafeMemoryFixtures } from "../../../memory/memoryFixtures.js";
+import { buildMemoryPacket, summarizeMemoryPacket } from "../../../memory/memoryPacketBuilder.js";
+import { assessMemoryFreshness } from "../../../memory/memoryFreshness.js";
+import { listPromotionCandidates } from "../../../memory/memoryPromotion.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -261,6 +265,20 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const agentBoundaryById = new Map(
     agentBoundaryModel.agents.map((entry) => [entry.agentId, entry]),
   );
+  const memoryItems = getSafeMemoryFixtures();
+  const memoryPacket = buildMemoryPacket({
+    scope: "task",
+    projectId: "private-project",
+    missionId: activeMissionId,
+    taskId: "task-governed-build-summary",
+    agentId: "CORE",
+    capabilityId: "implementation.backend_code",
+    mode: shellMode,
+    memoryItems,
+    memoryBudget: { maxItems: 5, maxSummaryCharacters: 1400 },
+  });
+  const memoryFreshness = memoryItems.map((item) => assessMemoryFreshness(item, { now: "2026-05-15T00:00:00.000Z" }));
+  const memoryPromotionCandidates = listPromotionCandidates(memoryItems);
   const multiRepoWorkspace = {
     phase: "P44.2",
     title: "Multi-Repo Workspace",
@@ -381,6 +399,36 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         dataClassificationLimits: agentBoundaryById.get("CORE")?.dataBoundary?.allowedDataClassifications || [],
         warnings: ["Runtime enforcement is not enabled yet."],
       },
+    },
+    memoryCenter: {
+      mode: shellMode,
+      sourceLabel: "scoped memory fixtures + packet preview",
+      runtimeInjectionEnabled: false,
+      providerDispatchEnabled: false,
+      dbWritesEnabled: false,
+      rawContentVisible: false,
+      activeProjectLabel: safeProjectDisplayName,
+      memoryItems,
+      freshness: memoryFreshness,
+      promotionCandidates: memoryPromotionCandidates,
+      packetPreview: memoryPacket,
+      packetSummary: summarizeMemoryPacket(memoryPacket),
+      overview: {
+        totalItems: memoryItems.length,
+        osItems: memoryItems.filter((item) => item.scope === "nexus_os").length,
+        projectItems: memoryItems.filter((item) => item.scope === "project").length,
+        agentItems: memoryItems.filter((item) => item.scope === "global_agent").length,
+        taskItems: memoryItems.filter((item) => item.scope === "task").length,
+        sessionItems: memoryItems.filter((item) => item.scope === "session").length,
+        staleItems: memoryFreshness.filter((item) => item.stale).length,
+        promotionCandidates: memoryPromotionCandidates.length,
+      },
+      safetyNotes: [
+        "Memory Center is read-only.",
+        "No source payloads, secrets, prompt payloads, or logs are displayed.",
+        "Runtime memory injection is not enabled.",
+        "Provider/tool dispatch remains disabled.",
+      ],
     },
     missionComposer: {
       title: "Active Mission",

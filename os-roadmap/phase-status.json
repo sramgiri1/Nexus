@@ -1200,7 +1200,7 @@
       "knownLimitations": [
         "Memory remains metadata-only. Runtime injection, provider dispatch, tool dispatch, worker runtime, and DB writes are disabled."
       ],
-      "nextPhase": "P46.5",
+      "nextPhase": "P46.6",
       "commandCenterVisible": true
     },
     {
@@ -1285,7 +1285,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scoped-memory-architecture",
-      "commit": "pending-subphase-commit",
+      "commit": "41392a9",
       "completedAt": "2026-05-15T15:49:39.722Z",
       "summary": "Tracks stale, expired, invalidated, and promotion-candidate memory.",
       "checksRun": [
@@ -1302,14 +1302,17 @@
       "phaseId": "P46.6",
       "title": "Command Center Memory Center",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/scoped-memory-architecture",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:54:22.124Z",
       "summary": "Exposes scoped memory in read-only Command Center UI.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:memory-center-ui",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
-        "No runtime memory injection or provider/tool execution is enabled."
+        "Memory Center is read-only. Memory editing and runtime injection are not enabled."
       ],
       "nextPhase": "P46.7",
       "commandCenterVisible": true
@@ -2107,8 +2110,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:49:39.722Z",
-  "currentPhase": "P46.5",
-  "previousPhase": "P46.4",
-  "nextPhase": "P46.6"
+  "updatedAt": "2026-05-15T15:54:22.124Z",
+  "currentPhase": "P46.6",
+  "previousPhase": "P46.5",
+  "nextPhase": "P46.7"
 }

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T15:26:39.779Z
-- Validation branch: arch/agent-registry-boundary-compiler
-- Validation HEAD: 24ead19
+- Generated at: 2026-05-15T15:56:07.122Z
+- Validation branch: arch/scoped-memory-architecture
+- Validation HEAD: 41392a9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
