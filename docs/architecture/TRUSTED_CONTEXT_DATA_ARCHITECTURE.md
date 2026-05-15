@@ -87,3 +87,19 @@ source content and private payloads are excluded.
 
 P47.5 builds read-only trusted context packet previews from registry, source of
 record, trust score, freshness, and lineage metadata.
+
+## P47.5 - Trusted Context Packet
+
+Trusted context packets are read-only previews for future agent/provider runs.
+They include source summaries, inclusion and exclusion reasons, trust summaries,
+freshness summaries, and lineage summaries.
+
+P47 packets are summaries-only. They do not include raw source code, raw private
+docs, raw logs, secrets, credentials, or raw policy JSON. Demo and public-safe
+modes cannot include private project sources. Packets are not injected into
+runtime agents and do not trigger provider, tool, worker, or DB behavior.
+
+## Next
+
+P47.6 adds a Command Center Data & Context Center so operators can inspect
+trusted context readiness without seeing raw private content.

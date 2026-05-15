@@ -1243,7 +1243,11 @@ P47.4 adds freshness and lineage models for trusted context sources. Freshness
 and lineage remain metadata-only and do not rewrite files or inject context into
 runtime agents.
 
-Next phase: P47.5 - Trusted Context Packet.
+P47.5 adds read-only trusted context packet previews. Packets include source
+summaries, trust/freshness/lineage summaries, and exclusion reasons, but no raw
+source content and no runtime agent injection.
+
+Next phase: P47.6 - Command Center Data / Context Center.
 
 ---
 

@@ -143,7 +143,8 @@
     "check:trusted-context-data-sources": "node scripts/check-trusted-context-data-sources.js",
     "check:system-of-record-map": "node scripts/check-system-of-record-map.js",
     "check:source-trust-score": "node scripts/check-source-trust-score.js",
-    "check:context-freshness-lineage": "node scripts/check-context-freshness-lineage.js"
+    "check:context-freshness-lineage": "node scripts/check-context-freshness-lineage.js",
+    "check:trusted-context-packet": "node scripts/check-trusted-context-packet.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
