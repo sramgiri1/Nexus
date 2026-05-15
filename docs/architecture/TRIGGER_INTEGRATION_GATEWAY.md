@@ -76,5 +76,19 @@ scheduler and worker runtime disabled.
 
 ## Next Phase
 
-P53.4 defines GitHub event trigger previews without GitHub API calls, webhook
-servers, credentials, or repository mutation.
+## P53.4 - GitHub Event Trigger Preview
+
+P53.4 adds a GitHub event preview catalog for pull request, review, comment,
+check suite, and workflow failure events. Each event maps to a dry-run NEXUS
+action and produces a dedupe key preview.
+
+The GitHub preview module does not call the GitHub API, start webhook servers,
+read tokens, create or update pull requests, or mutate projects.
+
+Command Center surfaces GitHub Events as preview-only with no credentials
+configured and webhook execution disabled.
+
+## Next Phase
+
+P53.5 defines Jira and Linear placeholder trigger models without ticket-system
+API calls, credentials, webhook receivers, or ticket mutation.

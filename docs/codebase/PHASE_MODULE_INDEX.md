@@ -1443,3 +1443,23 @@ state and should be verified again during future docs audits.
   external network, DB writes, or project mutation.
 - Known limitations:
   Scheduled triggers are metadata previews only.
+
+## P53.4 — GitHub Event Trigger Preview
+
+- Primary capability:
+  Dry-run GitHub event preview catalog and event-to-NEXUS-action mapping.
+- Main files/folders touched:
+  `integrations/githubTriggerPreview.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`
+- Main checker(s):
+  `scripts/check-github-trigger-preview.js`
+- Main report(s):
+  `reports/github-trigger-preview-report.md`
+- Command Center impact:
+  Command Palette details show GitHub Events as preview-only with no credentials
+  configured and webhook execution disabled.
+- Safety impact:
+  No GitHub API calls, network calls, webhook server, token use, PR mutation, or
+  project mutation.
+- Known limitations:
+  GitHub integration remains a dry-run preview only.

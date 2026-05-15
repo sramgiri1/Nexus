@@ -1540,6 +1540,12 @@ function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand
                     Scheduled triggers: Preview only · Runtime scheduler: Not enabled · Worker runtime: Not enabled
                   </span>
                 </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Integration preview</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    GitHub Events - Preview only · no credentials configured · webhook execution is disabled
+                  </span>
+                </div>
               </div>
 
               <div className="ccv2-command-palette__capabilities">

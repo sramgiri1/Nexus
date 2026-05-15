@@ -559,12 +559,14 @@ updated as new module families or entry points are added.
   `trigger-gateway/manualTrigger.js`,
   `trigger-gateway/scheduledTrigger.js`,
   `trigger-gateway/index.js`,
+  `integrations/githubTriggerPreview.js`,
   `policy/trigger-gateway-policy.json`
 - Public entry points:
   `trigger-gateway/index.js`,
   `scripts/check-trigger-gateway-schema.js`,
   `scripts/check-manual-trigger.js`,
-  `scripts/check-scheduled-trigger.js`
+  `scripts/check-scheduled-trigger.js`,
+  `scripts/check-github-trigger-preview.js`
 - Inputs/outputs:
   Trigger metadata in memory, policy JSON, checker output, and markdown reports.
 - Side effects:
@@ -578,9 +580,10 @@ updated as new module families or entry points are added.
 - Tests/checkers:
   `npm run check:trigger-gateway-schema`,
   `npm run check:manual-trigger`,
-  `npm run check:scheduled-trigger`
+  `npm run check:scheduled-trigger`,
+  `npm run check:github-trigger-preview`
 - Known limitations:
-  P53.1 through P53.3 are schema, policy, and preview only. Runtime integration
+  P53.1 through P53.4 are schema, policy, and preview only. Runtime integration
   remains disabled.
 - Status:
   foundation
