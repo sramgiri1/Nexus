@@ -1170,7 +1170,11 @@ agent registry schema for NEXUS, SHEPHERD, CORE, SWIFT, SENTINEL, AUDITOR,
 WARDEN, PRISM, and FORGE. It grants no runtime permissions and does not enable
 tool dispatch, provider calls, DB writes, worker execution, or source mutation.
 
-Next phase: P45.2 - Agent Capability Matrix.
+P45.2 adds a metadata-only agent capability matrix. It maps registered agents
+to stable capability IDs and validates separation-of-duties rules without
+wiring runtime enforcement.
+
+Next phase: P45.3 - Agent Path / Tool / Data Boundaries.
 
 ---
 

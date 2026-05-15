@@ -1863,7 +1863,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending-subphase-commit",
+      "commit": "6c72f76",
       "completedAt": "2026-05-15T15:02:20.893Z",
       "summary": "Defines the metadata-only agent registry schema and seeded NEXUS agent identities.",
       "checksRun": [
@@ -1879,20 +1879,38 @@
       "phaseId": "P45.2",
       "title": "Agent Capability Matrix",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:06:49.015Z",
+      "summary": "Maps agents to stable capability IDs and validates separation-of-duties rules without runtime enforcement.",
+      "checksRun": [
+        "npm run check:agent-capability-matrix"
+      ],
+      "knownLimitations": [
+        "Capability matrix is metadata-only and is not wired into runtime enforcement."
+      ],
+      "nextPhase": "P45.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.3",
+      "title": "Agent Path / Tool / Data Boundaries",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/agent-registry-boundary-compiler",
       "commit": "pending",
       "completedAt": "",
-      "summary": "Map agents to capability categories and separation-of-duties rules.",
+      "summary": "Define path, tool, data, project, change-scope, and approval boundaries.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P45.3",
+      "nextPhase": "P45.4",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:02:20.893Z",
-  "currentPhase": "P45.1",
-  "previousPhase": "P44.7",
-  "nextPhase": "P45.2"
+  "updatedAt": "2026-05-15T15:06:49.015Z",
+  "currentPhase": "P45.2",
+  "previousPhase": "P45.1",
+  "nextPhase": "P45.3"
 }

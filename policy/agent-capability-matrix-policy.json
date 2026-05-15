@@ -1,0 +1,26 @@
+{
+  "version": "1.0",
+  "phase": "P45.2",
+  "purpose": "agent_capability_matrix",
+  "metadataOnly": true,
+  "runtimeEnforcementAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerExecutionAllowed": false,
+  "sourceMutationAllowed": false,
+  "separationOfDutiesRequired": true,
+  "capabilityCategories": [
+    "orchestration",
+    "planning",
+    "implementation",
+    "verification",
+    "security",
+    "product",
+    "release",
+    "docs",
+    "platform",
+    "governance"
+  ]
+}

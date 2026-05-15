@@ -34,3 +34,22 @@ read-only summaries, but it is not a runtime authorization layer yet.
 
 ## Next
 P45.2 adds the agent capability matrix and separation-of-duties checks.
+
+## P45.2 - Agent Capability Matrix
+P45.2 maps each registered agent to stable capability IDs and capability
+categories: orchestration, planning, implementation, verification, security,
+product, release, docs, platform, and governance.
+
+The matrix validates separation of duties:
+- Implementers cannot approve their own implementation.
+- Verifiers cannot silently mutate code.
+- Security/privacy agents can block risk but do not implement product code.
+- Coordinators can route work but cannot bypass approval.
+
+The matrix remains metadata-only. It reports gaps, overlaps, and risky
+permissions, but it does not wire runtime enforcement into action bridges,
+local APIs, workers, provider dispatch, or tool dispatch.
+
+## Next
+P45.3 defines path, tool, data, project-scope, change-scope, and approval
+boundaries for each agent.
