@@ -147,7 +147,8 @@
     "check:trusted-context-packet": "node scripts/check-trusted-context-packet.js",
     "check:trusted-context-command-center": "node scripts/check-trusted-context-command-center.js",
     "check:trusted-context-final-validation": "node scripts/check-trusted-context-final-validation.js",
-    "check-agent-mesh-message-contract": "node scripts/check-agent-mesh-message-contract.js"
+    "check-agent-mesh-message-contract": "node scripts/check-agent-mesh-message-contract.js",
+    "check-agent-mesh-message-bus": "node scripts/check-agent-mesh-message-bus.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

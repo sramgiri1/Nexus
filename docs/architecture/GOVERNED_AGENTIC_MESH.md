@@ -26,3 +26,19 @@ mutate project files.
 ## Next
 
 P48.2 adds an append-only local message bus for redacted mesh messages.
+
+## P48.2 - Agent Message Bus
+
+The message bus records governed mesh messages in an append-only local JSONL
+store. Records remain redacted, summaries-only, and filterable by room, task,
+agent, project, mission, type, and status.
+
+The message bus preserves audit/evidence separation. It can create an activity
+logger dry-run when the observability logger is present, but it does not enable
+provider calls, tool dispatch, worker runtime, DB writes, project mutation, or
+task state mutation.
+
+## Next
+
+P48.3 adds governed agent rooms that group agents, tasks, messages, and
+evidence by scope.

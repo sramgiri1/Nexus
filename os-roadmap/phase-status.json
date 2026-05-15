@@ -2250,12 +2250,14 @@
       "phaseId": "P48.1",
       "title": "Agent Message Contract",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "fddf0cc",
+      "completedAt": "2026-05-15T16:47:33.488Z",
       "summary": "Defines typed, scoped, redacted, policy-checked mesh messages.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check-agent-mesh-message-contract"
+      ],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
@@ -2266,11 +2268,11 @@
       "phaseId": "P48.2",
       "title": "Agent Message Bus",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Adds append-only local message store for governed mesh messages.",
+      "summary": "Adds append-only local message bus/store for governed mesh messages.",
       "checksRun": [],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
@@ -2360,8 +2362,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:45:13.252Z",
-  "currentPhase": "P48.1",
-  "previousPhase": "P47.7",
-  "nextPhase": "P48.2"
+  "updatedAt": "2026-05-15T16:47:33.488Z",
+  "currentPhase": "P48.2",
+  "previousPhase": "P48.1",
+  "nextPhase": "P48.3"
 }
