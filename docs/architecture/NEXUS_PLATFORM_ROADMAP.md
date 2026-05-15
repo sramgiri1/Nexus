@@ -162,8 +162,8 @@ Risk level:
   - `P43.6` Packaging Safety Checker + Final Validation — complete
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
   - `P44.1` Repo Registry — complete
-  - `P44.2` Repo Ownership + Dependency Map — next
-  - `P44.3` Branch / Commit Workflow Model — planned
+  - `P44.2` Repo Ownership + Dependency Map — complete
+  - `P44.3` Branch / Commit Workflow Model — next
   - `P44.4` PR Draft + Evidence Link Model — planned
   - `P44.5` Review Comment Ingestion Model — planned
   - `P44.6` Merge Gate + Rollback Branch Model — planned
@@ -756,6 +756,18 @@ The registry is read-only. It does not create git branches, commits, pull
 requests, merges, pushes, release packages, provider calls, DB writes, project
 source mutations, or private source detailed scans. P44.2 is next and adds the
 repo ownership and dependency map.
+
+#### P44.2 — Repo Ownership + Dependency Map
+
+P44.2 adds read-only repository ownership, dependency, and blast-radius metadata.
+It maps owner teams and owner agents for NEXUS OS and project repository
+references, then records safe relationships such as `consumes-api` and
+`documentation-reference`.
+
+The dependency map remains metadata-only. It does not scan private project source
+contents, run git commands, mutate files, call providers, use external network
+APIs, or write to a DB. P44.3 is next and adds the governed branch / commit
+workflow model.
 
 ### Phase 15 — Containerization and Worker Scaling
 

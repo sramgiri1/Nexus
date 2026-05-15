@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-15T13:27:34.156Z",
+  "generatedAt": "2026-05-15T13:35:46.282Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -1742,23 +1742,27 @@
       "title": "Repo Registry",
       "status": "complete",
       "branch": "arch/multi-repo-git-pr-lifecycle",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-15T13:27:34.156Z",
+      "commit": "aac54b0",
+      "completedAt": "2026-05-15T13:35:46.282Z",
       "summary": "Adds a read-only repository registry for NEXUS OS and private project repository references.",
       "nextPhase": "P44.2"
     },
     {
       "phaseId": "P44.2",
       "track": "NEXUS_OS",
-      "checksRun": [],
-      "knownLimitations": [],
+      "checksRun": [
+        "npm run check:repo-dependency-map"
+      ],
+      "knownLimitations": [
+        "Dependency and blast-radius outputs are metadata-only; no git, network, provider, DB, or project mutation behavior is enabled."
+      ],
       "commandCenterVisible": true,
       "title": "Repo Ownership + Dependency Map",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Maps ownership and repo dependencies without runtime execution.",
+      "status": "complete",
+      "branch": "arch/multi-repo-git-pr-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T13:35:46.282Z",
+      "summary": "Adds read-only repo ownership, dependency, and blast-radius metadata without git execution or project mutation.",
       "nextPhase": "P44.3"
     },
     {
@@ -1834,7 +1838,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-15T16:00:00.000Z",
-  "currentPhase": "P44.1",
-  "previousPhase": "P43.6",
-  "nextPhase": "P44.2"
+  "currentPhase": "P44.2",
+  "previousPhase": "P44.1",
+  "nextPhase": "P44.3"
 }

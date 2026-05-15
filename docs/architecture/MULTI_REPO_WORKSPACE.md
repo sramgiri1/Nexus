@@ -49,3 +49,15 @@ P44 continues with:
 - P44.5 Review Comment Ingestion Model.
 - P44.6 Merge Gate + Rollback Branch Model.
 - P44.7 Multi-Repo Git/PR Final Validation.
+
+## P44.2 Repo Ownership + Dependency Map
+P44.2 adds read-only ownership and dependency maps on top of the repo registry.
+
+The ownership map records the owner team, owner agent, package boundary, and
+review escalation path for each repo. The dependency map records metadata-only
+relationships such as `consumes-api` and `documentation-reference`.
+
+The blast-radius summary is also metadata-only. It can identify that an
+OS/project-spanning change needs cross-repo and package-boundary review, but it
+does not run git commands, scan private source contents, or mutate any project
+files.

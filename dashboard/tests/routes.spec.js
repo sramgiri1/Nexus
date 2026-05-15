@@ -1677,8 +1677,8 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Project vs OS Mutation Boundary");
     expect(completedBody).toContain("P43.5");
     expect(completedBody).toContain("Command Center Scope Boundary UX");
-    expect(body).toContain("P44.1");
-    expect(body).toContain("Repo Registry");
+    expect(completedBody).toContain("P44.1");
+    expect(completedBody).toContain("Repo Registry");
     expect(body).toContain("P44.2");
     expect(body).toContain("Repo Ownership + Dependency Map");
     expect(body).not.toContain("DemoApp");

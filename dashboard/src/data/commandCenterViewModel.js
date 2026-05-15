@@ -5,7 +5,13 @@ import serviceState from "../../../local-state/runtime/services/service-state.js
 import doctorReport from "../../../reports/nexus-doctor-report.json";
 import projectProgressExample from "../../../os-roadmap/project-progress.example.json";
 import redactedReleaseManifest from "../../../artifacts/project-release/private-project-release-manifest.json";
-import { getRepoRegistry, summarizeRepoRegistry } from "../../../repo-workspace/index.js";
+import {
+  buildRepoDependencyMap,
+  buildRepoOwnershipMap,
+  getRepoRegistry,
+  summarizeRepoBlastRadius,
+  summarizeRepoRegistry,
+} from "../../../repo-workspace/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -226,11 +232,23 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   };
   const repoRegistry = getRepoRegistry();
   const repoRegistrySummary = summarizeRepoRegistry(repoRegistry);
+  const repoOwnershipMap = buildRepoOwnershipMap(repoRegistry);
+  const repoDependencyMap = buildRepoDependencyMap(repoRegistry);
+  const repoBlastRadius = summarizeRepoBlastRadius({ repoIds: ["nexus-os", "private-project-backend"] }, repoRegistry);
   const multiRepoWorkspace = {
-    phase: "P44.1",
+    phase: "P44.2",
     title: "Multi-Repo Workspace",
-    status: "Registry model ready",
+    status: "Registry and dependency map ready",
     summary: repoRegistrySummary,
+    ownership: {
+      ownerCount: repoOwnershipMap.owners.length,
+      owners: repoOwnershipMap.owners,
+    },
+    dependencies: {
+      relationshipCount: repoDependencyMap.relationships.length,
+      relationships: repoDependencyMap.relationships,
+      blastRadius: repoBlastRadius,
+    },
     repos: repoRegistry.repos.map((repo) => ({
       repoId: repo.repoId,
       projectId: repo.projectId,

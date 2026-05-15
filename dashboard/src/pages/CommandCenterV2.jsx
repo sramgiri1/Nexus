@@ -3368,6 +3368,7 @@ function ProjectsPage({ vm, studio }) {
   const multiRepo = vm.multiRepoWorkspace || {};
   const multiRepoSummary = multiRepo.summary || {};
   const multiRepoRepos = Array.isArray(multiRepo.repos) ? multiRepo.repos : [];
+  const multiRepoRelationships = Array.isArray(multiRepo.dependencies?.relationships) ? multiRepo.dependencies.relationships : [];
   const [activeTab, setActiveTab] = useState("portfolio");
   const registryEntries = [
     { label: "NEXUS OS", scope: "os", visibility: "internal", boundary: "Platform entry" },
@@ -3398,13 +3399,14 @@ function ProjectsPage({ vm, studio }) {
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Multi-Repo Workspace</div>
           <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P44.1 adds a read-only repo registry model for NEXUS OS and project repositories. No git branch, commit, PR,
-            merge, or push actions are enabled, and private project source is not inspected here.
+            P44.2 adds read-only repo ownership and dependency mapping for NEXUS OS and project repositories. No git branch,
+            commit, PR, merge, or push actions are enabled, and private project source is not inspected here.
           </p>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Repositories tracked</span><span className="ccv2-page-summary-value">{multiRepoSummary.repoCount ?? multiRepoRepos.length}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.activeRepos ?? 0}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.projectRepos ?? 0}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dependency links</span><span className="ccv2-page-summary-value">{multiRepo.dependencies?.relationshipCount ?? multiRepoRelationships.length}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Git lifecycle</span><span className="ccv2-page-summary-value">metadata-only</span></div>
           </div>
           <div className="ccv2-list" style={{ marginTop: 12 }}>
@@ -3415,6 +3417,15 @@ function ProjectsPage({ vm, studio }) {
                 <span className={`ccv2-pill ${repo.packageBoundary === "os" ? "ccv2-pill--ready" : "ccv2-pill--pending"}`}>
                   {repo.packageBoundary}
                 </span>
+              </div>
+            ))}
+          </div>
+          <div className="ccv2-list" style={{ marginTop: 12 }}>
+            {multiRepoRelationships.slice(0, 3).map((relationship) => (
+              <div key={`${relationship.fromRepoId}-${relationship.toRepoId}`} className="ccv2-list-row">
+                <span className="ccv2-list-row__title">{relationship.fromRepoId} → {relationship.toRepoId}</span>
+                <span className="ccv2-list-row__meta">{relationship.reason}</span>
+                <span className="ccv2-pill ccv2-pill--pending">{relationship.relationshipType}</span>
               </div>
             ))}
           </div>

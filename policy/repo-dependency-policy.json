@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "phase": "P44.2",
+  "purpose": "repo_ownership_dependency_map",
+  "readOnly": true,
+  "runtimeBehaviorChangesAllowed": false,
+  "gitBranchCreationAllowed": false,
+  "gitCommitAllowed": false,
+  "gitPrCreationAllowed": false,
+  "gitMergeAllowed": false,
+  "gitPushAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "allowedRelationshipTypes": [
+    "consumes-api",
+    "shares-package",
+    "deployment-order",
+    "test-dependency",
+    "documentation-reference",
+    "release-coupled",
+    "unknown"
+  ],
+  "requiredOutputs": [
+    "repo-workspace/repoOwnership.js",
+    "repo-workspace/repoDependencyMap.js",
+    "reports/repo-dependency-map-report.md"
+  ],
+  "commandCenterRoadmapUpdateRequired": true,
+  "osPhaseStatusUpdateRequired": true
+}
