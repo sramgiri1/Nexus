@@ -1,0 +1,238 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-05-15T02:40:00.000Z",
+  "types": [
+    {
+      "id": "os-module",
+      "label": "OS Module",
+      "description": "NEXUS OS platform modules, docs, dashboards, policies, and local runtime foundations.",
+      "commonStacks": [
+        "Node.js",
+        "React",
+        "Markdown",
+        "JSON policy"
+      ],
+      "commonAgents": [
+        "NEXUS",
+        "SHEPHERD",
+        "AUDITOR",
+        "WARDEN"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Review",
+        "Validate",
+        "Document"
+      ],
+      "plannedAdapters": [
+        "nexus-os-adapter"
+      ]
+    },
+    {
+      "id": "saas-mobile",
+      "label": "SaaS + Mobile",
+      "description": "Product projects that combine service, web, and mobile surfaces.",
+      "commonStacks": [
+        "Node/Fastify",
+        "TypeScript/React",
+        "Swift/iOS/Xcode",
+        "Postgres/Prisma"
+      ],
+      "commonAgents": [
+        "SHEPHERD",
+        "CORE",
+        "AUDITOR",
+        "SENTINEL",
+        "SWIFT"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Build",
+        "Validate",
+        "Review"
+      ],
+      "plannedAdapters": [
+        "node-service-adapter",
+        "react-web-adapter",
+        "ios-xcode-adapter"
+      ]
+    },
+    {
+      "id": "backend-service",
+      "label": "Backend Service",
+      "description": "API, worker, or service projects.",
+      "commonStacks": [
+        "Node/Fastify",
+        "Python/FastAPI/Pytest",
+        "Java/Spring/Maven/Gradle"
+      ],
+      "commonAgents": [
+        "CORE",
+        "AUDITOR",
+        "SENTINEL"
+      ],
+      "defaultWorkflows": [
+        "Build",
+        "Validate",
+        "Review"
+      ],
+      "plannedAdapters": [
+        "node-service-adapter",
+        "python-service-adapter",
+        "java-service-adapter"
+      ]
+    },
+    {
+      "id": "web-app",
+      "label": "Web App",
+      "description": "Browser-based application projects.",
+      "commonStacks": [
+        "TypeScript/React",
+        "Vite",
+        "Playwright"
+      ],
+      "commonAgents": [
+        "PRISM",
+        "CANVAS",
+        "AUDITOR"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Build",
+        "Browser QA"
+      ],
+      "plannedAdapters": [
+        "react-web-adapter"
+      ]
+    },
+    {
+      "id": "ios-app",
+      "label": "iOS App",
+      "description": "Native iOS projects.",
+      "commonStacks": [
+        "Swift/iOS/Xcode"
+      ],
+      "commonAgents": [
+        "SWIFT",
+        "AUDITOR",
+        "SENTINEL"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Build",
+        "Xcode Validation"
+      ],
+      "plannedAdapters": [
+        "ios-xcode-adapter"
+      ]
+    },
+    {
+      "id": "android-app",
+      "label": "Android App",
+      "description": "Native Android projects.",
+      "commonStacks": [
+        "Kotlin/Android/Gradle"
+      ],
+      "commonAgents": [
+        "CORE",
+        "AUDITOR",
+        "SENTINEL"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Build",
+        "Gradle Validation"
+      ],
+      "plannedAdapters": [
+        "android-gradle-adapter"
+      ]
+    },
+    {
+      "id": "library",
+      "label": "Library",
+      "description": "Reusable package or module projects.",
+      "commonStacks": [
+        "Node.js",
+        "Python",
+        "Java"
+      ],
+      "commonAgents": [
+        "CORE",
+        "AUDITOR"
+      ],
+      "defaultWorkflows": [
+        "Build",
+        "Validate",
+        "Package"
+      ],
+      "plannedAdapters": [
+        "package-adapter"
+      ]
+    },
+    {
+      "id": "automation-tool",
+      "label": "Automation Tool",
+      "description": "Local automation, CLI, or internal operator tooling.",
+      "commonStacks": [
+        "Node.js",
+        "Python",
+        "Shell"
+      ],
+      "commonAgents": [
+        "NEXUS",
+        "WARDEN",
+        "AUDITOR"
+      ],
+      "defaultWorkflows": [
+        "Guard",
+        "Validate",
+        "Document"
+      ],
+      "plannedAdapters": [
+        "cli-adapter"
+      ]
+    },
+    {
+      "id": "data-pipeline",
+      "label": "Data Pipeline",
+      "description": "Data ingestion, transformation, or reporting projects.",
+      "commonStacks": [
+        "Python",
+        "SQL",
+        "SQLite",
+        "Postgres",
+        "MongoDB"
+      ],
+      "commonAgents": [
+        "CORE",
+        "AUDITOR",
+        "SENTINEL"
+      ],
+      "defaultWorkflows": [
+        "Plan",
+        "Validate",
+        "Review"
+      ],
+      "plannedAdapters": [
+        "data-pipeline-adapter"
+      ]
+    },
+    {
+      "id": "unknown",
+      "label": "Unknown",
+      "description": "Project type has not been classified yet.",
+      "commonStacks": [],
+      "commonAgents": [
+        "SHEPHERD",
+        "AUDITOR"
+      ],
+      "defaultWorkflows": [
+        "Inventory",
+        "Plan"
+      ],
+      "plannedAdapters": [
+        "generic-project-adapter"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,121 @@
+{
+  "registryVersion": "1.0",
+  "generatedAt": "2026-05-15T02:40:00.000Z",
+  "source": "nexus-project-registry",
+  "defaultProjectId": "private-project-01",
+  "projects": [
+    {
+      "projectId": "nexus-os",
+      "label": "NEXUS OS",
+      "displayLabel": "NEXUS OS",
+      "visibility": "internal",
+      "scope": "os",
+      "status": "active",
+      "root": ".",
+      "projectType": "os-module",
+      "adapterId": "nexus-os-adapter",
+      "stackProfileId": "nexus-os-local",
+      "modeAllowed": [
+        "local-private",
+        "demo",
+        "public-safe"
+      ],
+      "publicSafeLabel": "NEXUS OS",
+      "localPrivateLabel": "NEXUS OS",
+      "demoOnly": false,
+      "localPrivateOnly": false,
+      "allowedRoots": [
+        "."
+      ],
+      "forbiddenRoots": [],
+      "docs": [
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/architecture/AGENTIC_OS_ARCHITECTURE.md"
+      ],
+      "testSuites": [
+        "check:command-center-ux",
+        "check:docs-coverage"
+      ],
+      "workflows": [
+        "plan",
+        "review",
+        "qa",
+        "explain"
+      ],
+      "releaseBoundary": {
+        "enabled": false,
+        "reason": "Release execution is not enabled in P42.1."
+      },
+      "createdAt": "2026-05-15T02:40:00.000Z",
+      "updatedAt": "2026-05-15T02:40:00.000Z"
+    },
+    {
+      "projectId": "private-project-01",
+      "label": "Private Project",
+      "displayLabel": "Private Project",
+      "visibility": "local-private",
+      "scope": "project",
+      "status": "active",
+      "projectType": "saas-mobile",
+      "adapterId": "planned-project-adapter",
+      "stackProfileId": "planned-stack-profile",
+      "modeAllowed": [
+        "local-private"
+      ],
+      "publicSafeLabel": "Private Project",
+      "localPrivateLabel": "Private Project",
+      "demoOnly": false,
+      "localPrivateOnly": true,
+      "allowedRoots": [],
+      "forbiddenRoots": [],
+      "docs": [
+        "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"
+      ],
+      "testSuites": [],
+      "workflows": [
+        "plan",
+        "review",
+        "qa"
+      ],
+      "releaseBoundary": {
+        "enabled": false,
+        "reason": "Project-specific release adapters are planned for later P42/P69 phases."
+      },
+      "createdAt": "2026-05-15T02:40:00.000Z",
+      "updatedAt": "2026-05-15T02:40:00.000Z"
+    },
+    {
+      "projectId": "demoapp",
+      "label": "DemoApp",
+      "displayLabel": "DemoApp",
+      "visibility": "demo",
+      "scope": "demo",
+      "status": "active",
+      "projectType": "web-app",
+      "adapterId": "demo-adapter",
+      "stackProfileId": "demo-stack-profile",
+      "modeAllowed": [
+        "demo"
+      ],
+      "publicSafeLabel": "DemoApp",
+      "localPrivateLabel": "DemoApp",
+      "demoOnly": true,
+      "localPrivateOnly": false,
+      "allowedRoots": [],
+      "forbiddenRoots": [],
+      "docs": [
+        "demo/README.md"
+      ],
+      "testSuites": [],
+      "workflows": [
+        "demo"
+      ],
+      "releaseBoundary": {
+        "enabled": false,
+        "reason": "Demo mode is showcase-only."
+      },
+      "createdAt": "2026-05-15T02:40:00.000Z",
+      "updatedAt": "2026-05-15T02:40:00.000Z"
+    }
+  ]
+}

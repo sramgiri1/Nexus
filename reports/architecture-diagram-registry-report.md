@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T02:20:42.902Z
-- Validation branch: docs/architecture-diagram-rendering
-- Validation HEAD: 41bb0bd
+- Generated at: 2026-05-15T02:44:32.269Z
+- Validation branch: arch/project-registry-schema-policy
+- Validation HEAD: 8ec2a4c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

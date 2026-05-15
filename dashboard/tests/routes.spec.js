@@ -892,7 +892,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("Project Registry + Adapter Framework");
+    expect(plannedBody).toContain("nexus.project.json Loader + Validator");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -1150,7 +1150,11 @@ test.describe("Command Center route-wide UX", () => {
       await expect(activeCommandTabPanel(page)).toContainText(new RegExp(labels[1].replace(/s$/, "s?"), "i"));
 
       const body = await page.locator("body").innerText();
-      expect(body).not.toContain("DemoApp");
+      if (path === "/command-center/projects") {
+        expect(body.toLowerCase()).toContain("demo-only entry");
+      } else {
+        expect(body).not.toContain("DemoApp");
+      }
       if (path !== "/command-center/roadmap") {
         for (const label of FORBIDDEN_PHASE_LABELS) {
           expect(body).not.toContain(label);
@@ -1323,6 +1327,13 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/projects");
 
+    await expect(page.getByText("Project Registry Foundation", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Registry entries");
+    await expect(page.locator("body")).toContainText("NEXUS OS");
+    await expect(page.locator("body")).toContainText("Private Project");
+    await expect(page.locator("body")).toContainText("Demo-only entry");
+    await expect(page.locator("body")).toContainText("Project selector arrives in P42.5");
+    await expect(page.locator("body")).toContainText("Project onboarding is planned for P42.4");
     await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText("Project Progress");
     await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework is planned for P42.");
@@ -1575,16 +1586,18 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks P41.8.6 final validation and P41.9 next", async ({ page }) => {
+  test("OS Roadmap tracks P41.9.2 completion and P42.1 current", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P41.8.6");
-    expect(body).toContain("Activity Tests + Docs + Final Validation");
-    expect(body).toContain("P41.9");
-    expect(body).toContain("README + Architecture Diagram Registry");
+    expect(body).toContain("P41.9.2");
+    expect(body).toContain("Architecture Diagram Rendering + README Follow-through");
+    expect(body).toContain("P42.1");
+    expect(body).toContain("Project Registry Schema + Policy");
+    expect(body).toContain("P42.2");
+    expect(body).toContain("nexus.project.json Loader + Validator");
     expect(body).not.toContain("DemoApp");
 
     expect(errors).toEqual([]);

@@ -1125,7 +1125,11 @@ architecture diagram. Mermaid CLI was not available without dependency
 installation in this environment, so deterministic fallback SVGs were generated
 and marked as `fallback-svg`.
 
-Next phase: P42 - Project Registry + Adapter Framework.
+P42.1 starts the Project Registry + Adapter Framework with schema, policy,
+baseline safe registry metadata, project type metadata, and validation. Project
+selector behavior is not implemented yet; it is planned for P42.5.
+
+Next phase: P42.2 - nexus.project.json Loader + Validator.
 
 ---
 

@@ -146,6 +146,8 @@ Risk level:
   - `P41.9.1` Architecture Diagram Registry Foundation — complete
   - `P41.9.2` Architecture Diagram Rendering + README Follow-through — complete
 - `P42` Project Registry + Adapter Framework
+  - `P42.1` Project Registry Schema + Policy — complete
+  - `P42.2` nexus.project.json Loader + Validator — next
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
@@ -598,6 +600,30 @@ Goal:
 
 - formalize project registration and adapter posture after the current runtime,
   governance, and operator layers stabilize
+
+Subphases:
+
+- `P42.1` — Project Registry Schema + Policy
+- `P42.2` — nexus.project.json Loader + Validator
+- `P42.3` — Stack Profile Model
+- `P42.4` — Project Onboarding Wizard / nexus:init-project
+- `P42.5` — Project Selector in Command Center
+
+#### P42.1 — Project Registry Schema + Policy
+
+P42.1 adds the Project Registry foundation: registry schema, future
+`nexus.project.json` schema, safe baseline project metadata, project type
+metadata, policy, checker, report, and minimal Projects page visibility.
+
+This subphase is schema and policy only. It does not implement project loader
+runtime, project selector behavior, onboarding, adapter execution, project
+mutation, provider calls, DB writes, workers, or MCP/tool dispatch.
+
+#### P42.2 — nexus.project.json Loader + Validator
+
+P42.2 is next. It will add a safe loader and validator for per-project profile
+files while preserving the demo/local-private/public-safe boundaries established
+in P42.1.
 
 ### Phase 15 — Containerization and Worker Scaling
 

@@ -207,13 +207,16 @@ check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
-check(phaseStatus.currentPhase === "P41.9.2", "phaseStatus", "currentPhase must be P41.9.2");
-check(phaseStatus.previousPhase === "P41.9.1", "phaseStatus", "previousPhase must be P41.9.1");
-check(Boolean(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be explicit");
+check(phaseStatus.currentPhase === "P42.1", "phaseStatus", "currentPhase must be P42.1");
+check(phaseStatus.previousPhase === "P41.9.2", "phaseStatus", "previousPhase must be P41.9.2");
+check(phaseStatus.nextPhase === "P42.2", "phaseStatus", "nextPhase must be P42.2");
 check(phaseEntries.get("P41.9.1")?.status === "complete", "phaseStatus", "P41.9.1 must be complete");
 check(phaseEntries.get("P41.9.1")?.commit === "41bb0bd", "phaseStatus", "P41.9.1 commit must be 41bb0bd");
-check(["complete", "in_progress"].includes(phaseEntries.get("P41.9.2")?.status), "phaseStatus", "P41.9.2 must be current or complete");
+check(phaseEntries.get("P41.9.2")?.status === "complete", "phaseStatus", "P41.9.2 must be complete");
 check(phaseEntries.get("P41.9.2")?.branch === "docs/architecture-diagram-rendering", "phaseStatus", "P41.9.2 branch mismatch");
+check(phaseEntries.get("P41.9.2")?.commit === "8ec2a4c", "phaseStatus", "P41.9.2 commit must be 8ec2a4c");
+check(phaseEntries.get("P42.1")?.branch === "arch/project-registry-schema-policy", "phaseStatus", "P42.1 branch mismatch");
+check(phaseEntries.get("P42.2")?.status === "planned", "phaseStatus", "P42.2 must be planned");
 
 for (const relativePath of [
   REGISTRY_PATH,

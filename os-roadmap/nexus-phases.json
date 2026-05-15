@@ -685,6 +685,51 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.1",
+      "title": "Project Registry Schema + Policy",
+      "track": "NEXUS_OS",
+      "order": 16.1,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds registry schema, project profile schema, baseline project metadata, policy, and validation checker.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.2",
+      "title": "nexus.project.json Loader + Validator",
+      "track": "NEXUS_OS",
+      "order": 16.2,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Planned safe loader and validator for per-project profiles.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.3",
+      "title": "Stack Profile Model",
+      "track": "NEXUS_OS",
+      "order": 16.3,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Planned stack profile model for project adapters.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.4",
+      "title": "Project Onboarding Wizard / nexus:init-project",
+      "track": "NEXUS_OS",
+      "order": 16.4,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Planned project onboarding wizard and local initialization command.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.5",
+      "title": "Project Selector in Command Center",
+      "track": "NEXUS_OS",
+      "order": 16.5,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Planned Command Center project selector backed by registry metadata.",
+      "commandCenterVisible": true
     }
   ]
 }

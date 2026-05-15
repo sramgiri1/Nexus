@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/nexus-project.schema.json",
+  "title": "NEXUS Project Profile",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "profileVersion",
+    "projectId",
+    "label",
+    "visibility",
+    "projectType",
+    "stacks",
+    "databases",
+    "testSuites",
+    "agents",
+    "workflows",
+    "allowedPaths",
+    "forbiddenPaths",
+    "costPolicy",
+    "releaseGates",
+    "docs",
+    "metadata"
+  ],
+  "properties": {
+    "profileVersion": {
+      "const": "1.0"
+    },
+    "projectId": {
+      "type": "string"
+    },
+    "label": {
+      "type": "string"
+    },
+    "visibility": {
+      "enum": [
+        "local-private",
+        "demo",
+        "public-safe",
+        "internal"
+      ],
+      "default": "local-private"
+    },
+    "projectType": {
+      "enum": [
+        "saas-mobile",
+        "backend-service",
+        "web-app",
+        "ios-app",
+        "android-app",
+        "library",
+        "os-module",
+        "automation-tool",
+        "data-pipeline",
+        "unknown"
+      ]
+    },
+    "stacks": {
+      "type": "object",
+      "description": "Future stack declarations such as Node/Fastify, TypeScript/React, Swift/iOS/Xcode, Kotlin/Android/Gradle, Python/FastAPI/Pytest, Java/Spring/Maven/Gradle, Postgres/Prisma, SQLite, and MongoDB."
+    },
+    "databases": {
+      "type": "object"
+    },
+    "testSuites": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "agents": {
+      "type": "object"
+    },
+    "workflows": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "allowedPaths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "forbiddenPaths": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "costPolicy": {
+      "type": "object"
+    },
+    "releaseGates": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "docs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "metadata": {
+      "type": "object"
+    }
+  }
+}

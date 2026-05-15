@@ -3285,6 +3285,11 @@ function ProjectsPage({ vm, studio }) {
     ? (projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project")
     : (studio?.activeProject?.name || "Private Project");
   const [activeTab, setActiveTab] = useState("portfolio");
+  const registryEntries = [
+    { label: "NEXUS OS", scope: "os", visibility: "internal", boundary: "Platform entry" },
+    { label: "Private Project", scope: "project", visibility: "local-private", boundary: "Private placeholder" },
+    { label: "DemoApp", scope: "demo", visibility: "demo", boundary: "Demo-only entry" },
+  ];
 
   return (
     <div className="ccv2-content">
@@ -3295,6 +3300,29 @@ function ProjectsPage({ vm, studio }) {
         </div>
 
         <div className="ccv2-card ccv2-page-summary-card">
+          <div className="ccv2-section-heading">Project Registry Foundation</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            P42.1 adds registry schemas, safe baseline metadata, project type metadata, and policy. Runtime project loading,
+            project onboarding, adapter execution, and project selection remain disabled. Project Registry + Adapter Framework is planned for P42.
+          </p>
+          <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry entries</span><span className="ccv2-page-summary-value">3</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project selector</span><span className="ccv2-page-summary-value">Project selector arrives in P42.5.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project onboarding</span><span className="ccv2-page-summary-value">Project onboarding is planned for P42.4.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profile loader</span><span className="ccv2-page-summary-value">nexus.project.json loader arrives in P42.2.</span></div>
+          </div>
+          <div className="ccv2-list" style={{ marginTop: 12 }}>
+            {registryEntries.map((entry) => (
+              <div key={entry.label} className="ccv2-list-row">
+                <span className="ccv2-list-row__title">{entry.label}</span>
+                <span className="ccv2-list-row__meta">{entry.scope} · {entry.visibility}</span>
+                <span className={`ccv2-pill ${entry.scope === "demo" ? "ccv2-pill--pending" : "ccv2-pill--ready"}`}>{entry.boundary}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Summary</div>
           <div className="ccv2-page-summary-grid">
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
@@ -3302,7 +3330,7 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Backend validation</span><span className="ccv2-page-summary-value">{pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">iOS readiness</span><span className="ccv2-page-summary-value">{pvStatus.iosReadiness || "Requires iOS/Xcode runner"}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Release readiness</span><span className="ccv2-page-summary-value">{vm.release.status === "NO-GO" ? "Not ready" : vm.release.status}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">Project Registry + Adapter Framework is planned for P42.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">P42.2 adds the nexus.project.json loader and validator.</span></div>
           </div>
         </div>
 

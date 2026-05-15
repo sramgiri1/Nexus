@@ -805,3 +805,15 @@ project boundaries generically, but they must not include private project names,
 source paths, secrets, raw logs, or raw policy payloads. The enterprise
 architecture diagram must stay architectural; the full roadmap belongs in the
 separate roadmap diagram and roadmap documents.
+
+## 12. Project Registry Foundation
+
+P42.1 adds the Project Registry schema and policy foundation. The baseline
+registry distinguishes NEXUS OS platform work, private project placeholders, and
+demo-only projects without enabling a runtime project selector or adapter
+execution.
+
+The registry uses public-safe labels by default. The demo project entry is
+demo-only and must not be used as the local-private fallback project. Private
+projects use `Private Project` wording in public-safe surfaces until later
+registry and profile phases can safely load explicit local-private metadata.

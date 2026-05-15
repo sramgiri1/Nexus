@@ -1,0 +1,160 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://nexus.local/schemas/project-registry.schema.json",
+  "title": "NEXUS Project Registry",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "registryVersion",
+    "generatedAt",
+    "source",
+    "defaultProjectId",
+    "projects"
+  ],
+  "properties": {
+    "registryVersion": {
+      "const": "1.0"
+    },
+    "generatedAt": {
+      "type": "string"
+    },
+    "source": {
+      "const": "nexus-project-registry"
+    },
+    "defaultProjectId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "projects": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/project"
+      }
+    }
+  },
+  "$defs": {
+    "project": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "projectId",
+        "label",
+        "displayLabel",
+        "visibility",
+        "scope",
+        "status",
+        "projectType",
+        "publicSafeLabel",
+        "createdAt",
+        "updatedAt"
+      ],
+      "properties": {
+        "projectId": {
+          "type": "string",
+          "minLength": 1
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "displayLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "visibility": {
+          "enum": [
+            "local-private",
+            "demo",
+            "public-safe",
+            "internal"
+          ]
+        },
+        "scope": {
+          "enum": [
+            "project",
+            "os",
+            "demo"
+          ]
+        },
+        "status": {
+          "enum": [
+            "active",
+            "inactive",
+            "planned",
+            "archived"
+          ]
+        },
+        "root": {
+          "type": "string"
+        },
+        "projectType": {
+          "type": "string"
+        },
+        "adapterId": {
+          "type": "string"
+        },
+        "stackProfileId": {
+          "type": "string"
+        },
+        "modeAllowed": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "publicSafeLabel": {
+          "type": "string",
+          "minLength": 1
+        },
+        "localPrivateLabel": {
+          "type": "string"
+        },
+        "demoOnly": {
+          "type": "boolean"
+        },
+        "localPrivateOnly": {
+          "type": "boolean"
+        },
+        "allowedRoots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "forbiddenRoots": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "docs": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "testSuites": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "workflows": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "releaseBoundary": {
+          "type": "object"
+        },
+        "createdAt": {
+          "type": "string"
+        },
+        "updatedAt": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

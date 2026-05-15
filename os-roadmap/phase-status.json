@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-15T02:16:55.439Z",
+  "generatedAt": "2026-05-15T02:40:00.000Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -784,7 +784,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/architecture-diagram-rendering",
-      "commit": "pending-final-commit",
+      "commit": "8ec2a4c",
       "completedAt": "2026-05-15T02:16:55.439Z",
       "summary": "Completes README and architecture diagram registry follow-through with public-safe rendered SVG artifacts and validated docs links.",
       "checksRun": [
@@ -834,8 +834,8 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "docs/architecture-diagram-rendering",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-15T02:16:55.439Z",
+      "commit": "8ec2a4c",
+      "completedAt": "2026-05-15T02:40:00.000Z",
       "summary": "Renders public-safe SVG architecture diagram artifacts, updates README and diagram docs, repairs diagram reports, and keeps roadmap content separate from architecture diagrams.",
       "checksRun": [
         "npm run diagrams:render",
@@ -850,18 +850,105 @@
         "Mermaid CLI was not available without dependency installation, so deterministic fallback SVG artifacts were generated.",
         "Rendered PNG outputs remain optional and were not generated."
       ],
-      "nextPhase": "P42",
+      "nextPhase": "P42.1",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P42",
       "title": "Project Registry + Adapter Framework",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/project-registry-schema-policy",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Builds the project registry and adapter framework foundation after diagram and documentation governance stabilized. Previous completed phase: P41.9.2 - Architecture Diagram Rendering + README Follow-through.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Project selector, loader runtime, onboarding wizard, and adapter runtime are not enabled in P42.1."
+      ],
+      "nextPhase": "P42.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.1",
+      "title": "Project Registry Schema + Policy",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/project-registry-schema-policy",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T02:40:00.000Z",
+      "summary": "Adds registry schemas, safe baseline project metadata, project type metadata, policy, checker, report, and minimal Command Center Projects visibility.",
+      "checksRun": [
+        "npm run check:project-registry",
+        "npm run check:architecture-diagrams",
+        "npm run check-os-phase-status",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Project selector is planned for P42.5 and is not implemented in P42.1.",
+        "nexus.project.json loader and validator are planned for P42.2.",
+        "Adapter runtime, onboarding wizard, project mutation, DB writes, provider calls, worker runtime, and tool dispatch remain disabled."
+      ],
+      "nextPhase": "P42.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.2",
+      "title": "nexus.project.json Loader + Validator",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned dynamic project registry and adapter framework.",
+      "summary": "Planned safe loader and validator for per-project nexus.project.json profiles.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P42.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.3",
+      "title": "Stack Profile Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned stack profile model for project adapters.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P42.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.4",
+      "title": "Project Onboarding Wizard / nexus:init-project",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned guided project onboarding and initialization flow.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P42.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.5",
+      "title": "Project Selector in Command Center",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned Command Center project selector backed by the Project Registry.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P43",
@@ -1388,7 +1475,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-14T23:03:20.000Z",
-  "currentPhase": "P41.9.2",
-  "previousPhase": "P41.9.1",
-  "nextPhase": "P42"
+  "currentPhase": "P42.1",
+  "previousPhase": "P41.9.2",
+  "nextPhase": "P42.2"
 }
