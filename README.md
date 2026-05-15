@@ -1133,10 +1133,11 @@ matrix. Adapter runtime, project mutation, provider calls, DB writes, workers,
 and tool dispatch remain disabled.
 
 P43 starts Scope Boundary + Project Packaging Safety. P43.1 adds classification
-only for NEXUS OS, project, cross-cutting, demo, and unknown changes; it does
-not enable mutation, packaging/export, providers, tools, workers, or DB writes.
+only for NEXUS OS, project, cross-cutting, demo, and unknown changes. P43.2 adds
+dry-run project vs OS mutation boundary decisions. These phases do not enable
+mutation, packaging/export, providers, tools, workers, or DB writes.
 
-Next phase: P43.2 - Project vs OS Mutation Boundary.
+Next phase: P43.3 - Project Export Safety Rules.
 
 ---
 

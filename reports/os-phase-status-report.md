@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T11:27:26.407Z
-- Validation branch: arch/scope-classification-model
-- Validation HEAD: e6a98d2
+- Generated at: 2026-05-15T11:39:26.620Z
+- Validation branch: arch/scope-boundary-packaging-safety
+- Validation HEAD: 3b8e572
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P43.1
-- Previous phase: P42.7
-- Next phase: P43.2
+- Current phase: P43.2
+- Previous phase: P43.1
+- Next phase: P43.3
 
 ## Checks
 

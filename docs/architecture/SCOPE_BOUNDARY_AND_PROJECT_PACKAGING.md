@@ -63,6 +63,17 @@ P43.1 is classification-only. It reports review requirements and boundary
 posture, but it does not block runtime behavior. Enforcement belongs to later
 P43 subphases.
 
+## P43.2 Project vs OS Mutation Boundary
+
+P43.2 adds dry-run project vs OS path boundary rules and mutation boundary
+decisions. It distinguishes NEXUS OS control-plane paths, project paths, iOS
+project paths, docs, demo files, runtime state, generated reports, policy files,
+dashboard files, and unknown paths.
+
+The P43.2 decision model always returns `mutationAllowed: false`. Cross-cutting
+and unknown changes require review, but this phase does not enforce runtime
+blocks or enable mutation.
+
 The following remain disabled:
 
 - Project mutation

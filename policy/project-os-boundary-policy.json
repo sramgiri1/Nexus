@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "phase": "P43.2",
+  "purpose": "project_os_mutation_boundary",
+  "mutationEnforcementEnabled": false,
+  "classificationRequired": true,
+  "crossCuttingReviewRequired": true,
+  "unknownReviewRequired": true,
+  "projectMutationAllowed": false,
+  "osMutationAllowed": false,
+  "projectPackagingAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "workerRuntimeAllowed": false,
+  "dbWritesAllowed": false,
+  "commandCenterUxRequired": true,
+  "allowedDecisionMode": "dry_run_only",
+  "nextPhase": "P43.3"
+}

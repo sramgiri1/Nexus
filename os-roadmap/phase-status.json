@@ -1044,17 +1044,18 @@
       "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "arch/scope-classification-model",
+      "branch": "arch/scope-boundary-packaging-safety",
       "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Defines scope boundaries and project packaging safety before project mutation, export, or adapter runtime can expand.",
       "checksRun": [
-        "npm run check:scope-classification"
+        "npm run check:scope-classification",
+        "npm run check:project-os-boundary"
       ],
       "knownLimitations": [
-        "P43.1 classifies scope only; mutation boundary enforcement, packaging checks, export manifests, and Command Center scope UX remain later P43 subphases."
+        "P43 remains dry-run/read-only until final validation; mutation enforcement, export packaging, and release packaging remain disabled."
       ],
-      "nextPhase": "P43.1",
+      "nextPhase": "P43.3",
       "commandCenterVisible": true
     },
     {
@@ -1063,7 +1064,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scope-classification-model",
-      "commit": "pending-final-commit",
+      "commit": "3b8e572",
       "completedAt": "2026-05-15T11:30:00.000Z",
       "summary": "Adds classification-only scope constants, path/file-set/task/action classifiers, policy evaluation, scope report generation, and checker coverage.",
       "checksRun": [
@@ -1096,14 +1097,38 @@
       "phaseId": "P43.2",
       "title": "Project vs OS Mutation Boundary",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T12:15:00.000Z",
+      "summary": "Adds dry-run project vs OS path boundary rules, mutation boundary decisions, policy, checker, and report without enabling mutation.",
+      "checksRun": [
+        "npm run check:project-os-boundary",
+        "npm run check:scope-classification",
+        "npm run check:project-registry-final-validation",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Mutation enforcement is not enabled. Project packaging and export remain disabled."
+      ],
+      "nextPhase": "P43.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.3",
+      "title": "Project Export Safety Rules",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned mutation boundary phase that will define how OS and project changes are reviewed before any broader packaging or export work.",
+      "summary": "Planned dry-run project export safety rules that define allowed and denied package contents before any real package is produced.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P43.3",
+      "nextPhase": "P43.4",
       "commandCenterVisible": true
     },
     {
@@ -1612,8 +1637,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T11:30:00.000Z",
-  "currentPhase": "P43.1",
-  "previousPhase": "P42.7",
-  "nextPhase": "P43.2"
+  "updatedAt": "2026-05-15T12:15:00.000Z",
+  "currentPhase": "P43.2",
+  "previousPhase": "P43.1",
+  "nextPhase": "P43.3"
 }

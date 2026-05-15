@@ -377,7 +377,16 @@
       "track": "NEXUS_OS",
       "order": 17.2,
       "group": "P43 Scope Boundary + Project Packaging Safety",
-      "summary": "Plans the mutation boundary rules that will govern OS and project changes before packaging/export work.",
+      "summary": "Adds dry-run path boundary and mutation decision rules for NEXUS OS, project, docs, demo, generated, and unknown changes.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.3",
+      "title": "Project Export Safety Rules",
+      "track": "NEXUS_OS",
+      "order": 17.3,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Defines dry-run export allow/deny rules for project packages without creating an export bundle.",
       "commandCenterVisible": true
     },
     {

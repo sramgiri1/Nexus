@@ -155,7 +155,8 @@ Risk level:
   - `P42.7` Project Registry Adapter Final Validation + Roadmap Closure — complete
 - `P43` Scope Boundary + Project Packaging Safety
   - `P43.1` Scope Classification Model — complete
-  - `P43.2` Project vs OS Mutation Boundary — next
+  - `P43.2` Project vs OS Mutation Boundary — complete
+  - `P43.3` Project Export Safety Rules — next
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -682,6 +683,16 @@ classification, policy evaluation, and a scope classification report.
 P43.1 does not enable project mutation, packaging/export, provider/tool/worker
 execution, runtime enforcement, or DB writes. P43.2 is next and will define the
 Project vs OS Mutation Boundary.
+
+#### P43.2 — Project vs OS Mutation Boundary
+
+P43.2 adds dry-run path boundary rules and mutation boundary decisions for
+NEXUS OS, project, iOS project, docs, demo, runtime state, generated report,
+policy, dashboard, and unknown paths.
+
+P43.2 keeps mutation disabled. Cross-cutting and unknown changes require review,
+but no runtime enforcement, packaging/export, provider/tool/worker execution, or
+DB writes are enabled. P43.3 is next and defines project export safety rules.
 
 ### Phase 15 — Containerization and Worker Scaling
 

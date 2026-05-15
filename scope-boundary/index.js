@@ -26,3 +26,21 @@ export {
   buildScopeClassificationReport,
   writeScopeClassificationReport,
 } from "./scopeReport.js";
+export {
+  classifyChangedPaths,
+  classifyPathScope,
+  getBoundaryPathRules,
+  summarizeBoundaryClassification,
+  validateBoundaryRules,
+} from "./pathBoundary.js";
+export {
+  createMutationBoundaryDecision,
+  isOsMutationAllowed,
+  isProjectMutationAllowed,
+  requiresCrossCuttingReview,
+  validateMutationBoundaryDecision,
+} from "./mutationBoundary.js";
+export {
+  buildProjectOsBoundaryReport,
+  writeProjectOsBoundaryReport,
+} from "./boundaryReport.js";

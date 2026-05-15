@@ -144,7 +144,8 @@ not enabled yet.
 - Known limitations: Project Registry + Adapter Framework is a read-only,
   policy-governed foundation. Project selector persistence is local UI-only.
   Scope classification is also read-only; enforcement and packaging safety are
-  planned for later P43 subphases.
+  planned for later P43 subphases. Project vs OS mutation boundary decisions
+  are dry-run only and do not enable mutation.
   If no project is selected, use the no-project guidance to create or import a
   project, add a project profile, define stack/test commands, create a mission,
   generate a plan, and activate the first task.
