@@ -36,3 +36,14 @@ export {
   triageReviewComment,
   validateReviewIngestionPlan,
 } from "./reviewIngestionPlan.js";
+
+export {
+  evaluateMergeGate,
+  summarizeMergeGate,
+  validateMergeGate,
+} from "./mergeGate.js";
+
+export {
+  buildRollbackBranchPlan,
+  validateRollbackBranchPlan,
+} from "./rollbackBranchPlan.js";

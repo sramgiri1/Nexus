@@ -1,0 +1,40 @@
+{
+  "version": "1.0",
+  "phase": "P44.6",
+  "purpose": "merge_gate_rollback_branch_model",
+  "metadataOnly": true,
+  "mergeAllowed": false,
+  "pushAllowed": false,
+  "releaseAllowed": false,
+  "packageCreationAllowed": false,
+  "rollbackBranchCreationAllowed": false,
+  "gitCommitAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "requiredGateInputs": [
+    "scopeClassificationPresent",
+    "projectOsBoundaryClean",
+    "evidenceLinked",
+    "testsRequired",
+    "testsRun",
+    "reviewComplete",
+    "approvalsPresent",
+    "rollbackPlanPresent",
+    "packageSafetyClear",
+    "costRiskClear"
+  ],
+  "allowedStatuses": [
+    "not-ready",
+    "ready-for-review",
+    "blocked",
+    "approved-for-merge-metadata-only"
+  ],
+  "requiredOutputs": [
+    "git-lifecycle/mergeGate.js",
+    "git-lifecycle/rollbackBranchPlan.js",
+    "reports/merge-gate-report.md"
+  ],
+  "osPhaseStatusUpdateRequired": true
+}

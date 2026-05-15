@@ -90,3 +90,13 @@ status, and whether evidence is required.
 
 The ingestion plan is metadata-only. It does not fetch comments from external
 systems and does not convert comments into tasks.
+
+## P44.6 Merge Gate + Rollback Branch Model
+P44.6 adds metadata-only merge gate evaluation and rollback branch planning. The
+gate checks scope classification, project/OS boundary cleanliness, evidence
+links, tests required/run status, review status, approvals, rollback plan,
+package safety, and cost/risk posture.
+
+The model can produce `not-ready`, `ready-for-review`, `blocked`, or
+`approved-for-merge-metadata-only` statuses, but it never performs a merge,
+push, release, package creation, or rollback branch creation.

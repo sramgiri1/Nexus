@@ -125,7 +125,8 @@
     "check:repo-dependency-map": "node scripts/check-repo-dependency-map.js",
     "check:git-workflow-model": "node scripts/check-git-workflow-model.js",
     "check:pr-draft-model": "node scripts/check-pr-draft-model.js",
-    "check:review-ingestion-model": "node scripts/check-review-ingestion-model.js"
+    "check:review-ingestion-model": "node scripts/check-review-ingestion-model.js",
+    "check:merge-gate-model": "node scripts/check-merge-gate-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

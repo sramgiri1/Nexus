@@ -166,8 +166,8 @@ Risk level:
   - `P44.3` Branch / Commit Workflow Model — complete
   - `P44.4` PR Draft + Evidence Link Model — complete
   - `P44.5` Review Comment Ingestion Model — complete
-  - `P44.6` Merge Gate + Rollback Branch Model — next
-  - `P44.7` Multi-Repo Git/PR Final Validation — planned
+  - `P44.6` Merge Gate + Rollback Branch Model — complete
+  - `P44.7` Multi-Repo Git/PR Final Validation — next
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
 - `P47` Trusted Context + Data Architecture Layer
@@ -801,6 +801,16 @@ capability.
 The ingestion model remains metadata-only. It does not fetch external comments,
 call GitHub/GitLab APIs, mutate project files, or create tasks. P44.6 is next
 and adds the merge gate and rollback branch model.
+
+#### P44.6 — Merge Gate + Rollback Branch Model
+
+P44.6 adds metadata-only merge gate and rollback branch planning. The gate checks
+scope classification, project/OS boundary cleanliness, evidence links, tests,
+reviews, approvals, rollback plan, package safety, and cost/risk status.
+
+The model never performs a merge, push, release, package creation, rollback
+branch creation, or project mutation. P44.7 is next and performs final
+multi-repo Git/PR lifecycle validation.
 
 ### Phase 15 — Containerization and Worker Scaling
 
