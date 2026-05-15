@@ -169,6 +169,8 @@ Risk level:
   - `P44.6` Merge Gate + Rollback Branch Model — complete
   - `P44.7` Multi-Repo Git/PR Final Validation — complete
 - `P45` Agent Registry + Boundary Compiler
+  - `P45.1` Agent Registry Schema — complete
+  - `P45.2` Agent Capability Matrix — next
 - `P46` Scoped Memory Architecture + Memory Center
 - `P47` Trusted Context + Data Architecture Layer
 - `P48` Governed Agentic Mesh

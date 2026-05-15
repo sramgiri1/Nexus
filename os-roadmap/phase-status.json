@@ -1856,11 +1856,43 @@
       "completedAt": "2026-05-15T13:56:14.504Z",
       "summary": "Finalizes P44 dry-run multi-repo Git/PR lifecycle validation and confirms no git execution, PR creation, provider calls, DB writes, or project mutation are enabled.",
       "nextPhase": "P45"
+    },
+    {
+      "phaseId": "P45.1",
+      "title": "Agent Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:02:20.893Z",
+      "summary": "Defines the metadata-only agent registry schema and seeded NEXUS agent identities.",
+      "checksRun": [
+        "npm run check:agent-registry-schema"
+      ],
+      "knownLimitations": [
+        "No runtime permissions, tool dispatch, provider calls, DB writes, or agent markdown edits are enabled."
+      ],
+      "nextPhase": "P45.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.2",
+      "title": "Agent Capability Matrix",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending",
+      "completedAt": "",
+      "summary": "Map agents to capability categories and separation-of-duties rules.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P45.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:00:00.000Z",
-  "currentPhase": "P44.7",
-  "previousPhase": "P44.6",
-  "nextPhase": "P45"
+  "updatedAt": "2026-05-15T15:02:20.893Z",
+  "currentPhase": "P45.1",
+  "previousPhase": "P44.7",
+  "nextPhase": "P45.2"
 }

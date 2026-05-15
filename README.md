@@ -1165,7 +1165,12 @@ pushes, provider calls, DB writes, project source mutation, or private source
 detailed scanning are enabled. See
 [docs/architecture/MULTI_REPO_WORKSPACE.md](docs/architecture/MULTI_REPO_WORKSPACE.md).
 
-Next phase: P45 - Agent Registry + Boundary Compiler.
+P45 starts Agent Registry + Boundary Compiler. P45.1 adds a metadata-only
+agent registry schema for NEXUS, SHEPHERD, CORE, SWIFT, SENTINEL, AUDITOR,
+WARDEN, PRISM, and FORGE. It grants no runtime permissions and does not enable
+tool dispatch, provider calls, DB writes, worker execution, or source mutation.
+
+Next phase: P45.2 - Agent Capability Matrix.
 
 ---
 

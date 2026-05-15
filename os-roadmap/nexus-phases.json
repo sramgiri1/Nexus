@@ -865,6 +865,60 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.1",
+      "title": "Agent Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 19.01,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Define metadata-only agent identities, schema fields, and seeded NEXUS agents.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.2",
+      "title": "Agent Capability Matrix",
+      "track": "NEXUS_OS",
+      "order": 19.020000000000003,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Map agent capabilities and separation-of-duties rules.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.3",
+      "title": "Agent Path / Tool / Data Boundaries",
+      "track": "NEXUS_OS",
+      "order": 19.030000000000005,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Define metadata-only path, tool, data, project, and change-scope boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.4",
+      "title": "Boundary Compiler",
+      "track": "NEXUS_OS",
+      "order": 19.040000000000006,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Compile dry-run agent boundary envelopes from agent, project, scope, and task intent.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.5",
+      "title": "Command Center Agent Registry UX",
+      "track": "NEXUS_OS",
+      "order": 19.050000000000008,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Expose agent registry and boundary summaries in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.6",
+      "title": "Agent Boundary Tests + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 19.06000000000001,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Validate and close the agent registry and boundary compiler track.",
+      "commandCenterVisible": true
     }
   ],
   "updatedAt": "2026-05-15T13:00:00.000Z"

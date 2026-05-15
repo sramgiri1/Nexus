@@ -221,9 +221,10 @@ check(statusById.get("P43.3")?.commit === "69dbd28", "osPhaseStatus", "P43.3 com
 check(statusById.get("P43.4")?.commit === "9c964a8", "osPhaseStatus", "P43.4 commit mismatch");
 check(statusById.get("P43.5")?.commit === "ee1f92c", "osPhaseStatus", "P43.5 commit mismatch");
 check(statusById.get("P43.6")?.status === "complete", "osPhaseStatus", "P43.6 must be complete");
-check(["P43", "P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43 or active P44 subphase");
-check(["P43.6", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.6 or prior P44 subphase");
-check(["P44", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44, a P44 subphase, or P45");
+const laterHandoffPhases = ["P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"];
+check(["P43", ...laterHandoffPhases].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43 or later handoff phase");
+check(["P43.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.6 or later handoff phase");
+check(laterHandoffPhases.includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44 or later handoff phase");
 
 check(
   read("README.md").includes("P44 - Multi-Repo Workspace + Git/PR Lifecycle")

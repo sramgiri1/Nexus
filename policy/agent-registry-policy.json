@@ -1,0 +1,31 @@
+{
+  "version": "1.0",
+  "phase": "P45.1",
+  "purpose": "agent_registry_schema",
+  "metadataOnly": true,
+  "runtimePermissionsGranted": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerExecutionAllowed": false,
+  "sourceMutationAllowed": false,
+  "agentMarkdownEditsAllowed": false,
+  "privateProjectMutationAllowed": false,
+  "requiredAgents": [
+    "NEXUS",
+    "SHEPHERD",
+    "CORE",
+    "SWIFT",
+    "SENTINEL",
+    "AUDITOR",
+    "WARDEN",
+    "PRISM",
+    "FORGE"
+  ],
+  "requiredOutputs": [
+    "agent-registry/agentRegistrySchema.js",
+    "agent-registry/agentTypes.js",
+    "reports/agent-registry-schema-report.md"
+  ]
+}

@@ -823,3 +823,16 @@ example `nexus.project.json` profiles. The loader does not execute adapters,
 select projects, mutate project files, connect to databases, call providers, or
 scan private source trees. It only validates safe profile metadata and reports
 readiness for the later stack profile model.
+
+## 13. Agent Registry Foundation
+
+P45.1 adds a metadata-only Agent Registry schema for NEXUS, SHEPHERD, CORE,
+SWIFT, SENTINEL, AUDITOR, WARDEN, PRISM, and FORGE. The registry records agent
+identity, role, version, capabilities, path and data posture, approval
+requirements, evidence requirements, cost policy, memory policy, handoff policy,
+and review-separation policy.
+
+The registry does not grant runtime authority. Provider calls, tool dispatch,
+worker execution, DB writes, release execution, source mutation, and agent
+self-update remain disabled until a later governed runtime phase explicitly
+enables them.
