@@ -42,3 +42,18 @@ task state mutation.
 
 P48.3 adds governed agent rooms that group agents, tasks, messages, and
 evidence by scope.
+
+## P48.3 - Agent Rooms
+
+Agent rooms group agents, tasks, messages, and evidence by governed scope. Room
+types include mission, task, validation, implementation review, release review,
+and OS update rooms.
+
+Rooms are coordination metadata only. They do not execute agents, transfer task
+ownership, dispatch providers/tools/workers, write to DB, or mutate project
+files. Participant updates and closure are represented as append-only room
+records.
+
+## Next
+
+P48.4 defines governed handoff requests from one agent to another.

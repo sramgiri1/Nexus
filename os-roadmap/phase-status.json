@@ -2268,12 +2268,14 @@
       "phaseId": "P48.2",
       "title": "Agent Message Bus",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "644a7b5",
+      "completedAt": "2026-05-15T16:50:09.256Z",
       "summary": "Adds append-only local message bus/store for governed mesh messages.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check-agent-mesh-message-bus"
+      ],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
@@ -2284,11 +2286,11 @@
       "phaseId": "P48.3",
       "title": "Agent Rooms",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Groups agents, tasks, messages, and evidence by governed scope.",
+      "summary": "Adds governed agent rooms that group agents, tasks, messages, and evidence by scope.",
       "checksRun": [],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
@@ -2362,8 +2364,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:47:33.488Z",
-  "currentPhase": "P48.2",
-  "previousPhase": "P48.1",
-  "nextPhase": "P48.3"
+  "updatedAt": "2026-05-15T16:50:09.256Z",
+  "currentPhase": "P48.3",
+  "previousPhase": "P48.2",
+  "nextPhase": "P48.4"
 }
