@@ -36,3 +36,22 @@ outputs.
 
 P47.2 maps knowledge domains to their system-of-record source so future context
 packets can prefer authoritative data over stale or ambiguous alternatives.
+
+## P47.2 - System-of-Record Mapping
+
+The system-of-record map defines which source is authoritative for each trusted
+context domain. It prevents future agents from selecting stale, ambiguous, or
+unauthorized sources when building context.
+
+Mapped domains include project requirements, project profile, project registry,
+OS roadmap, task state, evidence, audit, activity, validation results, release
+decisions, agent capability, policy, cost state, and scoped memory.
+
+The map is still metadata-only. Future cost state is marked planned. Scoped
+memory is referenced as packet-preview context only and is not injected into
+runtime agents.
+
+## Next
+
+P47.3 adds source trust scoring so the registry and system-of-record map can
+explain which sources are high, medium, low, or unavailable for use.

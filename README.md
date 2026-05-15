@@ -1231,7 +1231,11 @@ metadata-only data source registry so future context packets can identify source
 ownership, scope, freshness policy, redaction, and lineage requirements before
 any runtime use.
 
-Next phase: P47.2 - System-of-Record Mapping.
+P47.2 maps trusted context domains to system-of-record sources for project
+requirements, task state, evidence, audit, activity, validation results,
+policies, agent capability metadata, and scoped memory.
+
+Next phase: P47.3 - Source Trust Score.
 
 ---
 
