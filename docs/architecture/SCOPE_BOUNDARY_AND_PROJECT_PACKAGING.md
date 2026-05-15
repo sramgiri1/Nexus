@@ -105,6 +105,23 @@ The export safety plan is intentionally non-executing:
 P43.3 prepares the safety model for future packaging without shipping project
 files or exposing NEXUS control-plane internals.
 
+## P43.4 Redacted Release Manifest
+
+P43.4 generates a redacted release manifest at
+`artifacts/project-release/private-project-release-manifest.json`. The manifest
+summarizes release readiness, export dry-run posture, redaction status, and
+blocked unsafe content without embedding project source files or NEXUS
+control-plane internals.
+
+The manifest explicitly keeps these boundaries:
+
+- no package or archive is created.
+- project mutation remains disabled.
+- provider/tool/worker execution and DB writes remain disabled.
+- NEXUS agents, policies, local runtime state, evidence/audit/activity ledgers,
+  secrets, key material, and demo data are excluded.
+- the project display remains `Private Project` for local-private safety.
+
 ## Next Subphases
 
 - P43.2 - Project vs OS Mutation Boundary

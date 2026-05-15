@@ -60,3 +60,13 @@ export {
   buildProjectExportSafetyReport,
   writeProjectExportSafetyReport,
 } from "./exportSafetyReport.js";
+export {
+  createRedactionSummary,
+  validateRedactionSummary,
+} from "./redactionSummary.js";
+export {
+  createRedactedReleaseManifest,
+  summarizeReleaseManifest,
+  validateRedactedReleaseManifest,
+  writeRedactedReleaseManifest,
+} from "./releaseManifest.js";

@@ -1051,12 +1051,13 @@
       "checksRun": [
         "npm run check:scope-classification",
         "npm run check:project-os-boundary",
-        "npm run check:project-export-safety"
+        "npm run check:project-export-safety",
+        "npm run check:redacted-release-manifest"
       ],
       "knownLimitations": [
         "P43 remains dry-run/read-only until final validation; mutation enforcement, export packaging, and release packaging remain disabled."
       ],
-      "nextPhase": "P43.4",
+      "nextPhase": "P43.5",
       "commandCenterVisible": true
     },
     {
@@ -1124,7 +1125,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
+      "commit": "69dbd28",
       "completedAt": "2026-05-15T13:00:00.000Z",
       "summary": "Adds dry-run project export allow/deny rules, export safety evaluation, policy, checker, and report without creating a project package.",
       "checksRun": [
@@ -1650,13 +1651,23 @@
       "phaseId": "P43.4",
       "title": "Redacted Release Manifest",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned redacted project release manifest generation without packaging private source or NEXUS internals.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T14:00:00.000Z",
+      "summary": "Adds a redacted project release manifest generator, artifact, policy, checker, and report while keeping package creation disabled.",
+      "checksRun": [
+        "npm run generate:redacted-release-manifest",
+        "npm run check:redacted-release-manifest",
+        "npm run check:project-export-safety",
+        "npm run check:project-os-boundary",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "The manifest is redacted and dry-run only. It does not package source files or enable release execution."
+      ],
       "nextPhase": "P43.5",
       "commandCenterVisible": true
     },
@@ -1690,8 +1701,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T13:00:00.000Z",
-  "currentPhase": "P43.3",
-  "previousPhase": "P43.2",
-  "nextPhase": "P43.4"
+  "updatedAt": "2026-05-15T14:00:00.000Z",
+  "currentPhase": "P43.4",
+  "previousPhase": "P43.3",
+  "nextPhase": "P43.5"
 }

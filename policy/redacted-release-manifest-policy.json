@@ -1,0 +1,28 @@
+{
+  "version": "1.0",
+  "phase": "P43.4",
+  "purpose": "redacted_release_manifest",
+  "modeRequired": "local-private",
+  "manifestGenerationAllowed": true,
+  "manifestPath": "artifacts/project-release/private-project-release-manifest.json",
+  "packageCreationAllowed": false,
+  "exportDryRunOnly": true,
+  "projectMutationAllowed": false,
+  "osMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "workerRuntimeAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "nexusInternalsAllowed": false,
+  "secretsAllowed": false,
+  "localRuntimeStateAllowed": false,
+  "ledgerPayloadsAllowed": false,
+  "demoDataAllowed": false,
+  "rawProjectSourceAllowedInManifest": false,
+  "requiredOutputs": [
+    "artifacts/project-release/private-project-release-manifest.json",
+    "reports/redacted-release-manifest-report.md"
+  ],
+  "nextPhase": "P43.5 - Command Center Scope Boundary UX"
+}

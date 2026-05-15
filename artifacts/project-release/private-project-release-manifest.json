@@ -1,0 +1,76 @@
+{
+  "manifestVersion": "1.0",
+  "phase": "P43.4",
+  "generatedAt": "2026-05-15T11:53:00.543Z",
+  "mode": "local-private",
+  "project": {
+    "projectId": "private-project",
+    "displayName": "Private Project",
+    "displayNameRedacted": true,
+    "sourceRootIncluded": false
+  },
+  "releaseReadiness": {
+    "status": "dry_run_only",
+    "packageCreated": false,
+    "exportDryRunOnly": true,
+    "releaseExecutionEnabled": false,
+    "deploymentEnabled": false
+  },
+  "safetyPosture": {
+    "projectMutationAllowed": false,
+    "osMutationAllowed": false,
+    "providerCallsAllowed": false,
+    "toolDispatchAllowed": false,
+    "workerRuntimeAllowed": false,
+    "dbWritesAllowed": false,
+    "nexusInternalsIncluded": false,
+    "secretsIncluded": false,
+    "localRuntimeStateIncluded": false,
+    "ledgerPayloadsIncluded": false,
+    "demoDataIncluded": false
+  },
+  "allowedContentSummary": [
+    "project source category",
+    "project documentation category",
+    "project test category",
+    "project build configuration category",
+    "redacted validation summary category"
+  ],
+  "excludedContentSummary": [
+    "NEXUS agents and policy files",
+    "runtime state and service PID files",
+    "evidence, audit, and activity ledgers",
+    "provider/tool/worker internals",
+    "secrets, credentials, and key material",
+    "demo-only data"
+  ],
+  "redactionSummary": {
+    "redactionVersion": "1.0",
+    "redacted": true,
+    "privateProjectNameRedacted": true,
+    "secretsRemoved": true,
+    "nexusInternalsRemoved": true,
+    "localRuntimeStateRemoved": true,
+    "ledgerPayloadsRemoved": true,
+    "demoDataRemoved": true,
+    "excludedContent": [
+      "NEXUS agents and policy files",
+      "runtime state and service PID files",
+      "evidence, audit, and activity ledgers",
+      "provider/tool/worker internals",
+      "secrets, credentials, and key material",
+      "demo-only data"
+    ],
+    "notes": [
+      "Manifest contains release posture only, not source files or internal NEXUS runtime content.",
+      "Package creation remains disabled."
+    ]
+  },
+  "validationSummary": {
+    "exportSafetyChecked": true,
+    "scopeBoundaryChecked": true,
+    "manifestRedacted": true,
+    "packageCreated": false
+  },
+  "nextPhase": "P43.5 - Command Center Scope Boundary UX"
+}

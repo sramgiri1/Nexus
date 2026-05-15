@@ -157,7 +157,8 @@ Risk level:
   - `P43.1` Scope Classification Model — complete
   - `P43.2` Project vs OS Mutation Boundary — complete
   - `P43.3` Project Export Safety Rules — complete
-  - `P43.4` Redacted Release Manifest — next
+  - `P43.4` Redacted Release Manifest — complete
+  - `P43.5` Command Center Scope Boundary UX — next
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -706,6 +707,17 @@ and unredacted reports are blocked.
 
 P43.3 does not create a package or enable project mutation. P43.4 is next and
 generates a redacted release manifest.
+
+#### P43.4 — Redacted Release Manifest
+
+P43.4 generates a redacted release manifest artifact for the selected private
+project. The manifest records dry-run release posture, excluded unsafe content,
+redaction status, and validation posture without embedding project source files,
+NEXUS agents, policies, runtime files, ledgers, secrets, or demo data.
+
+P43.4 still creates no project package and enables no release execution. P43.5
+is next and adds Command Center visibility for scope boundary and packaging
+safety.
 
 ### Phase 15 — Containerization and Worker Scaling
 

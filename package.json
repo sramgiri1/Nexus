@@ -117,7 +117,9 @@
     "check:project-registry-final-validation": "node scripts/check-project-registry-final-validation.js",
     "check:scope-classification": "node scripts/check-scope-classification.js",
     "check:project-os-boundary": "node scripts/check-project-os-boundary.js",
-    "check:project-export-safety": "node scripts/check-project-export-safety.js"
+    "check:project-export-safety": "node scripts/check-project-export-safety.js",
+    "generate:redacted-release-manifest": "NEXUS_MODE=local-private node scripts/generate-redacted-release-manifest.js",
+    "check:redacted-release-manifest": "node scripts/check-redacted-release-manifest.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

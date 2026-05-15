@@ -169,19 +169,19 @@ check(read("reports/project-export-safety-report.md").includes("No project packa
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4"]) {
+for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P43.3", "osPhaseStatus", "currentPhase must be P43.3");
-check(phaseStatus.previousPhase === "P43.2", "osPhaseStatus", "previousPhase must be P43.2");
-check(phaseStatus.nextPhase === "P43.4", "osPhaseStatus", "nextPhase must be P43.4");
+check(["P43.3", "P43.4"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.3 or P43.4");
+check(["P43.2", "P43.3"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.2 or P43.3");
+check(["P43.4", "P43.5"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.4 or P43.5");
 check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 must be complete");
 check(statusById.get("P43.2")?.status === "complete", "osPhaseStatus", "P43.2 must be complete");
 check(statusById.get("P43.2")?.commit === "5ae9242", "osPhaseStatus", "P43.2 commit must be 5ae9242");
 check(statusById.get("P43.3")?.status === "complete", "osPhaseStatus", "P43.3 must be complete");
 check(statusById.get("P43.3")?.branch === "arch/scope-boundary-packaging-safety", "osPhaseStatus", "P43.3 branch mismatch");
-check(statusById.get("P43.4")?.status === "planned", "osPhaseStatus", "P43.4 must be planned");
+check(["planned", "complete"].includes(statusById.get("P43.4")?.status), "osPhaseStatus", "P43.4 must exist");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

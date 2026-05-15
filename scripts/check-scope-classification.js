@@ -202,7 +202,7 @@ check(read("reports/scope-classification-report.md").includes("P43.2"), "report"
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P42.7", "P43", "P43.1", "P43.2", "P43.3", "P43.4"]) {
+for (const phaseId of ["P42.7", "P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
@@ -215,9 +215,10 @@ check(statusById.get("P43.1")?.branch === "arch/scope-classification-model", "os
 check(statusById.get("P43.1")?.nextPhase === "P43.2", "osPhaseStatus", "P43.1 nextPhase must be P43.2");
 check(["planned", "complete"].includes(statusById.get("P43.2")?.status), "osPhaseStatus", "P43.2 must exist");
 check(["planned", "complete"].includes(statusById.get("P43.3")?.status), "osPhaseStatus", "P43.3 must exist");
-check(["P43.1", "P43.2", "P43.3"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, or P43.3");
-check(["P42.7", "P43.1", "P43.2"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, or P43.2");
-check(["P43.2", "P43.3", "P43.4"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, or P43.4");
+check(["planned", "complete"].includes(statusById.get("P43.4")?.status), "osPhaseStatus", "P43.4 must exist");
+check(["P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, or P43.4");
+check(["P42.7", "P43.1", "P43.2", "P43.3"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, or P43.3");
+check(["P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, or P43.5");
 
 check(commandCenterSource.includes("Scope Boundary"), "commandCenterUx", "Command Center scope boundary copy missing");
 check(commandCenterSource.includes("classification ready"), "commandCenterUx", "Command Center classification status missing");

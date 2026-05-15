@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P43", "P43.3"]);
+const CURRENT_PHASE_IDS = new Set(["P43", "P43.4"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P43.3", "currentPhase", "currentPhase must be P43.3");
-check(phaseStatus.previousPhase === "P43.2", "previousPhase", "previousPhase must be P43.2");
-check(phaseStatus.nextPhase === "P43.4", "nextPhase", "nextPhase must be P43.4");
+check(phaseStatus.currentPhase === "P43.4", "currentPhase", "currentPhase must be P43.4");
+check(phaseStatus.previousPhase === "P43.3", "previousPhase", "previousPhase must be P43.3");
+check(phaseStatus.nextPhase === "P43.5", "nextPhase", "nextPhase must be P43.5");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -305,7 +305,7 @@ check(p43?.status === "in_progress", "currentPhase", "P43 must be in_progress");
 check(p43?.title === "Scope Boundary + Project Packaging Safety", "currentPhase", "P43 title mismatch");
 check(p43?.branch === "arch/scope-boundary-packaging-safety", "currentPhase", "P43 branch mismatch");
 check(Boolean(p43?.commit), "currentPhase", "P43 must have a commit or pending-final-commit placeholder");
-check(p43?.nextPhase === "P43.4", "nextPhase", "P43 nextPhase must be P43.4");
+check(p43?.nextPhase === "P43.5", "nextPhase", "P43 nextPhase must be P43.5");
 
 const p431 = statusById.get("P43.1");
 check(p431?.status === "complete", "currentPhase", "P43.1 must be complete");
@@ -325,12 +325,19 @@ const p433 = statusById.get("P43.3");
 check(p433?.status === "complete", "nextPhase", "P43.3 must be complete");
 check(p433?.title === "Project Export Safety Rules", "nextPhase", "P43.3 title mismatch");
 check(p433?.branch === "arch/scope-boundary-packaging-safety", "nextPhase", "P43.3 branch mismatch");
-check(Boolean(p433?.commit), "nextPhase", "P43.3 must have a commit or pending-final-commit placeholder");
+check(p433?.commit === "69dbd28", "nextPhase", "P43.3 commit must be 69dbd28");
 check(p433?.nextPhase === "P43.4", "nextPhase", "P43.3 nextPhase must be P43.4");
 
 const p434 = statusById.get("P43.4");
-check(p434?.status === "planned", "nextPhase", "P43.4 must be planned");
+check(p434?.status === "complete", "nextPhase", "P43.4 must be complete");
 check(p434?.title === "Redacted Release Manifest", "nextPhase", "P43.4 title mismatch");
+check(p434?.branch === "arch/scope-boundary-packaging-safety", "nextPhase", "P43.4 branch mismatch");
+check(Boolean(p434?.commit), "nextPhase", "P43.4 must have a commit or pending-final-commit placeholder");
+check(p434?.nextPhase === "P43.5", "nextPhase", "P43.4 nextPhase must be P43.5");
+
+const p435 = statusById.get("P43.5");
+check(p435?.status === "planned", "nextPhase", "P43.5 must be planned");
+check(p435?.title === "Command Center Scope Boundary UX", "nextPhase", "P43.5 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

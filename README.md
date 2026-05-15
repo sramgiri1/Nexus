@@ -1137,10 +1137,11 @@ only for NEXUS OS, project, cross-cutting, demo, and unknown changes. P43.2 adds
 dry-run project vs OS mutation boundary decisions. P43.3 adds dry-run project
 export safety rules that allow-list project content and block NEXUS internals,
 raw evidence/audit/activity ledgers, local-state runtime files, secrets, and
-demo data. These phases do not enable mutation, package creation, providers,
+demo data. P43.4 adds a redacted release manifest artifact while still creating
+no package. These phases do not enable mutation, package creation, providers,
 tools, workers, or DB writes.
 
-Next phase: P43.4 - Redacted Release Manifest.
+Next phase: P43.5 - Command Center Scope Boundary UX.
 
 ---
 
