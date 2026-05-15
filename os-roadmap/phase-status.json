@@ -1531,7 +1531,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "a5bb012",
       "completedAt": "2026-05-15T23:30:00.000Z",
       "summary": "Adds preview-only adapters for Git, Test Runner, Filesystem Boundary, and Playwright actions without enabling execution.",
       "checksRun": [
@@ -1547,13 +1547,18 @@
       "phaseId": "P52.8",
       "title": "Command Center Tool Gateway View",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned read-only Command Center Tool Gateway UX.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:40:00.000Z",
+      "summary": "Adds a read-only Command Center Tool Gateway route for registry metadata, MCP placeholders, permissions, contracts, lazy loading, and adapter previews.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "The Tool Gateway view is read-only and does not execute tools, start MCP servers, call providers, use networks, write DB state, or mutate projects."
+      ],
       "nextPhase": "P52.9",
       "commandCenterVisible": true
     },
@@ -1565,7 +1570,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tool mcp registry governance final validation subphase.",
+      "summary": "Planned final validation and closure for P52.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P53",
@@ -3014,8 +3019,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:30:00.000Z",
-  "currentPhase": "P52.7",
-  "previousPhase": "P52.6",
-  "nextPhase": "P52.8"
+  "updatedAt": "2026-05-15T23:40:00.000Z",
+  "currentPhase": "P52.8",
+  "previousPhase": "P52.7",
+  "nextPhase": "P52.9"
 }

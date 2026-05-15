@@ -22,6 +22,7 @@ import {
   SAFETY_CENTER_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
+  TOOL_GATEWAY_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "../data/commandCenterTabs.js";
@@ -142,6 +143,7 @@ const ROUTE_ICONS = {
   agents: "◈",
   skills: "✦",
   hooks: "⌁",
+  tools: "⌘",
   liveapi: "◎",
   database: "⬟",
   services: "☍",
@@ -5261,6 +5263,174 @@ function WorkbenchPage({ vm }) {
   );
 }
 
+function ToolGatewayPage({ vm }) {
+  const gateway = vm.toolGateway || {};
+  const [activeTab, setActiveTab] = useState("overview");
+  const tools = gateway.tools || [];
+  const mcpServers = gateway.mcpServers || [];
+  const permissions = gateway.permissions || [];
+  const adapters = gateway.adapters || [];
+  const lazy = gateway.lazyLoading || {};
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Tool Gateway</div>
+            <div className="ccv2-page-head__sub">
+              One governed tool gateway for registry metadata, lazy contracts, permissions, and safe previews.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+            <span className="ccv2-pill ccv2-pill--disabled">MCP placeholders disabled</span>
+          </div>
+        </div>
+
+        <CommandTabs tabs={TOOL_GATEWAY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Tool Gateway sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Registered Tools", value: gateway.summary?.tools ?? 0 },
+                { label: "MCP Placeholders", value: gateway.summary?.mcpPlaceholders ?? 0 },
+                { label: "Permission Entries", value: gateway.summary?.permissionEntries ?? 0 },
+                { label: "Adapter Previews", value: gateway.summary?.adapterPreviews ?? 0 },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">Governance metadata</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Governed Tool Gateway</div>
+              <ul className="ccv2-list">
+                {(gateway.safetyNotes || []).map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+              <div className="ccv2-muted">
+                Search summaries, selected contract loading, and execute-preview decisions are available as metadata only.
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="tool-registry" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {tools.map((tool) => (
+                <article key={tool.toolId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{tool.displayName}</div>
+                  <div className="ccv2-muted">{tool.toolId}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill">{tool.category}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{tool.riskLevel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{tool.status}</span>
+                  </div>
+                  <div className="ccv2-muted">Lazy contract: {tool.lazyContractAvailable ? "Available" : "Not available yet"}</div>
+                  <div className="ccv2-muted">Execution: {tool.executionEnabled ? "Enabled" : "Disabled"}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="mcp-registry" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {mcpServers.map((server) => (
+                <article key={server.mcpServerId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{server.displayName}</div>
+                  <div className="ccv2-muted">{server.mcpServerId}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{server.status}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{server.transport}</span>
+                  </div>
+                  <div className="ccv2-muted">Server enabled: {server.serverEnabled ? "Yes" : "No"}</div>
+                  <div className="ccv2-muted">Schema loading: {server.lazySchemaLoadingRequired ? "Lazy only" : "Unknown"}</div>
+                  <div className="ccv2-muted">External network: {server.egressPolicy === "none" ? "Disabled" : server.egressPolicy}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="permissions" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {permissions.map((entry) => (
+                <article key={entry.permissionId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{entry.agentId} · {entry.toolId}</div>
+                  <div className="ccv2-muted">Decision: {entry.permission}</div>
+                  <div className="ccv2-muted">Approval required: {entry.approvalRequired ? "Yes" : "No"}</div>
+                  <div className="ccv2-muted">{entry.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="contracts" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Lazy Contract Loading</div>
+              <ul className="ccv2-list">
+                <li>Selected contract loading only.</li>
+                <li>No all-tools-in-context loading.</li>
+                <li>No all-MCP-schemas-in-context loading.</li>
+                <li>Execution previews return decisions only and keep execution disabled.</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="adapters" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {adapters.map((adapter) => (
+                <article key={adapter.adapterId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{adapter.label}</div>
+                  <div className="ccv2-muted">{adapter.purpose}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{adapter.status}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">No execution</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="lazy-loading" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Context Budget</div>
+                <div className="ccv2-muted">Max contracts per task: {lazy.maxContractsPerTask}</div>
+                <div className="ccv2-muted">Max tool summaries: {lazy.maxToolSummaries}</div>
+                <div className="ccv2-muted">Selected contract loading required: {lazy.selectedContractLoadingRequired ? "Yes" : "No"}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Blocked Bulk Loading</div>
+                <div className="ccv2-muted">All tool schemas allowed: {lazy.allToolSchemasAllowed ? "Yes" : "No"}</div>
+                <div className="ccv2-muted">All MCP schemas allowed: {lazy.allMcpSchemasAllowed ? "Yes" : "No"}</div>
+              </article>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Registry Artifacts</div>
+              <ul className="ccv2-list">
+                <li>tool-governance/toolRegistry.js</li>
+                <li>tool-governance/mcpRegistry.js</li>
+                <li>tool-governance/toolGateway.js</li>
+                <li>tool-governance/toolPermissionMatrix.js</li>
+                <li>tool-governance/adapters/index.js</li>
+                <li>policy/tool-gateway-policy.json</li>
+                <li>policy/lazy-tool-context-policy.json</li>
+                <li>reports/tool-gateway-report.md</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function AgentRoomsPage({ vm }) {
   const mesh = vm.agentMesh || {};
   const [activeTab, setActiveTab] = useState("overview");
@@ -7758,6 +7928,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
           {currentPage === "skills" && <SkillRegistryPage vm={vmWithApi} />}
           {currentPage === "hooks" && <HookRegistryPage vm={vmWithApi} />}
+          {currentPage === "tools" && <ToolGatewayPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

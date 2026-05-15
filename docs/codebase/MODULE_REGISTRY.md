@@ -495,6 +495,10 @@ updated as new module families or entry points are added.
   `tool-governance/toolPermissionMatrix.js`,
   `tool-governance/adapters/*Adapter.js`,
   `tool-governance/adapters/index.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`,
   `tool-governance/contracts/*.json`,
   `tool-governance/toolTypes.js`,
   `tool-governance/seeds/tool-registry.seed.json`,
@@ -536,8 +540,8 @@ updated as new module families or entry points are added.
   `scripts/check-tool-permission-matrix.js`,
   `scripts/check-tool-adapters.js`
 - Known limitations:
-  P52.1 through P52.7 are metadata-only and do not implement MCP server runtime
-  or Command Center Tool Gateway UX yet.
+  P52.1 through P52.8 are metadata-only. The Command Center Tool Gateway view is
+  read-only and does not implement MCP server runtime or execution controls.
 - Status:
   foundation
 

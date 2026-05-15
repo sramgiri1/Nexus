@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:18:58.466Z
-- Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: 3706de7
+- Generated at: 2026-05-15T23:01:47.986Z
+- Validation branch: arch/tool-mcp-registry-governance
+- Validation HEAD: a5bb012
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -20,6 +20,7 @@
 - Agent Rooms UX: PASS
 - Skill Registry UX: PASS
 - Hook Registry UX: PASS
+- Tool Gateway UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS

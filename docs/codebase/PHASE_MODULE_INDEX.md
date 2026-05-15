@@ -1335,3 +1335,25 @@ state and should be verified again during future docs audits.
   projects.
 - Known limitations:
   Command Center Tool Gateway UX arrives in P52.8.
+
+## P52.8 — Command Center Tool Gateway View
+
+- Primary capability:
+  Read-only Command Center route for the governed Tool Gateway.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`,
+  `dashboard/tests/routes.spec.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Adds `/command-center/tools` with registry, MCP placeholder, permission,
+  contract, adapter, lazy loading, and developer details tabs.
+- Safety impact:
+  The route is read-only and exposes no execution controls.
+- Known limitations:
+  Final validation and closure arrive in P52.9.

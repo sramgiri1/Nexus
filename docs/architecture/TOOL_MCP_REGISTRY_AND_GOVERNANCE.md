@@ -183,6 +183,26 @@ The adapters do not execute commands, launch browsers, run tests, read or write
 project files, call external networks, call providers, write DB state, or mutate
 projects. They only describe and validate future governed actions.
 
+## P52.8 - Command Center Tool Gateway View
+
+P52.8 exposes a read-only Command Center route at `/command-center/tools`.
+
+The view includes tabs for:
+
+- Overview
+- Tool Registry
+- MCP Registry
+- Permissions
+- Contracts
+- Adapters
+- Lazy Loading
+- Developer Details
+
+The page explains the single governed gateway model, metadata-only registry
+state, disabled MCP placeholders, lazy contract loading, default-deny
+permissions, and preview-only adapters. It does not add UI execution controls or
+backend execution behavior.
+
 ## Next Subphase
 
-P52.8 adds a read-only Command Center Tool Gateway view.
+P52.9 performs final validation and closes P52 with execution still disabled.

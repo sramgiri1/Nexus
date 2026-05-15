@@ -20,6 +20,7 @@ const sections = {
   agentRoomsUx: true,
   skillRegistryUx: true,
   hookRegistryUx: true,
+  toolGatewayUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -122,6 +123,7 @@ const requiredRoutePaths = [
   "/command-center/agents",
   "/command-center/skills",
   "/command-center/hooks",
+  "/command-center/tools",
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
@@ -149,6 +151,7 @@ const requiredTabbedRoutes = {
   "/command-center/agent-rooms": "overview",
   "/command-center/skills": "overview",
   "/command-center/hooks": "overview",
+  "/command-center/tools": "overview",
 };
 
 const routeHeadings = {
@@ -170,6 +173,7 @@ const routeHeadings = {
   "/command-center/agents": "Agent Registry",
   "/command-center/skills": "Skill Registry",
   "/command-center/hooks": "Hook Registry",
+  "/command-center/tools": "Tool Gateway",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -687,6 +691,40 @@ for (const expected of [
 check(routeSource.includes("/command-center/hooks"), "hookRegistryUx", "Route matrix missing /command-center/hooks");
 check(routeTestSource.includes("Hook Registry route renders read-only safe automation metadata"), "hookRegistryUx", "Route tests missing Hook Registry coverage");
 
+// Tool Gateway UX
+for (const expected of [
+  "Tool Gateway",
+  "Governed Tool Gateway",
+  "One governed tool gateway for registry metadata, lazy contracts, permissions, and safe previews.",
+  "Execution disabled",
+  "MCP placeholders disabled",
+  "No all-tools-in-context loading.",
+  "No all-MCP-schemas-in-context loading.",
+  "Adapter Previews",
+  "Lazy Contract Loading",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "toolGatewayUx",
+    `Tool Gateway UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const TOOL_GATEWAY_TABS",
+  'id: "overview"',
+  'id: "tool-registry"',
+  'id: "mcp-registry"',
+  'id: "permissions"',
+  'id: "contracts"',
+  'id: "adapters"',
+  'id: "lazy-loading"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "toolGatewayUx", `Tool Gateway tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/tools"), "toolGatewayUx", "Route matrix missing /command-center/tools");
+check(routeTestSource.includes("Tool Gateway route renders read-only governed tool metadata"), "toolGatewayUx", "Route tests missing Tool Gateway coverage");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1077,6 +1115,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/agent-rooms",
     "/command-center/skills",
     "/command-center/hooks",
+    "/command-center/tools",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1181,6 +1220,7 @@ console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}`);
 console.log(`Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
+console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1232,6 +1272,7 @@ const report = `# Command Center UX Report
 - Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}
 - Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}
 - Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}
+- Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

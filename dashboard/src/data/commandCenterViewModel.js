@@ -45,6 +45,10 @@ import {
   summarizeLoopRisks,
   summarizeTriggerDefinitions,
 } from "../../../hooks/index.js";
+import toolRegistrySeed from "../../../tool-governance/seeds/tool-registry.seed.json";
+import mcpRegistrySeed from "../../../tool-governance/seeds/mcp-registry.seed.json";
+import toolPermissionSeed from "../../../tool-governance/seeds/tool-permissions.seed.json";
+import { listToolAdapterPreviews } from "../../../tool-governance/adapters/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -628,6 +632,68 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       "Worker/runtime integration comes later.",
     ],
   };
+  const toolGatewayView = {
+    summary: {
+      gatewayLabel: "Governed Tool Gateway",
+      mode: "metadata and preview only",
+      tools: toolRegistrySeed.length,
+      mcpPlaceholders: mcpRegistrySeed.length,
+      permissionEntries: toolPermissionSeed.length,
+      adapterPreviews: listToolAdapterPreviews().length,
+      executionEnabled: false,
+      providerCallsEnabled: false,
+      externalNetworkEnabled: false,
+      dbWritesEnabled: false,
+      projectMutationEnabled: false,
+      lazyContractLoading: "Required",
+      nextPhase: "P52.9 - Final Validation",
+    },
+    tools: toolRegistrySeed.map((tool) => ({
+      toolId: tool.toolId,
+      displayName: tool.displayName,
+      category: tool.category,
+      interfaceType: tool.interfaceType,
+      status: tool.status,
+      riskLevel: tool.riskLevel,
+      owner: tool.owner,
+      lazyContractAvailable: tool.lazyContractAvailable,
+      executionEnabled: tool.executionEnabled,
+    })),
+    mcpServers: mcpRegistrySeed.map((server) => ({
+      mcpServerId: server.mcpServerId,
+      displayName: server.displayName,
+      status: server.status,
+      transport: server.transport,
+      serverEnabled: server.serverEnabled,
+      lazySchemaLoadingRequired: server.lazySchemaLoadingRequired,
+      egressPolicy: server.egressPolicy,
+    })),
+    permissions: toolPermissionSeed.map((entry) => ({
+      permissionId: entry.permissionId,
+      toolId: entry.toolId,
+      agentId: entry.agentId,
+      permission: entry.permission,
+      approvalRequired: entry.approvalRequired,
+      reason: entry.reason,
+    })),
+    adapters: listToolAdapterPreviews().map((adapter) => ({
+      ...adapter,
+      status: "Preview only",
+    })),
+    lazyLoading: {
+      maxContractsPerTask: 3,
+      maxToolSummaries: 20,
+      allToolSchemasAllowed: false,
+      allMcpSchemasAllowed: false,
+      selectedContractLoadingRequired: true,
+    },
+    safetyNotes: [
+      "One governed tool gateway evaluates tool metadata and preview decisions.",
+      "Tool execution, MCP server runtime, shell execution, provider calls, external network, DB writes, workers, and project mutation remain disabled.",
+      "Tool search returns summaries only. Selected contracts load lazily and never as all-tool or all-MCP schemas.",
+      "Adapter previews describe future actions only; they do not execute them.",
+    ],
+  };
 
   return {
     shell: {
@@ -659,6 +725,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     multiRepoWorkspace,
     skillRegistry: skillRegistryView,
     hookRegistry: hookRegistryView,
+    toolGateway: toolGatewayView,
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

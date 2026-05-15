@@ -298,6 +298,17 @@ export const HOOK_REGISTRY_TABS = [
   },
 ];
 
+export const TOOL_GATEWAY_TABS = [
+  { id: "overview", label: "Overview", description: "Gateway posture, counts, and safety boundaries", badge: "Read-only" },
+  { id: "tool-registry", label: "Tool Registry", description: "Registered tool metadata and lazy contract posture", badge: "Ready" },
+  { id: "mcp-registry", label: "MCP Registry", description: "Disabled MCP placeholders and schema loading state", badge: "Disabled" },
+  { id: "permissions", label: "Permissions", description: "Agent, project, scope, method, and risk decisions", badge: "Guarded" },
+  { id: "contracts", label: "Contracts", description: "Selected contract loading without all-tools context", badge: "Lazy" },
+  { id: "adapters", label: "Adapters", description: "Preview-only tool adapter descriptions", badge: "Preview" },
+  { id: "lazy-loading", label: "Lazy Loading", description: "Context budget and schema-loading guardrails", badge: "Safety" },
+  { id: "developer-details", label: "Developer Details", description: "Policy, reports, and registry artifact references", badge: "Read-only" },
+];
+
 export const AGENT_ROOMS_TABS = [
   {
     id: "overview",

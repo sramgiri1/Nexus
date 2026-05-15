@@ -15,6 +15,7 @@ import {
   SAFETY_CENTER_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
+  TOOL_GATEWAY_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "./commandCenterTabs.js";
@@ -217,6 +218,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: HOOK_REGISTRY_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/HOOK_REGISTRY_SAFE_AUTOMATION_LIFECYCLE.md",
+  },
+  {
+    key: "tools",
+    path: "/command-center/tools",
+    name: "Tool Gateway",
+    section: "DELIVERY",
+    allowPhaseLabels: false,
+    expectedHeading: "Tool Gateway",
+    status: "implemented",
+    badge: "Read-only",
+    scope: "platform",
+    tabs: TOOL_GATEWAY_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/TOOL_MCP_REGISTRY_AND_GOVERNANCE.md",
   },
   {
     key: "agentRooms",

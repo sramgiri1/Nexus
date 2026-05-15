@@ -1987,6 +1987,58 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Tool Gateway route renders read-only governed tool metadata", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tools");
+    const body = await page.locator("body").innerText();
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
+    await expect(page.locator("body")).toContainText("Governed Tool Gateway");
+    await expect(page.locator("body")).toContainText("One governed tool gateway");
+    await expect(page.locator("body")).toContainText("Execution disabled");
+    await expect(page.locator("body")).toContainText("MCP placeholders disabled");
+    for (const label of [
+      "Overview",
+      "Tool Registry",
+      "MCP Registry",
+      "Permissions",
+      "Contracts",
+      "Adapters",
+      "Lazy Loading",
+      "Developer Details",
+    ]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+    await commandTab(page, "Tool Registry").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Git Status");
+    await expect(activeCommandTabPanel(page)).toContainText("Execution: Disabled");
+    await commandTab(page, "MCP Registry").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Filesystem MCP Placeholder");
+    await expect(activeCommandTabPanel(page)).toContainText("Server enabled: No");
+    await commandTab(page, "Permissions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("AUDITOR");
+    await commandTab(page, "Contracts").click();
+    await expect(activeCommandTabPanel(page)).toContainText("No all-tools-in-context loading.");
+    await expect(activeCommandTabPanel(page)).toContainText("No all-MCP-schemas-in-context loading.");
+    await commandTab(page, "Adapters").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Git Adapter Preview");
+    await commandTab(page, "Lazy Loading").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Max contracts per task");
+
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("Requires P37");
+    expect(body).not.toContain("Requires P38");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
+
+    expect(errors).toEqual([]);
+  });
+
   test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
