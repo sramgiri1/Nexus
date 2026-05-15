@@ -129,7 +129,8 @@
     "check:merge-gate-model": "node scripts/check-merge-gate-model.js",
     "check:multi-repo-git-pr-final-validation": "node scripts/check-multi-repo-git-pr-final-validation.js",
     "check:agent-registry-schema": "node scripts/check-agent-registry-schema.js",
-    "check:agent-capability-matrix": "node scripts/check-agent-capability-matrix.js"
+    "check:agent-capability-matrix": "node scripts/check-agent-capability-matrix.js",
+    "check:agent-boundaries": "node scripts/check-agent-boundaries.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

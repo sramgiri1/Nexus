@@ -1174,7 +1174,11 @@ P45.2 adds a metadata-only agent capability matrix. It maps registered agents
 to stable capability IDs and validates separation-of-duties rules without
 wiring runtime enforcement.
 
-Next phase: P45.3 - Agent Path / Tool / Data Boundaries.
+P45.3 adds metadata-only path, tool, data, project-scope, change-scope, and
+approval boundaries for registered agents. No MCP/tool dispatch, provider
+execution, DB writes, worker runtime, or private project mutation is enabled.
+
+Next phase: P45.4 - Boundary Compiler.
 
 ---
 

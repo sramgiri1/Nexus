@@ -229,7 +229,9 @@ check(laterHandoffPhases.includes(phaseStatus.nextPhase), "osPhaseStatus", "next
 check(
   read("README.md").includes("P44 - Multi-Repo Workspace + Git/PR Lifecycle")
     || read("README.md").includes("P44.2 - Repo Ownership + Dependency Map")
-    || read("README.md").includes("P45 - Agent Registry + Boundary Compiler"),
+    || read("README.md").includes("P45 - Agent Registry + Boundary Compiler")
+    || read("README.md").includes("P45.4 - Boundary Compiler")
+    || read("README.md").includes("P46 - Scoped Memory Architecture + Memory Center"),
   "docs",
   "README must point to P44, active P44 subphase, or P45 handoff",
 );

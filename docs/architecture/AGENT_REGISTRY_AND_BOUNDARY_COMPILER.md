@@ -53,3 +53,24 @@ local APIs, workers, provider dispatch, or tool dispatch.
 ## Next
 P45.3 defines path, tool, data, project-scope, change-scope, and approval
 boundaries for each agent.
+
+## P45.3 - Agent Path / Tool / Data Boundaries
+P45.3 defines boundary metadata across six dimensions:
+- Path boundaries.
+- Tool boundaries.
+- Data boundaries.
+- Project scope boundaries.
+- Change-scope boundaries.
+- Approval boundaries.
+
+Examples are recorded for CORE, SENTINEL, AUDITOR, WARDEN, and SWIFT. Tool
+boundaries remain metadata-only; no MCP, provider, worker, xcodebuild, release,
+or DB-write execution is enabled.
+
+Data references are classified as public, internal, confidential, restricted,
+or secret. Secret data and private source detailed scans remain forbidden for
+the metadata-only boundary model.
+
+## Next
+P45.4 adds a dry-run boundary compiler that can produce a boundary envelope
+without applying it to runtime execution.

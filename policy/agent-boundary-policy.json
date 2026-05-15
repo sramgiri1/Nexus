@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "phase": "P45.3",
+  "purpose": "agent_path_tool_data_boundaries",
+  "metadataOnly": true,
+  "runtimeEnforcementAllowed": false,
+  "toolDispatchAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerExecutionAllowed": false,
+  "projectMutationAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "requiredBoundaryDimensions": [
+    "path",
+    "tool",
+    "data",
+    "projectScope",
+    "changeScope",
+    "approval"
+  ]
+}

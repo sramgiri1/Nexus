@@ -1881,7 +1881,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending-subphase-commit",
+      "commit": "251b595",
       "completedAt": "2026-05-15T15:06:49.015Z",
       "summary": "Maps agents to stable capability IDs and validates separation-of-duties rules without runtime enforcement.",
       "checksRun": [
@@ -1897,20 +1897,38 @@
       "phaseId": "P45.3",
       "title": "Agent Path / Tool / Data Boundaries",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:08:51.364Z",
+      "summary": "Defines metadata-only path, tool, data, project-scope, change-scope, and approval boundaries for agents.",
+      "checksRun": [
+        "npm run check:agent-boundaries"
+      ],
+      "knownLimitations": [
+        "Boundaries are not enforced at runtime and do not enable tool dispatch."
+      ],
+      "nextPhase": "P45.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.4",
+      "title": "Boundary Compiler",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/agent-registry-boundary-compiler",
       "commit": "pending",
       "completedAt": "",
-      "summary": "Define path, tool, data, project, change-scope, and approval boundaries.",
+      "summary": "Compile dry-run boundary envelopes from agent, project, scope, capability, and task intent.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P45.4",
+      "nextPhase": "P45.5",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:06:49.015Z",
-  "currentPhase": "P45.2",
-  "previousPhase": "P45.1",
-  "nextPhase": "P45.3"
+  "updatedAt": "2026-05-15T15:08:51.364Z",
+  "currentPhase": "P45.3",
+  "previousPhase": "P45.2",
+  "nextPhase": "P45.4"
 }

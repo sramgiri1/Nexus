@@ -31,3 +31,29 @@ export {
   summarizeAgentCapabilityMatrix,
   validateSeparationOfDuties,
 } from "./agentCapabilityMatrix.js";
+
+export {
+  AGENT_BOUNDARY_MODEL_VERSION,
+  APPROVAL_BOUNDARY_RULES,
+  PROJECT_SCOPE_BOUNDARIES,
+  buildAgentBoundaryModel,
+  validateAgentBoundaryModel,
+} from "./agentBoundaryModel.js";
+
+export {
+  AGENT_PATH_BOUNDARIES,
+  GLOBAL_FORBIDDEN_PATH_PATTERNS,
+  getPathBoundaryForAgent,
+} from "./pathBoundaryRules.js";
+
+export {
+  AGENT_DATA_BOUNDARIES,
+  DATA_CLASSIFICATION_ORDER,
+  FORBIDDEN_DATA_REFERENCES,
+  getDataBoundaryForAgent,
+} from "./dataBoundaryRules.js";
+
+export {
+  TOOL_BOUNDARIES,
+  getToolBoundaryForAgent,
+} from "./toolBoundaryRules.js";
