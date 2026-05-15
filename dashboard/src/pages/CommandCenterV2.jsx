@@ -1534,6 +1534,12 @@ function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand
                     {selectedCommand.triggerPreview?.status || "preview_only"} · Preview only - trigger execution is not enabled yet
                   </span>
                 </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Scheduled triggers</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    Scheduled triggers: Preview only · Runtime scheduler: Not enabled · Worker runtime: Not enabled
+                  </span>
+                </div>
               </div>
 
               <div className="ccv2-command-palette__capabilities">

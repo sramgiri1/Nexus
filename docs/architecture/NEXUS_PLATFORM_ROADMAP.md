@@ -230,8 +230,8 @@ Risk level:
   - `P52.9` Final Validation — complete
 - `P53` Trigger + Integration Gateway — in progress
   - `P53.1` Trigger Gateway Schema — complete
-  - `P53.2` Manual Command Center Trigger — in progress
-  - `P53.3` Cron / Scheduled Trigger Preview — planned
+  - `P53.2` Manual Command Center Trigger — complete
+  - `P53.3` Cron / Scheduled Trigger Preview — in progress
   - `P53.4` GitHub Event Trigger Preview — planned
   - `P53.5` Jira / Linear Placeholder Trigger Models — planned
   - `P53.6` Slack / Teams Placeholder Trigger Models — planned

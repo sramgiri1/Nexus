@@ -61,5 +61,20 @@ runtime execution.
 
 ## Next Phase
 
-P53.3 defines scheduled trigger previews without registering cron jobs, timers,
-or workers.
+## P53.3 - Cron / Scheduled Trigger Preview
+
+P53.3 adds scheduled trigger previews for disabled, manual-only, daily-preview,
+weekly-preview, and cron-preview schedule forms. Cron expressions are validated
+as strings only.
+
+Scheduled trigger previews are disabled by default and require rate limits, cost
+policy, dedupe, and kill switch posture. They do not register cron jobs, timers,
+background tasks, or worker runtime dependencies.
+
+Command Center surfaces scheduled trigger readiness as preview-only with runtime
+scheduler and worker runtime disabled.
+
+## Next Phase
+
+P53.4 defines GitHub event trigger previews without GitHub API calls, webhook
+servers, credentials, or repository mutation.

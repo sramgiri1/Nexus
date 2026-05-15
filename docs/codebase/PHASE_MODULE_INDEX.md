@@ -1422,3 +1422,24 @@ state and should be verified again during future docs audits.
   runtime evidence writes.
 - Known limitations:
   Manual triggers are preview-only until a later governed runtime phase.
+
+## P53.3 — Cron / Scheduled Trigger Preview
+
+- Primary capability:
+  Scheduled trigger preview model for disabled, manual-only, daily-preview,
+  weekly-preview, and cron-preview schedule forms.
+- Main files/folders touched:
+  `trigger-gateway/scheduledTrigger.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`
+- Main checker(s):
+  `scripts/check-scheduled-trigger.js`
+- Main report(s):
+  `reports/scheduled-trigger-report.md`
+- Command Center impact:
+  Command Palette details show scheduled trigger preview-only posture and
+  disabled scheduler/worker status.
+- Safety impact:
+  No cron registration, timers, background jobs, worker runtime, provider calls,
+  external network, DB writes, or project mutation.
+- Known limitations:
+  Scheduled triggers are metadata previews only.

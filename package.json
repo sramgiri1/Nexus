@@ -171,7 +171,8 @@
     "check:tool-adapters": "node scripts/check-tool-adapters.js",
     "check:tool-governance-final": "node scripts/check-tool-governance-final.js",
     "check:trigger-gateway-schema": "node scripts/check-trigger-gateway-schema.js",
-    "check:manual-trigger": "node scripts/check-manual-trigger.js"
+    "check:manual-trigger": "node scripts/check-manual-trigger.js",
+    "check:scheduled-trigger": "node scripts/check-scheduled-trigger.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
