@@ -66,3 +66,17 @@ runtime injection and are not DB-backed.
 
 ## Next After P46.2
 P46.3 builds deterministic scoped memory packets for future governed dispatch.
+
+## P46.3 - Memory Packet Builder
+P46.3 adds deterministic packet selection for future scoped memory injection.
+Packets accept scope, project, mission, task, agent, capability, mode, and a
+memory budget. They return included memory, excluded memory, inclusion reasons,
+freshness/trust warnings, token estimates, and classification summaries.
+
+P46.3 does not send packets to providers or inject them into runtime agents.
+Packets are summaries only and explicitly exclude unrelated project memory,
+demo/private leakage, raw private source, secret-like material, and raw prompts.
+
+## Next After P46.3
+P46.4 adds memory access policy decisions for agents, scopes, modes, and
+classifications.

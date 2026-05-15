@@ -178,8 +178,8 @@ Risk level:
 - `P46` Scoped Memory Architecture + Memory Center
   - `P46.1` Memory Scope Model — complete
   - `P46.2` Project / OS / Task / Session Memory Stores — complete
-  - `P46.3` Memory Packet Builder — next
-  - `P46.4` Memory Access Policy — planned
+  - `P46.3` Memory Packet Builder — complete
+  - `P46.4` Memory Access Policy — next
   - `P46.5` Memory Freshness + Staleness — planned
   - `P46.6` Command Center Memory Center — planned
   - `P46.7` Tests + Docs + Final Validation — planned

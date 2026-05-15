@@ -1204,7 +1204,12 @@ P46.2 adds safe local JSONL memory stores for NEXUS OS, project, task, and
 session memory metadata. Stores contain redacted summaries only and reject
 secret-like content.
 
-Next phase: P46.3 - Memory Packet Builder.
+P46.3 adds deterministic scoped memory packet building with inclusion reasons,
+exclusion reasons, freshness and trust warnings, token budget estimates, and
+classification summaries. Packets remain read-only previews and are not sent to
+providers or injected into agents.
+
+Next phase: P46.4 - Memory Access Policy.
 
 ---
 
