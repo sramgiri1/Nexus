@@ -2,8 +2,11 @@ import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import {
+  buildSkillContracts,
   getSkillRegistry,
   summarizeRegisteredSkills,
+  summarizeSkillContracts,
+  validateSkillContract,
   validateRegisteredSkills,
 } from "../skills-registry/index.js";
 
@@ -13,6 +16,7 @@ const sections = {
   modules: true,
   schema: true,
   registry: true,
+  contracts: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -65,12 +69,15 @@ const packageJson = parseJson("package.json", "modules");
 const policy = parseJson("policy/skill-registry-policy.json", "policy");
 const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const skills = getSkillRegistry();
+const contracts = buildSkillContracts(skills);
 const registryValidation = validateRegisteredSkills(skills);
 const summary = summarizeRegisteredSkills(skills);
+const contractSummary = summarizeSkillContracts(contracts);
 
 for (const file of [
   "skills-registry/skillSchema.js",
   "skills-registry/skillRegistry.js",
+  "skills-registry/skillContract.js",
   "skills-registry/registry.json",
   "skills-registry/index.js",
 ]) {
@@ -84,12 +91,21 @@ check(summary.executionEnabledCount === 0, "registry", "No skills may have execu
 check(summary.providerCallsAllowedCount === 0, "registry", "No skills may allow provider calls in P50");
 check(summary.toolCallsAllowedCount === 0, "registry", "No skills may allow tool calls in P50");
 check(summary.projectMutationAllowedCount === 0, "registry", "No skills may allow project mutation in P50");
+check(contracts.length === skills.length, "contracts", "Every skill needs a generated contract");
+for (const contract of contracts) {
+  const validation = validateSkillContract(contract);
+  check(validation.valid, "contracts", `Invalid contract ${contract.skillId}: ${validation.errors.join("; ")}`);
+  check(contract.forbiddenUseCases.some((item) => item.includes("providers")), "contracts", `${contract.skillId} must forbid provider execution`);
+}
+check(contractSummary.executionEnabledCount === 0, "contracts", "Contracts must keep execution disabled");
+check(contractSummary.providerCallsAllowedCount === 0, "contracts", "Contracts must keep provider calls disabled");
+check(contractSummary.projectMutationAllowedCount === 0, "contracts", "Contracts must keep project mutation disabled");
 
 for (const category of ["planning", "review", "qa", "release"]) {
   check(Boolean(summary.categoryCounts[category]), "registry", `Missing category: ${category}`);
 }
 
-check(policy.phase === "P50.1", "policy", "Policy phase must be P50.1 for the schema subphase");
+check(policy.phase === "P50.1", "policy", "Policy phase must remain P50.1 for the registry policy baseline");
 check(policy.skillExecutionAllowed === false, "policy", "Skill execution must be disabled");
 check(policy.providerCallsAllowed === false, "policy", "Provider calls must be disabled");
 check(policy.toolCallsAllowed === false, "policy", "Tool calls must be disabled");
@@ -100,15 +116,18 @@ check(policy.agentDefinitionMutationAllowed === false, "policy", "Agent definiti
 
 const docs = read("docs/architecture/SKILL_REGISTRY_AND_AUTHORING_WORKFLOW.md");
 check(docs.includes("P50.1 - Skill Registry Schema"), "docs", "Architecture doc missing P50.1 section");
+check(docs.includes("P50.2 - Skill Contract Model"), "docs", "Architecture doc missing P50.2 section");
 check(docs.includes("skill execution is disabled"), "docs", "Architecture doc must state skill execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P49.8")?.status === "complete", "osPhaseStatus", "P49.8 must remain complete");
 check(statusById.get("P50.1")?.status === "complete", "osPhaseStatus", "P50.1 must be complete");
 check(statusById.get("P50.1")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.1 branch mismatch");
-check(statusById.get("P50.1")?.nextPhase === "P50.2", "osPhaseStatus", "P50.1 next phase must be P50.2");
-check(phaseStatus.currentPhase === "P50.1", "osPhaseStatus", "Current phase must be P50.1");
-check(phaseStatus.nextPhase === "P50.2", "osPhaseStatus", "Next phase must be P50.2");
+check(statusById.get("P50.2")?.status === "complete", "osPhaseStatus", "P50.2 must be complete");
+check(statusById.get("P50.2")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.2 branch mismatch");
+check(statusById.get("P50.2")?.nextPhase === "P50.3", "osPhaseStatus", "P50.2 next phase must be P50.3");
+check(phaseStatus.currentPhase === "P50.2", "osPhaseStatus", "Current phase must be P50.2");
+check(phaseStatus.nextPhase === "P50.3", "osPhaseStatus", "Next phase must be P50.3");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -122,6 +141,7 @@ for (const file of changedFiles()) {
 for (const file of [
   "skills-registry/skillSchema.js",
   "skills-registry/skillRegistry.js",
+  "skills-registry/skillContract.js",
   "skills-registry/index.js",
   "scripts/check-skill-registry.js",
   "policy/skill-registry-policy.json",
@@ -142,11 +162,13 @@ const report = `# NEXUS Skill Registry Report
 
 ## Scope
 
-P50.1 - Skill Registry Schema
+P50.2 - Skill Contract Model
 
 ## Summary
 
 - Skills: ${summary.skillCount}
+- Contracts: ${contractSummary.contractCount}
+- Rollback-required contracts: ${contractSummary.rollbackRequiredCount}
 - Categories: ${Object.keys(summary.categoryCounts).join(", ")}
 - Execution-enabled skills: ${summary.executionEnabledCount}
 - Provider-enabled skills: ${summary.providerCallsAllowedCount}
@@ -158,6 +180,7 @@ P50.1 - Skill Registry Schema
 - Modules: ${sections.modules ? "PASS" : "FAIL"}
 - Schema: ${sections.schema ? "PASS" : "FAIL"}
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
+- Contracts: ${sections.contracts ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -184,6 +207,7 @@ result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 console.log(`Modules: ${sections.modules ? "PASS" : "FAIL"}`);
 console.log(`Schema: ${sections.schema ? "PASS" : "FAIL"}`);
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
+console.log(`Contracts: ${sections.contracts ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);

@@ -61,3 +61,29 @@ DB, mutate projects, or modify agent definitions.
 
 P50.2 adds the skill contract model used to describe allowed use cases,
 forbidden use cases, evidence, rollback requirements, and safety notes.
+
+## P50.2 - Skill Contract Model
+
+P50.2 adds contract helpers that turn registered skills into governance
+contracts. A skill contract describes:
+
+- purpose
+- input contract
+- output contract
+- allowed use cases
+- forbidden use cases
+- required agent boundary
+- required project profile
+- required evidence
+- test plan
+- rollback requirement
+- cost policy
+- safety notes
+
+Contracts are not executable. They do not call providers, tools, workers, DB
+write paths, project mutation paths, or agent-definition mutation paths.
+
+## Next Subphase
+
+P50.3 adds governed skill templates for Plan, Review, QA, Ship, Retro, Guard,
+and Explain-style operator workflows.
