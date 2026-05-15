@@ -21,3 +21,18 @@ export {
   summarizePrDraft,
   validatePrDraft,
 } from "./prDraftModel.js";
+
+export {
+  REVIEW_COMMENT_CLASSIFICATIONS,
+  REVIEW_COMMENT_SOURCES,
+  REVIEW_COMMENT_STATUSES,
+  buildReviewComment,
+  summarizeReviewComments,
+  validateReviewComment,
+} from "./reviewCommentModel.js";
+
+export {
+  buildReviewIngestionPlan,
+  triageReviewComment,
+  validateReviewIngestionPlan,
+} from "./reviewIngestionPlan.js";

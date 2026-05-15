@@ -215,6 +215,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P44.2: repo ownership + dependency map
 - P44.3: branch / commit workflow model
 - P44.4: PR draft + evidence link model
+- P44.5: review comment ingestion model
 
 ## Known Limitations
 
@@ -1153,12 +1154,14 @@ repo registry model for NEXUS OS and project repositories. P44.2 adds a
 metadata-only repo ownership and dependency map, including blast-radius summaries
 for cross-repo review. P44.3 adds a governed branch and commit workflow model
 that remains plan-only. P44.4 adds local PR draft metadata and evidence links
-without creating a PR or calling GitHub/GitLab APIs. No branch creation,
+without creating a PR or calling GitHub/GitLab APIs. P44.5 models review
+comment ingestion and triage without external review-system calls or task
+creation. No branch creation,
 commits, pull requests, merges, pushes, provider calls, DB writes, project source
 mutation, or private source detailed scanning are enabled. See
 [docs/architecture/MULTI_REPO_WORKSPACE.md](docs/architecture/MULTI_REPO_WORKSPACE.md).
 
-Next phase: P44.5 - Review Comment Ingestion Model.
+Next phase: P44.6 - Merge Gate + Rollback Branch Model.
 
 ---
 

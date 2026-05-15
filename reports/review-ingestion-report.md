@@ -1,4 +1,4 @@
-# NEXUS PR Draft Model Report
+# NEXUS Review Ingestion Report
 
 ## Metadata
 - Generated at: 2026-05-15T13:51:29.757Z
@@ -7,29 +7,26 @@
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
-P44.4 - PR Draft + Evidence Link Model
+P44.5 - Review Comment Ingestion Model
 
 ## Summary
-- PR draft ID: pr-draft-p44-4
-- Status: draft-metadata-only
-- Repositories linked: 1
-- Evidence links: 1
-- Audit links: 1
-- Correlation links: 1
-- PR created: no
-- External calls allowed: no
+- Comments modeled: 1
+- Sources: local-review, manual, future
+- External source fetched: no
+- Tasks created: no
+- Sample triage agent: WARDEN
 
 ## Non-Goals
 - No GitHub or GitLab API call was made.
-- No pull request was created.
-- No git branch, commit, merge, or push action was executed.
+- No review comment was fetched from an external service.
+- No task was created from a comment.
 
 ## Validation
 - modules: PASS
 - exports: PASS
 - policy: PASS
-- prDraft: PASS
-- evidenceLinks: PASS
+- commentModel: PASS
+- ingestionPlan: PASS
 - osPhaseStatus: PASS
 - noForbiddenChanges: PASS
 - formatting: PASS

@@ -165,8 +165,8 @@ Risk level:
   - `P44.2` Repo Ownership + Dependency Map — complete
   - `P44.3` Branch / Commit Workflow Model — complete
   - `P44.4` PR Draft + Evidence Link Model — complete
-  - `P44.5` Review Comment Ingestion Model — next
-  - `P44.6` Merge Gate + Rollback Branch Model — planned
+  - `P44.5` Review Comment Ingestion Model — complete
+  - `P44.6` Merge Gate + Rollback Branch Model — next
   - `P44.7` Multi-Repo Git/PR Final Validation — planned
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -790,6 +790,17 @@ plan, human-review requirement, and draft metadata-only status.
 
 This phase makes no GitHub or GitLab API calls and creates no pull requests.
 P44.5 is next and models review comment ingestion.
+
+#### P44.5 — Review Comment Ingestion Model
+
+P44.5 models review comments from future GitHub, GitLab, local-review, manual,
+or future sources. It classifies comments as bug, style, security, test-gap,
+architecture, product, or unknown and assigns an owner agent plus required
+capability.
+
+The ingestion model remains metadata-only. It does not fetch external comments,
+call GitHub/GitLab APIs, mutate project files, or create tasks. P44.6 is next
+and adds the merge gate and rollback branch model.
 
 ### Phase 15 — Containerization and Worker Scaling
 

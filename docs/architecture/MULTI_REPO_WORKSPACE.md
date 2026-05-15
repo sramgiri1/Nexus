@@ -81,3 +81,12 @@ rollback plan, human-review requirement, and status.
 
 Drafts remain `draft-metadata-only`. NEXUS does not call GitHub, GitLab, or any
 external network API, and it does not create pull requests in this phase.
+
+## P44.5 Review Comment Ingestion Model
+P44.5 models review comments from future GitHub, GitLab, local-review, manual,
+or future sources. Each comment records source, repo ID, PR draft ID, file path,
+line range, author role, classification, assigned agent, required capability,
+status, and whether evidence is required.
+
+The ingestion plan is metadata-only. It does not fetch comments from external
+systems and does not convert comments into tasks.

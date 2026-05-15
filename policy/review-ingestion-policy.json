@@ -1,0 +1,35 @@
+{
+  "version": "1.0",
+  "phase": "P44.5",
+  "purpose": "review_comment_ingestion_model",
+  "metadataOnly": true,
+  "githubApiCallsAllowed": false,
+  "gitlabApiCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "taskCreationAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "allowedSources": [
+    "github",
+    "gitlab",
+    "local-review",
+    "manual",
+    "future"
+  ],
+  "allowedClassifications": [
+    "bug",
+    "style",
+    "security",
+    "test-gap",
+    "architecture",
+    "product",
+    "unknown"
+  ],
+  "requiredOutputs": [
+    "git-lifecycle/reviewCommentModel.js",
+    "git-lifecycle/reviewIngestionPlan.js",
+    "reports/review-ingestion-report.md"
+  ],
+  "osPhaseStatusUpdateRequired": true
+}
