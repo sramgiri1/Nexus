@@ -1264,7 +1264,13 @@ active project, stack profile, capabilities, milestones, gaps, and adapter
 settings. It does not enable direct agent chat, provider/tool/worker dispatch,
 DB writes, task ownership mutation, adapter runtime, or project mutation.
 
-Next phase: P49.1 - Agent Definition Update Schema + Policy.
+P49 adds the Agent Definition Update Workflow: proposal-first change records,
+boundary diff classification, AUDITOR/WARDEN review records, human approval
+gates, dry-run versioning, rollback planning, Command Center read-only
+visibility, and final validation. It does not mutate `agents/*.md` or grant
+runtime provider/tool/worker/DB/project permissions.
+
+Next phase: P50 - Skill Registry + Skill Authoring Workflow.
 
 ---
 

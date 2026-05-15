@@ -230,6 +230,13 @@ const laterHandoffPhases = [
   "P48.7",
   "P48.8",
   "P49.1",
+  "P49.2",
+  "P49.3",
+  "P49.4",
+  "P49.5",
+  "P49.6",
+  "P49.7",
+  "P50",
 ];
 check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", ...laterHandoffPhases].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43 or later handoff phase");
 check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be a P43 or later handoff phase");

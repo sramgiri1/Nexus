@@ -156,7 +156,7 @@ check(
   "currentPhase must be P42.1, P42.2, P42.7, or P43.1",
 );
 check(
-  ["P42.2", "P42.3", "P43", "P43.2", "P49.1"].includes(phaseStatus.nextPhase),
+  ["P42.2", "P42.3", "P43", "P43.2", "P49.1", "P50"].includes(phaseStatus.nextPhase),
   "osPhaseStatus",
   "nextPhase must be P42.2, P42.3, P43, or P43.2",
 );

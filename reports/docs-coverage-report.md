@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T18:08:48.993Z
-- Validation branch: fix/projects-page-enterprise-ux
-- Validation HEAD: 5c52113
+- Generated at: 2026-05-15T18:31:27.147Z
+- Validation branch: arch/agent-definition-update-workflow
+- Validation HEAD: 8e03e92
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

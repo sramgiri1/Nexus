@@ -193,8 +193,15 @@ Risk level:
   - `P48.6` Command Center Agent Rooms UX — complete
   - `P48.7` Mesh Tests + Docs + Final Validation — complete
   - `P48.8` Projects Page Enterprise UX + Multi-Project Operating Surface Polish — complete
-- `P49.1` Agent Definition Update Schema + Policy — next
-- `P50` Skill Registry + Skill Authoring Workflow
+- `P49` Agent Definition Update Workflow — complete
+  - `P49.1` Agent Definition Change Proposal — complete
+  - `P49.2` Boundary Diff — complete
+  - `P49.3` AUDITOR / WARDEN Review — complete
+  - `P49.4` Human Approval Gate — complete
+  - `P49.5` Versioning + Rollback — complete
+  - `P49.6` Agent Regression Tests + Command Center UX — complete
+  - `P49.7` Final Validation — complete
+- `P50` Skill Registry + Skill Authoring Workflow — next
 - `P51` Hook Registry + Safe Automation Lifecycle
 - `P52` Tool / MCP Registry + Tool Governance
 - `P53` Trigger + Integration Gateway

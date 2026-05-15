@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: fix/projects-page-enterprise-ux
-- Registry checker HEAD: 5c52113
+- Registry checker branch: arch/agent-definition-update-workflow
+- Registry checker HEAD: 8e03e92
 - Registry checker result: PASS
 
