@@ -224,7 +224,8 @@ Risk level:
   - `P52.3` Governed Tool Gateway — complete
   - `P52.4` Tool Search + Contract Preview — complete
   - `P52.5` Lazy Tool Contract Loading — complete
-  - `P52.6` Tool Permission Matrix — next
+  - `P52.6` Tool Permission Matrix — complete
+  - `P52.7` Safe Tool Adapter Previews — next
 - `P53` Trigger + Integration Gateway
 - `P54` API + Batch Execution Adapter
 - `P55` Test Suite Manager: Project + OS

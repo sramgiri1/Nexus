@@ -1290,3 +1290,24 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Permission matrix, adapters, and Command Center Tool Gateway UX arrive in
   later P52 subphases.
+
+## P52.6 — Tool Permission Matrix
+
+- Primary capability:
+  Default-deny metadata permission matrix for tool access decisions by agent,
+  project, scope, method, classification, and risk.
+- Main files/folders touched:
+  `tool-governance/toolPermissionPolicy.js`,
+  `tool-governance/toolPermissionMatrix.js`,
+  `tool-governance/seeds/tool-permissions.seed.json`,
+  `policy/tool-permission-matrix-policy.json`
+- Main checker(s):
+  `scripts/check-tool-permission-matrix.js`
+- Main report(s):
+  `reports/tool-permission-matrix-report.md`
+- Command Center impact:
+  Prepares permission summaries for a future Tool Gateway route.
+- Safety impact:
+  Demo scope is blocked from private tools and MCP placeholders remain blocked.
+- Known limitations:
+  Adapter previews and Tool Gateway UX arrive in later P52 subphases.

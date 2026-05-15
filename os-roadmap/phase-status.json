@@ -1495,7 +1495,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "aca9fbe",
       "completedAt": "2026-05-15T23:10:00.000Z",
       "summary": "Adds context budget guardrails that block all-tool and all-MCP schema loading while allowing selected lazy contracts only.",
       "checksRun": [
@@ -1511,13 +1511,17 @@
       "phaseId": "P52.6",
       "title": "Tool Permission Matrix",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned tool permission matrix for agents, projects, scopes, methods, and risk levels.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:20:00.000Z",
+      "summary": "Adds a default-deny metadata permission matrix for agents, projects, scopes, methods, data classification, and risk.",
+      "checksRun": [
+        "npm run check:tool-permission-matrix"
+      ],
+      "knownLimitations": [
+        "The matrix gates metadata decisions only and does not enable tool or MCP execution."
+      ],
       "nextPhase": "P52.7",
       "commandCenterVisible": true
     },
@@ -1529,7 +1533,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned safe tool adapter previews subphase.",
+      "summary": "Planned safe adapter preview modules with no execution.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P52.8",
@@ -3006,8 +3010,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:10:00.000Z",
-  "currentPhase": "P52.5",
-  "previousPhase": "P52.4",
-  "nextPhase": "P52.6"
+  "updatedAt": "2026-05-15T23:20:00.000Z",
+  "currentPhase": "P52.6",
+  "previousPhase": "P52.5",
+  "nextPhase": "P52.7"
 }

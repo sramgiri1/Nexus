@@ -166,7 +166,8 @@
     "check:mcp-registry": "node scripts/check-mcp-registry.js",
     "check:tool-gateway": "node scripts/check-tool-gateway.js",
     "check:tool-search-contracts": "node scripts/check-tool-search-contracts.js",
-    "check:lazy-tool-context": "node scripts/check-lazy-tool-context.js"
+    "check:lazy-tool-context": "node scripts/check-lazy-tool-context.js",
+    "check:tool-permission-matrix": "node scripts/check-tool-permission-matrix.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

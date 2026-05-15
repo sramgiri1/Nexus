@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "phase": "P52.6",
+  "purpose": "tool_permission_matrix_metadata_only",
+  "metadataOnly": true,
+  "defaultDeny": true,
+  "executionAllowed": false,
+  "privateToolsInDemoAllowed": false,
+  "approvalRequiredForHighRisk": true,
+  "providerCallsAllowed": false,
+  "externalNetworkAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "workerRuntimeAllowed": false,
+  "mcpExecutionAllowed": false
+}

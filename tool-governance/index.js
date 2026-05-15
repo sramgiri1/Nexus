@@ -11,3 +11,5 @@ export * from "./toolContractLoader.js";
 export * from "./toolExecutionPreview.js";
 export * from "./lazyContractPolicy.js";
 export * from "./contextBudgetGuard.js";
+export * from "./toolPermissionPolicy.js";
+export * from "./toolPermissionMatrix.js";

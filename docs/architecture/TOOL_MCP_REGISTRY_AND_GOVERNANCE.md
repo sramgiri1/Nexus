@@ -143,7 +143,26 @@ These guardrails keep tool context small and governed. They do not execute
 tools, start MCP servers, call providers, access external networks, write DB
 state, or mutate projects.
 
+## P52.6 - Tool Permission Matrix
+
+P52.6 adds a default-deny permission matrix for tool metadata. Permissions are
+evaluated by agent, project, scope, method, data classification, and risk
+posture.
+
+The seed matrix covers:
+
+- AUDITOR access to Git Diff metadata
+- SENTINEL access to Test Runner metadata
+- CORE access to Filesystem Boundary metadata
+- WARDEN policy boundary metadata with approval
+- SWIFT Xcode MCP placeholder blocked until runtime exists
+- DROID Android Gradle MCP placeholder blocked until runtime exists
+- Demo scope blocked from private project tools
+
+The matrix is metadata-only. It does not enable execution, MCP servers,
+providers, external network, DB writes, workers, or project mutation.
+
 ## Next Subphase
 
-P52.6 adds a tool permission matrix for agents, scopes, projects, methods, and
-risk classification.
+P52.7 adds safe adapter preview modules. Adapters describe and validate future
+actions but do not execute them.

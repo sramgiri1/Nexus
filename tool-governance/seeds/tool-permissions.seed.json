@@ -1,0 +1,93 @@
+[
+  {
+    "permissionId": "auditor-git-diff-metadata",
+    "toolId": "git-diff",
+    "agentId": "AUDITOR",
+    "projectScope": "private-project",
+    "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+    "allowedMethods": ["diff", "diff-stat"],
+    "dataClassificationsAllowed": ["internal", "private"],
+    "riskLevelAllowed": "medium",
+    "permission": "allowed_metadata",
+    "approvalRequired": false,
+    "reason": "AUDITOR can inspect diff metadata for review evidence."
+  },
+  {
+    "permissionId": "sentinel-test-runner-metadata",
+    "toolId": "test-runner",
+    "agentId": "SENTINEL",
+    "projectScope": "private-project",
+    "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+    "allowedMethods": ["list-suites", "validate-command", "run-preview"],
+    "dataClassificationsAllowed": ["internal", "private"],
+    "riskLevelAllowed": "medium",
+    "permission": "allowed_metadata",
+    "approvalRequired": false,
+    "reason": "SENTINEL can inspect validation metadata without running tests."
+  },
+  {
+    "permissionId": "core-filesystem-boundary-metadata",
+    "toolId": "filesystem-boundary",
+    "agentId": "CORE",
+    "projectScope": "private-project",
+    "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+    "allowedMethods": ["validate-path", "preview-read", "check-forbidden-path"],
+    "dataClassificationsAllowed": ["internal", "private", "restricted"],
+    "riskLevelAllowed": "high",
+    "permission": "allowed_metadata",
+    "approvalRequired": true,
+    "reason": "CORE can preview filesystem boundaries but high-risk use requires approval."
+  },
+  {
+    "permissionId": "warden-policy-boundary-metadata",
+    "toolId": "filesystem-boundary",
+    "agentId": "WARDEN",
+    "projectScope": "private-project",
+    "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+    "allowedMethods": ["validate-path", "check-forbidden-path"],
+    "dataClassificationsAllowed": ["internal", "private", "restricted"],
+    "riskLevelAllowed": "high",
+    "permission": "requires_approval",
+    "approvalRequired": true,
+    "reason": "WARDEN policy checks may inspect high-risk boundary metadata only with approval."
+  },
+  {
+    "permissionId": "swift-xcode-placeholder-blocked",
+    "toolId": "mcp-xcode-placeholder",
+    "agentId": "SWIFT",
+    "projectScope": "private-project",
+    "allowedScopes": ["PROJECT_CHANGE"],
+    "allowedMethods": ["describe-ios-runner-preview"],
+    "dataClassificationsAllowed": ["private"],
+    "riskLevelAllowed": "high",
+    "permission": "blocked_not_enabled",
+    "approvalRequired": true,
+    "reason": "Xcode MCP runtime is not enabled."
+  },
+  {
+    "permissionId": "droid-gradle-placeholder-blocked",
+    "toolId": "mcp-android-gradle-placeholder",
+    "agentId": "DROID",
+    "projectScope": "private-project",
+    "allowedScopes": ["PROJECT_CHANGE"],
+    "allowedMethods": ["describe-android-runner-preview"],
+    "dataClassificationsAllowed": ["private"],
+    "riskLevelAllowed": "high",
+    "permission": "blocked_not_enabled",
+    "approvalRequired": true,
+    "reason": "Android Gradle MCP runtime is not enabled."
+  },
+  {
+    "permissionId": "demo-private-tools-blocked",
+    "toolId": "*",
+    "agentId": "DEMO",
+    "projectScope": "demo-project",
+    "allowedScopes": ["DEMO"],
+    "allowedMethods": ["describe"],
+    "dataClassificationsAllowed": ["public"],
+    "riskLevelAllowed": "low",
+    "permission": "blocked_scope",
+    "approvalRequired": false,
+    "reason": "Demo mode cannot access private project tools."
+  }
+]
