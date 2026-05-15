@@ -157,9 +157,9 @@ for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
-check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
-check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
+check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
+check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
+check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", "P44"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
 for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7"]) {
   const entry = statusById.get(phaseId) || {};
   check(entry.status === "complete", "osPhaseStatus", `${phaseId} must be complete`);

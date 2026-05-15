@@ -1043,22 +1043,27 @@
       "phaseId": "P43",
       "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/scope-boundary-packaging-safety",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Defines scope boundaries and project packaging safety before project mutation, export, or adapter runtime can expand.",
+      "completedAt": "2026-05-15T16:00:00.000Z",
+      "summary": "Completes scope classification, project/OS mutation boundary, export safety, redacted manifest, Command Center UX, and final validation while keeping packaging dry-run only.",
       "checksRun": [
+        "npm run check:scope-boundary-final-validation",
         "npm run check:scope-classification",
         "npm run check:project-os-boundary",
         "npm run check:project-export-safety",
         "npm run check:redacted-release-manifest",
-        "npm run check:command-center-ux"
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
       ],
       "knownLimitations": [
-        "P43 remains dry-run/read-only until final validation; mutation enforcement, export packaging, and release packaging remain disabled."
+        "Project export/package creation remains disabled. Project mutation, provider/tool/worker execution, release execution, and DB writes remain disabled."
       ],
-      "nextPhase": "P43.6",
+      "nextPhase": "P44",
       "commandCenterVisible": true
     },
     {
@@ -1678,7 +1683,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
+      "commit": "ee1f92c",
       "completedAt": "2026-05-15T15:00:00.000Z",
       "summary": "Adds Command Center visibility for project/OS boundary, export safety, blocked project package content, and redacted manifest availability without enabling execution.",
       "checksRun": [
@@ -1700,20 +1705,32 @@
       "phaseId": "P43.6",
       "title": "Packaging Safety Checker + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final validation and closure for scope boundary and project packaging safety.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T16:00:00.000Z",
+      "summary": "Adds final validation for P43 policies, reports, dry-run export safety, redacted manifest safety, Command Center UX, and roadmap closure.",
+      "checksRun": [
+        "npm run check:scope-boundary-final-validation",
+        "npm run check:scope-classification",
+        "npm run check:project-os-boundary",
+        "npm run check:project-export-safety",
+        "npm run check:redacted-release-manifest",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "No packaging/export execution is enabled. No source mutation or release execution is enabled."
+      ],
       "nextPhase": "P44",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:00:00.000Z",
-  "currentPhase": "P43.5",
-  "previousPhase": "P43.4",
-  "nextPhase": "P43.6"
+  "updatedAt": "2026-05-15T16:00:00.000Z",
+  "currentPhase": "P43",
+  "previousPhase": "P43.6",
+  "nextPhase": "P44"
 }

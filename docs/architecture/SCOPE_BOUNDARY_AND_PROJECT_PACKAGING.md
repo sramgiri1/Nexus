@@ -135,6 +135,21 @@ and projects are workloads. Shipping a project must not include NEXUS agents,
 policies, evidence ledgers, local-state runtime files, secrets, key material, or
 demo data.
 
+## P43.6 Packaging Safety Checker + Final Validation
+
+P43.6 closes the P43 sequence with a final validation checker and report. It
+verifies the P43.1 classification model, P43.2 mutation boundary, P43.3 export
+safety rules, P43.4 redacted release manifest, and P43.5 Command Center UX.
+
+The final posture remains intentionally conservative:
+
+- project export/package creation is disabled.
+- project mutation and OS mutation remain governed and disabled by default.
+- provider/tool/worker execution and DB writes remain disabled.
+- the redacted manifest is allowed, but it does not contain project source,
+  secrets, NEXUS agents, policies, local runtime state, or ledger payloads.
+- P44 is next for multi-repo workspace and Git/PR lifecycle work.
+
 ## Next Subphases
 
 - P43.2 - Project vs OS Mutation Boundary

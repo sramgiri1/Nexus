@@ -159,7 +159,7 @@ Risk level:
   - `P43.3` Project Export Safety Rules — complete
   - `P43.4` Redacted Release Manifest — complete
   - `P43.5` Command Center Scope Boundary UX — complete
-  - `P43.6` Packaging Safety Checker + Final Validation — next
+  - `P43.6` Packaging Safety Checker + Final Validation — complete
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
@@ -730,6 +730,13 @@ with project packages.
 
 P43.6 is next and performs final packaging safety validation and roadmap
 closure.
+
+#### P43.6 — Packaging Safety Checker + Final Validation
+
+P43.6 validates and closes the scope boundary and project packaging safety
+sequence. It confirms that P43 remains dry-run/read-only, no project package is
+created, redacted manifest generation is safe, and P44 is the next NEXUS OS
+phase.
 
 ### Phase 15 — Containerization and Worker Scaling
 

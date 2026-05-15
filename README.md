@@ -1139,11 +1139,11 @@ export safety rules that allow-list project content and block NEXUS internals,
 raw evidence/audit/activity ledgers, local-state runtime files, secrets, and
 demo data. P43.4 adds a redacted release manifest artifact while still creating
 no package. P43.5 adds Command Center visibility for scope boundary, export
-safety, blocked package content, and redacted manifest availability. These
-phases do not enable mutation, package creation, providers, tools, workers, or
-DB writes.
+safety, blocked package content, and redacted manifest availability. P43.6
+closes the sequence with final packaging safety validation. These phases do not
+enable mutation, package creation, providers, tools, workers, or DB writes.
 
-Next phase: P43.6 - Packaging Safety Checker + Final Validation.
+Next phase: P44 - Multi-Repo Workspace + Git/PR Lifecycle.
 
 ---
 

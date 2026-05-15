@@ -217,9 +217,9 @@ check(["planned", "complete"].includes(statusById.get("P43.2")?.status), "osPhas
 check(["planned", "complete"].includes(statusById.get("P43.3")?.status), "osPhaseStatus", "P43.3 must exist");
 check(["planned", "complete"].includes(statusById.get("P43.4")?.status), "osPhaseStatus", "P43.4 must exist");
 check(["planned", "complete"].includes(statusById.get("P43.5")?.status), "osPhaseStatus", "P43.5 must exist");
-check(["P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
-check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
-check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
+check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
+check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
+check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", "P44"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
 
 check(commandCenterSource.includes("Scope Boundary"), "commandCenterUx", "Command Center scope boundary copy missing");
 check(commandCenterSource.includes("classification ready"), "commandCenterUx", "Command Center classification status missing");

@@ -175,9 +175,9 @@ for (const phaseId of ["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", "P43.
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.2, P43.3, P43.4, or P43.5");
-check(["P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.1, P43.2, P43.3, or P43.4");
-check(["P43.3", "P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.3, P43.4, P43.5, or P43.6");
+check(["P43", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43.2, P43.3, P43.4, or P43.5");
+check(["P43.1", "P43.2", "P43.3", "P43.4", "P43.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.1, P43.2, P43.3, or P43.4");
+check(["P43.3", "P43.4", "P43.5", "P43.6", "P44"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P43.3, P43.4, P43.5, or P43.6");
 check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 must be complete");
 check(statusById.get("P43.2")?.status === "complete", "osPhaseStatus", "P43.2 must be complete");
 check(statusById.get("P43.2")?.branch === "arch/scope-boundary-packaging-safety", "osPhaseStatus", "P43.2 branch mismatch");

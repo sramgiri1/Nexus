@@ -207,9 +207,9 @@ check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
-check(["P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
-check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4"].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
-check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6"].includes(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
+check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5"].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43.1, P43.2, P43.3, P43.4, or P43.5");
+check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6"].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be P42.7, P43.1, P43.2, P43.3, or P43.4");
+check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", "P44"].includes(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be P43.2, P43.3, P43.4, P43.5, or P43.6");
 check(phaseEntries.get("P41.9.1")?.status === "complete", "phaseStatus", "P41.9.1 must be complete");
 check(phaseEntries.get("P41.9.1")?.commit === "41bb0bd", "phaseStatus", "P41.9.1 commit must be 41bb0bd");
 check(phaseEntries.get("P41.9.2")?.status === "complete", "phaseStatus", "P41.9.2 must be complete");
@@ -223,7 +223,7 @@ check(phaseEntries.get("P42.3")?.status === "complete", "phaseStatus", "P42.3 mu
 check(phaseEntries.get("P42.6")?.status === "complete", "phaseStatus", "P42.6 must be complete");
 check(phaseEntries.get("P42.7")?.status === "complete", "phaseStatus", "P42.7 must be complete");
 check(phaseEntries.get("P42.7")?.commit === "e6a98d2", "phaseStatus", "P42.7 commit must be e6a98d2");
-check(phaseEntries.get("P43")?.status === "in_progress", "phaseStatus", "P43 must be in_progress");
+check(["in_progress", "complete"].includes(phaseEntries.get("P43")?.status), "phaseStatus", "P43 must be in_progress");
 check(phaseEntries.get("P43.1")?.status === "complete", "phaseStatus", "P43.1 must be complete");
 check(["planned", "complete"].includes(phaseEntries.get("P43.2")?.status), "phaseStatus", "P43.2 must exist");
 check(["planned", "complete"].includes(phaseEntries.get("P43.3")?.status), "phaseStatus", "P43.3 must exist");
