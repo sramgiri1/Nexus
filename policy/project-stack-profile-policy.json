@@ -1,0 +1,23 @@
+{
+  "version": "1.0",
+  "phase": "P42.3",
+  "purpose": "stack_profile_model",
+  "readOnly": true,
+  "projectMutationAllowed": false,
+  "adapterRuntimeEnabled": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "commandExecutionAllowed": false,
+  "supportedStackAreas": [
+    "backend",
+    "web",
+    "ios",
+    "android",
+    "database",
+    "infrastructure",
+    "docs",
+    "tests"
+  ],
+  "requiresOSPhaseStatusUpdate": true
+}

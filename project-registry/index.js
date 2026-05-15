@@ -26,6 +26,26 @@ export {
   buildProjectProfileSummary,
   buildProjectRegistryReadinessSummary,
 } from "./projectProfileSummary.js";
+export {
+  getStackCapabilities,
+  getStackDbPolicy,
+  getStackTestSuites,
+  listStackProfiles,
+  normalizeStackProfile,
+} from "./stackProfileModel.js";
+export { validateStackProfile } from "./stackProfileValidator.js";
+export { summarizeStackProfile } from "./stackProfileSummary.js";
+export { getStackProfileById, getSupportedStackTypes, STACK_PROFILE_LIBRARY } from "./stackProfiles.js";
+export { generateProjectId, generateProjectProfile } from "./projectProfileGenerator.js";
+export { buildProjectOnboardingPlan, summarizeProjectOnboardingPlan } from "./projectOnboardingPlan.js";
+export { createProjectOnboardingDryRun, validateProjectOnboardingRequest } from "./projectOnboarding.js";
+export {
+  buildProjectCapabilityMatrix,
+  getCapabilityStatusCounts,
+  listProjectCapabilityMatrices,
+  validateProjectCapabilityMatrix,
+} from "./projectCapabilityMatrix.js";
+export { getCapabilityStatusLabel, summarizeProjectCapabilityMatrix } from "./projectCapabilitySummary.js";
 
 const MODULE_DIR = dirname(fileURLToPath(import.meta.url));
 const REGISTRY_PATH = join(MODULE_DIR, "projects.json");

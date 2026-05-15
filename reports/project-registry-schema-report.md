@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T03:21:18.471Z
-- Validation branch: arch/project-profile-loader-validator
-- Validation HEAD: 4c1d11d
+- Generated at: 2026-05-15T03:58:32.304Z
+- Validation branch: arch/project-registry-adapter-overnight
+- Validation HEAD: 276bfb4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

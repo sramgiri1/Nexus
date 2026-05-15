@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "phase": "P42.5",
+  "purpose": "command_center_project_selector",
+  "uiOnly": true,
+  "localStorageKey": "nexus-selected-project",
+  "projectMutationAllowed": false,
+  "projectFileWritesAllowed": false,
+  "adapterRuntimeEnabled": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "demoFallbackAllowed": false,
+  "demoProjectVisibleOnlyInDemoMode": true,
+  "requiresOSPhaseStatusUpdate": true
+}

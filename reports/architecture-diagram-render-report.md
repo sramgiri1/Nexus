@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: arch/project-registry-schema-policy
-- Registry checker HEAD: 8ec2a4c
+- Registry checker branch: arch/project-registry-adapter-overnight
+- Registry checker HEAD: 276bfb4
 - Registry checker result: PASS
 

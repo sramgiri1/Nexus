@@ -2,7 +2,9 @@
 
 P42.1 introduced the schema and policy foundation for the future Project
 Registry + Adapter Framework. P42.2 adds the read-only project profile loader,
-validator, bounded discovery, and safe example profiles.
+validator, bounded discovery, and safe example profiles. P42.3-P42.6 add stack
+profiles, dry-run onboarding, local UI project selection, and the read-only
+project capability matrix.
 
 ## Files
 
@@ -16,15 +18,22 @@ validator, bounded discovery, and safe example profiles.
   validation.
 - `projectProfileDiscovery.js`: bounded discovery for examples and fixtures.
 - `projectProfileSummary.js`: user-facing readiness and profile summaries.
+- `stackProfiles.js`: read-only stack profile library.
+- `stackProfileModel.js`: stack capability, test-suite, and DB posture helpers.
+- `projectOnboarding.js`: dry-run onboarding request validation.
+- `projectOnboardingPlan.js`: dry-run project onboarding plan builder.
+- `projectCapabilityMatrix.js`: selected-project capability matrix builder.
+- `projectCapabilitySummary.js`: user-facing matrix summary helpers.
 - `examples/*.json`: read-only example profiles for NEXUS OS, Private Project,
   and Demo Mode.
 - `index.js`: read-only helpers for safe registry and profile summaries.
 
 ## Scope
 
-P42.2 does not implement project selection, onboarding, adapter runtime,
-project mutation, provider calls, DB writes, or worker execution. Those
-capabilities remain planned follow-up phases.
+P42 implements metadata, dry-run planning, and UI-only selection. It does not
+implement adapter runtime, project mutation, provider calls, DB writes, worker
+execution, or MCP/tool execution. Those capabilities remain planned follow-up
+phases.
 
 ## Boundary Rules
 
@@ -40,5 +49,5 @@ capabilities remain planned follow-up phases.
 
 ## Next Phase
 
-P42.3 adds the Stack Profile Model. Adapter runtime remains disabled until a
-later governed phase.
+P43 adds Scope Boundary + Project Packaging Safety. Adapter runtime remains
+disabled until a later governed phase.

@@ -886,13 +886,15 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Completed").click();
     const completedBody = await page.locator("body").innerText();
-    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.6.5", "P41.6.6", "P41.7.1"]) {
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.7.1", "P42.2", "P42.6", "P42.7-lite"]) {
       expect(completedBody).toContain(phase);
     }
+    expect(completedBody).toContain("nexus.project.json Loader + Validator");
+    expect(completedBody).toContain("Project Capability Matrix");
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("nexus.project.json Loader + Validator");
+    expect(plannedBody).toContain("Scope Boundary + Project Packaging Safety");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -1339,13 +1341,52 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Project Selector");
     await expect(page.locator("body")).toContainText("Adapter Runtime");
     await expect(page.locator("body")).toContainText("Project Mutation");
-    await expect(page.locator("body")).toContainText("Next: Stack Profile Model");
+    await expect(page.locator("body")).toContainText("Next: Scope Boundary + Project Packaging Safety");
     await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText("Project Progress");
     await expect(page.locator("body")).toContainText(/private project|Private Project/);
 
     await page.goto("/command-center/demo");
     expect(await page.locator("body").innerText()).not.toContain(["Care", "Loop"].join(""));
+
+    expect(errors).toEqual([]);
+  });
+
+  test("projects page shows project capability matrix without enabling adapters", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/projects");
+
+    await expect(page.getByText("Project Capability Matrix", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Mission planning");
+    await expect(page.locator("body")).toContainText("Task activation");
+    await expect(page.locator("body")).toContainText("Agent Workbench");
+    await expect(page.locator("body")).toContainText("Controlled implementation");
+    await expect(page.locator("body")).toContainText("Backend validation");
+    await expect(page.locator("body")).toContainText("Requires iOS/Xcode runner");
+    await expect(page.locator("body")).toContainText("Provider dispatch is not enabled");
+    await expect(page.locator("body")).toContainText("Worker runtime is not enabled");
+    await expect(page.locator("body")).toContainText("MCP/tool execution is not enabled");
+    await expect(page.locator("body")).toContainText("Adapter Runtime disabled");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("project selector persists selected project context", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/projects");
+    const selector = page.getByLabel("Project selector");
+    await expect(selector).toBeVisible();
+    await selector.selectOption("nexus-os");
+    await expect(page.locator("body")).toContainText("Project: NEXUS OS");
+
+    await page.reload();
+    await expect(page.getByLabel("Project selector")).toHaveValue("nexus-os");
+    await expect(page.locator("body")).toContainText("Project: NEXUS OS");
+
+    await page.getByLabel("Project selector").selectOption("private-project-01");
+    await expect(page.locator("body")).toContainText("Project: Private Project");
 
     expect(errors).toEqual([]);
   });
@@ -1591,27 +1632,29 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks P42.1 completion and P42.2 current", async ({ page }) => {
+  test("OS Roadmap tracks completed P42 foundation and P43 next", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P42.2");
-    expect(body).toContain("nexus.project.json Loader + Validator");
-    expect(body).toContain("P42.3");
-    expect(body).toContain("Stack Profile Model");
+    expect(body).toContain("P42.7-lite");
+    expect(body).toContain("Project Registry Adapter Overnight Final Validation");
+    expect(body).toContain("P43");
+    expect(body).toContain("Scope Boundary + Project Packaging Safety");
     expect(body).not.toContain("DemoApp");
 
     await commandTab(page, "Completed").click();
     const completedBody = await activeCommandTabPanel(page).innerText();
     expect(completedBody).toContain("P42.1");
     expect(completedBody).toContain("Project Registry Schema + Policy");
+    expect(completedBody).toContain("P42.6");
+    expect(completedBody).toContain("Project Capability Matrix");
 
     expect(errors).toEqual([]);
   });
 
-  test("demo boundary keeps DemoApp on demo route only", async ({ page }) => {
+  test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/demo");

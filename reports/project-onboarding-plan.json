@@ -1,0 +1,146 @@
+{
+  "planVersion": "1.0",
+  "phase": "P42.4",
+  "dryRun": true,
+  "generatedAt": "2026-05-15T03:58:23.508Z",
+  "proposedProjectId": "example-saas",
+  "proposedProjectLabel": "Example SaaS",
+  "proposedProjectRoot": "projects/example-saas",
+  "proposedStackProfile": "node-fastify-prisma-ios",
+  "proposedProfile": {
+    "profileVersion": "1.0",
+    "projectId": "example-saas",
+    "projectLabel": "Example SaaS",
+    "label": "Example SaaS",
+    "visibility": "local-private",
+    "projectType": "saas-mobile",
+    "root": "projects/example-saas",
+    "scope": "project",
+    "stackProfileId": "node-fastify-prisma-ios",
+    "stacks": {},
+    "databases": {},
+    "testSuites": [],
+    "agents": {},
+    "workflows": [
+      {
+        "id": "plan",
+        "label": "Plan Mission"
+      },
+      {
+        "id": "validate",
+        "label": "Run QA Gate"
+      }
+    ],
+    "allowedRoots": [
+      "projects/example-saas"
+    ],
+    "allowedPaths": [
+      "projects/example-saas"
+    ],
+    "forbiddenPatterns": [
+      ".env",
+      "*.pem",
+      "*.key",
+      "*.p12",
+      "secrets/**"
+    ],
+    "forbiddenPaths": [
+      ".env",
+      "*.pem",
+      "*.key",
+      "*.p12",
+      "secrets/**"
+    ],
+    "costPolicy": {
+      "enabled": false
+    },
+    "releaseGates": [],
+    "docs": [],
+    "adapterRuntimeEnabled": false,
+    "projectSelectorEnabled": false,
+    "projectMutationAllowed": false,
+    "providerCallsAllowed": false,
+    "dbAccessAllowed": false,
+    "metadata": {
+      "generatedBy": "nexus:init-project",
+      "dryRunOnly": true
+    }
+  },
+  "stackSummary": {
+    "stackId": "node-fastify-prisma-ios",
+    "label": "Node/Fastify + Prisma + iOS",
+    "projectType": "saas-mobile",
+    "componentAreas": [
+      "backend",
+      "database",
+      "ios"
+    ],
+    "capabilities": [
+      "mission-planning",
+      "task-activation",
+      "agent-workbench",
+      "backend-validation"
+    ],
+    "testSuites": [
+      "backend-validation",
+      "ios-validation-planned"
+    ],
+    "dbPolicy": {
+      "present": true,
+      "type": "postgres-prisma",
+      "schemaPath": "prisma/schema.prisma",
+      "defaultAccess": "disabled",
+      "requiresApproval": [
+        "migrate",
+        "seed",
+        "reset"
+      ],
+      "safeValidationCommands": []
+    },
+    "forbiddenActions": [
+      "db-migrate",
+      "db-seed",
+      "db-reset",
+      "provider-dispatch",
+      "worker-runtime"
+    ],
+    "warnings": [
+      "iOS validation requires an explicit local runner."
+    ],
+    "valid": true,
+    "errors": [],
+    "adapterRuntimeEnabled": false,
+    "commandExecutionAllowed": false,
+    "dbAccessAllowed": false
+  },
+  "allowedRoots": [
+    "projects/example-saas"
+  ],
+  "forbiddenRoots": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "testSuiteSuggestions": [
+    "backend-validation",
+    "ios-validation-planned"
+  ],
+  "missingInfo": [
+    "Repository root confirmation",
+    "Stack-specific test commands",
+    "Release boundary",
+    "Approved project owner"
+  ],
+  "nextSteps": [
+    "Review the dry-run project profile.",
+    "Confirm stack and test commands.",
+    "Run a future governed onboarding phase to write nexus.project.json."
+  ],
+  "writesPlanned": [
+    "reports/project-onboarding-plan.json",
+    "reports/project-onboarding-report.md"
+  ],
+  "projectFileWritesAllowed": false
+}

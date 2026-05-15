@@ -4809,3 +4809,30 @@
   white-space: nowrap;
   letter-spacing: 0.02em;
 }
+
+.ccv2-project-selector {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border: 1px solid var(--v2-border);
+  border-radius: 999px;
+  background: var(--v2-surface-subtle);
+  color: var(--v2-muted);
+  font-size: 11px;
+}
+
+.ccv2-project-selector__label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-weight: 700;
+}
+
+.ccv2-project-selector select {
+  border: 0;
+  background: transparent;
+  color: var(--v2-text);
+  font: inherit;
+  font-weight: 700;
+  outline: none;
+}

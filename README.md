@@ -1125,13 +1125,14 @@ architecture diagram. Mermaid CLI was not available without dependency
 installation in this environment, so deterministic fallback SVGs were generated
 and marked as `fallback-svg`.
 
-P42.2 adds the read-only `nexus.project.json` loader, validator, bounded
-discovery, safe example profiles, project profile readiness summaries, and a
-dedicated checker. Project selector behavior, onboarding, adapter runtime,
+P42 completes the Project Registry + Adapter Framework foundation through
+P42.6. The repo now has read-only project profile loading, stack profiles,
+dry-run onboarding via `nexus:init-project`, a local UI-only Command Center
+project selector, and a selected-project capability matrix. Adapter runtime,
 project mutation, provider calls, DB writes, workers, and tool dispatch remain
 disabled.
 
-Next phase: P42.3 - Stack Profile Model.
+Next phase: P43 - Scope Boundary + Project Packaging Safety.
 
 ---
 

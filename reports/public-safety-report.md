@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-09T02:26:18.417Z
-- Validation branch: arch/first-controlled-implementation-ui
-- Validation HEAD: 5920f20
+- Generated at: 2026-05-15T03:58:38.423Z
+- Validation branch: arch/project-registry-adapter-overnight
+- Validation HEAD: 276bfb4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:
@@ -42,7 +42,8 @@ Scanned files:
 - docs/images/dashboard-screenshot-placeholder.svg
 
 Banned project terms:
-- None
+- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → banned project term (careloop)
+- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → banned project term (projects/careloop)
 
 Secret patterns:
 - docs/architecture/NEXUS_PLATFORM_ROADMAP.md → OpenAI key prefix (sk-activation)

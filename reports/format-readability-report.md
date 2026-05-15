@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-09T10:41:18.887Z
-- Validation branch: fix/command-center-capability-state-ux
-- Validation HEAD: 1827e31
+- Generated at: 2026-05-15T03:58:47.068Z
+- Validation branch: arch/project-registry-adapter-overnight
+- Validation HEAD: 276bfb4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 153
+- Files checked: 182
 
 ## Warnings
 
@@ -50,7 +50,7 @@
 - docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md:241 (299) — `memory/safety-events.json` and `memory/system-usage.json` are written by the safety subsystem and budget guard respectively. No agent, hook, or tool can write
 - docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md:5 (298) — P39 is the first phase where a UI-driven workflow may apply a narrow source change via the action bridge. The target is `projects/careloop/docs/NEXUS_IMPLEMENTA
 - docs/architecture/NEXUS_OS_GLOSSARY.md:308 (297) — A batch task that has been queued to `memory/batch-queue.json` but not yet submitted to the batch API. Deferred batch is the current implementation state — batc
-- docs/architecture/AGENTIC_OS_ARCHITECTURE.md:501 (296) — The state machine is the authoritative record of task, gate, and project state. Agents propose state transitions. The state machine validates and commits them.
+- docs/architecture/AGENTIC_OS_ARCHITECTURE.md:545 (296) — The state machine is the authoritative record of task, gate, and project state. Agents propose state transitions. The state machine validates and commits them.
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:73 (295) — \| `product_definition` \| `atlas` \| `shepherd`, `prism`, `core`, `swift`, `pixel` \| `auditor`, `warden` \| task, handoff \| `orchestration.plan_flow` until a dedic
 - docs/architecture/MISSION_COMPOSER.md:5 (293) — The Mission Composer is the governed entry point for starting a new private-project mission from the Command Center. It transforms a founder-stated goal into a
 

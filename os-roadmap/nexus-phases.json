@@ -710,7 +710,7 @@
       "track": "NEXUS_OS",
       "order": 16.3,
       "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Planned stack profile model for project adapters.",
+      "summary": "Adds read-only stack profile metadata, stack capability extraction, test-suite mapping, and DB access posture without executing adapters.",
       "commandCenterVisible": true
     },
     {
@@ -719,7 +719,7 @@
       "track": "NEXUS_OS",
       "order": 16.4,
       "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Planned project onboarding wizard and local initialization command.",
+      "summary": "Adds dry-run project onboarding, proposed nexus.project.json generation, reports, and a local init command without writing project files.",
       "commandCenterVisible": true
     },
     {
@@ -728,7 +728,25 @@
       "track": "NEXUS_OS",
       "order": 16.5,
       "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Planned Command Center project selector backed by registry metadata.",
+      "summary": "Adds a local UI-only Command Center project selector backed by registry metadata and localStorage without enabling adapters or project mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.6",
+      "title": "Project Capability Matrix",
+      "track": "NEXUS_OS",
+      "order": 16.6,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Adds a read-only selected-project capability matrix based on registry, stack profile, and existing NEXUS capability posture.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.7-lite",
+      "title": "Project Registry Adapter Overnight Final Validation",
+      "track": "NEXUS_OS",
+      "order": 16.7,
+      "group": "P42 Project Registry + Adapter Framework",
+      "summary": "Closes the overnight Project Registry Adapter foundation sequence and sets P43 as the next OS phase.",
       "commandCenterVisible": true
     }
   ]

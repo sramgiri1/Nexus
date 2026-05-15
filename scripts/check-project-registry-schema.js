@@ -144,12 +144,12 @@ for (const expected of [
 }
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
-check(["P41.9.2", "P42.1"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P41.9.2 or P42.1");
-check(["P42.1", "P42.2"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P42.1 or P42.2");
-check(["P42.2", "P42.3"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P42.2 or P42.3");
+check(["P41.9.2", "P42.1", "P42.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P41.9.2, P42.1, or P42.6");
+check(["P42.1", "P42.2", "P42.7-lite"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P42.1, P42.2, or P42.7-lite");
+check(["P42.2", "P42.3", "P43"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P42.2, P42.3, or P43");
 check(statusById.get("P41.9.2")?.status === "complete", "osPhaseStatus", "P41.9.2 must be complete");
 check(statusById.get("P41.9.2")?.commit === "8ec2a4c", "osPhaseStatus", "P41.9.2 commit must be 8ec2a4c");
-check(statusById.get("P42")?.status === "in_progress", "osPhaseStatus", "P42 parent must be in_progress");
+check(["in_progress", "complete"].includes(statusById.get("P42")?.status), "osPhaseStatus", "P42 parent must be in_progress or complete");
 check(statusById.get("P42.1")?.status === "complete", "osPhaseStatus", "P42.1 must be complete");
 check(statusById.get("P42.1")?.commit === "4c1d11d", "osPhaseStatus", "P42.1 commit must be 4c1d11d");
 check(["planned", "complete", "in_progress"].includes(statusById.get("P42.2")?.status), "osPhaseStatus", "P42.2 must exist as planned, current, or complete");

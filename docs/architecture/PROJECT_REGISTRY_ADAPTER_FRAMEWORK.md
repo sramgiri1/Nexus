@@ -70,6 +70,26 @@ P42.2 does not add project selector persistence, project onboarding, adapter
 runtime execution, project mutation, provider calls, DB writes, worker runtime,
 or MCP/tool execution.
 
+## P42.3-P42.6 Overnight Foundation
+
+The overnight Project Registry Adapter foundation completes the read-only
+operator layer for P42:
+
+- P42.3 adds stack profiles, stack capability extraction, test-suite metadata,
+  and disabled-by-default DB/runtime posture.
+- P42.4 adds dry-run project onboarding and `nexus:init-project`; it writes only
+  local reports and does not create or mutate project files.
+- P42.5 adds a Command Center project selector as local UI state only. It uses
+  registry-safe labels and does not enable adapters.
+- P42.6 adds the Project Capability Matrix for the selected project, showing
+  available, gated, and disabled capabilities without executing anything.
+
+The matrix currently marks mission planning, task activation, Agent Workbench,
+controlled implementation, and backend validation as available through existing
+governed surfaces. iOS validation requires an iOS/Xcode runner. Provider
+dispatch, worker runtime, MCP/tools, DB writes, project mutation, and Adapter
+Runtime remain disabled.
+
 ## Public-Safe Labels
 
 Project registry entries must include public-safe labels. Local-private project
@@ -83,8 +103,8 @@ families such as OS modules, SaaS/mobile projects, backend services, web apps,
 iOS apps, Android apps, libraries, automation tools, data pipelines, and
 unknown/unclassified projects.
 
-Project types are metadata only through P42.2. They do not activate adapters.
+Project types are metadata only through P42. They do not activate adapters.
 
 ## Next Phase
 
-P42.3 - Stack Profile Model.
+P43 - Scope Boundary + Project Packaging Safety.

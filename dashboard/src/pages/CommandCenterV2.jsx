@@ -34,6 +34,11 @@ import {
   NEXUS_PREVIOUS_COMPLETED_PHASE,
 } from "../data/nexusRoadmap.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
+import {
+  PROJECT_SELECTION_STORAGE_KEY,
+  getProjectSelectionOptions,
+  resolveSelectedProject,
+} from "../data/projectSelection.js";
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
@@ -451,7 +456,7 @@ function Sidebar({ vm, location }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm, currentPage, themeState, onOpenCommandPalette }) {
+function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, selectedProject, onSelectProject }) {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const route = COMMAND_CENTER_ROUTE_BY_KEY[currentPage] || COMMAND_CENTER_ROUTE_BY_KEY.mission;
   const pageLabel = COMMAND_CENTER_ROUTE_BY_KEY[currentPage]?.expectedHeading || "Mission Control";
@@ -466,9 +471,10 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette }) {
     ? "Scope: NEXUS OS"
     : route.scope === "demo"
       ? "Demo Mode"
-      : vm.shell?.selectedProjectLabel
-        ? `Project: ${vm.shell.selectedProjectLabel}`
+      : selectedProject?.label
+        ? `Project: ${selectedProject.label}`
         : "No project selected";
+  const projectOptions = getProjectSelectionOptions(vm.shell?.mode || "local-private");
 
   return (
     <header className="ccv2-topbar">
@@ -482,6 +488,22 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette }) {
         <span className="ccv2-topbar__scope-label">{scopeLabel}</span>
         <span className="ccv2-topbar__scope-value">{projectLabel}</span>
       </div>
+
+      {route.scope !== "demo" && (
+        <label className="ccv2-project-selector" aria-label="Project selector">
+          <span className="ccv2-project-selector__label">Project</span>
+          <select
+            value={selectedProject?.projectId || "private-project-01"}
+            onChange={(event) => onSelectProject(event.target.value)}
+          >
+            {projectOptions.map((option) => (
+              <option key={option.projectId} value={option.projectId} disabled={option.disabled}>
+                {option.label}{option.disabledReason ? " - Demo Mode only" : ""}
+              </option>
+            ))}
+          </select>
+        </label>
+      )}
 
       <div className="ccv2-topbar__spacer" />
 
@@ -3290,6 +3312,18 @@ function ProjectsPage({ vm, studio }) {
     { label: "Private Project", scope: "project", visibility: "local-private", boundary: "Private placeholder" },
     { label: "Demo project entry", scope: "demo", visibility: "demo", boundary: "Demo Mode only" },
   ];
+  const capabilityRows = [
+    { label: "Mission planning", status: "Available", reason: "Governed mission planning is available." },
+    { label: "Task activation", status: "Available", reason: "Planned tasks can be activated through governed task flows." },
+    { label: "Agent Workbench", status: "Available", reason: "Activated task review is available." },
+    { label: "Controlled implementation", status: "Available with limits", reason: "Scoped and documentation-only implementation paths are available." },
+    { label: "Backend validation", status: "Available", reason: "Approved validation checkers can run from a local terminal." },
+    { label: "iOS validation", status: "Requires runner", reason: "Requires iOS/Xcode runner." },
+    { label: "Provider dispatch", status: "Not enabled", reason: "Provider dispatch is not enabled." },
+    { label: "Worker runtime", status: "Not enabled", reason: "Worker runtime is not enabled." },
+    { label: "MCP/tools", status: "Not enabled", reason: "MCP/tool execution is not enabled." },
+    { label: "Adapter Runtime", status: "Disabled by policy", reason: "Adapter Runtime disabled." },
+  ];
 
   return (
     <div className="ccv2-content">
@@ -3302,18 +3336,18 @@ function ProjectsPage({ vm, studio }) {
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Registry Foundation</div>
           <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P42.2 adds a read-only project profile loader, validator, and bounded discovery for safe example profiles.
-            Project selection, onboarding, adapter execution, and project mutation remain disabled.
+            P42 adds a read-only registry, project profile loader, stack profile model, dry-run onboarding plan,
+            local UI project selector, and project capability matrix. Adapter execution and project mutation remain disabled.
           </p>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry entries</span><span className="ccv2-page-summary-value">3</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Profile Loader</span><span className="ccv2-page-summary-value">ready</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles discovered</span><span className="ccv2-page-summary-value">3 example profiles</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles valid</span><span className="ccv2-page-summary-value">3 valid examples</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Selector</span><span className="ccv2-page-summary-value">not enabled yet</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter Runtime</span><span className="ccv2-page-summary-value">not enabled yet</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Selector</span><span className="ccv2-page-summary-value">UI-only local selection</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter Runtime</span><span className="ccv2-page-summary-value">disabled by policy</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Mutation</span><span className="ccv2-page-summary-value">disabled</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next</span><span className="ccv2-page-summary-value">Next: Stack Profile Model</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next</span><span className="ccv2-page-summary-value">Next: Scope Boundary + Project Packaging Safety</span></div>
           </div>
           <div className="ccv2-list" style={{ marginTop: 12 }}>
             {registryEntries.map((entry) => (
@@ -3327,6 +3361,25 @@ function ProjectsPage({ vm, studio }) {
         </div>
 
         <div className="ccv2-card ccv2-page-summary-card">
+          <div className="ccv2-section-heading">Project Capability Matrix</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            Capability status is derived from registry metadata, stack profile posture, and existing NEXUS surfaces.
+            The matrix is read-only and does not enable adapters, workers, providers, tools, DB writes, or project mutation.
+          </p>
+          <div className="ccv2-list" style={{ marginTop: 12 }}>
+            {capabilityRows.map((row) => (
+              <div key={row.label} className="ccv2-list-row">
+                <span className="ccv2-list-row__title">{row.label}</span>
+                <span className="ccv2-list-row__meta">{row.reason}</span>
+                <span className={`ccv2-pill ${row.status === "Available" ? "ccv2-pill--ready" : "ccv2-pill--pending"}`}>
+                  {row.status}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Summary</div>
           <div className="ccv2-page-summary-grid">
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
@@ -3334,7 +3387,7 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Backend validation</span><span className="ccv2-page-summary-value">{pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">iOS readiness</span><span className="ccv2-page-summary-value">{pvStatus.iosReadiness || "Requires iOS/Xcode runner"}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Release readiness</span><span className="ccv2-page-summary-value">{vm.release.status === "NO-GO" ? "Not ready" : vm.release.status}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">P42.2 adds the nexus.project.json loader and validator.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">P43 hardens scope boundaries and project packaging safety.</span></div>
           </div>
         </div>
 
@@ -6472,6 +6525,10 @@ export default function CommandCenterV2({ studio }) {
     online: false,
     lastCheckedAt: null,
   });
+  const [selectedProjectId, setSelectedProjectId] = useState(() => {
+    if (typeof window === "undefined") return "private-project-01";
+    return window.localStorage.getItem(PROJECT_SELECTION_STORAGE_KEY) || "private-project-01";
+  });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [selectedCommandId, setSelectedCommandId] = useState("plan");
 
@@ -6524,6 +6581,12 @@ export default function CommandCenterV2({ studio }) {
   }, [currentPage, pageLabel]);
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(PROJECT_SELECTION_STORAGE_KEY, selectedProjectId);
+    }
+  }, [selectedProjectId]);
+
+  useEffect(() => {
     function handleKeyDown(event) {
       const target = event.target;
       if (target instanceof HTMLElement) {
@@ -6543,8 +6606,21 @@ export default function CommandCenterV2({ studio }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  const selectedProject = resolveSelectedProject(selectedProjectId, vm.shell.mode);
   const vmWithApi = {
     ...vm,
+    shell: {
+      ...vm.shell,
+      selectedProjectId: selectedProject.projectId,
+      selectedProjectLabel: selectedProject.label,
+      activeProject: selectedProject.label,
+      activeProjectScope: selectedProject.scope,
+    },
+    scopeModel: {
+      ...vm.scopeModel,
+      selectedProjectId: selectedProject.projectId,
+      selectedProjectLabel: selectedProject.label,
+    },
     liveApi: { ...vm.liveApi, ...apiState },
     actionBridgeRuntime: bridgeState,
     liveData,
@@ -6594,6 +6670,8 @@ export default function CommandCenterV2({ studio }) {
           apiState={apiState}
           onRefresh={refreshApiState}
           themeState={themeState}
+          selectedProject={selectedProject}
+          onSelectProject={setSelectedProjectId}
           onOpenCommandPalette={() => openCommandPalette("plan")}
         />
         <div className="ccv2-content-wrapper">

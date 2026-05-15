@@ -108,7 +108,12 @@
     "diagrams:render": "node scripts/render-architecture-diagrams.js",
     "check:project-registry": "node scripts/check-project-registry-schema.js",
     "check:project-registry-schema": "node scripts/check-project-registry-schema.js",
-    "check:project-profile-loader": "node scripts/check-project-profile-loader.js"
+    "check:project-profile-loader": "node scripts/check-project-profile-loader.js",
+    "check:project-stack-profile": "node scripts/check-project-stack-profile.js",
+    "nexus:init-project": "node scripts/nexus-init-project.js",
+    "check:project-onboarding": "node scripts/check-project-onboarding.js",
+    "check:command-center-project-selector": "node scripts/check-command-center-project-selector.js",
+    "check:project-capability-matrix": "node scripts/check-project-capability-matrix.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

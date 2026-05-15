@@ -148,7 +148,10 @@ Risk level:
 - `P42` Project Registry + Adapter Framework
   - `P42.1` Project Registry Schema + Policy — complete
   - `P42.2` nexus.project.json Loader + Validator — complete
-  - `P42.3` Stack Profile Model — next
+  - `P42.3` Stack Profile Model — complete
+  - `P42.4` Project Onboarding Wizard / nexus:init-project — complete
+  - `P42.5` Project Selector in Command Center — complete
+  - `P42.6` Project Capability Matrix — complete
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
@@ -609,6 +612,7 @@ Subphases:
 - `P42.3` — Stack Profile Model
 - `P42.4` — Project Onboarding Wizard / nexus:init-project
 - `P42.5` — Project Selector in Command Center
+- `P42.6` — Project Capability Matrix
 
 #### P42.1 — Project Registry Schema + Policy
 
@@ -633,8 +637,27 @@ runtime, or MCP/tool execution.
 
 #### P42.3 — Stack Profile Model
 
-P42.3 is next. It defines the stack profile model that later adapters will use
-without enabling adapter runtime execution in this phase.
+P42.3 defines the stack profile model that later adapters will use without
+enabling adapter runtime execution in this phase.
+
+#### P42.4 — Project Onboarding Wizard / nexus:init-project
+
+P42.4 adds dry-run project onboarding and `nexus:init-project`. The command
+writes only local reports and never creates project folders or mutates project
+source files.
+
+#### P42.5 — Project Selector in Command Center
+
+P42.5 adds a Command Center project selector backed by safe registry metadata.
+Selection is local UI state only and does not enable adapters, project writes,
+provider calls, workers, or DB writes.
+
+#### P42.6 — Project Capability Matrix
+
+P42.6 adds a read-only selected-project capability matrix. It shows which
+capabilities are available through existing governed NEXUS surfaces and which
+remain gated or disabled by policy. Provider dispatch, worker runtime,
+MCP/tools, Adapter Runtime, project mutation, and DB writes remain disabled.
 
 ### Phase 15 — Containerization and Worker Scaling
 

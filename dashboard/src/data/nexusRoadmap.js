@@ -94,15 +94,15 @@ export const NEXUS_BLOCKED_OS_PHASES = NEXUS_ROADMAP_PHASES.filter(
 export const NEXUS_OS_OPEN_GAPS = [
   {
     priority: "Now",
-    title: "Start P41.7 documentation-system reuse and registry hardening",
+    title: "Prepare P43 scope-boundary and project packaging safety",
     detail:
-      "Build on the stabilized usage docs, codebase docs, boot guidance, and roadmap registry to remove duplicated documentation patterns and keep Command Center help surfaces synchronized.",
+      "Use the completed P42 registry foundation to define safe package boundaries before adapters or project mutation expand.",
   },
   {
     priority: "Next",
-    title: "Ship P41.7 documentation-system reuse audit",
+    title: "Keep project adapters disabled until boundary policy is explicit",
     detail:
-      "Formalize documentation standards, module registry reuse guidance, and refactor-ready boundaries without expanding runtime scope.",
+      "Project profiles, stack profiles, onboarding plans, selector state, and capability matrix remain metadata-only until P43/P44 safety gates are complete.",
   },
   {
     priority: "Later",

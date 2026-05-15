@@ -1,0 +1,21 @@
+{
+  "version": "1.0",
+  "phase": "P42.4",
+  "purpose": "project_onboarding_dry_run",
+  "dryRunDefault": true,
+  "projectFileWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "adapterRuntimeEnabled": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "commandExecutionAllowed": false,
+  "allowedOutputs": [
+    "reports/project-onboarding-plan.json",
+    "reports/project-onboarding-report.md"
+  ],
+  "forbiddenOutputs": [
+    "projects/*/nexus.project.json"
+  ],
+  "requiresOSPhaseStatusUpdate": true
+}

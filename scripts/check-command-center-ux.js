@@ -529,7 +529,8 @@ for (const expected of [
   "DB writes disabled by policy",
   "Evidence proves what governed actions produced.",
   "Project Profile Loader",
-  "Next: Stack Profile Model",
+  "Project Capability Matrix",
+  "Next: Scope Boundary + Project Packaging Safety",
 ]) {
   check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);
 }
@@ -800,7 +801,12 @@ for (const expectedTest of [
 check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "boundaryPolish", "Local-private Mission Control should use a safe project display name");
 check(commandCenterSource.includes("Local Preview"), "boundaryPolish", "Sidebar should use a safe preview label instead of an arbitrary version");
 check(!commandCenterNonRoadmapSource.includes("DEMOAPP ACTIVE"), "boundaryPolish", "Primary Command Center UX should not show DEMOAPP ACTIVE");
-check(routeTestSource.includes("demo boundary keeps DemoApp on demo route only"), "boundaryPolish", "Route tests missing DemoApp boundary coverage");
+check(
+  routeTestSource.includes("demo boundary keeps DemoApp on demo route only") ||
+    routeTestSource.includes("DemoApp appears on demo route only"),
+  "boundaryPolish",
+  "Route tests missing DemoApp boundary coverage",
+);
 check(uxDocSource.includes("Sidebar Badge Semantics"), "boundaryPolish", "UX stabilization doc must record sidebar badge semantics");
 check(phaseStatusSource.includes('"phaseId": "P41.6.6"'), "boundaryPolish", "OS phase status registry must include P41.6.6");
 

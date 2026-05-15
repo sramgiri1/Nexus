@@ -857,16 +857,23 @@
       "phaseId": "P42",
       "title": "Project Registry + Adapter Framework",
       "track": "NEXUS_OS",
-      "status": "in_progress",
-      "branch": "arch/project-profile-loader-validator",
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Builds the project registry and adapter framework foundation after diagram and documentation governance stabilized. Current subphase: P42.2 - Project Profile Loader + Validator.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Project selector, onboarding wizard, adapter runtime, and project mutation remain disabled."
+      "completedAt": "2026-05-15T04:45:00.000Z",
+      "summary": "Builds the project registry and adapter framework foundation after diagram and documentation governance stabilized, including stack profiles, dry-run onboarding, UI-only project selection, and the project capability matrix.",
+      "checksRun": [
+        "npm run check:project-registry-schema",
+        "npm run check:project-profile-loader",
+        "npm run check:project-stack-profile",
+        "npm run check:project-onboarding",
+        "npm run check:command-center-project-selector",
+        "npm run check:project-capability-matrix"
       ],
-      "nextPhase": "P42.2",
+      "knownLimitations": [
+        "Adapter runtime, project mutation, provider calls, DB writes, worker runtime, and MCP/tool execution remain disabled."
+      ],
+      "nextPhase": "P43",
       "commandCenterVisible": true
     },
     {
@@ -904,7 +911,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/project-profile-loader-validator",
-      "commit": "pending-final-commit",
+      "commit": "276bfb4",
       "completedAt": "2026-05-15T03:05:00.000Z",
       "summary": "Adds a read-only project profile loader, validator, bounded discovery, safe example profiles, policy, checker, report, and minimal Projects page readiness visibility.",
       "checksRun": [
@@ -928,13 +935,17 @@
       "phaseId": "P42.3",
       "title": "Stack Profile Model",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned stack profile model for project adapters.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T04:00:00.000Z",
+      "summary": "Adds the read-only stack profile model, supported stack areas, stack capability extraction, DB policy posture, checker, policy, and report.",
+      "checksRun": [
+        "npm run check:project-stack-profile"
+      ],
+      "knownLimitations": [
+        "Stack profiles are metadata only and do not execute commands, connect DBs, or run adapters."
+      ],
       "nextPhase": "P42.4",
       "commandCenterVisible": true
     },
@@ -942,13 +953,17 @@
       "phaseId": "P42.4",
       "title": "Project Onboarding Wizard / nexus:init-project",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned guided project onboarding and initialization flow.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T04:10:00.000Z",
+      "summary": "Adds a dry-run-only project onboarding plan and nexus:init-project command that writes only local reports and never mutates project folders.",
+      "checksRun": [
+        "npm run check:project-onboarding"
+      ],
+      "knownLimitations": [
+        "Actual project file creation remains disabled and is deferred to a future governed onboarding phase."
+      ],
       "nextPhase": "P42.5",
       "commandCenterVisible": true
     },
@@ -956,13 +971,59 @@
       "phaseId": "P42.5",
       "title": "Project Selector in Command Center",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned Command Center project selector backed by the Project Registry.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T04:20:00.000Z",
+      "summary": "Adds a Command Center project selector backed by registry metadata with localStorage persistence and local UI-only behavior.",
+      "checksRun": [
+        "npm run check:command-center-project-selector",
+        "cd dashboard && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Selection is local UI state only. It does not mutate project files, enable adapters, or create project profiles."
+      ],
+      "nextPhase": "P42.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.6",
+      "title": "Project Capability Matrix",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T04:40:00.000Z",
+      "summary": "Adds a read-only selected-project capability matrix based on registry, stack profile, and existing NEXUS capability posture.",
+      "checksRun": [
+        "npm run check:project-capability-matrix"
+      ],
+      "knownLimitations": [
+        "The matrix is informational only and does not enable adapter runtime, project mutation, providers, workers, tools, or DB writes."
+      ],
+      "nextPhase": "P42.7-lite",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P42.7-lite",
+      "title": "Project Registry Adapter Overnight Final Validation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/project-registry-adapter-overnight",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T04:45:00.000Z",
+      "summary": "Closes the overnight Project Registry Adapter foundation sequence and sets P43 as the next OS phase.",
+      "checksRun": [
+        "npm run check:project-stack-profile",
+        "npm run check:project-onboarding",
+        "npm run check:command-center-project-selector",
+        "npm run check:project-capability-matrix",
+        "npm run check:os-phase-status"
+      ],
+      "knownLimitations": [
+        "Final status uses pending-final-commit until the branch commit is created.",
+        "Runtime project adapters remain disabled."
+      ],
       "nextPhase": "P43",
       "commandCenterVisible": true
     },
@@ -1486,8 +1547,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T03:05:00.000Z",
-  "currentPhase": "P42.2",
-  "previousPhase": "P42.1",
-  "nextPhase": "P42.3"
+  "updatedAt": "2026-05-15T04:20:00.000Z",
+  "currentPhase": "P42.7-lite",
+  "previousPhase": "P42.6",
+  "nextPhase": "P43"
 }

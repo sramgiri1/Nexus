@@ -1,0 +1,32 @@
+{
+  "version": "1.0",
+  "phase": "P42.6",
+  "purpose": "project_capability_matrix",
+  "readOnly": true,
+  "uiOnly": true,
+  "projectMutationAllowed": false,
+  "adapterRuntimeEnabled": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "mcpToolRuntimeAllowed": false,
+  "privateProjectFileWritesAllowed": false,
+  "demoFallbackAllowed": false,
+  "allowedOutputs": [
+    "reports/project-capability-matrix-report.md",
+    "Command Center Projects capability matrix"
+  ],
+  "requiredCapabilities": [
+    "mission-planning",
+    "task-activation",
+    "agent-workbench",
+    "controlled-implementation",
+    "backend-validation",
+    "ios-validation",
+    "provider-dispatch",
+    "worker-runtime",
+    "mcp-tools",
+    "adapter-runtime"
+  ]
+}
