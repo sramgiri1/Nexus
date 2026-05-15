@@ -163,7 +163,8 @@
     "check:skill-registry": "node scripts/check-skill-registry.js",
     "check:hook-registry": "node scripts/check-hook-registry.js",
     "check:tool-registry": "node scripts/check-tool-registry.js",
-    "check:mcp-registry": "node scripts/check-mcp-registry.js"
+    "check:mcp-registry": "node scripts/check-mcp-registry.js",
+    "check:tool-gateway": "node scripts/check-tool-gateway.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

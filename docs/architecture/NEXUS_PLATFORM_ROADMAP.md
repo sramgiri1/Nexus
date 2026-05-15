@@ -221,7 +221,8 @@ Risk level:
 - `P52` Tool / MCP Registry + Tool Governance — in progress
   - `P52.1` Tool Registry Schema — complete
   - `P52.2` MCP Registry Schema — complete
-  - `P52.3` Governed Tool Gateway — next
+  - `P52.3` Governed Tool Gateway — complete
+  - `P52.4` Tool Search + Contract Preview — next
 - `P53` Trigger + Integration Gateway
 - `P54` API + Batch Execution Adapter
 - `P55` Test Suite Manager: Project + OS

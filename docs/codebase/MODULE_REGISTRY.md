@@ -483,18 +483,23 @@ updated as new module families or entry points are added.
   `tool-governance/toolRegistry.js`,
   `tool-governance/mcpRegistrySchema.js`,
   `tool-governance/mcpRegistry.js`,
+  `tool-governance/toolDecision.js`,
+  `tool-governance/toolGatewayPolicy.js`,
+  `tool-governance/toolGateway.js`,
   `tool-governance/toolTypes.js`,
   `tool-governance/seeds/tool-registry.seed.json`,
   `tool-governance/seeds/mcp-registry.seed.json`,
   `policy/tool-registry-policy.json`,
-  `policy/mcp-registry-policy.json`
+  `policy/mcp-registry-policy.json`,
+  `policy/tool-gateway-policy.json`
 - Public entry points:
   `tool-governance/index.js`,
   `scripts/check-tool-registry.js`,
-  `scripts/check-mcp-registry.js`
+  `scripts/check-mcp-registry.js`,
+  `scripts/check-tool-gateway.js`
 - Inputs/outputs:
   Consumes static registry metadata; outputs read-only tool and MCP placeholder
-  summaries and validation reports.
+  summaries, gateway decisions, and validation reports.
 - Side effects:
   Checker/report generation only.
 - Safety boundary:
@@ -506,11 +511,12 @@ updated as new module families or entry points are added.
   before adding adapter or permission-specific models.
 - Tests/checkers:
   `scripts/check-tool-registry.js`,
-  `scripts/check-mcp-registry.js`
+  `scripts/check-mcp-registry.js`,
+  `scripts/check-tool-gateway.js`
 - Known limitations:
-  P52.1 and P52.2 are metadata-only and do not implement contracts,
-  permissions, adapters, MCP server runtime, or Command Center Tool Gateway UX
-  yet.
+  P52.1 through P52.3 are metadata-only and do not implement selected contract
+  loading, permissions, adapters, MCP server runtime, or Command Center Tool
+  Gateway UX yet.
 - Status:
   foundation
 

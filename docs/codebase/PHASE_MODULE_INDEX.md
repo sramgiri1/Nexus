@@ -1222,3 +1222,27 @@ state and should be verified again during future docs audits.
 - Known limitations:
   The registry is metadata-only. The governed gateway decision layer starts in
   P52.3.
+
+## P52.3 — Governed Tool Gateway
+
+- Primary capability:
+  Decision-only governed tool gateway for metadata lookup, selected contract
+  requests, and execution previews.
+- Main files/folders touched:
+  `tool-governance/toolDecision.js`,
+  `tool-governance/toolGatewayPolicy.js`,
+  `tool-governance/toolGateway.js`,
+  `policy/tool-gateway-policy.json`
+- Main checker(s):
+  `scripts/check-tool-gateway.js`
+- Main report(s):
+  `reports/tool-gateway-report.md`
+- Command Center impact:
+  Prepares gateway posture and decisions for a future Tool Gateway route.
+- Safety impact:
+  Execution previews are blocked with `BLOCKED_RUNTIME_DISABLED`. Tool
+  execution, MCP execution, shell execution, provider calls, external network,
+  DB writes, workers, and project mutation remain disabled.
+- Known limitations:
+  Search wrappers, contract loading, permissions, adapters, and Tool Gateway UX
+  arrive in later P52 subphases.

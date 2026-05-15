@@ -1457,13 +1457,17 @@
       "phaseId": "P52.3",
       "title": "Governed Tool Gateway",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned gateway decision layer for metadata-only tool lookup and preview decisions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T22:50:00.000Z",
+      "summary": "Adds the decision-only governed tool gateway for metadata lookup, contract requests, and execution previews while runtime execution remains disabled.",
+      "checksRun": [
+        "npm run check:tool-gateway"
+      ],
+      "knownLimitations": [
+        "The gateway returns decisions and safe summaries only. It does not execute tools, start MCP servers, call providers, access external networks, write DB state, or mutate projects."
+      ],
       "nextPhase": "P52.4",
       "commandCenterVisible": true
     },
@@ -1475,7 +1479,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tool search + contract preview subphase.",
+      "summary": "Planned tool search, selected contract loading, and execution preview wrappers.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P52.5",
@@ -2980,7 +2984,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "cc98b04",
       "completedAt": "2026-05-15T22:40:00.000Z",
       "summary": "Adds disabled MCP placeholder schema, seed metadata, policy, checker, and architecture docs without starting MCP servers.",
       "checksRun": [
@@ -2994,8 +2998,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T22:40:00.000Z",
-  "currentPhase": "P52.2",
-  "previousPhase": "P52.1",
-  "nextPhase": "P52.3"
+  "updatedAt": "2026-05-15T22:50:00.000Z",
+  "currentPhase": "P52.3",
+  "previousPhase": "P52.2",
+  "nextPhase": "P52.4"
 }

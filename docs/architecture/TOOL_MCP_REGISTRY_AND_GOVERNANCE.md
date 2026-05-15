@@ -68,7 +68,42 @@ Every MCP placeholder has:
 These records exist so future phases can evaluate tools and MCP servers through
 one governed gateway. They do not create or start MCP server runtimes.
 
+## P52.3 - Governed Tool Gateway
+
+P52.3 adds the decision-only governed tool gateway. It evaluates whether a
+metadata lookup, selected contract request, or execution preview is allowed,
+blocked, or requires a later approval path.
+
+The gateway supports request types:
+
+- `tool.lookup`
+- `tool.contract`
+- `tool.execute.preview`
+
+Execution preview does not execute anything. It returns a
+`BLOCKED_RUNTIME_DISABLED` decision because P52 keeps all runtime execution
+disabled.
+
+Gateway decisions include:
+
+- `ALLOW_METADATA_ONLY`
+- `DENY`
+- `REQUIRE_APPROVAL`
+- `BLOCKED_NOT_ENABLED`
+- `BLOCKED_SCOPE`
+- `BLOCKED_AGENT`
+- `BLOCKED_PROJECT`
+- `BLOCKED_DATA_CLASSIFICATION`
+- `BLOCKED_COST`
+- `BLOCKED_METHOD`
+- `BLOCKED_RUNTIME_DISABLED`
+
+The gateway returns safe summaries only. It does not return raw tool payloads,
+raw MCP schemas, shell commands, provider credentials, or project-private source
+content.
+
 ## Next Subphase
 
-P52.3 adds the governed tool gateway decision layer. It remains metadata-only
-and does not execute tools.
+P52.4 adds tool search, selected contract loading, and execution preview
+wrappers on top of the gateway. It remains metadata-only and does not execute
+tools.

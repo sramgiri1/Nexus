@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "phase": "P52.3",
+  "purpose": "governed_tool_gateway_decision_layer",
+  "metadataOnly": true,
+  "toolExecutionAllowed": false,
+  "mcpExecutionAllowed": false,
+  "shellExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkAllowed": false,
+  "projectMutationAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "arbitraryCommandAllowed": false,
+  "allowedRequestTypes": ["tool.lookup", "tool.contract", "tool.execute.preview"],
+  "allowedDecisions": [
+    "ALLOW_METADATA_ONLY",
+    "DENY",
+    "REQUIRE_APPROVAL",
+    "BLOCKED_NOT_ENABLED",
+    "BLOCKED_SCOPE",
+    "BLOCKED_AGENT",
+    "BLOCKED_PROJECT",
+    "BLOCKED_DATA_CLASSIFICATION",
+    "BLOCKED_COST",
+    "BLOCKED_METHOD",
+    "BLOCKED_RUNTIME_DISABLED"
+  ],
+  "maxCostEstimateUsd": 0,
+  "requiresEvidence": true,
+  "requiresAudit": true,
+  "rawPayloadsAllowed": false
+}
