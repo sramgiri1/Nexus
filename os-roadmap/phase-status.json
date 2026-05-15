@@ -2622,7 +2622,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/skill-registry-authoring-workflow",
-      "commit": "pending-final-commit",
+      "commit": "7f41092",
       "completedAt": "2026-05-15T19:30:00.000Z",
       "summary": "Map governed skills to stack-specific compatibility profiles without executing adapters.",
       "checksRun": [
@@ -2640,20 +2640,40 @@
       "phaseId": "P50.5",
       "title": "Skill Test Requirements",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T19:40:00.000Z",
+      "summary": "Define static, contract, UI, evidence, and future runtime test requirements for governed skills.",
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Runtime skill tests are documented as future-only and are not executable."
+      ],
+      "nextPhase": "P50.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.6",
+      "title": "Command Center Skill Registry View",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/skill-registry-authoring-workflow",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Define static, contract, UI, evidence, and future runtime test requirements for governed skills.",
+      "summary": "Expose skill registry, templates, profiles, and test requirements in Command Center without execution controls.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P50.6",
+      "nextPhase": "P50.7",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T19:30:00.000Z",
-  "currentPhase": "P50.4",
-  "previousPhase": "P50.3",
-  "nextPhase": "P50.5"
+  "updatedAt": "2026-05-15T19:40:00.000Z",
+  "currentPhase": "P50.5",
+  "previousPhase": "P50.4",
+  "nextPhase": "P50.6"
 }

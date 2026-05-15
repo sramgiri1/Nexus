@@ -3,3 +3,4 @@ export * from "./skillRegistry.js";
 export * from "./skillContract.js";
 export * from "./skillTemplates.js";
 export * from "./skillProfiles.js";
+export * from "./skillTestRequirements.js";

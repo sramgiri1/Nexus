@@ -135,3 +135,23 @@ mutate project files.
 
 P50.5 adds explicit skill test requirements for every governed template and
 profile relationship.
+
+## P50.5 - Skill Test Requirements
+
+P50.5 defines test requirement metadata for every governed skill template.
+Each requirement set includes:
+
+- required static checks
+- required contract checks
+- required Command Center UI checks
+- required evidence checks
+- future runtime checks marked disabled
+
+These requirements make future skill authoring safer by defining validation
+expectations before any skill execution path exists. Runtime checks remain
+future-only and disabled.
+
+## Next Subphase
+
+P50.6 exposes the Skill Registry in Command Center as a read-only operating
+surface.

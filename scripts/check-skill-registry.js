@@ -5,14 +5,17 @@ import {
   buildSkillContracts,
   getSkillRegistry,
   getSkillProfiles,
+  getSkillTestRequirements,
   getSkillTemplates,
   summarizeRegisteredSkills,
   summarizeSkillContracts,
   summarizeSkillProfiles,
+  summarizeSkillTestRequirements,
   summarizeSkillTemplates,
   validateSkillContract,
   validateSkillProfiles,
   validateRegisteredSkills,
+  validateSkillTestRequirements,
   validateSkillTemplates,
 } from "../skills-registry/index.js";
 
@@ -25,6 +28,7 @@ const sections = {
   contracts: true,
   templates: true,
   profiles: true,
+  testRequirements: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -80,13 +84,16 @@ const skills = getSkillRegistry();
 const contracts = buildSkillContracts(skills);
 const templates = getSkillTemplates();
 const profiles = getSkillProfiles();
+const testRequirements = getSkillTestRequirements();
 const registryValidation = validateRegisteredSkills(skills);
 const templateValidation = validateSkillTemplates(templates);
 const profileValidation = validateSkillProfiles(profiles);
+const testRequirementsValidation = validateSkillTestRequirements(testRequirements, templates);
 const summary = summarizeRegisteredSkills(skills);
 const contractSummary = summarizeSkillContracts(contracts);
 const templateSummary = summarizeSkillTemplates(templates);
 const profileSummary = summarizeSkillProfiles(profiles);
+const testRequirementsSummary = summarizeSkillTestRequirements(testRequirements);
 
 for (const file of [
   "skills-registry/skillSchema.js",
@@ -94,6 +101,7 @@ for (const file of [
   "skills-registry/skillContract.js",
   "skills-registry/skillTemplates.js",
   "skills-registry/skillProfiles.js",
+  "skills-registry/skillTestRequirements.js",
   "skills-registry/registry.json",
   "skills-registry/index.js",
 ]) {
@@ -164,6 +172,21 @@ for (const profileId of [
 check(profileSummary.executionEnabledCount === 0, "profiles", "No profiles may enable execution in P50.4");
 check(profileSummary.profileCount >= 6, "profiles", "Expected at least six stack-specific profiles");
 
+check(
+  testRequirementsValidation.valid,
+  "testRequirements",
+  `Test requirements validation failed: ${testRequirementsValidation.errors.join("; ")}`,
+);
+check(testRequirements.length === templates.length, "testRequirements", "Every governed skill template must have test requirements");
+for (const requirement of testRequirements) {
+  check(requirement.executionEnabled === false, "testRequirements", `${requirement.skillId} must keep execution disabled`);
+  check(requirement.futureRuntimeEnabled === false, "testRequirements", `${requirement.skillId} must keep future runtime checks disabled`);
+  check(requirement.requiredEvidenceChecks.length > 0, "testRequirements", `${requirement.skillId} must validate evidence`);
+  check(requirement.requiredUiChecks.length > 0, "testRequirements", `${requirement.skillId} must have UI checks`);
+}
+check(testRequirementsSummary.executionEnabledCount === 0, "testRequirements", "No test requirements may enable execution");
+check(testRequirementsSummary.futureRuntimeEnabledCount === 0, "testRequirements", "Runtime checks must remain future-only");
+
 for (const category of ["planning", "review", "qa", "release"]) {
   check(Boolean(summary.categoryCounts[category]), "registry", `Missing category: ${category}`);
 }
@@ -182,6 +205,7 @@ check(docs.includes("P50.1 - Skill Registry Schema"), "docs", "Architecture doc 
 check(docs.includes("P50.2 - Skill Contract Model"), "docs", "Architecture doc missing P50.2 section");
 check(docs.includes("P50.3 - Governed Skill Templates"), "docs", "Architecture doc missing P50.3 section");
 check(docs.includes("P50.4 - Stack-Specific Skill Profiles"), "docs", "Architecture doc missing P50.4 section");
+check(docs.includes("P50.5 - Skill Test Requirements"), "docs", "Architecture doc missing P50.5 section");
 check(docs.includes("skill execution is disabled"), "docs", "Architecture doc must state skill execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -197,9 +221,12 @@ check(statusById.get("P50.3")?.nextPhase === "P50.4", "osPhaseStatus", "P50.3 ne
 check(statusById.get("P50.4")?.status === "complete", "osPhaseStatus", "P50.4 must be complete");
 check(statusById.get("P50.4")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.4 branch mismatch");
 check(statusById.get("P50.4")?.nextPhase === "P50.5", "osPhaseStatus", "P50.4 next phase must be P50.5");
-check(statusById.get("P50.5")?.status === "planned", "osPhaseStatus", "P50.5 must be planned");
-check(phaseStatus.currentPhase === "P50.4", "osPhaseStatus", "Current phase must be P50.4");
-check(phaseStatus.nextPhase === "P50.5", "osPhaseStatus", "Next phase must be P50.5");
+check(statusById.get("P50.5")?.status === "complete", "osPhaseStatus", "P50.5 must be complete");
+check(statusById.get("P50.5")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.5 branch mismatch");
+check(statusById.get("P50.5")?.nextPhase === "P50.6", "osPhaseStatus", "P50.5 next phase must be P50.6");
+check(statusById.get("P50.6")?.status === "planned", "osPhaseStatus", "P50.6 must be planned");
+check(phaseStatus.currentPhase === "P50.5", "osPhaseStatus", "Current phase must be P50.5");
+check(phaseStatus.nextPhase === "P50.6", "osPhaseStatus", "Next phase must be P50.6");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -216,6 +243,7 @@ for (const file of [
   "skills-registry/skillContract.js",
   "skills-registry/skillTemplates.js",
   "skills-registry/skillProfiles.js",
+  "skills-registry/skillTestRequirements.js",
   "skills-registry/index.js",
   "scripts/check-skill-registry.js",
   "policy/skill-registry-policy.json",
@@ -236,7 +264,7 @@ const report = `# NEXUS Skill Registry Report
 
 ## Scope
 
-P50.4 - Stack-Specific Skill Profiles
+P50.5 - Skill Test Requirements
 
 ## Summary
 
@@ -244,14 +272,19 @@ P50.4 - Stack-Specific Skill Profiles
 - Contracts: ${contractSummary.contractCount}
 - Templates: ${templateSummary.templateCount}
 - Profiles: ${profileSummary.profileCount}
+- Test requirement sets: ${testRequirementsSummary.requirementCount}
 - Rollback-required contracts: ${contractSummary.rollbackRequiredCount}
 - Template owner agents: ${templateSummary.ownerAgents.join(", ")}
 - Profile skill links: ${profileSummary.compatibleSkillLinks}
 - Unavailable profile skill links: ${profileSummary.unavailableSkillLinks}
+- Static checks listed: ${testRequirementsSummary.staticCheckCount}
+- Evidence checks listed: ${testRequirementsSummary.evidenceCheckCount}
 - Categories: ${Object.keys(summary.categoryCounts).join(", ")}
 - Execution-enabled skills: ${summary.executionEnabledCount}
 - Execution-enabled templates: ${templateSummary.executionEnabledCount}
 - Execution-enabled profiles: ${profileSummary.executionEnabledCount}
+- Execution-enabled test requirements: ${testRequirementsSummary.executionEnabledCount}
+- Future-runtime enabled test requirements: ${testRequirementsSummary.futureRuntimeEnabledCount}
 - Provider-enabled skills: ${summary.providerCallsAllowedCount}
 - Tool-enabled skills: ${summary.toolCallsAllowedCount}
 - Project-mutation skills: ${summary.projectMutationAllowedCount}
@@ -264,6 +297,7 @@ P50.4 - Stack-Specific Skill Profiles
 - Contracts: ${sections.contracts ? "PASS" : "FAIL"}
 - Templates: ${sections.templates ? "PASS" : "FAIL"}
 - Profiles: ${sections.profiles ? "PASS" : "FAIL"}
+- Test requirements: ${sections.testRequirements ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -293,6 +327,7 @@ console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
 console.log(`Contracts: ${sections.contracts ? "PASS" : "FAIL"}`);
 console.log(`Templates: ${sections.templates ? "PASS" : "FAIL"}`);
 console.log(`Profiles: ${sections.profiles ? "PASS" : "FAIL"}`);
+console.log(`Test requirements: ${sections.testRequirements ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);
