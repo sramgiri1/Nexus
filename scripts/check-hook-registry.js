@@ -207,7 +207,8 @@ check(docs.includes("Hook execution is not enabled"), "docs", "Architecture doc 
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P50")?.status === "complete", "osPhaseStatus", "P50 parent must remain complete");
-check(statusById.get("P51")?.status === "in_progress", "osPhaseStatus", "P51 parent must be in progress");
+check(statusById.get("P51")?.status === "complete", "osPhaseStatus", "P51 parent must be complete");
+check(statusById.get("P51")?.nextPhase === "P52", "osPhaseStatus", "P51 parent next phase must be P52");
 check(statusById.get("P51.1")?.status === "complete", "osPhaseStatus", "P51.1 must be complete");
 check(statusById.get("P51.1")?.commit === "081e733", "osPhaseStatus", "P51.1 commit mismatch");
 check(statusById.get("P51.1")?.branch === "arch/hook-registry-safe-automation-lifecycle", "osPhaseStatus", "P51.1 branch mismatch");
@@ -225,10 +226,13 @@ check(statusById.get("P51.5")?.status === "complete", "osPhaseStatus", "P51.5 mu
 check(statusById.get("P51.5")?.commit === "aae9171", "osPhaseStatus", "P51.5 commit mismatch");
 check(statusById.get("P51.5")?.nextPhase === "P51.6", "osPhaseStatus", "P51.5 next phase must be P51.6");
 check(statusById.get("P51.6")?.status === "complete", "osPhaseStatus", "P51.6 must be complete");
+check(statusById.get("P51.6")?.commit === "3706de7", "osPhaseStatus", "P51.6 commit mismatch");
 check(statusById.get("P51.6")?.nextPhase === "P51.7", "osPhaseStatus", "P51.6 next phase must be P51.7");
-check(statusById.get("P51.7")?.status === "planned", "osPhaseStatus", "P51.7 must be planned");
-check(phaseStatus.currentPhase === "P51.6", "osPhaseStatus", "Current phase must be P51.6");
-check(phaseStatus.nextPhase === "P51.7", "osPhaseStatus", "Next phase must be P51.7");
+check(statusById.get("P51.7")?.status === "complete", "osPhaseStatus", "P51.7 must be complete");
+check(statusById.get("P51.7")?.nextPhase === "P52", "osPhaseStatus", "P51.7 next phase must be P52");
+check(statusById.get("P52")?.status === "planned", "osPhaseStatus", "P52 must be planned");
+check(phaseStatus.currentPhase === "P51.7", "osPhaseStatus", "Current phase must be P51.7");
+check(phaseStatus.nextPhase === "P52", "osPhaseStatus", "Next phase must be P52");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -269,7 +273,7 @@ const report = `# NEXUS Hook Registry Report
 
 ## Scope
 
-P51.6 - Command Center Hooks UX
+P51.7 - Hook Registry Final Validation
 
 ## Summary
 

@@ -131,7 +131,24 @@ The page does not expose execution controls. Any button or action copy must
 state that hook execution is not enabled yet and that runtime integration comes
 later.
 
+## P51.7 - Hook Registry Final Validation
+
+P51.7 validates the full safe automation lifecycle foundation and closes P51.
+The final state includes:
+
+- disabled seed hooks
+- dry-run trigger definitions
+- guard decisions for limits and retries
+- loop-risk detection
+- preview-only kill switches
+- read-only Command Center Hooks UX
+- OS roadmap/status updates
+- docs, reports, and check coverage
+
+P51 completes without enabling hook execution, schedulers, cron, webhooks,
+workers, provider/tool/MCP dispatch, DB writes, release execution, project
+mutation, or external network calls.
+
 ## Next Subphase
 
-P51.7 performs final validation and closes P51 while hook execution remains
-disabled.
+P52 starts Tool / MCP Registry + Tool Governance.

@@ -429,6 +429,49 @@ updated as new module families or entry points are added.
 - Status:
   active
 
+## Hook Registry + Safe Automation Lifecycle
+
+- Purpose:
+  Define governed hook metadata, planned trigger contracts, rate/retry guards,
+  loop-risk detection, kill switch previews, and read-only Command Center
+  visibility before any automation execution is enabled.
+- Primary files:
+  `hooks/hookSchema.js`,
+  `hooks/hookRegistry.js`,
+  `hooks/triggerDefinitions.js`,
+  `hooks/triggerContract.js`,
+  `hooks/hookLimits.js`,
+  `hooks/hookRuntimeGuard.js`,
+  `hooks/loopRiskDetector.js`,
+  `hooks/hookKillSwitch.js`,
+  `policy/hook-registry-policy.json`
+- Public entry points:
+  `hooks/index.js`,
+  `scripts/check-hook-registry.js`,
+  `/command-center/hooks`
+- Inputs/outputs:
+  Consumes static hook definitions and policy metadata; outputs read-only hook
+  readiness, trigger preview, guardrail, loop-risk, and kill-switch summaries.
+- Side effects:
+  Checker/report generation only.
+- Safety boundary:
+  Hook execution, schedulers, cron, webhooks, workers, provider/tool/MCP
+  dispatch, DB writes, release execution, project mutation, and external network
+  calls remain disabled.
+- Reuse notes:
+  Future automation phases should reuse the hook schema, trigger contract,
+  guard decision, loop-risk, and kill-switch models before adding runtime
+  integration.
+- Tests/checkers:
+  `scripts/check-hook-registry.js`,
+  `scripts/check-command-center-ux.js`,
+  `dashboard/tests/routes.spec.js`
+- Known limitations:
+  The registry is readiness-only until a later governed runtime phase explicitly
+  enables safe execution.
+- Status:
+  active
+
 ## Shared Helper Catalog and Refactor Plan
 
 - Purpose:

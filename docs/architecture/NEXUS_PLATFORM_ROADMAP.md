@@ -210,8 +210,15 @@ Risk level:
   - `P50.5` Skill Test Requirements — complete
   - `P50.6` Command Center Skill Registry View — complete
   - `P50.7` Final Validation — complete
-- `P51` Hook Registry + Safe Automation Lifecycle — next
-- `P52` Tool / MCP Registry + Tool Governance
+- `P51` Hook Registry + Safe Automation Lifecycle — complete
+  - `P51.1` Hook Registry Schema — complete
+  - `P51.2` Trigger Definition Model — complete
+  - `P51.3` Rate Limits, Retry Limits, and Runtime Guard Model — complete
+  - `P51.4` Loop-Risk Detector — complete
+  - `P51.5` Kill Switch and Safe Disable Model — complete
+  - `P51.6` Command Center Hooks UX — complete
+  - `P51.7` Final Validation — complete
+- `P52` Tool / MCP Registry + Tool Governance — next
 - `P53` Trigger + Integration Gateway
 - `P54` API + Batch Execution Adapter
 - `P55` Test Suite Manager: Project + OS

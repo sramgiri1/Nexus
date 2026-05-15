@@ -1036,3 +1036,143 @@ state and should be verified again during future docs audits.
   private project mutation were enabled.
 - Known limitations:
   Skill authoring remains governance metadata until later automation phases.
+
+## P51.1 — Hook Registry Schema
+
+- Primary capability:
+  Disabled hook registry schema and seed hook metadata.
+- Main files/folders touched:
+  `hooks/hookSchema.js`,
+  `hooks/hookRegistry.js`,
+  `policy/hook-registry-policy.json`
+- Main checker(s):
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Prepares data later surfaced by the Hook Registry route.
+- Safety impact:
+  Hooks are disabled, fail closed, and cannot execute.
+- Known limitations:
+  No runtime hook execution exists.
+
+## P51.2 — Trigger Definition Model
+
+- Primary capability:
+  Dry-run-only trigger definitions and trigger contracts.
+- Main files/folders touched:
+  `hooks/triggerDefinitions.js`,
+  `hooks/triggerContract.js`
+- Main checker(s):
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Supplies trigger preview metadata.
+- Safety impact:
+  Schedulers, webhooks, file watchers, workers, and network listeners remain
+  disabled.
+- Known limitations:
+  Triggers are metadata only.
+
+## P51.3 — Rate Limits, Retry Limits, and Runtime Guard Model
+
+- Primary capability:
+  Hook limit profiles and fail-closed guard decisions.
+- Main files/folders touched:
+  `hooks/hookLimits.js`,
+  `hooks/hookRuntimeGuard.js`
+- Main checker(s):
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Supplies guardrail decisions for the Hook Registry route.
+- Safety impact:
+  Guard decisions are preview-only and block disabled hooks.
+- Known limitations:
+  No runtime guard enforcement path is enabled.
+
+## P51.4 — Loop-Risk Detector
+
+- Primary capability:
+  Detect recursive hook and automation-loop risks.
+- Main files/folders touched:
+  `hooks/loopRiskDetector.js`
+- Main checker(s):
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Supplies loop-risk decisions for hook guardrail summaries.
+- Safety impact:
+  High and critical loop risks block future enablement decisions.
+- Known limitations:
+  Detection is metadata-only.
+
+## P51.5 — Kill Switch and Safe Disable Model
+
+- Primary capability:
+  Global, project-level, and hook-level kill switch preview model.
+- Main files/folders touched:
+  `hooks/hookKillSwitch.js`
+- Main checker(s):
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Supplies kill-switch summaries for the Hook Registry route.
+- Safety impact:
+  Re-enable requires review metadata and no state writes occur in P51.
+- Known limitations:
+  Disable and re-enable flows are preview-only.
+
+## P51.6 — Command Center Hooks UX
+
+- Primary capability:
+  Read-only Command Center Hook Registry route.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-hook-registry.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`,
+  `reports/hook-registry-report.md`
+- Command Center impact:
+  Adds `/command-center/hooks` with overview, hooks, triggers, guardrails, kill
+  switches, and developer detail tabs.
+- Safety impact:
+  UI is read-only and exposes no hook execution controls.
+- Known limitations:
+  Runtime hook execution remains disabled.
+
+## P51.7 — Hook Registry Final Validation
+
+- Primary capability:
+  Final validation and closure for P51.
+- Main files/folders touched:
+  `os-roadmap/phase-status.json`,
+  `docs/architecture/HOOK_REGISTRY_SAFE_AUTOMATION_LIFECYCLE.md`,
+  `docs/codebase/*`,
+  `README.md`
+- Main checker(s):
+  `scripts/check-hook-registry.js`,
+  `scripts/check-os-phase-status.js`,
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-docs-coverage.js`
+- Main report(s):
+  `reports/hook-registry-report.md`,
+  `reports/os-phase-status-report.md`,
+  `reports/command-center-ux-report.md`,
+  `reports/docs-coverage-report.md`
+- Command Center impact:
+  Marks P51 complete and P52 next in OS roadmap data.
+- Safety impact:
+  Confirms no hook execution, provider/tool/worker dispatch, DB writes,
+  external network calls, or private project mutation were enabled.
+- Known limitations:
+  Hook registry remains readiness-only until later governed runtime phases.

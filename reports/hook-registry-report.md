@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:16:11.592Z
+- Generated at: 2026-05-15T22:18:51.481Z
 - Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: aae9171
+- Validation HEAD: 3706de7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P51.6 - Command Center Hooks UX
+P51.7 - Hook Registry Final Validation
 
 ## Summary
 

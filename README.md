@@ -1281,7 +1281,13 @@ read-only Command Center Skill Registry route. It does not enable skill
 execution, provider/tool/worker dispatch, DB writes, release execution, or
 project mutation.
 
-Next phase: P51 - Hook Registry + Safe Automation Lifecycle.
+P51 adds the Hook Registry + Safe Automation Lifecycle: disabled hook schemas,
+trigger metadata, rate/retry guard decisions, loop-risk detection, kill switch
+previews, and a read-only Command Center Hook Registry route. It does not enable
+hook execution, schedulers, webhooks, workers, provider/tool/MCP dispatch, DB
+writes, release execution, or project mutation.
+
+Next phase: P52 - Tool / MCP Registry + Tool Governance.
 
 ---
 

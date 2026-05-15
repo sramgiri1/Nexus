@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: arch/agent-definition-update-workflow
-- Registry checker HEAD: 8e03e92
+- Registry checker branch: arch/hook-registry-safe-automation-lifecycle
+- Registry checker HEAD: 3706de7
 - Registry checker result: PASS
 
