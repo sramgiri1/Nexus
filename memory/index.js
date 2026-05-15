@@ -8,3 +8,6 @@ export * from "./memorySelection.js";
 export * from "./memoryPacketBuilder.js";
 export * from "./memoryAccessDecision.js";
 export * from "./memoryAccessPolicy.js";
+export * from "./memoryFreshness.js";
+export * from "./memoryInvalidation.js";
+export * from "./memoryPromotion.js";

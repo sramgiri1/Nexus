@@ -136,7 +136,8 @@
     "check:memory-scope-model": "node scripts/check-memory-scope-model.js",
     "check:memory-stores": "node scripts/check-memory-stores.js",
     "check:memory-packet-builder": "node scripts/check-memory-packet-builder.js",
-    "check:memory-access-policy": "node scripts/check-memory-access-policy.js"
+    "check:memory-access-policy": "node scripts/check-memory-access-policy.js",
+    "check:memory-freshness": "node scripts/check-memory-freshness.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

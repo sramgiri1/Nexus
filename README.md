@@ -1213,7 +1213,11 @@ P46.4 adds policy-only memory access decisions: ALLOW, DENY, REDACT, and
 REQUIRE_APPROVAL. Demo/public modes cannot access private project memory, and
 unrelated project memory remains blocked by default.
 
-Next phase: P46.5 - Memory Freshness + Staleness.
+P46.5 adds freshness, staleness, invalidation planning, and promotion-candidate
+rules. Stale and promotion states are proposals only; no automatic memory
+rewrite or runtime injection is enabled.
+
+Next phase: P46.6 - Command Center Memory Center.
 
 ---
 

@@ -96,3 +96,20 @@ AUDITOR, and NEXUS can inspect relevant redacted metadata, but not secrets.
 
 ## Next After P46.4
 P46.5 adds freshness, staleness, invalidation, and promotion-candidate rules.
+
+## P46.5 - Memory Freshness + Staleness
+P46.5 tracks whether memory can still be trusted after OS, project, task, or
+documentation changes. Freshness states are:
+- `fresh`
+- `stale_pending_validation`
+- `expired`
+- `invalidated`
+- `unknown`
+
+Invalidation plans are proposals. They identify memory that should be marked
+stale pending validation, but they do not automatically rewrite runtime state.
+Promotion candidates are also proposals and require approval.
+
+## Next After P46.5
+P46.6 exposes scoped memory safely in Command Center through a read-only Memory
+Center.
