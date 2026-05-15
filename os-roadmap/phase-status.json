@@ -2135,12 +2135,14 @@
       "phaseId": "P47.2",
       "title": "System-of-Record Mapping",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trusted-context-data-architecture",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "fa3fb13",
+      "completedAt": "2026-05-15T16:18:58.753Z",
       "summary": "Maps trusted context domains to authoritative sources to avoid stale or ambiguous context.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:system-of-record-map"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
@@ -2151,11 +2153,11 @@
       "phaseId": "P47.3",
       "title": "Source Trust Score",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Scores source trust and readiness by ownership, freshness, redaction, lineage, and policy.",
+      "summary": "Scores trusted context sources by system-of-record status, local availability, ownership, freshness, redaction, lineage, modes, and agent metadata.",
       "checksRun": [],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
@@ -2229,8 +2231,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:17:11.707Z",
-  "currentPhase": "P47.2",
-  "previousPhase": "P47.1",
-  "nextPhase": "P47.3"
+  "updatedAt": "2026-05-15T16:18:58.753Z",
+  "currentPhase": "P47.3",
+  "previousPhase": "P47.2",
+  "nextPhase": "P47.4"
 }

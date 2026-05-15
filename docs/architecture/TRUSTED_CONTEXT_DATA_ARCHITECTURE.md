@@ -55,3 +55,19 @@ runtime agents.
 
 P47.3 adds source trust scoring so the registry and system-of-record map can
 explain which sources are high, medium, low, or unavailable for use.
+
+## P47.3 - Source Trust Score
+
+Source trust scoring computes deterministic local trust bands for every
+registered source. Scoring considers whether the source is a system of record,
+whether its path exists locally, owner metadata, freshness policy, redaction,
+lineage, forbidden modes, and allowed agent metadata.
+
+Trust bands are high, medium, low, and unavailable. Scores are explanatory and
+redacted. They do not call providers, query external services, infer private
+content, write to a database, or grant runtime permissions.
+
+## Next
+
+P47.4 adds freshness and lineage records so trusted context can explain whether
+a source is fresh, stale, invalidated, unknown, or unavailable.

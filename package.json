@@ -141,7 +141,8 @@
     "check:memory-center-ui": "node scripts/check-memory-center-ui.js",
     "check:scoped-memory-final-validation": "node scripts/check-scoped-memory-final-validation.js",
     "check:trusted-context-data-sources": "node scripts/check-trusted-context-data-sources.js",
-    "check:system-of-record-map": "node scripts/check-system-of-record-map.js"
+    "check:system-of-record-map": "node scripts/check-system-of-record-map.js",
+    "check:source-trust-score": "node scripts/check-source-trust-score.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

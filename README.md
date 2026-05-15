@@ -1235,7 +1235,11 @@ P47.2 maps trusted context domains to system-of-record sources for project
 requirements, task state, evidence, audit, activity, validation results,
 policies, agent capability metadata, and scoped memory.
 
-Next phase: P47.3 - Source Trust Score.
+P47.3 adds deterministic source trust scoring for registered sources. Scores
+explain high, medium, low, and unavailable trust bands without external calls or
+runtime permissions.
+
+Next phase: P47.4 - Freshness + Lineage.
 
 ---
 
