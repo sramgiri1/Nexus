@@ -4,11 +4,14 @@ import { execFileSync } from "node:child_process";
 import {
   buildSkillContracts,
   getSkillRegistry,
+  getSkillProfiles,
   getSkillTemplates,
   summarizeRegisteredSkills,
   summarizeSkillContracts,
+  summarizeSkillProfiles,
   summarizeSkillTemplates,
   validateSkillContract,
+  validateSkillProfiles,
   validateRegisteredSkills,
   validateSkillTemplates,
 } from "../skills-registry/index.js";
@@ -21,6 +24,7 @@ const sections = {
   registry: true,
   contracts: true,
   templates: true,
+  profiles: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -75,17 +79,21 @@ const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const skills = getSkillRegistry();
 const contracts = buildSkillContracts(skills);
 const templates = getSkillTemplates();
+const profiles = getSkillProfiles();
 const registryValidation = validateRegisteredSkills(skills);
 const templateValidation = validateSkillTemplates(templates);
+const profileValidation = validateSkillProfiles(profiles);
 const summary = summarizeRegisteredSkills(skills);
 const contractSummary = summarizeSkillContracts(contracts);
 const templateSummary = summarizeSkillTemplates(templates);
+const profileSummary = summarizeSkillProfiles(profiles);
 
 for (const file of [
   "skills-registry/skillSchema.js",
   "skills-registry/skillRegistry.js",
   "skills-registry/skillContract.js",
   "skills-registry/skillTemplates.js",
+  "skills-registry/skillProfiles.js",
   "skills-registry/registry.json",
   "skills-registry/index.js",
 ]) {
@@ -134,6 +142,28 @@ for (const templateId of [
 check(templateSummary.executionEnabledCount === 0, "templates", "No templates may enable execution in P50.3");
 check(templateSummary.templateCount >= 9, "templates", "Expected at least nine governed skill templates");
 
+check(profileValidation.valid, "profiles", `Profile validation failed: ${profileValidation.errors.join("; ")}`);
+const profileById = new Map(profiles.map((profile) => [profile.profileId, profile]));
+for (const profileId of [
+  "saas-node-fastify",
+  "web-react",
+  "ios-swift-xcode",
+  "android-gradle-placeholder",
+  "docs-architecture",
+  "nexus-os-platform",
+]) {
+  const profile = profileById.get(profileId);
+  check(Boolean(profile), "profiles", `Missing stack-specific skill profile: ${profileId}`);
+  check(profile?.executionEnabled === false, "profiles", `${profileId} must keep execution disabled`);
+  check(Array.isArray(profile?.compatibleSkillIds), "profiles", `${profileId} must list compatible skills`);
+  check(Array.isArray(profile?.unavailableSkillIds), "profiles", `${profileId} must list unavailable skills`);
+  check(Array.isArray(profile?.requiredFutureAdapters), "profiles", `${profileId} must list future adapters`);
+  check(Array.isArray(profile?.projectProfileRequirements), "profiles", `${profileId} must list profile requirements`);
+  check(Array.isArray(profile?.testRequirements), "profiles", `${profileId} must list test requirements`);
+}
+check(profileSummary.executionEnabledCount === 0, "profiles", "No profiles may enable execution in P50.4");
+check(profileSummary.profileCount >= 6, "profiles", "Expected at least six stack-specific profiles");
+
 for (const category of ["planning", "review", "qa", "release"]) {
   check(Boolean(summary.categoryCounts[category]), "registry", `Missing category: ${category}`);
 }
@@ -151,6 +181,7 @@ const docs = read("docs/architecture/SKILL_REGISTRY_AND_AUTHORING_WORKFLOW.md");
 check(docs.includes("P50.1 - Skill Registry Schema"), "docs", "Architecture doc missing P50.1 section");
 check(docs.includes("P50.2 - Skill Contract Model"), "docs", "Architecture doc missing P50.2 section");
 check(docs.includes("P50.3 - Governed Skill Templates"), "docs", "Architecture doc missing P50.3 section");
+check(docs.includes("P50.4 - Stack-Specific Skill Profiles"), "docs", "Architecture doc missing P50.4 section");
 check(docs.includes("skill execution is disabled"), "docs", "Architecture doc must state skill execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -163,9 +194,12 @@ check(statusById.get("P50.2")?.nextPhase === "P50.3", "osPhaseStatus", "P50.2 ne
 check(statusById.get("P50.3")?.status === "complete", "osPhaseStatus", "P50.3 must be complete");
 check(statusById.get("P50.3")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.3 branch mismatch");
 check(statusById.get("P50.3")?.nextPhase === "P50.4", "osPhaseStatus", "P50.3 next phase must be P50.4");
-check(statusById.get("P50.4")?.status === "planned", "osPhaseStatus", "P50.4 must be planned");
-check(phaseStatus.currentPhase === "P50.3", "osPhaseStatus", "Current phase must be P50.3");
-check(phaseStatus.nextPhase === "P50.4", "osPhaseStatus", "Next phase must be P50.4");
+check(statusById.get("P50.4")?.status === "complete", "osPhaseStatus", "P50.4 must be complete");
+check(statusById.get("P50.4")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.4 branch mismatch");
+check(statusById.get("P50.4")?.nextPhase === "P50.5", "osPhaseStatus", "P50.4 next phase must be P50.5");
+check(statusById.get("P50.5")?.status === "planned", "osPhaseStatus", "P50.5 must be planned");
+check(phaseStatus.currentPhase === "P50.4", "osPhaseStatus", "Current phase must be P50.4");
+check(phaseStatus.nextPhase === "P50.5", "osPhaseStatus", "Next phase must be P50.5");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -181,6 +215,7 @@ for (const file of [
   "skills-registry/skillRegistry.js",
   "skills-registry/skillContract.js",
   "skills-registry/skillTemplates.js",
+  "skills-registry/skillProfiles.js",
   "skills-registry/index.js",
   "scripts/check-skill-registry.js",
   "policy/skill-registry-policy.json",
@@ -201,18 +236,22 @@ const report = `# NEXUS Skill Registry Report
 
 ## Scope
 
-P50.3 - Governed Skill Templates
+P50.4 - Stack-Specific Skill Profiles
 
 ## Summary
 
 - Skills: ${summary.skillCount}
 - Contracts: ${contractSummary.contractCount}
 - Templates: ${templateSummary.templateCount}
+- Profiles: ${profileSummary.profileCount}
 - Rollback-required contracts: ${contractSummary.rollbackRequiredCount}
 - Template owner agents: ${templateSummary.ownerAgents.join(", ")}
+- Profile skill links: ${profileSummary.compatibleSkillLinks}
+- Unavailable profile skill links: ${profileSummary.unavailableSkillLinks}
 - Categories: ${Object.keys(summary.categoryCounts).join(", ")}
 - Execution-enabled skills: ${summary.executionEnabledCount}
 - Execution-enabled templates: ${templateSummary.executionEnabledCount}
+- Execution-enabled profiles: ${profileSummary.executionEnabledCount}
 - Provider-enabled skills: ${summary.providerCallsAllowedCount}
 - Tool-enabled skills: ${summary.toolCallsAllowedCount}
 - Project-mutation skills: ${summary.projectMutationAllowedCount}
@@ -224,6 +263,7 @@ P50.3 - Governed Skill Templates
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
 - Contracts: ${sections.contracts ? "PASS" : "FAIL"}
 - Templates: ${sections.templates ? "PASS" : "FAIL"}
+- Profiles: ${sections.profiles ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -252,6 +292,7 @@ console.log(`Schema: ${sections.schema ? "PASS" : "FAIL"}`);
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
 console.log(`Contracts: ${sections.contracts ? "PASS" : "FAIL"}`);
 console.log(`Templates: ${sections.templates ? "PASS" : "FAIL"}`);
+console.log(`Profiles: ${sections.profiles ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);

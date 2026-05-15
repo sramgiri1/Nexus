@@ -111,3 +111,27 @@ and governable only; they are not executable.
 
 P50.4 maps skill templates to stack-specific profiles without enabling runtime
 adapters.
+
+## P50.4 - Stack-Specific Skill Profiles
+
+P50.4 adds compatibility profiles for common project stacks:
+
+- SaaS Node / Fastify
+- Web React
+- iOS Swift / Xcode
+- Android Gradle placeholder
+- Docs / Architecture
+- NEXUS OS Platform
+
+Each profile maps governed skill templates to compatible and unavailable
+states, explains why unavailable skills are blocked, lists future adapters,
+defines project profile requirements, and names validation expectations.
+
+Profiles are planning and governance metadata only. They do not run stack
+adapters, call providers, start tools, invoke Xcode/Gradle, write to DB, or
+mutate project files.
+
+## Next Subphase
+
+P50.5 adds explicit skill test requirements for every governed template and
+profile relationship.

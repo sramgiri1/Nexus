@@ -2602,7 +2602,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/skill-registry-authoring-workflow",
-      "commit": "pending-final-commit",
+      "commit": "0b3b43d",
       "completedAt": "2026-05-15T19:20:00.000Z",
       "summary": "Add governed Plan, Review, QA, Ship, Retro, Guard, and Explain templates.",
       "checksRun": [
@@ -2620,20 +2620,40 @@
       "phaseId": "P50.4",
       "title": "Stack-Specific Skill Profiles",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T19:30:00.000Z",
+      "summary": "Map governed skills to stack-specific compatibility profiles without executing adapters.",
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Stack profiles are read-only compatibility metadata and do not execute project adapters."
+      ],
+      "nextPhase": "P50.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.5",
+      "title": "Skill Test Requirements",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/skill-registry-authoring-workflow",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Map governed skills to stack-specific compatibility profiles without executing adapters.",
+      "summary": "Define static, contract, UI, evidence, and future runtime test requirements for governed skills.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P50.5",
+      "nextPhase": "P50.6",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T19:20:00.000Z",
-  "currentPhase": "P50.3",
-  "previousPhase": "P50.2",
-  "nextPhase": "P50.4"
+  "updatedAt": "2026-05-15T19:30:00.000Z",
+  "currentPhase": "P50.4",
+  "previousPhase": "P50.3",
+  "nextPhase": "P50.5"
 }
