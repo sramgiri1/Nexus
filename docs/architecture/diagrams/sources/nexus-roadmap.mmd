@@ -1,21 +1,15 @@
 flowchart TB
-  foundation[P26-P41 Foundation]
-  ux[P41.5 Command Center UX]
-  boot[P41.6 Local Boot and Service Orchestration]
-  docs[P41.7 Documentation and Reuse Foundation]
-  activity[P41.8 Activity and Observability]
-  diagrams[P41.9 README and Diagram Registry]
-  registry[P42 Project Registry and Adapter Framework]
-  governance[P43-P59 Governance, Memory, Tools, Policy, Cost]
-  runtime[P60-P71 Runtime, Automation, Recovery, Release]
-  enterprise[P72-P78 Enterprise Readiness]
+  foundation[Completed Foundation]
+  stabilization[Immediate Stabilization]
+  governance[Multi-project + Governance Plane]
+  quality[API / Batch / Quality / Cost / Policy]
+  runtime[Runtime + Agent Execution]
+  healing[Self-healing + Controlled Mutation]
+  enterprise[Enterprise Readiness]
 
-  foundation --> ux
-  ux --> boot
-  boot --> docs
-  docs --> activity
-  activity --> diagrams
-  diagrams --> registry
-  registry --> governance
-  governance --> runtime
-  runtime --> enterprise
+  foundation --> stabilization
+  stabilization --> governance
+  governance --> quality
+  quality --> runtime
+  runtime --> healing
+  healing --> enterprise

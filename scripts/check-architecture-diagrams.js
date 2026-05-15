@@ -5,7 +5,9 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REGISTRY_PATH = "docs/architecture/diagrams/diagram-registry.json";
 const DIAGRAM_README_PATH = "docs/architecture/diagrams/README.md";
-const REPORT_PATH = "reports/architecture-diagram-registry-report.md";
+const ROOT_README_PATH = "README.md";
+const REGISTRY_REPORT_PATH = "reports/architecture-diagram-registry-report.md";
+const RENDER_REPORT_PATH = "reports/architecture-diagram-render-report.md";
 const PHASE_STATUS_PATH = "os-roadmap/phase-status.json";
 const REQUIRED_DIAGRAMS = [
   "nexus-enterprise-architecture",
@@ -15,24 +17,28 @@ const REQUIRED_DIAGRAMS = [
   "runtime-self-healing",
   "nexus-roadmap",
 ];
-const REQUIRED_ENTRY_FIELDS = ["diagramId", "title", "status", "sourcePath", "renderedPath", "publicSafe"];
-const RENDERED_MISSING_ALLOWED = new Set(["planned", "source_available"]);
-const PUBLIC_SAFE_FORBIDDEN = ["CareLoop", "DemoApp", "projects/careloop", "projects/careloop-ios", ".env"];
-
+const PUBLIC_SAFE_FORBIDDEN = [
+  "CareLoop",
+  "DemoApp",
+  "projects/careloop",
+  "projects/careloop-ios",
+  ".env",
+  "sk-",
+];
+const FULL_ROADMAP_MARKERS = ["P26-P41", "P41.5", "P41.6", "P41.7", "P41.8", "P41.9", "P42", "P43", "P44"];
 const sections = {
   registry: true,
-  requiredDiagrams: true,
   mermaidSources: true,
-  renderedPathPolicy: true,
-  publicSafety: true,
+  renderedSvgs: true,
   readmeLinks: true,
+  diagramDocsLinks: true,
+  architectureRoadmapSeparation: true,
+  toolGatewayWording: true,
+  publicSafety: true,
   phaseStatus: true,
-  report: true,
   formatting: true,
 };
-
 const failures = [];
-const warnings = [];
 
 function fullPath(relativePath) {
   return join(ROOT, relativePath);
@@ -49,9 +55,7 @@ function fail(section, message) {
 }
 
 function check(condition, section, message) {
-  if (!condition) {
-    fail(section, message);
-  }
+  if (!condition) fail(section, message);
 }
 
 function gitOutput(args) {
@@ -73,6 +77,20 @@ function parseJson(relativePath, section) {
   }
 }
 
+function isPrettyJson(relativePath) {
+  const source = read(relativePath);
+  if (!source.trim()) return false;
+  try {
+    return `${JSON.stringify(JSON.parse(source), null, 2)}\n` === source;
+  } catch {
+    return false;
+  }
+}
+
+function diagramId(diagram) {
+  return diagram.id || diagram.diagramId;
+}
+
 function collectMarkdownLinks(relativePath) {
   const source = read(relativePath);
   const links = [];
@@ -89,11 +107,11 @@ function collectMarkdownLinks(relativePath) {
   return links;
 }
 
-function validateLocalLinks(relativePath) {
+function validateLocalLinks(relativePath, section) {
   for (const target of collectMarkdownLinks(relativePath)) {
     if (!target) continue;
     const resolved = resolve(dirname(fullPath(relativePath)), target);
-    check(existsSync(resolved), "readmeLinks", `Broken local link in ${relativePath}: ${target}`);
+    check(existsSync(resolved), section, `Broken local link in ${relativePath}: ${target}`);
   }
 }
 
@@ -103,107 +121,116 @@ function lineTooLong(relativePath) {
     .some((line) => line.length > 1000);
 }
 
-console.log("NEXUS Architecture Diagram Registry Check");
-console.log("=========================================");
+function sourceContainsManyRoadmapMarkers(source) {
+  return FULL_ROADMAP_MARKERS.filter((marker) => source.includes(marker)).length >= 4;
+}
+
+console.log("NEXUS Architecture Diagram Check");
+console.log("================================");
 
 const branch = gitOutput(["branch", "--show-current"]);
 const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 const registry = parseJson(REGISTRY_PATH, "registry");
-const diagramReadme = read(DIAGRAM_README_PATH);
 const phaseStatus = parseJson(PHASE_STATUS_PATH, "phaseStatus");
+const diagrams = Array.isArray(registry.diagrams) ? registry.diagrams : [];
+const byId = new Map(diagrams.map((diagram) => [diagramId(diagram), diagram]));
 
 check(existsSync(fullPath(REGISTRY_PATH)), "registry", `${REGISTRY_PATH} is missing`);
+check(isPrettyJson(REGISTRY_PATH), "registry", "Registry must be pretty-printed JSON");
 check(registry.registryVersion === "1.0", "registry", "Registry version must be 1.0");
-check(registry.phase === "P41.9.1", "registry", "Registry phase must be P41.9.1");
-check(Array.isArray(registry.diagrams), "registry", "Registry must include diagrams array");
-check(existsSync(fullPath(DIAGRAM_README_PATH)), "readmeLinks", `${DIAGRAM_README_PATH} is missing`);
-
-const diagrams = Array.isArray(registry.diagrams) ? registry.diagrams : [];
-const diagramsById = new Map(diagrams.map((diagram) => [diagram.diagramId, diagram]));
+check(registry.phase === "P41.9.2", "registry", "Registry phase must be P41.9.2");
+check(diagrams.length >= REQUIRED_DIAGRAMS.length, "registry", "Registry must include required diagrams");
 
 for (const requiredId of REQUIRED_DIAGRAMS) {
-  check(diagramsById.has(requiredId), "requiredDiagrams", `Missing required diagram: ${requiredId}`);
+  check(byId.has(requiredId), "registry", `Missing required diagram: ${requiredId}`);
 }
 
 for (const diagram of diagrams) {
-  for (const field of REQUIRED_ENTRY_FIELDS) {
-    check(Object.hasOwn(diagram, field), "registry", `Diagram ${diagram.diagramId || "unknown"} missing ${field}`);
-  }
-
-  check(
-    typeof diagram.publicSafe === "boolean",
-    "registry",
-    `Diagram ${diagram.diagramId || "unknown"} publicSafe must be boolean`,
-  );
+  const id = diagramId(diagram);
+  check(Boolean(id), "registry", "Every diagram needs id");
+  check(Boolean(diagram.title), "registry", `Diagram ${id} missing title`);
+  check(Boolean(diagram.purpose), "registry", `Diagram ${id} missing purpose`);
+  check(Boolean(diagram.sourcePath), "mermaidSources", `Diagram ${id} missing sourcePath`);
+  check(Boolean(diagram.renderedSvgPath), "renderedSvgs", `Diagram ${id} missing renderedSvgPath`);
+  check(diagram.publicSafe === true, "publicSafety", `Diagram ${id} must be publicSafe true`);
+  check(diagram.lastUpdatedPhase === "P41.9.2", "registry", `Diagram ${id} lastUpdatedPhase must be P41.9.2`);
+  check(["mermaid", "fallback-svg", "manual-svg"].includes(diagram.renderMode), "registry", `Diagram ${id} renderMode invalid`);
 
   if (diagram.sourcePath) {
-    check(existsSync(fullPath(diagram.sourcePath)), "mermaidSources", `Missing source: ${diagram.sourcePath}`);
-    check(diagram.sourcePath.endsWith(".mmd"), "mermaidSources", `Source must be Mermaid .mmd: ${diagram.sourcePath}`);
+    check(existsSync(fullPath(diagram.sourcePath)), "mermaidSources", `Missing Mermaid source: ${diagram.sourcePath}`);
+    check(diagram.sourcePath.endsWith(".mmd"), "mermaidSources", `Source must be .mmd: ${diagram.sourcePath}`);
   }
 
-  if (diagram.renderedPath) {
-    const renderedExists = existsSync(fullPath(diagram.renderedPath));
-    const missingAllowed = RENDERED_MISSING_ALLOWED.has(diagram.status);
-    check(
-      renderedExists || missingAllowed,
-      "renderedPathPolicy",
-      `Rendered path missing for non-planned diagram ${diagram.diagramId}: ${diagram.renderedPath}`,
-    );
+  if (diagram.status === "rendered_svg_available") {
+    const svg = read(diagram.renderedSvgPath || "");
+    check(existsSync(fullPath(diagram.renderedSvgPath || "")), "renderedSvgs", `Missing SVG: ${diagram.renderedSvgPath}`);
+    check(svg.trim().length > 0, "renderedSvgs", `SVG is empty: ${diagram.renderedSvgPath}`);
+    check(svg.includes("<svg"), "renderedSvgs", `SVG missing <svg: ${diagram.renderedSvgPath}`);
   }
 
-  if (diagram.publicSafe) {
-    const source = read(diagram.sourcePath || "");
-    const combined = `${diagram.title || ""}\n${diagram.description || ""}\n${source}`;
-    for (const forbidden of PUBLIC_SAFE_FORBIDDEN) {
-      check(
-        !combined.includes(forbidden),
-        "publicSafety",
-        `Public-safe diagram ${diagram.diagramId} contains forbidden text: ${forbidden}`,
-      );
-    }
+  const combined = `${diagram.title || ""}\n${diagram.purpose || ""}\n${read(diagram.sourcePath || "")}\n${read(diagram.renderedSvgPath || "")}`;
+  for (const forbidden of PUBLIC_SAFE_FORBIDDEN) {
+    check(!combined.includes(forbidden), "publicSafety", `Diagram ${id} contains forbidden text: ${forbidden}`);
   }
 }
 
 const enterpriseSource = read("docs/architecture/diagrams/sources/nexus-enterprise-architecture.mmd");
-check(
-  !enterpriseSource.includes("P41.9") && !enterpriseSource.includes("P42") && !enterpriseSource.includes("P78"),
-  "publicSafety",
-  "Enterprise architecture diagram must not include the full roadmap",
-);
-check(
-  read("docs/architecture/diagrams/sources/nexus-roadmap.mmd").includes("P41.9"),
-  "requiredDiagrams",
-  "Roadmap diagram should contain grouped roadmap phases",
-);
+const roadmapSource = read("docs/architecture/diagrams/sources/nexus-roadmap.mmd");
+check(!sourceContainsManyRoadmapMarkers(enterpriseSource), "architectureRoadmapSeparation", "Enterprise diagram contains full roadmap markers");
+check(roadmapSource.includes("Completed Foundation"), "architectureRoadmapSeparation", "Roadmap diagram must be separate and grouped");
+check(roadmapSource.includes("Enterprise Readiness"), "architectureRoadmapSeparation", "Roadmap diagram missing Enterprise Readiness group");
+check(!enterpriseSource.includes("P26-P77"), "architectureRoadmapSeparation", "Enterprise diagram must not mention full roadmap range");
 
-for (const expected of ["diagram-registry.json", "sources/", "source_available", "rendered image planned"]) {
-  check(diagramReadme.includes(expected), "readmeLinks", `Diagram README missing: ${expected}`);
+for (const expected of [
+  "Tool Registry",
+  "MCP Registry",
+  "CLI Adapter",
+  "API Adapter",
+  "Batch Adapter",
+  "Lazy Contract Loader",
+  "Search / Get Contract / Execute",
+  "Policy + Cost + Audit",
+]) {
+  check(enterpriseSource.includes(expected), "toolGatewayWording", `Tool Gateway missing ${expected}`);
 }
-validateLocalLinks(DIAGRAM_README_PATH);
+check(!enterpriseSource.includes("many MCP servers"), "toolGatewayWording", "Tool Gateway implies many MCP servers are active");
+
+validateLocalLinks(ROOT_README_PATH, "readmeLinks");
+validateLocalLinks(DIAGRAM_README_PATH, "diagramDocsLinks");
+for (const diagram of REQUIRED_DIAGRAMS) {
+  check(read(ROOT_README_PATH).includes(`${diagram}.svg`), "readmeLinks", `README missing rendered SVG link for ${diagram}`);
+  check(read(DIAGRAM_README_PATH).includes(`${diagram}.svg`), "diagramDocsLinks", `Diagram README missing SVG link for ${diagram}`);
+  check(read(DIAGRAM_README_PATH).includes(`${diagram}.mmd`), "diagramDocsLinks", `Diagram README missing source link for ${diagram}`);
+}
+check(!read(ROOT_README_PATH).includes(".png)"), "readmeLinks", "README should not link missing PNG artifacts");
+check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram README should not link missing PNG artifacts");
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
-check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status is empty");
-check(phaseStatus.currentPhase === "P41.9.1", "phaseStatus", "currentPhase must be P41.9.1");
-check(phaseStatus.previousPhase === "P41.8.6", "phaseStatus", "previousPhase must be P41.8.6");
-check(phaseStatus.nextPhase === "P41.9.2", "phaseStatus", "nextPhase must be P41.9.2");
-check(phaseEntries.get("P41.8.6")?.status === "complete", "phaseStatus", "P41.8.6 must be complete");
-check(phaseEntries.get("P41.8.6")?.commit === "867d899", "phaseStatus", "P41.8.6 commit must be 867d899");
-check(phaseEntries.get("P41.8")?.status === "complete", "phaseStatus", "P41.8 parent must be complete");
-check(phaseEntries.get("P41.9")?.status === "in_progress", "phaseStatus", "P41.9 parent must be in_progress");
-check(phaseEntries.has("P41.9.1"), "phaseStatus", "P41.9.1 must exist");
-check(phaseEntries.has("P41.9.2"), "phaseStatus", "P41.9.2 must exist");
+check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
+check(phaseStatus.currentPhase === "P41.9.2", "phaseStatus", "currentPhase must be P41.9.2");
+check(phaseStatus.previousPhase === "P41.9.1", "phaseStatus", "previousPhase must be P41.9.1");
+check(Boolean(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be explicit");
+check(phaseEntries.get("P41.9.1")?.status === "complete", "phaseStatus", "P41.9.1 must be complete");
+check(phaseEntries.get("P41.9.1")?.commit === "41bb0bd", "phaseStatus", "P41.9.1 commit must be 41bb0bd");
+check(["complete", "in_progress"].includes(phaseEntries.get("P41.9.2")?.status), "phaseStatus", "P41.9.2 must be current or complete");
+check(phaseEntries.get("P41.9.2")?.branch === "docs/architecture-diagram-rendering", "phaseStatus", "P41.9.2 branch mismatch");
 
 for (const relativePath of [
   REGISTRY_PATH,
   DIAGRAM_README_PATH,
+  ROOT_README_PATH,
   ...diagrams.map((diagram) => diagram.sourcePath).filter(Boolean),
+  ...diagrams.map((diagram) => diagram.renderedSvgPath).filter(Boolean),
 ]) {
   check(!lineTooLong(relativePath), "formatting", `Line over 1000 chars in ${relativePath}`);
 }
 
 let result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
+const renderedRows = diagrams
+  .map((diagram) => `| ${diagram.title || diagramId(diagram)} | ${diagram.status || "unknown"} | ${diagram.renderMode || "unknown"} | ${diagram.renderedSvgPath || "missing"} |`)
+  .join("\n");
 
-const report = `# NEXUS Architecture Diagram Registry Report
+const registryReport = `# NEXUS Architecture Diagram Registry Report
 
 ## Metadata
 
@@ -214,43 +241,33 @@ const report = `# NEXUS Architecture Diagram Registry Report
 
 ## Scope
 
-P41.9.1 - Architecture Diagram Registry Foundation
+P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Summary
 
 - Registry version: ${registry.registryVersion || "unknown"}
 - Diagrams registered: ${diagrams.length}
-- Required diagrams present: ${sections.requiredDiagrams ? "PASS" : "FAIL"}
-- Rendered artifact policy: ${sections.renderedPathPolicy ? "PASS" : "FAIL"}
-- Public-safe source validation: ${sections.publicSafety ? "PASS" : "FAIL"}
+- Rendered SVG artifacts: ${diagrams.filter((diagram) => diagram.status === "rendered_svg_available").length}
+- Render modes: ${[...new Set(diagrams.map((diagram) => diagram.renderMode).filter(Boolean))].join(", ") || "unknown"}
 
 ## Diagrams
 
-| Diagram | Status | Source | Rendered artifact |
+| Diagram | Status | Render mode | Rendered SVG |
 | --- | --- | --- | --- |
-${diagrams
-  .map((diagram) => {
-    const source = diagram.sourcePath && existsSync(fullPath(diagram.sourcePath)) ? "present" : "missing";
-    const rendered = diagram.renderedPath && existsSync(fullPath(diagram.renderedPath)) ? "present" : "planned";
-    return `| ${diagram.title || diagram.diagramId} | ${diagram.status || "unknown"} | ${source} | ${rendered} |`;
-  })
-  .join("\n")}
+${renderedRows}
 
 ## Checks
 
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
-- Required diagrams: ${sections.requiredDiagrams ? "PASS" : "FAIL"}
 - Mermaid sources: ${sections.mermaidSources ? "PASS" : "FAIL"}
-- Rendered-path policy: ${sections.renderedPathPolicy ? "PASS" : "FAIL"}
-- Public safety: ${sections.publicSafety ? "PASS" : "FAIL"}
+- Rendered SVGs: ${sections.renderedSvgs ? "PASS" : "FAIL"}
 - README links: ${sections.readmeLinks ? "PASS" : "FAIL"}
+- Diagram docs links: ${sections.diagramDocsLinks ? "PASS" : "FAIL"}
+- Architecture/roadmap separation: ${sections.architectureRoadmapSeparation ? "PASS" : "FAIL"}
+- Tool gateway wording: ${sections.toolGatewayWording ? "PASS" : "FAIL"}
+- Public safety: ${sections.publicSafety ? "PASS" : "FAIL"}
 - Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}
-- Report: ${sections.report ? "PASS" : "FAIL"}
 - Formatting/readability: ${sections.formatting ? "PASS" : "FAIL"}
-
-## Warnings
-
-${warnings.length === 0 ? "- None" : warnings.map((warning) => `- ${warning}`).join("\n")}
 
 ## Failures
 
@@ -261,22 +278,29 @@ ${failures.length === 0 ? "- None" : failures.map((failure) => `- ${failure}`).j
 ${result}
 `;
 
-try {
-  writeFileSync(fullPath(REPORT_PATH), report, "utf8");
-} catch (error) {
-  fail("report", `Could not write ${REPORT_PATH}: ${error.message}`);
-}
+const existingRenderReport = read(RENDER_REPORT_PATH).split("\n\n## Validation")[0].trim();
+const renderReport = `${existingRenderReport}
+
+## Validation
+
+- Registry checker branch: ${branch}
+- Registry checker HEAD: ${head}
+- Registry checker result: ${result}
+`;
+
+writeFileSync(fullPath(REGISTRY_REPORT_PATH), registryReport, "utf8");
+writeFileSync(fullPath(RENDER_REPORT_PATH), `${renderReport}\n`, "utf8");
 
 result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
-
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
-console.log(`Required diagrams: ${sections.requiredDiagrams ? "PASS" : "FAIL"}`);
 console.log(`Mermaid sources: ${sections.mermaidSources ? "PASS" : "FAIL"}`);
-console.log(`Rendered-path policy: ${sections.renderedPathPolicy ? "PASS" : "FAIL"}`);
-console.log(`Public safety: ${sections.publicSafety ? "PASS" : "FAIL"}`);
+console.log(`Rendered SVGs: ${sections.renderedSvgs ? "PASS" : "FAIL"}`);
 console.log(`README links: ${sections.readmeLinks ? "PASS" : "FAIL"}`);
+console.log(`Diagram docs links: ${sections.diagramDocsLinks ? "PASS" : "FAIL"}`);
+console.log(`Architecture/roadmap separation: ${sections.architectureRoadmapSeparation ? "PASS" : "FAIL"}`);
+console.log(`Tool gateway wording: ${sections.toolGatewayWording ? "PASS" : "FAIL"}`);
+console.log(`Public safety: ${sections.publicSafety ? "PASS" : "FAIL"}`);
 console.log(`Phase status: ${sections.phaseStatus ? "PASS" : "FAIL"}`);
-console.log(`Report: ${sections.report ? "PASS" : "FAIL"}`);
 console.log(`Formatting/readability: ${sections.formatting ? "PASS" : "FAIL"}`);
 console.log(`Result: ${result}`);
 

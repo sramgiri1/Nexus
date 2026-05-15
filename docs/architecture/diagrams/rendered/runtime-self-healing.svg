@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="650" viewBox="0 0 960 650" role="img" aria-labelledby="title desc">
+  <title id="title">Runtime Self-Healing</title>
+  <desc id="desc">Future self-healing loop showing runtime events, validation, recovery, policy, and operator review.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .frame { fill: #ffffff; stroke: #1f2937; stroke-width: 2; }
+    .label { fill: #475569; font: 600 13px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
+    .title { fill: #0f172a; font: 700 28px ui-sans-serif, system-ui, sans-serif; }
+    .purpose { fill: #334155; font: 15px ui-sans-serif, system-ui, sans-serif; }
+    .node { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.5; }
+    .nodeText { fill: #0f172a; font: 600 16px ui-sans-serif, system-ui, sans-serif; }
+    .note { fill: #64748b; font: 13px ui-sans-serif, system-ui, sans-serif; }
+  </style>
+  <rect width="960" height="650" class="bg"/>
+  <rect x="24" y="24" width="912" height="602" rx="22" class="frame"/>
+  <text x="56" y="64" class="label">NEXUS ARCHITECTURE DIAGRAM</text>
+  <text x="56" y="104" class="title">Runtime Self-Healing</text>
+  <text x="56" y="160" class="purpose">Future self-healing loop showing runtime events, validation, recovery, policy, and operator</text>
+  <text x="56" y="182" class="purpose">review.</text>
+
+  <rect x="56" y="168" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="189" class="nodeText">Runtime Event</text>
+  <rect x="56" y="214" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="235" class="nodeText">Activity Logger</text>
+  <rect x="56" y="260" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="281" class="nodeText">Correlation Model</text>
+  <rect x="56" y="306" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="327" class="nodeText">Validation Gate</text>
+  <rect x="56" y="352" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="373" class="nodeText">Failure Diagnosis</text>
+  <rect x="56" y="398" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="419" class="nodeText">Recovery Candidate</text>
+  <rect x="56" y="444" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="465" class="nodeText">Policy Review</text>
+  <rect x="56" y="490" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="511" class="nodeText">Operator Approval</text>
+  <rect x="56" y="536" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="557" class="nodeText">Controlled Recovery</text>
+  <rect x="56" y="582" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="603" class="nodeText">Evidence Update</text>
+  <text x="56" y="592" class="note">Render mode: fallback-svg. Mermaid CLI was not required for this deterministic public-safe artifact.</text>
+</svg>

@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="788" viewBox="0 0 960 788" role="img" aria-labelledby="title desc">
+  <title id="title">Project / OS Boundary</title>
+  <desc id="desc">Boundary diagram showing how NEXUS OS platform state stays separate from private project progress and demo data.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .frame { fill: #ffffff; stroke: #1f2937; stroke-width: 2; }
+    .label { fill: #475569; font: 600 13px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
+    .title { fill: #0f172a; font: 700 28px ui-sans-serif, system-ui, sans-serif; }
+    .purpose { fill: #334155; font: 15px ui-sans-serif, system-ui, sans-serif; }
+    .node { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.5; }
+    .nodeText { fill: #0f172a; font: 600 16px ui-sans-serif, system-ui, sans-serif; }
+    .note { fill: #64748b; font: 13px ui-sans-serif, system-ui, sans-serif; }
+  </style>
+  <rect width="960" height="788" class="bg"/>
+  <rect x="24" y="24" width="912" height="740" rx="22" class="frame"/>
+  <text x="56" y="64" class="label">NEXUS ARCHITECTURE DIAGRAM</text>
+  <text x="56" y="104" class="title">Project / OS Boundary</text>
+  <text x="56" y="160" class="purpose">Boundary diagram showing how NEXUS OS platform state stays separate from private project</text>
+  <text x="56" y="182" class="purpose">progress and demo data.</text>
+
+  <rect x="56" y="168" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="189" class="nodeText">NEXUS OS Platform</text>
+  <rect x="56" y="214" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="235" class="nodeText">OS Roadmap</text>
+  <rect x="56" y="260" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="281" class="nodeText">Policies</text>
+  <rect x="56" y="306" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="327" class="nodeText">Command Center</text>
+  <rect x="56" y="352" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="373" class="nodeText">Local Services</text>
+  <rect x="56" y="398" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="419" class="nodeText">Activity Ledger</text>
+  <rect x="56" y="444" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="465" class="nodeText">Private Project Workspace</text>
+  <rect x="56" y="490" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="511" class="nodeText">Project Profile</text>
+  <rect x="56" y="536" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="557" class="nodeText">Project Tasks</text>
+  <rect x="56" y="582" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="603" class="nodeText">Project Evidence</text>
+  <rect x="56" y="628" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="649" class="nodeText">Project Progress</text>
+  <rect x="56" y="674" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="695" class="nodeText">Demo Mode</text>
+  <rect x="56" y="720" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="741" class="nodeText">Demo-Safe Fixtures</text>
+  <text x="56" y="730" class="note">Render mode: fallback-svg. Mermaid CLI was not required for this deterministic public-safe artifact.</text>
+</svg>

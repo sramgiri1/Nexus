@@ -2,49 +2,45 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T23:34:54.456Z
-- Validation branch: docs/architecture-diagram-registry-foundation
-- Validation HEAD: 867d899
+- Generated at: 2026-05-15T02:20:42.902Z
+- Validation branch: docs/architecture-diagram-rendering
+- Validation HEAD: 41bb0bd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P41.9.1 - Architecture Diagram Registry Foundation
+P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Summary
 
 - Registry version: 1.0
 - Diagrams registered: 6
-- Required diagrams present: PASS
-- Rendered artifact policy: PASS
-- Public-safe source validation: PASS
+- Rendered SVG artifacts: 6
+- Render modes: fallback-svg
 
 ## Diagrams
 
-| Diagram | Status | Source | Rendered artifact |
+| Diagram | Status | Render mode | Rendered SVG |
 | --- | --- | --- | --- |
-| NEXUS Enterprise Architecture | source_available | present | planned |
-| Command Center Flow | source_available | present | planned |
-| Project / OS Boundary | source_available | present | planned |
-| Agent Governance | source_available | present | planned |
-| Runtime Self-Healing | source_available | present | planned |
-| NEXUS Roadmap | source_available | present | planned |
+| NEXUS Enterprise Architecture | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/nexus-enterprise-architecture.svg |
+| Command Center Flow | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/command-center-flow.svg |
+| Project / OS Boundary | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/project-os-boundary.svg |
+| Agent Governance | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/agent-governance.svg |
+| Runtime Self-Healing | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/runtime-self-healing.svg |
+| NEXUS Roadmap | rendered_svg_available | fallback-svg | docs/architecture/diagrams/rendered/nexus-roadmap.svg |
 
 ## Checks
 
 - Registry: PASS
-- Required diagrams: PASS
 - Mermaid sources: PASS
-- Rendered-path policy: PASS
-- Public safety: PASS
+- Rendered SVGs: PASS
 - README links: PASS
+- Diagram docs links: PASS
+- Architecture/roadmap separation: PASS
+- Tool gateway wording: PASS
+- Public safety: PASS
 - Phase status: PASS
-- Report: PASS
 - Formatting/readability: PASS
-
-## Warnings
-
-- None
 
 ## Failures
 

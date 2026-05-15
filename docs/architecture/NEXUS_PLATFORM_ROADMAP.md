@@ -143,8 +143,8 @@ Risk level:
 - `P41.8.1` Centralized Activity Log + Observability Ledger Foundation
 - `P41.8` Centralized Activity Log + Observability Ledger
 - `P41.9` README + Architecture Diagram Registry
-  - `P41.9.1` Architecture Diagram Registry Foundation
-  - `P41.9.2` Architecture Diagram Rendering + README Follow-through
+  - `P41.9.1` Architecture Diagram Registry Foundation — complete
+  - `P41.9.2` Architecture Diagram Rendering + README Follow-through — complete
 - `P42` Project Registry + Adapter Framework
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
@@ -585,8 +585,12 @@ behavior, call providers, write to a database, or mutate project source.
 
 #### P41.9.2 — Architecture Diagram Rendering + README Follow-through
 
-P41.9.2 is planned for safe rendered diagram artifacts and README visual
-follow-through after the diagram source model and validation rules are stable.
+P41.9.2 renders public-safe SVG artifacts from the diagram registry, updates
+README and diagram docs to link existing outputs, repairs phase-status/report
+metadata, and keeps enterprise architecture separate from the roadmap diagram.
+Mermaid CLI was not available without installing dependencies in this
+environment, so deterministic fallback SVG artifacts were generated and marked
+as `fallback-svg`. PNG outputs remain optional and planned.
 
 ### P42 — Project Registry + Adapter Framework
 

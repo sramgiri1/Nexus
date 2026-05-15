@@ -792,8 +792,13 @@ and documented in [docs/architecture/diagrams/README.md](diagrams/README.md).
 
 P41.9.1 adds source-only Mermaid diagrams for the enterprise architecture,
 Command Center flow, project/OS boundary, agent governance, runtime
-self-healing, and grouped NEXUS roadmap. Rendered image artifacts are planned
-and intentionally not generated in this foundation phase.
+self-healing, and grouped NEXUS roadmap.
+
+P41.9.2 renders public-safe SVG artifacts for those diagrams and updates README
+and diagram docs to reference existing SVG outputs only. Mermaid CLI was not
+available without installing dependencies in this environment, so P41.9.2 uses
+deterministic `fallback-svg` artifacts and records that render mode in the
+registry.
 
 The diagram registry is public-safe by default. Diagrams may describe private
 project boundaries generically, but they must not include private project names,

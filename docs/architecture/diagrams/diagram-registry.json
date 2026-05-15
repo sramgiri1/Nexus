@@ -1,84 +1,147 @@
 {
   "registryVersion": "1.0",
-  "updatedAt": "2026-05-14T23:26:36.000Z",
-  "phase": "P41.9.1",
-  "purpose": "Track NEXUS architecture diagrams, their sources, rendered outputs, status, and public/private safety.",
+  "updatedAt": "2026-05-15T02:19:12.284Z",
+  "phase": "P41.9.2",
+  "purpose": "Track NEXUS architecture diagrams, Mermaid sources, rendered artifacts, and public/private safety.",
   "diagrams": [
     {
-      "diagramId": "nexus-enterprise-architecture",
       "title": "NEXUS Enterprise Architecture",
-      "status": "source_available",
-      "audience": ["operator", "developer", "enterprise"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "operator",
+        "developer",
+        "enterprise"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/nexus-enterprise-architecture.mmd",
-      "renderedPath": "docs/architecture/diagrams/nexus-enterprise-architecture.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability."
+      "description": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.",
+      "id": "nexus-enterprise-architecture",
+      "purpose": "High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/nexus-enterprise-architecture.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     },
     {
-      "diagramId": "command-center-flow",
       "title": "Command Center Flow",
-      "status": "source_available",
-      "audience": ["operator", "developer"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "operator",
+        "developer"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/command-center-flow.mmd",
-      "renderedPath": "docs/architecture/diagrams/command-center-flow.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "Command Center navigation and operator flow across Mission Control, Activity Log, Docs, Service Health, roadmap, and governed actions."
+      "description": "Command Center navigation and operator flow across Mission Control, Activity Log, Docs, Service Health, roadmap, and governed actions.",
+      "id": "command-center-flow",
+      "purpose": "Command Center navigation and operator flow across Mission Control, Activity Log, Docs, Service Health, roadmap, and governed actions.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/command-center-flow.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     },
     {
-      "diagramId": "project-os-boundary",
       "title": "Project / OS Boundary",
-      "status": "source_available",
-      "audience": ["operator", "developer", "enterprise"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "operator",
+        "developer",
+        "enterprise"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/project-os-boundary.mmd",
-      "renderedPath": "docs/architecture/diagrams/project-os-boundary.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "Boundary diagram showing how NEXUS OS platform state stays separate from private project progress and demo data."
+      "description": "Boundary diagram showing how NEXUS OS platform state stays separate from private project progress and demo data.",
+      "id": "project-os-boundary",
+      "purpose": "Boundary diagram showing how NEXUS OS platform state stays separate from private project progress and demo data.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/project-os-boundary.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     },
     {
-      "diagramId": "agent-governance",
       "title": "Agent Governance",
-      "status": "source_available",
-      "audience": ["developer", "enterprise"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "developer",
+        "enterprise"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/agent-governance.mmd",
-      "renderedPath": "docs/architecture/diagrams/agent-governance.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "Governed agent layer showing planning, implementation, review, safety, evidence, and approval boundaries."
+      "description": "Governed agent layer showing planning, implementation, review, safety, evidence, and approval boundaries.",
+      "id": "agent-governance",
+      "purpose": "Governed agent layer showing planning, implementation, review, safety, evidence, and approval boundaries.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/agent-governance.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     },
     {
-      "diagramId": "runtime-self-healing",
       "title": "Runtime Self-Healing",
-      "status": "source_available",
-      "audience": ["developer", "enterprise"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "developer",
+        "enterprise"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/runtime-self-healing.mmd",
-      "renderedPath": "docs/architecture/diagrams/runtime-self-healing.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "Future self-healing loop showing runtime events, validation, recovery, policy, and operator review."
+      "description": "Future self-healing loop showing runtime events, validation, recovery, policy, and operator review.",
+      "id": "runtime-self-healing",
+      "purpose": "Future self-healing loop showing runtime events, validation, recovery, policy, and operator review.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/runtime-self-healing.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     },
     {
-      "diagramId": "nexus-roadmap",
       "title": "NEXUS Roadmap",
-      "status": "source_available",
-      "audience": ["operator", "developer", "enterprise"],
+      "status": "rendered_svg_available",
+      "audience": [
+        "operator",
+        "developer",
+        "enterprise"
+      ],
       "sourcePath": "docs/architecture/diagrams/sources/nexus-roadmap.mmd",
-      "renderedPath": "docs/architecture/diagrams/nexus-roadmap.png",
       "readmeReferenced": true,
       "publicSafe": true,
       "privateProjectDetailsAllowed": false,
-      "description": "Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram."
+      "description": "Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram.",
+      "id": "nexus-roadmap",
+      "purpose": "Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram.",
+      "renderedSvgPath": "docs/architecture/diagrams/rendered/nexus-roadmap.svg",
+      "renderedPngPath": null,
+      "renderMode": "fallback-svg",
+      "lastUpdatedPhase": "P41.9.2",
+      "warnings": [
+        "Fallback SVG generated because Mermaid CLI was not available without installing dependencies."
+      ]
     }
   ],
   "warnings": [
-    "Rendered PNG outputs are planned and intentionally not generated in P41.9.1."
+    "Fallback SVG artifacts are deterministic placeholders, not full Mermaid renders."
   ],
   "errors": []
 }

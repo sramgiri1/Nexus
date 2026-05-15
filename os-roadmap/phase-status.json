@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-14T23:26:36.000Z",
+  "generatedAt": "2026-05-15T02:16:55.439Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -782,16 +782,75 @@
       "phaseId": "P41.9",
       "title": "README + Architecture Diagram Registry",
       "track": "NEXUS_OS",
-      "status": "in_progress",
-      "branch": "docs/architecture-diagram-registry-foundation",
+      "status": "complete",
+      "branch": "docs/architecture-diagram-rendering",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Maintains README and architecture diagram registry foundations as a governed documentation surface. Previous completed phase: P41.8.6 - Activity Tests + Docs + Final Validation.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Rendered diagram artifacts are not generated until a safe local rendering workflow is selected."
+      "completedAt": "2026-05-15T02:16:55.439Z",
+      "summary": "Completes README and architecture diagram registry follow-through with public-safe rendered SVG artifacts and validated docs links.",
+      "checksRun": [
+        "npm run diagrams:render",
+        "npm run check:architecture-diagrams",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:format-readability",
+        "npm run check:public-safety",
+        "npm run check:command-center-ux"
       ],
-      "nextPhase": "P41.9.1",
+      "knownLimitations": [
+        "Mermaid CLI was not available without dependency installation, so deterministic fallback SVG artifacts were generated.",
+        "Rendered PNG outputs remain optional and were not generated."
+      ],
+      "nextPhase": "P42",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.1",
+      "title": "Architecture Diagram Registry Foundation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "docs/architecture-diagram-registry-foundation",
+      "commit": "41bb0bd",
+      "completedAt": "2026-05-15T02:16:55.439Z",
+      "summary": "Adds a public-safe architecture diagram registry, source-only Mermaid placeholders, diagram validation checker, and README/docs references.",
+      "checksRun": [
+        "npm run check:architecture-diagrams",
+        "npm run check-os-phase-status",
+        "npm run check:activity-observability-final",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Rendered PNG outputs were planned and intentionally not generated in P41.9.1.",
+        "Diagram sources were foundation-level placeholders pending a later rendering workflow."
+      ],
+      "nextPhase": "P41.9.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P41.9.2",
+      "title": "Architecture Diagram Rendering + README Follow-through",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "docs/architecture-diagram-rendering",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T02:16:55.439Z",
+      "summary": "Renders public-safe SVG architecture diagram artifacts, updates README and diagram docs, repairs diagram reports, and keeps roadmap content separate from architecture diagrams.",
+      "checksRun": [
+        "npm run diagrams:render",
+        "npm run check:architecture-diagrams",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:format-readability",
+        "npm run check:public-safety",
+        "npm run check:command-center-ux"
+      ],
+      "knownLimitations": [
+        "Mermaid CLI was not available without dependency installation, so deterministic fallback SVG artifacts were generated.",
+        "Rendered PNG outputs remain optional and were not generated."
+      ],
+      "nextPhase": "P42",
       "commandCenterVisible": true
     },
     {
@@ -1325,50 +1384,11 @@
       "knownLimitations": [],
       "nextPhase": "",
       "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P41.9.1",
-      "title": "Architecture Diagram Registry Foundation",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "docs/architecture-diagram-registry-foundation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-14T23:26:36.000Z",
-      "summary": "Adds a public-safe architecture diagram registry, source-only Mermaid placeholders, diagram validation checker, and README/docs references.",
-      "checksRun": [
-        "npm run check:architecture-diagrams",
-        "npm run check-os-phase-status",
-        "npm run check:activity-observability-final",
-        "npm run check:command-center-ux",
-        "npm run check:docs-coverage",
-        "npm run check:public-safety",
-        "npm run check:format-readability"
-      ],
-      "knownLimitations": [
-        "Rendered PNG outputs are planned and intentionally not generated in P41.9.1.",
-        "Diagram sources are foundation-level placeholders pending a later rendering workflow."
-      ],
-      "nextPhase": "P41.9.2",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P41.9.2",
-      "title": "Architecture Diagram Rendering + README Follow-through",
-      "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned follow-through for safe rendered diagram outputs and README architecture visual polish.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P42",
-      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-14T23:03:20.000Z",
-  "currentPhase": "P41.9.1",
-  "previousPhase": "P41.8.6",
-  "nextPhase": "P41.9.2"
+  "currentPhase": "P41.9.2",
+  "previousPhase": "P41.9.1",
+  "nextPhase": "P42"
 }

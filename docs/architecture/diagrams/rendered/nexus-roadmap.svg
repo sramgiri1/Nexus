@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="512" viewBox="0 0 960 512" role="img" aria-labelledby="title desc">
+  <title id="title">NEXUS Roadmap</title>
+  <desc id="desc">Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .frame { fill: #ffffff; stroke: #1f2937; stroke-width: 2; }
+    .label { fill: #475569; font: 600 13px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
+    .title { fill: #0f172a; font: 700 28px ui-sans-serif, system-ui, sans-serif; }
+    .purpose { fill: #334155; font: 15px ui-sans-serif, system-ui, sans-serif; }
+    .node { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.5; }
+    .nodeText { fill: #0f172a; font: 600 16px ui-sans-serif, system-ui, sans-serif; }
+    .note { fill: #64748b; font: 13px ui-sans-serif, system-ui, sans-serif; }
+  </style>
+  <rect width="960" height="512" class="bg"/>
+  <rect x="24" y="24" width="912" height="464" rx="22" class="frame"/>
+  <text x="56" y="64" class="label">NEXUS ARCHITECTURE DIAGRAM</text>
+  <text x="56" y="104" class="title">NEXUS Roadmap</text>
+  <text x="56" y="160" class="purpose">Grouped NEXUS OS roadmap diagram kept separate from the enterprise architecture diagram.</text>
+
+  <rect x="56" y="168" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="189" class="nodeText">Completed Foundation</text>
+  <rect x="56" y="214" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="235" class="nodeText">Immediate Stabilization</text>
+  <rect x="56" y="260" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="281" class="nodeText">Multi-project + Governance Plane</text>
+  <rect x="56" y="306" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="327" class="nodeText">API / Batch / Quality / Cost / Policy</text>
+  <rect x="56" y="352" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="373" class="nodeText">Runtime + Agent Execution</text>
+  <rect x="56" y="398" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="419" class="nodeText">Self-healing + Controlled Mutation</text>
+  <rect x="56" y="444" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="465" class="nodeText">Enterprise Readiness</text>
+  <text x="56" y="454" class="note">Render mode: fallback-svg. Mermaid CLI was not required for this deterministic public-safe artifact.</text>
+</svg>

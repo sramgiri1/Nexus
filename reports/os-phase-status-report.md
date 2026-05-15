@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-14T23:34:54.456Z
-- Validation branch: docs/architecture-diagram-registry-foundation
-- Validation HEAD: 867d899
+- Generated at: 2026-05-15T02:20:42.897Z
+- Validation branch: docs/architecture-diagram-rendering
+- Validation HEAD: 41bb0bd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P41.9.1
-- Previous phase: P41.8.6
-- Next phase: P41.9.2
+- Current phase: P41.9.2
+- Previous phase: P41.9.1
+- Next phase: P42
 
 ## Checks
 

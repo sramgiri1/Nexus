@@ -160,12 +160,21 @@ npm run nexus:down
 
 - [Diagram registry guide](docs/architecture/diagrams/README.md)
 - [Machine-readable diagram registry](docs/architecture/diagrams/diagram-registry.json)
-- Enterprise Architecture: source available, rendered output planned.
-- Command Center Flow: source available, rendered output planned.
-- Project / OS Boundary: source available, rendered output planned.
-- Roadmap: source available, rendered output planned.
+- [Enterprise Architecture](docs/architecture/diagrams/rendered/nexus-enterprise-architecture.svg):
+  NEXUS system layers and boundaries.
+- [Command Center Flow](docs/architecture/diagrams/rendered/command-center-flow.svg):
+  operator navigation and governed action flow.
+- [Project / OS Boundary](docs/architecture/diagrams/rendered/project-os-boundary.svg):
+  separation between NEXUS OS state, project progress, and demo-only data.
+- [Agent Governance](docs/architecture/diagrams/rendered/agent-governance.svg):
+  agent roles, gates, evidence, and policy flow.
+- [Runtime Self-Healing](docs/architecture/diagrams/rendered/runtime-self-healing.svg):
+  planned validation and recovery loop.
+- [Roadmap](docs/architecture/diagrams/rendered/nexus-roadmap.svg):
+  grouped phase progression only.
 
-Rendered diagram images are not linked until the generated artifacts exist.
+Architecture and roadmap diagrams are separate. Rendered PNGs are optional and
+planned; README links only existing SVG artifacts.
 
 ## Safety and Governance Boundaries
 
@@ -1108,9 +1117,15 @@ and production observability remain future work.
 
 P41.9.1 starts the README and architecture diagram registry follow-through. It
 adds source-only Mermaid diagram entries, a registry validation checker, and
-public-safe diagram documentation. Rendered PNG outputs remain planned.
+public-safe diagram documentation.
 
-Next phase: P41.9.2 - Architecture Diagram Rendering + README Follow-through.
+P41.9.2 renders public-safe SVG artifacts, updates README and diagram docs to
+link existing outputs, and keeps the roadmap diagram separate from the
+architecture diagram. Mermaid CLI was not available without dependency
+installation in this environment, so deterministic fallback SVGs were generated
+and marked as `fallback-svg`.
+
+Next phase: P42 - Project Registry + Adapter Framework.
 
 ---
 

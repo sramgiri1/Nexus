@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="834" viewBox="0 0 960 834" role="img" aria-labelledby="title desc">
+  <title id="title">NEXUS Enterprise Architecture</title>
+  <desc id="desc">High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .frame { fill: #ffffff; stroke: #1f2937; stroke-width: 2; }
+    .label { fill: #475569; font: 600 13px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
+    .title { fill: #0f172a; font: 700 28px ui-sans-serif, system-ui, sans-serif; }
+    .purpose { fill: #334155; font: 15px ui-sans-serif, system-ui, sans-serif; }
+    .node { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.5; }
+    .nodeText { fill: #0f172a; font: 600 16px ui-sans-serif, system-ui, sans-serif; }
+    .note { fill: #64748b; font: 13px ui-sans-serif, system-ui, sans-serif; }
+  </style>
+  <rect width="960" height="834" class="bg"/>
+  <rect x="24" y="24" width="912" height="786" rx="22" class="frame"/>
+  <text x="56" y="64" class="label">NEXUS ARCHITECTURE DIAGRAM</text>
+  <text x="56" y="104" class="title">NEXUS Enterprise Architecture</text>
+  <text x="56" y="160" class="purpose">High-level NEXUS OS architecture showing inputs, project registry, trusted context, Command</text>
+  <text x="56" y="182" class="purpose">Center, kernel, agents, governed tool gateway, runtime, state, security, and observability.</text>
+
+  <rect x="56" y="168" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="189" class="nodeText">Users and Inputs</text>
+  <rect x="56" y="214" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="235" class="nodeText">Project Registry and Trusted Context</text>
+  <rect x="56" y="260" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="281" class="nodeText">Command Center Control Plane</text>
+  <rect x="56" y="306" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="327" class="nodeText">NEXUS Kernel</text>
+  <rect x="56" y="352" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="373" class="nodeText">Agent Layer</text>
+  <rect x="56" y="398" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="419" class="nodeText">Governed Tool Gateway</text>
+  <rect x="56" y="444" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="465" class="nodeText">Runtime and Workers</text>
+  <rect x="56" y="490" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="511" class="nodeText">Project Delivery Layer</text>
+  <rect x="56" y="536" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="557" class="nodeText">Durable State and Evidence</text>
+  <rect x="56" y="582" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="603" class="nodeText">Security and Governance</text>
+  <rect x="56" y="628" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="649" class="nodeText">Reliability and Observability</text>
+  <rect x="56" y="674" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="695" class="nodeText">Governed Tool Gateway Detail</text>
+  <rect x="56" y="720" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="741" class="nodeText">Tool Registry</text>
+  <rect x="56" y="766" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="787" class="nodeText">MCP Registry</text>
+  <text x="56" y="776" class="note">Render mode: fallback-svg. Mermaid CLI was not required for this deterministic public-safe artifact.</text>
+</svg>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="604" viewBox="0 0 960 604" role="img" aria-labelledby="title desc">
+  <title id="title">Agent Governance</title>
+  <desc id="desc">Governed agent layer showing planning, implementation, review, safety, evidence, and approval boundaries.</desc>
+  <style>
+    .bg { fill: #f8fafc; }
+    .frame { fill: #ffffff; stroke: #1f2937; stroke-width: 2; }
+    .label { fill: #475569; font: 600 13px ui-sans-serif, system-ui, sans-serif; letter-spacing: .08em; }
+    .title { fill: #0f172a; font: 700 28px ui-sans-serif, system-ui, sans-serif; }
+    .purpose { fill: #334155; font: 15px ui-sans-serif, system-ui, sans-serif; }
+    .node { fill: #e0f2fe; stroke: #0369a1; stroke-width: 1.5; }
+    .nodeText { fill: #0f172a; font: 600 16px ui-sans-serif, system-ui, sans-serif; }
+    .note { fill: #64748b; font: 13px ui-sans-serif, system-ui, sans-serif; }
+  </style>
+  <rect width="960" height="604" class="bg"/>
+  <rect x="24" y="24" width="912" height="556" rx="22" class="frame"/>
+  <text x="56" y="64" class="label">NEXUS ARCHITECTURE DIAGRAM</text>
+  <text x="56" y="104" class="title">Agent Governance</text>
+  <text x="56" y="160" class="purpose">Governed agent layer showing planning, implementation, review, safety, evidence, and</text>
+  <text x="56" y="182" class="purpose">approval boundaries.</text>
+
+  <rect x="56" y="168" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="189" class="nodeText">Operator Intent</text>
+  <rect x="56" y="214" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="235" class="nodeText">SHEPHERD Planning</text>
+  <rect x="56" y="260" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="281" class="nodeText">CORE Implementation</text>
+  <rect x="56" y="306" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="327" class="nodeText">AUDITOR Review</text>
+  <rect x="56" y="352" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="373" class="nodeText">SENTINEL Validation</text>
+  <rect x="56" y="398" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="419" class="nodeText">WARDEN Policy Boundary</text>
+  <rect x="56" y="444" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="465" class="nodeText">Evidence Records</text>
+  <rect x="56" y="490" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="511" class="nodeText">Approvals</text>
+  <rect x="56" y="536" width="848" height="32" rx="10" class="node"/>
+  <text x="80" y="557" class="nodeText">Governed Result</text>
+  <text x="56" y="546" class="note">Render mode: fallback-svg. Mermaid CLI was not required for this deterministic public-safe artifact.</text>
+</svg>

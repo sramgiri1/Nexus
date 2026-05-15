@@ -1,28 +1,43 @@
 flowchart TB
-  inputs[Operator Inputs and Project Signals]
-  registry[Project Registry and Adapter Framework]
-  context[Trusted Context Layer]
-  commandCenter[Command Center]
-  kernel[NEXUS Kernel and Policy Boundary]
-  agents[Governed Agent Layer]
+  inputs[Users and Inputs]
+  registry[Project Registry and Trusted Context]
+  commandCenter[Command Center Control Plane]
+  kernel[NEXUS Kernel]
+  agents[Agent Layer]
   gateway[Governed Tool Gateway]
-  runtime[Local Runtime and Workers]
+  runtime[Runtime and Workers]
+  delivery[Project Delivery Layer]
   state[Durable State and Evidence]
   security[Security and Governance]
-  observability[Activity and Observability]
+  reliability[Reliability and Observability]
+
+  subgraph gatewayDetail[Governed Tool Gateway Detail]
+    toolRegistry[Tool Registry]
+    mcpRegistry[MCP Registry]
+    cliAdapter[CLI Adapter]
+    apiAdapter[API Adapter]
+    batchAdapter[Batch Adapter]
+    contractLoader[Lazy Contract Loader]
+    contractOps[Search / Get Contract / Execute]
+    gatewayControls[Policy + Cost + Audit]
+  end
 
   inputs --> commandCenter
-  registry --> context
-  context --> commandCenter
+  registry --> commandCenter
   commandCenter --> kernel
   kernel --> agents
   kernel --> gateway
   kernel --> runtime
+  agents --> delivery
+  runtime --> delivery
+  delivery --> state
   agents --> state
   gateway --> state
   runtime --> state
+  gateway --> gatewayDetail
+  gatewayDetail --> state
   security --> kernel
   security --> gateway
-  state --> observability
-  commandCenter --> observability
-  observability --> commandCenter
+  state --> reliability
+  commandCenter --> reliability
+  reliability --> commandCenter
