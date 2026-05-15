@@ -2153,12 +2153,14 @@
       "phaseId": "P47.3",
       "title": "Source Trust Score",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trusted-context-data-architecture",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "25af38a",
+      "completedAt": "2026-05-15T16:20:54.593Z",
       "summary": "Scores trusted context sources by system-of-record status, local availability, ownership, freshness, redaction, lineage, modes, and agent metadata.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:source-trust-score"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
@@ -2169,11 +2171,11 @@
       "phaseId": "P47.4",
       "title": "Freshness + Lineage",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Evaluates context freshness and records redacted lineage metadata.",
+      "summary": "Evaluates trusted context source freshness and creates redacted lineage records without source mutation.",
       "checksRun": [],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
@@ -2231,8 +2233,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:18:58.753Z",
-  "currentPhase": "P47.3",
-  "previousPhase": "P47.2",
-  "nextPhase": "P47.4"
+  "updatedAt": "2026-05-15T16:20:54.593Z",
+  "currentPhase": "P47.4",
+  "previousPhase": "P47.3",
+  "nextPhase": "P47.5"
 }

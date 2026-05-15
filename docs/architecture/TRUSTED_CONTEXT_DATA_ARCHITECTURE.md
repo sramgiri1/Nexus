@@ -71,3 +71,19 @@ content, write to a database, or grant runtime permissions.
 
 P47.4 adds freshness and lineage records so trusted context can explain whether
 a source is fresh, stale, invalidated, unknown, or unavailable.
+
+## P47.4 - Freshness + Lineage
+
+Freshness evaluation classifies each source as fresh, stale pending validation,
+invalidated by change, unknown, or unavailable. P47.4 keeps freshness markers
+metadata-only and in-memory for checker validation; it does not rewrite source
+files or mutate runtime ledgers.
+
+Lineage records capture source ID, derivation, generator, project/scope/task
+metadata, activity or evidence references, timestamp, and redacted status. Raw
+source content and private payloads are excluded.
+
+## Next
+
+P47.5 builds read-only trusted context packet previews from registry, source of
+record, trust score, freshness, and lineage metadata.

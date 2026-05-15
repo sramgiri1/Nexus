@@ -1239,7 +1239,11 @@ P47.3 adds deterministic source trust scoring for registered sources. Scores
 explain high, medium, low, and unavailable trust bands without external calls or
 runtime permissions.
 
-Next phase: P47.4 - Freshness + Lineage.
+P47.4 adds freshness and lineage models for trusted context sources. Freshness
+and lineage remain metadata-only and do not rewrite files or inject context into
+runtime agents.
+
+Next phase: P47.5 - Trusted Context Packet.
 
 ---
 
