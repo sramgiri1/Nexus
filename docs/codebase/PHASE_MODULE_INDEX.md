@@ -1378,3 +1378,24 @@ state and should be verified again during future docs audits.
   or project mutation was enabled.
 - Known limitations:
   Runtime dispatch remains a future governed phase.
+
+## P53.1 — Trigger Gateway Schema
+
+- Primary capability:
+  Preview-only trigger gateway schema and trigger type model.
+- Main files/folders touched:
+  `trigger-gateway/triggerGatewaySchema.js`,
+  `trigger-gateway/triggerTypes.js`, `trigger-gateway/index.js`,
+  `policy/trigger-gateway-policy.json`,
+  `docs/architecture/TRIGGER_INTEGRATION_GATEWAY.md`
+- Main checker(s):
+  `scripts/check-trigger-gateway-schema.js`
+- Main report(s):
+  `reports/trigger-gateway-schema-report.md`
+- Command Center impact:
+  Establishes metadata for later Trigger + Integrations preview UX.
+- Safety impact:
+  No trigger execution, webhooks, schedulers, provider calls, external network,
+  DB writes, worker runtime, credentials, or project mutation.
+- Known limitations:
+  Runtime integration remains disabled.

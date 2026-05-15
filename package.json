@@ -169,7 +169,8 @@
     "check:lazy-tool-context": "node scripts/check-lazy-tool-context.js",
     "check:tool-permission-matrix": "node scripts/check-tool-permission-matrix.js",
     "check:tool-adapters": "node scripts/check-tool-adapters.js",
-    "check:tool-governance-final": "node scripts/check-tool-governance-final.js"
+    "check:tool-governance-final": "node scripts/check-tool-governance-final.js",
+    "check:trigger-gateway-schema": "node scripts/check-trigger-gateway-schema.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

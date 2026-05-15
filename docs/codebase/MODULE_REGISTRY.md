@@ -547,6 +547,37 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Trigger + Integration Gateway
+
+- Purpose:
+  Define preview-only trigger and integration metadata for manual commands,
+  schedules, repository events, ticket events, chat commands, and API webhook
+  previews without enabling runtime execution.
+- Primary files:
+  `trigger-gateway/triggerGatewaySchema.js`,
+  `trigger-gateway/triggerTypes.js`,
+  `trigger-gateway/index.js`,
+  `policy/trigger-gateway-policy.json`
+- Public entry points:
+  `trigger-gateway/index.js`,
+  `scripts/check-trigger-gateway-schema.js`
+- Inputs/outputs:
+  Trigger metadata in memory, policy JSON, checker output, and markdown reports.
+- Side effects:
+  Checkers write reports only.
+- Safety boundary:
+  No trigger execution, webhook listeners, schedulers, provider calls, external
+  network calls, DB writes, worker runtime, credentials, or project mutation.
+- Reuse notes:
+  Future trigger preview modules should reuse the schema and trigger type model
+  before adding new integration-specific fields.
+- Tests/checkers:
+  `npm run check:trigger-gateway-schema`
+- Known limitations:
+  P53.1 is schema and policy only. Runtime integration remains disabled.
+- Status:
+  foundation
+
 ## Shared Helper Catalog and Refactor Plan
 
 - Purpose:
