@@ -1340,16 +1340,18 @@
       "phaseId": "P47",
       "title": "Trusted Context + Data Architecture Layer",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trusted-context-data-architecture",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Metadata-only trusted context architecture starts with data source registry, system-of-record mapping, trust scoring, freshness, lineage, packet previews, and Command Center visibility.",
-      "checksRun": [],
+      "completedAt": "2026-05-15T16:33:36.917Z",
+      "summary": "Completes the metadata-only trusted context layer between project registry, scoped memory, governance, and future provider/worker execution.",
+      "checksRun": [
+        "npm run check:trusted-context-final-validation"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
-      "nextPhase": "P47.1",
+      "nextPhase": "P48",
       "commandCenterVisible": true
     },
     {
@@ -2207,12 +2209,15 @@
       "phaseId": "P47.6",
       "title": "Command Center Data / Context Center",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trusted-context-data-architecture",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "68cc72d",
+      "completedAt": "2026-05-15T16:33:36.917Z",
       "summary": "Adds read-only Command Center Data & Context Center visibility for trusted context sources, trust, freshness, lineage, packet previews, and exclusions.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:trusted-context-command-center",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
@@ -2223,12 +2228,14 @@
       "phaseId": "P47.7",
       "title": "Tests + Docs + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Closes P47 and marks P48 as next.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T16:33:36.917Z",
+      "summary": "Finalizes Trusted Context + Data Architecture across registry, system-of-record mapping, trust scoring, freshness, lineage, packet previews, Command Center UX, docs, and safety validation.",
+      "checksRun": [
+        "npm run check:trusted-context-final-validation"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
@@ -2237,8 +2244,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:28:01.730Z",
-  "currentPhase": "P47.6",
-  "previousPhase": "P47.5",
-  "nextPhase": "P47.7"
+  "updatedAt": "2026-05-15T16:33:36.917Z",
+  "currentPhase": "P47.7",
+  "previousPhase": "P47.6",
+  "nextPhase": "P48"
 }

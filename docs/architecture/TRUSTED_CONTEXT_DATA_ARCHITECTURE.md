@@ -120,3 +120,17 @@ runtime agent injection disabled.
 
 P47.7 closes the trusted context phase with final validation, regenerated P47
 reports, docs updates, and P48 as the next roadmap phase.
+
+## P47.7 - Tests + Docs + Final Validation
+
+P47.7 validates the full trusted context layer: data source registry,
+system-of-record mapping, source trust scoring, freshness and lineage, trusted
+context packet previews, and Command Center Data & Context Center visibility.
+
+P47 closes as a read-only architecture layer. It does not enable provider/tool
+dispatch, worker runtime, DB writes, project mutation, or runtime agent context
+injection.
+
+## Next
+
+P48 - Governed Agentic Mesh.

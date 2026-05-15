@@ -934,3 +934,9 @@ P47.1 adds a read-only data source registry for OS, project, runtime, and safety
 sources. It records source ownership, scope, classification, freshness policy,
 redaction requirements, and lineage requirements without reading raw private
 content or enabling runtime agent injection.
+
+P47.2 through P47.7 add system-of-record mapping, source trust scoring,
+freshness and lineage, trusted context packet previews, Command Center Data &
+Context Center visibility, and final validation. P47 remains metadata-only and
+does not enable provider/tool/worker dispatch, DB writes, or runtime agent
+context injection.

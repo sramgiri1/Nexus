@@ -249,3 +249,13 @@ not enabled yet.
 - Available actions: inspection only
 - Disabled actions: batch runtime is not enabled
 - Known limitations: no live background worker runtime
+# Data & Context Center
+
+Use `/command-center/context` to inspect trusted context readiness. The page
+shows data source summaries, system-of-record domains, trust bands, freshness
+and lineage status, context packet preview summaries, and exclusions or blocks.
+
+The page is read-only. It does not show raw private docs, raw source, raw logs,
+raw policy JSON, secrets, or credentials. It does not execute provider calls,
+tool calls, worker jobs, DB writes, project mutation, or runtime agent context
+injection.

@@ -642,6 +642,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P47.1",
+      "title": "Data Source Registry",
+      "track": "NEXUS_OS",
+      "order": 20.01,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Define trusted context sources and registry schema.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.2",
+      "title": "System-of-Record Mapping",
+      "track": "NEXUS_OS",
+      "order": 20.020000000000003,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Map knowledge domains to authoritative sources.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.3",
+      "title": "Source Trust Score",
+      "track": "NEXUS_OS",
+      "order": 20.03,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Score sources by trust, ownership, freshness, and policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.4",
+      "title": "Freshness + Lineage",
+      "track": "NEXUS_OS",
+      "order": 20.040000000000003,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Track staleness, invalidation, and redacted source lineage.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.5",
+      "title": "Trusted Context Packet",
+      "track": "NEXUS_OS",
+      "order": 20.05,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Build read-only trusted context packet previews.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.6",
+      "title": "Command Center Data / Context Center",
+      "track": "NEXUS_OS",
+      "order": 20.060000000000002,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Expose trusted context readiness to operators.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.7",
+      "title": "Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 20.07,
+      "group": "P47 Trusted Context + Data Architecture Layer",
+      "summary": "Validate and close trusted context architecture.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P48",
       "title": "Governed Agentic Mesh",
       "track": "NEXUS_OS",
@@ -984,5 +1047,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-15T13:00:00.000Z"
+  "updatedAt": "2026-05-15T16:35:59.905Z"
 }

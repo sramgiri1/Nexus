@@ -610,13 +610,18 @@ updated as new module families or entry points are added.
   Future context, memory, tool, provider, worker, and project registry phases
   should use this registry before adding new context sources.
 - Tests/checkers:
-  `scripts/check-trusted-context-data-sources.js`
+  `scripts/check-trusted-context-data-sources.js`,
+  `scripts/check-system-of-record-map.js`,
+  `scripts/check-source-trust-score.js`,
+  `scripts/check-context-freshness-lineage.js`,
+  `scripts/check-trusted-context-packet.js`,
+  `scripts/check-trusted-context-command-center.js`,
+  `scripts/check-trusted-context-final-validation.js`
 - Known limitations:
-  P47.1 registers sources only. System-of-record mapping, trust scoring,
-  freshness, lineage, packet previews, and Command Center UX are later P47
-  subphases.
+  P47 is metadata-only. Packet previews are not injected into agents and do not
+  enable provider/tool/worker dispatch, DB writes, or project mutation.
 - Status:
-  foundation
+  active
 
 ## Planned or Not Found
 

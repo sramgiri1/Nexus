@@ -1252,7 +1252,11 @@ P47.6 adds the read-only Command Center Data & Context Center at
 system-of-record mapping, trust scores, freshness/lineage, packet previews, and
 exclusions without raw private content.
 
-Next phase: P47.7 - Tests + Docs + Final Validation.
+P47.7 closes Trusted Context + Data Architecture with final validation across
+the registry, source-of-record map, trust scoring, freshness/lineage, packet
+preview, and Command Center Data & Context Center.
+
+Next phase: P48 - Governed Agentic Mesh.
 
 ---
 
