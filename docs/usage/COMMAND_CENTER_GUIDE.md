@@ -135,14 +135,16 @@ not enabled yet.
 
 - Purpose: summarize current project or private-project state
 - Shows: active scope, backend validation, iOS readiness, release readiness,
-  project selector state, capability matrix, adapter posture, and local-private
-  project progress when available
+  project selector state, capability matrix, P43 scope classification posture,
+  adapter posture, and local-private project progress when available
 - Available actions: inspection only
 - Disabled actions: adapter runtime, project mutation, provider/tool/worker
   execution, and DB writes remain disabled
 - Evidence/activity: validation posture and readiness context
 - Known limitations: Project Registry + Adapter Framework is a read-only,
   policy-governed foundation. Project selector persistence is local UI-only.
+  Scope classification is also read-only; enforcement and packaging safety are
+  planned for later P43 subphases.
   If no project is selected, use the no-project guidance to create or import a
   project, add a project profile, define stack/test commands, create a mission,
   generate a plan, and activate the first task.

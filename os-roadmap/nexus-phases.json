@@ -358,8 +358,26 @@
       "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
       "order": 17,
-      "group": "Planned OS Phases",
+      "group": "P43 Scope Boundary + Project Packaging Safety",
       "summary": "Strengthen project packaging and scope boundaries before broader workspace automation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.1",
+      "title": "Scope Classification Model",
+      "track": "NEXUS_OS",
+      "order": 17.1,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Adds classification-only scope constants, classifiers, policy evaluation, reporting, and checker coverage.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.2",
+      "title": "Project vs OS Mutation Boundary",
+      "track": "NEXUS_OS",
+      "order": 17.2,
+      "group": "P43 Scope Boundary + Project Packaging Safety",
+      "summary": "Plans the mutation boundary rules that will govern OS and project changes before packaging/export work.",
       "commandCenterVisible": true
     },
     {

@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T10:28:09.405Z
-- Validation branch: test/project-registry-final-validation
-- Validation HEAD: acbe566
+- Generated at: 2026-05-15T11:27:26.407Z
+- Validation branch: arch/scope-classification-model
+- Validation HEAD: e6a98d2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P42.7
-- Previous phase: P42.6
-- Next phase: P43
+- Current phase: P43.1
+- Previous phase: P42.7
+- Next phase: P43.2
 
 ## Checks
 

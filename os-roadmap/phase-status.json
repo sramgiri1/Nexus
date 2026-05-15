@@ -859,7 +859,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "test/project-registry-final-validation",
-      "commit": "pending-final-commit",
+      "commit": "e6a98d2",
       "completedAt": "2026-05-15T10:30:00.000Z",
       "summary": "Completes the read-only, policy-governed Project Registry + Adapter Framework foundation through final validation and roadmap closure.",
       "checksRun": [
@@ -1010,7 +1010,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "test/project-registry-final-validation",
-      "commit": "pending-final-commit",
+      "commit": "e6a98d2",
       "completedAt": "2026-05-15T10:30:00.000Z",
       "summary": "Validates and closes the P42 Project Registry + Adapter Framework foundation, regenerates reports, fixes public-safe roadmap wording, and sets P43 as next.",
       "checksRun": [
@@ -1043,14 +1043,67 @@
       "phaseId": "P43",
       "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/scope-classification-model",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Defines scope boundaries and project packaging safety before project mutation, export, or adapter runtime can expand.",
+      "checksRun": [
+        "npm run check:scope-classification"
+      ],
+      "knownLimitations": [
+        "P43.1 classifies scope only; mutation boundary enforcement, packaging checks, export manifests, and Command Center scope UX remain later P43 subphases."
+      ],
+      "nextPhase": "P43.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.1",
+      "title": "Scope Classification Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/scope-classification-model",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T11:30:00.000Z",
+      "summary": "Adds classification-only scope constants, path/file-set/task/action classifiers, policy evaluation, scope report generation, and checker coverage.",
+      "checksRun": [
+        "npm run check:scope-classification",
+        "npm run check:project-registry-final-validation",
+        "npm run check:project-capability-matrix",
+        "npm run check:project-onboarding",
+        "npm run check:project-stack-profile",
+        "npm run check:project-profile-loader",
+        "npm run check:project-registry-schema",
+        "npm run check:os-phase-status",
+        "npm run check:architecture-diagrams",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:agentic-workspace",
+        "npm run check:db-foundation",
+        "npm run check:live-local-api",
+        "npm run check:command-center-private-validation",
+        "npm run check:format-readability",
+        "npm run check:public-safety"
+      ],
+      "knownLimitations": [
+        "Classification does not enforce runtime boundaries.",
+        "Project mutation, export, packaging safety checks, provider/tool/worker execution, and DB writes remain disabled."
+      ],
+      "nextPhase": "P43.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P43.2",
+      "title": "Project vs OS Mutation Boundary",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned project packaging and scope-boundary hardening phase.",
+      "summary": "Planned mutation boundary phase that will define how OS and project changes are reviewed before any broader packaging or export work.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P44",
+      "nextPhase": "P43.3",
       "commandCenterVisible": true
     },
     {
@@ -1559,8 +1612,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T04:20:00.000Z",
-  "currentPhase": "P42.7",
-  "previousPhase": "P42.6",
-  "nextPhase": "P43"
+  "updatedAt": "2026-05-15T11:30:00.000Z",
+  "currentPhase": "P43.1",
+  "previousPhase": "P42.7",
+  "nextPhase": "P43.2"
 }

@@ -115,3 +115,8 @@ Project types are metadata only through P42. They do not activate adapters.
 ## Next Phase
 
 P43 - Scope Boundary + Project Packaging Safety.
+
+P43.1 starts that sequence with a classification-only model for NEXUS OS,
+project, cross-cutting, demo, and unknown changes. It does not enable adapter
+runtime, project mutation, packaging/export, provider/tool/worker execution, or
+DB writes.

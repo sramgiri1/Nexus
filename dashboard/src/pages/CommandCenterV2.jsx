@@ -3380,6 +3380,20 @@ function ProjectsPage({ vm, studio }) {
         </div>
 
         <div className="ccv2-card ccv2-page-summary-card">
+          <div className="ccv2-section-heading">Scope Boundary</div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+            P43.1 adds classification for NEXUS OS, project, cross-cutting, demo, and unknown changes. The model is
+            classification ready; enforcement not enabled yet, and packaging safety is planned for later P43 subphases.
+          </p>
+          <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">NEXUS OS changes</span><span className="ccv2-page-summary-value">classified</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project changes</span><span className="ccv2-page-summary-value">classified · mutation disabled</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cross-cutting changes</span><span className="ccv2-page-summary-value">review required</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unknown changes</span><span className="ccv2-page-summary-value">review required</span></div>
+          </div>
+        </div>
+
+        <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Summary</div>
           <div className="ccv2-page-summary-grid">
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>

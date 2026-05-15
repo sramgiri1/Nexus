@@ -153,13 +153,13 @@ check(commandCenterSource.includes("Project Capability Matrix"), "p426", "Capabi
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
-for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7", "P43"]) {
+for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7", "P43", "P43.1", "P43.2"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P42.7", "osPhaseStatus", "currentPhase must be P42.7");
-check(phaseStatus.previousPhase === "P42.6", "osPhaseStatus", "previousPhase must be P42.6");
-check(phaseStatus.nextPhase === "P43", "osPhaseStatus", "nextPhase must be P43");
+check(phaseStatus.currentPhase === "P43.1", "osPhaseStatus", "currentPhase must be P43.1");
+check(phaseStatus.previousPhase === "P42.7", "osPhaseStatus", "previousPhase must be P42.7");
+check(phaseStatus.nextPhase === "P43.2", "osPhaseStatus", "nextPhase must be P43.2");
 for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.6", "P42.7"]) {
   const entry = statusById.get(phaseId) || {};
   check(entry.status === "complete", "osPhaseStatus", `${phaseId} must be complete`);
@@ -170,7 +170,9 @@ for (const phaseId of ["P42", "P42.1", "P42.2", "P42.3", "P42.4", "P42.5", "P42.
   check(Array.isArray(entry.knownLimitations), "osPhaseStatus", `${phaseId} must include knownLimitations`);
   check(entry.commandCenterVisible === true, "osPhaseStatus", `${phaseId} must be Command Center visible`);
 }
-check(statusById.get("P43")?.status === "planned", "osPhaseStatus", "P43 must be planned");
+check(["in_progress", "complete"].includes(statusById.get("P43")?.status), "osPhaseStatus", "P43 must be active");
+check(statusById.get("P43.1")?.status === "complete", "osPhaseStatus", "P43.1 must be complete");
+check(statusById.get("P43.2")?.status === "planned", "osPhaseStatus", "P43.2 must be planned");
 
 const registryValidation = validateProjectRegistry(loadProjectRegistry());
 check(registryValidation.valid === true, "projectRegistryJson", `Registry invalid: ${registryValidation.errors.join("; ")}`);

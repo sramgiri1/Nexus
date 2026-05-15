@@ -114,7 +114,8 @@
     "check:project-onboarding": "node scripts/check-project-onboarding.js",
     "check:command-center-project-selector": "node scripts/check-command-center-project-selector.js",
     "check:project-capability-matrix": "node scripts/check-project-capability-matrix.js",
-    "check:project-registry-final-validation": "node scripts/check-project-registry-final-validation.js"
+    "check:project-registry-final-validation": "node scripts/check-project-registry-final-validation.js",
+    "check:scope-classification": "node scripts/check-scope-classification.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

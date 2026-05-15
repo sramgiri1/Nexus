@@ -894,7 +894,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("Scope Boundary + Project Packaging Safety");
+    expect(plannedBody).toContain("Project vs OS Mutation Boundary");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -921,7 +921,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText("P42");
+    await expect(page.locator("body")).toContainText("P43.2");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -1368,6 +1368,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Worker runtime is not enabled");
     await expect(page.locator("body")).toContainText("MCP/tool execution is not enabled");
     await expect(page.locator("body")).toContainText("Adapter Runtime disabled");
+    await expect(page.getByText("Scope Boundary", { exact: true })).toBeVisible();
+    await expect(page.locator("body")).toContainText("classification ready");
+    await expect(page.locator("body")).toContainText("enforcement not enabled yet");
+    await expect(page.locator("body")).toContainText("Cross-cutting changes");
 
     expect(errors).toEqual([]);
   });
@@ -1632,14 +1636,16 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks completed P42 foundation and P43 next", async ({ page }) => {
+  test("OS Roadmap tracks completed P42 foundation and current P43.1 scope classification", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P42.7");
-    expect(body).toContain("Project Registry Adapter Final Validation + Roadmap Closure");
+    expect(body).toContain("P43.1");
+    expect(body).toContain("Scope Classification Model");
+    expect(body).toContain("P43.2");
+    expect(body).toContain("Project vs OS Mutation Boundary");
     expect(body).toContain("P43");
     expect(body).toContain("Scope Boundary + Project Packaging Safety");
     expect(body).not.toContain("DemoApp");
@@ -1650,6 +1656,8 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Project Registry Schema + Policy");
     expect(completedBody).toContain("P42.6");
     expect(completedBody).toContain("Project Capability Matrix");
+    expect(completedBody).toContain("P42.7");
+    expect(completedBody).toContain("Project Registry Adapter Final Validation + Roadmap Closure");
 
     expect(errors).toEqual([]);
   });
