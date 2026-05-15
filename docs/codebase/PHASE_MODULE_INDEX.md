@@ -1463,3 +1463,23 @@ state and should be verified again during future docs audits.
   project mutation.
 - Known limitations:
   GitHub integration remains a dry-run preview only.
+
+## P53.5 — Jira / Linear Placeholder Trigger Models
+
+- Primary capability:
+  Dry-run ticket event preview catalog and ticket-event-to-NEXUS-action mapping.
+- Main files/folders touched:
+  `integrations/ticketTriggerPreview.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`
+- Main checker(s):
+  `scripts/check-ticket-trigger-preview.js`
+- Main report(s):
+  `reports/ticket-trigger-preview-report.md`
+- Command Center impact:
+  Command Palette details show Jira / Linear as planned integrations with no
+  credentials and no outbound calls.
+- Safety impact:
+  No Jira or Linear API calls, credentials, webhook receiver, ticket mutation,
+  or project mutation.
+- Known limitations:
+  Ticket integrations remain dry-run previews only.

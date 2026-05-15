@@ -90,5 +90,19 @@ configured and webhook execution disabled.
 
 ## Next Phase
 
-P53.5 defines Jira and Linear placeholder trigger models without ticket-system
-API calls, credentials, webhook receivers, or ticket mutation.
+## P53.5 - Jira / Linear Placeholder Trigger Models
+
+P53.5 adds Jira and Linear placeholder trigger models for issue created,
+updated, assigned, status changed, priority changed, and comment created events.
+Each preview requires project scope and privacy classification.
+
+Ticket previews do not call Jira or Linear APIs, use credentials, receive
+webhooks, mutate tickets, or mutate projects.
+
+Command Center surfaces Jira / Linear as planned integrations with no
+credentials configured and no outbound calls enabled.
+
+## Next Phase
+
+P53.6 defines Slack and Teams placeholder trigger models without chat API calls,
+bot tokens, webhook receivers, or channel/user data storage.

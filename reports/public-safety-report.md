@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T23:36:37.537Z
+- Generated at: 2026-05-15T23:38:47.611Z
 - Validation branch: arch/trigger-integration-gateway
-- Validation HEAD: 44a3168
+- Validation HEAD: 32e3a77
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:

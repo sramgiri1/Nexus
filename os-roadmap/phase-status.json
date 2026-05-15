@@ -1597,7 +1597,8 @@
         "npm run check:trigger-gateway-schema",
         "npm run check:manual-trigger",
         "npm run check:scheduled-trigger",
-        "npm run check:github-trigger-preview"
+        "npm run check:github-trigger-preview",
+        "npm run check:ticket-trigger-preview"
       ],
       "knownLimitations": [
         "P53 is preview/dry-run only and does not enable real trigger execution, webhook listeners, schedulers, providers, network calls, DB writes, workers, credentials, or project mutation."
@@ -1663,10 +1664,10 @@
       "phaseId": "P53.4",
       "title": "GitHub Event Trigger Preview",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "32e3a77",
+      "completedAt": "2026-05-16T00:06:00.000Z",
       "summary": "GitHub Event Trigger Preview for preview-only Trigger + Integration Gateway governance.",
       "checksRun": [
         "npm run check:github-trigger-preview"
@@ -1681,13 +1682,17 @@
       "phaseId": "P53.5",
       "title": "Jira / Linear Placeholder Trigger Models",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "in_progress",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "",
+      "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Jira / Linear Placeholder Trigger Models for preview-only Trigger + Integration Gateway governance.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "checksRun": [
+        "npm run check:ticket-trigger-preview"
+      ],
+      "knownLimitations": [
+        "Ticket triggers are dry-run previews only; no Jira/Linear API calls, credentials, webhook receivers, ticket mutation, or project mutation."
+      ],
       "nextPhase": "P53.6",
       "commandCenterVisible": true
     },
@@ -3148,8 +3153,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:06:00.000Z",
-  "currentPhase": "P53.4",
-  "previousPhase": "P53.3",
-  "nextPhase": "P53.5"
+  "updatedAt": "2026-05-16T00:10:00.000Z",
+  "currentPhase": "P53.5",
+  "previousPhase": "P53.4",
+  "nextPhase": "P53.6"
 }

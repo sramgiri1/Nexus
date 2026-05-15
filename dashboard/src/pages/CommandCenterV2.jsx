@@ -1546,6 +1546,12 @@ function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand
                     GitHub Events - Preview only · no credentials configured · webhook execution is disabled
                   </span>
                 </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Ticket preview</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    Jira / Linear - Planned integration · no credentials configured · no outbound calls
+                  </span>
+                </div>
               </div>
 
               <div className="ccv2-command-palette__capabilities">
