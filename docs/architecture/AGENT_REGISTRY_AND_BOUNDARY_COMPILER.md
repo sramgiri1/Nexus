@@ -97,3 +97,18 @@ Example envelopes are generated for CORE, SENTINEL, WARDEN, and AUDITOR.
 
 ## Next
 P45.5 exposes the registry and dry-run boundary preview in Command Center.
+
+## P45.5 - Command Center Agent Registry UX
+P45.5 turns the former Agent Fleet surface into a read-only Agent Registry
+experience. The page shows tabs for Overview, Capabilities, Boundaries,
+Projects, Evidence Requirements, and Developer Details.
+
+The page shows the known NEXUS agents, their roles, status, capability counts,
+approval requirements, evidence requirements, cost posture, memory posture, and
+a dry-run boundary envelope preview. There are no edit controls, permission
+changes, runtime enforcement toggles, provider calls, DB writes, or tool
+dispatch.
+
+## Next
+P45.6 performs final validation for the registry, matrix, boundaries, compiler,
+Command Center UX, docs, roadmap status, and safety posture.

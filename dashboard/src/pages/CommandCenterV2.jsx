@@ -6,6 +6,7 @@ import { HelpLink } from "../components/command-center-v2/HelpLink.jsx";
 import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher.jsx";
 import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
 import {
+  AGENT_REGISTRY_TABS,
   BATCH_QUEUE_TABS,
   COST_CENTER_TABS,
   DURABLE_STATE_TABS,
@@ -2770,93 +2771,147 @@ function TaskQueuePage({ vm }) {
   );
 }
 
-/* ─── Agent Fleet Page ─── */
-function AgentFleetPage({ vm, studio }) {
-  const agents = studio?.agentEntries || [];
-  const missionTasks = vm.taskActivation?.missionTasks || [];
-
-  const MISSION_AGENTS = ["SHEPHERD", "AUDITOR", "PRISM", "SENTINEL", "WARDEN", "CORE"];
-
-  function plannedTasksForAgent(agentName) {
-    return missionTasks.filter((t) => t.targetAgent === agentName);
-  }
-
-  function statusDotClass(status) {
-    if (status === "active") return "ccv2-agent-status-dot--active";
-    if (status === "working") return "ccv2-agent-status-dot--working";
-    if (status === "blocked") return "ccv2-agent-status-dot--blocked";
-    if (status === "done") return "ccv2-agent-status-dot--done";
-    return "ccv2-agent-status-dot--idle";
-  }
+/* ─── Agent Registry Page ─── */
+function AgentRegistryPage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
+  const registry = vm.agentRegistry || {};
+  const agents = registry.agents || [];
+  const envelope = registry.envelopePreview || {};
 
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
         <div className="ccv2-page-head">
-          <div className="ccv2-page-head__title">Agent Fleet</div>
-          <div className="ccv2-page-head__sub">{agents.length} agents · live status from memory snapshot</div>
+          <div className="ccv2-page-head__title">Agent Registry</div>
+          <div className="ccv2-page-head__sub">
+            Versioned agent identities, capabilities, and metadata-only boundaries.
+          </div>
         </div>
 
-        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Task Assignments — Private Project</div>
-        <div className="ccv2-card" style={{ padding: 0, overflow: "hidden", marginBottom: 20 }}>
-          <table className="ccv2-table">
-            <thead>
-              <tr>
-                <th>Agent</th>
-                <th>Planned Tasks</th>
-                <th>Activated</th>
-                <th>Next Queued Task</th>
-                <th>Capability</th>
-              </tr>
-            </thead>
-            <tbody>
-              {MISSION_AGENTS.map((agentName) => {
-                const tasks = plannedTasksForAgent(agentName);
-                const nextTask = tasks[0];
-                return (
-                  <tr key={agentName}>
-                    <td style={{ fontWeight: 700 }}>{agentName}</td>
-                    <td>{tasks.length}</td>
-                    <td><span className="ccv2-pill ccv2-pill--disabled">0</span></td>
-                    <td style={{ fontSize: 12 }}>{nextTask ? nextTask.title : <span style={{ color: "var(--v2-muted-2)" }}>—</span>}</td>
-                    <td style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>{nextTask ? nextTask.capabilityId : "—"}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+        <div className="ccv2-stats-row">
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Registered Agents</div>
+            <div className="ccv2-stat-chip__value">{agents.length}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Runtime Enforcement</div>
+            <div className="ccv2-stat-chip__value">Off</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Active Project</div>
+            <div className="ccv2-stat-chip__value">{registry.activeProjectLabel || "Private Project"}</div>
+          </div>
+          <div className="ccv2-stat-chip">
+            <div className="ccv2-stat-chip__label">Tool Dispatch</div>
+            <div className="ccv2-stat-chip__value">Disabled</div>
+          </div>
         </div>
 
-        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>All Agents</div>
-        <div className="ccv2-agent-grid">
-          {agents.map((agent) => {
-            const agentName = agent.name?.toUpperCase();
-            const agentTasks = plannedTasksForAgent(agentName);
-            return (
-              <div key={agent.id} className="ccv2-agent-card">
-                <div className="ccv2-agent-card__header">
-                  <div className={`ccv2-agent-status-dot ${statusDotClass(agent.status)}`} />
-                  <div className="ccv2-agent-card__name">{agent.name}</div>
-                </div>
-                <div className="ccv2-agent-card__role">{agent.role} · {agent.team}</div>
-                {agentTasks.length > 0 && (
+        <CommandTabs
+          tabs={AGENT_REGISTRY_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Agent Registry sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-agent-grid">
+              {agents.map((agent) => (
+                <div key={agent.agentId} className="ccv2-agent-card">
+                  <div className="ccv2-agent-card__header">
+                    <div className="ccv2-agent-status-dot ccv2-agent-status-dot--active" />
+                    <div className="ccv2-agent-card__name">{agent.displayName}</div>
+                  </div>
+                  <div className="ccv2-agent-card__role">{agent.role}</div>
                   <div className="ccv2-agent-card__mission-tasks">
-                    <span className="ccv2-pill ccv2-pill--pending">{agentTasks.length} planned task{agentTasks.length > 1 ? "s" : ""}</span>
-                    <span style={{ fontSize: 11, color: "var(--v2-muted)", marginLeft: 4 }}>{agentTasks[0]?.title}</span>
+                    <span className="ccv2-pill ccv2-pill--pass">{agent.status}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{agent.agentType}</span>
+                    <span className="ccv2-pill ccv2-pill--pending">{agent.capabilityCount} capabilities</span>
                   </div>
-                )}
-                {agent.task && (
-                  <div className="ccv2-agent-card__task">{agent.task}</div>
-                )}
-                {typeof agent.progress === "number" && agent.progress > 0 && (
-                  <div style={{ marginTop: 6, height: 3, background: "rgba(255,255,255,0.07)", borderRadius: 2, overflow: "hidden" }}>
-                    <div style={{ height: "100%", width: `${agent.progress}%`, background: "var(--v2-teal)", borderRadius: 2 }} />
+                  <div className="ccv2-agent-card__task">
+                    Boundary: {agent.boundarySummary.allowedPathCount} allowed path groups · {agent.boundarySummary.forbiddenPathCount} forbidden groups
                   </div>
-                )}
+                </div>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="capabilities" activeTab={activeTab}>
+            <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
+              <table className="ccv2-table">
+                <thead><tr><th>Agent</th><th>Allowed capabilities</th><th>Categories</th><th>Forbidden posture</th></tr></thead>
+                <tbody>
+                  {agents.map((agent) => (
+                    <tr key={agent.agentId}>
+                      <td style={{ fontWeight: 700 }}>{agent.displayName}</td>
+                      <td>{agent.capabilities.slice(0, 3).join(", ")}{agent.capabilities.length > 3 ? "..." : ""}</td>
+                      <td>{agent.categoryCoverage.join(", ") || "Not mapped"}</td>
+                      <td>Cannot bypass approval, provider dispatch, tool execution, or DB writes.</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="boundaries" activeTab={activeTab}>
+            <div className="ccv2-grid-3">
+              {agents.map((agent) => (
+                <div key={agent.agentId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{agent.displayName}</div>
+                  <p className="ccv2-empty-state" style={{ marginTop: 8 }}>
+                    Data: {agent.boundarySummary.dataClassifications.join(", ")}.
+                    Tool dispatch: {agent.boundarySummary.toolDispatchEnabled ? "Enabled" : "Disabled"}.
+                  </p>
+                  <p className="ccv2-empty-state">
+                    Approval: {agent.approvalRequirements.length ? agent.approvalRequirements.join("; ") : "No special approval requirement recorded."}
+                  </p>
+                </div>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="projects" activeTab={activeTab}>
+            <ProjectContextCard vm={vm} surface="Agent Registry" />
+            <div className="ccv2-empty-state" style={{ marginTop: 12 }}>
+              Project Registry is metadata-only here. Agent boundaries use the selected project context but do not grant runtime access.
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence" activeTab={activeTab}>
+            <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
+              <table className="ccv2-table">
+                <thead><tr><th>Agent</th><th>Evidence requirements</th><th>Cost policy</th><th>Memory policy</th></tr></thead>
+                <tbody>
+                  {agents.map((agent) => (
+                    <tr key={agent.agentId}>
+                      <td style={{ fontWeight: 700 }}>{agent.displayName}</td>
+                      <td>{agent.evidenceRequirements.join(", ")}</td>
+                      <td>{agent.costPolicy}</td>
+                      <td>{agent.memoryPolicy}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Boundary Envelope Preview</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Agent</span><span className="ccv2-page-summary-value">{envelope.agentId}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project</span><span className="ccv2-page-summary-value">{envelope.projectId}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Scope</span><span className="ccv2-page-summary-value">{envelope.scopeType}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Capability</span><span className="ccv2-page-summary-value">{envelope.capabilityId}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dry-run</span><span className="ccv2-page-summary-value">{envelope.dryRun ? "Yes" : "No"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Valid</span><span className="ccv2-page-summary-value">{envelope.valid ? "Yes" : "No"}</span></div>
               </div>
-            );
-          })}
-        </div>
+              <p className="ccv2-empty-state" style={{ marginTop: 12 }}>
+                Developer details summarize the envelope. Raw JSON is intentionally not shown in the primary UI.
+              </p>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );
@@ -4844,7 +4899,7 @@ function LiveApiPage({ vm, onRefresh }) {
   const endpointGroups = [
     { name: "Mission Data", status: online ? "Online" : "Snapshot fallback", pages: "Mission Control, Workspace", endpoints: ["/missions", "/status"] },
     { name: "Task Data", status: online ? "Online" : "Snapshot fallback", pages: "Task Queue, Agent Workbench", endpoints: ["/tasks", "/actions"] },
-    { name: "Agent Data", status: online ? "Online" : "Snapshot fallback", pages: "Agent Fleet", endpoints: ["/agents"] },
+    { name: "Agent Data", status: online ? "Online" : "Snapshot fallback", pages: "Agent Registry", endpoints: ["/agents"] },
     { name: "Evidence Ledger", status: online ? "Online" : "Snapshot fallback", pages: "Evidence", endpoints: ["/evidence", "/audit"] },
     { name: "Runtime State", status: online ? "Online" : "Snapshot fallback", pages: "Mission Control, Task Queue", endpoints: ["/runtime"] },
     { name: "Safety Boundary", status: online ? "Online" : "Snapshot fallback", pages: "Safety Center", endpoints: ["/health", "/actions"] },
@@ -6806,7 +6861,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "tasks" && <TaskQueuePage vm={vmWithApi} />}
           {currentPage === "implementation" && <ImplementationPage vm={vmWithApi} />}
           {currentPage === "workbench" && <WorkbenchPage vm={vmWithApi} />}
-          {currentPage === "agents" && <AgentFleetPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "agents" && <AgentRegistryPage vm={vmWithApi} />}
           {currentPage === "approvals" && <ApprovalsPage vm={vmWithApi} studio={studio} />}
           {currentPage === "gates" && <VerificationGatesPage vm={vmWithApi} />}
           {currentPage === "contracts" && <ContractsPage vm={vmWithApi} />}

@@ -1231,6 +1231,42 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Agent Registry page shows tabs, known agents, and boundary preview", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/agents");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Agent Registry");
+    for (const agent of ["NEXUS", "SHEPHERD", "CORE", "SWIFT", "SENTINEL", "AUDITOR", "WARDEN", "PRISM", "FORGE"]) {
+      await expect(activeCommandTabPanel(page)).toContainText(agent);
+    }
+    for (const label of [
+      "Overview",
+      "Capabilities",
+      "Boundaries",
+      "Projects",
+      "Evidence Requirements",
+      "Developer Details",
+    ]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    const body = await page.locator("body").innerText();
+    expect(body).toMatch(/Boundary Envelope Preview/i);
+    expect(body).toMatch(/Runtime Enforcement/i);
+    expect(body).toMatch(/Tool Dispatch/i);
+    expect(body).not.toContain("{\"agent");
+    expect(body).not.toContain("DemoApp");
+
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Overview")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "Developer Details")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
   test("Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details", async ({ page }) => {
     const errors = captureClientErrors(page);
 

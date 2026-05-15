@@ -1,5 +1,6 @@
 import {
   BATCH_QUEUE_TABS,
+  AGENT_REGISTRY_TABS,
   COST_CENTER_TABS,
   DURABLE_STATE_TABS,
   EVIDENCE_TABS,
@@ -174,12 +175,14 @@ export const COMMAND_CENTER_ROUTES = [
   {
     key: "agents",
     path: "/command-center/agents",
-    name: "Agent Fleet",
+    name: "Agent Registry",
     section: "DELIVERY",
     allowPhaseLabels: false,
-    expectedHeading: "Agent Fleet",
+    expectedHeading: "Agent Registry",
     status: "implemented",
     scope: "project",
+    tabs: AGENT_REGISTRY_TABS,
+    defaultTab: "overview",
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {

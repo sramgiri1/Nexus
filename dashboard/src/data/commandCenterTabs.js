@@ -220,6 +220,45 @@ export const IMPLEMENTATION_TABS = [
   },
 ];
 
+export const AGENT_REGISTRY_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Known agents, roles, statuses, and registry posture",
+    badge: "Ready",
+  },
+  {
+    id: "capabilities",
+    label: "Capabilities",
+    description: "Allowed capabilities and separation-of-duties summary",
+    badge: "Read-only",
+  },
+  {
+    id: "boundaries",
+    label: "Boundaries",
+    description: "Path, tool, data, and approval boundary summaries",
+    badge: "Read-only",
+  },
+  {
+    id: "projects",
+    label: "Projects",
+    description: "Active project context and registry scope",
+    badge: "Ready",
+  },
+  {
+    id: "evidence",
+    label: "Evidence Requirements",
+    description: "Evidence expected from each agent handoff",
+    badge: "Read-only",
+  },
+  {
+    id: "developer-details",
+    label: "Developer Details",
+    description: "Envelope preview metadata without raw JSON dumps",
+    badge: "Read-only",
+  },
+];
+
 export const LIVE_API_TABS = [
   {
     id: "overview",

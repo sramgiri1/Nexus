@@ -1917,7 +1917,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending-subphase-commit",
+      "commit": "59ff2a0",
       "completedAt": "2026-05-15T15:11:50.595Z",
       "summary": "Adds a dry-run compiler for agent boundary envelopes from agent registry, project metadata, scope classification, and task intent.",
       "checksRun": [
@@ -1933,20 +1933,39 @@
       "phaseId": "P45.5",
       "title": "Command Center Agent Registry UX",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:17:15.835Z",
+      "summary": "Adds read-only Agent Registry UX with tabs, agent capability summaries, boundaries, evidence requirements, and dry-run envelope preview.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Agent editing and runtime permission changes are deferred to P49 and later governed runtime phases."
+      ],
+      "nextPhase": "P45.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.6",
+      "title": "Agent Boundary Tests + Final Validation",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/agent-registry-boundary-compiler",
       "commit": "pending",
       "completedAt": "",
-      "summary": "Expose the agent registry and boundary envelope preview in Command Center.",
+      "summary": "Close P45 with final validation across registry, matrix, boundaries, compiler, UX, docs, status, and safety.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P45.6",
+      "nextPhase": "P46",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:11:50.595Z",
-  "currentPhase": "P45.4",
-  "previousPhase": "P45.3",
-  "nextPhase": "P45.5"
+  "updatedAt": "2026-05-15T15:17:15.835Z",
+  "currentPhase": "P45.5",
+  "previousPhase": "P45.4",
+  "nextPhase": "P45.6"
 }

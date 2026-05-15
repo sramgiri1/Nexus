@@ -152,7 +152,7 @@ const routeHeadings = {
   "/command-center/projects": "Projects",
   "/command-center/roadmap": "OS Roadmap",
   "/command-center/demo": "Demo Mode",
-  "/command-center/agents": "Agent Fleet",
+  "/command-center/agents": "Agent Registry",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
   "/command-center/release": "Release Control",
@@ -531,6 +531,10 @@ for (const expected of [
   "Evidence proves what governed actions produced.",
   "Project Profile Loader",
   "Project Capability Matrix",
+  "Agent Registry",
+  "Boundary Envelope Preview",
+  "Runtime Enforcement",
+  "Tool Dispatch",
   "Next: Scope Boundary + Project Packaging Safety",
 ]) {
   check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);

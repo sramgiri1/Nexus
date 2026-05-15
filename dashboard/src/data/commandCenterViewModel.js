@@ -13,6 +13,14 @@ import {
   summarizeRepoRegistry,
 } from "../../../repo-workspace/index.js";
 import { buildGitWorkflowPlan, summarizeGitWorkflowPlan } from "../../../git-lifecycle/index.js";
+import {
+  buildAgentBoundaryModel,
+} from "../../../agent-registry/agentBoundaryModel.js";
+import {
+  buildAgentCapabilityMatrix,
+  summarizeAgentCapabilityMatrix,
+} from "../../../agent-registry/agentCapabilityMatrix.js";
+import { getAgentRegistry } from "../../../agent-registry/agentRegistrySchema.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -243,6 +251,16 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     repoIds: ["nexus-os"],
     summary: "show git workflow planning model",
   });
+  const agentRegistry = getAgentRegistry();
+  const agentCapabilityMatrix = buildAgentCapabilityMatrix(agentRegistry.agents);
+  const agentCapabilitySummary = summarizeAgentCapabilityMatrix(agentCapabilityMatrix);
+  const agentBoundaryModel = buildAgentBoundaryModel(agentRegistry.agents);
+  const agentCapabilityById = new Map(
+    agentCapabilityMatrix.agents.map((entry) => [entry.agentId, entry]),
+  );
+  const agentBoundaryById = new Map(
+    agentBoundaryModel.agents.map((entry) => [entry.agentId, entry]),
+  );
   const multiRepoWorkspace = {
     phase: "P44.2",
     title: "Multi-Repo Workspace",
@@ -314,6 +332,56 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     },
     scopeBoundary,
     multiRepoWorkspace,
+    agentRegistry: {
+      registryVersion: agentRegistry.registryVersion,
+      runtimePermissionsGranted: false,
+      runtimeEnforcementEnabled: false,
+      toolDispatchEnabled: false,
+      providerCallsEnabled: false,
+      dbWritesEnabled: false,
+      activeProjectLabel: safeProjectDisplayName,
+      selectedAgentId: "CORE",
+      capabilitySummary: agentCapabilitySummary,
+      agents: agentRegistry.agents.map((agent) => {
+        const capabilityEntry = agentCapabilityById.get(agent.agentId);
+        const boundaryEntry = agentBoundaryById.get(agent.agentId);
+        return {
+          agentId: agent.agentId,
+          displayName: agent.displayName,
+          role: agent.role,
+          status: agent.status,
+          agentType: agent.agentType,
+          capabilityCount: agent.allowedCapabilities.length,
+          capabilities: agent.allowedCapabilities,
+          forbiddenCapabilities: agent.forbiddenCapabilities,
+          boundarySummary: {
+            allowedPathCount: boundaryEntry?.pathBoundary?.allowedPathPatterns?.length || 0,
+            forbiddenPathCount: boundaryEntry?.pathBoundary?.forbiddenPathPatterns?.length || 0,
+            dataClassifications: boundaryEntry?.dataBoundary?.allowedDataClassifications || [],
+            toolDispatchEnabled: boundaryEntry?.toolBoundary?.dispatchEnabled === true,
+          },
+          approvalRequirements: agent.approvalRequirements,
+          evidenceRequirements: agent.evidenceRequirements,
+          costPolicy: agent.costPolicy?.providerSpendAllowed ? "Provider spend requires policy review" : "Provider spend disabled",
+          memoryPolicy: agent.memoryPolicy?.persistentMemoryWriteAllowed ? "Persistent memory write requires policy review" : "Persistent memory writes disabled",
+          categoryCoverage: capabilityEntry?.categoryCoverage || [],
+        };
+      }),
+      envelopePreview: {
+        agentId: "CORE",
+        projectId: "private-project-01",
+        scopeType: "project",
+        capabilityId: "implementation.scoped_patch",
+        dryRun: true,
+        valid: true,
+        approvalCount: 2,
+        evidenceCount: 3,
+        allowedPathCount: agentBoundaryById.get("CORE")?.pathBoundary?.allowedPathPatterns?.length || 0,
+        forbiddenPathCount: agentBoundaryById.get("CORE")?.pathBoundary?.forbiddenPathPatterns?.length || 0,
+        dataClassificationLimits: agentBoundaryById.get("CORE")?.dataBoundary?.allowedDataClassifications || [],
+        warnings: ["Runtime enforcement is not enabled yet."],
+      },
+    },
     missionComposer: {
       title: "Active Mission",
       subtitle: "Review the governed mission summary and move the current scope through planning, review, and validation.",

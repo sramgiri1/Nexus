@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T13:58:51.090Z
-- Validation branch: arch/multi-repo-git-pr-lifecycle
-- Validation HEAD: 6a1748f
+- Generated at: 2026-05-15T15:20:31.095Z
+- Validation branch: arch/agent-registry-boundary-compiler
+- Validation HEAD: 59ff2a0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

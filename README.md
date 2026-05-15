@@ -1182,7 +1182,12 @@ P45.4 adds a dry-run boundary compiler that produces agent boundary envelopes
 from agent registry metadata, project registry metadata, scope classification,
 capability ID, and task intent. Envelopes are not used for runtime enforcement.
 
-Next phase: P45.5 - Command Center Agent Registry UX.
+P45.5 adds the read-only Command Center Agent Registry page. It shows registry
+tabs, known agents, capability counts, boundary summaries, evidence
+requirements, and a dry-run boundary envelope preview. It does not add agent
+editing or runtime permission changes.
+
+Next phase: P45.6 - Agent Boundary Tests + Final Validation.
 
 ---
 
