@@ -81,6 +81,7 @@ const projectTypes = parseJson("project-registry/project-types.json", "projectTy
 const policy = parseJson("policy/project-registry-policy.json", "policy");
 const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
+const viewModelSource = read("dashboard/src/data/commandCenterViewModel.js");
 
 check(registrySchema.title === "NEXUS Project Registry", "schemas", "Project registry schema title mismatch");
 check(projectSchema.title === "NEXUS Project Profile", "schemas", "Project profile schema title mismatch");
@@ -133,29 +134,29 @@ check(privateProject.localPrivateOnly === true, "privateProjectPlaceholder", "Pr
 check(!JSON.stringify(privateProject).includes("projects/careloop"), "privateProjectPlaceholder", "Private placeholder must not expose private paths");
 
 for (const expected of [
-  "Project Registry Foundation",
-  "Registry entries",
-  "Project Profile Loader",
-  "Project Selector",
+  "Active Project Operating Surface",
+  "Project Registry",
+  "Project Health Strip",
+  "Stack Profile",
   "Adapter Runtime",
   "Project Mutation",
 ]) {
-  check(commandCenterSource.includes(expected), "commandCenterUx", `Projects page missing copy: ${expected}`);
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandCenterUx", `Projects page missing copy: ${expected}`);
 }
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
 check(
-  ["P41.9.2", "P42.1", "P42.6", "P42.7"].includes(phaseStatus.previousPhase),
+  ["P41.9.2", "P42.1", "P42.6", "P42.7", "P48.7"].includes(phaseStatus.previousPhase),
   "osPhaseStatus",
   "previousPhase must be P41.9.2, P42.1, P42.6, or P42.7",
 );
 check(
-  ["P42.1", "P42.2", "P42.7", "P43.1"].includes(phaseStatus.currentPhase),
+  ["P42.1", "P42.2", "P42.7", "P43.1", "P48.8"].includes(phaseStatus.currentPhase),
   "osPhaseStatus",
   "currentPhase must be P42.1, P42.2, P42.7, or P43.1",
 );
 check(
-  ["P42.2", "P42.3", "P43", "P43.2"].includes(phaseStatus.nextPhase),
+  ["P42.2", "P42.3", "P43", "P43.2", "P49.1"].includes(phaseStatus.nextPhase),
   "osPhaseStatus",
   "nextPhase must be P42.2, P42.3, P43, or P43.2",
 );

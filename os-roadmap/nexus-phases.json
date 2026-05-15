@@ -777,12 +777,30 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P48.8",
+      "title": "Projects Page Enterprise UX + Multi-Project Operating Surface Polish",
+      "track": "NEXUS_OS",
+      "order": 21.08,
+      "group": "P48 Governed Agentic Mesh",
+      "summary": "Polish the Command Center Projects page as an enterprise multi-project operating surface without enabling runtime behavior.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P49",
       "title": "Agent Definition Update Workflow",
       "track": "NEXUS_OS",
       "order": 23,
       "group": "Planned OS Phases",
       "summary": "Add governed workflows for evolving agent definitions without breaking safety guarantees.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.1",
+      "title": "Agent Definition Update Schema + Policy",
+      "track": "NEXUS_OS",
+      "order": 23.01,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Start governed agent definition update workflow with schema and policy foundations.",
       "commandCenterVisible": true
     },
     {

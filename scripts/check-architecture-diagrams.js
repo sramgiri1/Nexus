@@ -207,7 +207,30 @@ check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
-const laterHandoffPhases = ["P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"];
+const laterHandoffPhases = [
+  "P44",
+  "P44.1",
+  "P44.2",
+  "P44.3",
+  "P44.4",
+  "P44.5",
+  "P44.6",
+  "P44.7",
+  "P45",
+  "P45.1",
+  "P45.2",
+  "P45.3",
+  "P45.4",
+  "P45.5",
+  "P45.6",
+  "P46",
+  "P47",
+  "P47.7",
+  "P48",
+  "P48.7",
+  "P48.8",
+  "P49.1",
+];
 check(["P43", "P43.1", "P43.2", "P43.3", "P43.4", "P43.5", ...laterHandoffPhases].includes(phaseStatus.currentPhase), "phaseStatus", "currentPhase must be P43 or later handoff phase");
 check(["P42.7", "P43.1", "P43.2", "P43.3", "P43.4", "P43.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase), "phaseStatus", "previousPhase must be a P43 or later handoff phase");
 check(["P43.2", "P43.3", "P43.4", "P43.5", "P43.6", ...laterHandoffPhases].includes(phaseStatus.nextPhase), "phaseStatus", "nextPhase must be a P43 or later handoff phase");

@@ -2363,7 +2363,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
+      "commit": "5c52113",
       "completedAt": "2026-05-15T17:12:54.000Z",
       "summary": "Closes P48 and marks P49 as next.",
       "checksRun": [
@@ -2375,13 +2375,52 @@
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
-      "nextPhase": "P49",
+      "nextPhase": "P48.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48.8",
+      "title": "Projects Page Enterprise UX + Multi-Project Operating Surface Polish",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/projects-page-enterprise-ux",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:00:00.000Z",
+      "summary": "Polishes the Projects page into a tabbed enterprise project operating surface with active project context, stack profile, capability matrix, action-oriented gaps, and adapter safety posture.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:project-capability-matrix",
+        "npm run check:project-profile-loader",
+        "npm run check:project-registry-schema",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "The Projects page remains UI/read-only polish. It does not enable Project Registry adapter execution, provider/tool/worker dispatch, DB writes, project mutation, or backend behavior changes."
+      ],
+      "nextPhase": "P49.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.1",
+      "title": "Agent Definition Update Schema + Policy",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Start governed agent definition update workflow with schema and policy foundations.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Planned phase; no agent definition mutation is enabled yet."
+      ],
+      "nextPhase": "P49.2",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T17:12:54.000Z",
-  "currentPhase": "P48.7",
-  "previousPhase": "P48.6",
-  "nextPhase": "P49"
+  "updatedAt": "2026-05-15T18:00:00.000Z",
+  "currentPhase": "P48.8",
+  "previousPhase": "P48.7",
+  "nextPhase": "P49.1"
 }

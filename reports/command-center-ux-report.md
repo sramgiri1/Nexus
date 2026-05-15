@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T17:04:48.432Z
-- Validation branch: arch/governed-agentic-mesh
-- Validation HEAD: 966708c
+- Generated at: 2026-05-15T18:08:48.913Z
+- Validation branch: fix/projects-page-enterprise-ux
+- Validation HEAD: 5c52113
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

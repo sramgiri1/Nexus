@@ -192,7 +192,8 @@ Risk level:
   - `P48.5` Context Sync Through Policy — complete
   - `P48.6` Command Center Agent Rooms UX — complete
   - `P48.7` Mesh Tests + Docs + Final Validation — complete
-- `P49` Agent Definition Update Workflow — next
+  - `P48.8` Projects Page Enterprise UX + Multi-Project Operating Surface Polish — complete
+- `P49.1` Agent Definition Update Schema + Policy — next
 - `P50` Skill Registry + Skill Authoring Workflow
 - `P51` Hook Registry + Safe Automation Lifecycle
 - `P52` Tool / MCP Registry + Tool Governance

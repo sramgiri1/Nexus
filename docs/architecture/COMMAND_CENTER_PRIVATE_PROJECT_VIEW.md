@@ -77,6 +77,27 @@ This writes:
 The dashboard consumes the generated JS module and never reads the private
 filesystem directly at browser runtime.
 
+## P48.8 Projects Operating Surface
+
+The Projects route now presents private project context as a tabbed operating
+surface:
+
+- Portfolio
+- Active Project
+- Stack Profile
+- Capabilities
+- Milestones
+- Gaps
+- Adapter / Settings
+
+The active project label is primary. Environment and mode badges are secondary.
+`DemoApp` is allowed only on the demo route or demo-only artifacts. Raw project
+IDs, mission IDs, and file paths belong in Developer Details, not the primary
+operator view.
+
+Adapter runtime, provider/tool/worker dispatch, DB writes, and project mutation
+remain disabled by policy.
+
 ## Known Validation Hygiene
 
 Private branches have one known non-blocking validation hygiene item:

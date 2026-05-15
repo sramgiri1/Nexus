@@ -66,6 +66,7 @@ const policy = parseJson("policy/project-capability-matrix-policy.json", "policy
 const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const indexSource = read("project-registry/index.js");
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
+const viewModelSource = read("dashboard/src/data/commandCenterViewModel.js");
 const routeTests = read("dashboard/tests/routes.spec.js");
 
 for (const modulePath of [
@@ -119,18 +120,18 @@ check(summary.safetyPosture.adapterRuntime === "disabled", "matrix", "Summary mu
 
 for (const expected of [
   "Project Capability Matrix",
-  "Mission planning",
-  "Task activation",
+  "Mission Planning",
+  "Task Activation",
   "Agent Workbench",
-  "Controlled implementation",
-  "Backend validation",
+  "Controlled Implementation",
+  "Backend Validation",
   "Requires iOS/Xcode runner",
-  "Provider dispatch is not enabled",
-  "Worker runtime is not enabled",
-  "MCP/tool execution is not enabled",
-  "Adapter Runtime disabled",
+  "Provider-backed execution is intentionally blocked",
+  "Background execution remains planned and disabled",
+  "Tool and MCP execution are not available",
+  "Project adapter execution is visible as posture only",
 ]) {
-  check(commandCenterSource.includes(expected), "ui", `Projects UI missing: ${expected}`);
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "ui", `Projects UI missing: ${expected}`);
 }
 
 for (const expected of [

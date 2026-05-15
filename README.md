@@ -1258,11 +1258,13 @@ preview, and Command Center Data & Context Center.
 
 P48 adds the Governed Agentic Mesh: scoped redacted agent messages, append-only
 message records, agent rooms, governed handoffs, policy-scoped context sync, and
-the read-only Command Center Agent Rooms route. It does not enable direct agent
-chat, provider/tool/worker dispatch, DB writes, task ownership mutation, or
-project mutation.
+the read-only Command Center Agent Rooms route. P48.8 additionally polishes the
+Projects route into a tabbed enterprise project operating surface for portfolio,
+active project, stack profile, capabilities, milestones, gaps, and adapter
+settings. It does not enable direct agent chat, provider/tool/worker dispatch,
+DB writes, task ownership mutation, adapter runtime, or project mutation.
 
-Next phase: P49 - Agent Definition Update Workflow.
+Next phase: P49.1 - Agent Definition Update Schema + Policy.
 
 ---
 

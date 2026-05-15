@@ -1143,7 +1143,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"]],
       ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
-      ["/command-center/projects", ["Portfolio", "Active Project", "Packaging Safety", "Adapter", "Milestones", "Gaps"]],
+      ["/command-center/projects", ["Portfolio", "Active Project", "Stack Profile", "Capabilities", "Milestones", "Gaps", "Adapter / Settings"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
@@ -1161,8 +1161,9 @@ test.describe("Command Center route-wide UX", () => {
 
       const body = await page.locator("body").innerText();
       if (path === "/command-center/projects") {
-        expect(body.toLowerCase()).toContain("demo project entry");
-        expect(body.toLowerCase()).toContain("demo mode only");
+        expect(body).toContain("Active Project");
+        expect(body).toContain("Private Project");
+        expect(body).not.toContain("DemoApp");
       } else {
         expect(body).not.toContain("DemoApp");
       }
@@ -1194,9 +1195,9 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/projects");
-    await expect(page.locator("body")).toContainText("Project Registry is planned for P42");
+    await expect(page.locator("body")).toContainText("Active Project Operating Surface");
     await commandTab(page, "Milestones").click();
-    await expect(page.locator("body")).toContainText("Project milestones live here");
+    await expect(page.locator("body")).toContainText("OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.");
 
     await page.goto("/command-center/roadmap");
     const roadmapText = await page.locator("body").innerText();
@@ -1207,27 +1208,30 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Projects page shows scope boundary and packaging safety", async ({ page }) => {
+  test("Projects page shows enterprise operating surface tabs and project boundary", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/projects");
-    await expect(page.getByTestId("scope-boundary-packaging-panel").first()).toBeVisible();
-    await expect(page.locator("body")).toContainText("Scope Boundary & Packaging Safety");
-    await expect(page.locator("body")).toContainText("NEXUS OS is the control plane. Projects are workloads.");
-    await expect(page.locator("body")).toContainText("Project export");
-    await expect(page.locator("body")).toContainText("Dry-run only");
-    await expect(page.locator("body")).toContainText("Package bundle");
-    await expect(page.locator("body")).toContainText("Not created");
-    await expect(page.locator("body")).toContainText("Redacted manifest");
-    await expect(page.locator("body")).toContainText("Blocked From Project Package");
-    await expect(page.locator("body")).toContainText("NEXUS agents and policies");
-    await expect(page.locator("body")).toContainText("Evidence, audit, and activity ledgers");
-    await expect(page.locator("body")).toContainText("Local-state runtime files");
-    await expect(page.locator("body")).toContainText("Secrets and key material");
-    await expect(page.locator("body")).toContainText("artifacts/project-release/private-project-release-manifest.json");
-    await commandTab(page, "Packaging Safety").click();
-    await expect(activeCommandTabPanel(page)).toContainText("Scope Boundary & Packaging Safety");
-    await expect(page.locator("body")).not.toContainText("DemoApp");
+    for (const label of ["Portfolio", "Active Project", "Stack Profile", "Capabilities", "Milestones", "Gaps", "Adapter / Settings"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Active Project").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project Registry");
+    await expect(activeCommandTabPanel(page)).toContainText("Profile");
+    await expect(activeCommandTabPanel(page)).toContainText("Stack Profile");
+    await expect(activeCommandTabPanel(page)).toContainText("Capability Matrix");
+    await expect(activeCommandTabPanel(page)).toContainText("Adapter Runtime");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Mutation");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Dispatch");
+    await expect(activeCommandTabPanel(page)).toContainText("DB Writes");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled by policy");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
 
     expect(errors).toEqual([]);
   });
@@ -1533,26 +1537,23 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("projects page keeps project progress separate from the OS roadmap", async ({ page }) => {
+  test("projects page keeps project milestones separate from the OS roadmap", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/projects");
 
-    await expect(page.getByText("Project Registry Foundation", { exact: false })).toBeVisible();
-    await expect(page.locator("body")).toContainText("Registry entries");
-    await expect(page.locator("body")).toContainText("Project Profile Loader");
-    await expect(page.locator("body")).toContainText("Profiles discovered");
-    await expect(page.locator("body")).toContainText("Profiles valid");
-    await expect(page.locator("body")).toContainText("NEXUS OS");
+    await expect(page.locator("body")).toContainText("Active Project Operating Surface");
+    await expect(page.locator("body")).toContainText("Selected project");
     await expect(page.locator("body")).toContainText("Private Project");
-    await expect(page.locator("body")).toContainText("Demo project entry");
-    await expect(page.locator("body")).toContainText("Project Selector");
-    await expect(page.locator("body")).toContainText("Adapter Runtime");
-    await expect(page.locator("body")).toContainText("Project Mutation");
-    await expect(page.locator("body")).toContainText("Next: Scope Boundary + Project Packaging Safety");
-    await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
-    await expect(page.locator("body")).toContainText("Project Progress");
-    await expect(page.locator("body")).toContainText(/private project|Private Project/);
+    await commandTab(page, "Milestones").click();
+    await expect(activeCommandTabPanel(page)).toContainText("OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.");
+    await expect(activeCommandTabPanel(page)).toContainText("Project registry foundation");
+    await expect(activeCommandTabPanel(page)).toContainText("Adapter runtime");
+
+    await page.goto("/command-center/roadmap");
+    const roadmapText = await page.locator("body").innerText();
+    expect(roadmapText).toContain("NEXUS OS Platform Progress");
+    expect(roadmapText).not.toContain("Private Project Governed Build Mission");
 
     await page.goto("/command-center/demo");
     expect(await page.locator("body").innerText()).not.toContain(["Care", "Loop"].join(""));
@@ -1565,21 +1566,26 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/projects");
 
-    await expect(page.getByText("Project Capability Matrix", { exact: true })).toBeVisible();
-    await expect(page.locator("body")).toContainText("Mission planning");
-    await expect(page.locator("body")).toContainText("Task activation");
+    await commandTab(page, "Capabilities").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project Capability Matrix");
+    await expect(activeCommandTabPanel(page)).toContainText("Mission Planning");
+    await expect(activeCommandTabPanel(page)).toContainText("Task Activation");
     await expect(page.locator("body")).toContainText("Agent Workbench");
-    await expect(page.locator("body")).toContainText("Controlled implementation");
-    await expect(page.locator("body")).toContainText("Backend validation");
+    await expect(page.locator("body")).toContainText("Controlled Implementation");
+    await expect(page.locator("body")).toContainText("Backend Validation");
     await expect(page.locator("body")).toContainText("Requires iOS/Xcode runner");
-    await expect(page.locator("body")).toContainText("Provider dispatch is not enabled");
-    await expect(page.locator("body")).toContainText("Worker runtime is not enabled");
-    await expect(page.locator("body")).toContainText("MCP/tool execution is not enabled");
-    await expect(page.locator("body")).toContainText("Adapter Runtime disabled");
-    await expect(page.getByText("Scope Boundary", { exact: true })).toBeVisible();
-    await expect(page.locator("body")).toContainText("classification ready");
-    await expect(page.locator("body")).toContainText("enforcement not enabled yet");
-    await expect(page.locator("body")).toContainText("Cross-cutting changes");
+    await expect(page.locator("body")).toContainText("Provider-backed execution is intentionally blocked");
+    await expect(page.locator("body")).toContainText("Background execution remains planned and disabled");
+    await expect(page.locator("body")).toContainText("Tool and MCP execution are not available");
+    await expect(page.locator("body")).toContainText("Project adapter execution is visible as posture only");
+
+    await commandTab(page, "Gaps").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Why it matters");
+    await expect(activeCommandTabPanel(page)).toContainText("Next action");
+
+    await commandTab(page, "Adapter / Settings").click();
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS is the control plane. Projects are workloads.");
+    await expect(activeCommandTabPanel(page)).toContainText("Developer Details");
 
     expect(errors).toEqual([]);
   });

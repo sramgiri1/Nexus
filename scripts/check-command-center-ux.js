@@ -426,7 +426,7 @@ for (const forbidden of [
 }
 for (const expectedTest of [
   "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage",
-  "projects page keeps project progress separate from the OS roadmap",
+  "projects page keeps project milestones separate from the OS roadmap",
 ]) {
   check(routeTestSource.includes(expectedTest), "roadmapProjectSeparation", `Route tests missing roadmap/project separation coverage: ${expectedTest}`);
 }
@@ -534,18 +534,19 @@ for (const expected of [
   "Durable State Summary",
   "Evidence Summary",
   "Safety Summary",
-  "Project Summary",
+  "Active Project Operating Surface",
   "Developer Details",
   "Documentation-only update",
   "DB writes disabled by policy",
   "Evidence proves what governed actions produced.",
-  "Project Profile Loader",
+  "Project Health Strip",
+  "Stack Profile",
   "Project Capability Matrix",
   "Agent Registry",
   "Boundary Envelope Preview",
   "Runtime Enforcement",
   "Tool Dispatch",
-  "Next: Scope Boundary + Project Packaging Safety",
+  "Adapter / Settings",
 ]) {
   check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);
 }
@@ -561,7 +562,7 @@ for (const expectedTest of [
   "durable state page shows file-backed posture without failure framing",
   "evidence page shows summary and avoids raw payload dumps",
   "safety center shows plain-language safety posture without raw policy keys",
-  "projects page keeps project progress separate from the OS roadmap",
+  "projects page keeps project milestones separate from the OS roadmap",
 ]) {
   check(routeTestSource.includes(expectedTest), "pageSpecificUx", `Page-specific UX tests missing: ${expectedTest}`);
 }
@@ -755,7 +756,7 @@ for (const tabSet of [
   { exportName: "DURABLE_STATE_TABS", ids: ["overview", "entities", "import-plan", "fallback", "developer-details"] },
   { exportName: "EVIDENCE_TABS", ids: ["timeline", "by-task", "by-agent", "by-project", "developer-details"] },
   { exportName: "SAFETY_CENTER_TABS", ids: ["posture", "policy-blocks", "approvals", "data-privacy", "developer-details"] },
-  { exportName: "PROJECTS_TABS", ids: ["portfolio", "active-project", "adapter", "milestones", "gaps"] },
+  { exportName: "PROJECTS_TABS", ids: ["portfolio", "active-project", "stack-profile", "capabilities", "milestones", "gaps", "adapter-settings"] },
   { exportName: "OS_ROADMAP_TABS", ids: ["current", "completed", "planned", "blocked-risks", "history"] },
   { exportName: "COST_CENTER_TABS", ids: ["overview", "budgets", "by-project", "by-agent", "provider-spend"] },
   { exportName: "BATCH_QUEUE_TABS", ids: ["overview", "jobs", "results", "cost"] },
@@ -811,24 +812,31 @@ for (const expected of [
 }
 check(!commandCenterSource.includes("function OperationalTabs"), "tabbedCorePages", "Do not introduce a duplicate one-off tab component");
 for (const expected of [
-  "Scope Boundary & Packaging Safety",
-  "NEXUS OS is the control plane. Projects are workloads.",
-  "Project export",
-  "Dry-run only",
-  "Package bundle",
-  "Not created",
-  "Redacted manifest",
-  "Blocked From Project Package",
-  "NEXUS agents and policies",
-  "Evidence, audit, and activity ledgers",
-  "Local-state runtime files",
-  "Secrets and key material",
-  "artifacts/project-release/private-project-release-manifest.json",
+  "Active Project Operating Surface",
+  "Project Health",
+  "Stack Profile",
+  "Project Capability Matrix",
+  "OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.",
+  "Why it matters",
+  "Adapter / Settings",
+  "Developer Details",
 ]) {
-  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "scopeBoundaryUx", `Scope boundary UX missing: ${expected}`);
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "projectsEnterpriseUx", `Projects enterprise UX missing: ${expected}`);
 }
-check(commandTabsSource.includes('id: "packaging-safety"'), "scopeBoundaryUx", "Projects tabs must include packaging-safety");
-check(routeTestSource.includes("Projects page shows scope boundary and packaging safety"), "scopeBoundaryUx", "Route tests missing scope boundary packaging coverage");
+for (const expected of [
+  "Project Registry",
+  "Profile",
+  "Stack Profile",
+  "Capability Matrix",
+  "Adapter Runtime",
+  "Project Mutation",
+  "Provider Dispatch",
+  "DB Writes",
+]) {
+  check(viewModelSource.includes(expected), "projectsEnterpriseUx", `Project health strip missing: ${expected}`);
+}
+check(commandTabsSource.includes('id: "adapter-settings"'), "projectsEnterpriseUx", "Projects tabs must include adapter-settings");
+check(routeTestSource.includes("Projects page shows enterprise operating surface tabs and project boundary"), "projectsEnterpriseUx", "Route tests missing Projects enterprise tab coverage");
 for (const expected of [
   "<ScopeSwitcher",
   "Portfolio view is planned with Project Registry in P42",

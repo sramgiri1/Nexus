@@ -3421,31 +3421,30 @@ function ProjectsPage({ vm, studio }) {
   const pvBackend = pvStatus.latestBackendValidation || {};
   const projectProgress = vm.projectProgress || vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
-  const projectSummaryName = isLocalPrivate
-    ? (projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project")
-    : (studio?.activeProject?.name || "Private Project");
-  const multiRepo = vm.multiRepoWorkspace || {};
-  const multiRepoSummary = multiRepo.summary || {};
-  const multiRepoRepos = Array.isArray(multiRepo.repos) ? multiRepo.repos : [];
-  const multiRepoRelationships = Array.isArray(multiRepo.dependencies?.relationships) ? multiRepo.dependencies.relationships : [];
-  const gitWorkflowSummary = multiRepo.gitWorkflow?.summary || {};
+  const surface = vm.projectOperatingSurface || {};
+  const projectSummaryName = surface.selectedProjectLabel || projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project";
+  const activeMissionName = surface.activeMissionLabel || vm.mission?.displayName || "Governed Build Mission";
+  const healthStrip = surface.projectHealthStrip || [];
+  const stackProfile = surface.stackProfile || [];
+  const capabilityCards = surface.capabilityCards || [];
+  const milestones = surface.milestones || [];
+  const openGaps = surface.openGaps || [];
+  const adapterSettings = surface.adapterSettings || [];
+  const developerDetails = surface.developerDetails || [];
+  const portfolioSummary = surface.portfolioSummary || {};
   const [activeTab, setActiveTab] = useState("portfolio");
-  const registryEntries = [
-    { label: "NEXUS OS", scope: "os", visibility: "internal", boundary: "Platform entry" },
-    { label: "Private Project", scope: "project", visibility: "local-private", boundary: "Private placeholder" },
-    { label: "Demo project entry", scope: "demo", visibility: "demo", boundary: "Demo Mode only" },
+  const projectOptions = [
+    { label: projectSummaryName, meta: "Selected · local-private", status: "Active", tone: "pass" },
+    { label: "NEXUS OS", meta: "Platform scope · use OS Roadmap", status: "Separate", tone: "pending" },
+    { label: "Project Registry", meta: "Additional projects are planned through registry adapters", status: "Planned", tone: "disabled" },
   ];
-  const capabilityRows = [
-    { label: "Mission planning", status: "Available", reason: "Governed mission planning is available." },
-    { label: "Task activation", status: "Available", reason: "Planned tasks can be activated through governed task flows." },
-    { label: "Agent Workbench", status: "Available", reason: "Activated task review is available." },
-    { label: "Controlled implementation", status: "Available with limits", reason: "Scoped and documentation-only implementation paths are available." },
-    { label: "Backend validation", status: "Available", reason: "Approved validation checkers can run from a local terminal." },
-    { label: "iOS validation", status: "Requires runner", reason: "Requires iOS/Xcode runner." },
-    { label: "Provider dispatch", status: "Not enabled", reason: "Provider dispatch is not enabled." },
-    { label: "Worker runtime", status: "Not enabled", reason: "Worker runtime is not enabled." },
-    { label: "MCP/tools", status: "Not enabled", reason: "MCP/tool execution is not enabled." },
-    { label: "Adapter Runtime", status: "Disabled by policy", reason: "Adapter Runtime disabled." },
+  const startProjectSteps = [
+    "Create or import a project",
+    "Add or generate a project profile",
+    "Define stack and test commands",
+    "Create a mission",
+    "Generate a plan",
+    "Activate the first task",
   ];
 
   return (
@@ -3453,251 +3452,204 @@ function ProjectsPage({ vm, studio }) {
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Projects</div>
-          <div className="ccv2-page-head__sub">See the current project scope, validation state, readiness, and what remains adapter-gated.</div>
+          <div className="ccv2-page-head__sub">
+            Operate project context, stack readiness, capability posture, milestones, gaps, and adapter safety without mixing project work into the OS Roadmap.
+          </div>
         </div>
 
         <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Multi-Repo Workspace</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P44.2 adds read-only repo ownership and dependency mapping for NEXUS OS and project repositories. No git branch,
-            commit, PR, merge, or push actions are enabled, and private project source is not inspected here.
+          <div className="ccv2-section-heading">Active Project Operating Surface</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+            <span className="ccv2-pill ccv2-pill--pass">Active Project: {projectSummaryName}</span>
+            <span className="ccv2-pill ccv2-pill--pending">Active Mission: {activeMissionName}</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Mode: {isLocalPrivate ? "local-private" : vm.shell.mode}</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Source: {surface.sourceLabel || "Registry snapshot"}</span>
+          </div>
+          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 10 }}>
+            Project context is the primary identity on this page. Environment and mode remain secondary metadata. Adapter runtime,
+            project mutation, provider dispatch, and DB writes are visible as policy posture only.
           </p>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Repositories tracked</span><span className="ccv2-page-summary-value">{multiRepoSummary.repoCount ?? multiRepoRepos.length}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.activeRepos ?? 0}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.projectRepos ?? 0}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dependency links</span><span className="ccv2-page-summary-value">{multiRepo.dependencies?.relationshipCount ?? multiRepoRelationships.length}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Git lifecycle</span><span className="ccv2-page-summary-value">plan-only</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Proposed branch</span><span className="ccv2-page-summary-value">{gitWorkflowSummary.proposedBranchName || "metadata only"}</span></div>
-          </div>
-          <div className="ccv2-list" style={{ marginTop: 12 }}>
-            {multiRepoRepos.map((repo) => (
-              <div key={repo.repoId} className="ccv2-list-row">
-                <span className="ccv2-list-row__title">{repo.label}</span>
-                <span className="ccv2-list-row__meta">{repo.repoType} · {repo.visibility} · {repo.root}</span>
-                <span className={`ccv2-pill ${repo.packageBoundary === "os" ? "ccv2-pill--ready" : "ccv2-pill--pending"}`}>
-                  {repo.packageBoundary}
-                </span>
-              </div>
-            ))}
-          </div>
-          <div className="ccv2-list" style={{ marginTop: 12 }}>
-            {multiRepoRelationships.slice(0, 3).map((relationship) => (
-              <div key={`${relationship.fromRepoId}-${relationship.toRepoId}`} className="ccv2-list-row">
-                <span className="ccv2-list-row__title">{relationship.fromRepoId} → {relationship.toRepoId}</span>
-                <span className="ccv2-list-row__meta">{relationship.reason}</span>
-                <span className="ccv2-pill ccv2-pill--pending">{relationship.relationshipType}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Project Registry Foundation</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P42 adds a read-only registry, project profile loader, stack profile model, dry-run onboarding plan,
-            local UI project selector, and project capability matrix. Adapter execution and project mutation remain disabled.
-          </p>
-          <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry entries</span><span className="ccv2-page-summary-value">3</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Profile Loader</span><span className="ccv2-page-summary-value">ready</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles discovered</span><span className="ccv2-page-summary-value">3 example profiles</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles valid</span><span className="ccv2-page-summary-value">3 valid examples</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Selector</span><span className="ccv2-page-summary-value">UI-only local selection</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter Runtime</span><span className="ccv2-page-summary-value">disabled by policy</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Mutation</span><span className="ccv2-page-summary-value">disabled</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next</span><span className="ccv2-page-summary-value">Next: Scope Boundary + Project Packaging Safety</span></div>
-          </div>
-          <div className="ccv2-list" style={{ marginTop: 12 }}>
-            {registryEntries.map((entry) => (
-              <div key={entry.label} className="ccv2-list-row">
-                <span className="ccv2-list-row__title">{entry.label}</span>
-                <span className="ccv2-list-row__meta">{entry.scope} · {entry.visibility}</span>
-                <span className={`ccv2-pill ${entry.scope === "demo" ? "ccv2-pill--pending" : "ccv2-pill--ready"}`}>{entry.boundary}</span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Project Capability Matrix</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            Capability status is derived from registry metadata, stack profile posture, and existing NEXUS surfaces.
-            The matrix is read-only and does not enable adapters, workers, providers, tools, DB writes, or project mutation.
-          </p>
-          <div className="ccv2-list" style={{ marginTop: 12 }}>
-            {capabilityRows.map((row) => (
-              <div key={row.label} className="ccv2-list-row">
-                <span className="ccv2-list-row__title">{row.label}</span>
-                <span className="ccv2-list-row__meta">{row.reason}</span>
-                <span className={`ccv2-pill ${row.status === "Available" ? "ccv2-pill--ready" : "ccv2-pill--pending"}`}>
-                  {row.status}
-                </span>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Scope Boundary</div>
-          <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P43 adds classification, project vs OS mutation boundaries, export safety, and a redacted release manifest.
-            The model is classification ready; enforcement not enabled yet. These surfaces are dry-run/read-only;
-            project packages are not created.
-          </p>
-          <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">NEXUS OS changes</span><span className="ccv2-page-summary-value">classified</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project changes</span><span className="ccv2-page-summary-value">classified · mutation disabled</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cross-cutting changes</span><span className="ccv2-page-summary-value">review required</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unknown changes</span><span className="ccv2-page-summary-value">review required</span></div>
-          </div>
-        </div>
-
-        <ScopeBoundaryPackagingPanel vm={vm} />
-
-        <div className="ccv2-card ccv2-page-summary-card">
-          <div className="ccv2-section-heading">Project Summary</div>
-          <div className="ccv2-page-summary-grid">
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project state</span><span className="ccv2-page-summary-value">{isLocalPrivate ? "Active · private · local-private" : "Active · public-safe"}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry state</span><span className="ccv2-page-summary-value">{portfolioSummary.registryState || "Ready"}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Selected project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Backend validation</span><span className="ccv2-page-summary-value">{pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">iOS readiness</span><span className="ccv2-page-summary-value">{pvStatus.iosReadiness || "Requires iOS/Xcode runner"}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Release readiness</span><span className="ccv2-page-summary-value">{vm.release.status === "NO-GO" ? "Not ready" : vm.release.status}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next platform step</span><span className="ccv2-page-summary-value">P43 hardens scope boundaries and project packaging safety.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter runtime</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
           </div>
         </div>
 
         <CommandTabs tabs={PROJECTS_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Projects sections">
           <CommandTabPanel tabId="portfolio" activeTab={activeTab}>
-            <div className="ccv2-card">
+            <div className="ccv2-card ccv2-page-summary-card">
               <div className="ccv2-section-heading">Portfolio</div>
               <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-                Project Registry is planned for P42. Portfolio summaries remain placeholders until cross-project adapters are available.
+                The portfolio surface is ready for multi-project operation, but current live data is scoped to the selected project.
+                Do not fabricate cross-project activity before adapter runtime is enabled.
               </p>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registered projects</span><span className="ccv2-page-summary-value">{portfolioSummary.registeredProjects ?? 1}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active projects</span><span className="ccv2-page-summary-value">{portfolioSummary.activeProjects ?? 1}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Selected project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project registry</span><span className="ccv2-page-summary-value">{portfolioSummary.registryState || "Ready"}</span></div>
+              </div>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {projectOptions.map((option) => (
+                  <div key={option.label} className="ccv2-card">
+                    <div className="ccv2-section-heading">{option.label}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>{option.meta}</p>
+                    <span className={`ccv2-pill ccv2-pill--${option.tone}`}>{option.status}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-card" style={{ marginTop: 12 }}>
+                <div className="ccv2-section-heading">No Project Selected Guidance</div>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  {startProjectSteps.map((step) => (
+                    <div key={step} className="ccv2-page-summary-row">
+                      <span className="ccv2-page-summary-label">Start step</span>
+                      <span className="ccv2-page-summary-value">{step}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="active-project" activeTab={activeTab}>
-            <ProjectContextCard vm={vm} surface="Projects" />
-          </CommandTabPanel>
-          <CommandTabPanel tabId="packaging-safety" activeTab={activeTab}>
-            <ScopeBoundaryPackagingPanel vm={vm} />
-          </CommandTabPanel>
-          <CommandTabPanel tabId="adapter" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Adapter</div>
-              <div className="ccv2-empty-state">Project adapter status is planned with Project Registry + Adapter Framework in P42.</div>
-            </div>
-          </CommandTabPanel>
-          <CommandTabPanel tabId="milestones" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Milestones</div>
-              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-                Project milestones live here. NEXUS OS phases remain separate on the OS Roadmap.
-              </p>
-            </div>
-          </CommandTabPanel>
-          <CommandTabPanel tabId="gaps" activeTab={activeTab}>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Gaps</div>
-              {projectProgress?.gaps?.length ? projectProgress.gaps.map((gap) => (
-                <div key={gap} className="ccv2-list-row"><span className="ccv2-list-row__title">{gap}</span><span className="ccv2-pill ccv2-pill--pending">Open</span></div>
-              )) : <div className="ccv2-empty-state">No project gaps are available for this scope yet.</div>}
-            </div>
-          </CommandTabPanel>
-        </CommandTabs>
-
-        <div className="ccv2-two-col">
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Private Project Validation</div>
-            <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Overall</span>
-                <span style={{ fontSize: 12, fontWeight: 700, color: "var(--v2-green)" }}>{pvStatus.overall || "VALIDATED"}</span>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Active Project</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mission</span><span className="ccv2-page-summary-value">{activeMissionName}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profile</span><span className="ccv2-page-summary-value">Valid</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Release readiness</span><span className="ccv2-page-summary-value">{vm.release.status === "NO-GO" ? "Not ready" : vm.release.status}</span></div>
               </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Backend tests</span>
-                <span className="ccv2-mono" style={{ fontSize: 12, fontWeight: 700, color: "var(--v2-green)" }}>
-                  {pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS
-                </span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>Backend readiness</span>
-                <span style={{ fontSize: 12, color: "var(--v2-teal)" }}>{pvStatus.backendReadiness || "READY_FOR_VALIDATION"}</span>
-              </div>
-              <div style={{ display: "flex", justifyContent: "space-between" }}>
-                <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>iOS readiness</span>
-                <span style={{ fontSize: 12, color: "var(--v2-teal)" }}>{pvStatus.iosReadiness || "READY_FOR_XCODE_INVENTORY"}</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Project State</div>
-            <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-              No source file details are exposed here. Private project data is scoped to local-private mode, and adapter behavior remains intentionally limited until the Project Registry + Adapter Framework lands in P42.
-            </p>
-          </div>
-        </div>
-
-        {isLocalPrivate && projectProgress && (
-          <>
-            <div className="ccv2-card">
-              <div className="ccv2-section-heading">Project Progress · {projectProgress.projectName} {projectProgress.prdStatus.version}</div>
-              <div style={{ fontSize: 12, color: "var(--v2-muted)", margin: "4px 0 12px" }}>
-                Local-private only · active milestone: {projectProgress.milestone || "Current sprint"} · {projectProgress.productLanguage}
-              </div>
-
-              <div className="ccv2-sprint-board">
-                {projectProgress.sprints.map((s) => (
-                  <div key={s.id} className={`ccv2-sprint-tile ccv2-sprint-tile--${s.status.toLowerCase().replace("_", "-")}`}>
-                    <div className="ccv2-sprint-tile__id">{s.id}</div>
-                    <div className="ccv2-sprint-tile__focus">{s.focus}</div>
-                    <div className="ccv2-sprint-tile__status">{s.status.replace("_", " ")}</div>
-                    {s.tests !== "—" && <div className="ccv2-mono ccv2-sprint-tile__tests">{s.tests}</div>}
+              <div className="ccv2-section-heading" style={{ marginTop: 14 }}>Project Health Strip</div>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {healthStrip.map((item) => (
+                  <div key={item.label} className="ccv2-card">
+                    <div className="ccv2-section-heading">{item.label}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>{item.note}</p>
+                    <span className={`ccv2-pill ccv2-pill--${item.tone || "pending"}`}>{item.status}</span>
                   </div>
                 ))}
               </div>
             </div>
-
-            <div className="ccv2-two-col">
-              <div className="ccv2-card">
-                <div className="ccv2-section-heading">Project Open Gaps</div>
-                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                  {projectProgress.gaps.map((g) => (
-                    <div key={g} className="ccv2-gap-row">
-                      <span className="ccv2-gap-row__dot" />
-                      <span style={{ fontSize: 12, color: "var(--v2-muted)" }}>{g}</span>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="stack-profile" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Stack Profile</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Stack profile status explains what NEXUS can inspect or validate for the selected project without executing adapters.
+              </p>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {stackProfile.map((item) => (
+                  <div key={item.area} className="ccv2-card">
+                    <div className="ccv2-section-heading">{item.area}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>{item.summary}</p>
+                    <div style={{ display: "flex", flexWrap: "wrap", gap: 8, marginTop: 10 }}>
+                      <span className={`ccv2-pill ccv2-pill--${item.tone || "pending"}`}>{item.status}</span>
+                      <span className="ccv2-pill ccv2-pill--disabled">{item.runner}</span>
                     </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="ccv2-card">
-                <div className="ccv2-section-heading">Locked Decisions</div>
-                <div style={{ marginTop: 8, display: "flex", flexDirection: "column", gap: 6 }}>
-                  {projectProgress.lockedDecisions.map((d) => (
-                    <div key={d} style={{ fontSize: 11, color: "var(--v2-muted-2)", padding: "4px 0", borderBottom: "1px solid rgba(136,255,235,0.05)", lineHeight: 1.5 }}>
-                      {d}
-                    </div>
-                  ))}
-                </div>
-                <div style={{ marginTop: 10, fontSize: 11, color: "var(--v2-muted-2)" }}>
-                  Compliance: {projectProgress.compliance.framework}
-                </div>
+                  </div>
+                ))}
               </div>
             </div>
-          </>
-        )}
-
-        {!isLocalPrivate && (
-          <div className="ccv2-card">
-            <div className="ccv2-section-heading">Project Progress</div>
-            <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-              Project progress is shown only in local-private mode until the Project Registry + Adapter Framework lands in P42.
-              Public and demo surfaces use private-project wording and do not expose the local-private roadmap for a selected project.
-            </p>
-          </div>
-        )}
+          </CommandTabPanel>
+          <CommandTabPanel tabId="capabilities" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Project Capability Matrix</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Capability status is read-only and user-facing. This matrix does not enable adapters, workers, providers, tools, DB writes, or project mutation.
+              </p>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {capabilityCards.map((card) => (
+                  <div key={card.name} className="ccv2-card">
+                    <div className="ccv2-section-heading">{card.name}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>{card.description}</p>
+                    <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{card.nextAction}</span></div>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{card.owner}</span></div>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Required</span><span className="ccv2-page-summary-value">{card.required}</span></div>
+                    </div>
+                    <span className={`ccv2-pill ccv2-pill--${card.tone || "pending"}`} style={{ marginTop: 10 }}>{card.status}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="milestones" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Milestones</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.
+              </p>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {milestones.map((milestone) => (
+                  <div key={milestone.title} className="ccv2-card">
+                    <div className="ccv2-section-heading">{milestone.title}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>{milestone.summary}</p>
+                    <span className={`ccv2-pill ccv2-pill--${milestone.tone || "pending"}`}>{milestone.status}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="gaps" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Gaps</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                Open gaps are shown as next-action cards so operators can see why each gap matters and which capability unlocks it.
+              </p>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {openGaps.map((gap) => (
+                  <div key={gap.title} className="ccv2-card">
+                    <div className="ccv2-section-heading">{gap.title}</div>
+                    <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                      <strong>Why it matters:</strong> {gap.why}
+                    </p>
+                    <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{gap.nextAction}</span></div>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{gap.owner}</span></div>
+                      <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Enables</span><span className="ccv2-page-summary-value">{gap.enablingCapability}</span></div>
+                    </div>
+                    <span className={`ccv2-pill ccv2-pill--${gap.tone || "pending"}`} style={{ marginTop: 10 }}>{gap.status}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="adapter-settings" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">Adapter / Settings</div>
+              <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                NEXUS OS is the control plane. Projects are workloads. This tab shows adapter posture and safety settings without enabling project source mutation.
+              </p>
+              <div className="ccv2-grid ccv2-grid--two" style={{ marginTop: 12 }}>
+                {adapterSettings.map((setting) => (
+                  <div key={setting.label} className="ccv2-card">
+                    <div className="ccv2-section-heading">{setting.label}</div>
+                    <span className="ccv2-pill ccv2-pill--disabled">{setting.value}</span>
+                  </div>
+                ))}
+              </div>
+              <details className="ccv2-card" style={{ marginTop: 12 }}>
+                <summary className="ccv2-section-heading">Developer Details</summary>
+                <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
+                  Raw IDs and paths are intentionally secondary and are not used as the primary operator UX.
+                </p>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  {developerDetails.map((detail) => (
+                    <div key={detail.label} className="ccv2-page-summary-row">
+                      <span className="ccv2-page-summary-label">{detail.label}</span>
+                      <span className="ccv2-page-summary-value ccv2-mono">{detail.value}</span>
+                    </div>
+                  ))}
+                </div>
+              </details>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
       </div>
     </div>
   );

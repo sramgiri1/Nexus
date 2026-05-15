@@ -133,10 +133,18 @@ not enabled yet.
 
 ## Projects
 
-- Purpose: summarize current project or private-project state
-- Shows: active scope, backend validation, iOS readiness, release readiness,
-  project selector state, capability matrix, P43 scope classification posture,
-  adapter posture, and local-private project progress when available
+- Purpose: operate the selected project context without mixing project work into
+  the NEXUS OS Roadmap
+- Shows: Portfolio, Active Project, Stack Profile, Capabilities, Milestones,
+  Gaps, and Adapter / Settings tabs
+- Active Project: project label, active mission, profile state, release
+  readiness, and a health strip for Project Registry, Profile, Stack Profile,
+  Capability Matrix, Adapter Runtime, Project Mutation, Provider Dispatch, and
+  DB Writes
+- Capabilities: user-facing project capability cards with status, owner,
+  required runner/capability, and next action
+- Gaps: action-oriented cards explaining why each gap matters and what enables
+  the next step
 - Available actions: inspection only
 - Disabled actions: adapter runtime, project mutation, provider/tool/worker
   execution, and DB writes remain disabled

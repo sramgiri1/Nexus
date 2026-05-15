@@ -97,6 +97,27 @@ not an adapter runtime. Project selector state is local UI-only, project
 mutation remains disabled, provider/tool/worker execution remains disabled, and
 DB writes remain disabled.
 
+## P48.8 Projects Page Enterprise UX
+
+P48.8 polishes the Command Center Projects route into a tabbed enterprise
+operating surface for project context. The page now separates Portfolio, Active
+Project, Stack Profile, Capabilities, Milestones, Gaps, and Adapter / Settings
+instead of showing a long report-style page.
+
+The primary identity is the selected project, not environment or mode. In
+local-private mode the selected project is shown as `Private Project` unless an
+approved registry label is available. `DemoApp` remains demo-only.
+
+The Active Project tab includes a health strip for Project Registry, Profile,
+Stack Profile, Capability Matrix, Adapter Runtime, Project Mutation, Provider
+Dispatch, and DB Writes. Disabled runtime areas are shown as policy posture, not
+page failures. Raw project IDs, mission IDs, and paths are kept in Developer
+Details and are not used as primary operator copy.
+
+P48.8 does not enable adapter execution, project source mutation, provider/tool
+dispatch, worker runtime, production DB access, DB writes, or backend behavior
+changes.
+
 ## Public-Safe Labels
 
 Project registry entries must include public-safe labels. Local-private project

@@ -87,6 +87,7 @@ const policy = parseJson("policy/project-profile-loader-policy.json", "policy");
 const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const p421Report = read("reports/project-registry-schema-report.md");
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
+const viewModelSource = read("dashboard/src/data/commandCenterViewModel.js");
 
 for (const modulePath of [
   "project-registry/projectProfileLoader.js",
@@ -197,15 +198,15 @@ check(readiness.adapterRuntimeEnabled === false, "boundarySafety", "Readiness su
 check(readiness.projectMutationAllowed === false, "boundarySafety", "Readiness summary must keep project mutation disabled");
 
 for (const expected of [
-  "Project Profile Loader",
-  "Profiles discovered",
-  "Profiles valid",
-  "Project Selector",
+  "Active Project Operating Surface",
+  "Project Health Strip",
+  "Profile",
+  "Stack Profile",
   "Adapter Runtime",
   "Project Mutation",
   "Project Capability Matrix",
 ]) {
-  check(commandCenterSource.includes(expected), "commandCenterUx", `Projects page missing copy: ${expected}`);
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandCenterUx", `Projects page missing copy: ${expected}`);
 }
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
@@ -234,6 +235,12 @@ const laterHandoffPhases = [
   "P45.5",
   "P45.6",
   "P46",
+  "P47",
+  "P47.7",
+  "P48",
+  "P48.7",
+  "P48.8",
+  "P49.1",
 ];
 check(
   ["P42.1", "P42.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase),

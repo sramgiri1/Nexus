@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: arch/multi-repo-git-pr-lifecycle
-- Registry checker HEAD: 6a1748f
+- Registry checker branch: fix/projects-page-enterprise-ux
+- Registry checker HEAD: 5c52113
 - Registry checker result: PASS
 

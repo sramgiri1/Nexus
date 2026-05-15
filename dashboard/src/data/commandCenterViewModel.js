@@ -188,6 +188,78 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const doctorPassCount = doctorChecks.filter((entry) => entry?.ok).length;
   const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
+  const projectOperatingSurface = {
+    selectedProjectLabel: "Private Project",
+    selectedProjectStatus: "Active",
+    selectedProjectMode: "local-private",
+    activeMissionLabel: "Private Project Governed Build Mission",
+    sourceLabel: "Project Registry snapshot",
+    portfolioSummary: {
+      registeredProjects: 1,
+      activeProjects: 1,
+      selectedProject: "Private Project",
+      pinnedProjects: ["Private Project"],
+      recentProjects: ["Private Project"],
+      registryState: "Ready",
+      projectRegistryPlannedNote: "Project Registry is read-only here; multi-project adapter runtime remains disabled.",
+    },
+    projectHealthStrip: [
+      { label: "Project Registry", status: "Ready", tone: "pass", note: "Read-only registry metadata is available." },
+      { label: "Profile", status: "Valid", tone: "pass", note: "The selected project profile validates." },
+      { label: "Stack Profile", status: "Available", tone: "pass", note: "Stack and runner expectations are summarized." },
+      { label: "Capability Matrix", status: "Available", tone: "pass", note: "Capability posture is visible without execution." },
+      { label: "Adapter Runtime", status: "Disabled by policy", tone: "disabled", note: "No project adapter execution is enabled." },
+      { label: "Project Mutation", status: "Disabled by policy", tone: "disabled", note: "Project source writes are not enabled." },
+      { label: "Provider Dispatch", status: "Disabled by policy", tone: "disabled", note: "Provider-backed execution remains off." },
+      { label: "DB Writes", status: "Disabled by policy", tone: "disabled", note: "Runtime remains file-backed/read-only." },
+    ],
+    stackProfile: [
+      { area: "Backend", status: "Available", tone: "pass", summary: "Node/Fastify-style backend validation can be represented by governed local checks.", runner: "Approved backend checker" },
+      { area: "Web", status: "Available", tone: "pass", summary: "Command Center and web validation use dashboard build and page tests.", runner: "Dashboard build and Playwright" },
+      { area: "iOS", status: "Requires runner", tone: "pending", summary: "Mobile validation requires an approved local iOS/Xcode runner.", runner: "iOS/Xcode runner" },
+      { area: "Android", status: "Not configured", tone: "disabled", summary: "No Android runner is configured for the selected project.", runner: "Future mobile runner" },
+      { area: "DB", status: "Disabled by policy", tone: "disabled", summary: "Production DB and DB writes remain disabled for this local-private surface.", runner: "File-backed durable state" },
+      { area: "Tests", status: "Available", tone: "pass", summary: "Approved repository checkers and dashboard tests define current validation.", runner: "NEXUS check scripts" },
+      { area: "Tooling", status: "Not enabled yet", tone: "pending", summary: "Tool/MCP and provider dispatch are represented but not executable.", runner: "Governed dispatch planned" },
+    ],
+    capabilityCards: [
+      { name: "Mission Planning", status: "Available", tone: "pass", description: "Turn project goals into governed mission plans.", nextAction: "Create or refine the project mission plan.", owner: "SHEPHERD", required: "Mission composer" },
+      { name: "Task Activation", status: "Available", tone: "pass", description: "Move planned work into governed task review and execution queues.", nextAction: "Activate a planned task when evidence requirements are clear.", owner: "NEXUS", required: "Task activation bridge" },
+      { name: "Agent Workbench", status: "Available", tone: "pass", description: "Review activated work, evidence, blockers, and owner assignments.", nextAction: "Open review for the next activated task.", owner: "AUDITOR", required: "Agent Workbench" },
+      { name: "Controlled Implementation", status: "Available with limits", tone: "pending", description: "Scoped implementation flows are represented while broad project mutation stays off.", nextAction: "Use documentation-only or explicitly scoped implementation paths.", owner: "CORE", required: "Implementation bridge" },
+      { name: "Backend Validation", status: "Available", tone: "pass", description: "Approved local checkers can validate backend-facing readiness.", nextAction: "Run the approved validation command from a local terminal.", owner: "SENTINEL", required: "Backend checker" },
+      { name: "iOS Validation", status: "Requires iOS/Xcode runner", tone: "pending", description: "Mobile validation needs a governed local macOS/Xcode runner.", nextAction: "Prepare an approved iOS/Xcode runner before mobile validation.", owner: "SWIFT", required: "iOS/Xcode runner" },
+      { name: "Provider Dispatch", status: "Not enabled yet", tone: "disabled", description: "Provider-backed execution is intentionally blocked by governance.", nextAction: "Wait for governed provider dispatch and cost controls.", owner: "NEXUS", required: "Governed provider dispatch" },
+      { name: "Worker Runtime", status: "Not enabled yet", tone: "disabled", description: "Background execution remains planned and disabled.", nextAction: "Use foreground governed actions until worker runtime is delivered.", owner: "NEXUS", required: "Worker runtime" },
+      { name: "Tool/MCP Gateway", status: "Not enabled yet", tone: "disabled", description: "Tool and MCP execution are not available from this surface.", nextAction: "Keep tool execution disabled until the governed registry is enabled.", owner: "WARDEN", required: "Tool/MCP registry" },
+      { name: "Adapter Runtime", status: "Disabled by policy", tone: "disabled", description: "Project adapter execution is visible as posture only.", nextAction: "Keep adapter runtime disabled until an explicit adapter execution phase.", owner: "WARDEN", required: "Adapter runtime controls" },
+    ],
+    milestones: [
+      { title: "Project registry foundation", status: "Complete", tone: "pass", summary: "Read-only registry, profile, and selected-project metadata are available." },
+      { title: "Stack profile inventory", status: "Available", tone: "pass", summary: "Backend, web, mobile, DB, testing, and tooling expectations are summarized." },
+      { title: "Capability matrix", status: "Available", tone: "pass", summary: "Project capability posture and blocked runtime areas are visible." },
+      { title: "Adapter runtime", status: "Disabled by policy", tone: "disabled", summary: "Adapter execution and source mutation are not enabled." },
+    ],
+    openGaps: [
+      { title: "iOS/Xcode runner is not configured", why: "Mobile release confidence requires a governed local runner before iOS validation is meaningful.", status: "Requires runner", tone: "pending", nextAction: "Prepare an approved iOS/Xcode runner.", owner: "SWIFT", enablingCapability: "iOS/Xcode runner" },
+      { title: "Provider dispatch is not enabled", why: "NEXUS must have governance, cost, and recovery controls before provider-backed actions run.", status: "Not enabled yet", tone: "disabled", nextAction: "Keep provider-backed execution disabled until governed dispatch lands.", owner: "NEXUS", enablingCapability: "Governed provider dispatch" },
+      { title: "Project adapter runtime is disabled", why: "Project adapters can affect source boundaries and require explicit approval controls before execution.", status: "Disabled by policy", tone: "disabled", nextAction: "Use read-only profile and capability surfaces until adapter execution is approved.", owner: "WARDEN", enablingCapability: "Adapter runtime controls" },
+      { title: "Project Registry is single-project in this shell", why: "Portfolio operations need a real multi-project registry and adapter lifecycle before aggregation is live.", status: "Planned", tone: "pending", nextAction: "Treat portfolio cards as operating posture, not fabricated cross-project data.", owner: "NEXUS", enablingCapability: "Project Registry adapter runtime" },
+    ],
+    adapterSettings: [
+      { label: "Adapter runtime", value: "Disabled by policy" },
+      { label: "Project mutation", value: "Disabled by policy" },
+      { label: "Provider dispatch", value: "Disabled by policy" },
+      { label: "DB writes", value: "Disabled by policy" },
+      { label: "External network", value: "Disabled by policy" },
+    ],
+    developerDetails: [
+      { label: "Project ID", value: "private-project-01" },
+      { label: "Mission ID", value: "private-project-governed-build-mission" },
+      { label: "Profile path", value: "project-registry/examples/private-project.nexus.project.json" },
+      { label: "Release manifest", value: "artifacts/project-release/private-project-release-manifest.json" },
+    ],
+  };
   const activeMissionId = "private-project-governed-build-mission";
   const activeMissionDisplayName = humanizeMissionId(activeMissionId);
   const trustedContextSources = [
@@ -1000,6 +1072,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         milestone: projectProgressExampleEntry.milestone,
       }
       : null,
+    projectOperatingSurface,
     careloopProductProgress: projectProgressExampleEntry
       ? {
         productName: projectProgressExampleEntry.displayName,
