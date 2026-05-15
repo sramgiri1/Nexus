@@ -174,7 +174,7 @@ Risk level:
   - `P45.3` Agent Path / Tool / Data Boundaries — complete
   - `P45.4` Boundary Compiler — complete
   - `P45.5` Command Center Agent Registry UX — complete
-  - `P45.6` Agent Boundary Tests + Final Validation — next
+  - `P45.6` Agent Boundary Tests + Final Validation — complete
 - `P46` Scoped Memory Architecture + Memory Center
 - `P47` Trusted Context + Data Architecture Layer
 - `P48` Governed Agentic Mesh

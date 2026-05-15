@@ -151,8 +151,8 @@ for (const phaseId of ["P44", "P44.1", "P44.2", "P44.7", "P45"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44 or active P44 subphase");
-check(["P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be a P44 subphase or P45");
+check(["P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44 or later handoff phase");
+check(["P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be a P44 or later handoff phase");
 check(["in_progress", "complete"].includes(statusById.get("P44")?.status), "osPhaseStatus", "P44 must be active");
 check(statusById.get("P44.1")?.status === "complete", "osPhaseStatus", "P44.1 must be complete");
 check(statusById.get("P44.1")?.branch === "arch/multi-repo-git-pr-lifecycle", "osPhaseStatus", "P44.1 branch mismatch");

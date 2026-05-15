@@ -112,3 +112,17 @@ dispatch.
 ## Next
 P45.6 performs final validation for the registry, matrix, boundaries, compiler,
 Command Center UX, docs, roadmap status, and safety posture.
+
+## P45.6 - Agent Boundary Tests + Final Validation
+P45.6 closes the Agent Registry + Boundary Compiler track. The final validation
+confirms:
+- P45.1 through P45.5 are complete.
+- Agent registry, capability matrix, boundary model, and boundary compiler
+  reports exist and include validation metadata.
+- Command Center exposes the Agent Registry page.
+- DemoApp remains demo-only.
+- Runtime enforcement, tool dispatch, provider calls, DB writes, worker
+  execution, release execution, and source mutation remain disabled.
+
+P46 is next and will define scoped memory architecture and Memory Center
+visibility.

@@ -5,7 +5,26 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P43", "P43.6", "P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"]);
+const CURRENT_PHASE_IDS = new Set([
+  "P43",
+  "P43.6",
+  "P44",
+  "P44.1",
+  "P44.2",
+  "P44.3",
+  "P44.4",
+  "P44.5",
+  "P44.6",
+  "P44.7",
+  "P45",
+  "P45.1",
+  "P45.2",
+  "P45.3",
+  "P45.4",
+  "P45.5",
+  "P45.6",
+  "P46",
+]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +94,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(CURRENT_PHASE_IDS.has(phaseStatus.currentPhase), "currentPhase", "currentPhase must be P43 or active P44 subphase");
-check(["P43.6", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6"].includes(phaseStatus.previousPhase), "previousPhase", "previousPhase must be P43.6 or prior P44 subphase");
-check(["P44", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "nextPhase", "nextPhase must be P44, a P44 subphase, or P45");
+check(CURRENT_PHASE_IDS.has(phaseStatus.currentPhase), "currentPhase", "currentPhase must be P43 or later handoff phase");
+check(CURRENT_PHASE_IDS.has(phaseStatus.previousPhase), "previousPhase", "previousPhase must be P43.6 or later handoff phase");
+check(CURRENT_PHASE_IDS.has(phaseStatus.nextPhase), "nextPhase", "nextPhase must be P44 or later handoff phase");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -138,6 +157,13 @@ for (const phaseId of [
   "P44.6",
   "P44.7",
   "P45",
+  "P45.1",
+  "P45.2",
+  "P45.3",
+  "P45.4",
+  "P45.5",
+  "P45.6",
+  "P46",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
   check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);

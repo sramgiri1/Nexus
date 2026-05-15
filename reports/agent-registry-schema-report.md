@@ -1,9 +1,9 @@
 # Agent Registry Schema Report
 
 ## Metadata
-- Generated at: 2026-05-15T15:04:49.971Z
+- Generated at: 2026-05-15T15:26:36.962Z
 - Validation branch: arch/agent-registry-boundary-compiler
-- Validation HEAD: cfc5858
+- Validation HEAD: 24ead19
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

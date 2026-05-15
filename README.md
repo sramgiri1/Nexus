@@ -1187,7 +1187,15 @@ tabs, known agents, capability counts, boundary summaries, evidence
 requirements, and a dry-run boundary envelope preview. It does not add agent
 editing or runtime permission changes.
 
-Next phase: P45.6 - Agent Boundary Tests + Final Validation.
+P45.6 closes Agent Registry + Boundary Compiler with final validation across
+the registry schema, capability matrix, agent boundaries, dry-run compiler,
+Command Center Agent Registry UX, docs, roadmap status, and safety posture.
+
+P45 remains metadata-only. Runtime enforcement, tool/provider dispatch, worker
+execution, DB writes, release execution, source mutation, and agent self-update
+remain disabled.
+
+Next phase: P46 - Scoped Memory Architecture + Memory Center.
 
 ---
 

@@ -111,7 +111,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const shellMode = "local-private";
   const safeProjectDisplayName = shellMode === "local-private"
     ? "Private Project"
-    : (studio.activeProject?.name || "DemoApp");
+    : (studio.activeProject?.name || "Demo Project");
   const pvStatus = pvSnapshot?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};

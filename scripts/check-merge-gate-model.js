@@ -129,9 +129,9 @@ for (const phaseId of ["P44", "P44.5", "P44.6", "P44.7"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(["P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44.6 or P44.7");
-check(["P44.5", "P44.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be a prior P44 subphase");
-check(["P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44.7 or P45");
+check(["P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44.6 or later handoff phase");
+check(["P44.5", "P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be a prior P44 or later handoff phase");
+check(["P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44.7 or later handoff phase");
 check(statusById.get("P44.6")?.status === "complete", "osPhaseStatus", "P44.6 must be complete");
 check(["planned", "complete"].includes(statusById.get("P44.7")?.status), "osPhaseStatus", "P44.7 must be planned or complete");
 

@@ -78,10 +78,10 @@ for (const phaseId of ["P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P4
   check(statusById.get(phaseId)?.branch === "arch/multi-repo-git-pr-lifecycle", "osPhaseStatus", `${phaseId} branch mismatch`);
 }
 check(statusById.get("P44")?.status === "complete", "osPhaseStatus", "P44 parent phase must be complete");
-check(statusById.get("P45")?.status === "planned", "osPhaseStatus", "P45 must be planned");
-check(phaseStatus.currentPhase === "P44.7", "osPhaseStatus", "currentPhase must be P44.7");
-check(phaseStatus.previousPhase === "P44.6", "osPhaseStatus", "previousPhase must be P44.6");
-check(phaseStatus.nextPhase === "P45", "osPhaseStatus", "nextPhase must be P45");
+check(["planned", "in_progress", "complete"].includes(statusById.get("P45")?.status), "osPhaseStatus", "P45 must exist as planned, active, or complete");
+check(["P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44.7 or later handoff phase");
+check(["P44.6", "P44.7", "P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P44.6 or later handoff phase");
+check(["P45", "P45.1", "P45.2", "P45.3", "P45.4", "P45.5", "P45.6", "P46"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P45 or later handoff phase");
 
 const policySources = [
   "policy/repo-registry-policy.json",

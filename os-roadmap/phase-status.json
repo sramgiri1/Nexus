@@ -1170,15 +1170,19 @@
     {
       "phaseId": "P45",
       "track": "NEXUS_OS",
-      "checksRun": [],
-      "knownLimitations": [],
+      "checksRun": [
+        "npm run check:agent-registry-final-validation"
+      ],
+      "knownLimitations": [
+        "No runtime enforcement, tool/provider execution, DB writes, worker runtime, release execution, or agent self-update is enabled."
+      ],
       "commandCenterVisible": true,
       "title": "Agent Registry + Boundary Compiler",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned agent registry and compiled boundary layer.",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T15:22:54.059Z",
+      "summary": "Completes metadata-only agent registry, capability matrix, boundary model, dry-run boundary compiler, and Command Center Agent Registry UX.",
       "nextPhase": "P46"
     },
     {
@@ -1935,7 +1939,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending-subphase-commit",
+      "commit": "24ead19",
       "completedAt": "2026-05-15T15:17:15.835Z",
       "summary": "Adds read-only Agent Registry UX with tabs, agent capability summaries, boundaries, evidence requirements, and dry-run envelope preview.",
       "checksRun": [
@@ -1952,20 +1956,28 @@
       "phaseId": "P45.6",
       "title": "Agent Boundary Tests + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending",
-      "completedAt": "",
-      "summary": "Close P45 with final validation across registry, matrix, boundaries, compiler, UX, docs, status, and safety.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T15:22:54.059Z",
+      "summary": "Validates and closes P45 Agent Registry + Boundary Compiler across registry, matrix, boundaries, compiler, Command Center UX, docs, roadmap status, and safety.",
+      "checksRun": [
+        "npm run check:agent-registry-final-validation",
+        "npm run check:boundary-compiler",
+        "npm run check:agent-boundaries",
+        "npm run check:agent-capability-matrix",
+        "npm run check:agent-registry-schema"
+      ],
+      "knownLimitations": [
+        "Boundary envelopes remain dry-run previews and are not runtime enforcement. Agent editing is deferred to P49."
+      ],
       "nextPhase": "P46",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:17:15.835Z",
-  "currentPhase": "P45.5",
-  "previousPhase": "P45.4",
-  "nextPhase": "P45.6"
+  "updatedAt": "2026-05-15T15:22:54.059Z",
+  "currentPhase": "P45.6",
+  "previousPhase": "P45.5",
+  "nextPhase": "P46"
 }
