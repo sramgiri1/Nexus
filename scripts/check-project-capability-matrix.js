@@ -120,16 +120,18 @@ check(summary.safetyPosture.adapterRuntime === "disabled", "matrix", "Summary mu
 
 for (const expected of [
   "Project Capability Matrix",
-  "Mission Planning",
-  "Task Activation",
-  "Agent Workbench",
-  "Controlled Implementation",
-  "Backend Validation",
-  "Requires iOS/Xcode runner",
-  "Provider-backed execution is intentionally blocked",
-  "Background execution remains planned and disabled",
-  "Tool and MCP execution are not available",
-  "Project adapter execution is visible as posture only",
+  "Planning",
+  "Backend validation",
+  "iOS validation",
+  "Android validation",
+  "Web validation",
+  "Controlled implementation",
+  "Evidence/audit",
+  "Release readiness",
+  "Packaging/export safety",
+  "Cost tracking",
+  "Provider-backed execution remains off",
+  "Project-level cost enforcement is planned",
 ]) {
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "ui", `Projects UI missing: ${expected}`);
 }

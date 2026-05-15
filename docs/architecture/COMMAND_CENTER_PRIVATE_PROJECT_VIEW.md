@@ -77,23 +77,36 @@ This writes:
 The dashboard consumes the generated JS module and never reads the private
 filesystem directly at browser runtime.
 
-## P48.8 Projects Operating Surface
+## P49.8 Projects Operating Surface Productization
 
 The Projects route now presents private project context as a tabbed operating
 surface:
 
 - Portfolio
-- Active Project
-- Stack Profile
+- Selected Project
+- Stack
 - Capabilities
 - Milestones
 - Gaps
-- Adapter / Settings
+- Evidence
+- Settings / Adapter
 
-The active project label is primary. Environment and mode badges are secondary.
-`DemoApp` is allowed only on the demo route or demo-only artifacts. Raw project
-IDs, mission IDs, and file paths belong in Developer Details, not the primary
-operator view.
+The Projects page is an enterprise project operating surface, not a registry
+metadata dump. It answers what NEXUS knows about projects, which project is
+selected, what NEXUS can do today, what is blocked, what stack and gates exist,
+what evidence is available, and where the operator should go next.
+
+The selected project label is primary. Environment and mode badges are
+secondary. `DemoApp` is allowed only on the demo route or demo-only artifacts.
+Raw project IDs, mission IDs, file paths, and profile paths belong in Developer
+Details, not the primary operator view.
+
+Portfolio mode shows all known workloads, readiness totals, setup guidance, and
+a selector shell without fabricating live multi-project data. Selected Project
+mode shows project profile readiness, adapter readiness, active mission, current
+project status, disabled action reasons, and a project safety boundary summary.
+Stack, Capabilities, Milestones, Gaps, Evidence, and Settings / Adapter tabs use
+operator-friendly language and keep OS phases out of project milestones.
 
 Adapter runtime, provider/tool/worker dispatch, DB writes, and project mutation
 remain disabled by policy.

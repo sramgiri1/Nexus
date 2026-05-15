@@ -58,7 +58,7 @@ export const PAGE_TAB_PLANS = {
   database: ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"],
   evidence: ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"],
   safety: ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"],
-  projects: ["Portfolio", "Active Project", "Adapter", "Milestones", "Gaps"],
+  projects: ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"],
   roadmap: ["Current", "Completed", "Planned", "Blocked / Risks", "History"],
   cost: ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"],
   batch: ["Overview", "Jobs", "Results", "Cost"],
@@ -401,13 +401,14 @@ export const SAFETY_CENTER_TABS = [
 ];
 
 export const PROJECTS_TABS = [
-  { id: "portfolio", label: "Portfolio", description: "Registered projects, selected project, and portfolio readiness", badge: "Ready" },
-  { id: "active-project", label: "Active Project", description: "Selected project, mission, and project health", badge: "Ready" },
-  { id: "stack-profile", label: "Stack Profile", description: "Backend, web, mobile, DB, test, and tooling profile", badge: "Available" },
+  { id: "portfolio", label: "Portfolio", description: "Known workloads, portfolio posture, and next project actions", badge: "Ready" },
+  { id: "selected-project", label: "Selected Project", description: "Selected project, mission, readiness, and actions", badge: "Ready" },
+  { id: "stack", label: "Stack", description: "Backend, web, mobile, DB, test, and tooling profile", badge: "Available" },
   { id: "capabilities", label: "Capabilities", description: "Project capability matrix and next actions", badge: "Read-only" },
   { id: "milestones", label: "Milestones", description: "Project milestones, not OS phases", badge: "Read-only" },
   { id: "gaps", label: "Gaps", description: "Open project gaps and action-oriented next steps", badge: "Actionable" },
-  { id: "adapter-settings", label: "Adapter / Settings", description: "Adapter posture, safety settings, and developer details", badge: "Disabled" },
+  { id: "evidence", label: "Evidence", description: "Project-scoped evidence and validation proof summaries", badge: "Read-only" },
+  { id: "settings-adapter", label: "Settings / Adapter", description: "Adapter posture, safety settings, and developer details", badge: "Disabled" },
 ];
 
 export const OS_ROADMAP_TABS = [

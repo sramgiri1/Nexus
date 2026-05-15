@@ -858,6 +858,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P49.8",
+      "title": "Projects Page Productization + Portfolio/Project Operating Surface",
+      "track": "NEXUS_OS",
+      "order": 23.08,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Productize the Projects page as an enterprise Portfolio and Selected Project operating surface without enabling runtime behavior.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P50",
       "title": "Skill Registry + Skill Authoring Workflow",
       "track": "NEXUS_OS",

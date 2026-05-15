@@ -135,20 +135,31 @@ not enabled yet.
 
 - Purpose: operate the selected project context without mixing project work into
   the NEXUS OS Roadmap
-- Shows: Portfolio, Active Project, Stack Profile, Capabilities, Milestones,
-  Gaps, and Adapter / Settings tabs
-- Active Project: project label, active mission, profile state, release
-  readiness, and a health strip for Project Registry, Profile, Stack Profile,
-  Capability Matrix, Adapter Runtime, Project Mutation, Provider Dispatch, and
-  DB Writes
+- Shows: Portfolio, Selected Project, Stack, Capabilities, Milestones, Gaps,
+  Evidence, and Settings / Adapter tabs
+- Portfolio mode: all known workloads, project readiness totals, setup
+  guidance, and a project selector shell without fabricating multi-project data
+- Selected Project mode: project label, project type, active mission, profile
+  state, release readiness, available actions, and a health strip for Project
+  Registry, Profile, Stack Profile, Capability Matrix, Adapter Runtime, Project
+  Mutation, Provider Dispatch, and DB Writes
+- Stack: operator-friendly backend, database, mobile, web, test, and tooling
+  readiness; raw paths and commands belong in Developer Details
 - Capabilities: user-facing project capability cards with status, owner,
   required runner/capability, and next action
 - Gaps: action-oriented cards explaining why each gap matters and what enables
   the next step
+- Evidence: project-scoped evidence summaries only; no raw JSON or payload
+  dumps in primary UX
+- Settings / Adapter: profile source, adapter posture, runtime status, mutation
+  posture, provider dispatch, DB writes, allowed/forbidden boundary summaries,
+  and Developer Details for raw IDs/paths
 - Available actions: inspection only
 - Disabled actions: adapter runtime, project mutation, provider/tool/worker
   execution, and DB writes remain disabled
 - Evidence/activity: validation posture and readiness context
+- Demo boundary: DemoApp appears only on the Demo Mode route or demo-only
+  artifacts, never as a local-private Projects fallback
 - Known limitations: Project Registry + Adapter Framework is a read-only,
   policy-governed foundation. Project selector persistence is local UI-only.
   Scope classification and project export safety are read-only. Project vs OS

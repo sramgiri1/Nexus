@@ -201,6 +201,7 @@ Risk level:
   - `P49.5` Versioning + Rollback — complete
   - `P49.6` Agent Regression Tests + Command Center UX — complete
   - `P49.7` Final Validation — complete
+  - `P49.8` Projects Page Productization + Portfolio/Project Operating Surface — complete
 - `P50` Skill Registry + Skill Authoring Workflow — next
 - `P51` Hook Registry + Safe Automation Lifecycle
 - `P52` Tool / MCP Registry + Tool Governance

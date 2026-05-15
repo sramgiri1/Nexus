@@ -2529,13 +2529,37 @@
       "knownLimitations": [
         "P49 defines governance workflow only. It does not mutate agent files or enable provider/tool/worker/DB/project execution."
       ],
+      "nextPhase": "P49.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.8",
+      "title": "Projects Page Productization + Portfolio/Project Operating Surface",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/projects-page-productization",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:45:00.000Z",
+      "summary": "Productizes the Projects page into an enterprise Portfolio and Selected Project operating surface with stack, capabilities, milestones, gaps, evidence, and settings tabs.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "npm run check:project-registry-schema",
+        "npm run check:project-profile-loader",
+        "npm run check:project-stack-profile",
+        "npm run check:project-capability-matrix",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Projects remains a read-only operating surface. It does not enable project mutation, adapter runtime, provider/tool/worker dispatch, DB writes, or backend behavior changes."
+      ],
       "nextPhase": "P50",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T18:26:00.000Z",
-  "currentPhase": "P49.7",
-  "previousPhase": "P49.6",
+  "updatedAt": "2026-05-15T18:45:00.000Z",
+  "currentPhase": "P49.8",
+  "previousPhase": "P49.7",
   "nextPhase": "P50"
 }

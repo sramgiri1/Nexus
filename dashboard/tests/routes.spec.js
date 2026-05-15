@@ -1143,7 +1143,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"]],
       ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
-      ["/command-center/projects", ["Portfolio", "Active Project", "Stack Profile", "Capabilities", "Milestones", "Gaps", "Adapter / Settings"]],
+      ["/command-center/projects", ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
@@ -1161,7 +1161,7 @@ test.describe("Command Center route-wide UX", () => {
 
       const body = await page.locator("body").innerText();
       if (path === "/command-center/projects") {
-        expect(body).toContain("Active Project");
+        expect(body).toContain("Selected Project");
         expect(body).toContain("Private Project");
         expect(body).not.toContain("DemoApp");
       } else {
@@ -1195,7 +1195,7 @@ test.describe("Command Center route-wide UX", () => {
     }
 
     await page.goto("/command-center/projects");
-    await expect(page.locator("body")).toContainText("Active Project Operating Surface");
+    await expect(page.locator("body")).toContainText("Project Operating Surface");
     await commandTab(page, "Milestones").click();
     await expect(page.locator("body")).toContainText("OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.");
 
@@ -1212,13 +1212,21 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/projects");
-    for (const label of ["Portfolio", "Active Project", "Stack Profile", "Capabilities", "Milestones", "Gaps", "Adapter / Settings"]) {
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Projects");
+    await expect(page.locator("body")).toContainText("Manage NEXUS workloads, project readiness, stack profiles, boundaries, and project operating state.");
+    await expect(page.locator("body")).toContainText("Project Selector");
+    await expect(page.locator("body")).toContainText("Portfolio / All Projects");
+    await expect(page.locator("body")).toContainText("Selected Project: Private Project");
+    await expect(page.locator("body")).toContainText("Project Type: SaaS + Mobile");
+    await expect(page.locator("body")).toContainText("Stack: Node/Fastify + Prisma + iOS");
+
+    for (const label of ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]) {
       await expect(commandTab(page, label)).toBeVisible();
       await commandTab(page, label).click();
       await expect(activeCommandTabPanel(page)).toBeVisible();
     }
 
-    await commandTab(page, "Active Project").click();
+    await commandTab(page, "Selected Project").click();
     await expect(activeCommandTabPanel(page)).toContainText("Project Registry");
     await expect(activeCommandTabPanel(page)).toContainText("Profile");
     await expect(activeCommandTabPanel(page)).toContainText("Stack Profile");
@@ -1228,6 +1236,32 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Provider Dispatch");
     await expect(activeCommandTabPanel(page)).toContainText("DB Writes");
     await expect(activeCommandTabPanel(page)).toContainText("Disabled by policy");
+
+    await commandTab(page, "Portfolio").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Total projects");
+    await expect(activeCommandTabPanel(page)).toContainText("Projects needing setup");
+    await expect(activeCommandTabPanel(page)).toContainText("No Project Selected Guidance");
+    await expect(activeCommandTabPanel(page)).toContainText("Create Project");
+    await expect(activeCommandTabPanel(page)).toContainText("Project onboarding action is not enabled yet");
+
+    await commandTab(page, "Capabilities").click();
+    for (const capability of ["Planning", "Backend validation", "iOS validation", "Android validation", "Web validation", "Controlled implementation", "Evidence/audit", "Release readiness", "Packaging/export safety", "Cost tracking"]) {
+      await expect(activeCommandTabPanel(page)).toContainText(capability);
+    }
+
+    await commandTab(page, "Milestones").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project milestones live under Projects");
+    await expect(activeCommandTabPanel(page)).not.toContainText("P49");
+
+    await commandTab(page, "Evidence").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project Evidence");
+    await expect(activeCommandTabPanel(page)).toContainText("Raw payloads and raw JSON stay out of the primary UI.");
+
+    await commandTab(page, "Settings / Adapter").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project adapter not enabled yet");
+    await expect(activeCommandTabPanel(page)).toContainText("Project mutation");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider dispatch");
+    await expect(activeCommandTabPanel(page)).toContainText("DB writes");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
@@ -1565,7 +1599,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/projects");
 
-    await expect(page.locator("body")).toContainText("Active Project Operating Surface");
+    await expect(page.locator("body")).toContainText("Project Operating Surface");
     await expect(page.locator("body")).toContainText("Selected project");
     await expect(page.locator("body")).toContainText("Private Project");
     await commandTab(page, "Milestones").click();
@@ -1591,22 +1625,18 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Capabilities").click();
     await expect(activeCommandTabPanel(page)).toContainText("Project Capability Matrix");
-    await expect(activeCommandTabPanel(page)).toContainText("Mission Planning");
-    await expect(activeCommandTabPanel(page)).toContainText("Task Activation");
-    await expect(page.locator("body")).toContainText("Agent Workbench");
-    await expect(page.locator("body")).toContainText("Controlled Implementation");
-    await expect(page.locator("body")).toContainText("Backend Validation");
-    await expect(page.locator("body")).toContainText("Requires iOS/Xcode runner");
-    await expect(page.locator("body")).toContainText("Provider-backed execution is intentionally blocked");
-    await expect(page.locator("body")).toContainText("Background execution remains planned and disabled");
-    await expect(page.locator("body")).toContainText("Tool and MCP execution are not available");
-    await expect(page.locator("body")).toContainText("Project adapter execution is visible as posture only");
+    for (const capability of ["Planning", "Backend validation", "iOS validation", "Android validation", "Web validation", "Controlled implementation", "Evidence/audit", "Release readiness", "Packaging/export safety", "Cost tracking"]) {
+      await expect(activeCommandTabPanel(page)).toContainText(capability);
+    }
+    await expect(page.locator("body")).toContainText("Requires setup");
+    await expect(page.locator("body")).toContainText("provider dispatch is off");
+    await expect(page.locator("body")).toContainText("Project-level cost enforcement is planned");
 
     await commandTab(page, "Gaps").click();
     await expect(activeCommandTabPanel(page)).toContainText("Why it matters");
     await expect(activeCommandTabPanel(page)).toContainText("Next action");
 
-    await commandTab(page, "Adapter / Settings").click();
+    await commandTab(page, "Settings / Adapter").click();
     await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS is the control plane. Projects are workloads.");
     await expect(activeCommandTabPanel(page)).toContainText("Developer Details");
 

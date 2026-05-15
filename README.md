@@ -1270,6 +1270,11 @@ gates, dry-run versioning, rollback planning, Command Center read-only
 visibility, and final validation. It does not mutate `agents/*.md` or grant
 runtime provider/tool/worker/DB/project permissions.
 
+P49.8 productizes the Projects page as a Portfolio / Selected Project operating
+surface with stack, capabilities, milestones, gaps, evidence, and Settings /
+Adapter tabs. It remains read-only: no project mutation, adapter runtime,
+provider/tool/worker dispatch, or DB writes are enabled.
+
 Next phase: P50 - Skill Registry + Skill Authoring Workflow.
 
 ---

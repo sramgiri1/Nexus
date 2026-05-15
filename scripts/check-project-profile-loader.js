@@ -198,10 +198,11 @@ check(readiness.adapterRuntimeEnabled === false, "boundarySafety", "Readiness su
 check(readiness.projectMutationAllowed === false, "boundarySafety", "Readiness summary must keep project mutation disabled");
 
 for (const expected of [
-  "Active Project Operating Surface",
+  "Project Operating Surface",
+  "Selected Project",
   "Project Health Strip",
   "Profile",
-  "Stack Profile",
+  "Stack",
   "Adapter Runtime",
   "Project Mutation",
   "Project Capability Matrix",
@@ -247,6 +248,7 @@ const laterHandoffPhases = [
   "P49.5",
   "P49.6",
   "P49.7",
+  "P49.8",
   "P50",
 ];
 check(

@@ -534,19 +534,19 @@ for (const expected of [
   "Durable State Summary",
   "Evidence Summary",
   "Safety Summary",
-  "Active Project Operating Surface",
+  "Project Operating Surface",
   "Developer Details",
   "Documentation-only update",
   "DB writes disabled by policy",
   "Evidence proves what governed actions produced.",
   "Project Health Strip",
-  "Stack Profile",
+  "Stack",
   "Project Capability Matrix",
   "Agent Registry",
   "Boundary Envelope Preview",
   "Runtime Enforcement",
   "Tool Dispatch",
-  "Adapter / Settings",
+  "Settings / Adapter",
 ]) {
   check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);
 }
@@ -756,7 +756,7 @@ for (const tabSet of [
   { exportName: "DURABLE_STATE_TABS", ids: ["overview", "entities", "import-plan", "fallback", "developer-details"] },
   { exportName: "EVIDENCE_TABS", ids: ["timeline", "by-task", "by-agent", "by-project", "developer-details"] },
   { exportName: "SAFETY_CENTER_TABS", ids: ["posture", "policy-blocks", "approvals", "data-privacy", "developer-details"] },
-  { exportName: "PROJECTS_TABS", ids: ["portfolio", "active-project", "stack-profile", "capabilities", "milestones", "gaps", "adapter-settings"] },
+  { exportName: "PROJECTS_TABS", ids: ["portfolio", "selected-project", "stack", "capabilities", "milestones", "gaps", "evidence", "settings-adapter"] },
   { exportName: "OS_ROADMAP_TABS", ids: ["current", "completed", "planned", "blocked-risks", "history"] },
   { exportName: "COST_CENTER_TABS", ids: ["overview", "budgets", "by-project", "by-agent", "provider-spend"] },
   { exportName: "BATCH_QUEUE_TABS", ids: ["overview", "jobs", "results", "cost"] },
@@ -812,13 +812,16 @@ for (const expected of [
 }
 check(!commandCenterSource.includes("function OperationalTabs"), "tabbedCorePages", "Do not introduce a duplicate one-off tab component");
 for (const expected of [
-  "Active Project Operating Surface",
+  "Project Operating Surface",
+  "Project Selector",
+  "Selected Project",
   "Project Health",
-  "Stack Profile",
+  "Stack",
   "Project Capability Matrix",
   "OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.",
   "Why it matters",
-  "Adapter / Settings",
+  "Project Evidence",
+  "Settings / Adapter",
   "Developer Details",
 ]) {
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "projectsEnterpriseUx", `Projects enterprise UX missing: ${expected}`);
@@ -835,7 +838,29 @@ for (const expected of [
 ]) {
   check(viewModelSource.includes(expected), "projectsEnterpriseUx", `Project health strip missing: ${expected}`);
 }
-check(commandTabsSource.includes('id: "adapter-settings"'), "projectsEnterpriseUx", "Projects tabs must include adapter-settings");
+for (const expected of [
+  'id: "portfolio"',
+  'id: "selected-project"',
+  'id: "stack"',
+  'id: "capabilities"',
+  'id: "milestones"',
+  'id: "gaps"',
+  'id: "evidence"',
+  'id: "settings-adapter"',
+]) {
+  check(commandTabsSource.includes(expected), "projectsEnterpriseUx", `Projects tabs missing ${expected}`);
+}
+for (const expected of [
+  "Portfolio / All Projects",
+  "No Project Selected Guidance",
+  "Create Project",
+  "Project onboarding action is not enabled yet",
+  "Project mutation",
+  "Provider dispatch",
+  "DB writes",
+]) {
+  check(commandCenterSource.includes(expected), "projectsEnterpriseUx", `Projects productization copy missing: ${expected}`);
+}
 check(routeTestSource.includes("Projects page shows enterprise operating surface tabs and project boundary"), "projectsEnterpriseUx", "Route tests missing Projects enterprise tab coverage");
 for (const expected of [
   "<ScopeSwitcher",
