@@ -150,7 +150,8 @@
     "check-agent-mesh-message-contract": "node scripts/check-agent-mesh-message-contract.js",
     "check-agent-mesh-message-bus": "node scripts/check-agent-mesh-message-bus.js",
     "check-agent-rooms": "node scripts/check-agent-rooms.js",
-    "check-agent-handoff-protocol": "node scripts/check-agent-handoff-protocol.js"
+    "check-agent-handoff-protocol": "node scripts/check-agent-handoff-protocol.js",
+    "check-agent-mesh-context-sync": "node scripts/check-agent-mesh-context-sync.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

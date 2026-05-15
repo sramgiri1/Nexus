@@ -73,3 +73,20 @@ require human review, and cross-scope handoffs are blocked unless represented as
 ## Next
 
 P48.5 connects agent rooms to policy-scoped trusted context summaries.
+
+## P48.5 - Context Sync Through Policy
+
+Context sync connects an agent room to trusted context packet summaries. It
+lists allowed sources, excluded sources, stale context, and packet summary
+metadata without exposing raw documents, raw source payloads, secrets, or policy
+JSON in primary outputs.
+
+Context sync obeys trusted-context packet policy from P47. It blocks raw context
+inclusion, blocks private project context in demo/public-safe modes, and keeps
+runtime agent injection disabled. The result is a governed context summary that
+agents can reference through NEXUS coordination only.
+
+## Next
+
+P48.6 adds Command Center visibility for governed agent rooms, messages,
+handoffs, and context sync posture.
