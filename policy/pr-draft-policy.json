@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "phase": "P44.4",
+  "purpose": "pr_draft_evidence_link_model",
+  "metadataOnly": true,
+  "githubApiCallsAllowed": false,
+  "gitlabApiCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "prCreationAllowed": false,
+  "gitBranchCreationAllowed": false,
+  "gitCommitAllowed": false,
+  "gitMergeAllowed": false,
+  "gitPushAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "localEvidenceLinksOnly": true,
+  "humanReviewRequired": true,
+  "requiredOutputs": [
+    "git-lifecycle/prDraftModel.js",
+    "git-lifecycle/prEvidenceLinks.js",
+    "reports/pr-draft-model-report.md"
+  ],
+  "osPhaseStatusUpdateRequired": true
+}

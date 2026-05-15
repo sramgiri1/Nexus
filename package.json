@@ -123,7 +123,8 @@
     "check:scope-boundary-final-validation": "node scripts/check-scope-boundary-final-validation.js",
     "check:repo-registry": "node scripts/check-repo-registry.js",
     "check:repo-dependency-map": "node scripts/check-repo-dependency-map.js",
-    "check:git-workflow-model": "node scripts/check-git-workflow-model.js"
+    "check:git-workflow-model": "node scripts/check-git-workflow-model.js",
+    "check:pr-draft-model": "node scripts/check-pr-draft-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -2,7 +2,12 @@ import { existsSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { expect, test } from "@playwright/test";
 import { COMMAND_CENTER_ROUTES } from "../src/data/commandCenterRoutes.js";
-import { NEXUS_ROADMAP_PHASES } from "../src/data/nexusRoadmap.js";
+import {
+  NEXUS_CURRENT_OS_PHASE,
+  NEXUS_NEXT_OS_PHASE,
+  NEXUS_PREVIOUS_COMPLETED_PHASE,
+  NEXUS_ROADMAP_PHASES,
+} from "../src/data/nexusRoadmap.js";
 
 const SCREENSHOT_AUDIT_SCRIPT = fileURLToPath(new URL("../../scripts/capture-command-center-screenshots.js", import.meta.url));
 const SCREENSHOT_MANIFEST = fileURLToPath(new URL("../../reports/ui-audit/manifest.json", import.meta.url));
@@ -896,7 +901,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("PR Draft + Evidence Link Model");
+    expect(plannedBody).toContain(NEXUS_NEXT_OS_PHASE.label);
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -923,7 +928,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText("P44.4");
+    await expect(page.locator("body")).toContainText(NEXUS_NEXT_OS_PHASE.phase);
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -1681,8 +1686,10 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Repo Registry");
     expect(completedBody).toContain("P44.2");
     expect(completedBody).toContain("Repo Ownership + Dependency Map");
-    expect(body).toContain("P44.3");
-    expect(body).toContain("Branch / Commit Workflow Model");
+    expect(body).toContain(NEXUS_CURRENT_OS_PHASE.phase);
+    expect(body).toContain(NEXUS_CURRENT_OS_PHASE.label);
+    expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.phase);
+    expect(body).toContain(NEXUS_PREVIOUS_COMPLETED_PHASE.label);
     expect(body).not.toContain("DemoApp");
 
     expect(completedBody).toContain("P42.1");

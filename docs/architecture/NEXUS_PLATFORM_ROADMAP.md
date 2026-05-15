@@ -164,8 +164,8 @@ Risk level:
   - `P44.1` Repo Registry — complete
   - `P44.2` Repo Ownership + Dependency Map — complete
   - `P44.3` Branch / Commit Workflow Model — complete
-  - `P44.4` PR Draft + Evidence Link Model — next
-  - `P44.5` Review Comment Ingestion Model — planned
+  - `P44.4` PR Draft + Evidence Link Model — complete
+  - `P44.5` Review Comment Ingestion Model — next
   - `P44.6` Merge Gate + Rollback Branch Model — planned
   - `P44.7` Multi-Repo Git/PR Final Validation — planned
 - `P45` Agent Registry + Boundary Compiler
@@ -780,6 +780,16 @@ The model does not create branches, commits, pull requests, merges, pushes, or
 rollback branches. Direct main commits, unreviewed merges, force pushes, and
 branch deletion remain forbidden. P44.4 is next and adds PR draft metadata plus
 local evidence-link modeling.
+
+#### P44.4 — PR Draft + Evidence Link Model
+
+P44.4 adds local PR draft metadata and evidence-link modeling. Drafts include the
+source branch plan, target branch, linked mission and task IDs, evidence IDs,
+audit IDs, activity correlation IDs, validation summary, risk summary, rollback
+plan, human-review requirement, and draft metadata-only status.
+
+This phase makes no GitHub or GitLab API calls and creates no pull requests.
+P44.5 is next and models review comment ingestion.
 
 ### Phase 15 — Containerization and Worker Scaling
 

@@ -72,3 +72,12 @@ The model allows only `status`, `diff`, `branch-plan`, and `commit-plan`
 metadata. It explicitly forbids direct main commits, unreviewed merges, force
 pushes, branch deletion, real branch creation, real commits, pull request
 creation, merges, and pushes.
+
+## P44.4 PR Draft + Evidence Link Model
+P44.4 adds local PR draft metadata and evidence-link modeling. A draft includes
+the source branch plan, target branch, linked mission and task IDs, evidence
+IDs, audit IDs, activity correlation IDs, validation summary, risk summary,
+rollback plan, human-review requirement, and status.
+
+Drafts remain `draft-metadata-only`. NEXUS does not call GitHub, GitLab, or any
+external network API, and it does not create pull requests in this phase.
