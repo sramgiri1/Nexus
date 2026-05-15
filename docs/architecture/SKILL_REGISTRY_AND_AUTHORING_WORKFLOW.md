@@ -155,3 +155,24 @@ future-only and disabled.
 
 P50.6 exposes the Skill Registry in Command Center as a read-only operating
 surface.
+
+## P50.6 - Command Center Skill Registry View
+
+P50.6 adds `/command-center/skills` as a read-only Command Center surface.
+The page shows:
+
+- registry posture and counts
+- registered skills
+- skill ownership by agent
+- stack-specific profile compatibility
+- static, contract, UI, evidence, and future runtime test requirements
+- developer references for registry artifacts
+
+The page intentionally does not provide run buttons, provider dispatch, tool or
+MCP execution, worker execution, DB writes, release execution, project mutation,
+or autonomous skill execution.
+
+## Next Subphase
+
+P50.7 performs final validation and closes the Skill Registry + Authoring
+Workflow phase.

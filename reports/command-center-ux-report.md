@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T18:58:21.534Z
-- Validation branch: fix/projects-page-productization
-- Validation HEAD: da44ed1
+- Generated at: 2026-05-15T19:38:48.130Z
+- Validation branch: arch/skill-registry-authoring-workflow
+- Validation HEAD: 009cf7c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -18,6 +18,7 @@
 - Page-specific UX: PASS
 - Service Health UX: PASS
 - Agent Rooms UX: PASS
+- Skill Registry UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS

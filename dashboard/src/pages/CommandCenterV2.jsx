@@ -19,6 +19,7 @@ import {
   MISSION_CONTROL_TABS,
   PROJECTS_TABS,
   SAFETY_CENTER_TABS,
+  SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
@@ -138,6 +139,7 @@ const ROUTE_ICONS = {
   implementation: "▲",
   release: "⬆",
   agents: "◈",
+  skills: "✦",
   liveapi: "◎",
   database: "⬟",
   services: "☍",
@@ -3911,6 +3913,145 @@ function DemoModePage({ vm }) {
   );
 }
 
+function SkillRegistryPage({ vm }) {
+  const registry = vm.skillRegistry || {};
+  const [activeTab, setActiveTab] = useState("overview");
+  const skills = registry.skills || [];
+  const profiles = registry.profiles || [];
+  const testRequirements = registry.testRequirements || [];
+  const skillsByAgent = skills.reduce((acc, skill) => {
+    const owner = skill.ownerAgent || "NEXUS";
+    if (!acc[owner]) acc[owner] = [];
+    acc[owner].push(skill);
+    return acc;
+  }, {});
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Skill Registry</div>
+            <div className="ccv2-page-head__sub">
+              Governed skill definitions, templates, stack profiles, and validation requirements.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+          </div>
+        </div>
+
+        <CommandTabs tabs={SKILL_REGISTRY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Skill Registry sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Skills", value: registry.summary?.skills ?? 0 },
+                { label: "Templates", value: registry.summary?.templates ?? 0 },
+                { label: "Stack Profiles", value: registry.summary?.profiles ?? 0 },
+                { label: "Test Requirement Sets", value: registry.summary?.testRequirementSets ?? 0 },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">Governance metadata</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Safety Posture</div>
+              <ul className="ccv2-list">
+                {(registry.safetyNotes || ["Skill execution is not enabled yet."]).map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+              <div className="ccv2-muted">Next phase guidance: {registry.summary?.nextPhase || "P51 - Hook Registry + Safe Automation Lifecycle"}</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="skills" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {skills.map((skill) => (
+                <article key={skill.skillId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{skill.name}</div>
+                  <div className="ccv2-muted">{skill.description}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill">{skill.ownerAgent}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{skill.riskLevel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{skill.statusLabel}</span>
+                  </div>
+                  <div className="ccv2-muted">Required evidence: {(skill.requiredEvidence || []).join(", ")}</div>
+                  <div className="ccv2-muted">Disabled reason: {skill.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="by-agent" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {Object.entries(skillsByAgent).map(([agent, agentSkills]) => (
+                <article key={agent} className="ccv2-card">
+                  <div className="ccv2-section-heading">{agent}</div>
+                  <ul className="ccv2-list">
+                    {agentSkills.map((skill) => (
+                      <li key={skill.skillId}>{skill.name} · {skill.statusLabel}</li>
+                    ))}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="by-project-stack" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {profiles.map((profile) => (
+                <article key={profile.profileId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{profile.label}</div>
+                  <div className="ccv2-muted">Compatible skills: {profile.compatibleSkillIds.length}</div>
+                  <div className="ccv2-muted">Unavailable skills: {profile.unavailableSkillIds.length}</div>
+                  <div className="ccv2-muted">Project profile requirements: {profile.projectProfileRequirements.join(", ")}</div>
+                  <div className="ccv2-muted">Future adapters: {profile.requiredFutureAdapters.join(", ")}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="test-requirements" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {testRequirements.map((requirement) => (
+                <article key={requirement.skillId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{requirement.label}</div>
+                  <div className="ccv2-muted">Static checks: {requirement.requiredStaticChecks.join(", ")}</div>
+                  <div className="ccv2-muted">Contract checks: {requirement.requiredContractChecks.length}</div>
+                  <div className="ccv2-muted">UI checks: {requirement.requiredUiChecks.length}</div>
+                  <div className="ccv2-muted">Evidence checks: {requirement.requiredEvidenceChecks.length}</div>
+                  <div className="ccv2-muted">Future runtime checks are documented but not enabled.</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Registry Artifacts</div>
+              <ul className="ccv2-list">
+                <li>skills-registry/registry.json</li>
+                <li>skills-registry/skillSchema.js</li>
+                <li>skills-registry/skillContract.js</li>
+                <li>skills-registry/skillTemplates.js</li>
+                <li>skills-registry/skillProfiles.js</li>
+                <li>skills-registry/skillTestRequirements.js</li>
+                <li>policy/skill-registry-policy.json</li>
+                <li>reports/skill-registry-report.md</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Workspace Page ─── */
 function WorkspacePage({ vm }) {
   const navigate = useNavigate();
@@ -7485,6 +7626,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "safety" && <SafetyCenterPage vm={vmWithApi} />}
           {currentPage === "release" && <ReleaseControlPage vm={vmWithApi} />}
           {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "skills" && <SkillRegistryPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

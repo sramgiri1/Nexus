@@ -18,6 +18,7 @@ const PRIMARY_ROUTE_KEYS = [
   "tasks",
   "workbench",
   "implementation",
+  "skills",
   "agentRooms",
   "liveapi",
   "database",
@@ -33,7 +34,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
-const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms"].includes(key));
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms", "skills"].includes(key));
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
@@ -162,6 +163,7 @@ test("route metadata declares tab contracts for implemented tabbed routes", asyn
     "tasks",
     "workbench",
     "implementation",
+    "skills",
     "liveapi",
     "database",
     "evidence",
@@ -206,6 +208,28 @@ test("route-wide implemented tabs can switch without stale labels", async ({ pag
     }
   }
 
+  expect(errors).toEqual([]);
+});
+
+test("Skill Registry route renders read-only governed skill metadata", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center/skills");
+
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Skill Registry");
+  await expect(page.getByText("Skill execution is not enabled yet")).toBeVisible();
+  await expect(page.getByText("Provider, tool, worker, DB write, and project mutation paths remain disabled.")).toBeVisible();
+  await expect(commandTab(page, "Overview")).toHaveAttribute("aria-selected", "true");
+
+  for (const label of ["Skills", "By Agent", "By Project / Stack", "Test Requirements", "Developer Details"]) {
+    await commandTab(page, label).click();
+    await expect(activeCommandTabPanel(page)).toBeVisible();
+  }
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DEMOAPP ACTIVE");
+  expect(body).not.toContain("Execute Skill");
+  expect(body).not.toContain("Run Skill");
   expect(errors).toEqual([]);
 });
 

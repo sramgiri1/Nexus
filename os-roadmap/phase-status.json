@@ -2642,7 +2642,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/skill-registry-authoring-workflow",
-      "commit": "pending-final-commit",
+      "commit": "009cf7c",
       "completedAt": "2026-05-15T19:40:00.000Z",
       "summary": "Define static, contract, UI, evidence, and future runtime test requirements for governed skills.",
       "checksRun": [
@@ -2660,20 +2660,40 @@
       "phaseId": "P50.6",
       "title": "Command Center Skill Registry View",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T19:50:00.000Z",
+      "summary": "Expose skill registry, templates, profiles, and test requirements in Command Center without execution controls.",
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "The Command Center Skill Registry is read-only and does not execute skills."
+      ],
+      "nextPhase": "P50.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P50.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/skill-registry-authoring-workflow",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Expose skill registry, templates, profiles, and test requirements in Command Center without execution controls.",
+      "summary": "Validate and close P50 while keeping skill execution disabled.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P50.7",
+      "nextPhase": "P51",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T19:40:00.000Z",
-  "currentPhase": "P50.5",
-  "previousPhase": "P50.4",
-  "nextPhase": "P50.6"
+  "updatedAt": "2026-05-15T19:50:00.000Z",
+  "currentPhase": "P50.6",
+  "previousPhase": "P50.5",
+  "nextPhase": "P50.7"
 }

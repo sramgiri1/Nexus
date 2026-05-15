@@ -25,6 +25,16 @@ import { getSafeMemoryFixtures } from "../../../memory/memoryFixtures.js";
 import { buildMemoryPacket, summarizeMemoryPacket } from "../../../memory/memoryPacketBuilder.js";
 import { assessMemoryFreshness } from "../../../memory/memoryFreshness.js";
 import { listPromotionCandidates } from "../../../memory/memoryPromotion.js";
+import {
+  getSkillProfiles,
+  getSkillRegistry,
+  getSkillTemplates,
+  getSkillTestRequirements,
+  summarizeRegisteredSkills,
+  summarizeSkillProfiles,
+  summarizeSkillTemplates,
+  summarizeSkillTestRequirements,
+} from "../../../skills-registry/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -509,6 +519,57 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       note: "No git branch, commit, PR, merge, or push actions are enabled.",
     },
   };
+  const registeredSkills = getSkillRegistry();
+  const skillTemplates = getSkillTemplates();
+  const skillProfiles = getSkillProfiles();
+  const skillTestRequirements = getSkillTestRequirements(skillTemplates);
+  const skillRequirementById = new Map(skillTestRequirements.map((requirement) => [requirement.skillId, requirement]));
+  const skillProfileBySkillId = skillProfiles.reduce((acc, profile) => {
+    for (const skillId of profile.compatibleSkillIds) {
+      if (!acc.has(skillId)) acc.set(skillId, []);
+      acc.get(skillId).push(profile.label);
+    }
+    return acc;
+  }, new Map());
+  const skillRegistrySummary = summarizeRegisteredSkills(registeredSkills);
+  const skillTemplateSummary = summarizeSkillTemplates(skillTemplates);
+  const skillProfileSummary = summarizeSkillProfiles(skillProfiles);
+  const skillTestSummary = summarizeSkillTestRequirements(skillTestRequirements);
+  const skillRegistryView = {
+    summary: {
+      skills: skillRegistrySummary.skillCount,
+      templates: skillTemplateSummary.templateCount,
+      profiles: skillProfileSummary.profileCount,
+      testRequirementSets: skillTestSummary.requirementCount,
+      executionEnabled: false,
+      providerCallsEnabled: false,
+      toolExecutionEnabled: false,
+      workerRuntimeEnabled: false,
+      dbWritesEnabled: false,
+      projectMutationEnabled: false,
+      status: "Read-only registry",
+      nextPhase: "P51 - Hook Registry + Safe Automation Lifecycle",
+    },
+    skills: registeredSkills.map((skill) => ({
+      ...skill,
+      statusLabel: skill.executionEnabled ? "Executable" : "Not enabled",
+      disabledReason: "Skill execution not enabled yet",
+      compatibleProfiles: skillProfileBySkillId.get(skill.skillId) || [],
+      testRequirementCount: skill.testRequirements?.length || 0,
+    })),
+    templates: skillTemplates.map((template) => ({
+      ...template,
+      statusLabel: template.executionEnabled ? "Executable" : "Not enabled",
+      testRequirements: skillRequirementById.get(template.skillId) || null,
+    })),
+    profiles: skillProfiles,
+    testRequirements: skillTestRequirements,
+    safetyNotes: [
+      "Skill execution is not enabled yet.",
+      "Provider, tool, worker, DB write, and project mutation paths remain disabled.",
+      "Skills are registry, contract, template, profile, and test metadata only in P50.",
+    ],
+  };
 
   return {
     shell: {
@@ -538,6 +599,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     },
     scopeBoundary,
     multiRepoWorkspace,
+    skillRegistry: skillRegistryView,
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

@@ -18,6 +18,7 @@ const sections = {
   pageSpecificUx: true,
   serviceHealthUx: true,
   agentRoomsUx: true,
+  skillRegistryUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -118,6 +119,7 @@ const requiredRoutePaths = [
   "/command-center/roadmap",
   "/command-center/demo",
   "/command-center/agents",
+  "/command-center/skills",
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
@@ -143,6 +145,7 @@ const requiredTabbedRoutes = {
   "/command-center/memory": "overview",
   "/command-center/context": "overview",
   "/command-center/agent-rooms": "overview",
+  "/command-center/skills": "overview",
 };
 
 const routeHeadings = {
@@ -162,6 +165,7 @@ const routeHeadings = {
   "/command-center/roadmap": "OS Roadmap",
   "/command-center/demo": "Demo Mode",
   "/command-center/agents": "Agent Registry",
+  "/command-center/skills": "Skill Registry",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -619,6 +623,36 @@ for (const expectedTest of [
 }
 check(routeSource.includes("/command-center/agent-rooms"), "agentRoomsUx", "Route matrix missing /command-center/agent-rooms");
 
+// Skill Registry UX
+for (const expected of [
+  "Skill Registry",
+  "Governed skill definitions, templates, stack profiles, and validation requirements.",
+  "Skill execution is not enabled yet",
+  "Provider, tool, worker, DB write, and project mutation paths remain disabled.",
+  "Test Requirement Sets",
+  "By Project / Stack",
+  "Future runtime checks are documented but not enabled.",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "skillRegistryUx",
+    `Skill Registry UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const SKILL_REGISTRY_TABS",
+  'id: "overview"',
+  'id: "skills"',
+  'id: "by-agent"',
+  'id: "by-project-stack"',
+  'id: "test-requirements"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "skillRegistryUx", `Skill Registry tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/skills"), "skillRegistryUx", "Route matrix missing /command-center/skills");
+check(routeTestSource.includes("Skill Registry route renders read-only governed skill metadata"), "skillRegistryUx", "Route tests missing Skill Registry coverage");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1002,7 +1036,13 @@ check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screensh
 check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
 check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
 const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
-  (path) => !["/command-center/services", "/command-center/memory", "/command-center/context", "/command-center/agent-rooms"].includes(path),
+  (path) => ![
+    "/command-center/services",
+    "/command-center/memory",
+    "/command-center/context",
+    "/command-center/agent-rooms",
+    "/command-center/skills",
+  ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
   const route = screenshotManifest?.routes?.find((entry) => entry.path === path);
@@ -1104,6 +1144,7 @@ console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : 
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
 console.log(`Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}`);
+console.log(`Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1153,6 +1194,7 @@ const report = `# Command Center UX Report
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
 - Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}
+- Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

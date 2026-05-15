@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T19:30:07.072Z
+- Generated at: 2026-05-15T19:38:47.922Z
 - Validation branch: arch/skill-registry-authoring-workflow
-- Validation HEAD: 7f41092
+- Validation HEAD: 009cf7c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P50.5 - Skill Test Requirements
+P50.6 - Command Center Skill Registry View
 
 ## Summary
 

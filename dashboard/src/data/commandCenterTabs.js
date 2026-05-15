@@ -220,6 +220,45 @@ export const IMPLEMENTATION_TABS = [
   },
 ];
 
+export const SKILL_REGISTRY_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Registry posture, safety boundaries, and current counts",
+    badge: "Read-only",
+  },
+  {
+    id: "skills",
+    label: "Skills",
+    description: "Registered skill definitions and owner agents",
+    badge: "Ready",
+  },
+  {
+    id: "by-agent",
+    label: "By Agent",
+    description: "Skill ownership grouped by NEXUS agent",
+    badge: "Read-only",
+  },
+  {
+    id: "by-project-stack",
+    label: "By Project / Stack",
+    description: "Stack-specific compatibility profiles",
+    badge: "Read-only",
+  },
+  {
+    id: "test-requirements",
+    label: "Test Requirements",
+    description: "Static, contract, UI, evidence, and future runtime checks",
+    badge: "Ready",
+  },
+  {
+    id: "developer-details",
+    label: "Developer Details",
+    description: "Registry files, reports, policy, and docs references",
+    badge: "Read-only",
+  },
+];
+
 export const AGENT_ROOMS_TABS = [
   {
     id: "overview",
