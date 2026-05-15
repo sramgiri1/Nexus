@@ -49,6 +49,10 @@ import toolRegistrySeed from "../../../tool-governance/seeds/tool-registry.seed.
 import mcpRegistrySeed from "../../../tool-governance/seeds/mcp-registry.seed.json";
 import toolPermissionSeed from "../../../tool-governance/seeds/tool-permissions.seed.json";
 import { listToolAdapterPreviews } from "../../../tool-governance/adapters/index.js";
+import { createTriggerGatewaySummary, summarizeScheduledTriggers } from "../../../trigger-gateway/index.js";
+import { getGitHubTriggerCatalog } from "../../../integrations/githubTriggerPreview.js";
+import { getTicketTriggerCatalog } from "../../../integrations/ticketTriggerPreview.js";
+import { getChatTriggerCatalog } from "../../../integrations/chatTriggerPreview.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -694,6 +698,39 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       "Adapter previews describe future actions only; they do not execute them.",
     ],
   };
+  const triggerGatewaySummary = createTriggerGatewaySummary();
+  const scheduledSummary = summarizeScheduledTriggers();
+  const triggerIntegrationView = {
+    summary: {
+      gatewayLabel: "Trigger + Integrations",
+      mode: "preview and dry-run only",
+      triggerTypes: triggerGatewaySummary.triggerTypes,
+      manualPreviews: 9,
+      scheduledPreviews: scheduledSummary.previewCount,
+      githubEvents: getGitHubTriggerCatalog().length,
+      ticketEvents: getTicketTriggerCatalog().length,
+      chatCommands: getChatTriggerCatalog().length,
+      executionEnabled: false,
+      webhookListenersEnabled: false,
+      schedulersEnabled: false,
+      providerCallsEnabled: false,
+      externalNetworkEnabled: false,
+      dbWritesEnabled: false,
+      projectMutationEnabled: false,
+      nextPhase: "P54 - API + Batch Execution Adapter",
+    },
+    manualActions: ["plan", "review", "qa", "fix", "ship", "retro", "guard", "freeze", "explain"],
+    scheduled: scheduledSummary.previews,
+    githubEvents: getGitHubTriggerCatalog(),
+    ticketEvents: getTicketTriggerCatalog(),
+    chatCommands: getChatTriggerCatalog(),
+    safetyNotes: [
+      "Trigger execution is not enabled.",
+      "GitHub, Jira, Linear, Slack, Teams, and webhook integrations are preview-only.",
+      "No credentials, external network calls, webhook listeners, schedulers, DB writes, workers, provider calls, or project mutation are enabled.",
+      "Future runtime execution requires a dedicated governed phase.",
+    ],
+  };
 
   return {
     shell: {
@@ -726,6 +763,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     skillRegistry: skillRegistryView,
     hookRegistry: hookRegistryView,
     toolGateway: toolGatewayView,
+    triggerIntegration: triggerIntegrationView,
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

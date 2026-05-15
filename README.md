@@ -1296,10 +1296,10 @@ Gateway view, not a fleet of active MCP servers. Real tool execution, provider
 calls, external network, DB writes, shell execution through the gateway, workers,
 and project mutation remain disabled.
 
-P53 starts the Trigger + Integration Gateway as preview-only schema and
-governance work. Trigger execution, webhooks, schedulers, provider calls,
-external network, DB writes, worker runtime, credentials, and project mutation
-remain disabled.
+P53 completes the Trigger + Integration Gateway as preview-only schema,
+integration mapping, Command Center visibility, and governance work. Trigger
+execution, webhooks, schedulers, provider calls, external network, DB writes,
+worker runtime, credentials, and project mutation remain disabled.
 
 Next phase: P54 - API + Batch Execution Adapter.
 

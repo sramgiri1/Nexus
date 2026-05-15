@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T23:14:27.270Z
-- Validation branch: arch/tool-mcp-registry-governance
-- Validation HEAD: 4a09cab
+- Generated at: 2026-05-15T23:50:40.625Z
+- Validation branch: arch/trigger-integration-gateway
+- Validation HEAD: e78bac9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

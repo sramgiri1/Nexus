@@ -23,6 +23,7 @@ import {
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   TOOL_GATEWAY_TABS,
+  TRIGGER_INTEGRATION_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "../data/commandCenterTabs.js";
@@ -5461,6 +5462,144 @@ function ToolGatewayPage({ vm }) {
   );
 }
 
+function TriggerIntegrationPage({ vm }) {
+  const trigger = vm.triggerIntegration || {};
+  const summary = trigger.summary || {};
+  const [activeTab, setActiveTab] = useState("overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Trigger + Integrations</div>
+            <div className="ccv2-page-head__sub">
+              Preview-only trigger gateway for manual, scheduled, GitHub, ticket, chat, and webhook integration events.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+            <span className="ccv2-pill ccv2-pill--disabled">No credentials</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={TRIGGER_INTEGRATION_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Trigger and Integrations sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Trigger Types", value: summary.triggerTypes ?? 0 },
+                { label: "GitHub Events", value: summary.githubEvents ?? 0 },
+                { label: "Ticket Events", value: summary.ticketEvents ?? 0 },
+                { label: "Chat Commands", value: summary.chatCommands ?? 0 },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">Preview metadata</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Preview-Only Boundary</div>
+              <ul className="ccv2-list">
+                {(trigger.safetyNotes || []).map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="manual" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(trigger.manualActions || []).map((action) => (
+                <article key={action} className="ccv2-card">
+                  <div className="ccv2-section-heading">{action}</div>
+                  <div className="ccv2-muted">Manual Command Center trigger preview.</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">Dry-run</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">No execution</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="scheduled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(trigger.scheduled || []).map((schedule) => (
+                <article key={schedule.scheduleForm} className="ccv2-card">
+                  <div className="ccv2-section-heading">{schedule.scheduleForm}</div>
+                  <div className="ccv2-muted">Scheduled triggers: Preview only.</div>
+                  <div className="ccv2-muted">Runtime scheduler: Not enabled.</div>
+                  <div className="ccv2-muted">Worker runtime: Not enabled.</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="github" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(trigger.githubEvents || []).map((event) => (
+                <article key={event.eventType} className="ccv2-card">
+                  <div className="ccv2-section-heading">{event.displayName}</div>
+                  <div className="ccv2-muted">{event.eventType}</div>
+                  <div className="ccv2-muted">Maps to: {event.mappedAction}</div>
+                  <div className="ccv2-muted">GitHub Events - Preview only; webhook execution is disabled.</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="tickets" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(trigger.ticketEvents || []).slice(0, 12).map((event) => (
+                <article key={`${event.system}-${event.eventType}`} className="ccv2-card">
+                  <div className="ccv2-section-heading">{event.system}</div>
+                  <div className="ccv2-muted">{event.eventType}</div>
+                  <div className="ccv2-muted">Jira / Linear - Planned integration; no outbound calls.</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="chat" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(trigger.chatCommands || []).slice(0, 16).map((command) => (
+                <article key={`${command.system}-${command.command}`} className="ccv2-card">
+                  <div className="ccv2-section-heading">{command.command}</div>
+                  <div className="ccv2-muted">{command.system}</div>
+                  <div className="ccv2-muted">Slack / Teams - Planned integration; chat execution is disabled.</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Disabled Runtime Details</div>
+              <ul className="ccv2-list">
+                <li>trigger-gateway/triggerGatewaySchema.js</li>
+                <li>trigger-gateway/manualTrigger.js</li>
+                <li>trigger-gateway/scheduledTrigger.js</li>
+                <li>integrations/githubTriggerPreview.js</li>
+                <li>integrations/ticketTriggerPreview.js</li>
+                <li>integrations/chatTriggerPreview.js</li>
+                <li>policy/trigger-gateway-policy.json</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function AgentRoomsPage({ vm }) {
   const mesh = vm.agentMesh || {};
   const [activeTab, setActiveTab] = useState("overview");
@@ -7959,6 +8098,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "skills" && <SkillRegistryPage vm={vmWithApi} />}
           {currentPage === "hooks" && <HookRegistryPage vm={vmWithApi} />}
           {currentPage === "tools" && <ToolGatewayPage vm={vmWithApi} />}
+          {currentPage === "triggers" && <TriggerIntegrationPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

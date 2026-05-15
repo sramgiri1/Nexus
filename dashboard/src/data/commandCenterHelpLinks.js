@@ -89,6 +89,12 @@ export const COMMAND_CENTER_HELP_LINKS = {
     description: "Review governed command palette actions and disabled reason guidance.",
     routeKeys: ["mission"],
   },
+  triggers: {
+    label: "Trigger + Integration Gateway",
+    docPath: "docs/architecture/TRIGGER_INTEGRATION_GATEWAY.md",
+    description: "Review preview-only trigger and integration mappings without runtime execution.",
+    routeKeys: ["triggers"],
+  },
   troubleshooting: {
     label: "Troubleshooting",
     docPath: "docs/usage/TROUBLESHOOTING.md",

@@ -570,7 +570,8 @@ updated as new module families or entry points are added.
   `scripts/check-scheduled-trigger.js`,
   `scripts/check-github-trigger-preview.js`,
   `scripts/check-ticket-trigger-preview.js`,
-  `scripts/check-chat-trigger-preview.js`
+  `scripts/check-chat-trigger-preview.js`,
+  `scripts/check-trigger-integration-final.js`
 - Inputs/outputs:
   Trigger metadata in memory, policy JSON, checker output, and markdown reports.
 - Side effects:
@@ -587,9 +588,10 @@ updated as new module families or entry points are added.
   `npm run check:scheduled-trigger`,
   `npm run check:github-trigger-preview`,
   `npm run check:ticket-trigger-preview`,
-  `npm run check:chat-trigger-preview`
+  `npm run check:chat-trigger-preview`,
+  `npm run check:trigger-integration-final`
 - Known limitations:
-  P53.1 through P53.6 are schema, policy, and preview only. Runtime integration
+  P53.1 through P53.7 are schema, policy, and preview only. Runtime integration
   remains disabled.
 - Status:
   foundation

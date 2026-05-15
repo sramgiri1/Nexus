@@ -1105,8 +1105,71 @@
       "title": "Trigger + Integration Gateway",
       "track": "NEXUS_OS",
       "order": 27,
-      "group": "Planned OS Phases",
-      "summary": "Add governed trigger and integration entrypoints for external systems.",
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add preview-only trigger and integration entrypoints for external systems without runtime execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.1",
+      "title": "Trigger Gateway Schema",
+      "track": "NEXUS_OS",
+      "order": 27.01,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Define preview-only trigger gateway schema and trigger types.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.2",
+      "title": "Manual Command Center Trigger",
+      "track": "NEXUS_OS",
+      "order": 27.02,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add dry-run manual trigger previews for Command Center and command palette actions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.3",
+      "title": "Cron / Scheduled Trigger Preview",
+      "track": "NEXUS_OS",
+      "order": 27.03,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add disabled scheduled trigger previews without cron, timers, or workers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.4",
+      "title": "GitHub Event Trigger Preview",
+      "track": "NEXUS_OS",
+      "order": 27.04,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add GitHub event dry-run mappings without API calls or webhooks.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.5",
+      "title": "Jira / Linear Placeholder Trigger Models",
+      "track": "NEXUS_OS",
+      "order": 27.05,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add ticket-system dry-run mappings without APIs or ticket mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.6",
+      "title": "Slack / Teams Placeholder Trigger Models",
+      "track": "NEXUS_OS",
+      "order": 27.06,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Add chat command dry-run mappings without bot tokens or chat APIs.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P53.7",
+      "title": "Trigger Governance Final Validation",
+      "track": "NEXUS_OS",
+      "order": 27.07,
+      "group": "P53 Trigger + Integration Gateway",
+      "summary": "Validate and close P53 while trigger execution remains disabled.",
       "commandCenterVisible": true
     },
     {

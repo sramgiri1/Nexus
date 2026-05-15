@@ -309,6 +309,16 @@ export const TOOL_GATEWAY_TABS = [
   { id: "developer-details", label: "Developer Details", description: "Policy, reports, and registry artifact references", badge: "Read-only" },
 ];
 
+export const TRIGGER_INTEGRATION_TABS = [
+  { id: "overview", label: "Overview", description: "Trigger gateway posture, counts, and safety boundaries", badge: "Preview" },
+  { id: "manual", label: "Manual", description: "Command Center and command palette manual trigger previews", badge: "Dry-run" },
+  { id: "scheduled", label: "Scheduled", description: "Disabled schedule previews and scheduler posture", badge: "Preview" },
+  { id: "github", label: "GitHub", description: "Repository event dry-run mappings", badge: "Preview" },
+  { id: "tickets", label: "Tickets", description: "Jira and Linear placeholder event mappings", badge: "Planned" },
+  { id: "chat", label: "Chat", description: "Slack and Teams command previews", badge: "Planned" },
+  { id: "developer-details", label: "Developer Details", description: "Policy, reports, and disabled runtime details", badge: "Read-only" },
+];
+
 export const AGENT_ROOMS_TABS = [
   {
     id: "overview",
@@ -550,6 +560,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "cost") return COST_CENTER_TABS;
   if (pageId === "batch") return BATCH_QUEUE_TABS;
   if (pageId === "memory") return MEMORY_CENTER_TABS;
+  if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;
   return (PAGE_TAB_PLANS[pageId] || []).map((label) => ({
     id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     label,

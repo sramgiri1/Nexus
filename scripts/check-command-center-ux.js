@@ -21,6 +21,7 @@ const sections = {
   skillRegistryUx: true,
   hookRegistryUx: true,
   toolGatewayUx: true,
+  triggerIntegrationUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -124,6 +125,7 @@ const requiredRoutePaths = [
   "/command-center/skills",
   "/command-center/hooks",
   "/command-center/tools",
+  "/command-center/triggers",
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
@@ -152,6 +154,7 @@ const requiredTabbedRoutes = {
   "/command-center/skills": "overview",
   "/command-center/hooks": "overview",
   "/command-center/tools": "overview",
+  "/command-center/triggers": "overview",
 };
 
 const routeHeadings = {
@@ -174,6 +177,7 @@ const routeHeadings = {
   "/command-center/skills": "Skill Registry",
   "/command-center/hooks": "Hook Registry",
   "/command-center/tools": "Tool Gateway",
+  "/command-center/triggers": "Trigger + Integrations",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -725,6 +729,37 @@ for (const expected of [
 check(routeSource.includes("/command-center/tools"), "toolGatewayUx", "Route matrix missing /command-center/tools");
 check(routeTestSource.includes("Tool Gateway route renders read-only governed tool metadata"), "toolGatewayUx", "Route tests missing Tool Gateway coverage");
 
+// Trigger + Integrations UX
+for (const expected of [
+  "Trigger + Integrations",
+  "Preview-only trigger gateway",
+  "Execution disabled",
+  "No credentials",
+  "GitHub Events - Preview only",
+  "Jira / Linear - Planned integration",
+  "Slack / Teams - Planned integration",
+  "Scheduled triggers: Preview only",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "triggerIntegrationUx",
+    `Trigger + Integrations UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const TRIGGER_INTEGRATION_TABS",
+  'id: "manual"',
+  'id: "scheduled"',
+  'id: "github"',
+  'id: "tickets"',
+  'id: "chat"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "triggerIntegrationUx", `Trigger tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/triggers"), "triggerIntegrationUx", "Route matrix missing /command-center/triggers");
+check(routeTestSource.includes("Trigger Gateway route renders preview-only integration metadata"), "triggerIntegrationUx", "Route tests missing Trigger Gateway coverage");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1116,6 +1151,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/skills",
     "/command-center/hooks",
     "/command-center/tools",
+    "/command-center/triggers",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1221,6 +1257,7 @@ console.log(`Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}`);
 console.log(`Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
+console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1273,6 +1310,7 @@ const report = `# Command Center UX Report
 - Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}
 - Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}
 - Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}
+- Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

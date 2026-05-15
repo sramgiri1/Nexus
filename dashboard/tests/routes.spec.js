@@ -2053,6 +2053,36 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Trigger Gateway route renders preview-only integration metadata", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/triggers");
+    const body = await page.locator("body").innerText();
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Trigger + Integrations");
+    await expect(page.locator("body")).toContainText("Preview-only trigger gateway");
+    await expect(page.locator("body")).toContainText("Execution disabled");
+    await expect(page.locator("body")).toContainText("No credentials");
+    for (const label of ["Overview", "Manual", "Scheduled", "GitHub", "Tickets", "Chat", "Developer Details"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+    await commandTab(page, "Scheduled").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Scheduled triggers: Preview only");
+    await expect(activeCommandTabPanel(page)).toContainText("Runtime scheduler: Not enabled");
+    await commandTab(page, "GitHub").click();
+    await expect(activeCommandTabPanel(page)).toContainText("GitHub Events - Preview only");
+    await commandTab(page, "Tickets").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Jira / Linear - Planned integration");
+    await commandTab(page, "Chat").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Slack / Teams - Planned integration");
+
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("Requires P37");
+
+    expect(errors).toEqual([]);
+  });
+
   test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 

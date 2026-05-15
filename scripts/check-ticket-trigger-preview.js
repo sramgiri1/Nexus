@@ -107,8 +107,8 @@ check(docs.includes("P53.5 - Jira / Linear Placeholder Trigger Models"), "docs",
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P53.4")?.status === "complete", "osPhaseStatus", "P53.4 must be complete");
 check(["in_progress", "complete"].includes(statusById.get("P53.5")?.status), "osPhaseStatus", "P53.5 must be tracked");
-check(phaseStatus.currentPhase === "P53.5", "osPhaseStatus", "Current phase must be P53.5");
-check(phaseStatus.nextPhase === "P53.6", "osPhaseStatus", "Next phase must be P53.6");
+check(phaseStatus.currentPhase?.startsWith("P53"), "osPhaseStatus", "Current phase must be a P53 phase");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase must exist in phase status");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

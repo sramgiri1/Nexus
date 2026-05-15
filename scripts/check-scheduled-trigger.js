@@ -108,8 +108,8 @@ check(docs.includes("P53.3 - Cron / Scheduled Trigger Preview"), "docs", "Archit
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P53.2")?.status === "complete", "osPhaseStatus", "P53.2 must be complete");
 check(["in_progress", "complete"].includes(statusById.get("P53.3")?.status), "osPhaseStatus", "P53.3 must be tracked");
-check(phaseStatus.currentPhase === "P53.3", "osPhaseStatus", "Current phase must be P53.3");
-check(phaseStatus.nextPhase === "P53.4", "osPhaseStatus", "Next phase must be P53.4");
+check(phaseStatus.currentPhase?.startsWith("P53"), "osPhaseStatus", "Current phase must be a P53 phase");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase must exist in phase status");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

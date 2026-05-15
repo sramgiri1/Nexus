@@ -30,6 +30,18 @@ not enabled yet.
 - OS phase labels belong only on OS Roadmap.
 - If a tab shows an empty state, follow its next-action guidance instead of assuming the service or project is broken.
 
+## Trigger + Integrations
+
+- Route: `/command-center/triggers`
+- Purpose: show preview-only trigger and integration readiness for manual
+  commands, scheduled triggers, GitHub events, Jira/Linear tickets, and
+  Slack/Teams chat commands.
+- Current status: dry-run preview only. Trigger execution, webhook listeners,
+  schedulers, credentials, external network calls, provider/tool/worker
+  execution, DB writes, and project mutation are disabled.
+- Use this page to understand future integration mappings and safety posture,
+  not to run external integrations.
+
 ## Scope and Project Shell
 
 - Active Project is the primary work context when a project is selected; mode

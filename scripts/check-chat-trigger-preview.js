@@ -107,8 +107,8 @@ check(docs.includes("P53.6 - Slack / Teams Placeholder Trigger Models"), "docs",
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P53.5")?.status === "complete", "osPhaseStatus", "P53.5 must be complete");
 check(["in_progress", "complete"].includes(statusById.get("P53.6")?.status), "osPhaseStatus", "P53.6 must be tracked");
-check(phaseStatus.currentPhase === "P53.6", "osPhaseStatus", "Current phase must be P53.6");
-check(phaseStatus.nextPhase === "P53.7", "osPhaseStatus", "Next phase must be P53.7");
+check(phaseStatus.currentPhase?.startsWith("P53"), "osPhaseStatus", "Current phase must be a P53 phase");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase must exist in phase status");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

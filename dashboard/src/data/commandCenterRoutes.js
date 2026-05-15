@@ -16,6 +16,7 @@ import {
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   TOOL_GATEWAY_TABS,
+  TRIGGER_INTEGRATION_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "./commandCenterTabs.js";
@@ -232,6 +233,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: TOOL_GATEWAY_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/TOOL_MCP_REGISTRY_AND_GOVERNANCE.md",
+  },
+  {
+    key: "triggers",
+    path: "/command-center/triggers",
+    name: "Trigger Gateway",
+    section: "DELIVERY",
+    allowPhaseLabels: false,
+    expectedHeading: "Trigger + Integrations",
+    status: "implemented",
+    badge: "Preview",
+    scope: "platform",
+    tabs: TRIGGER_INTEGRATION_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/TRIGGER_INTEGRATION_GATEWAY.md",
   },
   {
     key: "agentRooms",
