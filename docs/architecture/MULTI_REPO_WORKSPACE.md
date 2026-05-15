@@ -61,3 +61,14 @@ The blast-radius summary is also metadata-only. It can identify that an
 OS/project-spanning change needs cross-repo and package-boundary review, but it
 does not run git commands, scan private source contents, or mutate any project
 files.
+
+## P44.3 Branch / Commit Workflow Model
+P44.3 adds a governed git workflow model for branch and commit planning. It
+records a change ID, scope, project ID, repo IDs, base branch, proposed branch
+name, commit message template, allowed plan-only git actions, forbidden git
+actions, review/evidence requirements, and a rollback branch plan.
+
+The model allows only `status`, `diff`, `branch-plan`, and `commit-plan`
+metadata. It explicitly forbids direct main commits, unreviewed merges, force
+pushes, branch deletion, real branch creation, real commits, pull request
+creation, merges, and pushes.

@@ -123,13 +123,13 @@ for (const phaseId of ["P44", "P44.1", "P44.2", "P44.3"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P44.2", "osPhaseStatus", "currentPhase must be P44.2");
-check(phaseStatus.previousPhase === "P44.1", "osPhaseStatus", "previousPhase must be P44.1");
-check(phaseStatus.nextPhase === "P44.3", "osPhaseStatus", "nextPhase must be P44.3");
+check(["P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44.2 or later P44 subphase");
+check(["P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be a prior P44 subphase");
+check(["P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be a P44 subphase or P45");
 check(statusById.get("P44.1")?.status === "complete", "osPhaseStatus", "P44.1 must be complete");
 check(statusById.get("P44.2")?.status === "complete", "osPhaseStatus", "P44.2 must be complete");
 check(statusById.get("P44.2")?.branch === "arch/multi-repo-git-pr-lifecycle", "osPhaseStatus", "P44.2 branch mismatch");
-check(statusById.get("P44.3")?.status === "planned", "osPhaseStatus", "P44.3 must be planned");
+check(["planned", "complete"].includes(statusById.get("P44.3")?.status), "osPhaseStatus", "P44.3 must be planned or complete");
 
 const privateDiff = gitOutput(["diff", "--", "projects/careloop", "projects/careloop-ios"]);
 check(privateDiff.trim().length === 0, "noForbiddenChanges", "Private project files must not be modified");

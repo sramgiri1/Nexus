@@ -3369,6 +3369,7 @@ function ProjectsPage({ vm, studio }) {
   const multiRepoSummary = multiRepo.summary || {};
   const multiRepoRepos = Array.isArray(multiRepo.repos) ? multiRepo.repos : [];
   const multiRepoRelationships = Array.isArray(multiRepo.dependencies?.relationships) ? multiRepo.dependencies.relationships : [];
+  const gitWorkflowSummary = multiRepo.gitWorkflow?.summary || {};
   const [activeTab, setActiveTab] = useState("portfolio");
   const registryEntries = [
     { label: "NEXUS OS", scope: "os", visibility: "internal", boundary: "Platform entry" },
@@ -3407,7 +3408,8 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Active repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.activeRepos ?? 0}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project repositories</span><span className="ccv2-page-summary-value">{multiRepoSummary.projectRepos ?? 0}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dependency links</span><span className="ccv2-page-summary-value">{multiRepo.dependencies?.relationshipCount ?? multiRepoRelationships.length}</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Git lifecycle</span><span className="ccv2-page-summary-value">metadata-only</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Git lifecycle</span><span className="ccv2-page-summary-value">plan-only</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Proposed branch</span><span className="ccv2-page-summary-value">{gitWorkflowSummary.proposedBranchName || "metadata only"}</span></div>
           </div>
           <div className="ccv2-list" style={{ marginTop: 12 }}>
             {multiRepoRepos.map((repo) => (

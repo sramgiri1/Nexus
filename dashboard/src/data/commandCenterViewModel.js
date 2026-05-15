@@ -12,6 +12,7 @@ import {
   summarizeRepoBlastRadius,
   summarizeRepoRegistry,
 } from "../../../repo-workspace/index.js";
+import { buildGitWorkflowPlan, summarizeGitWorkflowPlan } from "../../../git-lifecycle/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -235,6 +236,13 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const repoOwnershipMap = buildRepoOwnershipMap(repoRegistry);
   const repoDependencyMap = buildRepoDependencyMap(repoRegistry);
   const repoBlastRadius = summarizeRepoBlastRadius({ repoIds: ["nexus-os", "private-project-backend"] }, repoRegistry);
+  const gitWorkflowPlan = buildGitWorkflowPlan({
+    changeId: "p44-3-command-center-summary",
+    scope: "NEXUS_OS_CHANGE",
+    projectId: "nexus-os",
+    repoIds: ["nexus-os"],
+    summary: "show git workflow planning model",
+  });
   const multiRepoWorkspace = {
     phase: "P44.2",
     title: "Multi-Repo Workspace",
@@ -248,6 +256,12 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       relationshipCount: repoDependencyMap.relationships.length,
       relationships: repoDependencyMap.relationships,
       blastRadius: repoBlastRadius,
+    },
+    gitWorkflow: {
+      summary: summarizeGitWorkflowPlan(gitWorkflowPlan),
+      allowedGitActions: gitWorkflowPlan.allowedGitActions,
+      forbiddenGitActions: gitWorkflowPlan.forbiddenGitActions,
+      rollbackBranchPlan: gitWorkflowPlan.rollbackBranchPlan,
     },
     repos: repoRegistry.repos.map((repo) => ({
       repoId: repo.repoId,

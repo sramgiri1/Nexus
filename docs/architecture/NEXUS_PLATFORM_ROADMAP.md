@@ -163,8 +163,8 @@ Risk level:
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
   - `P44.1` Repo Registry — complete
   - `P44.2` Repo Ownership + Dependency Map — complete
-  - `P44.3` Branch / Commit Workflow Model — next
-  - `P44.4` PR Draft + Evidence Link Model — planned
+  - `P44.3` Branch / Commit Workflow Model — complete
+  - `P44.4` PR Draft + Evidence Link Model — next
   - `P44.5` Review Comment Ingestion Model — planned
   - `P44.6` Merge Gate + Rollback Branch Model — planned
   - `P44.7` Multi-Repo Git/PR Final Validation — planned
@@ -768,6 +768,18 @@ The dependency map remains metadata-only. It does not scan private project sourc
 contents, run git commands, mutate files, call providers, use external network
 APIs, or write to a DB. P44.3 is next and adds the governed branch / commit
 workflow model.
+
+#### P44.3 — Branch / Commit Workflow Model
+
+P44.3 adds a plan-only git workflow model. It records the change ID, scope,
+project ID, target repositories, base branch, proposed branch name, commit
+message template, allowed plan actions, forbidden git actions, review/evidence
+requirements, and rollback branch plan.
+
+The model does not create branches, commits, pull requests, merges, pushes, or
+rollback branches. Direct main commits, unreviewed merges, force pushes, and
+branch deletion remain forbidden. P44.4 is next and adds PR draft metadata plus
+local evidence-link modeling.
 
 ### Phase 15 — Containerization and Worker Scaling
 

@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "phase": "P44.3",
+  "purpose": "branch_commit_workflow_model",
+  "planOnly": true,
+  "gitBranchCreationAllowed": false,
+  "gitCommitAllowed": false,
+  "gitPrCreationAllowed": false,
+  "gitMergeAllowed": false,
+  "gitPushAllowed": false,
+  "directMainCommitAllowed": false,
+  "forcePushAllowed": false,
+  "deleteBranchAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "allowedGitActions": [
+    "status",
+    "diff",
+    "branch-plan",
+    "commit-plan"
+  ],
+  "forbiddenGitActions": [
+    "force-push",
+    "delete-branch",
+    "direct-main-commit",
+    "unreviewed-merge"
+  ],
+  "requiresReview": true,
+  "requiresEvidence": true,
+  "requiredOutputs": [
+    "git-lifecycle/gitWorkflowModel.js",
+    "git-lifecycle/gitSafetyPolicy.js",
+    "reports/git-workflow-model-report.md"
+  ],
+  "osPhaseStatusUpdateRequired": true
+}

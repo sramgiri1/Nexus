@@ -896,7 +896,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("Repo Ownership + Dependency Map");
+    expect(plannedBody).toContain("PR Draft + Evidence Link Model");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -923,7 +923,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText("P44.2");
+    await expect(page.locator("body")).toContainText("P44.4");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -1679,8 +1679,10 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Command Center Scope Boundary UX");
     expect(completedBody).toContain("P44.1");
     expect(completedBody).toContain("Repo Registry");
-    expect(body).toContain("P44.2");
-    expect(body).toContain("Repo Ownership + Dependency Map");
+    expect(completedBody).toContain("P44.2");
+    expect(completedBody).toContain("Repo Ownership + Dependency Map");
+    expect(body).toContain("P44.3");
+    expect(body).toContain("Branch / Commit Workflow Model");
     expect(body).not.toContain("DemoApp");
 
     expect(completedBody).toContain("P42.1");

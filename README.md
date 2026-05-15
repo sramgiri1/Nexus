@@ -213,6 +213,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P43: Scope Boundary + Project Packaging Safety
 - P44.1: Multi-Repo Workspace repo registry model
 - P44.2: repo ownership + dependency map
+- P44.3: branch / commit workflow model
 
 ## Known Limitations
 
@@ -1149,12 +1150,13 @@ enable mutation, package creation, providers, tools, workers, or DB writes.
 P44 starts Multi-Repo Workspace + Git/PR Lifecycle. P44.1 adds a read-only
 repo registry model for NEXUS OS and project repositories. P44.2 adds a
 metadata-only repo ownership and dependency map, including blast-radius summaries
-for cross-repo review. No branch creation, commits, pull requests, merges,
+for cross-repo review. P44.3 adds a governed branch and commit workflow model
+that remains plan-only. No branch creation, commits, pull requests, merges,
 pushes, provider calls, DB writes, project source mutation, or private source
 detailed scanning are enabled. See
 [docs/architecture/MULTI_REPO_WORKSPACE.md](docs/architecture/MULTI_REPO_WORKSPACE.md).
 
-Next phase: P44.3 - Branch / Commit Workflow Model.
+Next phase: P44.4 - PR Draft + Evidence Link Model.
 
 ---
 
