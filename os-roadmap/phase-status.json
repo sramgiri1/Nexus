@@ -2719,7 +2719,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/hook-registry-safe-automation-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "081e733",
       "completedAt": "2026-05-15T20:10:00.000Z",
       "summary": "Adds the disabled hook registry schema, seed hooks, policy, checker, and architecture documentation.",
       "checksRun": [
@@ -2735,20 +2735,38 @@
       "phaseId": "P51.2",
       "title": "Trigger Definition Model",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/hook-registry-safe-automation-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T20:20:00.000Z",
+      "summary": "Adds dry-run-only trigger definitions, trigger contracts, and trigger previews without enabling runtime trigger execution.",
+      "checksRun": [
+        "npm run check:hook-registry"
+      ],
+      "knownLimitations": [
+        "Trigger definitions are metadata only; schedulers, webhooks, file watchers, and workers remain disabled."
+      ],
+      "nextPhase": "P51.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.3",
+      "title": "Rate Limits, Retry Limits, and Runtime Guard Model",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned trigger contract model for manual and future hook triggers without runtime scheduling.",
+      "summary": "Planned runtime guard model for hook limits and fail-closed decisions.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P51.3",
+      "nextPhase": "P51.4",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T20:10:00.000Z",
-  "currentPhase": "P51.1",
-  "previousPhase": "P50.7",
-  "nextPhase": "P51.2"
+  "updatedAt": "2026-05-15T20:20:00.000Z",
+  "currentPhase": "P51.2",
+  "previousPhase": "P51.1",
+  "nextPhase": "P51.3"
 }

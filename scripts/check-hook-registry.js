@@ -3,8 +3,11 @@ import { join } from "node:path";
 import { execFileSync } from "node:child_process";
 import {
   getHookRegistry,
+  buildTriggerPreview,
   summarizeRegisteredHooks,
+  summarizeTriggerDefinitions,
   validateRegisteredHooks,
+  validateTriggerDefinitions,
 } from "../hooks/index.js";
 
 const ROOT = process.cwd();
@@ -13,6 +16,7 @@ const sections = {
   modules: true,
   schema: true,
   registry: true,
+  triggers: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -67,10 +71,14 @@ const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const hooks = getHookRegistry();
 const validation = validateRegisteredHooks(hooks);
 const summary = summarizeRegisteredHooks(hooks);
+const triggerValidation = validateTriggerDefinitions();
+const triggerSummary = summarizeTriggerDefinitions();
 
 for (const file of [
   "hooks/hookSchema.js",
   "hooks/hookRegistry.js",
+  "hooks/triggerDefinitions.js",
+  "hooks/triggerContract.js",
   "hooks/index.js",
 ]) {
   check(existsSync(join(ROOT, file)), "modules", `Missing module: ${file}`);
@@ -81,6 +89,17 @@ check(validation.valid, "schema", `Hook validation failed: ${validation.errors.j
 check(summary.hookCount >= 5, "registry", "Expected at least five disabled seed hooks");
 check(summary.enabledCount === 0, "registry", "No hooks may be enabled in P51");
 check(summary.failClosedCount === summary.hookCount, "registry", "Every hook must fail closed");
+check(triggerValidation.valid, "triggers", `Trigger validation failed: ${triggerValidation.errors.join("; ")}`);
+check(triggerSummary.triggerCount >= 7, "triggers", "Expected all trigger definitions");
+check(triggerSummary.runtimeEnabledCount === 0, "triggers", "No trigger runtime may be enabled");
+check(triggerSummary.schedulerAllowedCount === 0, "triggers", "No scheduler trigger may be enabled");
+check(triggerSummary.webhookAllowedCount === 0, "triggers", "No webhook trigger may be enabled");
+check(triggerSummary.externalInputAllowedCount === 0, "triggers", "No external trigger input may be enabled");
+
+const preview = buildTriggerPreview(hooks[0], { eventType: "manual_preview" });
+check(preview.dryRun === true, "triggers", "Trigger preview must be dry-run");
+check(preview.wouldExecute === false, "triggers", "Trigger preview must not execute");
+check(preview.decision === "PREVIEW_ONLY", "triggers", "Trigger preview decision mismatch");
 
 for (const hookId of [
   "test-failure-classification",
@@ -119,17 +138,21 @@ check(policy.dryRunPreviewOnly === true, "policy", "Policy must be dry-run previ
 
 const docs = read("docs/architecture/HOOK_REGISTRY_SAFE_AUTOMATION_LIFECYCLE.md");
 check(docs.includes("P51.1 - Hook Registry Schema"), "docs", "Architecture doc missing P51.1 section");
+check(docs.includes("P51.2 - Trigger Definition Model"), "docs", "Architecture doc missing P51.2 section");
 check(docs.includes("Hook execution is not enabled"), "docs", "Architecture doc must state hook execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P50")?.status === "complete", "osPhaseStatus", "P50 parent must remain complete");
 check(statusById.get("P51")?.status === "in_progress", "osPhaseStatus", "P51 parent must be in progress");
 check(statusById.get("P51.1")?.status === "complete", "osPhaseStatus", "P51.1 must be complete");
+check(statusById.get("P51.1")?.commit === "081e733", "osPhaseStatus", "P51.1 commit mismatch");
 check(statusById.get("P51.1")?.branch === "arch/hook-registry-safe-automation-lifecycle", "osPhaseStatus", "P51.1 branch mismatch");
 check(statusById.get("P51.1")?.nextPhase === "P51.2", "osPhaseStatus", "P51.1 next phase must be P51.2");
-check(statusById.get("P51.2")?.status === "planned", "osPhaseStatus", "P51.2 must be planned");
-check(phaseStatus.currentPhase === "P51.1", "osPhaseStatus", "Current phase must be P51.1");
-check(phaseStatus.nextPhase === "P51.2", "osPhaseStatus", "Next phase must be P51.2");
+check(statusById.get("P51.2")?.status === "complete", "osPhaseStatus", "P51.2 must be complete");
+check(statusById.get("P51.2")?.nextPhase === "P51.3", "osPhaseStatus", "P51.2 next phase must be P51.3");
+check(statusById.get("P51.3")?.status === "planned", "osPhaseStatus", "P51.3 must be planned");
+check(phaseStatus.currentPhase === "P51.2", "osPhaseStatus", "Current phase must be P51.2");
+check(phaseStatus.nextPhase === "P51.3", "osPhaseStatus", "Next phase must be P51.3");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -144,6 +167,8 @@ for (const file of changedFiles()) {
 for (const file of [
   "hooks/hookSchema.js",
   "hooks/hookRegistry.js",
+  "hooks/triggerDefinitions.js",
+  "hooks/triggerContract.js",
   "hooks/index.js",
   "scripts/check-hook-registry.js",
   "policy/hook-registry-policy.json",
@@ -164,13 +189,15 @@ const report = `# NEXUS Hook Registry Report
 
 ## Scope
 
-P51.1 - Hook Registry Schema
+P51.2 - Trigger Definition Model
 
 ## Summary
 
 - Hooks: ${summary.hookCount}
 - Enabled hooks: ${summary.enabledCount}
 - Fail-closed hooks: ${summary.failClosedCount}
+- Trigger definitions: ${triggerSummary.triggerCount}
+- Runtime-enabled triggers: ${triggerSummary.runtimeEnabledCount}
 - Trigger types: ${Object.keys(summary.triggerCounts).join(", ")}
 - Scopes: ${Object.keys(summary.scopeCounts).join(", ")}
 
@@ -179,6 +206,7 @@ P51.1 - Hook Registry Schema
 - Modules: ${sections.modules ? "PASS" : "FAIL"}
 - Schema: ${sections.schema ? "PASS" : "FAIL"}
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
+- Triggers: ${sections.triggers ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -205,6 +233,7 @@ result = Object.values(sections).every(Boolean) ? "PASS" : "FAIL";
 console.log(`Modules: ${sections.modules ? "PASS" : "FAIL"}`);
 console.log(`Schema: ${sections.schema ? "PASS" : "FAIL"}`);
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
+console.log(`Triggers: ${sections.triggers ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);

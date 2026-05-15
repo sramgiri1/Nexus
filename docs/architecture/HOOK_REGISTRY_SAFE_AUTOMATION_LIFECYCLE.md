@@ -46,7 +46,26 @@ Seed hooks are disabled templates only:
 - Repeated Failure Escalation
 - Docs Drift Reminder
 
+## P51.2 - Trigger Definition Model
+
+P51.2 adds trigger definitions and trigger contracts for safe previewing. The
+model documents manual and planned trigger types without activating schedulers,
+webhooks, file watchers, workers, provider calls, or external network listeners.
+
+Supported trigger definitions are:
+
+- Manual Preview
+- Schedule Placeholder
+- File Change Placeholder
+- Validation Result Placeholder
+- PRD Change Placeholder
+- Activity Event Placeholder
+- External Webhook Placeholder
+
+Every trigger contract is dry-run only. Trigger previews return a decision,
+required evidence, and safety notes, but `wouldExecute` remains false.
+
 ## Next Subphase
 
-P51.2 adds trigger definition and trigger contract metadata. Planned trigger
-types remain non-executable.
+P51.3 adds rate limits, retry limits, runtime guard decisions, and fail-closed
+guard behavior. Planned trigger types remain non-executable.
