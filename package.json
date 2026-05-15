@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "version": "1.0.0",
-  "description": "NEXUS — Agentic Venture Orchestration System",
+  "description": "NEXUS \u2014 Agentic Venture Orchestration System",
   "private": true,
   "type": "module",
   "scripts": {
@@ -152,7 +152,14 @@
     "check-agent-rooms": "node scripts/check-agent-rooms.js",
     "check-agent-handoff-protocol": "node scripts/check-agent-handoff-protocol.js",
     "check-agent-mesh-context-sync": "node scripts/check-agent-mesh-context-sync.js",
-    "check-governed-agentic-mesh": "node scripts/check-governed-agentic-mesh.js"
+    "check-governed-agentic-mesh": "node scripts/check-governed-agentic-mesh.js",
+    "check:agent-definition-proposal": "node scripts/check-agent-definition-proposal.js",
+    "check:agent-boundary-diff": "node scripts/check-agent-boundary-diff.js",
+    "check:agent-definition-review": "node scripts/check-agent-definition-review.js",
+    "check:agent-definition-approval-gate": "node scripts/check-agent-definition-approval-gate.js",
+    "check:agent-definition-versioning": "node scripts/check-agent-definition-versioning.js",
+    "check:agent-definition-command-center": "node scripts/check-agent-definition-command-center.js",
+    "check:agent-definition-update-final": "node scripts/check-agent-definition-update-final.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

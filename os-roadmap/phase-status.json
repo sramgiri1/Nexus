@@ -2384,7 +2384,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/projects-page-enterprise-ux",
-      "commit": "pending-final-commit",
+      "commit": "8e03e92",
       "completedAt": "2026-05-15T18:00:00.000Z",
       "summary": "Polishes the Projects page into a tabbed enterprise project operating surface with active project context, stack profile, capability matrix, action-oriented gaps, and adapter safety posture.",
       "checksRun": [
@@ -2403,24 +2403,139 @@
     },
     {
       "phaseId": "P49.1",
-      "title": "Agent Definition Update Schema + Policy",
+      "title": "Agent Definition Change Proposal",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Start governed agent definition update workflow with schema and policy foundations.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:20:00.000Z",
+      "summary": "Creates proposal schema and policy for modifying agent definitions without mutating agent files.",
+      "checksRun": [
+        "npm run check:agent-definition-proposal"
+      ],
       "knownLimitations": [
-        "Planned phase; no agent definition mutation is enabled yet."
+        "Proposal records are read-only and do not mutate agents/*.md."
       ],
       "nextPhase": "P49.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.2",
+      "title": "Boundary Diff",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:21:00.000Z",
+      "summary": "Computes proposal boundary diffs and classifies capability, path, tool, data, cost, and approval deltas.",
+      "checksRun": [
+        "npm run check:agent-boundary-diff"
+      ],
+      "knownLimitations": [
+        "Boundary diffs are metadata-only and do not apply proposed changes."
+      ],
+      "nextPhase": "P49.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.3",
+      "title": "AUDITOR / WARDEN Review",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:22:00.000Z",
+      "summary": "Adds AUDITOR and WARDEN review records for agent definition proposals.",
+      "checksRun": [
+        "npm run check:agent-definition-review"
+      ],
+      "knownLimitations": [
+        "Reviews are records only and do not auto-approve or apply agent changes."
+      ],
+      "nextPhase": "P49.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.4",
+      "title": "Human Approval Gate",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:23:00.000Z",
+      "summary": "Defines proposal status transitions and required human approval gates.",
+      "checksRun": [
+        "npm run check:agent-definition-approval-gate"
+      ],
+      "knownLimitations": [
+        "Human approval is simulated as local metadata only."
+      ],
+      "nextPhase": "P49.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.5",
+      "title": "Versioning + Rollback",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:24:00.000Z",
+      "summary": "Adds dry-run version records and rollback plan metadata for approved proposals.",
+      "checksRun": [
+        "npm run check:agent-definition-versioning"
+      ],
+      "knownLimitations": [
+        "No version or rollback execution is enabled."
+      ],
+      "nextPhase": "P49.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.6",
+      "title": "Agent Regression Tests + Command Center UX",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:25:00.000Z",
+      "summary": "Exposes read-only agent definition updates in Command Center and validates no permission expansion bypasses review.",
+      "checksRun": [
+        "npm run check:agent-definition-command-center",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Command Center is read-only and does not execute or apply agent definition changes."
+      ],
+      "nextPhase": "P49.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-definition-update-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:26:00.000Z",
+      "summary": "Validates and closes the P49 Agent Definition Update Workflow and marks P50 next.",
+      "checksRun": [
+        "npm run check:agent-definition-update-final",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "P49 defines governance workflow only. It does not mutate agent files or enable provider/tool/worker/DB/project execution."
+      ],
+      "nextPhase": "P50",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T18:00:00.000Z",
-  "currentPhase": "P48.8",
-  "previousPhase": "P48.7",
-  "nextPhase": "P49.1"
+  "updatedAt": "2026-05-15T18:26:00.000Z",
+  "currentPhase": "P49.7",
+  "previousPhase": "P49.6",
+  "nextPhase": "P50"
 }

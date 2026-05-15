@@ -1,0 +1,48 @@
+{
+  "version": "1.0",
+  "phase": "P49",
+  "purpose": "agent_definition_update_workflow",
+  "proposalFirst": true,
+  "directAgentFileMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolDispatchAllowed": false,
+  "workerRuntimeAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "requiredReviewers": [
+    "AUDITOR",
+    "WARDEN"
+  ],
+  "humanApprovalRequiredForRisk": [
+    "high",
+    "critical"
+  ],
+  "allowedProposalStatuses": [
+    "proposed",
+    "under_review",
+    "requires_human_approval",
+    "approved",
+    "rejected",
+    "changes_requested",
+    "expired"
+  ],
+  "requiredOutputs": [
+    "reports/agent-definition-proposal-report.md",
+    "reports/agent-boundary-diff-report.md",
+    "reports/agent-definition-review-report.md",
+    "reports/agent-definition-approval-gate-report.md",
+    "reports/agent-definition-versioning-report.md",
+    "reports/agent-definition-command-center-report.md",
+    "reports/agent-definition-update-final-report.md"
+  ],
+  "forbiddenMutationTargets": [
+    "agents/**",
+    "projects/careloop/**",
+    "projects/careloop-ios/**",
+    "orchestrator/**",
+    "providers/**",
+    "tools/**",
+    "db/**"
+  ]
+}

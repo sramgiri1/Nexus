@@ -796,11 +796,65 @@
     },
     {
       "phaseId": "P49.1",
-      "title": "Agent Definition Update Schema + Policy",
+      "title": "Agent Definition Change Proposal",
       "track": "NEXUS_OS",
       "order": 23.01,
       "group": "P49 Agent Definition Update Workflow",
-      "summary": "Start governed agent definition update workflow with schema and policy foundations.",
+      "summary": "Create proposal schema and policy for modifying agent definitions without mutating agent files.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.2",
+      "title": "Boundary Diff",
+      "track": "NEXUS_OS",
+      "order": 23.02,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Compare current agent registry definitions with proposed definitions and classify boundary deltas.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.3",
+      "title": "AUDITOR / WARDEN Review",
+      "track": "NEXUS_OS",
+      "order": 23.03,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Record AUDITOR and WARDEN reviews for agent definition proposals.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.4",
+      "title": "Human Approval Gate",
+      "track": "NEXUS_OS",
+      "order": 23.04,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Define proposal status transitions and human approval requirements.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.5",
+      "title": "Versioning + Rollback",
+      "track": "NEXUS_OS",
+      "order": 23.05,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Create dry-run version records and rollback plan metadata for approved proposals.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.6",
+      "title": "Agent Regression Tests + Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 23.06,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Expose read-only agent definition update workflow state in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P49.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 23.07,
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Validate and close the P49 Agent Definition Update Workflow.",
       "commandCenterVisible": true
     },
     {
