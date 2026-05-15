@@ -1,7 +1,8 @@
 # NEXUS Project Registry
 
-P42.1 introduces the schema and policy foundation for the future Project
-Registry + Adapter Framework. This directory is metadata-only in P42.1.
+P42.1 introduced the schema and policy foundation for the future Project
+Registry + Adapter Framework. P42.2 adds the read-only project profile loader,
+validator, bounded discovery, and safe example profiles.
 
 ## Files
 
@@ -10,13 +11,20 @@ Registry + Adapter Framework. This directory is metadata-only in P42.1.
 - `projects.json`: safe baseline registry entries for NEXUS OS, Private Project,
   and DemoApp.
 - `project-types.json`: supported and planned project type metadata.
-- `index.js`: read-only helpers for safe registry summaries.
+- `projectProfileLoader.js`: safe JSON-only profile loading from approved roots.
+- `projectProfileValidator.js`: profile boundary, stack, test suite, and safety
+  validation.
+- `projectProfileDiscovery.js`: bounded discovery for examples and fixtures.
+- `projectProfileSummary.js`: user-facing readiness and profile summaries.
+- `examples/*.json`: read-only example profiles for NEXUS OS, Private Project,
+  and Demo Mode.
+- `index.js`: read-only helpers for safe registry and profile summaries.
 
 ## Scope
 
-P42.1 does not implement project loading, project selection, onboarding,
-adapter runtime, project mutation, provider calls, DB writes, or worker
-execution. Those capabilities remain planned follow-up phases.
+P42.2 does not implement project selection, onboarding, adapter runtime,
+project mutation, provider calls, DB writes, or worker execution. Those
+capabilities remain planned follow-up phases.
 
 ## Boundary Rules
 
@@ -26,8 +34,11 @@ execution. Those capabilities remain planned follow-up phases.
   progress.
 - `projects.json` must not expose private business details or private source
   paths.
+- Project profiles are loaded only from approved roots and must be JSON files.
+- Future `projects/*/nexus.project.json` profiles are reserved for later
+  onboarding and are not required or created in P42.2.
 
 ## Next Phase
 
-P42.2 adds the `nexus.project.json` loader and validator. It should reuse these
-schemas and keep project profile reads safe and explicit.
+P42.3 adds the Stack Profile Model. Adapter runtime remains disabled until a
+later governed phase.

@@ -106,7 +106,9 @@
     "check-os-phase-status": "node scripts/check-os-phase-status.js",
     "check:architecture-diagrams": "node scripts/check-architecture-diagrams.js",
     "diagrams:render": "node scripts/render-architecture-diagrams.js",
-    "check:project-registry": "node scripts/check-project-registry-schema.js"
+    "check:project-registry": "node scripts/check-project-registry-schema.js",
+    "check:project-registry-schema": "node scripts/check-project-registry-schema.js",
+    "check:project-profile-loader": "node scripts/check-project-profile-loader.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -48,6 +48,28 @@ Postgres/Prisma, SQLite, and MongoDB.
 
 P42.2 adds the safe loader and validator for those profile files.
 
+## P42.2 Scope
+
+P42.2 adds a read-only `nexus.project.json` profile layer:
+
+- `project-registry/projectProfileLoader.js`
+- `project-registry/projectProfileValidator.js`
+- `project-registry/projectProfileDiscovery.js`
+- `project-registry/projectProfileSummary.js`
+- safe example profiles under `project-registry/examples`
+- `policy/project-profile-loader-policy.json`
+- `scripts/check-project-profile-loader.js`
+
+The loader accepts only relative JSON paths under approved roots and blocks
+absolute paths, traversal, secret-like paths, `.git`, and `node_modules`. The
+validator checks project identity, visibility, project type metadata, profile
+boundaries, stack declarations, test suite declarations, DB adapter posture,
+demo boundaries, local-private boundaries, and disabled runtime flags.
+
+P42.2 does not add project selector persistence, project onboarding, adapter
+runtime execution, project mutation, provider calls, DB writes, worker runtime,
+or MCP/tool execution.
+
 ## Public-Safe Labels
 
 Project registry entries must include public-safe labels. Local-private project
@@ -61,8 +83,8 @@ families such as OS modules, SaaS/mobile projects, backend services, web apps,
 iOS apps, Android apps, libraries, automation tools, data pipelines, and
 unknown/unclassified projects.
 
-Project types are metadata only in P42.1. They do not activate adapters.
+Project types are metadata only through P42.2. They do not activate adapters.
 
 ## Next Phase
 
-P42.2 - `nexus.project.json` Loader + Validator.
+P42.3 - Stack Profile Model.

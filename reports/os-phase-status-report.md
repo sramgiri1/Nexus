@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T02:44:32.205Z
-- Validation branch: arch/project-registry-schema-policy
-- Validation HEAD: 8ec2a4c
+- Generated at: 2026-05-15T03:21:18.443Z
+- Validation branch: arch/project-profile-loader-validator
+- Validation HEAD: 4c1d11d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P42.1
-- Previous phase: P41.9.2
-- Next phase: P42.2
+- Current phase: P42.2
+- Previous phase: P42.1
+- Next phase: P42.3
 
 ## Checks
 

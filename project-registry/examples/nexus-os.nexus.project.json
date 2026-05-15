@@ -1,0 +1,83 @@
+{
+  "profileVersion": "1.0",
+  "projectId": "nexus-os",
+  "projectLabel": "NEXUS OS",
+  "label": "NEXUS OS",
+  "visibility": "internal",
+  "projectType": "os-module",
+  "root": ".",
+  "scope": "os",
+  "stacks": {
+    "command-center": {
+      "label": "Command Center",
+      "kind": "web-app",
+      "runtimeEnabled": false,
+      "execute": false
+    },
+    "local-runtime": {
+      "label": "Local runtime metadata",
+      "kind": "automation-tool",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  },
+  "databases": {},
+  "testSuites": [
+    {
+      "id": "check-project-profile-loader",
+      "label": "Project profile loader check",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  ],
+  "agents": {
+    "platform": [
+      "NEXUS",
+      "SHEPHERD",
+      "AUDITOR",
+      "WARDEN"
+    ]
+  },
+  "workflows": [
+    {
+      "id": "explain",
+      "label": "Explain Current State"
+    }
+  ],
+  "allowedRoots": [
+    "."
+  ],
+  "allowedPaths": [
+    "."
+  ],
+  "forbiddenPatterns": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "costPolicy": {
+    "enabled": false
+  },
+  "releaseGates": [],
+  "docs": [
+    "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+    "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md"
+  ],
+  "adapterRuntimeEnabled": false,
+  "projectSelectorEnabled": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "metadata": {
+    "source": "p42.2-platform-profile"
+  }
+}

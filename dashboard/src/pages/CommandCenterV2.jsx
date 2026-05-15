@@ -3288,7 +3288,7 @@ function ProjectsPage({ vm, studio }) {
   const registryEntries = [
     { label: "NEXUS OS", scope: "os", visibility: "internal", boundary: "Platform entry" },
     { label: "Private Project", scope: "project", visibility: "local-private", boundary: "Private placeholder" },
-    { label: "DemoApp", scope: "demo", visibility: "demo", boundary: "Demo-only entry" },
+    { label: "Demo project entry", scope: "demo", visibility: "demo", boundary: "Demo Mode only" },
   ];
 
   return (
@@ -3302,14 +3302,18 @@ function ProjectsPage({ vm, studio }) {
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Registry Foundation</div>
           <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-            P42.1 adds registry schemas, safe baseline metadata, project type metadata, and policy. Runtime project loading,
-            project onboarding, adapter execution, and project selection remain disabled. Project Registry + Adapter Framework is planned for P42.
+            P42.2 adds a read-only project profile loader, validator, and bounded discovery for safe example profiles.
+            Project selection, onboarding, adapter execution, and project mutation remain disabled.
           </p>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry entries</span><span className="ccv2-page-summary-value">3</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project selector</span><span className="ccv2-page-summary-value">Project selector arrives in P42.5.</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project onboarding</span><span className="ccv2-page-summary-value">Project onboarding is planned for P42.4.</span></div>
-            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profile loader</span><span className="ccv2-page-summary-value">nexus.project.json loader arrives in P42.2.</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Profile Loader</span><span className="ccv2-page-summary-value">ready</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles discovered</span><span className="ccv2-page-summary-value">3 example profiles</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Profiles valid</span><span className="ccv2-page-summary-value">3 valid examples</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Selector</span><span className="ccv2-page-summary-value">not enabled yet</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter Runtime</span><span className="ccv2-page-summary-value">not enabled yet</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project Mutation</span><span className="ccv2-page-summary-value">disabled</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next</span><span className="ccv2-page-summary-value">Next: Stack Profile Model</span></div>
           </div>
           <div className="ccv2-list" style={{ marginTop: 12 }}>
             {registryEntries.map((entry) => (

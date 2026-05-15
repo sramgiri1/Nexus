@@ -1,0 +1,65 @@
+{
+  "profileVersion": "1.0",
+  "projectId": "demoapp",
+  "projectLabel": "DemoApp",
+  "label": "DemoApp",
+  "visibility": "demo",
+  "projectType": "web-app",
+  "root": "demo",
+  "scope": "demo",
+  "demoOnly": true,
+  "stacks": {
+    "demo-web": {
+      "label": "Demo web placeholder",
+      "kind": "web-app",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  },
+  "databases": {},
+  "testSuites": [],
+  "agents": {
+    "demo": [
+      "NEXUS"
+    ]
+  },
+  "workflows": [
+    {
+      "id": "demo",
+      "label": "Open Demo Mode"
+    }
+  ],
+  "allowedRoots": [
+    "demo"
+  ],
+  "allowedPaths": [
+    "demo"
+  ],
+  "forbiddenPatterns": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "costPolicy": {
+    "enabled": false
+  },
+  "releaseGates": [],
+  "docs": [],
+  "adapterRuntimeEnabled": false,
+  "projectSelectorEnabled": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "metadata": {
+    "source": "p42.2-demo-profile"
+  }
+}

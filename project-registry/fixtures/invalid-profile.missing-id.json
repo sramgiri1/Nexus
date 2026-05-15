@@ -1,0 +1,29 @@
+{
+  "profileVersion": "1.0",
+  "projectLabel": "Invalid Fixture",
+  "label": "Invalid Fixture",
+  "visibility": "local-private",
+  "projectType": "saas-mobile",
+  "root": "project-registry/fixtures",
+  "stacks": {},
+  "databases": {},
+  "testSuites": [],
+  "agents": {},
+  "workflows": [],
+  "allowedRoots": [
+    "project-registry/fixtures"
+  ],
+  "forbiddenPatterns": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "costPolicy": {},
+  "releaseGates": [],
+  "docs": [],
+  "metadata": {
+    "fixture": true
+  }
+}

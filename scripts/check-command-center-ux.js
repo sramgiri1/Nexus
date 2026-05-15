@@ -528,7 +528,8 @@ for (const expected of [
   "Documentation-only update",
   "DB writes disabled by policy",
   "Evidence proves what governed actions produced.",
-  "Project Registry + Adapter Framework is planned for P42.",
+  "Project Profile Loader",
+  "Next: Stack Profile Model",
 ]) {
   check(commandCenterSource.includes(expected), "pageSpecificUx", `Page-specific UX missing expected copy: ${expected}`);
 }

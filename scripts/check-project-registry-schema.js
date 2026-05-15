@@ -135,21 +135,24 @@ check(!JSON.stringify(privateProject).includes("projects/careloop"), "privatePro
 for (const expected of [
   "Project Registry Foundation",
   "Registry entries",
-  "Project selector arrives in P42.5",
-  "Project onboarding is planned for P42.4",
+  "Project Profile Loader",
+  "Project Selector",
+  "Adapter Runtime",
+  "Project Mutation",
 ]) {
   check(commandCenterSource.includes(expected), "commandCenterUx", `Projects page missing copy: ${expected}`);
 }
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
-check(phaseStatus.previousPhase === "P41.9.2", "osPhaseStatus", "previousPhase must be P41.9.2");
-check(phaseStatus.currentPhase === "P42.1", "osPhaseStatus", "currentPhase must be P42.1");
-check(phaseStatus.nextPhase === "P42.2", "osPhaseStatus", "nextPhase must be P42.2");
+check(["P41.9.2", "P42.1"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P41.9.2 or P42.1");
+check(["P42.1", "P42.2"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P42.1 or P42.2");
+check(["P42.2", "P42.3"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P42.2 or P42.3");
 check(statusById.get("P41.9.2")?.status === "complete", "osPhaseStatus", "P41.9.2 must be complete");
 check(statusById.get("P41.9.2")?.commit === "8ec2a4c", "osPhaseStatus", "P41.9.2 commit must be 8ec2a4c");
 check(statusById.get("P42")?.status === "in_progress", "osPhaseStatus", "P42 parent must be in_progress");
-check(["complete", "in_progress"].includes(statusById.get("P42.1")?.status), "osPhaseStatus", "P42.1 must be current or complete");
-check(statusById.get("P42.2")?.status === "planned", "osPhaseStatus", "P42.2 must be planned");
+check(statusById.get("P42.1")?.status === "complete", "osPhaseStatus", "P42.1 must be complete");
+check(statusById.get("P42.1")?.commit === "4c1d11d", "osPhaseStatus", "P42.1 commit must be 4c1d11d");
+check(["planned", "complete", "in_progress"].includes(statusById.get("P42.2")?.status), "osPhaseStatus", "P42.2 must exist as planned, current, or complete");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

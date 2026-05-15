@@ -147,7 +147,8 @@ Risk level:
   - `P41.9.2` Architecture Diagram Rendering + README Follow-through — complete
 - `P42` Project Registry + Adapter Framework
   - `P42.1` Project Registry Schema + Policy — complete
-  - `P42.2` nexus.project.json Loader + Validator — next
+  - `P42.2` nexus.project.json Loader + Validator — complete
+  - `P42.3` Stack Profile Model — next
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
@@ -621,9 +622,19 @@ mutation, provider calls, DB writes, workers, or MCP/tool dispatch.
 
 #### P42.2 — nexus.project.json Loader + Validator
 
-P42.2 is next. It will add a safe loader and validator for per-project profile
-files while preserving the demo/local-private/public-safe boundaries established
-in P42.1.
+P42.2 adds the safe loader and validator for per-project profile files while
+preserving the demo/local-private/public-safe boundaries established in P42.1.
+It also adds bounded discovery, safe example profiles, profile readiness
+summaries, policy, checker, report, and minimal Projects page visibility.
+
+This phase does not enable project selector behavior, project onboarding,
+adapter runtime execution, project mutation, provider calls, DB writes, worker
+runtime, or MCP/tool execution.
+
+#### P42.3 — Stack Profile Model
+
+P42.3 is next. It defines the stack profile model that later adapters will use
+without enabling adapter runtime execution in this phase.
 
 ### Phase 15 — Containerization and Worker Scaling
 

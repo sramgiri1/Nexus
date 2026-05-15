@@ -858,15 +858,15 @@
       "title": "Project Registry + Adapter Framework",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "arch/project-registry-schema-policy",
+      "branch": "arch/project-profile-loader-validator",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Builds the project registry and adapter framework foundation after diagram and documentation governance stabilized. Previous completed phase: P41.9.2 - Architecture Diagram Rendering + README Follow-through.",
+      "summary": "Builds the project registry and adapter framework foundation after diagram and documentation governance stabilized. Current subphase: P42.2 - Project Profile Loader + Validator.",
       "checksRun": [],
       "knownLimitations": [
-        "Project selector, loader runtime, onboarding wizard, and adapter runtime are not enabled in P42.1."
+        "Project selector, onboarding wizard, adapter runtime, and project mutation remain disabled."
       ],
-      "nextPhase": "P42.1",
+      "nextPhase": "P42.2",
       "commandCenterVisible": true
     },
     {
@@ -875,7 +875,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/project-registry-schema-policy",
-      "commit": "pending-final-commit",
+      "commit": "4c1d11d",
       "completedAt": "2026-05-15T02:40:00.000Z",
       "summary": "Adds registry schemas, safe baseline project metadata, project type metadata, policy, checker, report, and minimal Command Center Projects visibility.",
       "checksRun": [
@@ -902,13 +902,25 @@
       "phaseId": "P42.2",
       "title": "nexus.project.json Loader + Validator",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned safe loader and validator for per-project nexus.project.json profiles.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/project-profile-loader-validator",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T03:05:00.000Z",
+      "summary": "Adds a read-only project profile loader, validator, bounded discovery, safe example profiles, policy, checker, report, and minimal Projects page readiness visibility.",
+      "checksRun": [
+        "npm run check:project-profile-loader",
+        "npm run check:project-registry-schema",
+        "npm run check:os-phase-status",
+        "npm run check:architecture-diagrams",
+        "npm run check:command-center-private-validation",
+        "npm run check:public-safety",
+        "npm run check:format-readability"
+      ],
+      "knownLimitations": [
+        "Project selector behavior remains disabled until P42.5.",
+        "Adapter runtime execution remains disabled.",
+        "Only bounded example and fixture profile discovery is enabled; real project onboarding belongs to P42.4."
+      ],
       "nextPhase": "P42.3",
       "commandCenterVisible": true
     },
@@ -1474,8 +1486,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-14T23:03:20.000Z",
-  "currentPhase": "P42.1",
-  "previousPhase": "P41.9.2",
-  "nextPhase": "P42.2"
+  "updatedAt": "2026-05-15T03:05:00.000Z",
+  "currentPhase": "P42.2",
+  "previousPhase": "P42.1",
+  "nextPhase": "P42.3"
 }

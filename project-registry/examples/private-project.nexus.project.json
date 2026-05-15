@@ -1,0 +1,95 @@
+{
+  "profileVersion": "1.0",
+  "projectId": "private-project-01",
+  "projectLabel": "Private Project",
+  "label": "Private Project",
+  "visibility": "local-private",
+  "projectType": "saas-mobile",
+  "root": "projects/private-project-placeholder",
+  "scope": "project",
+  "stacks": {
+    "backend": {
+      "label": "Backend placeholder",
+      "kind": "backend-service",
+      "runtimeEnabled": false,
+      "execute": false
+    },
+    "mobile": {
+      "label": "Mobile placeholder",
+      "kind": "ios-app",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  },
+  "databases": {},
+  "testSuites": [
+    {
+      "id": "backend-validation",
+      "label": "Backend validation",
+      "runtimeEnabled": false,
+      "execute": false
+    },
+    {
+      "id": "mobile-validation",
+      "label": "Mobile validation",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  ],
+  "agents": {
+    "planning": [
+      "SHEPHERD",
+      "PRISM"
+    ],
+    "validation": [
+      "AUDITOR",
+      "SENTINEL"
+    ]
+  },
+  "workflows": [
+    {
+      "id": "plan",
+      "label": "Plan Mission"
+    },
+    {
+      "id": "validate",
+      "label": "Run QA Gate"
+    }
+  ],
+  "allowedRoots": [
+    "projects/private-project-placeholder"
+  ],
+  "allowedPaths": [
+    "projects/private-project-placeholder"
+  ],
+  "forbiddenPatterns": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "costPolicy": {
+    "enabled": false
+  },
+  "releaseGates": [],
+  "docs": [
+    "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md"
+  ],
+  "adapterRuntimeEnabled": false,
+  "projectSelectorEnabled": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "metadata": {
+    "source": "p42.2-example-profile",
+    "publicSafeLabel": "Private Project"
+  }
+}

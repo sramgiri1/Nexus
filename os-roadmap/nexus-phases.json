@@ -701,7 +701,7 @@
       "track": "NEXUS_OS",
       "order": 16.2,
       "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Planned safe loader and validator for per-project profiles.",
+      "summary": "Adds read-only project profile loading, validation, bounded discovery, safe example profiles, and readiness reporting without enabling selection or adapter runtime.",
       "commandCenterVisible": true
     },
     {

@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P42", "P42.1"]);
+const CURRENT_PHASE_IDS = new Set(["P42", "P42.2"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P42.1", "currentPhase", "currentPhase must be P42.1");
-check(phaseStatus.previousPhase === "P41.9.2", "previousPhase", "previousPhase must be P41.9.2");
-check(phaseStatus.nextPhase === "P42.2", "nextPhase", "nextPhase must be P42.2");
+check(phaseStatus.currentPhase === "P42.2", "currentPhase", "currentPhase must be P42.2");
+check(phaseStatus.previousPhase === "P42.1", "previousPhase", "previousPhase must be P42.1");
+check(phaseStatus.nextPhase === "P42.3", "nextPhase", "nextPhase must be P42.3");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -238,20 +238,27 @@ check(p4192?.nextPhase === "P42.1", "nextPhase", "P41.9.2 nextPhase must be P42.
 const p42 = statusById.get("P42");
 check(p42?.status === "in_progress", "currentPhase", "P42 must be in_progress");
 check(p42?.title === "Project Registry + Adapter Framework", "currentPhase", "P42 title mismatch");
-check(p42?.branch === "arch/project-registry-schema-policy", "currentPhase", "P42 branch mismatch");
+check(p42?.branch === "arch/project-profile-loader-validator", "currentPhase", "P42 branch mismatch");
 check(Boolean(p42?.commit), "currentPhase", "P42 must have a commit or pending-final-commit placeholder");
-check(p42?.nextPhase === "P42.1", "nextPhase", "P42 nextPhase must be P42.1");
+check(p42?.nextPhase === "P42.2", "nextPhase", "P42 nextPhase must be P42.2");
 
 const p421 = statusById.get("P42.1");
-check(p421?.status === "complete" || p421?.status === "in_progress", "currentPhase", "P42.1 must be current or complete");
+check(p421?.status === "complete", "previousPhase", "P42.1 must be complete");
 check(p421?.title === "Project Registry Schema + Policy", "currentPhase", "P42.1 title mismatch");
 check(p421?.branch === "arch/project-registry-schema-policy", "currentPhase", "P42.1 branch mismatch");
-check(Boolean(p421?.commit), "currentPhase", "P42.1 must have a commit or pending-final-commit placeholder");
+check(p421?.commit === "4c1d11d", "completedPhaseCommits", "P42.1 commit must be 4c1d11d");
 check(p421?.nextPhase === "P42.2", "nextPhase", "P42.1 nextPhase must be P42.2");
 
 const p422 = statusById.get("P42.2");
-check(p422?.status === "planned", "nextPhase", "P42.2 must be planned");
+check(p422?.status === "complete" || p422?.status === "in_progress", "currentPhase", "P42.2 must be current or complete");
 check(p422?.title === "nexus.project.json Loader + Validator", "nextPhase", "P42.2 title mismatch");
+check(p422?.branch === "arch/project-profile-loader-validator", "currentPhase", "P42.2 branch mismatch");
+check(Boolean(p422?.commit), "currentPhase", "P42.2 must have a commit or pending-final-commit placeholder");
+check(p422?.nextPhase === "P42.3", "nextPhase", "P42.2 nextPhase must be P42.3");
+
+const p423 = statusById.get("P42.3");
+check(p423?.status === "planned", "nextPhase", "P42.3 must be planned");
+check(p423?.title === "Stack Profile Model", "nextPhase", "P42.3 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

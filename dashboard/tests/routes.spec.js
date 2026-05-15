@@ -1151,7 +1151,8 @@ test.describe("Command Center route-wide UX", () => {
 
       const body = await page.locator("body").innerText();
       if (path === "/command-center/projects") {
-        expect(body.toLowerCase()).toContain("demo-only entry");
+        expect(body.toLowerCase()).toContain("demo project entry");
+        expect(body.toLowerCase()).toContain("demo mode only");
       } else {
         expect(body).not.toContain("DemoApp");
       }
@@ -1329,14 +1330,18 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.getByText("Project Registry Foundation", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText("Registry entries");
+    await expect(page.locator("body")).toContainText("Project Profile Loader");
+    await expect(page.locator("body")).toContainText("Profiles discovered");
+    await expect(page.locator("body")).toContainText("Profiles valid");
     await expect(page.locator("body")).toContainText("NEXUS OS");
     await expect(page.locator("body")).toContainText("Private Project");
-    await expect(page.locator("body")).toContainText("Demo-only entry");
-    await expect(page.locator("body")).toContainText("Project selector arrives in P42.5");
-    await expect(page.locator("body")).toContainText("Project onboarding is planned for P42.4");
+    await expect(page.locator("body")).toContainText("Demo project entry");
+    await expect(page.locator("body")).toContainText("Project Selector");
+    await expect(page.locator("body")).toContainText("Adapter Runtime");
+    await expect(page.locator("body")).toContainText("Project Mutation");
+    await expect(page.locator("body")).toContainText("Next: Stack Profile Model");
     await expect(page.getByText("Project Summary", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText("Project Progress");
-    await expect(page.locator("body")).toContainText("Project Registry + Adapter Framework is planned for P42.");
     await expect(page.locator("body")).toContainText(/private project|Private Project/);
 
     await page.goto("/command-center/demo");
@@ -1586,19 +1591,22 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks P41.9.2 completion and P42.1 current", async ({ page }) => {
+  test("OS Roadmap tracks P42.1 completion and P42.2 current", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P41.9.2");
-    expect(body).toContain("Architecture Diagram Rendering + README Follow-through");
-    expect(body).toContain("P42.1");
-    expect(body).toContain("Project Registry Schema + Policy");
     expect(body).toContain("P42.2");
     expect(body).toContain("nexus.project.json Loader + Validator");
+    expect(body).toContain("P42.3");
+    expect(body).toContain("Stack Profile Model");
     expect(body).not.toContain("DemoApp");
+
+    await commandTab(page, "Completed").click();
+    const completedBody = await activeCommandTabPanel(page).innerText();
+    expect(completedBody).toContain("P42.1");
+    expect(completedBody).toContain("Project Registry Schema + Policy");
 
     expect(errors).toEqual([]);
   });

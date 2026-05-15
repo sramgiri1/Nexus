@@ -1,6 +1,31 @@
 import { readFileSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+export {
+  PROJECT_PROFILE_APPROVED_ROOTS,
+  loadProjectProfile,
+  loadProjectProfileFromObject,
+  normalizeProjectProfile,
+  summarizeLoadedProjectProfile,
+} from "./projectProfileLoader.js";
+export {
+  validateProjectProfile,
+  validateProjectProfileBoundaries,
+  validateProjectProfileSafety,
+  validateProjectProfileStacks,
+  validateProjectProfileTestSuites,
+} from "./projectProfileValidator.js";
+export {
+  discoverProfileCandidates,
+  discoverProjectProfiles,
+  filterAllowedProfileCandidates,
+  summarizeProjectProfileDiscovery,
+} from "./projectProfileDiscovery.js";
+export {
+  buildProjectProfileCapabilitySummary,
+  buildProjectProfileSummary,
+  buildProjectRegistryReadinessSummary,
+} from "./projectProfileSummary.js";
 
 const MODULE_DIR = dirname(fileURLToPath(import.meta.url));
 const REGISTRY_PATH = join(MODULE_DIR, "projects.json");

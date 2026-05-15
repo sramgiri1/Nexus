@@ -817,3 +817,9 @@ The registry uses public-safe labels by default. The demo project entry is
 demo-only and must not be used as the local-private fallback project. Private
 projects use `Private Project` wording in public-safe surfaces until later
 registry and profile phases can safely load explicit local-private metadata.
+
+P42.2 adds the read-only project profile loader and validator for bounded
+example `nexus.project.json` profiles. The loader does not execute adapters,
+select projects, mutate project files, connect to databases, call providers, or
+scan private source trees. It only validates safe profile metadata and reports
+readiness for the later stack profile model.
