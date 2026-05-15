@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T18:31:19.484Z
+- Generated at: 2026-05-15T18:34:53.648Z
 - Validation branch: arch/agent-definition-update-workflow
-- Validation HEAD: 8e03e92
+- Validation HEAD: 326970b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
