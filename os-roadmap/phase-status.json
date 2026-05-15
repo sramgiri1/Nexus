@@ -2755,7 +2755,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/hook-registry-safe-automation-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "c21218d",
       "completedAt": "2026-05-15T20:30:00.000Z",
       "summary": "Adds decision-only hook limit profiles, retry policy checks, and fail-closed runtime guard decisions.",
       "checksRun": [
@@ -2771,20 +2771,38 @@
       "phaseId": "P51.4",
       "title": "Loop-Risk Detector",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/hook-registry-safe-automation-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T20:40:00.000Z",
+      "summary": "Adds metadata-only loop-risk detection that blocks high and critical automation cycles before enablement.",
+      "checksRun": [
+        "npm run check:hook-registry"
+      ],
+      "knownLimitations": [
+        "Loop-risk detection does not execute or schedule hooks."
+      ],
+      "nextPhase": "P51.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P51.5",
+      "title": "Kill Switch and Safe Disable Model",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned detector for recursive hook and automation-loop risks.",
+      "summary": "Planned kill switch model for global, project, and hook-level disable controls.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P51.5",
+      "nextPhase": "P51.6",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T20:30:00.000Z",
-  "currentPhase": "P51.3",
-  "previousPhase": "P51.2",
-  "nextPhase": "P51.4"
+  "updatedAt": "2026-05-15T20:40:00.000Z",
+  "currentPhase": "P51.4",
+  "previousPhase": "P51.3",
+  "nextPhase": "P51.5"
 }

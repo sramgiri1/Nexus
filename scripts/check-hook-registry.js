@@ -7,6 +7,10 @@ import {
   buildHookGuardDecision,
   evaluateHookLimits,
   evaluateRetryPolicy,
+  detectHookLoopRisks,
+  detectRegistryLoopRisks,
+  summarizeLoopRisks,
+  validateLoopRiskResult,
   HOOK_GUARD_DECISIONS,
   summarizeRegisteredHooks,
   summarizeTriggerDefinitions,
@@ -22,6 +26,7 @@ const sections = {
   registry: true,
   triggers: true,
   guards: true,
+  loopRisk: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -86,6 +91,7 @@ for (const file of [
   "hooks/triggerContract.js",
   "hooks/hookLimits.js",
   "hooks/hookRuntimeGuard.js",
+  "hooks/loopRiskDetector.js",
   "hooks/index.js",
 ]) {
   check(existsSync(join(ROOT, file)), "modules", `Missing module: ${file}`);
@@ -127,6 +133,16 @@ check(allowedSample.decision === HOOK_GUARD_DECISIONS.ALLOW_DRY_RUN, "guards", "
 check(evaluateHookLimits(hooks[0]).decision === "BLOCK_RATE_LIMIT", "guards", "P51 seed limits must block");
 check(evaluateRetryPolicy(hooks[0], { attempt: 1 }).decision === "BLOCK_RETRY_LIMIT", "guards", "Seed retries must block");
 
+const loopResults = detectRegistryLoopRisks(hooks);
+const loopSummary = summarizeLoopRisks(loopResults);
+for (const resultEntry of loopResults) {
+  const loopValidation = validateLoopRiskResult(resultEntry);
+  check(loopValidation.valid, "loopRisk", `Loop risk result invalid: ${loopValidation.errors.join("; ")}`);
+}
+const selfTriggerResult = detectHookLoopRisks({ ...hooks[0], enabled: true, triggerSource: hooks[0].hookId }, hooks);
+check(selfTriggerResult.decision === "BLOCK", "loopRisk", "Self-trigger loop must block");
+check(selfTriggerResult.riskLevel === "critical", "loopRisk", "Self-trigger loop must be critical");
+
 for (const hookId of [
   "test-failure-classification",
   "prd-change-test-gap-proposal",
@@ -166,6 +182,7 @@ const docs = read("docs/architecture/HOOK_REGISTRY_SAFE_AUTOMATION_LIFECYCLE.md"
 check(docs.includes("P51.1 - Hook Registry Schema"), "docs", "Architecture doc missing P51.1 section");
 check(docs.includes("P51.2 - Trigger Definition Model"), "docs", "Architecture doc missing P51.2 section");
 check(docs.includes("P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model"), "docs", "Architecture doc missing P51.3 section");
+check(docs.includes("P51.4 - Loop-Risk Detector"), "docs", "Architecture doc missing P51.4 section");
 check(docs.includes("Hook execution is not enabled"), "docs", "Architecture doc must state hook execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -179,10 +196,13 @@ check(statusById.get("P51.2")?.status === "complete", "osPhaseStatus", "P51.2 mu
 check(statusById.get("P51.2")?.commit === "81e8016", "osPhaseStatus", "P51.2 commit mismatch");
 check(statusById.get("P51.2")?.nextPhase === "P51.3", "osPhaseStatus", "P51.2 next phase must be P51.3");
 check(statusById.get("P51.3")?.status === "complete", "osPhaseStatus", "P51.3 must be complete");
+check(statusById.get("P51.3")?.commit === "c21218d", "osPhaseStatus", "P51.3 commit mismatch");
 check(statusById.get("P51.3")?.nextPhase === "P51.4", "osPhaseStatus", "P51.3 next phase must be P51.4");
-check(statusById.get("P51.4")?.status === "planned", "osPhaseStatus", "P51.4 must be planned");
-check(phaseStatus.currentPhase === "P51.3", "osPhaseStatus", "Current phase must be P51.3");
-check(phaseStatus.nextPhase === "P51.4", "osPhaseStatus", "Next phase must be P51.4");
+check(statusById.get("P51.4")?.status === "complete", "osPhaseStatus", "P51.4 must be complete");
+check(statusById.get("P51.4")?.nextPhase === "P51.5", "osPhaseStatus", "P51.4 next phase must be P51.5");
+check(statusById.get("P51.5")?.status === "planned", "osPhaseStatus", "P51.5 must be planned");
+check(phaseStatus.currentPhase === "P51.4", "osPhaseStatus", "Current phase must be P51.4");
+check(phaseStatus.nextPhase === "P51.5", "osPhaseStatus", "Next phase must be P51.5");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -201,6 +221,7 @@ for (const file of [
   "hooks/triggerContract.js",
   "hooks/hookLimits.js",
   "hooks/hookRuntimeGuard.js",
+  "hooks/loopRiskDetector.js",
   "hooks/index.js",
   "scripts/check-hook-registry.js",
   "policy/hook-registry-policy.json",
@@ -221,7 +242,7 @@ const report = `# NEXUS Hook Registry Report
 
 ## Scope
 
-P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model
+P51.4 - Loop-Risk Detector
 
 ## Summary
 
@@ -230,6 +251,8 @@ P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model
 - Fail-closed hooks: ${summary.failClosedCount}
 - Trigger definitions: ${triggerSummary.triggerCount}
 - Runtime-enabled triggers: ${triggerSummary.runtimeEnabledCount}
+- Loop-risk blocked hooks: ${loopSummary.blockedCount}
+- Loop-risk warnings: ${loopSummary.warningCount}
 - Trigger types: ${Object.keys(summary.triggerCounts).join(", ")}
 - Scopes: ${Object.keys(summary.scopeCounts).join(", ")}
 
@@ -240,6 +263,7 @@ P51.3 - Rate Limits, Retry Limits, and Runtime Guard Model
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
 - Triggers: ${sections.triggers ? "PASS" : "FAIL"}
 - Guards: ${sections.guards ? "PASS" : "FAIL"}
+- Loop risk: ${sections.loopRisk ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -268,6 +292,7 @@ console.log(`Schema: ${sections.schema ? "PASS" : "FAIL"}`);
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
 console.log(`Triggers: ${sections.triggers ? "PASS" : "FAIL"}`);
 console.log(`Guards: ${sections.guards ? "PASS" : "FAIL"}`);
+console.log(`Loop risk: ${sections.loopRisk ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);

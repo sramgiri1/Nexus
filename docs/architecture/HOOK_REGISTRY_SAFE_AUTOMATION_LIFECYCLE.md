@@ -84,7 +84,25 @@ limits at zero, so they remain blocked. A synthetic enabled sample may be used
 by the checker to prove the dry-run decision path, but the registry itself does
 not enable any hook.
 
+## P51.4 - Loop-Risk Detector
+
+P51.4 adds loop-risk detection for future hook enablement decisions. The
+detector is metadata-only and checks for unsafe recursion patterns before any
+runtime exists.
+
+Detected risks include:
+
+- self-triggering hooks
+- two-hook cycles
+- validation and repair loops without bounded retries
+- missing cooldowns
+- missing kill switches
+- non-fail-closed definitions
+- broad-scope hooks without approval requirements
+
+High and critical loop risks produce a `BLOCK` decision. Low-risk findings can
+warn without enabling execution.
+
 ## Next Subphase
 
-P51.4 adds loop-risk detection to block unsafe automation cycles before any
-future runtime can enable hooks.
+P51.5 adds kill switch metadata and preview-only disable/re-enable decisions.

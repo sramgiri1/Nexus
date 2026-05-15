@@ -4,3 +4,4 @@ export * from "./triggerDefinitions.js";
 export * from "./triggerContract.js";
 export * from "./hookLimits.js";
 export * from "./hookRuntimeGuard.js";
+export * from "./loopRiskDetector.js";
