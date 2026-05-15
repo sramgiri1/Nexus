@@ -1,5 +1,6 @@
 import {
   BATCH_QUEUE_TABS,
+  DATA_CONTEXT_TABS,
   MEMORY_CENTER_TABS,
   AGENT_REGISTRY_TABS,
   COST_CENTER_TABS,
@@ -263,6 +264,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: MEMORY_CENTER_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/SCOPED_MEMORY_ARCHITECTURE.md",
+  },
+  {
+    key: "context",
+    path: "/command-center/context",
+    name: "Data & Context",
+    section: "PLATFORM",
+    allowPhaseLabels: false,
+    expectedHeading: "Data & Context Center",
+    status: "implemented",
+    badge: "Read-only",
+    scope: "platform",
+    tabs: DATA_CONTEXT_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/TRUSTED_CONTEXT_DATA_ARCHITECTURE.md",
   },
   {
     key: "roadmap",

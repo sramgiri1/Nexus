@@ -220,6 +220,51 @@ export const IMPLEMENTATION_TABS = [
   },
 ];
 
+export const DATA_CONTEXT_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Trusted context posture and safety boundaries",
+    badge: "Read-only",
+  },
+  {
+    id: "data-sources",
+    label: "Data Sources",
+    description: "Registered OS, project, runtime, and safety sources",
+    badge: "Ready",
+  },
+  {
+    id: "system-of-record",
+    label: "System of Record",
+    description: "Authoritative source per context domain",
+    badge: "Ready",
+  },
+  {
+    id: "trust-scores",
+    label: "Trust Scores",
+    description: "High, medium, low, and unavailable source bands",
+    badge: "Ready",
+  },
+  {
+    id: "freshness-lineage",
+    label: "Freshness & Lineage",
+    description: "Freshness states and redacted lineage summary",
+    badge: "Read-only",
+  },
+  {
+    id: "packet-preview",
+    label: "Context Packet Preview",
+    description: "Summaries-only packet preview for active scope",
+    badge: "Preview",
+  },
+  {
+    id: "exclusions",
+    label: "Exclusions / Blocks",
+    description: "Sources excluded by mode, scope, policy, or packet limit",
+    badge: "Safety",
+  },
+];
+
 export const AGENT_REGISTRY_TABS = [
   {
     id: "overview",

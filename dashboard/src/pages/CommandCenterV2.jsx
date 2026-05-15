@@ -9,6 +9,7 @@ import {
   AGENT_REGISTRY_TABS,
   BATCH_QUEUE_TABS,
   COST_CENTER_TABS,
+  DATA_CONTEXT_TABS,
   DURABLE_STATE_TABS,
   EVIDENCE_TABS,
   IMPLEMENTATION_TABS,
@@ -6820,6 +6821,194 @@ function MemoryCenterPage({ vm }) {
   );
 }
 
+function DataContextCenterPage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
+  const context = vm.contextCenter || {};
+  const packet = context.packetPreview || {};
+  const trustBands = context.trustBands || {};
+  const staleSources = (context.freshness || []).filter((record) => record.status !== "fresh");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Data & Context Center</div>
+            <div className="ccv2-page-head__sub">
+              Inspect trusted context sources, system-of-record mapping, trust, freshness, lineage, and packet previews.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--read-only">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Runtime injection disabled</span>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Trusted Context Boundary</div>
+          <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+            <span>Project: {context.activeProjectLabel || "Private Project"}</span>
+            <span>Mode: {context.mode || "local-private"}</span>
+            <span>Source: {context.sourceLabel || "trusted context registry"}</span>
+            <span>Provider dispatch: Disabled</span>
+            <span>DB writes: Disabled</span>
+            <span>Raw content: Hidden</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={DATA_CONTEXT_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Data and Context Center sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                ["Data sources", context.sourceSummary?.total ?? 0],
+                ["System domains", context.systemOfRecord?.length ?? 0],
+                ["High trust", trustBands.high ?? 0],
+                ["Packet exclusions", context.exclusions?.length ?? 0],
+              ].map(([label, value]) => (
+                <div key={label} className="ccv2-card">
+                  <div className="ccv2-metric-card__label">{label}</div>
+                  <div className="ccv2-metric-card__value ccv2-metric-card__value--blue">{value}</div>
+                </div>
+              ))}
+            </div>
+            <div className="ccv2-card" style={{ marginTop: 12 }}>
+              <div className="ccv2-section-heading">Safety Notes</div>
+              <ul className="ccv2-list">
+                {(context.safetyNotes || []).map((note) => <li key={note}>{note}</li>)}
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="data-sources" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(context.dataSources || []).map((source) => (
+                <article key={source.sourceId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{source.label}</div>
+                  <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                    <span>ID: {source.sourceId}</span>
+                    <span>Scope: {source.scope}</span>
+                    <span>Type: {source.type}</span>
+                    <span>Owner: {source.owner}</span>
+                    <span>Classification: {source.dataClassification}</span>
+                    <span>System of record: {source.systemOfRecord ? "Yes" : "No"}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="system-of-record" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {(context.systemOfRecord || []).map((entry) => (
+                <article key={entry.domain} className="ccv2-card">
+                  <div className="ccv2-section-heading">{entry.domain.replaceAll("_", " ")}</div>
+                  <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                    <span>Primary: {entry.primarySourceId}</span>
+                    <span>Owner: {entry.owner}</span>
+                    <span>Freshness: {entry.freshnessRequirement}</span>
+                    <span>Scopes: {(entry.allowedScopes || []).join(", ")}</span>
+                  </div>
+                  <p style={{ marginTop: 10, color: "var(--v2-muted)", fontSize: 12 }}>
+                    {entry.agentAccessNotes}
+                  </p>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="trust-scores" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {["high", "medium", "low", "unavailable"].map((band) => (
+                <div key={band} className="ccv2-card">
+                  <div className="ccv2-metric-card__label">{band}</div>
+                  <div className="ccv2-metric-card__value ccv2-metric-card__value--green">{trustBands[band] ?? 0}</div>
+                </div>
+              ))}
+            </div>
+            <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 12 }}>
+              {(context.trustScores || []).map((score) => (
+                <article key={score.sourceId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{score.label}</div>
+                  <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                    <span>Band: {score.band}</span>
+                    <span>Score: {score.score}/100</span>
+                    <span>Source exists: {score.sourceExists ? "Yes" : "No / pattern"}</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="freshness-lineage" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Freshness Exceptions</div>
+                <ul className="ccv2-list">
+                  {staleSources.map((record) => (
+                    <li key={record.sourceId}>{record.sourceId}: {record.status}</li>
+                  ))}
+                  {staleSources.length === 0 && <li>All visible sources are fresh.</li>}
+                </ul>
+              </div>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Lineage Summary</div>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  <span>Lineage ID: {packet.lineageSummary?.lineageId || "preview-only"}</span>
+                  <span>Derived sources: {packet.lineageSummary?.derivedFromCount ?? 0}</span>
+                  <span>Redacted: Yes</span>
+                  <span>Raw content: Hidden</span>
+                </div>
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="packet-preview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Packet Summary</div>
+                <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+                  <span>Scope: {packet.scope || "PROJECT_CHANGE"}</span>
+                  <span>Mode: {packet.mode || "local-private"}</span>
+                  <span>Included: {packet.includedSources?.length ?? 0}</span>
+                  <span>Excluded: {packet.excludedSources?.length ?? 0}</span>
+                  <span>Raw content: Hidden</span>
+                  <span>Runtime injection: Disabled</span>
+                </div>
+              </div>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Included Sources</div>
+                <ul className="ccv2-list">
+                  {(packet.includedSources || []).map((source) => (
+                    <li key={source.sourceId}>{source.label}: {source.trustBand} trust, {source.freshnessStatus}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="exclusions" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {(context.exclusions || []).map((source) => (
+                <article key={source.sourceId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{source.label}</div>
+                  <ul className="ccv2-list">
+                    {(source.reasons || ["Not selected for this packet."]).map((reason) => <li key={reason}>{reason}</li>)}
+                  </ul>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function PlannedRoutePage({ routeKey }) {
   const route = COMMAND_CENTER_ROUTE_BY_KEY[routeKey];
 
@@ -7050,6 +7239,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
+          {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

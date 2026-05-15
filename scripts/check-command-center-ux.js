@@ -110,6 +110,7 @@ const requiredRoutePaths = [
   "/command-center/database",
   "/command-center/services",
   "/command-center/memory",
+  "/command-center/context",
   "/command-center/evidence",
   "/command-center/safety",
   "/command-center/projects",
@@ -138,6 +139,7 @@ const requiredTabbedRoutes = {
   "/command-center/cost": "overview",
   "/command-center/batch": "overview",
   "/command-center/memory": "overview",
+  "/command-center/context": "overview",
 };
 
 const routeHeadings = {
@@ -150,6 +152,7 @@ const routeHeadings = {
   "/command-center/database": "Durable State",
   "/command-center/services": "Service Health",
   "/command-center/memory": "Memory Center",
+  "/command-center/context": "Data & Context Center",
   "/command-center/evidence": "Evidence",
   "/command-center/safety": "Safety Center",
   "/command-center/projects": "Projects",
@@ -939,7 +942,7 @@ check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screensh
 check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
 check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
 const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
-  (path) => !["/command-center/services", "/command-center/memory"].includes(path),
+  (path) => !["/command-center/services", "/command-center/memory", "/command-center/context"].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
   const route = screenshotManifest?.routes?.find((entry) => entry.path === path);

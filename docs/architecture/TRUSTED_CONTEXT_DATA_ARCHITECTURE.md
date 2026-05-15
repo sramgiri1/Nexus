@@ -103,3 +103,20 @@ runtime agents and do not trigger provider, tool, worker, or DB behavior.
 
 P47.6 adds a Command Center Data & Context Center so operators can inspect
 trusted context readiness without seeing raw private content.
+
+## P47.6 - Command Center Data / Context Center
+
+The Command Center Data & Context Center is available at
+`/command-center/context`. It shows trusted context posture through tabs for
+overview, data sources, system of record, trust scores, freshness and lineage,
+context packet preview, and exclusions or blocks.
+
+The UI is read-only and uses summaries only. It does not show raw docs, raw
+source, raw logs, raw policy JSON, secrets, or private content. It preserves
+dark/light/system theme behavior and keeps provider, tool, worker, DB write, and
+runtime agent injection disabled.
+
+## Next
+
+P47.7 closes the trusted context phase with final validation, regenerated P47
+reports, docs updates, and P48 as the next roadmap phase.

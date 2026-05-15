@@ -190,6 +190,108 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
   const activeMissionId = "private-project-governed-build-mission";
   const activeMissionDisplayName = humanizeMissionId(activeMissionId);
+  const trustedContextSources = [
+    {
+      sourceId: "nexus-os-roadmap",
+      label: "NEXUS OS Roadmap",
+      type: "roadmap",
+      scope: "os",
+      owner: "NEXUS",
+      dataClassification: "internal",
+      systemOfRecord: true,
+    },
+    {
+      sourceId: "os-phase-status",
+      label: "OS Phase Status Registry",
+      type: "phase_status",
+      scope: "os",
+      owner: "NEXUS",
+      dataClassification: "internal",
+      systemOfRecord: true,
+    },
+    {
+      sourceId: "project-registry",
+      label: "Project Registry",
+      type: "project_registry",
+      scope: "portfolio",
+      owner: "NEXUS",
+      dataClassification: "local-private",
+      systemOfRecord: true,
+    },
+    {
+      sourceId: "runtime-tasks",
+      label: "Runtime Task State",
+      type: "runtime_state",
+      scope: "task",
+      owner: "NEXUS",
+      dataClassification: "local-private",
+      systemOfRecord: true,
+    },
+    {
+      sourceId: "evidence-ledger",
+      label: "Evidence Ledger",
+      type: "evidence_ledger",
+      scope: "task",
+      owner: "AUDITOR",
+      dataClassification: "local-private",
+      systemOfRecord: true,
+    },
+    {
+      sourceId: "policy-files",
+      label: "Policy Files",
+      type: "policy",
+      scope: "safety",
+      owner: "WARDEN",
+      dataClassification: "internal",
+      systemOfRecord: true,
+    },
+  ];
+  const trustedContextScores = trustedContextSources.map((source, index) => ({
+    sourceId: source.sourceId,
+    label: source.label,
+    band: index < 4 ? "high" : "medium",
+    score: index < 4 ? 90 : 75,
+    sourceExists: true,
+  }));
+  const trustedContextFreshness = trustedContextSources.map((source, index) => ({
+    sourceId: source.sourceId,
+    status: index < 2 ? "unknown" : "fresh",
+    redacted: true,
+  }));
+  const trustedContextPacket = {
+    scope: "PROJECT_CHANGE",
+    projectId: "private-project",
+    taskId: "trusted-context-preview",
+    agentId: "NEXUS",
+    capabilityId: "trusted-context.preview",
+    mode: shellMode,
+    includedSources: trustedContextSources.slice(2).map((source) => ({
+      ...source,
+      trustBand: trustedContextScores.find((score) => score.sourceId === source.sourceId)?.band || "medium",
+      freshnessStatus: trustedContextFreshness.find((record) => record.sourceId === source.sourceId)?.status || "unknown",
+      summaryOnly: true,
+      redacted: true,
+    })),
+    excludedSources: trustedContextSources.slice(0, 2).map((source) => ({
+      sourceId: source.sourceId,
+      label: source.label,
+      reasons: ["Source scope does not match requested project context scope."],
+      redacted: true,
+    })),
+    trustSummary: { high: 3, medium: 1, low: 0, unavailable: 0 },
+    freshnessSummary: { fresh: 4, stale: 0, unknown: 0, unavailable: 0 },
+    lineageSummary: {
+      lineageId: "lineage-trusted-context-preview",
+      derivedFromCount: 4,
+      redacted: true,
+    },
+    rawContentIncluded: false,
+    redacted: true,
+  };
+  const trustBands = trustedContextScores.reduce((acc, score) => {
+    acc[score.band] = (acc[score.band] || 0) + 1;
+    return acc;
+  }, { high: 0, medium: 0, low: 0, unavailable: 0 });
   const projectSummaries = [
     {
       projectId: "private-project-01",
@@ -663,6 +765,70 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
           || doctorFailures[0]
           || "Run npm run nexus:doctor to refresh diagnostics.",
       },
+    },
+    contextCenter: {
+      mode: shellMode,
+      sourceLabel: "trusted context registry + packet preview",
+      activeProjectLabel: safeProjectDisplayName,
+      registryVersion: "1.0",
+      dataSources: trustedContextSources,
+      sourceSummary: {
+        total: trustedContextSources.length,
+        os: trustedContextSources.filter((source) => source.scope === "os").length,
+        project: trustedContextSources.filter((source) => source.scope === "project").length,
+        runtime: trustedContextSources.filter((source) => ["runtime", "task"].includes(source.scope)).length,
+        safety: trustedContextSources.filter((source) => source.scope === "safety").length,
+      },
+      systemOfRecord: [
+        {
+          domain: "project_requirements",
+          primarySourceId: "project-registry",
+          owner: "Project Owner",
+          freshnessRequirement: "manual_verified",
+          allowedScopes: ["project", "mission", "task"],
+          agentAccessNotes: "Use redacted project summaries only; raw project docs stay excluded.",
+        },
+        {
+          domain: "task_state",
+          primarySourceId: "runtime-tasks",
+          owner: "NEXUS",
+          freshnessRequirement: "runtime_snapshot",
+          allowedScopes: ["task", "mission", "project"],
+          agentAccessNotes: "Task state is read-only metadata until governed runtime execution exists.",
+        },
+        {
+          domain: "evidence",
+          primarySourceId: "evidence-ledger",
+          owner: "AUDITOR",
+          freshnessRequirement: "append_only_ledger",
+          allowedScopes: ["task", "mission", "project", "os"],
+          agentAccessNotes: "Evidence summaries may be referenced; raw payloads stay excluded.",
+        },
+        {
+          domain: "policy",
+          primarySourceId: "policy-files",
+          owner: "WARDEN",
+          freshnessRequirement: "manual_verified",
+          allowedScopes: ["safety", "os", "project", "task"],
+          agentAccessNotes: "Policy context is summarized; raw policy JSON is not primary UI content.",
+        },
+      ],
+      trustScores: trustedContextScores,
+      trustBands,
+      freshness: trustedContextFreshness,
+      packetPreview: trustedContextPacket,
+      packetSummary: {
+        included: trustedContextPacket.includedSources.length,
+        excluded: trustedContextPacket.excludedSources.length,
+        rawContentIncluded: false,
+        redacted: true,
+      },
+      exclusions: trustedContextPacket.excludedSources,
+      safetyNotes: [
+        "Summaries only; raw source content is hidden.",
+        "Demo/public modes cannot include private project sources.",
+        "Provider, tool, worker, DB write, and runtime agent injection remain disabled.",
+      ],
     },
     commandPalette: {
       title: "NEXUS Command Palette",

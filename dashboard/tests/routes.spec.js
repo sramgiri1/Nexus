@@ -1310,6 +1310,53 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Data and Context Center shows trusted context tabs without raw dumps", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/context");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Data & Context Center");
+    await expect(page.locator("body")).toContainText("Inspect trusted context sources");
+    await expect(page.locator("body")).toContainText("Provider dispatch: Disabled");
+    await expect(page.locator("body")).toContainText("Raw content: Hidden");
+
+    for (const label of [
+      "Overview",
+      "Data Sources",
+      "System of Record",
+      "Trust Scores",
+      "Freshness & Lineage",
+      "Context Packet Preview",
+      "Exclusions / Blocks",
+    ]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+
+    await commandTab(page, "Data Sources").click();
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS Roadmap");
+    await commandTab(page, "System of Record").click();
+    await expect(activeCommandTabPanel(page)).toContainText("project requirements");
+    await commandTab(page, "Trust Scores").click();
+    await expect(activeCommandTabPanel(page)).toContainText("high");
+    await commandTab(page, "Freshness & Lineage").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Lineage Summary");
+    await commandTab(page, "Context Packet Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Runtime injection: Disabled");
+    await commandTab(page, "Exclusions / Blocks").click();
+    await expect(activeCommandTabPanel(page)).toContainText(/Forbidden|Source scope|Packet source/);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("{\"");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Data & Context Center");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Data & Context Center");
+
+    expect(errors).toEqual([]);
+  });
+
   test("Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details", async ({ page }) => {
     const errors = captureClientErrors(page);
 

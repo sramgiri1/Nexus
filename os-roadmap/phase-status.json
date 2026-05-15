@@ -2189,12 +2189,14 @@
       "phaseId": "P47.5",
       "title": "Trusted Context Packet",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trusted-context-data-architecture",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "bbe6e00",
+      "completedAt": "2026-05-15T16:28:01.730Z",
       "summary": "Builds read-only trusted context packet previews with inclusion, exclusion, trust, freshness, and lineage summaries.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:trusted-context-packet"
+      ],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
       ],
@@ -2205,11 +2207,11 @@
       "phaseId": "P47.6",
       "title": "Command Center Data / Context Center",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Adds operator visibility for trusted context, source trust, freshness, lineage, and packet previews.",
+      "summary": "Adds read-only Command Center Data & Context Center visibility for trusted context sources, trust, freshness, lineage, packet previews, and exclusions.",
       "checksRun": [],
       "knownLimitations": [
         "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
@@ -2235,8 +2237,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T16:23:08.465Z",
-  "currentPhase": "P47.5",
-  "previousPhase": "P47.4",
-  "nextPhase": "P47.6"
+  "updatedAt": "2026-05-15T16:28:01.730Z",
+  "currentPhase": "P47.6",
+  "previousPhase": "P47.5",
+  "nextPhase": "P47.7"
 }

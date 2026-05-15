@@ -1247,7 +1247,12 @@ P47.5 adds read-only trusted context packet previews. Packets include source
 summaries, trust/freshness/lineage summaries, and exclusion reasons, but no raw
 source content and no runtime agent injection.
 
-Next phase: P47.6 - Command Center Data / Context Center.
+P47.6 adds the read-only Command Center Data & Context Center at
+`/command-center/context`, showing data source registry summaries,
+system-of-record mapping, trust scores, freshness/lineage, packet previews, and
+exclusions without raw private content.
+
+Next phase: P47.7 - Tests + Docs + Final Validation.
 
 ---
 
