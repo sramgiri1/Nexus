@@ -259,3 +259,15 @@ The page is read-only. It does not show raw private docs, raw source, raw logs,
 raw policy JSON, secrets, or credentials. It does not execute provider calls,
 tool calls, worker jobs, DB writes, project mutation, or runtime agent context
 injection.
+
+# Agent Rooms
+
+Use `/command-center/agent-rooms` to inspect governed mesh coordination.
+
+The page shows redacted room, message, handoff, context-sync, and policy
+summaries. Agents coordinate through NEXUS governance, not direct free chat.
+Messages are scoped, redacted, audited, and policy-checked.
+
+Agent Rooms is read-only in P48. It does not execute agents, transfer task
+ownership, call providers, dispatch tools, start workers, write to DB, or mutate
+project files. Provider/tool/worker dispatch remains disabled by design.

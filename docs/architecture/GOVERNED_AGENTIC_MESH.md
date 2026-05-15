@@ -106,3 +106,18 @@ local-private mode.
 ## Next
 
 P48.7 finalizes mesh tests, docs, roadmap status, and safety validation.
+
+## P48.7 - Mesh Tests + Docs + Final Validation
+
+The final validation phase checks the message contract, append-only message bus,
+agent rooms, handoff protocol, context sync policy, Command Center Agent Rooms
+UX, reports, and roadmap status together.
+
+P48 closes with the same safety posture it started with: direct agent-to-agent
+free chat remains disabled, and mesh coordination cannot call providers,
+dispatch tools, start workers, write DB records, mutate project files, or
+transfer task ownership.
+
+## Next
+
+P49 adds the Agent Definition Update Workflow.

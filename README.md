@@ -1256,7 +1256,13 @@ P47.7 closes Trusted Context + Data Architecture with final validation across
 the registry, source-of-record map, trust scoring, freshness/lineage, packet
 preview, and Command Center Data & Context Center.
 
-Next phase: P48 - Governed Agentic Mesh.
+P48 adds the Governed Agentic Mesh: scoped redacted agent messages, append-only
+message records, agent rooms, governed handoffs, policy-scoped context sync, and
+the read-only Command Center Agent Rooms route. It does not enable direct agent
+chat, provider/tool/worker dispatch, DB writes, task ownership mutation, or
+project mutation.
+
+Next phase: P49 - Agent Definition Update Workflow.
 
 ---
 

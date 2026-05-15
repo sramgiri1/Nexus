@@ -623,6 +623,49 @@ updated as new module families or entry points are added.
 - Status:
   active
 
+## Governed Agentic Mesh
+
+- Purpose:
+  Provide governed, metadata-only agent coordination through scoped messages,
+  append-only message records, agent rooms, handoff requests, policy-scoped
+  context summaries, and Command Center visibility.
+- Primary files:
+  `agent-mesh/messageTypes.js`, `agent-mesh/messageContract.js`,
+  `agent-mesh/messageStore.js`, `agent-mesh/messageBus.js`,
+  `agent-mesh/agentRooms.js`, `agent-mesh/roomStore.js`,
+  `agent-mesh/handoffProtocol.js`, `agent-mesh/contextSync.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`
+- Public entry points:
+  `agent-mesh/index.js`, `scripts/check-governed-agentic-mesh.js`,
+  `/command-center/agent-rooms`
+- Inputs/outputs:
+  Redacted message, room, handoff, and context-sync metadata in; JSONL runtime
+  records, summaries, validation reports, and read-only UI state out.
+- Side effects:
+  Checkers write P48 reports and local runtime JSONL validation records under
+  `local-state/runtime/`.
+- Safety boundary:
+  Direct agent chat, provider dispatch, tool dispatch, worker runtime, DB
+  writes, project mutation, task ownership mutation, raw payload storage, and
+  raw private context exposure remain disabled.
+- Reuse notes:
+  Future agent coordination must use the mesh message contract, room model,
+  handoff protocol, and policy-scoped context summaries rather than creating
+  direct agent-to-agent messaging.
+- Tests/checkers:
+  `scripts/check-agent-mesh-message-contract.js`,
+  `scripts/check-agent-mesh-message-bus.js`,
+  `scripts/check-agent-rooms.js`,
+  `scripts/check-agent-handoff-protocol.js`,
+  `scripts/check-agent-mesh-context-sync.js`,
+  `scripts/check-governed-agentic-mesh.js`
+- Known limitations:
+  P48 remains coordination metadata only. It does not execute agents, dispatch
+  providers/tools/workers, write to DB, mutate project files, or change task
+  ownership.
+- Status:
+  active
+
 ## Planned or Not Found
 
 - Controlled implementation folder:
