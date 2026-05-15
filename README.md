@@ -1200,7 +1200,11 @@ canonical memory scopes, change scopes, memory item schema, and forbidden memory
 classes. Memory remains metadata-only: no runtime injection, provider dispatch,
 tool dispatch, worker runtime, DB writes, or project mutation is enabled.
 
-Next phase: P46.2 - Project / OS / Task / Session Memory Stores.
+P46.2 adds safe local JSONL memory stores for NEXUS OS, project, task, and
+session memory metadata. Stores contain redacted summaries only and reject
+secret-like content.
+
+Next phase: P46.3 - Memory Packet Builder.
 
 ---
 

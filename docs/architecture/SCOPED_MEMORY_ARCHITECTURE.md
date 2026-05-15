@@ -48,3 +48,21 @@ unrelated audit history.
 ## Next
 P46.2 adds safe local memory stores for OS, project, task, and session memory
 metadata.
+
+## P46.2 - Project / OS / Task / Session Memory Stores
+P46.2 adds local JSONL stores under `memory/runtime/` for scoped memory
+metadata. The store helpers support append/list/get operations by scope,
+project, task, and agent, but records are still summaries only.
+
+Store files:
+- `os-memory.jsonl`
+- `project-memory.jsonl`
+- `task-memory.jsonl`
+- `session-memory.jsonl`
+
+The stores reject secret-like content, force redacted summaries, and keep demo
+and public modes out of private project memory by default. These stores are not
+runtime injection and are not DB-backed.
+
+## Next After P46.2
+P46.3 builds deterministic scoped memory packets for future governed dispatch.

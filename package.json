@@ -133,7 +133,8 @@
     "check:agent-boundaries": "node scripts/check-agent-boundaries.js",
     "check:boundary-compiler": "node scripts/check-boundary-compiler.js",
     "check:agent-registry-final-validation": "node scripts/check-agent-registry-final-validation.js",
-    "check:memory-scope-model": "node scripts/check-memory-scope-model.js"
+    "check:memory-scope-model": "node scripts/check-memory-scope-model.js",
+    "check:memory-stores": "node scripts/check-memory-stores.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
