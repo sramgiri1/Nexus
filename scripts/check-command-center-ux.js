@@ -17,6 +17,7 @@ const sections = {
   missionControlLayout: true,
   pageSpecificUx: true,
   serviceHealthUx: true,
+  agentRoomsUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -120,6 +121,7 @@ const requiredRoutePaths = [
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
+  "/command-center/agent-rooms",
   "/command-center/cost",
   "/command-center/batch",
 ];
@@ -140,6 +142,7 @@ const requiredTabbedRoutes = {
   "/command-center/batch": "overview",
   "/command-center/memory": "overview",
   "/command-center/context": "overview",
+  "/command-center/agent-rooms": "overview",
 };
 
 const routeHeadings = {
@@ -159,6 +162,7 @@ const routeHeadings = {
   "/command-center/roadmap": "OS Roadmap",
   "/command-center/demo": "Demo Mode",
   "/command-center/agents": "Agent Registry",
+  "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
   "/command-center/release": "Release Control",
@@ -591,6 +595,29 @@ for (const expectedTest of [
 }
 check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Route matrix missing /command-center/services");
 
+// Agent Rooms UX
+for (const expected of [
+  "Agent Rooms",
+  "Governed Mesh Boundary",
+  "Agents coordinate through NEXUS governance, not direct free chat.",
+  "Messages are scoped, redacted, audited, and policy-checked.",
+  "Provider/tool/worker dispatch is not enabled by P48.",
+  "Recent Redacted Messages",
+  "Governed Handoffs",
+  "Context Sync",
+  "Task ownership unchanged",
+  "Runtime agent injection enabled: no",
+]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "agentRoomsUx", `Agent Rooms UX missing expected copy: ${expected}`);
+}
+for (const expectedTest of [
+  "Agent Rooms route shows governed mesh coordination",
+  "agent rooms tabs expose rooms messages handoffs context and policy",
+]) {
+  check(routeTestSource.includes(expectedTest), "agentRoomsUx", `Agent Rooms tests missing: ${expectedTest}`);
+}
+check(routeSource.includes("/command-center/agent-rooms"), "agentRoomsUx", "Route matrix missing /command-center/agent-rooms");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -942,7 +969,7 @@ check(screenshotManifest?.themes?.includes("dark"), "screenshotAudit", "Screensh
 check(screenshotManifest?.themes?.includes("light"), "screenshotAudit", "Screenshot manifest must include light theme");
 check(Array.isArray(screenshotManifest?.routes), "screenshotAudit", "Screenshot manifest routes must be an array");
 const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
-  (path) => !["/command-center/services", "/command-center/memory", "/command-center/context"].includes(path),
+  (path) => !["/command-center/services", "/command-center/memory", "/command-center/context", "/command-center/agent-rooms"].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
   const route = screenshotManifest?.routes?.find((entry) => entry.path === path);
@@ -1043,6 +1070,7 @@ console.log(`Theme control: ${sections.themeControl ? "PASS" : "FAIL"}`);
 console.log(`Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}`);
 console.log(`Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}`);
 console.log(`Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}`);
+console.log(`Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1091,6 +1119,7 @@ const report = `# Command Center UX Report
 - Mission Control layout: ${sections.missionControlLayout ? "PASS" : "FAIL"}
 - Page-specific UX: ${sections.pageSpecificUx ? "PASS" : "FAIL"}
 - Service Health UX: ${sections.serviceHealthUx ? "PASS" : "FAIL"}
+- Agent Rooms UX: ${sections.agentRoomsUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

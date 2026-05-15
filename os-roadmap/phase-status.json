@@ -2322,10 +2322,10 @@
       "phaseId": "P48.5",
       "title": "Context Sync Through Policy",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "966708c",
+      "completedAt": "2026-05-15T17:03:49.000Z",
       "summary": "Connects mesh rooms to trusted context packet summaries without raw data leakage.",
       "checksRun": [
         "npm run check-agent-mesh-context-sync"
@@ -2340,12 +2340,15 @@
       "phaseId": "P48.6",
       "title": "Command Center Agent Rooms UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Shows governed agent rooms in Command Center.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
@@ -2371,7 +2374,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-15T16:50:09.256Z",
-  "currentPhase": "P48.5",
-  "previousPhase": "P48.4",
-  "nextPhase": "P48.6"
+  "currentPhase": "P48.6",
+  "previousPhase": "P48.5",
+  "nextPhase": "P48.7"
 }

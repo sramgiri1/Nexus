@@ -7,6 +7,7 @@ import { ProjectSwitcher } from "../components/command-center-v2/ProjectSwitcher
 import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx";
 import {
   AGENT_REGISTRY_TABS,
+  AGENT_ROOMS_TABS,
   BATCH_QUEUE_TABS,
   COST_CENTER_TABS,
   DATA_CONTEXT_TABS,
@@ -4892,6 +4893,161 @@ function WorkbenchPage({ vm }) {
   );
 }
 
+function AgentRoomsPage({ vm }) {
+  const mesh = vm.agentMesh || {};
+  const [activeTab, setActiveTab] = useState("overview");
+  const overview = mesh.overview || {};
+  const rooms = mesh.rooms || [];
+  const messages = mesh.messages || [];
+  const handoffs = mesh.handoffs || [];
+  const contextSync = mesh.contextSync || {};
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Agent Rooms</div>
+            <div className="ccv2-page-head__sub">Governed coordination rooms for scoped, redacted agent collaboration.</div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Read-only</span>
+            <span className="ccv2-pill ccv2-pill--pending">{mesh.mode || "local-private"}</span>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Governed Mesh Boundary</div>
+          <div className="ccv2-page-summary-grid">
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Coordination rule</span><span className="ccv2-page-summary-value">{mesh.coordinationRule}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Message posture</span><span className="ccv2-page-summary-value">{mesh.safetyCopy}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime dispatch</span><span className="ccv2-page-summary-value">{mesh.disabledRuntimeCopy}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Source</span><span className="ccv2-page-summary-value">{mesh.sourceLabel}</span></div>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={AGENT_ROOMS_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Agent Rooms sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--four">
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Rooms</div><div className="ccv2-stat-chip__value">{overview.rooms || 0}</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Messages</div><div className="ccv2-stat-chip__value">{overview.messages || 0}</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Handoffs</div><div className="ccv2-stat-chip__value">{overview.handoffs || 0}</div></div>
+              <div className="ccv2-stat-chip"><div className="ccv2-stat-chip__label">Context Sync</div><div className="ccv2-stat-chip__value">{overview.contextSyncSummaries || 0}</div></div>
+            </div>
+            <div className="ccv2-card" style={{ marginTop: 12 }}>
+              <div className="ccv2-section-heading">Current State</div>
+              <div className="ccv2-empty-state">
+                Agent rooms are coordination metadata only. They do not run agents, transfer task ownership, dispatch tools, call providers, start workers, write DB records, or mutate project files.
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="rooms" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Rooms by Scope and Status</div>
+              <table className="ccv2-table">
+                <thead><tr><th>Room</th><th>Type</th><th>Scope</th><th>Participants</th><th>Status</th><th>Context</th></tr></thead>
+                <tbody>
+                  {rooms.map((room) => (
+                    <tr key={room.roomId}>
+                      <td>{room.title}</td>
+                      <td>{room.roomType}</td>
+                      <td>{room.scope}</td>
+                      <td>{room.participants.join(", ")}</td>
+                      <td><span className="ccv2-pill ccv2-pill--pending">{room.status}</span></td>
+                      <td>{room.contextStatus}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="messages" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Recent Redacted Messages</div>
+              <div className="ccv2-list">
+                {messages.map((message) => (
+                  <div className="ccv2-list-row" key={message.messageId}>
+                    <span className="ccv2-list-row__title">{message.fromAgent} to {message.toAgent} · {message.messageType}</span>
+                    <span className="ccv2-list-row__meta">{message.payloadSummary}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Redacted</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="handoffs" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Governed Handoffs</div>
+              <div className="ccv2-list">
+                {handoffs.map((handoff) => (
+                  <div className="ccv2-list-row" key={handoff.handoffId}>
+                    <span className="ccv2-list-row__title">{handoff.fromAgent} to {handoff.toAgent} · {handoff.status}</span>
+                    <span className="ccv2-list-row__meta">{handoff.reason}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Task ownership unchanged</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="context" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--two">
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Allowed Context</div>
+                <div className="ccv2-list">
+                  {(contextSync.allowedContext || []).map((source) => (
+                    <div className="ccv2-list-row" key={source.sourceId}>
+                      <span className="ccv2-list-row__title">{source.label}</span>
+                      <span className="ccv2-list-row__meta">{source.trustBand} trust · {source.freshnessStatus}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Excluded Context</div>
+                <div className="ccv2-list">
+                  {(contextSync.excludedContext || []).map((source) => (
+                    <div className="ccv2-list-row" key={source.sourceId}>
+                      <span className="ccv2-list-row__title">{source.label}</span>
+                      <span className="ccv2-list-row__meta">{(source.reasons || []).join(" ") || "Excluded by policy."}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="ccv2-card" style={{ marginTop: 12 }}>
+              <div className="ccv2-section-heading">Context Safety</div>
+              <div className="ccv2-empty-state">Raw context included: no. Runtime agent injection enabled: no. Stale context is flagged before use.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="policy" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Policy Decisions</div>
+              <div className="ccv2-list">
+                {(mesh.policyDecisions || []).map((decision) => (
+                  <div className="ccv2-list-row" key={decision}>
+                    <span className="ccv2-list-row__title">{decision}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Guarded</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── Live API Status Page ─── */
 function LiveApiPage({ vm, onRefresh }) {
   const api = vm.liveApi || {};
@@ -7232,6 +7388,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "safety" && <SafetyCenterPage vm={vmWithApi} />}
           {currentPage === "release" && <ReleaseControlPage vm={vmWithApi} />}
           {currentPage === "projects" && <ProjectsPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}
           {currentPage === "database" && <DurableStatePage vm={vmWithApi} />}

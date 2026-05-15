@@ -90,3 +90,19 @@ agents can reference through NEXUS coordination only.
 
 P48.6 adds Command Center visibility for governed agent rooms, messages,
 handoffs, and context sync posture.
+
+## P48.6 - Command Center Agent Rooms UX
+
+The Command Center Agent Rooms route shows governed mesh coordination in a
+read-only operator surface. It summarizes room status, participants, recent
+redacted messages, governed handoffs, context sync posture, and policy
+decisions.
+
+The UI keeps the core mesh rule visible: agents coordinate through NEXUS
+governance, not direct free chat. It does not expose raw payloads, raw logs,
+raw policy JSON, source content, secrets, project internals, or DemoApp data in
+local-private mode.
+
+## Next
+
+P48.7 finalizes mesh tests, docs, roadmap status, and safety validation.

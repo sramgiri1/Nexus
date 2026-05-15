@@ -18,6 +18,7 @@ const PRIMARY_ROUTE_KEYS = [
   "tasks",
   "workbench",
   "implementation",
+  "agentRooms",
   "liveapi",
   "database",
   "services",
@@ -32,7 +33,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
-const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => key !== "services");
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms"].includes(key));
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
@@ -1353,6 +1354,55 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Data & Context Center");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Data & Context Center");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Agent Rooms route shows governed mesh coordination", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/agent-rooms");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Agent Rooms");
+    await expect(page.locator("body")).toContainText("Agents coordinate through NEXUS governance, not direct free chat.");
+    await expect(page.locator("body")).toContainText("Messages are scoped, redacted, audited, and policy-checked.");
+    await expect(page.locator("body")).toContainText("Provider/tool/worker dispatch is not enabled by P48.");
+    await expect(page.locator("body")).toContainText("Agent rooms are coordination metadata only");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("api_key");
+    expect(body).not.toContain("raw source");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("agent rooms tabs expose rooms messages handoffs context and policy", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/agent-rooms");
+    for (const label of ["Overview", "Rooms", "Messages", "Handoffs", "Context Sync", "Policy"]) {
+      await expect(commandTab(page, label)).toBeVisible();
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Rooms").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Rooms by Scope and Status");
+    await commandTab(page, "Messages").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Recent Redacted Messages");
+    await commandTab(page, "Handoffs").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Task ownership unchanged");
+    await commandTab(page, "Context Sync").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Allowed Context");
+    await expect(activeCommandTabPanel(page)).toContainText("Runtime agent injection enabled: no");
+    await commandTab(page, "Policy").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Direct agent-to-agent free chat is disabled.");
+
+    await pickTheme(page, "dark");
+    await expect(commandTab(page, "Overview")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(commandTab(page, "Policy")).toBeVisible();
 
     expect(errors).toEqual([]);
   });

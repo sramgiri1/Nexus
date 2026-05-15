@@ -220,6 +220,45 @@ export const IMPLEMENTATION_TABS = [
   },
 ];
 
+export const AGENT_ROOMS_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Governed mesh posture, safety boundaries, and coordination summary",
+    badge: "Read-only",
+  },
+  {
+    id: "rooms",
+    label: "Rooms",
+    description: "Mission, task, validation, implementation review, release, and OS update rooms",
+    badge: "Ready",
+  },
+  {
+    id: "messages",
+    label: "Messages",
+    description: "Redacted scoped mesh message summaries",
+    badge: "Read-only",
+  },
+  {
+    id: "handoffs",
+    label: "Handoffs",
+    description: "Governed handoff requests and decisions",
+    badge: "Read-only",
+  },
+  {
+    id: "context",
+    label: "Context Sync",
+    description: "Allowed, excluded, and stale trusted context summaries",
+    badge: "Read-only",
+  },
+  {
+    id: "policy",
+    label: "Policy",
+    description: "Dispatch-disabled posture and governance decisions",
+    badge: "Guarded",
+  },
+];
+
 export const DATA_CONTEXT_TABS = [
   {
     id: "overview",
