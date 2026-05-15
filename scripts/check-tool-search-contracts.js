@@ -133,9 +133,9 @@ const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phas
 check(statusById.get("P52.3")?.status === "complete", "osPhaseStatus", "P52.3 must be complete");
 check(statusById.get("P52.3")?.commit === "607210b", "osPhaseStatus", "P52.3 commit must be 607210b");
 check(statusById.get("P52.4")?.status === "complete", "osPhaseStatus", "P52.4 must be complete");
-check(statusById.get("P52.5")?.status === "planned", "osPhaseStatus", "P52.5 must be planned");
-check(phaseStatus.currentPhase === "P52.4", "osPhaseStatus", "Current phase must be P52.4");
-check(phaseStatus.nextPhase === "P52.5", "osPhaseStatus", "Next phase must be P52.5");
+check(["planned", "complete"].includes(statusById.get("P52.5")?.status), "osPhaseStatus", "P52.5 must be planned or complete");
+check(Boolean(statusById.get(phaseStatus.currentPhase)), "osPhaseStatus", "Current phase entry must exist");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase entry must exist");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

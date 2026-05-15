@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T22:18:52.065Z
-- Validation branch: arch/hook-registry-safe-automation-lifecycle
-- Validation HEAD: 3706de7
+- Generated at: 2026-05-15T23:14:27.270Z
+- Validation branch: arch/tool-mcp-registry-governance
+- Validation HEAD: 4a09cab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

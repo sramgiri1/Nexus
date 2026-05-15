@@ -147,19 +147,19 @@ for (const expected of [
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
 check(
-  ["P41.9.2", "P42.1", "P42.6", "P42.7", "P48.7", "P49.7"].includes(phaseStatus.previousPhase),
+  ["P41.9.2", "P42.1", "P42.6", "P42.7", "P48.7", "P49.7", "P52.8"].includes(phaseStatus.previousPhase),
   "osPhaseStatus",
-  "previousPhase must be P41.9.2, P42.1, P42.6, P42.7, P48.7, or P49.7",
+  "previousPhase must be an accepted completed handoff phase",
 );
 check(
-  ["P42.1", "P42.2", "P42.7", "P43.1", "P48.8", "P49.8"].includes(phaseStatus.currentPhase),
+  ["P42.1", "P42.2", "P42.7", "P43.1", "P48.8", "P49.8", "P52.9"].includes(phaseStatus.currentPhase),
   "osPhaseStatus",
-  "currentPhase must be P42.1, P42.2, P42.7, P43.1, P48.8, or P49.8",
+  "currentPhase must be an accepted current handoff phase",
 );
 check(
-  ["P42.2", "P42.3", "P43", "P43.2", "P49.1", "P49.8", "P50"].includes(phaseStatus.nextPhase),
+  ["P42.2", "P42.3", "P43", "P43.2", "P49.1", "P49.8", "P50", "P53"].includes(phaseStatus.nextPhase),
   "osPhaseStatus",
-  "nextPhase must be P42.2, P42.3, P43, P43.2, P49.1, P49.8, or P50",
+  "nextPhase must be an accepted next handoff phase",
 );
 check(statusById.get("P41.9.2")?.status === "complete", "osPhaseStatus", "P41.9.2 must be complete");
 check(statusById.get("P41.9.2")?.commit === "8ec2a4c", "osPhaseStatus", "P41.9.2 commit must be 8ec2a4c");

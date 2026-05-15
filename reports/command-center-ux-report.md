@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T23:01:47.986Z
+- Generated at: 2026-05-15T23:12:34.361Z
 - Validation branch: arch/tool-mcp-registry-governance
-- Validation HEAD: a5bb012
+- Validation HEAD: 4a09cab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

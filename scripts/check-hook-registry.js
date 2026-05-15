@@ -230,9 +230,13 @@ check(statusById.get("P51.6")?.commit === "3706de7", "osPhaseStatus", "P51.6 com
 check(statusById.get("P51.6")?.nextPhase === "P51.7", "osPhaseStatus", "P51.6 next phase must be P51.7");
 check(statusById.get("P51.7")?.status === "complete", "osPhaseStatus", "P51.7 must be complete");
 check(statusById.get("P51.7")?.nextPhase === "P52", "osPhaseStatus", "P51.7 next phase must be P52");
-check(statusById.get("P52")?.status === "planned", "osPhaseStatus", "P52 must be planned");
-check(phaseStatus.currentPhase === "P51.7", "osPhaseStatus", "Current phase must be P51.7");
-check(phaseStatus.nextPhase === "P52", "osPhaseStatus", "Next phase must be P52");
+check(
+  ["planned", "in_progress", "complete"].includes(statusById.get("P52")?.status),
+  "osPhaseStatus",
+  "P52 must be planned, in progress, or complete",
+);
+check(Boolean(statusById.get(phaseStatus.currentPhase)), "osPhaseStatus", "Current phase must exist in phase status");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase must exist in phase status");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

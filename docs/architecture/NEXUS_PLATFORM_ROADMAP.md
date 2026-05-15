@@ -218,7 +218,7 @@ Risk level:
   - `P51.5` Kill Switch and Safe Disable Model — complete
   - `P51.6` Command Center Hooks UX — complete
   - `P51.7` Final Validation — complete
-- `P52` Tool / MCP Registry + Tool Governance — in progress
+- `P52` Tool / MCP Registry + Tool Governance — complete
   - `P52.1` Tool Registry Schema — complete
   - `P52.2` MCP Registry Schema — complete
   - `P52.3` Governed Tool Gateway — complete
@@ -227,7 +227,7 @@ Risk level:
   - `P52.6` Tool Permission Matrix — complete
   - `P52.7` Safe Tool Adapter Previews — complete
   - `P52.8` Command Center Tool Gateway View — complete
-  - `P52.9` Final Validation — next
+  - `P52.9` Final Validation — complete
 - `P53` Trigger + Integration Gateway
 - `P54` API + Batch Execution Adapter
 - `P55` Test Suite Manager: Project + OS

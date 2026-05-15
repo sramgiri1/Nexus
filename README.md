@@ -1296,7 +1296,7 @@ Gateway view, not a fleet of active MCP servers. Real tool execution, provider
 calls, external network, DB writes, shell execution through the gateway, workers,
 and project mutation remain disabled.
 
-Next phase: P52.9 - Tool MCP Registry Governance Final Validation.
+Next phase: P53 - Trigger + Integration Gateway.
 
 ---
 

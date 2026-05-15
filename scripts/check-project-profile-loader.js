@@ -250,6 +250,12 @@ const laterHandoffPhases = [
   "P49.7",
   "P49.8",
   "P50",
+  "P51",
+  "P51.7",
+  "P52",
+  "P52.8",
+  "P52.9",
+  "P53",
 ];
 check(
   ["P42.1", "P42.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase),

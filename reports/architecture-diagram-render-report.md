@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: arch/hook-registry-safe-automation-lifecycle
-- Registry checker HEAD: 3706de7
+- Registry checker branch: arch/tool-mcp-registry-governance
+- Registry checker HEAD: 4a09cab
 - Registry checker result: PASS
 

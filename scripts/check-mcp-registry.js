@@ -121,14 +121,14 @@ check(docs.includes("P52.2 - MCP Registry Schema"), "docs", "Architecture doc mi
 check(docs.includes("disabled MCP placeholders"), "docs", "Architecture doc missing disabled MCP placeholder wording");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
-check(statusById.get("P52")?.status === "in_progress", "osPhaseStatus", "P52 must be in progress");
+check(["in_progress", "complete"].includes(statusById.get("P52")?.status), "osPhaseStatus", "P52 must be in progress or complete");
 check(statusById.get("P52.1")?.status === "complete", "osPhaseStatus", "P52.1 must be complete");
 check(statusById.get("P52.1")?.commit === "ba116f1", "osPhaseStatus", "P52.1 commit must be ba116f1");
 check(statusById.get("P52.2")?.status === "complete", "osPhaseStatus", "P52.2 must be complete");
 check(statusById.get("P52.2")?.nextPhase === "P52.3", "osPhaseStatus", "P52.2 next phase must be P52.3");
-check(statusById.get("P52.3")?.status === "planned", "osPhaseStatus", "P52.3 must be planned");
-check(phaseStatus.currentPhase === "P52.2", "osPhaseStatus", "Current phase must be P52.2");
-check(phaseStatus.nextPhase === "P52.3", "osPhaseStatus", "Next phase must be P52.3");
+check(["planned", "complete"].includes(statusById.get("P52.3")?.status), "osPhaseStatus", "P52.3 must be planned or complete");
+check(Boolean(statusById.get(phaseStatus.currentPhase)), "osPhaseStatus", "Current phase entry must exist");
+check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase entry must exist");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

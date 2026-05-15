@@ -203,6 +203,24 @@ state, disabled MCP placeholders, lazy contract loading, default-deny
 permissions, and preview-only adapters. It does not add UI execution controls or
 backend execution behavior.
 
+## P52.9 - Final Validation
+
+P52.9 validates and closes Tool / MCP Registry + Tool Governance. The final
+checker verifies the registries, gateway decisions, lazy loading policy,
+permission matrix, adapter previews, Command Center route, reports, OS phase
+status, and safety boundaries.
+
+P52 closes with these non-goals preserved:
+
+- no real tool execution
+- no MCP server runtime
+- no provider calls
+- no external network calls
+- no DB writes
+- no worker runtime
+- no shell execution through the gateway
+- no project mutation
+
 ## Next Subphase
 
-P52.9 performs final validation and closes P52 with execution still disabled.
+P53 starts the Trigger + Integration Gateway.

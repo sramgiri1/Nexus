@@ -517,7 +517,8 @@ updated as new module families or entry points are added.
   `scripts/check-tool-search-contracts.js`,
   `scripts/check-lazy-tool-context.js`,
   `scripts/check-tool-permission-matrix.js`,
-  `scripts/check-tool-adapters.js`
+  `scripts/check-tool-adapters.js`,
+  `scripts/check-tool-governance-final.js`
 - Inputs/outputs:
   Consumes static registry metadata; outputs read-only tool and MCP placeholder
   summaries, selected lazy contracts, gateway decisions, execution previews, and
@@ -538,9 +539,10 @@ updated as new module families or entry points are added.
   `scripts/check-tool-search-contracts.js`,
   `scripts/check-lazy-tool-context.js`,
   `scripts/check-tool-permission-matrix.js`,
-  `scripts/check-tool-adapters.js`
+  `scripts/check-tool-adapters.js`,
+  `scripts/check-tool-governance-final.js`
 - Known limitations:
-  P52.1 through P52.8 are metadata-only. The Command Center Tool Gateway view is
+  P52.1 through P52.9 are metadata-only. The Command Center Tool Gateway view is
   read-only and does not implement MCP server runtime or execution controls.
 - Status:
   foundation

@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T18:31:32.481Z
-- Validation branch: arch/agent-definition-update-workflow
-- Validation HEAD: 8e03e92
+- Generated at: 2026-05-15T23:12:35.555Z
+- Validation branch: arch/tool-mcp-registry-governance
+- Validation HEAD: 4a09cab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 234
+- Files checked: 247
 
 ## Warnings
 

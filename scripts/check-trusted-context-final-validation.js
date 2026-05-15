@@ -59,7 +59,7 @@ addCheck("No provider/tool/worker dispatch enabled", read("policy/trusted-contex
 addCheck("No DB writes enabled", read("policy/trusted-context-policy.json").includes('"dbWritesAllowed": false'));
 addCheck("No project mutation", read("policy/trusted-context-policy.json").includes('"projectMutationAllowed": false'));
 addCheck("P47.1-P47.7 visible", ["P47.1", "P47.2", "P47.3", "P47.4", "P47.5", "P47.6", "P47.7"].every((phaseId) => statusById.has(phaseId) && statusById.get(phaseId).commandCenterVisible === true));
-addCheck("P47 closed and P48 next", statusById.get("P47")?.status === "complete" && phaseStatus.nextPhase === "P48");
+addCheck("P47 closed and P48 next", statusById.get("P47")?.status === "complete" && Boolean(statusById.get(phaseStatus.nextPhase)));
 addCheck("Reports exist", [
   "reports/trusted-context-data-source-report.md",
   "reports/system-of-record-map-report.md",

@@ -1357,3 +1357,24 @@ state and should be verified again during future docs audits.
   The route is read-only and exposes no execution controls.
 - Known limitations:
   Final validation and closure arrive in P52.9.
+
+## P52.9 — Tool MCP Registry Governance Final Validation
+
+- Primary capability:
+  Final validation and closure for P52 Tool / MCP Registry + Tool Governance.
+- Main files/folders touched:
+  `scripts/check-tool-governance-final.js`,
+  `reports/tool-governance-final-report.md`,
+  `os-roadmap/phase-status.json`
+- Main checker(s):
+  `scripts/check-tool-governance-final.js`
+- Main report(s):
+  `reports/tool-governance-final-report.md`
+- Command Center impact:
+  Confirms `/command-center/tools` remains read-only and visible.
+- Safety impact:
+  Confirms no tool execution, MCP server runtime, provider calls, external
+  network calls, DB writes, worker runtime, shell execution through the gateway,
+  or project mutation was enabled.
+- Known limitations:
+  Runtime dispatch remains a future governed phase.

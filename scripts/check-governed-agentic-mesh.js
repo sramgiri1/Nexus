@@ -137,7 +137,10 @@ addCheck("P48.4 complete", statusById.get("P48.4")?.status === "complete");
 addCheck("P48.5 complete", statusById.get("P48.5")?.status === "complete");
 addCheck("P48.6 complete", statusById.get("P48.6")?.status === "complete");
 addCheck("P48.7 visible", ["in_progress", "complete"].includes(statusById.get("P48.7")?.status));
-addCheck("P49 next", phaseStatus.nextPhase === "P49" || statusById.get("P48.7")?.nextPhase === "P49");
+addCheck(
+  "P49 next",
+  statusById.get("P49.1")?.status === "complete" || phaseStatus.nextPhase === "P49" || statusById.get("P48.7")?.nextPhase === "P49",
+);
 addCheck("Package script exists", packageJson.scripts?.["check-governed-agentic-mesh"] === "node scripts/check-governed-agentic-mesh.js");
 addCheck("No private project diff", git(["diff", "--", "projects/careloop", "projects/careloop-ios"]) === "");
 

@@ -1441,16 +1441,20 @@
       "phaseId": "P52",
       "title": "Tool / MCP Registry + Tool Governance",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Builds one governed tool gateway with metadata registries, lazy contracts, permission checks, and dry-run previews while execution remains disabled.",
-      "checksRun": [],
+      "completedAt": "2026-05-15T23:50:00.000Z",
+      "summary": "Completes one governed tool gateway with metadata registries, disabled MCP placeholders, lazy contracts, permission checks, adapter previews, Command Center UX, and final validation while execution remains disabled.",
+      "checksRun": [
+        "npm run check:tool-governance-final",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status"
+      ],
       "knownLimitations": [
         "P52 does not enable real tool execution, MCP servers, provider calls, external network, DB writes, workers, shell execution through the gateway, or project mutation."
       ],
-      "nextPhase": "P52.1",
+      "nextPhase": "P53",
       "commandCenterVisible": true
     },
     {
@@ -1549,7 +1553,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "4a09cab",
       "completedAt": "2026-05-15T23:40:00.000Z",
       "summary": "Adds a read-only Command Center Tool Gateway route for registry metadata, MCP placeholders, permissions, contracts, lazy loading, and adapter previews.",
       "checksRun": [
@@ -1566,13 +1570,17 @@
       "phaseId": "P52.9",
       "title": "Tool MCP Registry Governance Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final validation and closure for P52.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:50:00.000Z",
+      "summary": "Final validation and closure for P52 with all tool, MCP, provider, network, DB write, worker, shell, and project mutation execution disabled.",
+      "checksRun": [
+        "npm run check:tool-governance-final"
+      ],
+      "knownLimitations": [
+        "Runtime dispatch remains future-governed work."
+      ],
       "nextPhase": "P53",
       "commandCenterVisible": true
     },
@@ -3019,8 +3027,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:40:00.000Z",
-  "currentPhase": "P52.8",
-  "previousPhase": "P52.7",
-  "nextPhase": "P52.9"
+  "updatedAt": "2026-05-15T23:50:00.000Z",
+  "currentPhase": "P52.9",
+  "previousPhase": "P52.8",
+  "nextPhase": "P53"
 }
