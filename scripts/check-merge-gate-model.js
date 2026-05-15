@@ -129,11 +129,11 @@ for (const phaseId of ["P44", "P44.5", "P44.6", "P44.7"]) {
   check(statusById.has(phaseId), "osPhaseStatus", `phase-status missing ${phaseId}`);
   check(indexById.has(phaseId), "osPhaseStatus", `nexus-phases missing ${phaseId}`);
 }
-check(phaseStatus.currentPhase === "P44.6", "osPhaseStatus", "currentPhase must be P44.6");
-check(phaseStatus.previousPhase === "P44.5", "osPhaseStatus", "previousPhase must be P44.5");
-check(phaseStatus.nextPhase === "P44.7", "osPhaseStatus", "nextPhase must be P44.7");
+check(["P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P44.6 or P44.7");
+check(["P44.5", "P44.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be a prior P44 subphase");
+check(["P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44.7 or P45");
 check(statusById.get("P44.6")?.status === "complete", "osPhaseStatus", "P44.6 must be complete");
-check(statusById.get("P44.7")?.status === "planned", "osPhaseStatus", "P44.7 must be planned");
+check(["planned", "complete"].includes(statusById.get("P44.7")?.status), "osPhaseStatus", "P44.7 must be planned or complete");
 
 const privateDiff = gitOutput(["diff", "--", "projects/careloop", "projects/careloop-ios"]);
 check(privateDiff.trim().length === 0, "noForbiddenChanges", "Private project files must not be modified");

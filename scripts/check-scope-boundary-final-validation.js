@@ -227,9 +227,10 @@ check(["P44", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].inclu
 
 check(
   read("README.md").includes("P44 - Multi-Repo Workspace + Git/PR Lifecycle")
-    || read("README.md").includes("P44.2 - Repo Ownership + Dependency Map"),
+    || read("README.md").includes("P44.2 - Repo Ownership + Dependency Map")
+    || read("README.md").includes("P45 - Agent Registry + Boundary Compiler"),
   "docs",
-  "README must point to P44 or active P44 subphase",
+  "README must point to P44, active P44 subphase, or P45 handoff",
 );
 check(read("docs/architecture/SCOPE_BOUNDARY_AND_PROJECT_PACKAGING.md").includes("P43.6"), "docs", "Scope boundary docs must mention P43.6");
 check(read("docs/architecture/NEXUS_PLATFORM_ROADMAP.md").includes("P43.6"), "docs", "Roadmap docs must mention P43.6");

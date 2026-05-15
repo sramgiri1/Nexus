@@ -39,7 +39,7 @@ P41.9.2 - Architecture Diagram Rendering + README Follow-through
 
 ## Validation
 
-- Registry checker branch: arch/project-registry-adapter-overnight
-- Registry checker HEAD: 276bfb4
+- Registry checker branch: arch/multi-repo-git-pr-lifecycle
+- Registry checker HEAD: 6a1748f
 - Registry checker result: PASS
 

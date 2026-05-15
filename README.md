@@ -217,6 +217,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P44.4: PR draft + evidence link model
 - P44.5: review comment ingestion model
 - P44.6: merge gate + rollback branch model
+- P44.7: multi-repo Git/PR final validation
 
 ## Known Limitations
 
@@ -1158,12 +1159,13 @@ that remains plan-only. P44.4 adds local PR draft metadata and evidence links
 without creating a PR or calling GitHub/GitLab APIs. P44.5 models review
 comment ingestion and triage without external review-system calls or task
 creation. P44.6 models merge readiness and rollback branch planning without
-merge, push, release, package, or rollback branch execution. No branch creation,
-commits, pull requests, merges, pushes, provider calls, DB writes, project source
-mutation, or private source detailed scanning are enabled. See
+merge, push, release, package, or rollback branch execution. P44.7 closes the
+track with final validation. No branch creation, commits, pull requests, merges,
+pushes, provider calls, DB writes, project source mutation, or private source
+detailed scanning are enabled. See
 [docs/architecture/MULTI_REPO_WORKSPACE.md](docs/architecture/MULTI_REPO_WORKSPACE.md).
 
-Next phase: P44.7 - Multi-Repo Git/PR Final Validation.
+Next phase: P45 - Agent Registry + Boundary Compiler.
 
 ---
 

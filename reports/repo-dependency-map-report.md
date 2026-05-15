@@ -1,9 +1,9 @@
 # NEXUS Repo Dependency Map Report
 
 ## Metadata
-- Generated at: 2026-05-15T13:41:57.171Z
+- Generated at: 2026-05-15T13:58:49.822Z
 - Validation branch: arch/multi-repo-git-pr-lifecycle
-- Validation HEAD: c262879
+- Validation HEAD: 6a1748f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
