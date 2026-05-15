@@ -80,3 +80,19 @@ demo/private leakage, raw private source, secret-like material, and raw prompts.
 ## Next After P46.3
 P46.4 adds memory access policy decisions for agents, scopes, modes, and
 classifications.
+
+## P46.4 - Memory Access Policy
+P46.4 adds policy-only access decisions for scoped memory. The policy evaluates
+agent, project, memory scope, mode, capability, and classification before
+returning one of:
+- `ALLOW`
+- `DENY`
+- `REDACT`
+- `REQUIRE_APPROVAL`
+
+Private project memory is denied in demo/public modes, unrelated project memory
+is denied by default, and raw secret/source/prompt classes are denied. WARDEN,
+AUDITOR, and NEXUS can inspect relevant redacted metadata, but not secrets.
+
+## Next After P46.4
+P46.5 adds freshness, staleness, invalidation, and promotion-candidate rules.

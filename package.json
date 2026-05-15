@@ -135,7 +135,8 @@
     "check:agent-registry-final-validation": "node scripts/check-agent-registry-final-validation.js",
     "check:memory-scope-model": "node scripts/check-memory-scope-model.js",
     "check:memory-stores": "node scripts/check-memory-stores.js",
-    "check:memory-packet-builder": "node scripts/check-memory-packet-builder.js"
+    "check:memory-packet-builder": "node scripts/check-memory-packet-builder.js",
+    "check:memory-access-policy": "node scripts/check-memory-access-policy.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

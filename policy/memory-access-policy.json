@@ -1,0 +1,20 @@
+{
+  "version": "1.0",
+  "phase": "P46.4",
+  "purpose": "memory_access_policy",
+  "runtimeInjectionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "toolDispatchAllowed": false,
+  "projectMutationAllowed": false,
+  "privateMemoryAllowedInDemo": false,
+  "privateMemoryAllowedInPublic": false,
+  "unrelatedProjectMemoryAllowed": false,
+  "rawSecretMemoryAllowed": false,
+  "rawSourceMemoryAllowed": false,
+  "rawPromptMemoryAllowed": false,
+  "metadataInspectors": ["WARDEN", "AUDITOR", "NEXUS"],
+  "decisions": ["ALLOW", "DENY", "REDACT", "REQUIRE_APPROVAL"]
+}

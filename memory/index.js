@@ -6,3 +6,5 @@ export * from "./memoryIndex.js";
 export * from "./memoryBudget.js";
 export * from "./memorySelection.js";
 export * from "./memoryPacketBuilder.js";
+export * from "./memoryAccessDecision.js";
+export * from "./memoryAccessPolicy.js";

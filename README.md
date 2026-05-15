@@ -1209,7 +1209,11 @@ exclusion reasons, freshness and trust warnings, token budget estimates, and
 classification summaries. Packets remain read-only previews and are not sent to
 providers or injected into agents.
 
-Next phase: P46.4 - Memory Access Policy.
+P46.4 adds policy-only memory access decisions: ALLOW, DENY, REDACT, and
+REQUIRE_APPROVAL. Demo/public modes cannot access private project memory, and
+unrelated project memory remains blocked by default.
+
+Next phase: P46.5 - Memory Freshness + Staleness.
 
 ---
 
