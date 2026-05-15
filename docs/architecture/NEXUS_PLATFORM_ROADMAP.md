@@ -161,6 +161,13 @@ Risk level:
   - `P43.5` Command Center Scope Boundary UX — complete
   - `P43.6` Packaging Safety Checker + Final Validation — complete
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
+  - `P44.1` Repo Registry — complete
+  - `P44.2` Repo Ownership + Dependency Map — next
+  - `P44.3` Branch / Commit Workflow Model — planned
+  - `P44.4` PR Draft + Evidence Link Model — planned
+  - `P44.5` Review Comment Ingestion Model — planned
+  - `P44.6` Merge Gate + Rollback Branch Model — planned
+  - `P44.7` Multi-Repo Git/PR Final Validation — planned
 - `P45` Agent Registry + Boundary Compiler
 - `P46` Scoped Memory Architecture + Memory Center
 - `P47` Trusted Context + Data Architecture Layer
@@ -737,6 +744,18 @@ P43.6 validates and closes the scope boundary and project packaging safety
 sequence. It confirms that P43 remains dry-run/read-only, no project package is
 created, redacted manifest generation is safe, and P44 is the next NEXUS OS
 phase.
+
+#### P44.1 — Repo Registry
+
+P44.1 starts the Multi-Repo Workspace + Git/PR Lifecycle track with a
+metadata-only repo registry. It records NEXUS OS, private project backend,
+private project iOS, and demo-only repository references with ownership, scope,
+path boundary, branch metadata, and package-boundary fields.
+
+The registry is read-only. It does not create git branches, commits, pull
+requests, merges, pushes, release packages, provider calls, DB writes, project
+source mutations, or private source detailed scans. P44.2 is next and adds the
+repo ownership and dependency map.
 
 ### Phase 15 — Containerization and Worker Scaling
 

@@ -485,7 +485,70 @@
       "track": "NEXUS_OS",
       "order": 18,
       "group": "Planned OS Phases",
-      "summary": "Support governed multi-repo workspaces and Git/PR lifecycle management.",
+      "summary": "Add dry-run multi-repo registry, dependency, git workflow, PR metadata, review ingestion, merge gate, and rollback planning models.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.1",
+      "title": "Repo Registry",
+      "track": "NEXUS_OS",
+      "order": 18.1,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Create the read-only multi-repo registry model for NEXUS OS and project repositories.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.2",
+      "title": "Repo Ownership + Dependency Map",
+      "track": "NEXUS_OS",
+      "order": 18.2,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Map repository ownership and dependency relationships without runtime or git execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.3",
+      "title": "Branch / Commit Workflow Model",
+      "track": "NEXUS_OS",
+      "order": 18.3,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Model governed branch and commit plans without creating branches or commits.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.4",
+      "title": "PR Draft + Evidence Link Model",
+      "track": "NEXUS_OS",
+      "order": 18.4,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Model local PR draft metadata and evidence links without GitHub or GitLab API calls.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.5",
+      "title": "Review Comment Ingestion Model",
+      "track": "NEXUS_OS",
+      "order": 18.5,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Model review comment ingestion and triage without external review-system calls.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.6",
+      "title": "Merge Gate + Rollback Branch Model",
+      "track": "NEXUS_OS",
+      "order": 18.6,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Model merge readiness gates and rollback branch plans without merges, pushes, or release actions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P44.7",
+      "title": "Multi-Repo Git/PR Final Validation",
+      "track": "NEXUS_OS",
+      "order": 18.7,
+      "group": "P44 Multi-Repo Workspace + Git/PR Lifecycle",
+      "summary": "Finalize the dry-run multi-repo Git and PR lifecycle with validation coverage.",
       "commandCenterVisible": true
     },
     {

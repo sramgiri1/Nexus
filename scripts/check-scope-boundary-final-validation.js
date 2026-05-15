@@ -221,11 +221,16 @@ check(statusById.get("P43.3")?.commit === "69dbd28", "osPhaseStatus", "P43.3 com
 check(statusById.get("P43.4")?.commit === "9c964a8", "osPhaseStatus", "P43.4 commit mismatch");
 check(statusById.get("P43.5")?.commit === "ee1f92c", "osPhaseStatus", "P43.5 commit mismatch");
 check(statusById.get("P43.6")?.status === "complete", "osPhaseStatus", "P43.6 must be complete");
-check(phaseStatus.currentPhase === "P43", "osPhaseStatus", "currentPhase must be P43");
-check(phaseStatus.previousPhase === "P43.6", "osPhaseStatus", "previousPhase must be P43.6");
-check(phaseStatus.nextPhase === "P44", "osPhaseStatus", "nextPhase must be P44");
+check(["P43", "P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P43 or active P44 subphase");
+check(["P43.6", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P43.6 or prior P44 subphase");
+check(["P44", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P44, a P44 subphase, or P45");
 
-check(read("README.md").includes("P44 - Multi-Repo Workspace + Git/PR Lifecycle"), "docs", "README must point to P44 next");
+check(
+  read("README.md").includes("P44 - Multi-Repo Workspace + Git/PR Lifecycle")
+    || read("README.md").includes("P44.2 - Repo Ownership + Dependency Map"),
+  "docs",
+  "README must point to P44 or active P44 subphase",
+);
 check(read("docs/architecture/SCOPE_BOUNDARY_AND_PROJECT_PACKAGING.md").includes("P43.6"), "docs", "Scope boundary docs must mention P43.6");
 check(read("docs/architecture/NEXUS_PLATFORM_ROADMAP.md").includes("P43.6"), "docs", "Roadmap docs must mention P43.6");
 

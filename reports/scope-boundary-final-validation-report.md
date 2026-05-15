@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T12:06:34.646Z
-- Validation branch: arch/scope-boundary-packaging-safety
-- Validation HEAD: ee1f92c
+- Generated at: 2026-05-15T13:29:44.278Z
+- Validation branch: arch/multi-repo-git-pr-lifecycle
+- Validation HEAD: 710dd60
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

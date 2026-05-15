@@ -5,6 +5,7 @@ import serviceState from "../../../local-state/runtime/services/service-state.js
 import doctorReport from "../../../reports/nexus-doctor-report.json";
 import projectProgressExample from "../../../os-roadmap/project-progress.example.json";
 import redactedReleaseManifest from "../../../artifacts/project-release/private-project-release-manifest.json";
+import { getRepoRegistry, summarizeRepoRegistry } from "../../../repo-workspace/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -223,6 +224,35 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     safetyCopy:
       "NEXUS OS is the control plane. Projects are workloads. Shipping a project must not include NEXUS agents, policies, evidence ledgers, local-state runtime files, or secrets.",
   };
+  const repoRegistry = getRepoRegistry();
+  const repoRegistrySummary = summarizeRepoRegistry(repoRegistry);
+  const multiRepoWorkspace = {
+    phase: "P44.1",
+    title: "Multi-Repo Workspace",
+    status: "Registry model ready",
+    summary: repoRegistrySummary,
+    repos: repoRegistry.repos.map((repo) => ({
+      repoId: repo.repoId,
+      projectId: repo.projectId,
+      label: repo.label,
+      root: repo.root,
+      repoType: repo.repoType,
+      visibility: repo.visibility,
+      status: repo.status,
+      ownerAgent: repo.ownerAgent,
+      packageBoundary: repo.packageBoundary,
+      currentBranch: repo.currentBranch,
+    })),
+    safetyPosture: {
+      gitActionsEnabled: false,
+      branchCreationAllowed: false,
+      commitsAllowed: false,
+      prCreationAllowed: false,
+      projectMutationAllowed: false,
+      privateSourceDetailedScanningAllowed: false,
+      note: "No git branch, commit, PR, merge, or push actions are enabled.",
+    },
+  };
 
   return {
     shell: {
@@ -251,6 +281,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       osSummary,
     },
     scopeBoundary,
+    multiRepoWorkspace,
     missionComposer: {
       title: "Active Mission",
       subtitle: "Review the governed mission summary and move the current scope through planning, review, and validation.",

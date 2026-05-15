@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T10:29:31.492Z
-- Validation branch: test/project-registry-final-validation
-- Validation HEAD: acbe566
+- Generated at: 2026-05-15T13:29:33.988Z
+- Validation branch: arch/multi-repo-git-pr-lifecycle
+- Validation HEAD: 710dd60
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:

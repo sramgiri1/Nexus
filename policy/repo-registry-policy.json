@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "phase": "P44.1",
+  "purpose": "multi_repo_registry_model",
+  "readOnly": true,
+  "gitBranchCreationAllowed": false,
+  "gitCommitAllowed": false,
+  "gitPrCreationAllowed": false,
+  "gitMergeAllowed": false,
+  "gitPushAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "privateSourceDetailedScanningAllowed": false,
+  "allowedMetadataRoots": [
+    ".",
+    "projects/careloop",
+    "projects/careloop-ios",
+    "demo"
+  ],
+  "forbiddenMutationRoots": [
+    "projects/careloop",
+    "projects/careloop-ios"
+  ],
+  "requiredRepoIds": [
+    "nexus-os",
+    "private-project-backend",
+    "private-project-ios"
+  ],
+  "requiredOutputs": [
+    "repo-workspace/repoRegistry.js",
+    "repo-workspace/repoSchema.js",
+    "repo-workspace/index.js",
+    "reports/repo-registry-report.md"
+  ],
+  "commandCenterRoadmapUpdateRequired": true,
+  "osPhaseStatusUpdateRequired": true
+}

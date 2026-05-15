@@ -1,6 +1,6 @@
 {
   "version": "2.0",
-  "generatedAt": "2026-05-15T02:40:00.000Z",
+  "generatedAt": "2026-05-15T13:27:34.156Z",
   "phases": [
     {
       "phaseId": "P26-P41",
@@ -1041,13 +1041,7 @@
     },
     {
       "phaseId": "P43",
-      "title": "Scope Boundary + Project Packaging Safety",
       "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-15T16:00:00.000Z",
-      "summary": "Completes scope classification, project/OS mutation boundary, export safety, redacted manifest, Command Center UX, and final validation while keeping packaging dry-run only.",
       "checksRun": [
         "npm run check:scope-boundary-final-validation",
         "npm run check:scope-classification",
@@ -1063,8 +1057,14 @@
       "knownLimitations": [
         "Project export/package creation remains disabled. Project mutation, provider/tool/worker execution, release execution, and DB writes remain disabled."
       ],
-      "nextPhase": "P44",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "title": "Scope Boundary + Project Packaging Safety",
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "710dd60",
+      "completedAt": "2026-05-15T16:00:00.000Z",
+      "summary": "Scope classification, project/OS mutation boundary, export safety, redacted release manifests, and final validation are complete.",
+      "nextPhase": "P44"
     },
     {
       "phaseId": "P43.1",
@@ -1151,31 +1151,33 @@
     },
     {
       "phaseId": "P44",
-      "title": "Multi-Repo Workspace + Git/PR Lifecycle",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned multi-repo workspace and Git/PR lifecycle support.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P45",
-      "commandCenterVisible": true
+      "knownLimitations": [
+        "All P44 git and PR lifecycle capabilities are metadata-only until future governed execution phases."
+      ],
+      "commandCenterVisible": true,
+      "title": "Multi-Repo Workspace + Git/PR Lifecycle",
+      "status": "in_progress",
+      "branch": "arch/multi-repo-git-pr-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P44 introduces dry-run multi-repo and Git/PR lifecycle models without branch, commit, PR, merge, push, provider, DB, or project mutation behavior.",
+      "nextPhase": "P45"
     },
     {
       "phaseId": "P45",
-      "title": "Agent Registry + Boundary Compiler",
       "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Agent Registry + Boundary Compiler",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
       "summary": "Planned agent registry and compiled boundary layer.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P46",
-      "commandCenterVisible": true
+      "nextPhase": "P46"
     },
     {
       "phaseId": "P46",
@@ -1703,13 +1705,7 @@
     },
     {
       "phaseId": "P43.6",
-      "title": "Packaging Safety Checker + Final Validation",
       "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "arch/scope-boundary-packaging-safety",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-15T16:00:00.000Z",
-      "summary": "Adds final validation for P43 policies, reports, dry-run export safety, redacted manifest safety, Command Center UX, and roadmap closure.",
       "checksRun": [
         "npm run check:scope-boundary-final-validation",
         "npm run check:scope-classification",
@@ -1724,13 +1720,121 @@
       "knownLimitations": [
         "No packaging/export execution is enabled. No source mutation or release execution is enabled."
       ],
-      "nextPhase": "P44",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "title": "Packaging Safety Checker + Final Validation",
+      "status": "complete",
+      "branch": "arch/scope-boundary-packaging-safety",
+      "commit": "710dd60",
+      "completedAt": "2026-05-15T16:00:00.000Z",
+      "summary": "Finalized P43 packaging safety validation and handed off to P44.",
+      "nextPhase": "P44"
+    },
+    {
+      "phaseId": "P44.1",
+      "track": "NEXUS_OS",
+      "checksRun": [
+        "npm run check:repo-registry"
+      ],
+      "knownLimitations": [
+        "Registry is metadata-only. No git operations or project mutations are enabled."
+      ],
+      "commandCenterVisible": true,
+      "title": "Repo Registry",
+      "status": "complete",
+      "branch": "arch/multi-repo-git-pr-lifecycle",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T13:27:34.156Z",
+      "summary": "Adds a read-only repository registry for NEXUS OS and private project repository references.",
+      "nextPhase": "P44.2"
+    },
+    {
+      "phaseId": "P44.2",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Repo Ownership + Dependency Map",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Maps ownership and repo dependencies without runtime execution.",
+      "nextPhase": "P44.3"
+    },
+    {
+      "phaseId": "P44.3",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Branch / Commit Workflow Model",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Models governed branch and commit plans without creating branches or commits.",
+      "nextPhase": "P44.4"
+    },
+    {
+      "phaseId": "P44.4",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "PR Draft + Evidence Link Model",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Models PR draft metadata and local evidence links without external API calls.",
+      "nextPhase": "P44.5"
+    },
+    {
+      "phaseId": "P44.5",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Review Comment Ingestion Model",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Models review comment triage without GitHub or GitLab calls.",
+      "nextPhase": "P44.6"
+    },
+    {
+      "phaseId": "P44.6",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Merge Gate + Rollback Branch Model",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Models merge readiness and rollback branch plans without merges or pushes.",
+      "nextPhase": "P44.7"
+    },
+    {
+      "phaseId": "P44.7",
+      "track": "NEXUS_OS",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "title": "Multi-Repo Git/PR Final Validation",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Final validation for dry-run multi-repo Git and PR lifecycle models.",
+      "nextPhase": "P45"
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-15T16:00:00.000Z",
-  "currentPhase": "P43",
+  "currentPhase": "P44.1",
   "previousPhase": "P43.6",
-  "nextPhase": "P44"
+  "nextPhase": "P44.2"
 }

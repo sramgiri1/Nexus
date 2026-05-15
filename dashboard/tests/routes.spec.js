@@ -896,7 +896,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Planned").click();
     const plannedBody = await page.locator("body").innerText();
-    expect(plannedBody).toContain("Packaging Safety Checker + Final Validation");
+    expect(plannedBody).toContain("Repo Ownership + Dependency Map");
     for (const phase of NEXUS_ROADMAP_PHASES.filter((entry) => entry.status === "planned").map((entry) => entry.phase)) {
       expect(plannedBody).toContain(phase);
     }
@@ -923,7 +923,7 @@ test.describe("Command Center route-wide UX", () => {
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("OS Roadmap");
     await commandTab(page, "Planned").click();
-    await expect(page.locator("body")).toContainText("P43.6");
+    await expect(page.locator("body")).toContainText("P44.2");
 
     await page.goto("/command-center/projects");
     await pickTheme(page, "dark");
@@ -1663,7 +1663,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("OS Roadmap tracks completed P42 foundation and current P43 scope boundary work", async ({ page }) => {
+  test("OS Roadmap tracks completed P43 foundation and current P44 multi-repo work", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/roadmap");
@@ -1677,8 +1677,10 @@ test.describe("Command Center route-wide UX", () => {
     expect(completedBody).toContain("Project vs OS Mutation Boundary");
     expect(completedBody).toContain("P43.5");
     expect(completedBody).toContain("Command Center Scope Boundary UX");
-    expect(body).toContain("P43");
-    expect(body).toContain("Scope Boundary + Project Packaging Safety");
+    expect(body).toContain("P44.1");
+    expect(body).toContain("Repo Registry");
+    expect(body).toContain("P44.2");
+    expect(body).toContain("Repo Ownership + Dependency Map");
     expect(body).not.toContain("DemoApp");
 
     expect(completedBody).toContain("P42.1");

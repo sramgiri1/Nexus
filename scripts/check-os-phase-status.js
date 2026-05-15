@@ -5,7 +5,7 @@ import { execFileSync } from "node:child_process";
 const ROOT = process.cwd();
 const REPORT_PATH = join(ROOT, "reports", "os-phase-status-report.md");
 const ALLOWED_STATUSES = ["planned", "in_progress", "complete", "blocked", "skipped"];
-const CURRENT_PHASE_IDS = new Set(["P43", "P43.6"]);
+const CURRENT_PHASE_IDS = new Set(["P43", "P43.6", "P44", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"]);
 
 const sections = {
   nexusPhases: true,
@@ -75,9 +75,9 @@ check(Array.isArray(phaseStatus.phases), "phaseStatus", "phase-status.json must 
 const indexById = new Map((phaseIndex.phases || []).map((entry) => [entry.phaseId, entry]));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 
-check(phaseStatus.currentPhase === "P43", "currentPhase", "currentPhase must be P43");
-check(phaseStatus.previousPhase === "P43.6", "previousPhase", "previousPhase must be P43.6");
-check(phaseStatus.nextPhase === "P44", "nextPhase", "nextPhase must be P44");
+check(CURRENT_PHASE_IDS.has(phaseStatus.currentPhase), "currentPhase", "currentPhase must be P43 or active P44 subphase");
+check(["P43.6", "P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6"].includes(phaseStatus.previousPhase), "previousPhase", "previousPhase must be P43.6 or prior P44 subphase");
+check(["P44", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7", "P45"].includes(phaseStatus.nextPhase), "nextPhase", "nextPhase must be P44, a P44 subphase, or P45");
 check(statusById.has(phaseStatus.currentPhase), "currentPhase", "currentPhase entry must exist");
 check(statusById.has(phaseStatus.previousPhase), "previousPhase", "previousPhase entry must exist");
 check(statusById.has(phaseStatus.nextPhase), "nextPhase", "nextPhase entry must exist");
@@ -126,6 +126,18 @@ for (const phaseId of [
   "P43.1",
   "P43.2",
   "P43.3",
+  "P43.4",
+  "P43.5",
+  "P43.6",
+  "P44",
+  "P44.1",
+  "P44.2",
+  "P44.3",
+  "P44.4",
+  "P44.5",
+  "P44.6",
+  "P44.7",
+  "P45",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
   check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);
@@ -350,8 +362,19 @@ check(Boolean(p436?.commit), "nextPhase", "P43.6 must have a commit or pending-f
 check(p436?.nextPhase === "P44", "nextPhase", "P43.6 nextPhase must be P44");
 
 const p44 = statusById.get("P44");
-check(p44?.status === "planned", "nextPhase", "P44 must be planned");
+check(["planned", "in_progress", "complete"].includes(p44?.status), "nextPhase", "P44 must be planned, in progress, or complete");
 check(p44?.title === "Multi-Repo Workspace + Git/PR Lifecycle", "nextPhase", "P44 title mismatch");
+
+for (const phaseId of ["P44.1", "P44.2", "P44.3", "P44.4", "P44.5", "P44.6", "P44.7"]) {
+  const entry = statusById.get(phaseId);
+  check(Boolean(entry), "nextPhase", `${phaseId} must exist`);
+  check(entry?.commandCenterVisible === true, "commandCenterVisibility", `${phaseId} must be Command Center visible`);
+}
+const p441 = statusById.get("P44.1");
+if (p441?.status === "complete") {
+  check(p441?.branch === "arch/multi-repo-git-pr-lifecycle", "currentPhase", "P44.1 branch mismatch");
+  check(Boolean(p441?.commit), "completedPhaseCommits", "P44.1 must have a commit or pending-final-commit placeholder");
+}
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;
