@@ -210,7 +210,7 @@ for (const expected of [
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
 check(["P42.1", "P42.6"].includes(phaseStatus.previousPhase), "osPhaseStatus", "previousPhase must be P42.1 or P42.6");
-check(["P42.2", "P42.7-lite"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P42.2 or P42.7-lite");
+check(["P42.2", "P42.7"].includes(phaseStatus.currentPhase), "osPhaseStatus", "currentPhase must be P42.2 or P42.7");
 check(["P42.3", "P43"].includes(phaseStatus.nextPhase), "osPhaseStatus", "nextPhase must be P42.3 or P43");
 check(statusById.get("P42.1")?.status === "complete", "osPhaseStatus", "P42.1 must be complete");
 check(statusById.get("P42.1")?.commit === "4c1d11d", "osPhaseStatus", "P42.1 commit must be 4c1d11d");

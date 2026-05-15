@@ -741,12 +741,12 @@
       "commandCenterVisible": true
     },
     {
-      "phaseId": "P42.7-lite",
-      "title": "Project Registry Adapter Overnight Final Validation",
+      "phaseId": "P42.7",
+      "title": "Project Registry Adapter Final Validation + Roadmap Closure",
       "track": "NEXUS_OS",
       "order": 16.7,
       "group": "P42 Project Registry + Adapter Framework",
-      "summary": "Closes the overnight Project Registry Adapter foundation sequence and sets P43 as the next OS phase.",
+      "summary": "Validates and closes the P42 Project Registry + Adapter Framework foundation and sets P43 as the next OS phase.",
       "commandCenterVisible": true
     }
   ]

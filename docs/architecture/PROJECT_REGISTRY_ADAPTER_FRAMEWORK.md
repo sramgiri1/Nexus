@@ -70,10 +70,10 @@ P42.2 does not add project selector persistence, project onboarding, adapter
 runtime execution, project mutation, provider calls, DB writes, worker runtime,
 or MCP/tool execution.
 
-## P42.3-P42.6 Overnight Foundation
+## P42.3-P42.7 Foundation
 
-The overnight Project Registry Adapter foundation completes the read-only
-operator layer for P42:
+The Project Registry Adapter foundation completes the read-only operator layer
+for P42:
 
 - P42.3 adds stack profiles, stack capability extraction, test-suite metadata,
   and disabled-by-default DB/runtime posture.
@@ -83,12 +83,19 @@ operator layer for P42:
   registry-safe labels and does not enable adapters.
 - P42.6 adds the Project Capability Matrix for the selected project, showing
   available, gated, and disabled capabilities without executing anything.
+- P42.7 validates and closes the P42 foundation, regenerates reports, and sets
+  P43 as the next OS phase.
 
 The matrix currently marks mission planning, task activation, Agent Workbench,
 controlled implementation, and backend validation as available through existing
 governed surfaces. iOS validation requires an iOS/Xcode runner. Provider
 dispatch, worker runtime, MCP/tools, DB writes, project mutation, and Adapter
 Runtime remain disabled.
+
+P42 is complete through final validation. It is a policy-governed foundation,
+not an adapter runtime. Project selector state is local UI-only, project
+mutation remains disabled, provider/tool/worker execution remains disabled, and
+DB writes remain disabled.
 
 ## Public-Safe Labels
 

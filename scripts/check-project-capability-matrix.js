@@ -143,7 +143,7 @@ for (const expected of [
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
 check(statusById.get("P42.6")?.status === "complete", "osPhaseStatus", "P42.6 must be complete");
 check(statusById.get("P42.6")?.branch === "arch/project-registry-adapter-overnight", "osPhaseStatus", "P42.6 branch mismatch");
-check(statusById.get("P42.6")?.nextPhase === "P42.7-lite", "osPhaseStatus", "P42.6 nextPhase must be P42.7-lite");
+check(statusById.get("P42.6")?.nextPhase === "P42.7", "osPhaseStatus", "P42.6 nextPhase must be P42.7");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);

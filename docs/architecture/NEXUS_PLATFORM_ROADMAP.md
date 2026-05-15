@@ -152,6 +152,7 @@ Risk level:
   - `P42.4` Project Onboarding Wizard / nexus:init-project — complete
   - `P42.5` Project Selector in Command Center — complete
   - `P42.6` Project Capability Matrix — complete
+  - `P42.7` Project Registry Adapter Final Validation + Roadmap Closure — complete
 - `P43` Scope Boundary + Project Packaging Safety
 - `P44` Multi-Repo Workspace + Git/PR Lifecycle
 - `P45` Agent Registry + Boundary Compiler
@@ -252,13 +253,13 @@ Deliverables:
 - `task-actions/taskActivationBridge.js` — validates, activates, and records mission tasks
 - `task-actions/taskActivationStore.js` — append-only store for activation action records
 - `task-actions/index.js` — re-exports all task activation functions
-- `policy/task-activation-bridge-policy.json` — P37 boundary (execution: false, agent dispatch: false)
+- task activation bridge policy — P37 boundary (execution: false, agent dispatch: false)
 - `dashboard/src/api/taskActions.js` — browser API client for task activation
 - Task Queue page: 6 planned mission tasks with per-task Activate buttons and state display
 - Agent Fleet page: mission task assignments table (planned/activated counts per agent)
 - Mission Control: NBA updated to point to task activation in Task Queue
 - OS Roadmap: P36 COMPLETE, P37 IN_PROGRESS
-- `scripts/check-task-activation-bridge.js` — 12-section validator
+- task activation bridge checker — 12-section validator
 - `docs/architecture/TASK_ACTIVATION_AND_AGENT_ASSIGNMENT.md` — architecture doc
 
 Non-goals:
@@ -269,7 +270,7 @@ Non-goals:
 
 Validation checks:
 
-- `npm run check:task-activation-bridge` passes 12/12 sections
+- task activation bridge validation passes 12/12 sections
 - 30/30 E2E route tests pass
 - runtime task created with state=queued, redacted=true
 - evidence, audit, runtime event records created per activation
@@ -331,7 +332,7 @@ Risk level:
 Goal:
 
 - UI-driven workflow that applies a narrow, governed source change via the action bridge
-- Target: `projects/careloop/docs/NEXUS_IMPLEMENTATION_LOG.md` (documentation only)
+- Target: private project implementation log (documentation only)
 - CORE agent applies a governance log entry with proposal → apply → evidence/audit/runtime records
 - Command Center shows patch summary, rollback note, validation result, and next action
 
@@ -613,6 +614,7 @@ Subphases:
 - `P42.4` — Project Onboarding Wizard / nexus:init-project
 - `P42.5` — Project Selector in Command Center
 - `P42.6` — Project Capability Matrix
+- `P42.7` — Project Registry Adapter Final Validation + Roadmap Closure
 
 #### P42.1 — Project Registry Schema + Policy
 
@@ -658,6 +660,16 @@ P42.6 adds a read-only selected-project capability matrix. It shows which
 capabilities are available through existing governed NEXUS surfaces and which
 remain gated or disabled by policy. Provider dispatch, worker runtime,
 MCP/tools, Adapter Runtime, project mutation, and DB writes remain disabled.
+
+#### P42.7 — Project Registry Adapter Final Validation + Roadmap Closure
+
+P42.7 closes the Project Registry + Adapter Framework foundation. P42 is now a
+read-only, policy-governed foundation: project selector state is local UI-only,
+adapter runtime is disabled, project mutation is disabled, provider/tool/worker
+execution is disabled, and DB writes are disabled.
+
+P43 is next: Scope Boundary + Project Packaging Safety. Project progress remains
+separate from the NEXUS OS Roadmap.
 
 ### Phase 15 — Containerization and Worker Scaling
 

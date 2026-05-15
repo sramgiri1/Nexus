@@ -4,7 +4,7 @@ P42.1 introduced the schema and policy foundation for the future Project
 Registry + Adapter Framework. P42.2 adds the read-only project profile loader,
 validator, bounded discovery, and safe example profiles. P42.3-P42.6 add stack
 profiles, dry-run onboarding, local UI project selection, and the read-only
-project capability matrix.
+project capability matrix. P42.7 validates and closes the foundation.
 
 ## Files
 

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T03:58:38.423Z
-- Validation branch: arch/project-registry-adapter-overnight
-- Validation HEAD: 276bfb4
+- Generated at: 2026-05-15T10:29:31.492Z
+- Validation branch: test/project-registry-final-validation
+- Validation HEAD: acbe566
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:
@@ -42,11 +42,10 @@ Scanned files:
 - docs/images/dashboard-screenshot-placeholder.svg
 
 Banned project terms:
-- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → banned project term (careloop)
-- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → banned project term (projects/careloop)
+- None
 
 Secret patterns:
-- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → OpenAI key prefix (sk-activation)
+- None
 
 Private data patterns:
 - None
@@ -55,4 +54,4 @@ Dashboard data: PASS
 Demo artifacts: PASS
 README navigation: PASS
 
-Result: FAIL
+Result: PASS

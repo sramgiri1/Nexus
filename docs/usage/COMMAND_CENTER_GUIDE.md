@@ -35,7 +35,7 @@ not enabled yet.
 - Active Project is the primary work context when a project is selected; mode
   and environment badges are secondary metadata.
 - Project scope shows the active project, active mission, project tasks, evidence, gates, and cost posture when available.
-- Portfolio scope is a placeholder until Project Registry is implemented in P42.
+- Portfolio scope is a placeholder until future multi-project adapters are enabled.
 - NEXUS OS scope is for platform progress, service posture, docs/tests readiness, and roadmap status.
 - If no project is selected, Command Center should guide the operator to create
   or import a project, add a project profile, define stack and test commands,
@@ -135,13 +135,17 @@ not enabled yet.
 
 - Purpose: summarize current project or private-project state
 - Shows: active scope, backend validation, iOS readiness, release readiness,
-  adapter posture, and local-private project progress when available
+  project selector state, capability matrix, adapter posture, and local-private
+  project progress when available
 - Available actions: inspection only
-- Disabled actions: project registry and adapter framework are not complete yet
+- Disabled actions: adapter runtime, project mutation, provider/tool/worker
+  execution, and DB writes remain disabled
 - Evidence/activity: validation posture and readiness context
-- Known limitations: Project Registry + Adapter Framework is planned for P42,
-  so project progress is still a temporary local-private example rather than a
-  dynamic registry
+- Known limitations: Project Registry + Adapter Framework is a read-only,
+  policy-governed foundation. Project selector persistence is local UI-only.
+  If no project is selected, use the no-project guidance to create or import a
+  project, add a project profile, define stack/test commands, create a mission,
+  generate a plan, and activate the first task.
 
 ## Service Health
 

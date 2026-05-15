@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T03:58:32.357Z
-- Validation branch: arch/project-registry-adapter-overnight
-- Validation HEAD: 276bfb4
+- Generated at: 2026-05-15T10:28:09.414Z
+- Validation branch: test/project-registry-final-validation
+- Validation HEAD: acbe566
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

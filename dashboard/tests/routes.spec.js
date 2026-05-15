@@ -886,7 +886,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await commandTab(page, "Completed").click();
     const completedBody = await page.locator("body").innerText();
-    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.7.1", "P42.2", "P42.6", "P42.7-lite"]) {
+    for (const phase of ["P26-P41", "P41.5.1", "P41.6.4", "P41.7.1", "P42.2", "P42.6", "P42.7"]) {
       expect(completedBody).toContain(phase);
     }
     expect(completedBody).toContain("nexus.project.json Loader + Validator");
@@ -1638,8 +1638,8 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/roadmap");
     const body = await page.locator("body").innerText();
 
-    expect(body).toContain("P42.7-lite");
-    expect(body).toContain("Project Registry Adapter Overnight Final Validation");
+    expect(body).toContain("P42.7");
+    expect(body).toContain("Project Registry Adapter Final Validation + Roadmap Closure");
     expect(body).toContain("P43");
     expect(body).toContain("Scope Boundary + Project Packaging Safety");
     expect(body).not.toContain("DemoApp");

@@ -207,7 +207,7 @@ check(!read(DIAGRAM_README_PATH).includes(".png)"), "diagramDocsLinks", "Diagram
 
 const phaseEntries = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(Array.isArray(phaseStatus.phases) && phaseStatus.phases.length > 0, "phaseStatus", "Phase status must be populated");
-check(phaseStatus.currentPhase === "P42.7-lite", "phaseStatus", "currentPhase must be P42.7-lite");
+check(phaseStatus.currentPhase === "P42.7", "phaseStatus", "currentPhase must be P42.7");
 check(phaseStatus.previousPhase === "P42.6", "phaseStatus", "previousPhase must be P42.6");
 check(phaseStatus.nextPhase === "P43", "phaseStatus", "nextPhase must be P43");
 check(phaseEntries.get("P41.9.1")?.status === "complete", "phaseStatus", "P41.9.1 must be complete");
@@ -221,7 +221,7 @@ check(phaseEntries.get("P42.2")?.status === "complete", "phaseStatus", "P42.2 mu
 check(phaseEntries.get("P42.2")?.branch === "arch/project-profile-loader-validator", "phaseStatus", "P42.2 branch mismatch");
 check(phaseEntries.get("P42.3")?.status === "complete", "phaseStatus", "P42.3 must be complete");
 check(phaseEntries.get("P42.6")?.status === "complete", "phaseStatus", "P42.6 must be complete");
-check(phaseEntries.get("P42.7-lite")?.status === "complete", "phaseStatus", "P42.7-lite must be complete");
+check(phaseEntries.get("P42.7")?.status === "complete", "phaseStatus", "P42.7 must be complete");
 
 for (const relativePath of [
   REGISTRY_PATH,
