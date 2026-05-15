@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "phase": "P52.5",
+  "purpose": "lazy_tool_contract_loading_context_budget",
+  "maxContractsPerTask": 3,
+  "maxToolSummaries": 20,
+  "allToolSchemasAllowed": false,
+  "allMcpSchemasAllowed": false,
+  "selectedContractLoadingRequired": true,
+  "rawMcpSchemasAllowed": false,
+  "rawToolContractsAllowed": false,
+  "toolExecutionAllowed": false,
+  "mcpExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false
+}

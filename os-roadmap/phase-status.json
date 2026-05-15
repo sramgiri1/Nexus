@@ -1477,7 +1477,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "ec9bb5c",
       "completedAt": "2026-05-15T23:00:00.000Z",
       "summary": "Adds metadata-only tool search, selected lazy contracts, and execution preview wrappers on top of the governed gateway.",
       "checksRun": [
@@ -1493,13 +1493,17 @@
       "phaseId": "P52.5",
       "title": "Lazy Tool Contract Loading",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned explicit lazy contract loading and context budget guardrails.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:10:00.000Z",
+      "summary": "Adds context budget guardrails that block all-tool and all-MCP schema loading while allowing selected lazy contracts only.",
+      "checksRun": [
+        "npm run check:lazy-tool-context"
+      ],
+      "knownLimitations": [
+        "P52.5 enforces context posture only; it does not execute tools or start MCP servers."
+      ],
       "nextPhase": "P52.6",
       "commandCenterVisible": true
     },
@@ -1511,7 +1515,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tool permission matrix subphase.",
+      "summary": "Planned tool permission matrix for agents, projects, scopes, methods, and risk levels.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P52.7",
@@ -3002,8 +3006,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:00:00.000Z",
-  "currentPhase": "P52.4",
-  "previousPhase": "P52.3",
-  "nextPhase": "P52.5"
+  "updatedAt": "2026-05-15T23:10:00.000Z",
+  "currentPhase": "P52.5",
+  "previousPhase": "P52.4",
+  "nextPhase": "P52.6"
 }

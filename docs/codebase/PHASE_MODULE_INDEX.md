@@ -1269,3 +1269,24 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Context budget enforcement, permissions, adapters, and Tool Gateway UX arrive
   in later P52 subphases.
+
+## P52.5 — Lazy Tool Contract Loading
+
+- Primary capability:
+  Context budget guardrails for selected tool contracts and schema summaries.
+- Main files/folders touched:
+  `tool-governance/lazyContractPolicy.js`,
+  `tool-governance/contextBudgetGuard.js`,
+  `policy/lazy-tool-context-policy.json`
+- Main checker(s):
+  `scripts/check-lazy-tool-context.js`
+- Main report(s):
+  `reports/lazy-tool-context-report.md`
+- Command Center impact:
+  Prepares Tool Gateway UX to explain small-context, selected-contract loading.
+- Safety impact:
+  Blocks all tool schemas, all MCP schemas, raw MCP schemas, and bulk raw tool
+  contracts from primary context.
+- Known limitations:
+  Permission matrix, adapters, and Command Center Tool Gateway UX arrive in
+  later P52 subphases.

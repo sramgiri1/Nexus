@@ -489,23 +489,27 @@ updated as new module families or entry points are added.
   `tool-governance/toolSearch.js`,
   `tool-governance/toolContractLoader.js`,
   `tool-governance/toolExecutionPreview.js`,
+  `tool-governance/lazyContractPolicy.js`,
+  `tool-governance/contextBudgetGuard.js`,
   `tool-governance/contracts/*.json`,
   `tool-governance/toolTypes.js`,
   `tool-governance/seeds/tool-registry.seed.json`,
   `tool-governance/seeds/mcp-registry.seed.json`,
   `policy/tool-registry-policy.json`,
   `policy/mcp-registry-policy.json`,
-  `policy/tool-gateway-policy.json`
+  `policy/tool-gateway-policy.json`,
+  `policy/lazy-tool-context-policy.json`
 - Public entry points:
   `tool-governance/index.js`,
   `scripts/check-tool-registry.js`,
   `scripts/check-mcp-registry.js`,
   `scripts/check-tool-gateway.js`,
-  `scripts/check-tool-search-contracts.js`
+  `scripts/check-tool-search-contracts.js`,
+  `scripts/check-lazy-tool-context.js`
 - Inputs/outputs:
   Consumes static registry metadata; outputs read-only tool and MCP placeholder
   summaries, selected lazy contracts, gateway decisions, execution previews, and
-  validation reports.
+  context budget validation reports.
 - Side effects:
   Checker/report generation only.
 - Safety boundary:
@@ -519,9 +523,10 @@ updated as new module families or entry points are added.
   `scripts/check-tool-registry.js`,
   `scripts/check-mcp-registry.js`,
   `scripts/check-tool-gateway.js`,
-  `scripts/check-tool-search-contracts.js`
+  `scripts/check-tool-search-contracts.js`,
+  `scripts/check-lazy-tool-context.js`
 - Known limitations:
-  P52.1 through P52.4 are metadata-only and do not implement permissions,
+  P52.1 through P52.5 are metadata-only and do not implement permissions,
   adapters, MCP server runtime, or Command Center Tool Gateway UX yet.
 - Status:
   foundation

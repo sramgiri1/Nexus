@@ -126,7 +126,24 @@ Execution preview calls the gateway with `tool.execute.preview` and returns the
 blocked decision. It does not execute tools, run shell commands, call providers,
 load MCP servers, access external networks, write DB state, or mutate projects.
 
+## P52.5 - Lazy Tool Contract Loading
+
+P52.5 adds explicit context budget guardrails so NEXUS does not load all tool or MCP schemas into model context.
+
+The lazy loading policy:
+
+- allows selected contract loading only
+- caps selected contracts at three per task
+- caps tool summaries at twenty per task
+- blocks all tool schemas in context
+- blocks all MCP schemas in context
+- blocks raw MCP schemas and bulk raw tool contracts in primary context
+
+These guardrails keep tool context small and governed. They do not execute
+tools, start MCP servers, call providers, access external networks, write DB
+state, or mutate projects.
+
 ## Next Subphase
 
-P52.5 adds explicit lazy context budget guards to prevent loading all tool or
-MCP schemas into model context.
+P52.6 adds a tool permission matrix for agents, scopes, projects, methods, and
+risk classification.
