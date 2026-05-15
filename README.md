@@ -1289,12 +1289,12 @@ writes, release execution, or project mutation.
 
 P52 starts the Tool / MCP Registry + Tool Governance layer. It defines one
 governed tool gateway with metadata-only tool records, disabled MCP
-placeholders, decision-only gateway checks, and lazy contracts, not a fleet of
-active MCP servers. Real tool execution, provider calls, external network, DB
-writes, shell execution through the gateway, workers, and project mutation
-remain disabled.
+placeholders, decision-only gateway checks, search summaries, selected lazy
+contracts, and execution previews, not a fleet of active MCP servers. Real tool
+execution, provider calls, external network, DB writes, shell execution through
+the gateway, workers, and project mutation remain disabled.
 
-Next phase: P52.4 - Tool Search + Contract Preview.
+Next phase: P52.5 - Lazy Tool Contract Loading.
 
 ---
 

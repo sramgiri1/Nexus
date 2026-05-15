@@ -1246,3 +1246,26 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Search wrappers, contract loading, permissions, adapters, and Tool Gateway UX
   arrive in later P52 subphases.
+
+## P52.4 — Tool Search + Contract Preview
+
+- Primary capability:
+  Metadata-only tool search, selected lazy contract loading, and execution
+  preview wrappers.
+- Main files/folders touched:
+  `tool-governance/toolSearch.js`,
+  `tool-governance/toolContractLoader.js`,
+  `tool-governance/toolExecutionPreview.js`,
+  `tool-governance/contracts/*.json`
+- Main checker(s):
+  `scripts/check-tool-search-contracts.js`
+- Main report(s):
+  `reports/tool-search-contracts-report.md`
+- Command Center impact:
+  Prepares search and contract data for a future Tool Gateway route.
+- Safety impact:
+  Search returns compact summaries only; contract loading is selected and lazy;
+  execution previews remain blocked and do not run tools.
+- Known limitations:
+  Context budget enforcement, permissions, adapters, and Tool Gateway UX arrive
+  in later P52 subphases.

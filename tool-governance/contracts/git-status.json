@@ -1,0 +1,27 @@
+{
+  "toolId": "git-status",
+  "version": "1.0",
+  "purpose": "Describe future git status metadata requests without executing git.",
+  "methods": ["status", "branch-info"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "scope": { "type": "string" },
+      "includeBranch": { "type": "boolean" }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "summary": { "type": "string" },
+      "changedFileCount": { "type": "number" }
+    }
+  },
+  "examples": ["Preview whether a future governed adapter may summarize working tree status."],
+  "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+  "policyRefs": ["policy/tool-registry-policy.json", "policy/tool-gateway-policy.json"],
+  "costEstimateShape": "zero-cost metadata only",
+  "evidenceShape": "status summary evidence required before future execution",
+  "auditShape": "gateway decision audit required",
+  "executionEnabled": false
+}

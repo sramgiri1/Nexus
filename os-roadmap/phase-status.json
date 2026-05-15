@@ -1459,7 +1459,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "607210b",
       "completedAt": "2026-05-15T22:50:00.000Z",
       "summary": "Adds the decision-only governed tool gateway for metadata lookup, contract requests, and execution previews while runtime execution remains disabled.",
       "checksRun": [
@@ -1475,13 +1475,17 @@
       "phaseId": "P52.4",
       "title": "Tool Search + Contract Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned tool search, selected contract loading, and execution preview wrappers.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:00:00.000Z",
+      "summary": "Adds metadata-only tool search, selected lazy contracts, and execution preview wrappers on top of the governed gateway.",
+      "checksRun": [
+        "npm run check:tool-search-contracts"
+      ],
+      "knownLimitations": [
+        "Search returns summaries only, contract loading is selected and lazy, and execution previews remain blocked."
+      ],
       "nextPhase": "P52.5",
       "commandCenterVisible": true
     },
@@ -1493,7 +1497,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned lazy tool contract loading subphase.",
+      "summary": "Planned explicit lazy contract loading and context budget guardrails.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P52.6",
@@ -2998,8 +3002,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T22:50:00.000Z",
-  "currentPhase": "P52.3",
-  "previousPhase": "P52.2",
-  "nextPhase": "P52.4"
+  "updatedAt": "2026-05-15T23:00:00.000Z",
+  "currentPhase": "P52.4",
+  "previousPhase": "P52.3",
+  "nextPhase": "P52.5"
 }

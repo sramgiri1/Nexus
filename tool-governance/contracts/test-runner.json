@@ -1,0 +1,27 @@
+{
+  "toolId": "test-runner",
+  "version": "1.0",
+  "purpose": "Describe future approved test runner metadata without running tests.",
+  "methods": ["list-suites", "validate-command", "run-preview"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "suite": { "type": "string" },
+      "dryRun": { "type": "boolean" }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "validationPlan": { "type": "string" },
+      "commandAllowed": { "type": "boolean" }
+    }
+  },
+  "examples": ["Preview whether a future governed adapter may validate a test command."],
+  "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+  "policyRefs": ["policy/tool-registry-policy.json", "policy/tool-gateway-policy.json"],
+  "costEstimateShape": "zero-cost metadata only",
+  "evidenceShape": "test plan evidence required before future execution",
+  "auditShape": "gateway decision audit required",
+  "executionEnabled": false
+}

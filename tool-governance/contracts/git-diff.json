@@ -1,0 +1,27 @@
+{
+  "toolId": "git-diff",
+  "version": "1.0",
+  "purpose": "Describe future git diff metadata requests without executing git.",
+  "methods": ["diff", "diff-stat"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "scope": { "type": "string" },
+      "statOnly": { "type": "boolean" }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "summary": { "type": "string" },
+      "filesChanged": { "type": "number" }
+    }
+  },
+  "examples": ["Preview whether a future governed adapter may summarize a diff."],
+  "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+  "policyRefs": ["policy/tool-registry-policy.json", "policy/tool-gateway-policy.json"],
+  "costEstimateShape": "zero-cost metadata only",
+  "evidenceShape": "diff summary evidence required before future execution",
+  "auditShape": "gateway decision audit required",
+  "executionEnabled": false
+}

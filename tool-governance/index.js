@@ -6,3 +6,6 @@ export * from "./mcpRegistry.js";
 export * from "./toolDecision.js";
 export * from "./toolGatewayPolicy.js";
 export * from "./toolGateway.js";
+export * from "./toolSearch.js";
+export * from "./toolContractLoader.js";
+export * from "./toolExecutionPreview.js";

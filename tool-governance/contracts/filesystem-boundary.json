@@ -1,0 +1,27 @@
+{
+  "toolId": "filesystem-boundary",
+  "version": "1.0",
+  "purpose": "Describe future filesystem boundary metadata without reading or writing files.",
+  "methods": ["validate-path", "preview-read", "check-forbidden-path"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "path": { "type": "string" },
+      "intent": { "type": "string" }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "allowed": { "type": "boolean" },
+      "reason": { "type": "string" }
+    }
+  },
+  "examples": ["Preview whether a path would be in an allowed boundary."],
+  "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+  "policyRefs": ["policy/tool-registry-policy.json", "policy/tool-gateway-policy.json"],
+  "costEstimateShape": "zero-cost metadata only",
+  "evidenceShape": "boundary decision evidence required before future execution",
+  "auditShape": "gateway decision audit required",
+  "executionEnabled": false
+}

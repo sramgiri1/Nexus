@@ -1,0 +1,27 @@
+{
+  "toolId": "playwright-browser",
+  "version": "1.0",
+  "purpose": "Describe future browser QA metadata without launching a browser.",
+  "methods": ["list-routes", "screenshot-preview", "browser-action-preview"],
+  "inputSchema": {
+    "type": "object",
+    "properties": {
+      "route": { "type": "string" },
+      "theme": { "type": "string" }
+    }
+  },
+  "outputSchema": {
+    "type": "object",
+    "properties": {
+      "preview": { "type": "string" },
+      "routes": { "type": "array" }
+    }
+  },
+  "examples": ["Preview whether a route screenshot request would be governed."],
+  "allowedScopes": ["NEXUS_OS_CHANGE", "PROJECT_CHANGE"],
+  "policyRefs": ["policy/tool-registry-policy.json", "policy/tool-gateway-policy.json"],
+  "costEstimateShape": "zero-cost metadata only",
+  "evidenceShape": "browser QA evidence required before future execution",
+  "auditShape": "gateway decision audit required",
+  "executionEnabled": false
+}

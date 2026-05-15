@@ -102,8 +102,31 @@ The gateway returns safe summaries only. It does not return raw tool payloads,
 raw MCP schemas, shell commands, provider credentials, or project-private source
 content.
 
+## P52.4 - Tool Search + Contract Preview
+
+P52.4 adds metadata-only search, selected contract loading, and execution
+preview wrappers on top of the governed gateway.
+
+Tool search returns compact summaries only:
+
+- tool id
+- display name
+- category
+- interface type
+- status
+- risk level
+- owner
+- matched fields
+
+Search does not return raw schemas or all tool contracts. Contract loading is
+selected and lazy: one requested tool contract can be loaded only after the
+gateway allows `tool.contract` for the active context.
+
+Execution preview calls the gateway with `tool.execute.preview` and returns the
+blocked decision. It does not execute tools, run shell commands, call providers,
+load MCP servers, access external networks, write DB state, or mutate projects.
+
 ## Next Subphase
 
-P52.4 adds tool search, selected contract loading, and execution preview
-wrappers on top of the gateway. It remains metadata-only and does not execute
-tools.
+P52.5 adds explicit lazy context budget guards to prevent loading all tool or
+MCP schemas into model context.
