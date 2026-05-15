@@ -1195,7 +1195,12 @@ P45 remains metadata-only. Runtime enforcement, tool/provider dispatch, worker
 execution, DB writes, release execution, source mutation, and agent self-update
 remain disabled.
 
-Next phase: P46 - Scoped Memory Architecture + Memory Center.
+P46 starts Scoped Memory Architecture + Memory Center. P46.1 defines the
+canonical memory scopes, change scopes, memory item schema, and forbidden memory
+classes. Memory remains metadata-only: no runtime injection, provider dispatch,
+tool dispatch, worker runtime, DB writes, or project mutation is enabled.
+
+Next phase: P46.2 - Project / OS / Task / Session Memory Stores.
 
 ---
 

@@ -24,6 +24,14 @@ const CURRENT_PHASE_IDS = new Set([
   "P45.5",
   "P45.6",
   "P46",
+  "P46.1",
+  "P46.2",
+  "P46.3",
+  "P46.4",
+  "P46.5",
+  "P46.6",
+  "P46.7",
+  "P47",
 ]);
 
 const sections = {
@@ -164,6 +172,14 @@ for (const phaseId of [
   "P45.5",
   "P45.6",
   "P46",
+  "P46.1",
+  "P46.2",
+  "P46.3",
+  "P46.4",
+  "P46.5",
+  "P46.6",
+  "P46.7",
+  "P47",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
   check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);

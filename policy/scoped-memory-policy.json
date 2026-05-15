@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "phase": "P46.1",
+  "purpose": "scoped_memory_model",
+  "modelOnly": true,
+  "runtimeInjectionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "toolDispatchAllowed": false,
+  "projectMutationAllowed": false,
+  "privateSourceStorageAllowed": false,
+  "rawPromptStorageAllowed": false,
+  "secretStorageAllowed": false,
+  "demoPrivateLeakageAllowed": false,
+  "allowedScopes": [
+    "global_agent",
+    "nexus_os",
+    "project",
+    "mission",
+    "task",
+    "session",
+    "evidence_linked",
+    "promotion_candidate"
+  ],
+  "forbiddenMemoryClasses": [
+    "secrets",
+    ".env",
+    "raw credentials",
+    "unrelated project memory",
+    "raw private source",
+    "raw prompts unless explicitly allowed",
+    "unrelated audit history"
+  ]
+}

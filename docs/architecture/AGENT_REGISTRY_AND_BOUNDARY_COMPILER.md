@@ -126,3 +126,8 @@ confirms:
 
 P46 is next and will define scoped memory architecture and Memory Center
 visibility.
+
+## P46 Handoff
+P46.1 repairs the P45 phase-status commit reference to `ba3032c` and starts the
+scoped memory model. Agent boundaries remain metadata-only; scoped memory does
+not expand agent permissions or enable runtime enforcement.
