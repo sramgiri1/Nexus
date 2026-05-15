@@ -1594,7 +1594,8 @@
       "completedAt": "",
       "summary": "Adds preview-only trigger and integration gateway models for manual, scheduled, repository, ticket, chat, and webhook events while runtime execution remains disabled.",
       "checksRun": [
-        "npm run check:trigger-gateway-schema"
+        "npm run check:trigger-gateway-schema",
+        "npm run check:manual-trigger"
       ],
       "knownLimitations": [
         "P53 is preview/dry-run only and does not enable real trigger execution, webhook listeners, schedulers, providers, network calls, DB writes, workers, credentials, or project mutation."
@@ -1606,10 +1607,10 @@
       "phaseId": "P53.1",
       "title": "Trigger Gateway Schema",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "8d19f06",
+      "completedAt": "2026-05-15T23:55:00.000Z",
       "summary": "Trigger Gateway Schema for preview-only Trigger + Integration Gateway governance.",
       "checksRun": [
         "npm run check:trigger-gateway-schema"
@@ -1624,13 +1625,17 @@
       "phaseId": "P53.2",
       "title": "Manual Command Center Trigger",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "in_progress",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "",
+      "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Manual Command Center Trigger for preview-only Trigger + Integration Gateway governance.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "checksRun": [
+        "npm run check:manual-trigger"
+      ],
+      "knownLimitations": [
+        "Manual triggers are preview-only; they do not activate tasks, execute agents, call providers/tools, write runtime evidence, or mutate projects."
+      ],
       "nextPhase": "P53.3",
       "commandCenterVisible": true
     },
@@ -3133,8 +3138,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:55:00.000Z",
-  "currentPhase": "P53.1",
-  "previousPhase": "P52.9",
-  "nextPhase": "P53.2"
+  "updatedAt": "2026-05-15T23:58:00.000Z",
+  "currentPhase": "P53.2",
+  "previousPhase": "P53.1",
+  "nextPhase": "P53.3"
 }

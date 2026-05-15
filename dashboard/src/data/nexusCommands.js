@@ -1,3 +1,5 @@
+import { createManualTriggerRequest, previewManualTrigger } from "../../../trigger-gateway/index.js";
+
 const COMMAND_SCHEMA_FIELDS = [
   "id",
   "label",
@@ -292,6 +294,15 @@ export function getNexusCommandsForScope(scope = {}, capabilityReadiness = {}) {
         actionBridge: bridgeOnline ? "Online" : "Offline",
         liveApi: liveApiOnline ? "Online" : "Snapshot fallback",
       },
+      triggerPreview: previewManualTrigger(createManualTriggerRequest({
+        triggerType: "manual.command_palette",
+        source: "command_palette",
+        mode: scope?.mode || "local-private",
+        scope: scope?.changeScope || "PROJECT_CHANGE",
+        projectId: scope?.selectedProjectId || "private-project-01",
+        requestedAction: command.id,
+        requestedBy: { userId: "local-operator", role: "operator", authType: "local" },
+      })),
     };
   });
 }

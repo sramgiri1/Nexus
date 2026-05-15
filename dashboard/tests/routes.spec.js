@@ -589,6 +589,20 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Command Palette shows manual trigger preview state", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/");
+    await page.getByRole("button", { name: /Open Command Palette/i }).click();
+
+    const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
+    await dialog.getByRole("button", { name: /Plan Mission/i }).click();
+    await expect(dialog).toContainText("Trigger preview");
+    await expect(dialog).toContainText("Preview only - trigger execution is not enabled yet");
+
+    expect(errors).toEqual([]);
+  });
+
   test("Command Palette disabled commands show clear reasons and do not execute", async ({ page }) => {
     const errors = captureClientErrors(page);
 

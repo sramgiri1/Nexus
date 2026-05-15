@@ -1399,3 +1399,26 @@ state and should be verified again during future docs audits.
   DB writes, worker runtime, credentials, or project mutation.
 - Known limitations:
   Runtime integration remains disabled.
+
+## P53.2 — Manual Command Center Trigger
+
+- Primary capability:
+  Dry-run manual trigger previews for Command Center and command palette
+  operator actions.
+- Main files/folders touched:
+  `trigger-gateway/manualTrigger.js`,
+  `dashboard/src/data/nexusCommands.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/tests/routes.spec.js`
+- Main checker(s):
+  `scripts/check-manual-trigger.js`
+- Main report(s):
+  `reports/manual-trigger-report.md`
+- Command Center impact:
+  Command Palette command details show trigger preview status and preview-only
+  execution copy.
+- Safety impact:
+  No task activation, agent execution, provider/tool calls, project mutation, or
+  runtime evidence writes.
+- Known limitations:
+  Manual triggers are preview-only until a later governed runtime phase.

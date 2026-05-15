@@ -1528,6 +1528,12 @@ function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand
                     Local API: {selectedCommand.serviceState?.liveApi} · Action Bridge: {selectedCommand.serviceState?.actionBridge}
                   </span>
                 </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Trigger preview</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    {selectedCommand.triggerPreview?.status || "preview_only"} · Preview only - trigger execution is not enabled yet
+                  </span>
+                </div>
               </div>
 
               <div className="ccv2-command-palette__capabilities">

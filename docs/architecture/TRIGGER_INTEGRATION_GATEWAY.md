@@ -44,5 +44,22 @@ future Command Center preview surfaces only.
 
 ## Next Phase
 
+## P53.2 - Manual Command Center Trigger
+
 P53.2 adds a manual trigger preview model for Command Center and command
-palette actions. It remains dry-run only.
+palette actions. It accepts local operator intents such as Plan, Review, QA,
+Fix, Ship, Retro, Guard, Freeze, and Explain, then returns a preview-only
+response.
+
+Manual previews can recommend an existing route or governed bridge posture, but
+they do not activate tasks, execute agents, call providers or tools, mutate
+projects, or write runtime evidence.
+
+The Command Palette shows "Preview only - trigger execution is not enabled yet"
+so operators can see how future trigger routing will work without implying
+runtime execution.
+
+## Next Phase
+
+P53.3 defines scheduled trigger previews without registering cron jobs, timers,
+or workers.
