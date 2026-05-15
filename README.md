@@ -1178,7 +1178,11 @@ P45.3 adds metadata-only path, tool, data, project-scope, change-scope, and
 approval boundaries for registered agents. No MCP/tool dispatch, provider
 execution, DB writes, worker runtime, or private project mutation is enabled.
 
-Next phase: P45.4 - Boundary Compiler.
+P45.4 adds a dry-run boundary compiler that produces agent boundary envelopes
+from agent registry metadata, project registry metadata, scope classification,
+capability ID, and task intent. Envelopes are not used for runtime enforcement.
+
+Next phase: P45.5 - Command Center Agent Registry UX.
 
 ---
 

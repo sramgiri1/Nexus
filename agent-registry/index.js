@@ -57,3 +57,18 @@ export {
   TOOL_BOUNDARIES,
   getToolBoundaryForAgent,
 } from "./toolBoundaryRules.js";
+
+export {
+  BOUNDARY_COMPILER_VERSION,
+  buildBoundaryCompilerExamples,
+  compileAgentBoundary,
+  summarizeBoundaryCompiler,
+} from "./boundaryCompiler.js";
+
+export {
+  BOUNDARY_ENVELOPE_VERSION,
+  createBoundaryEnvelope,
+  summarizeBoundaryEnvelope,
+} from "./boundaryEnvelope.js";
+
+export { validateBoundaryEnvelope } from "./boundaryValidator.js";

@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "phase": "P45.4",
+  "purpose": "agent_boundary_compiler",
+  "dryRunOnly": true,
+  "runtimeEnforcementAllowed": false,
+  "actionBridgeBehaviorChangesAllowed": false,
+  "toolDispatchAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerExecutionAllowed": false,
+  "projectMutationAllowed": false,
+  "usesProjectRegistryMetadata": true,
+  "usesScopeClassificationMetadata": true
+}

@@ -130,7 +130,8 @@
     "check:multi-repo-git-pr-final-validation": "node scripts/check-multi-repo-git-pr-final-validation.js",
     "check:agent-registry-schema": "node scripts/check-agent-registry-schema.js",
     "check:agent-capability-matrix": "node scripts/check-agent-capability-matrix.js",
-    "check:agent-boundaries": "node scripts/check-agent-boundaries.js"
+    "check:agent-boundaries": "node scripts/check-agent-boundaries.js",
+    "check:boundary-compiler": "node scripts/check-boundary-compiler.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

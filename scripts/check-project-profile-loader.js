@@ -209,20 +209,46 @@ for (const expected of [
 }
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
+const laterHandoffPhases = [
+  "P42.7",
+  "P43",
+  "P43.1",
+  "P43.2",
+  "P43.3",
+  "P43.4",
+  "P43.5",
+  "P43.6",
+  "P44",
+  "P44.1",
+  "P44.2",
+  "P44.3",
+  "P44.4",
+  "P44.5",
+  "P44.6",
+  "P44.7",
+  "P45",
+  "P45.1",
+  "P45.2",
+  "P45.3",
+  "P45.4",
+  "P45.5",
+  "P45.6",
+  "P46",
+];
 check(
-  ["P42.1", "P42.6", "P42.7"].includes(phaseStatus.previousPhase),
+  ["P42.1", "P42.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase),
   "osPhaseStatus",
-  "previousPhase must be P42.1, P42.6, or P42.7",
+  "previousPhase must be P42.1, P42.6, or a later handoff phase",
 );
 check(
-  ["P42.2", "P42.7", "P43.1"].includes(phaseStatus.currentPhase),
+  ["P42.2", ...laterHandoffPhases].includes(phaseStatus.currentPhase),
   "osPhaseStatus",
-  "currentPhase must be P42.2, P42.7, or P43.1",
+  "currentPhase must be P42.2 or a later handoff phase",
 );
 check(
-  ["P42.3", "P43", "P43.2"].includes(phaseStatus.nextPhase),
+  ["P42.3", ...laterHandoffPhases].includes(phaseStatus.nextPhase),
   "osPhaseStatus",
-  "nextPhase must be P42.3, P43, or P43.2",
+  "nextPhase must be P42.3 or a later handoff phase",
 );
 check(statusById.get("P42.1")?.status === "complete", "osPhaseStatus", "P42.1 must be complete");
 check(statusById.get("P42.1")?.commit === "4c1d11d", "osPhaseStatus", "P42.1 commit must be 4c1d11d");

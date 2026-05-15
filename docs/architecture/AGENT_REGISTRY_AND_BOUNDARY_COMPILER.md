@@ -74,3 +74,26 @@ the metadata-only boundary model.
 ## Next
 P45.4 adds a dry-run boundary compiler that can produce a boundary envelope
 without applying it to runtime execution.
+
+## P45.4 - Boundary Compiler
+P45.4 compiles agent registry metadata, project registry metadata, scope
+classification, capability ID, and task intent into a dry-run boundary envelope.
+The envelope contains:
+- Agent identity.
+- Project scope.
+- Allowed and denied capabilities.
+- Allowed and forbidden paths.
+- Allowed and forbidden tools.
+- Data classification limits.
+- Cost policy.
+- Memory policy.
+- Required approvals.
+- Required evidence.
+
+The compiler is intentionally not connected to runtime execution. It is a
+preview and validation model for later governed execution phases.
+
+Example envelopes are generated for CORE, SENTINEL, WARDEN, and AUDITOR.
+
+## Next
+P45.5 exposes the registry and dry-run boundary preview in Command Center.

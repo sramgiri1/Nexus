@@ -1899,7 +1899,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-registry-boundary-compiler",
-      "commit": "pending-subphase-commit",
+      "commit": "e2c931d",
       "completedAt": "2026-05-15T15:08:51.364Z",
       "summary": "Defines metadata-only path, tool, data, project-scope, change-scope, and approval boundaries for agents.",
       "checksRun": [
@@ -1915,20 +1915,38 @@
       "phaseId": "P45.4",
       "title": "Boundary Compiler",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/agent-registry-boundary-compiler",
+      "commit": "pending-subphase-commit",
+      "completedAt": "2026-05-15T15:11:50.595Z",
+      "summary": "Adds a dry-run compiler for agent boundary envelopes from agent registry, project metadata, scope classification, and task intent.",
+      "checksRun": [
+        "npm run check:boundary-compiler"
+      ],
+      "knownLimitations": [
+        "Compiled envelopes are not used for runtime enforcement yet."
+      ],
+      "nextPhase": "P45.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.5",
+      "title": "Command Center Agent Registry UX",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "arch/agent-registry-boundary-compiler",
       "commit": "pending",
       "completedAt": "",
-      "summary": "Compile dry-run boundary envelopes from agent, project, scope, capability, and task intent.",
+      "summary": "Expose the agent registry and boundary envelope preview in Command Center.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P45.5",
+      "nextPhase": "P45.6",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:08:51.364Z",
-  "currentPhase": "P45.3",
-  "previousPhase": "P45.2",
-  "nextPhase": "P45.4"
+  "updatedAt": "2026-05-15T15:11:50.595Z",
+  "currentPhase": "P45.4",
+  "previousPhase": "P45.3",
+  "nextPhase": "P45.5"
 }
