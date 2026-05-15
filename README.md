@@ -1287,7 +1287,13 @@ previews, and a read-only Command Center Hook Registry route. It does not enable
 hook execution, schedulers, webhooks, workers, provider/tool/MCP dispatch, DB
 writes, release execution, or project mutation.
 
-Next phase: P52 - Tool / MCP Registry + Tool Governance.
+P52 starts the Tool / MCP Registry + Tool Governance layer. It defines one
+governed tool gateway with metadata-only tool records and lazy contracts, not a
+fleet of active MCP servers. Real tool execution, provider calls, external
+network, DB writes, shell execution through the gateway, workers, and project
+mutation remain disabled.
+
+Next phase: P52.2 - MCP Registry Schema.
 
 ---
 

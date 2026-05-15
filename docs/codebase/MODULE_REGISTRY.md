@@ -472,6 +472,41 @@ updated as new module families or entry points are added.
 - Status:
   active
 
+## Tool / MCP Registry + Tool Governance
+
+- Purpose:
+  Define the metadata-only tool registry that will feed one governed tool
+  gateway. P52 starts with tool definitions and later adds MCP placeholders,
+  search, lazy contracts, permission checks, and dry-run previews.
+- Primary files:
+  `tool-governance/toolRegistrySchema.js`,
+  `tool-governance/toolRegistry.js`,
+  `tool-governance/toolTypes.js`,
+  `tool-governance/seeds/tool-registry.seed.json`,
+  `policy/tool-registry-policy.json`
+- Public entry points:
+  `tool-governance/index.js`,
+  `scripts/check-tool-registry.js`
+- Inputs/outputs:
+  Consumes static registry metadata; outputs read-only tool summaries and
+  validation reports.
+- Side effects:
+  Checker/report generation only.
+- Safety boundary:
+  Tool execution, MCP execution, shell execution through the gateway, provider
+  calls, external network, DB writes, workers, and project mutation remain
+  disabled.
+- Reuse notes:
+  Future tool gateway phases should reuse the registry schema and seed metadata
+  before adding adapter or permission-specific models.
+- Tests/checkers:
+  `scripts/check-tool-registry.js`
+- Known limitations:
+  P52.1 is metadata-only and does not implement contracts, permissions, adapters,
+  or Command Center Tool Gateway UX yet.
+- Status:
+  foundation
+
 ## Shared Helper Catalog and Refactor Plan
 
 - Purpose:

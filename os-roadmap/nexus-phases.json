@@ -1020,6 +1020,87 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P52.1",
+      "title": "Tool Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 26.01,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Create the metadata-only tool registry schema and seed registry.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.2",
+      "title": "MCP Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 26.02,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Create disabled MCP registry metadata without real MCP servers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.3",
+      "title": "Governed Tool Gateway",
+      "track": "NEXUS_OS",
+      "order": 26.03,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Define governed tool gateway decisions without execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.4",
+      "title": "Tool Search + Contract Preview",
+      "track": "NEXUS_OS",
+      "order": 26.04,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Add search, get-contract, and execute-preview patterns.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.5",
+      "title": "Lazy Contract Loading",
+      "track": "NEXUS_OS",
+      "order": 26.05,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Enforce context budget and lazy contract loading.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.6",
+      "title": "Tool Permission Matrix",
+      "track": "NEXUS_OS",
+      "order": 26.06,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Map agent, project, scope, capability, and data permissions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.7",
+      "title": "Safe Adapter Previews",
+      "track": "NEXUS_OS",
+      "order": 26.07,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Add dry-run adapter definitions for first safe tool families.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.8",
+      "title": "Command Center Tool Gateway UX",
+      "track": "NEXUS_OS",
+      "order": 26.08,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Expose read-only Tool Gateway UX in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.9",
+      "title": "Tool Governance Final Validation",
+      "track": "NEXUS_OS",
+      "order": 26.09,
+      "group": "P52 Tool / MCP Registry + Tool Governance",
+      "summary": "Validate and close P52 while execution remains disabled.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P53",
       "title": "Trigger + Integration Gateway",
       "track": "NEXUS_OS",

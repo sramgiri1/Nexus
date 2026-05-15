@@ -1176,3 +1176,27 @@ state and should be verified again during future docs audits.
   external network calls, or private project mutation were enabled.
 - Known limitations:
   Hook registry remains readiness-only until later governed runtime phases.
+
+## P52.1 — Tool Registry Schema
+
+- Primary capability:
+  Metadata-only tool registry schema and seed registry.
+- Main files/folders touched:
+  `tool-governance/toolRegistrySchema.js`,
+  `tool-governance/toolRegistry.js`,
+  `tool-governance/toolTypes.js`,
+  `tool-governance/seeds/tool-registry.seed.json`,
+  `policy/tool-registry-policy.json`
+- Main checker(s):
+  `scripts/check-tool-registry.js`
+- Main report(s):
+  `reports/tool-registry-report.md`
+- Command Center impact:
+  Prepares registry data for a future Tool Gateway route.
+- Safety impact:
+  Tool runtime and execution remain disabled; provider calls, external network,
+  DB writes, workers, shell execution through the gateway, and project mutation
+  remain forbidden.
+- Known limitations:
+  Search, contracts, permissions, adapters, and Tool Gateway UX arrive in later
+  P52 subphases.

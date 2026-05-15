@@ -161,7 +161,8 @@
     "check:agent-definition-command-center": "node scripts/check-agent-definition-command-center.js",
     "check:agent-definition-update-final": "node scripts/check-agent-definition-update-final.js",
     "check:skill-registry": "node scripts/check-skill-registry.js",
-    "check:hook-registry": "node scripts/check-hook-registry.js"
+    "check:hook-registry": "node scripts/check-hook-registry.js",
+    "check:tool-registry": "node scripts/check-tool-registry.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

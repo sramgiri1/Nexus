@@ -1418,7 +1418,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/hook-registry-safe-automation-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "7c9fd94",
       "completedAt": "2026-05-15T21:10:00.000Z",
       "summary": "Completes the governed hook registry and safe automation lifecycle with schema, triggers, guards, loop-risk detection, kill switches, Command Center UX, and validation while execution remains disabled.",
       "checksRun": [
@@ -1441,14 +1441,16 @@
       "phaseId": "P52",
       "title": "Tool / MCP Registry + Tool Governance",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned tool and MCP governance registry.",
+      "summary": "Builds one governed tool gateway with metadata registries, lazy contracts, permission checks, and dry-run previews while execution remains disabled.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P53",
+      "knownLimitations": [
+        "P52 does not enable real tool execution, MCP servers, provider calls, external network, DB writes, workers, shell execution through the gateway, or project mutation."
+      ],
+      "nextPhase": "P52.1",
       "commandCenterVisible": true
     },
     {
@@ -2837,7 +2839,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/hook-registry-safe-automation-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "7c9fd94",
       "completedAt": "2026-05-15T21:10:00.000Z",
       "summary": "Final validation and closure for P51 with hook execution and automation runtimes still disabled.",
       "checksRun": [
@@ -2855,11 +2857,43 @@
       ],
       "nextPhase": "P52",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.1",
+      "title": "Tool Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T22:30:00.000Z",
+      "summary": "Adds metadata-only tool registry schema, seed tools, policy, checker, and architecture docs.",
+      "checksRun": [
+        "npm run check:tool-registry"
+      ],
+      "knownLimitations": [
+        "Tool registry is metadata-only; execution remains disabled."
+      ],
+      "nextPhase": "P52.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P52.2",
+      "title": "MCP Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned disabled MCP registry metadata without real MCP servers.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P52.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T21:10:00.000Z",
-  "currentPhase": "P51.7",
-  "previousPhase": "P51.6",
-  "nextPhase": "P52"
+  "updatedAt": "2026-05-15T22:30:00.000Z",
+  "currentPhase": "P52.1",
+  "previousPhase": "P51.7",
+  "nextPhase": "P52.2"
 }

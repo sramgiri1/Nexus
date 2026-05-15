@@ -1,0 +1,22 @@
+{
+  "version": "1.0",
+  "phase": "P52",
+  "purpose": "tool_registry_schema_metadata_only",
+  "registryReadinessOnly": true,
+  "runtimeEnabled": false,
+  "toolExecutionAllowed": false,
+  "mcpExecutionAllowed": false,
+  "shellExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "workerRuntimeAllowed": false,
+  "lazyContractLoadingRequired": true,
+  "rawMcpSchemasLoadedByDefault": false,
+  "requiresEvidence": true,
+  "requiresAudit": true,
+  "requiredOutputs": [
+    "reports/tool-registry-report.md"
+  ]
+}
