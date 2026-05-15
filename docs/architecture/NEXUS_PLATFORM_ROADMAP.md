@@ -924,3 +924,13 @@ Private product delivery should resume only after the public OS foundation,
 runtime enforcement, approvals, safety boundaries, and durable execution path
 are more mature. That work belongs in private repos, not in the public DemoApp
 showcase surface.
+
+## P47 - Trusted Context + Data Architecture Layer
+
+P47 adds a metadata-only trusted context layer between Project Registry, Scoped
+Memory, Tool/MCP governance, and future provider or worker execution.
+
+P47.1 adds a read-only data source registry for OS, project, runtime, and safety
+sources. It records source ownership, scope, classification, freshness policy,
+redaction requirements, and lineage requirements without reading raw private
+content or enabling runtime agent injection.

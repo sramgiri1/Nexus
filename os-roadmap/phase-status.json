@@ -1340,14 +1340,16 @@
       "phaseId": "P47",
       "title": "Trusted Context + Data Architecture Layer",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned trusted-context and data-layer architecture phase.",
+      "summary": "Metadata-only trusted context architecture starts with data source registry, system-of-record mapping, trust scoring, freshness, lineage, packet previews, and Command Center visibility.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P48",
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.1",
       "commandCenterVisible": true
     },
     {
@@ -2110,11 +2112,123 @@
       ],
       "nextPhase": "P46",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.1",
+      "title": "Data Source Registry",
+      "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/trusted-context-data-architecture",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Defines trusted context data sources, ownership, classification, freshness policy, redaction, and lineage requirements.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.2",
+      "title": "System-of-Record Mapping",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Maps knowledge domains to authoritative sources so agents do not use stale or ambiguous context.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.3",
+      "title": "Source Trust Score",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Scores source trust and readiness by ownership, freshness, redaction, lineage, and policy.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.4",
+      "title": "Freshness + Lineage",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Evaluates context freshness and records redacted lineage metadata.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.5",
+      "title": "Trusted Context Packet",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Builds read-only trusted context packet previews without runtime agent injection.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.6",
+      "title": "Command Center Data / Context Center",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Adds operator visibility for trusted context, source trust, freshness, lineage, and packet previews.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P47.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P47.7",
+      "title": "Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Closes P47 and marks P48 as next.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P47 remains metadata-only and does not enable provider/tool/worker dispatch, DB writes, or runtime agent injection."
+      ],
+      "nextPhase": "P48",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:57:59.695Z",
-  "currentPhase": "P46.7",
-  "previousPhase": "P46.6",
-  "nextPhase": "P47"
+  "updatedAt": "2026-05-15T16:14:58.304Z",
+  "currentPhase": "P47.1",
+  "previousPhase": "P46.7",
+  "nextPhase": "P47.2"
 }

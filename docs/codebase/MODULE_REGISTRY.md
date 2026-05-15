@@ -586,6 +586,38 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Trusted Context + Data Architecture
+
+- Purpose:
+  Define the metadata-only context trust layer that identifies authoritative,
+  fresh, scoped, governed data sources before future agent/provider execution.
+- Primary files:
+  `trusted-context/*`,
+  `policy/trusted-context-policy.json`,
+  `docs/architecture/TRUSTED_CONTEXT_DATA_ARCHITECTURE.md`
+- Public entry points:
+  `trusted-context/index.js`,
+  `scripts/check-trusted-context-data-sources.js`
+- Inputs/outputs:
+  Source metadata and repository file existence in; trusted context registry
+  summaries, validation reports, and future packet previews out.
+- Side effects:
+  Checkers write P47 reports under `reports/`. Runtime behavior is unchanged.
+- Safety boundary:
+  No provider calls, tool dispatch, worker runtime, DB writes, project source
+  mutation, private source content scans, or runtime agent injection are enabled.
+- Reuse notes:
+  Future context, memory, tool, provider, worker, and project registry phases
+  should use this registry before adding new context sources.
+- Tests/checkers:
+  `scripts/check-trusted-context-data-sources.js`
+- Known limitations:
+  P47.1 registers sources only. System-of-record mapping, trust scoring,
+  freshness, lineage, packet previews, and Command Center UX are later P47
+  subphases.
+- Status:
+  foundation
+
 ## Planned or Not Found
 
 - Controlled implementation folder:

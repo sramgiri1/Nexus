@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "phase": "P47.1",
+  "purpose": "trusted_context_data_architecture",
+  "modeRequired": "local-private",
+  "metadataOnly": true,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "toolDispatchAllowed": false,
+  "runtimeAgentInjectionAllowed": false,
+  "projectMutationAllowed": false,
+  "rawSourceContentAllowed": false,
+  "rawSecretsAllowed": false,
+  "privateContextAllowedInDemo": false,
+  "privateContextAllowedInPublic": false,
+  "lineageRequired": true,
+  "redactionRequired": true,
+  "requiredOutputs": [
+    "trusted-context/dataSourceRegistry.js",
+    "trusted-context/dataSourceSchema.js",
+    "reports/trusted-context-data-source-report.md"
+  ]
+}

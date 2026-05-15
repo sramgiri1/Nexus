@@ -1226,7 +1226,12 @@ P46.7 closes Scoped Memory Architecture + Memory Center with final validation
 across the scope model, stores, packet builder, access policy, freshness model,
 Memory Center UI, OS phase status, docs, public safety, and dashboard tests.
 
-Next phase: P47 - Trusted Context + Data Architecture Layer.
+P47 starts the Trusted Context + Data Architecture Layer. P47.1 adds a
+metadata-only data source registry so future context packets can identify source
+ownership, scope, freshness policy, redaction, and lineage requirements before
+any runtime use.
+
+Next phase: P47.2 - System-of-Record Mapping.
 
 ---
 
