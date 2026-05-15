@@ -87,3 +87,27 @@ write paths, project mutation paths, or agent-definition mutation paths.
 
 P50.3 adds governed skill templates for Plan, Review, QA, Ship, Retro, Guard,
 and Explain-style operator workflows.
+
+## P50.3 - Governed Skill Templates
+
+P50.3 adds opinionated operator templates:
+
+- Plan Mission
+- Create Project Brief
+- Review Plan
+- Run QA Gate
+- Fix Failing Test Plan
+- Prepare Release Review
+- Retro and Lessons Learned
+- Guard / Freeze Scope
+- Explain Current State
+
+Each template defines a user-facing label, owner agent, supported agents,
+required capability, required evidence, disabled execution reason, cost policy,
+approval requirement, and linked Command Center action. Templates are visible
+and governable only; they are not executable.
+
+## Next Subphase
+
+P50.4 maps skill templates to stack-specific profiles without enabling runtime
+adapters.

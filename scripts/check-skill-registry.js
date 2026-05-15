@@ -4,10 +4,13 @@ import { execFileSync } from "node:child_process";
 import {
   buildSkillContracts,
   getSkillRegistry,
+  getSkillTemplates,
   summarizeRegisteredSkills,
   summarizeSkillContracts,
+  summarizeSkillTemplates,
   validateSkillContract,
   validateRegisteredSkills,
+  validateSkillTemplates,
 } from "../skills-registry/index.js";
 
 const ROOT = process.cwd();
@@ -17,6 +20,7 @@ const sections = {
   schema: true,
   registry: true,
   contracts: true,
+  templates: true,
   policy: true,
   docs: true,
   osPhaseStatus: true,
@@ -70,14 +74,18 @@ const policy = parseJson("policy/skill-registry-policy.json", "policy");
 const phaseStatus = parseJson("os-roadmap/phase-status.json", "osPhaseStatus");
 const skills = getSkillRegistry();
 const contracts = buildSkillContracts(skills);
+const templates = getSkillTemplates();
 const registryValidation = validateRegisteredSkills(skills);
+const templateValidation = validateSkillTemplates(templates);
 const summary = summarizeRegisteredSkills(skills);
 const contractSummary = summarizeSkillContracts(contracts);
+const templateSummary = summarizeSkillTemplates(templates);
 
 for (const file of [
   "skills-registry/skillSchema.js",
   "skills-registry/skillRegistry.js",
   "skills-registry/skillContract.js",
+  "skills-registry/skillTemplates.js",
   "skills-registry/registry.json",
   "skills-registry/index.js",
 ]) {
@@ -101,6 +109,31 @@ check(contractSummary.executionEnabledCount === 0, "contracts", "Contracts must 
 check(contractSummary.providerCallsAllowedCount === 0, "contracts", "Contracts must keep provider calls disabled");
 check(contractSummary.projectMutationAllowedCount === 0, "contracts", "Contracts must keep project mutation disabled");
 
+check(templateValidation.valid, "templates", `Template validation failed: ${templateValidation.errors.join("; ")}`);
+const templateById = new Map(templates.map((template) => [template.skillId, template]));
+for (const templateId of [
+  "plan-mission",
+  "create-project-brief",
+  "review-plan",
+  "run-qa-gate",
+  "fix-failing-test-plan",
+  "prepare-release-review",
+  "retro-and-lessons-learned",
+  "guard-freeze-scope",
+  "explain-current-state",
+]) {
+  const template = templateById.get(templateId);
+  check(Boolean(template), "templates", `Missing governed skill template: ${templateId}`);
+  check(template?.executionEnabled === false, "templates", `${templateId} must keep execution disabled`);
+  check(template?.costPolicy?.providerSpendAllowed === false, "templates", `${templateId} must block provider spend`);
+  check(Boolean(template?.disabledReason), "templates", `${templateId} must have a disabled reason`);
+  check(Boolean(template?.approvalRequirement), "templates", `${templateId} must have an approval requirement`);
+  check(Boolean(template?.linkedCommandCenterAction), "templates", `${templateId} must link to a Command Center action`);
+  check(Array.isArray(template?.requiredEvidence) && template.requiredEvidence.length > 0, "templates", `${templateId} must require evidence`);
+}
+check(templateSummary.executionEnabledCount === 0, "templates", "No templates may enable execution in P50.3");
+check(templateSummary.templateCount >= 9, "templates", "Expected at least nine governed skill templates");
+
 for (const category of ["planning", "review", "qa", "release"]) {
   check(Boolean(summary.categoryCounts[category]), "registry", `Missing category: ${category}`);
 }
@@ -117,6 +150,7 @@ check(policy.agentDefinitionMutationAllowed === false, "policy", "Agent definiti
 const docs = read("docs/architecture/SKILL_REGISTRY_AND_AUTHORING_WORKFLOW.md");
 check(docs.includes("P50.1 - Skill Registry Schema"), "docs", "Architecture doc missing P50.1 section");
 check(docs.includes("P50.2 - Skill Contract Model"), "docs", "Architecture doc missing P50.2 section");
+check(docs.includes("P50.3 - Governed Skill Templates"), "docs", "Architecture doc missing P50.3 section");
 check(docs.includes("skill execution is disabled"), "docs", "Architecture doc must state skill execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -126,8 +160,12 @@ check(statusById.get("P50.1")?.branch === "arch/skill-registry-authoring-workflo
 check(statusById.get("P50.2")?.status === "complete", "osPhaseStatus", "P50.2 must be complete");
 check(statusById.get("P50.2")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.2 branch mismatch");
 check(statusById.get("P50.2")?.nextPhase === "P50.3", "osPhaseStatus", "P50.2 next phase must be P50.3");
-check(phaseStatus.currentPhase === "P50.2", "osPhaseStatus", "Current phase must be P50.2");
-check(phaseStatus.nextPhase === "P50.3", "osPhaseStatus", "Next phase must be P50.3");
+check(statusById.get("P50.3")?.status === "complete", "osPhaseStatus", "P50.3 must be complete");
+check(statusById.get("P50.3")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.3 branch mismatch");
+check(statusById.get("P50.3")?.nextPhase === "P50.4", "osPhaseStatus", "P50.3 next phase must be P50.4");
+check(statusById.get("P50.4")?.status === "planned", "osPhaseStatus", "P50.4 must be planned");
+check(phaseStatus.currentPhase === "P50.3", "osPhaseStatus", "Current phase must be P50.3");
+check(phaseStatus.nextPhase === "P50.4", "osPhaseStatus", "Next phase must be P50.4");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -142,6 +180,7 @@ for (const file of [
   "skills-registry/skillSchema.js",
   "skills-registry/skillRegistry.js",
   "skills-registry/skillContract.js",
+  "skills-registry/skillTemplates.js",
   "skills-registry/index.js",
   "scripts/check-skill-registry.js",
   "policy/skill-registry-policy.json",
@@ -162,15 +201,18 @@ const report = `# NEXUS Skill Registry Report
 
 ## Scope
 
-P50.2 - Skill Contract Model
+P50.3 - Governed Skill Templates
 
 ## Summary
 
 - Skills: ${summary.skillCount}
 - Contracts: ${contractSummary.contractCount}
+- Templates: ${templateSummary.templateCount}
 - Rollback-required contracts: ${contractSummary.rollbackRequiredCount}
+- Template owner agents: ${templateSummary.ownerAgents.join(", ")}
 - Categories: ${Object.keys(summary.categoryCounts).join(", ")}
 - Execution-enabled skills: ${summary.executionEnabledCount}
+- Execution-enabled templates: ${templateSummary.executionEnabledCount}
 - Provider-enabled skills: ${summary.providerCallsAllowedCount}
 - Tool-enabled skills: ${summary.toolCallsAllowedCount}
 - Project-mutation skills: ${summary.projectMutationAllowedCount}
@@ -181,6 +223,7 @@ P50.2 - Skill Contract Model
 - Schema: ${sections.schema ? "PASS" : "FAIL"}
 - Registry: ${sections.registry ? "PASS" : "FAIL"}
 - Contracts: ${sections.contracts ? "PASS" : "FAIL"}
+- Templates: ${sections.templates ? "PASS" : "FAIL"}
 - Policy: ${sections.policy ? "PASS" : "FAIL"}
 - Docs: ${sections.docs ? "PASS" : "FAIL"}
 - OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}
@@ -208,6 +251,7 @@ console.log(`Modules: ${sections.modules ? "PASS" : "FAIL"}`);
 console.log(`Schema: ${sections.schema ? "PASS" : "FAIL"}`);
 console.log(`Registry: ${sections.registry ? "PASS" : "FAIL"}`);
 console.log(`Contracts: ${sections.contracts ? "PASS" : "FAIL"}`);
+console.log(`Templates: ${sections.templates ? "PASS" : "FAIL"}`);
 console.log(`Policy: ${sections.policy ? "PASS" : "FAIL"}`);
 console.log(`Docs: ${sections.docs ? "PASS" : "FAIL"}`);
 console.log(`OS phase status: ${sections.osPhaseStatus ? "PASS" : "FAIL"}`);
