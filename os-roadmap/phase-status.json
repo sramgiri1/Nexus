@@ -1189,18 +1189,18 @@
       "phaseId": "P46",
       "title": "Scoped Memory Architecture + Memory Center",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/scoped-memory-architecture",
       "commit": "pending-final-commit",
-      "completedAt": "",
+      "completedAt": "2026-05-15T15:57:59.695Z",
       "summary": "Builds scoped memory architecture, safe memory stores, packet selection, access policy, freshness model, and read-only Memory Center.",
       "checksRun": [
-        "npm run check:memory-scope-model"
+        "npm run check:scoped-memory-final-validation"
       ],
       "knownLimitations": [
-        "Memory remains metadata-only. Runtime injection, provider dispatch, tool dispatch, worker runtime, and DB writes are disabled."
+        "Scoped memory remains metadata-only and read-only. Runtime injection is not enabled."
       ],
-      "nextPhase": "P46.6",
+      "nextPhase": "P47",
       "commandCenterVisible": true
     },
     {
@@ -1304,7 +1304,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scoped-memory-architecture",
-      "commit": "pending-subphase-commit",
+      "commit": "489de98",
       "completedAt": "2026-05-15T15:54:22.124Z",
       "summary": "Exposes scoped memory in read-only Command Center UI.",
       "checksRun": [
@@ -1321,14 +1321,17 @@
       "phaseId": "P46.7",
       "title": "Tests + Docs + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/scoped-memory-architecture",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T15:57:59.695Z",
       "summary": "Closes P46 with docs, reports, phase status, and validation.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:scoped-memory-final-validation",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
-        "No runtime memory injection or provider/tool execution is enabled."
+        "Scoped memory remains metadata-only. Trusted context, runtime injection, provider dispatch, memory editing, and persistence promotion are deferred."
       ],
       "nextPhase": "P47",
       "commandCenterVisible": true
@@ -2110,8 +2113,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T15:54:22.124Z",
-  "currentPhase": "P46.6",
-  "previousPhase": "P46.5",
-  "nextPhase": "P46.7"
+  "updatedAt": "2026-05-15T15:57:59.695Z",
+  "currentPhase": "P46.7",
+  "previousPhase": "P46.6",
+  "nextPhase": "P47"
 }

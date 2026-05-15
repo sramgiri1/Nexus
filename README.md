@@ -1222,7 +1222,11 @@ P46.6 adds the read-only Command Center Memory Center at
 promotion proposals, and packet previews. Memory editing and runtime injection
 remain disabled.
 
-Next phase: P46.7 - Tests + Docs + Final Validation.
+P46.7 closes Scoped Memory Architecture + Memory Center with final validation
+across the scope model, stores, packet builder, access policy, freshness model,
+Memory Center UI, OS phase status, docs, public safety, and dashboard tests.
+
+Next phase: P47 - Trusted Context + Data Architecture Layer.
 
 ---
 

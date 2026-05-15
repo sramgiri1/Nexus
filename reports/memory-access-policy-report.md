@@ -1,9 +1,9 @@
 # Memory Access Policy Report
 
 ## Metadata
-- Generated at: 2026-05-15T15:48:11.755Z
+- Generated at: 2026-05-15T15:58:19.592Z
 - Validation branch: arch/scoped-memory-architecture
-- Validation HEAD: a49dd1d
+- Validation HEAD: 489de98
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

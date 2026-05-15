@@ -135,3 +135,15 @@ into agents.
 ## Next After P46.6
 P46.7 performs final validation, regenerates memory reports, repairs phase
 status commit placeholders, and closes P46.
+
+## P46.7 - Tests + Docs + Final Validation
+P46.7 closes Scoped Memory Architecture + Memory Center. Final validation
+confirms:
+- Memory scope model, stores, packet builder, access policy, freshness model,
+  and Memory Center reports exist.
+- Memory Center is route-tested and visible in Command Center.
+- Demo/public access to private project memory is denied.
+- Runtime memory injection, provider dispatch, tool dispatch, worker runtime,
+  DB writes, project mutation, and private project file changes remain disabled.
+
+P47 is next and will define Trusted Context + Data Architecture Layer.

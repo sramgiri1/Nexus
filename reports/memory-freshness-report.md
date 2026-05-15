@@ -1,9 +1,9 @@
 # Memory Freshness Report
 
 ## Metadata
-- Generated at: 2026-05-15T15:49:49.007Z
+- Generated at: 2026-05-15T15:58:19.414Z
 - Validation branch: arch/scoped-memory-architecture
-- Validation HEAD: b4b91af
+- Validation HEAD: 489de98
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

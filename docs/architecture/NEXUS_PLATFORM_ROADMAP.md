@@ -182,8 +182,8 @@ Risk level:
   - `P46.4` Memory Access Policy — complete
   - `P46.5` Memory Freshness + Staleness — complete
   - `P46.6` Command Center Memory Center — complete
-  - `P46.7` Tests + Docs + Final Validation — next
-- `P47` Trusted Context + Data Architecture Layer
+  - `P46.7` Tests + Docs + Final Validation — complete
+- `P47` Trusted Context + Data Architecture Layer — next
 - `P48` Governed Agentic Mesh
 - `P49` Agent Definition Update Workflow
 - `P50` Skill Registry + Skill Authoring Workflow
