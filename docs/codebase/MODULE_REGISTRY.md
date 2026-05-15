@@ -493,6 +493,8 @@ updated as new module families or entry points are added.
   `tool-governance/contextBudgetGuard.js`,
   `tool-governance/toolPermissionPolicy.js`,
   `tool-governance/toolPermissionMatrix.js`,
+  `tool-governance/adapters/*Adapter.js`,
+  `tool-governance/adapters/index.js`,
   `tool-governance/contracts/*.json`,
   `tool-governance/toolTypes.js`,
   `tool-governance/seeds/tool-registry.seed.json`,
@@ -510,7 +512,8 @@ updated as new module families or entry points are added.
   `scripts/check-tool-gateway.js`,
   `scripts/check-tool-search-contracts.js`,
   `scripts/check-lazy-tool-context.js`,
-  `scripts/check-tool-permission-matrix.js`
+  `scripts/check-tool-permission-matrix.js`,
+  `scripts/check-tool-adapters.js`
 - Inputs/outputs:
   Consumes static registry metadata; outputs read-only tool and MCP placeholder
   summaries, selected lazy contracts, gateway decisions, execution previews, and
@@ -530,10 +533,11 @@ updated as new module families or entry points are added.
   `scripts/check-tool-gateway.js`,
   `scripts/check-tool-search-contracts.js`,
   `scripts/check-lazy-tool-context.js`,
-  `scripts/check-tool-permission-matrix.js`
+  `scripts/check-tool-permission-matrix.js`,
+  `scripts/check-tool-adapters.js`
 - Known limitations:
-  P52.1 through P52.6 are metadata-only and do not implement adapters, MCP
-  server runtime, or Command Center Tool Gateway UX yet.
+  P52.1 through P52.7 are metadata-only and do not implement MCP server runtime
+  or Command Center Tool Gateway UX yet.
 - Status:
   foundation
 

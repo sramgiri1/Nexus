@@ -162,7 +162,27 @@ The seed matrix covers:
 The matrix is metadata-only. It does not enable execution, MCP servers,
 providers, external network, DB writes, workers, or project mutation.
 
+## P52.7 - Safe Tool Adapter Previews
+
+P52.7 adds adapter preview modules for the first tool families:
+
+- Git Adapter Preview
+- Test Runner Adapter Preview
+- Filesystem Boundary Adapter Preview
+- Playwright Adapter Preview
+
+Each adapter exposes the same preview contract:
+
+- `describeAdapter()`
+- `listSupportedMethods()`
+- `validateAdapterRequest(request)`
+- `previewAdapterAction(request)`
+- `getAdapterSafetySummary()`
+
+The adapters do not execute commands, launch browsers, run tests, read or write
+project files, call external networks, call providers, write DB state, or mutate
+projects. They only describe and validate future governed actions.
+
 ## Next Subphase
 
-P52.7 adds safe adapter preview modules. Adapters describe and validate future
-actions but do not execute them.
+P52.8 adds a read-only Command Center Tool Gateway view.

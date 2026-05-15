@@ -1513,7 +1513,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/tool-mcp-registry-governance",
-      "commit": "pending-final-commit",
+      "commit": "f70e5ce",
       "completedAt": "2026-05-15T23:20:00.000Z",
       "summary": "Adds a default-deny metadata permission matrix for agents, projects, scopes, methods, data classification, and risk.",
       "checksRun": [
@@ -1529,13 +1529,17 @@
       "phaseId": "P52.7",
       "title": "Safe Tool Adapter Previews",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned safe adapter preview modules with no execution.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/tool-mcp-registry-governance",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T23:30:00.000Z",
+      "summary": "Adds preview-only adapters for Git, Test Runner, Filesystem Boundary, and Playwright actions without enabling execution.",
+      "checksRun": [
+        "npm run check:tool-adapters"
+      ],
+      "knownLimitations": [
+        "Adapters describe and validate future actions only. They do not execute tools, launch browsers, run tests, read/write files, call providers, use networks, write DB state, or mutate projects."
+      ],
       "nextPhase": "P52.8",
       "commandCenterVisible": true
     },
@@ -1547,7 +1551,7 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned command center tool gateway view subphase.",
+      "summary": "Planned read-only Command Center Tool Gateway UX.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P52.9",
@@ -3010,8 +3014,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T23:20:00.000Z",
-  "currentPhase": "P52.6",
-  "previousPhase": "P52.5",
-  "nextPhase": "P52.7"
+  "updatedAt": "2026-05-15T23:30:00.000Z",
+  "currentPhase": "P52.7",
+  "previousPhase": "P52.6",
+  "nextPhase": "P52.8"
 }

@@ -1311,3 +1311,27 @@ state and should be verified again during future docs audits.
   Demo scope is blocked from private tools and MCP placeholders remain blocked.
 - Known limitations:
   Adapter previews and Tool Gateway UX arrive in later P52 subphases.
+
+## P52.7 — Safe Tool Adapter Previews
+
+- Primary capability:
+  Preview-only adapter modules for Git, Test Runner, Filesystem Boundary, and
+  Playwright tool families.
+- Main files/folders touched:
+  `tool-governance/adapters/gitAdapter.js`,
+  `tool-governance/adapters/testRunnerAdapter.js`,
+  `tool-governance/adapters/filesystemBoundaryAdapter.js`,
+  `tool-governance/adapters/playwrightAdapter.js`,
+  `tool-governance/adapters/index.js`
+- Main checker(s):
+  `scripts/check-tool-adapters.js`
+- Main report(s):
+  `reports/tool-adapters-report.md`
+- Command Center impact:
+  Prepares adapter posture summaries for a future Tool Gateway route.
+- Safety impact:
+  Adapter previews do not execute commands, run tests, launch browsers, read or
+  write project files, call providers, access networks, write DB state, or mutate
+  projects.
+- Known limitations:
+  Command Center Tool Gateway UX arrives in P52.8.
