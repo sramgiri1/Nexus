@@ -104,5 +104,20 @@ credentials configured and no outbound calls enabled.
 
 ## Next Phase
 
-P53.6 defines Slack and Teams placeholder trigger models without chat API calls,
-bot tokens, webhook receivers, or channel/user data storage.
+## P53.6 - Slack / Teams Placeholder Trigger Models
+
+P53.6 adds Slack and Teams placeholder trigger models for sample `/nexus`
+commands: plan, review, qa, fix, ship, status, freeze, and guard.
+
+Chat previews parse commands and map them to dry-run NEXUS actions. They do not
+call Slack or Teams APIs, use bot tokens, receive webhooks, store channel/user
+data, or mutate projects. Every command requires scope and project confirmation,
+and risky commands require future approval.
+
+Command Center surfaces Slack / Teams as planned integrations with sample
+commands and chat execution disabled.
+
+## Next Phase
+
+P53.7 closes Trigger + Integration Gateway with final validation, Command Center
+UX, docs, reports, and roadmap status.

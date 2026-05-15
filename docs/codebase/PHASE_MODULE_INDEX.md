@@ -1483,3 +1483,23 @@ state and should be verified again during future docs audits.
   or project mutation.
 - Known limitations:
   Ticket integrations remain dry-run previews only.
+
+## P53.6 — Slack / Teams Placeholder Trigger Models
+
+- Primary capability:
+  Dry-run chat command parser and command-to-NEXUS-action mapping.
+- Main files/folders touched:
+  `integrations/chatTriggerPreview.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`
+- Main checker(s):
+  `scripts/check-chat-trigger-preview.js`
+- Main report(s):
+  `reports/chat-trigger-preview-report.md`
+- Command Center impact:
+  Command Palette details show Slack / Teams as planned integrations with
+  sample `/nexus` commands and chat execution disabled.
+- Safety impact:
+  No Slack or Teams API calls, bot token use, webhook receiver, channel/user
+  data storage, or project mutation.
+- Known limitations:
+  Chat integrations remain dry-run previews only.

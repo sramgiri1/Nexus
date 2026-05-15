@@ -174,7 +174,8 @@
     "check:manual-trigger": "node scripts/check-manual-trigger.js",
     "check:scheduled-trigger": "node scripts/check-scheduled-trigger.js",
     "check:github-trigger-preview": "node scripts/check-github-trigger-preview.js",
-    "check:ticket-trigger-preview": "node scripts/check-ticket-trigger-preview.js"
+    "check:ticket-trigger-preview": "node scripts/check-ticket-trigger-preview.js",
+    "check:chat-trigger-preview": "node scripts/check-chat-trigger-preview.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

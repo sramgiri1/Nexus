@@ -1552,6 +1552,12 @@ function CommandPalette({ open, vm, commands, selectedCommandId, onSelectCommand
                     Jira / Linear - Planned integration · no credentials configured · no outbound calls
                   </span>
                 </div>
+                <div className="ccv2-command-palette__detail-row">
+                  <span className="ccv2-command-palette__detail-label">Chat preview</span>
+                  <span className="ccv2-command-palette__detail-value">
+                    Slack / Teams - Planned integration · sample /nexus commands · chat execution is disabled
+                  </span>
+                </div>
               </div>
 
               <div className="ccv2-command-palette__capabilities">
