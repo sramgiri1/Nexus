@@ -387,6 +387,48 @@ updated as new module families or entry points are added.
 - Status:
   foundation
 
+## Skill Registry + Authoring Workflow
+
+- Purpose:
+  Document reusable governed skills, their contracts, templates, stack
+  compatibility, and validation requirements before any runtime execution is
+  enabled.
+- Primary files:
+  `skills-registry/skillSchema.js`,
+  `skills-registry/skillRegistry.js`,
+  `skills-registry/skillContract.js`,
+  `skills-registry/skillTemplates.js`,
+  `skills-registry/skillProfiles.js`,
+  `skills-registry/skillTestRequirements.js`,
+  `skills-registry/registry.json`,
+  `policy/skill-registry-policy.json`
+- Public entry points:
+  `skills-registry/index.js`,
+  `scripts/check-skill-registry.js`,
+  `/command-center/skills`
+- Inputs/outputs:
+  Consumes static registry metadata and outputs read-only skill summaries,
+  template metadata, stack compatibility, and test requirements.
+- Side effects:
+  Checker/report generation only.
+- Safety boundary:
+  Skill execution, provider calls, tool/MCP execution, worker runtime, DB writes,
+  release execution, project mutation, and agent definition mutation remain
+  disabled.
+- Reuse notes:
+  Future skill work should reuse the registry schema, contract model, template
+  structure, stack profiles, and test requirement mapping before adding new
+  skill-specific metadata.
+- Tests/checkers:
+  `scripts/check-skill-registry.js`,
+  `scripts/check-command-center-ux.js`,
+  `dashboard/tests/routes.spec.js`
+- Known limitations:
+  The registry is metadata-only until later governed automation phases enable
+  safe execution paths.
+- Status:
+  active
+
 ## Shared Helper Catalog and Refactor Plan
 
 - Purpose:

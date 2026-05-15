@@ -202,8 +202,15 @@ Risk level:
   - `P49.6` Agent Regression Tests + Command Center UX — complete
   - `P49.7` Final Validation — complete
   - `P49.8` Projects Page Productization + Portfolio/Project Operating Surface — complete
-- `P50` Skill Registry + Skill Authoring Workflow — next
-- `P51` Hook Registry + Safe Automation Lifecycle
+- `P50` Skill Registry + Skill Authoring Workflow — complete
+  - `P50.1` Skill Registry Schema — complete
+  - `P50.2` Skill Contract Model — complete
+  - `P50.3` Governed Skill Templates — complete
+  - `P50.4` Stack-Specific Skill Profiles — complete
+  - `P50.5` Skill Test Requirements — complete
+  - `P50.6` Command Center Skill Registry View — complete
+  - `P50.7` Final Validation — complete
+- `P51` Hook Registry + Safe Automation Lifecycle — next
 - `P52` Tool / MCP Registry + Tool Governance
 - `P53` Trigger + Integration Gateway
 - `P54` API + Batch Execution Adapter

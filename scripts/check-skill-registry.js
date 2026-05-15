@@ -207,6 +207,7 @@ check(docs.includes("P50.3 - Governed Skill Templates"), "docs", "Architecture d
 check(docs.includes("P50.4 - Stack-Specific Skill Profiles"), "docs", "Architecture doc missing P50.4 section");
 check(docs.includes("P50.5 - Skill Test Requirements"), "docs", "Architecture doc missing P50.5 section");
 check(docs.includes("P50.6 - Command Center Skill Registry View"), "docs", "Architecture doc missing P50.6 section");
+check(docs.includes("P50.7 - Final Validation"), "docs", "Architecture doc missing P50.7 section");
 check(docs.includes("skill execution is disabled"), "docs", "Architecture doc must state skill execution is disabled");
 
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
@@ -228,9 +229,13 @@ check(statusById.get("P50.5")?.nextPhase === "P50.6", "osPhaseStatus", "P50.5 ne
 check(statusById.get("P50.6")?.status === "complete", "osPhaseStatus", "P50.6 must be complete");
 check(statusById.get("P50.6")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.6 branch mismatch");
 check(statusById.get("P50.6")?.nextPhase === "P50.7", "osPhaseStatus", "P50.6 next phase must be P50.7");
-check(statusById.get("P50.7")?.status === "planned", "osPhaseStatus", "P50.7 must be planned");
-check(phaseStatus.currentPhase === "P50.6", "osPhaseStatus", "Current phase must be P50.6");
-check(phaseStatus.nextPhase === "P50.7", "osPhaseStatus", "Next phase must be P50.7");
+check(statusById.get("P50.7")?.status === "complete", "osPhaseStatus", "P50.7 must be complete");
+check(statusById.get("P50.7")?.branch === "arch/skill-registry-authoring-workflow", "osPhaseStatus", "P50.7 branch mismatch");
+check(statusById.get("P50.7")?.nextPhase === "P51", "osPhaseStatus", "P50.7 next phase must be P51");
+check(statusById.get("P50")?.status === "complete", "osPhaseStatus", "P50 parent must be complete");
+check(statusById.get("P51")?.status === "planned", "osPhaseStatus", "P51 must be planned");
+check(phaseStatus.currentPhase === "P50.7", "osPhaseStatus", "Current phase must be P50.7");
+check(phaseStatus.nextPhase === "P51", "osPhaseStatus", "Next phase must be P51");
 
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
@@ -268,7 +273,7 @@ const report = `# NEXUS Skill Registry Report
 
 ## Scope
 
-P50.6 - Command Center Skill Registry View
+P50.7 - Final Validation
 
 ## Summary
 

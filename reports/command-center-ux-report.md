@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T19:38:48.130Z
+- Generated at: 2026-05-15T19:42:11.128Z
 - Validation branch: arch/skill-registry-authoring-workflow
-- Validation HEAD: 009cf7c
+- Validation HEAD: bf0d6a8
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks

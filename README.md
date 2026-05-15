@@ -1275,7 +1275,13 @@ surface with stack, capabilities, milestones, gaps, evidence, and Settings /
 Adapter tabs. It remains read-only: no project mutation, adapter runtime,
 provider/tool/worker dispatch, or DB writes are enabled.
 
-Next phase: P50 - Skill Registry + Skill Authoring Workflow.
+P50 adds the Skill Registry + Skill Authoring Workflow: schema, contracts,
+governed templates, stack-specific profiles, skill test requirements, and a
+read-only Command Center Skill Registry route. It does not enable skill
+execution, provider/tool/worker dispatch, DB writes, release execution, or
+project mutation.
+
+Next phase: P51 - Hook Registry + Safe Automation Lifecycle.
 
 ---
 

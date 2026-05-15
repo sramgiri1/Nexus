@@ -176,3 +176,21 @@ or autonomous skill execution.
 
 P50.7 performs final validation and closes the Skill Registry + Authoring
 Workflow phase.
+
+## P50.7 - Final Validation
+
+P50.7 closes the Skill Registry + Authoring Workflow phase. The final posture:
+
+- skill schema is defined
+- skill contracts are defined
+- governed skill templates are defined
+- stack-specific skill profiles are defined
+- skill test requirements are defined
+- Command Center exposes a read-only Skill Registry page
+- skill execution is disabled
+- provider, tool, worker, DB write, release, and project mutation paths remain
+  disabled
+
+## Next Phase
+
+P51 adds the Hook Registry + Safe Automation Lifecycle.

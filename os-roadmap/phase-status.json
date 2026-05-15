@@ -1392,13 +1392,23 @@
       "phaseId": "P50",
       "title": "Skill Registry + Skill Authoring Workflow",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned skill registry and skill-authoring lifecycle.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/skill-registry-authoring-workflow",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T20:00:00.000Z",
+      "summary": "Completes the read-only Skill Registry + Authoring Workflow with schema, contracts, templates, profiles, tests, and Command Center UX.",
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "P50 does not enable skill execution, provider calls, tool/MCP execution, worker runtime, DB writes, release execution, or project mutation."
+      ],
       "nextPhase": "P51",
       "commandCenterVisible": true
     },
@@ -2662,7 +2672,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/skill-registry-authoring-workflow",
-      "commit": "pending-final-commit",
+      "commit": "bf0d6a8",
       "completedAt": "2026-05-15T19:50:00.000Z",
       "summary": "Expose skill registry, templates, profiles, and test requirements in Command Center without execution controls.",
       "checksRun": [
@@ -2680,20 +2690,30 @@
       "phaseId": "P50.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "arch/skill-registry-authoring-workflow",
       "commit": "pending-final-commit",
-      "completedAt": "",
+      "completedAt": "2026-05-15T20:00:00.000Z",
       "summary": "Validate and close P50 while keeping skill execution disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "checksRun": [
+        "npm run check:skill-registry",
+        "npm run check:os-phase-status",
+        "npm run check:command-center-ux",
+        "npm run check:docs-coverage",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Skill Registry is governance metadata only. Runtime execution begins only in later governed phases."
+      ],
       "nextPhase": "P51",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-15T19:50:00.000Z",
-  "currentPhase": "P50.6",
-  "previousPhase": "P50.5",
-  "nextPhase": "P50.7"
+  "updatedAt": "2026-05-15T20:00:00.000Z",
+  "currentPhase": "P50.7",
+  "previousPhase": "P50.6",
+  "nextPhase": "P51"
 }

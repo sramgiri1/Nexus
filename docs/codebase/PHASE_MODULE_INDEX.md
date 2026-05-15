@@ -890,3 +890,149 @@ state and should be verified again during future docs audits.
 - Known limitations:
   Rendered PNG/SVG artifacts are planned and intentionally not generated in
   P41.9.1.
+
+## P50.1 — Skill Registry Schema
+
+- Primary capability:
+  Read-only skill schema, registry policy, and built-in skill placeholders.
+- Main files/folders touched:
+  `skills-registry/skillSchema.js`,
+  `skills-registry/skillRegistry.js`,
+  `skills-registry/registry.json`,
+  `policy/skill-registry-policy.json`
+- Main checker(s):
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Established metadata later surfaced by the Skill Registry route.
+- Safety impact:
+  Skill execution, provider calls, tool calls, DB writes, and project mutation
+  remain disabled.
+- Known limitations:
+  No contracts, templates, profiles, tests, or UI were implemented in P50.1.
+
+## P50.2 — Skill Contract Model
+
+- Primary capability:
+  Skill contracts for allowed use, forbidden use, evidence, tests, rollback,
+  cost policy, and safety notes.
+- Main files/folders touched:
+  `skills-registry/skillContract.js`,
+  `skills-registry/index.js`
+- Main checker(s):
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Prepared contract metadata for read-only Skill Registry UX.
+- Safety impact:
+  Contracts explicitly forbid provider, tool, worker, DB, and project mutation
+  execution.
+- Known limitations:
+  Contract metadata is not executable.
+
+## P50.3 — Governed Skill Templates
+
+- Primary capability:
+  Governed operator templates for planning, review, QA, fix planning, ship
+  preparation, retro, guard/freeze, and explanation workflows.
+- Main files/folders touched:
+  `skills-registry/skillTemplates.js`,
+  `docs/architecture/SKILL_REGISTRY_AND_AUTHORING_WORKFLOW.md`
+- Main checker(s):
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Added user-facing skill template metadata for later Skill Registry display.
+- Safety impact:
+  Templates remain disabled and require evidence/approval metadata.
+- Known limitations:
+  Templates do not execute commands or mutate project state.
+
+## P50.4 — Stack-Specific Skill Profiles
+
+- Primary capability:
+  Stack-specific skill compatibility profiles for web, backend, mobile,
+  documentation, and NEXUS OS work.
+- Main files/folders touched:
+  `skills-registry/skillProfiles.js`
+- Main checker(s):
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Enabled stack compatibility summaries for the Skill Registry page.
+- Safety impact:
+  Profiles document future adapters without executing them.
+- Known limitations:
+  Project adapters remain disabled.
+
+## P50.5 — Skill Test Requirements
+
+- Primary capability:
+  Static, contract, UI, evidence, and future runtime test requirements for
+  governed skill templates.
+- Main files/folders touched:
+  `skills-registry/skillTestRequirements.js`
+- Main checker(s):
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Supplies test requirement summaries for the Skill Registry page.
+- Safety impact:
+  Future runtime checks are documented as disabled.
+- Known limitations:
+  No runtime skill tests are executable yet.
+
+## P50.6 — Command Center Skill Registry View
+
+- Primary capability:
+  Read-only Command Center Skill Registry route.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-skill-registry.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`,
+  `reports/skill-registry-report.md`
+- Command Center impact:
+  Adds `/command-center/skills` with overview, skills, by-agent, stack profile,
+  test requirement, and developer detail tabs.
+- Safety impact:
+  No skill execution or runtime behavior is enabled from the UI.
+- Known limitations:
+  UI remains read-only.
+
+## P50.7 — Skill Registry Final Validation
+
+- Primary capability:
+  Final validation and closure for P50.
+- Main files/folders touched:
+  `os-roadmap/phase-status.json`,
+  `docs/architecture/SKILL_REGISTRY_AND_AUTHORING_WORKFLOW.md`,
+  `docs/codebase/*`,
+  `README.md`
+- Main checker(s):
+  `scripts/check-skill-registry.js`,
+  `scripts/check-os-phase-status.js`,
+  `scripts/check-command-center-ux.js`,
+  `scripts/check-docs-coverage.js`
+- Main report(s):
+  `reports/skill-registry-report.md`,
+  `reports/os-phase-status-report.md`,
+  `reports/command-center-ux-report.md`,
+  `reports/docs-coverage-report.md`
+- Command Center impact:
+  Marks P50 complete and P51 next in OS roadmap data.
+- Safety impact:
+  Confirms no backend execution, provider/tool/worker dispatch, DB writes, or
+  private project mutation were enabled.
+- Known limitations:
+  Skill authoring remains governance metadata until later automation phases.
