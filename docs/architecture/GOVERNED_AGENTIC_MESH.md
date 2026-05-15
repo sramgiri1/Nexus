@@ -57,3 +57,19 @@ records.
 ## Next
 
 P48.4 defines governed handoff requests from one agent to another.
+
+## P48.4 - Handoff Protocol
+
+The handoff protocol records a governed request from one agent to another. A
+handoff includes the source and target agent, scope, mission/task references,
+reason, requested capability, evidence IDs, required next evidence, policy
+decision, human-review requirement, and status.
+
+Handoffs create redacted mesh messages and append handoff decision records, but
+they do not transfer task ownership or mutate task state. Sensitive handoffs
+require human review, and cross-scope handoffs are blocked unless represented as
+`CROSS_CUTTING_CHANGE` with an allowing policy decision.
+
+## Next
+
+P48.5 connects agent rooms to policy-scoped trusted context summaries.

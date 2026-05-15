@@ -2286,12 +2286,14 @@
       "phaseId": "P48.3",
       "title": "Agent Rooms",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
-      "completedAt": "",
+      "commit": "e44bd81",
+      "completedAt": "2026-05-15T16:52:30.000Z",
       "summary": "Adds governed agent rooms that group agents, tasks, messages, and evidence by scope.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check-agent-rooms"
+      ],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
@@ -2302,12 +2304,14 @@
       "phaseId": "P48.4",
       "title": "Handoff Protocol",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/governed-agentic-mesh",
+      "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Records governed handoff requests without task ownership mutation.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check-agent-handoff-protocol"
+      ],
       "knownLimitations": [
         "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
       ],
@@ -2365,7 +2369,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-15T16:50:09.256Z",
-  "currentPhase": "P48.3",
-  "previousPhase": "P48.2",
-  "nextPhase": "P48.4"
+  "currentPhase": "P48.4",
+  "previousPhase": "P48.3",
+  "nextPhase": "P48.5"
 }
