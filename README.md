@@ -235,9 +235,17 @@ Public-facing README sections use “private project” wording. Private-project
 - P58: Policy Center + Governance Admin
 - P59: Secrets and Credential Boundary
 - P59.8: Command Center OS / Multi-Project Identity Cleanup
-- P60: Worker Queue + Runtime Engine (next)
+- P60: Worker Queue + Runtime Engine (complete; preview-only runtime primitives)
+- P61: Concurrent Execution + Work Deduplication (next)
 - P44.6: merge gate + rollback branch model
 - P44.7: multi-repo Git/PR final validation
+
+## Worker Runtime Preview
+
+Command Center includes a Worker Runtime page at `/command-center/workers`.
+It models queue, lease, heartbeat, retry/timeout, and dead-letter primitives but
+does not execute agents, providers, tools, DB writes, shell commands, or project
+mutations. Run `npm run check:worker-runtime` to validate the preview model.
 
 ## Known Limitations
 

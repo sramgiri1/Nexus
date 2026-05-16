@@ -145,6 +145,14 @@ const CURRENT_PHASE_IDS = new Set([
   "P59.7",
   "P59.8",
   "P60",
+  "P60.1",
+  "P60.2",
+  "P60.3",
+  "P60.4",
+  "P60.5",
+  "P60.6",
+  "P60.7",
+  "P61",
 ]);
 
 const sections = {
@@ -571,8 +579,18 @@ check(p598?.status === "complete", "nextPhase", "P59.8 must be complete");
 check(p598?.title === "Command Center OS / Multi-Project Identity Cleanup", "nextPhase", "P59.8 title mismatch");
 
 const p60 = statusById.get("P60");
-check(["planned", "in_progress"].includes(p60?.status), "nextPhase", "P60 must be planned or in progress");
+check(["planned", "in_progress", "complete"].includes(p60?.status), "nextPhase", "P60 must be planned, in progress, or complete");
 check(p60?.title === "Worker Queue + Runtime Engine", "nextPhase", "P60 title mismatch");
+if (p60?.status === "complete") {
+  check(p60?.nextPhase === "P61", "nextPhase", "P60 nextPhase must be P61 when complete");
+  for (const phaseId of ["P60.1", "P60.2", "P60.3", "P60.4", "P60.5", "P60.6", "P60.7"]) {
+    check(statusById.get(phaseId)?.status === "complete", "previousPhase", `${phaseId} must be complete`);
+  }
+}
+
+const p61 = statusById.get("P61");
+check(["planned", "in_progress", "complete"].includes(p61?.status), "nextPhase", "P61 must be planned, in progress, or complete");
+check(p61?.title === "Concurrent Execution + Work Deduplication", "nextPhase", "P61 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

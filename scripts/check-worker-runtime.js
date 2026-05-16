@@ -220,6 +220,13 @@ if (statusById.has("P60.5")) {
 if (statusById.has("P60.6")) {
   check(statusById.get("P60.6")?.status === "complete", "osPhaseStatus", "P60.6 must be complete once present");
 }
+if (statusById.has("P60.7")) {
+  check(statusById.get("P60.7")?.status === "complete", "osPhaseStatus", "P60.7 must be complete once present");
+}
+if (statusById.get("P60")?.status === "complete") {
+  check(statusById.get("P60")?.nextPhase === "P61", "osPhaseStatus", "P60 nextPhase must be P61 when complete");
+  check(statusById.get("P61")?.status === "in_progress", "osPhaseStatus", "P61 must be current after P60 completion");
+}
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 
 const result = checks.every((entry) => entry.status === "PASS") ? "PASS" : "FAIL";

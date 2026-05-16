@@ -124,6 +124,23 @@ Examples:
 - if runtime locks, release actions, or provider dispatch are not enabled, the
   palette shows the missing capability instead of pretending to execute
 
+## Worker Runtime Preview
+
+P60 adds a Worker Runtime preview page at `/command-center/workers`.
+
+The page shows queue, lease, heartbeat, retry/timeout, and dead-letter models
+for future background execution. It is intentionally preview-only:
+
+- no worker loop starts
+- no agents execute
+- no tools, MCP adapters, or providers run
+- no project files are mutated
+- no DB writes occur
+
+Use `npm run check:worker-runtime` to validate the worker runtime model and
+`npm run worker-runtime:status` to write
+`reports/worker-runtime-status.json`.
+
 ## How To Read Status Output
 
 - `running, managed PID ...`: started by NEXUS and tracked in the service-state

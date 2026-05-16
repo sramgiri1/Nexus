@@ -958,3 +958,36 @@ updated as new module families or entry points are added.
   is deferred to a future governed phase.
 - Status:
   active
+
+## Worker Queue Runtime Engine
+
+- Purpose:
+  Preview-only runtime foundation for future governed background work. Defines
+  queue items, leases, heartbeats, retry/timeout calculations, dead-letter
+  records, and runtime summaries without executing tasks.
+- Primary files:
+  `worker-runtime/queueSchema.js`, `worker-runtime/workerQueue.js`,
+  `worker-runtime/leaseModel.js`, `worker-runtime/heartbeatModel.js`,
+  `worker-runtime/retryTimeoutModel.js`, `worker-runtime/deadLetterQueue.js`,
+  `worker-runtime/runtimeSummary.js`
+- Public entry points:
+  `worker-runtime/index.js`, `scripts/check-worker-runtime.js`,
+  `scripts/worker-runtime-status.js`, `/command-center/workers`
+- Inputs/outputs:
+  Redacted preview metadata in; validation summaries, status artifacts, and
+  Command Center preview state out.
+- Side effects:
+  Checkers write `reports/worker-runtime-report.md` and
+  `reports/worker-runtime-status.json`.
+- Safety boundary:
+  Worker execution, arbitrary commands, provider/tool/MCP calls, external
+  network, DB writes, and project mutation are disabled by
+  `policy/worker-runtime-policy.json`.
+- Tests/checkers:
+  `npm run check:worker-runtime`, `npm run check:command-center-ux`, dashboard
+  Playwright route tests.
+- Known limitations:
+  P60 is runtime primitive modeling only. Concurrent execution and work
+  deduplication are deferred to P61.
+- Status:
+  active

@@ -251,8 +251,15 @@ Risk level:
 - `P57` Cost Center + Budget Enforcement
 - `P58` Policy Center + Governance Admin
 - `P59` Secrets and Credential Boundary
-- `P60` Worker Queue + Runtime Engine
-- `P61` Concurrent Execution + Work Deduplication
+- `P60` Worker Queue + Runtime Engine — complete
+  - `P60.1` Worker Queue Schema — complete
+  - `P60.2` Task Lease Model — complete
+  - `P60.3` Heartbeats — complete
+  - `P60.4` Retry / Timeout — complete
+  - `P60.5` Dead-Letter Queue — complete
+  - `P60.6` Worker Runtime UX — complete
+  - `P60.7` Final Validation — complete
+- `P61` Concurrent Execution + Work Deduplication — next
 - `P62` Conversational NEXUS Command Interface
 - `P63` AI Interaction Snapshot + Granular Recovery Layer
 - `P64` Provider + Tool Dispatch Through Governance
@@ -1076,5 +1083,13 @@ states. Demo data is reserved for a future separate Lite/demo surface, and raw
 private placeholder identifiers stay out of primary Command Center UX.
 
 This phase does not add backend execution, provider/tool dispatch, DB writes,
-workers, project mutation, or Command Center Lite implementation. P60 - Worker
-Queue + Runtime Engine remains next.
+workers, project mutation, or Command Center Lite implementation.
+
+## P60 - Worker Queue + Runtime Engine
+
+P60 defines preview-only worker runtime primitives: queue items, leases,
+heartbeats, retry/timeout classification, dead-letter records, runtime summary,
+and a Command Center Worker Runtime page at `/command-center/workers`.
+
+P60 does not execute agents, tools, providers, shell commands, DB writes, or
+project mutations. P61 - Concurrent Execution + Work Deduplication is next.
