@@ -216,7 +216,8 @@
     "check:secret-access-policy": "node scripts/check-secret-access-policy.js",
     "check:secret-redaction": "node scripts/check-secret-redaction.js",
     "check:provider-credential-boundary": "node scripts/check-provider-credential-boundary.js",
-    "check:project-credential-boundary": "node scripts/check-project-credential-boundary.js"
+    "check:project-credential-boundary": "node scripts/check-project-credential-boundary.js",
+    "check:secrets-boundary-final-validation": "node scripts/check-secrets-boundary-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

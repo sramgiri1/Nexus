@@ -1965,16 +1965,23 @@
       "phaseId": "P59",
       "title": "Secrets and Credential Boundary",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/secrets-credential-boundary",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Secrets and Credential Boundary is in progress with reference-only credential metadata.",
-      "checksRun": [],
-      "knownLimitations": [
-        "No raw secret values are read or resolved."
+      "completedAt": "2026-05-16T15:39:30.731Z",
+      "summary": "Completed reference-only Secrets and Credential Boundary foundations across secret references, access policy, redaction checks, provider and project credential boundaries, Command Center UX, and final validation.",
+      "checksRun": [
+        "npm run check:secret-reference-model",
+        "npm run check:secret-access-policy",
+        "npm run check:secret-redaction",
+        "npm run check:provider-credential-boundary",
+        "npm run check:project-credential-boundary",
+        "npm run check:secrets-boundary-final-validation"
       ],
-      "nextPhase": "P59.1",
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P60",
       "commandCenterVisible": true
     },
     {
@@ -2073,7 +2080,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "172868a",
       "completedAt": "2026-05-16T15:32:20.174Z",
       "summary": "Added Command Center Secrets Boundary UX with reference-only credential posture.",
       "checksRun": [
@@ -2090,12 +2097,14 @@
       "phaseId": "P59.7",
       "title": "Secrets Boundary Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Validate and close P59.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:39:30.731Z",
+      "summary": "Validated and closed P59 Secrets and Credential Boundary.",
+      "checksRun": [
+        "npm run check:secrets-boundary-final-validation"
+      ],
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
       ],
@@ -2107,10 +2116,10 @@
       "title": "Worker Queue + Runtime Engine",
       "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "",
-      "commit": "",
+      "branch": "planned",
+      "commit": "planned",
       "completedAt": "",
-      "summary": "Planned worker runtime and queue engine phase.",
+      "summary": "Worker Queue + Runtime Engine is next.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P61",
@@ -3999,8 +4008,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:32:20.174Z",
-  "currentPhase": "P59.6",
-  "previousPhase": "P59.5",
-  "nextPhase": "P59.7"
+  "updatedAt": "2026-05-16T15:39:30.731Z",
+  "currentPhase": "P60",
+  "previousPhase": "P59",
+  "nextPhase": "P60"
 }

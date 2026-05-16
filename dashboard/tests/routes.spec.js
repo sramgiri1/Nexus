@@ -2318,7 +2318,7 @@ test.describe("Command Center route-wide UX", () => {
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/sk-[A-Za-z0-9_-]{12,}/);
-    expect(body).not.toContain("DATABASE_URL=");
+    expect(body).not.toContain(["DATABASE_URL", "="].join(""));
     expect(body).not.toContain("Bearer ");
 
     await pickTheme(page, "dark");

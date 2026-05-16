@@ -47,3 +47,16 @@ and readiness is metadata-only.
 Project credential references cover app database, CI/CD, deployment, mobile
 signing, OAuth, notifications, payments, and storage. DB writes, deploy, mobile
 signing, and private credential metadata in demo mode remain disabled.
+
+## P59.6 - Command Center Secrets Boundary UX
+
+The Command Center includes a Secrets Boundary route with overview, provider,
+project, DB/deploy, integration, and developer-detail tabs. It states that
+NEXUS stores references only and never displays, logs, or reports raw secret
+values.
+
+## P59.7 - Final Validation
+
+Final validation checks P59 reports, secret-like output scanning, disabled
+provider/tool/DB/deploy/project mutation posture, Command Center UX coverage,
+and OS phase status. P60 - Worker Queue + Runtime Engine is next.

@@ -872,3 +872,13 @@ break-glass process.
 The Policy Center is preview-only in P58. It does not change runtime policy
 enforcement, apply policy edits, enable live overrides, call providers or tools,
 write to DB, start workers, execute releases, or mutate project source.
+
+## 17. Secrets and Credential Boundary
+
+P59 adds a reference-only boundary for credentials. NEXUS can model provider,
+project, DB, deploy, mobile signing, webhook, and integration credential needs
+without reading or exposing raw values.
+
+The Secrets Boundary does not read secret values, resolve environment values,
+call providers or tools, write to DB, deploy, sign mobile artifacts, start
+workers, or mutate project source.

@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T15:05:55.423Z
-- Validation branch: arch/policy-center-governance-admin
-- Validation HEAD: 88c431c
+- Generated at: 2026-05-16T15:43:57.931Z
+- Validation branch: arch/secrets-credential-boundary
+- Validation HEAD: 172868a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P59
-- Previous phase: P58
-- Next phase: P59
+- Current phase: P60
+- Previous phase: P59
+- Next phase: P60
 
 ## Checks
 

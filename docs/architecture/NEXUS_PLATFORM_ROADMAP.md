@@ -1055,3 +1055,15 @@ break-glass model, and a Command Center Policy Center route.
 P58 does not enable runtime policy enforcement changes, live overrides,
 provider/tool dispatch, worker execution, DB writes, release execution, or
 project mutation. P59 - Secrets and Credential Boundary is next.
+
+## P59 - Secrets and Credential Boundary
+
+P59 adds reference-only credential governance for future provider, DB, deploy,
+mobile signing, and integration phases. It introduces secret reference metadata,
+metadata-only access decisions, redaction scanning, provider credential
+references, project credential references, and a Command Center Secrets Boundary
+route.
+
+P59 does not read secret values, resolve environment values, call providers or
+tools, write to DB, deploy, sign mobile artifacts, start workers, or mutate
+project files. P60 - Worker Queue + Runtime Engine is next.
