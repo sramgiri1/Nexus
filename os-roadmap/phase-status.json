@@ -1788,7 +1788,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/cost-center-budget-enforcement",
-      "commit": "pending-final-commit",
+      "commit": "8ccf879",
       "completedAt": "2026-05-16T12:58:31.780Z",
       "summary": "Completed preview-only Cost Center ledger, budget, estimator, recorder, enforcer, and Command Center UX foundations.",
       "checksRun": [
@@ -1802,13 +1802,143 @@
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Policy Center + Governance Admin is in progress with preview-only policy registry foundations.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P58.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.1",
+      "title": "Policy Registry",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:49:37.486Z",
+      "summary": "Read-only policy registry foundation for NEXUS governance families.",
+      "checksRun": [
+        "npm run check:policy-registry"
+      ],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.2",
+      "title": "Policy Versioning",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Governance policy administration and operator review are next.",
+      "summary": "Read-only policy version index and metadata model.",
       "checksRun": [],
-      "knownLimitations": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.3",
+      "title": "Policy Diff Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Policy diff risk classification without policy mutation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.4",
+      "title": "Policy Simulation Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Read-only policy decision simulation scenarios.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.5",
+      "title": "Exception Workflow",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Preview-only governed policy exception workflow.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.6",
+      "title": "Break-Glass Policy",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Preview-only emergency override governance model.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.7",
+      "title": "Command Center Policy Center UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Command Center Policy Center route and operator guidance.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
+      "nextPhase": "P58.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.8",
+      "title": "Policy Center Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Validate and close P58 while runtime enforcement remains unchanged.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no runtime enforcement changes are enabled."
+      ],
       "nextPhase": "P59",
       "commandCenterVisible": true
     },
@@ -3723,8 +3853,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:58:31.793Z",
-  "currentPhase": "P58",
+  "updatedAt": "2026-05-16T14:49:37.486Z",
+  "currentPhase": "P58.1",
   "previousPhase": "P57",
-  "nextPhase": "P58"
+  "nextPhase": "P58.2"
 }

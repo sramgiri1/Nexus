@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "phase": "P58.1",
+  "purpose": "policy_registry_foundation",
+  "previewOnly": true,
+  "readOnly": true,
+  "runtimeEnforcementChangesAllowed": false,
+  "policyMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerExecutionAllowed": false,
+  "projectMutationAllowed": false,
+  "rawPolicyPayloadsInPrimaryUxAllowed": false,
+  "commandCenterVisible": true
+}

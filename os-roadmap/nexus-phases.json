@@ -1290,6 +1290,78 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P58.1",
+      "title": "Policy Registry",
+      "track": "NEXUS_OS",
+      "order": 32.01,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Read-only policy registry foundation for NEXUS governance families.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.2",
+      "title": "Policy Versioning",
+      "track": "NEXUS_OS",
+      "order": 32.019999999999996,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Read-only policy version index and metadata model.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.3",
+      "title": "Policy Diff Preview",
+      "track": "NEXUS_OS",
+      "order": 32.03,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Policy diff risk classification without policy mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.4",
+      "title": "Policy Simulation Preview",
+      "track": "NEXUS_OS",
+      "order": 32.04,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Read-only policy decision simulation scenarios.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.5",
+      "title": "Exception Workflow",
+      "track": "NEXUS_OS",
+      "order": 32.05,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Preview-only governed policy exception workflow.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.6",
+      "title": "Break-Glass Policy",
+      "track": "NEXUS_OS",
+      "order": 32.059999999999995,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Preview-only emergency override governance model.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.7",
+      "title": "Command Center Policy Center UX",
+      "track": "NEXUS_OS",
+      "order": 32.07,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Command Center Policy Center route and operator guidance.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P58.8",
+      "title": "Policy Center Final Validation",
+      "track": "NEXUS_OS",
+      "order": 32.08,
+      "group": "P58 Policy Center + Governance Admin",
+      "summary": "Validate and close P58 while runtime enforcement remains unchanged.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P59",
       "title": "Secrets and Credential Boundary",
       "track": "NEXUS_OS",

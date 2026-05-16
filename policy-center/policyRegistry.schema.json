@@ -1,0 +1,25 @@
+{
+  "schemaVersion": "1.0",
+  "phase": "P58.1",
+  "title": "Policy Registry Entry Schema",
+  "requiredFields": [
+    "policyId",
+    "title",
+    "ownerArea",
+    "ownerAgent",
+    "scope",
+    "mode",
+    "status",
+    "sourcePath",
+    "relatedPhase",
+    "riskLevel",
+    "enforcementState",
+    "commandCenterVisible",
+    "version",
+    "tags"
+  ],
+  "allowedStatuses": ["active", "planned", "deprecated"],
+  "allowedRiskLevels": ["low", "medium", "high", "critical"],
+  "runtimeEnforcementChanged": false,
+  "previewOnly": true
+}

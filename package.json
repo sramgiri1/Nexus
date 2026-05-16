@@ -204,7 +204,8 @@
     "check:cost-recorder": "node scripts/check-cost-recorder.js",
     "check:budget-enforcer": "node scripts/check-budget-enforcer.js",
     "check:cost-center-command-ui": "node scripts/check-cost-center-command-ui.js",
-    "check:cost-center-final-validation": "node scripts/check-cost-center-final-validation.js"
+    "check:cost-center-final-validation": "node scripts/check-cost-center-final-validation.js",
+    "check:policy-registry": "node scripts/check-policy-registry.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
