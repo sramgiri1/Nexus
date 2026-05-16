@@ -2153,7 +2153,7 @@
       "knownLimitations": [
         "Runtime execution remains disabled until later phases."
       ],
-      "nextPhase": "P60.6",
+      "nextPhase": "P60.7",
       "commandCenterVisible": true
     },
     {
@@ -4132,12 +4132,16 @@
       "phaseId": "P60.6",
       "title": "Worker Runtime UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T18:26:42.612Z",
       "summary": "Expose preview-only worker runtime state in Command Center.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:worker-runtime",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
         "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
       ],
@@ -4162,8 +4166,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T18:22:58.327Z",
-  "currentPhase": "P60.6",
-  "previousPhase": "P60.5",
-  "nextPhase": "P60.6"
+  "updatedAt": "2026-05-16T18:26:42.613Z",
+  "currentPhase": "P60.7",
+  "previousPhase": "P60.6",
+  "nextPhase": "P60.7"
 }

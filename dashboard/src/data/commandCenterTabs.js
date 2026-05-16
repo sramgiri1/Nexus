@@ -594,6 +594,45 @@ export const BATCH_QUEUE_TABS = [
   { id: "cost", label: "Cost", description: "Future batch savings and cost status", badge: "Planned" },
 ];
 
+export const WORKER_RUNTIME_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Worker runtime primitive status and execution-disabled posture",
+    badge: "Preview",
+  },
+  {
+    id: "queue",
+    label: "Queue",
+    description: "Queue schema and preview-only work item state",
+    badge: "Modeled",
+  },
+  {
+    id: "leases",
+    label: "Leases",
+    description: "Task lease preview records for future workers",
+    badge: "Preview",
+  },
+  {
+    id: "heartbeats",
+    label: "Heartbeats",
+    description: "Heartbeat record model and stale detection preview",
+    badge: "Preview",
+  },
+  {
+    id: "retries",
+    label: "Retries / DLQ",
+    description: "Retry, timeout, and dead-letter queue primitives",
+    badge: "Modeled",
+  },
+  {
+    id: "developer-details",
+    label: "Developer Details",
+    description: "Policy and local artifact references",
+    badge: "Read-only",
+  },
+];
+
 export const MEMORY_CENTER_TABS = [
   { id: "overview", label: "Overview", description: "Scoped memory posture and safety summary", badge: "Ready" },
   { id: "os-memory", label: "OS Memory", description: "NEXUS OS scoped memory summaries", badge: "Read-only" },

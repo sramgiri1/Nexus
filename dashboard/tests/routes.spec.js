@@ -24,6 +24,7 @@ const PRIMARY_ROUTE_KEYS = [
   "liveapi",
   "database",
   "services",
+  "workers",
   "evidence",
   "safety",
   "projects",
@@ -35,7 +36,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
-const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "agentRooms", "skills", "hooks"].includes(key));
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "workers", "agentRooms", "skills", "hooks"].includes(key));
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
@@ -539,6 +540,41 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Port already in use");
     await expect(page.locator("body")).toContainText("Local API offline");
     await expect(page.locator("body")).toContainText("Action bridge offline");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Worker Runtime route renders preview-only runtime primitives", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workers");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Worker Runtime");
+    await expect(page.locator("body")).toContainText("Durable background execution foundation for future governed tasks.");
+    await expect(page.locator("body")).toContainText("P60 defines runtime primitives only");
+    await expect(page.locator("body")).toContainText("Worker queue");
+    await expect(page.locator("body")).toContainText("Leases");
+    await expect(page.locator("body")).toContainText("Heartbeats");
+    await expect(page.locator("body")).toContainText("Retry/timeout");
+    await expect(page.locator("body")).toContainText("Dead-letter queue");
+    await expect(page.locator("body")).toContainText("Runtime execution");
+    await expect(page.locator("body")).toContainText("Not enabled");
+    await expect(commandTab(page, "Queue")).toBeVisible();
+    await commandTab(page, "Retries / DLQ").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Requeue execution");
+    await commandTab(page, "Developer Details").click();
+    await expect(activeCommandTabPanel(page)).toContainText("policy/worker-runtime-policy.json");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    for (const label of FORBIDDEN_PHASE_LABELS) {
+      expect(body).not.toContain(label);
+    }
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
 
     expect(errors).toEqual([]);
   });
@@ -1218,6 +1254,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/policies", ["Overview", "Registry", "Versions", "Diff Preview", "Simulation", "Exceptions", "Break-Glass", "Developer Details"]],
       ["/command-center/secrets", ["Overview", "Provider Credentials", "Project Credentials", "DB / Deploy", "Integrations", "Developer Details"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
+      ["/command-center/workers", ["Overview", "Queue", "Leases", "Heartbeats", "Retries / DLQ", "Developer Details"]],
     ];
 
     for (const [path, labels] of tabbedRoutes) {
@@ -1254,6 +1291,7 @@ test.describe("Command Center route-wide UX", () => {
     for (const path of [
       "/command-center/liveapi",
       "/command-center/database",
+      "/command-center/workers",
       "/command-center/evidence",
       "/command-center/safety",
       "/command-center/projects",

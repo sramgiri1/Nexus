@@ -46,6 +46,7 @@ const checks = [
   { key: "policy", name: "Policy", status: "PASS", details: "" },
   { key: "auditOnly", name: "Execution disabled", status: "PASS", details: "" },
   { key: "reports", name: "Reports", status: "PASS", details: "" },
+  { key: "commandCenterUx", name: "Command Center Worker Runtime UX", status: "PASS", details: "" },
   { key: "osPhaseStatus", name: "OS phase status", status: "PASS", details: "" },
   { key: "noForbiddenChanges", name: "No forbidden changes", status: "PASS", details: "" },
   { key: "formatting", name: "Formatting/readability", status: "PASS", details: "" },
@@ -78,6 +79,9 @@ console.log("NEXUS Worker Runtime Check\n==========================");
 
 const branch = gitOutput(["branch", "--show-current"]);
 const head = gitOutput(["rev-parse", "--short", "HEAD"]);
+const commandCenterSource = (await import("node:fs")).readFileSync(join(ROOT, "dashboard/src/pages/CommandCenterV2.jsx"), "utf8");
+const routeSource = (await import("node:fs")).readFileSync(join(ROOT, "dashboard/src/data/commandCenterRoutes.js"), "utf8");
+const routeTestSource = (await import("node:fs")).readFileSync(join(ROOT, "dashboard/tests/routes.spec.js"), "utf8");
 
 for (const filePath of [
   "worker-runtime/queueSchema.js",
@@ -191,6 +195,13 @@ if (typeof moveToDeadLetterPreview === "function") {
 }
 check(!hasPrivateProjectDiff(), "noForbiddenChanges", "Private project files must not change");
 
+if (routeSource.includes("/command-center/workers") || commandCenterSource.includes("WorkerRuntimePage")) {
+  check(routeSource.includes("/command-center/workers"), "commandCenterUx", "Worker Runtime route must be registered");
+  check(commandCenterSource.includes("Worker Runtime"), "commandCenterUx", "Worker Runtime page copy must exist");
+  check(commandCenterSource.includes("P60 defines runtime primitives only"), "commandCenterUx", "Worker Runtime execution-disabled warning missing");
+  check(routeTestSource.includes("Worker Runtime route renders preview-only runtime primitives"), "commandCenterUx", "Worker Runtime Playwright coverage missing");
+}
+
 const phaseStatus = JSON.parse((await import("node:fs")).readFileSync(join(ROOT, "os-roadmap/phase-status.json"), "utf8"));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P60.1")?.status === "complete", "osPhaseStatus", "P60.1 must be complete");
@@ -205,6 +216,9 @@ if (statusById.has("P60.4")) {
 }
 if (statusById.has("P60.5")) {
   check(statusById.get("P60.5")?.status === "complete", "osPhaseStatus", "P60.5 must be complete once present");
+}
+if (statusById.has("P60.6")) {
+  check(statusById.get("P60.6")?.status === "complete", "osPhaseStatus", "P60.6 must be complete once present");
 }
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 

@@ -867,6 +867,28 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     toolGateway: toolGatewayView,
     triggerIntegration: triggerIntegrationView,
     apiBatch: apiBatchView,
+    workerRuntime: {
+      runtimeMode: "preview_only",
+      executionEnabled: false,
+      warning: "P60 defines runtime primitives only. It does not execute agents, tools, providers, or project mutations yet.",
+      nextAction: "Continue to P61 for concurrency and work deduplication.",
+      statusCards: [
+        { label: "Worker queue", value: "Modeled", detail: "Queue schema validates preview-only work items." },
+        { label: "Leases", value: "Preview", detail: "Lease records can be modeled; no worker claims execute." },
+        { label: "Heartbeats", value: "Preview", detail: "Heartbeat records and stale detection are deterministic previews." },
+        { label: "Retry/timeout", value: "Modeled", detail: "Retry delays and timeout classifications are calculated only." },
+        { label: "Dead-letter queue", value: "Modeled", detail: "DLQ records preserve blockers; requeue is not enabled." },
+        { label: "Runtime execution", value: "Not enabled", detail: "No agents, tools, providers, DB writes, or project mutations execute." },
+      ],
+      developerDetails: {
+        policyPath: "policy/worker-runtime-policy.json",
+        statusPath: "reports/worker-runtime-status.json",
+        queueStatePath: "local-state/runtime/worker-queue.jsonl",
+        leaseStatePath: "local-state/runtime/worker-leases.jsonl",
+        heartbeatStatePath: "local-state/runtime/worker-heartbeats.jsonl",
+        deadLetterStatePath: "local-state/runtime/dead-letter-queue.jsonl",
+      },
+    },
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

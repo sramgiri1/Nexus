@@ -60,6 +60,7 @@ const sections = {
   formattingReadability: true,
   testCenterUx: true,
   qualityIntelligenceUx: true,
+  workerRuntimeUx: true,
 };
 
 const failures = [];
@@ -125,6 +126,7 @@ const requiredRoutePaths = [
   "/command-center/liveapi",
   "/command-center/database",
   "/command-center/services",
+  "/command-center/workers",
   "/command-center/memory",
   "/command-center/context",
   "/command-center/evidence",
@@ -165,6 +167,7 @@ const requiredTabbedRoutes = {
   "/command-center/policies": "overview",
   "/command-center/secrets": "overview",
   "/command-center/batch": "overview",
+  "/command-center/workers": "overview",
   "/command-center/memory": "overview",
   "/command-center/context": "overview",
   "/command-center/agent-rooms": "overview",
@@ -185,6 +188,7 @@ const routeHeadings = {
   "/command-center/liveapi": "Live API Status",
   "/command-center/database": "Durable State",
   "/command-center/services": "Service Health",
+  "/command-center/workers": "Worker Runtime",
   "/command-center/memory": "Memory Center",
   "/command-center/context": "Data & Context Center",
   "/command-center/evidence": "Evidence",
@@ -227,6 +231,7 @@ const identitySource = readFile("dashboard/src/data/commandCenterIdentity.js");
 const commandTabsSource = readFile("dashboard/src/data/commandCenterTabs.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
+const workerRuntimeUxSource = [commandCenterSource, viewModelSource, routeSource, commandTabsSource].join("\n");
 const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
 const themeCssSource = readFile("dashboard/src/styles-command-center-v2.css");
 const routeTestSource = readFile("dashboard/tests/routes.spec.js");
@@ -635,6 +640,35 @@ for (const expectedTest of [
   check(routeTestSource.includes(expectedTest), "serviceHealthUx", `Service Health tests missing: ${expectedTest}`);
 }
 check(routeSource.includes("/command-center/services"), "serviceHealthUx", "Route matrix missing /command-center/services");
+
+// Worker Runtime UX
+for (const expected of [
+  "Worker Runtime",
+  "Durable background execution foundation for future governed tasks.",
+  "P60 defines runtime primitives only. It does not execute agents, tools, providers, or project mutations yet.",
+  "Worker queue",
+  "Leases",
+  "Heartbeats",
+  "Retry/timeout",
+  "Dead-letter queue",
+  "Runtime execution",
+  "policy/worker-runtime-policy.json",
+]) {
+  check(workerRuntimeUxSource.includes(expected), "workerRuntimeUx", `Worker Runtime page missing expected copy: ${expected}`);
+}
+for (const expected of [
+  "WORKER_RUNTIME_TABS",
+  "/command-center/workers",
+  "Worker Runtime",
+]) {
+  check(routeSource.includes(expected) || commandTabsSource.includes(expected), "workerRuntimeUx", `Worker Runtime route/tab metadata missing: ${expected}`);
+}
+for (const expectedTest of [
+  "Worker Runtime route renders preview-only runtime primitives",
+  "Retries / DLQ",
+]) {
+  check(routeTestSource.includes(expectedTest), "workerRuntimeUx", `Worker Runtime tests missing: ${expectedTest}`);
+}
 
 // Agent Rooms UX
 for (const expected of [
@@ -1373,6 +1407,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/tools",
     "/command-center/triggers",
     "/command-center/api-batch",
+    "/command-center/workers",
     "/command-center/quality",
     "/command-center/policies",
     "/command-center/secrets",
@@ -1526,6 +1561,7 @@ console.log(`Policy Center UX: ${sections.policyCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Secrets Boundary UX: ${sections.secretsBoundaryUx ? "PASS" : "FAIL"}`);
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
+console.log(`Worker Runtime UX: ${sections.workerRuntimeUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1623,6 +1659,7 @@ const report = `# Command Center UX Report
 - Formatting/readability: ${sections.formattingReadability ? "PASS" : "FAIL"}
 - Test Center UX (inline): ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Quality Intelligence UX (inline): ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
+- Worker Runtime UX: ${sections.workerRuntimeUx ? "PASS" : "FAIL"}
 
 ## Failures
 

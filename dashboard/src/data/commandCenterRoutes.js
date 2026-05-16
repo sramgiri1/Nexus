@@ -22,6 +22,7 @@ import {
   TEST_CENTER_TABS,
   TOOL_GATEWAY_TABS,
   TRIGGER_INTEGRATION_TABS,
+  WORKER_RUNTIME_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "./commandCenterTabs.js";
@@ -362,6 +363,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: BATCH_QUEUE_TABS,
     defaultTab: "overview",
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
+  },
+  {
+    key: "workers",
+    path: "/command-center/workers",
+    name: "Worker Runtime",
+    section: "PLATFORM",
+    allowPhaseLabels: false,
+    expectedHeading: "Worker Runtime",
+    status: "implemented",
+    badge: "Preview",
+    scope: "platform",
+    tabs: WORKER_RUNTIME_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/WORKER_QUEUE_RUNTIME_ENGINE.md",
   },
   {
     key: "cost",

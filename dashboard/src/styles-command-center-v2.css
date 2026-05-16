@@ -4858,6 +4858,26 @@
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
+.ccv2-warning-card {
+  margin: 0 0 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--v2-border-strong);
+  border-radius: 18px;
+  background: var(--v2-surface-raised);
+  color: var(--v2-text);
+  font-size: 13px;
+  line-height: 1.5;
+  box-shadow: var(--v2-shadow-soft);
+}
+
+.ccv2-metric-value {
+  margin: 8px 0;
+  color: var(--v2-text);
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+}
+
 .ccv2-muted {
   color: var(--v2-muted);
   font-size: 12px;

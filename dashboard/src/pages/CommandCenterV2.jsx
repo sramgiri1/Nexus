@@ -29,6 +29,7 @@ import {
   TEST_CENTER_TABS,
   TOOL_GATEWAY_TABS,
   TRIGGER_INTEGRATION_TABS,
+  WORKER_RUNTIME_TABS,
   WORKBENCH_TABS,
   WORKSPACE_TABS,
 } from "../data/commandCenterTabs.js";
@@ -3866,6 +3867,111 @@ function ProjectsPage({ vm, studio }) {
 }
 
 /* ─── Batch Queue Page ─── */
+function WorkerRuntimePage({ vm }) {
+  const [activeTab, setActiveTab] = useState("overview");
+  const runtime = vm.workerRuntime || {};
+  const statusCards = runtime.statusCards || [];
+  const developerDetails = runtime.developerDetails || {};
+
+  return (
+    <div className="ccv2-page">
+      <div className="ccv2-page-head">
+        <div>
+          <div className="ccv2-page-head__eyebrow">Platform runtime foundation</div>
+          <div className="ccv2-page-head__title">Worker Runtime</div>
+          <div className="ccv2-page-head__subtitle">Durable background execution foundation for future governed tasks.</div>
+        </div>
+        <div className="ccv2-page-head__meta">
+          <span className="ccv2-pill ccv2-pill--preview">Preview only</span>
+          <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+        </div>
+      </div>
+
+      <div className="ccv2-warning-card">
+        P60 defines runtime primitives only. It does not execute agents, tools, providers, or project mutations yet.
+      </div>
+
+      <CommandTabs
+        tabs={WORKER_RUNTIME_TABS}
+        activeTab={activeTab}
+        onTabChange={setActiveTab}
+        ariaLabel="Worker Runtime sections"
+      >
+        <CommandTabPanel tabId="overview" activeTab={activeTab}>
+          <div className="ccv2-grid ccv2-grid--three">
+            {statusCards.map((card) => (
+              <div className="ccv2-card" key={card.label}>
+                <div className="ccv2-section-heading">{card.label}</div>
+                <div className="ccv2-metric-value">{card.value}</div>
+                <p className="ccv2-muted">{card.detail}</p>
+              </div>
+            ))}
+          </div>
+          <div className="ccv2-card" style={{ marginTop: 16 }}>
+            <div className="ccv2-section-heading">Next Action</div>
+            <p className="ccv2-muted">{runtime.nextAction || "Continue to P61 for concurrency and work deduplication."}</p>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="queue" activeTab={activeTab}>
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Worker Queue</div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Queue schema</span><span className="ccv2-page-summary-value">Modeled</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed runtime</span><span className="ccv2-page-summary-value">preview_only</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Task execution</span><span className="ccv2-safety-row__value--disabled">Not enabled</span></div>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="leases" activeTab={activeTab}>
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Leases</div>
+            <p className="ccv2-muted">Leases are preview records for future workers. They do not claim or execute queue items.</p>
+            <div className="ccv2-empty-state">No active worker leases. Worker loop execution is not enabled.</div>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="heartbeats" activeTab={activeTab}>
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Heartbeats</div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Healthy workers</span><span className="ccv2-page-summary-value">0 preview</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Stale workers</span><span className="ccv2-page-summary-value">0 preview</span></div>
+            <p className="ccv2-muted">No timers or background daemons are started by this page.</p>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="retries" activeTab={activeTab}>
+          <div className="ccv2-grid ccv2-grid--two">
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Retry / Timeout</div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Retries</span><span className="ccv2-page-summary-value">Modeled</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Automatic retry execution</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Timeout policy</span><span className="ccv2-page-summary-value">Preview only</span></div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Dead-letter queue</div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DLQ model</span><span className="ccv2-page-summary-value">Available</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Requeue execution</span><span className="ccv2-safety-row__value--disabled">Not enabled</span></div>
+              <p className="ccv2-muted">Suggested action: inspect blocker and wait for a future governed requeue workflow.</p>
+            </div>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+          <div className="ccv2-card">
+            <div className="ccv2-section-heading">Developer Details</div>
+            {Object.entries(developerDetails).map(([label, value]) => (
+              <div className="ccv2-page-summary-row" key={label}>
+                <span className="ccv2-page-summary-label">{label}</span>
+                <span className="ccv2-page-summary-value">{value}</span>
+              </div>
+            ))}
+          </div>
+        </CommandTabPanel>
+      </CommandTabs>
+    </div>
+  );
+}
+
 function BatchQueuePage({ vm }) {
   const [activeTab, setActiveTab] = useState("overview");
   return (
@@ -8948,6 +9054,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "database" && <DurableStatePage vm={vmWithApi} />}
           {currentPage === "services" && <ServiceHealthPage vm={vmWithApi} />}
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
+          {currentPage === "workers" && <WorkerRuntimePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "policies" && <PolicyCenterPage />}
           {currentPage === "secrets" && <SecretsBoundaryPage />}
