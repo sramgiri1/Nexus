@@ -22,6 +22,8 @@ unsafe runtime behavior.
 - Policy Center checks validate policy registry, versions, diff previews,
   simulations, exception workflows, break-glass previews, and Command Center UX
   without changing runtime enforcement.
+- Secret boundary checks validate reference-only credential metadata and scan
+  P59 outputs for secret-like strings without reading `.env` files.
 
 ## Update Rule
 

@@ -28,3 +28,9 @@ Secret access policy allows metadata-only inspection of secret references when
 mode and scope permit it. Raw value resolution is always blocked in P59.
 Production-placeholder metadata requires approval, and public/demo access is
 denied.
+
+## P59.3 - Redaction Tests
+
+Secret redaction tests scan P59 reports, docs, and UI source touched by this
+phase for secret-like output. Scanner fixtures use fake placeholders only and
+allowlist the documentation-safe `sk-activation` phrase.

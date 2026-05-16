@@ -2001,7 +2001,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "da7e80d",
       "completedAt": "2026-05-16T15:24:33.151Z",
       "summary": "Added preview-only secret access policy decisions with raw value resolution blocked.",
       "checksRun": [
@@ -2017,12 +2017,14 @@
       "phaseId": "P59.3",
       "title": "Redaction Tests",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Secret-like scanner and redaction verification.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:25:54.566Z",
+      "summary": "Added secret-like scanner and redaction verification for P59 outputs.",
+      "checksRun": [
+        "npm run check:secret-redaction"
+      ],
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
       ],
@@ -3990,8 +3992,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:24:33.151Z",
-  "currentPhase": "P59.2",
-  "previousPhase": "P59.1",
-  "nextPhase": "P59.3"
+  "updatedAt": "2026-05-16T15:25:54.566Z",
+  "currentPhase": "P59.3",
+  "previousPhase": "P59.2",
+  "nextPhase": "P59.4"
 }
