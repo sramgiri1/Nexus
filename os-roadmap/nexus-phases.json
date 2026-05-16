@@ -1455,9 +1455,9 @@
       "phaseId": "P61",
       "title": "Concurrent Execution + Work Deduplication",
       "track": "NEXUS_OS",
-      "order": 35,
-      "group": "Planned OS Phases",
-      "summary": "Support concurrent governed execution with deduplication and conflict controls.",
+      "order": 35.1,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Preview-only concurrency, lock, deduplication, priority, and cancellation governance.",
       "commandCenterVisible": true
     },
     {
@@ -1882,7 +1882,70 @@
       "group": "P60 Worker Queue + Runtime Engine",
       "summary": "Validate and close the worker queue runtime engine foundation.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.1",
+      "title": "Concurrency Policy",
+      "track": "NEXUS_OS",
+      "order": 35.11,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Define preview-only concurrency limits and execution-disabled policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.2",
+      "title": "Project / Repo / File Lock Model",
+      "track": "NEXUS_OS",
+      "order": 35.12,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Model project, repo, path, agent, and capability lock previews without enforcement.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.3",
+      "title": "Duplicate Work Detection",
+      "track": "NEXUS_OS",
+      "order": 35.13,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Detect possible duplicate work with deterministic task signals only.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.4",
+      "title": "Queue Priority Model",
+      "track": "NEXUS_OS",
+      "order": 35.14,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Rank tasks through deterministic priority previews without queue reordering.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.5",
+      "title": "Cancellation Model",
+      "track": "NEXUS_OS",
+      "order": 35.15,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Preview safe cancellation requests without worker termination or task state mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.6",
+      "title": "Command Center Concurrency UX",
+      "track": "NEXUS_OS",
+      "order": 35.16,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Expose concurrency policy, locks, deduplication, priority, and cancellation previews in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 35.17,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Validate and close P61 concurrent execution and deduplication preview.",
+      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T12:58:31.989Z"
+  "updatedAt": "2026-05-16T19:03:01.092Z"
 }

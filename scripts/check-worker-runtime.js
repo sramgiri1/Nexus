@@ -225,7 +225,14 @@ if (statusById.has("P60.7")) {
 }
 if (statusById.get("P60")?.status === "complete") {
   check(statusById.get("P60")?.nextPhase === "P61", "osPhaseStatus", "P60 nextPhase must be P61 when complete");
-  check(statusById.get("P61")?.status === "in_progress", "osPhaseStatus", "P61 must be current after P60 completion");
+  check(
+    ["in_progress", "complete"].includes(statusById.get("P61")?.status),
+    "osPhaseStatus",
+    "P61 must be current or complete after P60 completion",
+  );
+  if (statusById.get("P61")?.status === "complete") {
+    check(statusById.get("P61")?.nextPhase === "P62", "osPhaseStatus", "P61 nextPhase must be P62 when complete");
+  }
 }
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 

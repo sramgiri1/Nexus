@@ -258,9 +258,9 @@ npm run check:concurrency-policy
 npm run check:concurrency-locks
 npm run check:work-deduplication
 npm run check:queue-priority
-npm run check:task-cancellation
 ```
 
+The task cancellation preview checker is also part of final P61 validation.
 P61 does not enable true parallel execution, lock enforcement, task merging,
 worker cancellation, provider/tool dispatch, DB writes, or project mutation.
 

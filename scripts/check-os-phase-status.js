@@ -153,6 +153,14 @@ const CURRENT_PHASE_IDS = new Set([
   "P60.6",
   "P60.7",
   "P61",
+  "P61.1",
+  "P61.2",
+  "P61.3",
+  "P61.4",
+  "P61.5",
+  "P61.6",
+  "P61.7",
+  "P62",
 ]);
 
 const sections = {
@@ -301,6 +309,23 @@ for (const phaseId of [
   "P46.6",
   "P46.7",
   "P47",
+  "P60",
+  "P60.1",
+  "P60.2",
+  "P60.3",
+  "P60.4",
+  "P60.5",
+  "P60.6",
+  "P60.7",
+  "P61",
+  "P61.1",
+  "P61.2",
+  "P61.3",
+  "P61.4",
+  "P61.5",
+  "P61.6",
+  "P61.7",
+  "P62",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
   check(statusById.has(phaseId), "p417Entries", `phase-status missing ${phaseId}`);
@@ -591,6 +616,16 @@ if (p60?.status === "complete") {
 const p61 = statusById.get("P61");
 check(["planned", "in_progress", "complete"].includes(p61?.status), "nextPhase", "P61 must be planned, in progress, or complete");
 check(p61?.title === "Concurrent Execution + Work Deduplication", "nextPhase", "P61 title mismatch");
+if (p61?.status === "complete") {
+  check(p61?.nextPhase === "P62", "nextPhase", "P61 nextPhase must be P62 when complete");
+  for (const phaseId of ["P61.1", "P61.2", "P61.3", "P61.4", "P61.5", "P61.6", "P61.7"]) {
+    check(statusById.get(phaseId)?.status === "complete", "previousPhase", `${phaseId} must be complete`);
+  }
+}
+
+const p62 = statusById.get("P62");
+check(["planned", "in_progress", "complete"].includes(p62?.status), "nextPhase", "P62 must be planned, in progress, or complete");
+check(p62?.title === "Conversational NEXUS Command Interface", "nextPhase", "P62 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

@@ -2160,13 +2160,23 @@
       "phaseId": "P61",
       "title": "Concurrent Execution + Work Deduplication",
       "track": "NEXUS_OS",
-      "status": "in_progress",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned concurrency and work-deduplication phase.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "finalized-in-final-commit",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Preview-only concurrency policy, locks, duplicate work detection, priority, cancellation, and Command Center UX are complete.",
+      "checksRun": [
+        "npm run check:concurrency-policy",
+        "npm run check:concurrency-locks",
+        "npm run check:work-deduplication",
+        "npm run check:queue-priority",
+        "npm run check:task-cancellation",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
       "nextPhase": "P62",
       "commandCenterVisible": true
     },
@@ -2175,10 +2185,10 @@
       "title": "Conversational NEXUS Command Interface",
       "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "",
-      "commit": "",
+      "branch": "planned",
+      "commit": "planned",
       "completedAt": "",
-      "summary": "Planned conversational operator interface phase.",
+      "summary": "Planned conversational governed operator interface phase.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P63",
@@ -4176,11 +4186,142 @@
       ],
       "nextPhase": "P61",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.1",
+      "title": "Concurrency Policy",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "f387e99",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Define preview-only concurrency limits and execution-disabled policy.",
+      "checksRun": [
+        "npm run check:concurrency-policy"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.2",
+      "title": "Project / Repo / File Lock Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "f135b85",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Model project, repo, path, agent, and capability lock previews without enforcement.",
+      "checksRun": [
+        "npm run check:concurrency-locks"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.3",
+      "title": "Duplicate Work Detection",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "f6d3124",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Detect possible duplicate work with deterministic task signals only.",
+      "checksRun": [
+        "npm run check:work-deduplication"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.4",
+      "title": "Queue Priority Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "30c5466",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Rank tasks through deterministic priority previews without queue reordering.",
+      "checksRun": [
+        "npm run check:queue-priority"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.5",
+      "title": "Cancellation Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "292c834",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Preview safe cancellation requests without worker termination or task state mutation.",
+      "checksRun": [
+        "npm run check:task-cancellation"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.6",
+      "title": "Command Center Concurrency UX",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "778b1b9",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Expose concurrency policy, locks, deduplication, priority, and cancellation previews in Command Center.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P61.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/concurrent-execution-deduplication",
+      "commit": "finalized-in-final-commit",
+      "completedAt": "2026-05-16T19:03:01.092Z",
+      "summary": "Validate and close P61 concurrent execution and deduplication preview.",
+      "checksRun": [
+        "npm run check:concurrency-policy",
+        "npm run check:concurrency-locks",
+        "npm run check:work-deduplication",
+        "npm run check:queue-priority",
+        "npm run check:task-cancellation"
+      ],
+      "knownLimitations": [
+        "Preview-only; no true parallel execution, lock enforcement, task merging, cancellation side effects, provider/tool dispatch, DB writes, or project mutation."
+      ],
+      "nextPhase": "P62",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T18:33:26.762Z",
-  "currentPhase": "P61",
-  "previousPhase": "P60",
-  "nextPhase": "P61"
+  "updatedAt": "2026-05-16T19:03:01.092Z",
+  "currentPhase": "P62",
+  "previousPhase": "P61",
+  "nextPhase": "P62"
 }
