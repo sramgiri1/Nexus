@@ -995,3 +995,20 @@ freshness and lineage, trusted context packet previews, Command Center Data &
 Context Center visibility, and final validation. P47 remains metadata-only and
 does not enable provider/tool/worker dispatch, DB writes, or runtime agent
 context injection.
+
+## P55 - Test Suite Manager: Project + OS
+
+P55 adds a registry and visibility layer for all NEXUS OS and active project
+test suites. It catalogs suites by scope (project, os, cross_cutting), layer,
+tool, risk, and evidence type. No test execution, no commands run, no provider
+calls, no DB writes in P55.
+
+P55.1 defines the canonical test suite registry schema and field set.
+P55.2 adds preview-only project-scoped test suite records for CareLoop.
+P55.3 adds 15 preview-only OS-scoped test suite records for NEXUS OS layers.
+P55.4 maps changed file paths to relevant test suites by pattern.
+P55.5 defines the test result record and evidence preview schema.
+P55.6 adds the /command-center/tests route with 6 tabs in the Command Center.
+P55.7 is comprehensive final validation of all P55 outputs.
+
+P56 — Quality Intelligence + Test Gap Detection is next.

@@ -189,7 +189,8 @@
     "check:project-test-suites": "node scripts/check-project-test-suites.js",
     "check:os-test-suites": "node scripts/check-os-test-suites.js",
     "check:test-selection-preview": "node scripts/check-test-selection-preview.js",
-    "check:test-evidence-model": "node scripts/check-test-evidence-model.js"
+    "check:test-evidence-model": "node scripts/check-test-evidence-model.js",
+    "check:test-suite-manager-final": "node scripts/check-test-suite-manager-final.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
