@@ -1908,7 +1908,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "1cde923",
       "completedAt": "2026-05-16T14:56:57.887Z",
       "summary": "Added preview-only break-glass governance model that is disabled by default.",
       "checksRun": [
@@ -1924,12 +1924,15 @@
       "phaseId": "P58.7",
       "title": "Command Center Policy Center UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Command Center Policy Center route and operator guidance.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:00:21.472Z",
+      "summary": "Added Command Center Policy Center UX with registry, versions, diff, simulation, exceptions, and break-glass previews.",
+      "checksRun": [
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run test:pages"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3863,8 +3866,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:56:57.887Z",
-  "currentPhase": "P58.6",
-  "previousPhase": "P58.5",
-  "nextPhase": "P58.7"
+  "updatedAt": "2026-05-16T15:00:21.472Z",
+  "currentPhase": "P58.7",
+  "previousPhase": "P58.6",
+  "nextPhase": "P58.8"
 }

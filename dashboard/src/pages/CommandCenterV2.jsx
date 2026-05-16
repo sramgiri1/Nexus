@@ -19,6 +19,7 @@ import {
   LIVE_API_TABS,
   MEMORY_CENTER_TABS,
   MISSION_CONTROL_TABS,
+  POLICY_CENTER_TABS,
   PROJECTS_TABS,
   QUALITY_INTELLIGENCE_TABS,
   SAFETY_CENTER_TABS,
@@ -3967,6 +3968,133 @@ function CostCenterPage({ vm, studio }) {
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Developer Details</div>
               <div className="ccv2-empty-state">Safe references: policy/cost-center-policy.json, reports/cost-ledger-preview.json, reports/budget-policy-preview.json, reports/cost-estimates-preview.json. No raw JSON dump is shown in primary UX.</div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Policy Center Page ─── */
+function PolicyCenterPage() {
+  const [activeTab, setActiveTab] = useState("overview");
+  const policyFamilies = [
+    { label: "Command Center UX", owner: "NEXUS", scope: "platform", risk: "medium", status: "Active" },
+    { label: "Project Registry", owner: "WARDEN", scope: "project", risk: "high", status: "Active" },
+    { label: "Scope Boundary", owner: "WARDEN", scope: "project", risk: "high", status: "Active" },
+    { label: "Agent Registry", owner: "WARDEN", scope: "platform", risk: "high", status: "Active" },
+    { label: "Tool / MCP Registry", owner: "WARDEN", scope: "platform", risk: "high", status: "Active" },
+    { label: "Cost Center", owner: "SENTINEL", scope: "platform", risk: "medium", status: "Active" },
+    { label: "Public / Private / Demo Safety", owner: "WARDEN", scope: "all", risk: "critical", status: "Active" },
+  ];
+  const simulationCards = [
+    { label: "Provider dispatch attempt", decision: "DENY", reason: "Provider dispatch is not enabled." },
+    { label: "Tool call attempt", decision: "DENY", reason: "Tool dispatch is not enabled." },
+    { label: "DB write attempt", decision: "DENY", reason: "DB writes are disabled by policy." },
+    { label: "Agent permission expansion", decision: "REQUIRES_REVIEW", reason: "WARDEN and AUDITOR review required." },
+  ];
+  const diffRows = [
+    { label: "Docs-only wording change", risk: "Low", implication: "No approval preview required." },
+    { label: "Approval threshold change", risk: "Medium", implication: "AUDITOR review preview." },
+    { label: "Tool permission expansion", risk: "High", implication: "WARDEN and AUDITOR review preview." },
+    { label: "Provider or DB enabling", risk: "Critical", implication: "Denied in preview." },
+  ];
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Policy Center</div>
+          <div className="ccv2-page-head__sub">Governance policy registry, previews, exceptions, and emergency controls · read-only</div>
+        </div>
+
+        <CommandTabs tabs={POLICY_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Policy Center sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Policy Center Status</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Policy registry</span><span className="ccv2-safety-row__value--ready">Registry ready</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Policy versions</span><span className="ccv2-safety-row__value--ready">Metadata only</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Simulation</span><span className="ccv2-safety-row__value--ready">Preview available</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Exception workflow</span><span className="ccv2-safety-row__value--ready">Preview only</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Break-glass</span><span className="ccv2-safety-row__value--disabled">Disabled by default</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Runtime enforcement changes</span><span className="ccv2-safety-row__value--disabled">Not enabled</span></div>
+              </div>
+              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Next action: review policy simulation results before P59 Secrets and Credential Boundary. Policy Center does not edit or apply policies in P58.</p>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="registry" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Registry</div>
+              <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+                {policyFamilies.map((policy) => (
+                  <div className="ccv2-safety-row" key={policy.label}>
+                    <span className="ccv2-safety-row__label">{policy.label}</span>
+                    <span>{policy.owner} · {policy.scope} · {policy.risk}</span>
+                    <small>{policy.status}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="versions" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Versions</div>
+              <div className="ccv2-empty-state">Latest version metadata and checksum summaries are available for policy families. Checksums summarize files without exposing policy payloads or secrets.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="diff-preview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Diff Preview</div>
+              <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+                {diffRows.map((row) => (
+                  <div className="ccv2-safety-row" key={row.label}>
+                    <span className="ccv2-safety-row__label">{row.label}</span>
+                    <span>{row.risk}</span>
+                    <small>{row.implication}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="simulation" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Simulation</div>
+              <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+                {simulationCards.map((card) => (
+                  <div className="ccv2-safety-row" key={card.label}>
+                    <span className="ccv2-safety-row__label">{card.label}</span>
+                    <span className={card.decision === "DENY" ? "ccv2-safety-row__value--disabled" : "ccv2-safety-row__value--ready"}>{card.decision}</span>
+                    <small>{card.reason}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="exceptions" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Exceptions</div>
+              <div className="ccv2-empty-state">Exception workflow is preview-only. Exceptions must be time-bound, evidence-bound, scoped, and reviewed by the required operator roles before any future runtime path can use them.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="break-glass" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Break-Glass</div>
+              <div className="ccv2-empty-state">Break-glass is disabled by default, emergency-only, and never automatic. It requires human approval, WARDEN and AUDITOR review, evidence, audit, expiration, and recovery planning. Audit and evidence cannot be disabled.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-empty-state">Safe references: policy-center modules, policy-center registry policy, break-glass policy, and P58 policy reports. Raw policy JSON is intentionally not shown in primary UX.</div>
             </div>
           </CommandTabPanel>
         </CommandTabs>
@@ -8691,6 +8819,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "services" && <ServiceHealthPage vm={vmWithApi} />}
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
+          {currentPage === "policies" && <PolicyCenterPage />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}

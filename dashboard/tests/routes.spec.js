@@ -1210,6 +1210,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/projects", ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]],
+      ["/command-center/policies", ["Overview", "Registry", "Versions", "Diff Preview", "Simulation", "Exceptions", "Break-Glass", "Developer Details"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
     ];
 
@@ -2242,6 +2243,53 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Policy Center route renders governance admin previews", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/policies");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Policy Center");
+    await expect(page.locator("body")).toContainText("Policy registry");
+    await expect(page.locator("body")).toContainText("Runtime enforcement changes");
+    await expect(page.locator("body")).toContainText("Not enabled");
+
+    for (const label of [
+      "Registry",
+      "Versions",
+      "Diff Preview",
+      "Simulation",
+      "Exceptions",
+      "Break-Glass",
+      "Developer Details",
+    ]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Simulation").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider dispatch attempt");
+    await expect(activeCommandTabPanel(page)).toContainText("DENY");
+
+    await commandTab(page, "Exceptions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("time-bound");
+    await expect(activeCommandTabPanel(page)).toContainText("evidence-bound");
+
+    await commandTab(page, "Break-Glass").click();
+    await expect(activeCommandTabPanel(page)).toContainText("disabled by default");
+    await expect(activeCommandTabPanel(page)).toContainText("human approval");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("providerCallsAllowed");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Policy Center");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Policy Center");
 
     expect(errors).toEqual([]);
   });

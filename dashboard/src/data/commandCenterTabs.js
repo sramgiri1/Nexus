@@ -567,6 +567,17 @@ export const COST_CENTER_TABS = [
   { id: "developer-details", label: "Developer Details", description: "Safe policy and report references only", badge: "Read-only" },
 ];
 
+export const POLICY_CENTER_TABS = [
+  { id: "overview", label: "Overview", description: "Policy registry status, high-risk areas, and next action", badge: "Preview" },
+  { id: "registry", label: "Registry", description: "Policy families by owner area, scope, risk, and status", badge: "Ready" },
+  { id: "versions", label: "Versions", description: "Version metadata and checksum summaries", badge: "Read-only" },
+  { id: "diff-preview", label: "Diff Preview", description: "Policy diff risk and approval implications", badge: "Preview" },
+  { id: "simulation", label: "Simulation", description: "Redacted decision scenarios without execution", badge: "Preview" },
+  { id: "exceptions", label: "Exceptions", description: "Time-bound exception workflow preview", badge: "Preview" },
+  { id: "break-glass", label: "Break-Glass", description: "Emergency policy model disabled by default", badge: "Disabled" },
+  { id: "developer-details", label: "Developer Details", description: "Safe module, report, and policy references", badge: "Read-only" },
+];
+
 export const BATCH_QUEUE_TABS = [
   { id: "overview", label: "Overview", description: "Batch status and not-enabled state", badge: "Planned" },
   { id: "jobs", label: "Jobs", description: "Future batch job list", badge: "Planned" },
@@ -617,6 +628,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "projects") return PROJECTS_TABS;
   if (pageId === "roadmap") return OS_ROADMAP_TABS;
   if (pageId === "cost") return COST_CENTER_TABS;
+  if (pageId === "policies") return POLICY_CENTER_TABS;
   if (pageId === "batch") return BATCH_QUEUE_TABS;
   if (pageId === "memory") return MEMORY_CENTER_TABS;
   if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;

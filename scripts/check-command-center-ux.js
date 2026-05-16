@@ -24,6 +24,7 @@ const sections = {
   triggerIntegrationUx: true,
   apiBatchUx: true,
   costCenterUx: true,
+  policyCenterUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -137,6 +138,7 @@ const requiredRoutePaths = [
   "/command-center/agent-rooms",
   "/command-center/quality",
   "/command-center/cost",
+  "/command-center/policies",
   "/command-center/batch",
 ];
 
@@ -153,6 +155,7 @@ const requiredTabbedRoutes = {
   "/command-center/projects": "portfolio",
   "/command-center/roadmap": "in-progress",
   "/command-center/cost": "overview",
+  "/command-center/policies": "overview",
   "/command-center/batch": "overview",
   "/command-center/memory": "overview",
   "/command-center/context": "overview",
@@ -193,6 +196,7 @@ const routeHeadings = {
   "/command-center/contracts": "Contracts",
   "/command-center/release": "Release Control",
   "/command-center/cost": "Cost Center",
+  "/command-center/policies": "Policy Center",
   "/command-center/batch": "Batch Queue",
 };
 
@@ -831,6 +835,39 @@ for (const expected of [
 check(routeSource.includes("/command-center/cost"), "costCenterUx", "Route matrix missing /command-center/cost");
 check(routeTestSource.includes("Cost Center route renders preview cost governance tabs"), "costCenterUx", "Route tests missing Cost Center coverage");
 
+// Policy Center UX
+for (const expected of [
+  "Policy Center",
+  "Policy registry",
+  "Runtime enforcement changes",
+  "Diff Preview",
+  "Simulation",
+  "Exceptions",
+  "Break-Glass",
+  "disabled by default",
+  "human approval",
+]) {
+  check(
+    commandCenterSource.includes(expected) || commandTabsSource.includes(expected),
+    "policyCenterUx",
+    `Policy Center UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const POLICY_CENTER_TABS",
+  'id: "registry"',
+  'id: "versions"',
+  'id: "diff-preview"',
+  'id: "simulation"',
+  'id: "exceptions"',
+  'id: "break-glass"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "policyCenterUx", `Policy Center tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/policies"), "policyCenterUx", "Route matrix missing /command-center/policies");
+check(routeTestSource.includes("Policy Center route renders governance admin previews"), "policyCenterUx", "Route tests missing Policy Center coverage");
+
 // Test Center UX
 for (const expected of [
   "Test Center",
@@ -1293,6 +1330,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/triggers",
     "/command-center/api-batch",
     "/command-center/quality",
+    "/command-center/policies",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1401,6 +1439,7 @@ console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
 console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
 console.log(`Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}`);
+console.log(`Policy Center UX: ${sections.policyCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
@@ -1458,6 +1497,7 @@ const report = `# Command Center UX Report
 - Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
 - API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
 - Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}
+- Policy Center UX: ${sections.policyCenterUx ? "PASS" : "FAIL"}
 - Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}

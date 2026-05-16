@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T12:55:08.291Z
-- Validation branch: arch/cost-center-budget-enforcement
-- Validation HEAD: 1d9a8af
+- Generated at: 2026-05-16T15:01:04.721Z
+- Validation branch: arch/policy-center-governance-admin
+- Validation HEAD: 1cde923
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -24,6 +24,7 @@
 - Trigger + Integrations UX: PASS
 - API / Batch UX: PASS
 - Cost Center UX: PASS
+- Policy Center UX: PASS
 - Test Center UX: PASS
 - Quality Intelligence UX: PASS
 - Command palette: PASS
