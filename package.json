@@ -207,7 +207,8 @@
     "check:cost-center-final-validation": "node scripts/check-cost-center-final-validation.js",
     "check:policy-registry": "node scripts/check-policy-registry.js",
     "check:policy-versioning": "node scripts/check-policy-versioning.js",
-    "check:policy-diff": "node scripts/check-policy-diff.js"
+    "check:policy-diff": "node scripts/check-policy-diff.js",
+    "check:policy-simulation": "node scripts/check-policy-simulation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

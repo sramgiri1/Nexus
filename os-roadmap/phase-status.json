@@ -1854,7 +1854,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "4018bb5",
       "completedAt": "2026-05-16T14:52:26.029Z",
       "summary": "Added policy diff preview and risk classification without policy mutation.",
       "checksRun": [
@@ -1870,12 +1870,14 @@
       "phaseId": "P58.4",
       "title": "Policy Simulation Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Read-only policy decision simulation scenarios.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:54:12.135Z",
+      "summary": "Added redacted read-only policy simulation scenarios and decision previews.",
+      "checksRun": [
+        "npm run check:policy-simulation"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3857,8 +3859,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:52:26.029Z",
-  "currentPhase": "P58.3",
-  "previousPhase": "P58.2",
-  "nextPhase": "P58.4"
+  "updatedAt": "2026-05-16T14:54:12.135Z",
+  "currentPhase": "P58.4",
+  "previousPhase": "P58.3",
+  "nextPhase": "P58.5"
 }

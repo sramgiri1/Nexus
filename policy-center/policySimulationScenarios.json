@@ -1,0 +1,86 @@
+[
+  {
+    "scenarioId": "core-project-source-mutation",
+    "label": "CORE backend source mutation in project scope",
+    "simulationType": "project_mutation",
+    "scope": "project",
+    "agentId": "CORE",
+    "requestedAction": "scoped backend source mutation",
+    "targetPaths": ["project-source-redacted"],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "high"
+  },
+  {
+    "scenarioId": "warden-privacy-review",
+    "label": "WARDEN privacy review",
+    "simulationType": "project_mutation",
+    "scope": "project",
+    "agentId": "WARDEN",
+    "requestedAction": "privacy review",
+    "targetPaths": [],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "low"
+  },
+  {
+    "scenarioId": "tool-call-before-dispatch",
+    "label": "Tool call attempt before tool dispatch enabled",
+    "simulationType": "tool_call",
+    "scope": "platform",
+    "agentId": "NEXUS",
+    "requestedAction": "tool dispatch",
+    "targetPaths": [],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "high"
+  },
+  {
+    "scenarioId": "provider-call-before-dispatch",
+    "label": "Provider call attempt before provider dispatch enabled",
+    "simulationType": "provider_call",
+    "scope": "platform",
+    "agentId": "NEXUS",
+    "requestedAction": "provider dispatch",
+    "targetPaths": [],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "critical"
+  },
+  {
+    "scenarioId": "db-write-disabled",
+    "label": "DB write attempt while DB writes disabled",
+    "simulationType": "db_write",
+    "scope": "platform",
+    "agentId": "NEXUS",
+    "requestedAction": "db write",
+    "targetPaths": [],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "critical"
+  },
+  {
+    "scenarioId": "demoapp-local-private-leakage",
+    "label": "DemoApp leakage attempt in local-private",
+    "simulationType": "demo_public_boundary",
+    "scope": "project",
+    "agentId": "WARDEN",
+    "requestedAction": "show demo project in private mode",
+    "targetPaths": [],
+    "dataClassification": "public",
+    "mode": "local-private",
+    "riskLevel": "critical"
+  },
+  {
+    "scenarioId": "agent-permission-expansion",
+    "label": "Agent permission expansion",
+    "simulationType": "agent_definition_update",
+    "scope": "platform",
+    "agentId": "WARDEN",
+    "requestedAction": "expand agent permission",
+    "targetPaths": [],
+    "dataClassification": "internal",
+    "mode": "local-private",
+    "riskLevel": "high"
+  }
+]
