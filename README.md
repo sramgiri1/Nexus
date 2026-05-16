@@ -1307,7 +1307,10 @@ and Command Center visibility layer. Provider calls, external network, API key
 reads, DB writes, worker runtime, batch uploads, and project mutation remain
 disabled.
 
-Next phase after P54: P55 - Test Suite Manager: Project + OS.
+P55 adds the Test Suite Manager — a registry and visibility layer for all NEXUS OS
+and active project test suites. It surfaces suite records, changed-file mappings,
+evidence-ready metadata, and a Test Center route in the Command Center. No test
+execution, no commands run, no provider calls, no DB writes in P55.
 
 ---
 

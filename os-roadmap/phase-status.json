@@ -3319,13 +3319,31 @@
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
-      "nextPhase": "P55",
+      "nextPhase": "P55.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.1",
+      "title": "Test Registry Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/test-suite-manager-project-os",
+      "commit": "pending",
+      "completedAt": "",
+      "summary": "Define the canonical test suite registry schema, field set, constants, and validation functions.",
+      "checksRun": [
+        "npm run check:test-suite-manager"
+      ],
+      "knownLimitations": [
+        "Registry/visibility only; no test execution, no commands run, no provider calls, no DB writes."
+      ],
+      "nextPhase": "P55.2",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-16T00:29:22.137Z",
-  "currentPhase": "P54.9",
-  "previousPhase": "P54.8",
-  "nextPhase": "P55"
+  "currentPhase": "P55.1",
+  "previousPhase": "P54.9",
+  "nextPhase": "P55.2"
 }

@@ -922,3 +922,39 @@ updated as new module families or entry points are added.
   dispatch is deferred to a later governed phase.
 - Status:
   active
+
+
+## Test Suite Manager
+
+- Purpose:
+  Registry and visibility layer for all NEXUS OS and active project test suites.
+  Provides schema, constants, records, evidence metadata, and Command Center UX.
+  No test execution, no commands run, no provider calls, no DB writes.
+- Primary files:
+  `test-suite/testRegistrySchema.js`, `test-suite/testTypes.js`,
+  `test-suite/projectTestSuites.js`, `test-suite/osTestSuites.js`,
+  `test-suite/testRegistry.js`, `test-suite/changedFileTestMapper.js`,
+  `test-suite/testSelectionPreview.js`, `test-suite/testResultSchema.js`,
+  `test-suite/testEvidenceModel.js`
+- Public entry points:
+  `test-suite/index.js`, `/command-center/tests`
+- Inputs/outputs:
+  Scope/layer/tool/risk metadata in; registry records, selection previews,
+  evidence summaries, and Command Center state out.
+- Side effects:
+  Checkers write reports under `reports/`.
+- Safety boundary:
+  Test execution, command execution, provider calls, external network,
+  DB writes, and project mutation are all disabled in P55.
+- Tests/checkers:
+  `scripts/check-test-suite-manager.js`,
+  `scripts/check-project-test-suites.js`,
+  `scripts/check-os-test-suites.js`,
+  `scripts/check-test-selection-preview.js`,
+  `scripts/check-test-evidence-model.js`,
+  `scripts/check-test-suite-manager-final.js`
+- Known limitations:
+  P55 is registry, preview, and evidence metadata only. Real test execution
+  is deferred to a future governed phase.
+- Status:
+  active

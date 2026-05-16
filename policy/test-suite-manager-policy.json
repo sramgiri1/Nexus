@@ -1,0 +1,11 @@
+{
+  "phase": "P55",
+  "testExecutionAllowed": false,
+  "registryOnly": true,
+  "commandExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "commandCenterUxRequired": true
+}

@@ -1688,3 +1688,132 @@ state and should be verified again during future docs audits.
   provider polling, batch upload, and project mutation remain disabled.
 - Known limitations:
   Real provider dispatch remains future governed work.
+
+## P55 — Test Suite Manager: Project + OS
+
+### P55.1 — Test Registry Schema
+
+- Primary capability:
+  Define the canonical test suite registry schema, field set, constants,
+  and normalization/validation functions.
+- Main files/folders touched:
+  `test-suite/testRegistrySchema.js`, `test-suite/testTypes.js`,
+  `test-suite/index.js`, `policy/test-suite-manager-policy.json`
+- Main checker(s):
+  `scripts/check-test-suite-manager.js`
+- Main report(s):
+  `reports/test-suite-manager-report.md`
+- Command Center impact:
+  Establishes schema required by Test Center UX.
+- Safety impact:
+  testExecutionAllowed: false, registryOnly: true confirmed in policy.
+- Known limitations:
+  Schema only; no suite records yet.
+
+### P55.2 — Project Test Suites
+
+- Primary capability:
+  Define preview-only project-scoped test suite records for CareLoop.
+- Main files/folders touched:
+  `test-suite/projectTestSuites.js`, `test-suite/testRegistry.js`,
+  `dashboard/src/data/commandCenterViewModel.js`
+- Main checker(s):
+  `scripts/check-project-test-suites.js`
+- Main report(s):
+  `reports/project-test-suites-report.md`
+- Command Center impact:
+  Adds projectTestSuites field to view model.
+- Safety impact:
+  All project suites have executionEnabled: false and forbiddenInDemo: true.
+- Known limitations:
+  commandPreview strings are display-only; no execution.
+
+### P55.3 — OS Test Suites
+
+- Primary capability:
+  Define preview-only OS-scoped test suite records for NEXUS OS layers.
+- Main files/folders touched:
+  `test-suite/osTestSuites.js`, `test-suite/testRegistry.js`
+- Main checker(s):
+  `scripts/check-os-test-suites.js`
+- Main report(s):
+  `reports/os-test-suites-report.md`
+- Command Center impact:
+  OS suites included in combined registry.
+- Safety impact:
+  All OS suites have executionEnabled: false.
+- Known limitations:
+  commandPreview strings are display-only; no execution.
+
+### P55.4 — Changed-File to Test Mapping
+
+- Primary capability:
+  Map changed file paths to relevant test suites based on glob patterns.
+- Main files/folders touched:
+  `test-suite/changedFileTestMapper.js`, `test-suite/testSelectionPreview.js`
+- Main checker(s):
+  `scripts/check-test-selection-preview.js`
+- Main report(s):
+  `reports/test-selection-preview-report.md`
+- Command Center impact:
+  Enables Selection Preview tab in Test Center.
+- Safety impact:
+  No execution occurs; mapping is metadata-only.
+- Known limitations:
+  Preview-only; no real git diff integration.
+
+### P55.5 — Test Result Evidence Model
+
+- Primary capability:
+  Define the test result record and evidence preview schema for audit-safe storage.
+- Main files/folders touched:
+  `test-suite/testResultSchema.js`, `test-suite/testEvidenceModel.js`
+- Main checker(s):
+  `scripts/check-test-evidence-model.js`
+- Main report(s):
+  `reports/test-evidence-model-report.md`
+- Command Center impact:
+  Evidence Model tab in Test Center shows schema summary.
+- Safety impact:
+  All records have redacted: true; no raw payloads stored.
+- Known limitations:
+  Schema and preview only; no real result ingestion yet.
+
+### P55.6 — Command Center Test Center UX
+
+- Primary capability:
+  Add /command-center/tests route with 6 tabs: Overview, Project Tests,
+  OS Tests, Selection Preview, Evidence Model, and Gaps.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Adds Test Center route with registry and evidence visibility.
+- Safety impact:
+  Run buttons are disabled; execution not enabled.
+- Known limitations:
+  Test Center is inspection only.
+
+### P55.7 — Test Suite Manager Final Validation
+
+- Primary capability:
+  Comprehensive final validation of all P55 subphases.
+- Main files/folders touched:
+  `scripts/check-test-suite-manager-final.js`,
+  `reports/test-suite-manager-final-report.md`
+- Main checker(s):
+  `scripts/check-test-suite-manager-final.js`
+- Main report(s):
+  `reports/test-suite-manager-final-report.md`
+- Command Center impact:
+  Confirms Test Center remains preview-only.
+- Safety impact:
+  Confirms testExecutionAllowed: false across all P55 outputs.
+- Known limitations:
+  Real test execution deferred to P56.
