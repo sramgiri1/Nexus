@@ -593,6 +593,15 @@ export const TEST_CENTER_TABS = [
   { id: "gaps", label: "Gaps", description: "Test coverage gaps and next actions", badge: "Actionable" },
 ];
 
+export const QUALITY_INTELLIGENCE_TABS = [
+  { id: "overview", label: "Overview", description: "Quality Intelligence summary and safety posture", badge: "Preview" },
+  { id: "prd-mapping", label: "PRD Mapping", description: "Requirement-to-test coverage preview", badge: "Preview" },
+  { id: "coverage-gaps", label: "Coverage Gaps", description: "Coverage gaps classified without test execution", badge: "Preview" },
+  { id: "recommendations", label: "Recommendations", description: "Risk-based test suite recommendations", badge: "Preview" },
+  { id: "flaky-signals", label: "Flaky Signals", description: "Flaky-test signals from metadata only", badge: "Read-only" },
+  { id: "test-proposals", label: "Test Proposals", description: "Governed proposal workflow for missing tests", badge: "Proposal" },
+];
+
 export function getTabsForPage(pageId) {
   if (pageId === "mission") return MISSION_CONTROL_TABS;
   if (pageId === "workspace") return WORKSPACE_TABS;
@@ -610,6 +619,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "memory") return MEMORY_CENTER_TABS;
   if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;
   if (pageId === "tests") return TEST_CENTER_TABS;
+  if (pageId === "quality") return QUALITY_INTELLIGENCE_TABS;
   return (PAGE_TAB_PLANS[pageId] || []).map((label) => ({
     id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     label,

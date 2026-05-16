@@ -122,7 +122,7 @@ function commandTab(page, label) {
 }
 
 function activeCommandTabPanel(page) {
-  return page.locator(".ccv2-command-tabs__panel:not([hidden])");
+  return page.locator(".ccv2-command-tabs__panel:visible");
 }
 
 test("home route renders Command Center V2 shell", async ({ page }) => {
@@ -2165,6 +2165,39 @@ test.describe("Command Center route-wide UX", () => {
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("DEMOAPP ACTIVE");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Quality Intelligence route renders preview-only test gap metadata", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/quality");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Quality Intelligence");
+    await expect(page.locator("body")).toContainText("Preview-only quality intelligence");
+    await expect(page.locator("body")).toContainText("Test execution disabled");
+    await expect(page.locator("body")).toContainText("No project mutation");
+    await expect(page.locator("body")).toContainText("Requirements mapped");
+    await expect(page.locator("body")).toContainText("Coverage gaps");
+
+    for (const label of ["PRD Mapping", "Coverage Gaps", "Recommendations", "Flaky Signals", "Test Proposals"]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Coverage Gaps").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Coverage Gap Detector");
+    await expect(activeCommandTabPanel(page)).toContainText("Execution disabled");
+
+    await commandTab(page, "Test Proposals").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Approval required");
+    await expect(activeCommandTabPanel(page)).toContainText("Mutation disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("Requires P37");
+    expect(body).not.toContain("Requires P38");
+    expect(body).not.toContain("raw JSON");
 
     expect(errors).toEqual([]);
   });

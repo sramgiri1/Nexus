@@ -51,6 +51,7 @@ const sections = {
   noForbiddenChanges: true,
   formattingReadability: true,
   testCenterUx: true,
+  qualityIntelligenceUx: true,
 };
 
 const failures = [];
@@ -133,6 +134,7 @@ const requiredRoutePaths = [
   "/command-center/contracts",
   "/command-center/release",
   "/command-center/agent-rooms",
+  "/command-center/quality",
   "/command-center/cost",
   "/command-center/batch",
 ];
@@ -159,6 +161,7 @@ const requiredTabbedRoutes = {
   "/command-center/tools": "overview",
   "/command-center/triggers": "overview",
   "/command-center/api-batch": "overview",
+  "/command-center/quality": "overview",
 };
 
 const routeHeadings = {
@@ -183,6 +186,7 @@ const routeHeadings = {
   "/command-center/tools": "Tool Gateway",
   "/command-center/triggers": "Trigger + Integrations",
   "/command-center/api-batch": "API / Batch Adapter",
+  "/command-center/quality": "Quality Intelligence",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -825,6 +829,44 @@ check(routeSource.includes("/command-center/tests"), "testCenterUx", "Route matr
 check(routeTestSource.includes("Test Center renders with overview and policy posture"), "testCenterUx", "Route tests missing Test Center coverage");
 check(commandCenterSource.includes("TestCenterPage"), "testCenterUx", "CommandCenterV2.jsx missing TestCenterPage component");
 
+// Quality Intelligence UX
+for (const expected of [
+  "Quality Intelligence",
+  "Preview-only quality intelligence",
+  "Test execution disabled",
+  "No project mutation",
+  "Coverage Gap Detector",
+  "Flaky Signals",
+  "Test Proposals",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "qualityIntelligenceUx",
+    `Quality Intelligence UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const QUALITY_INTELLIGENCE_TABS",
+  'id: "prd-mapping"',
+  'id: "coverage-gaps"',
+  'id: "recommendations"',
+  'id: "flaky-signals"',
+  'id: "test-proposals"',
+]) {
+  check(
+    commandTabsSource.includes(expected),
+    "qualityIntelligenceUx",
+    `Quality Intelligence tabs missing expected config: ${expected}`,
+  );
+}
+check(routeSource.includes("/command-center/quality"), "qualityIntelligenceUx", "Route matrix missing /command-center/quality");
+check(
+  routeTestSource.includes("Quality Intelligence route renders preview-only test gap metadata"),
+  "qualityIntelligenceUx",
+  "Route tests missing Quality Intelligence coverage",
+);
+check(commandCenterSource.includes("QualityIntelligencePage"), "qualityIntelligenceUx", "CommandCenterV2.jsx missing QualityIntelligencePage component");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1218,6 +1260,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/tools",
     "/command-center/triggers",
     "/command-center/api-batch",
+    "/command-center/quality",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1326,6 +1369,7 @@ console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
 console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
+console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1381,6 +1425,7 @@ const report = `# Command Center UX Report
 - Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
 - API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
 - Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
+- Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
@@ -1408,6 +1453,7 @@ const report = `# Command Center UX Report
 - No forbidden changes: ${sections.noForbiddenChanges ? "PASS" : "FAIL"}
 - Formatting/readability: ${sections.formattingReadability ? "PASS" : "FAIL"}
 - Test Center UX (inline): ${sections.testCenterUx ? "PASS" : "FAIL"}
+- Quality Intelligence UX (inline): ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 
 ## Failures
 

@@ -58,6 +58,19 @@ import { createOpenAIRequestPreview, summarizeOpenAIRequestPreview } from "../..
 import { addBatchRequest, createBatchJob, estimateBatchJobSize, summarizeBatchJob } from "../../../api-batch/batchJobBuilder.js";
 import { estimateBatchCost, estimateRequestCost } from "../../../api-batch/costEstimator.js";
 import { reconcileBatchResultsPreview, summarizeReconciliation } from "../../../api-batch/resultReconciler.js";
+import {
+  buildGapRecommendations,
+  buildFlakyTestRecords,
+  buildPrdTestMap,
+  detectCoverageGaps,
+  listTestProposalPreview,
+  recommendFlakyTestActions,
+  recommendTestsForChange,
+  summarizeCoverageGaps,
+  summarizeFlakyTests,
+  summarizePrdTestCoverage,
+  summarizeTestRecommendations,
+} from "../../../quality-intelligence/index.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -194,6 +207,23 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     activeProject: "Private Project",
     missionId: "private-project-governed-build-mission",
     prdGaps: ["Physical device push (open)"],
+  });
+  const prdTestMap = buildPrdTestMap({ projectId: "private-project" });
+  const prdCoverageSummary = summarizePrdTestCoverage(prdTestMap);
+  const coverageGaps = detectCoverageGaps(prdTestMap, []);
+  const coverageGapSummary = summarizeCoverageGaps(coverageGaps);
+  const gapRecommendations = buildGapRecommendations(coverageGaps);
+  const flakyTestRecords = buildFlakyTestRecords([]);
+  const flakyTestSummary = summarizeFlakyTests(flakyTestRecords);
+  const flakyTestActions = recommendFlakyTestActions(flakyTestRecords);
+  const testRecommendations = recommendTestsForChange({
+    changedFiles: ["dashboard/src/pages/CommandCenterV2.jsx", "quality-intelligence/prdTestMapper.js"],
+    coverageGaps,
+  });
+  const testRecommendationSummary = summarizeTestRecommendations(testRecommendations);
+  const testProposals = listTestProposalPreview({
+    projectId: "private-project",
+    gaps: coverageGaps.length ? coverageGaps.slice(0, 3) : undefined,
   });
   const manifestServices = Array.isArray(serviceManifest?.services)
     ? serviceManifest.services
@@ -1382,6 +1412,36 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         "Provider, tool, worker, DB write, and project mutation remain disabled.",
       ],
     },
+    qualityIntelligence: {
+      phase: "P56.6",
+      mode: "preview-only",
+      source: "P56 quality-intelligence metadata modules",
+      executionEnabled: false,
+      testGenerationEnabled: false,
+      projectMutationAllowed: false,
+      providerCallsAllowed: false,
+      toolExecutionAllowed: false,
+      workerRuntimeAllowed: false,
+      dbWritesAllowed: false,
+      externalNetworkCallsAllowed: false,
+      privateSourceContentScanned: false,
+      prdTestMap,
+      prdCoverageSummary,
+      coverageGaps,
+      coverageGapSummary,
+      gapRecommendations,
+      flakyTestRecords,
+      flakyTestSummary,
+      flakyTestActions,
+      testRecommendations,
+      testRecommendationSummary,
+      testProposals,
+      safetyNotes: [
+        "Preview-only: NEXUS does not run tests from Quality Intelligence.",
+        "Proposal-only: missing test coverage creates governed proposals, not files.",
+        "No private project source content is scanned by this view model.",
+      ],
+    },
     commandPalette: {
       title: "NEXUS Command Palette",
       keyboardHint: "Cmd/Ctrl+K",
@@ -1458,6 +1518,23 @@ export function buildCommandCenterViewModel(studio) {
   const pvGovernance = privateValidation.governance || {};
   const bridgeReadiness = actionBridge.bridgeReadiness || {};
   const lastDemoAction = actionBridge.lastDemoAction || {};
+  const prdTestMap = buildPrdTestMap({ projectId: "private-project" });
+  const prdCoverageSummary = summarizePrdTestCoverage(prdTestMap);
+  const coverageGaps = detectCoverageGaps(prdTestMap, []);
+  const coverageGapSummary = summarizeCoverageGaps(coverageGaps);
+  const gapRecommendations = buildGapRecommendations(coverageGaps);
+  const flakyTestRecords = buildFlakyTestRecords([]);
+  const flakyTestSummary = summarizeFlakyTests(flakyTestRecords);
+  const flakyTestActions = recommendFlakyTestActions(flakyTestRecords);
+  const testRecommendations = recommendTestsForChange({
+    changedFiles: ["dashboard/src/pages/CommandCenterV2.jsx", "quality-intelligence/prdTestMapper.js"],
+    coverageGaps,
+  });
+  const testRecommendationSummary = summarizeTestRecommendations(testRecommendations);
+  const testProposals = listTestProposalPreview({
+    projectId: "private-project",
+    gaps: coverageGaps.length ? coverageGaps.slice(0, 3) : undefined,
+  });
 
   return {
     shell: {
@@ -1594,6 +1671,36 @@ export function buildCommandCenterViewModel(studio) {
           nextAction: "Configure Xcode runner environment and update iOS suite to executionEnabled: true when ready.",
           owner: "SWIFT",
         },
+      ],
+    },
+    qualityIntelligence: {
+      phase: "P56.6",
+      mode: "preview-only",
+      source: "P56 quality-intelligence metadata modules",
+      executionEnabled: false,
+      testGenerationEnabled: false,
+      projectMutationAllowed: false,
+      providerCallsAllowed: false,
+      toolExecutionAllowed: false,
+      workerRuntimeAllowed: false,
+      dbWritesAllowed: false,
+      externalNetworkCallsAllowed: false,
+      privateSourceContentScanned: false,
+      prdTestMap,
+      prdCoverageSummary,
+      coverageGaps,
+      coverageGapSummary,
+      gapRecommendations,
+      flakyTestRecords,
+      flakyTestSummary,
+      flakyTestActions,
+      testRecommendations,
+      testRecommendationSummary,
+      testProposals,
+      safetyNotes: [
+        "Preview-only: NEXUS does not run tests from Quality Intelligence.",
+        "Proposal-only: missing test coverage creates governed proposals, not files.",
+        "No private project source content is scanned by this view model.",
       ],
     },
   };

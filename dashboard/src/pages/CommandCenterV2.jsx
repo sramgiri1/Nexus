@@ -20,6 +20,7 @@ import {
   MEMORY_CENTER_TABS,
   MISSION_CONTROL_TABS,
   PROJECTS_TABS,
+  QUALITY_INTELLIGENCE_TABS,
   SAFETY_CENTER_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
@@ -8090,7 +8091,9 @@ function TestCenterPage({ vm }) {
               ))}
             </div>
             {projectSuites.length === 0 && (
-              <div className="ccv2-empty-state">No project test suites loaded. Run check:project-test-suites to validate.</div>
+              <div className="ccv2-empty-state">
+                No project test suites loaded. Execution disabled. Run check:project-test-suites to validate.
+              </div>
             )}
           </CommandTabPanel>
 
@@ -8179,6 +8182,199 @@ function TestCenterPage({ vm }) {
             </div>
             {gaps.length === 0 && (
               <div className="ccv2-empty-state">No gaps identified.</div>
+            )}
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+function QualityIntelligencePage({ vm }) {
+  const quality = vm.qualityIntelligence || {};
+  const prdRecords = quality.prdTestMap?.records || [];
+  const coverageGaps = quality.coverageGaps || [];
+  const recommendations = quality.testRecommendations || [];
+  const flakyRecords = quality.flakyTestRecords || [];
+  const proposals = quality.testProposals || [];
+  const [activeTab, setActiveTab] = useState("overview");
+
+  const disabledReason = "Preview-only. Run and generation actions are disabled by policy.";
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Quality Intelligence</div>
+            <div className="ccv2-page-head__sub">
+              Preview-only quality intelligence for PRD mapping, coverage gaps, recommendations, flaky signals, and governed test proposals.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Test execution disabled</span>
+            <span className="ccv2-pill ccv2-pill--disabled">No project mutation</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={QUALITY_INTELLIGENCE_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Quality Intelligence sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Requirements mapped", value: quality.prdCoverageSummary?.totalRequirements ?? 0 },
+                { label: "Coverage gaps", value: quality.coverageGapSummary?.totalGaps ?? 0 },
+                { label: "Recommendations", value: quality.testRecommendationSummary?.recommendationCount ?? 0 },
+                { label: "Test proposals", value: proposals.length },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">P56 metadata preview</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Safety Posture</div>
+              <ul className="ccv2-list">
+                <li>Test execution disabled: Quality Intelligence does not run suites.</li>
+                <li>Test generation disabled: proposals are metadata and require future approval.</li>
+                <li>Provider, tool, worker, DB write, and external network execution remain disabled.</li>
+                <li>Private project source content is not scanned by this preview surface.</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="prd-mapping" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {prdRecords.map((record) => (
+                <article key={record.requirementId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{record.requirementLabel}</div>
+                  <div className="ccv2-muted">Scope: {record.scope} · Source: {record.source}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">{record.coverageStatus}</span>
+                    <span className="ccv2-pill">Confidence: {record.confidence}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">
+                      Linked suites: {record.linkedSuites.length}
+                    </span>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {prdRecords.length === 0 && (
+              <div className="ccv2-empty-state">
+                PRD Mapping metadata is unavailable. Run npm run check:prd-test-mapping to refresh the preview report.
+              </div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="coverage-gaps" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Coverage Gap Detector</div>
+              <div className="ccv2-muted">
+                Coverage gaps are inferred from metadata mappings only. Execution disabled: no tests are run and no files are created.
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {coverageGaps.map((gap) => (
+                <article key={gap.gapId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{gap.domain}</div>
+                  <div className="ccv2-muted">{gap.reason}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 6 }}>
+                    <strong>Recommended action:</strong> {gap.recommendedAction}
+                  </div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">Severity: {gap.severity}</span>
+                    <span className="ccv2-pill">Owner: {gap.ownerAgent}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {coverageGaps.length === 0 && <div className="ccv2-empty-state">No coverage gaps detected in metadata.</div>}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="recommendations" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {recommendations.map((recommendation) => (
+                <article key={recommendation.recommendationId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{recommendation.suiteId}</div>
+                  <div className="ccv2-muted">{recommendation.reason}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">Risk score: {recommendation.riskScore}</span>
+                    <span className="ccv2-pill">Owner: {recommendation.ownerAgent}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Run disabled</span>
+                  </div>
+                  <div className="ccv2-empty-state" style={{ marginTop: 8 }}>
+                    {recommendation.disabledReason || disabledReason}
+                  </div>
+                </article>
+              ))}
+            </div>
+            {recommendations.length === 0 && (
+              <div className="ccv2-empty-state">
+                No changed-file recommendation preview is available. Quality Intelligence remains metadata-only.
+              </div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="flaky-signals" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {flakyRecords.map((record) => (
+                <article key={record.testId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{record.testId}</div>
+                  <div className="ccv2-muted">Suite: {record.suiteId} · Status: {record.status}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 6 }}>{record.recommendedAction}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">Confidence: {record.confidence}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">No quarantine action</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {flakyRecords.length === 0 && (
+              <div className="ccv2-empty-state">
+                No flaky signals are available yet. Controlled test evidence is required before classification.
+              </div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="test-proposals" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Governed Test Proposals</div>
+              <div className="ccv2-muted">
+                Test proposals are approval-ready metadata only. They do not create or modify test files.
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {proposals.map((proposal) => (
+                <article key={proposal.proposalId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{proposal.title}</div>
+                  <div className="ccv2-muted">
+                    Linked requirement: {proposal.linkedRequirement} · Owner: {proposal.ownerAgent}
+                  </div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">Risk: {proposal.riskLevel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Approval required</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Mutation disabled</span>
+                  </div>
+                  <div style={{ marginTop: 8 }}>
+                    <button className="ccv2-btn ccv2-btn--disabled" disabled title={disabledReason}>
+                      Create test file (disabled)
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {proposals.length === 0 && (
+              <div className="ccv2-empty-state">
+                No governed test proposals are available yet. Coverage gaps are required before proposal preview.
+              </div>
             )}
           </CommandTabPanel>
         </CommandTabs>
@@ -8416,6 +8612,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "triggers" && <TriggerIntegrationPage vm={vmWithApi} />}
           {currentPage === "apiBatch" && <ApiBatchAdapterPage vm={vmWithApi} />}
           {currentPage === "tests" && <TestCenterPage vm={vmWithApi} />}
+          {currentPage === "quality" && <QualityIntelligencePage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

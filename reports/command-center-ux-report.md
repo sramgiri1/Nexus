@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:29:19.528Z
+- Generated at: 2026-05-16T03:49:02.699Z
 - Validation branch: arch/quality-intelligence-test-gap-detection
-- Validation HEAD: 415c6c0
+- Validation HEAD: b8c7160
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -24,6 +24,7 @@
 - Trigger + Integrations UX: PASS
 - API / Batch UX: PASS
 - Test Center UX: PASS
+- Quality Intelligence UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS
@@ -51,6 +52,7 @@
 - No forbidden changes: PASS
 - Formatting/readability: PASS
 - Test Center UX (inline): PASS
+- Quality Intelligence UX (inline): PASS
 
 ## Failures
 
