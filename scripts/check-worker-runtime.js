@@ -13,16 +13,20 @@ import {
   createHeartbeat,
   calculateNextRetry,
   classifyTimeout,
+  classifyDeadLetterReason,
   createRetryPolicy,
+  moveToDeadLetterPreview,
   getWorkerRuntimePolicy,
   detectStaleHeartbeats,
   listWorkerQueueItems,
   releaseLeasePreview,
   summarizeHeartbeats,
   summarizeLeases,
+  summarizeDeadLetterQueue,
   summarizeRetryTimeoutState,
   summarizeWorkerQueue,
   validateHeartbeat,
+  validateDeadLetterItem,
   validateRetryPolicy,
   validateWorkerLease,
   validateWorkerQueueItem,
@@ -38,6 +42,7 @@ const checks = [
   { key: "leases", name: "Lease model", status: "PASS", details: "" },
   { key: "heartbeats", name: "Heartbeats", status: "PASS", details: "" },
   { key: "retryTimeout", name: "Retry/timeout", status: "PASS", details: "" },
+  { key: "deadLetterQueue", name: "Dead-letter queue", status: "PASS", details: "" },
   { key: "policy", name: "Policy", status: "PASS", details: "" },
   { key: "auditOnly", name: "Execution disabled", status: "PASS", details: "" },
   { key: "reports", name: "Reports", status: "PASS", details: "" },
@@ -80,6 +85,7 @@ for (const filePath of [
   "worker-runtime/leaseModel.js",
   "worker-runtime/heartbeatModel.js",
   "worker-runtime/retryTimeoutModel.js",
+  "worker-runtime/deadLetterQueue.js",
   "worker-runtime/runtimeSummary.js",
   "worker-runtime/index.js",
   "policy/worker-runtime-policy.json",
@@ -172,6 +178,17 @@ if (typeof createRetryPolicy === "function") {
   const retrySummary = summarizeRetryTimeoutState([item]);
   check(retrySummary.automaticRetryExecutionEnabled === false, "auditOnly", "Retry summary must keep automatic retry disabled");
 }
+
+if (typeof moveToDeadLetterPreview === "function") {
+  const reason = classifyDeadLetterReason({ reasonCode: "timeout" });
+  check(reason.reasonCode === "timeout", "deadLetterQueue", "Dead-letter reason classification should preserve timeout");
+  const deadLetterItem = moveToDeadLetterPreview(item, { reasonCode: "timeout" });
+  const deadLetterValidation = validateDeadLetterItem(deadLetterItem);
+  check(deadLetterValidation.valid, "deadLetterQueue", `Valid DLQ item failed: ${deadLetterValidation.errors.join(", ")}`);
+  const dlqSummary = summarizeDeadLetterQueue([deadLetterItem]);
+  check(dlqSummary.requeueEnabled === false, "auditOnly", "DLQ summary must keep requeue disabled");
+  check(dlqSummary.recoverable === 1, "deadLetterQueue", "Recoverable DLQ summary should count timeout");
+}
 check(!hasPrivateProjectDiff(), "noForbiddenChanges", "Private project files must not change");
 
 const phaseStatus = JSON.parse((await import("node:fs")).readFileSync(join(ROOT, "os-roadmap/phase-status.json"), "utf8"));
@@ -185,6 +202,9 @@ if (statusById.has("P60.3")) {
 }
 if (statusById.has("P60.4")) {
   check(statusById.get("P60.4")?.status === "complete", "osPhaseStatus", "P60.4 must be complete once present");
+}
+if (statusById.has("P60.5")) {
+  check(statusById.get("P60.5")?.status === "complete", "osPhaseStatus", "P60.5 must be complete once present");
 }
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 

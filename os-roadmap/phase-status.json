@@ -2153,7 +2153,7 @@
       "knownLimitations": [
         "Runtime execution remains disabled until later phases."
       ],
-      "nextPhase": "P60.5",
+      "nextPhase": "P60.6",
       "commandCenterVisible": true
     },
     {
@@ -4114,12 +4114,14 @@
       "phaseId": "P60.5",
       "title": "Dead-Letter Queue",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T18:22:58.325Z",
       "summary": "Model dead-letter queue records and recovery guidance without requeue execution.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:worker-runtime"
+      ],
       "knownLimitations": [
         "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
       ],
@@ -4160,8 +4162,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T18:22:01.849Z",
-  "currentPhase": "P60.5",
-  "previousPhase": "P60.4",
-  "nextPhase": "P60.5"
+  "updatedAt": "2026-05-16T18:22:58.327Z",
+  "currentPhase": "P60.6",
+  "previousPhase": "P60.5",
+  "nextPhase": "P60.6"
 }

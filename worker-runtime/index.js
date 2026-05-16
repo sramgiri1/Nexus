@@ -3,4 +3,5 @@ export * from "./workerQueue.js";
 export * from "./leaseModel.js";
 export * from "./heartbeatModel.js";
 export * from "./retryTimeoutModel.js";
+export * from "./deadLetterQueue.js";
 export * from "./runtimeSummary.js";

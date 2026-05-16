@@ -1,17 +1,8 @@
+import { summarizeDeadLetterQueue } from "./deadLetterQueue.js";
 import { summarizeHeartbeats } from "./heartbeatModel.js";
 import { summarizeLeases } from "./leaseModel.js";
 import { summarizeRetryTimeoutState } from "./retryTimeoutModel.js";
 import { summarizeWorkerQueue } from "./workerQueue.js";
-
-function summarizeDeadLetterQueue(items = []) {
-  return {
-    totalItems: items.length,
-    modeled: false,
-    requeueEnabled: false,
-    executionEnabled: false,
-    warning: "Dead-letter queue modeling is added in P60.5.",
-  };
-}
 
 export function buildWorkerRuntimeSummary(input = {}) {
   const queue = summarizeWorkerQueue(input.queueItems || []);
