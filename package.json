@@ -201,7 +201,8 @@
     "check:cost-center-ledger": "node scripts/check-cost-center-ledger.js",
     "check:budget-model": "node scripts/check-budget-model.js",
     "check:cost-estimator": "node scripts/check-cost-estimator.js",
-    "check:cost-recorder": "node scripts/check-cost-recorder.js"
+    "check:cost-recorder": "node scripts/check-cost-recorder.js",
+    "check:budget-enforcer": "node scripts/check-budget-enforcer.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

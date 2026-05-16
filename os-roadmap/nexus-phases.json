@@ -1263,6 +1263,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P57.6",
+      "title": "Command Center Cost Center UX",
+      "track": "NEXUS_OS",
+      "order": 31.06,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Expose cost readiness, budgets, estimates, ledger, and enforcement previews in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
@@ -1659,5 +1668,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T12:49:24.695Z"
+  "updatedAt": "2026-05-16T12:50:50.482Z"
 }

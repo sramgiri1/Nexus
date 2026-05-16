@@ -3656,6 +3656,22 @@
     },
     {
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "8c388ba",
+      "completedAt": "2026-05-16T12:50:50.358Z",
+      "checksRun": [
+        "npm run check:cost-recorder"
+      ],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.4",
+      "title": "Actual Cost After Run",
+      "summary": "Added preview actual cost recording and reconciliation.",
+      "nextPhase": "P57.5"
+    },
+    {
+      "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "arch/cost-center-budget-enforcement",
       "commit": "pending-final-commit",
@@ -3663,10 +3679,10 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.4",
-      "title": "Actual Cost After Run",
-      "summary": "Adds preview actual cost recording and reconciliation.",
-      "nextPhase": "P57.5"
+      "phaseId": "P57.5",
+      "title": "Budget Block / Approval Threshold",
+      "summary": "Adds preview budget decisions for allow/block/approval/record-only.",
+      "nextPhase": "P57.6"
     },
     {
       "track": "NEXUS_OS",
@@ -3677,14 +3693,14 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.5",
-      "title": "Budget Block / Approval Threshold",
-      "summary": "Planned budget decision preview."
+      "phaseId": "P57.6",
+      "title": "Command Center Cost Center UX",
+      "summary": "Planned operator Cost Center page."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:49:24.647Z",
-  "currentPhase": "P57.4",
-  "previousPhase": "P57.3",
-  "nextPhase": "P57.5"
+  "updatedAt": "2026-05-16T12:50:50.367Z",
+  "currentPhase": "P57.5",
+  "previousPhase": "P57.4",
+  "nextPhase": "P57.6"
 }
