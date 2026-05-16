@@ -3640,6 +3640,22 @@
     },
     {
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "4e6928e",
+      "completedAt": "2026-05-16T12:49:24.641Z",
+      "checksRun": [
+        "npm run check:cost-estimator"
+      ],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.3",
+      "title": "Estimate Before Run",
+      "summary": "Added estimate-before-run preview model.",
+      "nextPhase": "P57.4"
+    },
+    {
+      "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "arch/cost-center-budget-enforcement",
       "commit": "pending-final-commit",
@@ -3647,10 +3663,10 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.3",
-      "title": "Estimate Before Run",
-      "summary": "Adds preview cost estimator before future governed execution.",
-      "nextPhase": "P57.4"
+      "phaseId": "P57.4",
+      "title": "Actual Cost After Run",
+      "summary": "Adds preview actual cost recording and reconciliation.",
+      "nextPhase": "P57.5"
     },
     {
       "track": "NEXUS_OS",
@@ -3661,14 +3677,14 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.4",
-      "title": "Actual Cost After Run",
-      "summary": "Planned preview actual cost recorder."
+      "phaseId": "P57.5",
+      "title": "Budget Block / Approval Threshold",
+      "summary": "Planned budget decision preview."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:48:13.789Z",
-  "currentPhase": "P57.3",
-  "previousPhase": "P57.2",
-  "nextPhase": "P57.4"
+  "updatedAt": "2026-05-16T12:49:24.647Z",
+  "currentPhase": "P57.4",
+  "previousPhase": "P57.3",
+  "nextPhase": "P57.5"
 }
