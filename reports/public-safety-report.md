@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:26:28.801Z
+- Generated at: 2026-05-16T03:32:05.347Z
 - Validation branch: arch/quality-intelligence-test-gap-detection
-- Validation HEAD: f1a8a05
+- Validation HEAD: 1339036
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:

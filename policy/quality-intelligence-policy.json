@@ -12,5 +12,7 @@
   "dbWritesAllowed": false,
   "externalNetworkCallsAllowed": false,
   "privateSourceContentScanningAllowed": false,
+  "testFileCreationAllowed": false,
+  "proposalOnly": true,
   "reportsOnly": true
 }

@@ -1,28 +1,29 @@
-# Test Recommendation Report
+# Test Proposal Workflow Report
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:32:04.829Z
+- Generated at: 2026-05-16T03:32:04.342Z
 - Validation branch: arch/quality-intelligence-test-gap-detection
 - Validation HEAD: 1339036
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P56.4 - Risk-Based Test Recommendation
+P56.5 - Test Proposal Workflow
 
 ## Summary
 
-- Recommendations: 1
-- High risk: 0
-- Preview-only recommendations: 1
+- Proposal ID: test-proposal-gap-prd-ios-validation
+- Risk: high
 - Execution enabled: false
+- Mutation allowed: false
+- Approval required: true
 
 ## Checks
 
 - Modules: PASS
-- Recommendations: PASS
-- Scoring: PASS
+- Proposal: PASS
+- Policy: PASS
 - OS phase status: PASS
 - No forbidden changes: PASS
 - Report written: PASS
