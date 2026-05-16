@@ -214,7 +214,8 @@
     "check:policy-center-final-validation": "node scripts/check-policy-center-final-validation.js",
     "check:secret-reference-model": "node scripts/check-secret-reference-model.js",
     "check:secret-access-policy": "node scripts/check-secret-access-policy.js",
-    "check:secret-redaction": "node scripts/check-secret-redaction.js"
+    "check:secret-redaction": "node scripts/check-secret-redaction.js",
+    "check:provider-credential-boundary": "node scripts/check-provider-credential-boundary.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

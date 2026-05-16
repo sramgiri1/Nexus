@@ -34,3 +34,10 @@ denied.
 Secret redaction tests scan P59 reports, docs, and UI source touched by this
 phase for secret-like output. Scanner fixtures use fake placeholders only and
 allowlist the documentation-safe `sk-activation` phrase.
+
+## P59.4 - Provider Credential Boundary
+
+Provider credentials are modeled as references for OpenAI, Anthropic, GitHub,
+Slack placeholder, Jira/Linear placeholder, and cloud provider placeholder
+integrations. Credential values are never read, provider calls remain disabled,
+and readiness is metadata-only.
