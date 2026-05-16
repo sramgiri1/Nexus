@@ -3495,12 +3495,14 @@
       "phaseId": "P56.3",
       "title": "Flaky Test Tracker",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/quality-intelligence-test-gap-detection",
-      "commit": "pending-subphase-commit",
+      "commit": "67fc9f1",
       "completedAt": "",
       "summary": "Flaky Test Tracker",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:flaky-test-tracker"
+      ],
       "knownLimitations": [
         "Preview-only; no test execution, provider/tool/worker/DB writes, or project mutation."
       ],
@@ -3511,9 +3513,9 @@
       "phaseId": "P56.4",
       "title": "Risk-Based Test Recommendation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/quality-intelligence-test-gap-detection",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Risk-Based Test Recommendation",
       "checksRun": [],
@@ -3573,8 +3575,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T03:29:17.050Z",
-  "currentPhase": "P56.3",
-  "previousPhase": "P56.2",
-  "nextPhase": "P56.4"
+  "updatedAt": "2026-05-16T03:30:31.976Z",
+  "currentPhase": "P56.4",
+  "previousPhase": "P56.3",
+  "nextPhase": "P56.5"
 }

@@ -193,7 +193,8 @@
     "check:test-suite-manager-final": "node scripts/check-test-suite-manager-final.js",
     "check:prd-test-mapping": "node scripts/check-prd-test-mapping.js",
     "check:coverage-gap-detector": "node scripts/check-coverage-gap-detector.js",
-    "check:flaky-test-tracker": "node scripts/check-flaky-test-tracker.js"
+    "check:flaky-test-tracker": "node scripts/check-flaky-test-tracker.js",
+    "check:test-recommendation-engine": "node scripts/check-test-recommendation-engine.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
