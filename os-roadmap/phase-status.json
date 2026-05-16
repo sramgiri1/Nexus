@@ -1890,7 +1890,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "ab03c21",
       "completedAt": "2026-05-16T14:55:39.039Z",
       "summary": "Added preview-only governed policy exception workflow with time-bound and evidence-bound decisions.",
       "checksRun": [
@@ -1906,12 +1906,14 @@
       "phaseId": "P58.6",
       "title": "Break-Glass Policy",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Preview-only emergency override governance model.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:56:57.887Z",
+      "summary": "Added preview-only break-glass governance model that is disabled by default.",
+      "checksRun": [
+        "npm run check:break-glass-policy"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3861,8 +3863,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:55:39.039Z",
-  "currentPhase": "P58.5",
-  "previousPhase": "P58.4",
-  "nextPhase": "P58.6"
+  "updatedAt": "2026-05-16T14:56:57.887Z",
+  "currentPhase": "P58.6",
+  "previousPhase": "P58.5",
+  "nextPhase": "P58.7"
 }
