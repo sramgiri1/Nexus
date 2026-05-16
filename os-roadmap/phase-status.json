@@ -2153,7 +2153,7 @@
       "knownLimitations": [
         "Runtime execution remains disabled until later phases."
       ],
-      "nextPhase": "P60.1",
+      "nextPhase": "P60.3",
       "commandCenterVisible": true
     },
     {
@@ -4059,12 +4059,14 @@
       "phaseId": "P60.2",
       "title": "Task Lease Model",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T18:19:57.768Z",
       "summary": "Model safe task leases for future workers without execution.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:worker-runtime"
+      ],
       "knownLimitations": [
         "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
       ],
@@ -4153,8 +4155,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T18:18:50.908Z",
-  "currentPhase": "P60.2",
-  "previousPhase": "P60.1",
-  "nextPhase": "P60.2"
+  "updatedAt": "2026-05-16T18:19:57.772Z",
+  "currentPhase": "P60.3",
+  "previousPhase": "P60.2",
+  "nextPhase": "P60.3"
 }

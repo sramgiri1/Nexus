@@ -9,9 +9,13 @@ import {
 } from "../shared/index.js";
 import {
   createWorkerQueueItem,
+  acquireLeasePreview,
   getWorkerRuntimePolicy,
   listWorkerQueueItems,
+  releaseLeasePreview,
+  summarizeLeases,
   summarizeWorkerQueue,
+  validateWorkerLease,
   validateWorkerQueueItem,
 } from "../worker-runtime/index.js";
 
@@ -22,6 +26,7 @@ const STATUS_PATH = join(ROOT, "reports/worker-runtime-status.json");
 const checks = [
   { key: "modules", name: "Modules", status: "PASS", details: "" },
   { key: "queueSchema", name: "Queue schema", status: "PASS", details: "" },
+  { key: "leases", name: "Lease model", status: "PASS", details: "" },
   { key: "policy", name: "Policy", status: "PASS", details: "" },
   { key: "auditOnly", name: "Execution disabled", status: "PASS", details: "" },
   { key: "reports", name: "Reports", status: "PASS", details: "" },
@@ -61,6 +66,7 @@ const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 for (const filePath of [
   "worker-runtime/queueSchema.js",
   "worker-runtime/workerQueue.js",
+  "worker-runtime/leaseModel.js",
   "worker-runtime/index.js",
   "policy/worker-runtime-policy.json",
 ]) {
@@ -103,11 +109,30 @@ check(policy.workerRuntimeEnabled === "preview_only", "policy", "Worker runtime 
 
 const queueSummary = summarizeWorkerQueue(listWorkerQueueItems({ items: [item] }));
 check(queueSummary.executionEnabled === false, "auditOnly", "Queue summary must keep execution disabled");
+
+if (typeof acquireLeasePreview === "function") {
+  const lease = acquireLeasePreview(item, { workerId: "local-preview-worker" }, { ttlSeconds: 60 });
+  const leaseValidation = validateWorkerLease(lease);
+  check(leaseValidation.valid, "leases", `Valid lease failed: ${leaseValidation.errors.join(", ")}`);
+  const duplicateLease = acquireLeasePreview(item, { workerId: "second-worker" }, { existingLeases: [lease] });
+  check(duplicateLease.leaseState === "blocked", "leases", "Duplicate lease preview should be blocked");
+  const releasedLease = releaseLeasePreview(lease, "checker");
+  check(releasedLease.leaseState === "released", "leases", "Released lease should be released");
+  const leaseSummary = summarizeLeases([
+    lease,
+    { ...lease, leaseId: "expired-lease", acquiredAt: "2020-01-01T00:00:00.000Z", expiresAt: "2020-01-01T00:00:01.000Z" },
+  ]);
+  check(leaseSummary.expired >= 1, "leases", "Expired lease should summarize as expired");
+  check(leaseSummary.executionEnabled === false, "auditOnly", "Lease summary must keep execution disabled");
+}
 check(!hasPrivateProjectDiff(), "noForbiddenChanges", "Private project files must not change");
 
 const phaseStatus = JSON.parse((await import("node:fs")).readFileSync(join(ROOT, "os-roadmap/phase-status.json"), "utf8"));
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P60.1")?.status === "complete", "osPhaseStatus", "P60.1 must be complete");
+if (statusById.has("P60.2")) {
+  check(statusById.get("P60.2")?.status === "complete", "osPhaseStatus", "P60.2 must be complete once present");
+}
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 
 const result = checks.every((entry) => entry.status === "PASS") ? "PASS" : "FAIL";
