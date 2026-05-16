@@ -1804,7 +1804,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "4a31da4",
       "completedAt": "2026-05-16T15:03:53.046Z",
       "summary": "Completed preview-only Policy Center registry, versioning, diff, simulation, exception, break-glass, and Command Center UX foundations.",
       "checksRun": [
@@ -1949,7 +1949,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "4a31da4",
       "completedAt": "2026-05-16T15:03:53.046Z",
       "summary": "Validates and closes P58 Policy Center + Governance Admin.",
       "checksRun": [
@@ -1965,13 +1965,129 @@
       "phaseId": "P59",
       "title": "Secrets and Credential Boundary",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Secrets and Credential Boundary is in progress with reference-only credential metadata.",
+      "checksRun": [],
+      "knownLimitations": [
+        "No raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.1",
+      "title": "Secret Reference Model",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:22:54.122Z",
+      "summary": "Read-only secret reference schema and registry.",
+      "checksRun": [
+        "npm run check:secret-reference-model"
+      ],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.2",
+      "title": "Secret Access Policy",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Secrets and credential boundary work is next.",
+      "summary": "Preview-only access decisions for secret references.",
       "checksRun": [],
-      "knownLimitations": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.3",
+      "title": "Redaction Tests",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Secret-like scanner and redaction verification.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.4",
+      "title": "Provider Credential Boundary",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Provider credential references without provider calls.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.5",
+      "title": "Project Credential Boundary",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Project credential categories without access.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.6",
+      "title": "Command Center Secrets Boundary UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Operator-facing Secrets Boundary page.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.7",
+      "title": "Secrets Boundary Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Validate and close P59.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Reference-only; no raw secret values are read or resolved."
+      ],
       "nextPhase": "P60",
       "commandCenterVisible": true
     },
@@ -3872,8 +3988,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:03:53.046Z",
-  "currentPhase": "P59",
+  "updatedAt": "2026-05-16T15:22:54.122Z",
+  "currentPhase": "P59.1",
   "previousPhase": "P58",
-  "nextPhase": "P59"
+  "nextPhase": "P59.2"
 }

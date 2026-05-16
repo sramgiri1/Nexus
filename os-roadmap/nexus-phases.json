@@ -1371,6 +1371,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P59.1",
+      "title": "Secret Reference Model",
+      "track": "NEXUS_OS",
+      "order": 33.01,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Read-only secret reference schema and registry.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.2",
+      "title": "Secret Access Policy",
+      "track": "NEXUS_OS",
+      "order": 33.019999999999996,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Preview-only access decisions for secret references.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.3",
+      "title": "Redaction Tests",
+      "track": "NEXUS_OS",
+      "order": 33.03,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Secret-like scanner and redaction verification.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.4",
+      "title": "Provider Credential Boundary",
+      "track": "NEXUS_OS",
+      "order": 33.04,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Provider credential references without provider calls.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.5",
+      "title": "Project Credential Boundary",
+      "track": "NEXUS_OS",
+      "order": 33.05,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Project credential categories without access.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.6",
+      "title": "Command Center Secrets Boundary UX",
+      "track": "NEXUS_OS",
+      "order": 33.059999999999995,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Operator-facing Secrets Boundary page.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.7",
+      "title": "Secrets Boundary Final Validation",
+      "track": "NEXUS_OS",
+      "order": 33.07,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Validate and close P59.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P60",
       "title": "Worker Queue + Runtime Engine",
       "track": "NEXUS_OS",
