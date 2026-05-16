@@ -1713,7 +1713,7 @@ state and should be verified again during future docs audits.
 ### P55.2 — Project Test Suites
 
 - Primary capability:
-  Define preview-only project-scoped test suite records for CareLoop.
+  Define preview-only project-scoped test suite records for the active private project.
 - Main files/folders touched:
   `test-suite/projectTestSuites.js`, `test-suite/testRegistry.js`,
   `dashboard/src/data/commandCenterViewModel.js`

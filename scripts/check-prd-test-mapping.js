@@ -41,7 +41,11 @@ for (const field of ["testExecutionAllowed", "projectMutationAllowed", "provider
 const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phaseId, entry]));
 check(statusById.get("P55.7")?.commit === "f1a8a05", "osPhaseStatus", "P55.7 commit must be updated to f1a8a05");
 check(["in_progress", "complete"].includes(statusById.get("P56.1")?.status), "osPhaseStatus", "P56.1 must be tracked");
-check(phaseStatus.currentPhase?.startsWith("P56"), "osPhaseStatus", "Current phase must be P56");
+check(
+  phaseStatus.currentPhase?.startsWith("P56") || phaseStatus.currentPhase === "P57",
+  "osPhaseStatus",
+  "Current phase must be P56 during implementation or P57 after P56 closure",
+);
 for (const file of changedFiles()) {
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden project change: ${file}`);
   check(!file.startsWith("projects/careloop-ios/"), "noForbiddenChanges", `Forbidden iOS project change: ${file}`);

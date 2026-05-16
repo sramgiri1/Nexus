@@ -1004,11 +1004,29 @@ tool, risk, and evidence type. No test execution, no commands run, no provider
 calls, no DB writes in P55.
 
 P55.1 defines the canonical test suite registry schema and field set.
-P55.2 adds preview-only project-scoped test suite records for CareLoop.
+P55.2 adds preview-only project-scoped test suite records for the active private project.
 P55.3 adds 15 preview-only OS-scoped test suite records for NEXUS OS layers.
 P55.4 maps changed file paths to relevant test suites by pattern.
 P55.5 defines the test result record and evidence preview schema.
 P55.6 adds the /command-center/tests route with 6 tabs in the Command Center.
 P55.7 is comprehensive final validation of all P55 outputs.
 
-P56 — Quality Intelligence + Test Gap Detection is next.
+## P56 - Quality Intelligence + Test Gap Detection
+
+P56 adds preview-only quality intelligence on top of the P55 test suite
+registry. It maps PRD and requirement signals to test coverage, identifies
+metadata-only coverage gaps, tracks flaky-test signals from existing evidence,
+recommends suites for changed-file patterns, and creates governed test proposal
+metadata. P56 does not execute tests, generate test files, mutate project
+source, call providers/tools/MCP, start workers, write to DB, or scan private
+source content.
+
+P56.1 maps PRD signals to project and OS test suites.
+P56.2 classifies coverage gaps and recommended follow-up actions.
+P56.3 models flaky-test signals without running or quarantining tests.
+P56.4 recommends suites based on risk and changed-file metadata.
+P56.5 creates governed test proposals as approval-ready metadata only.
+P56.6 adds the /command-center/quality route with six preview tabs.
+P56.7 completes final validation for all P56 outputs.
+
+P57 - Cost Center + Budget Enforcement is next.

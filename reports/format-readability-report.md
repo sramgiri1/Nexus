@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T00:31:58.874Z
-- Validation branch: arch/api-batch-execution-adapter
-- Validation HEAD: 8ca07fe
+- Generated at: 2026-05-16T03:52:44.460Z
+- Validation branch: arch/quality-intelligence-test-gap-detection
+- Validation HEAD: 1d3498b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 264
+- Files checked: 277
 
 ## Warnings
 
@@ -26,6 +26,8 @@
 - docs/architecture/LIVE_LOCAL_API_BACKEND.md:5:341
 - docs/architecture/LIVE_LOCAL_API_BACKEND.md:13:353
 - docs/architecture/TASK_ACTIVATION_AND_AGENT_ASSIGNMENT.md:9:302
+- docs/architecture/TEST_SUITE_MANAGER.md:5:382
+- docs/architecture/TEST_SUITE_MANAGER.md:67:373
 
 ## Failures
 
@@ -35,8 +37,10 @@
 
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:84 (403) — \| `compliance_privacy` \| `warden` \| `forge`, `stream`, `synapse`, `canvas`, `compass`, `oracle` \| `warden` \| verification, approval when needed \| `verification.
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:95 (391) — \| `release_control` \| `nexus` \| `shepherd`, `auditor`, `sentinel`, `warden`, `forge` \| `auditor`, `sentinel`, `warden` \| release, verification, approval when co
+- docs/architecture/TEST_SUITE_MANAGER.md:5 (382) — The Test Suite Manager (P55) is a **registry and visibility layer only**. It catalogs all known test suites for NEXUS OS and active projects, surfaces them in t
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:94 (378) — \| `demo_showcase` \| `canvas` \| `pixel`, `beacon`, `nexus`, `shepherd` \| `warden`, `auditor`, `sentinel` as public-safety and evidence reviewers \| task, handoff,
 - docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md:9 (375) — P38 let the operator review and approve tasks without executing anything. P39 crosses the first real write threshold — but deliberately targets a documentation
+- docs/architecture/TEST_SUITE_MANAGER.md:67 (373) — The registry provides `evidenceTypes` on each suite record so that downstream agents (AUDITOR, SENTINEL, WARDEN) can plan evidence collection without triggering
 - docs/architecture/LIVE_LOCAL_API_BACKEND.md:13 (353) — Before P40, Command Center read from static JavaScript modules (`privateValidationSnapshot.js`, `actionBridgeSnapshot.js`, `runtimeSnapshot.js`). These are gene
 - docs/architecture/LIVE_LOCAL_API_BACKEND.md:5 (341) — P40 moves Command Center from generated/static snapshots toward live local API-driven data. It introduces a local-only HTTP server that reads existing JSON/JSON
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:92 (338) — \| `reliability` \| `shepherd` \| `forge`, `relay`, `nexus` \| `auditor`, `sentinel`, `warden` as evidence contributors \| task, handoff, approval when risky \| `orch
@@ -51,8 +55,6 @@
 - docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md:5 (298) — P39 is the first phase where a UI-driven workflow may apply a narrow source change via the action bridge. The target is `projects/careloop/docs/NEXUS_IMPLEMENTA
 - docs/architecture/NEXUS_OS_GLOSSARY.md:308 (297) — A batch task that has been queued to `memory/batch-queue.json` but not yet submitted to the batch API. Deferred batch is the current implementation state — batc
 - docs/architecture/AGENTIC_OS_ARCHITECTURE.md:545 (296) — The state machine is the authoritative record of task, gate, and project state. Agents propose state transitions. The state machine validates and commits them.
-- docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:73 (295) — \| `product_definition` \| `atlas` \| `shepherd`, `prism`, `core`, `swift`, `pixel` \| `auditor`, `warden` \| task, handoff \| `orchestration.plan_flow` until a dedic
-- docs/architecture/MISSION_COMPOSER.md:5 (293) — The Mission Composer is the governed entry point for starting a new private-project mission from the Command Center. It transforms a founder-stated goal into a
 
 ## Result
 
