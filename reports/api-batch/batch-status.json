@@ -1,0 +1,28 @@
+{
+  "records": [
+    {
+      "batchJobId": "sample-batch-preview",
+      "providerId": "openai-preview",
+      "status": "ready_for_review",
+      "mode": "preview_only",
+      "externalStatusCallsAllowed": false,
+      "providerPollingAllowed": false,
+      "externalUploadAllowed": false,
+      "rawProviderPayloadStored": false,
+      "message": "Batch preview created locally.",
+      "updatedAt": "2026-05-16T00:16:05.187Z"
+    },
+    {
+      "batchJobId": "sample-batch-upload-blocked",
+      "providerId": "openai-preview",
+      "status": "upload_not_enabled",
+      "mode": "preview_only",
+      "externalStatusCallsAllowed": false,
+      "providerPollingAllowed": false,
+      "externalUploadAllowed": false,
+      "rawProviderPayloadStored": false,
+      "message": "Provider upload is disabled in P54.",
+      "updatedAt": "2026-05-16T00:16:05.188Z"
+    }
+  ]
+}

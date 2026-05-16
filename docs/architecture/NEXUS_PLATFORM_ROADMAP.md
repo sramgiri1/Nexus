@@ -240,8 +240,8 @@ Risk level:
   - `P54.1` Provider Adapter Interface — complete
   - `P54.2` OpenAI API Adapter Skeleton — complete
   - `P54.3` Batch Job Builder — complete
-  - `P54.4` JSONL Job Writer — in progress
-  - `P54.5` Batch Status Tracker Preview — planned
+  - `P54.4` JSONL Job Writer — complete
+  - `P54.5` Batch Status Tracker Preview — in progress
   - `P54.6` Batch Result Reconciler Preview — planned
   - `P54.7` Cost Estimator — planned
   - `P54.8` Command Center API / Batch Jobs UX — planned

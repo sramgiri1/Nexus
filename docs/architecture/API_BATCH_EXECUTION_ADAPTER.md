@@ -95,3 +95,23 @@ artifact without dumping raw records.
 ## Next Subphase
 
 P54.5 adds local preview status tracking for batch jobs without provider polling.
+
+## P54.5 - Batch Status Tracker Preview
+
+The status tracker records local preview status for batch jobs. Status records are stored as review artifacts under
+`reports/api-batch/` and never poll provider APIs.
+
+Supported statuses:
+
+- `preview_created`
+- `ready_for_review`
+- `blocked`
+- `upload_not_enabled`
+- `awaiting_future_provider_dispatch`
+- `reconciled_preview`
+
+No provider polling, external status calls, raw provider payload storage, upload, or execution is enabled.
+
+## Next Subphase
+
+P54.6 adds a local result reconciler that maps mock-safe preview results by `custom_id`.

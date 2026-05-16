@@ -5,3 +5,4 @@ export * from "./openaiAdapter.js";
 export * from "./batchJobTypes.js";
 export * from "./batchJobBuilder.js";
 export * from "./jsonlWriter.js";
+export * from "./batchStatusTracker.js";
