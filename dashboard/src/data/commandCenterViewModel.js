@@ -1587,6 +1587,16 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
           nextAction: "Inspect lock preview; runtime freeze is not enabled.",
         },
         {
+          command: "Retro",
+          intent: "Summarize recent activity, blockers, lessons learned, and next actions.",
+          route: "Activity Log",
+          risk: "low",
+          approval: "not required",
+          status: "Read-only",
+          blockedReason: "",
+          nextAction: "Show read-only activity and evidence summary.",
+        },
+        {
           command: "Explain",
           intent: "Explain current state, blockers, and next actions.",
           route: "Mission Control",

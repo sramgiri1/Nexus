@@ -4,6 +4,7 @@ export const COMMAND_INTENT_TYPES = Object.freeze([
   "run_quality_gate_preview",
   "prepare_fix_preview",
   "prepare_release_preview",
+  "run_retro_preview",
   "guard_scope",
   "freeze_scope",
   "explain_status",

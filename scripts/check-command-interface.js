@@ -121,7 +121,7 @@ function writePhaseReport(filePath, title, checks, summary = "") {
   writeMarkdownReport(
     filePath,
     [
-      { title: "Scope", body: "P62 - Conversational NEXUS Command Interface." },
+      { title: "Scope", body: "P62.8 - Command Center Chat Entry + Conversational UI Fix." },
       { title: "Summary", body: summary || "Preview-only command interface validation." },
       { title: "Checks", body: buildCheckTable(checks) },
       {
@@ -145,6 +145,7 @@ const head = git(["rev-parse", "--short", "HEAD"]);
 const packageSource = read("package.json");
 const policySource = read("policy/command-interface-policy.json");
 const commandCenterSource = read("dashboard/src/pages/CommandCenterV2.jsx");
+const routeSource = read("dashboard/src/data/commandCenterRoutes.js");
 const viewModelSource = read("dashboard/src/data/commandCenterViewModel.js");
 const testSource = read("dashboard/tests/routes.spec.js");
 const roadmapSource = `${read("os-roadmap/phase-status.json")}\n${read("os-roadmap/nexus-phases.json")}\n${read("dashboard/src/data/nexusRoadmap.js")}`;
@@ -178,7 +179,11 @@ const timelineRecords = listCommandRecords({ limit: 10 });
 const timeline = buildCommandTimeline({ records: timelineRecords });
 
 const checks = [
-  statusCheck(branch === "arch/conversational-nexus-command-interface", "Branch", branch),
+  statusCheck(
+    ["arch/conversational-nexus-command-interface", "fix/command-center-nexus-chat-entry"].includes(branch),
+    "Branch",
+    branch,
+  ),
   statusCheck(Object.values(moduleSources).every(Boolean), "Modules", "command-interface modules are present"),
   statusCheck(
     [
@@ -222,20 +227,81 @@ const checks = [
   statusCheck(freezeScenario.approval.state === "blocked_until_capability_ready", "Freeze approval", freezeScenario.approval.state),
   statusCheck(explainScenario.route.previewOnly === true, "Explain preview", explainScenario.route.nextAction),
   statusCheck(timeline.previewOnly === true && timelineRecords.every((record) => record.redacted), "Timeline", `${timelineRecords.length} records`),
-  statusCheck(packageSource.includes("\"check:command-interface\""), "Package script", "check:command-interface"),
   statusCheck(
-    commandCenterSource.includes("Conversational NEXUS Command Interface")
-      && commandCenterSource.includes("Commands are route-first previews until worker/provider/tool execution is enabled."),
+    packageSource.includes("\"check:command-interface\"") && packageSource.includes("\"check-command-interface\""),
+    "Package script",
+    "check:command-interface and check-command-interface",
+  ),
+  statusCheck(
+    (commandCenterSource.includes("Conversational NEXUS Command Interface")
+      || viewModelSource.includes("Conversational NEXUS Command Interface"))
+      && (commandCenterSource.includes("Commands are route-first previews until worker/provider/tool execution is enabled.")
+        || viewModelSource.includes("Commands are route-first previews until worker/provider/tool execution is enabled.")),
     "Command Center UI",
     "command preview panel copy present",
   ),
   statusCheck(
-    ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"].every((label) => commandCenterSource.includes(label) || viewModelSource.includes(label)),
+    routeSource.includes("/command-center/command")
+      && routeSource.includes("Ask NEXUS")
+      && routeSource.includes("expectedHeading: \"Ask NEXUS\""),
+    "Ask NEXUS route",
+    "/command-center/command registered",
+  ),
+  statusCheck(
+    commandCenterSource.includes("function AskNexusPage")
+      && commandCenterSource.includes("Describe a goal, question, or operating command.")
+      && commandCenterSource.includes("Preview command")
+      && commandCenterSource.includes("Open command history"),
+    "Ask NEXUS page",
+    "conversational preview page copy present",
+  ),
+  statusCheck(
+    [
+      "Plan the next milestone",
+      "Review current project readiness",
+      "Run QA readiness check",
+      "Explain blockers",
+      "Freeze project scope",
+      "Show release readiness",
+      "Summarize latest activity",
+      "What should I do next?",
+    ].every((prompt) => commandCenterSource.includes(prompt)),
+    "Suggested prompts",
+    "Ask NEXUS starter prompts present",
+  ),
+  statusCheck(
+    moduleSources["command-interface/commandIntentSchema.js"].includes("providerCallsAllowed: false")
+      && moduleSources["command-interface/commandIntentSchema.js"].includes("toolExecutionAllowed: false")
+      && moduleSources["command-interface/commandIntentSchema.js"].includes("workerExecutionAllowed: false")
+      && moduleSources["command-interface/commandIntentSchema.js"].includes("projectMutationAllowed: false")
+      && moduleSources["command-interface/commandIntentSchema.js"].includes("dbWritesAllowed: false"),
+    "Execution boundary",
+    "Ask NEXUS preview keeps provider/tool/worker/project/DB execution disabled",
+  ),
+  statusCheck(
+    commandCenterSource.includes("Provider spend disabled. No cost incurred by preview.")
+      && commandCenterSource.includes("Command history preview"),
+    "Safe timeline preview",
+    "history and cost copy are product-facing",
+  ),
+  statusCheck(
+    ["Plan", "Review", "QA", "Fix", "Ship", "Retro", "Guard", "Freeze", "Explain"].every((label) => commandCenterSource.includes(label) || viewModelSource.includes(label)),
     "Command UI labels",
     "all simple operator labels present",
   ),
-  statusCheck(testSource.includes("conversational command interface preview"), "Playwright coverage", "command interface tests present"),
-  statusCheck(roadmapSource.includes("P62") && roadmapSource.includes("Conversational NEXUS Command Interface") && roadmapSource.includes("P63"), "OS phase status", "P62/P63 present"),
+  statusCheck(
+    testSource.includes("conversational command interface preview")
+      && testSource.includes("Ask NEXUS route provides visible conversational command entry and preview"),
+    "Playwright coverage",
+    "command interface and Ask NEXUS tests present",
+  ),
+  statusCheck(
+    roadmapSource.includes("P62.8")
+      && roadmapSource.includes("Command Center Chat Entry + Conversational UI Fix")
+      && roadmapSource.includes("P63"),
+    "OS phase status",
+    "P62.8/P63 present",
+  ),
   statusCheck(noForbiddenPrivateChanges(), "No private project changes", "projects/careloop paths unchanged"),
   statusCheck(noForbiddenRuntimeChanges(), "No forbidden runtime changes", "runtime behavior paths unchanged"),
   statusCheck(

@@ -33,6 +33,7 @@ Supported intent types are:
 - `run_quality_gate_preview`
 - `prepare_fix_preview`
 - `prepare_release_preview`
+- `run_retro_preview`
 - `guard_scope`
 - `freeze_scope`
 - `explain_status`
@@ -102,6 +103,37 @@ The Command Center presents a conversational command preview surface. It shows:
 The UX copy is explicit: commands are route-first previews until worker,
 provider, and tool execution are enabled by later governed phases.
 
+## P62.8 - Ask NEXUS Chat Entry
+
+P62.8 adds a visible `Ask NEXUS` entry point to the Command Center:
+
+- Sidebar route: `/command-center/command`
+- Mission Control card/button: `Ask NEXUS`
+- Compact top-bar entry: `Ask NEXUS`
+
+The page is a conversational preview surface. Operators can type a goal or
+question, choose a suggested prompt, and preview how NEXUS would classify the
+request before any governed execution exists. Suggested prompts include:
+
+- `Plan the next milestone`
+- `Review current project readiness`
+- `Run QA readiness check`
+- `Explain blockers`
+- `Freeze project scope`
+- `Show release readiness`
+- `Summarize latest activity`
+- `What should I do next?`
+
+Preview results show intent, scope, target, route, owner/capability, risk,
+approval posture, cost status, blockers, next governed action, and a redacted
+command history preview. The UI is product-facing: it does not show raw JSON,
+raw logs, raw policy payloads, raw private project IDs, or demo project
+fallbacks in local-private mode.
+
+P62.8 is still preview-only. The page does not run providers, tools, MCP
+servers, workers, DB writes, project mutation, release/deploy actions, or new
+backend behavior.
+
 ## Safety Boundaries
 
 P62 does not add:
@@ -122,6 +154,7 @@ Run:
 
 ```bash
 npm run check:command-interface
+npm run check-command-interface
 ```
 
 The checker validates schema exports, scope packets, route previews, approval

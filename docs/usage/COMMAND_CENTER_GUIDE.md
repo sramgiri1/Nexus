@@ -21,6 +21,28 @@ not enabled yet.
   either open an existing governed route, show a read-only summary, or explain
   why they are not enabled
 
+## Ask NEXUS
+
+- Route: `/command-center/command`
+- Purpose: conversational entry point for operating NEXUS without memorizing
+  internal scripts or phase labels.
+- How to open it: use the `Ask NEXUS` sidebar item, the compact top-bar
+  `Ask NEXUS` button, or the Mission Control `Ask NEXUS` entry.
+- Composer placeholder: `Ask NEXUS to plan, review, QA, fix, ship, guard,
+  freeze, or explain...`
+- Suggested prompts: `Plan the next milestone`, `Review current project
+  readiness`, `Run QA readiness check`, `Explain blockers`, `Freeze project
+  scope`, `Show release readiness`, `Summarize latest activity`, and
+  `What should I do next?`
+- Preview result: shows intent, scope, target, route, owner/capability, risk,
+  approval posture, cost status, blockers, next governed action, and redacted
+  command history context.
+- Safety posture: preview-only. Provider dispatch, tool/MCP execution, worker
+  execution, DB writes, project mutation, and release/deploy actions are not
+  enabled from this page.
+- Project boundary: local-private UX shows the selected private project or
+  `No project selected`. DemoApp appears only on demo-specific surfaces.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

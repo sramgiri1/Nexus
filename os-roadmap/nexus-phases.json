@@ -1695,6 +1695,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P62.8",
+      "title": "Command Center Chat Entry + Conversational UI Fix",
+      "track": "NEXUS_OS",
+      "order": 36.08,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Adds visible Ask NEXUS entry points and a preview-only conversational Command Center route.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P54",
       "title": "API + Batch Execution Adapter",
       "track": "NEXUS_OS",
@@ -2010,5 +2019,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T19:27:33.978Z"
+  "updatedAt": "2026-05-16T19:57:19.996Z"
 }

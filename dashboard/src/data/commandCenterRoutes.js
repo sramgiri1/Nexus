@@ -49,6 +49,18 @@ export const COMMAND_CENTER_ROUTES = [
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
+    key: "command",
+    path: "/command-center/command",
+    name: "Ask NEXUS",
+    section: "OPERATIONS",
+    allowPhaseLabels: false,
+    expectedHeading: "Ask NEXUS",
+    status: "implemented",
+    badge: "Preview",
+    scope: "os",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
+  },
+  {
     key: "workspace",
     path: "/command-center/workspace",
     name: "Workspace",

@@ -268,6 +268,7 @@ Risk level:
   - `P62.5` Command Timeline — complete
   - `P62.6` Command Center Command UX — complete
   - `P62.7` Final Validation — complete
+  - `P62.8` Command Center Chat Entry + Conversational UI Fix — complete
 - `P63` AI Interaction Snapshot + Granular Recovery Layer — next
 - `P64` Provider + Tool Dispatch Through Governance
 - `P64.1` Code Mode Runtime + Lazy Tool Loading
@@ -1120,6 +1121,8 @@ Explain, resolves portfolio/project/NEXUS OS scope, maps each command to a
 governed route preview, shows risk and approval posture, and records redacted
 local command timeline entries.
 
-P62 does not execute providers, tools, workers, DB writes, project mutation, or
-release/deploy actions. The Command Center command UX is route-first and
-preview-only. P63 - AI Interaction Snapshot + Granular Recovery Layer is next.
+P62.8 adds the visible `Ask NEXUS` Command Center route and chat-style preview
+entry points. P62 does not execute providers, tools, workers, DB writes, project
+mutation, or release/deploy actions. The Command Center command UX is
+route-first and preview-only. P63 - AI Interaction Snapshot + Granular Recovery
+Layer is next.

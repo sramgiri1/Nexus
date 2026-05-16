@@ -2,22 +2,22 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T19:33:33.680Z
-- Validation branch: arch/conversational-nexus-command-interface
-- Validation HEAD: 62a0c2b
+- Generated at: 2026-05-16T20:09:13.688Z
+- Validation branch: fix/command-center-nexus-chat-entry
+- Validation HEAD: 186b988
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P62 - Conversational NEXUS Command Interface.
+P62.8 - Command Center Chat Entry + Conversational UI Fix.
 ## Summary
 
-Validation branch: arch/conversational-nexus-command-interface; Validation HEAD: 62a0c2b.
+Validation branch: fix/command-center-nexus-chat-entry; Validation HEAD: 186b988.
 ## Checks
 
 | Check | Status | Details |
 | --- | --- | --- |
-| Branch | PASS | arch/conversational-nexus-command-interface |
+| Branch | PASS | fix/command-center-nexus-chat-entry |
 | Modules | PASS | command-interface modules are present |
 | Intent schema exports | PASS |  |
 | Scope exports | PASS |  |
@@ -36,11 +36,16 @@ Validation branch: arch/conversational-nexus-command-interface; Validation HEAD:
 | Freeze approval | PASS | blocked_until_capability_ready |
 | Explain preview | PASS | Show read-only current state summary. |
 | Timeline | PASS | 1 records |
-| Package script | PASS | check:command-interface |
+| Package script | PASS | check:command-interface and check-command-interface |
 | Command Center UI | PASS | command preview panel copy present |
+| Ask NEXUS route | PASS | /command-center/command registered |
+| Ask NEXUS page | PASS | conversational preview page copy present |
+| Suggested prompts | PASS | Ask NEXUS starter prompts present |
+| Execution boundary | PASS | Ask NEXUS preview keeps provider/tool/worker/project/DB execution disabled |
+| Safe timeline preview | PASS | history and cost copy are product-facing |
 | Command UI labels | PASS | all simple operator labels present |
-| Playwright coverage | PASS | command interface tests present |
-| OS phase status | PASS | P62/P63 present |
+| Playwright coverage | PASS | command interface and Ask NEXUS tests present |
+| OS phase status | PASS | P62.8/P63 present |
 | No private project changes | PASS | projects/careloop paths unchanged |
 | No forbidden runtime changes | PASS | runtime behavior paths unchanged |
 | Formatting/readability | PASS | no checked lines over 1000 chars |

@@ -2186,7 +2186,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Added a preview-only conversational operator command interface with intent classification, scope detection, route previews, approval previews, redacted timeline records, and Command Center UX.",
       "checksRun": [
@@ -4335,7 +4335,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Defined deterministic local command intent schema and preview validation.",
       "checksRun": [
@@ -4354,7 +4354,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Added portfolio, project, and NEXUS OS scope context packet previews.",
       "checksRun": [
@@ -4373,7 +4373,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Mapped simple operator commands to governed preview routes.",
       "checksRun": [
@@ -4392,7 +4392,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Added approval requirement previews for risk and capability blockers.",
       "checksRun": [
@@ -4411,7 +4411,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Added redacted local command timeline preview records.",
       "checksRun": [
@@ -4430,7 +4430,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Surfaced command intent, route, risk, approval, blocker, and timeline previews in Command Center.",
       "checksRun": [
@@ -4449,7 +4449,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/conversational-nexus-command-interface",
-      "commit": "pending-final-commit",
+      "commit": "186b988",
       "completedAt": "2026-05-16T19:27:33.978Z",
       "summary": "Validated conversational command interface safety, UI, docs, and roadmap status.",
       "checksRun": [
@@ -4465,13 +4465,37 @@
         "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
         "Command timeline records are local redacted previews and are not yet centralized activity ledger events."
       ],
+      "nextPhase": "P62.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.8",
+      "title": "Command Center Chat Entry + Conversational UI Fix",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/command-center-nexus-chat-entry",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T19:57:19.996Z",
+      "summary": "Added visible Ask NEXUS entry points, a preview-only conversational Command Center route, starter prompts, governed command previews, and UI safety boundaries.",
+      "checksRun": [
+        "npm run check-command-interface",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:public-safety",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Command history remains a local redacted preview until centralized activity and recovery phases mature."
+      ],
       "nextPhase": "P63",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T19:27:33.978Z",
-  "currentPhase": "P62",
-  "previousPhase": "P61",
+  "updatedAt": "2026-05-16T19:57:19.996Z",
+  "currentPhase": "P62.8",
+  "previousPhase": "P62",
   "nextPhase": "P63"
 }

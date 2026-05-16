@@ -124,9 +124,10 @@ Command Center now also includes a **Command Palette** for simple governed opera
 
 P62 adds a preview-only **Conversational NEXUS Command Interface** for simple
 operator intent. It classifies commands such as Plan, Review, QA, Fix, Ship,
-Guard, Freeze, and Explain, then shows scope, route, risk, approval, blocker,
-and timeline previews. It does not enable providers, tools, workers, DB writes,
-project mutation, or release execution.
+Retro, Guard, Freeze, and Explain, then shows scope, route, risk, approval,
+blocker, cost, and timeline previews. Command Center exposes this through
+`Ask NEXUS` at `/command-center/command`. It does not enable providers, tools,
+workers, DB writes, project mutation, or release execution.
 
 P41.6.5 also tightens the local operator docs around:
 

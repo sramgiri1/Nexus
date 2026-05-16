@@ -57,6 +57,10 @@ import {
   getNoProjectGuidance,
   resolveCommandCenterIdentity,
 } from "../data/commandCenterIdentity.js";
+import { buildApprovalPreview } from "../../../command-interface/commandApprovalPreview.js";
+import { createCommandIntent } from "../../../command-interface/commandIntentSchema.js";
+import { buildCommandRoutePreview, routeCommandIntent } from "../../../command-interface/commandRouter.js";
+import { buildCommandContextPacket } from "../../../command-interface/commandScopeResolver.js";
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
@@ -140,6 +144,7 @@ function MetricCard({ metric }) {
 
 const ROUTE_ICONS = {
   mission: "⬡",
+  command: "⌕",
   workspace: "⊹",
   tasks: "≡",
   workbench: "⬡",
@@ -477,7 +482,7 @@ function Sidebar({ vm, location }) {
 }
 
 /* ─── Top Command Bar ─── */
-function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, selectedProject, onSelectProject }) {
+function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, onOpenAskNexus, selectedProject, onSelectProject }) {
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const route = COMMAND_CENTER_ROUTE_BY_KEY[currentPage] || COMMAND_CENTER_ROUTE_BY_KEY.mission;
   const pageLabel = COMMAND_CENTER_ROUTE_BY_KEY[currentPage]?.expectedHeading || "Mission Control";
@@ -531,6 +536,16 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, selectedPro
       <div className="ccv2-topbar__spacer" />
 
       <HelpLink routeKey={currentPage} />
+
+      <button
+        type="button"
+        className="ccv2-ask-nexus-trigger"
+        onClick={onOpenAskNexus}
+        aria-label="Open Ask NEXUS"
+        title="Ask NEXUS"
+      >
+        Ask NEXUS
+      </button>
 
       <button
         type="button"
@@ -2278,6 +2293,7 @@ function ConversationalCommandInterfacePanel({ vm }) {
   const commands = commandInterface.previewCommands || [];
   const timeline = commandInterface.recentTimeline || [];
   const noProjectSelected = !hasActiveProject(vm);
+  const navigate = useNavigate();
 
   return (
     <div className="ccv2-card ccv2-command-interface-preview">
@@ -2285,10 +2301,12 @@ function ConversationalCommandInterfacePanel({ vm }) {
         <div>
           <div className="ccv2-eyebrow">Command Interface</div>
           <h3 className="ccv2-command-interface-preview__title">
-            {commandInterface.title || "Conversational NEXUS Command Interface"}
+            Ask NEXUS
           </h3>
         </div>
-        <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+        <button type="button" className="ccv2-ask-nexus-inline" onClick={() => navigate("/command-center/command")}>
+          Open chat
+        </button>
       </div>
       <p className="ccv2-command-interface-preview__help">
         {commandInterface.helpText || "Commands are route-first previews until worker/provider/tool execution is enabled."}
@@ -2354,6 +2372,225 @@ function ConversationalCommandInterfacePanel({ vm }) {
           </div>
         ))}
       </div>
+    </div>
+  );
+}
+
+const ASK_NEXUS_STARTERS = [
+  "Plan the next milestone",
+  "Review current project readiness",
+  "Run QA readiness check",
+  "Explain blockers",
+  "Freeze project scope",
+  "Show release readiness",
+  "Summarize latest activity",
+  "What should I do next?",
+];
+
+const ROUTE_TARGET_LABELS = {
+  "/command-center": "Mission Control",
+  "/command-center/activity": "Activity Log",
+  "/command-center/implementation": "Implementation Workflow",
+  "/command-center/release": "Release Control",
+  "/command-center/safety": "Safety Center",
+  "/command-center/tests": "Test Center",
+  "/command-center/workbench": "Agent Workbench",
+  "/command-center/workers": "Worker Runtime",
+};
+
+function formatIntentLabel(intentType = "unknown") {
+  return intentType
+    .split("_")
+    .filter(Boolean)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(" ");
+}
+
+function buildAskNexusPreview(commandText, vm) {
+  const hasProject = hasActiveProject(vm) && vm.shell?.activeProjectScope === "project";
+  const commandScope = /\b(nexus os|os roadmap|platform|system)\b/i.test(commandText)
+    ? "os"
+    : /\b(portfolio|all projects|across projects)\b/i.test(commandText)
+      ? "portfolio"
+      : "project";
+  const projectId = hasProject && commandScope === "project" ? vm.shell?.selectedProjectId || "selected-project-ref" : "";
+  const intent = createCommandIntent({
+    commandText,
+    mode: vm.shell?.mode || "local-private",
+    scope: commandScope,
+    projectId,
+  });
+  const contextPacket = buildCommandContextPacket(intent, {
+    defaultScope: commandScope,
+    mode: vm.shell?.mode || "local-private",
+    selectedProjectId: projectId,
+    selectedProjectLabel: hasProject ? vm.shell?.activeProject : "",
+    selectedProject: hasProject ? vm.shell?.activeProject : "",
+  });
+  const route = routeCommandIntent(intent, {
+    capabilityReadiness: {
+      ...vm.capabilityReadiness,
+      commandPalette: { status: "ready", userFacingState: "Ready" },
+    },
+  });
+  const approval = buildApprovalPreview(route);
+  const routePreview = buildCommandRoutePreview(intent, route);
+  return {
+    intent,
+    contextPacket,
+    route,
+    approval,
+    routePreview,
+    costStatus: "Provider spend disabled. No cost incurred by preview.",
+  };
+}
+
+function AskNexusPage({ vm }) {
+  const [commandText, setCommandText] = useState("What should I do next?");
+  const [preview, setPreview] = useState(() => buildAskNexusPreview("What should I do next?", vm));
+  const [historyOpen, setHistoryOpen] = useState(true);
+  const timeline = vm.commandInterface?.recentTimeline || [];
+  const hasProject = hasActiveProject(vm) && vm.shell?.activeProjectScope === "project";
+  const projectLabel = hasProject ? vm.shell?.activeProject : "No project selected";
+  const scopeLabel = preview.contextPacket.scope === "os"
+    ? "NEXUS OS"
+    : preview.contextPacket.scope === "portfolio"
+      ? "Portfolio"
+      : "Project";
+  const routeLabel = ROUTE_TARGET_LABELS[preview.route.routeTarget] || preview.route.routeTarget || "Command Center";
+
+  function handlePreview(nextCommandText = commandText) {
+    setPreview(buildAskNexusPreview(nextCommandText, vm));
+  }
+
+  function handleStarter(prompt) {
+    setCommandText(prompt);
+    handlePreview(prompt);
+  }
+
+  return (
+    <div className="ccv2-content ccv2-ask-nexus-page">
+      <div className="ccv2-page-head">
+        <div className="ccv2-page-head__title">Ask NEXUS</div>
+        <div className="ccv2-page-head__sub">
+          Describe a goal, question, or operating command. NEXUS will classify scope, risk,
+          approvals, and next governed action.
+        </div>
+      </div>
+
+      <div className="ccv2-ask-context-strip" aria-label="Ask NEXUS context">
+        <div><span>Scope</span><strong>{scopeLabel}</strong></div>
+        <div><span>Selected project</span><strong>{projectLabel}</strong></div>
+        <div><span>Command mode</span><strong>Preview-only</strong></div>
+        <div><span>Provider dispatch</span><strong>Not enabled</strong></div>
+        <div><span>Tool execution</span><strong>Not enabled</strong></div>
+        <div><span>Worker execution</span><strong>Not enabled</strong></div>
+      </div>
+
+      <div className="ccv2-ask-layout">
+        <section className="ccv2-card ccv2-ask-chat" aria-label="Ask NEXUS conversation">
+          <div className="ccv2-ask-bubble ccv2-ask-bubble--user">
+            <div className="ccv2-eyebrow">You</div>
+            <div>{preview.intent.commandText}</div>
+          </div>
+          <div className="ccv2-ask-bubble ccv2-ask-bubble--nexus">
+            <div className="ccv2-eyebrow">NEXUS Preview</div>
+            <div className="ccv2-ask-bubble__title">
+              {preview.route.routeStatus === "blocked" ? "Command is blocked before execution" : "Command preview is ready"}
+            </div>
+            <p>
+              This preview classified the command, selected a governed route, and checked approval posture.
+              It did not execute work.
+            </p>
+            <div className="ccv2-ask-chip-row">
+              <span className="ccv2-pill ccv2-pill--pass">Intent: {formatIntentLabel(preview.intent.intentType)}</span>
+              <span className="ccv2-pill ccv2-pill--pending">Risk: {preview.routePreview.riskLevel}</span>
+              <span className="ccv2-pill ccv2-pill--disabled">Approval: {preview.approval.state}</span>
+              <span className={`ccv2-pill ccv2-pill--${preview.route.routeStatus === "blocked" ? "fail" : "pass"}`}>
+                {preview.route.routeStatus}
+              </span>
+            </div>
+          </div>
+
+          <div className="ccv2-ask-composer">
+            <label htmlFor="ask-nexus-input">Command composer</label>
+            <textarea
+              id="ask-nexus-input"
+              value={commandText}
+              onChange={(event) => setCommandText(event.target.value)}
+              placeholder="Ask NEXUS to plan, review, QA, fix, ship, guard, freeze, or explain..."
+            />
+            <div className="ccv2-ask-composer__actions">
+              <button type="button" className="ccv2-mission-composer__btn ccv2-mission-composer__btn--enabled" onClick={() => handlePreview()}>
+                Preview command
+              </button>
+              <button type="button" className="ccv2-mission-composer__btn" onClick={() => setCommandText("")}>Clear</button>
+              <button type="button" className="ccv2-mission-composer__btn" onClick={() => setHistoryOpen((open) => !open)}>
+                Open command history
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <aside className="ccv2-card ccv2-ask-suggestions" aria-label="Suggested Ask NEXUS prompts">
+          <div className="ccv2-eyebrow">Suggested commands</div>
+          <div className="ccv2-ask-suggestion-grid">
+            {ASK_NEXUS_STARTERS.map((prompt) => (
+              <button key={prompt} type="button" onClick={() => handleStarter(prompt)}>
+                {prompt}
+              </button>
+            ))}
+          </div>
+        </aside>
+      </div>
+
+      <section className="ccv2-card ccv2-ask-result" aria-label="Command preview result">
+        <div className="ccv2-card-header-row">
+          <div>
+            <div className="ccv2-eyebrow">Preview result</div>
+            <h3>Governed route preview</h3>
+          </div>
+          <span className="ccv2-pill ccv2-pill--disabled">No execution</span>
+        </div>
+        <div className="ccv2-ask-result-grid">
+          <div><span>Intent</span><strong>{formatIntentLabel(preview.intent.intentType)}</strong></div>
+          <div><span>Scope</span><strong>{scopeLabel}</strong></div>
+          <div><span>Target</span><strong>{projectLabel}</strong></div>
+          <div><span>Route</span><strong>{routeLabel}</strong></div>
+          <div><span>Agent / capability</span><strong>{preview.route.actionId || "NEXUS"}</strong></div>
+          <div><span>Risk</span><strong>{preview.routePreview.riskLevel}</strong></div>
+          <div><span>Approval</span><strong>{preview.approval.reason}</strong></div>
+          <div><span>Cost status</span><strong>{preview.costStatus}</strong></div>
+        </div>
+        {preview.route.blockedReason && (
+          <div className="ccv2-ask-blockers">
+            <strong>Blocker:</strong> {preview.route.blockedReason}
+          </div>
+        )}
+        <div className="ccv2-ask-next-action">
+          <strong>Next governed action:</strong> {preview.route.nextAction}
+        </div>
+      </section>
+
+      {historyOpen && (
+        <section className="ccv2-card ccv2-ask-history" aria-label="Command history preview">
+          <div className="ccv2-eyebrow">Command history preview</div>
+          {timeline.length === 0 ? (
+            <div className="ccv2-empty-state">No command previews yet. Ask NEXUS what to do next.</div>
+          ) : (
+            <div className="ccv2-ask-history-list">
+              {timeline.map((record) => (
+                <div key={record.commandId} className="ccv2-ask-history-row">
+                  <span>{record.commandText}</span>
+                  <strong>{formatIntentLabel(record.intentType)}</strong>
+                  <span>{record.routeStatus}</span>
+                  <span>{record.redacted ? "Redacted" : "Needs redaction"}</span>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      )}
     </div>
   );
 }
@@ -9190,6 +9427,7 @@ export default function CommandCenterV2({ studio }) {
           themeState={themeState}
           selectedProject={selectedProject}
           onSelectProject={setSelectedProjectId}
+          onOpenAskNexus={() => navigate("/command-center/command")}
           onOpenCommandPalette={() => openCommandPalette("plan")}
         />
         <div className="ccv2-content-wrapper">
@@ -9200,6 +9438,7 @@ export default function CommandCenterV2({ studio }) {
               onOpenCommandPalette={openCommandPalette}
             />
           )}
+          {currentPage === "command" && <AskNexusPage vm={vmWithApi} />}
           {currentPage === "workspace" && <WorkspacePage vm={vmWithApi} />}
           {currentPage === "tasks" && <TaskQueuePage vm={vmWithApi} />}
           {currentPage === "implementation" && <ImplementationPage vm={vmWithApi} />}

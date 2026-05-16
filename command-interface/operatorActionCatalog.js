@@ -50,6 +50,16 @@ export const OPERATOR_ACTION_CATALOG = [
     nextAction: "Open Release Control and inspect release blockers.",
   },
   {
+    actionId: "retro",
+    intentType: "run_retro_preview",
+    label: "Run Retro",
+    routeTarget: "/command-center/activity",
+    requiredCapabilities: ["commandPalette"],
+    riskLevel: "low",
+    blockedReason: "",
+    nextAction: "Summarize latest local activity and blockers as a read-only preview.",
+  },
+  {
     actionId: "guard",
     intentType: "guard_scope",
     label: "Guard Scope",

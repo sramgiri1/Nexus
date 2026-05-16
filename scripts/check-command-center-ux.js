@@ -222,6 +222,9 @@ const head = gitOutput(["rev-parse", "--short", "HEAD"]);
 
 const commandCenterSource = readFile("dashboard/src/pages/CommandCenterV2.jsx");
 const commandCenterNonRoadmapSource = stripRoadmapBlock(commandCenterSource);
+const osRoadmapPageSource = commandCenterSource.match(
+  /\/\* ─── OS Roadmap Page ─── \*\/[\s\S]*?function PlannedRoutePage/,
+)?.[0] || commandCenterSource;
 const topBarSource = commandCenterSource.match(/function TopBar[\s\S]*?\/\* ─── Mission Composer Card ─── \*\//)?.[0] || "";
 const workflowTemplateSource = readFile("workspace/workflowTemplates.js");
 const workflowRecommendationSource = readFile("workspace/workflowRecommendations.js");
@@ -469,7 +472,7 @@ for (const forbidden of [
   "Blocked / Risks",
   "History",
 ]) {
-  check(!commandCenterSource.includes(forbidden), "roadmapProjectSeparation", `Roadmap / project separation contains forbidden mixed-roadmap copy: ${forbidden}`);
+  check(!osRoadmapPageSource.includes(forbidden), "roadmapProjectSeparation", `Roadmap / project separation contains forbidden mixed-roadmap copy: ${forbidden}`);
 }
 for (const expectedTest of [
   "OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage",
@@ -1142,17 +1145,54 @@ check(routeTestSource.includes("Mission Control shows simple operator action row
 for (const expected of [
   "Conversational NEXUS Command Interface",
   "Commands are route-first previews until worker/provider/tool execution is enabled.",
+  "Ask NEXUS",
+  "Describe a goal, question, or operating command.",
+  "Preview command",
+  "Open command history",
   "Select or create a project first.",
   "Blocked reason",
   "Recent Command Timeline",
 ]) {
-  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandInterfaceUx", `Command interface UX missing: ${expected}`);
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || routeSource.includes(expected),
+    "commandInterfaceUx",
+    `Command interface UX missing: ${expected}`,
+  );
 }
-for (const expected of ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"]) {
+for (const expected of ["Plan", "Review", "QA", "Fix", "Ship", "Retro", "Guard", "Freeze", "Explain"]) {
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandInterfaceUx", `Command interface missing command label: ${expected}`);
 }
-check(routeTestSource.includes("conversational command interface preview"), "commandInterfaceUx", "Route tests missing command interface preview coverage");
+for (const prompt of [
+  "Plan the next milestone",
+  "Review current project readiness",
+  "Run QA readiness check",
+  "Explain blockers",
+  "Freeze project scope",
+  "Show release readiness",
+  "Summarize latest activity",
+  "What should I do next?",
+]) {
+  check(commandCenterSource.includes(prompt), "commandInterfaceUx", `Ask NEXUS suggested prompt missing: ${prompt}`);
+}
+check(
+  routeSource.includes("/command-center/command") && routeSource.includes("expectedHeading: \"Ask NEXUS\""),
+  "commandInterfaceUx",
+  "Ask NEXUS route missing from route matrix",
+);
+check(
+  topBarSource.includes("Open Ask NEXUS") && commandCenterSource.includes("Open chat"),
+  "commandInterfaceUx",
+  "Ask NEXUS entry points missing from top bar or Mission Control",
+);
+check(
+  routeTestSource.includes("conversational command interface preview")
+    && routeTestSource.includes("Ask NEXUS route provides visible conversational command entry and preview"),
+  "commandInterfaceUx",
+  "Route tests missing command interface preview and Ask NEXUS coverage",
+);
 check(!commandCenterSource.includes("Execute Command"), "commandInterfaceUx", "Command interface must not expose execution copy");
+check(!commandCenterNonRoadmapSource.includes("private-project-01"), "commandInterfaceUx", "Ask NEXUS primary UX must not expose raw private project IDs");
+check(!commandCenterNonRoadmapSource.includes("private-project-governed-build-mission"), "commandInterfaceUx", "Ask NEXUS primary UX must not expose raw mission IDs");
 
 // Command Center tabs
 check(commandTabsSource.includes("export const MISSION_CONTROL_TABS"), "commandCenterTabs", "commandCenterTabs.js must export MISSION_CONTROL_TABS");

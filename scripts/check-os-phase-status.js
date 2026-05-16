@@ -168,6 +168,7 @@ const CURRENT_PHASE_IDS = new Set([
   "P62.5",
   "P62.6",
   "P62.7",
+  "P62.8",
   "P63",
 ]);
 
@@ -341,6 +342,7 @@ for (const phaseId of [
   "P62.5",
   "P62.6",
   "P62.7",
+  "P62.8",
   "P63",
 ]) {
   check(indexById.has(phaseId), "p417Entries", `nexus-phases missing ${phaseId}`);
@@ -642,6 +644,9 @@ if (p61?.status === "complete") {
 const p62 = statusById.get("P62");
 check(["planned", "in_progress", "complete"].includes(p62?.status), "nextPhase", "P62 must be planned, in progress, or complete");
 check(p62?.title === "Conversational NEXUS Command Interface", "nextPhase", "P62 title mismatch");
+const p628 = statusById.get("P62.8");
+check(["in_progress", "complete"].includes(p628?.status), "nextPhase", "P62.8 must be in progress or complete");
+check(p628?.title === "Command Center Chat Entry + Conversational UI Fix", "nextPhase", "P62.8 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

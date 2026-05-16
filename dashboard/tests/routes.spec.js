@@ -14,6 +14,7 @@ const SCREENSHOT_MANIFEST = fileURLToPath(new URL("../../reports/ui-audit/manife
 
 const PRIMARY_ROUTE_KEYS = [
   "mission",
+  "command",
   "workspace",
   "tasks",
   "workbench",
@@ -36,7 +37,9 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
 
-const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter((key) => !["services", "workers", "agentRooms", "skills", "hooks"].includes(key));
+const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter(
+  (key) => !["command", "services", "workers", "agentRooms", "skills", "hooks"].includes(key),
+);
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
 ).filter(Boolean);
@@ -148,25 +151,103 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 
-  await page.goto("/command-center");
+  await page.goto("/command-center/command");
 
-  await expect(page.getByText("Conversational NEXUS Command Interface")).toBeVisible();
-  await expect(page.getByText("Commands are route-first previews until worker/provider/tool execution is enabled.")).toBeVisible();
-  await expect(page.locator(".ccv2-info-banner", { hasText: "Select or create a project first." })).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Ask NEXUS");
+  await expect(page.getByText("Describe a goal, question, or operating command.")).toBeVisible();
+  await expect(page.getByLabel("Ask NEXUS context")).toContainText("No project selected");
+  await expect(page.getByLabel("Ask NEXUS context")).toContainText("Preview-only");
 
-  for (const label of ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"]) {
-    await expect(
-      page.locator(".ccv2-command-interface-preview__command-top strong", { hasText: new RegExp(`^${label}$`) }),
-    ).toBeVisible();
+  for (const prompt of [
+    "Plan the next milestone",
+    "Review current project readiness",
+    "Run QA readiness check",
+    "Explain blockers",
+    "Freeze project scope",
+    "Show release readiness",
+    "Summarize latest activity",
+    "What should I do next?",
+  ]) {
+    await expect(page.getByRole("button", { name: prompt })).toBeVisible();
   }
 
-  await expect(page.locator(".ccv2-command-interface-preview__command").filter({ hasText: "QA" })).toContainText("Requires controlled validation bridge");
-  await expect(page.locator(".ccv2-command-interface-preview__command").filter({ hasText: "Ship" })).toContainText("Requires release action bridge");
-  await expect(page.locator(".ccv2-command-interface-preview__timeline")).toContainText("Explain current NEXUS state");
+  const composer = page.getByPlaceholder("Ask NEXUS to plan, review, QA, fix, ship, guard, freeze, or explain...");
+  await composer.fill("Plan the next milestone");
+  await page.getByRole("button", { name: "Preview command" }).click();
+  await expect(page.getByLabel("Command preview result")).toContainText("Select or create a project first.");
+  await expect(page.getByLabel("Command preview result")).toContainText("Provider spend disabled");
 
   const body = await page.locator("body").innerText();
   expect(body).not.toContain("DemoApp");
   expect(body).not.toContain("raw JSON");
+  expect(errors).toEqual([]);
+});
+
+test("Ask NEXUS route provides visible conversational command entry and preview", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center");
+  await expect(page.getByRole("link", { name: /Ask NEXUS/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Open Ask NEXUS/i })).toBeVisible();
+  await expect(page.getByRole("button", { name: /Open chat/i })).toBeVisible();
+
+  await page.getByRole("button", { name: /Open Ask NEXUS/i }).click();
+  await expect(page).toHaveURL(/\/command-center\/command$/);
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Ask NEXUS");
+  await expect(page.getByText("Describe a goal, question, or operating command.")).toBeVisible();
+  const askContext = page.getByLabel("Ask NEXUS context");
+  await expect(askContext).toContainText("Command mode");
+  await expect(askContext).toContainText("Preview-only");
+  await expect(askContext).toContainText("Provider dispatch");
+  await expect(askContext).toContainText("Tool execution");
+  await expect(askContext).toContainText("Worker execution");
+
+  const composer = page.getByPlaceholder("Ask NEXUS to plan, review, QA, fix, ship, guard, freeze, or explain...");
+  await expect(composer).toBeVisible();
+  for (const prompt of [
+    "Plan the next milestone",
+    "Review current project readiness",
+    "Run QA readiness check",
+    "Explain blockers",
+    "Freeze project scope",
+    "Show release readiness",
+    "Summarize latest activity",
+    "What should I do next?",
+  ]) {
+    await expect(page.getByRole("button", { name: prompt })).toBeVisible();
+  }
+
+  await composer.fill("What should I do next?");
+  await page.getByRole("button", { name: "Preview command" }).click();
+  await expect(page.getByLabel("Command preview result")).toContainText("Intent");
+  await expect(page.getByLabel("Command preview result")).toContainText("Next governed action");
+  await expect(page.getByLabel("Command preview result")).toContainText("Provider spend disabled");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toContain("private-project-01");
+  expect(body).not.toContain("private-project-governed-build-mission");
+  expect(body).not.toContain("provider executed");
+  expect(body).not.toContain("tool executed");
+  expect(body).not.toContain("worker executed");
+  for (const label of FORBIDDEN_PHASE_LABELS) {
+    expect(body).not.toContain(label);
+  }
+  expect(errors).toEqual([]);
+});
+
+test("Ask NEXUS route renders in dark and light themes", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center/command");
+  await pickTheme(page, "dark");
+  await expect(page.locator(".ccv2-ask-nexus-page")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Preview command" })).toBeVisible();
+
+  await pickTheme(page, "light");
+  await expect(page.locator(".ccv2-ask-nexus-page")).toBeVisible();
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Ask NEXUS");
+
   expect(errors).toEqual([]);
 });
 
@@ -290,6 +371,7 @@ test("Command Center help links are visible on major routes", async ({ page }) =
   const errors = captureClientErrors(page);
   const helpRoutes = [
     "/command-center",
+    "/command-center/command",
     "/command-center/workspace",
     "/command-center/tasks",
     "/command-center/workbench",
@@ -320,6 +402,7 @@ test("Command Center help links are visible on major routes", async ({ page }) =
 test("Command Center help links map to expected usage docs", async ({ page }) => {
   const expectedHelp = [
     ["/command-center", "Starting a Mission", "docs/usage/STARTING_A_MISSION.md"],
+    ["/command-center/command", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/workspace", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/tasks", "Activating Tasks", "docs/usage/ACTIVATING_TASKS.md"],
     ["/command-center/workbench", "Using Agent Workbench", "docs/usage/USING_AGENT_WORKBENCH.md"],

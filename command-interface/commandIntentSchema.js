@@ -12,9 +12,10 @@ const INTENT_RULES = [
   { intentType: "run_quality_gate_preview", actionType: "governed_action_preview", riskLevel: "medium", pattern: /\b(qa|quality|test|validate|gate)\b/i },
   { intentType: "prepare_fix_preview", actionType: "governed_action_preview", riskLevel: "high", pattern: /\b(fix|repair|remediate|failure|bug)\b/i },
   { intentType: "prepare_release_preview", actionType: "governed_action_preview", riskLevel: "high", pattern: /\b(ship|release|deploy|launch)\b/i },
+  { intentType: "run_retro_preview", actionType: "read_only_summary", riskLevel: "low", pattern: /\b(retro|retrospective|summarize latest activity|latest activity|lessons learned)\b/i },
   { intentType: "guard_scope", actionType: "read_only_summary", riskLevel: "medium", pattern: /\b(guard|scope|boundary|policy)\b/i },
   { intentType: "freeze_scope", actionType: "blocked", riskLevel: "high", pattern: /\b(freeze|lock|pause)\b/i },
-  { intentType: "explain_status", actionType: "read_only_summary", riskLevel: "low", pattern: /\b(explain|status|what'?s|state|summary)\b/i },
+  { intentType: "explain_status", actionType: "read_only_summary", riskLevel: "low", pattern: /\b(explain|status|what'?s|what should|next|state|summary)\b/i },
   { intentType: "open_page", actionType: "route_preview", riskLevel: "low", pattern: /\b(open|show|go to|navigate)\b/i },
 ];
 
@@ -45,9 +46,9 @@ export function classifyCommandPreview(input = {}) {
     riskLevel,
     status: missingProject ? "blocked" : intentType === "unknown" ? "blocked" : "preview",
     reason: missingProject
-      ? "Select or create a project first."
-      : intentType === "unknown"
-        ? "Command intent is unknown. Try Plan, Review, QA, Fix, Ship, Guard, Freeze, Explain, or Open."
+        ? "Select or create a project first."
+        : intentType === "unknown"
+        ? "Command intent is unknown. Try Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, Explain, or Open."
         : "Classified by deterministic local command rules.",
     previewOnly: true,
   };
