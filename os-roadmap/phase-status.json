@@ -3459,12 +3459,14 @@
       "phaseId": "P56.1",
       "title": "PRD-to-Test Mapping",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/quality-intelligence-test-gap-detection",
-      "commit": "pending-subphase-commit",
+      "commit": "5404006",
       "completedAt": "",
       "summary": "PRD-to-Test Mapping",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:prd-test-mapping"
+      ],
       "knownLimitations": [
         "Preview-only; no test execution, provider/tool/worker/DB writes, or project mutation."
       ],
@@ -3475,9 +3477,9 @@
       "phaseId": "P56.2",
       "title": "Coverage Gap Detector",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/quality-intelligence-test-gap-detection",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Coverage Gap Detector",
       "checksRun": [],
@@ -3569,8 +3571,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T03:26:21.964Z",
-  "currentPhase": "P56.1",
-  "previousPhase": "P55.7",
-  "nextPhase": "P56.2"
+  "updatedAt": "2026-05-16T03:27:50.121Z",
+  "currentPhase": "P56.2",
+  "previousPhase": "P56.1",
+  "nextPhase": "P56.3"
 }

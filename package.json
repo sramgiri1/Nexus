@@ -191,7 +191,8 @@
     "check:test-selection-preview": "node scripts/check-test-selection-preview.js",
     "check:test-evidence-model": "node scripts/check-test-evidence-model.js",
     "check:test-suite-manager-final": "node scripts/check-test-suite-manager-final.js",
-    "check:prd-test-mapping": "node scripts/check-prd-test-mapping.js"
+    "check:prd-test-mapping": "node scripts/check-prd-test-mapping.js",
+    "check:coverage-gap-detector": "node scripts/check-coverage-gap-detector.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

@@ -1,28 +1,29 @@
-# PRD Test Mapping Report
+# Coverage Gap Detector Report
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:27:51.908Z
+- Generated at: 2026-05-16T03:27:51.296Z
 - Validation branch: arch/quality-intelligence-test-gap-detection
 - Validation HEAD: 5404006
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P56.1 - PRD-to-Test Mapping
+P56.2 - Coverage Gap Detector
 
 ## Summary
 
-- Requirements mapped: 8
-- Covered requirements: 8
-- Gap requirements: 0
+- Gaps found: 1
+- High severity: 1
+- Medium severity: 0
+- Test generation enabled: false
 - Execution enabled: false
 
 ## Checks
 
 - Modules: PASS
-- Mapping: PASS
-- Policy: PASS
+- Gaps: PASS
+- Recommendations: PASS
 - OS phase status: PASS
 - No forbidden changes: PASS
 - Report written: PASS
