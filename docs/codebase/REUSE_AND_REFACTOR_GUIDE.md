@@ -131,3 +131,21 @@ New Command Center tab work should reuse:
 
 Do not create page-local tab components unless a future phase explicitly
 documents why the shared tab system is insufficient.
+
+## P56.8 Shared Utility Foundation
+
+P56.8 adds the first concrete shared utility foundation:
+
+- [Shared Utilities](SHARED_UTILITIES.md)
+- [Module Ownership](MODULE_OWNERSHIP.md)
+- [Dependency Rules](DEPENDENCY_RULES.md)
+- [Design System](DESIGN_SYSTEM.md)
+- [Testing Strategy](TESTING_STRATEGY.md)
+
+These utilities are available for future phases, but P56.8 does not broadly
+refactor historical checkers or runtime modules. Future phases should reuse the
+new helpers for result envelopes, report metadata, report writing, mode guards,
+redaction, checker formatting, and phase-status updates.
+
+If an older checker keeps phase-local report writing for now, record it as a
+refactor candidate rather than rewriting unrelated code during feature phases.

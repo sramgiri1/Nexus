@@ -196,7 +196,8 @@
     "check:flaky-test-tracker": "node scripts/check-flaky-test-tracker.js",
     "check:test-recommendation-engine": "node scripts/check-test-recommendation-engine.js",
     "check:test-proposal-workflow": "node scripts/check-test-proposal-workflow.js",
-    "check:quality-intelligence-final": "node scripts/check-quality-intelligence-final.js"
+    "check:quality-intelligence-final": "node scripts/check-quality-intelligence-final.js",
+    "check:codebase-maintainability": "node scripts/check-codebase-maintainability.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

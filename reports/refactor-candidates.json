@@ -1,0 +1,51 @@
+{
+  "version": "1.0",
+  "generatedAt": "2026-05-16T04:17:58.205Z",
+  "candidates": [
+    {
+      "id": "checker-report-metadata-duplication",
+      "area": "reports/checkers",
+      "description": "Many checkers write report metadata manually.",
+      "recommendedUtility": "shared/reportWriter.js",
+      "risk": "low",
+      "recommendedPhase": "future-maintenance",
+      "doNow": false
+    },
+    {
+      "id": "checker-result-formatting-duplication",
+      "area": "checkers",
+      "description": "Checker scripts repeat PASS/FAIL console formatting.",
+      "recommendedUtility": "shared/checkResultFormatter.js",
+      "risk": "low",
+      "recommendedPhase": "future-maintenance",
+      "doNow": false
+    },
+    {
+      "id": "mode-guard-duplication",
+      "area": "policy/runtime guards",
+      "description": "Mode checks appear across scripts and modules with phase-local wording.",
+      "recommendedUtility": "shared/modeGuard.js",
+      "risk": "medium",
+      "recommendedPhase": "scoped-safety-refactor",
+      "doNow": false
+    },
+    {
+      "id": "redaction-helper-consolidation",
+      "area": "reports/local-api/dashboard",
+      "description": "Redaction behavior should converge carefully without changing public/private boundaries.",
+      "recommendedUtility": "shared/redaction.js",
+      "risk": "high",
+      "recommendedPhase": "dedicated-redaction-validation",
+      "doNow": false
+    },
+    {
+      "id": "phase-status-writer-consolidation",
+      "area": "os-roadmap",
+      "description": "Phase status updates are manually scripted across phases.",
+      "recommendedUtility": "os-roadmap/updatePhaseStatus.js",
+      "risk": "low",
+      "recommendedPhase": "future-maintenance",
+      "doNow": false
+    }
+  ]
+}

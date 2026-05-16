@@ -1200,6 +1200,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P56.8",
+      "title": "Codebase Maintainability Guardrails + Shared Utility Foundation",
+      "track": "NEXUS_OS",
+      "order": 30.8,
+      "group": "Planned OS Phases",
+      "summary": "Shared utility foundation, maintainability docs, reuse inventory, and refactor candidate guardrails before Cost Center.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P57",
       "title": "Cost Center + Budget Enforcement",
       "track": "NEXUS_OS",
@@ -1556,7 +1565,7 @@
       "track": "NEXUS_OS",
       "order": 38.02,
       "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Preview-only project-scoped test suite records for CareLoop.",
+      "summary": "Preview-only project-scoped test suite records for Private project.",
       "commandCenterVisible": true
     },
     {
@@ -1605,5 +1614,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T00:29:22.137Z"
+  "updatedAt": "2026-05-16T04:15:31.539Z"
 }

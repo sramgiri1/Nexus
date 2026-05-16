@@ -1793,7 +1793,7 @@
       "summary": "Planned cost center and budget enforcement.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "P58",
+      "nextPhase": "P57.1",
       "commandCenterVisible": true
     },
     {
@@ -3356,7 +3356,7 @@
       "branch": "arch/test-suite-manager-project-os",
       "commit": "pending",
       "completedAt": "",
-      "summary": "Preview-only project-scoped test suite records for CareLoop.",
+      "summary": "Preview-only project-scoped test suite records for Private project.",
       "checksRun": [
         "npm run check:project-test-suites"
       ],
@@ -3573,7 +3573,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/quality-intelligence-test-gap-detection",
-      "commit": "pending-final-commit",
+      "commit": "b4d4c4b",
       "completedAt": "2026-05-16T03:51:06.605Z",
       "summary": "Quality Intelligence Final Validation",
       "checksRun": [
@@ -3585,13 +3585,31 @@
       "knownLimitations": [
         "Preview-only; no test execution, provider/tool/worker/DB writes, or project mutation."
       ],
-      "nextPhase": "P57",
+      "nextPhase": "P56.8",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P56.8",
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "title": "Codebase Maintainability Guardrails + Shared Utility Foundation",
+      "status": "complete",
+      "branch": "chore/codebase-maintainability-guardrails",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T04:06:34.865Z",
+      "summary": "Adds shared utility foundations, maintainability docs, reuse inventory, refactor candidates, and codebase maintainability checks.",
+      "checksRun": [
+        "npm run check:codebase-maintainability"
+      ],
+      "knownLimitations": [
+        "Existing checkers are not broadly migrated; future phases should adopt shared utilities opportunistically."
+      ],
+      "nextPhase": "P57"
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T03:51:06.605Z",
+  "updatedAt": "2026-05-16T04:17:41.444Z",
   "currentPhase": "P57",
-  "previousPhase": "P56.7",
-  "nextPhase": "P57.1"
+  "previousPhase": "P56.8",
+  "nextPhase": "P57"
 }

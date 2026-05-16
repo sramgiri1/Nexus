@@ -1817,3 +1817,30 @@ state and should be verified again during future docs audits.
   Confirms testExecutionAllowed: false across all P55 outputs.
 - Known limitations:
   Real test execution deferred to P56.
+
+### P56.8 — Codebase Maintainability Guardrails + Shared Utility Foundation
+
+- Primary capability:
+  Add shared utility foundations and maintainability guardrails before Cost
+  Center work.
+- Main files/folders touched:
+  `shared/*`, `os-roadmap/updatePhaseStatus.js`,
+  `docs/codebase/SHARED_UTILITIES.md`,
+  `docs/codebase/MODULE_OWNERSHIP.md`,
+  `docs/codebase/DEPENDENCY_RULES.md`,
+  `docs/codebase/DESIGN_SYSTEM.md`,
+  `docs/codebase/TESTING_STRATEGY.md`
+- Main checker(s):
+  `scripts/check-codebase-maintainability.js`
+- Main report(s):
+  `reports/codebase-maintainability-report.md`,
+  `reports/shared-helper-inventory.json`,
+  `reports/refactor-candidates.json`
+- Command Center impact:
+  OS Roadmap status tracks P56.8 completion and P57 as next.
+- Safety impact:
+  No broad refactors, runtime behavior changes, provider/tool/worker/DB writes,
+  or private project mutation.
+- Known limitations:
+  Historical checkers are not broadly migrated; migration is deferred to future
+  scoped maintenance phases.

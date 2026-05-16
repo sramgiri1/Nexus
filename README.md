@@ -31,13 +31,13 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P41.7.7
+## Current Status Through P56.8
 
-P41.5 is complete, P41.6.1 through P41.6.6 are complete, and P41.7.1 through P41.7.7 now add the codebase documentation foundation,
-finalized tabbed Command Center validation layer, operator-facing usage documentation foundation, and route-aware Command Center help
-links. The P41.7 documentation track is complete, with docs coverage, OS phase status checks, and final Command Center docs polish
-part of the validation surface. The
-Command Center and local operator surface have:
+P41.5 through P56.7 are complete. P56.8 adds codebase maintainability
+guardrails, shared utility foundations, module ownership docs, dependency
+rules, design-system guidance, testing strategy guidance, and refactor candidate
+tracking without changing runtime behavior. The Command Center and local
+operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -56,6 +56,11 @@ Command Center and local operator surface have:
 - compact route-aware Command Center help links that point operators to the relevant local usage guide without executing actions
 - final docs coverage and OS phase status validation for the P41.7 documentation track
 - a compact global header, three-tab OS Roadmap, and real Docs & Guides index for usage, codebase, and architecture docs
+- activity, diagram, project-registry, scope-boundary, multi-repo, agent,
+  memory/context, mesh, skill/hook/tool, trigger, API/batch, test-suite-manager,
+  and quality-intelligence foundations through P56.7
+- shared utility foundations for result envelopes, report metadata/writing,
+  mode guards, redaction, checker formatting, and phase status updates
 
 ## Command Center Overview
 
@@ -155,6 +160,11 @@ npm run nexus:down
 - [Codebase docs landing page](docs/codebase/README.md)
 - [Module registry](docs/codebase/MODULE_REGISTRY.md)
 - [Phase module index](docs/codebase/PHASE_MODULE_INDEX.md)
+- [Shared utilities](docs/codebase/SHARED_UTILITIES.md)
+- [Module ownership](docs/codebase/MODULE_OWNERSHIP.md)
+- [Dependency rules](docs/codebase/DEPENDENCY_RULES.md)
+- [Design system](docs/codebase/DESIGN_SYSTEM.md)
+- [Testing strategy](docs/codebase/TESTING_STRATEGY.md)
 
 ## Architecture Diagrams
 
@@ -216,6 +226,8 @@ Public-facing README sections use “private project” wording. Private-project
 - P44.3: branch / commit workflow model
 - P44.4: PR draft + evidence link model
 - P44.5: review comment ingestion model
+- P56.8: codebase maintainability guardrails + shared utility foundation
+- P57: Cost Center + Budget Enforcement (next)
 - P44.6: merge gate + rollback branch model
 - P44.7: multi-repo Git/PR final validation
 

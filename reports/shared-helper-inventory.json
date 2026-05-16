@@ -1,0 +1,62 @@
+{
+  "inventoryVersion": "1.0",
+  "generatedAt": "2026-05-16T04:17:58.205Z",
+  "sharedUtilities": [
+    {
+      "id": "result-envelope",
+      "path": "shared/resultEnvelope.js",
+      "purpose": "standard structured pass/fail/blocked/skipped result objects",
+      "status": "available",
+      "migrationRequired": false
+    },
+    {
+      "id": "report-metadata",
+      "path": "shared/reportMetadata.js",
+      "purpose": "standard generated-at, branch, and Validation HEAD metadata",
+      "status": "available",
+      "migrationRequired": false
+    },
+    {
+      "id": "report-writer",
+      "path": "shared/reportWriter.js",
+      "purpose": "standard markdown report generation",
+      "status": "available",
+      "migrationRequired": false
+    },
+    {
+      "id": "mode-guard",
+      "path": "shared/modeGuard.js",
+      "purpose": "normalize and evaluate NEXUS execution modes",
+      "status": "available",
+      "migrationRequired": true
+    },
+    {
+      "id": "redaction",
+      "path": "shared/redaction.js",
+      "purpose": "redact secret-like values in reports and previews",
+      "status": "available",
+      "migrationRequired": true
+    },
+    {
+      "id": "check-result-formatter",
+      "path": "shared/checkResultFormatter.js",
+      "purpose": "standard checker console lines and summaries",
+      "status": "available",
+      "migrationRequired": true
+    },
+    {
+      "id": "phase-status-updater",
+      "path": "os-roadmap/updatePhaseStatus.js",
+      "purpose": "read, validate, update, and report OS phase status",
+      "status": "available",
+      "migrationRequired": true
+    }
+  ],
+  "knownDuplicatePatterns": [
+    "manual report metadata blocks in checkers",
+    "manual PASS/FAIL console formatting",
+    "phase-local mode guard checks",
+    "phase-local redaction logic",
+    "manual phase-status JSON edits"
+  ]
+}

@@ -92,6 +92,34 @@ const CURRENT_PHASE_IDS = new Set([
   "P53.6",
   "P53.7",
   "P54",
+  "P54.1",
+  "P54.2",
+  "P54.3",
+  "P54.4",
+  "P54.5",
+  "P54.6",
+  "P54.7",
+  "P54.8",
+  "P54.9",
+  "P55",
+  "P55.1",
+  "P55.2",
+  "P55.3",
+  "P55.4",
+  "P55.5",
+  "P55.6",
+  "P55.7",
+  "P56",
+  "P56.1",
+  "P56.2",
+  "P56.3",
+  "P56.4",
+  "P56.5",
+  "P56.6",
+  "P56.7",
+  "P56.8",
+  "P57",
+  "P57.1",
 ]);
 
 const sections = {
@@ -477,6 +505,25 @@ if (p441?.status === "complete") {
   check(p441?.branch === "arch/multi-repo-git-pr-lifecycle", "currentPhase", "P44.1 branch mismatch");
   check(Boolean(p441?.commit), "completedPhaseCommits", "P44.1 must have a commit or pending-final-commit placeholder");
 }
+
+const p568 = statusById.get("P56.8");
+check(p568?.status === "complete", "currentPhase", "P56.8 must be complete");
+check(
+  p568?.title === "Codebase Maintainability Guardrails + Shared Utility Foundation",
+  "currentPhase",
+  "P56.8 title mismatch",
+);
+check(
+  p568?.branch === "chore/codebase-maintainability-guardrails",
+  "currentPhase",
+  "P56.8 branch mismatch",
+);
+check(Boolean(p568?.commit), "completedPhaseCommits", "P56.8 must have a commit or pending-final-commit placeholder");
+check(p568?.nextPhase === "P57", "nextPhase", "P56.8 nextPhase must be P57");
+
+const p57 = statusById.get("P57");
+check(["planned", "in_progress"].includes(p57?.status), "nextPhase", "P57 must be planned or in progress");
+check(p57?.title === "Cost Center + Budget Enforcement", "nextPhase", "P57 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

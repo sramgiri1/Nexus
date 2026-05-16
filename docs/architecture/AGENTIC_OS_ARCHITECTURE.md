@@ -836,3 +836,16 @@ The registry does not grant runtime authority. Provider calls, tool dispatch,
 worker execution, DB writes, release execution, source mutation, and agent
 self-update remain disabled until a later governed runtime phase explicitly
 enables them.
+
+## 14. Codebase Maintainability Guardrails
+
+P56.8 adds shared utility foundations for cross-cutting NEXUS code patterns:
+result envelopes, report metadata, report writing, mode guards, redaction,
+checker formatting, and OS phase status updates. These utilities are additive
+and do not change runtime behavior.
+
+The maintainability guardrails also document module ownership, dependency
+direction rules, design-system expectations, testing strategy, shared utility
+adoption, helper inventory, and refactor candidates. High-risk runtime and
+security paths remain unchanged until a dedicated refactor phase defines scope,
+rollback, and validation.
