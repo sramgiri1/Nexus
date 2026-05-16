@@ -11,14 +11,19 @@ import {
   createWorkerQueueItem,
   acquireLeasePreview,
   createHeartbeat,
+  calculateNextRetry,
+  classifyTimeout,
+  createRetryPolicy,
   getWorkerRuntimePolicy,
   detectStaleHeartbeats,
   listWorkerQueueItems,
   releaseLeasePreview,
   summarizeHeartbeats,
   summarizeLeases,
+  summarizeRetryTimeoutState,
   summarizeWorkerQueue,
   validateHeartbeat,
+  validateRetryPolicy,
   validateWorkerLease,
   validateWorkerQueueItem,
 } from "../worker-runtime/index.js";
@@ -32,6 +37,7 @@ const checks = [
   { key: "queueSchema", name: "Queue schema", status: "PASS", details: "" },
   { key: "leases", name: "Lease model", status: "PASS", details: "" },
   { key: "heartbeats", name: "Heartbeats", status: "PASS", details: "" },
+  { key: "retryTimeout", name: "Retry/timeout", status: "PASS", details: "" },
   { key: "policy", name: "Policy", status: "PASS", details: "" },
   { key: "auditOnly", name: "Execution disabled", status: "PASS", details: "" },
   { key: "reports", name: "Reports", status: "PASS", details: "" },
@@ -73,6 +79,7 @@ for (const filePath of [
   "worker-runtime/workerQueue.js",
   "worker-runtime/leaseModel.js",
   "worker-runtime/heartbeatModel.js",
+  "worker-runtime/retryTimeoutModel.js",
   "worker-runtime/runtimeSummary.js",
   "worker-runtime/index.js",
   "policy/worker-runtime-policy.json",
@@ -150,6 +157,21 @@ if (typeof createHeartbeat === "function") {
   const heartbeatSummary = summarizeHeartbeats([heartbeat]);
   check(heartbeatSummary.executionEnabled === false, "auditOnly", "Heartbeat summary must keep execution disabled");
 }
+
+if (typeof createRetryPolicy === "function") {
+  const retryPolicy = createRetryPolicy({ maxAttempts: 2, baseDelaySeconds: 10, maxDelaySeconds: 60 });
+  const retryValidation = validateRetryPolicy(retryPolicy);
+  check(retryValidation.valid, "retryTimeout", `Valid retry policy failed: ${retryValidation.errors.join(", ")}`);
+  const retryPreview = calculateNextRetry(1, retryPolicy);
+  check(retryPreview.retryAllowed === true, "retryTimeout", "Retry preview should allow retry before max attempts");
+  check(retryPreview.executionEnabled === false, "auditOnly", "Retry preview must keep execution disabled");
+  const maxAttemptPreview = calculateNextRetry(2, retryPolicy);
+  check(maxAttemptPreview.retryAllowed === false, "retryTimeout", "Retry preview should block at max attempts");
+  const timeout = classifyTimeout(item, { expiresAt: "2020-01-01T00:00:00.000Z" }, retryPolicy);
+  check(timeout.timedOut === true, "retryTimeout", "Timeout classification should detect expired lease");
+  const retrySummary = summarizeRetryTimeoutState([item]);
+  check(retrySummary.automaticRetryExecutionEnabled === false, "auditOnly", "Retry summary must keep automatic retry disabled");
+}
 check(!hasPrivateProjectDiff(), "noForbiddenChanges", "Private project files must not change");
 
 const phaseStatus = JSON.parse((await import("node:fs")).readFileSync(join(ROOT, "os-roadmap/phase-status.json"), "utf8"));
@@ -160,6 +182,9 @@ if (statusById.has("P60.2")) {
 }
 if (statusById.has("P60.3")) {
   check(statusById.get("P60.3")?.status === "complete", "osPhaseStatus", "P60.3 must be complete once present");
+}
+if (statusById.has("P60.4")) {
+  check(statusById.get("P60.4")?.status === "complete", "osPhaseStatus", "P60.4 must be complete once present");
 }
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 

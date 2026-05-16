@@ -1,15 +1,7 @@
 import { summarizeHeartbeats } from "./heartbeatModel.js";
 import { summarizeLeases } from "./leaseModel.js";
+import { summarizeRetryTimeoutState } from "./retryTimeoutModel.js";
 import { summarizeWorkerQueue } from "./workerQueue.js";
-
-function summarizeRetryTimeoutState(items = []) {
-  return {
-    totalItems: items.length,
-    modeled: false,
-    executionEnabled: false,
-    warning: "Retry/timeout modeling is added in P60.4.",
-  };
-}
 
 function summarizeDeadLetterQueue(items = []) {
   return {
