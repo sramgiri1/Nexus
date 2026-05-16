@@ -1983,7 +1983,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "32538a8",
       "completedAt": "2026-05-16T15:22:54.122Z",
       "summary": "Read-only secret reference schema and registry.",
       "checksRun": [
@@ -1999,12 +1999,14 @@
       "phaseId": "P59.2",
       "title": "Secret Access Policy",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Preview-only access decisions for secret references.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:24:33.151Z",
+      "summary": "Added preview-only secret access policy decisions with raw value resolution blocked.",
+      "checksRun": [
+        "npm run check:secret-access-policy"
+      ],
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
       ],
@@ -3988,8 +3990,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:22:54.122Z",
-  "currentPhase": "P59.1",
-  "previousPhase": "P58",
-  "nextPhase": "P59.2"
+  "updatedAt": "2026-05-16T15:24:33.151Z",
+  "currentPhase": "P59.2",
+  "previousPhase": "P59.1",
+  "nextPhase": "P59.3"
 }

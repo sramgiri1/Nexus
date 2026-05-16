@@ -212,7 +212,8 @@
     "check:policy-exception-workflow": "node scripts/check-policy-exception-workflow.js",
     "check:break-glass-policy": "node scripts/check-break-glass-policy.js",
     "check:policy-center-final-validation": "node scripts/check-policy-center-final-validation.js",
-    "check:secret-reference-model": "node scripts/check-secret-reference-model.js"
+    "check:secret-reference-model": "node scripts/check-secret-reference-model.js",
+    "check:secret-access-policy": "node scripts/check-secret-access-policy.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

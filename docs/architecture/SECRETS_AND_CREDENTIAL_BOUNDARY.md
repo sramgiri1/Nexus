@@ -21,3 +21,10 @@ or mutate project files in P59.
 ## Next Steps
 
 P59.2 adds preview-only secret access policy decisions.
+
+## P59.2 - Secret Access Policy
+
+Secret access policy allows metadata-only inspection of secret references when
+mode and scope permit it. Raw value resolution is always blocked in P59.
+Production-placeholder metadata requires approval, and public/demo access is
+denied.
