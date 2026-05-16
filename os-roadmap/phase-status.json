@@ -2142,14 +2142,18 @@
       "phaseId": "P60",
       "title": "Worker Queue + Runtime Engine",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Worker Queue + Runtime Engine is next.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P61",
+      "summary": "Builds preview-only worker queue, lease, heartbeat, retry/timeout, dead-letter, and Command Center runtime primitives without enabling execution.",
+      "checksRun": [
+        "npm run check:worker-runtime"
+      ],
+      "knownLimitations": [
+        "Runtime execution remains disabled until later phases."
+      ],
+      "nextPhase": "P60.1",
       "commandCenterVisible": true
     },
     {
@@ -4032,11 +4036,125 @@
       "title": "Cost Center Final Validation",
       "summary": "Validates and closes P57 Cost Center + Budget Enforcement.",
       "nextPhase": "P58"
+    },
+    {
+      "phaseId": "P60.1",
+      "title": "Worker Queue Schema",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T18:18:50.905Z",
+      "summary": "Define preview-only worker queue schema and policy.",
+      "checksRun": [
+        "npm run check:worker-runtime"
+      ],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.2",
+      "title": "Task Lease Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Model safe task leases for future workers without execution.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.3",
+      "title": "Heartbeats",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Model future worker heartbeat records without daemons or timers.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.4",
+      "title": "Retry / Timeout",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Model retry policy and timeout classification without automatic retry loops.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.5",
+      "title": "Dead-Letter Queue",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Model dead-letter queue records and recovery guidance without requeue execution.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.6",
+      "title": "Worker Runtime UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Expose preview-only worker runtime state in Command Center.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P60.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Validate and close the worker queue runtime engine foundation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
+      ],
+      "nextPhase": "P61",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T16:53:29.397Z",
-  "currentPhase": "P60",
-  "previousPhase": "P59.8",
-  "nextPhase": "P60"
+  "updatedAt": "2026-05-16T18:18:50.908Z",
+  "currentPhase": "P60.2",
+  "previousPhase": "P60.1",
+  "nextPhase": "P60.2"
 }

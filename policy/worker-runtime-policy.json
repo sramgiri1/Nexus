@@ -1,0 +1,24 @@
+{
+  "version": "1.0",
+  "phase": "P60",
+  "purpose": "worker_queue_runtime_engine_preview",
+  "workerRuntimeEnabled": "preview_only",
+  "taskExecutionAllowed": false,
+  "providerCallsAllowed": false,
+  "toolCallsAllowed": false,
+  "externalNetworkAllowed": false,
+  "projectMutationAllowed": false,
+  "dbWritesAllowed": false,
+  "workerLoopAllowed": false,
+  "arbitraryCommandAllowed": false,
+  "evidenceAllowed": true,
+  "activityAllowed": true,
+  "runtimeStateDirectory": "local-state/runtime",
+  "allowedStateFiles": [
+    "local-state/runtime/worker-queue.jsonl",
+    "local-state/runtime/worker-leases.jsonl",
+    "local-state/runtime/worker-heartbeats.jsonl",
+    "local-state/runtime/dead-letter-queue.jsonl"
+  ],
+  "safetyNote": "P60 models worker runtime primitives only. It does not execute agents, tools, providers, shell commands, project mutations, or DB writes."
+}

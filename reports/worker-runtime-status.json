@@ -1,0 +1,26 @@
+{
+  "phase": "P60",
+  "generatedAt": "2026-05-16T18:18:52.217Z",
+  "branch": "arch/worker-queue-runtime-engine",
+  "head": "ad01576",
+  "result": "PASS",
+  "queue": {
+    "modeled": true,
+    "executionEnabled": false,
+    "totalItems": 1,
+    "queued": 1,
+    "blocked": 0,
+    "leased": 0,
+    "running": 0,
+    "completed": 0,
+    "failed": 0,
+    "deadLetter": 0,
+    "warning": "Worker queue preview is modeled. Runtime execution is not enabled."
+  },
+  "executionEnabled": false,
+  "providerCallsAllowed": false,
+  "toolCallsAllowed": false,
+  "projectMutationAllowed": false,
+  "dbWritesAllowed": false,
+  "failures": []
+}

@@ -1446,9 +1446,9 @@
       "phaseId": "P60",
       "title": "Worker Queue + Runtime Engine",
       "track": "NEXUS_OS",
-      "order": 34,
-      "group": "Planned OS Phases",
-      "summary": "Deliver governed background execution through worker queues and runtime control.",
+      "order": 35,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Preview-only durable worker runtime primitives for future governed execution.",
       "commandCenterVisible": true
     },
     {
@@ -1818,6 +1818,69 @@
       "order": 38.07,
       "group": "P55 Test Suite Manager: Project + OS",
       "summary": "Comprehensive final validation of all P55 subphases.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.1",
+      "title": "Worker Queue Schema",
+      "track": "NEXUS_OS",
+      "order": 35.01,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Define preview-only worker queue schema and policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.2",
+      "title": "Task Lease Model",
+      "track": "NEXUS_OS",
+      "order": 35.019999999999996,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model safe task leases for future workers without execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.3",
+      "title": "Heartbeats",
+      "track": "NEXUS_OS",
+      "order": 35.03,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model future worker heartbeat records without daemons or timers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.4",
+      "title": "Retry / Timeout",
+      "track": "NEXUS_OS",
+      "order": 35.04,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model retry policy and timeout classification without automatic retry loops.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.5",
+      "title": "Dead-Letter Queue",
+      "track": "NEXUS_OS",
+      "order": 35.05,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model dead-letter queue records and recovery guidance without requeue execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.6",
+      "title": "Worker Runtime UX",
+      "track": "NEXUS_OS",
+      "order": 35.059999999999995,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Expose preview-only worker runtime state in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 35.07,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Validate and close the worker queue runtime engine foundation.",
       "commandCenterVisible": true
     }
   ],
