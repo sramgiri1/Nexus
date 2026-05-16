@@ -1092,4 +1092,15 @@ heartbeats, retry/timeout classification, dead-letter records, runtime summary,
 and a Command Center Worker Runtime page at `/command-center/workers`.
 
 P60 does not execute agents, tools, providers, shell commands, DB writes, or
-project mutations. P61 - Concurrent Execution + Work Deduplication is next.
+project mutations.
+
+## P61 - Concurrent Execution + Work Deduplication
+
+P61 defines preview-only concurrency governance for future parallel work. It
+adds a concurrency policy, project/repo/path/agent/capability lock previews,
+deterministic duplicate work detection, queue priority previews, cancellation
+previews, and Command Center visibility on the Worker Runtime page.
+
+P61 does not enforce locks, reorder queues, merge tasks, cancel workers, execute
+agents, call providers, dispatch tools, write DB records, or mutate project
+files. P62 - Conversational NEXUS Command Interface is next.

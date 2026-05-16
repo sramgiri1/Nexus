@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T18:38:19.307Z
-- Validation branch: arch/worker-queue-runtime-engine
-- Validation HEAD: 209ad8f
+- Generated at: 2026-05-16T18:55:40.022Z
+- Validation branch: arch/concurrent-execution-deduplication
+- Validation HEAD: 5b93eb4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -28,6 +28,7 @@
 - Secrets Boundary UX: PASS
 - Test Center UX: PASS
 - Quality Intelligence UX: PASS
+- Concurrency preview UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS

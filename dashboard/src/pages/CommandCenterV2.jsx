@@ -2600,6 +2600,32 @@ function TaskQueuePage({ vm }) {
           </div>
         </div>
 
+        <div className="ccv2-card ccv2-page-summary-card">
+          <div className="ccv2-section-heading">Concurrency Preview</div>
+          <div className="ccv2-page-summary-grid">
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Lock preview</span>
+              <span className="ccv2-page-summary-value">Preview-ready</span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Duplicate work</span>
+              <span className="ccv2-page-summary-value">Preview-ready</span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Priority model</span>
+              <span className="ccv2-page-summary-value">Preview-ready</span>
+            </div>
+            <div className="ccv2-page-summary-row">
+              <span className="ccv2-page-summary-label">Cancellation</span>
+              <span className="ccv2-page-summary-value">Preview-ready</span>
+            </div>
+          </div>
+          <p className="ccv2-muted">
+            These P61 badges are read-only previews. They do not merge tasks, reorder queues,
+            cancel work, enforce locks, or start parallel execution.
+          </p>
+        </div>
+
         <CommandTabs
           tabs={TASK_QUEUE_TABS}
           activeTab={activeTaskTab}
@@ -3637,6 +3663,19 @@ function ProjectsPage({ vm, studio }) {
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter runtime</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Project mutation</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
           </div>
+          <div className="ccv2-card" style={{ marginTop: 12 }}>
+            <div className="ccv2-section-heading">Concurrency Limits</div>
+            <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Per project</span><span className="ccv2-page-summary-value">1 preview task</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Per repo</span><span className="ccv2-page-summary-value">1 preview task</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Per agent</span><span className="ccv2-page-summary-value">1 preview task</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Execution</span><span className="ccv2-safety-row__value--disabled">Not enabled yet</span></div>
+            </div>
+            <p className="ccv2-muted">
+              P61 models project, repo, path, agent, and capability coordination only.
+              Project Registry remains the source of project identity; no project mutation is enabled.
+            </p>
+          </div>
         </div>
 
         <CommandTabs tabs={PROJECTS_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Projects sections">
@@ -3871,6 +3910,7 @@ function WorkerRuntimePage({ vm }) {
   const [activeTab, setActiveTab] = useState("overview");
   const runtime = vm.workerRuntime || {};
   const statusCards = runtime.statusCards || [];
+  const concurrency = runtime.concurrencyPreview || {};
   const developerDetails = runtime.developerDetails || {};
 
   return (
@@ -3910,6 +3950,17 @@ function WorkerRuntimePage({ vm }) {
           <div className="ccv2-card" style={{ marginTop: 16 }}>
             <div className="ccv2-section-heading">Next Action</div>
             <p className="ccv2-muted">{runtime.nextAction || "Continue to P61 for concurrency and work deduplication."}</p>
+          </div>
+          <div className="ccv2-card" style={{ marginTop: 16 }}>
+            <div className="ccv2-section-heading">Concurrency Readiness</div>
+            <div className="ccv2-page-summary-grid">
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Execution</span><span className="ccv2-safety-row__value--disabled">{concurrency.executionStatus || "Not enabled yet"}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Lock model</span><span className="ccv2-page-summary-value">{concurrency.lockModel || "Preview-ready"}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Duplicate detection</span><span className="ccv2-page-summary-value">{concurrency.duplicateDetection || "Preview-ready"}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Priority model</span><span className="ccv2-page-summary-value">{concurrency.priorityModel || "Preview-ready"}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cancellation</span><span className="ccv2-page-summary-value">{concurrency.cancellationModel || "Preview-ready"}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Policy</span><span className="ccv2-page-summary-value">{concurrency.policyStatus || "Preview-only policy loaded"}</span></div>
+            </div>
           </div>
         </CommandTabPanel>
 
@@ -3952,6 +4003,38 @@ function WorkerRuntimePage({ vm }) {
               <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DLQ model</span><span className="ccv2-page-summary-value">Available</span></div>
               <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Requeue execution</span><span className="ccv2-safety-row__value--disabled">Not enabled</span></div>
               <p className="ccv2-muted">Suggested action: inspect blocker and wait for a future governed requeue workflow.</p>
+            </div>
+          </div>
+        </CommandTabPanel>
+
+        <CommandTabPanel tabId="concurrency" activeTab={activeTab}>
+          <div className="ccv2-grid ccv2-grid--two">
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Concurrency Policy</div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Max per project</span><span className="ccv2-page-summary-value">{concurrency.maxConcurrentTasksPerProject || 1}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Max per repo</span><span className="ccv2-page-summary-value">{concurrency.maxConcurrentTasksPerRepo || 1}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Max per agent</span><span className="ccv2-page-summary-value">{concurrency.maxConcurrentTasksPerAgent || 1}</span></div>
+              <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Parallel execution</span><span className="ccv2-safety-row__value--disabled">Not enabled yet</span></div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Preview Models</div>
+              {["Lock model", "Duplicate work preview", "Priority preview", "Cancellation preview"].map((label) => (
+                <div className="ccv2-page-summary-row" key={label}>
+                  <span className="ccv2-page-summary-label">{label}</span>
+                  <span className="ccv2-page-summary-value">Preview-ready</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className="ccv2-card" style={{ marginTop: 16 }}>
+            <div className="ccv2-section-heading">Safety Notes</div>
+            <div className="ccv2-list">
+              {(concurrency.safetyNotes || []).map((note) => (
+                <div className="ccv2-list-row" key={note}>
+                  <span className="ccv2-list-row__title">{note}</span>
+                  <span className="ccv2-pill ccv2-pill--disabled">Preview</span>
+                </div>
+              ))}
             </div>
           </div>
         </CommandTabPanel>

@@ -236,7 +236,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P59: Secrets and Credential Boundary
 - P59.8: Command Center OS / Multi-Project Identity Cleanup
 - P60: Worker Queue + Runtime Engine (complete; preview-only runtime primitives)
-- P61: Concurrent Execution + Work Deduplication (next)
+- P61: Concurrent Execution + Work Deduplication (complete; preview-only governance models)
 - P44.6: merge gate + rollback branch model
 - P44.7: multi-repo Git/PR final validation
 
@@ -246,6 +246,23 @@ Command Center includes a Worker Runtime page at `/command-center/workers`.
 It models queue, lease, heartbeat, retry/timeout, and dead-letter primitives but
 does not execute agents, providers, tools, DB writes, shell commands, or project
 mutations. Run `npm run check:worker-runtime` to validate the preview model.
+
+## Concurrent Execution Preview
+
+P61 adds preview-only concurrency governance: policy limits, lock proposals,
+duplicate work detection, queue priority previews, and cancellation previews.
+These models are visible from the Worker Runtime page and validated with:
+
+```bash
+npm run check:concurrency-policy
+npm run check:concurrency-locks
+npm run check:work-deduplication
+npm run check:queue-priority
+npm run check:task-cancellation
+```
+
+P61 does not enable true parallel execution, lock enforcement, task merging,
+worker cancellation, provider/tool dispatch, DB writes, or project mutation.
 
 ## Known Limitations
 

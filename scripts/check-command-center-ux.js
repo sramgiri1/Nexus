@@ -61,6 +61,7 @@ const sections = {
   testCenterUx: true,
   qualityIntelligenceUx: true,
   workerRuntimeUx: true,
+  concurrencyPreviewUx: true,
 };
 
 const failures = [];
@@ -646,6 +647,10 @@ for (const expected of [
   "Worker Runtime",
   "Durable background execution foundation for future governed tasks.",
   "P60 defines runtime primitives only. It does not execute agents, tools, providers, or project mutations yet.",
+  "Concurrency Readiness",
+  "Concurrency Policy",
+  "Duplicate work preview",
+  "Cancellation preview",
   "Worker queue",
   "Leases",
   "Heartbeats",
@@ -653,6 +658,7 @@ for (const expected of [
   "Dead-letter queue",
   "Runtime execution",
   "policy/worker-runtime-policy.json",
+  "policy/concurrency-policy.json",
 ]) {
   check(workerRuntimeUxSource.includes(expected), "workerRuntimeUx", `Worker Runtime page missing expected copy: ${expected}`);
 }
@@ -663,8 +669,24 @@ for (const expected of [
 ]) {
   check(routeSource.includes(expected) || commandTabsSource.includes(expected), "workerRuntimeUx", `Worker Runtime route/tab metadata missing: ${expected}`);
 }
+for (const expected of [
+  "Concurrency Readiness",
+  "Lock preview",
+  "Duplicate work",
+  "Priority model",
+  "Cancellation",
+  "Concurrency Limits",
+  "No real parallel execution is enabled.",
+]) {
+  check(
+    workerRuntimeUxSource.includes(expected) || commandCenterSource.includes(expected),
+    "concurrencyPreviewUx",
+    `Concurrency preview UX missing expected copy: ${expected}`,
+  );
+}
 for (const expectedTest of [
   "Worker Runtime route renders preview-only runtime primitives",
+  "Worker Runtime route renders concurrency readiness previews",
   "Retries / DLQ",
 ]) {
   check(routeTestSource.includes(expectedTest), "workerRuntimeUx", `Worker Runtime tests missing: ${expectedTest}`);
@@ -1562,6 +1584,7 @@ console.log(`Secrets Boundary UX: ${sections.secretsBoundaryUx ? "PASS" : "FAIL"
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
 console.log(`Worker Runtime UX: ${sections.workerRuntimeUx ? "PASS" : "FAIL"}`);
+console.log(`Concurrency preview UX: ${sections.concurrencyPreviewUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1626,6 +1649,7 @@ const report = `# Command Center UX Report
 - Secrets Boundary UX: ${sections.secretsBoundaryUx ? "PASS" : "FAIL"}
 - Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
+- Concurrency preview UX: ${sections.concurrencyPreviewUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

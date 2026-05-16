@@ -626,6 +626,12 @@ export const WORKER_RUNTIME_TABS = [
     badge: "Modeled",
   },
   {
+    id: "concurrency",
+    label: "Concurrency",
+    description: "Locks, duplicate work, priority, and cancellation previews",
+    badge: "Preview",
+  },
+  {
     id: "developer-details",
     label: "Developer Details",
     description: "Policy and local artifact references",

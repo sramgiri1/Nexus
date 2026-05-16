@@ -559,11 +559,18 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Dead-letter queue");
     await expect(page.locator("body")).toContainText("Runtime execution");
     await expect(page.locator("body")).toContainText("Not enabled");
+    await expect(page.locator("body")).toContainText("Concurrency Readiness");
     await expect(commandTab(page, "Queue")).toBeVisible();
     await commandTab(page, "Retries / DLQ").click();
     await expect(activeCommandTabPanel(page)).toContainText("Requeue execution");
+    await commandTab(page, "Concurrency").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Concurrency Policy");
+    await expect(activeCommandTabPanel(page)).toContainText("Duplicate work preview");
+    await expect(activeCommandTabPanel(page)).toContainText("Cancellation preview");
+    await expect(activeCommandTabPanel(page)).toContainText("Parallel execution");
     await commandTab(page, "Developer Details").click();
     await expect(activeCommandTabPanel(page)).toContainText("policy/worker-runtime-policy.json");
+    await expect(activeCommandTabPanel(page)).toContainText("policy/concurrency-policy.json");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toContain("DemoApp");
@@ -575,6 +582,27 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-command-tabs")).toBeVisible();
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Worker Runtime route renders concurrency readiness previews", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/workers");
+
+    await expect(page.locator("body")).toContainText("Concurrency Readiness");
+    await expect(page.locator("body")).toContainText("Lock model");
+    await expect(page.locator("body")).toContainText("Duplicate detection");
+    await expect(page.locator("body")).toContainText("Priority model");
+    await expect(page.locator("body")).toContainText("Cancellation");
+    await commandTab(page, "Concurrency").click();
+    await expect(activeCommandTabPanel(page)).toContainText("No real parallel execution is enabled.");
+    await expect(activeCommandTabPanel(page)).toContainText("Priority previews do not reorder worker queues.");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
 
     expect(errors).toEqual([]);
   });
@@ -1155,6 +1183,9 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.getByText("Queue Summary", { exact: false })).toBeVisible();
     await expect(page.getByText("Task State Summary", { exact: false })).toBeVisible();
+    await expect(page.locator("body")).toContainText("Concurrency Preview");
+    await expect(page.locator("body")).toContainText("Duplicate work");
+    await expect(page.locator("body")).toContainText("Priority model");
     await expect(page.getByText("Planned Tasks", { exact: false })).toBeVisible();
     await expect(page.locator("body")).toContainText(/Activate a planned task|No activated tasks yet|Activated Runtime Tasks/);
 
@@ -1328,6 +1359,9 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Selected Project: Selected Project");
     await expect(page.locator("body")).toContainText("Project Type: SaaS + Mobile");
     await expect(page.locator("body")).toContainText("Stack: Node/Fastify + Prisma + iOS");
+    await expect(page.locator("body")).toContainText("Concurrency Limits");
+    await expect(page.locator("body")).toContainText("Per project");
+    await expect(page.locator("body")).toContainText("Execution");
 
     for (const label of ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]) {
       await expect(commandTab(page, label)).toBeVisible();
