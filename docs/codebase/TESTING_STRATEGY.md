@@ -17,6 +17,8 @@ unsafe runtime behavior.
 - Screenshot/visual audits catch broad UX regressions.
 - Integration/dry-run tests validate boot or runtime plans without unsafe
   execution.
+- Cost governance checks validate ledgers, budgets, estimates, preview actuals,
+  and budget decisions without provider calls or real spend.
 
 ## Update Rule
 

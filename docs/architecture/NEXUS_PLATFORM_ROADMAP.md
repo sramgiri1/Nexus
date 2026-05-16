@@ -1035,4 +1035,12 @@ dependency rules, design-system guidance, testing strategy guidance, shared
 helper inventory, and refactor candidates. P56.8 is additive only; broad
 refactors and runtime behavior changes are deferred.
 
-P57 - Cost Center + Budget Enforcement is next.
+## P57 - Cost Center + Budget Enforcement
+
+P57 adds a governed Cost Center foundation. It introduces redacted cost ledger
+records, budget policies, estimate-before-run previews, preview actual-cost
+records, budget block/approval decisions, and a read-only Command Center Cost
+Center UX. P57 does not call providers, upload batches, execute tools, start
+workers, write to DB, mutate project files, or claim real spend.
+
+P58 - Policy Center + Governance Admin is next.

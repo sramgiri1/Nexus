@@ -1209,7 +1209,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
       ["/command-center/projects", ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]],
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
-      ["/command-center/cost", ["Overview", "Budgets", "By Project", "By Agent", "Provider Spend"]],
+      ["/command-center/cost", ["Overview", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
     ];
 
@@ -2238,9 +2238,9 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("{\"");
     expect(body).not.toContain("real spend captured");
 
-    await setTheme(page, "dark");
+    await pickTheme(page, "dark");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
-    await setTheme(page, "light");
+    await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
 
     expect(errors).toEqual([]);

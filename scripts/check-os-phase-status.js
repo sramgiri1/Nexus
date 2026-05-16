@@ -120,6 +120,13 @@ const CURRENT_PHASE_IDS = new Set([
   "P56.8",
   "P57",
   "P57.1",
+  "P57.2",
+  "P57.3",
+  "P57.4",
+  "P57.5",
+  "P57.6",
+  "P57.7",
+  "P58",
 ]);
 
 const sections = {
@@ -522,8 +529,12 @@ check(Boolean(p568?.commit), "completedPhaseCommits", "P56.8 must have a commit 
 check(p568?.nextPhase === "P57", "nextPhase", "P56.8 nextPhase must be P57");
 
 const p57 = statusById.get("P57");
-check(["planned", "in_progress"].includes(p57?.status), "nextPhase", "P57 must be planned or in progress");
+check(["planned", "in_progress", "complete"].includes(p57?.status), "nextPhase", "P57 must be planned, in progress, or complete");
 check(p57?.title === "Cost Center + Budget Enforcement", "nextPhase", "P57 title mismatch");
+
+const p58 = statusById.get("P58");
+check(["planned", "in_progress"].includes(p58?.status), "nextPhase", "P58 must be planned or in progress");
+check(p58?.title === "Policy Center + Governance Admin", "nextPhase", "P58 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

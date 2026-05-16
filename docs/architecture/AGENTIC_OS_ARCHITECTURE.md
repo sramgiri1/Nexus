@@ -849,3 +849,15 @@ direction rules, design-system expectations, testing strategy, shared utility
 adoption, helper inventory, and refactor candidates. High-risk runtime and
 security paths remain unchanged until a dedicated refactor phase defines scope,
 rollback, and validation.
+
+## 15. Cost Center + Budget Enforcement
+
+P57 adds the Cost Center as a governance layer for future execution. Cost
+records, budget policies, estimates, preview actuals, and enforcement decisions
+are modeled before provider/tool/worker execution is enabled.
+
+The Cost Center is preview-only in P57. It can show estimates, redacted ledger
+records, and budget decisions, but it does not spend money, call providers,
+upload batches, start workers, write to DB, mutate project files, or execute
+tools. Later runtime phases must route through these cost controls before real
+dispatch is enabled.

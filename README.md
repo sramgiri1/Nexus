@@ -31,13 +31,13 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P56.8
+## Current Status Through P57
 
-P41.5 through P56.7 are complete. P56.8 adds codebase maintainability
-guardrails, shared utility foundations, module ownership docs, dependency
-rules, design-system guidance, testing strategy guidance, and refactor candidate
-tracking without changing runtime behavior. The Command Center and local
-operator surface have:
+P41.5 through P57 are complete. P57 adds Cost Center + Budget Enforcement
+foundations: redacted cost ledger records, scoped budget policies,
+estimate-before-run previews, actual-cost preview records, budget
+block/approval decisions, and a read-only Command Center Cost Center UX. The
+Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -61,6 +61,8 @@ operator surface have:
   and quality-intelligence foundations through P56.7
 - shared utility foundations for result envelopes, report metadata/writing,
   mode guards, redaction, checker formatting, and phase status updates
+- preview-only cost governance with provider spend, worker runtime, DB writes,
+  and project mutation still disabled
 
 ## Command Center Overview
 
@@ -227,7 +229,8 @@ Public-facing README sections use “private project” wording. Private-project
 - P44.4: PR draft + evidence link model
 - P44.5: review comment ingestion model
 - P56.8: codebase maintainability guardrails + shared utility foundation
-- P57: Cost Center + Budget Enforcement (next)
+- P57: Cost Center + Budget Enforcement
+- P58: Policy Center + Governance Admin (next)
 - P44.6: merge gate + rollback branch model
 - P44.7: multi-repo Git/PR final validation
 

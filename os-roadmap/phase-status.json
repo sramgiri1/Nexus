@@ -1786,14 +1786,16 @@
       "phaseId": "P57",
       "title": "Cost Center + Budget Enforcement",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/cost-center-budget-enforcement",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "Cost Center + Budget Enforcement is in progress with preview-only cost governance foundations.",
-      "checksRun": [],
+      "completedAt": "2026-05-16T12:58:31.780Z",
+      "summary": "Completed preview-only Cost Center ledger, budget, estimator, recorder, enforcer, and Command Center UX foundations.",
+      "checksRun": [
+        "npm run check:cost-center-final-validation"
+      ],
       "knownLimitations": [],
-      "nextPhase": "P57.1",
+      "nextPhase": "P58",
       "commandCenterVisible": true
     },
     {
@@ -1801,10 +1803,10 @@
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "",
-      "commit": "",
+      "branch": "planned",
+      "commit": "planned",
       "completedAt": "",
-      "summary": "Planned policy-center and governance administration phase.",
+      "summary": "Governance policy administration and operator review are next.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P59",
@@ -3688,35 +3690,41 @@
     },
     {
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/cost-center-budget-enforcement",
-      "commit": "pending-final-commit",
-      "completedAt": "",
-      "checksRun": [],
+      "commit": "9278c55",
+      "completedAt": "2026-05-16T12:58:31.774Z",
+      "checksRun": [
+        "npm run check:cost-center-command-ui",
+        "npm run check:command-center-ux"
+      ],
       "knownLimitations": [],
       "commandCenterVisible": true,
       "phaseId": "P57.6",
       "title": "Command Center Cost Center UX",
-      "summary": "Adds operator Cost Center UX for budgets, estimates, ledger, and enforcement previews.",
+      "summary": "Added read-only Cost Center UX for budgets, estimates, ledger, enforcement, gaps, and developer references.",
       "nextPhase": "P57.7"
     },
     {
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T12:58:31.779Z",
+      "checksRun": [
+        "npm run check:cost-center-final-validation"
+      ],
       "knownLimitations": [],
       "commandCenterVisible": true,
       "phaseId": "P57.7",
       "title": "Cost Center Final Validation",
-      "summary": "Planned final validation and P57 closure."
+      "summary": "Validates and closes P57 Cost Center + Budget Enforcement.",
+      "nextPhase": "P58"
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:55:06.664Z",
-  "currentPhase": "P57.6",
-  "previousPhase": "P57.5",
-  "nextPhase": "P57.7"
+  "updatedAt": "2026-05-16T12:58:31.793Z",
+  "currentPhase": "P58",
+  "previousPhase": "P57",
+  "nextPhase": "P58"
 }
