@@ -1,0 +1,16 @@
+{
+  "version": "1.0",
+  "phase": "P56",
+  "purpose": "quality_intelligence_test_gap_detection",
+  "previewOnly": true,
+  "testExecutionAllowed": false,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolExecutionAllowed": false,
+  "mcpExecutionAllowed": false,
+  "workerRuntimeAllowed": false,
+  "dbWritesAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "privateSourceContentScanningAllowed": false,
+  "reportsOnly": true
+}

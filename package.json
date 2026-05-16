@@ -1,7 +1,7 @@
 {
   "name": "nexus",
   "version": "1.0.0",
-  "description": "NEXUS \u2014 Agentic Venture Orchestration System",
+  "description": "NEXUS — Agentic Venture Orchestration System",
   "private": true,
   "type": "module",
   "scripts": {
@@ -190,7 +190,8 @@
     "check:os-test-suites": "node scripts/check-os-test-suites.js",
     "check:test-selection-preview": "node scripts/check-test-selection-preview.js",
     "check:test-evidence-model": "node scripts/check-test-evidence-model.js",
-    "check:test-suite-manager-final": "node scripts/check-test-suite-manager-final.js"
+    "check:test-suite-manager-final": "node scripts/check-test-suite-manager-final.js",
+    "check:prd-test-mapping": "node scripts/check-prd-test-mapping.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

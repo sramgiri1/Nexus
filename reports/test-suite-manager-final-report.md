@@ -2,10 +2,10 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T01:57:15.286Z
+- Generated at: 2026-05-16T03:26:27.878Z
 - Phase: P55.7
-- Validation branch: arch/test-suite-manager-project-os
-- Validation HEAD: 8bbede8
+- Validation branch: arch/quality-intelligence-test-gap-detection
+- Validation HEAD: f1a8a05
 
 ## Checks
 

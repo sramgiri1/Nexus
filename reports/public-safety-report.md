@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T00:31:58.490Z
-- Validation branch: arch/api-batch-execution-adapter
-- Validation HEAD: 8ca07fe
+- Generated at: 2026-05-16T03:26:28.801Z
+- Validation branch: arch/quality-intelligence-test-gap-detection
+- Validation HEAD: f1a8a05
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 Scanned files:
@@ -42,7 +42,7 @@ Scanned files:
 - docs/images/dashboard-screenshot-placeholder.svg
 
 Banned project terms:
-- None
+- docs/architecture/NEXUS_PLATFORM_ROADMAP.md → banned project term (CareLoop)
 
 Secret patterns:
 - None
@@ -54,4 +54,4 @@ Dashboard data: PASS
 Demo artifacts: PASS
 README navigation: PASS
 
-Result: PASS
+Result: FAIL
