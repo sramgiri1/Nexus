@@ -177,3 +177,23 @@ files.
 ## Next Subphase
 
 P54.9 finalizes validation, regenerates reports from the current branch, and marks P54 complete with P55 next.
+
+## P54.9 - API + Batch Adapter Final Validation
+
+P54 final validation verifies the complete preview-only adapter surface:
+
+- provider adapter interface
+- OpenAI-compatible request preview
+- batch job builder
+- JSONL preview writer
+- local batch status tracker
+- result reconciliation preview
+- cost estimator
+- Command Center API / Batch UX
+
+P54 closes with provider calls, external network, API key reads, DB writes, worker runtime, provider polling, batch upload, and
+project mutation disabled.
+
+## Next Phase
+
+P55 - Test Suite Manager: Project + OS.

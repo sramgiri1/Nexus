@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T00:19:57.854Z
+- Generated at: 2026-05-16T00:31:45.504Z
 - Validation branch: arch/api-batch-execution-adapter
-- Validation HEAD: bfdae2e
+- Validation HEAD: 8ca07fe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

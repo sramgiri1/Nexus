@@ -884,3 +884,41 @@ updated as new module families or entry points are added.
 - Provider or tool runtime registries:
   Not active yet. These remain planned future module families under later
   roadmap phases.
+
+## API + Batch Execution Adapter
+
+- Purpose:
+  Provide preview-only provider adapter metadata, OpenAI-compatible request
+  previews, batch job packaging, JSONL preview files, local status summaries,
+  result reconciliation previews, and cost estimates.
+- Primary files:
+  `api-batch/providerAdapter.js`, `api-batch/providerRegistry.js`,
+  `api-batch/openaiAdapter.js`, `api-batch/batchJobBuilder.js`,
+  `api-batch/jsonlWriter.js`, `api-batch/batchStatusTracker.js`,
+  `api-batch/resultReconciler.js`, `api-batch/costEstimator.js`
+- Public entry points:
+  `api-batch/index.js`, `/command-center/api-batch`
+- Inputs/outputs:
+  Redacted request summaries and preview batch metadata in; local reports,
+  preview JSONL artifacts, cost summaries, and Command Center state out.
+- Side effects:
+  Checkers write reports under `reports/` and preview artifacts under
+  `reports/api-batch/`.
+- Safety boundary:
+  Provider calls, external network, API key reads, DB writes, worker runtime,
+  provider polling, batch upload, raw prompt storage, and project mutation are
+  disabled.
+- Tests/checkers:
+  `scripts/check-api-batch-provider-adapter.js`,
+  `scripts/check-openai-adapter-preview.js`,
+  `scripts/check-batch-job-builder.js`,
+  `scripts/check-batch-jsonl-writer.js`,
+  `scripts/check-batch-status-tracker.js`,
+  `scripts/check-batch-result-reconciler.js`,
+  `scripts/check-api-batch-cost-estimator.js`,
+  `scripts/check-api-batch-final.js`
+- Known limitations:
+  P54 is packaging, preview, estimate, and reconciliation only. Real provider
+  dispatch is deferred to a later governed phase.
+- Status:
+  active

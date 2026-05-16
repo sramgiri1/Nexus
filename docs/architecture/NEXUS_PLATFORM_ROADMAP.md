@@ -236,7 +236,7 @@ Risk level:
   - `P53.5` Jira / Linear Placeholder Trigger Models — complete
   - `P53.6` Slack / Teams Placeholder Trigger Models — complete
   - `P53.7` Trigger Governance Final Validation — complete
-- `P54` API + Batch Execution Adapter — in progress
+- `P54` API + Batch Execution Adapter — complete
   - `P54.1` Provider Adapter Interface — complete
   - `P54.2` OpenAI API Adapter Skeleton — complete
   - `P54.3` Batch Job Builder — complete
@@ -245,7 +245,7 @@ Risk level:
   - `P54.6` Batch Result Reconciler Preview — complete
   - `P54.7` Cost Estimator — complete
   - `P54.8` Command Center API / Batch Jobs UX — complete
-  - `P54.9` API + Batch Adapter Final Validation — in progress
+  - `P54.9` API + Batch Adapter Final Validation — complete
 - `P55` Test Suite Manager: Project + OS
 - `P56` Quality Intelligence + Test Gap Detection
 - `P57` Cost Center + Budget Enforcement

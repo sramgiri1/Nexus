@@ -59,7 +59,8 @@ export function validateProviderAdapter(adapter = createProviderAdapter()) {
 }
 
 export function createProviderRequestPreview(options = {}) {
-  const adapter = options.adapter || createProviderAdapter({ providerId: options.providerId });
+  const adapterOverrides = options.providerId ? { providerId: options.providerId } : {};
+  const adapter = options.adapter || createProviderAdapter(adapterOverrides);
   return {
     requestPreviewId: options.requestPreviewId || `provider_preview_${Date.now()}`,
     providerId: adapter.providerId,

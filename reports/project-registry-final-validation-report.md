@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T13:58:50.899Z
-- Validation branch: arch/multi-repo-git-pr-lifecycle
-- Validation HEAD: 6a1748f
+- Generated at: 2026-05-16T00:31:46.333Z
+- Validation branch: arch/api-batch-execution-adapter
+- Validation HEAD: 8ca07fe
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope

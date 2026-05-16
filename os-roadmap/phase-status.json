@@ -1732,16 +1732,18 @@
       "phaseId": "P54",
       "title": "API + Batch Execution Adapter",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
       "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Builds preview-only provider request, batch packaging, cost estimation, and reconciliation foundations.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Provider execution remains disabled until a later governed dispatch phase."
+      "checksRun": [
+        "npm run check:api-batch-final"
       ],
-      "nextPhase": "P54.1",
+      "knownLimitations": [
+        "Provider dispatch remains disabled until a later governed phase."
+      ],
+      "nextPhase": "P55",
       "commandCenterVisible": true
     },
     {
@@ -3289,12 +3291,12 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "8ca07fe",
       "completedAt": "",
       "summary": "Preview-only Command Center API and batch visibility.",
       "checksRun": [
-        "cd dashboard && npm run build && npm run test:unit && npm run test:pages",
-        "npm run check:command-center-ux"
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
       ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
@@ -3306,12 +3308,14 @@
       "phaseId": "P54.9",
       "title": "API + Batch Adapter Final Validation",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
       "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Final validation and closure for P54.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:api-batch-final"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3320,7 +3324,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:26:16.495Z",
+  "updatedAt": "2026-05-16T00:29:22.137Z",
   "currentPhase": "P54.9",
   "previousPhase": "P54.8",
   "nextPhase": "P55"

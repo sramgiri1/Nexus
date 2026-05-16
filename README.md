@@ -1301,9 +1301,11 @@ integration mapping, Command Center visibility, and governance work. Trigger
 execution, webhooks, schedulers, provider calls, external network, DB writes,
 worker runtime, credentials, and project mutation remain disabled.
 
-P54 starts the API + Batch Execution Adapter as a preview-only provider request
-and batch packaging layer. Provider calls, external network, API key reads, DB
-writes, worker runtime, batch uploads, and project mutation remain disabled.
+P54 completes the API + Batch Execution Adapter as a preview-only provider
+request, batch packaging, JSONL preview, status, reconciliation, cost estimate,
+and Command Center visibility layer. Provider calls, external network, API key
+reads, DB writes, worker runtime, batch uploads, and project mutation remain
+disabled.
 
 Next phase after P54: P55 - Test Suite Manager: Project + OS.
 

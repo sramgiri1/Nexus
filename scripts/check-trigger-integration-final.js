@@ -132,8 +132,14 @@ for (const phaseId of ["P53.1", "P53.2", "P53.3", "P53.4", "P53.5", "P53.6", "P5
   check(statusById.get(phaseId)?.status === "complete", "osPhaseStatus", `${phaseId} must be complete`);
 }
 check(statusById.get("P53")?.status === "complete", "osPhaseStatus", "P53 parent must be complete");
-check(phaseStatus.currentPhase === "P53.7", "osPhaseStatus", "Current phase must be P53.7");
-check(phaseStatus.nextPhase === "P54", "osPhaseStatus", "Next phase must be P54");
+check(
+  ["P53.7", "P54", "P54.1", "P54.2", "P54.3", "P54.4", "P54.5", "P54.6", "P54.7", "P54.8", "P54.9"].includes(
+    phaseStatus.currentPhase,
+  ),
+  "osPhaseStatus",
+  "Current phase must be P53.7 or a later P54 phase",
+);
+check(["P54", "P54.1", "P54.2", "P54.3", "P54.4", "P54.5", "P54.6", "P54.7", "P54.8", "P54.9", "P55"].includes(phaseStatus.nextPhase), "osPhaseStatus", "Next phase must be P54 or later");
 
 for (const field of [
   "triggerExecutionAllowed",

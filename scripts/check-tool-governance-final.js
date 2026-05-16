@@ -155,9 +155,11 @@ for (const [phaseId, commit] of Object.entries(expectedCommits)) {
 check(statusById.get("P52")?.status === "complete", "osPhaseStatus", "P52 parent must be complete");
 check(statusById.get("P52.9")?.status === "complete", "osPhaseStatus", "P52.9 must be complete");
 check(
-  phaseStatus.currentPhase === "P52.9" || phaseStatus.currentPhase?.startsWith("P53"),
+  phaseStatus.currentPhase === "P52.9" ||
+    phaseStatus.currentPhase?.startsWith("P53") ||
+    phaseStatus.currentPhase?.startsWith("P54"),
   "osPhaseStatus",
-  "Current phase must be P52.9 or a P53 handoff phase",
+  "Current phase must be P52.9 or a later handoff phase",
 );
 check(Boolean(statusById.get(phaseStatus.nextPhase)), "osPhaseStatus", "Next phase must exist in phase status");
 

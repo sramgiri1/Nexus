@@ -1527,3 +1527,164 @@ state and should be verified again during future docs audits.
   provider/tool/worker execution, DB writes, or project mutation.
 - Known limitations:
   Runtime trigger execution remains future governed work.
+
+## P54.1 — Provider Adapter Interface
+
+- Primary capability:
+  Preview-only provider adapter abstraction and policy.
+- Main files/folders touched:
+  `api-batch/providerAdapter.js`, `api-batch/providerRegistry.js`,
+  `api-batch/providerPolicy.js`, `policy/api-batch-adapter-policy.json`
+- Main checker(s):
+  `scripts/check-api-batch-provider-adapter.js`
+- Main report(s):
+  `reports/api-batch-provider-adapter-report.md`
+- Command Center impact:
+  Sets up provider adapter state used by the API / Batch route.
+- Safety impact:
+  Provider calls, external network, API keys, DB writes, workers, and project
+  mutation remain disabled.
+- Known limitations:
+  Adapter execution is not implemented.
+
+## P54.2 — OpenAI API Adapter Skeleton
+
+- Primary capability:
+  OpenAI-compatible request-shape preview without SDK import or API key reads.
+- Main files/folders touched:
+  `api-batch/openaiAdapter.js`
+- Main checker(s):
+  `scripts/check-openai-adapter-preview.js`
+- Main report(s):
+  `reports/openai-adapter-preview-report.md`
+- Command Center impact:
+  Provides OpenAI preview metadata for API / Batch UX.
+- Safety impact:
+  No OpenAI client, network call, API key read, or raw prompt storage.
+- Known limitations:
+  Future provider dispatch is deferred.
+
+## P54.3 — Batch Job Builder
+
+- Primary capability:
+  Build preview-only batch job objects with custom IDs and redacted summaries.
+- Main files/folders touched:
+  `api-batch/batchJobBuilder.js`, `api-batch/batchJobTypes.js`
+- Main checker(s):
+  `scripts/check-batch-job-builder.js`
+- Main report(s):
+  `reports/batch-job-builder-report.md`
+- Command Center impact:
+  Supplies batch job summary state for API / Batch UX.
+- Safety impact:
+  No upload, provider calls, external network, or execution path.
+- Known limitations:
+  Batch jobs are review artifacts only.
+
+## P54.4 — JSONL Job Writer
+
+- Primary capability:
+  Write safe local JSONL preview files under `reports/api-batch/`.
+- Main files/folders touched:
+  `api-batch/jsonlWriter.js`, `reports/api-batch/`
+- Main checker(s):
+  `scripts/check-batch-jsonl-writer.js`
+- Main report(s):
+  `reports/batch-jsonl-writer-report.md`
+- Command Center impact:
+  Shows JSONL preview availability.
+- Safety impact:
+  No raw prompt/source dumps and no provider upload.
+- Known limitations:
+  JSONL files are local preview artifacts only.
+
+## P54.5 — Batch Status Tracker Preview
+
+- Primary capability:
+  Track local preview batch status without provider polling.
+- Main files/folders touched:
+  `api-batch/batchStatusTracker.js`, `reports/api-batch/batch-status.json`
+- Main checker(s):
+  `scripts/check-batch-status-tracker.js`
+- Main report(s):
+  `reports/batch-status-tracker-report.md`
+- Command Center impact:
+  Provides preview status posture for API / Batch UX.
+- Safety impact:
+  No provider polling or external status calls.
+- Known limitations:
+  Status records are local preview records only.
+
+## P54.6 — Batch Result Reconciler Preview
+
+- Primary capability:
+  Map mock-safe preview results to requests by `custom_id`.
+- Main files/folders touched:
+  `api-batch/resultReconciler.js`, `reports/api-batch/reconciliation-preview.json`
+- Main checker(s):
+  `scripts/check-batch-result-reconciler.js`
+- Main report(s):
+  `reports/batch-result-reconciler-report.md`
+- Command Center impact:
+  Shows preview reconciliation status.
+- Safety impact:
+  No provider output download or raw provider payload storage.
+- Known limitations:
+  Reconciliation uses preview/mock-safe summaries only.
+
+## P54.7 — Cost Estimator
+
+- Primary capability:
+  Estimate request and batch costs with placeholder local pricing.
+- Main files/folders touched:
+  `api-batch/costEstimator.js`, `api-batch/modelPolicy.js`
+- Main checker(s):
+  `scripts/check-api-batch-cost-estimator.js`
+- Main report(s):
+  `reports/api-batch-cost-estimator-report.md`
+- Command Center impact:
+  Shows cost estimate readiness on API / Batch UX.
+- Safety impact:
+  No real pricing fetch, network call, or execution approval bypass.
+- Known limitations:
+  Estimates are approximate placeholders.
+
+## P54.8 — Command Center API / Batch Jobs UX
+
+- Primary capability:
+  Add `/command-center/api-batch` preview-only operator visibility.
+- Main files/folders touched:
+  `dashboard/src/pages/CommandCenterV2.jsx`,
+  `dashboard/src/data/commandCenterRoutes.js`,
+  `dashboard/src/data/commandCenterTabs.js`,
+  `dashboard/src/data/commandCenterViewModel.js`
+- Main checker(s):
+  `scripts/check-command-center-ux.js`
+- Main report(s):
+  `reports/command-center-ux-report.md`
+- Command Center impact:
+  Adds provider adapters, batch job, cost, and reconciliation tabs.
+- Safety impact:
+  UI actions remain disabled and do not upload, execute, call providers, or read
+  credentials.
+- Known limitations:
+  The page is inspection only.
+
+## P54.9 — API + Batch Adapter Final Validation
+
+- Primary capability:
+  Final validation and closure for P54.
+- Main files/folders touched:
+  `scripts/check-api-batch-final.js`, `reports/api-batch-final-report.md`,
+  `docs/architecture/API_BATCH_EXECUTION_ADAPTER.md`
+- Main checker(s):
+  `scripts/check-api-batch-final.js`
+- Main report(s):
+  `reports/api-batch-final-report.md`
+- Command Center impact:
+  Confirms API / Batch UX remains preview-only.
+- Safety impact:
+  Confirms provider calls, external network, API key reads, DB writes, workers,
+  provider polling, batch upload, and project mutation remain disabled.
+- Known limitations:
+  Real provider dispatch remains future governed work.
