@@ -25,6 +25,7 @@ const sections = {
   apiBatchUx: true,
   costCenterUx: true,
   policyCenterUx: true,
+  secretsBoundaryUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -139,6 +140,7 @@ const requiredRoutePaths = [
   "/command-center/quality",
   "/command-center/cost",
   "/command-center/policies",
+  "/command-center/secrets",
   "/command-center/batch",
 ];
 
@@ -156,6 +158,7 @@ const requiredTabbedRoutes = {
   "/command-center/roadmap": "in-progress",
   "/command-center/cost": "overview",
   "/command-center/policies": "overview",
+  "/command-center/secrets": "overview",
   "/command-center/batch": "overview",
   "/command-center/memory": "overview",
   "/command-center/context": "overview",
@@ -197,6 +200,7 @@ const routeHeadings = {
   "/command-center/release": "Release Control",
   "/command-center/cost": "Cost Center",
   "/command-center/policies": "Policy Center",
+  "/command-center/secrets": "Secrets Boundary",
   "/command-center/batch": "Batch Queue",
 };
 
@@ -868,6 +872,36 @@ for (const expected of [
 check(routeSource.includes("/command-center/policies"), "policyCenterUx", "Route matrix missing /command-center/policies");
 check(routeTestSource.includes("Policy Center route renders governance admin previews"), "policyCenterUx", "Route tests missing Policy Center coverage");
 
+// Secrets Boundary UX
+for (const expected of [
+  "Secrets Boundary",
+  "NEXUS stores references only",
+  "Raw secret values are not displayed",
+  "Provider credentials",
+  "Project credentials",
+  "DB credentials",
+  "Deploy credentials",
+  "Mobile signing",
+]) {
+  check(
+    commandCenterSource.includes(expected) || commandTabsSource.includes(expected),
+    "secretsBoundaryUx",
+    `Secrets Boundary UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const SECRETS_BOUNDARY_TABS",
+  'id: "providers"',
+  'id: "project"',
+  'id: "database-deploy"',
+  'id: "integrations"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "secretsBoundaryUx", `Secrets Boundary tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/secrets"), "secretsBoundaryUx", "Route matrix missing /command-center/secrets");
+check(routeTestSource.includes("Secrets Boundary route renders reference-only credential posture"), "secretsBoundaryUx", "Route tests missing Secrets Boundary coverage");
+
 // Test Center UX
 for (const expected of [
   "Test Center",
@@ -1331,6 +1365,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/api-batch",
     "/command-center/quality",
     "/command-center/policies",
+    "/command-center/secrets",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1440,6 +1475,7 @@ console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS"
 console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
 console.log(`Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Policy Center UX: ${sections.policyCenterUx ? "PASS" : "FAIL"}`);
+console.log(`Secrets Boundary UX: ${sections.secretsBoundaryUx ? "PASS" : "FAIL"}`);
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
@@ -1498,6 +1534,7 @@ const report = `# Command Center UX Report
 - API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
 - Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}
 - Policy Center UX: ${sections.policyCenterUx ? "PASS" : "FAIL"}
+- Secrets Boundary UX: ${sections.secretsBoundaryUx ? "PASS" : "FAIL"}
 - Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}

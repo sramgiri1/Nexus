@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T15:01:04.721Z
-- Validation branch: arch/policy-center-governance-admin
-- Validation HEAD: 1cde923
+- Generated at: 2026-05-16T15:32:58.544Z
+- Validation branch: arch/secrets-credential-boundary
+- Validation HEAD: 137166a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -25,6 +25,7 @@
 - API / Batch UX: PASS
 - Cost Center UX: PASS
 - Policy Center UX: PASS
+- Secrets Boundary UX: PASS
 - Test Center UX: PASS
 - Quality Intelligence UX: PASS
 - Command palette: PASS

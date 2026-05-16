@@ -578,6 +578,15 @@ export const POLICY_CENTER_TABS = [
   { id: "developer-details", label: "Developer Details", description: "Safe module, report, and policy references", badge: "Read-only" },
 ];
 
+export const SECRETS_BOUNDARY_TABS = [
+  { id: "overview", label: "Overview", description: "Reference-only credential boundary status", badge: "Ready" },
+  { id: "providers", label: "Provider Credentials", description: "Provider credential reference readiness", badge: "Metadata only" },
+  { id: "project", label: "Project Credentials", description: "Project-scoped credential categories and blockers", badge: "Blocked" },
+  { id: "database-deploy", label: "DB / Deploy", description: "Database, deploy, and mobile signing posture", badge: "Disabled" },
+  { id: "integrations", label: "Integrations", description: "Webhook, chat, OAuth, and notification references", badge: "Future phase" },
+  { id: "developer-details", label: "Developer Details", description: "Reference IDs and safe report links only", badge: "Read-only" },
+];
+
 export const BATCH_QUEUE_TABS = [
   { id: "overview", label: "Overview", description: "Batch status and not-enabled state", badge: "Planned" },
   { id: "jobs", label: "Jobs", description: "Future batch job list", badge: "Planned" },
@@ -629,6 +638,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "roadmap") return OS_ROADMAP_TABS;
   if (pageId === "cost") return COST_CENTER_TABS;
   if (pageId === "policies") return POLICY_CENTER_TABS;
+  if (pageId === "secrets") return SECRETS_BOUNDARY_TABS;
   if (pageId === "batch") return BATCH_QUEUE_TABS;
   if (pageId === "memory") return MEMORY_CENTER_TABS;
   if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;

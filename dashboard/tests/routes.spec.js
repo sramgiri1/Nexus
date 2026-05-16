@@ -1211,6 +1211,7 @@ test.describe("Command Center route-wide UX", () => {
       ["/command-center/roadmap", ["Completed", "In Progress", "Planned"]],
       ["/command-center/cost", ["Overview", "Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]],
       ["/command-center/policies", ["Overview", "Registry", "Versions", "Diff Preview", "Simulation", "Exceptions", "Break-Glass", "Developer Details"]],
+      ["/command-center/secrets", ["Overview", "Provider Credentials", "Project Credentials", "DB / Deploy", "Integrations", "Developer Details"]],
       ["/command-center/batch", ["Overview", "Jobs", "Results", "Cost"]],
     ];
 
@@ -2290,6 +2291,40 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Policy Center");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Policy Center");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Secrets Boundary route renders reference-only credential posture", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/secrets");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Secrets Boundary");
+    await expect(page.locator("body")).toContainText("NEXUS stores references only");
+    await expect(page.locator("body")).toContainText("Raw secret values are not displayed");
+    await expect(page.locator("body")).toContainText("Provider credentials");
+
+    for (const label of ["Provider Credentials", "Project Credentials", "DB / Deploy", "Integrations", "Developer Details"]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "DB / Deploy").click();
+    await expect(activeCommandTabPanel(page)).toContainText("DB writes");
+    await expect(activeCommandTabPanel(page)).toContainText("Deploy execution");
+    await expect(activeCommandTabPanel(page)).toContainText("Mobile signing");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/sk-[A-Za-z0-9_-]{12,}/);
+    expect(body).not.toContain("DATABASE_URL=");
+    expect(body).not.toContain("Bearer ");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Secrets Boundary");
+    await pickTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Secrets Boundary");
 
     expect(errors).toEqual([]);
   });

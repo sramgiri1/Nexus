@@ -23,6 +23,7 @@ import {
   PROJECTS_TABS,
   QUALITY_INTELLIGENCE_TABS,
   SAFETY_CENTER_TABS,
+  SECRETS_BOUNDARY_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
   TEST_CENTER_TABS,
@@ -4095,6 +4096,95 @@ function PolicyCenterPage() {
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Developer Details</div>
               <div className="ccv2-empty-state">Safe references: policy-center modules, policy-center registry policy, break-glass policy, and P58 policy reports. Raw policy JSON is intentionally not shown in primary UX.</div>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+/* ─── Secrets Boundary Page ─── */
+function SecretsBoundaryPage() {
+  const [activeTab, setActiveTab] = useState("overview");
+  const statusCards = [
+    { label: "Provider credentials", state: "Metadata only", detail: "Provider calls remain disabled." },
+    { label: "Project credentials", state: "Blocked", detail: "Project credential values are not resolved." },
+    { label: "DB credentials", state: "Blocked", detail: "DB writes remain disabled." },
+    { label: "Deploy credentials", state: "Future phase", detail: "Deploy execution is not enabled." },
+    { label: "Mobile signing", state: "Future phase", detail: "Signing credentials are references only." },
+    { label: "Webhook and chat integrations", state: "Not configured", detail: "Integration credentials are metadata only." },
+  ];
+  const projectCategories = ["App database", "CI/CD", "Deployment", "Mobile signing", "OAuth", "Notification service", "Payment provider", "Storage provider"];
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">Secrets Boundary</div>
+          <div className="ccv2-page-head__sub">Credential references only · raw values are never displayed, logged, or included in reports</div>
+        </div>
+
+        <CommandTabs tabs={SECRETS_BOUNDARY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Secrets Boundary sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Secrets Boundary Status</div>
+              <p className="ccv2-empty-state" style={{ marginTop: 8 }}>NEXUS stores references only. Raw secret values are not displayed, logged, or included in reports.</p>
+              <div className="ccv2-safety-grid" style={{ marginTop: 10 }}>
+                {statusCards.map((card) => (
+                  <div className="ccv2-safety-row" key={card.label}>
+                    <span className="ccv2-safety-row__label">{card.label}</span>
+                    <span className={card.state === "Blocked" ? "ccv2-safety-row__value--disabled" : "ccv2-safety-row__value--ready"}>{card.state}</span>
+                    <small>{card.detail}</small>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="providers" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Provider Credentials</div>
+              <div className="ccv2-empty-state">OpenAI, Anthropic, GitHub, Slack placeholder, Jira/Linear placeholder, and cloud provider placeholder credentials are reference metadata only. Provider dispatch remains disabled.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="project" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Project Credentials</div>
+              <div className="ccv2-grid-3" style={{ marginTop: 10 }}>
+                {projectCategories.map((category) => (
+                  <div className="ccv2-stat-chip" key={category}>
+                    <span>{category}</span>
+                    <strong>Reference only</strong>
+                  </div>
+                ))}
+              </div>
+              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Demo Mode does not show private project credential metadata.</p>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="database-deploy" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">DB / Deploy</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">DB writes</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Deploy execution</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Mobile signing</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="integrations" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Integrations</div>
+              <div className="ccv2-empty-state">Webhook, chat, OAuth, notification, payment, and storage credentials are future-phase references. No external integration calls are enabled.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-empty-state">Reference IDs: secret-ref-openai-api-key, secret-ref-anthropic-api-key, secret-ref-github-token, secret-ref-project-db-url. Raw credential values are never shown.</div>
             </div>
           </CommandTabPanel>
         </CommandTabs>
@@ -8820,6 +8910,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "batch" && <BatchQueuePage vm={vmWithApi} />}
           {currentPage === "cost" && <CostCenterPage vm={vmWithApi} studio={studio} />}
           {currentPage === "policies" && <PolicyCenterPage />}
+          {currentPage === "secrets" && <SecretsBoundaryPage />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
