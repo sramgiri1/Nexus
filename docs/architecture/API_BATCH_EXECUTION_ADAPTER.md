@@ -115,3 +115,22 @@ No provider polling, external status calls, raw provider payload storage, upload
 ## Next Subphase
 
 P54.6 adds a local result reconciler that maps mock-safe preview results by `custom_id`.
+
+## P54.6 - Batch Result Reconciler Preview
+
+The result reconciler maps preview or mock-safe results back to batch requests using `custom_id`. It detects missing custom
+IDs, duplicate custom IDs, unmatched results, and unsafe result payloads.
+
+Rules:
+
+- No provider output download.
+- No raw provider payload storage.
+- Preview/mock-safe records only.
+- Summaries only in reports and Command Center surfaces.
+
+The reconciler exists so future provider dispatch can be added behind governance without changing the evidence and review
+contract.
+
+## Next Subphase
+
+P54.7 adds approximate API and batch cost estimation without fetching provider pricing.

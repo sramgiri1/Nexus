@@ -3233,12 +3233,14 @@
       "phaseId": "P54.5",
       "title": "Batch Status Tracker Preview",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "b87928b",
       "completedAt": "",
       "summary": "Local batch status preview tracking.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:batch-status-tracker"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3249,9 +3251,9 @@
       "phaseId": "P54.6",
       "title": "Batch Result Reconciler Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Preview result reconciliation by custom_id.",
       "checksRun": [],
@@ -3311,8 +3313,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:15:57.984Z",
-  "currentPhase": "P54.5",
-  "previousPhase": "P54.4",
-  "nextPhase": "P54.6"
+  "updatedAt": "2026-05-16T00:17:42.862Z",
+  "currentPhase": "P54.6",
+  "previousPhase": "P54.5",
+  "nextPhase": "P54.7"
 }

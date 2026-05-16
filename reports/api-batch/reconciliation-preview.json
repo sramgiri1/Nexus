@@ -1,0 +1,35 @@
+{
+  "summary": {
+    "batchJobId": "sample-batch-preview",
+    "mode": "preview_only",
+    "matchedCount": 1,
+    "missingCount": 1,
+    "unmatchedCount": 1,
+    "errorCount": 0,
+    "warningCount": 2,
+    "providerDownloadAllowed": false
+  },
+  "reconciliation": {
+    "batchJobId": "sample-batch-preview",
+    "mode": "preview_only",
+    "providerDownloadAllowed": false,
+    "rawProviderPayloadStored": false,
+    "matched": [
+      {
+        "custom_id": "module-001",
+        "outputSummary": "Preview classification summary."
+      }
+    ],
+    "missing": [
+      "module-002"
+    ],
+    "unmatched": [
+      "module-003"
+    ],
+    "errors": [],
+    "warnings": [
+      "Missing results: module-002",
+      "Unmatched results: module-003"
+    ]
+  }
+}

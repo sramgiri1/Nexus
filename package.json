@@ -181,7 +181,8 @@
     "check:openai-adapter-preview": "node scripts/check-openai-adapter-preview.js",
     "check:batch-job-builder": "node scripts/check-batch-job-builder.js",
     "check:batch-jsonl-writer": "node scripts/check-batch-jsonl-writer.js",
-    "check:batch-status-tracker": "node scripts/check-batch-status-tracker.js"
+    "check:batch-status-tracker": "node scripts/check-batch-status-tracker.js",
+    "check:batch-result-reconciler": "node scripts/check-batch-result-reconciler.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

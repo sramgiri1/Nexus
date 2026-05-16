@@ -6,3 +6,4 @@ export * from "./batchJobTypes.js";
 export * from "./batchJobBuilder.js";
 export * from "./jsonlWriter.js";
 export * from "./batchStatusTracker.js";
+export * from "./resultReconciler.js";
