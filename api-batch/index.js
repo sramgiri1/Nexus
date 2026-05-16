@@ -4,3 +4,4 @@ export * from "./providerPolicy.js";
 export * from "./openaiAdapter.js";
 export * from "./batchJobTypes.js";
 export * from "./batchJobBuilder.js";
+export * from "./jsonlWriter.js";

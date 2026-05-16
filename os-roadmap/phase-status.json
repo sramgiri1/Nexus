@@ -3197,12 +3197,14 @@
       "phaseId": "P54.3",
       "title": "Batch Job Builder",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "1c5f2f6",
       "completedAt": "",
       "summary": "Preview-only batch job builder.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:batch-job-builder"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3213,9 +3215,9 @@
       "phaseId": "P54.4",
       "title": "JSONL Job Writer",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Safe local JSONL preview writer.",
       "checksRun": [],
@@ -3307,8 +3309,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:12:24.778Z",
-  "currentPhase": "P54.3",
-  "previousPhase": "P54.2",
-  "nextPhase": "P54.4"
+  "updatedAt": "2026-05-16T00:14:13.496Z",
+  "currentPhase": "P54.4",
+  "previousPhase": "P54.3",
+  "nextPhase": "P54.5"
 }

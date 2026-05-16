@@ -1,0 +1,2 @@
+{"custom_id":"docs-001","method":"POST","endpoint":"/v1/responses","inputSummary":"Redacted docs generation request.","rawInputStored":false,"externalCallAllowed":false,"metadata":{}}
+{"custom_id":"docs-002","method":"POST","endpoint":"/v1/responses","inputSummary":"Redacted module registry request.","rawInputStored":false,"externalCallAllowed":false,"metadata":{}}

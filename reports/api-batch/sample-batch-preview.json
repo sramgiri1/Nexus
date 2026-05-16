@@ -1,0 +1,8 @@
+{
+  "batchJobId": "sample-batch-preview",
+  "relativePath": "reports/api-batch/sample-batch-preview.jsonl",
+  "requestCount": 2,
+  "customIdsPresent": true,
+  "externalUploadAllowed": false,
+  "safeForReview": true
+}

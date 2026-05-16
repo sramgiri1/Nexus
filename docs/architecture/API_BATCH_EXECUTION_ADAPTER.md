@@ -75,3 +75,23 @@ Request records use redacted summaries and require `custom_id` values so a later
 ## Next Subphase
 
 P54.4 writes safe local preview JSONL files under `reports/api-batch/` for operator review.
+
+## P54.4 - JSONL Job Writer
+
+The JSONL writer creates safe local preview files under `reports/api-batch/`. These files are review artifacts only. They are
+not uploaded to any provider and do not contain raw prompts or private source dumps.
+
+Rules:
+
+- Write only under `reports/api-batch/`.
+- Require `custom_id` for every line.
+- Store redacted summaries only.
+- Keep `externalCallAllowed: false`.
+- Keep external upload disabled.
+
+The writer also produces a small JSON summary next to the JSONL preview so checkers and the Command Center can summarize the
+artifact without dumping raw records.
+
+## Next Subphase
+
+P54.5 adds local preview status tracking for batch jobs without provider polling.
