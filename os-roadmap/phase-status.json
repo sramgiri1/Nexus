@@ -1836,7 +1836,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "a9e269d",
       "completedAt": "2026-05-16T14:50:56.016Z",
       "summary": "Added read-only policy version index and checksum metadata.",
       "checksRun": [
@@ -1852,12 +1852,14 @@
       "phaseId": "P58.3",
       "title": "Policy Diff Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Policy diff risk classification without policy mutation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:52:26.029Z",
+      "summary": "Added policy diff preview and risk classification without policy mutation.",
+      "checksRun": [
+        "npm run check:policy-diff"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3855,8 +3857,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:50:56.016Z",
-  "currentPhase": "P58.2",
-  "previousPhase": "P58.1",
-  "nextPhase": "P58.3"
+  "updatedAt": "2026-05-16T14:52:26.029Z",
+  "currentPhase": "P58.3",
+  "previousPhase": "P58.2",
+  "nextPhase": "P58.4"
 }
