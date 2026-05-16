@@ -186,7 +186,8 @@
     "check:api-batch-cost-estimator": "node scripts/check-api-batch-cost-estimator.js",
     "check:api-batch-final": "node scripts/check-api-batch-final.js",
     "check:test-suite-manager": "node scripts/check-test-suite-manager.js",
-    "check:project-test-suites": "node scripts/check-project-test-suites.js"
+    "check:project-test-suites": "node scripts/check-project-test-suites.js",
+    "check:os-test-suites": "node scripts/check-os-test-suites.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
