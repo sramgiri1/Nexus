@@ -178,7 +178,8 @@
     "check:chat-trigger-preview": "node scripts/check-chat-trigger-preview.js",
     "check:trigger-integration-final": "node scripts/check-trigger-integration-final.js",
     "check:api-batch-provider-adapter": "node scripts/check-api-batch-provider-adapter.js",
-    "check:openai-adapter-preview": "node scripts/check-openai-adapter-preview.js"
+    "check:openai-adapter-preview": "node scripts/check-openai-adapter-preview.js",
+    "check:batch-job-builder": "node scripts/check-batch-job-builder.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

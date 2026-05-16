@@ -3179,12 +3179,14 @@
       "phaseId": "P54.2",
       "title": "OpenAI API Adapter Skeleton",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "da3ce22",
       "completedAt": "",
       "summary": "OpenAI-compatible request-shape preview skeleton.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:openai-adapter-preview"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3195,9 +3197,9 @@
       "phaseId": "P54.3",
       "title": "Batch Job Builder",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Preview-only batch job builder.",
       "checksRun": [],
@@ -3305,8 +3307,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:09:58.652Z",
-  "currentPhase": "P54.2",
-  "previousPhase": "P54.1",
-  "nextPhase": "P54.3"
+  "updatedAt": "2026-05-16T00:12:24.778Z",
+  "currentPhase": "P54.3",
+  "previousPhase": "P54.2",
+  "nextPhase": "P54.4"
 }

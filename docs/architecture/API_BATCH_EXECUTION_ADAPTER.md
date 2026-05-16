@@ -56,3 +56,22 @@ No actual OpenAI client is created. API keys are not read. Provider calls and ne
 ## Next Subphase
 
 P54.3 adds a batch job builder that prepares preview request objects without uploading or sending them.
+
+## P54.3 - Batch Job Builder
+
+The batch job builder prepares JSONL-like request objects for review. It tracks workload type, provider ID, request count,
+custom IDs, cost-estimate requirements, and future reconciliation requirements.
+
+Batch jobs remain preview-only:
+
+- No upload.
+- No provider call.
+- No external network.
+- No raw private source dumps.
+- No execution path.
+
+Request records use redacted summaries and require `custom_id` values so a later reconciliation phase can map results safely.
+
+## Next Subphase
+
+P54.4 writes safe local preview JSONL files under `reports/api-batch/` for operator review.

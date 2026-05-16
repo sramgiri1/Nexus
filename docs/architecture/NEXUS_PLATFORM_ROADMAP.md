@@ -238,8 +238,8 @@ Risk level:
   - `P53.7` Trigger Governance Final Validation — complete
 - `P54` API + Batch Execution Adapter — in progress
   - `P54.1` Provider Adapter Interface — complete
-  - `P54.2` OpenAI API Adapter Skeleton — in progress
-  - `P54.3` Batch Job Builder — planned
+  - `P54.2` OpenAI API Adapter Skeleton — complete
+  - `P54.3` Batch Job Builder — in progress
   - `P54.4` JSONL Job Writer — planned
   - `P54.5` Batch Status Tracker Preview — planned
   - `P54.6` Batch Result Reconciler Preview — planned
