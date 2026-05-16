@@ -1,0 +1,17 @@
+{
+  "policyVersion": "1.0",
+  "phase": "P61",
+  "concurrencyExecutionEnabled": false,
+  "previewOnly": true,
+  "maxConcurrentTasksPerProject": 1,
+  "maxConcurrentTasksPerRepo": 1,
+  "maxConcurrentTasksPerAgent": 1,
+  "pathLocksRequired": true,
+  "duplicateDetectionRequired": true,
+  "budgetCheckRequired": true,
+  "humanApprovalForOverride": true,
+  "providerCallsAllowed": false,
+  "toolExecutionAllowed": false,
+  "projectMutationAllowed": false,
+  "dbWritesAllowed": false
+}

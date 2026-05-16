@@ -219,7 +219,12 @@
     "check:project-credential-boundary": "node scripts/check-project-credential-boundary.js",
     "check:secrets-boundary-final-validation": "node scripts/check-secrets-boundary-final-validation.js",
     "check:worker-runtime": "node scripts/check-worker-runtime.js",
-    "worker-runtime:status": "node scripts/worker-runtime-status.js"
+    "worker-runtime:status": "node scripts/worker-runtime-status.js",
+    "check:concurrency-policy": "node scripts/check-concurrency-policy.js",
+    "check:concurrency-locks": "node scripts/check-concurrency-locks.js",
+    "check:work-deduplication": "node scripts/check-work-deduplication.js",
+    "check:queue-priority": "node scripts/check-queue-priority.js",
+    "check:task-cancellation": "node scripts/check-task-cancellation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
