@@ -1,0 +1,57 @@
+{
+  "version": "1.0",
+  "phase": "P57.1",
+  "generatedAt": "2026-05-16T12:45:00.943Z",
+  "previewOnly": true,
+  "providerDispatchAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "records": [
+    {
+      "costRecordId": "cost_mp8c9le0_cov76r",
+      "schemaVersion": "1.0",
+      "eventType": "cost_estimate_created",
+      "sourceType": "task",
+      "sourceId": "task_preview",
+      "projectId": "private-project",
+      "missionId": "",
+      "taskId": "task_preview",
+      "agentId": "",
+      "skillId": "",
+      "toolId": "",
+      "phaseId": "P57.1",
+      "correlationId": "",
+      "currency": "USD",
+      "estimatedUsd": 0.0125,
+      "actualUsd": 0,
+      "estimatedTokens": 2500,
+      "actualTokens": 0,
+      "units": {},
+      "budgetPolicyId": "",
+      "decision": "RECORD_ONLY",
+      "status": "preview",
+      "dataClassification": "internal",
+      "redacted": true,
+      "createdAt": "2026-05-16T12:45:00.936Z",
+      "metadata": {
+        "apiKey": "[REDACTED]",
+        "note": "estimate only"
+      },
+      "warnings": [],
+      "errors": []
+    }
+  ],
+  "summary": {
+    "records": 1,
+    "estimatedUsd": 0.0125,
+    "actualUsd": 0,
+    "estimatedTokens": 2500,
+    "actualTokens": 0,
+    "byDecision": {
+      "RECORD_ONLY": 1
+    },
+    "bySourceType": {
+      "task": 1
+    }
+  }
+}

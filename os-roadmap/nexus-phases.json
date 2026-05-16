@@ -1218,6 +1218,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P57.1",
+      "title": "Cost Ledger Schema",
+      "track": "NEXUS_OS",
+      "order": 31.01,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Define redacted cost ledger records and preview reporting.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
@@ -1614,5 +1623,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T04:15:31.539Z"
+  "updatedAt": "2026-05-16T12:45:00.582Z"
 }

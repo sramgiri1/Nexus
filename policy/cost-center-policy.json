@@ -1,0 +1,18 @@
+{
+  "version": "1.0",
+  "phase": "P57",
+  "purpose": "cost_center_budget_enforcement",
+  "costEstimatesAllowed": true,
+  "actualCostRecordingAllowed": "preview_only",
+  "budgetBlockingAllowed": "preview_only",
+  "realProviderSpendAllowed": false,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "workerExecutionAllowed": false,
+  "toolExecutionAllowed": false,
+  "commandCenterUxRequired": true,
+  "playwrightRequired": true,
+  "sharedUtilitiesRequired": true
+}

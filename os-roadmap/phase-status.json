@@ -1786,11 +1786,11 @@
       "phaseId": "P57",
       "title": "Cost Center + Budget Enforcement",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned cost center and budget enforcement.",
+      "summary": "Cost Center + Budget Enforcement is in progress with preview-only cost governance foundations.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P57.1",
@@ -3605,11 +3605,38 @@
         "Existing checkers are not broadly migrated; future phases should adopt shared utilities opportunistically."
       ],
       "nextPhase": "P57"
+    },
+    {
+      "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.1",
+      "title": "Cost Ledger Schema",
+      "summary": "Adds the redacted cost ledger schema and report-backed preview store.",
+      "nextPhase": "P57.2"
+    },
+    {
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "checksRun": [],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.2",
+      "title": "Task / Agent / Skill / Tool Budget Model",
+      "summary": "Planned budget policy model for scoped cost governance."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T04:17:41.444Z",
-  "currentPhase": "P57",
+  "updatedAt": "2026-05-16T12:45:00.529Z",
+  "currentPhase": "P57.1",
   "previousPhase": "P56.8",
-  "nextPhase": "P57"
+  "nextPhase": "P57.2"
 }
