@@ -3251,12 +3251,14 @@
       "phaseId": "P54.6",
       "title": "Batch Result Reconciler Preview",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "bfdae2e",
       "completedAt": "",
       "summary": "Preview result reconciliation by custom_id.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:batch-result-reconciler"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3267,9 +3269,9 @@
       "phaseId": "P54.7",
       "title": "Cost Estimator",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Approximate API and batch cost estimator.",
       "checksRun": [],
@@ -3313,8 +3315,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:17:42.862Z",
-  "currentPhase": "P54.6",
-  "previousPhase": "P54.5",
-  "nextPhase": "P54.7"
+  "updatedAt": "2026-05-16T00:19:50.125Z",
+  "currentPhase": "P54.7",
+  "previousPhase": "P54.6",
+  "nextPhase": "P54.8"
 }

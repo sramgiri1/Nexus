@@ -7,3 +7,5 @@ export * from "./batchJobBuilder.js";
 export * from "./jsonlWriter.js";
 export * from "./batchStatusTracker.js";
 export * from "./resultReconciler.js";
+export * from "./modelPolicy.js";
+export * from "./costEstimator.js";

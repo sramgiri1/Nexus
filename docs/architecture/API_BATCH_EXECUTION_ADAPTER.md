@@ -134,3 +134,23 @@ contract.
 ## Next Subphase
 
 P54.7 adds approximate API and batch cost estimation without fetching provider pricing.
+
+## P54.7 - Cost Estimator
+
+The cost estimator provides approximate request and batch cost previews before any future provider execution. It uses local
+placeholder pricing policies only and does not fetch real provider pricing.
+
+Outputs include:
+
+- estimated input tokens
+- estimated output tokens
+- estimated USD when placeholder pricing is known
+- unknown cost warnings when pricing is missing
+- approval requirement summaries
+- execution blocked state
+
+No real provider pricing fetch, network call, API key read, or execution approval bypass is enabled.
+
+## Next Subphase
+
+P54.8 exposes API and batch adapter previews in the Command Center.

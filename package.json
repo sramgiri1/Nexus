@@ -182,7 +182,8 @@
     "check:batch-job-builder": "node scripts/check-batch-job-builder.js",
     "check:batch-jsonl-writer": "node scripts/check-batch-jsonl-writer.js",
     "check:batch-status-tracker": "node scripts/check-batch-status-tracker.js",
-    "check:batch-result-reconciler": "node scripts/check-batch-result-reconciler.js"
+    "check:batch-result-reconciler": "node scripts/check-batch-result-reconciler.js",
+    "check:api-batch-cost-estimator": "node scripts/check-api-batch-cost-estimator.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
