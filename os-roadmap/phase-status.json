@@ -1872,7 +1872,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "19ae866",
       "completedAt": "2026-05-16T14:54:12.135Z",
       "summary": "Added redacted read-only policy simulation scenarios and decision previews.",
       "checksRun": [
@@ -1888,12 +1888,14 @@
       "phaseId": "P58.5",
       "title": "Exception Workflow",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Preview-only governed policy exception workflow.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:55:39.039Z",
+      "summary": "Added preview-only governed policy exception workflow with time-bound and evidence-bound decisions.",
+      "checksRun": [
+        "npm run check:policy-exception-workflow"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3859,8 +3861,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:54:12.135Z",
-  "currentPhase": "P58.4",
-  "previousPhase": "P58.3",
-  "nextPhase": "P58.5"
+  "updatedAt": "2026-05-16T14:55:39.039Z",
+  "currentPhase": "P58.5",
+  "previousPhase": "P58.4",
+  "nextPhase": "P58.6"
 }
