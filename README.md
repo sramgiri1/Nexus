@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P59
+## Current Status Through P62
 
-P41.5 through P59 are complete. P59 adds Secrets and Credential Boundary
+P41.5 through P62 are complete. P59 adds Secrets and Credential Boundary
 foundations: secret reference metadata, access policy previews, redaction
 checks, provider credential boundaries, project credential boundaries, and a
 read-only Command Center Secrets Boundary UX. Runtime secret resolution,
@@ -65,6 +65,8 @@ surface have:
   mode guards, redaction, checker formatting, and phase status updates
 - preview-only cost governance with provider spend, worker runtime, DB writes,
   and project mutation still disabled
+- preview-only worker runtime, concurrency, and conversational command interface
+  foundations through P62
 
 ## Command Center Overview
 
@@ -120,6 +122,12 @@ Command Center now includes a read-only **Service Health** route at `/command-ce
 
 Command Center now also includes a **Command Palette** for simple governed operator actions such as Plan, Review, QA, Fix, Ship, Retro, Guard, Freeze, and Explain. Commands only route to existing safe capabilities or show disabled reasons.
 
+P62 adds a preview-only **Conversational NEXUS Command Interface** for simple
+operator intent. It classifies commands such as Plan, Review, QA, Fix, Ship,
+Guard, Freeze, and Explain, then shows scope, route, risk, approval, blocker,
+and timeline previews. It does not enable providers, tools, workers, DB writes,
+project mutation, or release execution.
+
 P41.6.5 also tightens the local operator docs around:
 
 - `nexus:up`
@@ -157,6 +165,7 @@ npm run nexus:down
 - Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - Architecture diagrams: [docs/architecture/diagrams](docs/architecture/diagrams/README.md)
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
+- Conversational command interface: [docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md](docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
 ## Codebase Documentation

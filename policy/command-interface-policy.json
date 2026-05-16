@@ -1,0 +1,19 @@
+{
+  "policyVersion": "1.0",
+  "phase": "P62",
+  "purpose": "conversational_nexus_command_interface",
+  "previewOnly": true,
+  "executionAllowed": false,
+  "providerCallsAllowed": false,
+  "toolExecutionAllowed": false,
+  "workerExecutionAllowed": false,
+  "dbWritesAllowed": false,
+  "projectMutationAllowed": false,
+  "releaseDeployAllowed": false,
+  "demoFallbackAllowed": false,
+  "timelineRecordsAllowed": true,
+  "timelineRecordPath": "local-state/runtime/commands.jsonl",
+  "rawSecretsAllowed": false,
+  "rawPolicyDumpAllowed": false,
+  "requiredCommands": ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"]
+}

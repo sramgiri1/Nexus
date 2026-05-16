@@ -561,84 +561,66 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P45.1",
+      "title": "Agent Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 19.01,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Define metadata-only agent identities, schema fields, and seeded NEXUS agents.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.2",
+      "title": "Agent Capability Matrix",
+      "track": "NEXUS_OS",
+      "order": 19.020000000000003,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Map agent capabilities and separation-of-duties rules.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.3",
+      "title": "Agent Path / Tool / Data Boundaries",
+      "track": "NEXUS_OS",
+      "order": 19.030000000000005,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Define metadata-only path, tool, data, project, and change-scope boundaries.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.4",
+      "title": "Boundary Compiler",
+      "track": "NEXUS_OS",
+      "order": 19.040000000000006,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Compile dry-run agent boundary envelopes from agent, project, scope, and task intent.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.5",
+      "title": "Command Center Agent Registry UX",
+      "track": "NEXUS_OS",
+      "order": 19.050000000000008,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Expose agent registry and boundary summaries in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P45.6",
+      "title": "Agent Boundary Tests + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 19.06000000000001,
+      "group": "P45 Agent Registry + Boundary Compiler",
+      "summary": "Validate and close the agent registry and boundary compiler track.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P46",
       "title": "Scoped Memory Architecture + Memory Center",
       "track": "NEXUS_OS",
       "order": 20,
       "group": "Planned OS Phases",
       "summary": "Add governed memory scopes and operator visibility into persistent memory behavior.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.1",
-      "title": "Memory Scope Model",
-      "track": "NEXUS_OS",
-      "order": 30,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Defines canonical memory scopes, change scopes, memory item schema, and forbidden memory classes.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.2",
-      "title": "Project / OS / Task / Session Memory Stores",
-      "track": "NEXUS_OS",
-      "order": 30.1,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Adds safe local scoped memory metadata stores.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.3",
-      "title": "Memory Packet Builder",
-      "track": "NEXUS_OS",
-      "order": 30.2,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Builds deterministic scoped memory packets for future governed dispatch.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.4",
-      "title": "Memory Access Policy",
-      "track": "NEXUS_OS",
-      "order": 30.3,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Validates scoped memory access decisions by agent, scope, mode, and classification.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.5",
-      "title": "Memory Freshness + Staleness",
-      "track": "NEXUS_OS",
-      "order": 30.4,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Tracks stale, expired, invalidated, and promotion-candidate memory.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.6",
-      "title": "Command Center Memory Center",
-      "track": "NEXUS_OS",
-      "order": 30.5,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Exposes scoped memory in read-only Command Center UI.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P46.7",
-      "title": "Tests + Docs + Final Validation",
-      "track": "NEXUS_OS",
-      "order": 30.6,
-      "group": "P46 Scoped Memory Architecture + Memory Center",
-      "summary": "Closes P46 with docs, reports, phase status, and validation.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P47",
-      "title": "Trusted Context + Data Architecture Layer",
-      "track": "NEXUS_OS",
-      "order": 21,
-      "group": "Planned OS Phases",
-      "summary": "Separate trusted context assembly from project data access and redaction rules.",
       "commandCenterVisible": true
     },
     {
@@ -705,12 +687,12 @@
       "commandCenterVisible": true
     },
     {
-      "phaseId": "P48",
-      "title": "Governed Agentic Mesh",
+      "phaseId": "P47",
+      "title": "Trusted Context + Data Architecture Layer",
       "track": "NEXUS_OS",
-      "order": 22,
+      "order": 21,
       "group": "Planned OS Phases",
-      "summary": "Enable governed multi-agent mesh coordination with explicit boundaries and approvals.",
+      "summary": "Separate trusted context assembly from project data access and redaction rules.",
       "commandCenterVisible": true
     },
     {
@@ -783,6 +765,15 @@
       "order": 21.08,
       "group": "P48 Governed Agentic Mesh",
       "summary": "Polish the Command Center Projects page as an enterprise multi-project operating surface without enabling runtime behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P48",
+      "title": "Governed Agentic Mesh",
+      "track": "NEXUS_OS",
+      "order": 22,
+      "group": "Planned OS Phases",
+      "summary": "Enable governed multi-agent mesh coordination with explicit boundaries and approvals.",
       "commandCenterVisible": true
     },
     {
@@ -1173,21 +1164,12 @@
       "commandCenterVisible": true
     },
     {
-      "phaseId": "P54",
-      "title": "API + Batch Execution Adapter",
+      "phaseId": "P46.1",
+      "title": "Memory Scope Model",
       "track": "NEXUS_OS",
-      "order": 37,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Build preview-only provider request and batch packaging foundations without provider execution.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55",
-      "title": "Test Suite Manager: Project + OS",
-      "track": "NEXUS_OS",
-      "order": 38,
-      "group": "Planned OS Phases",
-      "summary": "Unify project and OS validation suites under governed test-suite management.",
+      "order": 30,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Defines canonical memory scopes, change scopes, memory item schema, and forbidden memory classes.",
       "commandCenterVisible": true
     },
     {
@@ -1197,6 +1179,60 @@
       "order": 30,
       "group": "Planned OS Phases",
       "summary": "Detect quality gaps, missing test coverage, and validation blind spots.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.2",
+      "title": "Project / OS / Task / Session Memory Stores",
+      "track": "NEXUS_OS",
+      "order": 30.1,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Adds safe local scoped memory metadata stores.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.3",
+      "title": "Memory Packet Builder",
+      "track": "NEXUS_OS",
+      "order": 30.2,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Builds deterministic scoped memory packets for future governed dispatch.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.4",
+      "title": "Memory Access Policy",
+      "track": "NEXUS_OS",
+      "order": 30.3,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Validates scoped memory access decisions by agent, scope, mode, and classification.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.5",
+      "title": "Memory Freshness + Staleness",
+      "track": "NEXUS_OS",
+      "order": 30.4,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Tracks stale, expired, invalidated, and promotion-candidate memory.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.6",
+      "title": "Command Center Memory Center",
+      "track": "NEXUS_OS",
+      "order": 30.5,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Exposes scoped memory in read-only Command Center UI.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P46.7",
+      "title": "Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "order": 30.6,
+      "group": "P46 Scoped Memory Architecture + Memory Center",
+      "summary": "Closes P46 with docs, reports, phase status, and validation.",
       "commandCenterVisible": true
     },
     {
@@ -1452,6 +1488,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P60.1",
+      "title": "Worker Queue Schema",
+      "track": "NEXUS_OS",
+      "order": 35.01,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Define preview-only worker queue schema and policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.2",
+      "title": "Task Lease Model",
+      "track": "NEXUS_OS",
+      "order": 35.019999999999996,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model safe task leases for future workers without execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.3",
+      "title": "Heartbeats",
+      "track": "NEXUS_OS",
+      "order": 35.03,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model future worker heartbeat records without daemons or timers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.4",
+      "title": "Retry / Timeout",
+      "track": "NEXUS_OS",
+      "order": 35.04,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model retry policy and timeout classification without automatic retry loops.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.5",
+      "title": "Dead-Letter Queue",
+      "track": "NEXUS_OS",
+      "order": 35.05,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Model dead-letter queue records and recovery guidance without requeue execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.6",
+      "title": "Worker Runtime UX",
+      "track": "NEXUS_OS",
+      "order": 35.059999999999995,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Expose preview-only worker runtime state in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P60.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 35.07,
+      "group": "P60 Worker Queue + Runtime Engine",
+      "summary": "Validate and close the worker queue runtime engine foundation.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P61",
       "title": "Concurrent Execution + Work Deduplication",
       "track": "NEXUS_OS",
@@ -1461,12 +1560,147 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P61.1",
+      "title": "Concurrency Policy",
+      "track": "NEXUS_OS",
+      "order": 35.11,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Define preview-only concurrency limits and execution-disabled policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.2",
+      "title": "Project / Repo / File Lock Model",
+      "track": "NEXUS_OS",
+      "order": 35.12,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Model project, repo, path, agent, and capability lock previews without enforcement.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.3",
+      "title": "Duplicate Work Detection",
+      "track": "NEXUS_OS",
+      "order": 35.13,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Detect possible duplicate work with deterministic task signals only.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.4",
+      "title": "Queue Priority Model",
+      "track": "NEXUS_OS",
+      "order": 35.14,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Rank tasks through deterministic priority previews without queue reordering.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.5",
+      "title": "Cancellation Model",
+      "track": "NEXUS_OS",
+      "order": 35.15,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Preview safe cancellation requests without worker termination or task state mutation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.6",
+      "title": "Command Center Concurrency UX",
+      "track": "NEXUS_OS",
+      "order": 35.16,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Expose concurrency policy, locks, deduplication, priority, and cancellation previews in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P61.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 35.17,
+      "group": "P61 Concurrent Execution + Work Deduplication",
+      "summary": "Validate and close P61 concurrent execution and deduplication preview.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P62",
       "title": "Conversational NEXUS Command Interface",
       "track": "NEXUS_OS",
       "order": 36,
-      "group": "Planned OS Phases",
-      "summary": "Evolve the operator surface from palette commands to conversational governed control.",
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Preview-only conversational governed operator command interface.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.1",
+      "title": "Command Intent Schema",
+      "track": "NEXUS_OS",
+      "order": 36.01,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Defined deterministic local command intent schema and preview validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.2",
+      "title": "Scope / Project Detection",
+      "track": "NEXUS_OS",
+      "order": 36.02,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Added portfolio, project, and NEXUS OS scope context packet previews.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.3",
+      "title": "Plan/Review/QA/Ship/Guard/Freeze Command Mapping",
+      "track": "NEXUS_OS",
+      "order": 36.03,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Mapped simple operator commands to governed preview routes.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.4",
+      "title": "Approval Prompt UX Model",
+      "track": "NEXUS_OS",
+      "order": 36.04,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Added approval requirement previews for risk and capability blockers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.5",
+      "title": "Command Timeline",
+      "track": "NEXUS_OS",
+      "order": 36.05,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Added redacted local command timeline preview records.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.6",
+      "title": "Command Center Command UX",
+      "track": "NEXUS_OS",
+      "order": 36.06,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Surfaced command intent, route, risk, approval, blocker, and timeline previews in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P62.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 36.07,
+      "group": "P62 Conversational NEXUS Command Interface",
+      "summary": "Validated conversational command interface safety, UI, docs, and roadmap status.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54",
+      "title": "API + Batch Execution Adapter",
+      "track": "NEXUS_OS",
+      "order": 37,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Build preview-only provider request and batch packaging foundations without provider execution.",
       "commandCenterVisible": true
     },
     {
@@ -1479,12 +1713,165 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P54.1",
+      "title": "Provider Adapter Interface",
+      "track": "NEXUS_OS",
+      "order": 37.01,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only provider adapter abstraction and policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.2",
+      "title": "OpenAI API Adapter Skeleton",
+      "track": "NEXUS_OS",
+      "order": 37.02,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "OpenAI-compatible request-shape preview skeleton.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.3",
+      "title": "Batch Job Builder",
+      "track": "NEXUS_OS",
+      "order": 37.03,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only batch job builder.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.4",
+      "title": "JSONL Job Writer",
+      "track": "NEXUS_OS",
+      "order": 37.04,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Safe local JSONL preview writer.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.5",
+      "title": "Batch Status Tracker Preview",
+      "track": "NEXUS_OS",
+      "order": 37.05,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Local batch status preview tracking.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.6",
+      "title": "Batch Result Reconciler Preview",
+      "track": "NEXUS_OS",
+      "order": 37.06,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview result reconciliation by custom_id.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.7",
+      "title": "Cost Estimator",
+      "track": "NEXUS_OS",
+      "order": 37.07,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Approximate API and batch cost estimator.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.8",
+      "title": "Command Center API / Batch Jobs UX",
+      "track": "NEXUS_OS",
+      "order": 37.08,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only Command Center API and batch visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.9",
+      "title": "API + Batch Adapter Final Validation",
+      "track": "NEXUS_OS",
+      "order": 37.09,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Final validation and closure for P54.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55",
+      "title": "Test Suite Manager: Project + OS",
+      "track": "NEXUS_OS",
+      "order": 38,
+      "group": "Planned OS Phases",
+      "summary": "Unify project and OS validation suites under governed test-suite management.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P64",
       "title": "Provider + Tool Dispatch Through Governance",
       "track": "NEXUS_OS",
       "order": 38,
       "group": "Planned OS Phases",
       "summary": "Enable real provider and tool dispatch only through governed execution pathways.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.1",
+      "title": "Test Registry Schema",
+      "track": "NEXUS_OS",
+      "order": 38.01,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Define the canonical test suite registry schema, field set, constants, and validation functions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.2",
+      "title": "Project Test Suites",
+      "track": "NEXUS_OS",
+      "order": 38.02,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Preview-only project-scoped test suite records for Private project.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.3",
+      "title": "OS Test Suites",
+      "track": "NEXUS_OS",
+      "order": 38.03,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Preview-only OS-scoped test suite records for NEXUS OS infrastructure layers.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.4",
+      "title": "Changed-File to Test Mapping",
+      "track": "NEXUS_OS",
+      "order": 38.04,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Map changed file paths to relevant test suites based on glob patterns.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.5",
+      "title": "Test Result Evidence Model",
+      "track": "NEXUS_OS",
+      "order": 38.05,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Define the test result record and evidence preview schema for audit-safe storage.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.6",
+      "title": "Command Center Test Center UX",
+      "track": "NEXUS_OS",
+      "order": 38.06,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Add /command-center/tests route with 6 tabs for Test Suite Manager visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.7",
+      "title": "Test Suite Manager Final Validation",
+      "track": "NEXUS_OS",
+      "order": 38.07,
+      "group": "P55 Test Suite Manager: Project + OS",
+      "summary": "Comprehensive final validation of all P55 subphases.",
       "commandCenterVisible": true
     },
     {
@@ -1621,331 +2008,7 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.1",
-      "title": "Agent Registry Schema",
-      "track": "NEXUS_OS",
-      "order": 19.01,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Define metadata-only agent identities, schema fields, and seeded NEXUS agents.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.2",
-      "title": "Agent Capability Matrix",
-      "track": "NEXUS_OS",
-      "order": 19.020000000000003,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Map agent capabilities and separation-of-duties rules.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.3",
-      "title": "Agent Path / Tool / Data Boundaries",
-      "track": "NEXUS_OS",
-      "order": 19.030000000000005,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Define metadata-only path, tool, data, project, and change-scope boundaries.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.4",
-      "title": "Boundary Compiler",
-      "track": "NEXUS_OS",
-      "order": 19.040000000000006,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Compile dry-run agent boundary envelopes from agent, project, scope, and task intent.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.5",
-      "title": "Command Center Agent Registry UX",
-      "track": "NEXUS_OS",
-      "order": 19.050000000000008,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Expose agent registry and boundary summaries in Command Center.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P45.6",
-      "title": "Agent Boundary Tests + Final Validation",
-      "track": "NEXUS_OS",
-      "order": 19.06000000000001,
-      "group": "P45 Agent Registry + Boundary Compiler",
-      "summary": "Validate and close the agent registry and boundary compiler track.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.1",
-      "title": "Provider Adapter Interface",
-      "track": "NEXUS_OS",
-      "order": 37.01,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Preview-only provider adapter abstraction and policy.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.2",
-      "title": "OpenAI API Adapter Skeleton",
-      "track": "NEXUS_OS",
-      "order": 37.02,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "OpenAI-compatible request-shape preview skeleton.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.3",
-      "title": "Batch Job Builder",
-      "track": "NEXUS_OS",
-      "order": 37.03,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Preview-only batch job builder.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.4",
-      "title": "JSONL Job Writer",
-      "track": "NEXUS_OS",
-      "order": 37.04,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Safe local JSONL preview writer.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.5",
-      "title": "Batch Status Tracker Preview",
-      "track": "NEXUS_OS",
-      "order": 37.05,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Local batch status preview tracking.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.6",
-      "title": "Batch Result Reconciler Preview",
-      "track": "NEXUS_OS",
-      "order": 37.06,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Preview result reconciliation by custom_id.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.7",
-      "title": "Cost Estimator",
-      "track": "NEXUS_OS",
-      "order": 37.07,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Approximate API and batch cost estimator.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.8",
-      "title": "Command Center API / Batch Jobs UX",
-      "track": "NEXUS_OS",
-      "order": 37.08,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Preview-only Command Center API and batch visibility.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P54.9",
-      "title": "API + Batch Adapter Final Validation",
-      "track": "NEXUS_OS",
-      "order": 37.09,
-      "group": "P54 API + Batch Execution Adapter",
-      "summary": "Final validation and closure for P54.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.1",
-      "title": "Test Registry Schema",
-      "track": "NEXUS_OS",
-      "order": 38.01,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Define the canonical test suite registry schema, field set, constants, and validation functions.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.2",
-      "title": "Project Test Suites",
-      "track": "NEXUS_OS",
-      "order": 38.02,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Preview-only project-scoped test suite records for Private project.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.3",
-      "title": "OS Test Suites",
-      "track": "NEXUS_OS",
-      "order": 38.03,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Preview-only OS-scoped test suite records for NEXUS OS infrastructure layers.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.4",
-      "title": "Changed-File to Test Mapping",
-      "track": "NEXUS_OS",
-      "order": 38.04,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Map changed file paths to relevant test suites based on glob patterns.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.5",
-      "title": "Test Result Evidence Model",
-      "track": "NEXUS_OS",
-      "order": 38.05,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Define the test result record and evidence preview schema for audit-safe storage.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.6",
-      "title": "Command Center Test Center UX",
-      "track": "NEXUS_OS",
-      "order": 38.06,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Add /command-center/tests route with 6 tabs for Test Suite Manager visibility.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P55.7",
-      "title": "Test Suite Manager Final Validation",
-      "track": "NEXUS_OS",
-      "order": 38.07,
-      "group": "P55 Test Suite Manager: Project + OS",
-      "summary": "Comprehensive final validation of all P55 subphases.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.1",
-      "title": "Worker Queue Schema",
-      "track": "NEXUS_OS",
-      "order": 35.01,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Define preview-only worker queue schema and policy.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.2",
-      "title": "Task Lease Model",
-      "track": "NEXUS_OS",
-      "order": 35.019999999999996,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Model safe task leases for future workers without execution.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.3",
-      "title": "Heartbeats",
-      "track": "NEXUS_OS",
-      "order": 35.03,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Model future worker heartbeat records without daemons or timers.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.4",
-      "title": "Retry / Timeout",
-      "track": "NEXUS_OS",
-      "order": 35.04,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Model retry policy and timeout classification without automatic retry loops.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.5",
-      "title": "Dead-Letter Queue",
-      "track": "NEXUS_OS",
-      "order": 35.05,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Model dead-letter queue records and recovery guidance without requeue execution.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.6",
-      "title": "Worker Runtime UX",
-      "track": "NEXUS_OS",
-      "order": 35.059999999999995,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Expose preview-only worker runtime state in Command Center.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P60.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 35.07,
-      "group": "P60 Worker Queue + Runtime Engine",
-      "summary": "Validate and close the worker queue runtime engine foundation.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.1",
-      "title": "Concurrency Policy",
-      "track": "NEXUS_OS",
-      "order": 35.11,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Define preview-only concurrency limits and execution-disabled policy.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.2",
-      "title": "Project / Repo / File Lock Model",
-      "track": "NEXUS_OS",
-      "order": 35.12,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Model project, repo, path, agent, and capability lock previews without enforcement.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.3",
-      "title": "Duplicate Work Detection",
-      "track": "NEXUS_OS",
-      "order": 35.13,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Detect possible duplicate work with deterministic task signals only.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.4",
-      "title": "Queue Priority Model",
-      "track": "NEXUS_OS",
-      "order": 35.14,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Rank tasks through deterministic priority previews without queue reordering.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.5",
-      "title": "Cancellation Model",
-      "track": "NEXUS_OS",
-      "order": 35.15,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Preview safe cancellation requests without worker termination or task state mutation.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.6",
-      "title": "Command Center Concurrency UX",
-      "track": "NEXUS_OS",
-      "order": 35.16,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Expose concurrency policy, locks, deduplication, priority, and cancellation previews in Command Center.",
-      "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P61.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 35.17,
-      "group": "P61 Concurrent Execution + Work Deduplication",
-      "summary": "Validate and close P61 concurrent execution and deduplication preview.",
-      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T19:03:01.092Z"
+  "updatedAt": "2026-05-16T19:27:33.978Z"
 }

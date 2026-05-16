@@ -259,9 +259,16 @@ Risk level:
   - `P60.5` Dead-Letter Queue — complete
   - `P60.6` Worker Runtime UX — complete
   - `P60.7` Final Validation — complete
-- `P61` Concurrent Execution + Work Deduplication — next
-- `P62` Conversational NEXUS Command Interface
-- `P63` AI Interaction Snapshot + Granular Recovery Layer
+- `P61` Concurrent Execution + Work Deduplication — complete
+- `P62` Conversational NEXUS Command Interface — complete
+  - `P62.1` Command Intent Schema — complete
+  - `P62.2` Scope / Project Detection — complete
+  - `P62.3` Plan/Review/QA/Ship/Guard/Freeze Command Mapping — complete
+  - `P62.4` Approval Prompt UX Model — complete
+  - `P62.5` Command Timeline — complete
+  - `P62.6` Command Center Command UX — complete
+  - `P62.7` Final Validation — complete
+- `P63` AI Interaction Snapshot + Granular Recovery Layer — next
 - `P64` Provider + Tool Dispatch Through Governance
 - `P64.1` Code Mode Runtime + Lazy Tool Loading
 - `P65` Batch Intelligence Jobs for Large-Scale Analysis
@@ -1104,3 +1111,15 @@ previews, and Command Center visibility on the Worker Runtime page.
 P61 does not enforce locks, reorder queues, merge tasks, cancel workers, execute
 agents, call providers, dispatch tools, write DB records, or mutate project
 files. P62 - Conversational NEXUS Command Interface is next.
+
+## P62 - Conversational NEXUS Command Interface
+
+P62 adds a preview-only conversational command layer for simple operator intent.
+It classifies commands such as Plan, Review, QA, Fix, Ship, Guard, Freeze, and
+Explain, resolves portfolio/project/NEXUS OS scope, maps each command to a
+governed route preview, shows risk and approval posture, and records redacted
+local command timeline entries.
+
+P62 does not execute providers, tools, workers, DB writes, project mutation, or
+release/deploy actions. The Command Center command UX is route-first and
+preview-only. P63 - AI Interaction Snapshot + Granular Recovery Layer is next.

@@ -1,0 +1,1 @@
+{"commandId":"cmd_record_seed","correlationId":"corr_command_preview_seed","commandText":"Explain current NEXUS state","intentType":"explain_status","scope":"os","projectId":"","routeStatus":"preview","nextAction":"Show read-only current state summary.","redacted":true,"previewOnly":true,"executionEnabled":false,"createdAt":"2026-05-16T00:00:00.000Z"}

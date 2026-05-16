@@ -145,6 +145,31 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center");
+
+  await expect(page.getByText("Conversational NEXUS Command Interface")).toBeVisible();
+  await expect(page.getByText("Commands are route-first previews until worker/provider/tool execution is enabled.")).toBeVisible();
+  await expect(page.locator(".ccv2-info-banner", { hasText: "Select or create a project first." })).toBeVisible();
+
+  for (const label of ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"]) {
+    await expect(
+      page.locator(".ccv2-command-interface-preview__command-top strong", { hasText: new RegExp(`^${label}$`) }),
+    ).toBeVisible();
+  }
+
+  await expect(page.locator(".ccv2-command-interface-preview__command").filter({ hasText: "QA" })).toContainText("Requires controlled validation bridge");
+  await expect(page.locator(".ccv2-command-interface-preview__command").filter({ hasText: "Ship" })).toContainText("Requires release action bridge");
+  await expect(page.locator(".ccv2-command-interface-preview__timeline")).toContainText("Explain current NEXUS state");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toContain("raw JSON");
+  expect(errors).toEqual([]);
+});
+
 test("legacy command center route renders legacy Command Center", async ({ page }) => {
   const errors = captureClientErrors(page);
 

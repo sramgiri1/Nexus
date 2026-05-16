@@ -2191,6 +2191,7 @@ function MissionControlOverviewTab({ vm, activeScope, operatorCommands, onOpenCo
     return (
       <>
         <ProjectContextCard vm={vm} surface="Mission Control" />
+        <ConversationalCommandInterfacePanel vm={vm} />
         <div className="ccv2-mission-control__lead-grid">
           <SystemStatusStrip vm={vm} />
           <div className="ccv2-card">
@@ -2208,6 +2209,8 @@ function MissionControlOverviewTab({ vm, activeScope, operatorCommands, onOpenCo
   return (
     <>
       <MissionComposerCard vm={vm} />
+
+      <ConversationalCommandInterfacePanel vm={vm} />
 
       <OperatorActionsPanel
         commands={operatorCommands}
@@ -2267,6 +2270,91 @@ function MissionControlWorkflowsTab({ vm, operatorCommands, onOpenCommandPalette
         </div>
       </div>
     </>
+  );
+}
+
+function ConversationalCommandInterfacePanel({ vm }) {
+  const commandInterface = vm.commandInterface || {};
+  const commands = commandInterface.previewCommands || [];
+  const timeline = commandInterface.recentTimeline || [];
+  const noProjectSelected = !hasActiveProject(vm);
+
+  return (
+    <div className="ccv2-card ccv2-command-interface-preview">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Command Interface</div>
+          <h3 className="ccv2-command-interface-preview__title">
+            {commandInterface.title || "Conversational NEXUS Command Interface"}
+          </h3>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+      </div>
+      <p className="ccv2-command-interface-preview__help">
+        {commandInterface.helpText || "Commands are route-first previews until worker/provider/tool execution is enabled."}
+      </p>
+
+      <div className="ccv2-command-interface-preview__context">
+        <div>
+          <span>Scope</span>
+          <strong>{vm.shell?.activeProjectScope === "os" ? "NEXUS OS" : vm.shell?.activeProjectScope === "portfolio" ? "Portfolio" : "Project"}</strong>
+        </div>
+        <div>
+          <span>Project</span>
+          <strong>{noProjectSelected ? "No project selected" : vm.shell?.activeProject || commandInterface.selectedProjectLabel}</strong>
+        </div>
+        <div>
+          <span>Mode</span>
+          <strong>{vm.shell?.mode || "local-private"}</strong>
+        </div>
+      </div>
+
+      {noProjectSelected && (
+        <div className="ccv2-info-banner">
+          {commandInterface.noProjectBlockedReason || "Select or create a project first."}
+        </div>
+      )}
+
+      <div className="ccv2-command-interface-preview__grid">
+        {commands.map((command) => (
+          <div key={command.command} className="ccv2-command-interface-preview__command">
+            <div className="ccv2-command-interface-preview__command-top">
+              <strong>{command.command}</strong>
+              <span className={`ccv2-pill ccv2-pill--${command.status === "Blocked" ? "fail" : command.status === "Read-only" ? "disabled" : "pass"}`}>
+                {command.status}
+              </span>
+            </div>
+            <p>{command.intent}</p>
+            <div className="ccv2-command-interface-preview__meta">
+              <span>Route: {command.route}</span>
+              <span>Risk: {command.risk}</span>
+              <span>Approval: {command.approval}</span>
+            </div>
+            {command.blockedReason && (
+              <div className="ccv2-command-interface-preview__blocked">
+                Blocked reason: {command.blockedReason}
+              </div>
+            )}
+            <div className="ccv2-command-interface-preview__next">
+              Next action: {noProjectSelected && command.command !== "Explain"
+                ? commandInterface.noProjectBlockedReason
+                : command.nextAction}
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="ccv2-command-interface-preview__timeline">
+        <div className="ccv2-eyebrow">Recent Command Timeline</div>
+        {timeline.map((record) => (
+          <div key={record.commandId} className="ccv2-command-interface-preview__timeline-row">
+            <span>{record.commandText}</span>
+            <strong>{record.routeStatus}</strong>
+            <span>{record.redacted ? "Redacted" : "Not redacted"}</span>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 }
 

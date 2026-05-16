@@ -224,7 +224,8 @@
     "check:concurrency-locks": "node scripts/check-concurrency-locks.js",
     "check:work-deduplication": "node scripts/check-work-deduplication.js",
     "check:queue-priority": "node scripts/check-queue-priority.js",
-    "check:task-cancellation": "node scripts/check-task-cancellation.js"
+    "check:task-cancellation": "node scripts/check-task-cancellation.js",
+    "check:command-interface": "node scripts/check-command-interface.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

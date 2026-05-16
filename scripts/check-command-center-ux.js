@@ -27,6 +27,7 @@ const sections = {
   policyCenterUx: true,
   secretsBoundaryUx: true,
   commandPalette: true,
+  commandInterfaceUx: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
   commandCenterTabs: true,
@@ -1137,6 +1138,22 @@ for (const expected of [
 check(commandCenterSource.includes("Read-only and route-first"), "operatorActions", "Operator actions should explain read-only and route-first posture");
 check(routeTestSource.includes("Mission Control shows simple operator action rows"), "operatorActions", "Route tests missing Mission Control operator actions coverage");
 
+// Conversational command interface
+for (const expected of [
+  "Conversational NEXUS Command Interface",
+  "Commands are route-first previews until worker/provider/tool execution is enabled.",
+  "Select or create a project first.",
+  "Blocked reason",
+  "Recent Command Timeline",
+]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandInterfaceUx", `Command interface UX missing: ${expected}`);
+}
+for (const expected of ["Plan", "Review", "QA", "Fix", "Ship", "Guard", "Freeze", "Explain"]) {
+  check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "commandInterfaceUx", `Command interface missing command label: ${expected}`);
+}
+check(routeTestSource.includes("conversational command interface preview"), "commandInterfaceUx", "Route tests missing command interface preview coverage");
+check(!commandCenterSource.includes("Execute Command"), "commandInterfaceUx", "Command interface must not expose execution copy");
+
 // Command Center tabs
 check(commandTabsSource.includes("export const MISSION_CONTROL_TABS"), "commandCenterTabs", "commandCenterTabs.js must export MISSION_CONTROL_TABS");
 check(commandTabsSource.includes("export const PAGE_TAB_PLANS"), "commandCenterTabs", "commandCenterTabs.js must export PAGE_TAB_PLANS");
@@ -1586,6 +1603,7 @@ console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" 
 console.log(`Worker Runtime UX: ${sections.workerRuntimeUx ? "PASS" : "FAIL"}`);
 console.log(`Concurrency preview UX: ${sections.concurrencyPreviewUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
+console.log(`Command interface UX: ${sections.commandInterfaceUx ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
 console.log(`Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}`);
@@ -1651,6 +1669,7 @@ const report = `# Command Center UX Report
 - Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 - Concurrency preview UX: ${sections.concurrencyPreviewUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
+- Command interface UX: ${sections.commandInterfaceUx ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
 - Command Center tabs: ${sections.commandCenterTabs ? "PASS" : "FAIL"}
