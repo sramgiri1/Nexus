@@ -1227,6 +1227,24 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P57.2",
+      "title": "Task / Agent / Skill / Tool Budget Model",
+      "track": "NEXUS_OS",
+      "order": 31.02,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Define budgets for task, project, agent, skill, tool, batch, and OS phase scopes.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P57.3",
+      "title": "Estimate Before Run",
+      "track": "NEXUS_OS",
+      "order": 31.03,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Estimate cost before future governed execution.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
@@ -1623,5 +1641,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T12:45:00.582Z"
+  "updatedAt": "2026-05-16T12:46:46.173Z"
 }

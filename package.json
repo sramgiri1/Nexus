@@ -198,7 +198,8 @@
     "check:test-proposal-workflow": "node scripts/check-test-proposal-workflow.js",
     "check:quality-intelligence-final": "node scripts/check-quality-intelligence-final.js",
     "check:codebase-maintainability": "node scripts/check-codebase-maintainability.js",
-    "check:cost-center-ledger": "node scripts/check-cost-center-ledger.js"
+    "check:cost-center-ledger": "node scripts/check-cost-center-ledger.js",
+    "check:budget-model": "node scripts/check-budget-model.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
