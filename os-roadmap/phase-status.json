@@ -1967,7 +1967,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "e09fdad",
       "completedAt": "2026-05-16T15:39:30.731Z",
       "summary": "Completed reference-only Secrets and Credential Boundary foundations across secret references, access policy, redaction checks, provider and project credential boundaries, Command Center UX, and final validation.",
       "checksRun": [
@@ -1981,7 +1981,7 @@
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
       ],
-      "nextPhase": "P60",
+      "nextPhase": "P59.8",
       "commandCenterVisible": true
     },
     {
@@ -2099,7 +2099,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "e09fdad",
       "completedAt": "2026-05-16T15:39:30.731Z",
       "summary": "Validated and closed P59 Secrets and Credential Boundary.",
       "checksRun": [
@@ -2107,6 +2107,24 @@
       ],
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
+      ],
+      "nextPhase": "P59.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P59.8",
+      "title": "Command Center OS / Multi-Project Identity Cleanup",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "fix/command-center-os-multiproject-identity",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T16:53:29.397Z",
+      "summary": "Full Command Center identity now focuses on NEXUS OS, portfolio, selected-project, and no-project states instead of demo/private fallbacks.",
+      "checksRun": [
+        "npm run check:command-center-ux"
+      ],
+      "knownLimitations": [
+        "Command Center Lite/demo remains future work and is not implemented in this phase."
       ],
       "nextPhase": "P60",
       "commandCenterVisible": true
@@ -4008,8 +4026,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:39:30.731Z",
+  "updatedAt": "2026-05-16T16:53:29.397Z",
   "currentPhase": "P60",
-  "previousPhase": "P59",
+  "previousPhase": "P59.8",
   "nextPhase": "P60"
 }

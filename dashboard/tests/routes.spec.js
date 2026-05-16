@@ -136,7 +136,8 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.getByRole("link", { name: /Workspace/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
   await expect(page.locator(".ccv2-page-head__title")).toContainText("Mission Control");
-  await expect(page.locator("#v2-mission-hero")).toBeVisible();
+  await expect(page.locator("body")).toContainText("No project selected");
+  await expect(page.locator("body")).toContainText("Create or import a project");
   await expect(page.locator(".nav-rail")).toHaveCount(0);
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
@@ -630,6 +631,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
+    await page.getByLabel("Project selector").selectOption("private-project-01");
 
     const operatorActions = page.locator("#v2-operator-actions");
     await expect(operatorActions).toBeVisible();
@@ -704,7 +706,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(scopeSelector.getByRole("button", { name: "Portfolio", exact: true })).toBeVisible();
     await expect(scopeSelector.getByRole("button", { name: "NEXUS OS", exact: true })).toBeVisible();
     await expect(page.getByLabel("Project context")).toContainText("Active Project");
-    await expect(page.getByLabel("Project context")).toContainText("Private Project");
+    await expect(page.getByLabel("Project context")).toContainText("No project selected");
     await expect(page.getByLabel("Project context")).toContainText("Scope: Project");
     await expect(page.getByLabel("Project context")).toContainText("Mode: local-private");
 
@@ -723,8 +725,8 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center");
     const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
 
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Active Mission");
-    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Next Best Action");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("No project selected");
+    await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("Create or import a project");
     await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("System Status");
 
     await scopeSelector.getByRole("button", { name: "Portfolio", exact: true }).click();
@@ -831,6 +833,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
+    await page.getByLabel("Project selector").selectOption("private-project-01");
 
     for (const section of [
       "Mission Control",
@@ -865,13 +868,14 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
+    await page.getByLabel("Project selector").selectOption("private-project-01");
 
     const missionHero = page.locator("#v2-mission-hero");
 
     await expect(missionHero).toBeVisible();
     await expect(missionHero.getByText("Active Project", { exact: false }).first()).toBeVisible();
     await expect(missionHero.getByText("Active Mission", { exact: false }).first()).toBeVisible();
-    await expect(missionHero).toContainText("Private Project Governed Build Mission");
+    await expect(missionHero).toContainText("Governed Build Mission");
     await expect(missionHero).toContainText("Mission ID");
     await expect(missionHero).toContainText("Read-only until mission edit workflow is enabled.");
     await expect(missionHero.getByRole("button", { name: /Generate Plan/i })).toBeVisible();
@@ -906,6 +910,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
+    await page.getByLabel("Project selector").selectOption("private-project-01");
     await pickTheme(page, "dark");
     await expect(page.locator("#v2-mission-hero")).toBeVisible();
     await expect(page.locator(".ccv2-theme-control")).toBeVisible();
@@ -1228,7 +1233,7 @@ test.describe("Command Center route-wide UX", () => {
       const body = await page.locator("body").innerText();
       if (path === "/command-center/projects") {
         expect(body).toContain("Selected Project");
-        expect(body).toContain("Private Project");
+        expect(body).toContain("Selected Project");
         expect(body).not.toContain("DemoApp");
       } else {
         expect(body).not.toContain("DemoApp");
@@ -1282,7 +1287,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Manage NEXUS workloads, project readiness, stack profiles, boundaries, and project operating state.");
     await expect(page.locator("body")).toContainText("Project Selector");
     await expect(page.locator("body")).toContainText("Portfolio / All Projects");
-    await expect(page.locator("body")).toContainText("Selected Project: Private Project");
+    await expect(page.locator("body")).toContainText("Selected Project: Selected Project");
     await expect(page.locator("body")).toContainText("Project Type: SaaS + Mobile");
     await expect(page.locator("body")).toContainText("Stack: Node/Fastify + Prisma + iOS");
 
@@ -1402,7 +1407,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Memory Center");
     await expect(page.locator("body")).toContainText("Memory Scope Context");
     await expect(page.locator("body")).toContainText("Runtime injection disabled");
-    await expect(page.locator("body")).toContainText("Private Project");
+    await expect(page.locator("body")).toContainText("Selected Project");
 
     for (const label of [
       "Overview",
@@ -1555,7 +1560,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("core operational pages prioritize active project context and keep DemoApp out", async ({ page }) => {
+  test("core operational pages prioritize project selection guidance and keep DemoApp out", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     for (const path of [
@@ -1565,9 +1570,9 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/implementation",
     ]) {
       await page.goto(path);
-      await expect(page.locator("body")).toContainText("Active Project Context");
-      await expect(page.locator("body")).toContainText("Private Project");
-      await expect(page.locator("body")).toContainText("Project-scoped tasks, evidence, gates, cost, and progress");
+      await expect(page.locator("body")).toContainText("No project selected");
+      await expect(page.locator("body")).toContainText("Create or import a project");
+      await expect(page.locator("body")).toContainText("Activate the first task");
       const body = await page.locator("body").innerText();
       expect(body).not.toContain("DemoApp");
       expect(body).not.toContain("DEMOAPP ACTIVE");
@@ -1667,7 +1672,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.locator("body")).toContainText("Project Operating Surface");
     await expect(page.locator("body")).toContainText("Selected project");
-    await expect(page.locator("body")).toContainText("Private Project");
+    await expect(page.locator("body")).toContainText("Selected Project");
     await commandTab(page, "Milestones").click();
     await expect(activeCommandTabPanel(page)).toContainText("OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.");
     await expect(activeCommandTabPanel(page)).toContainText("Project registry foundation");
@@ -1723,7 +1728,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Project: NEXUS OS");
 
     await page.getByLabel("Project selector").selectOption("private-project-01");
-    await expect(page.locator("body")).toContainText("Project: Private Project");
+    await expect(page.locator("body")).toContainText("Project: Selected Project");
 
     expect(errors).toEqual([]);
   });
@@ -2329,20 +2334,35 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("DemoApp appears on demo route only", async ({ page }) => {
+  test("full Command Center routes do not show DemoApp", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/demo");
     const demoText = await page.locator("body").innerText();
     expect(demoText).toContain("Demo Mode");
 
-    for (const route of ["/", "/command-center/workspace"]) {
+    for (const route of [
+      "/",
+      "/command-center/workspace",
+      "/command-center/tasks",
+      "/command-center/workbench",
+      "/command-center/implementation",
+      "/command-center/projects",
+      "/command-center/evidence",
+      "/command-center/safety",
+      "/command-center/roadmap",
+      "/command-center/liveapi",
+      "/command-center/database",
+      "/command-center/services",
+    ]) {
       await page.goto(route);
       const body = await page.locator("body").innerText();
       expect(body).not.toContain("DEMOAPP ACTIVE");
       expect(body).not.toContain("DemoApp");
-      expect(body).toContain("Private Project");
-      expect(body.toLowerCase()).toContain("local-private");
+      expect(body).not.toContain("private-project-01");
+      expect(body).not.toContain("private-project-governed-build-mission");
+      expect(body).not.toContain("private project companion");
+      expect(body).toContain("No project selected");
     }
 
     expect(errors).toEqual([]);

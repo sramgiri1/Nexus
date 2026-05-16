@@ -1067,3 +1067,14 @@ route.
 P59 does not read secret values, resolve environment values, call providers or
 tools, write to DB, deploy, sign mobile artifacts, start workers, or mutate
 project files. P60 - Worker Queue + Runtime Engine is next.
+
+### P59.8 - Command Center OS / Multi-Project Identity Cleanup
+
+P59.8 is a cleanup phase after P59 final validation. It keeps the full Command
+Center focused on NEXUS OS, Portfolio, Selected Project, and No project selected
+states. Demo data is reserved for a future separate Lite/demo surface, and raw
+private placeholder identifiers stay out of primary Command Center UX.
+
+This phase does not add backend execution, provider/tool dispatch, DB writes,
+workers, project mutation, or Command Center Lite implementation. P60 - Worker
+Queue + Runtime Engine remains next.

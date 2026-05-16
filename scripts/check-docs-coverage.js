@@ -160,7 +160,7 @@ for (const expected of [
   );
 }
 
-for (const expected of ["active project", "Active Project", "Private Project"]) {
+for (const expected of ["active project", "Selected Project", "No project selected"]) {
   check(
     `${gettingStarted}\n${commandCenterGuide}\n${demoModeGuide}`.includes(expected),
     "usageDocs",
@@ -169,10 +169,10 @@ for (const expected of ["active project", "Active Project", "Private Project"]) 
 }
 
 for (const expected of [
-  "DemoApp is demo mode only",
+  "future separate",
   "Local-private",
-  "Private Project",
-  "must not use DemoApp as fallback",
+  "Selected Project",
+  "must not use demo data as fallback",
 ]) {
   assertContains(`${demoModeGuide}\n${commandCenterGuide}`, expected, "modeGuidance", `Mode guidance missing: ${expected}`);
 }
@@ -308,7 +308,8 @@ for (const file of requiredUsageDocs) {
   const demoMentions = content.match(/DemoApp/g) || [];
   const hasSafeBoundaryCopy = content.includes("DemoApp is demo mode only")
     || content.includes("DemoApp-only public-safe")
-    || content.includes("DemoApp-safe");
+    || content.includes("DemoApp-safe")
+    || content.includes("future separate Command Center Lite/demo surface");
   check(
     demoMentions.length === 0 || hasSafeBoundaryCopy,
     "publicSafeWording",

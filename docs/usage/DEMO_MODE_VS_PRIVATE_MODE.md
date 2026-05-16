@@ -2,7 +2,9 @@
 
 ## Demo Mode
 
-Demo mode is public-safe and DemoApp-oriented. It is designed for safe demonstrations without exposing private-project details.
+Demo mode is public-safe and intentionally separate from the full Command
+Center. The full Command Center should not use demo fixtures as fallback
+identity or project data.
 
 ## Local-Private Mode
 
@@ -10,12 +12,8 @@ Local-private mode allows governed access to private-project workflows under str
 
 ## Public-Safe Surfaces
 
-Public-facing surfaces should stay:
-
-- DemoApp-only where applicable
-- private-project safe
-- redacted
-- free of raw private internals
+Public-facing surfaces should stay redacted, demo-safe, and free of raw private
+internals.
 
 ## Private Project Wording
 
@@ -23,18 +21,18 @@ In public-safe docs and broad operator messaging, use “private project” word
 rather than exposing product internals unless a private-mode-only artifact
 explicitly requires it.
 
-## DemoApp Boundary
+## Full Command Center Boundary
 
-DemoApp content belongs on Demo Mode surfaces. It should not leak into local-private Mission Control or Workspace primary UX.
+The full Command Center is not the demo surface. Its primary identity is one of:
 
-Allowed DemoApp locations:
+- NEXUS OS
+- Portfolio
+- Selected Project
+- No project selected
 
-- `/command-center/demo`
-- demo-only fixtures
-- demo-only tests that explicitly validate Demo Mode
-
-Local-private pages must show `Private Project`, an approved selected project
-label, or a no-project state. They must not use DemoApp as fallback data.
+Demo fixtures are reserved for a future separate Command Center Lite/demo
+surface and demo-only tests. Local-private pages must show a selected project
+label or no-project state; they must not use demo data as fallback data.
 
 ## No Private Project Leakage Rule
 
@@ -56,4 +54,5 @@ When no project is selected, the safe local-private path is:
 5. generate a plan
 6. activate the first task
 
-Opening Demo Mode is allowed for public-safe demonstration, but Demo Mode is not the active project fallback.
+Demo or Lite experiences are separate from the full Command Center and are not
+the active project fallback.

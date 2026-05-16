@@ -143,6 +143,7 @@ const CURRENT_PHASE_IDS = new Set([
   "P59.5",
   "P59.6",
   "P59.7",
+  "P59.8",
   "P60",
 ]);
 
@@ -556,6 +557,9 @@ check(p58?.title === "Policy Center + Governance Admin", "nextPhase", "P58 title
 const p59 = statusById.get("P59");
 check(["planned", "in_progress", "complete"].includes(p59?.status), "nextPhase", "P59 must be planned, in progress, or complete");
 check(p59?.title === "Secrets and Credential Boundary", "nextPhase", "P59 title mismatch");
+const p598 = statusById.get("P59.8");
+check(p598?.status === "complete", "nextPhase", "P59.8 must be complete");
+check(p598?.title === "Command Center OS / Multi-Project Identity Cleanup", "nextPhase", "P59.8 title mismatch");
 
 const p60 = statusById.get("P60");
 check(["planned", "in_progress"].includes(p60?.status), "nextPhase", "P60 must be planned or in progress");

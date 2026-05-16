@@ -234,6 +234,7 @@ Public-facing README sections use “private project” wording. Private-project
 - P57: Cost Center + Budget Enforcement
 - P58: Policy Center + Governance Admin
 - P59: Secrets and Credential Boundary
+- P59.8: Command Center OS / Multi-Project Identity Cleanup
 - P60: Worker Queue + Runtime Engine (next)
 - P44.6: merge gate + rollback branch model
 - P44.7: multi-repo Git/PR final validation

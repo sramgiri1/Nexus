@@ -719,3 +719,24 @@ central logger work aligned in the Command Center.
 ### Next Phase
 
 - P41.8.3 — API / UI / Action Bridge Activity Capture
+
+## P59.8 — Command Center OS / Multi-Project Identity Cleanup
+
+P59.8 makes the full Command Center the NEXUS OS control plane rather than a
+demo dashboard or single private-project fallback.
+
+- Full Command Center identity is limited to NEXUS OS, Portfolio, Selected
+  Project, and No project selected states.
+- Demo fixtures are reserved for a future separate Command Center Lite/demo
+  surface and are not used as fallback data in the full Command Center.
+- Raw private placeholder IDs are kept out of primary UX; technical references
+  belong only in Developer Details or tests.
+- No-project pages show onboarding guidance: create/import a project, add a
+  profile, define stack and test commands, create a mission, generate a plan,
+  and activate the first task.
+- The OS Roadmap remains OS-only and project progress remains under Projects or
+  selected-project scope.
+
+No backend execution, provider calls, tool execution, worker runtime, DB writes,
+project mutation, local API behavior, or action bridge behavior changed in this
+cleanup.

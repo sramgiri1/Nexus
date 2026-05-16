@@ -291,6 +291,32 @@ not enabled yet.
 - Known limitations: real provider dispatch is deferred to a later governed phase
 # Data & Context Center
 
+## Full Command Center Identity
+
+The full Command Center is the NEXUS OS operating console. Its primary
+contexts are:
+
+- NEXUS OS
+- Portfolio
+- Selected Project
+- No project selected
+
+Environment, local-private mode, service health, and durable-state status are
+secondary metadata. They should not replace the selected project or OS scope as
+the page identity.
+
+When no project is selected, the full Command Center shows setup guidance:
+
+1. Create or import a project.
+2. Add a project profile.
+3. Define stack and test commands.
+4. Create a mission.
+5. Generate a plan.
+6. Activate the first task.
+
+Demo fixtures are reserved for a future separate Command Center Lite/demo
+surface. They are not the fallback identity for the full Command Center.
+
 Use `/command-center/context` to inspect trusted context readiness. The page
 shows data source summaries, system-of-record domains, trust bands, freshness
 and lineage status, context packet preview summaries, and exclusions or blocks.

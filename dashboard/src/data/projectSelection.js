@@ -2,8 +2,16 @@ export const PROJECT_SELECTION_STORAGE_KEY = "nexus-selected-project";
 
 export const PROJECT_SELECTION_OPTIONS = [
   {
+    projectId: "",
+    label: "No project selected",
+    scope: "project",
+    visibility: "local-private",
+    localPrivateAllowed: true,
+    demoOnly: false,
+  },
+  {
     projectId: "private-project-01",
-    label: "Private Project",
+    label: "Selected Project",
     scope: "project",
     visibility: "local-private",
     localPrivateAllowed: true,
@@ -40,5 +48,5 @@ export function getProjectSelectionOptions(mode = "local-private") {
 export function resolveSelectedProject(projectId, mode = "local-private") {
   const options = getProjectSelectionOptions(mode);
   const selected = options.find((option) => option.projectId === projectId && !option.disabled);
-  return selected || options.find((option) => option.projectId === "private-project-01");
+  return selected || options.find((option) => option.projectId === "");
 }

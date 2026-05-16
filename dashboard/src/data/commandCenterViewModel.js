@@ -159,9 +159,7 @@ function buildServiceCard(service) {
 
 export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const shellMode = "local-private";
-  const safeProjectDisplayName = shellMode === "local-private"
-    ? "Private Project"
-    : (studio.activeProject?.name || "Demo Project");
+  const safeProjectDisplayName = "Selected Project";
   const pvStatus = pvSnapshot?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};
@@ -204,8 +202,8 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     backendTestsPassed: pvBackend.testsPassed ?? 58,
     backendTestsTotal: pvBackend.totalTests ?? 58,
     mode: "local-private",
-    activeProject: "Private Project",
-    missionId: "private-project-governed-build-mission",
+    activeProject: "Selected Project",
+    missionId: "governed-build-mission",
     prdGaps: ["Physical device push (open)"],
   });
   const prdTestMap = buildPrdTestMap({ projectId: "private-project" });
@@ -252,12 +250,12 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
   const projectOperatingSurface = {
-    selectedProjectLabel: "Private Project",
+    selectedProjectLabel: "Selected Project",
     selectedProjectType: "SaaS + Mobile",
     selectedProjectStatus: "Active",
     selectedProjectMode: "local-private",
     stackSummary: "Node/Fastify + Prisma + iOS",
-    activeMissionLabel: "Private Project Governed Build Mission",
+    activeMissionLabel: "Governed Build Mission",
     sourceLabel: "Project Registry snapshot",
     portfolioSummary: {
       totalProjects: 1,
@@ -267,9 +265,9 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       blockedProjects: blockedTaskCount > 0 ? 1 : 0,
       pendingApprovals: runtimeApprovals.requested || 0,
       readyForValidation: 1,
-      selectedProject: "Private Project",
-      pinnedProjects: ["Private Project"],
-      recentProjects: ["Private Project"],
+      selectedProject: "Selected Project",
+      pinnedProjects: ["Selected Project"],
+      recentProjects: ["Selected Project"],
       registryState: "Ready",
       projectRegistryPlannedNote: "Project Registry is read-only here; multi-project adapter runtime remains disabled.",
     },
@@ -331,13 +329,13 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       { title: "Release/package evidence", status: "Not ready", tone: "pending", summary: "Release package evidence appears after governed release and packaging checks.", linkedAction: "Release readiness", redacted: "Yes" },
     ],
     developerDetails: [
-      { label: "Project ID", value: "private-project-01" },
-      { label: "Mission ID", value: "private-project-governed-build-mission" },
+      { label: "Project ID", value: "selected-project-ref" },
+      { label: "Mission ID", value: "governed-build-mission" },
       { label: "Profile path", value: "project-registry/examples/private-project.nexus.project.json" },
       { label: "Release manifest", value: "artifacts/project-release/private-project-release-manifest.json" },
     ],
   };
-  const activeMissionId = "private-project-governed-build-mission";
+  const activeMissionId = "governed-build-mission";
   const activeMissionDisplayName = humanizeMissionId(activeMissionId);
   const trustedContextSources = [
     {
@@ -443,7 +441,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   }, { high: 0, medium: 0, low: 0, unavailable: 0 });
   const projectSummaries = [
     {
-      projectId: "private-project-01",
+      projectId: "selected-project-ref",
       label: safeProjectDisplayName,
       mode: shellMode,
       status: blockedTaskCount > 0 ? "Needs review" : "Active",
@@ -849,15 +847,15 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       availableScopes: ["portfolio", "project", "os"],
       projectRegistryStatus: "planned",
       workspaceScope: "project",
-      selectedProjectId: "private-project-01",
+      selectedProjectId: "selected-project-ref",
       selectedProjectLabel: safeProjectDisplayName,
-      pinnedProjectIds: ["private-project-01"],
+      pinnedProjectIds: ["selected-project-ref"],
     },
     scopeModel: {
       workspaceScope: "project",
-      selectedProjectId: "private-project-01",
+      selectedProjectId: "selected-project-ref",
       selectedProjectLabel: safeProjectDisplayName,
-      pinnedProjectIds: ["private-project-01"],
+      pinnedProjectIds: ["selected-project-ref"],
       projectSummaries,
       portfolioSummary,
       osSummary,
@@ -906,7 +904,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       }),
       envelopePreview: {
         agentId: "CORE",
-        projectId: "private-project-01",
+        projectId: "selected-project-ref",
         scopeType: "project",
         capabilityId: "implementation.scoped_patch",
         dryRun: true,
@@ -1107,8 +1105,8 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     taskActivation: {
       bridgeEndpoint: "http://localhost:3748",
       policyPhase: "P37-LOCAL",
-      missionId: "private-project-governed-build-mission",
-      projectId: "private-project-01",
+      missionId: "governed-build-mission",
+      projectId: "selected-project-ref",
       missionTasks: plannedMissionTasks,
       nextTask: plannedMissionTasks[0],
       activatedCount: activeTaskCount,
@@ -1540,7 +1538,7 @@ export function buildCommandCenterViewModel(studio) {
     shell: {
       mode: "local-private",
       environment: "Prototype",
-      activeProject: studio.activeProject?.name || "Private Project",
+      activeProject: studio.activeProject?.name || "Selected Project",
     },
     mission: {
       founderIntent: "Build and validate the active mission through governed NEXUS agents.",

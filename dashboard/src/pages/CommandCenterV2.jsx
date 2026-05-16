@@ -52,6 +52,10 @@ import {
   getProjectSelectionOptions,
   resolveSelectedProject,
 } from "../data/projectSelection.js";
+import {
+  getNoProjectGuidance,
+  resolveCommandCenterIdentity,
+} from "../data/commandCenterIdentity.js";
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
@@ -251,7 +255,7 @@ function formatCapabilityLabel(capabilityId) {
 }
 
 function hasActiveProject(vm) {
-  return Boolean(vm?.shell?.activeProject && vm.shell.activeProject !== "No project selected");
+  return Boolean(!vm?.commandCenterIdentity?.noProjectSelected && vm?.shell?.activeProject && vm.shell.activeProject !== "No project selected");
 }
 
 function ProjectContextCard({ vm, surface }) {
@@ -260,21 +264,15 @@ function ProjectContextCard({ vm, surface }) {
   const projectSelected = hasActiveProject(vm);
 
   if (!projectSelected) {
+    const guidance = vm?.commandCenterIdentity?.noProjectGuidance || getNoProjectGuidance();
     return (
       <div className="ccv2-card ccv2-page-summary-card">
         <div className="ccv2-section-heading">No project selected</div>
         <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
-          Start by selecting or creating a project before using {surface}. Environment and mode are secondary until a project scope exists.
+          Start by selecting or creating a project before using {surface}. NEXUS OS and portfolio views remain available; project operations require a selected project.
         </p>
         <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
-          {[
-            "Create or import a project",
-            "Add a project profile",
-            "Define stack and test commands",
-            "Create a mission",
-            "Generate a plan",
-            "Activate the first task",
-          ].map((step) => (
+          {guidance.steps.map((step) => (
             <div key={step} className="ccv2-page-summary-row">
               <span className="ccv2-page-summary-label">Next step</span>
               <span className="ccv2-page-summary-value">{step}</span>
@@ -282,14 +280,19 @@ function ProjectContextCard({ vm, surface }) {
           ))}
         </div>
         <div style={{ display: "flex", gap: 8, marginTop: 12, flexWrap: "wrap" }}>
-          {["Create Project", "Import Existing Project", "Read Getting Started"].map((label) => (
-            <button key={label} className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled title="Project Registry is planned for P42">
-              {label}
+          {guidance.actions.map((action) => (
+            <button
+              key={action.label}
+              className={`ccv2-wf-card__btn ccv2-wf-card__btn--${action.enabled ? "enabled" : "disabled"}`}
+              disabled={!action.enabled}
+              title={action.disabledReason || action.route || ""}
+              onClick={() => {
+                if (action.route) window.location.href = action.route;
+              }}
+            >
+              {action.label}
             </button>
           ))}
-          <button className="ccv2-wf-card__btn ccv2-wf-card__btn--enabled" onClick={() => { window.location.href = "/command-center/demo"; }}>
-            Open Demo Mode
-          </button>
         </div>
       </div>
     );
@@ -489,7 +492,9 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, selectedPro
     : route.scope === "demo"
       ? "Demo Mode"
       : selectedProject?.label
-        ? `Project: ${selectedProject.label}`
+        ? selectedProject.projectId
+          ? `Project: ${selectedProject.label}`
+          : "No project selected"
         : "No project selected";
   const projectOptions = getProjectSelectionOptions(vm.shell?.mode || "local-private");
 
@@ -510,7 +515,7 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, selectedPro
         <label className="ccv2-project-selector" aria-label="Project selector">
           <span className="ccv2-project-selector__label">Project</span>
           <select
-            value={selectedProject?.projectId || "private-project-01"}
+            value={selectedProject?.projectId || ""}
             onChange={(event) => onSelectProject(event.target.value)}
           >
             {projectOptions.map((option) => (
@@ -1152,7 +1157,7 @@ function PrivateValidationPanel({ vm }) {
   return (
     <div id="v2-private-validation" className="ccv2-card ccv2-pv-panel">
       <div className="ccv2-pv-panel__header">
-        <h3 className="ccv2-pv-panel__title">Private Project Validation</h3>
+        <h3 className="ccv2-pv-panel__title">Project Validation</h3>
         <span className="ccv2-pv-panel__overall ccv2-pv-panel__overall--validated">
           {pv.overall}
         </span>
@@ -2181,6 +2186,24 @@ function MissionControlOverviewTab({ vm, activeScope, operatorCommands, onOpenCo
     );
   }
 
+  if (!hasActiveProject(vm)) {
+    return (
+      <>
+        <ProjectContextCard vm={vm} surface="Mission Control" />
+        <div className="ccv2-mission-control__lead-grid">
+          <SystemStatusStrip vm={vm} />
+          <div className="ccv2-card">
+            <div className="ccv2-eyebrow" style={{ marginBottom: 8 }}>Project operations locked</div>
+            <p className="ccv2-empty-state">
+              Mission planning, task activation, evidence, gates, and project cost views require a selected project.
+              Use Portfolio or NEXUS OS scope for platform context.
+            </p>
+          </div>
+        </div>
+      </>
+    );
+  }
+
   return (
     <>
       <MissionComposerCard vm={vm} />
@@ -2413,7 +2436,7 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
         </CommandTabPanel>
       </CommandTabs>
 
-      {isLocalPrivate && clp && activeTab === "overview" && activeScope === "project" && (
+      {isLocalPrivate && clp && hasActiveProject(vm) && activeTab === "overview" && activeScope === "project" && (
         <div className="ccv2-mission-control__section-grid ccv2-mission-control__section-grid--single">
           <CareLoopProgressCard clp={clp} />
         </div>
@@ -2596,7 +2619,7 @@ function TaskQueuePage({ vm }) {
         </div>
 
         <div className="ccv2-eyebrow" style={{ marginBottom: 4 }}>Planned Tasks</div>
-        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Tasks — Private Project</div>
+        <div className="ccv2-section-heading" style={{ marginBottom: 8 }}>Mission Tasks — Selected Project</div>
         <div className="ccv2-card" style={{ padding: 0, overflow: "hidden" }}>
           {missionTasks.length > 0 ? (
             <table className="ccv2-table ccv2-mission-tasks-table">
@@ -2846,7 +2869,7 @@ function AgentRegistryPage({ vm }) {
           </div>
           <div className="ccv2-stat-chip">
             <div className="ccv2-stat-chip__label">Active Project</div>
-            <div className="ccv2-stat-chip__value">{registry.activeProjectLabel || "Private Project"}</div>
+            <div className="ccv2-stat-chip__value">{registry.activeProjectLabel || "Selected Project"}</div>
           </div>
           <div className="ccv2-stat-chip">
             <div className="ccv2-stat-chip__label">Tool Dispatch</div>
@@ -3472,7 +3495,7 @@ function ScopeBoundaryPackagingPanel({ vm }) {
   const boundary = vm.scopeBoundary || {};
   const rows = [
     { label: "Active scope", value: boundary.activeScope || "Project", tone: "ready" },
-    { label: "Selected project", value: boundary.selectedProjectLabel || "Private Project", tone: "ready" },
+    { label: "Selected project", value: boundary.selectedProjectLabel || "Selected Project", tone: "ready" },
     { label: "Project mutation", value: boundary.projectMutation || "Disabled unless governed", tone: "disabled" },
     { label: "OS mutation", value: boundary.osMutation || "Disabled unless governed", tone: "disabled" },
     { label: "Cross-cutting changes", value: boundary.crossCutting || "Review required", tone: "pending" },
@@ -3534,7 +3557,7 @@ function ProjectsPage({ vm, studio }) {
   const projectProgress = vm.projectProgress || vm.careloopProductProgress;
   const isLocalPrivate = vm.shell.mode === "local-private";
   const surface = vm.projectOperatingSurface || {};
-  const projectSummaryName = surface.selectedProjectLabel || projectProgress?.safeProjectName || vm.shell.activeProject || "Private Project";
+  const projectSummaryName = surface.selectedProjectLabel || projectProgress?.safeProjectName || vm.shell.activeProject || "Selected Project";
   const activeMissionName = surface.activeMissionLabel || vm.mission?.displayName || "Governed Build Mission";
   const healthStrip = surface.projectHealthStrip || [];
   const stackProfile = surface.stackProfile || [];
@@ -3657,7 +3680,7 @@ function ProjectsPage({ vm, studio }) {
                     ["Create Project", "Project onboarding action is not enabled yet"],
                     ["Import Existing Project", "Project import action is not enabled yet"],
                     ["Run nexus:init-project", "Use CLI until Command Center action is wired"],
-                    ["Open Demo Mode", "Demo Mode is the only place Demo Project appears"],
+                    ["Command Center Lite", "Separate demo/lite surface is planned; full Command Center stays OS and portfolio focused."],
                     ["Read Getting Started", "Open docs for project setup guidance"],
                   ].map(([label, reason]) => (
                     <button key={label} className="ccv2-wf-card__btn ccv2-wf-card__btn--disabled" disabled title={reason}>
@@ -7014,7 +7037,7 @@ const DOCS_GUIDES = [
     description: "Understand what appears in demo mode, what stays private, and how NEXUS prevents data leakage.",
     path: "docs/usage/DEMO_MODE_VS_PRIVATE_MODE.md",
     preview: [
-      "Clarifies demo-safe data, local-private surfaces, and why DemoApp never appears in primary local-private UX.",
+      "Clarifies demo-safe data, local-private surfaces, and why demo fixtures never appear in primary full Command Center UX.",
       "Use it when validating public-safe boundaries or reviewing screenshots.",
     ],
   },
@@ -8000,7 +8023,7 @@ function MemoryCenterPage({ vm }) {
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Memory Scope Context</div>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
-            <span>Project: {memory.activeProjectLabel || vm.shell?.activeProject || "Private Project"}</span>
+            <span>Project: {memory.activeProjectLabel || vm.shell?.activeProject || "Selected Project"}</span>
             <span>Mode: {memory.mode || vm.shell?.mode || "local-private"}</span>
             <span>Source: {memory.sourceLabel || "scoped memory snapshot"}</span>
             <span>Provider dispatch: Disabled</span>
@@ -8131,7 +8154,7 @@ function DataContextCenterPage({ vm }) {
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Trusted Context Boundary</div>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
-            <span>Project: {context.activeProjectLabel || "Private Project"}</span>
+            <span>Project: {context.activeProjectLabel || "Selected Project"}</span>
             <span>Mode: {context.mode || "local-private"}</span>
             <span>Source: {context.sourceLabel || "trusted context registry"}</span>
             <span>Provider dispatch: Disabled</span>
@@ -8727,8 +8750,8 @@ export default function CommandCenterV2({ studio }) {
     lastCheckedAt: null,
   });
   const [selectedProjectId, setSelectedProjectId] = useState(() => {
-    if (typeof window === "undefined") return "private-project-01";
-    return window.localStorage.getItem(PROJECT_SELECTION_STORAGE_KEY) || "private-project-01";
+    if (typeof window === "undefined") return "";
+    return window.localStorage.getItem(PROJECT_SELECTION_STORAGE_KEY) || "";
   });
   const [commandPaletteOpen, setCommandPaletteOpen] = useState(false);
   const [selectedCommandId, setSelectedCommandId] = useState("plan");
@@ -8808,20 +8831,37 @@ export default function CommandCenterV2({ studio }) {
   }, []);
 
   const selectedProject = resolveSelectedProject(selectedProjectId, vm.shell.mode);
+  const currentScope = currentRoute?.scope === "portfolio"
+    ? "portfolio"
+    : currentRoute?.scope === "os" || currentRoute?.scope === "platform"
+      ? "os"
+      : "project";
+  const commandCenterIdentity = resolveCommandCenterIdentity(
+    {
+      scope: currentScope,
+      selectedProject,
+      demoMode: currentRoute?.scope === "demo",
+    },
+    vm.scopeModel?.projectSummaries || [],
+  );
   const vmWithApi = {
     ...vm,
     shell: {
       ...vm.shell,
-      selectedProjectId: selectedProject.projectId,
-      selectedProjectLabel: selectedProject.label,
-      activeProject: selectedProject.label,
-      activeProjectScope: selectedProject.scope,
+      selectedProjectId: commandCenterIdentity.selectedProjectId,
+      selectedProjectLabel: commandCenterIdentity.selectedProjectDisplayName,
+      activeProject: commandCenterIdentity.primaryContextLabel,
+      activeProjectScope: commandCenterIdentity.scope,
+      defaultScope: commandCenterIdentity.scope === "portfolio" || commandCenterIdentity.scope === "os"
+        ? commandCenterIdentity.scope
+        : "project",
     },
     scopeModel: {
       ...vm.scopeModel,
-      selectedProjectId: selectedProject.projectId,
-      selectedProjectLabel: selectedProject.label,
+      selectedProjectId: commandCenterIdentity.selectedProjectId,
+      selectedProjectLabel: commandCenterIdentity.selectedProjectDisplayName || commandCenterIdentity.primaryContextLabel,
     },
+    commandCenterIdentity,
     liveApi: { ...vm.liveApi, ...apiState },
     actionBridgeRuntime: bridgeState,
     liveData,

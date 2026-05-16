@@ -1,13 +1,13 @@
 function resolveProjectLabel({ activeScope, mode, activeProject }) {
   if (activeScope === "os") return "NEXUS OS";
   if (mode === "demo") return activeProject || "DemoApp";
-  return activeProject && activeProject !== "DemoApp" ? activeProject : "Private Project";
+  return activeProject && activeProject !== "DemoApp" ? activeProject : "No project selected";
 }
 
 export function ProjectSwitcher({
   activeScope = "project",
   mode = "local-private",
-  activeProject = "Private Project",
+  activeProject = "No project selected",
 }) {
   const projectLabel = resolveProjectLabel({ activeScope, mode, activeProject });
   const scopeLabel = activeScope === "os"

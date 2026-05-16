@@ -50,6 +50,11 @@ const sections = {
   workflowLabels: true,
   pageCopy: true,
   roadmapPreservation: true,
+  fullCommandCenterIdentity: true,
+  demoReferencesRemoved: true,
+  privatePlaceholderLabelsRemoved: true,
+  noProjectStartState: true,
+  osRoadmapOsOnly: true,
   demoBoundary: true,
   noForbiddenChanges: true,
   formattingReadability: true,
@@ -218,6 +223,7 @@ const routeSource = readFile("dashboard/src/data/commandCenterRoutes.js");
 const readinessSource = readFile("dashboard/src/data/capabilityReadiness.js");
 const commandSource = readFile("dashboard/src/data/nexusCommands.js");
 const helpLinksSource = readFile("dashboard/src/data/commandCenterHelpLinks.js");
+const identitySource = readFile("dashboard/src/data/commandCenterIdentity.js");
 const commandTabsSource = readFile("dashboard/src/data/commandCenterTabs.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
@@ -1148,7 +1154,7 @@ for (const expectedTest of [
   "Task Queue tabs separate planned, active, review, blocked, completed, and all projects",
   "Agent Workbench tabs separate task, review, evidence, activity, and context",
   "Implementation Workflow tabs separate proposal, apply, validation, rollback, activity, and developer details",
-  "core operational pages prioritize active project context and keep DemoApp out",
+  "core operational pages prioritize project selection guidance and keep DemoApp out",
 ]) {
   check(routeTestSource.includes(expectedTest), "tabbedCorePages", `Route tests missing operational tab coverage: ${expectedTest}`);
 }
@@ -1159,7 +1165,11 @@ for (const expected of [
   "Add a project profile",
   "Define stack and test commands",
 ]) {
-  check(commandCenterSource.includes(expected), "tabbedCorePages", `Active project/no-project guidance missing: ${expected}`);
+  check(
+    commandCenterSource.includes(expected) || identitySource.includes(expected),
+    "tabbedCorePages",
+    `Active project/no-project guidance missing: ${expected}`,
+  );
 }
 check(!commandCenterSource.includes("function OperationalTabs"), "tabbedCorePages", "Do not introduce a duplicate one-off tab component");
 for (const expected of [
@@ -1239,12 +1249,12 @@ for (const expectedTest of [
 }
 
 // Boundary polish
-check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "boundaryPolish", "Local-private Mission Control should use a safe project display name");
+check(viewModelSource.includes('const safeProjectDisplayName = "Selected Project"'), "boundaryPolish", "Command Center view model should use selected-project identity copy");
 check(commandCenterSource.includes("Local Preview"), "boundaryPolish", "Sidebar should use a safe preview label instead of an arbitrary version");
 check(!commandCenterNonRoadmapSource.includes("DEMOAPP ACTIVE"), "boundaryPolish", "Primary Command Center UX should not show DEMOAPP ACTIVE");
 check(
   routeTestSource.includes("demo boundary keeps DemoApp on demo route only") ||
-    routeTestSource.includes("DemoApp appears on demo route only"),
+    routeTestSource.includes("full Command Center routes do not show DemoApp"),
   "boundaryPolish",
   "Route tests missing DemoApp boundary coverage",
 );
@@ -1265,7 +1275,7 @@ for (const expected of [
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "missionDisplay", `Mission display missing expected copy: ${expected}`);
 }
 check(
-  viewModelSource.includes("private-project-governed-build-mission")
+  viewModelSource.includes("governed-build-mission")
     && commandCenterSource.includes("humanizeMissionId"),
   "missionDisplay",
   "Mission display should derive a human-readable title from the governed mission id",
@@ -1425,7 +1435,45 @@ for (const expectedTest of [
 // Demo boundary
 check(!commandCenterSource.includes("DEMOAPP ACTIVE"), "demoBoundary", "CommandCenterV2.jsx should not contain DEMOAPP ACTIVE");
 check(!viewModelSource.includes('activeProject: studio.activeProject?.name || "DemoApp"'), "demoBoundary", "V2 view model should not default to DemoApp");
-check(viewModelSource.includes('activeProject: safeProjectDisplayName'), "demoBoundary", "V2 view model should use a safe local-private project label");
+check(viewModelSource.includes('const safeProjectDisplayName = "Selected Project"'), "demoBoundary", "V2 view model should use selected-project identity copy");
+
+// P59.8 full Command Center identity cleanup
+const fullCommandCenterPrimarySource = [
+  commandCenterSource,
+  viewModelSource,
+  routeSource,
+  helpLinksSource,
+  identitySource,
+].join("\n");
+for (const expected of [
+  "resolveCommandCenterIdentity",
+  "getNoProjectGuidance",
+  "normalizeDisplayProject",
+  "commandCenterVariant: FULL_COMMAND_CENTER_VARIANT",
+  "No project selected",
+]) {
+  check(identitySource.includes(expected), "fullCommandCenterIdentity", `Identity resolver missing ${expected}`);
+}
+for (const forbidden of ["DEMOAPP ACTIVE", "private-project-governed-build-mission", "private project companion", "private-project backend validation plan"]) {
+  check(!fullCommandCenterPrimarySource.includes(forbidden), "privatePlaceholderLabelsRemoved", `Full Command Center primary source contains ${forbidden}`);
+}
+check(!commandCenterSource.includes("DemoApp"), "demoReferencesRemoved", "CommandCenterV2 primary source should not contain DemoApp");
+check(!viewModelSource.includes("DemoApp"), "demoReferencesRemoved", "Command Center view model should not contain DemoApp");
+check(routeTestSource.includes("full Command Center routes do not show DemoApp"), "demoReferencesRemoved", "Route tests missing full Command Center DemoApp exclusion");
+for (const expected of [
+  "Create or import a project",
+  "Add a project profile",
+  "Define stack and test commands",
+  "Create a mission",
+  "Generate a plan",
+  "Activate the first task",
+  "Requires project onboarding action",
+]) {
+  check(fullCommandCenterPrimarySource.includes(expected), "noProjectStartState", `No-project start state missing ${expected}`);
+}
+check(routeTestSource.includes("private-project-01"), "privatePlaceholderLabelsRemoved", "Route tests must verify raw private project id is not visible");
+check(routeTestSource.includes("private-project-governed-build-mission"), "privatePlaceholderLabelsRemoved", "Route tests must verify raw mission id is not visible");
+check(routeTestSource.includes("OS Roadmap shows NEXUS OS platform progress without project-roadmap leakage"), "osRoadmapOsOnly", "Route tests missing OS-only roadmap coverage");
 
 // No forbidden changes
 try {
@@ -1490,6 +1538,11 @@ console.log(`Scope boundary UX: ${sections.scopeBoundaryUx ? "PASS" : "FAIL"}`);
 console.log(`Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}`);
 console.log(`Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}`);
 console.log(`OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}`);
+console.log(`Full Command Center identity: ${sections.fullCommandCenterIdentity ? "PASS" : "FAIL"}`);
+console.log(`Demo references removed: ${sections.demoReferencesRemoved ? "PASS" : "FAIL"}`);
+console.log(`Private placeholder labels removed: ${sections.privatePlaceholderLabelsRemoved ? "PASS" : "FAIL"}`);
+console.log(`No-project start state: ${sections.noProjectStartState ? "PASS" : "FAIL"}`);
+console.log(`OS roadmap OS-only: ${sections.osRoadmapOsOnly ? "PASS" : "FAIL"}`);
 console.log(`Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}`);
 console.log(`Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}`);
 console.log(`Boundary polish: ${sections.boundaryPolish ? "PASS" : "FAIL"}`);
@@ -1548,6 +1601,11 @@ const report = `# Command Center UX Report
 - Scope switcher: ${sections.scopeSwitcher ? "PASS" : "FAIL"}
 - Multi-project shell: ${sections.multiProjectShell ? "PASS" : "FAIL"}
 - OS Roadmap / Project Progress separation: ${sections.roadmapProjectSeparation ? "PASS" : "FAIL"}
+- Full Command Center identity: ${sections.fullCommandCenterIdentity ? "PASS" : "FAIL"}
+- Demo references removed: ${sections.demoReferencesRemoved ? "PASS" : "FAIL"}
+- Private placeholder labels removed: ${sections.privatePlaceholderLabelsRemoved ? "PASS" : "FAIL"}
+- No-project start state: ${sections.noProjectStartState ? "PASS" : "FAIL"}
+- OS roadmap OS-only: ${sections.osRoadmapOsOnly ? "PASS" : "FAIL"}
 - Header environment formatting: ${sections.headerFormatting ? "PASS" : "FAIL"}
 - Sidebar label completeness/planned behavior: ${sections.sidebarPlannedBehavior ? "PASS" : "FAIL"}
 - Boundary polish: ${sections.boundaryPolish ? "PASS" : "FAIL"}

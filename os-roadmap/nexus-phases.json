@@ -1434,6 +1434,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P59.8",
+      "title": "Command Center OS / Multi-Project Identity Cleanup",
+      "track": "NEXUS_OS",
+      "order": 33.08,
+      "group": "P59 Secrets and Credential Boundary",
+      "summary": "Remove full Command Center demo/private fallback identity and focus the surface on NEXUS OS, portfolio, selected project, and no-project states.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P60",
       "title": "Worker Queue + Runtime Engine",
       "track": "NEXUS_OS",

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T15:32:58.544Z
-- Validation branch: arch/secrets-credential-boundary
-- Validation HEAD: 137166a
+- Generated at: 2026-05-16T17:01:37.697Z
+- Validation branch: fix/command-center-os-multiproject-identity
+- Validation HEAD: e09fdad
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -39,6 +39,11 @@
 - Scope switcher: PASS
 - Multi-project shell: PASS
 - OS Roadmap / Project Progress separation: PASS
+- Full Command Center identity: PASS
+- Demo references removed: PASS
+- Private placeholder labels removed: PASS
+- No-project start state: PASS
+- OS roadmap OS-only: PASS
 - Header environment formatting: PASS
 - Sidebar label completeness/planned behavior: PASS
 - Boundary polish: PASS
