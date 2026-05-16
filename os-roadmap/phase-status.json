@@ -1818,7 +1818,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/policy-center-governance-admin",
-      "commit": "pending-final-commit",
+      "commit": "a64d1ae",
       "completedAt": "2026-05-16T14:49:37.486Z",
       "summary": "Read-only policy registry foundation for NEXUS governance families.",
       "checksRun": [
@@ -1834,12 +1834,14 @@
       "phaseId": "P58.2",
       "title": "Policy Versioning",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Read-only policy version index and metadata model.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/policy-center-governance-admin",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T14:50:56.016Z",
+      "summary": "Added read-only policy version index and checksum metadata.",
+      "checksRun": [
+        "npm run check:policy-versioning"
+      ],
       "knownLimitations": [
         "Preview-only; no runtime enforcement changes are enabled."
       ],
@@ -3853,8 +3855,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T14:49:37.486Z",
-  "currentPhase": "P58.1",
-  "previousPhase": "P57",
-  "nextPhase": "P58.2"
+  "updatedAt": "2026-05-16T14:50:56.016Z",
+  "currentPhase": "P58.2",
+  "previousPhase": "P58.1",
+  "nextPhase": "P58.3"
 }
