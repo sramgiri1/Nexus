@@ -1376,14 +1376,23 @@
       "phaseId": "P49",
       "title": "Agent Definition Update Workflow",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned agent definition update workflow.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "fix/projects-page-productization",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-15T18:45:00.000Z",
+      "summary": "Closes the governed Agent Definition Update Workflow and follow-on Projects operating surface productization through P49.8.",
+      "checksRun": [
+        "npm run check:agent-definition-update-final",
+        "npm run check:command-center-ux",
+        "npm run check:project-registry-schema",
+        "npm run check:project-profile-loader",
+        "npm run check:project-stack-profile",
+        "npm run check:project-capability-matrix",
+        "npm run check:os-phase-status",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
-        "P48 remains metadata-only until final validation and does not enable provider/tool/worker dispatch, DB writes, or project mutation."
+        "P49 defines governance workflow and read-only operating surfaces only. It does not mutate agent files or enable provider/tool/worker/DB/project execution."
       ],
       "nextPhase": "P50",
       "commandCenterVisible": true

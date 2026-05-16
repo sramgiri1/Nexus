@@ -790,8 +790,8 @@
       "title": "Agent Definition Update Workflow",
       "track": "NEXUS_OS",
       "order": 23,
-      "group": "Planned OS Phases",
-      "summary": "Add governed workflows for evolving agent definitions without breaking safety guarantees.",
+      "group": "P49 Agent Definition Update Workflow",
+      "summary": "Govern agent definition proposals, boundary review, approval, versioning, rollback planning, Command Center visibility, and Projects operating surface productization.",
       "commandCenterVisible": true
     },
     {

@@ -557,6 +557,15 @@ check(p58?.title === "Policy Center + Governance Admin", "nextPhase", "P58 title
 const p59 = statusById.get("P59");
 check(["planned", "in_progress", "complete"].includes(p59?.status), "nextPhase", "P59 must be planned, in progress, or complete");
 check(p59?.title === "Secrets and Credential Boundary", "nextPhase", "P59 title mismatch");
+
+const p49 = statusById.get("P49");
+check(p49?.status === "complete", "previousPhase", "P49 parent phase must be complete");
+check(p49?.title === "Agent Definition Update Workflow", "previousPhase", "P49 title mismatch");
+check(p49?.nextPhase === "P50", "nextPhase", "P49 nextPhase must be P50");
+for (const phaseId of ["P49.1", "P49.2", "P49.3", "P49.4", "P49.5", "P49.6", "P49.7", "P49.8"]) {
+  check(statusById.get(phaseId)?.status === "complete", "previousPhase", `${phaseId} must be complete`);
+}
+
 const p598 = statusById.get("P59.8");
 check(p598?.status === "complete", "nextPhase", "P59.8 must be complete");
 check(p598?.title === "Command Center OS / Multi-Project Identity Cleanup", "nextPhase", "P59.8 title mismatch");
