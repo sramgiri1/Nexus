@@ -3161,12 +3161,14 @@
       "phaseId": "P54.1",
       "title": "Provider Adapter Interface",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "99481f7",
       "completedAt": "",
       "summary": "Preview-only provider adapter abstraction and policy.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:api-batch-provider-adapter"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3177,9 +3179,9 @@
       "phaseId": "P54.2",
       "title": "OpenAI API Adapter Skeleton",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "OpenAI-compatible request-shape preview skeleton.",
       "checksRun": [],
@@ -3303,8 +3305,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:07:53.429Z",
-  "currentPhase": "P54.1",
-  "previousPhase": "P53.7",
-  "nextPhase": "P54.2"
+  "updatedAt": "2026-05-16T00:09:58.652Z",
+  "currentPhase": "P54.2",
+  "previousPhase": "P54.1",
+  "nextPhase": "P54.3"
 }

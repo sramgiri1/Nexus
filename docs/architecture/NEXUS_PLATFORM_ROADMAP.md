@@ -237,8 +237,8 @@ Risk level:
   - `P53.6` Slack / Teams Placeholder Trigger Models — complete
   - `P53.7` Trigger Governance Final Validation — complete
 - `P54` API + Batch Execution Adapter — in progress
-  - `P54.1` Provider Adapter Interface — in progress
-  - `P54.2` OpenAI API Adapter Skeleton — planned
+  - `P54.1` Provider Adapter Interface — complete
+  - `P54.2` OpenAI API Adapter Skeleton — in progress
   - `P54.3` Batch Job Builder — planned
   - `P54.4` JSONL Job Writer — planned
   - `P54.5` Batch Status Tracker Preview — planned

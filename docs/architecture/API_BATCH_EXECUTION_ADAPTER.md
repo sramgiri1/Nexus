@@ -35,3 +35,24 @@ cost estimates, evidence, and human approval before any future execution phase.
 
 P54.2 adds an OpenAI-compatible request-shape preview skeleton without importing an SDK, reading API keys, or calling the
 network.
+
+## P54.2 - OpenAI API Adapter Skeleton
+
+The OpenAI adapter skeleton models request shape compatibility for future Responses, Chat Completions, Embeddings, and Batch
+workloads. It is not an OpenAI client and does not import an SDK.
+
+Preview records include:
+
+- provider ID
+- endpoint family
+- model policy
+- redacted input summary
+- cost estimate requirement
+- evidence requirement
+- execution block reason
+
+No actual OpenAI client is created. API keys are not read. Provider calls and network calls remain disabled.
+
+## Next Subphase
+
+P54.3 adds a batch job builder that prepares preview request objects without uploading or sending them.
