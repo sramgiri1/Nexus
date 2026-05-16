@@ -1,28 +1,27 @@
-# Coverage Gap Detector Report
+# Flaky Test Tracker Report
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:29:18.482Z
+- Generated at: 2026-05-16T03:29:17.487Z
 - Validation branch: arch/quality-intelligence-test-gap-detection
 - Validation HEAD: 415c6c0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-P56.2 - Coverage Gap Detector
+P56.3 - Flaky Test Tracker
 
 ## Summary
 
-- Gaps found: 1
-- High severity: 1
-- Medium severity: 0
-- Test generation enabled: false
+- Records: 2
+- No signal: 1
+- Suspected: 1
 - Execution enabled: false
 
 ## Checks
 
 - Modules: PASS
-- Gaps: PASS
+- Records: PASS
 - Recommendations: PASS
 - OS phase status: PASS
 - No forbidden changes: PASS
