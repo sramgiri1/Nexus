@@ -1245,6 +1245,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P57.4",
+      "title": "Actual Cost After Run",
+      "track": "NEXUS_OS",
+      "order": 31.04,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Record preview actual cost after future runs without billing APIs.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
@@ -1641,5 +1650,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T12:46:46.173Z"
+  "updatedAt": "2026-05-16T12:48:13.841Z"
 }

@@ -3624,6 +3624,22 @@
     },
     {
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "8b6d51b",
+      "completedAt": "2026-05-16T12:48:13.778Z",
+      "checksRun": [
+        "npm run check:budget-model"
+      ],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.2",
+      "title": "Task / Agent / Skill / Tool Budget Model",
+      "summary": "Added scoped budget model for estimates-only cost governance.",
+      "nextPhase": "P57.3"
+    },
+    {
+      "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "arch/cost-center-budget-enforcement",
       "commit": "pending-final-commit",
@@ -3631,10 +3647,10 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.2",
-      "title": "Task / Agent / Skill / Tool Budget Model",
-      "summary": "Adds scoped budget policy model for estimates-only cost governance.",
-      "nextPhase": "P57.3"
+      "phaseId": "P57.3",
+      "title": "Estimate Before Run",
+      "summary": "Adds preview cost estimator before future governed execution.",
+      "nextPhase": "P57.4"
     },
     {
       "track": "NEXUS_OS",
@@ -3645,14 +3661,14 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.3",
-      "title": "Estimate Before Run",
-      "summary": "Planned preview estimator before future execution."
+      "phaseId": "P57.4",
+      "title": "Actual Cost After Run",
+      "summary": "Planned preview actual cost recorder."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:46:46.126Z",
-  "currentPhase": "P57.2",
-  "previousPhase": "P57.1",
-  "nextPhase": "P57.3"
+  "updatedAt": "2026-05-16T12:48:13.789Z",
+  "currentPhase": "P57.3",
+  "previousPhase": "P57.2",
+  "nextPhase": "P57.4"
 }

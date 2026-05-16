@@ -1,0 +1,206 @@
+{
+  "version": "1.0",
+  "phase": "P57.3",
+  "generatedAt": "2026-05-16T12:48:14.512Z",
+  "previewOnly": true,
+  "providerDispatchAllowed": false,
+  "estimates": [
+    {
+      "ok": true,
+      "estimateId": "estimate_task_preview",
+      "phaseId": "P57.3",
+      "sourceType": "task",
+      "sourceId": "task_preview",
+      "estimatedUsd": 0.0044,
+      "estimatedTokens": 2600,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "assumptions": [
+        "Static preview price table only.",
+        "No real billing data or provider token accounting is used."
+      ],
+      "warnings": [
+        "Estimate preview only; no provider dispatch occurred.",
+        "Budget policy is estimates-only."
+      ],
+      "errors": [],
+      "costLedgerRecord": {
+        "costRecordId": "cost_mp8cdqr4_n2uh9d",
+        "schemaVersion": "1.0",
+        "eventType": "cost_estimate_created",
+        "sourceType": "task",
+        "sourceId": "task_preview",
+        "projectId": "",
+        "missionId": "",
+        "taskId": "",
+        "agentId": "",
+        "skillId": "",
+        "toolId": "",
+        "phaseId": "P57.3",
+        "correlationId": "",
+        "currency": "USD",
+        "estimatedUsd": 0.0044,
+        "actualUsd": 0,
+        "estimatedTokens": 2600,
+        "actualTokens": 0,
+        "units": {},
+        "budgetPolicyId": "budget_estimator_preview",
+        "decision": "RECORD_ONLY",
+        "status": "preview",
+        "dataClassification": "internal",
+        "redacted": true,
+        "createdAt": "2026-05-16T12:48:14.512Z",
+        "metadata": {
+          "estimateId": "estimate_task_preview",
+          "providerProfile": "preview"
+        },
+        "warnings": [],
+        "errors": []
+      }
+    },
+    {
+      "ok": true,
+      "estimateId": "estimate_batch_preview",
+      "phaseId": "P57.3",
+      "sourceType": "api_batch",
+      "sourceId": "batch_preview",
+      "estimatedUsd": 0.07,
+      "estimatedTokens": 25000,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "assumptions": [
+        "Static preview price table only.",
+        "No real billing data or provider token accounting is used."
+      ],
+      "warnings": [
+        "Estimate preview only; no provider dispatch occurred.",
+        "Budget policy is estimates-only."
+      ],
+      "errors": [],
+      "costLedgerRecord": {
+        "costRecordId": "cost_mp8cdqr4_eb0odk",
+        "schemaVersion": "1.0",
+        "eventType": "cost_estimate_created",
+        "sourceType": "api_batch",
+        "sourceId": "batch_preview",
+        "projectId": "",
+        "missionId": "",
+        "taskId": "",
+        "agentId": "",
+        "skillId": "",
+        "toolId": "",
+        "phaseId": "P57.3",
+        "correlationId": "",
+        "currency": "USD",
+        "estimatedUsd": 0.07,
+        "actualUsd": 0,
+        "estimatedTokens": 25000,
+        "actualTokens": 0,
+        "units": {},
+        "budgetPolicyId": "budget_estimator_preview",
+        "decision": "RECORD_ONLY",
+        "status": "preview",
+        "dataClassification": "internal",
+        "redacted": true,
+        "createdAt": "2026-05-16T12:48:14.512Z",
+        "metadata": {
+          "estimateId": "estimate_batch_preview",
+          "providerProfile": "openai-preview"
+        },
+        "warnings": [],
+        "errors": []
+      }
+    },
+    {
+      "ok": true,
+      "estimateId": "estimate_test_preview",
+      "phaseId": "P57.3",
+      "sourceType": "tool",
+      "sourceId": "test_suite_preview",
+      "estimatedUsd": 0.0045,
+      "estimatedTokens": 0,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "assumptions": [
+        "Static preview price table only.",
+        "No real billing data or provider token accounting is used."
+      ],
+      "warnings": [
+        "Estimate preview only; no provider dispatch occurred.",
+        "Budget policy is estimates-only."
+      ],
+      "errors": [],
+      "costLedgerRecord": {
+        "costRecordId": "cost_mp8cdqr4_6cqdj2",
+        "schemaVersion": "1.0",
+        "eventType": "cost_estimate_created",
+        "sourceType": "tool",
+        "sourceId": "test_suite_preview",
+        "projectId": "",
+        "missionId": "",
+        "taskId": "",
+        "agentId": "",
+        "skillId": "",
+        "toolId": "",
+        "phaseId": "P57.3",
+        "correlationId": "",
+        "currency": "USD",
+        "estimatedUsd": 0.0045000000000000005,
+        "actualUsd": 0,
+        "estimatedTokens": 0,
+        "actualTokens": 0,
+        "units": {},
+        "budgetPolicyId": "budget_estimator_preview",
+        "decision": "RECORD_ONLY",
+        "status": "preview",
+        "dataClassification": "internal",
+        "redacted": true,
+        "createdAt": "2026-05-16T12:48:14.512Z",
+        "metadata": {
+          "estimateId": "estimate_test_preview",
+          "providerProfile": "local"
+        },
+        "warnings": [],
+        "errors": []
+      }
+    }
+  ],
+  "summaries": [
+    {
+      "estimateId": "estimate_task_preview",
+      "sourceType": "task",
+      "estimatedUsd": 0.0044,
+      "estimatedTokens": 2600,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "warningCount": 2,
+      "errorCount": 0
+    },
+    {
+      "estimateId": "estimate_batch_preview",
+      "sourceType": "api_batch",
+      "estimatedUsd": 0.07,
+      "estimatedTokens": 25000,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "warningCount": 2,
+      "errorCount": 0
+    },
+    {
+      "estimateId": "estimate_test_preview",
+      "sourceType": "tool",
+      "estimatedUsd": 0.0045,
+      "estimatedTokens": 0,
+      "estimateOnly": true,
+      "providerDispatchAllowed": false,
+      "confidence": "medium",
+      "warningCount": 2,
+      "errorCount": 0
+    }
+  ]
+}
