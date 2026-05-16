@@ -50,6 +50,7 @@ const sections = {
   demoBoundary: true,
   noForbiddenChanges: true,
   formattingReadability: true,
+  testCenterUx: true,
 };
 
 const failures = [];
@@ -794,6 +795,36 @@ for (const expected of [
 check(routeSource.includes("/command-center/api-batch"), "apiBatchUx", "Route matrix missing /command-center/api-batch");
 check(routeTestSource.includes("API Batch route renders preview-only provider and batch metadata"), "apiBatchUx", "Route tests missing API Batch coverage");
 
+// Test Center UX
+for (const expected of [
+  "Test Center",
+  "Execution is not enabled in Test Center yet",
+  "Policy Posture",
+  "testExecutionAllowed: false",
+  "Registry only",
+  "Project Test Suites",
+  "NEXUS OS Test Suites",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "testCenterUx",
+    `Test Center UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const TEST_CENTER_TABS",
+  'id: "project-tests"',
+  'id: "os-tests"',
+  'id: "selection-preview"',
+  'id: "evidence-model"',
+  'id: "gaps"',
+]) {
+  check(commandTabsSource.includes(expected), "testCenterUx", `Test Center tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/tests"), "testCenterUx", "Route matrix missing /command-center/tests");
+check(routeTestSource.includes("Test Center renders with overview and policy posture"), "testCenterUx", "Route tests missing Test Center coverage");
+check(commandCenterSource.includes("TestCenterPage"), "testCenterUx", "CommandCenterV2.jsx missing TestCenterPage component");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1294,6 +1325,7 @@ console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
 console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
+console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1348,6 +1380,7 @@ const report = `# Command Center UX Report
 - Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}
 - Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
 - API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
+- Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}
@@ -1374,6 +1407,7 @@ const report = `# Command Center UX Report
 - Demo boundary: ${sections.demoBoundary ? "PASS" : "FAIL"}
 - No forbidden changes: ${sections.noForbiddenChanges ? "PASS" : "FAIL"}
 - Formatting/readability: ${sections.formattingReadability ? "PASS" : "FAIL"}
+- Test Center UX (inline): ${sections.testCenterUx ? "PASS" : "FAIL"}
 
 ## Failures
 

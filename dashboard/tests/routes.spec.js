@@ -2122,6 +2122,53 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Test Center renders with overview and policy posture", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tests");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Test Center");
+    await expect(page.locator("body")).toContainText("Execution is not enabled in Test Center yet");
+    await expect(page.locator("body")).toContainText("Policy Posture");
+    await expect(page.locator("body")).toContainText("testExecutionAllowed: false");
+    await expect(page.locator("body")).toContainText("Registry only");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Test Center shows Project Tests and OS Tests as separate sections", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tests");
+    await commandTab(page, "Project Tests").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project Test Suites");
+    await commandTab(page, "OS Tests").click();
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS OS Test Suites");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Test Center shows execution disabled state", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tests");
+    await expect(page.locator("body")).toContainText("Execution disabled");
+    await commandTab(page, "Project Tests").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Execution disabled");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Test Center does not show DemoApp content", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tests");
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("DEMOAPP ACTIVE");
+
+    expect(errors).toEqual([]);
+  });
+
   test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 

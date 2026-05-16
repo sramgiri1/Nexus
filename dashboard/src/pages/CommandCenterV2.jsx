@@ -23,6 +23,7 @@ import {
   SAFETY_CENTER_TABS,
   SKILL_REGISTRY_TABS,
   TASK_QUEUE_TABS,
+  TEST_CENTER_TABS,
   TOOL_GATEWAY_TABS,
   TRIGGER_INTEGRATION_TABS,
   WORKBENCH_TABS,
@@ -8002,6 +8003,190 @@ function DataContextCenterPage({ vm }) {
   );
 }
 
+function TestCenterPage({ vm }) {
+  const tsm = vm.testSuiteManager || {};
+  const projectSuites = tsm.selectedProjectSuites || [];
+  const osSuites = tsm.osSuites || [];
+  const selectionPreview = tsm.selectionPreview || { executionEnabled: false, selectedSuites: 0, reason: "No changed files in current snapshot" };
+  const evidenceModel = tsm.evidenceModel || { supported: true, executionEnabled: false };
+  const gaps = tsm.gaps || [];
+  const [activeTab, setActiveTab] = useState("overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">Test Center</div>
+            <div className="ccv2-page-head__sub">
+              Test suite registry, selection preview, and evidence model. Execution is not enabled in Test Center yet.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Registry only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+            <span className="ccv2-pill">Phase: {tsm.policyPhase || "P55"}</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={TEST_CENTER_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="Test Center sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Project Test Suites", value: tsm.projectTestCount ?? 0 },
+                { label: "OS Test Suites", value: tsm.osTestCount ?? 0 },
+                { label: "Test Execution", value: tsm.executionEnabled ? "Enabled" : "Disabled" },
+                { label: "Registry Only", value: tsm.registryOnly ? "Yes" : "No" },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">P55 posture</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Policy Posture</div>
+              <ul className="ccv2-list">
+                <li>testExecutionAllowed: false — no tests are run from the Command Center.</li>
+                <li>registryOnly: true — suites are metadata and preview only.</li>
+                <li>commandExecutionAllowed: false — commandPreview strings are display-only.</li>
+                <li>providerCallsAllowed: false — no provider calls in this phase.</li>
+                <li>projectMutationAllowed: false — projects/careloop and projects/careloop-ios are not touched.</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="project-tests" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">Project Test Suites (Preview Only)</div>
+              <div className="ccv2-muted" style={{ marginBottom: 8 }}>
+                These suites are private and forbidden in Demo Mode. commandPreview is display-only — no commands are executed.
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--3">
+              {projectSuites.map((suite) => (
+                <article key={suite.suiteId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{suite.suiteId}</div>
+                  <div className="ccv2-muted">{suite.layer} · {suite.tool} · {suite.riskLevel} risk</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{suite.status || "planned"}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+                  </div>
+                  <div className="ccv2-muted" style={{ marginTop: 6, fontFamily: "monospace", fontSize: 11 }}>
+                    {suite.commandPreview}
+                  </div>
+                  <div style={{ marginTop: 8 }}>
+                    <button className="ccv2-btn ccv2-btn--disabled" disabled title="Controlled execution is not enabled in Test Center yet">
+                      Run (disabled)
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {projectSuites.length === 0 && (
+              <div className="ccv2-empty-state">No project test suites loaded. Run check:project-test-suites to validate.</div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="os-tests" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">NEXUS OS Test Suites (Preview Only)</div>
+              <div className="ccv2-muted" style={{ marginBottom: 8 }}>
+                These suites cover NEXUS OS infrastructure layers. commandPreview is display-only — no commands are executed.
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--3">
+              {osSuites.map((suite) => (
+                <article key={suite.suiteId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{suite.suiteId}</div>
+                  <div className="ccv2-muted">{suite.layer} · {suite.tool} · owner: {suite.ownerAgent}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{suite.status || "ready"}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+                  </div>
+                  <div style={{ marginTop: 8 }}>
+                    <button className="ccv2-btn ccv2-btn--disabled" disabled title="Controlled execution is not enabled in Test Center yet">
+                      Run (disabled)
+                    </button>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {osSuites.length === 0 && (
+              <div className="ccv2-empty-state">No OS test suites loaded. Run check:os-test-suites to validate.</div>
+            )}
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="selection-preview" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Changed-File to Test Suite Mapping</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row">
+                  <span className="ccv2-page-summary-label">Selected suites</span>
+                  <span className="ccv2-page-summary-value">{selectionPreview.selectedSuites}</span>
+                </div>
+                <div className="ccv2-page-summary-row">
+                  <span className="ccv2-page-summary-label">Execution enabled</span>
+                  <span className="ccv2-page-summary-value">{selectionPreview.executionEnabled ? "Yes" : "No"}</span>
+                </div>
+              </div>
+              <div className="ccv2-empty-state">{selectionPreview.reason || "No changed files in current snapshot"}</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence-model" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Test Result Evidence Schema</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row">
+                  <span className="ccv2-page-summary-label">Supported</span>
+                  <span className="ccv2-page-summary-value">{evidenceModel.supported ? "Yes" : "No"}</span>
+                </div>
+                <div className="ccv2-page-summary-row">
+                  <span className="ccv2-page-summary-label">Execution enabled</span>
+                  <span className="ccv2-page-summary-value">{evidenceModel.executionEnabled ? "Yes" : "No"}</span>
+                </div>
+                <div className="ccv2-page-summary-row">
+                  <span className="ccv2-page-summary-label">Redacted</span>
+                  <span className="ccv2-page-summary-value">true (always)</span>
+                </div>
+              </div>
+              <div className="ccv2-empty-state">
+                All evidence records have redacted: true. Raw test output is never stored. Only metadata, status, and correlationId are preserved.
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="gaps" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              {gaps.map((gap) => (
+                <article key={gap.title} className="ccv2-card">
+                  <div className="ccv2-section-heading">{gap.title}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 4 }}><strong>Why:</strong> {gap.why}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 4 }}><strong>Next action:</strong> {gap.nextAction}</div>
+                  <div className="ccv2-chip-row" style={{ marginTop: 8 }}>
+                    <span className="ccv2-pill">Owner: {gap.owner}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Actionable</span>
+                  </div>
+                </article>
+              ))}
+            </div>
+            {gaps.length === 0 && (
+              <div className="ccv2-empty-state">No gaps identified.</div>
+            )}
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function PlannedRoutePage({ routeKey }) {
   const route = COMMAND_CENTER_ROUTE_BY_KEY[routeKey];
 
@@ -8230,6 +8415,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "tools" && <ToolGatewayPage vm={vmWithApi} />}
           {currentPage === "triggers" && <TriggerIntegrationPage vm={vmWithApi} />}
           {currentPage === "apiBatch" && <ApiBatchAdapterPage vm={vmWithApi} />}
+          {currentPage === "tests" && <TestCenterPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

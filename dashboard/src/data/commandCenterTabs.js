@@ -584,6 +584,15 @@ export const MEMORY_CENTER_TABS = [
   { id: "packets", label: "Packets", description: "Scoped memory packet preview and exclusions", badge: "Read-only" },
 ];
 
+export const TEST_CENTER_TABS = [
+  { id: "overview", label: "Overview", description: "Test Suite Manager overview and policy posture", badge: "Ready" },
+  { id: "project-tests", label: "Project Tests", description: "Project-scoped test suite previews", badge: "Preview" },
+  { id: "os-tests", label: "OS Tests", description: "NEXUS OS test suite previews", badge: "Preview" },
+  { id: "selection-preview", label: "Selection Preview", description: "Changed-file to test suite mapping", badge: "Preview" },
+  { id: "evidence-model", label: "Evidence Model", description: "Test result evidence preview schema", badge: "Ready" },
+  { id: "gaps", label: "Gaps", description: "Test coverage gaps and next actions", badge: "Actionable" },
+];
+
 export function getTabsForPage(pageId) {
   if (pageId === "mission") return MISSION_CONTROL_TABS;
   if (pageId === "workspace") return WORKSPACE_TABS;
@@ -600,6 +609,7 @@ export function getTabsForPage(pageId) {
   if (pageId === "batch") return BATCH_QUEUE_TABS;
   if (pageId === "memory") return MEMORY_CENTER_TABS;
   if (pageId === "triggers") return TRIGGER_INTEGRATION_TABS;
+  if (pageId === "tests") return TEST_CENTER_TABS;
   return (PAGE_TAB_PLANS[pageId] || []).map((label) => ({
     id: label.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, ""),
     label,

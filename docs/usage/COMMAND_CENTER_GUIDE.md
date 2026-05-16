@@ -311,3 +311,23 @@ Messages are scoped, redacted, audited, and policy-checked.
 Agent Rooms is read-only in P48. It does not execute agents, transfer task
 ownership, call providers, dispatch tools, start workers, write to DB, or mutate
 project files. Provider/tool/worker dispatch remains disabled by design.
+
+# Test Center
+
+Use `/command-center/tests` to inspect the Test Suite Manager registry.
+
+The page shows project and OS test suite previews, changed-file to test suite
+mapping, evidence schema summaries, and coverage gaps with next actions.
+
+**Tabs:**
+- Overview — policy posture (executionEnabled: false, registryOnly: true) and suite counts
+- Project Tests — CareLoop test suite previews with commandPreview strings (display-only)
+- OS Tests — NEXUS OS infrastructure test suite previews
+- Selection Preview — shows which suites match current changed files (metadata-only)
+- Evidence Model — test result record schema and redaction policy
+- Gaps — coverage gaps with owner and next action
+
+Test Center is registry and visibility only in P55. Test execution, command
+execution, provider calls, external network, DB writes, and project mutation
+are all disabled. The Run buttons in the suite views are disabled with a clear
+reason. No DemoApp content appears on this page.

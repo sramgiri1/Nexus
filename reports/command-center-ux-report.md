@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T00:31:45.728Z
-- Validation branch: arch/api-batch-execution-adapter
-- Validation HEAD: 8ca07fe
+- Generated at: 2026-05-16T01:55:29.627Z
+- Validation branch: arch/test-suite-manager-project-os
+- Validation HEAD: b3597b1
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -23,6 +23,7 @@
 - Tool Gateway UX: PASS
 - Trigger + Integrations UX: PASS
 - API / Batch UX: PASS
+- Test Center UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS
@@ -49,6 +50,7 @@
 - Demo boundary: PASS
 - No forbidden changes: PASS
 - Formatting/readability: PASS
+- Test Center UX (inline): PASS
 
 ## Failures
 
