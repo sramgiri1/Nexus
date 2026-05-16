@@ -41,3 +41,9 @@ Provider credentials are modeled as references for OpenAI, Anthropic, GitHub,
 Slack placeholder, Jira/Linear placeholder, and cloud provider placeholder
 integrations. Credential values are never read, provider calls remain disabled,
 and readiness is metadata-only.
+
+## P59.5 - Project Credential Boundary
+
+Project credential references cover app database, CI/CD, deployment, mobile
+signing, OAuth, notifications, payments, and storage. DB writes, deploy, mobile
+signing, and private credential metadata in demo mode remain disabled.

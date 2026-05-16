@@ -2037,7 +2037,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/secrets-credential-boundary",
-      "commit": "pending-final-commit",
+      "commit": "20b0b8e",
       "completedAt": "2026-05-16T15:27:25.632Z",
       "summary": "Added provider credential references without provider calls or credential values.",
       "checksRun": [
@@ -2053,12 +2053,14 @@
       "phaseId": "P59.5",
       "title": "Project Credential Boundary",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Project credential categories without access.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "arch/secrets-credential-boundary",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T15:29:05.731Z",
+      "summary": "Added project credential boundary references for DB, deploy, CI/CD, mobile signing, OAuth, notifications, payments, and storage.",
+      "checksRun": [
+        "npm run check:project-credential-boundary"
+      ],
       "knownLimitations": [
         "Reference-only; no raw secret values are read or resolved."
       ],
@@ -3994,8 +3996,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T15:27:25.632Z",
-  "currentPhase": "P59.4",
-  "previousPhase": "P59.3",
-  "nextPhase": "P59.5"
+  "updatedAt": "2026-05-16T15:29:05.731Z",
+  "currentPhase": "P59.5",
+  "previousPhase": "P59.4",
+  "nextPhase": "P59.6"
 }

@@ -6,3 +6,5 @@ export * from "./secretRedactionScanner.js";
 export * from "./redactionFixtures.js";
 export * from "./providerCredentialBoundary.js";
 export * from "./providerCredentialRegistry.js";
+export * from "./projectCredentialBoundary.js";
+export * from "./projectCredentialRegistry.js";
