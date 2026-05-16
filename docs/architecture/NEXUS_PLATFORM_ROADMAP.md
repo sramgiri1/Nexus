@@ -1043,4 +1043,15 @@ records, budget block/approval decisions, and a read-only Command Center Cost
 Center UX. P57 does not call providers, upload batches, execute tools, start
 workers, write to DB, mutate project files, or claim real spend.
 
-P58 - Policy Center + Governance Admin is next.
+P58 - Policy Center + Governance Admin follows P57.
+
+## P58 - Policy Center + Governance Admin
+
+P58 adds a read-only governance administration layer for policies. It introduces
+policy registry metadata, version summaries, diff risk previews, policy
+simulation scenarios, exception workflow previews, a disabled-by-default
+break-glass model, and a Command Center Policy Center route.
+
+P58 does not enable runtime policy enforcement changes, live overrides,
+provider/tool dispatch, worker execution, DB writes, release execution, or
+project mutation. P59 - Secrets and Credential Boundary is next.

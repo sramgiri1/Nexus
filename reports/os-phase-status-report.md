@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T13:03:49.633Z
-- Validation branch: arch/cost-center-budget-enforcement
-- Validation HEAD: 9278c55
+- Generated at: 2026-05-16T15:05:55.423Z
+- Validation branch: arch/policy-center-governance-admin
+- Validation HEAD: 88c431c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P58
-- Previous phase: P57
-- Next phase: P58
+- Current phase: P59
+- Previous phase: P58
+- Next phase: P59
 
 ## Checks
 

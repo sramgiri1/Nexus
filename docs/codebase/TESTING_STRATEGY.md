@@ -19,6 +19,9 @@ unsafe runtime behavior.
   execution.
 - Cost governance checks validate ledgers, budgets, estimates, preview actuals,
   and budget decisions without provider calls or real spend.
+- Policy Center checks validate policy registry, versions, diff previews,
+  simulations, exception workflows, break-glass previews, and Command Center UX
+  without changing runtime enforcement.
 
 ## Update Rule
 

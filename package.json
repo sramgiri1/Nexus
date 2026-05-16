@@ -210,7 +210,8 @@
     "check:policy-diff": "node scripts/check-policy-diff.js",
     "check:policy-simulation": "node scripts/check-policy-simulation.js",
     "check:policy-exception-workflow": "node scripts/check-policy-exception-workflow.js",
-    "check:break-glass-policy": "node scripts/check-break-glass-policy.js"
+    "check:break-glass-policy": "node scripts/check-break-glass-policy.js",
+    "check:policy-center-final-validation": "node scripts/check-policy-center-final-validation.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

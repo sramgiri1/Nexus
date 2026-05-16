@@ -127,6 +127,15 @@ const CURRENT_PHASE_IDS = new Set([
   "P57.6",
   "P57.7",
   "P58",
+  "P58.1",
+  "P58.2",
+  "P58.3",
+  "P58.4",
+  "P58.5",
+  "P58.6",
+  "P58.7",
+  "P58.8",
+  "P59",
 ]);
 
 const sections = {
@@ -533,8 +542,12 @@ check(["planned", "in_progress", "complete"].includes(p57?.status), "nextPhase",
 check(p57?.title === "Cost Center + Budget Enforcement", "nextPhase", "P57 title mismatch");
 
 const p58 = statusById.get("P58");
-check(["planned", "in_progress"].includes(p58?.status), "nextPhase", "P58 must be planned or in progress");
+check(["planned", "in_progress", "complete"].includes(p58?.status), "nextPhase", "P58 must be planned, in progress, or complete");
 check(p58?.title === "Policy Center + Governance Admin", "nextPhase", "P58 title mismatch");
+
+const p59 = statusById.get("P59");
+check(["planned", "in_progress"].includes(p59?.status), "nextPhase", "P59 must be planned or in progress");
+check(p59?.title === "Secrets and Credential Boundary", "nextPhase", "P59 title mismatch");
 
 for (const entry of phaseStatus.phases || []) {
   if (entry.status !== "complete") continue;

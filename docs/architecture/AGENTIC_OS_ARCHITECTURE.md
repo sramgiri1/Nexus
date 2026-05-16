@@ -861,3 +861,14 @@ records, and budget decisions, but it does not spend money, call providers,
 upload batches, start workers, write to DB, mutate project files, or execute
 tools. Later runtime phases must route through these cost controls before real
 dispatch is enabled.
+
+## 16. Policy Center + Governance Admin
+
+P58 adds the Policy Center as a governance administration layer. It catalogs
+policy families, records version metadata, previews policy diffs, simulates
+policy decisions, models exception requests, and defines a disabled-by-default
+break-glass process.
+
+The Policy Center is preview-only in P58. It does not change runtime policy
+enforcement, apply policy edits, enable live overrides, call providers or tools,
+write to DB, start workers, execute releases, or mutate project source.
