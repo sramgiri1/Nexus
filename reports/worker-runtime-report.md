@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P60
-- Generated at: 2026-05-16T18:19:58.260Z
+- Generated at: 2026-05-16T18:20:59.438Z
 - Validation branch: arch/worker-queue-runtime-engine
-- Validation HEAD: ed4267b
+- Validation HEAD: 2d6b17e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -18,6 +18,7 @@ P60 Worker Queue + Runtime Engine remains preview-only. No worker loop or task e
 | Modules | PASS |  |
 | Queue schema | PASS |  |
 | Lease model | PASS |  |
+| Heartbeats | PASS |  |
 | Policy | PASS |  |
 | Execution disabled | PASS |  |
 | Reports | PASS |  |

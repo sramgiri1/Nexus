@@ -10,11 +10,15 @@ import {
 import {
   createWorkerQueueItem,
   acquireLeasePreview,
+  createHeartbeat,
   getWorkerRuntimePolicy,
+  detectStaleHeartbeats,
   listWorkerQueueItems,
   releaseLeasePreview,
+  summarizeHeartbeats,
   summarizeLeases,
   summarizeWorkerQueue,
+  validateHeartbeat,
   validateWorkerLease,
   validateWorkerQueueItem,
 } from "../worker-runtime/index.js";
@@ -27,6 +31,7 @@ const checks = [
   { key: "modules", name: "Modules", status: "PASS", details: "" },
   { key: "queueSchema", name: "Queue schema", status: "PASS", details: "" },
   { key: "leases", name: "Lease model", status: "PASS", details: "" },
+  { key: "heartbeats", name: "Heartbeats", status: "PASS", details: "" },
   { key: "policy", name: "Policy", status: "PASS", details: "" },
   { key: "auditOnly", name: "Execution disabled", status: "PASS", details: "" },
   { key: "reports", name: "Reports", status: "PASS", details: "" },
@@ -67,6 +72,8 @@ for (const filePath of [
   "worker-runtime/queueSchema.js",
   "worker-runtime/workerQueue.js",
   "worker-runtime/leaseModel.js",
+  "worker-runtime/heartbeatModel.js",
+  "worker-runtime/runtimeSummary.js",
   "worker-runtime/index.js",
   "policy/worker-runtime-policy.json",
 ]) {
@@ -125,6 +132,24 @@ if (typeof acquireLeasePreview === "function") {
   check(leaseSummary.expired >= 1, "leases", "Expired lease should summarize as expired");
   check(leaseSummary.executionEnabled === false, "auditOnly", "Lease summary must keep execution disabled");
 }
+
+if (typeof createHeartbeat === "function") {
+  const heartbeat = createHeartbeat({
+    workerId: "local-preview-worker",
+    leaseId: "lease-preview",
+    queueItemId: item.queueItemId,
+  });
+  const heartbeatValidation = validateHeartbeat(heartbeat);
+  check(heartbeatValidation.valid, "heartbeats", `Valid heartbeat failed: ${heartbeatValidation.errors.join(", ")}`);
+  const stale = detectStaleHeartbeats([
+    { ...heartbeat, heartbeatId: "heartbeat-stale", lastSeenAt: "2020-01-01T00:00:00.000Z" },
+  ]);
+  check(stale[0]?.status === "stale", "heartbeats", "Stale heartbeat detection should be deterministic");
+  const missingLeaseValidation = validateHeartbeat({ ...heartbeat, heartbeatId: "missing-lease", leaseId: "" });
+  check(!missingLeaseValidation.valid, "heartbeats", "Heartbeat without lease should warn/fail validation");
+  const heartbeatSummary = summarizeHeartbeats([heartbeat]);
+  check(heartbeatSummary.executionEnabled === false, "auditOnly", "Heartbeat summary must keep execution disabled");
+}
 check(!hasPrivateProjectDiff(), "noForbiddenChanges", "Private project files must not change");
 
 const phaseStatus = JSON.parse((await import("node:fs")).readFileSync(join(ROOT, "os-roadmap/phase-status.json"), "utf8"));
@@ -132,6 +157,9 @@ const statusById = new Map((phaseStatus.phases || []).map((entry) => [entry.phas
 check(statusById.get("P60.1")?.status === "complete", "osPhaseStatus", "P60.1 must be complete");
 if (statusById.has("P60.2")) {
   check(statusById.get("P60.2")?.status === "complete", "osPhaseStatus", "P60.2 must be complete once present");
+}
+if (statusById.has("P60.3")) {
+  check(statusById.get("P60.3")?.status === "complete", "osPhaseStatus", "P60.3 must be complete once present");
 }
 check(["P60.2", "P61"].includes(statusById.get("P60.1")?.nextPhase), "osPhaseStatus", "P60.1 nextPhase must point forward");
 

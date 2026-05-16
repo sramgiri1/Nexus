@@ -2153,7 +2153,7 @@
       "knownLimitations": [
         "Runtime execution remains disabled until later phases."
       ],
-      "nextPhase": "P60.3",
+      "nextPhase": "P60.4",
       "commandCenterVisible": true
     },
     {
@@ -4077,12 +4077,15 @@
       "phaseId": "P60.3",
       "title": "Heartbeats",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
+      "status": "complete",
+      "branch": "arch/worker-queue-runtime-engine",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-16T18:20:58.589Z",
       "summary": "Model future worker heartbeat records without daemons or timers.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:worker-runtime",
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages"
+      ],
       "knownLimitations": [
         "Preview-only runtime model; no agents, tools, providers, project mutation, or DB writes execute."
       ],
@@ -4155,8 +4158,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T18:19:57.772Z",
-  "currentPhase": "P60.3",
-  "previousPhase": "P60.2",
-  "nextPhase": "P60.3"
+  "updatedAt": "2026-05-16T18:20:58.590Z",
+  "currentPhase": "P60.4",
+  "previousPhase": "P60.3",
+  "nextPhase": "P60.4"
 }
