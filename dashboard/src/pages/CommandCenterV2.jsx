@@ -8,6 +8,7 @@ import { ScopeSwitcher } from "../components/command-center-v2/ScopeSwitcher.jsx
 import {
   AGENT_REGISTRY_TABS,
   AGENT_ROOMS_TABS,
+  API_BATCH_TABS,
   BATCH_QUEUE_TABS,
   COST_CENTER_TABS,
   DATA_CONTEXT_TABS,
@@ -5600,6 +5601,135 @@ function TriggerIntegrationPage({ vm }) {
   );
 }
 
+function ApiBatchAdapterPage({ vm }) {
+  const apiBatch = vm.apiBatch || {};
+  const summary = apiBatch.summary || {};
+  const [activeTab, setActiveTab] = useState("overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page">
+        <div className="ccv2-page-head">
+          <div>
+            <div className="ccv2-page-head__title">API / Batch Adapter</div>
+            <div className="ccv2-page-head__sub">
+              Preview-only provider request packaging, batch job review, cost estimation, and result reconciliation.
+            </div>
+          </div>
+          <div className="ccv2-page-head__actions">
+            <span className="ccv2-pill ccv2-pill--disabled">Preview only</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Provider calls disabled</span>
+            <span className="ccv2-pill ccv2-pill--disabled">Upload disabled</span>
+          </div>
+        </div>
+
+        <CommandTabs
+          tabs={API_BATCH_TABS}
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          ariaLabel="API and Batch Adapter sections"
+        >
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {[
+                { label: "Provider Adapters", value: summary.providerAdapters ?? 0 },
+                { label: "Preview-only Adapters", value: summary.previewOnlyAdapters ?? 0 },
+                { label: "Provider Execution", value: summary.providerExecutionEnabled ? "Enabled" : "Disabled" },
+                { label: "External Upload", value: summary.externalUploadAllowed ? "Enabled" : "Disabled" },
+              ].map((item) => (
+                <article key={item.label} className="ccv2-card">
+                  <div className="ccv2-kpi__label">{item.label}</div>
+                  <div className="ccv2-kpi__value">{item.value}</div>
+                  <div className="ccv2-kpi__meta">Preview-only state</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card ccv2-card--accent">
+              <div className="ccv2-section-heading">API / Batch Safety Boundary</div>
+              <ul className="ccv2-list">
+                {(apiBatch.safetyNotes || []).map((note) => (
+                  <li key={note}>{note}</li>
+                ))}
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="providers" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {(apiBatch.providers || []).map((provider) => (
+                <article key={provider.providerId} className="ccv2-card">
+                  <div className="ccv2-section-heading">{provider.label}</div>
+                  <div className="ccv2-muted">{provider.providerId}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{provider.displayStatus}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">External calls disabled</span>
+                  </div>
+                  <div className="ccv2-muted">Supported modes: {(provider.supportedModes || []).join(", ")}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="batch" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Batch Job Builder</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Batch job</span><span className="ccv2-page-summary-value">{apiBatch.batchJob?.batchJobId}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Request count</span><span className="ccv2-page-summary-value">{apiBatch.batchJob?.requestCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">JSONL preview files</span><span className="ccv2-page-summary-value">{apiBatch.jsonlPreview?.available ? "Available" : "Not generated"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview path</span><span className="ccv2-page-summary-value">{apiBatch.jsonlPreview?.path}</span></div>
+              </div>
+              <div className="ccv2-empty-state">Create preview batch job is guidance-only in the UI. Upload disabled. Provider calls disabled.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="cost" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Cost Estimate</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Estimated input tokens</span><span className="ccv2-page-summary-value">{apiBatch.batchCost?.estimatedInputTokens}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Estimated output tokens</span><span className="ccv2-page-summary-value">{apiBatch.batchCost?.estimatedOutputTokens}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Estimated USD</span><span className="ccv2-page-summary-value">{apiBatch.batchCost?.estimatedUsd ?? "Unknown"}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval required</span><span className="ccv2-page-summary-value">{apiBatch.batchCost?.approvalRequired ? "Yes" : "No"}</span></div>
+              </div>
+              <div className="ccv2-empty-state">Cost estimates are approximate placeholders. No real provider pricing fetch occurs.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="reconciliation" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Result Reconciliation Preview</div>
+              <div className="ccv2-page-summary-grid">
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Matched results</span><span className="ccv2-page-summary-value">{apiBatch.reconciliation?.matchedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Missing results</span><span className="ccv2-page-summary-value">{apiBatch.reconciliation?.missingCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unmatched results</span><span className="ccv2-page-summary-value">{apiBatch.reconciliation?.unmatchedCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Provider download</span><span className="ccv2-page-summary-value">Disabled</span></div>
+              </div>
+              <div className="ccv2-empty-state">Result reconciliation is preview-only and summarizes results by custom_id.</div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Disabled Runtime Details</div>
+              <ul className="ccv2-list">
+                <li>api-batch/providerAdapter.js</li>
+                <li>api-batch/openaiAdapter.js</li>
+                <li>api-batch/batchJobBuilder.js</li>
+                <li>api-batch/jsonlWriter.js</li>
+                <li>api-batch/batchStatusTracker.js</li>
+                <li>api-batch/resultReconciler.js</li>
+                <li>api-batch/costEstimator.js</li>
+                <li>policy/api-batch-adapter-policy.json</li>
+              </ul>
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 function AgentRoomsPage({ vm }) {
   const mesh = vm.agentMesh || {};
   const [activeTab, setActiveTab] = useState("overview");
@@ -8099,6 +8229,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "hooks" && <HookRegistryPage vm={vmWithApi} />}
           {currentPage === "tools" && <ToolGatewayPage vm={vmWithApi} />}
           {currentPage === "triggers" && <TriggerIntegrationPage vm={vmWithApi} />}
+          {currentPage === "apiBatch" && <ApiBatchAdapterPage vm={vmWithApi} />}
           {currentPage === "agentRooms" && <AgentRoomsPage vm={vmWithApi} />}
           {currentPage === "roadmap" && <OSRoadmapPage vm={vmWithApi} />}
           {currentPage === "liveapi" && <LiveApiPage vm={vmWithApi} onRefresh={refreshApiState} />}

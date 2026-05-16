@@ -95,6 +95,12 @@ export const COMMAND_CENTER_HELP_LINKS = {
     description: "Review preview-only trigger and integration mappings without runtime execution.",
     routeKeys: ["triggers"],
   },
+  apiBatch: {
+    label: "API + Batch Execution Adapter",
+    docPath: "docs/architecture/API_BATCH_EXECUTION_ADAPTER.md",
+    description: "Review preview-only provider adapters, batch packaging, costs, and reconciliation.",
+    routeKeys: ["apiBatch"],
+  },
   troubleshooting: {
     label: "Troubleshooting",
     docPath: "docs/usage/TROUBLESHOOTING.md",

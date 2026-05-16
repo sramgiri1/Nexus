@@ -22,6 +22,7 @@ const sections = {
   hookRegistryUx: true,
   toolGatewayUx: true,
   triggerIntegrationUx: true,
+  apiBatchUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -126,6 +127,7 @@ const requiredRoutePaths = [
   "/command-center/hooks",
   "/command-center/tools",
   "/command-center/triggers",
+  "/command-center/api-batch",
   "/command-center/approvals",
   "/command-center/contracts",
   "/command-center/release",
@@ -155,6 +157,7 @@ const requiredTabbedRoutes = {
   "/command-center/hooks": "overview",
   "/command-center/tools": "overview",
   "/command-center/triggers": "overview",
+  "/command-center/api-batch": "overview",
 };
 
 const routeHeadings = {
@@ -178,6 +181,7 @@ const routeHeadings = {
   "/command-center/hooks": "Hook Registry",
   "/command-center/tools": "Tool Gateway",
   "/command-center/triggers": "Trigger + Integrations",
+  "/command-center/api-batch": "API / Batch Adapter",
   "/command-center/agent-rooms": "Agent Rooms",
   "/command-center/approvals": "Approvals",
   "/command-center/contracts": "Contracts",
@@ -760,6 +764,36 @@ for (const expected of [
 check(routeSource.includes("/command-center/triggers"), "triggerIntegrationUx", "Route matrix missing /command-center/triggers");
 check(routeTestSource.includes("Trigger Gateway route renders preview-only integration metadata"), "triggerIntegrationUx", "Route tests missing Trigger Gateway coverage");
 
+// API / Batch Adapter UX
+for (const expected of [
+  "API / Batch Adapter",
+  "Preview-only provider request packaging",
+  "Provider calls disabled",
+  "Upload disabled",
+  "Provider Adapters",
+  "Batch Jobs",
+  "Cost Estimate",
+  "Result Reconciliation Preview",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "apiBatchUx",
+    `API / Batch UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const API_BATCH_TABS",
+  'id: "providers"',
+  'id: "batch"',
+  'id: "cost"',
+  'id: "reconciliation"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "apiBatchUx", `API / Batch tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/api-batch"), "apiBatchUx", "Route matrix missing /command-center/api-batch");
+check(routeTestSource.includes("API Batch route renders preview-only provider and batch metadata"), "apiBatchUx", "Route tests missing API Batch coverage");
+
 // Command Center help links
 check(helpLinksSource.includes("COMMAND_CENTER_HELP_LINKS"), "commandCenterHelpLinks", "commandCenterHelpLinks.js must export COMMAND_CENTER_HELP_LINKS");
 check(commandCenterSource.includes("HelpLink"), "commandCenterHelpLinks", "Command Center shell must render HelpLink");
@@ -1152,6 +1186,7 @@ const screenshotRequiredRoutePaths = requiredRoutePaths.filter(
     "/command-center/hooks",
     "/command-center/tools",
     "/command-center/triggers",
+    "/command-center/api-batch",
   ].includes(path),
 );
 for (const path of screenshotRequiredRoutePaths) {
@@ -1258,6 +1293,7 @@ console.log(`Skill Registry UX: ${sections.skillRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
+console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
 console.log(`Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}`);
 console.log(`Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}`);
@@ -1311,6 +1347,7 @@ const report = `# Command Center UX Report
 - Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}
 - Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}
 - Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
+- API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}
 - Command Center help links: ${sections.commandCenterHelpLinks ? "PASS" : "FAIL"}
 - Operator actions: ${sections.operatorActions ? "PASS" : "FAIL"}

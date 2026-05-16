@@ -1,5 +1,6 @@
 import {
   BATCH_QUEUE_TABS,
+  API_BATCH_TABS,
   DATA_CONTEXT_TABS,
   MEMORY_CENTER_TABS,
   AGENT_ROOMS_TABS,
@@ -247,6 +248,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: TRIGGER_INTEGRATION_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/TRIGGER_INTEGRATION_GATEWAY.md",
+  },
+  {
+    key: "apiBatch",
+    path: "/command-center/api-batch",
+    name: "API / Batch",
+    section: "DELIVERY",
+    allowPhaseLabels: false,
+    expectedHeading: "API / Batch Adapter",
+    status: "implemented",
+    badge: "Preview",
+    scope: "platform",
+    tabs: API_BATCH_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/API_BATCH_EXECUTION_ADAPTER.md",
   },
   {
     key: "agentRooms",

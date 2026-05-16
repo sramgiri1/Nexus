@@ -2083,6 +2083,45 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("API Batch route renders preview-only provider and batch metadata", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/api-batch");
+    const body = await page.locator("body").innerText();
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("API / Batch Adapter");
+    await expect(page.locator("body")).toContainText("Preview-only provider request packaging");
+    await expect(page.locator("body")).toContainText("Provider calls disabled");
+    await expect(page.locator("body")).toContainText("Upload disabled");
+    for (const label of [
+      "Overview",
+      "Provider Adapters",
+      "Batch Jobs",
+      "Cost Estimate",
+      "Reconciliation",
+      "Developer Details",
+    ]) {
+      await expect(commandTab(page, label)).toBeVisible();
+    }
+    await commandTab(page, "Provider Adapters").click();
+    await expect(activeCommandTabPanel(page)).toContainText("OpenAI API Preview");
+    await expect(activeCommandTabPanel(page)).toContainText("External calls disabled");
+    await commandTab(page, "Batch Jobs").click();
+    await expect(activeCommandTabPanel(page)).toContainText("JSONL preview files");
+    await expect(activeCommandTabPanel(page)).toContainText("Upload disabled");
+    await commandTab(page, "Cost Estimate").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Estimated input tokens");
+    await commandTab(page, "Reconciliation").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Result Reconciliation Preview");
+
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("raw prompt");
+    expect(body).not.toContain("Requires P37");
+
+    expect(errors).toEqual([]);
+  });
+
   test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 

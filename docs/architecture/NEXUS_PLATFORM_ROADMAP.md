@@ -243,9 +243,9 @@ Risk level:
   - `P54.4` JSONL Job Writer — complete
   - `P54.5` Batch Status Tracker Preview — complete
   - `P54.6` Batch Result Reconciler Preview — complete
-  - `P54.7` Cost Estimator — in progress
-  - `P54.8` Command Center API / Batch Jobs UX — planned
-  - `P54.9` API + Batch Adapter Final Validation — planned
+  - `P54.7` Cost Estimator — complete
+  - `P54.8` Command Center API / Batch Jobs UX — complete
+  - `P54.9` API + Batch Adapter Final Validation — in progress
 - `P55` Test Suite Manager: Project + OS
 - `P56` Quality Intelligence + Test Gap Detection
 - `P57` Cost Center + Budget Enforcement

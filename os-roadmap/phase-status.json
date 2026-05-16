@@ -3269,12 +3269,14 @@
       "phaseId": "P54.7",
       "title": "Cost Estimator",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-subphase-commit",
+      "commit": "03ffdb3",
       "completedAt": "",
       "summary": "Approximate API and batch cost estimator.",
-      "checksRun": [],
+      "checksRun": [
+        "npm run check:api-batch-cost-estimator"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3285,12 +3287,15 @@
       "phaseId": "P54.8",
       "title": "Command Center API / Batch Jobs UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "complete",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
       "completedAt": "",
       "summary": "Preview-only Command Center API and batch visibility.",
-      "checksRun": [],
+      "checksRun": [
+        "cd dashboard && npm run build && npm run test:unit && npm run test:pages",
+        "npm run check:command-center-ux"
+      ],
       "knownLimitations": [
         "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
       ],
@@ -3301,9 +3306,9 @@
       "phaseId": "P54.9",
       "title": "API + Batch Adapter Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-final-commit",
       "completedAt": "",
       "summary": "Final validation and closure for P54.",
       "checksRun": [],
@@ -3315,8 +3320,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:19:50.125Z",
-  "currentPhase": "P54.7",
-  "previousPhase": "P54.6",
-  "nextPhase": "P54.8"
+  "updatedAt": "2026-05-16T00:26:16.495Z",
+  "currentPhase": "P54.9",
+  "previousPhase": "P54.8",
+  "nextPhase": "P55"
 }

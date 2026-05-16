@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-15T23:50:40.428Z
-- Validation branch: arch/trigger-integration-gateway
-- Validation HEAD: e78bac9
+- Generated at: 2026-05-16T00:24:41.273Z
+- Validation branch: arch/api-batch-execution-adapter
+- Validation HEAD: 03ffdb3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -22,6 +22,7 @@
 - Hook Registry UX: PASS
 - Tool Gateway UX: PASS
 - Trigger + Integrations UX: PASS
+- API / Batch UX: PASS
 - Command palette: PASS
 - Command Center help links: PASS
 - Operator actions: PASS

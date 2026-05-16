@@ -280,6 +280,15 @@ not enabled yet.
 - Available actions: inspection only
 - Disabled actions: batch runtime is not enabled
 - Known limitations: no live background worker runtime
+
+## API / Batch Adapter
+
+- Purpose: inspect preview-only provider adapter and batch packaging readiness
+- Route: `/command-center/api-batch`
+- Shows: provider adapters, OpenAI request-shape preview, JSONL preview artifacts, cost estimates, and reconciliation posture
+- Available actions: inspection and local preview review only
+- Disabled actions: provider calls, external upload, API key reads, worker runtime, DB writes, and project mutation
+- Known limitations: real provider dispatch is deferred to a later governed phase
 # Data & Context Center
 
 Use `/command-center/context` to inspect trusted context readiness. The page

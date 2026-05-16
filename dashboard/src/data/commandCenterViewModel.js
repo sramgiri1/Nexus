@@ -53,6 +53,11 @@ import { createTriggerGatewaySummary, summarizeScheduledTriggers } from "../../.
 import { getGitHubTriggerCatalog } from "../../../integrations/githubTriggerPreview.js";
 import { getTicketTriggerCatalog } from "../../../integrations/ticketTriggerPreview.js";
 import { getChatTriggerCatalog } from "../../../integrations/chatTriggerPreview.js";
+import { listProviderAdapters, summarizeProviderRegistry } from "../../../api-batch/providerRegistry.js";
+import { createOpenAIRequestPreview, summarizeOpenAIRequestPreview } from "../../../api-batch/openaiAdapter.js";
+import { addBatchRequest, createBatchJob, estimateBatchJobSize, summarizeBatchJob } from "../../../api-batch/batchJobBuilder.js";
+import { estimateBatchCost, estimateRequestCost } from "../../../api-batch/costEstimator.js";
+import { reconcileBatchResultsPreview, summarizeReconciliation } from "../../../api-batch/resultReconciler.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -731,6 +736,75 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       "Future runtime execution requires a dedicated governed phase.",
     ],
   };
+  const providerAdapters = listProviderAdapters();
+  const providerRegistrySummary = summarizeProviderRegistry(providerAdapters);
+  const openAIRequestPreview = createOpenAIRequestPreview({
+    endpoint: "responses",
+    modelPolicy: "balanced",
+    inputSummary: "Redacted Command Center API request preview.",
+  });
+  let apiBatchJob = createBatchJob({ batchJobId: "command-center-api-batch-preview", workloadType: "docs_generation" });
+  apiBatchJob = addBatchRequest(apiBatchJob, {
+    custom_id: "docs-preview-001",
+    inputSummary: "Redacted documentation generation request.",
+  });
+  apiBatchJob = addBatchRequest(apiBatchJob, {
+    custom_id: "test-gap-preview-001",
+    inputSummary: "Redacted test gap analysis request.",
+  });
+  const apiBatchCost = estimateBatchCost(apiBatchJob, { modelPolicy: "balanced", approvalThresholdUsd: 0.01 });
+  const apiBatchReconciliation = reconcileBatchResultsPreview(apiBatchJob, [
+    {
+      custom_id: "docs-preview-001",
+      outputSummary: "Preview-only result summary for documentation generation.",
+      rawProviderPayloadStored: false,
+    },
+  ]);
+  const apiBatchView = {
+    summary: {
+      label: "API / Batch Adapter",
+      mode: "preview-only",
+      providerAdapters: providerRegistrySummary.providerCount,
+      previewOnlyAdapters: providerRegistrySummary.previewOnlyCount,
+      externalCallsEnabled: false,
+      externalUploadAllowed: false,
+      providerExecutionEnabled: false,
+      apiKeysRead: false,
+      dbWritesEnabled: false,
+      workerRuntimeEnabled: false,
+      projectMutationEnabled: false,
+      nextDependencies: ["Cost Center", "Worker Runtime", "Provider Dispatch"],
+    },
+    providers: providerAdapters.map((adapter) => ({
+      ...adapter,
+      displayStatus: adapter.status === "preview_only" ? "Preview only" : "Planned",
+    })),
+    openAIRequestPreview: summarizeOpenAIRequestPreview(openAIRequestPreview),
+    requestCostPreview: estimateRequestCost(openAIRequestPreview, { modelPolicy: "balanced" }),
+    batchJob: summarizeBatchJob(apiBatchJob),
+    batchJobSize: estimateBatchJobSize(apiBatchJob),
+    batchCost: apiBatchCost,
+    reconciliation: summarizeReconciliation(apiBatchReconciliation),
+    jsonlPreview: {
+      available: true,
+      path: "reports/api-batch/sample-batch-preview.jsonl",
+      safeForReview: true,
+      rawPromptStored: false,
+    },
+    disabledActions: [
+      { label: "Create preview batch job", reason: "Use local checker-generated preview artifacts for now." },
+      { label: "Upload batch", reason: "Upload disabled; provider calls disabled." },
+      { label: "Execute provider request", reason: "Provider execution disabled until governed dispatch exists." },
+    ],
+    safetyNotes: [
+      "Provider adapters are preview-only.",
+      "External provider calls disabled.",
+      "External upload disabled.",
+      "API keys and credentials are not read.",
+      "Cost estimate is available before any future execution.",
+      "Result reconciliation is preview-only and maps summaries by custom_id.",
+    ],
+  };
 
   return {
     shell: {
@@ -764,6 +838,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     hookRegistry: hookRegistryView,
     toolGateway: toolGatewayView,
     triggerIntegration: triggerIntegrationView,
+    apiBatch: apiBatchView,
     agentRegistry: {
       registryVersion: agentRegistry.registryVersion,
       runtimePermissionsGranted: false,

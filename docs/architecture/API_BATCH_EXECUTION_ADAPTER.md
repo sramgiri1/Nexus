@@ -154,3 +154,26 @@ No real provider pricing fetch, network call, API key read, or execution approva
 ## Next Subphase
 
 P54.8 exposes API and batch adapter previews in the Command Center.
+
+## P54.8 - Command Center API / Batch Jobs UX
+
+The Command Center exposes `/command-center/api-batch` as a preview-only operator view for the API and batch adapter layer.
+
+The page shows:
+
+- provider adapters as preview-only
+- OpenAI adapter skeleton metadata
+- batch job builder readiness
+- safe JSONL preview file availability
+- external upload disabled
+- provider execution disabled
+- cost estimate availability
+- preview-only result reconciliation
+- next dependencies: Cost Center, Worker Runtime, and Provider Dispatch
+
+No UI button uploads a batch, calls a provider, reads credentials, starts a worker, writes DB records, or mutates project
+files.
+
+## Next Subphase
+
+P54.9 finalizes validation, regenerates reports from the current branch, and marks P54 complete with P55 next.

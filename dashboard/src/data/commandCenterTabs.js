@@ -64,6 +64,45 @@ export const PAGE_TAB_PLANS = {
   batch: ["Overview", "Jobs", "Results", "Cost"],
 };
 
+export const API_BATCH_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Provider adapters, batch previews, and safety boundary",
+    badge: "Preview",
+  },
+  {
+    id: "providers",
+    label: "Provider Adapters",
+    description: "Preview-only provider adapter readiness",
+    badge: "Preview",
+  },
+  {
+    id: "batch",
+    label: "Batch Jobs",
+    description: "Batch job builder and JSONL preview artifacts",
+    badge: "Ready",
+  },
+  {
+    id: "cost",
+    label: "Cost Estimate",
+    description: "Approximate cost estimates and approval requirements",
+    badge: "Ready",
+  },
+  {
+    id: "reconciliation",
+    label: "Reconciliation",
+    description: "Preview result mapping by custom_id",
+    badge: "Preview",
+  },
+  {
+    id: "developer-details",
+    label: "Developer Details",
+    description: "Preview modules and disabled runtime details",
+    badge: "Read-only",
+  },
+];
+
 export const WORKSPACE_TABS = [
   {
     id: "recommended",
