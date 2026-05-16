@@ -1590,22 +1590,14 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-16T00:18:00.000Z",
-      "summary": "Completes preview-only Trigger + Integration Gateway with manual, scheduled, GitHub, ticket, chat, and webhook trigger metadata plus Command Center visibility while runtime execution remains disabled.",
+      "commit": "44faf02",
+      "completedAt": "",
+      "summary": "Completed preview-only trigger and integration gateway with manual, scheduled, GitHub, ticket, and chat previews.",
       "checksRun": [
-        "npm run check:trigger-integration-final",
-        "npm run check:trigger-gateway-schema",
-        "npm run check:manual-trigger",
-        "npm run check:scheduled-trigger",
-        "npm run check:github-trigger-preview",
-        "npm run check:ticket-trigger-preview",
-        "npm run check:chat-trigger-preview",
-        "npm run check:command-center-ux",
-        "npm run check:os-phase-status"
+        "npm run check:trigger-integration-final"
       ],
       "knownLimitations": [
-        "P53 does not enable real trigger execution, webhook listeners, schedulers, credentials, provider/tool/worker execution, external network calls, DB writes, or project mutation."
+        "Trigger execution remains disabled."
       ],
       "nextPhase": "P54",
       "commandCenterVisible": true
@@ -1740,14 +1732,16 @@
       "phaseId": "P54",
       "title": "API + Batch Execution Adapter",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned API and batch execution adapter layer.",
+      "summary": "Builds preview-only provider request, batch packaging, cost estimation, and reconciliation foundations.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P55",
+      "knownLimitations": [
+        "Provider execution remains disabled until a later governed dispatch phase."
+      ],
+      "nextPhase": "P54.1",
       "commandCenterVisible": true
     },
     {
@@ -1755,10 +1749,10 @@
       "title": "Test Suite Manager: Project + OS",
       "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "",
-      "commit": "",
+      "branch": "planned",
+      "commit": "planned",
       "completedAt": "",
-      "summary": "Planned unified test suite manager for projects and the OS.",
+      "summary": "Unify project and OS validation suites under governed test-suite management.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P56",
@@ -3162,11 +3156,155 @@
       ],
       "nextPhase": "P52.3",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.1",
+      "title": "Provider Adapter Interface",
+      "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "arch/api-batch-execution-adapter",
+      "commit": "pending-subphase-commit",
+      "completedAt": "",
+      "summary": "Preview-only provider adapter abstraction and policy.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.2",
+      "title": "OpenAI API Adapter Skeleton",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "OpenAI-compatible request-shape preview skeleton.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.3",
+      "title": "Batch Job Builder",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Preview-only batch job builder.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.4",
+      "title": "JSONL Job Writer",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Safe local JSONL preview writer.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.5",
+      "title": "Batch Status Tracker Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Local batch status preview tracking.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.6",
+      "title": "Batch Result Reconciler Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Preview result reconciliation by custom_id.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.7",
+      "title": "Cost Estimator",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Approximate API and batch cost estimator.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.8",
+      "title": "Command Center API / Batch Jobs UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Preview-only Command Center API and batch visibility.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P54.9",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.9",
+      "title": "API + Batch Adapter Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Final validation and closure for P54.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider calls, external network, DB writes, worker runtime, or project mutation."
+      ],
+      "nextPhase": "P55",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T00:18:00.000Z",
-  "currentPhase": "P53.7",
-  "previousPhase": "P53.6",
-  "nextPhase": "P54"
+  "updatedAt": "2026-05-16T00:07:53.429Z",
+  "currentPhase": "P54.1",
+  "previousPhase": "P53.7",
+  "nextPhase": "P54.2"
 }

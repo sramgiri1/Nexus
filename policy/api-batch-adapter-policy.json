@@ -1,0 +1,19 @@
+{
+  "version": "1.0",
+  "phase": "P54",
+  "purpose": "api_batch_execution_adapter_preview",
+  "previewOnly": true,
+  "providerCallsAllowed": false,
+  "externalNetworkCallsAllowed": false,
+  "apiKeysAllowed": false,
+  "credentialReadsAllowed": false,
+  "dbWritesAllowed": false,
+  "workerRuntimeAllowed": false,
+  "projectMutationAllowed": false,
+  "batchUploadAllowed": false,
+  "providerPollingAllowed": false,
+  "rawPromptStorageAllowed": false,
+  "costEstimateRequired": true,
+  "evidenceRequired": true,
+  "humanApprovalRequiredForExecution": true
+}

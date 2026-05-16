@@ -176,7 +176,8 @@
     "check:github-trigger-preview": "node scripts/check-github-trigger-preview.js",
     "check:ticket-trigger-preview": "node scripts/check-ticket-trigger-preview.js",
     "check:chat-trigger-preview": "node scripts/check-chat-trigger-preview.js",
-    "check:trigger-integration-final": "node scripts/check-trigger-integration-final.js"
+    "check:trigger-integration-final": "node scripts/check-trigger-integration-final.js",
+    "check:api-batch-provider-adapter": "node scripts/check-api-batch-provider-adapter.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

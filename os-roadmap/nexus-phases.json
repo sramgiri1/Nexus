@@ -1176,18 +1176,18 @@
       "phaseId": "P54",
       "title": "API + Batch Execution Adapter",
       "track": "NEXUS_OS",
-      "order": 28,
-      "group": "Planned OS Phases",
-      "summary": "Adapt governed execution through API and batch pathways without bypassing policy.",
+      "order": 37,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Build preview-only provider request and batch packaging foundations without provider execution.",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P55",
       "title": "Test Suite Manager: Project + OS",
       "track": "NEXUS_OS",
-      "order": 29,
+      "order": 38,
       "group": "Planned OS Phases",
-      "summary": "Unify test suite management across projects and the NEXUS OS itself.",
+      "summary": "Unify project and OS validation suites under governed test-suite management.",
       "commandCenterVisible": true
     },
     {
@@ -1459,7 +1459,88 @@
       "group": "P45 Agent Registry + Boundary Compiler",
       "summary": "Validate and close the agent registry and boundary compiler track.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.1",
+      "title": "Provider Adapter Interface",
+      "track": "NEXUS_OS",
+      "order": 37.01,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only provider adapter abstraction and policy.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.2",
+      "title": "OpenAI API Adapter Skeleton",
+      "track": "NEXUS_OS",
+      "order": 37.02,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "OpenAI-compatible request-shape preview skeleton.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.3",
+      "title": "Batch Job Builder",
+      "track": "NEXUS_OS",
+      "order": 37.03,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only batch job builder.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.4",
+      "title": "JSONL Job Writer",
+      "track": "NEXUS_OS",
+      "order": 37.04,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Safe local JSONL preview writer.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.5",
+      "title": "Batch Status Tracker Preview",
+      "track": "NEXUS_OS",
+      "order": 37.05,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Local batch status preview tracking.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.6",
+      "title": "Batch Result Reconciler Preview",
+      "track": "NEXUS_OS",
+      "order": 37.06,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview result reconciliation by custom_id.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.7",
+      "title": "Cost Estimator",
+      "track": "NEXUS_OS",
+      "order": 37.07,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Approximate API and batch cost estimator.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.8",
+      "title": "Command Center API / Batch Jobs UX",
+      "track": "NEXUS_OS",
+      "order": 37.08,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Preview-only Command Center API and batch visibility.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P54.9",
+      "title": "API + Batch Adapter Final Validation",
+      "track": "NEXUS_OS",
+      "order": 37.09,
+      "group": "P54 API + Batch Execution Adapter",
+      "summary": "Final validation and closure for P54.",
+      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-15T16:45:13.252Z"
+  "updatedAt": "2026-05-16T00:07:53.429Z"
 }
