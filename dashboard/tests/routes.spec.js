@@ -2202,6 +2202,50 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Cost Center route renders preview cost governance tabs", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/cost");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+    await expect(page.locator("body")).toContainText("Ready for estimates");
+    await expect(page.locator("body")).toContainText("Real provider spend");
+    await expect(page.locator("body")).toContainText("Disabled");
+
+    for (const label of ["Budgets", "Estimates", "Ledger", "Enforcement", "Gaps / Next", "Developer Details"]) {
+      await commandTab(page, label).click();
+      await expect(activeCommandTabPanel(page)).toBeVisible();
+    }
+
+    await commandTab(page, "Budgets").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Project");
+    await expect(activeCommandTabPanel(page)).toContainText("Tool");
+    await expect(activeCommandTabPanel(page)).toContainText("API Batch");
+
+    await commandTab(page, "Estimates").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Task estimate preview");
+    await expect(activeCommandTabPanel(page)).toContainText("no provider call");
+
+    await commandTab(page, "Ledger").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Redacted cost ledger preview");
+
+    await commandTab(page, "Enforcement").click();
+    await expect(activeCommandTabPanel(page)).toContainText("REQUIRE_APPROVAL");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider dispatch requested");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("\"records\"");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("real spend captured");
+
+    await setTheme(page, "dark");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+    await setTheme(page, "light");
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Cost Center");
+
+    expect(errors).toEqual([]);
+  });
+
   test("DemoApp appears on demo route only", async ({ page }) => {
     const errors = captureClientErrors(page);
 

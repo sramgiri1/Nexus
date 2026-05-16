@@ -23,6 +23,7 @@ const sections = {
   toolGatewayUx: true,
   triggerIntegrationUx: true,
   apiBatchUx: true,
+  costCenterUx: true,
   commandPalette: true,
   commandCenterHelpLinks: true,
   operatorActions: true,
@@ -799,6 +800,37 @@ for (const expected of [
 check(routeSource.includes("/command-center/api-batch"), "apiBatchUx", "Route matrix missing /command-center/api-batch");
 check(routeTestSource.includes("API Batch route renders preview-only provider and batch metadata"), "apiBatchUx", "Route tests missing API Batch coverage");
 
+// Cost Center UX
+for (const expected of [
+  "Cost Center",
+  "Ready for estimates",
+  "Real provider spend",
+  "Provider dispatch",
+  "Budget enforcement",
+  "Redacted cost ledger preview",
+  "REQUIRE_APPROVAL",
+  "RECORD_ONLY",
+]) {
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected) || commandTabsSource.includes(expected),
+    "costCenterUx",
+    `Cost Center UX missing expected copy: ${expected}`,
+  );
+}
+for (const expected of [
+  "export const COST_CENTER_TABS",
+  'id: "budgets"',
+  'id: "estimates"',
+  'id: "ledger"',
+  'id: "enforcement"',
+  'id: "gaps"',
+  'id: "developer-details"',
+]) {
+  check(commandTabsSource.includes(expected), "costCenterUx", `Cost Center tabs missing expected config: ${expected}`);
+}
+check(routeSource.includes("/command-center/cost"), "costCenterUx", "Route matrix missing /command-center/cost");
+check(routeTestSource.includes("Cost Center route renders preview cost governance tabs"), "costCenterUx", "Route tests missing Cost Center coverage");
+
 // Test Center UX
 for (const expected of [
   "Test Center",
@@ -1006,7 +1038,7 @@ for (const tabSet of [
   { exportName: "SAFETY_CENTER_TABS", ids: ["posture", "policy-blocks", "approvals", "data-privacy", "developer-details"] },
   { exportName: "PROJECTS_TABS", ids: ["portfolio", "selected-project", "stack", "capabilities", "milestones", "gaps", "evidence", "settings-adapter"] },
   { exportName: "OS_ROADMAP_TABS", ids: ["current", "completed", "planned", "blocked-risks", "history"] },
-  { exportName: "COST_CENTER_TABS", ids: ["overview", "budgets", "by-project", "by-agent", "provider-spend"] },
+  { exportName: "COST_CENTER_TABS", ids: ["overview", "budgets", "estimates", "ledger", "enforcement", "gaps", "developer-details"] },
   { exportName: "BATCH_QUEUE_TABS", ids: ["overview", "jobs", "results", "cost"] },
 ]) {
   check(commandTabsSource.includes(`export const ${tabSet.exportName}`), "tabbedPlatformPages", `Missing tab config export: ${tabSet.exportName}`);
@@ -1368,6 +1400,7 @@ console.log(`Hook Registry UX: ${sections.hookRegistryUx ? "PASS" : "FAIL"}`);
 console.log(`Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}`);
 console.log(`Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}`);
 console.log(`API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}`);
+console.log(`Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}`);
 console.log(`Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}`);
 console.log(`Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}`);
@@ -1424,6 +1457,7 @@ const report = `# Command Center UX Report
 - Tool Gateway UX: ${sections.toolGatewayUx ? "PASS" : "FAIL"}
 - Trigger + Integrations UX: ${sections.triggerIntegrationUx ? "PASS" : "FAIL"}
 - API / Batch UX: ${sections.apiBatchUx ? "PASS" : "FAIL"}
+- Cost Center UX: ${sections.costCenterUx ? "PASS" : "FAIL"}
 - Test Center UX: ${sections.testCenterUx ? "PASS" : "FAIL"}
 - Quality Intelligence UX: ${sections.qualityIntelligenceUx ? "PASS" : "FAIL"}
 - Command palette: ${sections.commandPalette ? "PASS" : "FAIL"}

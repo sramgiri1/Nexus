@@ -1272,6 +1272,15 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P57.7",
+      "title": "Cost Center Final Validation",
+      "track": "NEXUS_OS",
+      "order": 31.07,
+      "group": "P57 Cost Center + Budget Enforcement",
+      "summary": "Validate and close P57 while real spend remains disabled.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P58",
       "title": "Policy Center + Governance Admin",
       "track": "NEXUS_OS",
@@ -1668,5 +1677,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-16T12:50:50.482Z"
+  "updatedAt": "2026-05-16T12:55:06.722Z"
 }

@@ -558,11 +558,13 @@ export const OS_ROADMAP_TABS = [
 ];
 
 export const COST_CENTER_TABS = [
-  { id: "overview", label: "Overview", description: "Cost enforcement status", badge: "Planned" },
-  { id: "budgets", label: "Budgets", description: "Project, agent, and tool budget placeholders", badge: "Planned" },
-  { id: "by-project", label: "By Project", description: "Future project cost breakdown", badge: "Planned" },
-  { id: "by-agent", label: "By Agent", description: "Future agent cost breakdown", badge: "Planned" },
-  { id: "provider-spend", label: "Provider Spend", description: "Provider spend status; dispatch not enabled", badge: "Disabled" },
+  { id: "overview", label: "Overview", description: "Cost readiness, budget posture, and disabled spend", badge: "Preview" },
+  { id: "budgets", label: "Budgets", description: "Budget scopes and approval thresholds", badge: "Ready" },
+  { id: "estimates", label: "Estimates", description: "Estimate-before-run preview records", badge: "Preview" },
+  { id: "ledger", label: "Ledger", description: "Redacted cost ledger preview", badge: "Read-only" },
+  { id: "enforcement", label: "Enforcement", description: "ALLOW, BLOCK, REQUIRE_APPROVAL, and RECORD_ONLY examples", badge: "Preview" },
+  { id: "gaps", label: "Gaps / Next", description: "Remaining work before real spend capture", badge: "Actionable" },
+  { id: "developer-details", label: "Developer Details", description: "Safe policy and report references only", badge: "Read-only" },
 ];
 
 export const BATCH_QUEUE_TABS = [

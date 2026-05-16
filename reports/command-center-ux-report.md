@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:52:43.553Z
-- Validation branch: arch/quality-intelligence-test-gap-detection
-- Validation HEAD: 1d3498b
+- Generated at: 2026-05-16T12:55:08.291Z
+- Validation branch: arch/cost-center-budget-enforcement
+- Validation HEAD: 1d9a8af
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Checks
@@ -23,6 +23,7 @@
 - Tool Gateway UX: PASS
 - Trigger + Integrations UX: PASS
 - API / Batch UX: PASS
+- Cost Center UX: PASS
 - Test Center UX: PASS
 - Quality Intelligence UX: PASS
 - Command palette: PASS

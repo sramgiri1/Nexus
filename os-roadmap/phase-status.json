@@ -3672,6 +3672,22 @@
     },
     {
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/cost-center-budget-enforcement",
+      "commit": "1d9a8af",
+      "completedAt": "2026-05-16T12:55:06.653Z",
+      "checksRun": [
+        "npm run check:budget-enforcer"
+      ],
+      "knownLimitations": [],
+      "commandCenterVisible": true,
+      "phaseId": "P57.5",
+      "title": "Budget Block / Approval Threshold",
+      "summary": "Added preview budget block, approval, allow, and record-only decisions.",
+      "nextPhase": "P57.6"
+    },
+    {
+      "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "arch/cost-center-budget-enforcement",
       "commit": "pending-final-commit",
@@ -3679,10 +3695,10 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.5",
-      "title": "Budget Block / Approval Threshold",
-      "summary": "Adds preview budget decisions for allow/block/approval/record-only.",
-      "nextPhase": "P57.6"
+      "phaseId": "P57.6",
+      "title": "Command Center Cost Center UX",
+      "summary": "Adds operator Cost Center UX for budgets, estimates, ledger, and enforcement previews.",
+      "nextPhase": "P57.7"
     },
     {
       "track": "NEXUS_OS",
@@ -3693,14 +3709,14 @@
       "checksRun": [],
       "knownLimitations": [],
       "commandCenterVisible": true,
-      "phaseId": "P57.6",
-      "title": "Command Center Cost Center UX",
-      "summary": "Planned operator Cost Center page."
+      "phaseId": "P57.7",
+      "title": "Cost Center Final Validation",
+      "summary": "Planned final validation and P57 closure."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T12:50:50.367Z",
-  "currentPhase": "P57.5",
-  "previousPhase": "P57.4",
-  "nextPhase": "P57.6"
+  "updatedAt": "2026-05-16T12:55:06.664Z",
+  "currentPhase": "P57.6",
+  "previousPhase": "P57.5",
+  "nextPhase": "P57.7"
 }

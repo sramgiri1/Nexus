@@ -3875,29 +3875,100 @@ function BatchQueuePage({ vm }) {
 /* ─── Cost Center Page ─── */
 function CostCenterPage({ vm, studio }) {
   const [activeTab, setActiveTab] = useState("overview");
+  const budgetScopes = ["Global", "Project", "Mission", "Task", "Agent", "Skill", "Hook", "Tool", "Trigger", "Provider", "API Batch", "Worker", "OS Phase"];
+  const estimates = [
+    { label: "Task estimate preview", amount: "$0.0125", confidence: "Medium", assumption: "Static token estimate; no provider call." },
+    { label: "API batch estimate preview", amount: "$0.0700", confidence: "Low", assumption: "Preview price table only; no batch upload." },
+    { label: "Tool/test estimate preview", amount: "$0.0045", confidence: "Medium", assumption: "Local runtime seconds only." },
+  ];
+  const decisions = [
+    { decision: "ALLOW", reason: "Estimate preview is within budget. Execution still remains disabled in P57." },
+    { decision: "BLOCK", reason: "Provider dispatch requested while provider dispatch is disabled." },
+    { decision: "REQUIRE_APPROVAL", reason: "Estimate exceeds the approval threshold." },
+    { decision: "RECORD_ONLY", reason: "Estimate-only request records cost preview without execution." },
+  ];
   return (
     <div className="ccv2-content">
       <div className="ccv2-page">
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">Cost Center</div>
-          <div className="ccv2-page-head__sub">Budget limits · no live provider spend in local-private mode</div>
+          <div className="ccv2-page-head__sub">Preview cost governance · estimates before future execution · no real provider spend</div>
         </div>
 
         <CommandTabs tabs={COST_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Cost Center sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
             <div className="ccv2-card">
-              <div className="ccv2-section-heading">Cost Enforcement Status</div>
+              <div className="ccv2-section-heading">Cost Center Status</div>
               <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
-                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Cost enforcement</span><span className="ccv2-safety-row__value--disabled">Not enabled yet</span></div>
-                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Provider calls</span><span className="ccv2-safety-row__value--disabled">Disabled in local-private mode</span></div>
-                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Live spend data</span><span className="ccv2-safety-row__value--disabled">Not available</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Cost model</span><span className="ccv2-safety-row__value--ready">Ready for estimates</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Real provider spend</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Provider dispatch</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">DB writes</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Worker runtime</span><span className="ccv2-safety-row__value--disabled">Disabled</span></div>
+                <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Budget enforcement</span><span className="ccv2-safety-row__value--ready">Preview only</span></div>
+              </div>
+              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Cost Center estimates, ledger entries, and budget decisions are governance previews. They do not represent real billing data.</p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="budgets" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Budgets</div>
+              <div className="ccv2-grid-3" style={{ marginTop: 10 }}>
+                {budgetScopes.map((scope) => (
+                  <div className="ccv2-stat-chip" key={scope}>
+                    <span>{scope}</span>
+                    <strong>Preview scope</strong>
+                  </div>
+                ))}
+              </div>
+              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Approval threshold preview: estimates above the configured threshold require operator approval before future execution.</p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="estimates" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Estimates</div>
+              <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+                {estimates.map((estimate) => (
+                  <div className="ccv2-safety-row" key={estimate.label}>
+                    <span className="ccv2-safety-row__label">{estimate.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{estimate.amount} · {estimate.confidence}</span>
+                    <small>{estimate.assumption}</small>
+                  </div>
+                ))}
               </div>
             </div>
           </CommandTabPanel>
-          <CommandTabPanel tabId="budgets" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Budgets</div><div className="ccv2-empty-state">Project, agent, and tool budgets are placeholders until Cost Center enforcement is implemented.</div></div></CommandTabPanel>
-          <CommandTabPanel tabId="by-project" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">By Project</div><div className="ccv2-empty-state">Project cost breakdown is planned. Project Registry arrives in P42.</div></div></CommandTabPanel>
-          <CommandTabPanel tabId="by-agent" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">By Agent</div><div className="ccv2-empty-state">Agent cost breakdown is planned. No spend is fabricated.</div></div></CommandTabPanel>
-          <CommandTabPanel tabId="provider-spend" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Provider Spend</div><div className="ccv2-empty-state">Provider dispatch not enabled. No provider spend is available.</div></div></CommandTabPanel>
+          <CommandTabPanel tabId="ledger" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Ledger</div>
+              <div className="ccv2-empty-state">Redacted cost ledger preview includes estimate records, actual preview records, and budget decisions. No raw prompts, provider payloads, secrets, or private source content are shown.</div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="enforcement" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Enforcement</div>
+              <div className="ccv2-stack-list" style={{ marginTop: 10 }}>
+                {decisions.map((decision) => (
+                  <div className="ccv2-safety-row" key={decision.decision}>
+                    <span className="ccv2-safety-row__label">{decision.decision}</span>
+                    <span>{decision.reason}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="gaps" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Gaps / Next</div>
+              <div className="ccv2-empty-state">Real provider cost capture waits for governed provider dispatch. Worker cost waits for worker runtime. DB-backed cost ledger waits for DB-backed runtime primary.</div>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Developer Details</div>
+              <div className="ccv2-empty-state">Safe references: policy/cost-center-policy.json, reports/cost-ledger-preview.json, reports/budget-policy-preview.json, reports/cost-estimates-preview.json. No raw JSON dump is shown in primary UX.</div>
+            </div>
+          </CommandTabPanel>
         </CommandTabs>
       </div>
     </div>
