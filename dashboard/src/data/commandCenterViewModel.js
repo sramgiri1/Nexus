@@ -1528,5 +1528,19 @@ export function buildCommandCenterViewModel(studio) {
       summary: validation.summary || {},
       reports: validation.reports || [],
     },
+    projectTestSuites: {
+      total: 5,
+      executionEnabled: false,
+      byLayer: { backend: 1, ios: 1, policy: 2, release: 1 },
+      byStatus: { ready: 1, planned: 4 },
+      projectIds: ["careloop"],
+      suites: [
+        { suiteId: "careloop-backend-validation", layer: "backend", tool: "npm", riskLevel: "medium", status: "ready", commandPreview: "npm test", forbiddenInDemo: true },
+        { suiteId: "careloop-ios-readiness", layer: "ios", tool: "xcodebuild", riskLevel: "high", status: "planned", commandPreview: "xcodebuild test -scheme CareLoop ...", forbiddenInDemo: true },
+        { suiteId: "careloop-prd-acceptance", layer: "policy", tool: "none", riskLevel: "medium", status: "planned", commandPreview: "(manual PRD acceptance checklist)", forbiddenInDemo: true },
+        { suiteId: "careloop-privacy-compliance", layer: "policy", tool: "none", riskLevel: "high", status: "planned", commandPreview: "(review-only: FTC compliance checklist)", forbiddenInDemo: true },
+        { suiteId: "careloop-release-readiness", layer: "release", tool: "none", riskLevel: "critical", status: "planned", commandPreview: "(release gate: all gates PASS)", forbiddenInDemo: true },
+      ],
+    },
   };
 }

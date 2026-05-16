@@ -3339,11 +3339,29 @@
       ],
       "nextPhase": "P55.2",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P55.2",
+      "title": "Project Test Suites",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "arch/test-suite-manager-project-os",
+      "commit": "pending",
+      "completedAt": "",
+      "summary": "Preview-only project-scoped test suite records for CareLoop.",
+      "checksRun": [
+        "npm run check:project-test-suites"
+      ],
+      "knownLimitations": [
+        "commandPreview strings are display-only; no execution."
+      ],
+      "nextPhase": "P55.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-16T00:29:22.137Z",
-  "currentPhase": "P55.1",
-  "previousPhase": "P54.9",
-  "nextPhase": "P55.2"
+  "currentPhase": "P55.2",
+  "previousPhase": "P55.1",
+  "nextPhase": "P55.3"
 }
