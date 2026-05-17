@@ -50,7 +50,11 @@ struct CareLoopApp: App {
         if ProcessInfo.processInfo.arguments.contains(LaunchArguments.resetSession) {
             AppState.resetPersistedSession()
         }
-        _appState = StateObject(wrappedValue: AppState())
+        if let scenario = UITestScenario.current {
+            _appState = StateObject(wrappedValue: AppState(uiTestScenario: scenario))
+        } else {
+            _appState = StateObject(wrappedValue: AppState())
+        }
     }
 
     var body: some Scene {

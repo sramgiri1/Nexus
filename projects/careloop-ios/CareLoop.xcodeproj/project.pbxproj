@@ -21,11 +21,13 @@
 		37ED7B09263FFD7D6B8312F0 /* APIClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF30A75208A05C0A15FDA4D /* APIClient.swift */; };
 		3A6D82263A2F7E0F24065743 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6279EF7C105F8E42CFD7FEF4 /* SettingsView.swift */; };
 		435A1E13979412F77305F902 /* CareLoopBrand.swift in Sources */ = {isa = PBXBuildFile; fileRef = 94338AEC6769116795187371 /* CareLoopBrand.swift */; };
+		C0A1B2C3D4E5F60718293A4D /* UITestScenario.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A1B2C3D4E5F60718293A4E /* UITestScenario.swift */; };
 		47806E4E5E7F08491C2B6F9D /* Endpoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = D1C1E3DE5F7454F797BF5E33 /* Endpoints.swift */; };
 		480927E325DF54004F6E74B8 /* AppState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302875AD4CB725545B0E4765 /* AppState.swift */; };
 		48A24005ACF3BCA0C28E015E /* OnboardingValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2371C5E7A53B731AA2D42FAC /* OnboardingValidation.swift */; };
 		A1B2C3D4E5F6A7B8C9D0E1F2 /* WelcomeCardsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C3D4E5F6A7B8C9D0E1F2A3 /* WelcomeCardsView.swift */; };
 		55F5BD48C86BD264FAA6FC23 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B72BA44CCF46770F3B90E5B /* Circle.swift */; };
+		C0A1B2C3D4E5F60718293A4F /* CircleHomePolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A1B2C3D4E5F60718293A50 /* CircleHomePolicy.swift */; };
 		C0A1B2C3D4E5F60718293A4B /* TaskWorkflowPolicy.swift in Sources */ = {isa = PBXBuildFile; fileRef = C0A1B2C3D4E5F60718293A4C /* TaskWorkflowPolicy.swift */; };
 		69BAC329D8BEE07EE2F77710 /* RecipientManagementView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BBDD00D4C4E5E17BF29935F8 /* RecipientManagementView.swift */; };
 		6B4110389AD3A59757FBE195 /* Task.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE0C5318EFFB8BD80363344D /* Task.swift */; };
@@ -92,7 +94,9 @@
 		64D951960FA60A042CDCC9D0 /* NotificationPermissionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationPermissionView.swift; sourceTree = "<group>"; };
 		79AE64AED3E2BCE27476795E /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		7B72BA44CCF46770F3B90E5B /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
+		C0A1B2C3D4E5F60718293A50 /* CircleHomePolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleHomePolicy.swift; sourceTree = "<group>"; };
 		C0A1B2C3D4E5F60718293A4C /* TaskWorkflowPolicy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskWorkflowPolicy.swift; sourceTree = "<group>"; };
+		C0A1B2C3D4E5F60718293A4E /* UITestScenario.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UITestScenario.swift; sourceTree = "<group>"; };
 		7EC7A865339EBDA7F92B73D0 /* SocialAuthSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialAuthSession.swift; sourceTree = "<group>"; };
 		94338AEC6769116795187371 /* CareLoopBrand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareLoopBrand.swift; sourceTree = "<group>"; };
 		B2FCBAAA3E631E793BD70DB0 /* MemberListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemberListView.swift; sourceTree = "<group>"; };
@@ -229,6 +233,7 @@
 				302875AD4CB725545B0E4765 /* AppState.swift */,
 				1EB81C72F8FF200E683C051B /* CareLoopApp.swift */,
 				F2A3B4C5D6E7F8A9B0C1D2E3 /* SubscriptionManager.swift */,
+				C0A1B2C3D4E5F60718293A4E /* UITestScenario.swift */,
 			);
 			path = App;
 			sourceTree = "<group>";
@@ -257,6 +262,7 @@
 			isa = PBXGroup;
 			children = (
 				7B72BA44CCF46770F3B90E5B /* Circle.swift */,
+				C0A1B2C3D4E5F60718293A50 /* CircleHomePolicy.swift */,
 				D7149EB945E6F752F84F0095 /* Insights.swift */,
 				FE0C5318EFFB8BD80363344D /* Task.swift */,
 				C0A1B2C3D4E5F60718293A4C /* TaskWorkflowPolicy.swift */,
@@ -450,6 +456,7 @@
 				C42A7475E324FD1C0E58500E /* CareLoopApp.swift in Sources */,
 				435A1E13979412F77305F902 /* CareLoopBrand.swift in Sources */,
 				55F5BD48C86BD264FAA6FC23 /* Circle.swift in Sources */,
+				C0A1B2C3D4E5F60718293A4F /* CircleHomePolicy.swift in Sources */,
 				7CD08FF40B1F4400EA1EA4E7 /* CircleHomeView.swift in Sources */,
 				E386E4972F40C58E405240AB /* CircleListView.swift in Sources */,
 				CE804BA91DB6FBF4542A1796 /* CircleSettingsView.swift in Sources */,
@@ -477,6 +484,7 @@
 				070638D0B7BFF0AF6E85D88A /* TaskRowView.swift in Sources */,
 				F7A8B9C0D1E2F3A4B5C6D7E8 /* RecipientBoardView.swift in Sources */,
 				CABE522EA50F7D8B03955411 /* TaskWeekdayPicker.swift in Sources */,
+				C0A1B2C3D4E5F60718293A4D /* UITestScenario.swift in Sources */,
 				1A29F2D62482ED9136C31774 /* User.swift in Sources */,
 				F1A2B3C4D5E6F7A8B9C0D1E2 /* SubscriptionManager.swift in Sources */,
 				F3A4B5C6D7E8F9A0B1C2D3E4 /* PaywallView.swift in Sources */,

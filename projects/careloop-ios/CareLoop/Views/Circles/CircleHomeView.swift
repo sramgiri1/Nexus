@@ -3,61 +3,71 @@ import SwiftUI
 struct CircleHomeView: View {
     @EnvironmentObject private var appState: AppState
 
-    @State private var tasks:              [CareTask] = []
-    @State private var loading             = true
-    @State private var error:              String?
+    @State private var tasks: [CareTask] = []
+    @State private var loading = true
+    @State private var error: String?
     @State private var deepLinkToTaskBoard = false
+    @State private var isCompletingNextTask = false
 
-    // MARK: – Design tokens
-    private let teal  = Color(red: 0.16, green: 0.80, blue: 0.72)
-    private let blue  = Color(red: 0.13, green: 0.56, blue: 0.87)
+    private let teal = Color(red: 0.16, green: 0.80, blue: 0.72)
+    private let blue = Color(red: 0.13, green: 0.56, blue: 0.87)
     private let green = Color(red: 0.12, green: 0.68, blue: 0.49)
-    private let dark  = Color(red: 0.10, green: 0.16, blue: 0.24)
-    private let mid   = Color(red: 0.43, green: 0.50, blue: 0.60)
-    private let bg    = Color(red: 0.95, green: 0.96, blue: 0.99)
-    private let rose  = Color(red: 0.85, green: 0.30, blue: 0.50)
+    private let dark = Color(red: 0.10, green: 0.16, blue: 0.24)
+    private let mid = Color(red: 0.43, green: 0.50, blue: 0.60)
+    private let bg = Color(red: 0.95, green: 0.96, blue: 0.99)
+    private let rose = Color(red: 0.85, green: 0.30, blue: 0.50)
 
     private let twoColumns = [GridItem(.flexible(), spacing: 14), GridItem(.flexible(), spacing: 14)]
 
-    // MARK: – Role helpers
     private var role: MemberRole { appState.userRole }
-    private var isAdmin:     Bool { role == .admin }
-    private var isMember:    Bool { role == .member }
-    private var isRecipient: Bool { role == .recipient }
+    private var isOrganizer: Bool { role == .admin }
+    private var isCaregiver: Bool { role == .member }
+    private var isReceiver: Bool { role == .recipient }
+
+    private var activeCircle: CareCircle? { appState.activeCircle }
+    private var activeRecipients: [CareRecipient] {
+        guard let circle = activeCircle else { return [] }
+        return CircleHomePolicy.activeRecipients(in: circle)
+    }
+    private var receiverSummaries: [ReceiverDashboardSummary] {
+        guard let circle = activeCircle else { return [] }
+        return CircleHomePolicy.receiverSummaries(in: circle, tasks: tasks)
+    }
+    private var nextReceiverTask: CareTask? {
+        CircleHomePolicy.nextDueTask(in: tasks)
+    }
+    private var laterReceiverTasks: [CareTask] {
+        CircleHomePolicy.remainingOpenTasks(after: nextReceiverTask?.id, in: tasks, limit: 3)
+    }
 
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                if let circle = appState.activeCircle {
-                    VStack(alignment: .leading, spacing: 22) {
-                        heroCard(circle: circle)
-                        statsRow(circle: circle)
-                        actionsSection(circle: circle)
-                        previewSection
-                        if let err = error {
-                            Text(err).font(.footnote).foregroundStyle(.red)
-                        }
-                        Spacer(minLength: 32)
+            ZStack {
+                bg.ignoresSafeArea()
+
+                if let circle = activeCircle {
+                    if isReceiver {
+                        receiverHome(circle: circle)
+                    } else {
+                        dashboardHome(circle: circle)
                     }
-                    .padding(18)
                 } else {
                     ProgressView()
-                        .frame(maxWidth: .infinity, alignment: .center)
-                        .padding(.top, 80)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                 }
             }
-            .background(bg.ignoresSafeArea())
-            .navigationTitle(appState.activeCircle?.name ?? "CareLoop")
+            .navigationTitle(activeCircle?.name ?? "Care Circle")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
                     Button { appState.clearActiveCircleSelection() } label: {
                         Image(systemName: "square.grid.2x2")
                     }
+                    .accessibilityIdentifier("circle-directory-button")
                 }
             }
             .navigationDestination(isPresented: $deepLinkToTaskBoard) {
-                if isRecipient {
+                if isReceiver {
                     RecipientBoardView().environmentObject(appState)
                 } else {
                     CirclesView().environmentObject(appState)
@@ -67,9 +77,11 @@ struct CircleHomeView: View {
             .onChange(of: appState.pendingTaskId) { id in
                 if id != nil, !deepLinkToTaskBoard { deepLinkToTaskBoard = true }
             }
-            .onChange(of: appState.activeCircle?.id) { _ in Task { await loadTasks() } }
+            .onChange(of: appState.activeCircle?.id) { _ in
+                Task { await loadTasks() }
+            }
             .refreshable {
-                if let id = appState.activeCircle?.id {
+                if let id = appState.activeCircle?.id, UITestScenario.current == nil {
                     try? await appState.activateCircle(id: id)
                 }
                 await loadTasks()
@@ -78,19 +90,73 @@ struct CircleHomeView: View {
         .careLoopBrandBanner()
     }
 
-    // MARK: – Hero card
+    private func dashboardHome(circle: CareCircle) -> some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 22) {
+                heroCard(circle: circle)
+                statsRow(circle: circle)
+                receiverSection
+                actionsSection(circle: circle)
+                previewSection
+                if let error {
+                    Text(error)
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+                Spacer(minLength: 32)
+            }
+            .padding(18)
+        }
+        .accessibilityIdentifier(isOrganizer ? "organizer-dashboard" : "caregiver-dashboard")
+    }
 
-    @ViewBuilder
+    private func receiverHome(circle: CareCircle) -> some View {
+        ScrollView(showsIndicators: false) {
+            VStack(alignment: .leading, spacing: 22) {
+                receiverHero(circle: circle)
+
+                if loading {
+                    homeShell {
+                        HStack {
+                            Spacer()
+                            ProgressView()
+                            Spacer()
+                        }
+                        .padding(.vertical, 30)
+                    }
+                } else if let task = nextReceiverTask {
+                    nextTaskCard(task)
+                    if !laterReceiverTasks.isEmpty {
+                        receiverTimelineSection
+                    }
+                } else {
+                    receiverEmptyState
+                }
+
+                if let error {
+                    Text(error)
+                        .font(.footnote)
+                        .foregroundStyle(.red)
+                }
+                Spacer(minLength: 32)
+            }
+            .padding(18)
+        }
+        .accessibilityIdentifier("care-receiver-home")
+    }
+
     private func heroCard(circle: CareCircle) -> some View {
         VStack(alignment: .leading, spacing: 14) {
             HStack(spacing: 12) {
-                // Role icon
                 ZStack {
                     RoundedRectangle(cornerRadius: 14, style: .continuous)
-                        .fill(LinearGradient(
-                            colors: [roleGradientStart, roleGradientEnd],
-                            startPoint: .topLeading, endPoint: .bottomTrailing
-                        ))
+                        .fill(
+                            LinearGradient(
+                                colors: [roleGradientStart, roleGradientEnd],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
                     Image(systemName: roleIcon)
                         .font(.system(size: 18, weight: .bold))
                         .foregroundStyle(.white)
@@ -101,23 +167,25 @@ struct CircleHomeView: View {
                     Text(circle.name)
                         .font(.system(size: 20, weight: .bold, design: .rounded))
                         .foregroundStyle(dark)
-                    Text(roleTagline)
+                    Text(isOrganizer ? "Care Circle dashboard" : "Your caregiver dashboard")
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(mid)
                 }
                 Spacer()
             }
 
+            Text(circle.recipientDisplaySummary.isEmpty ? "This care circle is ready for coordination." : circle.recipientDisplaySummary)
+                .font(.system(size: 15, weight: .semibold, design: .rounded))
+                .foregroundStyle(dark)
+
             HStack(spacing: 8) {
                 roleBadge
-                if !isRecipient && !circle.recipientDisplaySummary.isEmpty {
-                    labelChip(
-                        circle.recipientDisplaySummary,
-                        icon: "heart.fill",
-                        tint: rose,
-                        fill: rose.opacity(0.08)
-                    )
-                }
+                labelChip(
+                    "\(activeRecipients.count) \(activeRecipients.count == 1 ? "care receiver" : "care receivers")",
+                    icon: "heart.fill",
+                    tint: rose,
+                    fill: rose.opacity(0.08)
+                )
             }
         }
         .padding(18)
@@ -125,105 +193,57 @@ struct CircleHomeView: View {
         .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 3)
     }
 
-    private var roleIcon: String {
-        switch role {
-        case .admin:     return "star.fill"
-        case .member:    return "hands.and.sparkles.fill"
-        case .recipient: return "heart.fill"
+    private func receiverHero(circle: CareCircle) -> some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack(spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 16, style: .continuous)
+                        .fill(
+                            LinearGradient(
+                                colors: [rose, Color(red: 0.95, green: 0.55, blue: 0.30)],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                    Image(systemName: "heart.text.square.fill")
+                        .font(.system(size: 20, weight: .bold))
+                        .foregroundStyle(.white)
+                }
+                .frame(width: 54, height: 54)
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(circle.name)
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .foregroundStyle(dark)
+                    Text("Your care plan for right now")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(mid)
+                }
+            }
+
+            roleBadge
         }
+        .padding(18)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
+        .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 3)
     }
 
-    private var roleGradientStart: Color {
-        switch role {
-        case .admin:     return blue
-        case .member:    return teal
-        case .recipient: return rose
-        }
-    }
-
-    private var roleGradientEnd: Color {
-        switch role {
-        case .admin:     return Color(red: 0.08, green: 0.40, blue: 0.75)
-        case .member:    return blue
-        case .recipient: return Color(red: 0.95, green: 0.55, blue: 0.30)
-        }
-    }
-
-    private var roleTagline: String {
-        switch role {
-        case .admin:     return "You manage this care circle"
-        case .member:    return "You're a caregiver in this circle"
-        case .recipient: return "This circle is organized for your care"
-        }
-    }
-
-    @ViewBuilder
-    private var roleBadge: some View {
-        HStack(spacing: 5) {
-            Image(systemName: roleIcon).font(.system(size: 10, weight: .bold))
-            Text(role.displayLabel)
-                .font(.system(size: 12, weight: .bold, design: .rounded))
-        }
-        .foregroundStyle(roleGradientStart)
-        .padding(.horizontal, 10).padding(.vertical, 5)
-        .background(roleGradientStart.opacity(0.10), in: Capsule())
-    }
-
-    private func labelChip(_ title: String, icon: String, tint: Color, fill: Color) -> some View {
-        HStack(spacing: 4) {
-            Image(systemName: icon).font(.system(size: 9, weight: .bold))
-            Text(title).font(.system(size: 12, weight: .bold, design: .rounded))
-        }
-        .foregroundStyle(tint)
-        .padding(.horizontal, 10).padding(.vertical, 5)
-        .background(fill, in: Capsule())
-    }
-
-    // MARK: – Stats row (role-specific)
-
-    @ViewBuilder
     private func statsRow(circle: CareCircle) -> some View {
-        switch role {
-        case .admin:
-            LazyVGrid(columns: twoColumns, spacing: 14) {
-                statCard("Active tasks",
-                         value: "\(tasks.filter { $0.status != .done && $0.status != .skipped }.count)",
-                         icon: "checklist", tint: blue)
-                statCard("Completed",
-                         value: "\(tasks.filter { $0.status == .done || $0.status == .skipped }.count)",
-                         icon: "checkmark.circle.fill", tint: green)
-                statCard("Caregivers",
-                         value: "\((circle.members ?? []).filter { $0.role != .recipient }.count)",
-                         icon: "person.2.fill", tint: mid)
-                statCard("Recipients",
-                         value: "\(circle.recipientNames.count)",
-                         icon: "heart.fill", tint: rose)
-            }
-
-        case .member:
-            let myId = appState.currentUser?.id ?? ""
-            LazyVGrid(columns: twoColumns, spacing: 14) {
-                statCard("Active tasks",
-                         value: "\(tasks.filter { $0.status != .done && $0.status != .skipped }.count)",
-                         icon: "checklist", tint: blue)
-                statCard("Assigned to me",
-                         value: "\(tasks.filter { $0.assigneeId == myId && $0.status != .done && $0.status != .skipped }.count)",
-                         icon: "person.badge.clock.fill", tint: teal)
-            }
-
-        case .recipient:
-            LazyVGrid(columns: twoColumns, spacing: 14) {
-                statCard("Today's tasks",
-                         value: "\(tasks.filter { t in t.dueAt.map { Calendar.current.isDateInToday($0) } ?? false && t.status != .done && t.status != .skipped }.count)",
-                         icon: "sun.max.fill", tint: rose)
-                statCard("Caregivers",
-                         value: "\((circle.members ?? []).filter { $0.role != .recipient }.count)",
-                         icon: "person.2.fill", tint: blue)
+        LazyVGrid(columns: twoColumns, spacing: 14) {
+            if isOrganizer {
+                statCard("Due soon", value: "\(openTaskCount)", icon: "checklist", tint: blue)
+                statCard("Overdue", value: "\(overdueCount)", icon: "exclamationmark.circle.fill", tint: .red)
+                statCard("Completed", value: "\(completedTaskCount)", icon: "checkmark.circle.fill", tint: green)
+                statCard("Receivers", value: "\(activeRecipients.count)", icon: "heart.fill", tint: rose)
+            } else {
+                statCard("Due today", value: "\(CircleHomePolicy.dueTodayCount(in: tasks))", icon: "sun.max.fill", tint: blue)
+                statCard("Assigned to me", value: "\(myAssignedCount)", icon: "person.badge.clock.fill", tint: teal)
+                statCard("Overdue", value: "\(overdueCount)", icon: "exclamationmark.circle.fill", tint: .red)
+                statCard("My receivers", value: "\(activeRecipients.count)", icon: "heart.fill", tint: rose)
             }
         }
     }
 
-    @ViewBuilder
     private func statCard(_ title: String, value: String, icon: String, tint: Color) -> some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack {
@@ -245,82 +265,359 @@ struct CircleHomeView: View {
         .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
     }
 
-    // MARK: – Actions section (role-specific)
+    private var receiverSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            sectionHeader("Care Receivers")
 
-    @ViewBuilder
+            if receiverSummaries.isEmpty {
+                homeShell {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("No active care receivers yet")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(dark)
+                        Text("A care receiver needs to be active before daily coordination can begin.")
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(mid)
+                    }
+                    .padding(18)
+                }
+            } else {
+                VStack(spacing: 12) {
+                    ForEach(receiverSummaries) { summary in
+                        receiverCard(summary)
+                    }
+                }
+            }
+        }
+    }
+
+    private func receiverCard(_ summary: ReceiverDashboardSummary) -> some View {
+        NavigationLink {
+            CirclesView().environmentObject(appState)
+        } label: {
+            VStack(alignment: .leading, spacing: 14) {
+                HStack(alignment: .top, spacing: 12) {
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 14, style: .continuous)
+                            .fill(rose.opacity(summary.overdueCount > 0 ? 0.18 : 0.10))
+                        Image(systemName: "heart.fill")
+                            .font(.system(size: 16, weight: .bold))
+                            .foregroundStyle(summary.overdueCount > 0 ? .red : rose)
+                    }
+                    .frame(width: 46, height: 46)
+
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text(summary.recipient.name)
+                            .font(.system(size: 17, weight: .bold, design: .rounded))
+                            .foregroundStyle(dark)
+                        if let relationship = summary.recipient.relationship, !relationship.isEmpty {
+                            Text(relationship)
+                                .font(.system(size: 12, weight: .semibold, design: .rounded))
+                                .foregroundStyle(mid)
+                        }
+                        Text(summary.nextTaskTitle ?? "No open tasks right now")
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(mid)
+                            .lineLimit(1)
+                    }
+
+                    Spacer()
+
+                    VStack(alignment: .trailing, spacing: 6) {
+                        receiverCountChip("\(summary.openCount) open", tint: blue)
+                        if summary.overdueCount > 0 {
+                            receiverCountChip("\(summary.overdueCount) overdue", tint: .red)
+                        }
+                    }
+                }
+
+                HStack(spacing: 10) {
+                    receiverMetric(title: "Completed", value: "\(summary.completedCount)", tint: green)
+                    receiverMetric(title: "Support team", value: "\(summary.supportingCaregiverCount)", tint: teal)
+                    if let nextDueAt = summary.nextDueAt {
+                        receiverMetric(title: "Next", value: dueLabel(for: nextDueAt), tint: blue)
+                    }
+                }
+            }
+            .padding(18)
+            .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier("receiver-summary-\(summary.recipient.id)")
+    }
+
+    private func receiverCountChip(_ title: String, tint: Color) -> some View {
+        Text(title)
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(tint.opacity(0.10), in: Capsule())
+    }
+
+    private func receiverMetric(title: String, value: String, tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(value)
+                .font(.system(size: 13, weight: .bold, design: .rounded))
+                .foregroundStyle(tint)
+            Text(title)
+                .font(.system(size: 11, weight: .medium, design: .rounded))
+                .foregroundStyle(mid)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
     private func actionsSection(circle: CareCircle) -> some View {
         VStack(alignment: .leading, spacing: 14) {
-            sectionHeader(role == .recipient ? "Your Care" : "Actions")
+            sectionHeader("Quick Actions")
 
-            switch role {
-            case .admin:   adminActions
-            case .member:  memberActions
-            case .recipient: recipientActions
+            featuredActionLink(
+                title: isOrganizer ? "Task Board" : "My Task Board",
+                subtitle: isOrganizer ? "Add, assign, and track care work across the circle" : "Track the work you own and the care tasks you support",
+                icon: "checklist.checked",
+                badge: overdueCount > 0 ? "\(overdueCount) overdue" : nil,
+                badgeColor: .red
+            ) {
+                CirclesView().environmentObject(appState)
             }
-        }
-    }
 
-    // Admin: Featured task board + 2×2 grid
-    @ViewBuilder
-    private var adminActions: some View {
-        featuredActionLink(
-            title: "Task Board",
-            subtitle: "Add, assign, and track all care tasks",
-            icon: "checklist.checked",
-            badge: overdueCount > 0 ? "\(overdueCount) overdue" : nil,
-            badgeColor: .red
-        ) { CirclesView().environmentObject(appState) }
-
-        LazyVGrid(columns: twoColumns, spacing: 14) {
-            secondaryActionLink(title: "Members",    icon: "person.2.fill",          tint: blue,  subtitle: "Invite & manage caregivers") { MemberListView().environmentObject(appState) }
-            secondaryActionLink(title: "Insights",   icon: "chart.bar.fill",          tint: green, subtitle: "Completion patterns")           { AdminInsightsView().environmentObject(appState) }
-            secondaryActionLink(title: "Activity",   icon: "clock.fill",              tint: teal,  subtitle: "Circle timeline")               { ActivityFeedView().environmentObject(appState) }
-            secondaryActionLink(title: "Settings",   icon: "gearshape.fill",          tint: mid,   subtitle: "Archive & circle preferences")  { SettingsView().environmentObject(appState) }
-            if let circle = appState.activeCircle {
-                ShareLink(
-                    item: "Join \(circle.name) on CareLoop!\nCircle code: \(circle.id)",
-                    subject: Text("Join my CareLoop circle")
-                ) {
-                    secondaryCard(title: "Share Circle", icon: "square.and.arrow.up", tint: blue, subtitle: "Invite via message or link")
+            LazyVGrid(columns: twoColumns, spacing: 14) {
+                if isOrganizer {
+                    secondaryActionLink(title: "Care Receivers", icon: "heart.text.square.fill", tint: rose, subtitle: "Manage active receivers") {
+                        RecipientManagementView().environmentObject(appState)
+                    }
+                    secondaryActionLink(title: "People & Access", icon: "person.2.fill", tint: blue, subtitle: "Invite and scope support") {
+                        MemberListView().environmentObject(appState)
+                    }
+                    secondaryActionLink(title: "Insights", icon: "chart.bar.fill", tint: green, subtitle: "See completion patterns") {
+                        AdminInsightsView().environmentObject(appState)
+                    }
+                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences") {
+                        SettingsView().environmentObject(appState)
+                    }
+                } else {
+                    secondaryActionLink(title: "Care Circle", icon: "person.2.fill", tint: blue, subtitle: "See your support team") {
+                        MemberListView().environmentObject(appState)
+                    }
+                    secondaryActionLink(title: "Activity", icon: "clock.fill", tint: teal, subtitle: "Receiver progress updates") {
+                        ActivityFeedView().environmentObject(appState)
+                    }
+                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences") {
+                        SettingsView().environmentObject(appState)
+                    }
+                    if let circle = appState.activeCircle {
+                        ShareLink(
+                            item: "Join \(circle.name) on CareLoop!\nCare Circle code: \(circle.id)",
+                            subject: Text("Join my Care Circle")
+                        ) {
+                            secondaryCard(title: "Share", icon: "square.and.arrow.up", tint: blue, subtitle: "Invite by message or link")
+                        }
+                    }
                 }
-                .buttonStyle(.plain)
             }
         }
     }
 
-    // Member: Featured task board + Members + Settings
-    @ViewBuilder
-    private var memberActions: some View {
-        featuredActionLink(
-            title: "Task Board",
-            subtitle: "View and complete tasks for this circle",
-            icon: "checklist",
-            badge: myAssignedCount > 0 ? "\(myAssignedCount) assigned to me" : nil,
-            badgeColor: teal
-        ) { CirclesView().environmentObject(appState) }
+    private var previewSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            HStack {
+                sectionHeader("Next Up")
+                Spacer()
+                Button { deepLinkToTaskBoard = true } label: {
+                    Text("Open task board")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .foregroundStyle(blue)
+                }
+                .accessibilityIdentifier("open-task-board-button")
+            }
 
-        LazyVGrid(columns: twoColumns, spacing: 14) {
-            secondaryActionLink(title: "Members",  icon: "person.2.fill",  tint: blue, subtitle: "See who's in this circle") { MemberListView().environmentObject(appState) }
-            secondaryActionLink(title: "Activity", icon: "clock.fill",     tint: mid,  subtitle: "Circle timeline")          { ActivityFeedView().environmentObject(appState) }
-            secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid,  subtitle: "Circle preferences")       { SettingsView().environmentObject(appState) }
+            if loading {
+                homeShell {
+                    HStack {
+                        Spacer()
+                        ProgressView()
+                        Spacer()
+                    }
+                    .padding(.vertical, 18)
+                }
+            } else if previewTasks.isEmpty {
+                homeShell {
+                    VStack(alignment: .leading, spacing: 6) {
+                        Text("No upcoming tasks")
+                            .font(.system(size: 15, weight: .bold, design: .rounded))
+                            .foregroundStyle(dark)
+                        Text("Use the task board to add the next step for this care circle.")
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
+                            .foregroundStyle(mid)
+                    }
+                    .padding(18)
+                }
+            } else {
+                homeShell {
+                    VStack(spacing: 0) {
+                        ForEach(Array(previewTasks.enumerated()), id: \.element.id) { index, task in
+                            previewRow(task)
+                            if index < previewTasks.count - 1 {
+                                Divider().padding(.leading, 54)
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
 
-    // Recipient: My Care featured card only
-    @ViewBuilder
-    private var recipientActions: some View {
-        featuredActionLink(
-            title: "My Care",
-            subtitle: "See all tasks being done for you today and coming up",
-            icon: "heart.text.square.fill",
-            badge: todayForRecipientCount > 0 ? "\(todayForRecipientCount) today" : nil,
-            badgeColor: rose
-        ) { CirclesView().environmentObject(appState) }
+    private func nextTaskCard(_ task: CareTask) -> some View {
+        VStack(alignment: .leading, spacing: 18) {
+            HStack(spacing: 8) {
+                labelChip("Next due task", icon: "clock.fill", tint: rose, fill: rose.opacity(0.10))
+                if task.isOverdue {
+                    labelChip("Overdue", icon: "exclamationmark.triangle.fill", tint: .red, fill: Color.red.opacity(0.10))
+                }
+            }
+
+            VStack(alignment: .leading, spacing: 10) {
+                Text(task.title)
+                    .font(.system(size: 28, weight: .bold, design: .rounded))
+                    .foregroundStyle(dark)
+                Text(task.notes?.isEmpty == false ? task.notes! : "Your care team scheduled this task for you.")
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(mid)
+                if let dueAt = task.dueAt {
+                    Text(dueLabel(for: dueAt))
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(task.isOverdue ? .red : rose)
+                }
+            }
+
+            VStack(spacing: 10) {
+                Button {
+                    Task { await markReceiverTaskDone(task) }
+                } label: {
+                    HStack {
+                        if isCompletingNextTask {
+                            ProgressView()
+                                .progressViewStyle(.circular)
+                        } else {
+                            Image(systemName: "checkmark.circle.fill")
+                        }
+                        Text(task.canToggleCompletion ? "Mark Complete" : "Open My Tasks")
+                    }
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundStyle(.white)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 16)
+                    .background(task.canToggleCompletion ? rose : blue, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                }
+                .disabled(isCompletingNextTask)
+                .accessibilityIdentifier("receiver-next-task-primary")
+
+                Button {
+                    deepLinkToTaskBoard = true
+                } label: {
+                    Text("View All My Tasks")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(blue)
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 15)
+                        .background(blue.opacity(0.08), in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                }
+                .accessibilityIdentifier("receiver-open-all-tasks")
+            }
+        }
+        .padding(22)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
+        .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
+        .accessibilityIdentifier("receiver-next-task-card")
     }
 
-    // MARK: – Featured action card (full-width gradient)
+    private var receiverTimelineSection: some View {
+        VStack(alignment: .leading, spacing: 14) {
+            sectionHeader("Later Today")
 
-    @ViewBuilder
+            homeShell {
+                VStack(spacing: 0) {
+                    ForEach(Array(laterReceiverTasks.enumerated()), id: \.element.id) { index, task in
+                        previewRow(task)
+                        if index < laterReceiverTasks.count - 1 {
+                            Divider().padding(.leading, 54)
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private var receiverEmptyState: some View {
+        homeShell {
+            VStack(alignment: .leading, spacing: 12) {
+                Text("Nothing is due right now")
+                    .font(.system(size: 22, weight: .bold, design: .rounded))
+                    .foregroundStyle(dark)
+                Text("When your care team schedules the next task, it will appear here first.")
+                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                    .foregroundStyle(mid)
+                Button {
+                    deepLinkToTaskBoard = true
+                } label: {
+                    Text("Open My Task List")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(blue)
+                        .padding(.top, 6)
+                }
+            }
+            .padding(22)
+        }
+    }
+
+    private var previewTasks: [CareTask] {
+        let openTasks = tasks.filter { $0.status != .done && $0.status != .skipped }
+        if isCaregiver {
+            let myId = appState.currentUser?.id ?? ""
+            let assigned = openTasks.filter { $0.assigneeId == myId }
+            return CircleHomePolicy.remainingOpenTasks(after: nil, in: assigned.isEmpty ? openTasks : assigned, limit: 3)
+        }
+        return CircleHomePolicy.remainingOpenTasks(after: nil, in: openTasks, limit: 3)
+    }
+
+    private func previewRow(_ task: CareTask) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(task.isOverdue ? Color.red.opacity(0.12) : roleGradientStart.opacity(0.10))
+                    .frame(width: 40, height: 40)
+                Image(systemName: task.isOverdue ? "exclamationmark" : previewRowIcon)
+                    .font(.system(size: 15, weight: .bold))
+                    .foregroundStyle(task.isOverdue ? .red : roleGradientStart)
+            }
+
+            VStack(alignment: .leading, spacing: 4) {
+                Text(task.title)
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundStyle(dark)
+                    .lineLimit(1)
+
+                HStack(spacing: 5) {
+                    if let recipient = task.recipient?.name {
+                        Text(recipient)
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundStyle(mid)
+                        Text("·").foregroundStyle(.quaternary)
+                    }
+                    if let dueAt = task.dueAt {
+                        Text(dueLabel(for: dueAt))
+                            .font(.system(size: 12, weight: .medium, design: .rounded))
+                            .foregroundStyle(task.isOverdue ? .red : mid)
+                    }
+                }
+            }
+            Spacer()
+        }
+        .padding(.vertical, 12)
+        .padding(.horizontal, 18)
+    }
+
     private func featuredActionLink<Destination: View>(
         title: String,
         subtitle: String,
@@ -329,21 +626,25 @@ struct CircleHomeView: View {
         badgeColor: Color,
         @ViewBuilder destination: () -> Destination
     ) -> some View {
-        NavigationLink(destination: destination) {
+        NavigationLink {
+            destination()
+        } label: {
             featuredCard(title: title, subtitle: subtitle, icon: icon, badge: badge, badgeColor: badgeColor)
         }
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder
     private func featuredCard(title: String, subtitle: String, icon: String, badge: String?, badgeColor: Color) -> some View {
         HStack(spacing: 16) {
             ZStack {
                 RoundedRectangle(cornerRadius: 14, style: .continuous)
-                    .fill(LinearGradient(
-                        colors: [roleGradientStart.opacity(0.18), roleGradientEnd.opacity(0.10)],
-                        startPoint: .topLeading, endPoint: .bottomTrailing
-                    ))
+                    .fill(
+                        LinearGradient(
+                            colors: [roleGradientStart.opacity(0.18), roleGradientEnd.opacity(0.10)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
                 Image(systemName: icon)
                     .font(.system(size: 20, weight: .semibold))
                     .foregroundStyle(roleGradientStart)
@@ -359,7 +660,8 @@ struct CircleHomeView: View {
                         Text(badge)
                             .font(.system(size: 11, weight: .bold, design: .rounded))
                             .foregroundStyle(badgeColor)
-                            .padding(.horizontal, 8).padding(.vertical, 3)
+                            .padding(.horizontal, 8)
+                            .padding(.vertical, 3)
                             .background(badgeColor.opacity(0.10), in: Capsule())
                     }
                 }
@@ -378,31 +680,21 @@ struct CircleHomeView: View {
         .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 3)
     }
 
-    // MARK: – Secondary action cards
-
-    @ViewBuilder
     private func secondaryActionLink<Destination: View>(
-        title: String, icon: String, tint: Color, subtitle: String,
+        title: String,
+        icon: String,
+        tint: Color,
+        subtitle: String,
         @ViewBuilder destination: () -> Destination
     ) -> some View {
-        NavigationLink(destination: destination) {
+        NavigationLink {
+            destination()
+        } label: {
             secondaryCard(title: title, icon: icon, tint: tint, subtitle: subtitle)
         }
         .buttonStyle(.plain)
     }
 
-    @ViewBuilder
-    private func secondaryActionButton(
-        title: String, icon: String, tint: Color, subtitle: String,
-        action: @escaping () -> Void
-    ) -> some View {
-        Button(action: action) {
-            secondaryCard(title: title, icon: icon, tint: tint, subtitle: subtitle)
-        }
-        .buttonStyle(.plain)
-    }
-
-    @ViewBuilder
     private func secondaryCard(title: String, icon: String, tint: Color, subtitle: String) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             ZStack {
@@ -413,6 +705,7 @@ struct CircleHomeView: View {
                     .foregroundStyle(tint)
             }
             .frame(width: 42, height: 42)
+
             Text(title)
                 .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundStyle(dark)
@@ -429,137 +722,11 @@ struct CircleHomeView: View {
         .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
     }
 
-    // MARK: – Preview section (role-specific)
-
-    @ViewBuilder
-    private var previewSection: some View {
-        VStack(alignment: .leading, spacing: 14) {
-            HStack {
-                sectionHeader(isRecipient ? "Today's Care" : "Next Up")
-                Spacer()
-                NavigationLink {
-                    CirclesView().environmentObject(appState)
-                } label: {
-                    Text(isRecipient ? "View all" : "Open task board")
-                        .font(.system(size: 13, weight: .bold, design: .rounded))
-                        .foregroundStyle(isRecipient ? rose : blue)
-                }
-            }
-
-            if loading {
-                previewShell {
-                    HStack { Spacer(); ProgressView(); Spacer() }.padding(.vertical, 18)
-                }
-            } else if previewTasks.isEmpty {
-                previewShell {
-                    VStack(alignment: .leading, spacing: 6) {
-                        Text(isRecipient ? "Nothing scheduled for today" : "No upcoming tasks")
-                            .font(.system(size: 15, weight: .bold, design: .rounded)).foregroundStyle(dark)
-                        Text(isRecipient
-                             ? "Your caregivers haven't scheduled tasks for today yet."
-                             : "Tap 'Open task board' to add the first task.")
-                            .font(.system(size: 13, weight: .medium, design: .rounded)).foregroundStyle(mid)
-                    }
-                    .padding(18)
-                }
-            } else {
-                previewShell {
-                    VStack(spacing: 0) {
-                        ForEach(Array(previewTasks.enumerated()), id: \.element.id) { idx, task in
-                            previewRow(task)
-                            if idx < previewTasks.count - 1 {
-                                Divider().padding(.leading, 54)
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
-
-    private var previewTasks: [CareTask] {
-        let base = tasks
-            .filter { $0.status != .done && $0.status != .skipped }
-            .sorted {
-                switch ($0.dueAt, $1.dueAt) {
-                case let (l?, r?): return l < r
-                case (_?, nil): return true
-                case (nil, _?): return false
-                case (nil, nil): return $0.title.localizedCaseInsensitiveCompare($1.title) == .orderedAscending
-                }
-            }
-
-        if isRecipient {
-            return base.filter { t in t.dueAt.map { Calendar.current.isDateInToday($0) } ?? false }.prefix(4).map { $0 }
-        }
-        if isMember {
-            let myId = appState.currentUser?.id ?? ""
-            let mine = base.filter { $0.assigneeId == myId }
-            return mine.isEmpty ? Array(base.prefix(3)) : Array(mine.prefix(3))
-        }
-        return Array(base.prefix(3))
-    }
-
-    @ViewBuilder
-    private func previewRow(_ task: CareTask) -> some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(task.isOverdue ? Color.red.opacity(0.12) : roleGradientStart.opacity(0.10))
-                    .frame(width: 40, height: 40)
-                Image(systemName: task.isOverdue ? "exclamationmark" : previewRowIcon)
-                    .font(.system(size: 15, weight: .bold))
-                    .foregroundStyle(task.isOverdue ? .red : roleGradientStart)
-            }
-
-            VStack(alignment: .leading, spacing: 4) {
-                Text(task.title)
-                    .font(.system(size: 15, weight: .bold, design: .rounded))
-                    .foregroundStyle(dark).lineLimit(1)
-
-                HStack(spacing: 5) {
-                    if isRecipient, let assignee = task.assignee?.name {
-                        let first = assignee.split(separator: " ").first.map(String.init) ?? assignee
-                        Text(first).font(.system(size: 12, weight: .medium, design: .rounded)).foregroundStyle(blue)
-                        Text("·").foregroundStyle(.quaternary)
-                    }
-                    if let due = task.dueAt {
-                        Text(previewDueLabel(due))
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundStyle(task.isOverdue ? .red : mid)
-                    } else if let recipient = task.recipient?.name, !isRecipient {
-                        Text(recipient)
-                            .font(.system(size: 12, weight: .medium, design: .rounded))
-                            .foregroundStyle(mid)
-                    }
-                }
-            }
-            Spacer()
-        }
-        .padding(.vertical, 12).padding(.horizontal, 18)
-    }
-
-    private var previewRowIcon: String {
-        switch role {
-        case .admin, .member: return "checklist"
-        case .recipient:      return "heart"
-        }
-    }
-
-    private func previewDueLabel(_ date: Date) -> String {
-        if date < Date() { return "Overdue" }
-        if Calendar.current.isDateInToday(date) { return date.formatted(date: .omitted, time: .shortened) }
-        if Calendar.current.isDateInTomorrow(date) { return "Tomorrow" }
-        return date.formatted(date: .abbreviated, time: .omitted)
-    }
-
-    private func previewShell<Content: View>(@ViewBuilder content: () -> Content) -> some View {
+    private func homeShell<Content: View>(@ViewBuilder content: () -> Content) -> some View {
         content()
             .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
             .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
     }
-
-    // MARK: – Section header
 
     private func sectionHeader(_ title: String) -> some View {
         Text(title)
@@ -567,10 +734,68 @@ struct CircleHomeView: View {
             .foregroundStyle(dark)
     }
 
-    // MARK: – Counts
+    private var roleIcon: String {
+        switch role {
+        case .admin: return "star.fill"
+        case .member: return "hands.and.sparkles.fill"
+        case .recipient: return "heart.fill"
+        }
+    }
+
+    private var roleGradientStart: Color {
+        switch role {
+        case .admin: return blue
+        case .member: return teal
+        case .recipient: return rose
+        }
+    }
+
+    private var roleGradientEnd: Color {
+        switch role {
+        case .admin: return Color(red: 0.08, green: 0.40, blue: 0.75)
+        case .member: return blue
+        case .recipient: return Color(red: 0.95, green: 0.55, blue: 0.30)
+        }
+    }
+
+    private var roleBadge: some View {
+        HStack(spacing: 5) {
+            Image(systemName: roleIcon)
+                .font(.system(size: 10, weight: .bold))
+            Text(role.displayLabel)
+                .font(.system(size: 12, weight: .bold, design: .rounded))
+        }
+        .foregroundStyle(roleGradientStart)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(roleGradientStart.opacity(0.10), in: Capsule())
+    }
+
+    private func labelChip(_ title: String, icon: String, tint: Color, fill: Color) -> some View {
+        HStack(spacing: 4) {
+            Image(systemName: icon).font(.system(size: 9, weight: .bold))
+            Text(title).font(.system(size: 12, weight: .bold, design: .rounded))
+        }
+        .foregroundStyle(tint)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(fill, in: Capsule())
+    }
+
+    private var previewRowIcon: String {
+        isCaregiver ? "person.badge.clock.fill" : "checklist"
+    }
+
+    private var openTaskCount: Int {
+        tasks.filter { $0.status != .done && $0.status != .skipped && !$0.isOverdue }.count
+    }
 
     private var overdueCount: Int {
-        tasks.filter { $0.isOverdue }.count
+        tasks.filter(\.isOverdue).count
+    }
+
+    private var completedTaskCount: Int {
+        tasks.filter { $0.status == .done || $0.status == .skipped }.count
     }
 
     private var myAssignedCount: Int {
@@ -578,22 +803,70 @@ struct CircleHomeView: View {
         return tasks.filter { $0.assigneeId == myId && $0.status != .done && $0.status != .skipped }.count
     }
 
-    private var todayForRecipientCount: Int {
-        tasks.filter { t in
-            guard t.status != .done, t.status != .skipped else { return false }
-            return t.dueAt.map { Calendar.current.isDateInToday($0) } ?? false
-        }.count
+    private func dueLabel(for date: Date) -> String {
+        if date < Date() { return "Overdue" }
+        if Calendar.current.isDateInToday(date) {
+            return "Today · \(date.formatted(date: .omitted, time: .shortened))"
+        }
+        if Calendar.current.isDateInTomorrow(date) { return "Tomorrow" }
+        return date.formatted(date: .abbreviated, time: .shortened)
     }
 
-    // MARK: – Data
+    private func markReceiverTaskDone(_ task: CareTask) async {
+        guard task.canToggleCompletion else {
+            deepLinkToTaskBoard = true
+            return
+        }
+        guard let circleId = appState.activeCircle?.id else { return }
+
+        isCompletingNextTask = true
+        defer { isCompletingNextTask = false }
+
+        do {
+            let updatedTask: CareTask
+            if UITestScenario.current != nil {
+                updatedTask = task.withUpdatedStatus(.done, completedAt: Date(), completedBy: appState.currentUser)
+            } else {
+                updatedTask = try await APIClient.shared.updateTaskStatus(circleId: circleId, taskId: task.id, status: .done)
+            }
+            applyTaskUpdate(updatedTask)
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func applyTaskUpdate(_ updatedTask: CareTask) {
+        tasks = tasks.map { existing in
+            existing.id == updatedTask.id ? updatedTask : existing
+        }
+
+        if var circle = appState.activeCircle {
+            circle.tasks = tasks
+            appState.attachCircle(circle)
+        }
+    }
 
     private func loadTasks() async {
-        guard let circleId = appState.activeCircle?.id else {
-            tasks = []; loading = false; return
+        if let seededTasks = appState.activeCircle?.tasks, UITestScenario.current != nil {
+            tasks = seededTasks
+            loading = false
+            error = nil
+            return
         }
-        loading = true; error = nil
-        do { tasks = try await APIClient.shared.fetchTasks(circleId: circleId) }
-        catch { self.error = error.localizedDescription }
+
+        guard let circleId = appState.activeCircle?.id else {
+            tasks = []
+            loading = false
+            return
+        }
+
+        loading = true
+        error = nil
+        do {
+            tasks = try await APIClient.shared.fetchTasks(circleId: circleId)
+        } catch {
+            self.error = error.localizedDescription
+        }
         loading = false
     }
 }

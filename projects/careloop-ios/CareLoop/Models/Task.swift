@@ -148,6 +148,33 @@ struct CareTask: Identifiable, Codable, Hashable {
     var canToggleCompletion: Bool {
         TaskWorkflowPolicy.canToggleFromList(self)
     }
+
+    func withUpdatedStatus(_ nextStatus: TaskStatus, completedAt: Date?, completedBy: CareUser?) -> CareTask {
+        CareTask(
+            id: id,
+            title: title,
+            notes: notes,
+            dueAt: dueAt,
+            status: nextStatus,
+            priority: priority,
+            recurrenceFrequency: recurrenceFrequency,
+            recurrenceInterval: recurrenceInterval,
+            recurrenceWeekdays: recurrenceWeekdays,
+            recurrenceEndsAt: recurrenceEndsAt,
+            seriesId: seriesId,
+            completedAt: completedAt,
+            completedById: completedBy?.id,
+            completedBy: completedBy,
+            archivedAt: archivedAt,
+            circleId: circleId,
+            recipientId: recipientId,
+            recipient: recipient,
+            creatorId: creatorId,
+            assigneeId: assigneeId,
+            assignee: assignee,
+            capabilities: capabilities
+        )
+    }
 }
 
 struct CareTaskCapabilities: Codable, Hashable {

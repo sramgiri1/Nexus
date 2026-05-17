@@ -5,14 +5,51 @@ final class CareLoopUITests: XCTestCase {
         continueAfterFailure = false
     }
 
+    private func launchApp(arguments: [String]) -> XCUIApplication {
+        let app = XCUIApplication()
+        app.launchArguments += arguments
+        app.launch()
+        return app
+    }
+
     @MainActor
     func test_launchesIntoOnboardingWhenSessionIsReset() throws {
-        let app = XCUIApplication()
-        app.launchArguments += ["-careloop-ui-reset-session"]
-        app.launch()
+        let app = launchApp(arguments: ["-careloop-ui-reset-session"])
 
         XCTAssertTrue(app.staticTexts["Welcome back"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["Log in"].exists)
         XCTAssertTrue(app.buttons["Sign up"].exists)
+    }
+
+    @MainActor
+    func test_organizerHomeShowsReceiverCardsAndQuickActions() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Care Receivers"].exists)
+        XCTAssertTrue(app.staticTexts["Maya"].exists)
+        XCTAssertTrue(app.staticTexts["Task Board"].exists)
+        dashboard.swipeUp()
+        XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    func test_caregiverHomeShowsScopedDashboard() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
+
+        XCTAssertTrue(app.scrollViews["caregiver-dashboard"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Maya"].exists)
+        XCTAssertFalse(app.staticTexts["David"].exists)
+        XCTAssertTrue(app.staticTexts["My Task Board"].exists)
+    }
+
+    @MainActor
+    func test_receiverHomeShowsNextDueTaskExperience() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "receiver-home"])
+
+        XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
+        XCTAssertTrue(app.buttons["View All My Tasks"].exists)
     }
 }

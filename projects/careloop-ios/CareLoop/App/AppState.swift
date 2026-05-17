@@ -21,7 +21,7 @@ final class AppState: ObservableObject {
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?
 
-    init() {
+    init(shouldRestoreSession: Bool = true) {
         NotificationCenter.default.publisher(for: .careLoopPushTokenRegistered)
             .compactMap { $0.object as? String }
             .receive(on: RunLoop.main)
@@ -38,7 +38,9 @@ final class AppState: ObservableObject {
             }
             .store(in: &cancellables)
 
-        Task { await restoreSession() }
+        if shouldRestoreSession {
+            Task { await restoreSession() }
+        }
     }
 
     var circleMemberships: [CircleMembership] {

@@ -140,16 +140,16 @@ struct CircleListView: View {
                     .font(.system(size: 14, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
             }
-            Text("Your CareLoops")
+            Text("Your Care Circles")
                 .font(.system(size: 30, weight: .bold, design: .rounded))
                 .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
-            Text("Care for everyone who matters most.")
+            Text("Choose a care circle to continue.")
                 .font(.system(size: 14, weight: .medium, design: .rounded))
                 .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
 
             if !memberships.isEmpty {
                 HStack(spacing: 8) {
-                    statPill("\(memberships.count)", label: memberships.count == 1 ? "circle" : "circles", icon: "circle.grid.2x2.fill")
+                    statPill("\(memberships.count)", label: memberships.count == 1 ? "care circle" : "care circles", icon: "circle.grid.2x2.fill")
                     if !pendingInvites.isEmpty {
                         statPill("\(pendingInvites.count)", label: pendingInvites.count == 1 ? "invite" : "invites", icon: "envelope.fill")
                     }
@@ -179,7 +179,7 @@ struct CircleListView: View {
         VStack(spacing: 10) {
             ForEach(memberships) { membership in
                 let circle = membership.circle ?? CareCircle(
-                    id: membership.circleId, name: "CareLoop Group", recipientName: "Family"
+                    id: membership.circleId, name: "Care Circle", recipientName: "Family"
                 )
                 Button { Task { await openCircle(circle.id) } } label: {
                     circleCard(circle: circle, role: membership.role)
@@ -434,7 +434,7 @@ struct CircleListView: View {
                         .font(.system(size: 13, weight: .bold))
                         .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
                 }
-                Text("Join or Create a Circle")
+                Text("Join or Create a Care Circle")
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
                 Spacer()
@@ -455,11 +455,11 @@ struct CircleListView: View {
         let (label, fg, bg): (String, Color, Color) = {
             switch role {
             case .admin:
-                return ("Admin", Color(red: 0.13, green: 0.56, blue: 0.87), Color(red: 0.88, green: 0.95, blue: 1.0))
+                return ("Care Organizer", Color(red: 0.13, green: 0.56, blue: 0.87), Color(red: 0.88, green: 0.95, blue: 1.0))
             case .member:
-                return ("Member", Color(red: 0.35, green: 0.43, blue: 0.56), Color(red: 0.92, green: 0.95, blue: 0.99))
+                return ("Caregiver", Color(red: 0.35, green: 0.43, blue: 0.56), Color(red: 0.92, green: 0.95, blue: 0.99))
             case .recipient:
-                return ("Receiver", Color(red: 0.85, green: 0.30, blue: 0.50), Color(red: 0.99, green: 0.91, blue: 0.94))
+                return ("Care Receiver", Color(red: 0.85, green: 0.30, blue: 0.50), Color(red: 0.99, green: 0.91, blue: 0.94))
             }
         }()
         Text(label)
@@ -470,7 +470,7 @@ struct CircleListView: View {
     }
 
     private func recipientSubtitle(for circle: CareCircle, role: MemberRole) -> String {
-        if role == .recipient { return "This circle is organized for your care" }
+        if role == .recipient { return "This care circle is organized for your care" }
         let names = circle.recipientNames
         switch names.count {
         case 0:  return "Invite care receivers to get started"

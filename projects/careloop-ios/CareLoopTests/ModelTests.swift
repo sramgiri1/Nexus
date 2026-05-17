@@ -113,6 +113,12 @@ final class MemberRoleTests: XCTestCase {
         XCTAssertEqual(MemberRole(rawValue: "MEMBER"), .member)
         XCTAssertNil(MemberRole(rawValue: "OWNER"))
     }
+
+    func test_displayLabels_matchProductTerminology() {
+        XCTAssertEqual(MemberRole.admin.displayLabel, "Care Organizer")
+        XCTAssertEqual(MemberRole.member.displayLabel, "Caregiver")
+        XCTAssertEqual(MemberRole.recipient.displayLabel, "Care Receiver")
+    }
 }
 
 // MARK: — Sprint 2: AppState push notification state
@@ -552,5 +558,91 @@ final class TaskWorkflowPolicyTests: XCTestCase {
         )
 
         XCTAssertFalse(task.canToggleCompletion)
+    }
+}
+
+final class CircleHomePolicyTests: XCTestCase {
+
+    private func makeRecipient(id: String, name: String, userId: String, assignees: [String]) -> CareRecipient {
+        CareRecipient(
+            id: id,
+            name: name,
+            relationship: nil,
+            notes: nil,
+            isPrimary: id == "r1",
+            sortOrder: 0,
+            activationStatus: .active,
+            receiverUserId: userId,
+            eligibleAssigneeIds: assignees
+        )
+    }
+
+    private func makeTask(
+        id: String,
+        title: String,
+        dueAt: Date?,
+        status: TaskStatus,
+        recipient: CareRecipient,
+        assigneeId: String
+    ) -> CareTask {
+        CareTask(
+            id: id,
+            title: title,
+            notes: nil,
+            dueAt: dueAt,
+            status: status,
+            priority: .normal,
+            completedAt: status == .done ? Date() : nil,
+            archivedAt: nil,
+            circleId: "c1",
+            recipientId: recipient.id,
+            recipient: recipient,
+            creatorId: "u1",
+            assigneeId: assigneeId,
+            assignee: nil
+        )
+    }
+
+    func test_nextDueTask_prefersSoonestIncompleteTask() {
+        let recipient = makeRecipient(id: "r1", name: "Mom", userId: "u4", assignees: ["u1", "u4"])
+        let tasks = [
+            makeTask(id: "t1", title: "Later", dueAt: Date().addingTimeInterval(3600), status: .pending, recipient: recipient, assigneeId: "u4"),
+            makeTask(id: "t2", title: "Sooner", dueAt: Date().addingTimeInterval(900), status: .pending, recipient: recipient, assigneeId: "u4"),
+            makeTask(id: "t3", title: "Done", dueAt: Date().addingTimeInterval(300), status: .done, recipient: recipient, assigneeId: "u4"),
+        ]
+
+        XCTAssertEqual(CircleHomePolicy.nextDueTask(in: tasks)?.id, "t2")
+    }
+
+    func test_receiverSummaries_calculateOpenOverdueAndCompletedCounts() {
+        let mom = makeRecipient(id: "r1", name: "Mom", userId: "u4", assignees: ["u1", "u2", "u4"])
+        let dad = makeRecipient(id: "r2", name: "Dad", userId: "u5", assignees: ["u1", "u5"])
+        let members = [
+            CircleMember(id: "m1", role: .admin, userId: "u1", user: nil),
+            CircleMember(id: "m2", role: .member, userId: "u2", user: nil),
+            CircleMember(id: "m4", role: .recipient, userId: "u4", user: nil),
+            CircleMember(id: "m5", role: .recipient, userId: "u5", user: nil),
+        ]
+        let circle = CareCircle(
+            id: "c1",
+            name: "Family",
+            recipientName: "Mom",
+            members: members,
+            recipients: [mom, dad]
+        )
+        let tasks = [
+            makeTask(id: "t1", title: "Morning meds", dueAt: Date().addingTimeInterval(1800), status: .pending, recipient: mom, assigneeId: "u4"),
+            makeTask(id: "t2", title: "Refill meds", dueAt: Date().addingTimeInterval(-1800), status: .pending, recipient: mom, assigneeId: "u2"),
+            makeTask(id: "t3", title: "Check in", dueAt: Date().addingTimeInterval(-7200), status: .done, recipient: mom, assigneeId: "u1"),
+            makeTask(id: "t4", title: "Walk", dueAt: Date().addingTimeInterval(5400), status: .pending, recipient: dad, assigneeId: "u5"),
+        ]
+
+        let summaries = CircleHomePolicy.receiverSummaries(in: circle, tasks: tasks)
+
+        XCTAssertEqual(summaries.count, 2)
+        XCTAssertEqual(summaries.first(where: { $0.recipient.id == "r1" })?.openCount, 1)
+        XCTAssertEqual(summaries.first(where: { $0.recipient.id == "r1" })?.overdueCount, 1)
+        XCTAssertEqual(summaries.first(where: { $0.recipient.id == "r1" })?.completedCount, 1)
+        XCTAssertEqual(summaries.first(where: { $0.recipient.id == "r1" })?.supportingCaregiverCount, 2)
     }
 }

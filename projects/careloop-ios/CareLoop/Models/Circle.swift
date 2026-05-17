@@ -135,9 +135,9 @@ enum MemberRole: String, Codable, CaseIterable {
 
     var displayLabel: String {
         switch self {
-        case .admin:     return "Admin"
-        case .member:    return "Member"
-        case .recipient: return "Recipient"
+        case .admin:     return "Care Organizer"
+        case .member:    return "Caregiver"
+        case .recipient: return "Care Receiver"
         }
     }
 }
