@@ -136,6 +136,7 @@ struct WelcomeCardsView: View {
                 .foregroundStyle(.white)
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("welcome-start-circle-button")
 
             Button(action: onJoinCircle) {
                 HStack {
@@ -151,6 +152,7 @@ struct WelcomeCardsView: View {
                 .foregroundStyle(blue)
             }
             .buttonStyle(.plain)
+            .accessibilityIdentifier("welcome-join-circle-button")
         }
     }
 

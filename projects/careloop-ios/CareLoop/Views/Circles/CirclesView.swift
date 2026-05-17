@@ -118,14 +118,17 @@ struct CirclesView: View {
                 Button { showMembers = true } label: {
                     Image(systemName: "person.2")
                 }
+                .accessibilityIdentifier("task-board-people-access-button")
                 if appState.userRole == .admin {
                     Button { showSettings = true } label: {
                         Image(systemName: "gearshape")
                     }
+                    .accessibilityIdentifier("task-board-settings-button")
                 }
                 Button { appState.clearActiveCircleSelection() } label: {
                     Image(systemName: "square.grid.2x2")
                 }
+                .accessibilityIdentifier("task-board-back-to-dashboard-button")
             }
         }
         ToolbarItem(placement: .primaryAction) {

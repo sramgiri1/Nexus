@@ -14,6 +14,12 @@ struct JoinCircleView: View {
         case create = "Create new circle"
     }
 
+    private enum InputField: Hashable {
+        case circleId
+        case circleName
+        case recipientName
+    }
+
     @State private var mode: Mode
 
     init(dismissOnSuccess: Bool = false, startInCreateMode: Bool? = nil) {
@@ -27,6 +33,7 @@ struct JoinCircleView: View {
     @State private var recipientName = ""
     @State private var loading       = false
     @State private var error:        String?
+    @FocusState private var focusedField: InputField?
 
     private var reachedCircleLimit: Bool {
         (appState.currentUser?.memberships?.count ?? 0) >= 3
@@ -79,6 +86,7 @@ struct JoinCircleView: View {
                         .clipShape(Capsule())
                     }
                     .buttonStyle(.plain)
+                    .accessibilityIdentifier(mode == .join ? "join-circle-submit-button" : "create-circle-submit-button")
                     .disabled(loading || !isValid || reachedCircleLimit)
                     .opacity(loading || !isValid || reachedCircleLimit ? 0.55 : 1)
                 }
@@ -155,15 +163,15 @@ struct JoinCircleView: View {
                 Text("Enter the circle ID shared by the circle admin.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
-                field("Circle ID", text: $circleId, placeholder: "circle-123")
+                field("Circle ID", text: $circleId, placeholder: "circle-123", field: .circleId)
             } else {
                 Text("Create a new circle")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
                 Text("Add the first care receiver now. Tasks unlock after they accept the invite or are proxy-activated.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
-                field("Circle name", text: $circleName, placeholder: "Smith Family Care")
-                field("Who is being cared for?", text: $recipientName, placeholder: "e.g. Mom, Dad, John")
+                field("Circle name", text: $circleName, placeholder: "Smith Family Care", field: .circleName)
+                field("Who is being cared for?", text: $recipientName, placeholder: "e.g. Mom, Dad, John", field: .recipientName)
             }
         }
         .padding(22)
@@ -217,7 +225,7 @@ struct JoinCircleView: View {
         }
     }
 
-    private func field(_ title: String, text: Binding<String>, placeholder: String) -> some View {
+    private func field(_ title: String, text: Binding<String>, placeholder: String, field: InputField) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             Text(title)
                 .font(.system(size: 14, weight: .semibold, design: .rounded))
@@ -234,6 +242,30 @@ struct JoinCircleView: View {
                     RoundedRectangle(cornerRadius: 20, style: .continuous)
                         .stroke(Color(red: 0.86, green: 0.90, blue: 0.95), lineWidth: 1.5)
                 )
+                .focused($focusedField, equals: field)
+                .submitLabel(field == .circleName ? .next : .done)
+                .onSubmit {
+                    switch field {
+                    case .circleName:
+                        focusedField = .recipientName
+                    default:
+                        focusedField = nil
+                    }
+                }
+                .accessibilityIdentifier(fieldIdentifier(for: title))
+        }
+    }
+
+    private func fieldIdentifier(for title: String) -> String {
+        switch title {
+        case "Circle ID":
+            return "join-circle-id-field"
+        case "Circle name":
+            return "create-circle-name-field"
+        case "Who is being cared for?":
+            return "create-circle-recipient-field"
+        default:
+            return "join-circle-field-\(title)"
         }
     }
 }

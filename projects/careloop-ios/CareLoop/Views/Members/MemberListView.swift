@@ -77,6 +77,7 @@ struct MemberListView: View {
                         } label: {
                             Image(systemName: "person.badge.plus")
                         }
+                        .accessibilityIdentifier("invite-caregiver-button")
                     }
                     if let circle = appState.activeCircle {
                         ToolbarItem(placement: .topBarTrailing) {
@@ -623,10 +624,12 @@ private struct InviteMemberView: View {
             Form {
                 Section("Invite Support Person") {
                     TextField("Full name", text: $name)
+                        .accessibilityIdentifier("invite-caregiver-name-field")
                     TextField("Email address", text: $email)
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                        .accessibilityIdentifier("invite-caregiver-email-field")
                     Picker("Role", selection: $role) {
                         Text(MemberRole.member.displayLabel).tag(MemberRole.member)
                         Text(MemberRole.admin.displayLabel).tag(MemberRole.admin)
@@ -642,6 +645,7 @@ private struct InviteMemberView: View {
                         Text("I confirm this person is 18 years or older")
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                     }
+                    .accessibilityIdentifier("invite-caregiver-adult-toggle")
                 } footer: {
                     Text("CareLoop is for adults only. Invite flows for minors will be supported in a future update.")
                         .font(.footnote)
@@ -666,6 +670,7 @@ private struct InviteMemberView: View {
                     Button("Invite") {
                         Task { await sendInvite() }
                     }
+                    .accessibilityIdentifier("invite-caregiver-submit-button")
                     .disabled(!canInvite)
                 }
             }

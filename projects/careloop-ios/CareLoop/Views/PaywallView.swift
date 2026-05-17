@@ -14,6 +14,10 @@ struct PaywallView: View {
     @State private var syncError: String?
     @State private var completion: PremiumPurchaseCompletion?
 
+    private var allowsSimulatedPremiumSync: Bool {
+        ProcessInfo.processInfo.arguments.contains("-careloop-ui-simulate-premium-sync")
+    }
+
     private let features: [(icon: String, title: String)] = [
         ("arrow.clockwise", "Recurring routines for this care receiver"),
         ("chart.bar.fill", "Receiver-scoped completion insights"),
@@ -316,12 +320,24 @@ struct PaywallView: View {
                 .foregroundStyle(.white.opacity(0.32))
                 .multilineTextAlignment(.center)
 
-            if UITestScenario.current != nil {
+            if UITestScenario.current != nil || allowsSimulatedPremiumSync {
                 Button("Simulate Purchase Success") {
-                    showSuccess(
-                        productId: isYearly ? SubscriptionManager.yearlyID : SubscriptionManager.monthlyID,
-                        expiresAt: Date().addingTimeInterval(isYearly ? 365 * 24 * 60 * 60 : 30 * 24 * 60 * 60)
-                    )
+                    let productId = isYearly ? SubscriptionManager.yearlyID : SubscriptionManager.monthlyID
+                    let expiresAt = Date().addingTimeInterval(isYearly ? 365 * 24 * 60 * 60 : 30 * 24 * 60 * 60)
+                    if allowsSimulatedPremiumSync {
+                        Task {
+                            await syncEntitlement(
+                                productId: productId,
+                                originalTransactionId: "simulated-\(UUID().uuidString)",
+                                expiresAt: expiresAt
+                            )
+                        }
+                    } else {
+                        showSuccess(
+                            productId: productId,
+                            expiresAt: expiresAt
+                        )
+                    }
                 }
                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.55))

@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T20:09:13.294Z
-- Validation branch: fix/command-center-nexus-chat-entry
-- Validation HEAD: 186b988
+- Generated at: 2026-05-17T20:33:57.409Z
+- Validation branch: codex/careloop-premium-phases
+- Validation HEAD: dd3cc9c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase

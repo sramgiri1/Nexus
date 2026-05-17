@@ -2213,9 +2213,131 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Capture granular AI interaction snapshots and recovery points across governed execution.",
+      "summary": "Plan granular, redacted AI interaction snapshots and recovery previews across governed execution.",
       "checksRun": [],
-      "knownLimitations": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.1",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.1",
+      "title": "Snapshot Contract + Redaction Policy",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define the AI interaction snapshot envelope, redaction rules, allowed evidence fields, and preview-only policy boundaries.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.2",
+      "title": "Interaction Capture Points",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Map where governed prompts, model outputs, tool previews, approvals, and command timeline events will emit snapshot-ready records.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.3",
+      "title": "Recovery Point Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define recovery point metadata, parent-child linkage, resumability flags, and failure-state classification.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.4",
+      "title": "Snapshot Store + Retention Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add local preview storage contracts, retention policy, pruning rules, and public-safe sample records without enabling durable DB writes.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.5",
+      "title": "Command Center Recovery UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose preview-only snapshot and recovery point views in Command Center with redacted details and disabled recovery actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.6",
+      "title": "Recovery Replay / Resume Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Build deterministic replay and resume-plan previews that explain what would be restored without executing providers, tools, workers, or mutations.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
+      "nextPhase": "P63.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P63.7",
+      "title": "Recovery Tests + Docs + Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate snapshot contracts, recovery previews, Command Center visibility, docs, and roadmap closure for P63.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
+        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      ],
       "nextPhase": "P64",
       "commandCenterVisible": true
     },
@@ -4494,7 +4616,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-16T19:57:19.996Z",
+  "updatedAt": "2026-05-17T20:00:00.000Z",
   "currentPhase": "P62.8",
   "previousPhase": "P62",
   "nextPhase": "P63"

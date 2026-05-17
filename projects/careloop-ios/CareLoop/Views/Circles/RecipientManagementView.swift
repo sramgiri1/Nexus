@@ -436,7 +436,9 @@ struct RecipientManagementView: View {
                             Image(systemName: "ellipsis.circle")
                                 .font(.system(size: 18, weight: .semibold))
                                 .foregroundStyle(.secondary)
+                                .accessibilityIdentifier("recipient-actions-\(recipient.id)")
                         }
+                        .accessibilityIdentifier("recipient-actions-menu-\(recipient.id)")
                     }
                 }
             }
@@ -446,6 +448,34 @@ struct RecipientManagementView: View {
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(dark)
                     .padding(.top, 2)
+            }
+
+            if recipient.receiverUserId == nil || !recipient.isActiveForTasks {
+                HStack(spacing: 10) {
+                    if recipient.receiverUserId == nil {
+                        Button(recipient.activationStatus == .invited ? "Resend Invite" : "Send Invite") {
+                            invitingRecipient = recipient
+                        }
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(blue)
+                        .accessibilityIdentifier("recipient-invite-direct-\(recipient.id)")
+                    }
+
+                    if !recipient.isActiveForTasks {
+                        Button("Proxy Activate") {
+                            proxyRecipient = recipient
+                        }
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
+                        .buttonStyle(.bordered)
+                        .controlSize(.small)
+                        .tint(teal)
+                        .accessibilityIdentifier("recipient-proxy-direct-\(recipient.id)")
+                    }
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.top, 6)
             }
 
             if !recipient.hasPremium {
@@ -864,6 +894,7 @@ private struct RecipientInviteSheet: View {
                         .keyboardType(.emailAddress)
                         .textInputAutocapitalization(.never)
                         .autocorrectionDisabled()
+                        .accessibilityIdentifier("recipient-invite-email-field")
                     Text("They need to accept the invite before tasks can begin, unless a Care Organizer records proxy authorization.")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
@@ -887,6 +918,7 @@ private struct RecipientInviteSheet: View {
                     Button("Send") {
                         Task { await send() }
                     }
+                    .accessibilityIdentifier("recipient-invite-send-button")
                     .disabled(!email.contains("@") || loading)
                 }
             }
@@ -924,6 +956,7 @@ private struct ProxyActivationSheet: View {
                         .font(.footnote)
                         .foregroundStyle(.secondary)
                     TextField("Consent reference (optional)", text: $documentReference)
+                        .accessibilityIdentifier("recipient-proxy-consent-field")
                 }
 
                 if let error {
@@ -944,6 +977,7 @@ private struct ProxyActivationSheet: View {
                     Button("Activate") {
                         Task { await activate() }
                     }
+                    .accessibilityIdentifier("recipient-proxy-activate-button")
                     .disabled(loading)
                 }
             }

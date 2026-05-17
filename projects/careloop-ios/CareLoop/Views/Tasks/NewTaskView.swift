@@ -120,6 +120,7 @@ struct NewTaskView: View {
                     } else {
                         Button("Add") { Task { await save() } }
                             .fontWeight(.semibold)
+                            .accessibilityIdentifier("new-task-submit-button")
                             .disabled(cannotSave)
                     }
                 }
@@ -141,6 +142,7 @@ struct NewTaskView: View {
             .padding(.horizontal, 16)
             .padding(.vertical, 15)
             .background(card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
+            .accessibilityIdentifier("new-task-title-field")
     }
 
     // MARK: – Mode toggle
@@ -178,6 +180,7 @@ struct NewTaskView: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(mode == .once ? "task-mode-once-button" : "task-mode-repeating-button")
     }
 
     // MARK: – When card (one-time)
