@@ -132,6 +132,7 @@ struct CirclesView: View {
             Button { showNewTask = true } label: {
                 Image(systemName: "plus")
             }
+            .accessibilityIdentifier("add-task-button")
         }
     }
 

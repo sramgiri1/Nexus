@@ -38,6 +38,7 @@ model User {
   proxyAuthorizedRecipients     CareRecipient[]            @relation("CareRecipientProxyAuthorizer")
   grantedRecipientAccesses      CareRecipientAccess[]      @relation("CareRecipientAccessGrantor")
   purchasedReceiverEntitlements CareRecipientEntitlement[] @relation("CareRecipientEntitlementPurchaser")
+  premiumUpgradeRequests        PremiumUpgradeRequest[]    @relation("PremiumUpgradeRequestRequester")
 }
 
 model AuthIdentity {
@@ -79,6 +80,7 @@ model CareCircle {
   recipients  CareRecipient[]
   tasks       Task[]
   events      Event[]
+  premiumUpgradeRequests PremiumUpgradeRequest[]
 }
 
 model Invitation {
@@ -131,6 +133,7 @@ model CareRecipient {
   accessGrants CareRecipientAccess[]
   entitlement  CareRecipientEntitlement?
   invitations  Invitation[]
+  premiumUpgradeRequests PremiumUpgradeRequest[]
 
   @@index([circleId, activationStatus])
   @@index([receiverUserId])
@@ -186,6 +189,22 @@ model CareRecipientEntitlement {
   purchasedById String?
 
   @@index([status, expiresAt])
+}
+
+model PremiumUpgradeRequest {
+  id        String   @id @default(cuid())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  circle      CareCircle     @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId    String
+  recipient   CareRecipient  @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId String
+  requester   User           @relation("PremiumUpgradeRequestRequester", fields: [requesterUserId], references: [id], onDelete: Cascade)
+  requesterUserId String
+
+  @@unique([recipientId, requesterUserId])
+  @@index([circleId, recipientId, createdAt])
 }
 
 model Task {

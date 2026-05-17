@@ -30,6 +30,7 @@ const invitationInclude = {
 const MAX_CIRCLES_PER_USER = 3;
 const INVITATION_EXPIRES_AFTER_DAYS = 14;
 const ENTITLEMENT_SOURCES = new Set(["APP_STORE", "MANUAL"]);
+const PREMIUM_REQUEST_VISIBLE_DAYS = 7;
 
 export default async function circles(app) {
   const db = app.db;
@@ -151,6 +152,32 @@ export default async function circles(app) {
 
   function invitationHasExpired(invitation, now = new Date()) {
     return invitation?.status === "PENDING" && invitation.expiresAt && new Date(invitation.expiresAt) <= now;
+  }
+
+  function premiumRequestCutoff(now = new Date()) {
+    return new Date(now.getTime() - PREMIUM_REQUEST_VISIBLE_DAYS * 24 * 60 * 60 * 1000);
+  }
+
+  function summarizePremiumRequests(requests) {
+    const byRecipient = new Map();
+    for (const request of requests) {
+      const current = byRecipient.get(request.recipientId) ?? {
+        recipientId: request.recipientId,
+        recipientName: request.recipient?.name ?? "Care receiver",
+        requestCount: 0,
+        latestRequesterName: null,
+        latestRequesterId: null,
+        latestRequestedAt: null,
+      };
+      current.requestCount += 1;
+      if (!current.latestRequestedAt || request.createdAt > current.latestRequestedAt) {
+        current.latestRequesterName = request.requester?.name ?? "Caregiver";
+        current.latestRequesterId = request.requesterUserId;
+        current.latestRequestedAt = request.createdAt;
+      }
+      byRecipient.set(request.recipientId, current);
+    }
+    return [...byRecipient.values()].sort((lhs, rhs) => rhs.latestRequestedAt - lhs.latestRequestedAt);
   }
 
   async function markInvitationExpired(tx, invitation) {
@@ -712,6 +739,80 @@ export default async function circles(app) {
     });
 
     return recipientSummary(updatedRecipient);
+  });
+
+  // POST /circles/:id/recipients/:recipientId/premium-requests — caregivers can request organizer upgrade
+  app.post("/circles/:id/recipients/:recipientId/premium-requests", async (req, reply) => {
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    const member = await assertRequestMember(db, req.params.id, req, reply);
+    if (!member) return;
+    if (member.role !== "MEMBER") {
+      return reply.code(403).send({ error: "Only caregivers can request a premium upgrade" });
+    }
+
+    const accessContext = await loadReceiverAccessContext(db, {
+      circleId: req.params.id,
+      member,
+      userId: authenticatedUserId,
+    });
+    if (!accessContext.recipientIds.has(req.params.recipientId)) {
+      return reply.code(404).send({ error: "Recipient not found" });
+    }
+
+    try {
+      const request = await db.$transaction(async (tx) => {
+        const created = await tx.premiumUpgradeRequest.create({
+          data: {
+            circleId: req.params.id,
+            recipientId: req.params.recipientId,
+            requesterUserId: authenticatedUserId,
+          },
+          include: {
+            recipient: { select: { id: true, name: true } },
+            requester: { select: { id: true, name: true, email: true } },
+          },
+        });
+        await tx.event.create({
+          data: {
+            type: "APP_SESSION",
+            circleId: req.params.id,
+            actorId: authenticatedUserId,
+            payload: {
+              action: "PREMIUM_UPGRADE_REQUESTED",
+              recipientId: req.params.recipientId,
+            },
+          },
+        });
+        return created;
+      });
+      return reply.code(201).send(request);
+    } catch (err) {
+      if ((err instanceof Prisma.PrismaClientKnownRequestError || err?.code === "P2002") && err.code === "P2002") {
+        return reply.code(409).send({
+          error: "You already requested premium for this care receiver",
+          code: "PREMIUM_REQUEST_ALREADY_SENT",
+        });
+      }
+      throw err;
+    }
+  });
+
+  // GET /circles/:id/premium-requests — admins see collapsed recent request summaries
+  app.get("/circles/:id/premium-requests", async (req, reply) => {
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+    const requests = await db.premiumUpgradeRequest.findMany({
+      where: {
+        circleId: req.params.id,
+        createdAt: { gte: premiumRequestCutoff() },
+      },
+      include: {
+        recipient: { select: { id: true, name: true } },
+        requester: { select: { id: true, name: true, email: true } },
+      },
+      orderBy: { createdAt: "desc" },
+    });
+    return summarizePremiumRequests(requests);
   });
 
   // POST /circles/:id/recipients/reorder — admin only

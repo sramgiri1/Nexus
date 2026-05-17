@@ -141,6 +141,28 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_caregiverCanRequestUpgradeButCannotPurchase() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
+
+        XCTAssertTrue(app.scrollViews["caregiver-dashboard"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["quick-action-my-task-board"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-my-task-board"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 3))
+        app.buttons["add-task-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["New Task"].waitForExistence(timeout: 5))
+        app.buttons["Repeating"].tap()
+
+        XCTAssertTrue(app.staticTexts["Recurring schedules are premium for Maya"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["task-recurring-request-upgrade-button"].exists)
+        XCTAssertFalse(app.buttons["task-recurring-upgrade-button"].exists)
+        app.buttons["task-recurring-request-upgrade-button"].tap()
+        XCTAssertTrue(app.buttons["Request sent"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

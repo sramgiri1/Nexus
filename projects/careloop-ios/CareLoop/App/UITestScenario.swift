@@ -340,6 +340,18 @@ private struct UITestScenarioFixture {
             )
 
         case .caregiverHome:
+            let caregiverMomRecipient = CareRecipient(
+                id: momRecipient.id,
+                name: momRecipient.name,
+                relationship: momRecipient.relationship,
+                notes: momRecipient.notes,
+                isPrimary: momRecipient.isPrimary,
+                sortOrder: momRecipient.sortOrder,
+                activationStatus: momRecipient.activationStatus,
+                receiverUserId: momRecipient.receiverUserId,
+                eligibleAssigneeIds: momRecipient.eligibleAssigneeIds,
+                premium: .free
+            )
             let visibleTasks = organizerTasks.filter { task in
                 task.recipientId == momRecipient.id && (task.assigneeId == caregiver.id || task.assigneeId == mom.id || task.creatorId == caregiver.id)
             }
@@ -348,7 +360,7 @@ private struct UITestScenarioFixture {
                 name: "Ramgiri Care Circle",
                 recipientName: "Maya",
                 members: allMembers,
-                recipients: [momRecipient],
+                recipients: [caregiverMomRecipient],
                 tasks: visibleTasks
             )
             var user = caregiver

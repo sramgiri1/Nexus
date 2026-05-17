@@ -45,6 +45,7 @@ struct NewTaskView: View {
     @State private var loading = false
     @State private var error:  String?
     @State private var paywallRecipient: CareRecipient?
+    @State private var upgradeRequestRecipientIds = Set<String>()
 
     init(circleId: String, creatorId: String, members: [CircleMember], recipients: [CareRecipient], isAdmin: Bool, onCreated: @escaping (CareTask) -> Void) {
         self.circleId   = circleId
@@ -402,7 +403,7 @@ struct NewTaskView: View {
                         .foregroundStyle(.secondary)
                 }
                 .padding(.horizontal, 16)
-                .padding(.bottom, isAdmin && selectedRecipientModel != nil ? 0 : 14)
+                .padding(.bottom, selectedRecipientModel != nil ? 0 : 14)
 
                 if isAdmin, let recipient = selectedRecipientModel {
                     Button {
@@ -418,9 +419,28 @@ struct NewTaskView: View {
                     .padding(.horizontal, 16)
                     .padding(.bottom, 14)
                     .accessibilityIdentifier("task-recurring-upgrade-button")
+                } else if let recipient = selectedRecipientModel {
+                    caregiverUpgradeRequestButton(for: recipient)
                 }
             }
         }
+    }
+
+    private func caregiverUpgradeRequestButton(for recipient: CareRecipient) -> some View {
+        Button {
+            Task { await requestUpgrade(for: recipient) }
+        } label: {
+            Label(upgradeRequestRecipientIds.contains(recipient.id) ? "Request sent" : "Ask organizer to upgrade", systemImage: "paperplane.fill")
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+                .frame(maxWidth: .infinity)
+                .padding(.vertical, 14)
+        }
+        .buttonStyle(.bordered)
+        .tint(teal)
+        .disabled(upgradeRequestRecipientIds.contains(recipient.id))
+        .padding(.horizontal, 16)
+        .padding(.bottom, 14)
+        .accessibilityIdentifier("task-recurring-request-upgrade-button")
     }
 
     // MARK: – Priority card
@@ -695,6 +715,19 @@ struct NewTaskView: View {
     private var lockedRecurringDetail: String {
         selectedRecipientModel?.premiumStatusDetail
             ?? "Select a premium care receiver to add repeating care routines."
+    }
+
+    private func requestUpgrade(for recipient: CareRecipient) async {
+        if UITestScenario.current != nil {
+            upgradeRequestRecipientIds.insert(recipient.id)
+            return
+        }
+        do {
+            _ = try await APIClient.shared.requestRecipientPremiumUpgrade(circleId: circleId, recipientId: recipient.id)
+            upgradeRequestRecipientIds.insert(recipient.id)
+        } catch {
+            self.error = error.localizedDescription
+        }
     }
 
     private func save() async {

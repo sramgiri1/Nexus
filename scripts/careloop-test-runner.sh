@@ -173,6 +173,7 @@ case "$suite" in
       "CareLoopTests/PaywallDisclosureTextTests" \
       "CareLoopTests/CareRecipientPremiumTests" \
       "CareLoopUITests/CareLoopUITests/test_organizerCanOpenReceiverPremiumPaywall" \
+      "CareLoopUITests/CareLoopUITests/test_caregiverCanRequestUpgradeButCannotPurchase" \
       "CareLoopUITests/CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade"
     ;;
   *)

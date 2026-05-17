@@ -70,6 +70,7 @@ function buildDb(seed = {}) {
     })))],
     recipientEntitlements: [...(seed.recipientEntitlements || [])],
     recipientAccesses: [...(seed.recipientAccesses || [])],
+    premiumUpgradeRequests: [...(seed.premiumUpgradeRequests || [])],
     members:    [...(seed.members    || [])],
     tasks:      [...(seed.tasks      || [])],
     taskComments: [...(seed.taskComments || [])],
@@ -86,6 +87,7 @@ function buildDb(seed = {}) {
     ...S.recipients.map((item) => item.id),
     ...S.recipientEntitlements.map((item) => item.id),
     ...S.recipientAccesses.map((item) => item.id),
+    ...S.premiumUpgradeRequests.map((item) => item.id),
     ...S.members.map((item) => item.id),
     ...S.tasks.map((item) => item.id),
     ...S.taskComments.map((item) => item.id),
@@ -303,6 +305,9 @@ function buildDb(seed = {}) {
         s.recipients = s.recipients.filter((recipient) => recipient.circleId !== where.id);
         s.recipientAccesses = s.recipientAccesses.filter((access) =>
           s.recipients.some((recipient) => recipient.id === access.recipientId),
+        );
+        s.premiumUpgradeRequests = s.premiumUpgradeRequests.filter((request) =>
+          s.recipients.some((recipient) => recipient.id === request.recipientId),
         );
         s.tasks = s.tasks.filter((task) => task.circleId !== where.id);
         s.invitations = s.invitations.filter((invitation) => invitation.circleId !== where.id);
@@ -547,6 +552,51 @@ function buildDb(seed = {}) {
         if (!entitlement) throw Object.assign(new Error("NotFound"), { code: "P2025" });
         Object.assign(entitlement, d, { updatedAt: new Date() });
         return entitlement;
+      },
+    };
+  }
+
+  function premiumUpgradeRequestRepo(s) {
+    function includeRequest(request, include) {
+      if (!request) return null;
+      return {
+        ...request,
+        recipient: include?.recipient
+          ? (s.recipients.find((recipient) => recipient.id === request.recipientId) ?? null)
+          : undefined,
+        requester: include?.requester
+          ? (s.users.find((user) => user.id === request.requesterUserId) ?? null)
+          : undefined,
+      };
+    }
+
+    return {
+      create: async ({ data: d, include }) => {
+        if (s.premiumUpgradeRequests.some((request) =>
+          request.recipientId === d.recipientId && request.requesterUserId === d.requesterUserId,
+        )) {
+          throw Object.assign(new Error("Unique"), { code: "P2002" });
+        }
+        const request = {
+          id: uid("pur"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          ...d,
+        };
+        s.premiumUpgradeRequests.push(request);
+        return includeRequest(request, include);
+      },
+      findMany: async ({ where, include, orderBy } = {}) => {
+        let items = s.premiumUpgradeRequests.filter((request) => {
+          if (where?.circleId && request.circleId !== where.circleId) return false;
+          if (where?.recipientId && request.recipientId !== where.recipientId) return false;
+          if (where?.createdAt?.gte && request.createdAt < where.createdAt.gte) return false;
+          return true;
+        });
+        if (orderBy?.createdAt === "desc") {
+          items = [...items].sort((lhs, rhs) => rhs.createdAt - lhs.createdAt);
+        }
+        return items.map((request) => includeRequest(request, include));
       },
     };
   }
@@ -848,6 +898,7 @@ function buildDb(seed = {}) {
     careRecipient: careRecipientRepo(s),
     careRecipientEntitlement: careRecipientEntitlementRepo(s),
     careRecipientAccess: careRecipientAccessRepo(s),
+    premiumUpgradeRequest: premiumUpgradeRequestRepo(s),
     circleMember: memberRepo(s),
     authIdentity: authIdentityRepo(s),
     passwordResetCode: passwordResetCodeRepo(s),
@@ -867,6 +918,7 @@ function buildDb(seed = {}) {
     careRecipient: careRecipientRepo(S),
     careRecipientEntitlement: careRecipientEntitlementRepo(S),
     careRecipientAccess: careRecipientAccessRepo(S),
+    premiumUpgradeRequest: premiumUpgradeRequestRepo(S),
     circleMember: memberRepo(S),
     task:         taskRepo(S),
     taskComment:  taskCommentRepo(S),
@@ -2457,6 +2509,84 @@ describe("circle membership management", () => {
     const body = res.json();
     assert.equal(body.name, "Jane Doe");
     assert.equal(body.relationship, "Spouse");
+    await app.close();
+  });
+
+  test("POST /circles/:id/recipients/:recipientId/premium-requests lets a scoped caregiver ask once", async () => {
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver@test.com", name: "Caregiver" });
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", email: "admin@test.com", name: "Admin" },
+        { id: "u2", email: "caregiver@test.com", name: "Caregiver" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      recipients: [
+        { id: "r1", circleId: "c1", name: "John Doe", relationship: "Dad", notes: null, isPrimary: true, sortOrder: 0 },
+      ],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" },
+      ],
+      recipientAccesses: [{ id: "ra1", recipientId: "r1", memberId: "m2", revokedAt: null, grantedAt: new Date() }],
+    }));
+
+    const first = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients/r1/premium-requests",
+      headers: caregiverHeaders,
+      payload: {},
+    });
+    assert.equal(first.statusCode, 201);
+    assert.equal(first.json().recipientId, "r1");
+    assert.equal(first.json().requesterUserId, "u2");
+
+    const duplicate = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients/r1/premium-requests",
+      headers: caregiverHeaders,
+      payload: {},
+    });
+    assert.equal(duplicate.statusCode, 409);
+    assert.equal(duplicate.json().code, "PREMIUM_REQUEST_ALREADY_SENT");
+    await app.close();
+  });
+
+  test("GET /circles/:id/premium-requests collapses visible recent requests by receiver", async () => {
+    const now = new Date();
+    const expired = new Date(now.getTime() - 8 * 24 * 60 * 60 * 1000);
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", email: "admin@test.com", name: "Admin" },
+        { id: "u2", email: "caregiver@test.com", name: "Caregiver" },
+        { id: "u3", email: "backup@test.com", name: "Backup" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      recipients: [
+        { id: "r1", circleId: "c1", name: "John Doe", relationship: "Dad", notes: null, isPrimary: true, sortOrder: 0 },
+      ],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" },
+        { id: "m3", userId: "u3", circleId: "c1", role: "MEMBER" },
+      ],
+      premiumUpgradeRequests: [
+        { id: "pur1", circleId: "c1", recipientId: "r1", requesterUserId: "u2", createdAt: now, updatedAt: now },
+        { id: "pur2", circleId: "c1", recipientId: "r1", requesterUserId: "u3", createdAt: new Date(now.getTime() - 60_000), updatedAt: now },
+        { id: "pur3", circleId: "c1", recipientId: "r1", requesterUserId: "u4", createdAt: expired, updatedAt: expired },
+      ],
+    }));
+
+    const res = await app.inject({
+      method: "GET",
+      url: "/circles/c1/premium-requests",
+      headers: HDR,
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().length, 1);
+    assert.equal(res.json()[0].recipientId, "r1");
+    assert.equal(res.json()[0].requestCount, 2);
+    assert.equal(res.json()[0].latestRequesterName, "Caregiver");
     await app.close();
   });
 

@@ -84,24 +84,26 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P4: Caregiver Upgrade Request
 
-**Status:** Next.
+**Status:** Complete.
 
 **Goal:** Let caregivers signal premium need without giving them billing authority.
 
 **Deliverables**
 
-- Add backend model/API for caregiver premium requests.
-- Enforce one request per caregiver per receiver lifetime.
-- Auto-expire visible request summaries after 7 days.
-- Add caregiver locked-feature state with `Ask organizer to upgrade` and `View plans`.
-- Ensure caregivers never see a purchase CTA.
+- Added backend model/API for caregiver premium requests.
+- Enforced one request per caregiver per receiver lifetime.
+- Added recent request summaries that auto-expire from organizer visibility after 7 days.
+- Added caregiver locked-feature state with `Ask organizer to upgrade`.
+- Ensured caregiver locked recurring task flow never shows a purchase CTA.
 
 **Tests**
 
-- Backend tests for request create, duplicate block, collapsed summary, and expiry.
-- UI tests for caregiver request CTA, sent state, and no purchase CTA.
+- `scripts/careloop-test-runner.sh backend:circles`
+- `scripts/careloop-test-runner.sh ios:payments`
 
 ## Phase P5: Organizer Request Visibility
+
+**Status:** Next.
 
 **Goal:** Surface upgrade demand where organizers manage receiver access and plans.
 
