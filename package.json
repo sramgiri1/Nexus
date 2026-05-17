@@ -67,6 +67,7 @@
     "check:careloop-test-remediation": "node scripts/check-careloop-test-remediation.js",
     "careloop:phase2-start": "NEXUS_MODE=local-private node scripts/careloop-phase-2-start.js",
     "check:careloop-phase2-start": "node scripts/check-careloop-phase-2-start.js",
+    "check:careloop-premium-phase-plan": "node scripts/check-careloop-premium-phase-plan.js",
     "careloop:demo": "node scripts/careloop-demo-room-setup.js",
     "careloop:demo:room": "node scripts/careloop-demo-room-setup.js",
     "generate:private-validation-snapshot": "NEXUS_MODE=local-private node scripts/generate-private-validation-snapshot.js",

@@ -1003,6 +1003,13 @@ This product should **not** use per-caregiver seat pricing. Premium is purchased
 - do not paywall basic task completion
 - do not paywall the core collaborative loop for one basic care receiver
 - use a mix of visible locked premium features plus soft / hard upgrade prompts as families grow into more complexity
+- Adding a second care receiver triggers an upgrade choice sheet before the add-care-receiver form opens.
+- If the organizer cancels that prompt, return to the previous screen with no draft receiver created.
+- Caregiver upgrade requests appear only in Care Receiver Management.
+- Caregiver upgrade requests are informational only; purchase remains a deliberate organizer action from the receiver upgrade/manage entry point.
+- Multiple caregiver upgrade requests collapse into one row per receiver with request count and latest requester.
+- Each caregiver can request premium once per receiver lifetime.
+- Visible request summaries auto-dismiss after 7 days if premium is not purchased.
 
 ### 10.4 Monetization items locked
 
@@ -1016,14 +1023,17 @@ This product should **not** use per-caregiver seat pricing. Premium is purchased
   - better accountability
   - more coordination controls
   - richer insights
+- compact receiver cards use icon-only premium/free indicators, backed by full accessibility labels
+- care receivers see their own premium/free badge but no billing controls
+- caregivers may view premium value and pricing context, but cannot purchase
+- expired or failed premium preserves existing data visibility and blocks only new premium actions
+- Existing data remains visible after premium expiry.
 
 ### 10.5 Monetization items still open
 
-- whether Care Circle count itself is limited by plan, or only receiver-level premium capability is monetized
 - pricing numbers for monthly and annual plans
 - whether a trial exists and, if so, its exact duration and trigger
 - final paywall copy and upgrade timing
-- whether any premium feature should unlock at the whole-circle level instead of strictly receiver scope
 - final server-side entitlement object design and billing reconciliation policy
 
 ---
@@ -1075,6 +1085,19 @@ This is a convergence roadmap for the **existing** codebase, not a greenfield bu
 - server-side entitlement sync
 - premium-aware insights and automation
 - privacy policy, incident response, TestFlight, and launch QA
+
+### Premium implementation subphases
+
+The premium phase must be implemented in small, testable slices. `projects/careloop/docs/PREMIUM_PHASE_PLAN.md` is the operative Nexus plan for this phase.
+
+- P1: premium decisions and contracts
+- P2: receiver plan visibility
+- P3: add-second-receiver gate
+- P4: caregiver upgrade request
+- P5: organizer request visibility
+- P6: purchase success and management UX
+- P7: premium enforcement sweep
+- P8: demo and StoreKit hardening
 
 ---
 

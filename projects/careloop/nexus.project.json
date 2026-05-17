@@ -117,9 +117,10 @@
     "release-readiness"
   ],
   "docs": [
-    "projects/careloop/docs/PRD.md",
-    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
-    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md"
+      "projects/careloop/docs/PRD.md",
+      "projects/careloop/docs/PREMIUM_PHASE_PLAN.md",
+      "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+      "projects/careloop/docs/NEXUS_PROJECT_STATUS.md"
   ],
   "adapterRuntimeEnabled": false,
   "projectSelectorEnabled": true,
@@ -127,8 +128,8 @@
   "providerCallsAllowed": false,
   "dbAccessAllowed": false,
   "metadata": {
-    "source": "careloop-phase-2-nexus-start",
+    "source": "codex/careloop-premium-phases",
     "publicSafeLabel": "Private Project",
-    "phaseId": "CARELOOP-P2"
+    "phaseId": "CARELOOP-P3-PREMIUM"
   }
 }

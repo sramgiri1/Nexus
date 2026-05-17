@@ -2,18 +2,18 @@
 
 ## Metadata
 
-- Generated at: 2026-05-17T12:13:19.466Z
+- Generated at: 2026-05-17T15:51:00.539Z
 - Phase: P55.2
-- Validation branch: project/careloop-phase-2-nexus-start
-- Validation HEAD: 4db7bb9
+- Validation branch: codex/careloop-premium-phases
+- Validation HEAD: faf5d07
 
 ## Summary
 
-- Total suites: 13
+- Total suites: 14
 - Execution enabled: false (always)
 - Project IDs: careloop
-- By layer: {"backend":5,"runtime":1,"ios":4,"policy":2,"release":1}
-- By status: {"ready":9,"planned":4}
+- By layer: {"backend":5,"runtime":1,"ios":4,"policy":3,"release":1}
+- By status: {"ready":10,"planned":4}
 
 ## Suite Records (Preview Only)
 
@@ -29,6 +29,7 @@
 | careloop-ios-onboarding | ios | custom | medium | ready |
 | careloop-ios-personas | ios | custom | medium | ready |
 | careloop-ios-reminders | ios | custom | high | ready |
+| careloop-premium-plan | policy | node-script | low | ready |
 | careloop-prd-acceptance | policy | none | medium | planned |
 | careloop-privacy-compliance | policy | none | high | planned |
 | careloop-release-readiness | release | none | critical | planned |

@@ -1,11 +1,11 @@
 {
   "projectId": "careloop",
   "displayName": "CareLoop",
-  "activePhase": "CARELOOP-P2",
-  "activeMission": "CareLoop Phase 2",
+  "activePhase": "CARELOOP-P3-PREMIUM",
+  "activeMission": "CareLoop Premium Receiver-Scoped Monetization",
   "status": "in_progress",
-  "nextAction": "Review Phase 2 task plan",
-  "generatedAt": "2026-05-17T00:55:26.747Z",
+  "nextAction": "Execute premium subphases P1-P8 with tests, docs, demo updates, commits, and pushes",
+  "generatedAt": "2026-05-17T15:00:00.000Z",
   "missionContractPath": "contracts/projects/careloop/phase-2-mission-contract.json",
   "taskPlanPath": "contracts/projects/careloop/phase-2-task-plan.json",
   "readinessReportPath": "reports/careloop-phase-2-readiness.json",
@@ -16,8 +16,8 @@
   "deploymentAllowed": false,
   "taskCounts": {
     "planned": 8,
-    "active": 0,
-    "blocked": 8,
+    "active": 1,
+    "blocked": 7,
     "complete": 0
   }
 }

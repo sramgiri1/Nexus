@@ -29,6 +29,7 @@ Suites:
   backend:security      Authz/scope isolation and cross-user mutation tests.
   backend:payments      Premium entitlement and receiver paywall backend tests.
   backend:scale         50-user and multi-circle/multi-role simulations.
+  docs:premium          Premium PRD/phase-plan contract check.
 
   ios                   Full Xcode suite.
   ios:unit              iOS unit/model tests only.
@@ -114,6 +115,9 @@ case "$suite" in
     ;;
   backend:scale)
     run_backend_pattern "50 users|multi-user|multiple circles|different roles|isolates one account"
+    ;;
+  docs:premium)
+    (cd "$ROOT_DIR" && npm run check:careloop-premium-phase-plan)
     ;;
   ios)
     run_xcode

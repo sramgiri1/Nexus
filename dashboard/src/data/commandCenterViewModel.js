@@ -168,7 +168,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const shellMode = "local-private";
   const careloopPhase2 = summarizeCareLoopPhase2();
   const safeProjectDisplayName = careloopPhase2.displayName || "CareLoop";
-  const activeMissionId = "careloop-phase-2";
+  const activeMissionId = "careloop-premium";
   const activeMissionDisplayName = careloopPhase2.activeMission || "CareLoop Phase 2";
   const phase2TaskRows = CARELOOP_PHASE_2_TASKS.map((task) => ({
     planTaskId: task.taskId,
@@ -272,8 +272,8 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     selectedProjectStatus: "In Progress",
     selectedProjectMode: "local-private",
     stackSummary: "Node/Fastify + Prisma + iOS",
-    activePhaseLabel: "CareLoop Phase 2",
-    activePhaseSummary: "Product Hardening and Validation",
+    activePhaseLabel: careloopPhase2.activePhase || "CARELOOP-P3-PREMIUM",
+    activePhaseSummary: "Receiver-Scoped Premium Monetization",
     activeMissionLabel: activeMissionDisplayName,
     nextAction: careloopPhase2.nextAction || "Review Phase 2 task plan",
     sourceLabel: "Project Registry snapshot",
@@ -350,14 +350,15 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       { label: "External network", value: "Disabled by policy" },
     ],
     evidenceSummary: [
-      { title: "Phase 2 mission contract", status: "Available", tone: "pass", summary: "Governed mission contract was generated for Phase 2 planning.", linkedAction: "CareLoop Phase 2 start", redacted: "Yes" },
-      { title: "Phase 2 task plan", status: "Available", tone: "pass", summary: `${plannedMissionTasks.length} planned tasks are assigned to NEXUS agents and blocked from execution.`, linkedAction: "CareLoop Phase 2 task plan", redacted: "Yes" },
-      { title: "Readiness gates", status: "Pending", tone: "pending", summary: `${phase2ReadinessGates.length} readiness gates require review before implementation.`, linkedAction: "Phase 2 readiness", redacted: "Yes" },
+      { title: "Premium phase plan", status: "Active", tone: "pending", summary: "Receiver-scoped premium implementation is split into P1-P8 with tests and commits at each phase boundary.", linkedAction: "CareLoop premium plan", redacted: "Yes" },
+      { title: "Phase 2 mission contract", status: "Available", tone: "pass", summary: "Phase 2 remains available as the completed hardening baseline.", linkedAction: "CareLoop Phase 2 start", redacted: "Yes" },
+      { title: "Readiness gates", status: "Pending", tone: "pending", summary: `${phase2ReadinessGates.length} readiness gates plus premium phase checks remain active.`, linkedAction: "Premium phase readiness", redacted: "Yes" },
     ],
     developerDetails: [
       { label: "Project ID", value: "careloop" },
       { label: "Mission ID", value: activeMissionId },
       { label: "Profile path", value: "projects/careloop/nexus.project.json" },
+      { label: "Premium plan", value: "projects/careloop/docs/PREMIUM_PHASE_PLAN.md" },
       { label: "Task plan", value: "contracts/projects/careloop/phase-2-task-plan.json" },
     ],
   };

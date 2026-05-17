@@ -37,6 +37,18 @@ Track CareLoop Phase 2 as a governed NEXUS project mission for product hardening
 - iOS onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA for primary persona screens with simulator screenshots under `projects/careloop/docs/qa/screenshots/`.
 - Focused test runner at `scripts/careloop-test-runner.sh` and Nexus suite metadata for targeted test selection.
+- Single-command room demo launcher at `npm run careloop:demo`.
+
+## Premium Phase Handoff
+
+CareLoop has moved into `CARELOOP-P3-PREMIUM` for receiver-scoped monetization. The operative plan is `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`.
+
+Premium phase rules:
+
+- Implement P1-P8 as small testable phases.
+- Update tests and suite metadata in every phase.
+- Update the single-command demo after premium demo states exist.
+- Commit and push at each phase boundary.
 
 ## Current Test Commands
 
@@ -51,6 +63,7 @@ Track CareLoop Phase 2 as a governed NEXUS project mission for product hardening
 - `scripts/careloop-test-runner.sh ios:tasks`
 - `scripts/careloop-test-runner.sh ios:reminders`
 - `scripts/careloop-test-runner.sh ios:payments`
+- `npm run check:careloop-premium-phase-plan`
 
 ## Still Not Enabled
 

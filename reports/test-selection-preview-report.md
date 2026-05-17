@@ -2,10 +2,10 @@
 
 ## Metadata
 
-- Generated at: 2026-05-17T12:13:19.466Z
+- Generated at: 2026-05-17T15:51:00.539Z
 - Phase: P55.4
-- Validation branch: project/careloop-phase-2-nexus-start
-- Validation HEAD: 4db7bb9
+- Validation branch: codex/careloop-premium-phases
+- Validation HEAD: faf5d07
 
 ## Sample Preview (dashboard + db + memory)
 
