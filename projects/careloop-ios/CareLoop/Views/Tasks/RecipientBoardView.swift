@@ -77,12 +77,14 @@ struct RecipientBoardView: View {
         .onChange(of: appState.activeCircle?.id) { _ in Task { await load() } }
         .onChange(of: appState.pendingTaskId) { id in
             guard let id, highlightedTaskId == nil,
+                  appState.pendingTaskCircleId == nil || appState.pendingTaskCircleId == appState.activeCircle?.id,
                   tasks.contains(where: { $0.id == id }) else { return }
             highlightedTaskId = id
             appState.consumePendingTask()
         }
         .onChange(of: tasks) { _ in
             guard let id = appState.pendingTaskId, highlightedTaskId == nil,
+                  appState.pendingTaskCircleId == nil || appState.pendingTaskCircleId == appState.activeCircle?.id,
                   tasks.contains(where: { $0.id == id }) else { return }
             highlightedTaskId = id
             appState.consumePendingTask()

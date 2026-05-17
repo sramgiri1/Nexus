@@ -16,6 +16,7 @@ final class AppState: ObservableObject {
     @Published var currentUser: CareUser?
     @Published var activeCircle: CareCircle?
     @Published var pendingTaskId: String?
+    @Published var pendingTaskCircleId: String?
     @Published var shouldPromptNewTask = false
 
     var uiTestInvitations: [GroupInvitation] = []
@@ -36,10 +37,9 @@ final class AppState: ObservableObject {
             .store(in: &cancellables)
 
         NotificationCenter.default.publisher(for: .careLoopPushTaskOpened)
-            .compactMap { $0.object as? String }
             .receive(on: RunLoop.main)
-            .sink { [weak self] taskId in
-                self?.pendingTaskId = taskId
+            .sink { [weak self] notification in
+                self?.handlePushTaskOpened(notification.object)
             }
             .store(in: &cancellables)
 
@@ -158,6 +158,7 @@ final class AppState: ObservableObject {
 
     func consumePendingTask() {
         pendingTaskId = nil
+        pendingTaskCircleId = nil
     }
 
     func consumeNewTaskPrompt() {
@@ -167,6 +168,19 @@ final class AppState: ObservableObject {
     private func handlePushToken(_ token: String) {
         pendingPushToken = token
         Task { await flushPendingPushTokenIfNeeded() }
+    }
+
+    private func handlePushTaskOpened(_ object: Any?) {
+        if let taskId = object as? String {
+            pendingTaskId = taskId
+            pendingTaskCircleId = nil
+            return
+        }
+        guard let payload = object as? [String: String],
+              let taskId = payload["taskId"]
+        else { return }
+        pendingTaskId = taskId
+        pendingTaskCircleId = payload["circleId"]
     }
 
     private var storedCircleId: String? {

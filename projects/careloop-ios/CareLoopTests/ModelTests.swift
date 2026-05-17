@@ -169,14 +169,17 @@ final class AppStatePushTests: XCTestCase {
     func test_pendingTaskId_defaultsToNil() {
         let state = AppState()
         XCTAssertNil(state.pendingTaskId)
+        XCTAssertNil(state.pendingTaskCircleId)
     }
 
     @MainActor
     func test_consumePendingTask_clearsTaskId() {
         let state = AppState()
         state.pendingTaskId = "task-abc"
+        state.pendingTaskCircleId = "circle-abc"
         state.consumePendingTask()
         XCTAssertNil(state.pendingTaskId, "consumePendingTask should clear pendingTaskId")
+        XCTAssertNil(state.pendingTaskCircleId, "consumePendingTask should clear pendingTaskCircleId")
     }
 
     @MainActor
@@ -206,6 +209,18 @@ final class AppStatePushTests: XCTestCase {
         // but the sink uses RunLoop.main; flush the run loop
         RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
         XCTAssertEqual(state.pendingTaskId, taskId)
+    }
+
+    @MainActor
+    func test_pushTaskOpenedNotification_setsPendingTaskAndCircleIds() {
+        let state = AppState()
+        NotificationCenter.default.post(
+            name: .careLoopPushTaskOpened,
+            object: ["taskId": "push-task", "circleId": "push-circle", "recipientId": "push-recipient"]
+        )
+        RunLoop.main.run(until: Date(timeIntervalSinceNow: 0.05))
+        XCTAssertEqual(state.pendingTaskId, "push-task")
+        XCTAssertEqual(state.pendingTaskCircleId, "push-circle")
     }
 }
 

@@ -107,8 +107,11 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 
 - [ ] Banner shown when app is foregrounded (`UNUserNotificationCenterDelegate.willPresent`)  
 - [x] Tapping notification sets `AppState.pendingTaskId` via `careLoopPushTaskOpened` notification  
+- [x] Reminder push payload includes `taskId`, `circleId`, and `recipientId` for scoped deep links  
+- [x] Tapping notification sets both pending task and pending circle context when provided  
 - [x] `CirclesView.syncDeepLink()` matches `pendingTaskId` to a task and sets `selectedTask` (drives navigationDestination)  
 - [x] `CircleHomeView` observes `pendingTaskId`: navigates to `RecipientBoardView` for RECIPIENT role, `CirclesView` task list for ADMIN/MEMBER  
+- [x] Wrong-circle pending task links do not open a task board until the owning circle is active  
 - [x] `RecipientBoardView` observes `pendingTaskId` on appear and on tasks load — fires `highlightedTaskId` and calls `consumePendingTask()`  
 - [x] `ScrollViewReader` scrolls to the highlighted task with `.center` anchor  
 - [x] Rose-colored ring overlay animates in on matched task, fades after 2 seconds  
@@ -120,9 +123,10 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 ### 8. iOS unit tests (XCTest)
 
 - [x] `AppState.pendingTaskId` defaults to nil  
-- [x] `consumePendingTask()` clears the value  
+- [x] `AppState.pendingTaskCircleId` defaults to nil  
+- [x] `consumePendingTask()` clears pending task and circle values  
 - [x] `consumePendingTask()` is idempotent when nil  
-- [x] `careLoopPushTaskOpened` notification sets `pendingTaskId`  
+- [x] `careLoopPushTaskOpened` notification sets `pendingTaskId` and optional `pendingTaskCircleId`  
 - [x] Push token request body encodes `{"pushToken": <value>}`  
 - [x] Reminder scheduledAt = dueAt - 15min (unit)  
 - [x] Escalation window boundary conditions (unit)  

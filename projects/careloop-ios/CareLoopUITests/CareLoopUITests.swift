@@ -136,11 +136,24 @@ final class CareLoopUITests: XCTestCase {
     func test_organizerPendingTaskDeepLinkOpensTaskBoard() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "organizer-home",
-            "-careloop-ui-pending-task", "t2"
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
         ])
 
         XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Pick up prescriptions"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    func test_pendingTaskDeepLinkWaitsForOwningCircle() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "other-circle"
+        ])
+
+        XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.scrollViews["task-board-screen"].waitForExistence(timeout: 1))
     }
 
     @MainActor

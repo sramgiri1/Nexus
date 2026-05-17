@@ -8,6 +8,7 @@ enum UITestScenario: String {
 
     private static let launchArgument = "-careloop-ui-scenario"
     private static let pendingTaskLaunchArgument = "-careloop-ui-pending-task"
+    private static let pendingTaskCircleLaunchArgument = "-careloop-ui-pending-circle"
 
     static var current: UITestScenario? {
         parse(ProcessInfo.processInfo.arguments)
@@ -28,6 +29,14 @@ enum UITestScenario: String {
         }
         return arguments[index + 1]
     }
+
+    static func pendingTaskCircleId(_ arguments: [String]) -> String? {
+        guard let index = arguments.firstIndex(of: pendingTaskCircleLaunchArgument),
+              arguments.indices.contains(index + 1) else {
+            return nil
+        }
+        return arguments[index + 1]
+    }
 }
 
 extension AppState {
@@ -42,6 +51,7 @@ extension AppState {
         uiTestEvents = fixture.events
         uiTestCompletionInsights = fixture.completionInsights
         pendingTaskId = UITestScenario.pendingTaskId(ProcessInfo.processInfo.arguments) ?? fixture.pendingTaskId
+        pendingTaskCircleId = UITestScenario.pendingTaskCircleId(ProcessInfo.processInfo.arguments)
         shouldPromptNewTask = false
     }
 }

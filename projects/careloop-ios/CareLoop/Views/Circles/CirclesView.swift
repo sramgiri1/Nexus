@@ -504,6 +504,7 @@ struct CirclesView: View {
 
     private func syncDeepLink() {
         guard let id = appState.pendingTaskId,
+              appState.pendingTaskCircleId == nil || appState.pendingTaskCircleId == appState.activeCircle?.id,
               let task = tasks.first(where: { $0.id == id }) else { return }
         if multipleRecipients, let recipientId = task.recipientId {
             selectedRecipient = recipientId

@@ -34,7 +34,14 @@ final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCent
         withCompletionHandler completionHandler: @escaping () -> Void
     ) {
         if let taskId = response.notification.request.content.userInfo["taskId"] as? String {
-            NotificationCenter.default.post(name: .careLoopPushTaskOpened, object: taskId)
+            var payload = ["taskId": taskId]
+            if let circleId = response.notification.request.content.userInfo["circleId"] as? String {
+                payload["circleId"] = circleId
+            }
+            if let recipientId = response.notification.request.content.userInfo["recipientId"] as? String {
+                payload["recipientId"] = recipientId
+            }
+            NotificationCenter.default.post(name: .careLoopPushTaskOpened, object: payload)
         }
         completionHandler()
     }

@@ -1980,7 +1980,7 @@ describe("circle membership management", () => {
 // ═══════════════════════════════════════════════════════════════════════════════
 
 describe("sendReminderNotifications", () => {
-  const task = { id: "t1", title: "Meds", circle: { name: "Circle" } };
+  const task = { id: "t1", title: "Meds", circleId: "c1", recipientId: "cr1", circle: { id: "c1", name: "Circle" } };
 
   test("delivers to all user IDs and returns one result per user", async () => {
     const db = buildDb({
@@ -2005,6 +2005,16 @@ describe("sendReminderNotifications", () => {
     const results = await sendReminderNotifications({ db, task, type: "reminder", userIds: ["u1"] });
     assert.equal(results[0].channel, "NONE");
     assert.equal(results[0].delivered, false);
+  });
+
+  test("push reminder payload includes task, circle, and care receiver ids for deep links", async () => {
+    const db = buildDb({ users: [{ id: "u1", name: "Alice", email: "a@t.com", pushToken: "device-token" }] });
+    const results = await sendReminderNotifications({ db, task, type: "reminder", userIds: ["u1"] });
+    assert.equal(results[0].channel, "PUSH");
+    assert.equal(results[0].simulated, true);
+    assert.equal(results[0].payload.taskId, "t1");
+    assert.equal(results[0].payload.circleId, "c1");
+    assert.equal(results[0].payload.recipientId, "cr1");
   });
 });
 

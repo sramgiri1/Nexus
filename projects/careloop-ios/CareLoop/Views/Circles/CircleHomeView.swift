@@ -917,7 +917,10 @@ struct CircleHomeView: View {
     }
 
     private func syncPendingTaskNavigation() {
-        guard appState.pendingTaskId != nil, !deepLinkToTaskBoard else { return }
+        guard appState.pendingTaskId != nil,
+              appState.pendingTaskCircleId == nil || appState.pendingTaskCircleId == appState.activeCircle?.id,
+              !deepLinkToTaskBoard
+        else { return }
         deepLinkToTaskBoard = true
     }
 }

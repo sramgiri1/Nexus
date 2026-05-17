@@ -299,6 +299,8 @@ Every API action, screen, and empty state must enforce these product rules.
 
 **Push-to-email fallback:** If the targeted user has no `pushToken`, skip push and send email directly. If Resend fails, log and mark `Reminder.status = FAILED` — no retry in Sprint 1.
 
+**Deep-link payload:** Reminder notifications include `taskId`, `circleId`, `recipientId`, and notification `type`. The iOS app stores both pending task and pending circle context, opens the task only when the active circle owns it, and clears the pending state after navigation.
+
 **Idempotency:** Cron checks `Reminder.status` before sending. A reminder with `status != PENDING` is skipped. Prevents double-sends on process restart.
 
 ### 5.4 Daily Digest

@@ -89,7 +89,7 @@ function taskNotificationContent(type, taskTitle, extra) {
 
 async function sendApns({ pushToken, payload }) {
   if (!hasApnsConfig()) {
-    return { delivered: false, simulated: true, channel: "PUSH", reason: "apns_not_configured" };
+    return { delivered: false, simulated: true, channel: "PUSH", reason: "apns_not_configured", payload };
   }
 
   const body = JSON.stringify(payload);
@@ -192,6 +192,8 @@ export async function deliverTaskNotification({ db, userId, task, type, extra })
       sound: "default",
     },
     taskId: task.id,
+    circleId: task.circleId ?? task.circle?.id ?? null,
+    recipientId: task.recipientId ?? task.recipient?.id ?? null,
     type,
   };
 
