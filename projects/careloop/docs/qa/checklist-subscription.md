@@ -14,7 +14,8 @@
 | `CareLoop/App/SubscriptionManager.swift` | StoreKit 2 `@MainActor ObservableObject` singleton |
 | `CareLoop/Views/PaywallView.swift` | Dark-navy subscription paywall |
 | `CareLoop/Views/Circles/CircleListView.swift` | Updated: premium badge, upgrade prompt, stat pills, AccountSheet callback |
-| `CareLoopTests/SubscriptionManagerTests.swift` | 34 unit tests across 5 test classes |
+| `CareLoopTests/SubscriptionManagerTests.swift` | Unit tests across StoreKit/product contracts and paywall disclosure text |
+| `CareLoop/Configuration/CareLoop.storekit` | Local StoreKit configuration for simulator purchase testing |
 
 ---
 
@@ -112,6 +113,32 @@ func test_monthlyProduct_nilSafeWhenProductsEmpty() {
 - [x] Privacy Policy and Terms of Use links in paywall footer
 - [x] X (close) button with `accessibilityLabel("Close")`
 - [x] No forbidden health claims in paywall copy
+- [x] Local StoreKit config exists with monthly/yearly receiver Premium product IDs
+
+## Local StoreKit configuration
+
+Use this file in the Xcode scheme's StoreKit Configuration setting for simulator purchase tests:
+
+```text
+CareLoop/Configuration/CareLoop.storekit
+```
+
+Expected product IDs:
+
+- `com.careloop.ios.premium.monthly`
+- `com.careloop.ios.premium.yearly`
+
+Local contract check:
+
+```bash
+npm run check:careloop-demo-readiness
+```
+
+External setup still required before production billing sign-off:
+
+- Create the matching subscription group and product IDs in App Store Connect.
+- Configure sandbox tester accounts.
+- Validate purchase, restore, expiry, billing retry, and cancellation on a physical device or TestFlight build.
 
 ---
 

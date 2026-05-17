@@ -41,7 +41,7 @@ Track CareLoop Phase 2 as a governed NEXUS project mission for product hardening
 
 ## Premium Phase Handoff
 
-CareLoop remains in `CARELOOP-P3-PREMIUM` for receiver-scoped monetization. The operative plan is `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`, and the next premium subphase is P8 demo and StoreKit hardening.
+CareLoop remains in `CARELOOP-P3-PREMIUM` for receiver-scoped monetization. The operative plan is `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`, and premium subphases P1-P8 are complete on the active branch.
 
 Premium phase rules:
 
@@ -59,6 +59,7 @@ Completed premium subphases:
 - P5: organizer Care Receiver Management surfaces collapsed premium request summaries per receiver with count/latest requester context and no direct-purchase behavior.
 - P6: receiver-scoped purchase success and plan management UX confirms unlocked features, renewal scope, App Store manage/restore actions, and above-fold organizer access.
 - P7: expired entitlement enforcement keeps existing care data visible while blocking new premium-only actions, with backend and iOS payment-suite coverage.
+- P8: demo and StoreKit hardening keeps `npm run careloop:demo` as the room launcher, adds premium/free/expired/request-pending showcase data, adds local StoreKit products, and validates the demo contract.
 
 ## Current Test Commands
 
@@ -74,13 +75,14 @@ Completed premium subphases:
 - `scripts/careloop-test-runner.sh ios:reminders`
 - `scripts/careloop-test-runner.sh ios:payments`
 - `npm run check:careloop-premium-phase-plan`
+- `npm run check:careloop-demo-readiness`
 
 ## Still Not Enabled
 
 - Prisma migrations or DB writes
 - Deployment or release execution
 - Production provider calls
-- StoreKit sandbox purchase/restore without Apple setup
+- App Store Connect StoreKit products, sandbox testers, and physical-device purchase/restore without Apple setup
 - APNs physical-device delivery without Apple setup
 - Real social-auth provider redirects without credentials
 

@@ -30,6 +30,7 @@ Suites:
   backend:payments      Premium entitlement and receiver paywall backend tests.
   backend:scale         50-user and multi-circle/multi-role simulations.
   docs:premium          Premium PRD/phase-plan contract check.
+  docs:demo             Demo seed and StoreKit configuration contract check.
 
   ios                   Full Xcode suite.
   ios:unit              iOS unit/model tests only.
@@ -119,6 +120,9 @@ case "$suite" in
   docs:premium)
     (cd "$ROOT_DIR" && npm run check:careloop-premium-phase-plan)
     ;;
+  docs:demo)
+    (cd "$ROOT_DIR" && npm run check:careloop-demo-readiness)
+    ;;
   ios)
     run_xcode
     ;;
@@ -166,6 +170,7 @@ case "$suite" in
       "CareLoopUITests/CareLoopUITests/test_pendingTaskDeepLinkWaitsForOwningCircle"
     ;;
   ios:payments)
+    (cd "$ROOT_DIR" && npm run check:careloop-demo-readiness)
     run_ios_only \
       "CareLoopTests/SubscriptionManagerInitialStateTests" \
       "CareLoopTests/SubscriptionManagerProductIdTests" \

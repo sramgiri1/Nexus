@@ -162,20 +162,23 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P8: Demo And StoreKit Hardening
 
+**Status:** Complete.
+
 **Goal:** Make the investor/demo path and sandbox billing path representative.
 
 **Deliverables**
 
-- Update the single-command demo seed with free, premium, expired, and request-pending receivers.
-- Update the room launcher profile set to include premium management moments.
-- Add StoreKit configuration and simulator purchase tests where possible.
-- Document remaining App Store Connect, sandbox tester, and physical-device requirements.
+- Updated the single-command demo seed with free, premium, expired, and request-pending receiver states across four real-world care scenarios.
+- Kept the existing `npm run careloop:demo` launcher as the one-command room demo entry.
+- Added local StoreKit configuration for monthly and yearly receiver Premium products.
+- Added a demo-readiness contract check that validates the demo command, showcase seed, and StoreKit product IDs.
+- Documented first-run demo setup, StoreKit scheme configuration, App Store Connect product setup, sandbox testers, and physical-device purchase/restore requirements.
 
 **Tests**
 
-- `npm run careloop:demo`
-- StoreKit simulator tests where local config is available.
-- Physical-device checklist for App Store sandbox purchase/restore.
+- `npm run check:careloop-demo-readiness`
+- `scripts/careloop-test-runner.sh docs:demo`
+- `scripts/careloop-test-runner.sh ios:payments`
 
 ## Phase Completion Rule
 

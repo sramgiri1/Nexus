@@ -192,6 +192,10 @@ const circleScenarios = [
       { userKey: "recoveryCaregiver", accessTo: ["grace"] },
       { userKey: "recoveryBackup", accessTo: ["grace"] },
     ],
+    premiumRequests: [
+      { recipientKey: "grace", requesterKey: "recoveryCaregiver", createdHoursAgo: 2 },
+      { recipientKey: "grace", requesterKey: "recoveryBackup", createdHoursAgo: 1 },
+    ],
     pendingInvites: [
       { email: "demo.recovery.volunteer@careloop.local", name: "Casey Volunteer", role: "MEMBER" },
     ],
@@ -408,7 +412,10 @@ const circleScenarios = [
         userKey: "memoryRecipient",
         entitlement: {
           status: "ACTIVE",
-          source: "MANUAL",
+          source: "APP_STORE",
+          expiresAtHoursFromNow: -48,
+          appleOriginalTransactionId: "demo-memory-walter-expired-001",
+          appleProductId: "com.careloop.ios.premium.monthly",
         },
       },
     ],
@@ -530,7 +537,7 @@ function entitlementData(recipientId, organizerId, entitlement, now) {
     status: entitlement.status,
     source: entitlement.source,
     startsAt: hoursFromNow(now, -24 * 14),
-    expiresAt: hoursFromNow(now, 24 * 30),
+    expiresAt: hoursFromNow(now, entitlement.expiresAtHoursFromNow ?? 24 * 30),
     purchasedById: organizerId,
     appleOriginalTransactionId: entitlement.appleOriginalTransactionId ?? null,
     appleProductId: entitlement.appleProductId ?? null,
@@ -753,6 +760,17 @@ async function createCircleScenario(scenario, users, now) {
           },
         });
       }
+    }
+
+    for (const requestSpec of scenario.premiumRequests ?? []) {
+      await tx.premiumUpgradeRequest.create({
+        data: {
+          circleId: circle.id,
+          recipientId: recipients[requestSpec.recipientKey].id,
+          requesterUserId: users[requestSpec.requesterKey].id,
+          createdAt: hoursFromNow(now, -requestSpec.createdHoursAgo),
+        },
+      });
     }
 
     for (const [index, inviteSpec] of scenario.pendingInvites.entries()) {

@@ -97,6 +97,13 @@ Current CareLoop progress:
   `backend:auth`, `backend:circles`, `backend:reminders`, `backend:scale`,
   `ios:onboarding`, `ios:personas`, `ios:tasks`, `ios:reminders`, and
   `ios:payments`.
+- Receiver-scoped premium subphases P1-P8 are implemented on
+  `codex/careloop-premium-phases`, including the single-command room demo,
+  premium/free/expired/request-pending demo data, and local StoreKit product
+  configuration.
+- The CareLoop room demo launches from the repo root with
+  `npm run careloop:demo`; first-time simulator setup can use
+  `CARELOOP_DEMO_FORCE_BUILD=1 CARELOOP_DEMO_FORCE_INSTALL=1 npm run careloop:demo`.
 
 Recent validation:
 
@@ -104,6 +111,8 @@ Recent validation:
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with the expanded reminder, escalation,
   50-user, and multi-role coverage.
+- `npm run check:careloop-demo-readiness` validates the demo command, showcase
+  seed, and StoreKit product ID contract.
 
 Known remaining CareLoop blockers:
 
@@ -111,8 +120,8 @@ Known remaining CareLoop blockers:
   physical-device/TestFlight pass.
 - Google/Facebook/Apple provider credentials and redirect URIs are still needed
   for real social-auth validation.
-- StoreKit sandbox purchase/restore and App Store entitlement verification need
-  external setup.
+- App Store Connect StoreKit products, sandbox testers, and physical-device
+  purchase/restore validation still need external setup.
 - UI automation is still missing for delete circle/member/receiver destructive
   flows, full create-recurring-task form submission, invite email delivery, and
   some empty/error/offline states.
