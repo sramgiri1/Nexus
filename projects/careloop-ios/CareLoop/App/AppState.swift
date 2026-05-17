@@ -26,8 +26,11 @@ final class AppState: ObservableObject {
 
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?
+    private let launchSession: DemoLaunchSession?
 
-    init(shouldRestoreSession: Bool = true) {
+    init(shouldRestoreSession: Bool = true, launchSession: DemoLaunchSession? = nil) {
+        self.launchSession = launchSession
+
         NotificationCenter.default.publisher(for: .careLoopPushTokenRegistered)
             .compactMap { $0.object as? String }
             .receive(on: RunLoop.main)
@@ -42,6 +45,11 @@ final class AppState: ObservableObject {
                 self?.handlePushTaskOpened(notification.object)
             }
             .store(in: &cancellables)
+
+        if let launchSession {
+            APIClient.shared.setAccessToken(launchSession.accessToken)
+            persistSession(userId: nil, circleId: launchSession.circleId)
+        }
 
         if shouldRestoreSession {
             Task { await restoreSession() }
@@ -147,6 +155,14 @@ final class AppState: ObservableObject {
     private func restoreSession() async {
         guard APIClient.shared.hasAccessToken else { return }
         do {
+            if let launchSession, launchSession.autoActivateCircle {
+                try await refreshCurrentUser(
+                    preferredCircleId: launchSession.circleId,
+                    selectCircle: true
+                )
+                return
+            }
+
             let user = try await APIClient.shared.fetchCurrentUser()
             let rememberedCircleId = resolvedCircleId(from: user, preferredCircleId: storedCircleId)
             currentUser = mergedUser(user, with: nil)

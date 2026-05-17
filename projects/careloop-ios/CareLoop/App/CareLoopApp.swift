@@ -59,6 +59,8 @@ struct CareLoopApp: App {
         }
         if let scenario = UITestScenario.current {
             _appState = StateObject(wrappedValue: AppState(uiTestScenario: scenario))
+        } else if let launchSession = DemoLaunchSession.current {
+            _appState = StateObject(wrappedValue: AppState(launchSession: launchSession))
         } else {
             _appState = StateObject(wrappedValue: AppState())
         }
