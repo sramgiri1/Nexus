@@ -1182,6 +1182,7 @@ Implementation should move in tested vertical slices, not isolated screen paint 
   - Care Circle list -> create / join -> dashboard
   - create recurring task -> complete -> deep-link back from reminder
 - backend smoke coverage must exist for auth, Care Circle, invite, receiver activation, and task routes
+- screen-level coverage must be tracked in `docs/qa/testability-matrix.md`
 
 ### 15.2 Slice order
 
