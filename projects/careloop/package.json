@@ -11,8 +11,9 @@
     "studio": "prisma studio",
     "qa:reset": "node scripts/reset-db.js",
     "qa:seed:sprint1": "node scripts/seed-sprint1.js",
-    "test": "node --test test/sprint2.test.js",
-    "test:watch": "node --test --watch test/sprint2.test.js"
+    "test": "node --test test/*.test.js",
+    "test:smoke": "node --test test/sprint2.test.js",
+    "test:watch": "node --test --watch test/*.test.js"
   },
   "dependencies": {
     "@fastify/cors": "^9.0.1",

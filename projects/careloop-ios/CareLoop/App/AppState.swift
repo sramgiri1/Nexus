@@ -8,13 +8,16 @@ extension Notification.Name {
 
 @MainActor
 final class AppState: ObservableObject {
+    private enum SessionKeys {
+        static let user = "careloop.userId"
+        static let circle = "careloop.circleId"
+    }
+
     @Published var currentUser: CareUser?
     @Published var activeCircle: CareCircle?
     @Published var pendingTaskId: String?
     @Published var shouldPromptNewTask = false
 
-    private let userKey   = "careloop.userId"
-    private let circleKey = "careloop.circleId"
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?
 
@@ -124,9 +127,13 @@ final class AppState: ObservableObject {
         currentUser  = nil
         activeCircle = nil
         shouldPromptNewTask = false
+        Self.resetPersistedSession()
+    }
+
+    static func resetPersistedSession() {
         APIClient.shared.clearAccessToken()
-        UserDefaults.standard.removeObject(forKey: userKey)
-        UserDefaults.standard.removeObject(forKey: circleKey)
+        UserDefaults.standard.removeObject(forKey: SessionKeys.user)
+        UserDefaults.standard.removeObject(forKey: SessionKeys.circle)
     }
 
     private func restoreSession() async {
@@ -155,20 +162,20 @@ final class AppState: ObservableObject {
     }
 
     private var storedCircleId: String? {
-        UserDefaults.standard.string(forKey: circleKey)
+        UserDefaults.standard.string(forKey: SessionKeys.circle)
     }
 
     private func persistSession(userId: String?, circleId: String?) {
         if let userId {
-            UserDefaults.standard.set(userId, forKey: userKey)
+            UserDefaults.standard.set(userId, forKey: SessionKeys.user)
         } else {
-            UserDefaults.standard.removeObject(forKey: userKey)
+            UserDefaults.standard.removeObject(forKey: SessionKeys.user)
         }
 
         if let circleId {
-            UserDefaults.standard.set(circleId, forKey: circleKey)
+            UserDefaults.standard.set(circleId, forKey: SessionKeys.circle)
         } else {
-            UserDefaults.standard.removeObject(forKey: circleKey)
+            UserDefaults.standard.removeObject(forKey: SessionKeys.circle)
         }
     }
 

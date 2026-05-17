@@ -10,7 +10,17 @@ import StoreKit
 @MainActor
 final class SubscriptionManagerInitialStateTests: XCTestCase {
 
-    private var manager: SubscriptionManager { SubscriptionManager.shared }
+    private var manager: SubscriptionManager!
+
+    override func setUp() {
+        super.setUp()
+        manager = SubscriptionManager(startupBehavior: .manual)
+    }
+
+    override func tearDown() {
+        manager = nil
+        super.tearDown()
+    }
 
     // MARK: – Initial published state
 
@@ -74,7 +84,17 @@ final class SubscriptionManagerProductIdTests: XCTestCase {
 @MainActor
 final class SubscriptionManagerAccessorTests: XCTestCase {
 
-    private var manager: SubscriptionManager { SubscriptionManager.shared }
+    private var manager: SubscriptionManager!
+
+    override func setUp() {
+        super.setUp()
+        manager = SubscriptionManager(startupBehavior: .manual)
+    }
+
+    override func tearDown() {
+        manager = nil
+        super.tearDown()
+    }
 
     // MARK: – Nil-safe accessor contract when products have not loaded
 

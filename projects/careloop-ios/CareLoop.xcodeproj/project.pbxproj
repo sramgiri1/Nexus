@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		070638D0B7BFF0AF6E85D88A /* TaskRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E9AF4A2FE132B03AA630746 /* TaskRowView.swift */; };
 		09B801178F8D8F47266C5440 /* NewTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02A3C54418E5BFB0EAC1CC46 /* NewTaskView.swift */; };
+		A9E1C0011B8D4C8E9F010001 /* CareLoopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E1C0021B8D4C8E9F010002 /* CareLoopUITests.swift */; };
 		0EC37C4FE15319FD7D74A206 /* MemberListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2FCBAAA3E631E793BD70DB0 /* MemberListView.swift */; };
 		1A29F2D62482ED9136C31774 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 26ACF72E72439C0BAC5D12EC /* User.swift */; };
 		214B349BC7F8A1E9D7DE302C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 23201C199B97E3927FAF8537 /* ContentView.swift */; };
@@ -58,11 +59,20 @@
 			remoteGlobalIDString = 2E33951834C1EC590082CB4F;
 			remoteInfo = CareLoop;
 		};
+		A9E1C0081B8D4C8E9F010008 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A2860524DE6EB3C2A3C788AD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E33951834C1EC590082CB4F;
+			remoteInfo = CareLoop;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		00522140DAA3DA6212EAEB5F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		02A3C54418E5BFB0EAC1CC46 /* NewTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewTaskView.swift; sourceTree = "<group>"; };
+		A9E1C0021B8D4C8E9F010002 /* CareLoopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareLoopUITests.swift; sourceTree = "<group>"; };
+		A9E1C0031B8D4C8E9F010003 /* CareLoopUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = CareLoopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		15F6AFA5DC145E9626BB15DB /* JoinCircleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoinCircleView.swift; sourceTree = "<group>"; };
 		1EB81C72F8FF200E683C051B /* CareLoopApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CareLoopApp.swift; sourceTree = "<group>"; };
 		1FF2D3EF70AFD68FB45A4A56 /* AdminInsightsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminInsightsView.swift; sourceTree = "<group>"; };
@@ -121,6 +131,7 @@
 			children = (
 				B591F88B07062BE57B910FD9 /* CareLoop.app */,
 				E2BFC0D77ED18D396F926828 /* CareLoopTests.xctest */,
+				A9E1C0031B8D4C8E9F010003 /* CareLoopUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -167,6 +178,14 @@
 				F6A7B8C9D0E1F2A3B4C5D6E7 /* SubscriptionManagerTests.swift */,
 			);
 			path = CareLoopTests;
+			sourceTree = "<group>";
+		};
+		A9E1C0041B8D4C8E9F010004 /* CareLoopUITests */ = {
+			isa = PBXGroup;
+			children = (
+				A9E1C0021B8D4C8E9F010002 /* CareLoopUITests.swift */,
+			);
+			path = CareLoopUITests;
 			sourceTree = "<group>";
 		};
 		7F8E264FAF6962BB9E4F40BD /* Circles */ = {
@@ -274,6 +293,7 @@
 			children = (
 				F25D5AE2BCE6A074BE66B1F5 /* CareLoop */,
 				7EA569585E0F5D22ABA7D6E5 /* CareLoopTests */,
+				A9E1C0041B8D4C8E9F010004 /* CareLoopUITests */,
 				3C79A0E307336B26B7F1BDA1 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -307,6 +327,24 @@
 			productReference = B591F88B07062BE57B910FD9 /* CareLoop.app */;
 			productType = "com.apple.product-type.application";
 		};
+		A9E1C0051B8D4C8E9F010005 /* CareLoopUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9E1C00B1B8D4C8E9F01000B /* Build configuration list for PBXNativeTarget "CareLoopUITests" */;
+			buildPhases = (
+				A9E1C0061B8D4C8E9F010006 /* Sources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9E1C0071B8D4C8E9F010007 /* PBXTargetDependency */,
+			);
+			name = CareLoopUITests;
+			packageProductDependencies = (
+			);
+			productName = CareLoopUITests;
+			productReference = A9E1C0031B8D4C8E9F010003 /* CareLoopUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
 		BCC6E0E55C2A00353EE40851 /* CareLoopTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = E5684F86F091605CD024EDE6 /* Build configuration list for PBXNativeTarget "CareLoopTests" */;
@@ -337,6 +375,10 @@
 					2E33951834C1EC590082CB4F = {
 						DevelopmentTeam = "";
 					};
+					A9E1C0051B8D4C8E9F010005 = {
+						DevelopmentTeam = "";
+						TestTargetID = 2E33951834C1EC590082CB4F;
+					};
 					BCC6E0E55C2A00353EE40851 = {
 						DevelopmentTeam = "";
 					};
@@ -357,6 +399,7 @@
 			projectRoot = "";
 			targets = (
 				2E33951834C1EC590082CB4F /* CareLoop */,
+				A9E1C0051B8D4C8E9F010005 /* CareLoopUITests */,
 				BCC6E0E55C2A00353EE40851 /* CareLoopTests */,
 			);
 		};
@@ -382,6 +425,14 @@
 				979CBA5198E7E79DFA92AAD9 /* ModelTests.swift in Sources */,
 				2DEF09A8C47BCE62560AA5BC /* OnboardingValidationTests.swift in Sources */,
 				F5A6B7C8D9E0F1A2B3C4D5E6 /* SubscriptionManagerTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E1C0061B8D4C8E9F010006 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9E1C0011B8D4C8E9F010001 /* CareLoopUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -435,6 +486,11 @@
 			isa = PBXTargetDependency;
 			target = 2E33951834C1EC590082CB4F /* CareLoop */;
 			targetProxy = 8F8721F0AEBEBE2E9AEFBA74 /* PBXContainerItemProxy */;
+		};
+		A9E1C0071B8D4C8E9F010007 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E33951834C1EC590082CB4F /* CareLoop */;
+			targetProxy = A9E1C0081B8D4C8E9F010008 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -520,6 +576,37 @@
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		A9E1C0091B8D4C8E9F010009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CareLoop;
+			};
+			name = Debug;
+		};
+		A9E1C00A1B8D4C8E9F01000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.careloop.ios.uitests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SWIFT_VERSION = 5.9;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = CareLoop;
 			};
 			name = Release;
 		};
@@ -651,6 +738,15 @@
 			buildConfigurations = (
 				06BA718184A2160E603BFDBF /* Debug */,
 				DF7913171CAE1DF5D8975332 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		A9E1C00B1B8D4C8E9F01000B /* Build configuration list for PBXNativeTarget "CareLoopUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9E1C0091B8D4C8E9F010009 /* Debug */,
+				A9E1C00A1B8D4C8E9F01000A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;

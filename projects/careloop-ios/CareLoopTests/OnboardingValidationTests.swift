@@ -14,10 +14,9 @@ final class OnboardingValidationTests: XCTestCase {
         XCTAssertTrue(OnboardingValidation.joinCircle(circleId: "circle-123"))
     }
 
-    func test_createCircle_requiresCircleAndRecipientNames() {
-        XCTAssertFalse(OnboardingValidation.createCircle(circleName: "", recipientName: "Mom"))
-        XCTAssertFalse(OnboardingValidation.createCircle(circleName: "Family", recipientName: ""))
-        XCTAssertTrue(OnboardingValidation.createCircle(circleName: "Family", recipientName: "Mom"))
+    func test_createCircle_requiresCircleName() {
+        XCTAssertFalse(OnboardingValidation.createCircle(circleName: ""))
+        XCTAssertTrue(OnboardingValidation.createCircle(circleName: "Family"))
     }
 
     func test_supportedCreateAccountProviders_includeEmailGoogleFacebookApple() {

@@ -6,6 +6,11 @@ final class SubscriptionManager: ObservableObject {
 
     static let shared = SubscriptionManager()
 
+    enum StartupBehavior {
+        case automatic
+        case manual
+    }
+
     static let monthlyID = "com.careloop.ios.premium.monthly"
     static let yearlyID  = "com.careloop.ios.premium.yearly"
 
@@ -18,7 +23,13 @@ final class SubscriptionManager: ObservableObject {
 
     private var transactionTask: Task<Void, Never>?
 
-    private init() {
+    init(startupBehavior: StartupBehavior = .automatic) {
+        guard startupBehavior == .automatic else { return }
+        start()
+    }
+
+    private func start() {
+        guard transactionTask == nil else { return }
         transactionTask = observeTransactionUpdates()
         Task {
             isLoading = true
