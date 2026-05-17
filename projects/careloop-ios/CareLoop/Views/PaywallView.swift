@@ -2,17 +2,22 @@ import SwiftUI
 import StoreKit
 
 struct PaywallView: View {
+    let circleId: String
+    let recipient: CareRecipient
+
+    @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var store = SubscriptionManager.shared
+
     @State private var isYearly = true
+    @State private var isSyncingEntitlement = false
+    @State private var syncError: String?
 
     private let features: [(icon: String, title: String)] = [
-        ("infinity",               "Unlimited care circles"),
-        ("bell.badge.fill",        "Smart push reminders"),
-        ("chart.bar.fill",         "Admin insights & analytics"),
-        ("person.2.fill",          "Full member management"),
-        ("arrow.clockwise",        "Recurring task schedules"),
-        ("shield.checkerboard",    "Priority support"),
+        ("arrow.clockwise", "Recurring routines for this care receiver"),
+        ("chart.bar.fill", "Receiver-scoped completion insights"),
+        ("person.3.fill", "Unlimited caregiver access"),
+        ("bell.badge.fill", "Advanced coordination and reminders"),
     ]
 
     var body: some View {
@@ -20,12 +25,17 @@ struct PaywallView: View {
             ZStack {
                 background
                 ScrollView(showsIndicators: false) {
-                    VStack(spacing: 0) {
-                        heroSection.padding(.top, 24)
-                        featuresSection.padding(.top, 30)
-                        planSelectorSection.padding(.top, 30).padding(.horizontal, 22)
-                        ctaSection.padding(.top, 22).padding(.horizontal, 22)
-                        footerSection.padding(.top, 18).padding(.horizontal, 22).padding(.bottom, 48)
+                    VStack(spacing: 24) {
+                        heroSection
+                            .padding(.top, 24)
+                        featuresSection
+                        planSelectorSection
+                            .padding(.horizontal, 22)
+                        ctaSection
+                            .padding(.horizontal, 22)
+                        footerSection
+                            .padding(.horizontal, 22)
+                            .padding(.bottom, 44)
                     }
                 }
             }
@@ -42,13 +52,9 @@ struct PaywallView: View {
                 }
             }
             .navigationBarTitleDisplayMode(.inline)
-            .onChange(of: store.isPremium) { isPremium in
-                if isPremium { dismiss() }
-            }
         }
+        .accessibilityIdentifier("receiver-paywall-screen")
     }
-
-    // MARK: – Background
 
     private var background: some View {
         LinearGradient(
@@ -63,38 +69,52 @@ struct PaywallView: View {
         .ignoresSafeArea()
     }
 
-    // MARK: – Hero
-
     private var heroSection: some View {
         VStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(LinearGradient(
-                        colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
-                        startPoint: .topLeading, endPoint: .bottomTrailing
-                    ))
-                    .frame(width: 76, height: 76)
+                    .fill(
+                        LinearGradient(
+                            colors: [Color(red: 0.16, green: 0.80, blue: 0.72), Color(red: 0.13, green: 0.56, blue: 0.87)],
+                            startPoint: .topLeading,
+                            endPoint: .bottomTrailing
+                        )
+                    )
+                    .frame(width: 78, height: 78)
                     .shadow(color: Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.50), radius: 22, x: 0, y: 6)
                 Image(systemName: "crown.fill")
                     .font(.system(size: 30))
                     .foregroundStyle(.white)
             }
 
-            VStack(spacing: 7) {
-                Text("CareLoop Premium")
+            VStack(spacing: 8) {
+                Text(ReceiverPremiumPolicy.upgradePromptTitle(for: recipient))
                     .font(.system(size: 26, weight: .bold, design: .rounded))
                     .foregroundStyle(.white)
-                Text("The complete platform for\ncoordinated family care.")
+                    .multilineTextAlignment(.center)
+                Text("Premium applies only to \(recipient.name)’s care workflow inside this Care Circle.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.white.opacity(0.68))
                     .multilineTextAlignment(.center)
                     .lineSpacing(3)
             }
+
+            HStack(spacing: 8) {
+                statusChip(title: recipient.name, tint: Color(red: 0.16, green: 0.80, blue: 0.72))
+                statusChip(title: recipient.caregiverAccessSummary, tint: Color(red: 0.13, green: 0.56, blue: 0.87))
+            }
         }
         .padding(.horizontal, 28)
     }
 
-    // MARK: – Features
+    private func statusChip(title: String, tint: Color) -> some View {
+        Text(title)
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(Capsule().fill(tint.opacity(0.15)))
+    }
 
     private var featuresSection: some View {
         VStack(spacing: 0) {
@@ -125,11 +145,9 @@ struct PaywallView: View {
         }
     }
 
-    // MARK: – Plan Selector
-
     private var planSelectorSection: some View {
         VStack(spacing: 10) {
-            Text("Choose your plan")
+            Text("Choose a plan")
                 .font(.system(size: 11, weight: .bold, design: .rounded))
                 .foregroundStyle(.white.opacity(0.45))
                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -146,25 +164,23 @@ struct PaywallView: View {
     @ViewBuilder
     private func planCard(yearly: Bool) -> some View {
         let selected = isYearly == yearly
-        let product  = store.product(yearly: yearly)
-        let price    = product?.displayPrice ?? (yearly ? "$39.99" : "$4.99")
-        let period   = yearly ? "/ year" : "/ month"
+        let product = store.product(yearly: yearly)
+        let price = product?.displayPrice ?? (yearly ? "$39.99" : "$4.99")
+        let period = yearly ? "/ year" : "/ month"
 
         Button { isYearly = yearly } label: {
             VStack(spacing: 6) {
                 if yearly {
                     Text("Best Value")
                         .font(.system(size: 10, weight: .bold, design: .rounded))
-                        .foregroundStyle(selected
-                            ? Color(red: 0.04, green: 0.08, blue: 0.20)
-                            : Color(red: 0.16, green: 0.80, blue: 0.72))
-                        .padding(.horizontal, 9).padding(.vertical, 3)
-                        .background(Capsule().fill(selected
-                            ? Color(red: 0.16, green: 0.80, blue: 0.72)
-                            : Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.18)))
+                        .foregroundStyle(selected ? Color(red: 0.04, green: 0.08, blue: 0.20) : Color(red: 0.16, green: 0.80, blue: 0.72))
+                        .padding(.horizontal, 9)
+                        .padding(.vertical, 3)
+                        .background(Capsule().fill(selected ? Color(red: 0.16, green: 0.80, blue: 0.72) : Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.18)))
                 } else {
                     Spacer().frame(height: 20)
                 }
+
                 Text(yearly ? "Yearly" : "Monthly")
                     .font(.system(size: 13, weight: .bold, design: .rounded))
                     .foregroundStyle(selected ? .white : .white.opacity(0.55))
@@ -179,22 +195,27 @@ struct PaywallView: View {
             .frame(maxWidth: .infinity)
             .background(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(selected
-                        ? AnyShapeStyle(LinearGradient(
-                            colors: [
-                                Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.20),
-                                Color(red: 0.13, green: 0.56, blue: 0.87).opacity(0.20),
-                            ],
-                            startPoint: .topLeading, endPoint: .bottomTrailing
-                          ))
-                        : AnyShapeStyle(Color.white.opacity(0.05)))
+                    .fill(
+                        selected
+                        ? AnyShapeStyle(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.20),
+                                    Color(red: 0.13, green: 0.56, blue: 0.87).opacity(0.20),
+                                ],
+                                startPoint: .topLeading,
+                                endPoint: .bottomTrailing
+                            )
+                        )
+                        : AnyShapeStyle(Color.white.opacity(0.05))
+                    )
             )
             .overlay(
                 RoundedRectangle(cornerRadius: 18, style: .continuous)
                     .strokeBorder(
                         selected
-                            ? Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.65)
-                            : Color.white.opacity(0.10),
+                        ? Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.65)
+                        : Color.white.opacity(0.10),
                         lineWidth: selected ? 1.5 : 1
                     )
             )
@@ -202,17 +223,17 @@ struct PaywallView: View {
         .buttonStyle(.plain)
     }
 
-    // MARK: – CTA
-
     private var ctaSection: some View {
         VStack(spacing: 12) {
-            let product  = store.product(yearly: isYearly)
+            let product = store.product(yearly: isYearly)
             let hasOffer = store.introOffer(yearly: isYearly) != nil
-            let ctaLabel = hasOffer ? "Start Free Trial" : "Subscribe Now"
-            let isProductLoading = store.isLoading || (product == nil && store.storeError == nil)
+            let ctaLabel = hasOffer ? "Start Free Trial" : "Unlock Premium"
+            let isProductLoading = store.isLoading || isSyncingEntitlement || (product == nil && store.storeError == nil)
 
             Button {
-                if let product { Task { await store.purchase(product) } }
+                if let product {
+                    Task { await purchaseAndSync(product) }
+                }
             } label: {
                 Group {
                     if isProductLoading {
@@ -226,30 +247,36 @@ struct PaywallView: View {
                 .frame(height: 54)
                 .background(
                     RoundedRectangle(cornerRadius: 16, style: .continuous)
-                        .fill(LinearGradient(
-                            colors: [
-                                Color(red: 0.16, green: 0.80, blue: 0.72),
-                                Color(red: 0.13, green: 0.56, blue: 0.87),
-                            ],
-                            startPoint: .leading, endPoint: .trailing
-                        ))
+                        .fill(
+                            LinearGradient(
+                                colors: [
+                                    Color(red: 0.16, green: 0.80, blue: 0.72),
+                                    Color(red: 0.13, green: 0.56, blue: 0.87),
+                                ],
+                                startPoint: .leading,
+                                endPoint: .trailing
+                            )
+                        )
                         .shadow(color: Color(red: 0.16, green: 0.80, blue: 0.72).opacity(0.38), radius: 14, x: 0, y: 5)
                 )
                 .foregroundStyle(.white)
                 .opacity(isProductLoading ? 0.75 : 1.0)
             }
-            .disabled(store.isLoading || product == nil)
+            .disabled(isProductLoading || product == nil)
 
-            if let err = store.storeError {
-                Text(err)
+            if let syncError {
+                Text(syncError)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(Color(red: 1.0, green: 0.45, blue: 0.45))
+                    .multilineTextAlignment(.center)
+            } else if let storeError = store.storeError {
+                Text(storeError)
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(Color(red: 1.0, green: 0.45, blue: 0.45))
                     .multilineTextAlignment(.center)
             }
         }
     }
-
-    // MARK: – Footer
 
     private var footerSection: some View {
         VStack(spacing: 16) {
@@ -262,49 +289,89 @@ struct PaywallView: View {
             if let msg = store.restoreMessage {
                 Text(msg)
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
-                    .foregroundStyle(store.isPremium
-                        ? Color(red: 0.16, green: 0.80, blue: 0.72)
-                        : .white.opacity(0.55))
+                    .foregroundStyle(store.isPremium ? Color(red: 0.16, green: 0.80, blue: 0.72) : .white.opacity(0.55))
                     .multilineTextAlignment(.center)
             }
 
-            Button { Task { await store.restorePurchases() } } label: {
+            Button {
+                Task { await restoreAndSync() }
+            } label: {
                 Text("Restore Purchases")
                     .font(.system(size: 13, weight: .semibold, design: .rounded))
-                    .foregroundStyle(.white.opacity(store.isLoading ? 0.30 : 0.50))
+                    .foregroundStyle(.white.opacity(store.isLoading || isSyncingEntitlement ? 0.30 : 0.50))
                     .underline()
             }
-            .disabled(store.isLoading)
+            .disabled(store.isLoading || isSyncingEntitlement)
 
-            HStack(spacing: 20) {
-                Link("Privacy Policy", destination: URL(string: "https://careloop.app/privacy")!)
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.32))
-                Text("·").foregroundStyle(.white.opacity(0.22))
-                Link("Terms of Use", destination: URL(string: "https://careloop.app/terms")!)
-                    .font(.system(size: 11, weight: .medium, design: .rounded))
-                    .foregroundStyle(.white.opacity(0.32))
-            }
+            Text("Premium is managed per care receiver. Unlocking \(recipient.name) does not automatically upgrade other care receivers in this Care Circle.")
+                .font(.system(size: 11, weight: .medium, design: .rounded))
+                .foregroundStyle(.white.opacity(0.32))
+                .multilineTextAlignment(.center)
         }
     }
 
     private var disclosureText: String {
         let product = store.product(yearly: isYearly)
-        let price   = product?.displayPrice ?? (isYearly ? "$39.99" : "$4.99")
-        let period  = isYearly ? "year" : "month"
+        let price = product?.displayPrice ?? (isYearly ? "$39.99" : "$4.99")
+        let period = isYearly ? "year" : "month"
 
         if let offer = store.introOffer(yearly: isYearly) {
             let n = offer.period.value
             let unit: String
             switch offer.period.unit {
-            case .day:   unit = n == 1 ? "day"   : "days"
-            case .week:  unit = n == 1 ? "week"  : "weeks"
+            case .day: unit = n == 1 ? "day" : "days"
+            case .week: unit = n == 1 ? "week" : "weeks"
             case .month: unit = n == 1 ? "month" : "months"
-            case .year:  unit = n == 1 ? "year"  : "years"
+            case .year: unit = n == 1 ? "year" : "years"
             @unknown default: unit = "period"
             }
             return "\(n)-\(unit) free trial, then \(price)/\(period). Auto-renews unless cancelled at least 24 hours before the period ends. Cancel anytime in App Store Settings › Subscriptions."
         }
         return "Billed \(price)/\(period). Auto-renews unless cancelled at least 24 hours before the period ends. Cancel anytime in App Store Settings › Subscriptions."
+    }
+
+    private func purchaseAndSync(_ product: Product) async {
+        syncError = nil
+        await store.purchase(product)
+        guard let purchase = store.latestPurchaseSnapshot else {
+            return
+        }
+        await syncEntitlement(
+            productId: purchase.productId,
+            originalTransactionId: String(purchase.originalTransactionId),
+            expiresAt: purchase.expirationDate
+        )
+    }
+
+    private func restoreAndSync() async {
+        syncError = nil
+        await store.restorePurchases()
+        guard let purchase = store.latestPurchaseSnapshot else {
+            return
+        }
+        await syncEntitlement(
+            productId: purchase.productId,
+            originalTransactionId: String(purchase.originalTransactionId),
+            expiresAt: purchase.expirationDate
+        )
+    }
+
+    private func syncEntitlement(productId: String, originalTransactionId: String, expiresAt: Date?) async {
+        isSyncingEntitlement = true
+        defer { isSyncingEntitlement = false }
+
+        do {
+            _ = try await APIClient.shared.syncRecipientPremium(
+                circleId: circleId,
+                recipientId: recipient.id,
+                expiresAt: expiresAt,
+                appleOriginalTransactionId: originalTransactionId,
+                appleProductId: productId
+            )
+            try await appState.activateCircle(id: circleId)
+            dismiss()
+        } catch {
+            syncError = error.localizedDescription
+        }
     }
 }

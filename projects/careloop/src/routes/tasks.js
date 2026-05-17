@@ -16,6 +16,7 @@ import {
   loadReceiverAccessContext,
   taskCapabilities,
 } from "../lib/access.js";
+import { receiverEntitlementCapabilities } from "../lib/entitlements.js";
 
 const taskInclude = {
   assignee: { select: { id: true, email: true, name: true, phone: true, pushToken: true, timezone: true } },
@@ -230,12 +231,20 @@ export default async function tasks(app) {
   async function assertTaskableRecipient(tx, circleId, recipientId) {
     const recipient = await tx.careRecipient.findFirst({
       where: { id: recipientId, circleId },
+      include: { entitlement: true },
     });
     if (!recipient) throw new Error("recipientId must belong to this circle");
     if (!canCreateTasksForReceiver(recipient)) {
       throw new Error("Care receiver must accept or be proxy-activated before tasks can be created");
     }
     return recipient;
+  }
+
+  function assertRecurringFeatureAccess(receiver, recurrence) {
+    if (!recurrence || recurrence.frequency === "NONE") return;
+    if (!receiverEntitlementCapabilities(receiver.entitlement).canUseAdvancedReminders) {
+      throw createHttpError("Recurring schedules require premium for this care receiver", 402);
+    }
   }
 
   // POST /circles/:circleId/tasks
@@ -295,6 +304,7 @@ export default async function tasks(app) {
         if (!canCreateTaskWithAccess({ member, receiver, accessContext: assignmentContext })) {
           throw createHttpError("You do not have access to create tasks for this care receiver", 403);
         }
+        assertRecurringFeatureAccess(receiver, normalizedRecurrence);
         assertAssigneeAllowed(assigneeId, receiver);
 
         const createdTask = await createTaskRecord(tx, {
@@ -491,6 +501,14 @@ export default async function tasks(app) {
           }
           targetRecipient = receiver;
           data.recipientId = resolvedRecipientId;
+        }
+
+        if ((recurrenceWasProvided && normalizedRecurrence.frequency !== "NONE")
+          || (recipientId !== undefined && nextRecurrenceFrequency !== "NONE")) {
+          assertRecurringFeatureAccess(
+            targetRecipient ?? task.recipient,
+            recurrenceWasProvided ? normalizedRecurrence : { frequency: nextRecurrenceFrequency },
+          );
         }
 
         const nextAssigneeId = assigneeId !== undefined ? assigneeId : task.assigneeId;

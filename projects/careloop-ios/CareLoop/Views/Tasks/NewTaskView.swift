@@ -44,6 +44,7 @@ struct NewTaskView: View {
 
     @State private var loading = false
     @State private var error:  String?
+    @State private var paywallRecipient: CareRecipient?
 
     init(circleId: String, creatorId: String, members: [CircleMember], recipients: [CareRecipient], isAdmin: Bool, onCreated: @escaping (CareTask) -> Void) {
         self.circleId   = circleId
@@ -80,9 +81,13 @@ struct NewTaskView: View {
                     if taskMode == .once {
                         whenCard
                     } else {
-                        scheduleCard
-                        startTimeCard
-                        endsCard
+                        if recurrenceLocked {
+                            premiumLockCard
+                        } else {
+                            scheduleCard
+                            startTimeCard
+                            endsCard
+                        }
                     }
 
                     if activeRecipients.count != 1 || activeRecipients.isEmpty { recipientCard }
@@ -121,6 +126,9 @@ struct NewTaskView: View {
             .onChange(of: freq)      { _ in seedWeekdayIfNeeded() }
             .onChange(of: startDate) { _ in seedWeekdayIfNeeded() }
             .onChange(of: recipientId) { _ in syncAssigneeSelection() }
+            .sheet(item: $paywallRecipient) { recipient in
+                PaywallView(circleId: circleId, recipient: recipient)
+            }
         }
     }
 
@@ -346,6 +354,10 @@ struct NewTaskView: View {
         )
     }
 
+    private var recurrenceLocked: Bool {
+        taskMode == .repeating && !ReceiverPremiumPolicy.supportsRecurringSchedules(for: selectedRecipientModel)
+    }
+
     // MARK: – Care recipient card
 
     @ViewBuilder
@@ -374,6 +386,39 @@ struct NewTaskView: View {
                 }
                 .padding(.horizontal, 16)
                 .padding(.vertical, 13)
+            }
+        }
+    }
+
+    private var premiumLockCard: some View {
+        CardShell {
+            VStack(alignment: .leading, spacing: 10) {
+                sectionLabel("Repeating Schedules")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(lockedRecurringTitle)
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text(lockedRecurringDetail)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, isAdmin && selectedRecipientModel != nil ? 0 : 14)
+
+                if isAdmin, let recipient = selectedRecipientModel {
+                    Button {
+                        paywallRecipient = recipient
+                    } label: {
+                        Label("Unlock Premium for \(recipient.name)", systemImage: "crown.fill")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 14)
+                    .accessibilityIdentifier("task-recurring-upgrade-button")
+                }
             }
         }
     }
@@ -581,6 +626,7 @@ struct NewTaskView: View {
             || loading
             || recipientId.isEmpty
             || assigneeId == nil
+            || recurrenceLocked
     }
 
     private var computedDueAt: Date? {
@@ -637,6 +683,18 @@ struct NewTaskView: View {
             isOrganizer: isAdmin,
             currentUserId: creatorId
         )
+    }
+
+    private var lockedRecurringTitle: String {
+        if let recipient = selectedRecipientModel {
+            return "Recurring schedules are premium for \(recipient.name)"
+        }
+        return "Recurring schedules require premium"
+    }
+
+    private var lockedRecurringDetail: String {
+        selectedRecipientModel?.premiumStatusDetail
+            ?? "Select a premium care receiver to add repeating care routines."
     }
 
     private func save() async {

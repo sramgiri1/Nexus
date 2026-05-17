@@ -9,8 +9,17 @@ struct AdminInsightsView: View {
     @State private var insights: CircleCompletionInsights?
     @State private var loading = true
     @State private var error: String?
+    @State private var paywallRecipient: CareRecipient?
 
     private let periodOptions = [7, 14, 30]
+
+    private var canUpgrade: Bool { appState.userRole == .admin }
+    private var canLoadAllInsights: Bool {
+        ReceiverPremiumPolicy.allVisibleRecipientsSupportInsights(in: appState.activeCircle)
+    }
+    private var selectedRecipient: CareRecipient? {
+        recipientOptions.first(where: { $0.id == selectedRecipientId })
+    }
 
     var body: some View {
         List {
@@ -42,9 +51,15 @@ struct AdminInsightsView: View {
                 Section("Recipient") {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            recipientChip(id: "all", title: "All recipients")
+                            if canLoadAllInsights {
+                                recipientChip(id: "all", title: "All recipients", locked: false)
+                            }
                             ForEach(recipientOptions) { recipient in
-                                recipientChip(id: recipient.id, title: recipient.name)
+                                recipientChip(
+                                    id: recipient.id,
+                                    title: recipient.name,
+                                    locked: !ReceiverPremiumPolicy.supportsInsights(for: recipient)
+                                )
                             }
                         }
                         .padding(.vertical, 4)
@@ -60,6 +75,28 @@ struct AdminInsightsView: View {
                         ProgressView()
                         Spacer()
                     }
+                }
+            } else if shouldShowPremiumLock {
+                Section("Insights Locked") {
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text(lockTitle)
+                            .font(.system(size: 17, weight: .bold, design: .rounded))
+                        Text(lockDetail)
+                            .font(.system(size: 14, weight: .medium, design: .rounded))
+                            .foregroundStyle(.secondary)
+                        if canUpgrade, let lockedRecipient {
+                            Button {
+                                paywallRecipient = lockedRecipient
+                            } label: {
+                                Label("Unlock Premium for \(lockedRecipient.name)", systemImage: "crown.fill")
+                                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                            }
+                            .buttonStyle(.borderedProminent)
+                            .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                            .accessibilityIdentifier("insights-upgrade-button")
+                        }
+                    }
+                    .padding(.vertical, 6)
                 }
             } else if let error {
                 Section {
@@ -145,18 +182,51 @@ struct AdminInsightsView: View {
         }
         .navigationTitle("Completion Insights")
         .navigationBarTitleDisplayMode(.inline)
-        .task { await loadInsights() }
+        .task {
+            alignSelectionToPremiumScope()
+            await loadInsights()
+        }
         .onChange(of: selectedPeriod) { _ in
             Task { await loadInsights() }
         }
         .onChange(of: selectedRecipientId) { _ in
             Task { await loadInsights() }
         }
+        .sheet(item: $paywallRecipient) { recipient in
+            PaywallView(circleId: appState.activeCircle?.id ?? "", recipient: recipient)
+                .environmentObject(appState)
+        }
         .careLoopBrandBanner()
     }
 
     private var recipientOptions: [CareRecipient] {
         appState.activeCircle?.recipients ?? []
+    }
+
+    private var lockedRecipient: CareRecipient? {
+        guard selectedRecipientId != "all" else { return nil }
+        return selectedRecipient
+    }
+
+    private var shouldShowPremiumLock: Bool {
+        if selectedRecipientId == "all" {
+            return !canLoadAllInsights
+        }
+        return !ReceiverPremiumPolicy.supportsInsights(for: selectedRecipient)
+    }
+
+    private var lockTitle: String {
+        if let lockedRecipient {
+            return "Premium is required for \(lockedRecipient.name)"
+        }
+        return "Choose a premium care receiver"
+    }
+
+    private var lockDetail: String {
+        if let lockedRecipient {
+            return lockedRecipient.premiumStatusDetail
+        }
+        return "Completion insights stay inside premium care receiver scopes. Select a premium receiver to continue."
     }
 
     @ViewBuilder
@@ -186,13 +256,19 @@ struct AdminInsightsView: View {
     }
 
     @ViewBuilder
-    private func recipientChip(id: String, title: String) -> some View {
+    private func recipientChip(id: String, title: String, locked: Bool) -> some View {
         let isSelected = selectedRecipientId == id
         Button {
             selectedRecipientId = id
         } label: {
-            Text(title)
-                .font(.system(size: 14, weight: .bold, design: .rounded))
+            HStack(spacing: 6) {
+                Text(title)
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                if locked {
+                    Image(systemName: "lock.fill")
+                        .font(.system(size: 10, weight: .bold))
+                }
+            }
                 .foregroundStyle(isSelected ? .white : Color(red: 0.23, green: 0.33, blue: 0.44))
                 .padding(.horizontal, 14)
                 .padding(.vertical, 10)
@@ -227,17 +303,34 @@ struct AdminInsightsView: View {
             return
         }
 
+        guard !shouldShowPremiumLock else {
+            loading = false
+            insights = nil
+            error = nil
+            return
+        }
+
         loading = true
         error = nil
         do {
-            insights = try await APIClient.shared.fetchCompletionInsights(
-                circleId: circleId,
-                days: selectedPeriod,
-                recipientId: selectedRecipientId == "all" ? nil : selectedRecipientId
-            )
+            if UITestScenario.current != nil, let seededInsights = appState.uiTestCompletionInsights {
+                insights = seededInsights
+            } else {
+                insights = try await APIClient.shared.fetchCompletionInsights(
+                    circleId: circleId,
+                    days: selectedPeriod,
+                    recipientId: selectedRecipientId == "all" ? nil : selectedRecipientId
+                )
+            }
         } catch {
             self.error = error.localizedDescription
         }
         loading = false
+    }
+
+    private func alignSelectionToPremiumScope() {
+        if selectedRecipientId == "all", !canLoadAllInsights, let firstPremium = recipientOptions.first(where: \.premium.capabilities.canUseInsights) {
+            selectedRecipientId = firstPremium.id
+        }
     }
 }

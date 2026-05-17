@@ -4,14 +4,12 @@ import SwiftUI
 
 struct CircleListView: View {
     @EnvironmentObject private var appState: AppState
-    @ObservedObject private var subscriptions = SubscriptionManager.shared
 
     @State private var loadingCircleId: String?
     @State private var loadingInviteId: String?
     @State private var error: String?
     @State private var circleSheetMode: CircleSheetMode? = nil
     @State private var showAccount = false
-    @State private var showPaywall = false
 
     private var memberships: [CircleMembership] { appState.circleMemberships }
     private var pendingInvites: [GroupInvitation] { appState.currentUser?.pendingInvites ?? [] }
@@ -45,9 +43,6 @@ struct CircleListView: View {
                         }
 
                         if !memberships.isEmpty {
-                            if !subscriptions.isPremium {
-                                upgradePrompt.padding(.horizontal, 22).padding(.top, 18)
-                            }
                             addCircleRow.padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 44)
                         } else {
                             Spacer(minLength: 40)
@@ -71,10 +66,7 @@ struct CircleListView: View {
                     .environmentObject(appState)
             }
             .sheet(isPresented: $showAccount) {
-                AccountSheet(onUpgrade: { showPaywall = true }).environmentObject(appState)
-            }
-            .sheet(isPresented: $showPaywall) {
-                PaywallView()
+                AccountSheet().environmentObject(appState)
             }
         }
     }
@@ -85,27 +77,9 @@ struct CircleListView: View {
         HStack(alignment: .center) {
             CareLoopBrandView(style: .wordmark, surface: .light, wordmarkHeight: 17)
             Spacer()
-            HStack(spacing: 10) {
-                if subscriptions.isPremium {
-                    premiumBadge
-                }
-                Button { showAccount = true } label: { avatarView }
-                    .accessibilityLabel("Account")
-            }
+            Button { showAccount = true } label: { avatarView }
+                .accessibilityLabel("Account")
         }
-    }
-
-    private var premiumBadge: some View {
-        HStack(spacing: 4) {
-            Image(systemName: "crown.fill")
-                .font(.system(size: 9, weight: .bold))
-            Text("Premium")
-                .font(.system(size: 10, weight: .bold, design: .rounded))
-        }
-        .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
-        .padding(.horizontal, 9).padding(.vertical, 5)
-        .background(Capsule().fill(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.10)))
-        .overlay(Capsule().strokeBorder(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.22), lineWidth: 1))
     }
 
     private var avatarView: some View {
@@ -370,59 +344,6 @@ struct CircleListView: View {
         )
     }
 
-    // MARK: — Upgrade prompt
-
-    private var upgradePrompt: some View {
-        Button { showPaywall = true } label: {
-            HStack(spacing: 14) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 12, style: .continuous)
-                        .fill(LinearGradient(
-                            colors: [Color(red: 0.55, green: 0.22, blue: 0.97), Color(red: 0.24, green: 0.40, blue: 0.97)],
-                            startPoint: .topLeading, endPoint: .bottomTrailing
-                        ))
-                    Image(systemName: "crown.fill")
-                        .font(.system(size: 17))
-                        .foregroundStyle(.white)
-                }
-                .frame(width: 44, height: 44)
-
-                VStack(alignment: .leading, spacing: 2) {
-                    Text("Unlock CareLoop Premium")
-                        .font(.system(size: 15, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
-                    Text("Unlimited circles · Insights · Smart reminders")
-                        .font(.system(size: 12, weight: .medium, design: .rounded))
-                        .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
-                        .lineLimit(1)
-                }
-
-                Spacer()
-
-                Image(systemName: "chevron.right")
-                    .font(.system(size: 11, weight: .semibold))
-                    .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.6))
-            }
-            .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(.white)
-                    .shadow(color: Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.10), radius: 10, x: 0, y: 3)
-            )
-            .overlay(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .strokeBorder(
-                        LinearGradient(
-                            colors: [Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.22), Color(red: 0.24, green: 0.40, blue: 0.97).opacity(0.22)],
-                            startPoint: .leading, endPoint: .trailing
-                        ),
-                        lineWidth: 1.5
-                    )
-            )
-        }
-        .buttonStyle(.plain)
-    }
-
     // MARK: — Add circle
 
     private var addCircleRow: some View {
@@ -531,7 +452,6 @@ struct AccountSheet: View {
     @EnvironmentObject private var appState: AppState
     @ObservedObject private var subscriptions = SubscriptionManager.shared
     @Environment(\.dismiss) private var dismiss
-    var onUpgrade: (() -> Void)? = nil
 
     var body: some View {
         NavigationStack {
@@ -552,21 +472,8 @@ struct AccountSheet: View {
 
                         if let user = appState.currentUser {
                             VStack(alignment: .leading, spacing: 3) {
-                                HStack(spacing: 8) {
-                                    Text(user.name)
-                                        .font(.system(size: 17, weight: .bold, design: .rounded))
-                                    if subscriptions.isPremium {
-                                        HStack(spacing: 3) {
-                                            Image(systemName: "crown.fill")
-                                                .font(.system(size: 9, weight: .bold))
-                                            Text("Premium")
-                                                .font(.system(size: 10, weight: .bold, design: .rounded))
-                                        }
-                                        .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
-                                        .padding(.horizontal, 8).padding(.vertical, 3)
-                                        .background(Capsule().fill(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.10)))
-                                    }
-                                }
+                                Text(user.name)
+                                    .font(.system(size: 17, weight: .bold, design: .rounded))
                                 Text(user.email)
                                     .font(.system(size: 14, weight: .medium, design: .rounded))
                                     .foregroundStyle(.secondary)
@@ -583,33 +490,30 @@ struct AccountSheet: View {
                     }
                 }
 
-                Section("Subscription") {
-                    if subscriptions.isPremium {
+                Section("Premium") {
+                    if let snapshot = subscriptions.latestPurchaseSnapshot {
                         HStack {
-                            Label("CareLoop Premium", systemImage: "crown.fill")
+                            Label("App Store Subscription", systemImage: "crown.fill")
                                 .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
                             Spacer()
-                            Text("Active")
+                            Text("Connected")
                                 .font(.system(size: 13, weight: .semibold, design: .rounded))
                                 .foregroundStyle(Color(red: 0.07, green: 0.68, blue: 0.48))
                         }
-                        if let renewal = subscriptions.renewalDate {
+                        if let renewal = snapshot.expirationDate {
                             LabeledContent("Renews", value: renewal, format: .dateTime.month().day().year())
                         }
+                        Text("Premium access is managed per care receiver. Active purchases are synced when a Care Organizer upgrades a specific receiver.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                         Button("Manage Subscription") {
                             subscriptions.openSubscriptionManagement()
                         }
                         .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
                     } else {
-                        Button {
-                            dismiss()
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.35) {
-                                onUpgrade?()
-                            }
-                        } label: {
-                            Label("Upgrade to Premium", systemImage: "crown.fill")
-                                .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
-                        }
+                        Text("Premium is unlocked one care receiver at a time from inside a Care Circle.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
                 }
 

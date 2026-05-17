@@ -121,6 +121,46 @@ final class MemberRoleTests: XCTestCase {
     }
 }
 
+final class CareRecipientPremiumTests: XCTestCase {
+
+    func test_careRecipient_defaultsToFreePremiumState() {
+        let recipient = CareRecipient(id: "r1", name: "Maya")
+
+        XCTAssertFalse(recipient.hasPremium)
+        XCTAssertEqual(recipient.premiumStatusLabel, "Free")
+        XCTAssertEqual(recipient.caregiverAccessSummary, "1 caregiver included")
+    }
+
+    func test_careRecipient_exposesPremiumCapabilities() {
+        let recipient = CareRecipient(
+            id: "r1",
+            name: "Maya",
+            premium: CareRecipientPremium(
+                status: .active,
+                source: .appStore,
+                startsAt: Date(timeIntervalSince1970: 0),
+                expiresAt: Date(timeIntervalSince1970: 3600),
+                appleOriginalTransactionId: "otx-1",
+                appleProductId: "com.careloop.ios.premium.yearly",
+                hasPremium: true,
+                capabilities: CareRecipientPremiumCapabilities(
+                    hasPremium: true,
+                    canUseAdvancedReminders: true,
+                    canUseInsights: true,
+                    canUseUnlimitedCaregivers: true,
+                    canUseAdvancedCoordination: true
+                )
+            )
+        )
+
+        XCTAssertTrue(recipient.hasPremium)
+        XCTAssertEqual(recipient.premiumStatusLabel, "Premium")
+        XCTAssertEqual(recipient.caregiverAccessSummary, "Unlimited caregivers")
+        XCTAssertTrue(ReceiverPremiumPolicy.supportsInsights(for: recipient))
+        XCTAssertTrue(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))
+    }
+}
+
 // MARK: — Sprint 2: AppState push notification state
 
 final class AppStatePushTests: XCTestCase {

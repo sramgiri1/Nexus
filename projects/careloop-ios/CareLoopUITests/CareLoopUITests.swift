@@ -65,6 +65,20 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanOpenReceiverPremiumPaywall() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-upgrade-premium"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-upgrade-premium"].tap()
+
+        XCTAssertTrue(app.otherElements["receiver-paywall-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Unlock Premium for David"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_caregiverHomeShowsScopedDashboard() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
 
@@ -87,6 +101,24 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Overview"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Maya"].exists)
         XCTAssertTrue(app.staticTexts["A task was completed"].exists)
+    }
+
+    @MainActor
+    func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-insights"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-insights"].tap()
+
+        XCTAssertTrue(app.staticTexts["Overview"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["David"].waitForExistence(timeout: 3))
+        app.buttons["David"].tap()
+
+        XCTAssertTrue(app.staticTexts["Premium is required for David"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["insights-upgrade-button"].exists)
     }
 
     @MainActor

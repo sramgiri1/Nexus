@@ -4,6 +4,12 @@ import UIKit
 @MainActor
 final class SubscriptionManager: ObservableObject {
 
+    struct PurchaseSnapshot: Equatable {
+        let productId: String
+        let originalTransactionId: UInt64
+        let expirationDate: Date?
+    }
+
     static let shared = SubscriptionManager()
 
     enum StartupBehavior {
@@ -105,6 +111,15 @@ final class SubscriptionManager: ObservableObject {
                 storeError = error.localizedDescription
             }
         }
+    }
+
+    var latestPurchaseSnapshot: PurchaseSnapshot? {
+        guard let activeTransaction else { return nil }
+        return PurchaseSnapshot(
+            productId: activeTransaction.productID,
+            originalTransactionId: activeTransaction.originalID,
+            expirationDate: activeTransaction.expirationDate
+        )
     }
 
     // MARK: – Private

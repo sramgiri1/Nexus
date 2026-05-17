@@ -82,6 +82,7 @@ export async function loadReceiverAccessContext(db, { circleId, member, userId }
   const recipients = await db.careRecipient.findMany({
     where: { circleId },
     orderBy: recipientOrder,
+    include: { entitlement: true },
   });
 
   if (isCareOrganizer(member)) {

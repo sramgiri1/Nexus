@@ -46,6 +46,7 @@ struct TaskDetailView: View {
     @State private var error:               String?
     @State private var showDeleteAlert      = false
     @State private var showSeriesScopeDialog = false
+    @State private var paywallRecipient: CareRecipient?
 
     init(task: CareTask, onUpdate: @escaping (CareTask) -> Void, onDelete: @escaping () -> Void) {
         _task       = State(initialValue: task)
@@ -110,6 +111,10 @@ struct TaskDetailView: View {
         activeRecipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first
     }
 
+    private var recurrenceLocked: Bool {
+        taskMode == .repeating && !ReceiverPremiumPolicy.supportsRecurringSchedules(for: selectedRecipientModel)
+    }
+
     private var availableAssignees: [CircleMember] {
         TaskWorkflowPolicy.eligibleAssigneeMembers(
             for: selectedRecipientModel,
@@ -135,9 +140,13 @@ struct TaskDetailView: View {
                 if taskMode == .once {
                     whenCard.disabled(!canEdit)
                 } else {
-                    scheduleCard.disabled(!canEdit)
-                    startTimeCard.disabled(!canEdit)
-                    endsCard.disabled(!canEdit)
+                    if recurrenceLocked {
+                        premiumLockCard
+                    } else {
+                        scheduleCard.disabled(!canEdit)
+                        startTimeCard.disabled(!canEdit)
+                        endsCard.disabled(!canEdit)
+                    }
                 }
 
                 if canChangeStatus { statusCard }
@@ -183,6 +192,10 @@ struct TaskDetailView: View {
         .onChange(of: freq)      { _ in seedWeekdayIfNeeded() }
         .onChange(of: startDate) { _ in seedWeekdayIfNeeded() }
         .onChange(of: recipientId) { _ in syncAssigneeSelection() }
+        .sheet(item: $paywallRecipient) { recipient in
+            PaywallView(circleId: circleId, recipient: recipient)
+                .environmentObject(appState)
+        }
         .confirmationDialog("Delete this task?", isPresented: $showDeleteAlert, titleVisibility: .visible) {
             Button("Delete", role: .destructive) { Task { await performDelete() } }
         }
@@ -426,6 +439,39 @@ struct TaskDetailView: View {
         }
     }
 
+    private var premiumLockCard: some View {
+        CardShell {
+            VStack(alignment: .leading, spacing: 10) {
+                sectionLabel("Repeating Schedules")
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(lockedRecurringTitle)
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Text(lockedRecurringDetail)
+                        .font(.system(size: 14, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.horizontal, 16)
+                .padding(.bottom, isAdmin && selectedRecipientModel != nil ? 0 : 14)
+
+                if isAdmin, let recipient = selectedRecipientModel {
+                    Button {
+                        paywallRecipient = recipient
+                    } label: {
+                        Label("Unlock Premium for \(recipient.name)", systemImage: "crown.fill")
+                            .font(.system(size: 14, weight: .bold, design: .rounded))
+                            .frame(maxWidth: .infinity)
+                            .padding(.vertical, 14)
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 14)
+                    .accessibilityIdentifier("task-detail-recurring-upgrade-button")
+                }
+            }
+        }
+    }
+
     // MARK: – Priority card — mirrors NewTaskView
 
     private var priorityCard: some View {
@@ -633,6 +679,7 @@ struct TaskDetailView: View {
         || loading
         || recipientId.isEmpty
         || (canAssign && assigneeId == nil)
+        || recurrenceLocked
     }
 
     private var computedDueAt: Date? {
@@ -688,6 +735,18 @@ struct TaskDetailView: View {
             isOrganizer: isAdmin,
             currentUserId: userId
         )
+    }
+
+    private var lockedRecurringTitle: String {
+        if let recipient = selectedRecipientModel {
+            return "Recurring schedules are premium for \(recipient.name)"
+        }
+        return "Recurring schedules require premium"
+    }
+
+    private var lockedRecurringDetail: String {
+        selectedRecipientModel?.premiumStatusDetail
+            ?? "Select a premium care receiver to keep repeating routines enabled."
     }
 
     private var hasChanges: Bool {

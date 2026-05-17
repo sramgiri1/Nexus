@@ -62,6 +62,13 @@ private struct UITestScenarioFixture {
         let dad = CareUser(id: "u5", email: "dad@careloop.test", name: "David Receiver", phone: nil, memberships: nil)
         let organizerActor = EventActor(id: organizer.id, name: organizer.name)
         let caregiverActor = EventActor(id: caregiver.id, name: caregiver.name)
+        let premiumCapabilities = CareRecipientPremiumCapabilities(
+            hasPremium: true,
+            canUseAdvancedReminders: true,
+            canUseInsights: true,
+            canUseUnlimitedCaregivers: true,
+            canUseAdvancedCoordination: true
+        )
 
         let allMembers = [
             CircleMember(id: "m1", role: .admin, userId: organizer.id, user: organizer),
@@ -80,7 +87,17 @@ private struct UITestScenarioFixture {
             sortOrder: 0,
             activationStatus: .active,
             receiverUserId: mom.id,
-            eligibleAssigneeIds: [organizer.id, caregiver.id, backupCaregiver.id, mom.id]
+            eligibleAssigneeIds: [organizer.id, caregiver.id, backupCaregiver.id, mom.id],
+            premium: CareRecipientPremium(
+                status: .active,
+                source: .appStore,
+                startsAt: Date().addingTimeInterval(-14 * 24 * 60 * 60),
+                expiresAt: Date().addingTimeInterval(14 * 24 * 60 * 60),
+                appleOriginalTransactionId: "ui-premium-maya",
+                appleProductId: "com.careloop.ios.premium.yearly",
+                hasPremium: true,
+                capabilities: premiumCapabilities
+            )
         )
         let dadRecipient = CareRecipient(
             id: "r2",
@@ -91,7 +108,8 @@ private struct UITestScenarioFixture {
             sortOrder: 1,
             activationStatus: .invited,
             receiverUserId: nil,
-            eligibleAssigneeIds: [organizer.id, backupCaregiver.id]
+            eligibleAssigneeIds: [organizer.id, backupCaregiver.id],
+            premium: .free
         )
 
         let organizerTasks = [

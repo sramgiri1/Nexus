@@ -8,6 +8,7 @@ struct CircleHomeView: View {
     @State private var error: String?
     @State private var deepLinkToTaskBoard = false
     @State private var isCompletingNextTask = false
+    @State private var paywallRecipient: CareRecipient?
 
     private let teal = Color(red: 0.16, green: 0.80, blue: 0.72)
     private let blue = Color(red: 0.13, green: 0.56, blue: 0.87)
@@ -38,6 +39,9 @@ struct CircleHomeView: View {
     }
     private var laterReceiverTasks: [CareTask] {
         CircleHomePolicy.remainingOpenTasks(after: nextReceiverTask?.id, in: tasks, limit: 3)
+    }
+    private var upgradeRecipient: CareRecipient? {
+        ReceiverPremiumPolicy.defaultPaywallRecipient(in: activeCircle)
     }
 
     var body: some View {
@@ -72,6 +76,10 @@ struct CircleHomeView: View {
                 } else {
                     CirclesView().environmentObject(appState)
                 }
+            }
+            .sheet(item: $paywallRecipient) { recipient in
+                PaywallView(circleId: activeCircle?.id ?? "", recipient: recipient)
+                    .environmentObject(appState)
             }
             .task {
                 await loadTasks()
@@ -330,6 +338,7 @@ struct CircleHomeView: View {
                     Spacer()
 
                     VStack(alignment: .trailing, spacing: 6) {
+                        receiverCountChip(summary.recipient.premiumStatusLabel, tint: summary.recipient.hasPremium ? green : mid)
                         receiverCountChip("\(summary.openCount) open", tint: blue)
                         if summary.overdueCount > 0 {
                             receiverCountChip("\(summary.overdueCount) overdue", tint: .red)
@@ -396,6 +405,17 @@ struct CircleHomeView: View {
                     }
                     secondaryActionLink(title: "People & Access", icon: "person.2.fill", tint: blue, subtitle: "Invite and scope support", accessibilityIdentifier: "quick-action-people-access") {
                         MemberListView().environmentObject(appState)
+                    }
+                    if let upgradeRecipient {
+                        secondaryActionButton(
+                            title: "Unlock Premium",
+                            icon: "crown.fill",
+                            tint: Color(red: 0.55, green: 0.22, blue: 0.97),
+                            subtitle: "Upgrade \(upgradeRecipient.name)'s workflow",
+                            accessibilityIdentifier: "quick-action-upgrade-premium"
+                        ) {
+                            paywallRecipient = upgradeRecipient
+                        }
                     }
                     secondaryActionLink(title: "Insights", icon: "chart.bar.fill", tint: green, subtitle: "See completion patterns", accessibilityIdentifier: "quick-action-insights") {
                         AdminInsightsView().environmentObject(appState)
@@ -700,6 +720,21 @@ struct CircleHomeView: View {
         NavigationLink {
             destination()
         } label: {
+            secondaryCard(title: title, icon: icon, tint: tint, subtitle: subtitle)
+        }
+        .buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityIdentifier)
+    }
+
+    private func secondaryActionButton(
+        title: String,
+        icon: String,
+        tint: Color,
+        subtitle: String,
+        accessibilityIdentifier: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button(action: action) {
             secondaryCard(title: title, icon: icon, tint: tint, subtitle: subtitle)
         }
         .buttonStyle(.plain)

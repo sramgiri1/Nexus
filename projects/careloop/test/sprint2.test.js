@@ -67,6 +67,7 @@ function buildDb(seed = {}) {
       createdAt: new Date(),
       updatedAt: new Date(),
     })))],
+    recipientEntitlements: [...(seed.recipientEntitlements || [])],
     recipientAccesses: [...(seed.recipientAccesses || [])],
     members:    [...(seed.members    || [])],
     tasks:      [...(seed.tasks      || [])],
@@ -82,6 +83,7 @@ function buildDb(seed = {}) {
     ...S.circles.map((item) => item.id),
     ...S.invitations.map((item) => item.id),
     ...S.recipients.map((item) => item.id),
+    ...S.recipientEntitlements.map((item) => item.id),
     ...S.recipientAccesses.map((item) => item.id),
     ...S.members.map((item) => item.id),
     ...S.tasks.map((item) => item.id),
@@ -204,6 +206,16 @@ function buildDb(seed = {}) {
   }
 
   function circleRepo(s) {
+    function includeRecipient(recipient, include) {
+      if (!include) return recipient;
+      return {
+        ...recipient,
+        entitlement: include.entitlement
+          ? (s.recipientEntitlements.find((item) => item.recipientId === recipient.id) ?? null)
+          : undefined,
+      };
+    }
+
     return {
       create: async ({ data: d }) => {
         const c = { id: uid("c"), createdAt: new Date(), updatedAt: new Date(), archiveAfterDays: 7, ...d };
@@ -242,6 +254,10 @@ function buildDb(seed = {}) {
                   if (lhs.isPrimary !== rhs.isPrimary) return lhs.isPrimary ? -1 : 1;
                   return lhs.createdAt - rhs.createdAt;
                 })
+                .map((recipient) => includeRecipient(
+                  recipient,
+                  typeof include.recipients === "object" ? include.recipients.include : undefined,
+                ))
             : undefined,
           tasks: include.tasks ? s.tasks.filter((t) => t.circleId === c.id) : undefined,
         };
@@ -270,6 +286,10 @@ function buildDb(seed = {}) {
                   if (lhs.isPrimary !== rhs.isPrimary) return lhs.isPrimary ? -1 : 1;
                   return lhs.createdAt - rhs.createdAt;
                 })
+                .map((recipient) => includeRecipient(
+                  recipient,
+                  typeof include.recipients === "object" ? include.recipients.include : undefined,
+                ))
             : undefined,
           tasks: include.tasks ? s.tasks.filter((t) => t.circleId === circle.id) : undefined,
         };
@@ -333,6 +353,17 @@ function buildDb(seed = {}) {
   }
 
   function careRecipientRepo(s) {
+    function includeRecipient(recipient, include) {
+      if (!recipient) return null;
+      if (!include) return recipient;
+      return {
+        ...recipient,
+        entitlement: include.entitlement
+          ? (s.recipientEntitlements.find((item) => item.recipientId === recipient.id) ?? null)
+          : undefined,
+      };
+    }
+
     return {
       create: async ({ data: d }) => {
         const recipient = {
@@ -355,9 +386,9 @@ function buildDb(seed = {}) {
         s.recipients.push(recipient);
         return recipient;
       },
-      findUnique: async ({ where }) =>
-        s.recipients.find((recipient) => recipient.id === where.id) ?? null,
-      findFirst: async ({ where, orderBy } = {}) => {
+      findUnique: async ({ where, include } = {}) =>
+        includeRecipient(s.recipients.find((recipient) => recipient.id === where.id) ?? null, include),
+      findFirst: async ({ where, orderBy, include } = {}) => {
         let items = s.recipients.filter((recipient) => {
           if (where?.id && recipient.id !== where.id) return false;
           if (where?.circleId && recipient.circleId !== where.circleId) return false;
@@ -377,11 +408,12 @@ function buildDb(seed = {}) {
             return 0;
           });
         }
-        return items[0] ?? null;
+        return includeRecipient(items[0] ?? null, include);
       },
-      findMany: async ({ where, orderBy } = {}) => {
+      findMany: async ({ where, orderBy, include } = {}) => {
         let items = s.recipients.filter((recipient) => {
           if (where?.circleId && recipient.circleId !== where.circleId) return false;
+          if (where?.id?.in && !where.id.in.includes(recipient.id)) return false;
           return true;
         });
         if (orderBy) {
@@ -398,7 +430,7 @@ function buildDb(seed = {}) {
             return 0;
           });
         }
-        return items;
+        return items.map((recipient) => includeRecipient(recipient, include));
       },
       count: async ({ where } = {}) =>
         s.recipients.filter((recipient) => {
@@ -451,11 +483,54 @@ function buildDb(seed = {}) {
           if (where?.revokedAt === null && access.revokedAt !== null) return false;
           return true;
         }),
+      count: async ({ where } = {}) =>
+        s.recipientAccesses.filter((access) => {
+          if (where?.recipientId && access.recipientId !== where.recipientId) return false;
+          if (where?.memberId && access.memberId !== where.memberId) return false;
+          if (where?.revokedAt === null && access.revokedAt !== null) return false;
+          return true;
+        }).length,
       update: async ({ where, data: d }) => {
         const access = s.recipientAccesses.find((item) => item.id === where.id);
         if (!access) throw Object.assign(new Error("NotFound"), { code: "P2025" });
         Object.assign(access, d, { updatedAt: new Date() });
         return access;
+      },
+    };
+  }
+
+  function careRecipientEntitlementRepo(s) {
+    return {
+      findUnique: async ({ where }) =>
+        s.recipientEntitlements.find((entitlement) =>
+          where.id
+            ? entitlement.id === where.id
+            : entitlement.recipientId === where.recipientId,
+        ) ?? null,
+      create: async ({ data: d }) => {
+        const entitlement = {
+          id: uid("cre"),
+          status: "FREE",
+          source: null,
+          startsAt: null,
+          expiresAt: null,
+          appleOriginalTransactionId: null,
+          appleProductId: null,
+          purchasedById: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          ...d,
+        };
+        s.recipientEntitlements.push(entitlement);
+        return entitlement;
+      },
+      update: async ({ where, data: d }) => {
+        const entitlement = s.recipientEntitlements.find((item) =>
+          where.id ? item.id === where.id : item.recipientId === where.recipientId,
+        );
+        if (!entitlement) throw Object.assign(new Error("NotFound"), { code: "P2025" });
+        Object.assign(entitlement, d, { updatedAt: new Date() });
+        return entitlement;
       },
     };
   }
@@ -713,6 +788,7 @@ function buildDb(seed = {}) {
     careCircle:   circleRepo(s),
     invitation:   invitationRepo(s),
     careRecipient: careRecipientRepo(s),
+    careRecipientEntitlement: careRecipientEntitlementRepo(s),
     careRecipientAccess: careRecipientAccessRepo(s),
     circleMember: memberRepo(s),
     authIdentity: authIdentityRepo(s),
@@ -731,6 +807,7 @@ function buildDb(seed = {}) {
     passwordResetCode: passwordResetCodeRepo(S),
     careCircle:   circleRepo(S),
     careRecipient: careRecipientRepo(S),
+    careRecipientEntitlement: careRecipientEntitlementRepo(S),
     careRecipientAccess: careRecipientAccessRepo(S),
     circleMember: memberRepo(S),
     task:         taskRepo(S),
@@ -1951,6 +2028,21 @@ describe("receiver-scoped access control", () => {
           updatedAt: now,
         },
       ],
+      recipientEntitlements: [
+        {
+          id: "cre1",
+          recipientId: "cr1",
+          status: "ACTIVE",
+          source: "APP_STORE",
+          startsAt: new Date("2026-04-01T00:00:00.000Z"),
+          expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+          appleOriginalTransactionId: "otx-premium-cr1",
+          appleProductId: "com.careloop.ios.premium.yearly",
+          purchasedById: "u1",
+          createdAt: now,
+          updatedAt: now,
+        },
+      ],
       members: [
         { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
         { id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" },
@@ -2257,6 +2349,121 @@ describe("receiver-scoped access control", () => {
     assert.equal(hiddenComment.statusCode, 404);
     await app.close();
   });
+
+  test("requires premium receiver scope for insights", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    const allRecipients = await app.inject({
+      method: "GET",
+      url: "/circles/c1/insights/completion?days=7",
+      headers: organizerHeaders,
+    });
+    assert.equal(allRecipients.statusCode, 402);
+    assert.equal(allRecipients.json().error, "Completion insights are available only for premium care receivers");
+    assert.equal(allRecipients.json().recipientId, "cr2");
+
+    const premiumRecipient = await app.inject({
+      method: "GET",
+      url: "/circles/c1/insights/completion?days=7&recipientId=cr1",
+      headers: organizerHeaders,
+    });
+    assert.equal(premiumRecipient.statusCode, 200);
+
+    const freeRecipient = await app.inject({
+      method: "GET",
+      url: "/circles/c1/insights/completion?days=7&recipientId=cr2",
+      headers: organizerHeaders,
+    });
+    assert.equal(freeRecipient.statusCode, 402);
+    await app.close();
+  });
+
+  test("enforces free caregiver access limits until a receiver is upgraded", async () => {
+    const db = buildDb(scopedAccessSeed());
+    const app = await buildApp(db);
+    const adminHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    const firstGrant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m3/recipient-access/cr2",
+      headers: adminHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(firstGrant.statusCode, 200);
+
+    const blockedSecondGrant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m6/recipient-access/cr2",
+      headers: adminHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(blockedSecondGrant.statusCode, 402);
+    assert.equal(blockedSecondGrant.json().error, "Upgrade this care receiver to unlock more caregiver access");
+
+    const entitlement = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: {
+        userId: "u1",
+        source: "APP_STORE",
+        expiresAt: "2026-06-01T00:00:00.000Z",
+        appleOriginalTransactionId: "otx-premium-cr2",
+        appleProductId: "com.careloop.ios.premium.monthly",
+      },
+    });
+    assert.equal(entitlement.statusCode, 200);
+    assert.equal(entitlement.json().premium.hasPremium, true);
+    assert.equal(entitlement.json().premium.appleProductId, "com.careloop.ios.premium.monthly");
+
+    const allowedSecondGrant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m6/recipient-access/cr2",
+      headers: adminHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(allowedSecondGrant.statusCode, 200);
+    await app.close();
+  });
+
+  test("blocks recurring tasks for free receivers and allows them for premium receivers", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    const freeReceiverRecurring = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: organizerHeaders,
+      payload: {
+        title: "Evening medication",
+        creatorId: "u1",
+        recipientId: "cr2",
+        assigneeId: "u5",
+        dueAt: "2026-05-01T18:00:00.000Z",
+        recurrence: { frequency: "DAILY" },
+      },
+    });
+    assert.equal(freeReceiverRecurring.statusCode, 402);
+    assert.equal(freeReceiverRecurring.json().error, "Recurring schedules require premium for this care receiver");
+
+    const premiumReceiverRecurring = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: organizerHeaders,
+      payload: {
+        title: "Morning medication",
+        creatorId: "u1",
+        recipientId: "cr1",
+        assigneeId: "u4",
+        dueAt: "2026-05-01T09:00:00.000Z",
+        recurrence: { frequency: "DAILY" },
+      },
+    });
+    assert.equal(premiumReceiverRecurring.statusCode, 201);
+    assert.equal(premiumReceiverRecurring.json().recurrenceFrequency, "DAILY");
+    await app.close();
+  });
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
@@ -2270,6 +2477,19 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     db = buildDb({
       users:   [{ id: "u1", name: "Alice", email: "a@t.com", pushToken: null }],
       circles: [{ id: "c1", name: "Smith Family", recipientName: "Mom" }],
+      recipientEntitlements: [{
+        id: "cre-reminders",
+        recipientId: "cr1",
+        status: "ACTIVE",
+        source: "APP_STORE",
+        startsAt: new Date("2026-04-01T00:00:00.000Z"),
+        expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+        appleOriginalTransactionId: "otx-reminders",
+        appleProductId: "com.careloop.ios.premium.monthly",
+        purchasedById: "u1",
+        createdAt: new Date("2026-04-01T00:00:00.000Z"),
+        updatedAt: new Date("2026-04-01T00:00:00.000Z"),
+      }],
       members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
     });
     app = await buildApp(db);
@@ -2561,6 +2781,34 @@ describe("GET /circles/:id/insights/completion", () => {
       recipients: [
         { id: "cr1", circleId: "c1", name: "John Doe", relationship: null, notes: null, isPrimary: true, createdAt: now, updatedAt: now },
         { id: "cr2", circleId: "c1", name: "Jane Doe", relationship: "Spouse", notes: null, isPrimary: false, createdAt: now, updatedAt: now },
+      ],
+      recipientEntitlements: [
+        {
+          id: "cre-insights-1",
+          recipientId: "cr1",
+          status: "ACTIVE",
+          source: "APP_STORE",
+          startsAt: new Date("2026-04-01T00:00:00.000Z"),
+          expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+          appleOriginalTransactionId: "otx-insights-1",
+          appleProductId: "com.careloop.ios.premium.monthly",
+          purchasedById: "u1",
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          id: "cre-insights-2",
+          recipientId: "cr2",
+          status: "ACTIVE",
+          source: "APP_STORE",
+          startsAt: new Date("2026-04-01T00:00:00.000Z"),
+          expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+          appleOriginalTransactionId: "otx-insights-2",
+          appleProductId: "com.careloop.ios.premium.monthly",
+          purchasedById: "u1",
+          createdAt: now,
+          updatedAt: now,
+        },
       ],
       members: [
         { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },

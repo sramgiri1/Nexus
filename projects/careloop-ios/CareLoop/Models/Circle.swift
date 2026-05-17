@@ -61,6 +61,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
     let activationStatus: CareReceiverActivationStatus
     let receiverUserId: String?
     let eligibleAssigneeIds: [String]
+    let premium: CareRecipientPremium
 
     init(
         id: String,
@@ -71,7 +72,8 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         sortOrder: Int = 0,
         activationStatus: CareReceiverActivationStatus = .draft,
         receiverUserId: String? = nil,
-        eligibleAssigneeIds: [String] = []
+        eligibleAssigneeIds: [String] = [],
+        premium: CareRecipientPremium = .free
     ) {
         self.id = id
         self.name = name
@@ -82,6 +84,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         self.activationStatus = activationStatus
         self.receiverUserId = receiverUserId
         self.eligibleAssigneeIds = eligibleAssigneeIds
+        self.premium = premium
     }
 
     var isActiveForTasks: Bool {
@@ -110,6 +113,30 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         }
     }
 
+    var hasPremium: Bool {
+        premium.hasPremium
+    }
+
+    var premiumStatusLabel: String {
+        premium.hasPremium ? "Premium" : "Free"
+    }
+
+    var premiumStatusDetail: String {
+        if premium.hasPremium {
+            if let expiresAt = premium.expiresAt {
+                return "Premium receiver features active until \(expiresAt.formatted(.dateTime.month().day().year()))."
+            }
+            return "Premium receiver features are active."
+        }
+        return "Basic tasks and reminders only. Upgrade this care receiver to unlock recurring schedules, insights, and unlimited caregivers."
+    }
+
+    var caregiverAccessSummary: String {
+        premium.capabilities.canUseUnlimitedCaregivers
+            ? "Unlimited caregivers"
+            : "1 caregiver included"
+    }
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -120,6 +147,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         case activationStatus
         case receiverUserId
         case eligibleAssigneeIds
+        case premium
     }
 
     init(from decoder: Decoder) throws {
@@ -133,6 +161,98 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         activationStatus = try container.decodeIfPresent(CareReceiverActivationStatus.self, forKey: .activationStatus) ?? .draft
         receiverUserId = try container.decodeIfPresent(String.self, forKey: .receiverUserId)
         eligibleAssigneeIds = try container.decodeIfPresent([String].self, forKey: .eligibleAssigneeIds) ?? []
+        premium = try container.decodeIfPresent(CareRecipientPremium.self, forKey: .premium) ?? .free
+    }
+}
+
+struct CareRecipientPremium: Codable, Hashable {
+    let status: CareRecipientEntitlementStatus
+    let source: CareRecipientEntitlementSource?
+    let startsAt: Date?
+    let expiresAt: Date?
+    let appleOriginalTransactionId: String?
+    let appleProductId: String?
+    let hasPremium: Bool
+    let capabilities: CareRecipientPremiumCapabilities
+
+    static let free = CareRecipientPremium(
+        status: .free,
+        source: nil,
+        startsAt: nil,
+        expiresAt: nil,
+        appleOriginalTransactionId: nil,
+        appleProductId: nil,
+        hasPremium: false,
+        capabilities: .free
+    )
+}
+
+struct CareRecipientPremiumCapabilities: Codable, Hashable {
+    let hasPremium: Bool
+    let canUseAdvancedReminders: Bool
+    let canUseInsights: Bool
+    let canUseUnlimitedCaregivers: Bool
+    let canUseAdvancedCoordination: Bool
+
+    static let free = CareRecipientPremiumCapabilities(
+        hasPremium: false,
+        canUseAdvancedReminders: false,
+        canUseInsights: false,
+        canUseUnlimitedCaregivers: false,
+        canUseAdvancedCoordination: false
+    )
+}
+
+enum CareRecipientEntitlementStatus: String, Codable {
+    case free = "FREE"
+    case active = "ACTIVE"
+    case expired = "EXPIRED"
+    case revoked = "REVOKED"
+}
+
+enum CareRecipientEntitlementSource: String, Codable {
+    case appStore = "APP_STORE"
+    case manual = "MANUAL"
+}
+
+enum ReceiverPremiumPolicy {
+    static func premiumRecipients(in circle: CareCircle?) -> [CareRecipient] {
+        guard let circle else { return [] }
+        return circle.orderedRecipients.filter(\.hasPremium)
+    }
+
+    static func freeRecipients(in circle: CareCircle?) -> [CareRecipient] {
+        guard let circle else { return [] }
+        return circle.orderedRecipients.filter { !$0.hasPremium }
+    }
+
+    static func defaultPaywallRecipient(in circle: CareCircle?) -> CareRecipient? {
+        guard let circle else { return nil }
+        return freeRecipients(in: circle).first(where: \.isActiveForTasks)
+            ?? freeRecipients(in: circle).first
+            ?? circle.primaryRecipient
+    }
+
+    static func supportsInsights(for recipient: CareRecipient?) -> Bool {
+        recipient?.premium.capabilities.canUseInsights == true
+    }
+
+    static func supportsRecurringSchedules(for recipient: CareRecipient?) -> Bool {
+        recipient?.premium.capabilities.canUseAdvancedReminders == true
+    }
+
+    static func allVisibleRecipientsSupportInsights(in circle: CareCircle?) -> Bool {
+        let recipients = circle?.orderedRecipients ?? []
+        guard !recipients.isEmpty else { return false }
+        return recipients.allSatisfy(\.premium.capabilities.canUseInsights)
+    }
+
+    static func upgradePromptTitle(for recipient: CareRecipient) -> String {
+        "Unlock Premium for \(recipient.name)"
+    }
+
+    static func upgradePromptSubtitle(for recipient: CareRecipient) -> String {
+        recipient.premiumStatusDetail
     }
 }
 

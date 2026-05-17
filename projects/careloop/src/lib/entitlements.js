@@ -5,6 +5,10 @@ export const RECEIVER_ENTITLEMENT_STATUS = Object.freeze({
   REVOKED: "REVOKED",
 });
 
+export const RECEIVER_PREMIUM_LIMITS = Object.freeze({
+  FREE_CAREGIVER_ACCESS: 1,
+});
+
 export function isReceiverPremium(entitlement, now = new Date()) {
   if (!entitlement || entitlement.status !== RECEIVER_ENTITLEMENT_STATUS.ACTIVE) {
     return false;
@@ -22,4 +26,25 @@ export function receiverEntitlementCapabilities(entitlement, now = new Date()) {
     canUseUnlimitedCaregivers: premium,
     canUseAdvancedCoordination: premium,
   };
+}
+
+export function receiverEntitlementSummary(entitlement, now = new Date()) {
+  const capabilities = receiverEntitlementCapabilities(entitlement, now);
+  return {
+    status: entitlement?.status ?? RECEIVER_ENTITLEMENT_STATUS.FREE,
+    source: entitlement?.source ?? null,
+    startsAt: entitlement?.startsAt ?? null,
+    expiresAt: entitlement?.expiresAt ?? null,
+    appleOriginalTransactionId: entitlement?.appleOriginalTransactionId ?? null,
+    appleProductId: entitlement?.appleProductId ?? null,
+    hasPremium: capabilities.hasPremium,
+    capabilities,
+  };
+}
+
+export function maxCaregiversForReceiver(entitlement, now = new Date()) {
+  const capabilities = receiverEntitlementCapabilities(entitlement, now);
+  return capabilities.canUseUnlimitedCaregivers
+    ? null
+    : RECEIVER_PREMIUM_LIMITS.FREE_CAREGIVER_ACCESS;
 }

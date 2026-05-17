@@ -8,6 +8,7 @@ struct RecipientManagementView: View {
     @State private var editingRecipient: CareRecipient?
     @State private var invitingRecipient: CareRecipient?
     @State private var proxyRecipient: CareRecipient?
+    @State private var paywallRecipient: CareRecipient?
     @State private var loadingRecipientId: String?
     @State private var loadingInviteId: String?
     @State private var error: String?
@@ -96,6 +97,10 @@ struct RecipientManagementView: View {
                     try await proxyActivate(recipient, consentDocumentReference: consentDocumentReference)
                 }
                 .environmentObject(appState)
+            }
+            .sheet(item: $paywallRecipient) { recipient in
+                PaywallView(circleId: appState.activeCircle?.id ?? "", recipient: recipient)
+                    .environmentObject(appState)
             }
             .task { await refreshData() }
             .refreshable {
@@ -238,18 +243,28 @@ struct RecipientManagementView: View {
                         .font(.system(size: 13, weight: .medium, design: .rounded))
                         .foregroundStyle(mid)
                         .fixedSize(horizontal: false, vertical: true)
+                    Text(recipient.premiumStatusDetail)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(recipient.hasPremium ? teal : mid)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
 
                 Spacer(minLength: 12)
 
                 VStack(alignment: .trailing, spacing: 8) {
                     chip(recipient.activationStatus.label, tint: statusColor)
+                    chip(recipient.premiumStatusLabel, tint: recipient.hasPremium ? teal : mid)
                     if loadingRecipientId == recipient.id {
                         ProgressView().scaleEffect(0.8)
                     } else {
                         Menu {
                             Button("Edit Details") {
                                 editingRecipient = recipient
+                            }
+                            if !recipient.hasPremium {
+                                Button("Unlock Premium") {
+                                    paywallRecipient = recipient
+                                }
                             }
                             if !recipient.isPrimary {
                                 Button("Make Primary") {

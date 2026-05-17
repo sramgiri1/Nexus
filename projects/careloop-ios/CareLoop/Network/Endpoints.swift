@@ -62,6 +62,32 @@ extension APIClient {
         return try await postAny("/circles/\(circleId)/recipients/\(recipientId)/proxy-activate", body: body)
     }
 
+    func syncRecipientPremium(
+        circleId: String,
+        recipientId: String,
+        source: String = "APP_STORE",
+        expiresAt: Date?,
+        appleOriginalTransactionId: String?,
+        appleProductId: String?
+    ) async throws -> CareRecipient {
+        var body: [String: Any] = [
+            "source": source,
+        ]
+        if let expiresAt {
+            body["expiresAt"] = ISO8601DateFormatter().string(from: expiresAt)
+        }
+        if let appleOriginalTransactionId {
+            body["appleOriginalTransactionId"] = appleOriginalTransactionId
+        }
+        if let appleProductId {
+            body["appleProductId"] = appleProductId
+        }
+        return try await putAny(
+            "/circles/\(circleId)/recipients/\(recipientId)/entitlement",
+            body: body
+        )
+    }
+
     func reorderRecipients(circleId: String, recipientIds: [String], primaryRecipientId: String? = nil) async throws -> [CareRecipient] {
         var body: [String: Any] = [
             "recipientIds": recipientIds,

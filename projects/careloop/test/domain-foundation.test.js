@@ -15,7 +15,9 @@ import {
 } from "../src/lib/access.js";
 import {
   isReceiverPremium,
+  maxCaregiversForReceiver,
   receiverEntitlementCapabilities,
+  receiverEntitlementSummary,
 } from "../src/lib/entitlements.js";
 
 const now = new Date("2026-05-16T12:00:00.000Z");
@@ -137,5 +139,26 @@ describe("receiver-scoped entitlement foundation", () => {
     assert.equal(isReceiverPremium(null, now), false);
     assert.equal(isReceiverPremium({ status: "ACTIVE", expiresAt: new Date("2026-05-15T12:00:00.000Z") }, now), false);
     assert.equal(isReceiverPremium({ status: "REVOKED", expiresAt: null }, now), false);
+  });
+
+  test("entitlement summary exposes premium state and capability metadata", () => {
+    const summary = receiverEntitlementSummary({
+      status: "ACTIVE",
+      source: "APP_STORE",
+      startsAt: new Date("2026-05-01T00:00:00.000Z"),
+      expiresAt: new Date("2026-06-01T00:00:00.000Z"),
+      appleOriginalTransactionId: "otx-1",
+      appleProductId: "com.careloop.ios.premium.monthly",
+    }, now);
+
+    assert.equal(summary.hasPremium, true);
+    assert.equal(summary.source, "APP_STORE");
+    assert.equal(summary.appleProductId, "com.careloop.ios.premium.monthly");
+    assert.equal(summary.capabilities.canUseInsights, true);
+  });
+
+  test("free receivers keep a single caregiver access limit", () => {
+    assert.equal(maxCaregiversForReceiver(null, now), 1);
+    assert.equal(maxCaregiversForReceiver({ status: "ACTIVE", expiresAt: new Date("2026-06-01T00:00:00.000Z") }, now), null);
   });
 });

@@ -3,6 +3,11 @@ import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticated
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
 import {
+  maxCaregiversForReceiver,
+  receiverEntitlementCapabilities,
+  receiverEntitlementSummary,
+} from "../lib/entitlements.js";
+import {
   eligibleAssigneeUserIdsForReceiver,
   filterVisibleTasks,
   isCareOrganizer,
@@ -11,7 +16,10 @@ import {
 
 const circleInclude = {
   members: { include: { user: { select: { id: true, name: true, email: true } } } },
-  recipients: { orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }] },
+  recipients: {
+    orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+    include: { entitlement: true },
+  },
   tasks:   true,
 };
 const invitationInclude = {
@@ -26,7 +34,7 @@ export default async function circles(app) {
 
   function decorateRecipientsForMember(recipients, member, circleMembers, activeRecipientAccesses) {
     return recipients.map((recipient) => ({
-      ...recipient,
+      ...recipientSummary(recipient),
       eligibleAssigneeIds: eligibleAssigneeUserIdsForReceiver({
         member,
         receiver: recipient,
@@ -36,8 +44,26 @@ export default async function circles(app) {
     }));
   }
 
+  function recipientSummary(recipient) {
+    const { entitlement, ...rest } = recipient;
+    return {
+      ...rest,
+      premium: receiverEntitlementSummary(entitlement),
+    };
+  }
+
   function filteredCircleForMember(circle, member, accessContext, activeRecipientAccesses) {
-    if (isCareOrganizer(member)) return circle;
+    if (isCareOrganizer(member)) {
+      return {
+        ...circle,
+        recipients: decorateRecipientsForMember(
+          circle.recipients ?? [],
+          member,
+          circle.members ?? [],
+          activeRecipientAccesses,
+        ),
+      };
+    }
     const filteredRecipients = decorateRecipientsForMember(
       accessContext.recipients,
       member,
@@ -249,12 +275,42 @@ export default async function circles(app) {
       return reply.send(emptyCompletionInsights(periodDays, recipientId));
     }
 
+    const visibleRecipients = await db.careRecipient.findMany({
+      where: {
+        circleId: req.params.id,
+        ...(recipientId
+          ? { id: recipientId }
+          : (!isCareOrganizer(member) ? { id: { in: scopedRecipientIds } } : {})),
+      },
+      include: { entitlement: true },
+      orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+    });
+    const selectedRecipients = visibleRecipients.filter((recipient) =>
+      recipientId ? recipient.id === recipientId : true,
+    );
+    if (recipientId && selectedRecipients.length === 0) {
+      return reply.code(404).send({ error: "Recipient not found" });
+    }
+
+    const premiumEligibleRecipients = selectedRecipients.filter((recipient) =>
+      receiverEntitlementCapabilities(recipient.entitlement).canUseInsights,
+    );
+    if (selectedRecipients.length > 0 && premiumEligibleRecipients.length !== selectedRecipients.length) {
+      const blockingRecipient = selectedRecipients.find((recipient) =>
+        !receiverEntitlementCapabilities(recipient.entitlement).canUseInsights,
+      );
+      return reply.code(402).send({
+        error: "Completion insights are available only for premium care receivers",
+        recipientId: blockingRecipient?.id ?? null,
+      });
+    }
+
     const recipientScope = recipientId ? { recipientId } : {};
     const allowedRecipientIds = recipientId
       ? new Set([recipientId])
       : (!isCareOrganizer(member) ? new Set(scopedRecipientIds) : null);
 
-    const [rawCompletedTasks, rawActiveTasks, rawAllTasks, rawCircleRecipients] = await Promise.all([
+    const [rawCompletedTasks, rawActiveTasks, rawAllTasks] = await Promise.all([
       db.task.findMany({
         where: {
           circleId: req.params.id,
@@ -286,15 +342,6 @@ export default async function circles(app) {
         },
         include: { recipient: { select: { id: true, name: true } } },
       }),
-      db.careRecipient.findMany({
-        where: {
-          circleId: req.params.id,
-          ...(recipientId
-            ? { id: recipientId }
-            : (!isCareOrganizer(member) ? { id: { in: scopedRecipientIds } } : {})),
-        },
-        orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
-      }),
     ]);
     const completedTasks = allowedRecipientIds
       ? rawCompletedTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
@@ -306,8 +353,8 @@ export default async function circles(app) {
       ? rawAllTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
       : rawAllTasks;
     const circleRecipients = allowedRecipientIds
-      ? rawCircleRecipients.filter((recipient) => allowedRecipientIds.has(recipient.id))
-      : rawCircleRecipients;
+      ? visibleRecipients.filter((recipient) => allowedRecipientIds.has(recipient.id))
+      : visibleRecipients;
     const overdueCount = activeTasks.filter((task) => task.dueAt && task.dueAt < now).length;
 
     const dailyMap = new Map();
@@ -557,6 +604,81 @@ export default async function circles(app) {
     });
 
     return recipient;
+  });
+
+  // PUT /circles/:id/recipients/:recipientId/entitlement — admin-only premium sync
+  app.put("/circles/:id/recipients/:recipientId/entitlement", async (req, reply) => {
+    const {
+      userId,
+      source,
+      expiresAt,
+      appleOriginalTransactionId,
+      appleProductId,
+    } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+
+    const recipient = await db.careRecipient.findFirst({
+      where: { id: req.params.recipientId, circleId: req.params.id },
+      include: { entitlement: true },
+    });
+    if (!recipient) return reply.code(404).send({ error: "Recipient not found" });
+
+    let expirationDate = null;
+    if (expiresAt) {
+      expirationDate = new Date(expiresAt);
+      if (Number.isNaN(expirationDate.getTime())) {
+        return reply.code(400).send({ error: "expiresAt must be a valid ISO8601 date" });
+      }
+    }
+
+    const updatedRecipient = await db.$transaction(async (tx) => {
+      const payload = {
+        status: "ACTIVE",
+        source: source ?? "APP_STORE",
+        startsAt: recipient.entitlement?.startsAt ?? new Date(),
+        expiresAt: expirationDate,
+        purchasedById: authenticatedUserId,
+        appleOriginalTransactionId: appleOriginalTransactionId ?? null,
+        appleProductId: appleProductId ?? null,
+      };
+
+      if (recipient.entitlement) {
+        await tx.careRecipientEntitlement.update({
+          where: { recipientId: recipient.id },
+          data: payload,
+        });
+      } else {
+        await tx.careRecipientEntitlement.create({
+          data: {
+            recipientId: recipient.id,
+            ...payload,
+          },
+        });
+      }
+
+      await tx.event.create({
+        data: {
+          type: "RECIPIENT_UPDATED",
+          circleId: req.params.id,
+          actorId: authenticatedUserId,
+          payload: {
+            recipientId: recipient.id,
+            entitlementStatus: "ACTIVE",
+            appleProductId: appleProductId ?? null,
+          },
+        },
+      });
+
+      return tx.careRecipient.findUnique({
+        where: { id: recipient.id },
+        include: { entitlement: true },
+      });
+    });
+
+    return recipientSummary(updatedRecipient);
   });
 
   // POST /circles/:id/recipients/reorder — admin only
@@ -998,12 +1120,25 @@ export default async function circles(app) {
     if (!caregiver) return;
     const recipient = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
+      include: { entitlement: true },
     });
     if (!recipient) return reply.code(404).send({ error: "Care receiver not found" });
 
     const [existingGrant] = await db.careRecipientAccess.findMany({
       where: { memberId: caregiver.id, recipientId: recipient.id },
     });
+    const caregiverLimit = maxCaregiversForReceiver(recipient.entitlement);
+    if (caregiverLimit !== null && (!existingGrant || existingGrant.revokedAt)) {
+      const activeGrantCount = await db.careRecipientAccess.count({
+        where: { recipientId: recipient.id, revokedAt: null },
+      });
+      if (activeGrantCount >= caregiverLimit) {
+        return reply.code(402).send({
+          error: "Upgrade this care receiver to unlock more caregiver access",
+          recipientId: recipient.id,
+        });
+      }
+    }
     let grant;
     if (existingGrant && !existingGrant.revokedAt) {
       grant = existingGrant;

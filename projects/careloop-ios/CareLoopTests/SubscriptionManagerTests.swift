@@ -38,6 +38,10 @@ final class SubscriptionManagerInitialStateTests: XCTestCase {
         XCTAssertNil(manager.renewalDate)
     }
 
+    func test_latestPurchaseSnapshot_defaultsNil() {
+        XCTAssertNil(manager.latestPurchaseSnapshot)
+    }
+
     func test_storeError_defaultsNil() {
         XCTAssertNil(manager.storeError, "No error should exist before any purchase attempt")
     }
