@@ -8,6 +8,7 @@ struct NewTaskView: View {
     let isAdmin:    Bool
     let onCreated:  (CareTask) -> Void
 
+    @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
 
     // MARK: – Shared fields
@@ -736,20 +737,74 @@ struct NewTaskView: View {
     private func save() async {
         loading = true
         do {
-            let created = try await APIClient.shared.createTask(
-                circleId:    circleId,
-                title:       title.trimmingCharacters(in: .whitespaces),
-                notes:       notes.isEmpty ? nil : notes,
-                dueAt:       computedDueAt,
-                priority:    priority,
-                assigneeId:  assigneeId,
-                recipientId: recipientId.isEmpty ? nil : recipientId,
-                recurrence:  computedRecurrence
-            )
+            let created = try await createTask()
             onCreated(created)
             dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false
+    }
+
+    private func createTask() async throws -> CareTask {
+        if UITestScenario.current != nil {
+            let created = makeUITestTask()
+            appendUITestTask(created)
+            return created
+        }
+
+        return try await APIClient.shared.createTask(
+            circleId:    circleId,
+            title:       title.trimmingCharacters(in: .whitespaces),
+            notes:       notes.isEmpty ? nil : notes,
+            dueAt:       computedDueAt,
+            priority:    priority,
+            assigneeId:  assigneeId,
+            recipientId: recipientId.isEmpty ? nil : recipientId,
+            recurrence:  computedRecurrence
+        )
+    }
+
+    private func makeUITestTask() -> CareTask {
+        let recurrence = computedRecurrence
+        let selectedAssignee = members.first { $0.userId == assigneeId }?.user
+        return CareTask(
+            id: "ui-task-\(UUID().uuidString)",
+            title: title.trimmingCharacters(in: .whitespaces),
+            notes: notes.isEmpty ? nil : notes,
+            dueAt: computedDueAt,
+            status: .pending,
+            priority: priority,
+            recurrenceFrequency: recurrence?.frequency ?? .none,
+            recurrenceInterval: recurrence?.interval,
+            recurrenceWeekdays: recurrence?.weekdays ?? [],
+            recurrenceEndsAt: recurrence?.endsAt,
+            seriesId: recurrence == nil ? nil : "ui-series-\(UUID().uuidString)",
+            completedAt: nil,
+            archivedAt: nil,
+            circleId: circleId,
+            recipientId: recipientId.isEmpty ? nil : recipientId,
+            recipient: selectedRecipientModel,
+            creatorId: creatorId,
+            assigneeId: assigneeId,
+            assignee: selectedAssignee,
+            capabilities: CareTaskCapabilities(
+                canEdit: isAdmin,
+                canDelete: isAdmin,
+                canAssign: isAdmin,
+                canChangeRecipient: isAdmin,
+                canChangeStatus: true,
+                canMarkDone: true,
+                canSkip: true,
+                canComment: true
+            )
+        )
+    }
+
+    private func appendUITestTask(_ task: CareTask) {
+        guard var circle = appState.activeCircle else { return }
+        var updatedTasks = circle.tasks ?? []
+        updatedTasks.insert(task, at: 0)
+        circle.tasks = updatedTasks
+        appState.activeCircle = circle
     }
 }
 

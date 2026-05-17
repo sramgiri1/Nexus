@@ -233,6 +233,7 @@ struct TaskDetailView: View {
             .padding(.horizontal, 16).padding(.vertical, 15)
             .background(card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .disabled(!canEdit)
+            .accessibilityIdentifier("task-detail-title-field")
     }
 
     // MARK: – Mode toggle

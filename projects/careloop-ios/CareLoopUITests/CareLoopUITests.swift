@@ -568,6 +568,38 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanCreateRecurringTaskForPremiumReceiver() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let recurringTaskTitle = "Daily hydration check"
+
+        XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
+        tapQuickAction("quick-action-task-board", in: app)
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 5))
+        app.buttons["add-task-button"].tap()
+
+        typeText(into: app.textFields["new-task-title-field"], text: recurringTaskTitle)
+        XCTAssertTrue(app.buttons["task-mode-repeating-button"].waitForExistence(timeout: 5))
+        app.buttons["task-mode-repeating-button"].tap()
+
+        XCTAssertFalse(app.staticTexts["Recurring schedules require premium"].exists)
+        XCTAssertTrue(app.buttons["new-task-submit-button"].isEnabled)
+        app.buttons["new-task-submit-button"].tap()
+
+        XCTAssertTrue(app.staticTexts[recurringTaskTitle].waitForExistence(timeout: 5))
+        let recurringTaskCard = app.buttons.matching(NSPredicate(format: "label CONTAINS %@", recurringTaskTitle)).firstMatch
+        XCTAssertTrue(recurringTaskCard.waitForExistence(timeout: 3))
+        recurringTaskCard.tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.textFields["task-detail-title-field"].waitForExistence(timeout: 3))
+        XCTAssertEqual(app.textFields["task-detail-title-field"].value as? String, recurringTaskTitle)
+        XCTAssertTrue(app.staticTexts["Repeats"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts["Recurring schedules require premium"].exists)
+    }
+
+    @MainActor
     func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

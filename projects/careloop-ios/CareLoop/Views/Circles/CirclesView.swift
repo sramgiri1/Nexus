@@ -71,11 +71,12 @@ struct CirclesView: View {
                         isAdmin:    appState.userRole == .admin,
                         onCreated:  { created in
                             tasks.insert(created, at: 0)
-                            if created.dueAt != nil && !askedForPush {
+                            if created.dueAt != nil && !askedForPush && UITestScenario.current == nil {
                                 showPermissionSheet = true
                             }
                         }
                     )
+                    .environmentObject(appState)
                 }
             }
             .sheet(isPresented: $showMembers) {
