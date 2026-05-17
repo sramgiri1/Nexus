@@ -22,12 +22,13 @@ extension APIClient {
         try await get("/circles/\(circleId)/recipients")
     }
 
-    func createRecipient(circleId: String, name: String, relationship: String?, notes: String? = nil) async throws -> CareRecipient {
+    func createRecipient(circleId: String, name: String, relationship: String?, notes: String? = nil, premiumIntent: String? = nil) async throws -> CareRecipient {
         var body: [String: Any] = [
             "name": name
         ]
         if let relationship { body["relationship"] = relationship }
         if let notes { body["notes"] = notes }
+        if let premiumIntent { body["premiumIntent"] = premiumIntent }
         return try await postAny("/circles/\(circleId)/recipients", body: body)
     }
 

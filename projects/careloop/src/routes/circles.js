@@ -495,7 +495,7 @@ export default async function circles(app) {
 
   // POST /circles/:id/recipients — admin only
   app.post("/circles/:id/recipients", async (req, reply) => {
-    const { userId, name, relationship, notes } = req.body ?? {};
+    const { userId, name, relationship, notes, premiumIntent } = req.body ?? {};
     const authenticatedUserId = requireAuthenticatedUser(req, reply);
     if (!authenticatedUserId) return;
     if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
@@ -504,15 +504,22 @@ export default async function circles(app) {
       return reply.code(400).send({ error: "name is required" });
     }
 
+    const recipientCount = await db.careRecipient.count({ where: { circleId: req.params.id } });
+    if (recipientCount >= 1 && premiumIntent !== "ADD_RECEIVER") {
+      return reply.code(402).send({
+        error: "Upgrade is required to add another care receiver",
+        code: "CARE_RECEIVER_LIMIT_REQUIRES_PREMIUM",
+      });
+    }
+
     const recipient = await db.$transaction(async (tx) => {
-      const count = await tx.careRecipient.count({ where: { circleId: req.params.id } });
       const created = await tx.careRecipient.create({
         data: {
           circleId: req.params.id,
           name: name.trim(),
           relationship: relationship?.trim() || null,
           notes: notes?.trim() || null,
-          sortOrder: count,
+          sortOrder: recipientCount,
         },
       });
       await tx.event.create({

@@ -66,24 +66,25 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P3: Add Second Receiver Gate
 
-**Status:** Next.
+**Status:** Complete.
 
 **Goal:** Enforce the free-tier receiver limit at the first honest decision point.
 
 **Deliverables**
 
-- Backend blocks a second free receiver unless the target receiver path has premium eligibility.
+- Backend blocks a second free receiver unless the caller provides the premium add-receiver intent.
 - iOS shows a choice sheet when `Add Care Receiver` is tapped after the free receiver already exists.
-- `Cancel` returns to the previous screen without creating a draft.
-- `Upgrade` opens the receiver-scoped premium flow.
+- Declining the prompt keeps the user in Care Receiver Management with no draft receiver.
+- Choosing upgrade opens the receiver add form with receiver-scoped premium intent.
 
 **Tests**
 
-- Backend test: second receiver is blocked on free tier.
-- UI test: add-receiver gate appears before the form.
-- UI test: cancel returns without draft state.
+- `scripts/careloop-test-runner.sh backend:circles`
+- `scripts/careloop-test-runner.sh ios:personas`
 
 ## Phase P4: Caregiver Upgrade Request
+
+**Status:** Next.
 
 **Goal:** Let caregivers signal premium need without giving them billing authority.
 

@@ -2420,7 +2420,7 @@ describe("circle membership management", () => {
     await app.close();
   });
 
-  test("POST /circles/:id/recipients lets an admin add another care recipient", async () => {
+  test("POST /circles/:id/recipients blocks a second free care receiver without upgrade intent", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
       circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
@@ -2432,6 +2432,25 @@ describe("circle membership management", () => {
       url: "/circles/c1/recipients",
       headers: HDR,
       payload: { userId: "u1", name: "Jane Doe", relationship: "Spouse" },
+    });
+
+    assert.equal(res.statusCode, 402);
+    assert.equal(res.json().code, "CARE_RECEIVER_LIMIT_REQUIRES_PREMIUM");
+    await app.close();
+  });
+
+  test("POST /circles/:id/recipients lets an admin add another care recipient after upgrade intent", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients",
+      headers: HDR,
+      payload: { userId: "u1", name: "Jane Doe", relationship: "Spouse", premiumIntent: "ADD_RECEIVER" },
     });
 
     assert.equal(res.statusCode, 201);

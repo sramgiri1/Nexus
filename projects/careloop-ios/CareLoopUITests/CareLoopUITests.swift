@@ -75,9 +75,28 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Care Receiver Management"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Activation controls task access"].exists)
         XCTAssertTrue(app.staticTexts["David"].exists)
-        XCTAssertTrue(app.images["recipient-plan-badge-r1"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.images["recipient-plan-badge-r2"].exists)
-        XCTAssertTrue(app.buttons["recipient-upgrade-r2"].exists)
+        XCTAssertTrue(app.staticTexts["Premium plan active"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Basic plan"].exists)
+        XCTAssertTrue(app.buttons["Upgrade David"].exists)
+    }
+
+    @MainActor
+    func test_addSecondReceiverShowsPremiumGateBeforeForm() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.buttons["add-care-receiver-button"].waitForExistence(timeout: 5))
+        app.buttons["add-care-receiver-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Premium is required to add another care receiver"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts["Add Care Receiver"].waitForExistence(timeout: 1))
+        app.buttons["Upgrade and add receiver"].tap()
+        XCTAssertTrue(app.staticTexts["Add Care Receiver"].waitForExistence(timeout: 3))
     }
 
     @MainActor

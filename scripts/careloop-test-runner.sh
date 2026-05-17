@@ -142,6 +142,8 @@ case "$suite" in
       "CareLoopTests/AppStateCircleTests" \
       "CareLoopTests/CircleHomePolicyTests" \
       "CareLoopUITests/CareLoopUITests/test_organizerHomeShowsReceiverCardsAndQuickActions" \
+      "CareLoopUITests/CareLoopUITests/test_organizerCanOpenCareReceiverManagement" \
+      "CareLoopUITests/CareLoopUITests/test_addSecondReceiverShowsPremiumGateBeforeForm" \
       "CareLoopUITests/CareLoopUITests/test_caregiverHomeShowsScopedDashboard" \
       "CareLoopUITests/CareLoopUITests/test_receiverHomeShowsNextDueTaskExperience" \
       "CareLoopUITests/CareLoopUITests/test_receiverCanCompleteNextTaskFromHome"

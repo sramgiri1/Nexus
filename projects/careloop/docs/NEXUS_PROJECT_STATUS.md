@@ -4,7 +4,7 @@
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
 - Status: Implementation and validation in progress
-- Next action: Execute premium subphases P1-P8 with tests, docs, demo data, commits, and pushes at each phase boundary
+- Next action: Execute premium subphase P4 caregiver upgrade requests with tests, docs, commit, and push before P5
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -19,6 +19,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Premium planning has been split into receiver-scoped subphases in `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`.
 - Premium P1 is complete: PRD contracts, Nexus status, Command Center visibility, and automated docs/test metadata validation.
 - Premium P2 is complete: receiver plan badges now appear in organizer/caregiver dashboard contexts, Care Receiver Management exposes plan status and upgrade action, and Care Receiver persona sees badge-only plan state.
+- Premium P3 is complete: adding a second care receiver is blocked on the free path, requires an explicit premium add-receiver intent, and the iOS management screen gates the add form behind an upgrade choice.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -30,12 +31,14 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - `npm run check:careloop-premium-phase-plan` is the P1 docs/contract gate.
 - `scripts/careloop-test-runner.sh ios:personas` passed after P2 receiver plan visibility changes.
 - `scripts/careloop-test-runner.sh ios:payments` passed after P2 premium/paywall entry changes.
+- `scripts/careloop-test-runner.sh backend:circles` passed after P3 second-receiver gate changes.
+- `scripts/careloop-test-runner.sh ios:personas` passed after P3 add-receiver gate UI coverage.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
 ## Remaining Blockers
 
-- Premium P3-P8 implementation and test automation are not complete yet.
+- Premium P4-P8 implementation and test automation are not complete yet.
 - Physical-device/TestFlight validation for APNs delivery, notification tap, universal links, and OS permission prompts.
 - Real Google/Facebook/Apple auth credentials and redirect URI configuration.
 - StoreKit sandbox purchase/restore and App Store entitlement verification.

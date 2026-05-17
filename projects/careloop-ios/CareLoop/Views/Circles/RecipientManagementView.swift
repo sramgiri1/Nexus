@@ -5,6 +5,8 @@ struct RecipientManagementView: View {
     @Environment(\.dismiss) private var dismiss
 
     @State private var showCreateRecipient = false
+    @State private var showAddReceiverUpgradeGate = false
+    @State private var addReceiverUsesPremiumIntent = false
     @State private var editingRecipient: CareRecipient?
     @State private var invitingRecipient: CareRecipient?
     @State private var proxyRecipient: CareRecipient?
@@ -67,11 +69,11 @@ struct RecipientManagementView: View {
                 }
                 ToolbarItem(placement: .primaryAction) {
                     Button {
-                        error = nil
-                        showCreateRecipient = true
+                        startAddRecipient()
                     } label: {
                         Image(systemName: "plus")
                     }
+                    .accessibilityIdentifier("add-care-receiver-button")
                 }
             }
             .sheet(isPresented: $showCreateRecipient, onDismiss: { Task { await refreshData() } }) {
@@ -79,6 +81,21 @@ struct RecipientManagementView: View {
                     try await createRecipient(name: name, relationship: relationship, notes: notes, inviteEmail: inviteEmail)
                 }
                 .environmentObject(appState)
+            }
+            .confirmationDialog(
+                "Premium is required to add another care receiver",
+                isPresented: $showAddReceiverUpgradeGate,
+                titleVisibility: .visible
+            ) {
+                Button("Upgrade and add receiver") {
+                    addReceiverUsesPremiumIntent = true
+                    showCreateRecipient = true
+                }
+                Button("Cancel", role: .cancel) {
+                    addReceiverUsesPremiumIntent = false
+                }
+            } message: {
+                Text("Your free plan includes one care receiver. Upgrade before adding another receiver to this Care Circle.")
             }
             .sheet(item: $editingRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
                 RecipientEditorSheet(title: "Edit Care Receiver", recipient: recipient) { name, relationship, notes, _ in
@@ -350,6 +367,8 @@ struct RecipientManagementView: View {
                 Circle()
                     .fill((recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid).opacity(0.11))
             )
+            .accessibilityElement(children: .ignore)
+            .accessibilityHidden(false)
             .accessibilityLabel(recipient.premiumStatusAccessibilityLabel)
             .accessibilityIdentifier("recipient-plan-badge-\(recipient.id)")
     }
@@ -374,8 +393,7 @@ struct RecipientManagementView: View {
                     .multilineTextAlignment(.center)
             }
             Button {
-                error = nil
-                showCreateRecipient = true
+                startAddRecipient()
             } label: {
                 HStack(spacing: 8) {
                     Image(systemName: "plus")
@@ -399,6 +417,16 @@ struct RecipientManagementView: View {
         }
         .frame(maxWidth: .infinity)
         .padding(.top, 40)
+    }
+
+    private func startAddRecipient() {
+        error = nil
+        addReceiverUsesPremiumIntent = false
+        if recipients.isEmpty {
+            showCreateRecipient = true
+        } else {
+            showAddReceiverUpgradeGate = true
+        }
     }
 
     private func sectionLabel(_ title: String, icon: String, color: Color) -> some View {
@@ -450,7 +478,14 @@ struct RecipientManagementView: View {
 
     private func createRecipient(name: String, relationship: String?, notes: String?, inviteEmail: String?) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
-        let created = try await APIClient.shared.createRecipient(circleId: circleId, name: name, relationship: relationship, notes: notes)
+        let created = try await APIClient.shared.createRecipient(
+            circleId: circleId,
+            name: name,
+            relationship: relationship,
+            notes: notes,
+            premiumIntent: addReceiverUsesPremiumIntent ? "ADD_RECEIVER" : nil
+        )
+        addReceiverUsesPremiumIntent = false
         if let inviteEmail, !inviteEmail.isEmpty {
             _ = try await APIClient.shared.inviteMember(
                 circleId: circleId,
