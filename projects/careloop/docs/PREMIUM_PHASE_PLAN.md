@@ -144,19 +144,21 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P7: Premium Enforcement Sweep
 
+**Status:** Complete.
+
 **Goal:** Make all premium gates consistent and server-backed.
 
 **Deliverables**
 
-- Enforce premium for additional care receivers, unlimited caregivers, recurring tasks, and premium insights.
-- Preserve visibility of existing data after expiry.
-- Block only new premium actions when entitlement is absent or expired.
+- Confirmed premium gates for additional care receivers, unlimited caregivers, recurring tasks, and premium insights remain server-backed.
+- Added expired-entitlement regression coverage proving existing receiver data remains visible.
+- Added backend coverage proving expired entitlements still block recurring tasks, premium insights, and additional caregiver grants.
+- Added iOS model coverage and copy for expired/revoked receiver Premium states so users see why premium actions are locked.
 
 **Tests**
 
-- Backend entitlement tests for every gated operation.
-- UI locked-state regression tests.
-- Downgrade regression test proving existing data remains visible.
+- `scripts/careloop-test-runner.sh backend:circles`
+- `scripts/careloop-test-runner.sh ios:payments`
 
 ## Phase P8: Demo And StoreKit Hardening
 

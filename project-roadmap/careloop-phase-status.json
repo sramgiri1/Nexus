@@ -4,7 +4,7 @@
   "activePhase": "CARELOOP-P3-PREMIUM",
   "activeMission": "CareLoop Premium Receiver-Scoped Monetization",
   "status": "in_progress",
-  "nextAction": "Execute premium subphase P7 entitlement enforcement sweep with tests, docs, commit, and push before P8",
+  "nextAction": "Execute premium subphase P8 demo and StoreKit hardening with tests, docs, commit, and push",
   "generatedAt": "2026-05-17T15:00:00.000Z",
   "missionContractPath": "contracts/projects/careloop/phase-2-mission-contract.json",
   "taskPlanPath": "contracts/projects/careloop/phase-2-task-plan.json",

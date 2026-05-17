@@ -2,10 +2,10 @@
 
 ## Metadata
 
-- Generated at: 2026-05-17T16:50:42.801Z
+- Generated at: 2026-05-17T16:56:44.044Z
 - Phase: P55.2
 - Validation branch: codex/careloop-premium-phases
-- Validation HEAD: 4765e76
+- Validation HEAD: 0d5629d
 
 ## Summary
 

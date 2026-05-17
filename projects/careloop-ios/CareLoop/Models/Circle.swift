@@ -117,12 +117,23 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         premium.hasPremium
     }
 
+    var hasExpiredPremium: Bool {
+        if premium.status == .expired { return true }
+        guard premium.status == .active, let expiresAt = premium.expiresAt else { return false }
+        return expiresAt <= Date()
+    }
+
     var premiumStatusLabel: String {
-        premium.hasPremium ? "Premium" : "Free"
+        if premium.hasPremium { return "Premium" }
+        if premium.status == .revoked { return "Revoked" }
+        if hasExpiredPremium { return "Expired" }
+        return "Free"
     }
 
     var premiumStatusIconName: String {
-        premium.hasPremium ? "crown.fill" : "crown"
+        if premium.hasPremium { return "crown.fill" }
+        if premium.status == .revoked || hasExpiredPremium { return "exclamationmark.triangle.fill" }
+        return "crown"
     }
 
     var premiumStatusAccessibilityLabel: String {
@@ -135,6 +146,15 @@ struct CareRecipient: Identifiable, Codable, Hashable {
                 return "Premium receiver features active until \(expiresAt.formatted(.dateTime.month().day().year()))."
             }
             return "Premium receiver features are active."
+        }
+        if premium.status == .revoked {
+            return "Premium was revoked for this care receiver. Existing care history remains visible, but new premium actions are blocked."
+        }
+        if hasExpiredPremium {
+            if let expiresAt = premium.expiresAt {
+                return "Premium expired on \(expiresAt.formatted(.dateTime.month().day().year())). Existing care history remains visible, but new premium actions are blocked."
+            }
+            return "Premium expired for this care receiver. Existing care history remains visible, but new premium actions are blocked."
         }
         return "Basic tasks and reminders only. Upgrade this care receiver to unlock recurring schedules, insights, and unlimited caregivers."
     }

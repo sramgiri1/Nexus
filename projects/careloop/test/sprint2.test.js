@@ -3467,6 +3467,78 @@ describe("receiver-scoped access control", () => {
     assert.equal(premiumReceiverRecurring.json().recurrenceFrequency, "DAILY");
     await app.close();
   });
+
+  test("keeps existing receiver data visible but blocks premium actions after entitlement expiry", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    const firstGrant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m3/recipient-access/cr2",
+      headers: organizerHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(firstGrant.statusCode, 200);
+
+    const expiredEntitlement = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: organizerHeaders,
+      payload: {
+        userId: "u1",
+        source: "APP_STORE",
+        expiresAt: "2026-01-01T00:00:00.000Z",
+        appleOriginalTransactionId: "otx-expired-cr2",
+        appleProductId: "com.careloop.ios.premium.monthly",
+      },
+    });
+    assert.equal(expiredEntitlement.statusCode, 200);
+    assert.equal(expiredEntitlement.json().premium.status, "ACTIVE");
+    assert.equal(expiredEntitlement.json().premium.hasPremium, false);
+    assert.equal(expiredEntitlement.json().premium.capabilities.canUseInsights, false);
+
+    const visibleTasks = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: organizerHeaders,
+    });
+    assert.equal(visibleTasks.statusCode, 200);
+    assert.ok(visibleTasks.json().some((task) => task.id === "t4" && task.recipientId === "cr2"));
+
+    const blockedRecurring = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: organizerHeaders,
+      payload: {
+        title: "Expired plan medication",
+        creatorId: "u1",
+        recipientId: "cr2",
+        assigneeId: "u5",
+        dueAt: "2026-05-01T18:00:00.000Z",
+        recurrence: { frequency: "DAILY" },
+      },
+    });
+    assert.equal(blockedRecurring.statusCode, 402);
+    assert.equal(blockedRecurring.json().error, "Recurring schedules require premium for this care receiver");
+
+    const blockedInsights = await app.inject({
+      method: "GET",
+      url: "/circles/c1/insights/completion?days=7&recipientId=cr2",
+      headers: organizerHeaders,
+    });
+    assert.equal(blockedInsights.statusCode, 402);
+    assert.equal(blockedInsights.json().error, "Completion insights are available only for premium care receivers");
+
+    const blockedSecondGrant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m6/recipient-access/cr2",
+      headers: organizerHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(blockedSecondGrant.statusCode, 402);
+    assert.equal(blockedSecondGrant.json().error, "Upgrade this care receiver to unlock more caregiver access");
+    await app.close();
+  });
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════

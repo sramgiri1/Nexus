@@ -163,6 +163,32 @@ final class CareRecipientPremiumTests: XCTestCase {
         XCTAssertTrue(ReceiverPremiumPolicy.supportsInsights(for: recipient))
         XCTAssertTrue(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))
     }
+
+    func test_careRecipient_exposesExpiredPremiumAsLockedButVisible() {
+        let recipient = CareRecipient(
+            id: "r1",
+            name: "Maya",
+            premium: CareRecipientPremium(
+                status: .active,
+                source: .appStore,
+                startsAt: Date(timeIntervalSince1970: 0),
+                expiresAt: Date(timeIntervalSince1970: 3600),
+                appleOriginalTransactionId: "otx-1",
+                appleProductId: "com.careloop.ios.premium.monthly",
+                hasPremium: false,
+                capabilities: .free
+            )
+        )
+
+        XCTAssertFalse(recipient.hasPremium)
+        XCTAssertTrue(recipient.hasExpiredPremium)
+        XCTAssertEqual(recipient.premiumStatusLabel, "Expired")
+        XCTAssertEqual(recipient.premiumStatusIconName, "exclamationmark.triangle.fill")
+        XCTAssertEqual(recipient.premiumStatusAccessibilityLabel, "Maya plan: Expired")
+        XCTAssertTrue(recipient.premiumStatusDetail.contains("Existing care history remains visible"))
+        XCTAssertFalse(ReceiverPremiumPolicy.supportsInsights(for: recipient))
+        XCTAssertFalse(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))
+    }
 }
 
 // MARK: — Sprint 2: AppState push notification state
