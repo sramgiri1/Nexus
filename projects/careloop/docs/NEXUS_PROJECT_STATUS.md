@@ -25,7 +25,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Premium P6 is complete: receiver-scoped purchase success, unlocked-feature confirmation, App Store plan management, restore entry, and above-fold organizer management entry are implemented with UI coverage.
 - Premium P7 is complete: expired receiver entitlements keep existing care data visible while recurring tasks, premium insights, and additional caregiver access remain blocked; iOS now labels expired/revoked plan states explicitly.
 - Premium P8 is complete: the existing `npm run careloop:demo` room launcher now has premium/free/expired/request-pending showcase data, local StoreKit product configuration, and demo readiness validation.
-- Reminder/recurrence hardening is in progress: premium recurring task creation is now UI-automated, and completing a recurring task in the task board is covered through next-occurrence UI automation.
+- Reminder/recurrence hardening is in progress: premium recurring task creation, recurring completion/next occurrence, task detail status changes, comment add/delete, and task detail snooze are now covered through focused Xcode UI automation.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -50,7 +50,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - `npm run check:careloop-demo-readiness` passed after P8 demo/StoreKit contract updates.
 - `scripts/careloop-test-runner.sh docs:demo` passed after P8 demo/StoreKit contract updates.
 - Backend task suite passed after reminder/recurrence hardening UI coverage.
-- Focused Xcode task suite passed with recurring creation and recurring completion/next-occurrence UI coverage.
+- Focused Xcode task suite passed with recurring creation, recurring completion/next-occurrence, task detail status, comment add/delete, and snooze UI coverage.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

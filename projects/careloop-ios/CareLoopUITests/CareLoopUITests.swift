@@ -627,6 +627,42 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_taskDetailCanChangeStatusToDone() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t2"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t2"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        app.buttons["task-detail-status-done"].tap()
+        XCTAssertEqual(app.buttons["task-detail-status-done"].value as? String, "Selected")
+    }
+
+    @MainActor
+    func test_taskCommentsCanBeAddedAndDeleted() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "task-comments",
+            "-careloop-ui-pending-task", "t2"
+        ])
+        let commentBody = "Confirm pickup window with pharmacy"
+
+        let field = waitForAnyElement(in: app, identifier: "task-comment-field")
+        typeText(into: field, text: commentBody)
+        app.buttons["task-comment-send-button"].tap()
+
+        XCTAssertTrue(app.staticTexts[commentBody].waitForExistence(timeout: 5))
+        let deleteButton = app.buttons["Delete comment"]
+        XCTAssertTrue(deleteButton.waitForExistence(timeout: 3))
+        deleteButton.tap()
+        waitForDisappearance(of: app.staticTexts[commentBody], timeout: 5)
+    }
+
+    @MainActor
     func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

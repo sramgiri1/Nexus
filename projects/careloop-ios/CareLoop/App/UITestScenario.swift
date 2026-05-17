@@ -5,6 +5,7 @@ enum UITestScenario: String {
     case organizerHome = "organizer-home"
     case caregiverHome = "caregiver-home"
     case receiverHome = "receiver-home"
+    case taskComments = "task-comments"
 
     private static let launchArgument = "-careloop-ui-scenario"
     private static let pendingTaskLaunchArgument = "-careloop-ui-pending-task"
@@ -243,7 +244,7 @@ private struct UITestScenarioFixture {
                 pendingTaskId: nil
             )
 
-        case .organizerHome:
+        case .organizerHome, .taskComments:
             let circle = CareCircle(
                 id: "c1",
                 name: "Ramgiri Care Circle",

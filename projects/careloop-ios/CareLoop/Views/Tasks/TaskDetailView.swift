@@ -50,6 +50,7 @@ struct TaskDetailView: View {
     @State private var upgradeRequestRecipientIds = Set<String>()
     @State private var snoozingMinutes: Int?
     @State private var snoozeMessage: String?
+    @State private var showComments = false
 
     init(task: CareTask, onUpdate: @escaping (CareTask) -> Void, onDelete: @escaping () -> Void) {
         _task       = State(initialValue: task)
@@ -208,6 +209,11 @@ struct TaskDetailView: View {
         .sheet(item: $paywallRecipient) { recipient in
             PaywallView(circleId: circleId, recipient: recipient)
                 .environmentObject(appState)
+        }
+        .sheet(isPresented: $showComments) {
+            NavigationStack {
+                TaskCommentsView(task: task).environmentObject(appState)
+            }
         }
         .confirmationDialog("Delete this task?", isPresented: $showDeleteAlert, titleVisibility: .visible) {
             Button("Delete", role: .destructive) { Task { await performDelete() } }
@@ -480,6 +486,8 @@ struct TaskDetailView: View {
             )
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("task-detail-status-\(s.rawValue.lowercased())")
+        .accessibilityValue(active ? "Selected" : "Not selected")
     }
 
     // MARK: – Recipient card
@@ -639,8 +647,8 @@ struct TaskDetailView: View {
     // MARK: – Comments link
 
     private var commentsLink: some View {
-        NavigationLink {
-            TaskCommentsView(task: task).environmentObject(appState)
+        Button {
+            showComments = true
         } label: {
             HStack {
                 Label("Comments", systemImage: "bubble.left.and.bubble.right")
@@ -656,6 +664,7 @@ struct TaskDetailView: View {
             .shadow(color: .black.opacity(0.04), radius: 5, x: 0, y: 2)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier("task-detail-comments-link")
     }
 
     // MARK: – Delete button
@@ -866,23 +875,69 @@ struct TaskDetailView: View {
     private func save(seriesScope: TaskSeriesScope = .occurrence) async {
         loading = true; error = nil
         do {
-            let updated = try await APIClient.shared.updateTask(
-                circleId:    circleId,
-                taskId:      task.id,
-                title:       title.trimmingCharacters(in: .whitespaces),
-                notes:       notes.isEmpty ? nil : notes,
-                dueAt:       computedDueAt,
-                priority:    priority,
-                status:      status,
-                canAssign:   canAssign,
-                assigneeId:  assigneeId,
-                recipientId: recipientId.isEmpty ? nil : recipientId,
-                recurrence:  computedRecurrence,
-                seriesScope: seriesScope
-            )
+            let updated = try await updateTask(seriesScope: seriesScope)
             task = updated; onUpdate(updated); dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false
+    }
+
+    private func updateTask(seriesScope: TaskSeriesScope) async throws -> CareTask {
+        if UITestScenario.current != nil {
+            return updateUITestTask()
+        }
+
+        return try await APIClient.shared.updateTask(
+            circleId:    circleId,
+            taskId:      task.id,
+            title:       title.trimmingCharacters(in: .whitespaces),
+            notes:       notes.isEmpty ? nil : notes,
+            dueAt:       computedDueAt,
+            priority:    priority,
+            status:      status,
+            canAssign:   canAssign,
+            assigneeId:  assigneeId,
+            recipientId: recipientId.isEmpty ? nil : recipientId,
+            recurrence:  computedRecurrence,
+            seriesScope: seriesScope
+        )
+    }
+
+    private func updateUITestTask() -> CareTask {
+        var updated = CareTask(
+            id: task.id,
+            title: title.trimmingCharacters(in: .whitespaces),
+            notes: notes.isEmpty ? nil : notes,
+            dueAt: computedDueAt,
+            status: status,
+            priority: priority,
+            recurrenceFrequency: computedRecurrence?.frequency ?? .none,
+            recurrenceInterval: computedRecurrence?.interval,
+            recurrenceWeekdays: computedRecurrence?.weekdays ?? [],
+            recurrenceEndsAt: computedRecurrence?.endsAt,
+            seriesId: computedRecurrence == nil ? nil : task.seriesId,
+            completedAt: status == .done ? Date() : nil,
+            completedById: status == .done ? appState.currentUser?.id : nil,
+            completedBy: status == .done ? appState.currentUser : nil,
+            archivedAt: task.archivedAt,
+            circleId: task.circleId,
+            recipientId: recipientId.isEmpty ? nil : recipientId,
+            recipient: selectedRecipientModel,
+            creatorId: task.creatorId,
+            assigneeId: assigneeId,
+            assignee: availableAssignees.first { $0.userId == assigneeId }?.user ?? task.assignee,
+            capabilities: task.capabilities
+        )
+
+        if status != .done {
+            updated = updated.withUpdatedStatus(status, completedAt: nil, completedBy: nil)
+        }
+
+        if var circle = appState.activeCircle {
+            circle.tasks = (circle.tasks ?? []).map { $0.id == updated.id ? updated : $0 }
+            appState.activeCircle = circle
+        }
+
+        return updated
     }
 
     private func snoozeReminder(minutes: Int) async {

@@ -69,6 +69,7 @@ struct TaskCommentsView: View {
                         .padding(.horizontal, 16).padding(.bottom, 8)
                 }
             }
+            .accessibilityIdentifier("task-comments-screen")
             .onChange(of: comments) { _ in
                 if let last = comments.last {
                     withAnimation { proxy.scrollTo(last.id, anchor: .bottom) }
@@ -108,6 +109,8 @@ struct TaskCommentsView: View {
                                 .foregroundStyle(mid.opacity(0.6))
                         }
                         .buttonStyle(.plain)
+                        .accessibilityLabel("Delete comment")
+                        .accessibilityIdentifier("task-comment-delete-\(comment.id)")
                     }
                 }
                 Text(comment.body)
@@ -118,6 +121,7 @@ struct TaskCommentsView: View {
         }
         .padding(.horizontal, 16)
         .padding(.vertical, 10)
+        .accessibilityIdentifier("task-comment-row-\(comment.id)")
     }
 
     // MARK: – Composer
@@ -129,6 +133,7 @@ struct TaskCommentsView: View {
                 .lineLimit(1...4)
                 .padding(.horizontal, 12).padding(.vertical, 9)
                 .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+                .accessibilityIdentifier("task-comment-field")
 
             Button {
                 Task { await post() }
@@ -143,6 +148,7 @@ struct TaskCommentsView: View {
             }
             .buttonStyle(.plain)
             .disabled(draft.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || posting)
+            .accessibilityIdentifier("task-comment-send-button")
         }
         .padding(.horizontal, 14)
         .padding(.vertical, 10)
@@ -176,6 +182,11 @@ struct TaskCommentsView: View {
             loading = false
             return
         }
+        if UITestScenario.current != nil {
+            comments = []
+            loading = false
+            return
+        }
         do {
             comments = try await APIClient.shared.fetchComments(circleId: circleId, taskId: task.id)
         } catch {
@@ -190,6 +201,18 @@ struct TaskCommentsView: View {
         guard !text.isEmpty else { return }
         posting = true
         error = nil
+        if UITestScenario.current != nil {
+            comments.append(TaskComment(
+                id: "ui-comment-\(UUID().uuidString)",
+                body: text,
+                createdAt: Date(),
+                authorId: currentUserId ?? "ui-user",
+                author: CommentAuthor(id: currentUserId ?? "ui-user", name: appState.currentUser?.name ?? "CareLoop User")
+            ))
+            draft = ""
+            posting = false
+            return
+        }
         do {
             let comment = try await APIClient.shared.postComment(circleId: circleId, taskId: task.id, body: text)
             comments.append(comment)
@@ -203,6 +226,10 @@ struct TaskCommentsView: View {
     private func deleteComment(_ comment: TaskComment) async {
         guard let circleId = appState.activeCircle?.id else { return }
         error = nil
+        if UITestScenario.current != nil {
+            comments.removeAll { $0.id == comment.id }
+            return
+        }
         do {
             try await APIClient.shared.deleteComment(circleId: circleId, taskId: task.id, commentId: comment.id)
             comments.removeAll { $0.id == comment.id }

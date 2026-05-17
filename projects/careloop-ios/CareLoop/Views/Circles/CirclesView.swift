@@ -330,6 +330,7 @@ struct CirclesView: View {
         )
         .contextMenu { contextMenuItems(for: task) }
         .accessibilityIdentifier("task-card-\(task.id)")
+        .accessibilityValue(task.status.label)
     }
 
     @ViewBuilder
