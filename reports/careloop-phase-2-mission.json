@@ -1,0 +1,209 @@
+{
+  "mission": {
+    "contractVersion": "1.0",
+    "contractType": "project_mission",
+    "projectId": "careloop",
+    "projectDisplayName": "CareLoop",
+    "mode": "local-private",
+    "phaseId": "CARELOOP-P2",
+    "title": "CareLoop Phase 2: Product Hardening and Validation",
+    "objective": "Start CareLoop Phase 2 as a governed NEXUS project mission focused on product hardening, validation readiness, privacy review, test coverage, and release preparation.",
+    "source": "nexus_command_center",
+    "owner": "local-operator",
+    "missionType": "project_phase_start",
+    "scope": "PROJECT_CHANGE_PLANNING",
+    "mutationAllowed": false,
+    "providerCallsAllowed": false,
+    "toolExecutionAllowed": false,
+    "dbWritesAllowed": false,
+    "deploymentAllowed": false,
+    "riskLevel": "medium",
+    "dataClassification": "confidential",
+    "agents": [
+      "SHEPHERD",
+      "PRISM",
+      "CORE",
+      "SWIFT",
+      "SENTINEL",
+      "AUDITOR",
+      "WARDEN",
+      "NEXUS"
+    ],
+    "acceptanceCriteria": [
+      "CareLoop Phase 2 mission is visible in Command Center Projects and Mission Control",
+      "Phase 2 task plan is created with agent ownership",
+      "Phase 2 readiness gates are defined",
+      "No CareLoop source files are modified",
+      "No provider/tool/DB/deploy actions are executed",
+      "Evidence, audit, and activity records are redacted and linked"
+    ],
+    "createdAt": "2026-05-17T00:55:26.747Z"
+  },
+  "taskPlan": {
+    "planVersion": "1.0",
+    "projectId": "careloop",
+    "phaseId": "CARELOOP-P2",
+    "title": "CareLoop Phase 2 Governed Task Plan",
+    "status": "planned",
+    "mutationAllowed": false,
+    "executionAllowed": false,
+    "generatedAt": "2026-05-17T00:55:26.747Z",
+    "tasks": [
+      {
+        "taskId": "careloop-p2-task-01-product-brief",
+        "title": "Phase 2 Product Brief",
+        "ownerAgent": "SHEPHERD",
+        "supportAgents": [
+          "PRISM",
+          "NEXUS"
+        ],
+        "capabilityId": "orchestration.plan_flow",
+        "riskLevel": "medium",
+        "purpose": "Summarize Phase 2 goals, dependencies, and operator handoff points.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "Phase 2 mission contract",
+          "CareLoop PRD summary"
+        ],
+        "blockedUntil": "Governed planning review",
+        "nextRecommendedAction": "Review Phase 2 task plan in Command Center."
+      },
+      {
+        "taskId": "careloop-p2-task-02-prd-gap-review",
+        "title": "PRD Gap Review",
+        "ownerAgent": "PRISM",
+        "supportAgents": [
+          "AUDITOR"
+        ],
+        "capabilityId": "product.prd_review",
+        "riskLevel": "medium",
+        "purpose": "Compare the current PRD and local status against Phase 2 goals.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "PRD version and sprint gap audit"
+        ],
+        "blockedUntil": "Product owner confirms Phase 2 scope freeze",
+        "nextRecommendedAction": "Confirm which PRD gaps are first implementation candidates."
+      },
+      {
+        "taskId": "careloop-p2-task-03-backend-validation-readiness",
+        "title": "Backend Validation Readiness",
+        "ownerAgent": "SENTINEL",
+        "supportAgents": [
+          "AUDITOR"
+        ],
+        "capabilityId": "verification.code_quality_gate",
+        "riskLevel": "medium",
+        "purpose": "Confirm backend test suite baseline and next test gaps without running tests.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "Existing backend validation report",
+          "Test Suite Manager posture"
+        ],
+        "blockedUntil": "Controlled validation command selected",
+        "nextRecommendedAction": "Review existing backend validation artifacts before any new run."
+      },
+      {
+        "taskId": "careloop-p2-task-04-privacy-safety-review",
+        "title": "Privacy and Safety Review",
+        "ownerAgent": "WARDEN",
+        "supportAgents": [
+          "AUDITOR"
+        ],
+        "capabilityId": "security.privacy_review",
+        "riskLevel": "high",
+        "purpose": "Review privacy constraints, notes risk, public/demo separation, and secrets boundary.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "Privacy policy source",
+          "Secrets boundary status",
+          "Public/demo boundary check"
+        ],
+        "blockedUntil": "Privacy review checklist accepted",
+        "nextRecommendedAction": "Confirm sensitive-data handling before implementation planning."
+      },
+      {
+        "taskId": "careloop-p2-task-05-ios-validation-readiness",
+        "title": "iOS Validation Readiness",
+        "ownerAgent": "SWIFT",
+        "supportAgents": [
+          "SENTINEL"
+        ],
+        "capabilityId": "verification.ios_readiness",
+        "riskLevel": "medium",
+        "purpose": "Prepare iOS validation plan without running xcodebuild.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "iOS validation plan",
+          "Xcode runner not-enabled status"
+        ],
+        "blockedUntil": "iOS/Xcode runner is approved for a later validation phase",
+        "nextRecommendedAction": "Document simulator/device validation requirements."
+      },
+      {
+        "taskId": "careloop-p2-task-06-test-gap-proposal",
+        "title": "Test Gap Proposal",
+        "ownerAgent": "AUDITOR",
+        "supportAgents": [
+          "SENTINEL"
+        ],
+        "capabilityId": "quality.test_gap_detection",
+        "riskLevel": "medium",
+        "purpose": "Use existing Test Suite Manager and Quality Intelligence outputs to identify Phase 2 test gaps.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "Quality Intelligence gap summary",
+          "Test Suite Manager snapshot"
+        ],
+        "blockedUntil": "Gap review is accepted by operator",
+        "nextRecommendedAction": "Prioritize test gaps before source mutation."
+      },
+      {
+        "taskId": "careloop-p2-task-07-implementation-candidates",
+        "title": "Controlled Implementation Candidate Selection",
+        "ownerAgent": "CORE",
+        "supportAgents": [
+          "NEXUS"
+        ],
+        "capabilityId": "implementation.planning",
+        "riskLevel": "high",
+        "purpose": "Identify safe first implementation candidates for later controlled source mutation.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "PRD gap review",
+          "Privacy and validation gates"
+        ],
+        "blockedUntil": "P67 controlled source mutation expansion and operator approval",
+        "nextRecommendedAction": "Select the smallest low-risk implementation candidate."
+      },
+      {
+        "taskId": "careloop-p2-task-08-release-readiness-outline",
+        "title": "Release Readiness Outline",
+        "ownerAgent": "NEXUS",
+        "supportAgents": [
+          "AUDITOR",
+          "WARDEN"
+        ],
+        "capabilityId": "release.readiness_planning",
+        "riskLevel": "high",
+        "purpose": "Define what CareLoop needs before release/deploy phases.",
+        "mutationAllowed": false,
+        "executionAllowed": false,
+        "requiredEvidence": [
+          "Release gate outline",
+          "Privacy/security gate status",
+          "Validation readiness"
+        ],
+        "blockedUntil": "P69/P70 release and deploy loops are enabled",
+        "nextRecommendedAction": "Keep release actions disabled and document launch blockers."
+      }
+    ]
+  }
+}

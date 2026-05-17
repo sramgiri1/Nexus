@@ -204,6 +204,19 @@ not enabled yet.
   project, add a project profile, define stack/test commands, create a mission,
   generate a plan, and activate the first task.
 
+### CareLoop Phase 2
+
+CareLoop can be selected in local-private mode as a real project mission. The
+Projects page shows CareLoop Phase 2, the active Phase 2 task plan, project
+milestones, readiness gaps, and redacted evidence summaries.
+
+This CARELOOP-P2.1 surface is planning-only:
+
+- Phase 2 tasks are planned, not executed.
+- CareLoop source, Prisma, and iOS files are not mutated.
+- Provider/tool execution, DB writes, iOS/Xcode, and release/deploy actions stay disabled.
+- The OS Roadmap remains NEXUS-platform-only; CareLoop phases live under Projects and project-roadmap files.
+
 ## Service Health
 
 - Purpose: show which local NEXUS services are running, offline, disabled, planned, or unknown

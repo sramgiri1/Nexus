@@ -32,6 +32,28 @@ If no project is selected, start with project setup instead of using demo data:
 5. generate a plan
 6. activate the first task
 
+## Starting a Selected Project Phase
+
+CARELOOP-P2.1 starts CareLoop Phase 2 as a local-private selected-project
+mission inside NEXUS. This is a planning and readiness handoff, not a product
+implementation phase.
+
+The generated mission defines:
+
+- active project: CareLoop
+- active mission: CareLoop Phase 2
+- goal: product hardening, validation readiness, privacy review, test coverage,
+  and release preparation
+- task plan: eight planned tasks assigned to SHEPHERD, PRISM, CORE, SWIFT,
+  SENTINEL, AUDITOR, WARDEN, and NEXUS
+- safety posture: source mutation, provider calls, tool execution, DB writes,
+  iOS/Xcode, and deployment are disabled
+
+The CareLoop PRD is clear enough to start Phase 2 planning and readiness gates.
+It is not a source-mutation-ready implementation contract by itself; scoped
+implementation candidates require a later controlled implementation phase,
+operator approval, and validation/privacy gates.
+
 ## Current Action States
 
 - Generate Plan: available when the current planning bridge is online

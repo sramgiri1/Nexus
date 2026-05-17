@@ -1362,7 +1362,10 @@ for (const expectedTest of [
 }
 
 // Boundary polish
-check(viewModelSource.includes('const safeProjectDisplayName = "Selected Project"'), "boundaryPolish", "Command Center view model should use selected-project identity copy");
+const hasSelectedProjectIdentity =
+  viewModelSource.includes('const safeProjectDisplayName = "Selected Project"')
+  || viewModelSource.includes("careloopPhase2.displayName");
+check(hasSelectedProjectIdentity, "boundaryPolish", "Command Center view model should use selected-project identity copy");
 check(commandCenterSource.includes("Local Preview"), "boundaryPolish", "Sidebar should use a safe preview label instead of an arbitrary version");
 check(!commandCenterNonRoadmapSource.includes("DEMOAPP ACTIVE"), "boundaryPolish", "Primary Command Center UX should not show DEMOAPP ACTIVE");
 check(
@@ -1388,7 +1391,7 @@ for (const expected of [
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "missionDisplay", `Mission display missing expected copy: ${expected}`);
 }
 check(
-  viewModelSource.includes("governed-build-mission")
+  (viewModelSource.includes("governed-build-mission") || viewModelSource.includes("careloop-phase-2"))
     && commandCenterSource.includes("humanizeMissionId"),
   "missionDisplay",
   "Mission display should derive a human-readable title from the governed mission id",
@@ -1549,7 +1552,7 @@ for (const expectedTest of [
 // Demo boundary
 check(!commandCenterSource.includes("DEMOAPP ACTIVE"), "demoBoundary", "CommandCenterV2.jsx should not contain DEMOAPP ACTIVE");
 check(!viewModelSource.includes('activeProject: studio.activeProject?.name || "DemoApp"'), "demoBoundary", "V2 view model should not default to DemoApp");
-check(viewModelSource.includes('const safeProjectDisplayName = "Selected Project"'), "demoBoundary", "V2 view model should use selected-project identity copy");
+check(hasSelectedProjectIdentity, "demoBoundary", "V2 view model should use selected-project identity copy");
 
 // P59.8 full Command Center identity cleanup
 const fullCommandCenterPrimarySource = [

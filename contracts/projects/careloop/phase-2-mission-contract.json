@@ -1,0 +1,40 @@
+{
+  "contractVersion": "1.0",
+  "contractType": "project_mission",
+  "projectId": "careloop",
+  "projectDisplayName": "CareLoop",
+  "mode": "local-private",
+  "phaseId": "CARELOOP-P2",
+  "title": "CareLoop Phase 2: Product Hardening and Validation",
+  "objective": "Start CareLoop Phase 2 as a governed NEXUS project mission focused on product hardening, validation readiness, privacy review, test coverage, and release preparation.",
+  "source": "nexus_command_center",
+  "owner": "local-operator",
+  "missionType": "project_phase_start",
+  "scope": "PROJECT_CHANGE_PLANNING",
+  "mutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolExecutionAllowed": false,
+  "dbWritesAllowed": false,
+  "deploymentAllowed": false,
+  "riskLevel": "medium",
+  "dataClassification": "confidential",
+  "agents": [
+    "SHEPHERD",
+    "PRISM",
+    "CORE",
+    "SWIFT",
+    "SENTINEL",
+    "AUDITOR",
+    "WARDEN",
+    "NEXUS"
+  ],
+  "acceptanceCriteria": [
+    "CareLoop Phase 2 mission is visible in Command Center Projects and Mission Control",
+    "Phase 2 task plan is created with agent ownership",
+    "Phase 2 readiness gates are defined",
+    "No CareLoop source files are modified",
+    "No provider/tool/DB/deploy actions are executed",
+    "Evidence, audit, and activity records are redacted and linked"
+  ],
+  "createdAt": "2026-05-17T00:55:26.747Z"
+}

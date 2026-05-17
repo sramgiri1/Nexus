@@ -1,0 +1,23 @@
+{
+  "projectId": "careloop",
+  "displayName": "CareLoop",
+  "activePhase": "CARELOOP-P2",
+  "activeMission": "CareLoop Phase 2",
+  "status": "in_progress",
+  "nextAction": "Review Phase 2 task plan",
+  "generatedAt": "2026-05-17T00:55:26.747Z",
+  "missionContractPath": "contracts/projects/careloop/phase-2-mission-contract.json",
+  "taskPlanPath": "contracts/projects/careloop/phase-2-task-plan.json",
+  "readinessReportPath": "reports/careloop-phase-2-readiness.json",
+  "mutationAllowed": false,
+  "providerCallsAllowed": false,
+  "toolExecutionAllowed": false,
+  "dbWritesAllowed": false,
+  "deploymentAllowed": false,
+  "taskCounts": {
+    "planned": 8,
+    "active": 0,
+    "blocked": 8,
+    "complete": 0
+  }
+}

@@ -1,6 +1,6 @@
 {
   "registryVersion": "1.0",
-  "generatedAt": "2026-05-15T02:40:00.000Z",
+  "generatedAt": "2026-05-17T00:55:26.747Z",
   "source": "nexus-project-registry",
   "defaultProjectId": "private-project-01",
   "projects": [
@@ -83,6 +83,56 @@
       },
       "createdAt": "2026-05-15T02:40:00.000Z",
       "updatedAt": "2026-05-15T02:40:00.000Z"
+    },
+    {
+      "projectId": "careloop",
+      "label": "CareLoop",
+      "displayLabel": "CareLoop",
+      "visibility": "local-private",
+      "scope": "project",
+      "status": "active",
+      "root": "projects/careloop",
+      "projectType": "saas-mobile",
+      "adapterId": "careloop-planned-adapter",
+      "stackProfileId": "careloop-local-stack",
+      "modeAllowed": [
+        "local-private"
+      ],
+      "publicSafeLabel": "Private Project",
+      "localPrivateLabel": "CareLoop",
+      "demoOnly": false,
+      "localPrivateOnly": true,
+      "allowedRoots": [
+        "projects/careloop"
+      ],
+      "forbiddenRoots": [
+        "projects/careloop/src",
+        "projects/careloop/prisma",
+        "projects/careloop-ios"
+      ],
+      "docs": [
+        "projects/careloop/docs/PRD.md",
+        "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+        "projects/careloop/docs/NEXUS_PROJECT_STATUS.md"
+      ],
+      "testSuites": [
+        "check:careloop-backend-validation",
+        "check:careloop-validation-plan"
+      ],
+      "workflows": [
+        "plan",
+        "review",
+        "qa",
+        "privacy-review",
+        "ios-readiness",
+        "release-readiness"
+      ],
+      "releaseBoundary": {
+        "enabled": false,
+        "reason": "Release and deployment execution remain disabled until P69/P70."
+      },
+      "createdAt": "2026-05-17T00:55:26.747Z",
+      "updatedAt": "2026-05-17T00:55:26.747Z"
     },
     {
       "projectId": "demoapp",

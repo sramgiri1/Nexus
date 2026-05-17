@@ -18,6 +18,14 @@ export const PROJECT_SELECTION_OPTIONS = [
     demoOnly: false,
   },
   {
+    projectId: "careloop",
+    label: "CareLoop",
+    scope: "project",
+    visibility: "local-private",
+    localPrivateAllowed: true,
+    demoOnly: false,
+  },
+  {
     projectId: "nexus-os",
     label: "NEXUS OS",
     scope: "os",

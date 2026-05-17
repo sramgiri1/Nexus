@@ -71,6 +71,13 @@ import {
   summarizePrdTestCoverage,
   summarizeTestRecommendations,
 } from "../../../quality-intelligence/index.js";
+import {
+  CARELOOP_PHASE_2_READINESS,
+  CARELOOP_PHASE_2_TASKS,
+  CARELOOP_PHASE_STATUS,
+  getCareLoopPhaseMilestones,
+  summarizeCareLoopPhase2,
+} from "./projectRoadmap.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -159,7 +166,23 @@ function buildServiceCard(service) {
 
 export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const shellMode = "local-private";
-  const safeProjectDisplayName = "Selected Project";
+  const careloopPhase2 = summarizeCareLoopPhase2();
+  const safeProjectDisplayName = careloopPhase2.displayName || "CareLoop";
+  const activeMissionId = "careloop-phase-2";
+  const activeMissionDisplayName = careloopPhase2.activeMission || "CareLoop Phase 2";
+  const phase2TaskRows = CARELOOP_PHASE_2_TASKS.map((task) => ({
+    planTaskId: task.taskId,
+    title: task.title,
+    targetAgent: task.ownerAgent,
+    supportAgents: task.supportAgents || [],
+    capabilityId: task.capabilityId,
+    riskLevel: task.riskLevel,
+    state: "planned",
+    activationEnabled: false,
+    activationDisabledReason: task.blockedUntil || "Planning-only task",
+    requiredEvidence: task.requiredEvidence || [],
+    nextRecommendedAction: task.nextRecommendedAction,
+  }));
   const pvStatus = pvSnapshot?.status || {};
   const pvBackend = pvStatus.latestBackendValidation || {};
   const pvRemediation = pvStatus.latestRemediation || {};
@@ -186,14 +209,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     + (runtimeTaskStates.awaiting_approval || 0);
   const activeAgentCount = studio.currentLoad?.length || 0;
   const totalAgentCount = studio.agentEntries?.length || AGENT_DIRECTORY.length;
-  const plannedMissionTasks = [
-    { planTaskId: "b6f66c80-bd0c-42c9-a21c-869cff1bc55e", title: "Project Brief", targetAgent: "SHEPHERD", capabilityId: "orchestration.plan_flow", riskLevel: "medium", state: "planned", activationEnabled: true, activationDisabledReason: "" },
-    { planTaskId: "3c02b0d8-6c56-42d1-91c4-c809534b506b", title: "Backend Validation Follow-up", targetAgent: "AUDITOR", capabilityId: "verification.code_quality_gate", riskLevel: "medium", state: "planned", activationEnabled: true, activationDisabledReason: "" },
-    { planTaskId: "a8554471-c0a4-4489-a03e-8de33a8bdf6d", title: "UX Product Flow Planning", targetAgent: "PRISM", capabilityId: "design.ux_flow", riskLevel: "low", state: "planned", activationEnabled: true, activationDisabledReason: "" },
-    { planTaskId: "e3faa610-25c3-4db1-99ef-ebec4a845432", title: "iOS Readiness Planning", targetAgent: "SENTINEL", capabilityId: "verification.qa_gate", riskLevel: "medium", state: "planned", activationEnabled: true, activationDisabledReason: "" },
-    { planTaskId: "8fc5eda4-dab0-42b4-a014-e7daf807631c", title: "Privacy Compliance Review", targetAgent: "WARDEN", capabilityId: "security.privacy_review", riskLevel: "high", state: "planned", activationEnabled: true, activationDisabledReason: "" },
-    { planTaskId: "cdb8dc13-e5c4-4a1d-bbdc-113faf52f5da", title: "First Controlled Implementation Candidate", targetAgent: "CORE", capabilityId: "implementation.backend_code", riskLevel: "high", state: "planned", activationEnabled: false, activationDisabledReason: "Activate lower-risk tasks first" },
-  ];
+  const plannedMissionTasks = phase2TaskRows;
   const workspaceSummary = buildWorkspaceSummary({
     missionExists: true,
     taskPlanExists: true,
@@ -202,9 +218,9 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     backendTestsPassed: pvBackend.testsPassed ?? 58,
     backendTestsTotal: pvBackend.totalTests ?? 58,
     mode: "local-private",
-    activeProject: "Selected Project",
-    missionId: "governed-build-mission",
-    prdGaps: ["Physical device push (open)"],
+    activeProject: safeProjectDisplayName,
+    missionId: activeMissionId,
+    prdGaps: CARELOOP_PHASE_2_READINESS.implementationGaps || [],
   });
   const prdTestMap = buildPrdTestMap({ projectId: "private-project" });
   const prdCoverageSummary = summarizePrdTestCoverage(prdTestMap);
@@ -249,13 +265,17 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   const doctorPassCount = doctorChecks.filter((entry) => entry?.ok).length;
   const doctorFailureCount = doctorChecks.filter((entry) => entry?.ok === false).length;
   const projectProgressExampleEntry = projectProgressExample?.projects?.[0] || null;
+  const phase2ReadinessGates = CARELOOP_PHASE_2_READINESS.readinessGates || [];
   const projectOperatingSurface = {
-    selectedProjectLabel: "Selected Project",
+    selectedProjectLabel: safeProjectDisplayName,
     selectedProjectType: "SaaS + Mobile",
-    selectedProjectStatus: "Active",
+    selectedProjectStatus: "In Progress",
     selectedProjectMode: "local-private",
     stackSummary: "Node/Fastify + Prisma + iOS",
-    activeMissionLabel: "Governed Build Mission",
+    activePhaseLabel: "CareLoop Phase 2",
+    activePhaseSummary: "Product Hardening and Validation",
+    activeMissionLabel: activeMissionDisplayName,
+    nextAction: careloopPhase2.nextAction || "Review Phase 2 task plan",
     sourceLabel: "Project Registry snapshot",
     portfolioSummary: {
       totalProjects: 1,
@@ -265,9 +285,9 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       blockedProjects: blockedTaskCount > 0 ? 1 : 0,
       pendingApprovals: runtimeApprovals.requested || 0,
       readyForValidation: 1,
-      selectedProject: "Selected Project",
-      pinnedProjects: ["Selected Project"],
-      recentProjects: ["Selected Project"],
+      selectedProject: safeProjectDisplayName,
+      pinnedProjects: [safeProjectDisplayName],
+      recentProjects: [safeProjectDisplayName],
       registryState: "Ready",
       projectRegistryPlannedNote: "Project Registry is read-only here; multi-project adapter runtime remains disabled.",
     },
@@ -291,28 +311,34 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       { area: "Tooling", status: "Not enabled yet", tone: "pending", summary: "Tool/MCP and provider dispatch are represented but not executable.", runner: "Governed dispatch planned" },
     ],
     capabilityCards: [
-      { name: "Planning", status: "Available", tone: "pass", description: "Turn project goals into governed mission and project plans.", nextAction: "Start a mission or generate a project brief.", owner: "SHEPHERD", required: "Mission composer" },
+      { name: "Planning", status: "Available", tone: "pass", description: "Turn Phase 2 goals into governed mission and project plans.", nextAction: "Review Phase 2 task plan.", owner: "SHEPHERD", required: "Mission composer" },
       { name: "Backend validation", status: "Ready", tone: "pass", description: "Approved local checkers can validate backend-facing readiness.", nextAction: "Run approved backend validation from a local terminal.", owner: "SENTINEL", required: "Backend checker" },
       { name: "iOS validation", status: "Requires setup", tone: "pending", description: "Mobile validation needs a governed local macOS/Xcode runner.", nextAction: "Prepare iOS validation setup.", owner: "SWIFT", required: "iOS/Xcode runner" },
       { name: "Android validation", status: "Not configured", tone: "disabled", description: "No Android project profile or runner is configured.", nextAction: "Add Android profile metadata before validation.", owner: "SENTINEL", required: "Android runner" },
       { name: "Web validation", status: "Ready", tone: "pass", description: "Dashboard build and page tests cover current web validation.", nextAction: "Run dashboard build and page tests when UI changes.", owner: "AUDITOR", required: "Playwright + build" },
-      { name: "Controlled implementation", status: "Requires approval", tone: "pending", description: "Scoped implementation flows are represented while broad project mutation stays off.", nextAction: "Use documentation-only or explicitly scoped implementation paths.", owner: "CORE", required: "Implementation bridge" },
+      { name: "Controlled implementation", status: "Planned", tone: "pending", description: "Phase 2 implementation candidates are planning-only until controlled source mutation is approved.", nextAction: "Select the smallest low-risk candidate after readiness gates.", owner: "CORE", required: "P67 controlled source mutation" },
       { name: "Evidence/audit", status: "Available", tone: "pass", description: "Governed actions and checks produce redacted evidence summaries.", nextAction: "View project evidence after validation or review.", owner: "AUDITOR", required: "Evidence ledger" },
-      { name: "Release readiness", status: "Not enabled yet", tone: "pending", description: "Release execution requires gates, evidence, and explicit release controls.", nextAction: "Complete validation gates before release planning.", owner: "NEXUS", required: "Release action bridge" },
+      { name: "Release readiness", status: "Not enabled yet", tone: "pending", description: "Release execution requires gates, evidence, and explicit release controls.", nextAction: "Complete the Phase 2 release readiness outline.", owner: "NEXUS", required: "Release action bridge" },
       { name: "Packaging/export safety", status: "Ready", tone: "pass", description: "Packaging safety boundaries prevent NEXUS OS internals from shipping with projects.", nextAction: "Review blocked roots before any export dry run.", owner: "WARDEN", required: "Packaging policy" },
       { name: "Cost tracking", status: "Not enabled yet", tone: "disabled", description: "Project-level cost enforcement is planned and provider dispatch is off.", nextAction: "Keep provider spend disabled until Cost Center enforcement lands.", owner: "NEXUS", required: "Cost Center" },
     ],
     milestones: [
-      { title: "Project registry foundation", status: "Complete", tone: "pass", summary: "Read-only registry, profile, and selected-project metadata are available." },
-      { title: "Stack profile inventory", status: "Available", tone: "pass", summary: "Backend, web, mobile, DB, testing, and tooling expectations are summarized." },
-      { title: "Capability matrix", status: "Available", tone: "pass", summary: "Project capability posture and blocked runtime areas are visible." },
-      { title: "Adapter runtime", status: "Disabled by policy", tone: "disabled", summary: "Adapter execution and source mutation are not enabled." },
+      ...getCareLoopPhaseMilestones(),
     ],
     openGaps: [
-      { title: "iOS/Xcode runner is not configured", why: "Mobile release confidence requires a governed local runner before iOS validation is meaningful.", status: "Requires runner", tone: "pending", nextAction: "Prepare an approved iOS/Xcode runner.", owner: "SWIFT", enablingCapability: "iOS/Xcode runner" },
-      { title: "Provider dispatch is not enabled", why: "NEXUS must have governance, cost, and recovery controls before provider-backed actions run.", status: "Not enabled yet", tone: "disabled", nextAction: "Keep provider-backed execution disabled until governed dispatch lands.", owner: "NEXUS", enablingCapability: "Governed provider dispatch" },
-      { title: "Project adapter runtime is disabled", why: "Project adapters can affect source boundaries and require explicit approval controls before execution.", status: "Disabled by policy", tone: "disabled", nextAction: "Use read-only profile and capability surfaces until adapter execution is approved.", owner: "WARDEN", enablingCapability: "Adapter runtime controls" },
-      { title: "Project Registry is single-project in this shell", why: "Portfolio operations need a real multi-project registry and adapter lifecycle before aggregation is live.", status: "Planned", tone: "pending", nextAction: "Treat portfolio cards as operating posture, not fabricated cross-project data.", owner: "NEXUS", enablingCapability: "Project Registry adapter runtime" },
+      ...(CARELOOP_PHASE_2_READINESS.implementationGaps || []).map((gap, index) => ({
+        title: gap,
+        why: "This gap must be closed before Phase 2 source implementation or release readiness can proceed.",
+        status: "Pending",
+        tone: "pending",
+        nextAction: phase2ReadinessGates[index]?.gate
+          ? `Complete ${phase2ReadinessGates[index].gate}.`
+          : "Keep as a governed Phase 2 planning blocker.",
+        owner: index === 0 ? "CORE" : index === 1 ? "SENTINEL" : "WARDEN",
+        enablingCapability: index === 0 ? "Controlled implementation planning" : index === 1 ? "Validation readiness" : "Privacy and safety review",
+      })),
+      { title: "Provider dispatch remains disabled", why: "Phase 2 starts from NEXUS without provider-backed execution.", status: "Disabled by policy", tone: "disabled", nextAction: "Wait for governed provider/tool dispatch phases.", owner: "NEXUS", enablingCapability: "P64 provider/tool dispatch" },
+      { title: "Release/deploy execution remains disabled", why: "Release and deployment require later platform phases and completed gates.", status: "Not enabled yet", tone: "disabled", nextAction: "Use release readiness planning only.", owner: "AUDITOR", enablingCapability: "P69/P70 release/deploy loops" },
     ],
     adapterSettings: [
       { label: "Profile source", value: "Project Registry snapshot" },
@@ -324,19 +350,17 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       { label: "External network", value: "Disabled by policy" },
     ],
     evidenceSummary: [
-      { title: "Latest project evidence", status: "Available", tone: "pass", summary: "Validation and Command Center checks are summarized as redacted evidence.", linkedAction: "Project readiness validation", redacted: "Yes" },
-      { title: "Validation evidence", status: "Available", tone: "pass", summary: `${pvBackend.testsPassed ?? 58}/${pvBackend.totalTests ?? 58} approved backend checks passed in the current snapshot.`, linkedAction: "Backend validation", redacted: "Yes" },
-      { title: "Release/package evidence", status: "Not ready", tone: "pending", summary: "Release package evidence appears after governed release and packaging checks.", linkedAction: "Release readiness", redacted: "Yes" },
+      { title: "Phase 2 mission contract", status: "Available", tone: "pass", summary: "Governed mission contract was generated for Phase 2 planning.", linkedAction: "CareLoop Phase 2 start", redacted: "Yes" },
+      { title: "Phase 2 task plan", status: "Available", tone: "pass", summary: `${plannedMissionTasks.length} planned tasks are assigned to NEXUS agents and blocked from execution.`, linkedAction: "CareLoop Phase 2 task plan", redacted: "Yes" },
+      { title: "Readiness gates", status: "Pending", tone: "pending", summary: `${phase2ReadinessGates.length} readiness gates require review before implementation.`, linkedAction: "Phase 2 readiness", redacted: "Yes" },
     ],
     developerDetails: [
-      { label: "Project ID", value: "selected-project-ref" },
-      { label: "Mission ID", value: "governed-build-mission" },
-      { label: "Profile path", value: "project-registry/examples/private-project.nexus.project.json" },
-      { label: "Release manifest", value: "artifacts/project-release/private-project-release-manifest.json" },
+      { label: "Project ID", value: "careloop" },
+      { label: "Mission ID", value: activeMissionId },
+      { label: "Profile path", value: "projects/careloop/nexus.project.json" },
+      { label: "Task plan", value: "contracts/projects/careloop/phase-2-task-plan.json" },
     ],
   };
-  const activeMissionId = "governed-build-mission";
-  const activeMissionDisplayName = humanizeMissionId(activeMissionId);
   const trustedContextSources = [
     {
       sourceId: "nexus-os-roadmap",
@@ -441,7 +465,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
   }, { high: 0, medium: 0, low: 0, unavailable: 0 });
   const projectSummaries = [
     {
-      projectId: "selected-project-ref",
+      projectId: "careloop",
       label: safeProjectDisplayName,
       mode: shellMode,
       status: blockedTaskCount > 0 ? "Needs review" : "Active",
@@ -847,15 +871,15 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
       availableScopes: ["portfolio", "project", "os"],
       projectRegistryStatus: "planned",
       workspaceScope: "project",
-      selectedProjectId: "selected-project-ref",
+      selectedProjectId: "careloop",
       selectedProjectLabel: safeProjectDisplayName,
-      pinnedProjectIds: ["selected-project-ref"],
+      pinnedProjectIds: ["careloop"],
     },
     scopeModel: {
       workspaceScope: "project",
-      selectedProjectId: "selected-project-ref",
+      selectedProjectId: "careloop",
       selectedProjectLabel: safeProjectDisplayName,
-      pinnedProjectIds: ["selected-project-ref"],
+      pinnedProjectIds: ["careloop"],
       projectSummaries,
       portfolioSummary,
       osSummary,
@@ -1057,20 +1081,21 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         { label: "Create Project Brief", enabled: false, reason: "Requires generated mission plan" },
         { label: "Start Governed Run", enabled: false, reason: "Requires approved task plan" },
       ],
-      contractPath: "contracts/missions/private-project-mission-contract.json",
-      taskPlanPath: "contracts/missions/private-project-task-plan.json",
-      taskCount: 6,
-      nextAction: "Generate plan from the read-only mission prompt",
+      contractPath: "contracts/projects/careloop/phase-2-mission-contract.json",
+      taskPlanPath: "contracts/projects/careloop/phase-2-task-plan.json",
+      taskCount: plannedMissionTasks.length,
+      nextAction: careloopPhase2.nextAction || "Review Phase 2 task plan",
     },
     mission: {
-      founderIntent: "Build and validate the active mission through governed NEXUS agents.",
-      quote: "Ship a calm, governed private-project companion — beta in 6 weeks, audit-ready from day one.",
-      sprintId: "Sprint 2026.18",
-      sprintDay: "Day 6 of 7",
+      displayName: activeMissionDisplayName,
+      founderIntent: "Start CareLoop Phase 2 as a governed NEXUS project mission.",
+      quote: "Begin Phase 2 with planning, validation readiness, privacy review, and release preparation before source mutation.",
+      sprintId: CARELOOP_PHASE_STATUS.activePhase || "CARELOOP-P2",
+      sprintDay: "Planning start",
       lead: "SHEPHERD",
-      sprintProgress: studio.gateProgress || 62,
+      sprintProgress: studio.gateProgress || 15,
       releaseStatus: "NO-GO",
-      releaseBlocker: "SENTINEL gate pending · approval evidence missing",
+      releaseBlocker: "Release/deploy execution disabled until Phase 2 gates and later platform phases are complete",
       gates: gateStatuses,
     },
     pipeline: {
@@ -1157,13 +1182,13 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
     taskActivation: {
       bridgeEndpoint: "http://localhost:3748",
       policyPhase: "P37-LOCAL",
-      missionId: "governed-build-mission",
-      projectId: "selected-project-ref",
+      missionId: activeMissionId,
+      projectId: "careloop",
       missionTasks: plannedMissionTasks,
       nextTask: plannedMissionTasks[0],
       activatedCount: activeTaskCount,
       plannedCount: plannedMissionTasks.length,
-      activationPolicy: { allowed: true, requiresBridge: true, disabledReason: "Requires governed action bridge (npm run mission:action-server)" },
+      activationPolicy: { allowed: false, requiresBridge: true, disabledReason: "CareLoop Phase 2 tasks are planning-only until operator approval and safe activation are enabled." },
     },
     controlledImplementation: {
       policyPhase: "P39-LOCAL",

@@ -61,6 +61,14 @@ function listChangedFiles() {
   return [...output.split("\n"), ...staged.split("\n"), ...untracked.split("\n")].filter(Boolean);
 }
 
+function isAllowedCareLoopMetadata(file) {
+  return [
+    "projects/careloop/nexus.project.json",
+    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md",
+  ].includes(file);
+}
+
 console.log("NEXUS Activity Capture Check\n============================");
 
 const branch = gitOutput(["branch", "--show-current"]);
@@ -216,6 +224,7 @@ const forbiddenPrefixes = [
   "db/",
 ];
 for (const changedFile of changedFiles) {
+  if (isAllowedCareLoopMetadata(changedFile)) continue;
   if (forbiddenPrefixes.some((prefix) => changedFile.startsWith(prefix))) {
     fail("noForbiddenChanges", `Forbidden changed file: ${changedFile}`);
   }

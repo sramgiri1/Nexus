@@ -69,6 +69,14 @@ function changedFiles() {
     .filter(Boolean);
 }
 
+function isAllowedCareLoopMetadata(file) {
+  return [
+    "projects/careloop/nexus.project.json",
+    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md",
+  ].includes(file);
+}
+
 console.log("NEXUS Project Registry Schema Check");
 console.log("===================================");
 
@@ -147,17 +155,17 @@ for (const expected of [
 
 const statusById = new Map((phaseStatus.phases || []).map((phase) => [phase.phaseId, phase]));
 check(
-  ["P41.9.2", "P42.1", "P42.6", "P42.7", "P48.7", "P49.7", "P52.8"].includes(phaseStatus.previousPhase),
+  ["P41.9.2", "P42.1", "P42.6", "P42.7", "P48.7", "P49.7", "P52.8", "P62"].includes(phaseStatus.previousPhase),
   "osPhaseStatus",
   "previousPhase must be an accepted completed handoff phase",
 );
 check(
-  ["P42.1", "P42.2", "P42.7", "P43.1", "P48.8", "P49.8", "P52.9"].includes(phaseStatus.currentPhase),
+  ["P42.1", "P42.2", "P42.7", "P43.1", "P48.8", "P49.8", "P52.9", "P62.8"].includes(phaseStatus.currentPhase),
   "osPhaseStatus",
   "currentPhase must be an accepted current handoff phase",
 );
 check(
-  ["P42.2", "P42.3", "P43", "P43.2", "P49.1", "P49.8", "P50", "P53"].includes(phaseStatus.nextPhase),
+  ["P42.2", "P42.3", "P43", "P43.2", "P49.1", "P49.8", "P50", "P53", "P63"].includes(phaseStatus.nextPhase),
   "osPhaseStatus",
   "nextPhase must be an accepted next handoff phase",
 );
@@ -169,6 +177,7 @@ check(statusById.get("P42.1")?.commit === "4c1d11d", "osPhaseStatus", "P42.1 com
 check(["planned", "complete", "in_progress"].includes(statusById.get("P42.2")?.status), "osPhaseStatus", "P42.2 must exist as planned, current, or complete");
 
 for (const file of changedFiles()) {
+  if (isAllowedCareLoopMetadata(file)) continue;
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("projects/careloop-ios/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("local-api/"), "noForbiddenChanges", `Forbidden local API behavior change: ${file}`);

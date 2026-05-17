@@ -1,0 +1,134 @@
+{
+  "profileVersion": "1.0",
+  "projectId": "careloop",
+  "projectLabel": "CareLoop",
+  "label": "CareLoop",
+  "visibility": "local-private",
+  "projectType": "saas-mobile",
+  "root": "projects/careloop",
+  "scope": "project",
+  "stacks": {
+    "backend": {
+      "label": "Fastify API + Prisma",
+      "kind": "backend-service",
+      "runtimeEnabled": false,
+      "execute": false
+    },
+    "ios": {
+      "label": "SwiftUI iOS app",
+      "kind": "ios-app",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  },
+  "databases": {
+    "postgres": {
+      "label": "Supabase Postgres / Prisma",
+      "runtimeEnabled": false,
+      "connect": false
+    }
+  },
+  "testSuites": [
+    {
+      "id": "backend-validation",
+      "label": "Backend validation",
+      "runtimeEnabled": false,
+      "execute": false
+    },
+    {
+      "id": "ios-validation",
+      "label": "iOS validation readiness",
+      "runtimeEnabled": false,
+      "execute": false
+    }
+  ],
+  "agents": {
+    "planning": [
+      "SHEPHERD",
+      "PRISM"
+    ],
+    "implementation": [
+      "CORE",
+      "NEXUS"
+    ],
+    "validation": [
+      "AUDITOR",
+      "SENTINEL"
+    ],
+    "safety": [
+      "WARDEN"
+    ],
+    "ios": [
+      "SWIFT"
+    ]
+  },
+  "workflows": [
+    {
+      "id": "plan-sprint",
+      "label": "Plan Sprint"
+    },
+    {
+      "id": "validate-backend",
+      "label": "Validate Backend"
+    },
+    {
+      "id": "privacy-review",
+      "label": "Run Privacy Review"
+    },
+    {
+      "id": "ios-readiness",
+      "label": "Prepare iOS Validation"
+    },
+    {
+      "id": "release-readiness",
+      "label": "Review Release"
+    }
+  ],
+  "allowedRoots": [
+    "projects/careloop"
+  ],
+  "allowedPaths": [
+    "projects/careloop"
+  ],
+  "forbiddenPatterns": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**"
+  ],
+  "forbiddenPaths": [
+    ".env",
+    "*.pem",
+    "*.key",
+    "*.p12",
+    "secrets/**",
+    "projects/careloop/src/**",
+    "projects/careloop/prisma/**",
+    "projects/careloop-ios/**"
+  ],
+  "costPolicy": {
+    "enabled": false
+  },
+  "releaseGates": [
+    "privacy-review",
+    "backend-validation",
+    "ios-validation",
+    "release-readiness"
+  ],
+  "docs": [
+    "projects/careloop/docs/PRD.md",
+    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md"
+  ],
+  "adapterRuntimeEnabled": false,
+  "projectSelectorEnabled": true,
+  "projectMutationAllowed": false,
+  "providerCallsAllowed": false,
+  "dbAccessAllowed": false,
+  "metadata": {
+    "source": "careloop-phase-2-nexus-start",
+    "publicSafeLabel": "Private Project",
+    "phaseId": "CARELOOP-P2"
+  }
+}

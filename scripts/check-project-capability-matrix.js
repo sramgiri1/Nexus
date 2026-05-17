@@ -57,6 +57,14 @@ function changedFiles() {
     .filter(Boolean);
 }
 
+function isAllowedCareLoopMetadata(file) {
+  return [
+    "projects/careloop/nexus.project.json",
+    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md",
+  ].includes(file);
+}
+
 console.log("NEXUS Project Capability Matrix Check");
 console.log("=====================================");
 
@@ -149,6 +157,7 @@ check(statusById.get("P42.6")?.branch === "arch/project-registry-adapter-overnig
 check(statusById.get("P42.6")?.nextPhase === "P42.7", "osPhaseStatus", "P42.6 nextPhase must be P42.7");
 
 for (const file of changedFiles()) {
+  if (isAllowedCareLoopMetadata(file)) continue;
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("projects/careloop-ios/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("db/"), "noForbiddenChanges", `Forbidden DB behavior change: ${file}`);

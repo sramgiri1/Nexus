@@ -1,0 +1,50 @@
+{
+  "generatedAt": "2026-05-17T00:55:26.747Z",
+  "projectId": "careloop",
+  "phaseId": "CARELOOP-P2",
+  "prdClearEnoughToStart": true,
+  "prdSignalsFound": [
+    "Product Vision",
+    "Role Permissions",
+    "Sprint 2",
+    "APNs",
+    "StoreKit"
+  ],
+  "clarityAssessment": "The PRD is clear enough to start Phase 2 planning and readiness gates. It is not a source-mutation-ready implementation contract by itself.",
+  "implementationGaps": [
+    "Phase 2 source changes need a dedicated controlled implementation subphase.",
+    "Live APNs, Resend, Railway, Prisma migration, and iOS/Xcode validation require explicit operator approval and environment readiness.",
+    "Privacy and invite-delivery hardening need acceptance tests before implementation."
+  ],
+  "readinessGates": [
+    {
+      "gate": "PRD gap review",
+      "status": "pending"
+    },
+    {
+      "gate": "Backend validation readiness",
+      "status": "pending"
+    },
+    {
+      "gate": "Privacy and safety review",
+      "status": "pending"
+    },
+    {
+      "gate": "iOS validation readiness",
+      "status": "pending"
+    },
+    {
+      "gate": "Release readiness outline",
+      "status": "pending"
+    }
+  ],
+  "execution": {
+    "mutationAllowed": false,
+    "providerCallsAllowed": false,
+    "toolExecutionAllowed": false,
+    "dbWritesAllowed": false,
+    "deploymentAllowed": false,
+    "testsRun": false,
+    "xcodeRun": false
+  }
+}

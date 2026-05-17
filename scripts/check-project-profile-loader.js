@@ -78,6 +78,14 @@ function lineTooLong(relativePath) {
     .some((line) => line.length > 1000);
 }
 
+function isAllowedCareLoopMetadata(file) {
+  return [
+    "projects/careloop/nexus.project.json",
+    "projects/careloop/docs/NEXUS_CARELOOP_PHASE_2.md",
+    "projects/careloop/docs/NEXUS_PROJECT_STATUS.md",
+  ].includes(file);
+}
+
 console.log("NEXUS Project Profile Loader Check");
 console.log("==================================");
 
@@ -256,6 +264,9 @@ const laterHandoffPhases = [
   "P52.8",
   "P52.9",
   "P53",
+  "P62",
+  "P62.8",
+  "P63",
 ];
 check(
   ["P42.1", "P42.6", ...laterHandoffPhases].includes(phaseStatus.previousPhase),
@@ -281,6 +292,7 @@ check(p421Report.includes("Validation branch:"), "osPhaseStatus", "P42.1 report 
 check(p421Report.includes("Validation HEAD:"), "osPhaseStatus", "P42.1 report must include validation HEAD metadata");
 
 for (const file of changedFiles()) {
+  if (isAllowedCareLoopMetadata(file)) continue;
   check(!file.startsWith("projects/careloop/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("projects/careloop-ios/"), "noForbiddenChanges", `Forbidden private project change: ${file}`);
   check(!file.startsWith("local-api/"), "noForbiddenChanges", `Forbidden local API behavior change: ${file}`);

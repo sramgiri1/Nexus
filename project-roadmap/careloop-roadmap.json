@@ -1,0 +1,30 @@
+{
+  "projectId": "careloop",
+  "displayName": "CareLoop",
+  "activePhase": "CARELOOP-P2",
+  "updatedAt": "2026-05-17T00:55:26.747Z",
+  "phases": [
+    {
+      "phaseId": "CARELOOP-P1",
+      "title": "Foundation and Backend Validation",
+      "status": "complete",
+      "summary": "Inventory, validation plan, command classification, backend validation, and known test remediation completed."
+    },
+    {
+      "phaseId": "CARELOOP-P2",
+      "title": "Product Hardening and Validation",
+      "status": "in_progress",
+      "summary": "Begin governed product hardening, PRD gap review, validation readiness, privacy review, and release readiness planning."
+    },
+    {
+      "phaseId": "CARELOOP-P3",
+      "title": "Controlled Implementation and Expanded Validation",
+      "status": "planned"
+    },
+    {
+      "phaseId": "CARELOOP-P4",
+      "title": "Release Preparation and Deployment Readiness",
+      "status": "planned"
+    }
+  ]
+}

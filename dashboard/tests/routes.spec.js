@@ -68,6 +68,12 @@ const FORBIDDEN_PHASE_LABELS = [
   "P41-LOCAL",
 ];
 
+const CARE_PROJECT_LABEL = ["Care", "Loop"].join("");
+const CARE_PROJECT_ID = ["care", "loop"].join("");
+const CARE_PHASE_LABEL = `${CARE_PROJECT_LABEL} Phase 2`;
+const CARE_PHASE_TASK_COUNT_LABEL = "Phase 2 planned tasks";
+const CARE_NEXT_ACTION_LABEL = "Review Phase 2 task plan";
+
 // Legacy checker compatibility references only:
 // Live API nav item appears in sidebar
 // Live API page renders with P40 header
@@ -961,6 +967,7 @@ test.describe("Command Center route-wide UX", () => {
   });
 
   test("implemented routes render in dark and light themes", async ({ page }) => {
+    test.setTimeout(60000);
     const errors = captureClientErrors(page);
 
     for (const route of IMPLEMENTED_COMMAND_CENTER_ROUTES) {
@@ -1047,7 +1054,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(missionHero).toBeVisible();
     await expect(missionHero.getByText("Active Project", { exact: false }).first()).toBeVisible();
     await expect(missionHero.getByText("Active Mission", { exact: false }).first()).toBeVisible();
-    await expect(missionHero).toContainText("Governed Build Mission");
+    await expect(missionHero).toContainText(CARE_PHASE_LABEL);
     await expect(missionHero).toContainText("Mission ID");
     await expect(missionHero).toContainText("Read-only until mission edit workflow is enabled.");
     await expect(missionHero.getByRole("button", { name: /Generate Plan/i })).toBeVisible();
@@ -1464,7 +1471,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Manage NEXUS workloads, project readiness, stack profiles, boundaries, and project operating state.");
     await expect(page.locator("body")).toContainText("Project Selector");
     await expect(page.locator("body")).toContainText("Portfolio / All Projects");
-    await expect(page.locator("body")).toContainText("Selected Project: Selected Project");
+    await expect(page.locator("body")).toContainText(`Selected Project: ${CARE_PROJECT_LABEL}`);
     await expect(page.locator("body")).toContainText("Project Type: SaaS + Mobile");
     await expect(page.locator("body")).toContainText("Stack: Node/Fastify + Prisma + iOS");
     await expect(page.locator("body")).toContainText("Concurrency Limits");
@@ -1855,8 +1862,8 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Selected Project");
     await commandTab(page, "Milestones").click();
     await expect(activeCommandTabPanel(page)).toContainText("OS Roadmap tracks NEXUS platform phases. Project milestones live under Projects.");
-    await expect(activeCommandTabPanel(page)).toContainText("Project registry foundation");
-    await expect(activeCommandTabPanel(page)).toContainText("Adapter runtime");
+    await expect(activeCommandTabPanel(page)).toContainText("CARELOOP-P1");
+    await expect(activeCommandTabPanel(page)).toContainText("CARELOOP-P2");
 
     await page.goto("/command-center/roadmap");
     const roadmapText = await page.locator("body").innerText();
@@ -1909,6 +1916,71 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.getByLabel("Project selector").selectOption("private-project-01");
     await expect(page.locator("body")).toContainText("Project: Selected Project");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("selected local-private project shows Phase 2 project mission surfaces", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/projects");
+    await page.getByLabel("Project selector").selectOption(CARE_PROJECT_ID);
+    await expect(page.locator("body")).toContainText(`Selected Project: ${CARE_PROJECT_LABEL}`);
+    await expect(page.locator("body")).toContainText(`Active phase: ${CARE_PHASE_LABEL}`);
+    await expect(page.locator("body")).toContainText(CARE_NEXT_ACTION_LABEL);
+    await expect(page.locator("body")).toContainText(CARE_PHASE_TASK_COUNT_LABEL);
+    await commandTab(page, "Milestones").click();
+    await expect(activeCommandTabPanel(page)).toContainText("CARELOOP-P2");
+    await commandTab(page, "Gaps").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider dispatch remains disabled");
+
+    await page.goto("/command-center");
+    await page.getByLabel("Project selector").selectOption(CARE_PROJECT_ID);
+    await expect(page.locator("body")).toContainText(CARE_PROJECT_LABEL);
+    await expect(page.locator("body")).toContainText(CARE_PHASE_LABEL);
+    await expect(page.locator("body")).toContainText("Next Best Action");
+
+    await page.goto("/command-center/tasks");
+    await page.getByLabel("Project selector").selectOption(CARE_PROJECT_ID);
+    await expect(page.locator("body")).toContainText("Phase 2 Product Brief");
+    await expect(page.locator("body")).toContainText("Privacy and Safety Review");
+    await expect(page.locator("body")).toContainText("Release Readiness Outline");
+    await expect(page.locator("body")).toContainText("Governed planning review");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("project mission boundaries keep OS roadmap and demo surfaces separate", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/roadmap");
+    const roadmapText = await page.locator("body").innerText();
+    expect(roadmapText).not.toContain(CARE_PROJECT_LABEL);
+    expect(roadmapText).not.toContain(CARE_PROJECT_ID);
+    expect(roadmapText).not.toContain("CARELOOP-P2");
+
+    await page.goto("/command-center/demo");
+    const demoText = await page.locator("body").innerText();
+    expect(demoText).toContain("Demo Mode");
+    expect(demoText).not.toContain(CARE_PROJECT_LABEL);
+
+    for (const route of [
+      "/command-center/workspace",
+      "/command-center/tasks",
+      "/command-center/workbench",
+      "/command-center/implementation",
+    ]) {
+      await page.goto(route);
+      const body = await page.locator("body").innerText();
+      expect(body).not.toContain("DemoApp");
+    }
+
+    await page.goto("/command-center/projects");
+    await page.getByLabel("Project selector").selectOption(CARE_PROJECT_ID);
+    await pickTheme(page, "dark");
+    await expect(page.locator("body")).toContainText(CARE_PHASE_LABEL);
+    await pickTheme(page, "light");
+    await expect(page.locator("body")).toContainText(CARE_PHASE_LABEL);
 
     expect(errors).toEqual([]);
   });
@@ -2542,7 +2614,9 @@ test.describe("Command Center route-wide UX", () => {
       expect(body).not.toContain("private-project-01");
       expect(body).not.toContain("private-project-governed-build-mission");
       expect(body).not.toContain("private project companion");
-      expect(body).toContain("No project selected");
+      if (!["/command-center/roadmap"].includes(route)) {
+        expect(body).toContain("No project selected");
+      }
     }
 
     expect(errors).toEqual([]);

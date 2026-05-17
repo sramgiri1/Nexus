@@ -517,7 +517,7 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, onOpenAskNe
         <span className="ccv2-topbar__scope-value">{projectLabel}</span>
       </div>
 
-      {route.scope !== "demo" && (
+      {route.scope !== "demo" && route.scope !== "os" && (
         <label className="ccv2-project-selector" aria-label="Project selector">
           <span className="ccv2-project-selector__label">Project</span>
           <select
@@ -3959,6 +3959,7 @@ function ProjectsPage({ vm, studio }) {
             <span className="ccv2-pill ccv2-pill--pass">Selected Project: {projectSummaryName}</span>
             <span className="ccv2-pill ccv2-pill--pass">Project Type: {surface.selectedProjectType || "SaaS + Mobile"}</span>
             <span className="ccv2-pill ccv2-pill--pass">Status: {surface.selectedProjectStatus || "Active"}</span>
+            <span className="ccv2-pill ccv2-pill--pending">Active phase: {surface.activePhaseLabel || "Project phase"}</span>
             <span className="ccv2-pill ccv2-pill--pending">Active Mission: {activeMissionName}</span>
             <span className="ccv2-pill ccv2-pill--disabled">Mode: {isLocalPrivate ? "local-private" : vm.shell.mode}</span>
             <span className="ccv2-pill ccv2-pill--pending">Stack: {surface.stackSummary || "Node/Fastify + Prisma + iOS"}</span>
@@ -3983,6 +3984,8 @@ function ProjectsPage({ vm, studio }) {
           <div className="ccv2-page-summary-grid" style={{ marginTop: 12 }}>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Registry state</span><span className="ccv2-page-summary-value">{portfolioSummary.registryState || "Ready"}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Selected project</span><span className="ccv2-page-summary-value">{projectSummaryName}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{surface.nextAction || "Review project task plan"}</span></div>
+            <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Phase 2 planned tasks</span><span className="ccv2-page-summary-value">{vm.taskActivation?.plannedCount ?? 0}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Backend validation</span><span className="ccv2-page-summary-value">{pvBackend.testsPassed ?? 58}/{pvBackend.totalTests ?? 58} PASS</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">iOS readiness</span><span className="ccv2-page-summary-value">{pvStatus.iosReadiness || "Requires iOS/Xcode runner"}</span></div>
             <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Adapter runtime</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
@@ -4721,7 +4724,7 @@ function SecretsBoundaryPage() {
           <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Developer Details</div>
-              <div className="ccv2-empty-state">Reference IDs: secret-ref-openai-api-key, secret-ref-anthropic-api-key, secret-ref-github-token, secret-ref-project-db-url. Raw credential values are never shown.</div>
+              <div className="ccv2-empty-state">Credential references are summarized by provider and project scope. Raw credential values are never shown.</div>
             </div>
           </CommandTabPanel>
         </CommandTabs>
