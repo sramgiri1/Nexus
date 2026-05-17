@@ -8,31 +8,36 @@ datasource db {
 }
 
 model User {
-  id           String   @id @default(cuid())
-  email        String   @unique
-  name         String
-  phone        String?
-  passwordHash String?
-  authVersion  Int      @default(0)
-  pushToken         String?
-  timezone          String?
-  notifAssignments  Boolean  @default(true)
-  notifEscalations  Boolean  @default(true)
-  notifDigest       Boolean  @default(true)
-  createdAt         DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id               String   @id @default(cuid())
+  email            String   @unique
+  name             String
+  phone            String?
+  passwordHash     String?
+  authVersion      Int      @default(0)
+  pushToken        String?
+  timezone         String?
+  notifAssignments Boolean  @default(true)
+  notifEscalations Boolean  @default(true)
+  notifDigest      Boolean  @default(true)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  identities    AuthIdentity[]
-  memberships   CircleMember[]
-  sentInvitations Invitation[] @relation("InvitationSender")
-  acceptedInvitations Invitation[] @relation("InvitationResponder")
-  passwordResetCodes PasswordResetCode[]
-  tasksCreated  Task[]         @relation("TaskCreator")
-  tasksAssigned Task[]         @relation("TaskAssignee")
-  tasksCompleted Task[]        @relation("TaskCompletedBy")
-  taskComments   TaskComment[]  @relation("TaskCommentAuthor")
-  events        Event[]
-  digestLogs    DigestLog[]
+  identities                    AuthIdentity[]
+  memberships                   CircleMember[]
+  sentInvitations               Invitation[]               @relation("InvitationSender")
+  acceptedInvitations           Invitation[]               @relation("InvitationResponder")
+  passwordResetCodes            PasswordResetCode[]
+  tasksCreated                  Task[]                     @relation("TaskCreator")
+  tasksAssigned                 Task[]                     @relation("TaskAssignee")
+  tasksCompleted                Task[]                     @relation("TaskCompletedBy")
+  taskComments                  TaskComment[]              @relation("TaskCommentAuthor")
+  events                        Event[]
+  digestLogs                    DigestLog[]
+  receiverProfiles              CareRecipient[]            @relation("CareReceiverUser")
+  attestedReceiverConsents      CareRecipient[]            @relation("CareRecipientConsentAttester")
+  proxyAuthorizedRecipients     CareRecipient[]            @relation("CareRecipientProxyAuthorizer")
+  grantedRecipientAccesses      CareRecipientAccess[]      @relation("CareRecipientAccessGrantor")
+  purchasedReceiverEntitlements CareRecipientEntitlement[] @relation("CareRecipientEntitlementPurchaser")
 }
 
 model AuthIdentity {
@@ -51,29 +56,29 @@ model AuthIdentity {
 }
 
 model PasswordResetCode {
-  id         String   @id @default(cuid())
+  id         String    @id @default(cuid())
   codeHash   String
   expiresAt  DateTime
   consumedAt DateTime?
-  createdAt  DateTime @default(now())
+  createdAt  DateTime  @default(now())
 
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId String
 }
 
 model CareCircle {
-  id          String   @id @default(cuid())
-  name        String
-  recipientName String
-  archiveAfterDays Int @default(7)
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id               String   @id @default(cuid())
+  name             String
+  recipientName    String
+  archiveAfterDays Int      @default(7)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
 
-  members  CircleMember[]
+  members     CircleMember[]
   invitations Invitation[]
-  recipients CareRecipient[]
-  tasks    Task[]
-  events   Event[]
+  recipients  CareRecipient[]
+  tasks       Task[]
+  events      Event[]
 }
 
 model Invitation {
@@ -97,19 +102,34 @@ model Invitation {
 }
 
 model CareRecipient {
-  id           String   @id @default(cuid())
-  name         String
-  relationship String?
-  notes        String?
-  isPrimary    Boolean  @default(false)
-  sortOrder    Int      @default(0)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id                       String                        @id @default(cuid())
+  name                     String
+  relationship             String?
+  notes                    String?
+  isPrimary                Boolean                       @default(false)
+  sortOrder                Int                           @default(0)
+  activationStatus         CareRecipientActivationStatus @default(DRAFT)
+  activatedAt              DateTime?
+  consentAttestedAt        DateTime?
+  consentDocumentReference String?
+  createdAt                DateTime                      @default(now())
+  updatedAt                DateTime                      @updatedAt
 
-  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
-  circleId String
+  circle              CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId            String
+  receiverUser        User?      @relation("CareReceiverUser", fields: [receiverUserId], references: [id], onDelete: SetNull)
+  receiverUserId      String?
+  consentAttestedBy   User?      @relation("CareRecipientConsentAttester", fields: [consentAttestedById], references: [id], onDelete: SetNull)
+  consentAttestedById String?
+  proxyAuthorizedBy   User?      @relation("CareRecipientProxyAuthorizer", fields: [proxyAuthorizedById], references: [id], onDelete: SetNull)
+  proxyAuthorizedById String?
 
-  tasks Task[]
+  tasks        Task[]
+  accessGrants CareRecipientAccess[]
+  entitlement  CareRecipientEntitlement?
+
+  @@index([circleId, activationStatus])
+  @@index([receiverUserId])
 }
 
 model CircleMember {
@@ -122,39 +142,78 @@ model CircleMember {
   circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
   circleId String
 
+  recipientAccesses CareRecipientAccess[]
+
   @@unique([userId, circleId])
 }
 
-model Task {
-  id          String     @id @default(cuid())
-  title       String
-  notes       String?
-  dueAt       DateTime?
-  status      TaskStatus @default(PENDING)
-  priority    Priority   @default(NORMAL)
-  recurrenceFrequency RecurrenceFrequency @default(NONE)
-  recurrenceInterval Int?
-  recurrenceWeekdays String[] @default([])
-  recurrenceEndsAt DateTime?
-  seriesId     String?
-  completedAt DateTime?
-  archivedAt  DateTime?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+model CareRecipientAccess {
+  id        String    @id @default(cuid())
+  grantedAt DateTime  @default(now())
+  revokedAt DateTime?
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-  circle      CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
-  circleId    String
-  recipient   CareRecipient? @relation(fields: [recipientId], references: [id], onDelete: SetNull)
-  recipientId String?
-  creator     User       @relation("TaskCreator", fields: [creatorId], references: [id])
-  creatorId   String
-  assignee    User?      @relation("TaskAssignee", fields: [assigneeId], references: [id])
-  assigneeId  String?
-  completedBy User?      @relation("TaskCompletedBy", fields: [completedById], references: [id])
+  recipient   CareRecipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId String
+  member      CircleMember  @relation(fields: [memberId], references: [id], onDelete: Cascade)
+  memberId    String
+  grantedBy   User?         @relation("CareRecipientAccessGrantor", fields: [grantedById], references: [id], onDelete: SetNull)
+  grantedById String?
+
+  @@unique([recipientId, memberId])
+  @@index([memberId, revokedAt])
+}
+
+model CareRecipientEntitlement {
+  id                         String                          @id @default(cuid())
+  status                     CareRecipientEntitlementStatus  @default(FREE)
+  source                     CareRecipientEntitlementSource?
+  startsAt                   DateTime?
+  expiresAt                  DateTime?
+  appleOriginalTransactionId String?
+  appleProductId             String?
+  createdAt                  DateTime                        @default(now())
+  updatedAt                  DateTime                        @updatedAt
+
+  recipient     CareRecipient @relation(fields: [recipientId], references: [id], onDelete: Cascade)
+  recipientId   String        @unique
+  purchasedBy   User?         @relation("CareRecipientEntitlementPurchaser", fields: [purchasedById], references: [id], onDelete: SetNull)
+  purchasedById String?
+
+  @@index([status, expiresAt])
+}
+
+model Task {
+  id                  String              @id @default(cuid())
+  title               String
+  notes               String?
+  dueAt               DateTime?
+  status              TaskStatus          @default(PENDING)
+  priority            Priority            @default(NORMAL)
+  recurrenceFrequency RecurrenceFrequency @default(NONE)
+  recurrenceInterval  Int?
+  recurrenceWeekdays  String[]            @default([])
+  recurrenceEndsAt    DateTime?
+  seriesId            String?
+  completedAt         DateTime?
+  archivedAt          DateTime?
+  createdAt           DateTime            @default(now())
+  updatedAt           DateTime            @updatedAt
+
+  circle        CareCircle     @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId      String
+  recipient     CareRecipient? @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+  recipientId   String?
+  creator       User           @relation("TaskCreator", fields: [creatorId], references: [id])
+  creatorId     String
+  assignee      User?          @relation("TaskAssignee", fields: [assigneeId], references: [id])
+  assigneeId    String?
+  completedBy   User?          @relation("TaskCompletedBy", fields: [completedById], references: [id])
   completedById String?
 
-  reminders   Reminder[]
-  comments    TaskComment[]
+  reminders Reminder[]
+  comments  TaskComment[]
 }
 
 model TaskComment {
@@ -163,10 +222,10 @@ model TaskComment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  task      Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
-  taskId    String
-  author    User   @relation("TaskCommentAuthor", fields: [authorId], references: [id])
-  authorId  String
+  task     Task   @relation(fields: [taskId], references: [id], onDelete: Cascade)
+  taskId   String
+  author   User   @relation("TaskCommentAuthor", fields: [authorId], references: [id])
+  authorId String
 }
 
 model Reminder {
@@ -209,6 +268,25 @@ enum Role {
   ADMIN
   MEMBER
   RECIPIENT
+}
+
+enum CareRecipientActivationStatus {
+  DRAFT
+  INVITED
+  ACTIVE
+  PROXY_ACTIVE
+}
+
+enum CareRecipientEntitlementStatus {
+  FREE
+  ACTIVE
+  EXPIRED
+  REVOKED
+}
+
+enum CareRecipientEntitlementSource {
+  APP_STORE
+  MANUAL
 }
 
 enum TaskStatus {
