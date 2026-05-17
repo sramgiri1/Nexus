@@ -401,6 +401,7 @@ curl -X PATCH http://localhost:3000/circles/<circleId>/tasks/<taskId> \
 - [x] `RecipientBoardView` done task rows hide due date label
 - [x] `TaskDetailView` status card shows "Completed by [full name]" below the status chips when done with completedBy
 - [x] Completing a task via "I've done this" (RecipientBoardView) — row updates to show "Done by [firstName]" after in-place refresh
+- [x] Completing the next due task from care receiver home advances the home card to the next open task
 - [x] Tasks completed before this update (no `completedBy`) degrade gracefully — no crash, row shows "Done" fallback chip
 - [x] `.skipped` tasks show "Done" fallback chip (not "Done by") since `completedBy` is nil for skipped
 - [x] `TaskDetailView` "Completed by" row and bottom padding react to `@State var status`, not `task.status` (no desync on chip tap)

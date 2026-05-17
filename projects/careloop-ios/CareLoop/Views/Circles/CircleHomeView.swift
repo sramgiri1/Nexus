@@ -556,7 +556,6 @@ struct CircleHomeView: View {
         .padding(22)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
         .shadow(color: .black.opacity(0.06), radius: 10, x: 0, y: 4)
-        .accessibilityIdentifier("receiver-next-task-card")
     }
 
     private var receiverTimelineSection: some View {

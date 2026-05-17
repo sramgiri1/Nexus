@@ -166,6 +166,19 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_receiverCanCompleteNextTaskFromHome() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "receiver-home"])
+
+        XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
+
+        app.buttons["receiver-next-task-primary"].tap()
+
+        XCTAssertTrue(app.staticTexts["Drink water"].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.staticTexts["Take lunchtime medication"].exists)
+    }
+
+    @MainActor
     func test_receiverPendingTaskDeepLinkOpensPersonalBoard() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "receiver-home",
