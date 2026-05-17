@@ -2,14 +2,14 @@
 
 ## Purpose
 
-Start CareLoop Phase 2 as a governed NEXUS project mission for product hardening, validation readiness, privacy review, test coverage, and release preparation.
+Track CareLoop Phase 2 as a governed NEXUS project mission for product hardening, validation readiness, privacy review, test coverage, and release preparation.
 
 ## Goals
 
-- Review the PRD and current local status before source mutation.
-- Define validation, privacy, iOS, and release readiness gates.
-- Select safe implementation candidates for a later controlled source mutation phase.
-- Keep provider calls, tool execution, DB writes, deployment, and project mutation disabled.
+- Keep the PRD and local implementation aligned as source changes land.
+- Maintain validation, privacy, iOS, and release readiness gates.
+- Implement remaining product gaps in small phases with tests updated each phase.
+- Keep external provider calls, production DB writes, deployment, and release execution disabled until explicitly configured.
 
 ## Task Plan
 
@@ -24,24 +24,45 @@ Start CareLoop Phase 2 as a governed NEXUS project mission for product hardening
 
 ## Readiness Gates
 
-- PRD gap review
-- Backend validation readiness
-- Privacy and safety review
-- iOS validation readiness
-- Test gap proposal
-- Release readiness outline
+- PRD gap review: updated with owner decisions for personas, roles, circles, invites, care receiver activation, task visibility, reminders, escalation, and monetization.
+- Backend validation readiness: active; focused suites and full backend regression exist.
+- Privacy and safety review: partially complete; no clinic/EMR integration and external provider setup remains blocked.
+- iOS validation readiness: active; Xcode simulator suite runs locally.
+- Test gap proposal: active; `testability-matrix.md` and `test-runbook.md` define automated, simulator manual, physical-device, and missing coverage.
+- Release readiness outline: blocked by external provider, StoreKit, APNs, TestFlight, and destructive-flow UI coverage.
 
-## Not Enabled Yet
+## Implemented Since Mission Start
 
-- CareLoop source mutation
+- Backend auth, circle/invite/member lifecycle, care receiver activation, scoped task visibility, recurring tasks, reminders, snooze, escalation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
+- iOS onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
+- Visual QA for primary persona screens with simulator screenshots under `projects/careloop/docs/qa/screenshots/`.
+- Focused test runner at `scripts/careloop-test-runner.sh` and Nexus suite metadata for targeted test selection.
+
+## Current Test Commands
+
+- `scripts/careloop-test-runner.sh smoke`
+- `scripts/careloop-test-runner.sh full`
+- `scripts/careloop-test-runner.sh backend:auth`
+- `scripts/careloop-test-runner.sh backend:circles`
+- `scripts/careloop-test-runner.sh backend:reminders`
+- `scripts/careloop-test-runner.sh backend:scale`
+- `scripts/careloop-test-runner.sh ios:onboarding`
+- `scripts/careloop-test-runner.sh ios:personas`
+- `scripts/careloop-test-runner.sh ios:tasks`
+- `scripts/careloop-test-runner.sh ios:reminders`
+- `scripts/careloop-test-runner.sh ios:payments`
+
+## Still Not Enabled
+
 - Prisma migrations or DB writes
-- Provider/tool/MCP execution
-- iOS/Xcode execution
 - Deployment or release execution
+- Production provider calls
+- StoreKit sandbox purchase/restore without Apple setup
+- APNs physical-device delivery without Apple setup
+- Real social-auth provider redirects without credentials
 
 ## Next Platform Dependencies
 
-- P63 recovery snapshots
-- P64 provider/tool dispatch through governance
-- P67 controlled source mutation expansion
 - P69/P70 release and deploy monitoring
+- Provider credential governance for Google/Facebook/Apple auth, APNs, Resend, and StoreKit.
+- Test evidence ingestion for focused CareLoop suite results.

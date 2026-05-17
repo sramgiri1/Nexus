@@ -68,6 +68,55 @@ surface have:
 - preview-only worker runtime, concurrency, and conversational command interface
   foundations through P62
 
+## CareLoop Project Progress
+
+CareLoop is the active private project under `projects/careloop` and
+`projects/careloop-ios`. The current work is tracked on branch
+`project/careloop-phase-2-nexus-start` and is separate from the NEXUS platform
+roadmap.
+
+Current CareLoop progress:
+
+- PRD decisions have been captured for personas, circles, care receivers,
+  invite behavior, task visibility, recurring tasks, reminder/snooze/escalation,
+  premium limits, and pay-per-care-receiver monetization.
+- Backend coverage now includes auth, circle/invite/member lifecycle, receiver
+  activation, scoped task visibility, recurring task behavior, reminder
+  scheduling, snooze, escalation, push/email simulation, premium entitlement
+  rules, delete scenarios, 50-user simulation, and multi-circle/multi-role
+  isolation.
+- iOS coverage now includes onboarding contracts, circle directory, organizer
+  dashboard, caregiver dashboard, care receiver home, task board deep links,
+  receiver task completion, task detail snooze, paywall entry, and role
+  recalculation.
+- Visual QA screenshots and notes exist for circle directory, organizer home,
+  caregiver home, and care receiver home under
+  `projects/careloop/docs/qa/visual-qa-careloop.md`.
+- Focused test suites are runnable through
+  `scripts/careloop-test-runner.sh`, including `smoke`, `full`,
+  `backend:auth`, `backend:circles`, `backend:reminders`, `backend:scale`,
+  `ios:onboarding`, `ios:personas`, `ios:tasks`, `ios:reminders`, and
+  `ios:payments`.
+
+Recent validation:
+
+- `scripts/careloop-test-runner.sh smoke` passed.
+- Full Xcode regression passed on iPhone 17 Pro simulator.
+- Backend `npm test` previously passed with the expanded reminder, escalation,
+  50-user, and multi-role coverage.
+
+Known remaining CareLoop blockers:
+
+- Real APNs delivery, notification tap behavior, and universal links require a
+  physical-device/TestFlight pass.
+- Google/Facebook/Apple provider credentials and redirect URIs are still needed
+  for real social-auth validation.
+- StoreKit sandbox purchase/restore and App Store entitlement verification need
+  external setup.
+- UI automation is still missing for delete circle/member/receiver destructive
+  flows, full create-recurring-task form submission, invite email delivery, and
+  some empty/error/offline states.
+
 ## Command Center Overview
 
 Command Center is the current operator surface for:

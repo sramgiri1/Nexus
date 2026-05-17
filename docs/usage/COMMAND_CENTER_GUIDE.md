@@ -210,12 +210,21 @@ CareLoop can be selected in local-private mode as a real project mission. The
 Projects page shows CareLoop Phase 2, the active Phase 2 task plan, project
 milestones, readiness gaps, and redacted evidence summaries.
 
-This CARELOOP-P2.1 surface is planning-only:
+CARELOOP-P2 has moved beyond planning into controlled local implementation and
+validation:
 
-- Phase 2 tasks are planned, not executed.
-- CareLoop source, Prisma, and iOS files are not mutated.
-- Provider/tool execution, DB writes, iOS/Xcode, and release/deploy actions stay disabled.
-- The OS Roadmap remains NEXUS-platform-only; CareLoop phases live under Projects and project-roadmap files.
+- PRD decisions are captured for personas, care circles, invites, care receiver
+  activation, task visibility, reminders, escalation, premium limits, and
+  monetization.
+- Backend and iOS source have been changed under operator-directed local
+  workflow.
+- Local backend and Xcode tests can run through
+  `scripts/careloop-test-runner.sh`.
+- Provider calls, production DB writes, StoreKit/APNs/social-auth live
+  credentials, and release/deploy actions stay disabled until external setup is
+  approved.
+- The OS Roadmap remains NEXUS-platform-only; CareLoop phases live under
+  Projects and project-roadmap files.
 
 ## Service Health
 
@@ -382,7 +391,7 @@ mapping, evidence schema summaries, and coverage gaps with next actions.
 
 **Tabs:**
 - Overview — policy posture (executionEnabled: false, registryOnly: true) and suite counts
-- Project Tests — CareLoop test suite previews with commandPreview strings (display-only)
+- Project Tests — CareLoop test suite previews with commandPreview strings, including focused smoke/backend/iOS suites
 - OS Tests — NEXUS OS infrastructure test suite previews
 - Selection Preview — shows which suites match current changed files (metadata-only)
 - Evidence Model — test result record schema and redaction policy

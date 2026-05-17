@@ -2,10 +2,10 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T01:50:14.787Z
+- Generated at: 2026-05-17T12:13:19.466Z
 - Phase: P55.4
-- Validation branch: arch/test-suite-manager-project-os
-- Validation HEAD: 3d3c389
+- Validation branch: project/careloop-phase-2-nexus-start
+- Validation HEAD: 4db7bb9
 
 ## Sample Preview (dashboard + db + memory)
 
