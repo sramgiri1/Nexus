@@ -45,6 +45,37 @@ export function canEditTask({ member, userId, task }) {
   return task.creatorId === userId;
 }
 
+export function escalationUserIdsForTask({
+  task,
+  circleMembers,
+  activeRecipientAccesses,
+}) {
+  const userIds = new Set();
+  if (task?.assigneeId) {
+    userIds.add(task.assigneeId);
+  } else if (task?.creatorId) {
+    userIds.add(task.creatorId);
+  }
+
+  for (const member of circleMembers ?? []) {
+    if (member.role === "ADMIN") {
+      userIds.add(member.userId);
+      continue;
+    }
+    if (member.role !== "MEMBER") continue;
+    const supportsReceiver = (activeRecipientAccesses ?? []).some((grant) =>
+      grant.memberId === member.id
+      && grant.recipientId === task.recipientId
+      && !grant.revokedAt
+    );
+    if (supportsReceiver) {
+      userIds.add(member.userId);
+    }
+  }
+
+  return [...userIds];
+}
+
 const recipientOrder = [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }];
 
 export async function loadReceiverAccessContext(db, { circleId, member, userId }) {

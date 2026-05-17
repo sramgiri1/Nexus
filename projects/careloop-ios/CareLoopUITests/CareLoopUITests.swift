@@ -75,11 +75,48 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_caregiverCanOpenReceiverProgress() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
+        let dashboard = app.scrollViews["caregiver-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-activity"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-activity"].tap()
+
+        XCTAssertTrue(app.staticTexts["Overview"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Maya"].exists)
+        XCTAssertTrue(app.staticTexts["A task was completed"].exists)
+    }
+
+    @MainActor
+    func test_organizerPendingTaskDeepLinkOpensTaskBoard() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Pick up prescriptions"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_receiverHomeShowsNextDueTaskExperience() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "receiver-home"])
 
         XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
         XCTAssertTrue(app.buttons["View All My Tasks"].exists)
+    }
+
+    @MainActor
+    func test_receiverPendingTaskDeepLinkOpensPersonalBoard() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "receiver-home",
+            "-careloop-ui-pending-task", "t5"
+        ])
+
+        XCTAssertTrue(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].waitForExistence(timeout: 3))
     }
 }

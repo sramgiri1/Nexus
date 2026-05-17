@@ -57,6 +57,21 @@ export default async function circles(app) {
     };
   }
 
+  function emptyCompletionInsights(periodDays, selectedRecipientId = null) {
+    return {
+      periodDays,
+      selectedRecipientId,
+      completedByDay: [],
+      topCaregivers: [],
+      recipientBreakdown: [],
+      totals: {
+        completed: 0,
+        active: 0,
+        overdue: 0,
+      },
+    };
+  }
+
   function eventVisibleToMember(event, member, accessContext, visibleTaskIds) {
     if (isCareOrganizer(member)) return true;
     const payload = event.payload ?? {};
@@ -200,27 +215,46 @@ export default async function circles(app) {
     return filteredCircleForMember(circle, member, accessContext, activeRecipientAccesses);
   });
 
-  // GET /circles/:id/insights/completion — admin only
+  // GET /circles/:id/insights/completion — organizers + caregivers within receiver scope
   app.get("/circles/:id/insights/completion", async (req, reply) => {
     const requestedDays = Number.parseInt(req.query?.days ?? "7", 10);
     const recipientId = req.query?.recipientId || null;
     const periodDays = Number.isInteger(requestedDays) ? Math.min(30, Math.max(7, requestedDays)) : 7;
-    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+    const member = await assertRequestMember(db, req.params.id, req, reply);
+    if (!member) return;
+    if (member.role === "RECIPIENT") {
+      return reply.code(403).send({ error: "Care receivers cannot view progress insights" });
+    }
 
-    if (recipientId) {
-      const recipient = await db.careRecipient.findFirst({
-        where: { id: recipientId, circleId: req.params.id },
+    const accessContext = isCareOrganizer(member)
+      ? null
+      : await loadReceiverAccessContext(db, {
+        circleId: req.params.id,
+        member,
+        userId: member.userId,
       });
-      if (!recipient) return reply.code(404).send({ error: "Recipient not found" });
+
+    if (!isCareOrganizer(member) && recipientId && !accessContext.recipientIds.has(recipientId)) {
+      return reply.code(404).send({ error: "Recipient not found" });
     }
 
     const now = new Date(Date.now());
     const since = new Date(now);
     since.setUTCHours(0, 0, 0, 0);
     since.setUTCDate(since.getUTCDate() - (periodDays - 1));
-    const recipientScope = recipientId ? { recipientId } : {};
+    const scopedRecipientIds = isCareOrganizer(member)
+      ? null
+      : [...accessContext.recipientIds];
+    if (!isCareOrganizer(member) && scopedRecipientIds.length === 0) {
+      return reply.send(emptyCompletionInsights(periodDays, recipientId));
+    }
 
-    const [completedTasks, activeTasks, allTasks, circleRecipients] = await Promise.all([
+    const recipientScope = recipientId ? { recipientId } : {};
+    const allowedRecipientIds = recipientId
+      ? new Set([recipientId])
+      : (!isCareOrganizer(member) ? new Set(scopedRecipientIds) : null);
+
+    const [rawCompletedTasks, rawActiveTasks, rawAllTasks, rawCircleRecipients] = await Promise.all([
       db.task.findMany({
         where: {
           circleId: req.params.id,
@@ -248,14 +282,32 @@ export default async function circles(app) {
         where: {
           circleId: req.params.id,
           archivedAt: null,
+          ...recipientScope,
         },
         include: { recipient: { select: { id: true, name: true } } },
       }),
       db.careRecipient.findMany({
-        where: { circleId: req.params.id },
+        where: {
+          circleId: req.params.id,
+          ...(recipientId
+            ? { id: recipientId }
+            : (!isCareOrganizer(member) ? { id: { in: scopedRecipientIds } } : {})),
+        },
         orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
       }),
     ]);
+    const completedTasks = allowedRecipientIds
+      ? rawCompletedTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
+      : rawCompletedTasks;
+    const activeTasks = allowedRecipientIds
+      ? rawActiveTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
+      : rawActiveTasks;
+    const allTasks = allowedRecipientIds
+      ? rawAllTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
+      : rawAllTasks;
+    const circleRecipients = allowedRecipientIds
+      ? rawCircleRecipients.filter((recipient) => allowedRecipientIds.has(recipient.id))
+      : rawCircleRecipients;
     const overdueCount = activeTasks.filter((task) => task.dueAt && task.dueAt < now).length;
 
     const dailyMap = new Map();
@@ -303,9 +355,11 @@ export default async function circles(app) {
       periodDays,
       selectedRecipientId: recipientId,
       completedByDay: [...dailyMap.entries()].map(([date, count]) => ({ date, count })),
-      topCaregivers: [...caregiverCounts.values()]
-        .sort((lhs, rhs) => rhs.completedCount - lhs.completedCount || lhs.name.localeCompare(rhs.name))
-        .slice(0, 5),
+      topCaregivers: isCareOrganizer(member)
+        ? [...caregiverCounts.values()]
+          .sort((lhs, rhs) => rhs.completedCount - lhs.completedCount || lhs.name.localeCompare(rhs.name))
+          .slice(0, 5)
+        : [],
       recipientBreakdown,
       totals: {
         completed: completedTasks.length,

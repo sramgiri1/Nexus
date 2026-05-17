@@ -73,12 +73,18 @@ struct CircleHomeView: View {
                     CirclesView().environmentObject(appState)
                 }
             }
-            .task { await loadTasks() }
-            .onChange(of: appState.pendingTaskId) { id in
-                if id != nil, !deepLinkToTaskBoard { deepLinkToTaskBoard = true }
+            .task {
+                await loadTasks()
+                syncPendingTaskNavigation()
+            }
+            .onChange(of: appState.pendingTaskId) { _ in
+                syncPendingTaskNavigation()
             }
             .onChange(of: appState.activeCircle?.id) { _ in
-                Task { await loadTasks() }
+                Task {
+                    await loadTasks()
+                    syncPendingTaskNavigation()
+                }
             }
             .refreshable {
                 if let id = appState.activeCircle?.id, UITestScenario.current == nil {
@@ -401,7 +407,7 @@ struct CircleHomeView: View {
                     secondaryActionLink(title: "Care Circle", icon: "person.2.fill", tint: blue, subtitle: "See your support team", accessibilityIdentifier: "quick-action-care-circle") {
                         MemberListView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "Activity", icon: "clock.fill", tint: teal, subtitle: "Receiver progress updates", accessibilityIdentifier: "quick-action-activity") {
+                    secondaryActionLink(title: "Receiver Progress", icon: "clock.fill", tint: teal, subtitle: "Counts and updates without private assignments", accessibilityIdentifier: "quick-action-activity") {
                         ActivityFeedView().environmentObject(appState)
                     }
                     secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences", accessibilityIdentifier: "quick-action-settings") {
@@ -873,5 +879,10 @@ struct CircleHomeView: View {
             self.error = error.localizedDescription
         }
         loading = false
+    }
+
+    private func syncPendingTaskNavigation() {
+        guard appState.pendingTaskId != nil, !deepLinkToTaskBoard else { return }
+        deepLinkToTaskBoard = true
     }
 }

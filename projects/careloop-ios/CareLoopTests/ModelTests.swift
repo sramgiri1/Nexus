@@ -625,6 +625,35 @@ final class TaskWorkflowPolicyTests: XCTestCase {
     }
 }
 
+final class CircleEventPresentationTests: XCTestCase {
+
+    func test_caregiverFeedDescription_redactsActorDetails() {
+        let event = CircleEvent(
+            id: "e1",
+            type: .taskCompleted,
+            createdAt: Date(),
+            actorId: "u1",
+            actor: EventActor(id: "u1", name: "Olivia Organizer")
+        )
+
+        XCTAssertEqual(event.feedDescription(for: .member), "A task was completed")
+        XCTAssertTrue(event.isVisible(to: .recipient))
+    }
+
+    func test_caregiverFeedDescription_hides_team_management_events() {
+        let event = CircleEvent(
+            id: "e2",
+            type: .inviteCreated,
+            createdAt: Date(),
+            actorId: "u1",
+            actor: EventActor(id: "u1", name: "Olivia Organizer")
+        )
+
+        XCTAssertEqual(event.feedDescription(for: .member), "")
+        XCTAssertFalse(event.isVisible(to: .member))
+    }
+}
+
 final class CircleHomePolicyTests: XCTestCase {
 
     private func makeRecipient(id: String, name: String, userId: String, assignees: [String]) -> CareRecipient {

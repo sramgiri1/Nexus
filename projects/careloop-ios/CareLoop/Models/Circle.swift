@@ -274,6 +274,41 @@ struct CircleEvent: Identifiable, Codable {
 
     var isVisible: Bool { !feedDescription.isEmpty }
 
+    func feedDescription(for viewerRole: MemberRole) -> String {
+        if viewerRole == .admin {
+            return feedDescription
+        }
+
+        switch type {
+        case .taskCreated:
+            return "A task was added"
+        case .taskSeriesCreated:
+            return "A recurring task was added"
+        case .taskCompleted:
+            return "A task was completed"
+        case .taskUpdated:
+            return "A task was updated"
+        case .taskDeleted:
+            return "A task was removed"
+        case .recipientAdded:
+            return "A care receiver was added"
+        case .recipientUpdated:
+            return "Care receiver details were updated"
+        case .recipientRemoved:
+            return "A care receiver was removed"
+        case .reminderSent:
+            return "A reminder was sent"
+        case .reminderEscalated:
+            return "A care task still needs attention"
+        default:
+            return ""
+        }
+    }
+
+    func isVisible(to viewerRole: MemberRole) -> Bool {
+        !feedDescription(for: viewerRole).isEmpty
+    }
+
     var feedIcon: String {
         switch type {
         case .taskCreated, .taskSeriesCreated:  return "plus.circle.fill"

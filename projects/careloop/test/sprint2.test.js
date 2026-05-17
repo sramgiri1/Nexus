@@ -23,6 +23,7 @@ import { test, describe, before, after } from "node:test";
 import assert from "node:assert/strict";
 
 import { deliverTaskNotification, sendReminderNotifications, sendDailyDigest } from "../src/lib/push.js";
+import { escalationUserIdsForTask } from "../src/lib/access.js";
 import Fastify from "fastify";
 import authPlugin    from "../src/plugins/auth.js";
 import authRoutes    from "../src/routes/auth.js";
@@ -1824,7 +1825,7 @@ describe("auth hardening and protected reads", () => {
     await app.close();
   });
 
-  test("prevents non-members from reading circle data and members from reading admin-only insights", async () => {
+  test("prevents non-members from reading circle data and returns empty insights for caregivers without receiver access", async () => {
     const db = buildDb({
       users: [
         { id: "u1", name: "Admin", email: "admin@test.com" },
@@ -1882,7 +1883,19 @@ describe("auth hardening and protected reads", () => {
       url: "/circles/c1/insights/completion?days=7",
       headers: memberHeaders,
     });
-    assert.equal(memberInsights.statusCode, 403);
+    assert.equal(memberInsights.statusCode, 200);
+    assert.deepEqual(memberInsights.json(), {
+      periodDays: 7,
+      selectedRecipientId: null,
+      completedByDay: [],
+      topCaregivers: [],
+      recipientBreakdown: [],
+      totals: {
+        completed: 0,
+        active: 0,
+        overdue: 0,
+      },
+    });
     await app.close();
   });
 });
@@ -2179,6 +2192,47 @@ describe("receiver-scoped access control", () => {
     assert.equal(res.statusCode, 200);
     assert.deepEqual(res.json().map((event) => event.id), ["e4", "e1"]);
     await app.close();
+  });
+
+  test("returns caregiver progress insights within receiver scope without caregiver attribution", async () => {
+    const now = new Date("2026-04-30T18:00:00.000Z");
+    const db = buildDb(scopedAccessSeed());
+    const app = await buildApp(db);
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+    const realDateNow = Date.now;
+    Date.now = () => now.getTime();
+
+    try {
+      const res = await app.inject({
+        method: "GET",
+        url: "/circles/c1/insights/completion?days=7",
+        headers: caregiverHeaders,
+      });
+      assert.equal(res.statusCode, 200);
+      assert.deepEqual(res.json().recipientBreakdown, [{
+        recipientId: "cr1",
+        name: "Receiver One",
+        completed: 0,
+        active: 3,
+        overdue: 2,
+      }]);
+      assert.deepEqual(res.json().totals, {
+        completed: 0,
+        active: 3,
+        overdue: 2,
+      });
+      assert.deepEqual(res.json().topCaregivers, []);
+
+      const hiddenRecipient = await app.inject({
+        method: "GET",
+        url: "/circles/c1/insights/completion?days=7&recipientId=cr2",
+        headers: caregiverHeaders,
+      });
+      assert.equal(hiddenRecipient.statusCode, 404);
+    } finally {
+      Date.now = realDateNow;
+      await app.close();
+    }
   });
 
   test("returns 404 for hidden task mutations and comments outside the visible scope", async () => {
@@ -2654,6 +2708,30 @@ describe("Scheduler escalation rules (unit)", () => {
     const sentAt = new Date(Date.now() - (ESCALATION_MIN - 1) * 60 * 1000);
     const cutoff  = new Date(Date.now() - ESCALATION_MIN * 60 * 1000);
     assert.ok(sentAt > cutoff, "reminder younger than 15min does not qualify");
+  });
+
+  test("escalation recipients include the assignee, organizers, and supporting caregivers only", () => {
+    const userIds = escalationUserIdsForTask({
+      task: {
+        assigneeId: "u2",
+        creatorId: "u1",
+        recipientId: "cr1",
+      },
+      circleMembers: [
+        { id: "m1", userId: "u1", role: "ADMIN" },
+        { id: "m2", userId: "u2", role: "MEMBER" },
+        { id: "m3", userId: "u3", role: "MEMBER" },
+        { id: "m4", userId: "u4", role: "MEMBER" },
+        { id: "m5", userId: "u5", role: "RECIPIENT" },
+      ],
+      activeRecipientAccesses: [
+        { memberId: "m2", recipientId: "cr1", revokedAt: null },
+        { memberId: "m3", recipientId: "cr1", revokedAt: null },
+        { memberId: "m4", recipientId: "cr2", revokedAt: null },
+      ],
+    }).sort();
+
+    assert.deepEqual(userIds, ["u1", "u2", "u3"]);
   });
 
   test("digest date string format is YYYY-MM-DD", () => {

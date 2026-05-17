@@ -20,6 +20,8 @@ final class AppState: ObservableObject {
 
     var uiTestInvitations: [GroupInvitation] = []
     var uiTestRecipientAccessByMemberId: [String: [RecipientAccessSummary]] = [:]
+    var uiTestEvents: [CircleEvent] = []
+    var uiTestCompletionInsights: CircleCompletionInsights?
 
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?

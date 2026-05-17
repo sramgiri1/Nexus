@@ -12,6 +12,7 @@ struct CirclesView: View {
     @State private var showSettings        = false
     @State private var showPermissionSheet = false
     @State private var selectedTask:       CareTask?
+    @State private var highlightedTaskId:  String?
     @State private var selectedRecipient   = "all"
 
     // MARK: – Design tokens
@@ -137,39 +138,50 @@ struct CirclesView: View {
     // MARK: – Board scroll view
 
     private var boardScrollView: some View {
-        ScrollView(showsIndicators: false) {
-            LazyVStack(alignment: .leading, spacing: 20) {
-                circleHeaderCard
-                    .padding(.horizontal, 16)
-
-                if multipleRecipients {
-                    recipientFilterRow
+        ScrollViewReader { proxy in
+            ScrollView(showsIndicators: false) {
+                LazyVStack(alignment: .leading, spacing: 20) {
+                    circleHeaderCard
                         .padding(.horizontal, 16)
+
+                    if multipleRecipients {
+                        recipientFilterRow
+                            .padding(.horizontal, 16)
+                    }
+
+                    if let err = error {
+                        Text(err)
+                            .font(.footnote).foregroundStyle(.red)
+                            .padding(.horizontal, 16)
+                    }
+
+                    boardSection("Overdue",  tasks: overdueSection,  color: .red)
+                    boardSection("Today",    tasks: todaySection,     color: teal)
+                    boardSection("Upcoming", tasks: upcomingSection,  color: blue)
+                    boardSection("Anytime",  tasks: noDateSection,    color: Color(red: 0.43, green: 0.50, blue: 0.60))
+                    boardSection("Completed", tasks: completedSection, color: green)
+
+                    if allEmpty {
+                        emptyStateView
+                            .padding(.horizontal, 16)
+                    }
+
+                    Spacer(minLength: 32)
                 }
-
-                if let err = error {
-                    Text(err)
-                        .font(.footnote).foregroundStyle(.red)
-                        .padding(.horizontal, 16)
-                }
-
-                boardSection("Overdue",  tasks: overdueSection,  color: .red)
-                boardSection("Today",    tasks: todaySection,     color: teal)
-                boardSection("Upcoming", tasks: upcomingSection,  color: blue)
-                boardSection("Anytime",  tasks: noDateSection,    color: Color(red: 0.43, green: 0.50, blue: 0.60))
-                boardSection("Completed", tasks: completedSection, color: green)
-
-                if allEmpty {
-                    emptyStateView
-                        .padding(.horizontal, 16)
-                }
-
-                Spacer(minLength: 32)
+                .padding(.top, 14)
+                .padding(.bottom, 20)
             }
-            .padding(.top, 14)
-            .padding(.bottom, 20)
+            .accessibilityIdentifier("task-board-screen")
+            .refreshable { await loadTasks() }
+            .onChange(of: highlightedTaskId) { id in
+                guard let id else { return }
+                withAnimation { proxy.scrollTo(id, anchor: .center) }
+                Task {
+                    try? await Task.sleep(for: .seconds(2))
+                    highlightedTaskId = nil
+                }
+            }
         }
-        .refreshable { await loadTasks() }
     }
 
     // MARK: – Circle header card
@@ -304,6 +316,13 @@ struct CirclesView: View {
             TaskRowView(task: task, onToggle: { Task { await toggle(task) } })
         }
         .buttonStyle(.plain)
+        .id(task.id)
+        .overlay(
+            RoundedRectangle(cornerRadius: 16, style: .continuous)
+                .stroke(Color(red: 0.85, green: 0.30, blue: 0.50), lineWidth: 2)
+                .opacity(highlightedTaskId == task.id ? 1 : 0)
+                .animation(.easeOut(duration: 0.3), value: highlightedTaskId)
+        )
         .contextMenu { contextMenuItems(for: task) }
     }
 
@@ -438,6 +457,12 @@ struct CirclesView: View {
     // MARK: – Data operations
 
     private func loadTasks() async {
+        if let seededTasks = appState.activeCircle?.tasks, UITestScenario.current != nil {
+            tasks = seededTasks
+            loading = false
+            error = nil
+            return
+        }
         guard let circleId = appState.activeCircle?.id else {
             tasks = []; loading = false; return
         }
@@ -480,7 +505,10 @@ struct CirclesView: View {
     private func syncDeepLink() {
         guard let id = appState.pendingTaskId,
               let task = tasks.first(where: { $0.id == id }) else { return }
-        selectedTask = task
+        if multipleRecipients, let recipientId = task.recipientId {
+            selectedRecipient = recipientId
+        }
+        highlightedTaskId = task.id
         appState.consumePendingTask()
     }
 }

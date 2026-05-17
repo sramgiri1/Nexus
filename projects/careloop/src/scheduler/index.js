@@ -2,6 +2,11 @@ import cron from "node-cron";
 import { logEvent } from "../lib/roles.js";
 import { sendDailyDigest, sendReminderNotifications } from "../lib/push.js";
 import { isRecurringTask, nextDueAtForTask } from "../lib/recurrence.js";
+import {
+  escalationUserIdsForTask,
+  filterVisibleTasks,
+  loadReceiverAccessContext,
+} from "../lib/access.js";
 
 const DIGEST_HOUR = parseInt(process.env.DAILY_DIGEST_HOUR || "18", 10);
 const ESCALATION_MINUTES = parseInt(process.env.REMINDER_ESCALATION_MINUTES || "15", 10);
@@ -95,7 +100,17 @@ async function processEscalations(db) {
   });
 
   for (const reminder of reminders) {
-    const userIds = reminder.task.circle.members.map((member) => member.userId);
+    const activeRecipientAccesses = await db.careRecipientAccess.findMany({
+      where: {
+        recipientId: reminder.task.recipientId,
+        revokedAt: null,
+      },
+    });
+    const userIds = escalationUserIdsForTask({
+      task: reminder.task,
+      circleMembers: reminder.task.circle.members,
+      activeRecipientAccesses,
+    });
     const deliveries = await sendReminderNotifications({
       db,
       task: reminder.task,
@@ -143,35 +158,42 @@ async function processDigests(db) {
       where: { userId: user.id },
       include: { circle: true },
     });
-    const circleIds = memberships.map((membership) => membership.circleId);
-    if (circleIds.length === 0) continue;
+    if (memberships.length === 0) continue;
 
-    const [dueToday, overdue, completedToday] = await Promise.all([
-      db.task.findMany({
+    const startOfDay = new Date(`${now.date}T00:00:00Z`);
+    const dueToday = [];
+    const overdue = [];
+    const completedToday = [];
+
+    for (const membership of memberships) {
+      const accessContext = await loadReceiverAccessContext(db, {
+        circleId: membership.circleId,
+        member: membership,
+        userId: user.id,
+      });
+      const circleTasks = await db.task.findMany({
         where: {
-          circleId: { in: circleIds },
-          dueAt: { not: null },
-          status: { not: "DONE" },
+          circleId: membership.circleId,
+          archivedAt: null,
         },
-        orderBy: { dueAt: "asc" },
-      }),
-      db.task.findMany({
-        where: {
-          circleId: { in: circleIds },
-          dueAt: { not: null, lt: new Date() },
-          status: { not: "DONE" },
-        },
-        orderBy: { dueAt: "asc" },
-      }),
-      db.task.findMany({
-        where: {
-          circleId: { in: circleIds },
-          status: "DONE",
-          updatedAt: { gte: new Date(`${now.date}T00:00:00Z`) },
-        },
-        orderBy: { updatedAt: "desc" },
-      }),
-    ]);
+        orderBy: [{ dueAt: "asc" }, { updatedAt: "desc" }],
+      });
+      const visibleTasks = filterVisibleTasks(circleTasks, {
+        member: membership,
+        userId: user.id,
+        accessContext,
+      });
+
+      dueToday.push(
+        ...visibleTasks.filter((task) => task.dueAt && !["DONE", "SKIPPED"].includes(task.status)),
+      );
+      overdue.push(
+        ...visibleTasks.filter((task) => task.dueAt && task.dueAt < new Date() && !["DONE", "SKIPPED"].includes(task.status)),
+      );
+      completedToday.push(
+        ...visibleTasks.filter((task) => task.status === "DONE" && task.updatedAt >= startOfDay),
+      );
+    }
 
     const digestResult = await sendDailyDigest({
       user,

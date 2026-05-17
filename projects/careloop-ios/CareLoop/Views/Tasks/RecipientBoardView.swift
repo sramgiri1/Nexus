@@ -52,6 +52,7 @@ struct RecipientBoardView: View {
                 }
             }
             .background(bg.ignoresSafeArea())
+            .accessibilityIdentifier("recipient-task-board-screen")
             .navigationTitle(appState.activeCircle?.name ?? "My Care")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
@@ -449,6 +450,12 @@ struct RecipientBoardView: View {
     // MARK: – Data
 
     private func load() async {
+        if let seededTasks = appState.activeCircle?.tasks, UITestScenario.current != nil {
+            tasks = seededTasks
+            loading = false
+            error = nil
+            return
+        }
         guard let circleId = appState.activeCircle?.id else {
             tasks = []; loading = false; return
         }
