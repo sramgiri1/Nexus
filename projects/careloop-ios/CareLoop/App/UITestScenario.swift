@@ -1,6 +1,7 @@
 import Foundation
 
 enum UITestScenario: String {
+    case circleDirectory = "circle-directory"
     case organizerHome = "organizer-home"
     case caregiverHome = "caregiver-home"
     case receiverHome = "receiver-home"
@@ -35,7 +36,7 @@ extension AppState {
 
         let fixture = UITestScenarioFixture.make(scenario)
         currentUser = fixture.user
-        activeCircle = fixture.circle
+        activeCircle = scenario == .circleDirectory ? nil : fixture.circle
         uiTestInvitations = fixture.invitations
         uiTestRecipientAccessByMemberId = fixture.recipientAccessByMemberId
         uiTestEvents = fixture.events
@@ -184,6 +185,49 @@ private struct UITestScenarioFixture {
         ]
 
         switch scenario {
+        case .circleDirectory:
+            let circle = CareCircle(
+                id: "c1",
+                name: "Ramgiri Care Circle",
+                recipientName: "Maya",
+                members: allMembers,
+                recipients: [momRecipient, dadRecipient],
+                tasks: organizerTasks
+            )
+            let pendingInvites = [
+                GroupInvitation(
+                    id: "invite-caregiver",
+                    email: "newcaregiver@careloop.test",
+                    name: "Nina Caregiver",
+                    role: .member,
+                    status: .pending,
+                    circle: circle,
+                    recipient: nil,
+                    invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                ),
+                GroupInvitation(
+                    id: "invite-receiver",
+                    email: "dad@careloop.test",
+                    name: "David Receiver",
+                    role: .recipient,
+                    status: .pending,
+                    circle: circle,
+                    recipient: dadRecipient,
+                    invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                ),
+            ]
+            var user = organizer
+            user.memberships = [CircleMembership(id: "cm1", circleId: circle.id, role: .admin, circle: circle)]
+            return UITestScenarioFixture(
+                user: user,
+                circle: circle,
+                invitations: pendingInvites,
+                recipientAccessByMemberId: [:],
+                events: [],
+                completionInsights: nil,
+                pendingTaskId: nil
+            )
+
         case .organizerHome:
             let circle = CareCircle(
                 id: "c1",

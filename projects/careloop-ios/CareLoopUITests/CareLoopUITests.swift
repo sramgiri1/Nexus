@@ -22,6 +22,17 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_circleDirectoryShowsSeparateCreateAndJoinActions() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "circle-directory"])
+        let directory = app.scrollViews["circle-directory-screen"]
+
+        XCTAssertTrue(directory.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Your Care Circles"].exists)
+        XCTAssertTrue(app.buttons["create-circle-button"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["join-circle-button"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_organizerHomeShowsReceiverCardsAndQuickActions() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

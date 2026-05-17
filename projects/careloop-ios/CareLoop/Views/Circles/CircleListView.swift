@@ -43,7 +43,10 @@ struct CircleListView: View {
                         }
 
                         if !memberships.isEmpty {
-                            addCircleRow.padding(.horizontal, 22).padding(.top, 14).padding(.bottom, 44)
+                            directoryActionsSection
+                                .padding(.horizontal, 22)
+                                .padding(.top, 14)
+                                .padding(.bottom, 44)
                         } else {
                             Spacer(minLength: 40)
                         }
@@ -59,6 +62,7 @@ struct CircleListView: View {
                     do { try await appState.refreshMemberships() }
                     catch let loadError { error = loadError.localizedDescription }
                 }
+                .accessibilityIdentifier("circle-directory-screen")
             }
             .navigationBarHidden(true)
             .sheet(item: $circleSheetMode) { mode in
@@ -344,29 +348,78 @@ struct CircleListView: View {
         )
     }
 
-    // MARK: — Add circle
+    // MARK: — Directory actions
 
-    private var addCircleRow: some View {
-        Button { error = nil; circleSheetMode = .picker } label: {
-            HStack(spacing: 12) {
-                ZStack {
-                    Circle().fill(Color(red: 0.88, green: 0.95, blue: 1.0)).frame(width: 34, height: 34)
-                    Image(systemName: "plus")
-                        .font(.system(size: 13, weight: .bold))
-                        .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
-                }
-                Text("Join or Create a Care Circle")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.13, green: 0.56, blue: 0.87))
-                Spacer()
+    private var directoryActionsSection: some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Text("Next Step")
+                .font(.system(size: 11, weight: .bold, design: .rounded))
+                .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
+                .textCase(.uppercase)
+                .tracking(0.4)
+
+            Button {
+                error = nil
+                circleSheetMode = .create
+            } label: {
+                actionCard(
+                    title: "Create a Care Circle",
+                    subtitle: "Start a new family care workspace",
+                    icon: "plus",
+                    accent: Color(red: 0.13, green: 0.56, blue: 0.87),
+                    fill: Color(red: 0.88, green: 0.95, blue: 1.0)
+                )
             }
-            .padding(14)
-            .background(
-                RoundedRectangle(cornerRadius: 18, style: .continuous)
-                    .fill(.white)
-                    .shadow(color: Color(red: 0.13, green: 0.22, blue: 0.45).opacity(0.05), radius: 6, x: 0, y: 2)
-            )
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("create-circle-button")
+
+            Button {
+                error = nil
+                circleSheetMode = .join
+            } label: {
+                actionCard(
+                    title: "Join a Care Circle",
+                    subtitle: "Use an invite or Care Circle code",
+                    icon: "person.badge.plus",
+                    accent: Color(red: 0.16, green: 0.60, blue: 0.55),
+                    fill: Color(red: 0.89, green: 0.97, blue: 0.95)
+                )
+            }
+            .buttonStyle(.plain)
+            .accessibilityIdentifier("join-circle-button")
         }
+    }
+
+    private func actionCard(title: String, subtitle: String, icon: String, accent: Color, fill: Color) -> some View {
+        HStack(spacing: 12) {
+            ZStack {
+                Circle().fill(fill).frame(width: 36, height: 36)
+                Image(systemName: icon)
+                    .font(.system(size: 13, weight: .bold))
+                    .foregroundStyle(accent)
+            }
+
+            VStack(alignment: .leading, spacing: 2) {
+                Text(title)
+                    .font(.system(size: 15, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
+                Text(subtitle)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
+            }
+
+            Spacer()
+
+            Image(systemName: "chevron.right")
+                .font(.system(size: 11, weight: .semibold))
+                .foregroundStyle(Color(red: 0.65, green: 0.74, blue: 0.88))
+        }
+        .padding(14)
+        .background(
+            RoundedRectangle(cornerRadius: 18, style: .continuous)
+                .fill(.white)
+                .shadow(color: Color(red: 0.13, green: 0.22, blue: 0.45).opacity(0.05), radius: 6, x: 0, y: 2)
+        )
     }
 
     // MARK: — Shared
@@ -435,13 +488,12 @@ struct CircleListView: View {
 // MARK: — Sheet mode
 
 private enum CircleSheetMode: Identifiable {
-    case create, join, picker
+    case create, join
     var id: Self { self }
     var startInCreateMode: Bool? {
         switch self {
         case .create: return true
         case .join:   return false
-        case .picker: return nil
         }
     }
 }
