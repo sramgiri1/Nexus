@@ -2112,6 +2112,265 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("isolates one account across multiple circles with different roles", async () => {
+    const app = await buildApp(buildDb());
+    const password = "password123";
+    const signups = {};
+    const headersFor = (auth) => ({
+      authorization: `Bearer ${auth.accessToken}`,
+      "content-type": "application/json",
+    });
+
+    for (const [key, name] of [
+      ["shared", "Shared Multi Role"],
+      ["circleAOwner", "Circle A Organizer"],
+      ["circleCOwner", "Circle C Organizer"],
+      ["peerCaregiver", "Peer Caregiver"],
+    ]) {
+      const signup = await app.inject({
+        method: "POST",
+        url: "/auth/signup",
+        payload: {
+          email: `${key}@careloop.test`,
+          name,
+          password,
+        },
+      });
+      assert.equal(signup.statusCode, 201);
+      const auth = signup.json();
+      signups[key] = { ...auth, headers: headersFor(auth) };
+    }
+
+    const createCircle = async ({ owner, name, recipientName }) => {
+      const response = await app.inject({
+        method: "POST",
+        url: "/circles",
+        headers: owner.headers,
+        payload: {
+          creatorId: owner.user.id,
+          name,
+          recipientName,
+        },
+      });
+      assert.equal(response.statusCode, 201);
+      return response.json();
+    };
+
+    const inviteAndAccept = async ({ inviter, circleId, invitee, role, recipientId }) => {
+      const invite = await app.inject({
+        method: "POST",
+        url: `/circles/${circleId}/members/invite`,
+        headers: inviter.headers,
+        payload: {
+          userId: inviter.user.id,
+          name: invitee.user.name,
+          email: invitee.user.email,
+          role,
+          ...(recipientId ? { recipientId } : {}),
+        },
+      });
+      assert.equal(invite.statusCode, 201);
+
+      const accept = await app.inject({
+        method: "POST",
+        url: `/invitations/${invite.json().id}/accept`,
+        headers: invitee.headers,
+        payload: { userId: invitee.user.id },
+      });
+      assert.equal(accept.statusCode, 201);
+      assert.equal(accept.json().role, role);
+      return accept.json();
+    };
+
+    const createTask = async ({ actor, circleId, recipientId, title, assigneeId }) => {
+      const response = await app.inject({
+        method: "POST",
+        url: `/circles/${circleId}/tasks`,
+        headers: actor.headers,
+        payload: {
+          creatorId: actor.user.id,
+          title,
+          recipientId,
+          assigneeId,
+          dueAt: new Date(Date.now() + 60 * 60 * 1000).toISOString(),
+        },
+      });
+      assert.equal(response.statusCode, 201);
+      return response.json();
+    };
+
+    const shared = signups.shared;
+    const circleAOwner = signups.circleAOwner;
+    const circleCOwner = signups.circleCOwner;
+    const peerCaregiver = signups.peerCaregiver;
+
+    const circleA = await createCircle({
+      owner: circleAOwner,
+      name: "Circle A Receiver Role",
+      recipientName: "Shared Receiver",
+    });
+    const recipientAId = circleA.recipients[0].id;
+    await inviteAndAccept({
+      inviter: circleAOwner,
+      circleId: circleA.id,
+      invitee: shared,
+      role: "RECIPIENT",
+      recipientId: recipientAId,
+    });
+
+    const circleB = await createCircle({
+      owner: shared,
+      name: "Circle B Admin Role",
+      recipientName: "Receiver B",
+    });
+    const recipientBId = circleB.recipients[0].id;
+    const activateB = await app.inject({
+      method: "POST",
+      url: `/circles/${circleB.id}/recipients/${recipientBId}/proxy-activate`,
+      headers: shared.headers,
+      payload: { userId: shared.user.id, consentDocumentReference: "test-proxy-b" },
+    });
+    assert.equal(activateB.statusCode, 200);
+
+    const circleC = await createCircle({
+      owner: circleCOwner,
+      name: "Circle C Caregiver Role",
+      recipientName: "Receiver C",
+    });
+    const recipientCId = circleC.recipients[0].id;
+    const activateC = await app.inject({
+      method: "POST",
+      url: `/circles/${circleC.id}/recipients/${recipientCId}/proxy-activate`,
+      headers: circleCOwner.headers,
+      payload: { userId: circleCOwner.user.id, consentDocumentReference: "test-proxy-c" },
+    });
+    assert.equal(activateC.statusCode, 200);
+    const sharedMemberC = await inviteAndAccept({
+      inviter: circleCOwner,
+      circleId: circleC.id,
+      invitee: shared,
+      role: "MEMBER",
+    });
+    const peerMemberC = await inviteAndAccept({
+      inviter: circleCOwner,
+      circleId: circleC.id,
+      invitee: peerCaregiver,
+      role: "MEMBER",
+    });
+    assert.ok(peerMemberC.id, "peer caregiver joins circle C without receiver access");
+    const grantSharedAccess = await app.inject({
+      method: "PUT",
+      url: `/circles/${circleC.id}/members/${sharedMemberC.id}/recipient-access/${recipientCId}`,
+      headers: circleCOwner.headers,
+      payload: { userId: circleCOwner.user.id },
+    });
+    assert.equal(grantSharedAccess.statusCode, 200);
+
+    const taskA = await createTask({
+      actor: circleAOwner,
+      circleId: circleA.id,
+      recipientId: recipientAId,
+      title: "Circle A receiver-only medication",
+      assigneeId: shared.user.id,
+    });
+    const taskB = await createTask({
+      actor: shared,
+      circleId: circleB.id,
+      recipientId: recipientBId,
+      title: "Circle B admin-owned task",
+      assigneeId: shared.user.id,
+    });
+    const taskCVisible = await createTask({
+      actor: circleCOwner,
+      circleId: circleC.id,
+      recipientId: recipientCId,
+      title: "Circle C assigned caregiver task",
+      assigneeId: shared.user.id,
+    });
+    const taskCHidden = await createTask({
+      actor: circleCOwner,
+      circleId: circleC.id,
+      recipientId: recipientCId,
+      title: "Circle C peer caregiver task",
+      assigneeId: peerCaregiver.user.id,
+    });
+
+    const sharedContext = await app.inject({
+      method: "GET",
+      url: "/users/me",
+      headers: shared.headers,
+    });
+    assert.equal(sharedContext.statusCode, 200);
+    const roleByCircleId = new Map(
+      sharedContext.json().memberships.map((membership) => [membership.circleId, membership.role]),
+    );
+    assert.equal(roleByCircleId.get(circleA.id), "RECIPIENT");
+    assert.equal(roleByCircleId.get(circleB.id), "ADMIN");
+    assert.equal(roleByCircleId.get(circleC.id), "MEMBER");
+
+    const sharedCircleATasks = await app.inject({
+      method: "GET",
+      url: `/circles/${circleA.id}/tasks`,
+      headers: shared.headers,
+    });
+    assert.equal(sharedCircleATasks.statusCode, 200);
+    assert.deepEqual(sharedCircleATasks.json().map((task) => task.id), [taskA.id]);
+    assert.equal(sharedCircleATasks.json()[0].capabilities.canMarkDone, true);
+    assert.equal(sharedCircleATasks.json()[0].capabilities.canEdit, false);
+
+    const blockedReceiverCreate = await app.inject({
+      method: "POST",
+      url: `/circles/${circleA.id}/tasks`,
+      headers: shared.headers,
+      payload: {
+        creatorId: shared.user.id,
+        title: "Receiver should not create",
+        recipientId: recipientAId,
+        assigneeId: shared.user.id,
+      },
+    });
+    assert.equal(blockedReceiverCreate.statusCode, 403);
+
+    const sharedCircleBTasks = await app.inject({
+      method: "GET",
+      url: `/circles/${circleB.id}/tasks`,
+      headers: shared.headers,
+    });
+    assert.equal(sharedCircleBTasks.statusCode, 200);
+    assert.deepEqual(sharedCircleBTasks.json().map((task) => task.id), [taskB.id]);
+    assert.equal(sharedCircleBTasks.json()[0].capabilities.canEdit, true);
+    assert.equal(sharedCircleBTasks.json()[0].capabilities.canAssign, true);
+
+    const sharedCircleCTasks = await app.inject({
+      method: "GET",
+      url: `/circles/${circleC.id}/tasks`,
+      headers: shared.headers,
+    });
+    assert.equal(sharedCircleCTasks.statusCode, 200);
+    assert.deepEqual(sharedCircleCTasks.json().map((task) => task.id), [taskCVisible.id]);
+    assert.ok(!sharedCircleCTasks.json().some((task) => task.id === taskCHidden.id));
+    assert.equal(sharedCircleCTasks.json()[0].capabilities.canMarkDone, true);
+    assert.equal(sharedCircleCTasks.json()[0].capabilities.canEdit, false);
+
+    const completeCircleA = await app.inject({
+      method: "PATCH",
+      url: `/circles/${circleA.id}/tasks/${taskA.id}`,
+      headers: shared.headers,
+      payload: { userId: shared.user.id, status: "DONE" },
+    });
+    assert.equal(completeCircleA.statusCode, 200);
+    assert.equal(completeCircleA.json().status, "DONE");
+
+    const crossCircleTaskFetch = await app.inject({
+      method: "GET",
+      url: `/circles/${circleB.id}/tasks/${taskA.id}/comments`,
+      headers: shared.headers,
+    });
+    assert.equal(crossCircleTaskFetch.statusCode, 404);
+
+    await app.close();
+  });
+
   test("PATCH /circles/:id/members/:memberId/role lets an admin promote a caregiver", async () => {
     const app = await buildApp(buildDb({
       users: [

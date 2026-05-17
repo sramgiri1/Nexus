@@ -329,6 +329,41 @@ final class AppStateRoleTests: XCTestCase {
         state.activeCircle = CareCircle(id: "c1", name: "Test", recipientName: "Bob", members: [admin, member], tasks: nil)
         XCTAssertEqual(state.userRole, .admin)
     }
+
+    @MainActor
+    func test_userRole_recalculatesWhenSameUserSwitchesCircles() {
+        let state = AppState()
+        state.currentUser = CareUser(id: "u1", email: "a@test.com", name: "Alice", phone: nil, memberships: nil)
+
+        let receiverCircle = CareCircle(
+            id: "c1",
+            name: "Receiver Circle",
+            recipientName: "Alice",
+            members: [CircleMember(id: "m1", role: .recipient, userId: "u1", user: nil)],
+            tasks: nil
+        )
+        let adminCircle = CareCircle(
+            id: "c2",
+            name: "Admin Circle",
+            recipientName: "Bob",
+            members: [CircleMember(id: "m2", role: .admin, userId: "u1", user: nil)],
+            tasks: nil
+        )
+        let caregiverCircle = CareCircle(
+            id: "c3",
+            name: "Caregiver Circle",
+            recipientName: "Carol",
+            members: [CircleMember(id: "m3", role: .member, userId: "u1", user: nil)],
+            tasks: nil
+        )
+
+        state.activeCircle = receiverCircle
+        XCTAssertEqual(state.userRole, .recipient)
+        state.activeCircle = adminCircle
+        XCTAssertEqual(state.userRole, .admin)
+        state.activeCircle = caregiverCircle
+        XCTAssertEqual(state.userRole, .member)
+    }
 }
 
 // MARK: — AppState multi-circle behavior
