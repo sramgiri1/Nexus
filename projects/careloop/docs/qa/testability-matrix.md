@@ -18,13 +18,13 @@ This matrix is the working contract for phase-by-phase implementation. Each phas
 | Task board: organizer/caregiver | `test_organizerPendingTaskDeepLinkOpensTaskBoard`; wrong-circle deep-link test | Filters, sections, detail navigation | None | Create recurring task UI automation |
 | Personal task board: care receiver | `test_receiverPendingTaskDeepLinkOpensPersonalBoard`; model and backend recipient completion tests | Highlight behavior, done-row labels | Real push deep-link open | UI automation for "I've done this" from board |
 | New task / recurrence | Backend recurrence tests; weekday recurrence model tests | Date picker, assignee picker, premium lock copy | Notification scheduling on real device | Full create recurring task -> complete -> next occurrence UI journey |
-| Task detail / comments | Model tests; backend hidden comment mutation tests | Comment add/delete, detail status controls | None | UI automation for comments and task detail status changes |
+| Task detail / comments / snooze | `test_taskDetailCanSnoozeReminder`; Model tests; backend hidden comment mutation tests | Comment add/delete, detail status controls, snooze copy | None | UI automation for comments and task detail status changes |
 | People and access | `test_organizerCanOpenPeopleAndAccess`; backend access grant/revoke tests | Invite caregiver sheet, access toggles, role changes | Real invite email delivery | UI automation for invite caregiver and grant receiver access |
 | Care receiver management | `test_organizerCanOpenCareReceiverManagement`; backend add/reorder/delete/proxy tests | Add/edit/reorder/proxy activate sheets | Consent/legal review on real device | UI automation for invite receiver and proxy activation |
 | Insights / activity | `test_caregiverCanOpenReceiverProgress`; `test_insightsLockFreeReceiverBehindPremiumUpgrade`; backend insights tests | Date windows, empty-state charts | None | Organizer insights drill-down UI automation |
 | Premium paywall / purchase | `test_organizerCanOpenReceiverPremiumPaywall`; StoreKit unit coverage; backend entitlement source/transaction validation | Paywall layout, entitlement states | Sandbox purchase, restore, refund/revoke | Server-side App Store receipt verification automation |
 | Settings / account | Keychain logout/session tests | Notification preference toggles, sign out, account data | Push permission prompt | Settings UI automation |
-| Push reminders / deep links | Backend payload tests; AppState deep-link tests; focused UI deep-link tests | Foreground banner copy in simulator when possible | APNs delivery, tap banner, highlight task | TestFlight end-to-end reminder run |
+| Push reminders / snooze / deep links | Backend payload/snooze/escalation tests; AppState deep-link tests; focused UI deep-link and snooze tests | Foreground banner copy in simulator when possible | APNs delivery, tap banner, highlight task | TestFlight end-to-end reminder run |
 | Delete circle / member / receiver | Backend delete circle/member/receiver tests | Destructive confirmation copy and navigation after delete | None | UI automation for delete circle and blocked delete states |
 
 ## Gates

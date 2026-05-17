@@ -324,6 +324,7 @@ struct CirclesView: View {
                 .animation(.easeOut(duration: 0.3), value: highlightedTaskId)
         )
         .contextMenu { contextMenuItems(for: task) }
+        .accessibilityIdentifier("task-card-\(task.id)")
     }
 
     @ViewBuilder

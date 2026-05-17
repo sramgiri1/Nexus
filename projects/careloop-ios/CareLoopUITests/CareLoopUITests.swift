@@ -145,6 +145,24 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_taskDetailCanSnoozeReminder() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t2"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t2"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Need more time?"].waitForExistence(timeout: 3))
+        app.buttons["snooze-15-button"].tap()
+        XCTAssertTrue(app.staticTexts["Snoozed for 15 minutes."].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_pendingTaskDeepLinkWaitsForOwningCircle() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "organizer-home",

@@ -66,17 +66,28 @@ curl -X POST http://localhost:3000/circles/<circleId>/tasks \
 ### 3. Reminder send — scheduler loop
 
 - [x] `processPendingReminders` finds `Reminder.status=PENDING` where `scheduledAt <= now`  
+- [x] `processPendingReminders` also sends expired `SNOOZED` reminders when their moved `scheduledAt <= now`
 - [x] Calls `sendReminderNotifications` for assignee or creator  
 - [x] Updates `Reminder.status=SENT`, `sentAt=now`  
 - [x] Logs `REMINDER_SENT` event  
 - [x] No push token → falls back to email (or NONE if no email either)  
 - [x] Simulated mode (no APNS config) returns `{simulated:true}` without crashing  
 
+### 3A. Reminder snooze
+
+- [x] `POST /circles/:circleId/tasks/:taskId/reminder/snooze` accepts 15, 60, or 1440 minutes only
+- [x] Assigned caregiver, task creator, or Care Organizer can snooze an active reminder
+- [x] Snooze moves `scheduledAt`, sets `snoozedUntil`, increments `snoozeCount`, and logs `REMINDER_SNOOZED`
+- [x] Snoozed reminders do not send before the new `scheduledAt`
+- [x] Completed and skipped tasks cannot be snoozed
+- [x] iOS Task Detail exposes 15 min / 1 hour / Tomorrow snooze controls with UI test coverage
+
 ### 4. Escalation — 15-minute window
 
 - [x] Reminder with `status=SENT` and `sentAt <= (now - 15min)` qualifies for escalation  
 - [x] Reminder with `sentAt <= (now - 14min)` does NOT qualify  
 - [x] `task.status = DONE` suppresses escalation (Prisma filter: `task.status { not: "DONE" }`)  
+- [x] `task.status = SKIPPED` also suppresses reminder send and escalation
 - [x] Escalation fans out to all circle members  
 - [x] Updates `Reminder.status=ESCALATED`, `escalatedAt=now`  
 - [x] Logs `REMINDER_ESCALATED` event  

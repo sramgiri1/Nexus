@@ -29,11 +29,12 @@ function userLocalParts(date, timezone) {
   };
 }
 
-async function processPendingReminders(db) {
+export async function processPendingReminders(db) {
   const reminders = await db.reminder.findMany({
     where: {
-      status: "PENDING",
+      status: { in: ["PENDING", "SNOOZED"] },
       scheduledAt: { lte: new Date() },
+      task: { status: { notIn: ["DONE", "SKIPPED"] } },
     },
     include: {
       task: {
@@ -62,11 +63,14 @@ async function processPendingReminders(db) {
     });
     const failed = deliveries.some((delivery) => !delivery.delivered && !delivery.simulated);
     const status = failed ? "FAILED" : "SENT";
+    const sentAt = new Date();
     await db.reminder.update({
       where: { id: reminder.id },
       data: {
         status,
-        sentAt: new Date(),
+        sentAt,
+        snoozedUntil: null,
+        escalationDueAt: failed ? null : new Date(sentAt.getTime() + ESCALATION_MINUTES * 60 * 1000),
       },
     });
     await logEvent(db, {
@@ -78,13 +82,13 @@ async function processPendingReminders(db) {
   }
 }
 
-async function processEscalations(db) {
-  const cutoff = new Date(Date.now() - ESCALATION_MINUTES * 60 * 1000);
+export async function processEscalations(db) {
+  const now = new Date();
   const reminders = await db.reminder.findMany({
     where: {
       status: "SENT",
-      sentAt: { lte: cutoff },
-      task: { status: { not: "DONE" } },
+      escalationDueAt: { lte: now },
+      task: { status: { notIn: ["DONE", "SKIPPED"] } },
     },
     include: {
       task: {
@@ -135,7 +139,7 @@ async function processEscalations(db) {
   }
 }
 
-async function processDigests(db) {
+export async function processDigests(db) {
   const users = await db.user.findMany({
     where: {
       timezone: { not: null },
@@ -224,7 +228,7 @@ async function processDigests(db) {
   }
 }
 
-async function processTaskArchiving(db) {
+export async function processTaskArchiving(db) {
   const circles = await db.careCircle.findMany({
     select: { id: true, archiveAfterDays: true },
   });
@@ -272,7 +276,7 @@ async function createRecurringOccurrence(tx, task, dueAt) {
   return createdTask;
 }
 
-async function processRecurringOccurrences(db) {
+export async function processRecurringOccurrences(db) {
   const now = new Date();
   const recurringTasks = await db.task.findMany({
     where: {

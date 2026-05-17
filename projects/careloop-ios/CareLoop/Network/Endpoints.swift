@@ -212,6 +212,10 @@ extension APIClient {
         try await deleteVoid("/circles/\(circleId)/tasks/\(taskId)")
     }
 
+    func snoozeReminder(circleId: String, taskId: String, minutes: Int) async throws -> ReminderSnoozeResult {
+        try await post("/circles/\(circleId)/tasks/\(taskId)/reminder/snooze", body: ["minutes": minutes])
+    }
+
     func fetchComments(circleId: String, taskId: String) async throws -> [TaskComment] {
         try await get("/circles/\(circleId)/tasks/\(taskId)/comments")
     }

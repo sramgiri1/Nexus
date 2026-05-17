@@ -188,6 +188,27 @@ struct CareTaskCapabilities: Codable, Hashable {
     let canComment: Bool
 }
 
+struct ReminderSnoozeResult: Codable, Hashable {
+    let id: String
+    let taskId: String
+    let scheduledAt: Date
+    let sentAt: Date?
+    let snoozedUntil: Date?
+    let snoozeCount: Int
+    let escalationDueAt: Date?
+    let status: ReminderStatus
+    let escalatedAt: Date?
+}
+
+enum ReminderStatus: String, Codable, Hashable {
+    case pending = "PENDING"
+    case snoozed = "SNOOZED"
+    case sent = "SENT"
+    case failed = "FAILED"
+    case escalated = "ESCALATED"
+    case cancelled = "CANCELLED"
+}
+
 struct TaskComment: Identifiable, Codable, Equatable {
     let id: String
     let body: String

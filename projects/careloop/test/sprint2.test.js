@@ -31,6 +31,7 @@ import usersRoute    from "../src/routes/users.js";
 import circlesRoute  from "../src/routes/circles.js";
 import tasksRoute    from "../src/routes/tasks.js";
 import { createOAuthState, hashPassword, issueAccessToken, verifyOAuthState } from "../src/lib/auth.js";
+import { processEscalations, processPendingReminders } from "../src/scheduler/index.js";
 
 async function authHeaders(user = { id: "u1", email: "a@t.com", name: "Alice" }) {
   return {
@@ -627,6 +628,7 @@ function buildDb(seed = {}) {
       if (where.status && typeof where.status === "string" && task.status !== where.status) return false;
       if (where.status?.in && !where.status.in.includes(task.status)) return false;
       if (where.status?.not && task.status === where.status.not) return false;
+      if (where.status?.notIn && where.status.notIn.includes(task.status)) return false;
       if (where.dueAt && where.dueAt instanceof Date && String(task.dueAt) !== String(where.dueAt)) return false;
       if (where.dueAt?.lt && !(task.dueAt && task.dueAt < where.dueAt.lt)) return false;
       if (where.dueAt?.lte && !(task.dueAt && task.dueAt <= where.dueAt.lte)) return false;
@@ -705,22 +707,63 @@ function buildDb(seed = {}) {
   }
 
   function reminderRepo(s) {
+    function matchesReminderWhere(reminder, where = {}) {
+      if (where.taskId && reminder.taskId !== where.taskId) return false;
+      if (where.status && typeof where.status === "string" && reminder.status !== where.status) return false;
+      if (where.status?.in && !where.status.in.includes(reminder.status)) return false;
+      if (where.scheduledAt?.lte && !(reminder.scheduledAt && reminder.scheduledAt <= where.scheduledAt.lte)) return false;
+      if (where.escalationDueAt?.lte && !(reminder.escalationDueAt && reminder.escalationDueAt <= where.escalationDueAt.lte)) return false;
+      if (where.task?.status?.notIn || where.task?.status?.not) {
+        const task = s.tasks.find((item) => item.id === reminder.taskId);
+        if (!task) return false;
+        if (where.task.status.notIn?.includes(task.status)) return false;
+        if (where.task.status.not && task.status === where.task.status.not) return false;
+      }
+      return true;
+    }
+
+    function includeReminder(reminder, include) {
+      if (!reminder) return null;
+      if (!include?.task) return { ...reminder };
+      const task = s.tasks.find((item) => item.id === reminder.taskId);
+      const circle = task ? s.circles.find((item) => item.id === task.circleId) : null;
+      return {
+        ...reminder,
+        task: task ? {
+          ...task,
+          circle: include.task.include?.circle?.include?.members
+            ? { ...circle, members: s.members.filter((member) => member.circleId === task.circleId) }
+            : circle,
+        } : null,
+      };
+    }
+
     return {
       create: async ({ data: d }) => {
-        const r = { id: uid("r"), status: "PENDING", ...d };
+        const r = {
+          id: uid("r"),
+          status: "PENDING",
+          sentAt: null,
+          snoozedUntil: null,
+          snoozeCount: 0,
+          escalationDueAt: null,
+          escalatedAt: null,
+          ...d,
+        };
         s.reminders.push(r);
         return r;
       },
       findFirst: async ({ where }) =>
-        s.reminders.find((reminder) => {
-          if (where.taskId && reminder.taskId !== where.taskId) return false;
-          return true;
-        }) ?? null,
-      update: async ({ where, data: d }) => {
+        includeReminder(s.reminders.find((reminder) => matchesReminderWhere(reminder, where)) ?? null),
+      findMany: async ({ where, include } = {}) =>
+        s.reminders
+          .filter((reminder) => matchesReminderWhere(reminder, where))
+          .map((reminder) => includeReminder(reminder, include)),
+      update: async ({ where, data: d, include }) => {
         const reminder = s.reminders.find((item) => item.id === where.id);
         if (!reminder) throw Object.assign(new Error("NotFound"), { code: "P2025" });
         Object.assign(reminder, d);
-        return reminder;
+        return includeReminder(reminder, include);
       },
       deleteMany: async ({ where }) => {
         const before = s.reminders.length;
@@ -1853,6 +1896,222 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("simulates 50 users through receiver activation invites tasks snooze completion and deletion", async () => {
+    const app = await buildApp(buildDb());
+    const password = "password123";
+    const accounts = [];
+
+    const headersFor = (auth) => ({
+      authorization: `Bearer ${auth.accessToken}`,
+      "content-type": "application/json",
+    });
+
+    for (let index = 1; index <= 50; index += 1) {
+      const signup = await app.inject({
+        method: "POST",
+        url: "/auth/signup",
+        payload: {
+          email: `careloop-user-${String(index).padStart(2, "0")}@example.test`,
+          name: `CareLoop User ${index}`,
+          password,
+        },
+      });
+      assert.equal(signup.statusCode, 201);
+      const auth = signup.json();
+      accounts.push({ ...auth, headers: headersFor(auth) });
+    }
+
+    const organizer = accounts[0];
+    const receiver = accounts[1];
+    const backupAdmins = accounts.slice(2, 6);
+    const caregivers = accounts.slice(6);
+
+    const createCircle = await app.inject({
+      method: "POST",
+      url: "/circles",
+      headers: organizer.headers,
+      payload: {
+        creatorId: organizer.user.id,
+        name: "50 User CareLoop Simulation",
+        recipientName: "Primary Receiver",
+      },
+    });
+    assert.equal(createCircle.statusCode, 201);
+    const circle = createCircle.json();
+    const recipientId = circle.recipients[0].id;
+
+    const receiverInvite = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/members/invite`,
+      headers: organizer.headers,
+      payload: {
+        userId: organizer.user.id,
+        name: receiver.user.name,
+        email: receiver.user.email,
+        role: "RECIPIENT",
+        recipientId,
+      },
+    });
+    assert.equal(receiverInvite.statusCode, 201);
+
+    const acceptReceiver = await app.inject({
+      method: "POST",
+      url: `/invitations/${receiverInvite.json().id}/accept`,
+      headers: receiver.headers,
+      payload: { userId: receiver.user.id },
+    });
+    assert.equal(acceptReceiver.statusCode, 201);
+    assert.equal(acceptReceiver.json().role, "RECIPIENT");
+
+    const premium = await app.inject({
+      method: "PUT",
+      url: `/circles/${circle.id}/recipients/${recipientId}/entitlement`,
+      headers: organizer.headers,
+      payload: { userId: organizer.user.id, source: "MANUAL" },
+    });
+    assert.equal(premium.statusCode, 200);
+    assert.equal(premium.json().premium.hasPremium, true);
+
+    const acceptedMembers = [];
+    for (const account of [...backupAdmins, ...caregivers]) {
+      const role = backupAdmins.includes(account) ? "ADMIN" : "MEMBER";
+      const invite = await app.inject({
+        method: "POST",
+        url: `/circles/${circle.id}/members/invite`,
+        headers: organizer.headers,
+        payload: {
+          userId: organizer.user.id,
+          name: account.user.name,
+          email: account.user.email,
+          role,
+        },
+      });
+      assert.equal(invite.statusCode, 201);
+
+      const accept = await app.inject({
+        method: "POST",
+        url: `/invitations/${invite.json().id}/accept`,
+        headers: account.headers,
+        payload: { userId: account.user.id },
+      });
+      assert.equal(accept.statusCode, 201);
+      assert.equal(accept.json().role, role);
+      acceptedMembers.push({ account, member: accept.json(), role });
+    }
+
+    const caregiverMembers = acceptedMembers.filter((item) => item.role === "MEMBER");
+    for (const { member } of caregiverMembers) {
+      const grant = await app.inject({
+        method: "PUT",
+        url: `/circles/${circle.id}/members/${member.id}/recipient-access/${recipientId}`,
+        headers: organizer.headers,
+        payload: { userId: organizer.user.id },
+      });
+      assert.equal(grant.statusCode, 200);
+    }
+
+    const createdTasks = [];
+    const dueAt = new Date(Date.now() + 60 * 60 * 1000).toISOString();
+    for (const { account } of caregiverMembers) {
+      const task = await app.inject({
+        method: "POST",
+        url: `/circles/${circle.id}/tasks`,
+        headers: organizer.headers,
+        payload: {
+          creatorId: organizer.user.id,
+          title: `Daily check for ${account.user.name}`,
+          recipientId,
+          assigneeId: account.user.id,
+          dueAt,
+          recurrence: { frequency: "DAILY" },
+        },
+      });
+      assert.equal(task.statusCode, 201);
+      assert.equal(task.json().assigneeId, account.user.id);
+      assert.equal(task.json().recurrenceFrequency, "DAILY");
+      createdTasks.push(task.json());
+    }
+
+    assert.equal(createdTasks.length, 44);
+
+    const assignedCaregiver = caregiverMembers[0].account;
+    const snooze = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/tasks/${createdTasks[0].id}/reminder/snooze`,
+      headers: assignedCaregiver.headers,
+      payload: { minutes: 60 },
+    });
+    assert.equal(snooze.statusCode, 200);
+    assert.equal(snooze.json().status, "SNOOZED");
+
+    const receiverTask = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/tasks`,
+      headers: organizer.headers,
+      payload: {
+        creatorId: organizer.user.id,
+        title: "Receiver confirms morning medication",
+        recipientId,
+        assigneeId: receiver.user.id,
+        dueAt,
+      },
+    });
+    assert.equal(receiverTask.statusCode, 201);
+
+    const completeAsReceiver = await app.inject({
+      method: "PATCH",
+      url: `/circles/${circle.id}/tasks/${receiverTask.json().id}`,
+      headers: receiver.headers,
+      payload: { userId: receiver.user.id, status: "DONE" },
+    });
+    assert.equal(completeAsReceiver.statusCode, 200);
+    assert.equal(completeAsReceiver.json().status, "DONE");
+
+    const caregiverCreatedTask = await app.inject({
+      method: "POST",
+      url: `/circles/${circle.id}/tasks`,
+      headers: assignedCaregiver.headers,
+      payload: {
+        creatorId: assignedCaregiver.user.id,
+        title: "Caregiver-created errand",
+        recipientId,
+        assigneeId: assignedCaregiver.user.id,
+        dueAt,
+      },
+    });
+    assert.equal(caregiverCreatedTask.statusCode, 201);
+
+    const deleteTask = await app.inject({
+      method: "DELETE",
+      url: `/circles/${circle.id}/tasks/${caregiverCreatedTask.json().id}`,
+      headers: assignedCaregiver.headers,
+      payload: { userId: assignedCaregiver.user.id },
+    });
+    assert.equal(deleteTask.statusCode, 204);
+
+    const caregiverView = await app.inject({
+      method: "GET",
+      url: `/circles/${circle.id}/tasks`,
+      headers: assignedCaregiver.headers,
+    });
+    assert.equal(caregiverView.statusCode, 200);
+    assert.ok(caregiverView.json().some((task) => task.id === createdTasks[0].id));
+    assert.ok(!caregiverView.json().some((task) => task.id === caregiverCreatedTask.json().id));
+
+    const deleteCircle = await app.inject({
+      method: "DELETE",
+      url: `/circles/${circle.id}`,
+      headers: organizer.headers,
+      payload: { userId: organizer.user.id },
+    });
+    assert.equal(deleteCircle.statusCode, 204);
+    assert.equal(app.db._s.circles.length, 0);
+    assert.equal(app.db._s.members.length, 0);
+    assert.equal(app.db._s.tasks.length, 0);
+
+    await app.close();
+  });
+
   test("PATCH /circles/:id/members/:memberId/role lets an admin promote a caregiver", async () => {
     const app = await buildApp(buildDb({
       users: [
@@ -2863,6 +3122,115 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     });
     assert.equal(res.statusCode, 201);
     assert.equal(db._s.reminders.length, countBefore, "no new reminder created");
+  });
+
+  test("snoozes a task reminder and delays scheduler delivery", async () => {
+    const dueAt = new Date(Date.now() - 60 * 1000).toISOString();
+    const create = await app.inject({
+      method: "POST", url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Snooze meds", creatorId: "u1", dueAt, assigneeId: "u1" }),
+    });
+    assert.equal(create.statusCode, 201);
+    const task = create.json();
+
+    const snooze = await app.inject({
+      method: "POST",
+      url: `/circles/c1/tasks/${task.id}/reminder/snooze`,
+      headers: HDR,
+      payload: { minutes: 15 },
+    });
+    assert.equal(snooze.statusCode, 200);
+    assert.equal(snooze.json().status, "SNOOZED");
+    assert.equal(snooze.json().snoozeCount, 1);
+
+    await processPendingReminders(db);
+    const reminder = db._s.reminders.find((item) => item.taskId === task.id);
+    assert.equal(reminder.status, "SNOOZED", "scheduler skips reminders snoozed into the future");
+  });
+
+  test("rejects invalid snooze durations and completed task snoozes", async () => {
+    const dueAt = new Date(Date.now() - 60 * 1000).toISOString();
+    const create = await app.inject({
+      method: "POST", url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Complete before snooze", creatorId: "u1", dueAt, assigneeId: "u1" }),
+    });
+    assert.equal(create.statusCode, 201);
+    const task = create.json();
+
+    const invalid = await app.inject({
+      method: "POST",
+      url: `/circles/c1/tasks/${task.id}/reminder/snooze`,
+      headers: HDR,
+      payload: { minutes: 5 },
+    });
+    assert.equal(invalid.statusCode, 400);
+
+    const done = await app.inject({
+      method: "PATCH",
+      url: `/circles/c1/tasks/${task.id}`,
+      headers: HDR,
+      payload: { userId: "u1", status: "DONE" },
+    });
+    assert.equal(done.statusCode, 200);
+
+    const snoozeDone = await app.inject({
+      method: "POST",
+      url: `/circles/c1/tasks/${task.id}/reminder/snooze`,
+      headers: HDR,
+      payload: { minutes: 15 },
+    });
+    assert.equal(snoozeDone.statusCode, 400);
+    assert.equal(snoozeDone.json().error, "Completed tasks cannot be snoozed");
+  });
+
+  test("snoozed reminder sends when snooze expires and then escalates once overdue", async () => {
+    const dueAt = new Date(Date.now() - 60 * 1000).toISOString();
+    const create = await app.inject({
+      method: "POST", url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Escalate after snooze", creatorId: "u1", dueAt, assigneeId: "u1" }),
+    });
+    assert.equal(create.statusCode, 201);
+    const task = create.json();
+    const reminder = db._s.reminders.find((item) => item.taskId === task.id);
+    Object.assign(reminder, {
+      status: "SNOOZED",
+      scheduledAt: new Date(Date.now() - 1000),
+      snoozedUntil: new Date(Date.now() - 1000),
+      snoozeCount: 1,
+    });
+
+    await processPendingReminders(db);
+    assert.equal(reminder.status, "SENT");
+    assert.equal(reminder.snoozedUntil, null);
+    assert.ok(reminder.escalationDueAt, "sent reminder gets escalationDueAt");
+
+    reminder.escalationDueAt = new Date(Date.now() - 1000);
+    await processEscalations(db);
+    assert.equal(reminder.status, "ESCALATED");
+    assert.ok(reminder.escalatedAt, "escalation timestamp is set");
+  });
+
+  test("completed task reminders do not send or escalate", async () => {
+    const dueAt = new Date(Date.now() - 60 * 1000).toISOString();
+    const create = await app.inject({
+      method: "POST", url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Done before reminder", creatorId: "u1", dueAt, assigneeId: "u1" }),
+    });
+    assert.equal(create.statusCode, 201);
+    const task = create.json();
+    const reminder = db._s.reminders.find((item) => item.taskId === task.id);
+    db._s.tasks.find((item) => item.id === task.id).status = "DONE";
+
+    await processPendingReminders(db);
+    assert.equal(reminder.status, "PENDING");
+
+    Object.assign(reminder, { status: "SENT", escalationDueAt: new Date(Date.now() - 1000) });
+    await processEscalations(db);
+    assert.equal(reminder.status, "SENT");
   });
 
   test("logs TASK_CREATED event for every task", async () => {

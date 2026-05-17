@@ -288,7 +288,7 @@ Every API action, screen, and empty state must enforce these product rules.
 
 **Timezone source:** Stored on the `User` record as an IANA timezone string (e.g. `America/New_York`). **Capture mechanism:** iOS auto-detects `TimeZone.current.identifier` at onboarding and immediately calls `PATCH /users/:id/timezone`. No user-facing picker in Sprint 1. **Fallback:** if auto-detect returns empty, default to `America/New_York`. Used for digest scheduling only. Reminder offsets (15 min before due) are always UTC-relative.
 
-**Reminder creation:** When a task is saved with a `dueAt`, a `Reminder` record is created with `scheduledAt = dueAt - 15 minutes`. Cron polls every minute for reminders where `scheduledAt <= now AND status = PENDING`.
+**Reminder creation:** When a task is saved with a `dueAt`, a `Reminder` record is created with `scheduledAt = dueAt - 15 minutes`. Cron polls every minute for reminders where `scheduledAt <= now AND status IN (PENDING, SNOOZED)`.
 
 **Escalation logic:**
 
@@ -297,11 +297,13 @@ Every API action, screen, and empty state must enforce these product rules.
 3. Escalation notifies the Care Organizer and the relevant supporting caregivers for that care receiver
 4. Reassignment remains under organizer control; escalation is awareness, not automatic takeover
 
+**Snooze:** The assigned user, task creator, or Care Organizer can snooze an active task reminder for 15 minutes, 1 hour, or tomorrow. Snoozing sets `Reminder.status = SNOOZED`, moves `scheduledAt` / `snoozedUntil` forward, clears any pending escalation timestamp, logs `REMINDER_SNOOZED`, and is capped at 3 snoozes per reminder. Completed or skipped tasks cannot be snoozed.
+
 **Push-to-email fallback:** If the targeted user has no `pushToken`, skip push and send email directly. If Resend fails, log and mark `Reminder.status = FAILED` — no retry in Sprint 1.
 
 **Deep-link payload:** Reminder notifications include `taskId`, `circleId`, `recipientId`, and notification `type`. The iOS app stores both pending task and pending circle context, opens the task only when the active circle owns it, and clears the pending state after navigation.
 
-**Idempotency:** Cron checks `Reminder.status` before sending. A reminder with `status != PENDING` is skipped. Prevents double-sends on process restart.
+**Idempotency:** Cron checks `Reminder.status` before sending. A reminder with `status` outside `PENDING` / `SNOOZED` is skipped. Prevents double-sends on process restart while allowing snoozed reminders to be delivered when their new `scheduledAt` arrives.
 
 ### 5.4 Daily Digest
 
@@ -735,6 +737,7 @@ Errors: `403` if requester is not Admin; `404` if member not found; `400` if las
 | GET    | /circles/:circleId/tasks                  | bearer | member              |
 | PATCH  | /circles/:circleId/tasks/:taskId          | bearer | member (limited)    |
 | DELETE | /circles/:circleId/tasks/:taskId          | bearer | member (own)/admin  |
+| POST   | /circles/:circleId/tasks/:taskId/reminder/snooze | bearer | assignee/creator/admin |
 
 **POST /circles/:circleId/tasks — body:**
 

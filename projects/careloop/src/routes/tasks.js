@@ -24,6 +24,8 @@ const taskInclude = {
   recipient: { select: { id: true, name: true, relationship: true, notes: true, isPrimary: true, sortOrder: true } },
   circle: { select: { id: true, name: true } },
 };
+const SNOOZE_OPTIONS_MINUTES = new Set([15, 60, 1440]);
+const MAX_REMINDER_SNOOZES = 3;
 
 function parseOptionalDate(value, fieldName) {
   if (!value) return null;
@@ -64,6 +66,9 @@ async function syncReminderForTask(tx, taskId, dueAt) {
           scheduledAt,
           status: "PENDING",
           sentAt: null,
+          snoozedUntil: null,
+          snoozeCount: 0,
+          escalationDueAt: null,
           escalatedAt: null,
         },
       });
@@ -74,6 +79,25 @@ async function syncReminderForTask(tx, taskId, dueAt) {
   }
 
   await tx.reminder.deleteMany({ where: { taskId } });
+}
+
+function canSnoozeTaskReminder({ member, task, userId }) {
+  if (member.role === "ADMIN") return true;
+  return task.assigneeId === userId || task.creatorId === userId;
+}
+
+function reminderSummary(reminder) {
+  return {
+    id: reminder.id,
+    taskId: reminder.taskId,
+    scheduledAt: reminder.scheduledAt,
+    sentAt: reminder.sentAt ?? null,
+    snoozedUntil: reminder.snoozedUntil ?? null,
+    snoozeCount: reminder.snoozeCount ?? 0,
+    escalationDueAt: reminder.escalationDueAt ?? null,
+    status: reminder.status,
+    escalatedAt: reminder.escalatedAt ?? null,
+  };
 }
 
 async function createTaskRecord(tx, data) {
@@ -685,6 +709,57 @@ export default async function tasks(app) {
       payload: { taskId: task.id },
     });
     return reply.code(204).send();
+  });
+
+  // POST /circles/:circleId/tasks/:taskId/reminder/snooze — assigned user, creator, or admin
+  app.post("/circles/:circleId/tasks/:taskId/reminder/snooze", async (req, reply) => {
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    const minutes = Number(req.body?.minutes ?? 15);
+    if (!SNOOZE_OPTIONS_MINUTES.has(minutes)) {
+      return reply.code(400).send({ error: "minutes must be one of 15, 60, or 1440" });
+    }
+
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
+
+    const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
+    if (!task) return reply.code(404).send({ error: "Task not found" });
+    if (["DONE", "SKIPPED"].includes(task.status)) {
+      return reply.code(400).send({ error: "Completed tasks cannot be snoozed" });
+    }
+    if (!canSnoozeTaskReminder({ member, task, userId: authenticatedUserId })) {
+      return reply.code(403).send({ error: "You cannot snooze this reminder" });
+    }
+
+    const existingReminder = await db.reminder.findFirst({ where: { taskId: task.id } });
+    if (!existingReminder) {
+      return reply.code(404).send({ error: "Reminder not found" });
+    }
+    if ((existingReminder.snoozeCount ?? 0) >= MAX_REMINDER_SNOOZES) {
+      return reply.code(400).send({ error: "Reminder snooze limit reached" });
+    }
+
+    const snoozedUntil = new Date(Date.now() + minutes * 60 * 1000);
+    const reminder = await db.reminder.update({
+      where: { id: existingReminder.id },
+      data: {
+        status: "SNOOZED",
+        scheduledAt: snoozedUntil,
+        snoozedUntil,
+        snoozeCount: (existingReminder.snoozeCount ?? 0) + 1,
+        escalationDueAt: null,
+        escalatedAt: null,
+      },
+    });
+
+    await logEvent(db, {
+      type: "REMINDER_SNOOZED",
+      circleId: task.circleId,
+      actorId: authenticatedUserId,
+      payload: { taskId: task.id, reminderId: reminder.id, minutes, snoozedUntil },
+    });
+    return reply.code(200).send(reminderSummary(reminder));
   });
 
   const commentInclude = {

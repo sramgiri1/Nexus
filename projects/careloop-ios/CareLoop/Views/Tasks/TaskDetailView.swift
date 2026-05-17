@@ -47,6 +47,8 @@ struct TaskDetailView: View {
     @State private var showDeleteAlert      = false
     @State private var showSeriesScopeDialog = false
     @State private var paywallRecipient: CareRecipient?
+    @State private var snoozingMinutes: Int?
+    @State private var snoozeMessage: String?
 
     init(task: CareTask, onUpdate: @escaping (CareTask) -> Void, onDelete: @escaping () -> Void) {
         _task       = State(initialValue: task)
@@ -102,6 +104,11 @@ struct TaskDetailView: View {
     private var canChangeRecipient: Bool { task.capabilities?.canChangeRecipient ?? canEdit }
     private var canDelete: Bool { task.capabilities?.canDelete ?? canEdit }
     private var canSkip: Bool { task.capabilities?.canSkip ?? (isAdmin || isOwn) }
+    private var canSnoozeReminder: Bool {
+        task.dueAt != nil
+        && ![TaskStatus.done, .skipped].contains(status)
+        && (isAdmin || task.assigneeId == userId || task.creatorId == userId)
+    }
 
     private var activeRecipients: [CareRecipient] {
         TaskWorkflowPolicy.activeRecipients(appState.activeCircle?.recipients ?? [])
@@ -149,6 +156,10 @@ struct TaskDetailView: View {
                     }
                 }
 
+                if canSnoozeReminder {
+                    snoozeCard
+                }
+
                 if canChangeStatus { statusCard }
 
                 if activeRecipients.count != 1 || activeRecipients.isEmpty {
@@ -175,6 +186,7 @@ struct TaskDetailView: View {
             .padding(.top, 14)
             .padding(.horizontal, 16)
         }
+        .accessibilityIdentifier("task-detail-screen")
         .background(bg.ignoresSafeArea())
         .navigationTitle(task.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -288,6 +300,55 @@ struct TaskDetailView: View {
                 expandableTimeRow(time: $dueTime, isExpanded: $showDueTimePicker, label: "Time")
             }
         }
+    }
+
+    private var snoozeCard: some View {
+        CardShell {
+            HStack(spacing: 10) {
+                Image(systemName: "bell.badge.clock.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(teal)
+                    .frame(width: 30)
+                VStack(alignment: .leading, spacing: 3) {
+                    Text("Need more time?")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    Text(snoozeMessage ?? "Snooze this reminder and delay escalation.")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+                Spacer()
+            }
+            .padding(.horizontal, 16)
+            .padding(.top, 16)
+
+            HStack(spacing: 8) {
+                snoozeButton(label: "15 min", minutes: 15)
+                snoozeButton(label: "1 hour", minutes: 60)
+                snoozeButton(label: "Tomorrow", minutes: 1440)
+            }
+            .padding(.horizontal, 16)
+            .padding(.bottom, 16)
+        }
+    }
+
+    private func snoozeButton(label: String, minutes: Int) -> some View {
+        Button {
+            Task { await snoozeReminder(minutes: minutes) }
+        } label: {
+            HStack(spacing: 6) {
+                if snoozingMinutes == minutes {
+                    ProgressView().scaleEffect(0.75)
+                }
+                Text(label)
+            }
+            .font(.system(size: 13, weight: .bold, design: .rounded))
+            .foregroundStyle(.white)
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 10)
+            .background(teal, in: RoundedRectangle(cornerRadius: 12, style: .continuous))
+        }
+        .disabled(snoozingMinutes != nil)
+        .accessibilityIdentifier("snooze-\(minutes)-button")
     }
 
     // MARK: – Schedule card (repeating) — mirrors NewTaskView
@@ -788,6 +849,37 @@ struct TaskDetailView: View {
             task = updated; onUpdate(updated); dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false
+    }
+
+    private func snoozeReminder(minutes: Int) async {
+        snoozingMinutes = minutes
+        error = nil
+        defer { snoozingMinutes = nil }
+
+        if UITestScenario.current != nil {
+            snoozeMessage = "Snoozed for \(snoozeLabel(minutes: minutes))."
+            return
+        }
+
+        do {
+            let result = try await APIClient.shared.snoozeReminder(circleId: circleId, taskId: task.id, minutes: minutes)
+            if let until = result.snoozedUntil {
+                snoozeMessage = "Snoozed until \(until.formatted(date: .omitted, time: .shortened))."
+            } else {
+                snoozeMessage = "Snoozed for \(snoozeLabel(minutes: minutes))."
+            }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func snoozeLabel(minutes: Int) -> String {
+        switch minutes {
+        case 15: return "15 minutes"
+        case 60: return "1 hour"
+        case 1440: return "tomorrow"
+        default: return "\(minutes) minutes"
+        }
     }
 
     private func performDelete() async {

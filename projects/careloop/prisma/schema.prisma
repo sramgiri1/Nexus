@@ -236,6 +236,9 @@ model Reminder {
   id          String         @id @default(cuid())
   scheduledAt DateTime
   sentAt      DateTime?
+  snoozedUntil DateTime?
+  snoozeCount Int            @default(0)
+  escalationDueAt DateTime?
   channel     Channel        @default(PUSH)
   status      ReminderStatus @default(PENDING)
   escalatedAt DateTime?
@@ -323,9 +326,11 @@ enum Channel {
 
 enum ReminderStatus {
   PENDING
+  SNOOZED
   SENT
   FAILED
   ESCALATED
+  CANCELLED
 }
 
 enum EventType {
@@ -346,6 +351,7 @@ enum EventType {
   MEMBER_REMOVED
   MEMBER_ROLE_UPDATED
   REMINDER_SENT
+  REMINDER_SNOOZED
   REMINDER_ESCALATED
   DIGEST_SENT
   DIGEST_OPENED
