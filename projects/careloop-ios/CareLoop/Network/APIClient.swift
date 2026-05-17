@@ -44,6 +44,18 @@ final class APIClient {
         KeychainStore.remove(accessTokenKey)
     }
 
+    func revokeCurrentAccessTokenForSignOut() {
+        guard let token = accessToken else { return }
+        Task {
+            try? await requestVoid(
+                path: "/auth/logout",
+                method: "POST",
+                body: Data("{}".utf8),
+                accessTokenOverride: token
+            )
+        }
+    }
+
     func get<T: Decodable>(_ path: String) async throws -> T {
         try await request(path: path, method: "GET", body: nil as Data?)
     }
@@ -83,12 +95,17 @@ final class APIClient {
         try await requestVoid(path: path, method: "DELETE", body: data)
     }
 
-    private func requestVoid(path: String, method: String, body: Data?) async throws {
+    private func requestVoid(
+        path: String,
+        method: String,
+        body: Data?,
+        accessTokenOverride: String? = nil
+    ) async throws {
         guard let url = URL(string: baseURL + path) else { throw APIError.invalidURL }
         var req = URLRequest(url: url)
         req.httpMethod = method
-        if let accessToken {
-            req.setValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
+        if let bearerToken = accessTokenOverride ?? accessToken {
+            req.setValue("Bearer \(bearerToken)", forHTTPHeaderField: "Authorization")
         }
         if body != nil {
             req.setValue("application/json", forHTTPHeaderField: "Content-Type")

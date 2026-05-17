@@ -131,6 +131,7 @@ final class AppState: ObservableObject {
     }
 
     func signOut() {
+        APIClient.shared.revokeCurrentAccessTokenForSignOut()
         currentUser  = nil
         activeCircle = nil
         shouldPromptNewTask = false

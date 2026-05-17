@@ -216,6 +216,12 @@ export function providerFromSlug(slug) {
   }
 }
 
+export function normalizeAuthProvider(provider) {
+  if (!provider || typeof provider !== "string") return null;
+  const normalized = provider.trim().toUpperCase();
+  return ["GOOGLE", "FACEBOOK", "APPLE"].includes(normalized) ? normalized : null;
+}
+
 export function buildOAuthStartUrl(provider, request, callbackScheme) {
   if (!isOAuthConfigured(provider)) {
     throw new Error(`${provider} sign-in is not configured yet.`);

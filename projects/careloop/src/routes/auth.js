@@ -7,6 +7,7 @@ import {
   hashPassword,
   hashValue,
   issueAccessToken,
+  normalizeAuthProvider,
   normalizeEmail,
   oauthCallbackRedirect,
   passwordResetExpiry,
@@ -179,11 +180,14 @@ export default async function authRoutes(app) {
 
   app.post("/auth/social", { config: { public: true } }, async (req, reply) => {
     const { provider, idToken, accessToken, email, name, providerUserId } = req.body ?? {};
-    if (!provider) return reply.code(400).send({ error: "provider is required" });
+    const normalizedProvider = normalizeAuthProvider(provider);
+    if (!normalizedProvider) {
+      return reply.code(400).send({ error: "provider must be GOOGLE, FACEBOOK, or APPLE" });
+    }
 
     let resolved;
     try {
-      resolved = await resolveSocialProfile(provider, {
+      resolved = await resolveSocialProfile(normalizedProvider, {
         idToken,
         accessToken,
         email,
@@ -198,7 +202,7 @@ export default async function authRoutes(app) {
       const existingIdentity = await db.authIdentity.findUnique({
         where: {
           provider_providerUserId: {
-            provider,
+            provider: normalizedProvider,
             providerUserId: resolved.providerUserId,
           },
         },
@@ -206,13 +210,13 @@ export default async function authRoutes(app) {
       if (!existingIdentity) {
         return reply.code(400).send({ error: "Provider did not return an email for first-time account creation" });
       }
-      return reply.send(await authResponse(db, provider, existingIdentity.userId));
+      return reply.send(await authResponse(db, normalizedProvider, existingIdentity.userId));
     }
 
     const identity = await db.authIdentity.findUnique({
       where: {
         provider_providerUserId: {
-          provider,
+          provider: normalizedProvider,
           providerUserId: resolved.providerUserId,
         },
       },
@@ -238,7 +242,7 @@ export default async function authRoutes(app) {
     await db.authIdentity.upsert({
       where: {
         provider_providerUserId: {
-          provider,
+          provider: normalizedProvider,
           providerUserId: resolved.providerUserId,
         },
       },
@@ -248,7 +252,7 @@ export default async function authRoutes(app) {
         userId,
       },
       create: {
-        provider,
+        provider: normalizedProvider,
         providerUserId: resolved.providerUserId,
         providerEmail: resolved.email || null,
         providerName: resolved.name || null,
@@ -256,7 +260,15 @@ export default async function authRoutes(app) {
       },
     });
 
-    return reply.send(await authResponse(db, provider, userId));
+    return reply.send(await authResponse(db, normalizedProvider, userId));
+  });
+
+  app.post("/auth/logout", async (req, reply) => {
+    await db.user.update({
+      where: { id: req.userId },
+      data: { authVersion: { increment: 1 } },
+    });
+    return reply.send({ loggedOut: true });
   });
 
   app.post("/auth/forgot-password/request", { config: { public: true } }, async (req, reply) => {

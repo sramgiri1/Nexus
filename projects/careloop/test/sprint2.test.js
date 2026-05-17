@@ -900,6 +900,73 @@ describe("auth routes", () => {
     await app.close();
   });
 
+  test("POST /auth/social accepts provider names case-insensitively", async () => {
+    const app = await buildApp(buildDb());
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/social",
+      payload: {
+        provider: "google",
+        providerUserId: "google-lowercase",
+        email: "lowercase-provider@test.com",
+        name: "Lowercase Provider",
+      },
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().method, "GOOGLE");
+    assert.equal(app.db._s.identities[0].provider, "GOOGLE");
+    await app.close();
+  });
+
+  test("POST /auth/social rejects unsupported providers before profile resolution", async () => {
+    const app = await buildApp(buildDb());
+    const res = await app.inject({
+      method: "POST",
+      url: "/auth/social",
+      payload: {
+        provider: "gmail",
+        providerUserId: "gmail-123",
+        email: "gmail@test.com",
+        name: "Gmail User",
+      },
+    });
+
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "provider must be GOOGLE, FACEBOOK, or APPLE");
+    assert.equal(app.db._s.users.length, 0);
+    await app.close();
+  });
+
+  test("POST /auth/social rejects local fallback payloads in production mode", async () => {
+    const previousNodeEnv = process.env.NODE_ENV;
+    process.env.NODE_ENV = "production";
+    const app = await buildApp(buildDb());
+    try {
+      const res = await app.inject({
+        method: "POST",
+        url: "/auth/social",
+        payload: {
+          provider: "GOOGLE",
+          providerUserId: "google-prod-fallback",
+          email: "prod-social@test.com",
+          name: "Prod Social",
+        },
+      });
+
+      assert.equal(res.statusCode, 401);
+      assert.equal(res.json().error, "Google authentication payload is incomplete");
+      assert.equal(app.db._s.users.length, 0);
+    } finally {
+      if (previousNodeEnv === undefined) {
+        delete process.env.NODE_ENV;
+      } else {
+        process.env.NODE_ENV = previousNodeEnv;
+      }
+      await app.close();
+    }
+  });
+
   test("POST /auth/login includes pending invitations for the authenticated email", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "member@test.com", name: "Member", passwordHash: hashPassword("password123") }],
@@ -927,6 +994,36 @@ describe("auth routes", () => {
     const body = res.json();
     assert.equal(body.user.pendingInvites.length, 1);
     assert.equal(body.user.pendingInvites[0].id, "i1");
+    await app.close();
+  });
+
+  test("POST /auth/logout revokes the current bearer token version", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "logout@test.com", name: "Logout User", passwordHash: hashPassword("password123"), authVersion: 0 }],
+    }));
+    const token = await issueAccessToken({ id: "u1", email: "logout@test.com", name: "Logout User", authVersion: 0 });
+    const headers = {
+      authorization: `Bearer ${token}`,
+      "content-type": "application/json",
+    };
+
+    const logout = await app.inject({
+      method: "POST",
+      url: "/auth/logout",
+      headers,
+      payload: {},
+    });
+    assert.equal(logout.statusCode, 200);
+    assert.equal(logout.json().loggedOut, true);
+    assert.equal(app.db._s.users[0].authVersion, 1);
+
+    const revoked = await app.inject({
+      method: "GET",
+      url: "/users/me",
+      headers,
+    });
+    assert.equal(revoked.statusCode, 401);
+    assert.equal(revoked.json().error, "Access token has been revoked");
     await app.close();
   });
 

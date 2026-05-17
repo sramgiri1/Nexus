@@ -175,6 +175,9 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 - [x] Invalid bearer token returns `401`
 - [x] Legacy caller IDs that do not match the authenticated user are rejected with `403`
 - [x] Password reset revokes previously issued bearer tokens
+- [x] Logout revokes the current bearer token version server-side
+- [x] Social auth accepts supported provider names case-insensitively and rejects unsupported providers
+- [x] Production mode rejects local/dev social fallback payloads without provider token validation
 - [x] iOS stores the bearer token in Keychain rather than `UserDefaults`
 
 ### 11. Circle setup after authentication

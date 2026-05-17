@@ -329,6 +329,7 @@ Every API action, screen, and empty state must enforce these product rules.
 - Social sign-in maps to a first-party CareLoop `User` plus a linked `AuthIdentity` record per provider.
 - After authentication, the app should check for pending invites matching the authenticated email identity and surface them before sending the user into normal circle selection.
 - Transport auth is bearer-token based in the current local build. Account auth issues a first-party CareLoop access token, and all protected reads/mutations execute in the authenticated user context.
+- Signing out revokes the current bearer-token version server-side and clears local Keychain/session state in the iOS app.
 - **Local/dev mode:** social sign-in may complete via provider-returned profile payload while provider credentials are still being finalized. Production mode must validate provider tokens or callback exchanges before identity creation.
 - **Session restore (current implementation):** the iOS app persists `userId` and last attached `circleId`. On relaunch:
   - organizers and caregivers restore into their last active Care Circle if possible
@@ -384,6 +385,7 @@ Every API action, screen, and empty state must enforce these product rules.
 | POST   | /auth/signup                | none | any  |
 | POST   | /auth/login                 | none | any  |
 | POST   | /auth/social                | none | any  |
+| POST   | /auth/logout                | bearer | authenticated |
 | GET    | /auth/oauth/:provider/start | none | any  |
 | GET    | /auth/oauth/:provider/callback | none | any |
 | POST   | /auth/oauth/:provider/callback | none | any |
@@ -445,8 +447,10 @@ Every API action, screen, and empty state must enforce these product rules.
 **POST /auth/social — behavior:**
 
 - Validates provider token when available
+- Normalizes provider names case-insensitively to `GOOGLE`, `FACEBOOK`, or `APPLE`; unsupported provider names fail with `400`
 - Links to an existing CareLoop user by provider identity first, then by email
 - Creates a new CareLoop user on first sign-in if no linked user exists
+- Local/dev fallback profile payloads are rejected in production mode; production requires provider token validation or OAuth callback exchange
 
 **POST /auth/social — response 200:**
 
