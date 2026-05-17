@@ -43,6 +43,10 @@ struct CircleHomeView: View {
     private var upgradeRecipient: CareRecipient? {
         ReceiverPremiumPolicy.defaultPaywallRecipient(in: activeCircle)
     }
+    private var receiverProfile: CareRecipient? {
+        guard isReceiver, let userId = appState.currentUser?.id else { return nil }
+        return activeCircle?.orderedRecipients.first { $0.receiverUserId == userId }
+    }
 
     var body: some View {
         NavigationStack {
@@ -194,6 +198,9 @@ struct CircleHomeView: View {
 
             HStack(spacing: 8) {
                 roleBadge
+                if let receiverProfile {
+                    premiumStatusIcon(for: receiverProfile, accessibilityIdentifier: "receiver-home-plan-badge")
+                }
                 labelChip(
                     "\(activeRecipients.count) \(activeRecipients.count == 1 ? "care receiver" : "care receivers")",
                     icon: "heart.fill",
@@ -237,6 +244,9 @@ struct CircleHomeView: View {
             }
 
             roleBadge
+            if let receiverProfile {
+                premiumStatusIcon(for: receiverProfile, accessibilityIdentifier: "receiver-home-plan-badge")
+            }
         }
         .padding(18)
         .frame(maxWidth: .infinity, alignment: .leading)
@@ -331,7 +341,7 @@ struct CircleHomeView: View {
                                 .font(.system(size: 12, weight: .semibold, design: .rounded))
                                 .foregroundStyle(mid)
                         }
-                        Text(summary.nextTaskTitle ?? "No open tasks right now")
+                        Text(summary.recipient.isActiveForTasks ? (summary.nextTaskTitle ?? "No open tasks right now") : "Tasks unlock after activation")
                             .font(.system(size: 13, weight: .medium, design: .rounded))
                             .foregroundStyle(mid)
                             .lineLimit(1)
@@ -340,7 +350,7 @@ struct CircleHomeView: View {
                     Spacer()
 
                     VStack(alignment: .trailing, spacing: 6) {
-                        receiverCountChip(summary.recipient.premiumStatusLabel, tint: summary.recipient.hasPremium ? green : mid)
+                        premiumStatusIcon(for: summary.recipient, accessibilityIdentifier: "receiver-plan-badge-\(summary.recipient.id)")
                         receiverCountChip("\(summary.openCount) open", tint: blue)
                         if summary.overdueCount > 0 {
                             receiverCountChip("\(summary.overdueCount) overdue", tint: .red)
@@ -362,6 +372,19 @@ struct CircleHomeView: View {
         }
         .buttonStyle(.plain)
         .accessibilityIdentifier("receiver-summary-\(summary.recipient.id)")
+    }
+
+    private func premiumStatusIcon(for recipient: CareRecipient, accessibilityIdentifier: String) -> some View {
+        Image(systemName: recipient.premiumStatusIconName)
+            .font(.system(size: 12, weight: .bold))
+            .foregroundStyle(recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid)
+            .frame(width: 28, height: 28)
+            .background(
+                Circle()
+                    .fill((recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid).opacity(0.11))
+            )
+            .accessibilityLabel(recipient.premiumStatusAccessibilityLabel)
+            .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func receiverCountChip(_ title: String, tint: Color) -> some View {

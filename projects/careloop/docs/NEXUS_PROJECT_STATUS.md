@@ -17,7 +17,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 
 - PRD decisions have been captured for users, personas, circles, care receivers, invites, roles, task visibility, reminders, snooze, escalation, premium limits, and pay-per-care-receiver monetization.
 - Premium planning has been split into receiver-scoped subphases in `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`.
-- Current premium phase starts with P1: PRD contracts, Nexus status, Command Center visibility, and automated docs/test metadata validation.
+- Premium P1 is complete: PRD contracts, Nexus status, Command Center visibility, and automated docs/test metadata validation.
+- Premium P2 is complete: receiver plan badges now appear in organizer/caregiver dashboard contexts, Care Receiver Management exposes plan status and upgrade action, and Care Receiver persona sees badge-only plan state.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -27,12 +28,14 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 
 - `scripts/careloop-test-runner.sh smoke` passed.
 - `npm run check:careloop-premium-phase-plan` is the P1 docs/contract gate.
+- `scripts/careloop-test-runner.sh ios:personas` passed after P2 receiver plan visibility changes.
+- `scripts/careloop-test-runner.sh ios:payments` passed after P2 premium/paywall entry changes.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
 ## Remaining Blockers
 
-- Premium P2-P8 implementation and test automation are not complete yet.
+- Premium P3-P8 implementation and test automation are not complete yet.
 - Physical-device/TestFlight validation for APNs delivery, notification tap, universal links, and OS permission prompts.
 - Real Google/Facebook/Apple auth credentials and redirect URI configuration.
 - StoreKit sandbox purchase/restore and App Store entitlement verification.

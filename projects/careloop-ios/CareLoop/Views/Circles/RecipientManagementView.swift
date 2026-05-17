@@ -252,13 +252,19 @@ struct RecipientManagementView: View {
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundStyle(recipient.hasPremium ? teal : mid)
                         .fixedSize(horizontal: false, vertical: true)
+                    HStack(spacing: 8) {
+                        premiumStatusIcon(for: recipient)
+                        Text(recipient.hasPremium ? "Premium plan active" : "Basic plan")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundStyle(recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid)
+                    }
+                    .padding(.top, 2)
                 }
 
                 Spacer(minLength: 12)
 
                 VStack(alignment: .trailing, spacing: 8) {
                     chip(recipient.activationStatus.label, tint: statusColor)
-                    chip(recipient.premiumStatusLabel, tint: recipient.hasPremium ? teal : mid)
                     if loadingRecipientId == recipient.id {
                         ProgressView().scaleEffect(0.8)
                     } else {
@@ -314,11 +320,38 @@ struct RecipientManagementView: View {
                     .foregroundStyle(dark)
                     .padding(.top, 2)
             }
+
+            if !recipient.hasPremium {
+                Button {
+                    paywallRecipient = recipient
+                } label: {
+                    Label("Upgrade \(recipient.name)", systemImage: "crown.fill")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.borderedProminent)
+                .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                .accessibilityIdentifier("recipient-upgrade-\(recipient.id)")
+            }
         }
         .padding(18)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
         .accessibilityIdentifier("recipient-card-\(recipient.id)")
+    }
+
+    private func premiumStatusIcon(for recipient: CareRecipient) -> some View {
+        Image(systemName: recipient.premiumStatusIconName)
+            .font(.system(size: 12, weight: .bold))
+            .foregroundStyle(recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid)
+            .frame(width: 28, height: 28)
+            .background(
+                Circle()
+                    .fill((recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid).opacity(0.11))
+            )
+            .accessibilityLabel(recipient.premiumStatusAccessibilityLabel)
+            .accessibilityIdentifier("recipient-plan-badge-\(recipient.id)")
     }
 
     private var emptyState: some View {

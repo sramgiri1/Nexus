@@ -128,6 +128,8 @@ final class CareRecipientPremiumTests: XCTestCase {
 
         XCTAssertFalse(recipient.hasPremium)
         XCTAssertEqual(recipient.premiumStatusLabel, "Free")
+        XCTAssertEqual(recipient.premiumStatusIconName, "crown")
+        XCTAssertEqual(recipient.premiumStatusAccessibilityLabel, "Maya plan: Free")
         XCTAssertEqual(recipient.caregiverAccessSummary, "1 caregiver included")
     }
 
@@ -155,6 +157,8 @@ final class CareRecipientPremiumTests: XCTestCase {
 
         XCTAssertTrue(recipient.hasPremium)
         XCTAssertEqual(recipient.premiumStatusLabel, "Premium")
+        XCTAssertEqual(recipient.premiumStatusIconName, "crown.fill")
+        XCTAssertEqual(recipient.premiumStatusAccessibilityLabel, "Maya plan: Premium")
         XCTAssertEqual(recipient.caregiverAccessSummary, "Unlimited caregivers")
         XCTAssertTrue(ReceiverPremiumPolicy.supportsInsights(for: recipient))
         XCTAssertTrue(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))

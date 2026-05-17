@@ -40,6 +40,8 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Care Receivers"].exists)
         XCTAssertTrue(app.staticTexts["Maya"].exists)
+        XCTAssertTrue(app.images["receiver-plan-badge-r1"].exists)
+        XCTAssertTrue(app.images["receiver-plan-badge-r2"].exists)
         XCTAssertTrue(app.staticTexts["Task Board"].exists)
         dashboard.swipeUp()
         XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 3))
@@ -73,6 +75,9 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Care Receiver Management"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Activation controls task access"].exists)
         XCTAssertTrue(app.staticTexts["David"].exists)
+        XCTAssertTrue(app.images["recipient-plan-badge-r1"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.images["recipient-plan-badge-r2"].exists)
+        XCTAssertTrue(app.buttons["recipient-upgrade-r2"].exists)
     }
 
     @MainActor
@@ -96,6 +101,8 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.scrollViews["caregiver-dashboard"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Maya"].exists)
         XCTAssertFalse(app.staticTexts["David"].exists)
+        XCTAssertTrue(app.images["receiver-plan-badge-r1"].exists)
+        XCTAssertFalse(app.buttons["quick-action-upgrade-premium"].exists)
         XCTAssertTrue(app.staticTexts["My Task Board"].exists)
     }
 
@@ -179,6 +186,8 @@ final class CareLoopUITests: XCTestCase {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "receiver-home"])
 
         XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.images["receiver-home-plan-badge"].exists)
+        XCTAssertFalse(app.buttons["quick-action-upgrade-premium"].exists)
         XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
         XCTAssertTrue(app.buttons["View All My Tasks"].exists)
     }

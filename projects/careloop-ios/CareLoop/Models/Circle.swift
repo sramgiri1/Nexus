@@ -121,6 +121,14 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         premium.hasPremium ? "Premium" : "Free"
     }
 
+    var premiumStatusIconName: String {
+        premium.hasPremium ? "crown.fill" : "crown"
+    }
+
+    var premiumStatusAccessibilityLabel: String {
+        "\(name) plan: \(premiumStatusLabel)"
+    }
+
     var premiumStatusDetail: String {
         if premium.hasPremium {
             if let expiresAt = premium.expiresAt {

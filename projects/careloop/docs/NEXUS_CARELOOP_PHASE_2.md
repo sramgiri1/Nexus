@@ -50,6 +50,11 @@ Premium phase rules:
 - Update the single-command demo after premium demo states exist.
 - Commit and push at each phase boundary.
 
+Completed premium subphases:
+
+- P1: premium decisions and contracts.
+- P2: receiver plan visibility across dashboard, Care Receiver Management, Caregiver, and Care Receiver personas.
+
 ## Current Test Commands
 
 - `scripts/careloop-test-runner.sh smoke`

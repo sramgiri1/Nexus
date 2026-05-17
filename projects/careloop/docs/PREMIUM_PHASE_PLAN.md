@@ -1,6 +1,6 @@
 # CareLoop Premium Phase Plan
 
-**Status:** Active planning contract for receiver-scoped premium implementation.
+**Status:** Active implementation contract for receiver-scoped premium implementation.
 **Branch:** `codex/careloop-premium-phases`
 **Updated:** 2026-05-17
 
@@ -26,6 +26,8 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P1: Premium Decisions And Contracts
 
+**Status:** Complete.
+
 **Goal:** Make premium scope and implementation phases explicit for agents, tests, and Command Center before behavior changes.
 
 **Deliverables**
@@ -45,23 +47,26 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P2: Receiver Plan Visibility
 
+**Status:** Complete.
+
 **Goal:** Make plan state obvious without turning billing into dashboard clutter.
 
 **Deliverables**
 
-- Add icon-only premium/free status to dashboard receiver cards with accessibility labels.
-- Add plan status, upgrade/manage actions, and request summaries to Care Receiver Management.
-- Keep Care Receiver persona limited to badge-only visibility.
-- Keep Caregiver persona without billing controls.
+- Added icon-only premium/free status to dashboard receiver cards with accessibility labels.
+- Added plan status and upgrade action to Care Receiver Management.
+- Kept Care Receiver persona limited to badge-only visibility.
+- Kept Caregiver persona without billing controls.
+- Dashboard receiver summaries now include inactive/invited receivers so plan state is visible before activation.
 
 **Tests**
 
-- UI test: organizer sees receiver plan states on dashboard and receiver management.
-- UI test: care receiver sees badge only and no billing controls.
-- UI test: caregiver sees scoped premium context without purchase CTA.
-- Existing `ios:personas` and `ios:payments` suites include the new tests.
+- `scripts/careloop-test-runner.sh ios:personas`
+- `scripts/careloop-test-runner.sh ios:payments`
 
 ## Phase P3: Add Second Receiver Gate
+
+**Status:** Next.
 
 **Goal:** Enforce the free-tier receiver limit at the first honest decision point.
 

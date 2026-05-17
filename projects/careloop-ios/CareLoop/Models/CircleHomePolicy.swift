@@ -18,7 +18,7 @@ enum CircleHomePolicy {
     }
 
     static func receiverSummaries(in circle: CareCircle, tasks: [CareTask]) -> [ReceiverDashboardSummary] {
-        activeRecipients(in: circle).map { recipient in
+        circle.orderedRecipients.map { recipient in
             let recipientTasks = tasks.filter { $0.recipientId == recipient.id }
             let openTasks = recipientTasks.filter { !$0.isClosed }
             let nextTask = nextDueTask(in: openTasks)
