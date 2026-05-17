@@ -229,8 +229,11 @@ struct TaskDetailView: View {
                 TaskCommentsView(task: task).environmentObject(appState)
             }
         }
-        .confirmationDialog("Delete this task?", isPresented: $showDeleteAlert, titleVisibility: .visible) {
+        .alert("Delete this task?", isPresented: $showDeleteAlert) {
+            Button("Cancel", role: .cancel) {}
             Button("Delete", role: .destructive) { Task { await performDelete() } }
+        } message: {
+            Text("This removes the task from the care circle.")
         }
         .confirmationDialog(
             "Apply changes to",
@@ -695,6 +698,7 @@ struct TaskDetailView: View {
         }
         .buttonStyle(.plain)
         .disabled(loading)
+        .accessibilityIdentifier("task-detail-delete-button")
     }
 
     // MARK: – Reusable sub-components (matches NewTaskView)
@@ -998,10 +1002,20 @@ struct TaskDetailView: View {
     private func performDelete() async {
         loading = true
         do {
-            try await APIClient.shared.deleteTask(circleId: circleId, taskId: task.id)
+            if UITestScenario.current != nil {
+                deleteUITestTask()
+            } else {
+                try await APIClient.shared.deleteTask(circleId: circleId, taskId: task.id)
+            }
             onDelete(); dismiss()
         } catch { self.error = error.localizedDescription }
         loading = false
+    }
+
+    private func deleteUITestTask() {
+        guard var circle = appState.activeCircle else { return }
+        circle.tasks = (circle.tasks ?? []).filter { $0.id != task.id }
+        appState.activeCircle = circle
     }
 }
 

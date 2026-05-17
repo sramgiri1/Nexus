@@ -28,6 +28,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Reminder/recurrence hardening is in progress: premium recurring task creation, recurring completion/next occurrence, task detail status changes, comment add/delete, and task detail snooze are now covered through focused Xcode UI automation.
 - Post-premium Phase A has started. A shared Task Detail presentation policy now centralizes task status, overdue/escalated display state, role permissions, inactive-receiver blocking, and recurring-premium blocking for Task Detail and Task Board surfaces.
 - Phase A edit-task subphase is in progress: Task Detail now opens in a view-first mode, exposes an explicit organizer `Edit` action for content changes, and keeps status/comment actions available without making every field editable by default.
+- Phase A delete-task subphase is in progress: Task Detail now uses an alert-based destructive confirmation, supports cancel/confirm behavior in UI-test fixtures, and removes deleted tasks from the local task board state.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -56,6 +57,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode unit test `CareLoopTests/TaskDetailPresentationTests` passed for the shared Task Detail state model.
 - Focused Xcode UI tests for recurring completion, task detail status, and comments add/delete passed after the shared Task Detail policy integration.
 - Focused Xcode UI test `CareLoopUITests/test_organizerCanEditTaskTitleFromDetail` passed for organizer task-title editing from Task Detail.
+- Focused Xcode UI test `CareLoopUITests/test_organizerCanCancelAndConfirmTaskDeleteFromDetail` passed for Task Detail delete cancel/confirm behavior.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

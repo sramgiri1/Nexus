@@ -672,6 +672,31 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanCancelAndConfirmTaskDeleteFromDetail() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t2"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t2"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-detail-delete-button"].waitForExistence(timeout: 3))
+        app.buttons["task-detail-delete-button"].tap()
+        XCTAssertTrue(app.buttons["Cancel"].waitForExistence(timeout: 3))
+        app.buttons["Cancel"].tap()
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 3))
+
+        app.buttons["task-detail-delete-button"].tap()
+        XCTAssertTrue(app.buttons["Delete"].waitForExistence(timeout: 3))
+        app.buttons["Delete"].tap()
+        waitForDisappearance(of: app.buttons["task-card-t2"], timeout: 5)
+    }
+
+    @MainActor
     func test_taskCommentsCanBeAddedAndDeleted() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "task-comments",
