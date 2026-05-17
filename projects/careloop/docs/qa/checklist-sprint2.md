@@ -573,3 +573,14 @@ curl http://localhost:3000/users/me -H "Authorization: Bearer $TOKEN"
 - [x] Error shown in existing error section below Danger Zone on save failure
 - [ ] Manual QA: toggle off Task assignments → assign a task to self → no push/email received
 - [ ] Manual QA: toggle off Daily digest → confirm no digest at 6pm local time for that user
+
+---
+
+## Premium entitlement hardening
+
+- [x] `PUT /circles/:id/recipients/:recipientId/entitlement` remains admin-only and receiver-scoped
+- [x] App Store entitlement sync rejects missing `appleOriginalTransactionId` or `appleProductId`
+- [x] Entitlement sync rejects unsupported sources; `MANUAL` remains available for admin operations/testing
+- [x] Premium receiver unlocks additional caregiver access grants
+- [x] Free receiver blocks recurring schedules with 402
+- [ ] Server-side App Store receipt / transaction verification against Apple production and sandbox APIs

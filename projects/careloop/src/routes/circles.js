@@ -29,6 +29,7 @@ const invitationInclude = {
 };
 const MAX_CIRCLES_PER_USER = 3;
 const INVITATION_EXPIRES_AFTER_DAYS = 14;
+const ENTITLEMENT_SOURCES = new Set(["APP_STORE", "MANUAL"]);
 
 export default async function circles(app) {
   const db = app.db;
@@ -637,6 +638,14 @@ export default async function circles(app) {
     if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
     if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
+    const normalizedSource = source ?? "APP_STORE";
+    if (!ENTITLEMENT_SOURCES.has(normalizedSource)) {
+      return reply.code(400).send({ error: "source must be APP_STORE or MANUAL" });
+    }
+    if (normalizedSource === "APP_STORE" && (!appleOriginalTransactionId || !appleProductId)) {
+      return reply.code(400).send({ error: "App Store entitlements require appleOriginalTransactionId and appleProductId" });
+    }
+
     const recipient = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
       include: { entitlement: true },
@@ -654,7 +663,7 @@ export default async function circles(app) {
     const updatedRecipient = await db.$transaction(async (tx) => {
       const payload = {
         status: "ACTIVE",
-        source: source ?? "APP_STORE",
+        source: normalizedSource,
         startsAt: recipient.entitlement?.startsAt ?? new Date(),
         expiresAt: expirationDate,
         purchasedById: authenticatedUserId,

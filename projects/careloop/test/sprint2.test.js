@@ -2726,6 +2726,43 @@ describe("receiver-scoped access control", () => {
     await app.close();
   });
 
+  test("validates premium entitlement sync source and App Store transaction identity", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const adminHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    const missingAppleIdentity = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: { userId: "u1", source: "APP_STORE" },
+    });
+    assert.equal(missingAppleIdentity.statusCode, 400);
+    assert.equal(
+      missingAppleIdentity.json().error,
+      "App Store entitlements require appleOriginalTransactionId and appleProductId",
+    );
+
+    const invalidSource = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: { userId: "u1", source: "STRIPE" },
+    });
+    assert.equal(invalidSource.statusCode, 400);
+    assert.equal(invalidSource.json().error, "source must be APP_STORE or MANUAL");
+
+    const manualEntitlement = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: { userId: "u1", source: "MANUAL" },
+    });
+    assert.equal(manualEntitlement.statusCode, 200);
+    assert.equal(manualEntitlement.json().premium.source, "MANUAL");
+    assert.equal(manualEntitlement.json().premium.hasPremium, true);
+    await app.close();
+  });
+
   test("blocks recurring tasks for free receivers and allows them for premium receivers", async () => {
     const app = await buildApp(buildDb(scopedAccessSeed()));
     const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
