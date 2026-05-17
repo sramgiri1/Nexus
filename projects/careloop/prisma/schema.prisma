@@ -88,6 +88,7 @@ model Invitation {
   role       Role             @default(MEMBER)
   status     InvitationStatus @default(PENDING)
   acceptedAt DateTime?
+  expiresAt  DateTime?
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
 
@@ -362,4 +363,5 @@ enum InvitationStatus {
   ACCEPTED
   DECLINED
   REVOKED
+  EXPIRED
 }

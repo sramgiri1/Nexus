@@ -53,9 +53,20 @@ struct GroupInvitation: Identifiable, Codable {
     let name: String
     let role: MemberRole
     let status: InvitationStatus
+    let expiresAt: Date?
     let circle: CareCircle
     let recipient: CareRecipient?
     let invitedBy: InvitationSender?
+}
+
+extension GroupInvitation {
+    var expirationSummary: String? {
+        guard let expiresAt else { return nil }
+        if status == .expired || Date() >= expiresAt {
+            return "Expired"
+        }
+        return "Expires \(expiresAt.formatted(.dateTime.month().day().year()))"
+    }
 }
 
 enum InvitationStatus: String, Codable {
@@ -63,4 +74,5 @@ enum InvitationStatus: String, Codable {
     case accepted = "ACCEPTED"
     case declined = "DECLINED"
     case revoked = "REVOKED"
+    case expired = "EXPIRED"
 }

@@ -303,6 +303,11 @@ struct CircleListView: View {
                             .font(.system(size: 12, weight: .medium, design: .rounded))
                             .foregroundStyle(.secondary)
                     }
+                    if let expirationSummary = invite.expirationSummary {
+                        Text(expirationSummary)
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundStyle(expirationSummary == "Expired" ? .red : .orange)
+                    }
                 }
                 Spacer()
                 rolePill(invite.role)

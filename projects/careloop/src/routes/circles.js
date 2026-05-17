@@ -28,6 +28,7 @@ const invitationInclude = {
   invitedBy: { select: { id: true, name: true, email: true } },
 };
 const MAX_CIRCLES_PER_USER = 3;
+const INVITATION_EXPIRES_AFTER_DAYS = 14;
 
 export default async function circles(app) {
   const db = app.db;
@@ -141,6 +142,22 @@ export default async function circles(app) {
         consentDocumentReference: null,
       },
     });
+  }
+
+  function invitationExpiryDate() {
+    return new Date(Date.now() + INVITATION_EXPIRES_AFTER_DAYS * 24 * 60 * 60 * 1000);
+  }
+
+  function invitationHasExpired(invitation, now = new Date()) {
+    return invitation?.status === "PENDING" && invitation.expiresAt && new Date(invitation.expiresAt) <= now;
+  }
+
+  async function markInvitationExpired(tx, invitation) {
+    await tx.invitation.update({
+      where: { id: invitation.id },
+      data: { status: "EXPIRED" },
+    });
+    await resetRecipientInviteStateIfUnclaimed(tx, invitation.recipientId);
   }
 
   async function membershipCount(userId) {
@@ -882,7 +899,7 @@ export default async function circles(app) {
     if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
 
     const requestedStatus = String(req.query?.status ?? "PENDING").toUpperCase();
-    const status = ["PENDING", "ACCEPTED", "DECLINED", "REVOKED"].includes(requestedStatus)
+    const status = ["PENDING", "ACCEPTED", "DECLINED", "REVOKED", "EXPIRED"].includes(requestedStatus)
       ? requestedStatus
       : "PENDING";
 
@@ -943,7 +960,11 @@ export default async function circles(app) {
       where: { circleId: req.params.id, email: normalizedEmail, status: "PENDING" },
     });
     if (existingPending) {
-      return reply.code(409).send({ error: "A pending invitation already exists for this email" });
+      if (invitationHasExpired(existingPending)) {
+        await db.$transaction((tx) => markInvitationExpired(tx, existingPending));
+      } else {
+        return reply.code(409).send({ error: "A pending invitation already exists for this email" });
+      }
     }
 
     const invitation = await db.$transaction(async (tx) => {
@@ -955,6 +976,7 @@ export default async function circles(app) {
           role: normalizedRole,
           recipientId: invitedRecipient?.id ?? null,
           invitedById: authenticatedUserId,
+          expiresAt: invitationExpiryDate(),
         },
       });
 
@@ -1002,6 +1024,10 @@ export default async function circles(app) {
     }
     if (invitation.status !== "PENDING") {
       return reply.code(409).send({ error: "Only pending invitations can be revoked" });
+    }
+    if (invitationHasExpired(invitation)) {
+      await db.$transaction((tx) => markInvitationExpired(tx, invitation));
+      return reply.code(409).send({ error: "Invitation has expired" });
     }
 
     await db.$transaction(async (tx) => {
@@ -1237,6 +1263,10 @@ export default async function circles(app) {
     if (invitation.status !== "PENDING") {
       return reply.code(409).send({ error: `Invitation is already ${invitation.status.toLowerCase()}` });
     }
+    if (invitationHasExpired(invitation)) {
+      await db.$transaction((tx) => markInvitationExpired(tx, invitation));
+      return reply.code(409).send({ error: "Invitation has expired" });
+    }
     if (!await ensureCircleCapacity(authenticatedUserId, reply)) return;
 
     const member = await db.$transaction(async (tx) => {
@@ -1318,6 +1348,10 @@ export default async function circles(app) {
     }
     if (invitation.status !== "PENDING") {
       return reply.code(409).send({ error: `Invitation is already ${invitation.status.toLowerCase()}` });
+    }
+    if (invitationHasExpired(invitation)) {
+      await db.$transaction((tx) => markInvitationExpired(tx, invitation));
+      return reply.code(409).send({ error: "Invitation has expired" });
     }
 
     await db.$transaction(async (tx) => {

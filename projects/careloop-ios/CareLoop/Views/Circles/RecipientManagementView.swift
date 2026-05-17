@@ -178,6 +178,11 @@ struct RecipientManagementView: View {
                 Text("Waiting for direct acceptance before tasks can begin.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(mid)
+                if let expirationSummary = invite.expirationSummary {
+                    Text(expirationSummary)
+                        .font(.system(size: 12, weight: .semibold, design: .rounded))
+                        .foregroundStyle(expirationSummary == "Expired" ? .red : .orange)
+                }
             }
 
             Spacer()

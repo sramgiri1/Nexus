@@ -558,6 +558,7 @@ final class GroupInvitationTests: XCTestCase {
           "name": "Mom",
           "role": "RECIPIENT",
           "status": "PENDING",
+          "expiresAt": "2099-05-31T10:00:00Z",
           "circle": {
             "id": "c1",
             "name": "Ramgiri Care Circle",
@@ -578,10 +579,42 @@ final class GroupInvitationTests: XCTestCase {
         }
         """.data(using: .utf8)!
 
-        let invitation = try JSONDecoder().decode(GroupInvitation.self, from: data)
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let invitation = try decoder.decode(GroupInvitation.self, from: data)
         XCTAssertEqual(invitation.recipient?.id, "cr1")
         XCTAssertEqual(invitation.recipient?.activationStatus, .invited)
         XCTAssertEqual(invitation.circle.name, "Ramgiri Care Circle")
+        XCTAssertNotNil(invitation.expiresAt)
+        XCTAssertTrue(invitation.expirationSummary?.contains("Expires") == true)
+    }
+
+    func test_groupInvitation_decodesExpiredStatus() throws {
+        let data = """
+        {
+          "id": "i2",
+          "email": "caregiver@test.com",
+          "name": "Caregiver",
+          "role": "MEMBER",
+          "status": "EXPIRED",
+          "expiresAt": "2026-05-01T10:00:00Z",
+          "circle": {
+            "id": "c1",
+            "name": "Ramgiri Care Circle",
+            "recipientName": "Maya",
+            "archiveAfterDays": 7
+          },
+          "recipient": null,
+          "invitedBy": null
+        }
+        """.data(using: .utf8)!
+
+        let decoder = JSONDecoder()
+        decoder.dateDecodingStrategy = .iso8601
+        let invitation = try decoder.decode(GroupInvitation.self, from: data)
+        XCTAssertEqual(invitation.status, .expired)
+        XCTAssertNotNil(invitation.expiresAt)
+        XCTAssertEqual(invitation.expirationSummary, "Expired")
     }
 }
 

@@ -345,13 +345,14 @@ struct MemberListView: View {
     }
 
     private func inviteCopy(_ invite: GroupInvitation) -> String {
+        let suffix = invite.expirationSummary.map { " \($0)." } ?? ""
         switch invite.role {
         case .admin:
-            return "Will join as a Care Organizer with full-circle visibility."
+            return "Will join as a Care Organizer with full-circle visibility.\(suffix)"
         case .member:
-            return "Will join as a Caregiver. Receiver access is granted separately after they join."
+            return "Will join as a Caregiver. Receiver access is granted separately after they join.\(suffix)"
         case .recipient:
-            return "Will join as a Care Receiver."
+            return "Will join as a Care Receiver.\(suffix)"
         }
     }
 

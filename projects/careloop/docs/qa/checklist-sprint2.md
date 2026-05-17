@@ -249,6 +249,9 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 - [x] Admin can invite a member by name + email from the member list
 - [x] Admin can choose `MEMBER` or `ADMIN` access before sending the invite
 - [x] Invited email stays `PENDING` until the invited user authenticates and accepts
+- [x] New invites include a server-side expiration timestamp
+- [x] Expired pending invites cannot be accepted and are marked `EXPIRED`
+- [x] Expired recipient invites reset unclaimed receiver state and allow a fresh invite
 - [x] Pending invites are visible to admins and can be revoked
 - [x] Admin can remove another member from the active circle
 - [x] Admin can promote a caregiver to `ADMIN`

@@ -201,6 +201,7 @@ private struct UITestScenarioFixture {
                     name: "Nina Caregiver",
                     role: .member,
                     status: .pending,
+                    expiresAt: nil,
                     circle: circle,
                     recipient: nil,
                     invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
@@ -211,6 +212,7 @@ private struct UITestScenarioFixture {
                     name: "David Receiver",
                     role: .recipient,
                     status: .pending,
+                    expiresAt: nil,
                     circle: circle,
                     recipient: dadRecipient,
                     invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
@@ -244,6 +246,7 @@ private struct UITestScenarioFixture {
                     name: "Nina Caregiver",
                     role: .member,
                     status: .pending,
+                    expiresAt: nil,
                     circle: circle,
                     recipient: nil,
                     invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
@@ -254,6 +257,7 @@ private struct UITestScenarioFixture {
                     name: "David Receiver",
                     role: .recipient,
                     status: .pending,
+                    expiresAt: nil,
                     circle: circle,
                     recipient: dadRecipient,
                     invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)

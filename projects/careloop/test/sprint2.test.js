@@ -323,6 +323,7 @@ function buildDb(seed = {}) {
           id: uid("i"),
           status: "PENDING",
           acceptedAt: null,
+          expiresAt: null,
           invitedById: null,
           acceptedById: null,
           createdAt: new Date(),
@@ -1270,6 +1271,7 @@ describe("circle membership management", () => {
     assert.equal(body.role, "ADMIN");
     assert.equal(body.email, "member@test.com");
     assert.equal(body.status, "PENDING");
+    assert.ok(body.expiresAt, "invite expiration is returned");
     assert.equal(app.db._s.members.length, 1);
     await app.close();
   });
@@ -1496,6 +1498,94 @@ describe("circle membership management", () => {
 
     assert.equal(res.statusCode, 200);
     assert.equal(app.db._s.recipients[0].activationStatus, "DRAFT");
+    await app.close();
+  });
+
+  test("POST /invitations/:inviteId/accept expires stale pending invitations", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u2", email: "member@test.com", name: "Member" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Bob", archiveAfterDays: 7 }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "member@test.com",
+        name: "Member",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: null,
+        acceptedById: null,
+        acceptedAt: null,
+        expiresAt: new Date(Date.now() - 60 * 1000),
+        createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/invitations/i1/accept",
+      headers: await authHeaders({ id: "u2", email: "member@test.com", name: "Member" }),
+      payload: {},
+    });
+
+    assert.equal(res.statusCode, 409);
+    assert.equal(res.json().error, "Invitation has expired");
+    assert.equal(app.db._s.invitations[0].status, "EXPIRED");
+    assert.equal(app.db._s.members.length, 0);
+    await app.close();
+  });
+
+  test("expired recipient invites reset draft state and allow a fresh invite", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: null,
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "INVITED",
+        activatedAt: null,
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "mom@test.com",
+        name: "Mom",
+        role: "RECIPIENT",
+        recipientId: "cr1",
+        status: "PENDING",
+        invitedById: "u1",
+        acceptedById: null,
+        acceptedAt: null,
+        expiresAt: new Date(Date.now() - 60 * 1000),
+        createdAt: new Date(Date.now() - 15 * 24 * 60 * 60 * 1000),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/members/invite",
+      headers: HDR,
+      payload: { userId: "u1", name: "Mom", email: "mom@test.com", role: "RECIPIENT", recipientId: "cr1" },
+    });
+
+    assert.equal(res.statusCode, 201);
+    assert.equal(app.db._s.invitations[0].status, "EXPIRED");
+    assert.equal(app.db._s.invitations[1].status, "PENDING");
+    assert.equal(app.db._s.recipients[0].activationStatus, "INVITED");
     await app.close();
   });
 

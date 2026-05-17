@@ -175,6 +175,7 @@ Every API action, screen, and empty state must enforce these product rules.
 - Invite status lifecycle:
   - `PENDING`
   - `ACCEPTED`
+  - `DECLINED`
   - `REVOKED`
   - `EXPIRED`
 - Care receiver activation flow:
@@ -189,6 +190,7 @@ Every API action, screen, and empty state must enforce these product rules.
 - If a caregiver is restricted from a care receiver, they should see **nothing at all** about that receiver or those tasks.
 - Receivers should be able to see who has access to them as a basic consent right, not a premium feature.
 - If the invitee already belongs to 3 Care Circles, acceptance must fail with a clear error until they leave another one.
+- Pending invites expire after 14 days. Expired receiver invites reset unclaimed receiver activation state so an organizer can send a fresh invite.
 
 ### 5.1.3 Multi-circle operations
 
@@ -591,8 +593,10 @@ Both PATCH endpoints return the updated user object.
 | POST   | /circles/:id/recipients                  | bearer | admin         |
 | PATCH  | /circles/:id/recipients/:recipientId     | bearer | admin         |
 | DELETE | /circles/:id/recipients/:recipientId     | bearer | admin         |
-| POST   | /circles/:id/invitations                 | bearer | admin         |
+| POST   | /circles/:id/members/invite              | bearer | admin         |
+| GET    | /circles/:id/invitations                 | bearer | admin         |
 | POST   | /invitations/:inviteId/accept            | bearer | authenticated |
+| POST   | /invitations/:inviteId/decline           | bearer | authenticated |
 | DELETE | /circles/:id/invitations/:inviteId       | bearer | admin         |
 | DELETE | /circles/:id/members/:memberId           | bearer | admin         |
 | PATCH  | /circles/:id/members/:memberId/role      | bearer | admin         |
@@ -651,21 +655,21 @@ Adds another care recipient profile inside the Care Circle.
 
 **Product contract note:** this endpoint needs a follow-up evolution to support `draft`, `invited`, `active`, and `proxy-active` receiver states plus consent metadata and explicit access-list behavior.
 
-**POST /circles/:id/invitations — current local body:**
+**POST /circles/:id/members/invite — current local body:**
 
 ```json
 {
   "userId": "admin-user-id",
+  "name": "string (required)",
   "email": "string (required)",
-  "role": "MEMBER|ADMIN (default MEMBER)"
+  "role": "MEMBER|ADMIN|RECIPIENT (default MEMBER)",
+  "recipientId": "string? (required only when linking an existing care receiver invite)"
 }
 ```
 
-Creates a pending invite. Admin may invite another caregiver directly as `ADMIN` if desired. Invite acceptance, not invite creation, creates the membership row.
+Creates a pending invite. Admin may invite another caregiver directly as `ADMIN`, invite caregivers as `MEMBER`, or invite a care receiver as `RECIPIENT`. Invite acceptance, not invite creation, creates the membership row.
 
-**Product contract note:** the current local API mainly models caregiver or admin invites. The target product model also needs explicit care receiver invite / activation flows and caregiver-to-receiver access grants.
-
-**POST /circles/:id/invitations — response 201:**
+**POST /circles/:id/members/invite — response 201:**
 
 ```json
 {
@@ -702,7 +706,7 @@ Creates the membership when the authenticated user's email matches the invited e
 }
 ```
 
-**Invite acceptance errors:** `400` if user already belongs to 3 groups; `403` if invite email does not match authenticated identity; `404` if invite not found; `409` if already accepted.
+**Invite acceptance errors:** `400` if user already belongs to 3 groups; `403` if invite email does not match authenticated identity; `404` if invite not found; `409` if already accepted, declined, revoked, or expired.
 
 **DELETE /circles/:id/members/:memberId — errors:** `400` if attempting to remove the last remaining admin; `404` if member not found.
 
