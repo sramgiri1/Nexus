@@ -454,4 +454,103 @@ final class CareCircleRecipientTests: XCTestCase {
         XCTAssertTrue(CareRecipient(id: "r2", name: "Jane", activationStatus: .proxyActive).isActiveForTasks)
         XCTAssertFalse(CareRecipient(id: "r3", name: "Mia", activationStatus: .invited).isActiveForTasks)
     }
+
+    func test_recipientEligibleAssigneeIds_decodeWhenPresent() throws {
+        let data = """
+        {
+          "id": "cr1",
+          "name": "Mom",
+          "relationship": "Parent",
+          "notes": null,
+          "isPrimary": true,
+          "sortOrder": 0,
+          "activationStatus": "ACTIVE",
+          "receiverUserId": "u3",
+          "eligibleAssigneeIds": ["u1", "u2", "u3"]
+        }
+        """.data(using: .utf8)!
+
+        let recipient = try JSONDecoder().decode(CareRecipient.self, from: data)
+        XCTAssertEqual(recipient.eligibleAssigneeIds, ["u1", "u2", "u3"])
+    }
+}
+
+final class TaskWorkflowPolicyTests: XCTestCase {
+
+    func test_defaultAssignee_prefersCurrentUserWhenEligible() {
+        let recipient = CareRecipient(
+            id: "cr1",
+            name: "Mom",
+            activationStatus: .active,
+            receiverUserId: "u3",
+            eligibleAssigneeIds: ["u1", "u3"]
+        )
+        let members = [
+            CircleMember(id: "m1", role: .admin, userId: "u1", user: CareUser(id: "u1", email: "a@test.com", name: "Alex", phone: nil, memberships: nil)),
+            CircleMember(id: "m2", role: .recipient, userId: "u3", user: CareUser(id: "u3", email: "r@test.com", name: "Mom", phone: nil, memberships: nil)),
+        ]
+
+        let assigneeId = TaskWorkflowPolicy.defaultAssigneeId(
+            for: recipient,
+            members: members,
+            isOrganizer: false,
+            currentUserId: "u1"
+        )
+
+        XCTAssertEqual(assigneeId, "u1")
+    }
+
+    func test_eligibleAssigneeMembers_filtersToRecipientScopeForCaregiver() {
+        let recipient = CareRecipient(
+            id: "cr1",
+            name: "Mom",
+            activationStatus: .active,
+            receiverUserId: "u3",
+            eligibleAssigneeIds: ["u1", "u2", "u3"]
+        )
+        let members = [
+            CircleMember(id: "m1", role: .admin, userId: "u1", user: CareUser(id: "u1", email: "a@test.com", name: "Alex", phone: nil, memberships: nil)),
+            CircleMember(id: "m2", role: .member, userId: "u2", user: CareUser(id: "u2", email: "b@test.com", name: "Bea", phone: nil, memberships: nil)),
+            CircleMember(id: "m3", role: .recipient, userId: "u3", user: CareUser(id: "u3", email: "r@test.com", name: "Mom", phone: nil, memberships: nil)),
+            CircleMember(id: "m4", role: .member, userId: "u4", user: CareUser(id: "u4", email: "c@test.com", name: "Chris", phone: nil, memberships: nil)),
+        ]
+
+        let eligible = TaskWorkflowPolicy.eligibleAssigneeMembers(
+            for: recipient,
+            members: members,
+            isOrganizer: false,
+            currentUserId: "u2"
+        )
+
+        XCTAssertEqual(eligible.map(\.userId), ["u2", "u3", "u1"])
+    }
+
+    func test_canToggleFromList_usesCapabilitiesForIncompleteTasks() {
+        let task = CareTask(
+            id: "t1",
+            title: "Give meds",
+            notes: nil,
+            dueAt: Date(),
+            status: .pending,
+            priority: .normal,
+            completedAt: nil,
+            archivedAt: nil,
+            circleId: "c1",
+            creatorId: "u1",
+            assigneeId: "u2",
+            assignee: nil,
+            capabilities: CareTaskCapabilities(
+                canEdit: false,
+                canDelete: false,
+                canAssign: false,
+                canChangeRecipient: false,
+                canChangeStatus: false,
+                canMarkDone: false,
+                canSkip: false,
+                canComment: true
+            )
+        )
+
+        XCTAssertFalse(task.canToggleCompletion)
+    }
 }

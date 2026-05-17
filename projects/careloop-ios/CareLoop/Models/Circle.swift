@@ -60,6 +60,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
     let sortOrder: Int
     let activationStatus: CareReceiverActivationStatus
     let receiverUserId: String?
+    let eligibleAssigneeIds: [String]
 
     init(
         id: String,
@@ -69,7 +70,8 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         isPrimary: Bool = false,
         sortOrder: Int = 0,
         activationStatus: CareReceiverActivationStatus = .draft,
-        receiverUserId: String? = nil
+        receiverUserId: String? = nil,
+        eligibleAssigneeIds: [String] = []
     ) {
         self.id = id
         self.name = name
@@ -79,6 +81,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         self.sortOrder = sortOrder
         self.activationStatus = activationStatus
         self.receiverUserId = receiverUserId
+        self.eligibleAssigneeIds = eligibleAssigneeIds
     }
 
     var isActiveForTasks: Bool {
@@ -94,6 +97,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         case sortOrder
         case activationStatus
         case receiverUserId
+        case eligibleAssigneeIds
     }
 
     init(from decoder: Decoder) throws {
@@ -106,6 +110,7 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         sortOrder = try container.decodeIfPresent(Int.self, forKey: .sortOrder) ?? 0
         activationStatus = try container.decodeIfPresent(CareReceiverActivationStatus.self, forKey: .activationStatus) ?? .draft
         receiverUserId = try container.decodeIfPresent(String.self, forKey: .receiverUserId)
+        eligibleAssigneeIds = try container.decodeIfPresent([String].self, forKey: .eligibleAssigneeIds) ?? []
     }
 }
 

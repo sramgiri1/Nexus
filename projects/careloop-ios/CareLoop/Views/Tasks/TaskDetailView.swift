@@ -95,8 +95,29 @@ struct TaskDetailView: View {
     private var circleId: String { appState.activeCircle?.id ?? "" }
     private var isAdmin:  Bool   { appState.userRole == .admin }
     private var isOwn:    Bool   { task.creatorId == userId }
-    private var canEdit:  Bool   { isAdmin || isOwn }
-    private var canChangeStatus: Bool { appState.userRole != .recipient }
+    private var canEdit:  Bool   { task.capabilities?.canEdit ?? (isAdmin || isOwn) }
+    private var canChangeStatus: Bool { task.capabilities?.canChangeStatus ?? (appState.userRole != .recipient) }
+    private var canAssign: Bool { task.capabilities?.canAssign ?? isAdmin }
+    private var canChangeRecipient: Bool { task.capabilities?.canChangeRecipient ?? canEdit }
+    private var canDelete: Bool { task.capabilities?.canDelete ?? canEdit }
+    private var canSkip: Bool { task.capabilities?.canSkip ?? (isAdmin || isOwn) }
+
+    private var activeRecipients: [CareRecipient] {
+        TaskWorkflowPolicy.activeRecipients(appState.activeCircle?.recipients ?? [])
+    }
+
+    private var selectedRecipientModel: CareRecipient? {
+        activeRecipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first
+    }
+
+    private var availableAssignees: [CircleMember] {
+        TaskWorkflowPolicy.eligibleAssigneeMembers(
+            for: selectedRecipientModel,
+            members: appState.activeCircle?.members ?? [],
+            isOrganizer: isAdmin,
+            currentUserId: userId
+        )
+    }
 
     // MARK: – Design tokens (mirrors NewTaskView)
     private let teal = Color(red: 0.16, green: 0.80, blue: 0.72)
@@ -121,18 +142,18 @@ struct TaskDetailView: View {
 
                 if canChangeStatus { statusCard }
 
-                if (appState.activeCircle?.recipients ?? []).count != 1 {
-                    recipientCard.disabled(!canEdit)
+                if activeRecipients.count != 1 || activeRecipients.isEmpty {
+                    recipientCard.disabled(!canChangeRecipient)
                 }
                 priorityCard.disabled(!canEdit)
-                if isAdmin && !(appState.activeCircle?.members ?? []).isEmpty {
+                if canAssign && !availableAssignees.isEmpty {
                     assigneeCard
                 }
                 notesCard.disabled(!canEdit)
 
                 commentsLink
 
-                if canEdit { deleteButton }
+                if canDelete { deleteButton }
 
                 if let error {
                     Text(error)
@@ -161,6 +182,7 @@ struct TaskDetailView: View {
         }
         .onChange(of: freq)      { _ in seedWeekdayIfNeeded() }
         .onChange(of: startDate) { _ in seedWeekdayIfNeeded() }
+        .onChange(of: recipientId) { _ in syncAssigneeSelection() }
         .confirmationDialog("Delete this task?", isPresented: $showDeleteAlert, titleVisibility: .visible) {
             Button("Delete", role: .destructive) { Task { await performDelete() } }
         }
@@ -349,7 +371,7 @@ struct TaskDetailView: View {
                 statusChip(.pending,    icon: "circle",                 color: Color(uiColor: .tertiaryLabel))
                 statusChip(.inProgress, icon: "circle.dotted",          color: Color(red: 0.13, green: 0.56, blue: 0.87))
                 statusChip(.done,       icon: "checkmark.circle.fill",  color: Color(red: 0.12, green: 0.68, blue: 0.49))
-                if isAdmin || isOwn {
+                if canSkip {
                     statusChip(.skipped, icon: "forward.circle.fill",   color: .orange)
                 }
             }
@@ -388,15 +410,14 @@ struct TaskDetailView: View {
 
     @ViewBuilder
     private var recipientCard: some View {
-        let recipients = appState.activeCircle?.recipients ?? []
-        if !recipients.isEmpty {
+        if !activeRecipients.isEmpty {
             CardShell {
                 HStack {
                     Label("For", systemImage: "person.fill")
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                     Spacer()
                     Picker("", selection: $recipientId) {
-                        ForEach(recipients) { r in Text(r.name).tag(r.id) }
+                        ForEach(activeRecipients) { r in Text(r.name).tag(r.id) }
                     }
                     .labelsHidden().tint(teal)
                 }
@@ -442,8 +463,7 @@ struct TaskDetailView: View {
                     get: { assigneeId ?? "" },
                     set: { assigneeId = $0.isEmpty ? nil : $0 }
                 )) {
-                    Text("Anyone").tag("")
-                    ForEach(appState.activeCircle?.members ?? []) { m in
+                    ForEach(availableAssignees) { m in
                         Text(m.role == .recipient
                              ? "\(m.user?.name ?? "Unknown") (Care Receiver)"
                              : m.user?.name ?? "Unknown")
@@ -609,7 +629,10 @@ struct TaskDetailView: View {
     // MARK: – Save logic
 
     private var cannotSave: Bool {
-        title.trimmingCharacters(in: .whitespaces).isEmpty || loading || recipientId.isEmpty
+        title.trimmingCharacters(in: .whitespaces).isEmpty
+        || loading
+        || recipientId.isEmpty
+        || (canAssign && assigneeId == nil)
     }
 
     private var computedDueAt: Date? {
@@ -653,6 +676,20 @@ struct TaskDetailView: View {
         weekdays = [TaskWeekday.from(date: startDate)]
     }
 
+    private func syncAssigneeSelection() {
+        guard canAssign else { return }
+        let currentIds = Set(availableAssignees.map(\.userId))
+        if let assigneeId, currentIds.contains(assigneeId) {
+            return
+        }
+        self.assigneeId = TaskWorkflowPolicy.defaultAssigneeId(
+            for: selectedRecipientModel,
+            members: appState.activeCircle?.members ?? [],
+            isOrganizer: isAdmin,
+            currentUserId: userId
+        )
+    }
+
     private var hasChanges: Bool {
         title != task.title
         || notes != (task.notes ?? "")
@@ -683,7 +720,7 @@ struct TaskDetailView: View {
                 dueAt:       computedDueAt,
                 priority:    priority,
                 status:      status,
-                isAdmin:     isAdmin,
+                canAssign:   canAssign,
                 assigneeId:  assigneeId,
                 recipientId: recipientId.isEmpty ? nil : recipientId,
                 recurrence:  computedRecurrence,

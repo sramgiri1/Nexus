@@ -11,8 +11,10 @@ import {
 import { canCreateTasksForReceiver } from "../lib/receiver-state.js";
 import {
   canCreateTaskWithAccess,
+  eligibleAssigneeUserIdsForReceiver,
   filterVisibleTasks,
   loadReceiverAccessContext,
+  taskCapabilities,
 } from "../lib/access.js";
 
 const taskInclude = {
@@ -115,12 +117,62 @@ async function ensureNextRecurringOccurrence(tx, task) {
 export default async function tasks(app) {
   const db = app.db;
 
+  async function assignmentContextForMember(dbLike, circleId, member, userId) {
+    const [accessContext, circleMembers, activeRecipientAccesses] = await Promise.all([
+      loadReceiverAccessContext(dbLike, {
+        circleId,
+        member,
+        userId,
+      }),
+      dbLike.circleMember.findMany({ where: { circleId } }),
+      dbLike.careRecipientAccess.findMany({ where: { revokedAt: null } }),
+    ]);
+
+    return {
+      ...accessContext,
+      recipients: accessContext.recipients.map((recipient) => ({
+        ...recipient,
+        eligibleAssigneeIds: eligibleAssigneeUserIdsForReceiver({
+          member,
+          receiver: recipient,
+          circleMembers,
+          activeRecipientAccesses,
+        }),
+      })),
+      circleMembers,
+      activeRecipientAccesses,
+    };
+  }
+
   async function accessContextForMember(circleId, member) {
-    return loadReceiverAccessContext(db, {
-      circleId,
-      member,
-      userId: member.userId,
-    });
+    return assignmentContextForMember(db, circleId, member, member.userId);
+  }
+
+  function assertAssigneeAllowed(assigneeId, receiver) {
+    if (!assigneeId) {
+      throw createHttpError("assigneeId is required", 400);
+    }
+    if (!receiver.eligibleAssigneeIds?.includes(assigneeId)) {
+      throw createHttpError("You cannot assign this task to that user", 403);
+    }
+  }
+
+  function decorateTaskForMember(task, member, accessContext) {
+    const receiver = accessContext.recipients.find((recipient) => recipient.id === task.recipientId);
+    if (!receiver) return task;
+    return {
+      ...task,
+      recipient: task.recipient
+        ? { ...task.recipient, receiverUserId: receiver.receiverUserId, eligibleAssigneeIds: receiver.eligibleAssigneeIds ?? [] }
+        : receiver,
+      capabilities: taskCapabilities({
+        member,
+        userId: member.userId,
+        task,
+        receiver,
+        accessGrant: accessContext.accessGrantByRecipientId.get(task.recipientId) ?? null,
+      }),
+    };
   }
 
   async function findVisibleTask(circleId, taskId, member, include = taskInclude) {
@@ -137,7 +189,10 @@ export default async function tasks(app) {
       userId: member.userId,
       accessContext,
     })[0] ?? null;
-    return { task: visibleTask, accessContext };
+    return {
+      task: visibleTask ? decorateTaskForMember(visibleTask, member, accessContext) : null,
+      accessContext,
+    };
   }
 
   async function resolveRecipientId(tx, circleId, requestedRecipientId, assigneeId) {
@@ -218,17 +273,29 @@ export default async function tasks(app) {
     let task;
     try {
       task = await db.$transaction(async (tx) => {
+        const assignmentContext = await assignmentContextForMember(
+          tx,
+          req.params.circleId,
+          member,
+          authenticatedUserId,
+        );
         const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId, assigneeId);
         if (!resolvedRecipientId) throw new Error("recipientId is required");
-        const receiver = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
-        const accessContext = await loadReceiverAccessContext(tx, {
-          circleId: req.params.circleId,
-          member,
-          userId: authenticatedUserId,
-        });
-        if (!canCreateTaskWithAccess({ member, receiver, accessContext })) {
+        const receiverBase = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+        const receiver = assignmentContext.recipients.find((recipient) => recipient.id === resolvedRecipientId)
+          ?? {
+            ...receiverBase,
+            eligibleAssigneeIds: eligibleAssigneeUserIdsForReceiver({
+              member,
+              receiver: receiverBase,
+              circleMembers: assignmentContext.circleMembers,
+              activeRecipientAccesses: assignmentContext.activeRecipientAccesses,
+            }),
+          };
+        if (!canCreateTaskWithAccess({ member, receiver, accessContext: assignmentContext })) {
           throw createHttpError("You do not have access to create tasks for this care receiver", 403);
         }
+        assertAssigneeAllowed(assigneeId, receiver);
 
         const createdTask = await createTaskRecord(tx, {
           title,
@@ -261,7 +328,7 @@ export default async function tasks(app) {
           data: { type: "TASK_CREATED", circleId: req.params.circleId, actorId: authenticatedUserId, payload: { taskId: createdTask.id, title } },
         });
 
-        return createdTask;
+        return decorateTaskForMember(createdTask, member, assignmentContext);
       });
     } catch (error) {
       return reply.code(error.statusCode ?? 400).send({ error: error.message });
@@ -295,7 +362,7 @@ export default async function tasks(app) {
       member,
       userId: member.userId,
       accessContext,
-    });
+    }).map((task) => decorateTaskForMember(task, member, accessContext));
   });
 
   // PATCH /circles/:circleId/tasks/:taskId
@@ -330,15 +397,20 @@ export default async function tasks(app) {
     }
 
     if (member.role === "MEMBER") {
-      if (assigneeId !== undefined)
-        return reply.code(403).send({ error: "Members cannot reassign tasks" });
-      if (recipientId !== undefined)
-        return reply.code(403).send({ error: "Members cannot reassign task recipients" });
       const isOwn = task.creatorId === authenticatedUserId;
-      if (!isOwn && (title !== undefined || notes !== undefined || dueAt !== undefined || priority !== undefined || recurrenceWasProvided))
-        return reply.code(403).send({ error: "Members can only edit their own tasks" });
-      if (status === "SKIPPED" && !isOwn)
-        return reply.code(403).send({ error: "Members can only skip their own tasks" });
+      const isStructuralEdit = title !== undefined
+        || notes !== undefined
+        || dueAt !== undefined
+        || priority !== undefined
+        || assigneeId !== undefined
+        || recipientId !== undefined
+        || recurrenceWasProvided;
+      if (!isOwn && isStructuralEdit)
+        return reply.code(403).send({ error: "Caregivers can only edit or reassign tasks they created" });
+      if (status !== undefined && status !== task.status && !task.capabilities?.canChangeStatus)
+        return reply.code(403).send({ error: "Caregivers cannot change status for this task" });
+      if (status === "SKIPPED" && !task.capabilities?.canSkip)
+        return reply.code(403).send({ error: "Caregivers can only skip tasks they control" });
     }
 
     const currentDueAt = task.dueAt ?? null;
@@ -391,14 +463,39 @@ export default async function tasks(app) {
     let updated;
     try {
       updated = await db.$transaction(async (tx) => {
+        const assignmentContext = await assignmentContextForMember(
+          tx,
+          req.params.circleId,
+          member,
+          authenticatedUserId,
+        );
+        let targetRecipient = assignmentContext.recipients.find((recipient) => recipient.id === task.recipientId)
+          ?? task.recipient;
+
         if (recipientId !== undefined) {
           const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
           if (!resolvedRecipientId) throw new Error("recipientId is required");
-          const receiver = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
-          if (!canCreateTaskWithAccess({ member, receiver, accessContext })) {
+          const receiverBase = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+          const receiver = assignmentContext.recipients.find((recipient) => recipient.id === resolvedRecipientId)
+            ?? {
+              ...receiverBase,
+              eligibleAssigneeIds: eligibleAssigneeUserIdsForReceiver({
+                member,
+                receiver: receiverBase,
+                circleMembers: assignmentContext.circleMembers,
+                activeRecipientAccesses: assignmentContext.activeRecipientAccesses,
+              }),
+            };
+          if (!canCreateTaskWithAccess({ member, receiver, accessContext: assignmentContext })) {
             throw createHttpError("You do not have access to assign tasks for this care receiver", 403);
           }
+          targetRecipient = receiver;
           data.recipientId = resolvedRecipientId;
+        }
+
+        const nextAssigneeId = assigneeId !== undefined ? assigneeId : task.assigneeId;
+        if (recipientId !== undefined || assigneeId !== undefined) {
+          assertAssigneeAllowed(nextAssigneeId, targetRecipient);
         }
 
         if (recurrenceWasProvided) {
@@ -481,7 +578,7 @@ export default async function tasks(app) {
           await ensureNextRecurringOccurrence(tx, nextTask);
         }
 
-        return nextTask;
+        return decorateTaskForMember(nextTask, member, assignmentContext);
       });
     } catch (error) {
       return reply.code(error.statusCode ?? 400).send({ error: error.message });

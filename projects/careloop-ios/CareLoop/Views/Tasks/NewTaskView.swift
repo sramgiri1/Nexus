@@ -52,7 +52,15 @@ struct NewTaskView: View {
         self.recipients = recipients
         self.isAdmin    = isAdmin
         self.onCreated  = onCreated
-        _recipientId    = State(initialValue: recipients.first?.id ?? "")
+        let activeRecipients = TaskWorkflowPolicy.activeRecipients(recipients)
+        let initialRecipient = activeRecipients.first ?? recipients.first
+        _recipientId = State(initialValue: initialRecipient?.id ?? "")
+        _assigneeId = State(initialValue: TaskWorkflowPolicy.defaultAssigneeId(
+            for: initialRecipient,
+            members: members,
+            isOrganizer: isAdmin,
+            currentUserId: creatorId
+        ))
     }
 
     // MARK: – Design tokens
@@ -77,9 +85,9 @@ struct NewTaskView: View {
                         endsCard
                     }
 
-                    if recipients.count != 1 { recipientCard }
+                    if activeRecipients.count != 1 || activeRecipients.isEmpty { recipientCard }
                     priorityCard
-                    if !members.isEmpty { assigneeCard }
+                    if !activeRecipients.isEmpty && !availableAssignees.isEmpty { assigneeCard }
                     notesCard
                     if let error {
                         Text(error)
@@ -112,6 +120,7 @@ struct NewTaskView: View {
             }
             .onChange(of: freq)      { _ in seedWeekdayIfNeeded() }
             .onChange(of: startDate) { _ in seedWeekdayIfNeeded() }
+            .onChange(of: recipientId) { _ in syncAssigneeSelection() }
         }
     }
 
@@ -320,20 +329,35 @@ struct NewTaskView: View {
         }
     }
 
+    private var activeRecipients: [CareRecipient] {
+        TaskWorkflowPolicy.activeRecipients(recipients)
+    }
+
+    private var selectedRecipientModel: CareRecipient? {
+        activeRecipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first
+    }
+
+    private var availableAssignees: [CircleMember] {
+        TaskWorkflowPolicy.eligibleAssigneeMembers(
+            for: selectedRecipientModel,
+            members: members,
+            isOrganizer: isAdmin,
+            currentUserId: creatorId
+        )
+    }
+
     // MARK: – Care recipient card
 
     @ViewBuilder
     private var recipientCard: some View {
-        if recipients.isEmpty && !hasRecipientMember {
+        if activeRecipients.isEmpty {
             CardShell {
-                Label("Add a care recipient before creating tasks.", systemImage: "person.crop.circle.badge.exclamationmark")
+                Label("Activate a care receiver before creating tasks.", systemImage: "person.crop.circle.badge.exclamationmark")
                     .font(.system(size: 14, design: .rounded))
                     .foregroundStyle(.secondary)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 14)
             }
-        } else if recipients.isEmpty {
-            EmptyView()
         } else {
             CardShell {
                 HStack {
@@ -341,7 +365,7 @@ struct NewTaskView: View {
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                     Spacer()
                     Picker("", selection: $recipientId) {
-                        ForEach(recipients) { r in
+                        ForEach(activeRecipients) { r in
                             Text(r.name).tag(r.id)
                         }
                     }
@@ -394,8 +418,7 @@ struct NewTaskView: View {
                     get: { assigneeId ?? "" },
                     set: { assigneeId = $0.isEmpty ? nil : $0 }
                 )) {
-                    Text("Anyone").tag("")
-                    ForEach(members) { m in
+                    ForEach(availableAssignees) { m in
                         Text(m.role == .recipient
                              ? "\(m.user?.name ?? "Unknown") (Care Receiver)"
                              : m.user?.name ?? "Unknown")
@@ -553,14 +576,11 @@ struct NewTaskView: View {
 
     // MARK: – Save logic
 
-    private var hasRecipientMember: Bool {
-        members.contains { $0.role == .recipient }
-    }
-
     private var cannotSave: Bool {
         title.trimmingCharacters(in: .whitespaces).isEmpty
             || loading
-            || (recipientId.isEmpty && !hasRecipientMember)
+            || recipientId.isEmpty
+            || assigneeId == nil
     }
 
     private var computedDueAt: Date? {
@@ -604,6 +624,19 @@ struct NewTaskView: View {
     private func seedWeekdayIfNeeded() {
         guard taskMode == .repeating, freq == .weekly, weekdays.isEmpty else { return }
         weekdays = [TaskWeekday.from(date: startDate)]
+    }
+
+    private func syncAssigneeSelection() {
+        let currentIds = Set(availableAssignees.map(\.userId))
+        if let assigneeId, currentIds.contains(assigneeId) {
+            return
+        }
+        self.assigneeId = TaskWorkflowPolicy.defaultAssigneeId(
+            for: selectedRecipientModel,
+            members: members,
+            isOrganizer: isAdmin,
+            currentUserId: creatorId
+        )
     }
 
     private func save() async {

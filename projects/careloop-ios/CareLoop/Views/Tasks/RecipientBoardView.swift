@@ -189,7 +189,9 @@ struct RecipientBoardView: View {
 
     private func recipientTaskRow(_ task: CareTask) -> some View {
         let isMyTask = task.assigneeId == appState.currentUser?.id
-        let canMarkDone = isMyTask && task.status != .done && task.status != .skipped
+        let canMarkDone = (task.capabilities?.canMarkDone ?? isMyTask)
+            && task.status != .done
+            && task.status != .skipped
 
         return VStack(alignment: .leading, spacing: 0) {
             HStack(spacing: 12) {

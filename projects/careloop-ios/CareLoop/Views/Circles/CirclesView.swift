@@ -326,7 +326,7 @@ struct CirclesView: View {
             }
         }
 
-        if isAdmin && task.assigneeId != nil {
+        if canAssign(task) && task.assigneeId != nil {
             Button { selectedTask = task } label: {
                 Label("Reassign", systemImage: "person.2.badge.gearshape")
             }
@@ -419,16 +419,20 @@ struct CirclesView: View {
     private var isAdmin: Bool   { appState.userRole == .admin }
 
     private func canEdit(_ task: CareTask) -> Bool {
-        isAdmin || task.creatorId == userId
+        task.capabilities?.canEdit ?? (isAdmin || task.creatorId == userId)
     }
 
     private func canSkip(_ task: CareTask) -> Bool {
         guard task.status != .done, task.status != .skipped else { return false }
-        return isAdmin || task.creatorId == userId
+        return task.capabilities?.canSkip ?? (isAdmin || task.creatorId == userId)
+    }
+
+    private func canAssign(_ task: CareTask) -> Bool {
+        task.capabilities?.canAssign ?? isAdmin
     }
 
     private func canDelete(_ task: CareTask) -> Bool {
-        isAdmin || task.creatorId == userId
+        task.capabilities?.canDelete ?? (isAdmin || task.creatorId == userId)
     }
 
     // MARK: – Data operations
@@ -445,6 +449,7 @@ struct CirclesView: View {
 
     private func toggle(_ task: CareTask) async {
         guard let circleId = appState.activeCircle?.id else { return }
+        guard task.canToggleCompletion else { return }
         let next: TaskStatus = task.status == .done ? .pending : .done
         if let updated = try? await APIClient.shared.updateTaskStatus(
             circleId: circleId, taskId: task.id, status: next

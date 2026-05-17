@@ -133,7 +133,7 @@ extension APIClient {
 
     func updateTask(circleId: String, taskId: String,
                     title: String, notes: String?, dueAt: Date?,
-                    priority: TaskPriority, status: TaskStatus, isAdmin: Bool, assigneeId: String?,
+                    priority: TaskPriority, status: TaskStatus, canAssign: Bool, assigneeId: String?,
                     recipientId: String?,
                     recurrence: TaskRecurrence?,
                     seriesScope: TaskSeriesScope = .occurrence) async throws -> CareTask {
@@ -147,7 +147,7 @@ extension APIClient {
         body["dueAt"]  = dueAt.map { ISO8601DateFormatter().string(from: $0) as Any } ?? NSNull()
         body["recurrence"] = recurrencePayload(from: recurrence)
         body["recipientId"] = recipientId.map { $0 as Any } ?? NSNull()
-        if isAdmin { body["assigneeId"] = assigneeId.map { $0 as Any } ?? NSNull() }
+        if canAssign { body["assigneeId"] = assigneeId.map { $0 as Any } ?? NSNull() }
         return try await patchAny("/circles/\(circleId)/tasks/\(taskId)", body: body)
     }
 

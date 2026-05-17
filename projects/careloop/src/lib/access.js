@@ -33,6 +33,7 @@ export function canViewTask({ member, userId, task, receiver, accessGrant }) {
     return receiver.receiverUserId === userId && task.assigneeId === userId;
   }
   if (!isActiveRecipientAccess(accessGrant)) return false;
+  if (task.creatorId === userId) return true;
   if (task.assigneeId === userId) return true;
   return task.assigneeId === receiver.receiverUserId;
 }
@@ -110,4 +111,92 @@ export function canCreateTaskWithAccess({ member, receiver, accessContext }) {
     receiver,
     accessGrant: accessContext.accessGrantByRecipientId.get(receiver.id) ?? null,
   });
+}
+
+export function eligibleAssigneeUserIdsForReceiver({
+  member,
+  receiver,
+  circleMembers,
+  activeRecipientAccesses,
+}) {
+  if (!member || !receiver) return [];
+  const eligibleIds = new Set();
+  const receiverUserId = receiver.receiverUserId;
+
+  if (isCareOrganizer(member)) {
+    for (const circleMember of circleMembers) {
+      if (circleMember.role !== "RECIPIENT") {
+        eligibleIds.add(circleMember.userId);
+      }
+    }
+    if (receiverUserId) eligibleIds.add(receiverUserId);
+    return [...eligibleIds];
+  }
+
+  if (isCareReceiver(member)) {
+    if (receiverUserId) eligibleIds.add(receiverUserId);
+    return [...eligibleIds];
+  }
+
+  eligibleIds.add(member.userId);
+  if (receiverUserId) eligibleIds.add(receiverUserId);
+
+  for (const circleMember of circleMembers) {
+    if (circleMember.role === "ADMIN") {
+      eligibleIds.add(circleMember.userId);
+      continue;
+    }
+    if (circleMember.role !== "MEMBER") continue;
+    if (circleMember.id === member.id) {
+      eligibleIds.add(circleMember.userId);
+      continue;
+    }
+    const hasReceiverAccess = activeRecipientAccesses.some((grant) =>
+      grant.memberId === circleMember.id
+      && grant.recipientId === receiver.id
+      && !grant.revokedAt
+    );
+    if (hasReceiverAccess) {
+      eligibleIds.add(circleMember.userId);
+    }
+  }
+
+  return [...eligibleIds];
+}
+
+export function taskCapabilities({ member, userId, task, receiver, accessGrant }) {
+  const canEdit = canEditTask({ member, userId, task });
+  const isAssignedToSelf = task.assigneeId === userId;
+  const isAssignedToReceiver = Boolean(receiver?.receiverUserId) && task.assigneeId === receiver.receiverUserId;
+  const isUnassigned = !task.assigneeId;
+  const isOrganizer = isCareOrganizer(member);
+  const isReceiver = isCareReceiver(member);
+  const isCaregiver = member?.role === "MEMBER";
+
+  let canChangeStatus = false;
+  let canMarkDone = false;
+  let canSkip = false;
+
+  if (isOrganizer) {
+    canChangeStatus = true;
+    canMarkDone = true;
+    canSkip = true;
+  } else if (isReceiver) {
+    canMarkDone = isAssignedToSelf;
+  } else if (isCaregiver && isActiveRecipientAccess(accessGrant)) {
+    canMarkDone = isAssignedToSelf || isAssignedToReceiver;
+    canChangeStatus = canMarkDone || (isUnassigned && task.creatorId === userId);
+    canSkip = task.creatorId === userId && (isAssignedToSelf || isAssignedToReceiver || isUnassigned);
+  }
+
+  return {
+    canEdit,
+    canDelete: canEdit,
+    canAssign: isOrganizer || (isCaregiver && task.creatorId === userId),
+    canChangeRecipient: isOrganizer || (isCaregiver && task.creatorId === userId),
+    canChangeStatus,
+    canMarkDone,
+    canSkip,
+    canComment: true,
+  };
 }

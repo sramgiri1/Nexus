@@ -2,7 +2,12 @@ import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver } from "../lib/receiver-state.js";
-import { filterVisibleTasks, isCareOrganizer, loadReceiverAccessContext } from "../lib/access.js";
+import {
+  eligibleAssigneeUserIdsForReceiver,
+  filterVisibleTasks,
+  isCareOrganizer,
+  loadReceiverAccessContext,
+} from "../lib/access.js";
 
 const circleInclude = {
   members: { include: { user: { select: { id: true, name: true, email: true } } } },
@@ -19,9 +24,26 @@ const MAX_CIRCLES_PER_USER = 3;
 export default async function circles(app) {
   const db = app.db;
 
-  function filteredCircleForMember(circle, member, accessContext) {
+  function decorateRecipientsForMember(recipients, member, circleMembers, activeRecipientAccesses) {
+    return recipients.map((recipient) => ({
+      ...recipient,
+      eligibleAssigneeIds: eligibleAssigneeUserIdsForReceiver({
+        member,
+        receiver: recipient,
+        circleMembers,
+        activeRecipientAccesses,
+      }),
+    }));
+  }
+
+  function filteredCircleForMember(circle, member, accessContext, activeRecipientAccesses) {
     if (isCareOrganizer(member)) return circle;
-    const filteredRecipients = accessContext.recipients;
+    const filteredRecipients = decorateRecipientsForMember(
+      accessContext.recipients,
+      member,
+      circle.members ?? [],
+      activeRecipientAccesses,
+    );
     const filteredTasks = filterVisibleTasks(circle.tasks ?? [], {
       member,
       userId: member.userId,
@@ -158,7 +180,8 @@ export default async function circles(app) {
       member,
       userId: member.userId,
     });
-    return filteredCircleForMember(circle, member, accessContext);
+    const activeRecipientAccesses = await db.careRecipientAccess.findMany({ where: { revokedAt: null } });
+    return filteredCircleForMember(circle, member, accessContext, activeRecipientAccesses);
   });
 
   // GET /circles/:id/insights/completion — admin only
@@ -330,7 +353,9 @@ export default async function circles(app) {
       member,
       userId: member.userId,
     });
-    return accessContext.recipients;
+    const circleMembers = await db.circleMember.findMany({ where: { circleId: req.params.id } });
+    const activeRecipientAccesses = await db.careRecipientAccess.findMany({ where: { revokedAt: null } });
+    return decorateRecipientsForMember(accessContext.recipients, member, circleMembers, activeRecipientAccesses);
   });
 
   // POST /circles/:id/recipients — admin only

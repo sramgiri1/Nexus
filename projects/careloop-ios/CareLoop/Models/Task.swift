@@ -20,6 +20,7 @@ struct CareTask: Identifiable, Codable, Hashable {
         lhs.recipient == rhs.recipient &&
         lhs.creatorId == rhs.creatorId &&
         lhs.assigneeId == rhs.assigneeId &&
+        lhs.capabilities == rhs.capabilities &&
         lhs.assignee?.id == rhs.assignee?.id &&
         lhs.assignee?.name == rhs.assignee?.name &&
         lhs.assignee?.email == rhs.assignee?.email &&
@@ -48,6 +49,7 @@ struct CareTask: Identifiable, Codable, Hashable {
         hasher.combine(recipient)
         hasher.combine(creatorId)
         hasher.combine(assigneeId)
+        hasher.combine(capabilities)
         hasher.combine(assignee?.id)
         hasher.combine(assignee?.name)
         hasher.combine(assignee?.email)
@@ -78,6 +80,7 @@ struct CareTask: Identifiable, Codable, Hashable {
     let creatorId: String
     let assigneeId: String?
     var assignee: CareUser?
+    let capabilities: CareTaskCapabilities?
 
     init(
         id: String,
@@ -100,7 +103,8 @@ struct CareTask: Identifiable, Codable, Hashable {
         recipient: CareRecipient? = nil,
         creatorId: String,
         assigneeId: String?,
-        assignee: CareUser?
+        assignee: CareUser?,
+        capabilities: CareTaskCapabilities? = nil
     ) {
         self.id = id
         self.title = title
@@ -123,6 +127,7 @@ struct CareTask: Identifiable, Codable, Hashable {
         self.creatorId = creatorId
         self.assigneeId = assigneeId
         self.assignee = assignee
+        self.capabilities = capabilities
     }
 
     var isOverdue: Bool {
@@ -139,6 +144,21 @@ struct CareTask: Identifiable, Codable, Hashable {
             endsAt: recurrenceEndsAt
         )
     }
+
+    var canToggleCompletion: Bool {
+        TaskWorkflowPolicy.canToggleFromList(self)
+    }
+}
+
+struct CareTaskCapabilities: Codable, Hashable {
+    let canEdit: Bool
+    let canDelete: Bool
+    let canAssign: Bool
+    let canChangeRecipient: Bool
+    let canChangeStatus: Bool
+    let canMarkDone: Bool
+    let canSkip: Bool
+    let canComment: Bool
 }
 
 struct TaskComment: Identifiable, Codable, Equatable {

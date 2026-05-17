@@ -489,6 +489,20 @@ function buildDb(seed = {}) {
           if (where.role && m.role !== where.role) return false;
           return true;
         }) ?? null,
+      findMany: async ({ where, include } = {}) =>
+        s.members
+          .filter((member) => {
+            if (where?.circleId && member.circleId !== where.circleId) return false;
+            if (where?.role && member.role !== where.role) return false;
+            return true;
+          })
+          .map((member) => {
+            if (!include?.user) return member;
+            return {
+              ...member,
+              user: s.users.find((user) => user.id === member.userId) ?? null,
+            };
+          }),
       count: async ({ where } = {}) =>
         s.members.filter((m) => {
           if (where?.userId && m.userId !== where.userId) return false;
@@ -1990,7 +2004,7 @@ describe("receiver-scoped access control", () => {
       method: "POST",
       url: "/circles/c1/tasks",
       headers: caregiverHeaders,
-      payload: { title: "Unsupported receiver task", creatorId: "u2", recipientId: "cr2" },
+      payload: { title: "Unsupported receiver task", creatorId: "u2", recipientId: "cr2", assigneeId: "u2" },
     });
     assert.equal(denied.statusCode, 403);
     assert.equal(denied.json().error, "You do not have access to create tasks for this care receiver");
@@ -2003,6 +2017,8 @@ describe("receiver-scoped access control", () => {
     });
     assert.equal(allowed.statusCode, 201);
     assert.equal(allowed.json().recipientId, "cr1");
+    assert.equal(allowed.json().capabilities.canAssign, true);
+    assert.equal(allowed.json().capabilities.canMarkDone, true);
     await app.close();
   });
 
@@ -2067,7 +2083,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     const res = await app.inject({
       method: "POST", url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "Give meds", creatorId: "u1", dueAt }),
+      body: JSON.stringify({ title: "Give meds", creatorId: "u1", dueAt, assigneeId: "u1" }),
     });
     assert.equal(res.statusCode, 201);
     const task = JSON.parse(res.payload);
@@ -2088,7 +2104,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     const res = await app.inject({
       method: "POST", url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "Check in on Dad", creatorId: "u1" }),
+      body: JSON.stringify({ title: "Check in on Dad", creatorId: "u1", assigneeId: "u1" }),
     });
     assert.equal(res.statusCode, 201);
     assert.equal(db._s.reminders.length, countBefore, "no new reminder created");
@@ -2099,7 +2115,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     await app.inject({
       method: "POST", url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "Morning walk", creatorId: "u1" }),
+      body: JSON.stringify({ title: "Morning walk", creatorId: "u1", assigneeId: "u1" }),
     });
     const countAfter = db._s.events.filter((e) => e.type === "TASK_CREATED").length;
     assert.equal(countAfter, countBefore + 1);
@@ -2118,9 +2134,19 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     const res = await app.inject({
       method: "POST", url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "x".repeat(201), creatorId: "u1" }),
+      body: JSON.stringify({ title: "x".repeat(201), creatorId: "u1", assigneeId: "u1" }),
     });
     assert.equal(res.statusCode, 400);
+  });
+
+  test("returns 400 when assigneeId is missing", async () => {
+    const res = await app.inject({
+      method: "POST", url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Needs an assignee", creatorId: "u1" }),
+    });
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "assigneeId is required");
   });
 
   test("returns 400 when the care receiver has not accepted or been proxy-activated", async () => {
@@ -2152,7 +2178,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
       method: "POST",
       url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "Give meds", creatorId: "u1", recipientId: "cr1" }),
+      body: JSON.stringify({ title: "Give meds", creatorId: "u1", recipientId: "cr1", assigneeId: "u1" }),
     });
     assert.equal(res.statusCode, 400);
     assert.equal(res.json().error, "Care receiver must accept or be proxy-activated before tasks can be created");
@@ -2163,7 +2189,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     const res = await app.inject({
       method: "POST", url: "/circles/c1/tasks",
       headers: HDR,
-      body: JSON.stringify({ title: "Intruder task", creatorId: "not-a-member" }),
+      body: JSON.stringify({ title: "Intruder task", creatorId: "not-a-member", assigneeId: "not-a-member" }),
     });
     assert.equal(res.statusCode, 403);
   });
@@ -2180,6 +2206,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
         creatorId: "u1",
         dueAt,
         recipientId,
+        assigneeId: "u1",
         recurrence: {
           frequency: "DAILY",
           interval: 1,
@@ -2206,6 +2233,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
         creatorId: "u1",
         dueAt,
         recipientId,
+        assigneeId: "u1",
         recurrence: {
           frequency: "WEEKLY",
           interval: 1,
@@ -2246,6 +2274,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
         creatorId: "u1",
         dueAt,
         recipientId,
+        assigneeId: "u1",
         recurrence: {
           frequency: "WEEKLY",
           interval: 1,
@@ -2295,6 +2324,7 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
         creatorId: "u1",
         dueAt: new Date("2026-04-29T12:00:00.000Z").toISOString(),
         recipientId,
+        assigneeId: "u1",
         recurrence: {
           frequency: "WEEKLY",
           interval: 1,

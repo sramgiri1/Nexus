@@ -69,6 +69,8 @@ struct TaskRowView: View {
                 .frame(width: 30, height: 30)
         }
         .buttonStyle(.plain)
+        .disabled(!task.canToggleCompletion)
+        .opacity(task.canToggleCompletion ? 1 : 0.45)
         .padding(.top, 1)
     }
 
