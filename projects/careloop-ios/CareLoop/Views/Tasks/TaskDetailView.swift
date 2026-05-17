@@ -44,6 +44,7 @@ struct TaskDetailView: View {
     @State private var status = TaskStatus.pending
     @State private var loading              = false
     @State private var error:               String?
+    @State private var isEditing            = false
     @State private var showDeleteAlert      = false
     @State private var showSeriesScopeDialog = false
     @State private var paywallRecipient: CareRecipient?
@@ -148,17 +149,17 @@ struct TaskDetailView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 14) {
                 titleCard
-                modeToggle.disabled(!canEdit)
+                modeToggle.disabled(!canEditContent)
 
                 if taskMode == .once {
-                    whenCard.disabled(!canEdit)
+                    whenCard.disabled(!canEditContent)
                 } else {
                     if recurrenceLocked {
                         premiumLockCard
                     } else {
-                        scheduleCard.disabled(!canEdit)
-                        startTimeCard.disabled(!canEdit)
-                        endsCard.disabled(!canEdit)
+                        scheduleCard.disabled(!canEditContent)
+                        startTimeCard.disabled(!canEditContent)
+                        endsCard.disabled(!canEditContent)
                     }
                 }
 
@@ -169,13 +170,13 @@ struct TaskDetailView: View {
                 if canChangeStatus { statusCard }
 
                 if activeRecipients.count != 1 || activeRecipients.isEmpty {
-                    recipientCard.disabled(!canChangeRecipient)
+                    recipientCard.disabled(!(canChangeRecipient && isEditing))
                 }
-                priorityCard.disabled(!canEdit)
+                priorityCard.disabled(!canEditContent)
                 if canAssign && !availableAssignees.isEmpty {
-                    assigneeCard
+                    assigneeCard.disabled(!isEditing)
                 }
-                notesCard.disabled(!canEdit)
+                notesCard.disabled(!canEditContent)
 
                 if detailPresentation.permissions.canComment {
                     commentsLink
@@ -202,10 +203,17 @@ struct TaskDetailView: View {
             ToolbarItem(placement: .confirmationAction) {
                 if loading {
                     ProgressView().scaleEffect(0.8)
-                } else {
+                } else if isEditing || hasStatusChange {
                     Button("Save") { handleSaveTapped() }
                         .fontWeight(.semibold)
                         .disabled(cannotSave)
+                        .accessibilityIdentifier("task-detail-save-button")
+                } else if canEdit {
+                    Button("Edit") { isEditing = true }
+                        .fontWeight(.semibold)
+                        .accessibilityIdentifier("task-detail-edit-button")
+                } else {
+                    EmptyView()
                 }
             }
         }
@@ -244,7 +252,7 @@ struct TaskDetailView: View {
             .font(.system(size: 18, weight: .semibold, design: .rounded))
             .padding(.horizontal, 16).padding(.vertical, 15)
             .background(card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
-            .disabled(!canEdit)
+            .disabled(!canEditContent)
             .accessibilityIdentifier("task-detail-title-field")
     }
 
@@ -772,11 +780,13 @@ struct TaskDetailView: View {
     // MARK: – Save logic
 
     private var cannotSave: Bool {
-        title.trimmingCharacters(in: .whitespaces).isEmpty
-        || loading
-        || recipientId.isEmpty
-        || (canAssign && assigneeId == nil)
-        || recurrenceLocked
+        loading
+        || (isEditing && (
+            title.trimmingCharacters(in: .whitespaces).isEmpty
+            || recipientId.isEmpty
+            || (canAssign && assigneeId == nil)
+            || recurrenceLocked
+        ))
     }
 
     private var computedDueAt: Date? {
@@ -867,6 +877,14 @@ struct TaskDetailView: View {
         || assigneeId != task.assigneeId
         || recipientId != (task.recipientId ?? "")
         || computedRecurrence != task.recurrence
+    }
+
+    private var hasStatusChange: Bool {
+        status != task.status
+    }
+
+    private var canEditContent: Bool {
+        canEdit && isEditing
     }
 
     private var shouldPromptForSeriesScope: Bool {

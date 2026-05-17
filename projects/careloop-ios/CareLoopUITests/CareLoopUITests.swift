@@ -644,6 +644,34 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanEditTaskTitleFromDetail() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+        let updatedTitle = "Pick up prescriptions updated"
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t2"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t2"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-detail-edit-button"].waitForExistence(timeout: 3))
+        app.buttons["task-detail-edit-button"].tap()
+
+        let titleField = app.textFields["task-detail-title-field"]
+        XCTAssertTrue(titleField.waitForExistence(timeout: 3))
+        titleField.tap()
+        titleField.typeText(" updated")
+
+        XCTAssertTrue(app.buttons["task-detail-save-button"].waitForExistence(timeout: 3))
+        app.buttons["task-detail-save-button"].tap()
+
+        XCTAssertTrue(app.staticTexts[updatedTitle].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func test_taskCommentsCanBeAddedAndDeleted() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "task-comments",
