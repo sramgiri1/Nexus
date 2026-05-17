@@ -4,6 +4,8 @@
 
 This matrix is the working contract for phase-by-phase implementation. Each phase must update the relevant rows before it is considered complete.
 
+Runnable suite groups are documented in `test-runbook.md` and exposed through `scripts/careloop-test-runner.sh`.
+
 | Screen / flow | Automated today | Simulator manual | Physical-device only | Missing coverage entirely |
 |---|---|---|---|---|
 | Onboarding welcome / reset session | `CareLoopUITests.test_launchesIntoOnboardingWhenSessionIsReset`; onboarding model tests | Visual polish, copy review, small-screen pass | None | Full sign-up form UI journey with backend stub |
