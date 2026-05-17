@@ -294,6 +294,20 @@ function buildDb(seed = {}) {
           tasks: include.tasks ? s.tasks.filter((t) => t.circleId === circle.id) : undefined,
         };
       },
+      delete: async ({ where }) => {
+        const index = s.circles.findIndex((circle) => circle.id === where.id);
+        if (index === -1) throw Object.assign(new Error("NotFound"), { code: "P2025" });
+        const [deleted] = s.circles.splice(index, 1);
+        s.members = s.members.filter((member) => member.circleId !== where.id);
+        s.recipients = s.recipients.filter((recipient) => recipient.circleId !== where.id);
+        s.recipientAccesses = s.recipientAccesses.filter((access) =>
+          s.recipients.some((recipient) => recipient.id === access.recipientId),
+        );
+        s.tasks = s.tasks.filter((task) => task.circleId !== where.id);
+        s.invitations = s.invitations.filter((invitation) => invitation.circleId !== where.id);
+        s.events = s.events.filter((event) => event.circleId !== where.id);
+        return deleted;
+      },
     };
   }
 
@@ -1625,6 +1639,94 @@ describe("circle membership management", () => {
     assert.equal(app.db._s.recipients[0].activationStatus, "PROXY_ACTIVE");
     assert.equal(app.db._s.recipients[0].proxyAuthorizedById, "u1");
     assert.equal(app.db._s.recipients[0].consentDocumentReference, "family-consent-form");
+    await app.close();
+  });
+
+  test("DELETE /circles/:id removes an admin-owned circle and scoped records", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: null,
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "ACTIVE",
+        activatedAt: new Date(),
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "member@test.com",
+        name: "Member",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: "u1",
+        acceptedById: null,
+        acceptedAt: null,
+        expiresAt: new Date(Date.now() + 14 * 24 * 60 * 60 * 1000),
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      tasks: [{
+        id: "t1",
+        circleId: "c1",
+        recipientId: "cr1",
+        title: "Medication",
+        status: "PENDING",
+        creatorId: "u1",
+        assigneeId: "u1",
+        dueAt: null,
+        completedAt: null,
+        archivedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "DELETE",
+      url: "/circles/c1",
+      headers: HDR,
+      payload: { userId: "u1" },
+    });
+
+    assert.equal(res.statusCode, 204);
+    assert.equal(app.db._s.circles.length, 0);
+    assert.equal(app.db._s.members.length, 0);
+    assert.equal(app.db._s.recipients.length, 0);
+    assert.equal(app.db._s.invitations.length, 0);
+    assert.equal(app.db._s.tasks.length, 0);
+    await app.close();
+  });
+
+  test("DELETE /circles/:id blocks non-admin circle deletion", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u2", email: "caregiver@test.com", name: "Caregiver" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      members: [{ id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" }],
+    }));
+
+    const res = await app.inject({
+      method: "DELETE",
+      url: "/circles/c1",
+      headers: await authHeaders({ id: "u2", email: "caregiver@test.com", name: "Caregiver" }),
+      payload: {},
+    });
+
+    assert.equal(res.statusCode, 403);
+    assert.equal(app.db._s.circles.length, 1);
     await app.close();
   });
 

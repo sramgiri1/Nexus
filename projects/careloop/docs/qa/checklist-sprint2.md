@@ -226,6 +226,8 @@ SELECT COUNT(*) FROM "DigestLog" WHERE "userId"='<id>' AND date='2026-04-26';
 - [x] Returning from an active circle back to the circle list is a first-class nav action
 - [x] Switching circles reloads the selected circle context before opening operations
 - [x] Last selected circle is persisted for session restore
+- [x] Admin-only full circle deletion is covered by backend regression tests
+- [x] Non-admin full circle deletion is blocked by backend regression tests
 - [ ] Manual QA for switching between two circles and confirming task scope follows the active circle on device
 
 ### 13A. Multi-recipient group operations
