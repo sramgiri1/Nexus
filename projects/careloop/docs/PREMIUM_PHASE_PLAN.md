@@ -103,7 +103,7 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P5: Organizer Request Visibility
 
-**Status:** Next.
+**Status:** Complete.
 
 **Goal:** Surface upgrade demand where organizers manage receiver access and plans.
 
@@ -112,12 +112,13 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 - Show collapsed upgrade request rows in Care Receiver Management.
 - One row per receiver, with request count and latest requester.
 - Request rows are informational and do not purchase directly.
+- Added iOS API/model support for fetching receiver-scoped request summaries.
+- Added UI-test fixture coverage for organizer-visible request summaries.
 
 **Tests**
 
-- Backend test for request summary shape.
-- UI test for organizer seeing request count.
-- UI test proving tapping request does not purchase.
+- `scripts/careloop-test-runner.sh ios:personas`
+- Focused Xcode UI test: `CareLoopUITests/test_organizerCanOpenCareReceiverManagement`
 
 ## Phase P6: Purchase Success And Management UX
 

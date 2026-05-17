@@ -21,6 +21,7 @@ final class AppState: ObservableObject {
 
     var uiTestInvitations: [GroupInvitation] = []
     var uiTestRecipientAccessByMemberId: [String: [RecipientAccessSummary]] = [:]
+    var uiTestPremiumUpgradeRequests: [PremiumUpgradeRequestSummary] = []
     var uiTestEvents: [CircleEvent] = []
     var uiTestCompletionInsights: CircleCompletionInsights?
 

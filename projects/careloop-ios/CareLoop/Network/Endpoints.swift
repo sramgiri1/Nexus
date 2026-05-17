@@ -93,6 +93,10 @@ extension APIClient {
         try await postAny("/circles/\(circleId)/recipients/\(recipientId)/premium-requests", body: [:])
     }
 
+    func fetchPremiumUpgradeRequests(circleId: String) async throws -> [PremiumUpgradeRequestSummary] {
+        try await get("/circles/\(circleId)/premium-requests")
+    }
+
     func reorderRecipients(circleId: String, recipientIds: [String], primaryRecipientId: String? = nil) async throws -> [CareRecipient] {
         var body: [String: Any] = [
             "recipientIds": recipientIds,

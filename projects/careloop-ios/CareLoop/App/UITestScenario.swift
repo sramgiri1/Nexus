@@ -48,6 +48,7 @@ extension AppState {
         activeCircle = scenario == .circleDirectory ? nil : fixture.circle
         uiTestInvitations = fixture.invitations
         uiTestRecipientAccessByMemberId = fixture.recipientAccessByMemberId
+        uiTestPremiumUpgradeRequests = fixture.premiumUpgradeRequests
         uiTestEvents = fixture.events
         uiTestCompletionInsights = fixture.completionInsights
         pendingTaskId = UITestScenario.pendingTaskId(ProcessInfo.processInfo.arguments) ?? fixture.pendingTaskId
@@ -61,6 +62,7 @@ private struct UITestScenarioFixture {
     let circle: CareCircle
     let invitations: [GroupInvitation]
     let recipientAccessByMemberId: [String: [RecipientAccessSummary]]
+    let premiumUpgradeRequests: [PremiumUpgradeRequestSummary]
     let events: [CircleEvent]
     let completionInsights: CircleCompletionInsights?
     let pendingTaskId: String?
@@ -235,6 +237,7 @@ private struct UITestScenarioFixture {
                 circle: circle,
                 invitations: pendingInvites,
                 recipientAccessByMemberId: [:],
+                premiumUpgradeRequests: [],
                 events: [],
                 completionInsights: nil,
                 pendingTaskId: nil
@@ -312,8 +315,17 @@ private struct UITestScenarioFixture {
                             grantedAt: Date().addingTimeInterval(-30 * 60)
                         ),
                     ],
-                ]
-                ,
+                ],
+                premiumUpgradeRequests: [
+                    PremiumUpgradeRequestSummary(
+                        recipientId: dadRecipient.id,
+                        recipientName: dadRecipient.name,
+                        requestCount: 2,
+                        latestRequesterName: backupCaregiver.name,
+                        latestRequesterId: backupCaregiver.id,
+                        latestRequestedAt: Date().addingTimeInterval(-30 * 60)
+                    ),
+                ],
                 events: [
                     CircleEvent(id: "e1", type: .taskCompleted, createdAt: Date().addingTimeInterval(-45 * 60), actorId: caregiver.id, actor: caregiverActor),
                     CircleEvent(id: "e2", type: .recipientUpdated, createdAt: Date().addingTimeInterval(-90 * 60), actorId: organizer.id, actor: organizerActor),
@@ -370,6 +382,7 @@ private struct UITestScenarioFixture {
                 circle: circle,
                 invitations: [],
                 recipientAccessByMemberId: [:],
+                premiumUpgradeRequests: [],
                 events: [
                     CircleEvent(id: "e4", type: .taskCompleted, createdAt: Date().addingTimeInterval(-30 * 60), actorId: organizer.id, actor: organizerActor),
                     CircleEvent(id: "e5", type: .taskUpdated, createdAt: Date().addingTimeInterval(-2 * 60 * 60), actorId: organizer.id, actor: organizerActor),
@@ -443,6 +456,7 @@ private struct UITestScenarioFixture {
                 circle: circle,
                 invitations: [],
                 recipientAccessByMemberId: [:],
+                premiumUpgradeRequests: [],
                 events: [],
                 completionInsights: nil,
                 pendingTaskId: nil

@@ -15,6 +15,7 @@ struct RecipientManagementView: View {
     @State private var loadingInviteId: String?
     @State private var error: String?
     @State private var pendingInvites: [GroupInvitation] = []
+    @State private var upgradeRequests: [PremiumUpgradeRequestSummary] = []
 
     private let rose = Color(red: 0.85, green: 0.30, blue: 0.50)
     private let blue = Color(red: 0.13, green: 0.56, blue: 0.87)
@@ -38,6 +39,11 @@ struct RecipientManagementView: View {
                         Text(error)
                             .font(.footnote)
                             .foregroundStyle(.red)
+                            .padding(.horizontal, 20)
+                    }
+
+                    if !upgradeRequests.isEmpty {
+                        upgradeRequestSection
                             .padding(.horizontal, 20)
                     }
 
@@ -172,6 +178,55 @@ struct RecipientManagementView: View {
             .background(Color.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
             .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
         }
+    }
+
+    private var upgradeRequestSection: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            sectionLabel("Upgrade Requests", icon: "paperplane.fill", color: Color(red: 0.55, green: 0.22, blue: 0.97))
+
+            VStack(spacing: 0) {
+                ForEach(Array(upgradeRequests.enumerated()), id: \.element.id) { index, request in
+                    upgradeRequestRow(request)
+                    if index < upgradeRequests.count - 1 {
+                        Divider().padding(.leading, 56)
+                    }
+                }
+            }
+            .background(Color.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+        }
+    }
+
+    private func upgradeRequestRow(_ request: PremiumUpgradeRequestSummary) -> some View {
+        HStack(spacing: 14) {
+            ZStack {
+                Circle()
+                    .fill(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.12))
+                Image(systemName: "crown.fill")
+                    .font(.system(size: 14, weight: .bold))
+                    .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
+            }
+            .frame(width: 36, height: 36)
+
+            VStack(alignment: .leading, spacing: 3) {
+                Text("\(request.requestCount) \(request.requestCount == 1 ? "caregiver" : "caregivers") requested Premium for \(request.recipientName)")
+                    .font(.system(size: 14, weight: .bold, design: .rounded))
+                    .foregroundStyle(dark)
+                if let latestRequesterName = request.latestRequesterName {
+                    Text("Latest request from \(latestRequesterName).")
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(mid)
+                }
+                Text("Review the receiver plan below. This request does not start a purchase.")
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(mid)
+            }
+
+            Spacer()
+        }
+        .padding(.horizontal, 16)
+        .padding(.vertical, 12)
+        .accessibilityIdentifier("premium-request-\(request.recipientId)")
     }
 
     private func pendingRow(_ invite: GroupInvitation) -> some View {
@@ -460,6 +515,7 @@ struct RecipientManagementView: View {
 
     private func refreshData() async {
         await loadPendingInvites()
+        await loadUpgradeRequests()
     }
 
     private func loadPendingInvites() async {
@@ -471,6 +527,19 @@ struct RecipientManagementView: View {
         do {
             let all = try await APIClient.shared.fetchInvitations(circleId: circleId)
             pendingInvites = all.filter { $0.role == .recipient }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func loadUpgradeRequests() async {
+        guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            upgradeRequests = appState.uiTestPremiumUpgradeRequests
+            return
+        }
+        do {
+            upgradeRequests = try await APIClient.shared.fetchPremiumUpgradeRequests(circleId: circleId)
         } catch {
             self.error = error.localizedDescription
         }

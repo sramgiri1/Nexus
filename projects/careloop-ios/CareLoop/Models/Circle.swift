@@ -219,6 +219,17 @@ struct PremiumUpgradeRequest: Identifiable, Codable, Hashable {
     let createdAt: Date?
 }
 
+struct PremiumUpgradeRequestSummary: Identifiable, Codable, Hashable {
+    let recipientId: String
+    let recipientName: String
+    let requestCount: Int
+    let latestRequesterName: String?
+    let latestRequesterId: String?
+    let latestRequestedAt: Date?
+
+    var id: String { recipientId }
+}
+
 enum CareRecipientEntitlementStatus: String, Codable {
     case free = "FREE"
     case active = "ACTIVE"
