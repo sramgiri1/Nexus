@@ -1,6 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
+import { activationForAcceptedReceiver } from "../lib/receiver-state.js";
 
 const circleInclude = {
   members: { include: { user: { select: { id: true, name: true, email: true } } } },
@@ -9,6 +10,7 @@ const circleInclude = {
 };
 const invitationInclude = {
   circle: { select: { id: true, name: true, recipientName: true, archiveAfterDays: true } },
+  recipient: { select: { id: true, name: true, activationStatus: true, receiverUserId: true } },
   invitedBy: { select: { id: true, name: true, email: true } },
 };
 const MAX_CIRCLES_PER_USER = 3;
@@ -550,7 +552,7 @@ export default async function circles(app) {
 
   // POST /circles/:id/members/invite — admin invite by email, membership created on acceptance
   app.post("/circles/:id/members/invite", async (req, reply) => {
-    const { userId, email, name, role } = req.body ?? {};
+    const { userId, email, name, role, recipientId } = req.body ?? {};
     const authenticatedUserId = requireAuthenticatedUser(req, reply);
     if (!authenticatedUserId) return;
     if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
@@ -567,6 +569,22 @@ export default async function circles(app) {
 
     const circle = await db.careCircle.findUnique({ where: { id: req.params.id } });
     if (!circle) return reply.code(404).send({ error: "Circle not found" });
+
+    let invitedRecipient = null;
+    if (recipientId !== undefined) {
+      if (normalizedRole !== "RECIPIENT") {
+        return reply.code(400).send({ error: "recipientId can only be used for care receiver invitations" });
+      }
+      invitedRecipient = await db.careRecipient.findFirst({
+        where: { id: recipientId, circleId: req.params.id },
+      });
+      if (!invitedRecipient) {
+        return reply.code(404).send({ error: "Care receiver not found" });
+      }
+      if (invitedRecipient.receiverUserId) {
+        return reply.code(409).send({ error: "Care receiver already has an account" });
+      }
+    }
 
     const existingUser = await db.user.findUnique({ where: { email: normalizedEmail } });
     if (existingUser) {
@@ -592,6 +610,7 @@ export default async function circles(app) {
           email: normalizedEmail,
           name: name.trim(),
           role: normalizedRole,
+          recipientId: invitedRecipient?.id ?? null,
           invitedById: authenticatedUserId,
         },
       });
@@ -605,6 +624,7 @@ export default async function circles(app) {
             invitationId: created.id,
             email: normalizedEmail,
             role: normalizedRole,
+            recipientId: invitedRecipient?.id ?? null,
           },
         },
       });
@@ -754,14 +774,26 @@ export default async function circles(app) {
       });
 
       if (invitation.role === "RECIPIENT") {
-        const existing = await tx.careRecipient.findFirst({
-          where: { circleId: invitation.circleId },
-          orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
-        });
-        const isPrimary = !existing;
-        await tx.careRecipient.create({
-          data: { circleId: invitation.circleId, name: user.name, isPrimary },
-        });
+        if (invitation.recipientId) {
+          await tx.careRecipient.update({
+            where: { id: invitation.recipientId },
+            data: activationForAcceptedReceiver(authenticatedUserId),
+          });
+        } else {
+          const existing = await tx.careRecipient.findFirst({
+            where: { circleId: invitation.circleId },
+            orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+          });
+          const isPrimary = !existing;
+          await tx.careRecipient.create({
+            data: {
+              circleId: invitation.circleId,
+              name: user.name,
+              isPrimary,
+              ...activationForAcceptedReceiver(authenticatedUserId),
+            },
+          });
+        }
       }
 
       await tx.invitation.update({

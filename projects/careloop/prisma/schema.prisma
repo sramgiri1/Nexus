@@ -91,8 +91,10 @@ model Invitation {
   createdAt  DateTime         @default(now())
   updatedAt  DateTime         @updatedAt
 
-  circle   CareCircle @relation(fields: [circleId], references: [id], onDelete: Cascade)
-  circleId String
+  circle      CareCircle     @relation(fields: [circleId], references: [id], onDelete: Cascade)
+  circleId    String
+  recipient   CareRecipient? @relation(fields: [recipientId], references: [id], onDelete: SetNull)
+  recipientId String?
 
   invitedBy   User?   @relation("InvitationSender", fields: [invitedById], references: [id], onDelete: SetNull)
   invitedById String?
@@ -127,6 +129,7 @@ model CareRecipient {
   tasks        Task[]
   accessGrants CareRecipientAccess[]
   entitlement  CareRecipientEntitlement?
+  invitations  Invitation[]
 
   @@index([circleId, activationStatus])
   @@index([receiverUserId])

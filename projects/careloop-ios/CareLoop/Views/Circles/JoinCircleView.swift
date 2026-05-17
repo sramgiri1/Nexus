@@ -98,7 +98,7 @@ struct JoinCircleView: View {
                 .foregroundStyle(Color(red: 0.10, green: 0.16, blue: 0.24))
             let subtitle: String = {
                 if startInCreateMode == true {
-                    return "Give your care circle a name. You can invite everyone once it's set up."
+                    return "Create your Care Circle, then invite the first care receiver so care starts with consent."
                 } else if startInCreateMode == false {
                     return "Enter the invite code or circle ID shared with you by your family."
                 }
@@ -159,7 +159,7 @@ struct JoinCircleView: View {
             } else {
                 Text("Create a new circle")
                     .font(.system(size: 22, weight: .bold, design: .rounded))
-                Text("Give your care circle a name. You can invite caregivers and care receivers once it's created.")
+                Text("Add the first care receiver now. Tasks unlock after they accept the invite or are proxy-activated.")
                     .font(.system(size: 15, weight: .medium, design: .rounded))
                     .foregroundStyle(.secondary)
                 field("Circle name", text: $circleName, placeholder: "Smith Family Care")
@@ -206,7 +206,7 @@ struct JoinCircleView: View {
                         name: circleName.trimmingCharacters(in: .whitespacesAndNewlines),
                         recipientName: recipientName.trimmingCharacters(in: .whitespacesAndNewlines)
                     )
-                    try await appState.activateCircle(id: created.id, promptNewTask: true)
+                    try await appState.activateCircle(id: created.id, promptNewTask: false)
                     if dismissOnSuccess {
                         dismiss()
                     }

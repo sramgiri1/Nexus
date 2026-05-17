@@ -56,6 +56,13 @@ function buildDb(seed = {}) {
       notes: null,
       isPrimary: true,
       sortOrder: 0,
+      activationStatus: "ACTIVE",
+      activatedAt: new Date(),
+      receiverUserId: null,
+      consentAttestedAt: null,
+      consentAttestedById: null,
+      proxyAuthorizedById: null,
+      consentDocumentReference: null,
       createdAt: new Date(),
       updatedAt: new Date(),
     })))],
@@ -280,6 +287,7 @@ function buildDb(seed = {}) {
       return {
         ...invitation,
         circle: include.circle ? (s.circles.find((circle) => circle.id === invitation.circleId) ?? null) : undefined,
+        recipient: include.recipient ? (s.recipients.find((recipient) => recipient.id === invitation.recipientId) ?? null) : undefined,
         invitedBy: include.invitedBy ? (s.users.find((user) => user.id === invitation.invitedById) ?? null) : undefined,
       };
     }
@@ -328,6 +336,13 @@ function buildDb(seed = {}) {
           notes: null,
           isPrimary: false,
           sortOrder: 0,
+          activationStatus: "DRAFT",
+          activatedAt: null,
+          receiverUserId: null,
+          consentAttestedAt: null,
+          consentAttestedById: null,
+          proxyAuthorizedById: null,
+          consentDocumentReference: null,
           createdAt: new Date(),
           updatedAt: new Date(),
           ...d,
@@ -973,6 +988,24 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("POST /circles creates the first care receiver as inactive until accepted", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+    }));
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles",
+      headers: HDR,
+      payload: { name: "Alpha", recipientName: "Mom" },
+    });
+
+    assert.equal(res.statusCode, 201);
+    const recipient = app.db._s.recipients.find((item) => item.circleId === res.json().id);
+    assert.equal(recipient.activationStatus, "DRAFT");
+    assert.equal(recipient.receiverUserId, null);
+    await app.close();
+  });
+
   test("POST /invitations/:inviteId/accept creates membership after auth", async () => {
     const app = await buildApp(buildDb({
       users: [
@@ -1008,6 +1041,56 @@ describe("circle membership management", () => {
     assert.equal(body.role, "ADMIN");
     assert.equal(app.db._s.members.length, 2);
     assert.equal(app.db._s.invitations[0].status, "ACCEPTED");
+    await app.close();
+  });
+
+  test("recipient invitation activates the existing care receiver profile on acceptance", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", email: "admin@test.com", name: "Admin" },
+        { id: "u2", email: "mom@test.com", name: "Mom" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: null,
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "DRAFT",
+        activatedAt: null,
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    }));
+
+    const invite = await app.inject({
+      method: "POST",
+      url: "/circles/c1/members/invite",
+      headers: HDR,
+      payload: { name: "Mom", email: "mom@test.com", role: "RECIPIENT", recipientId: "cr1" },
+    });
+    assert.equal(invite.statusCode, 201);
+    assert.equal(invite.json().recipientId, "cr1");
+
+    const accept = await app.inject({
+      method: "POST",
+      url: `/invitations/${invite.json().id}/accept`,
+      headers: await authHeaders({ id: "u2", email: "mom@test.com", name: "Mom" }),
+      payload: {},
+    });
+    assert.equal(accept.statusCode, 201);
+    assert.equal(app.db._s.recipients.length, 1);
+    assert.equal(app.db._s.recipients[0].activationStatus, "ACTIVE");
+    assert.equal(app.db._s.recipients[0].receiverUserId, "u2");
     await app.close();
   });
 
@@ -1625,6 +1708,42 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
       body: JSON.stringify({ title: "x".repeat(201), creatorId: "u1" }),
     });
     assert.equal(res.statusCode, 400);
+  });
+
+  test("returns 400 when the care receiver has not accepted or been proxy-activated", async () => {
+    const inactiveDb = buildDb({
+      users: [{ id: "u1", name: "Alice", email: "a@t.com", pushToken: null }],
+      circles: [{ id: "c1", name: "Smith Family", recipientName: "Mom" }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: null,
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "DRAFT",
+        activatedAt: null,
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    });
+    const inactiveApp = await buildApp(inactiveDb);
+    const res = await inactiveApp.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: HDR,
+      body: JSON.stringify({ title: "Give meds", creatorId: "u1", recipientId: "cr1" }),
+    });
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "Care receiver must accept or be proxy-activated before tasks can be created");
+    await inactiveApp.close();
   });
 
   test("returns 403 when creatorId is not a circle member", async () => {

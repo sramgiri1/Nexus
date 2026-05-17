@@ -8,6 +8,7 @@ import {
   normalizeRecurrenceInput,
   recurrenceFields,
 } from "../lib/recurrence.js";
+import { canCreateTasksForReceiver } from "../lib/receiver-state.js";
 
 const taskInclude = {
   assignee: { select: { id: true, email: true, name: true, phone: true, pushToken: true, timezone: true } },
@@ -135,6 +136,17 @@ export default async function tasks(app) {
     return null;
   }
 
+  async function assertTaskableRecipient(tx, circleId, recipientId) {
+    const recipient = await tx.careRecipient.findFirst({
+      where: { id: recipientId, circleId },
+    });
+    if (!recipient) throw new Error("recipientId must belong to this circle");
+    if (!canCreateTasksForReceiver(recipient)) {
+      throw new Error("Care receiver must accept or be proxy-activated before tasks can be created");
+    }
+    return recipient;
+  }
+
   // POST /circles/:circleId/tasks
   app.post("/circles/:circleId/tasks", async (req, reply) => {
     const { title, notes, dueAt, priority, creatorId, assigneeId, recurrence, recipientId } = req.body ?? {};
@@ -172,6 +184,7 @@ export default async function tasks(app) {
       task = await db.$transaction(async (tx) => {
         const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId, assigneeId);
         if (!resolvedRecipientId) throw new Error("recipientId is required");
+        await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
 
         const createdTask = await createTaskRecord(tx, {
           title,
@@ -330,6 +343,7 @@ export default async function tasks(app) {
         if (recipientId !== undefined) {
           const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
           if (!resolvedRecipientId) throw new Error("recipientId is required");
+          await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
           data.recipientId = resolvedRecipientId;
         }
 

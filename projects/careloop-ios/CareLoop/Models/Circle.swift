@@ -58,6 +58,8 @@ struct CareRecipient: Identifiable, Codable, Hashable {
     let notes: String?
     let isPrimary: Bool
     let sortOrder: Int
+    let activationStatus: CareReceiverActivationStatus
+    let receiverUserId: String?
 
     init(
         id: String,
@@ -65,7 +67,9 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         relationship: String? = nil,
         notes: String? = nil,
         isPrimary: Bool = false,
-        sortOrder: Int = 0
+        sortOrder: Int = 0,
+        activationStatus: CareReceiverActivationStatus = .draft,
+        receiverUserId: String? = nil
     ) {
         self.id = id
         self.name = name
@@ -73,7 +77,43 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         self.notes = notes
         self.isPrimary = isPrimary
         self.sortOrder = sortOrder
+        self.activationStatus = activationStatus
+        self.receiverUserId = receiverUserId
     }
+
+    var isActiveForTasks: Bool {
+        activationStatus == .active || activationStatus == .proxyActive
+    }
+
+    private enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case relationship
+        case notes
+        case isPrimary
+        case sortOrder
+        case activationStatus
+        case receiverUserId
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        id = try container.decode(String.self, forKey: .id)
+        name = try container.decode(String.self, forKey: .name)
+        relationship = try container.decodeIfPresent(String.self, forKey: .relationship)
+        notes = try container.decodeIfPresent(String.self, forKey: .notes)
+        isPrimary = try container.decodeIfPresent(Bool.self, forKey: .isPrimary) ?? false
+        sortOrder = try container.decodeIfPresent(Int.self, forKey: .sortOrder) ?? 0
+        activationStatus = try container.decodeIfPresent(CareReceiverActivationStatus.self, forKey: .activationStatus) ?? .draft
+        receiverUserId = try container.decodeIfPresent(String.self, forKey: .receiverUserId)
+    }
+}
+
+enum CareReceiverActivationStatus: String, Codable, CaseIterable {
+    case draft = "DRAFT"
+    case invited = "INVITED"
+    case active = "ACTIVE"
+    case proxyActive = "PROXY_ACTIVE"
 }
 
 struct CircleMember: Identifiable, Codable {

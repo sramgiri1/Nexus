@@ -431,4 +431,27 @@ final class CareCircleRecipientTests: XCTestCase {
         XCTAssertEqual(circle.orderedRecipients.map(\.id), ["r1", "r2", "r3"])
         XCTAssertEqual(circle.primaryRecipient?.id, "r1")
     }
+
+    func test_recipientActivation_decodesWithDraftDefaultForOlderPayloads() throws {
+        let data = """
+        {
+          "id": "r1",
+          "name": "John Doe",
+          "relationship": null,
+          "notes": null,
+          "isPrimary": true,
+          "sortOrder": 0
+        }
+        """.data(using: .utf8)!
+
+        let recipient = try JSONDecoder().decode(CareRecipient.self, from: data)
+        XCTAssertEqual(recipient.activationStatus, .draft)
+        XCTAssertFalse(recipient.isActiveForTasks)
+    }
+
+    func test_recipientActivation_activeAndProxyActiveUnlockTasks() {
+        XCTAssertTrue(CareRecipient(id: "r1", name: "John", activationStatus: .active).isActiveForTasks)
+        XCTAssertTrue(CareRecipient(id: "r2", name: "Jane", activationStatus: .proxyActive).isActiveForTasks)
+        XCTAssertFalse(CareRecipient(id: "r3", name: "Mia", activationStatus: .invited).isActiveForTasks)
+    }
 }
