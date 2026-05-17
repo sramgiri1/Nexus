@@ -11,6 +11,7 @@ struct RecipientManagementView: View {
     @State private var invitingRecipient: CareRecipient?
     @State private var proxyRecipient: CareRecipient?
     @State private var paywallRecipient: CareRecipient?
+    @State private var managementRecipient: CareRecipient?
     @State private var loadingRecipientId: String?
     @State private var loadingInviteId: String?
     @State private var error: String?
@@ -28,12 +29,48 @@ struct RecipientManagementView: View {
         appState.activeCircle?.orderedRecipients ?? []
     }
 
+    private var firstPremiumRecipient: CareRecipient? {
+        recipients.first(where: \.hasPremium)
+    }
+
     var body: some View {
         NavigationStack {
             ScrollView(showsIndicators: false) {
                 VStack(spacing: 20) {
                     infoBanner
                         .padding(.horizontal, 20)
+
+                    if let firstPremiumRecipient {
+                        Button {
+                            managementRecipient = firstPremiumRecipient
+                        } label: {
+                            HStack(spacing: 12) {
+                                Image(systemName: "crown.fill")
+                                    .font(.system(size: 15, weight: .bold))
+                                    .foregroundStyle(Color(red: 0.55, green: 0.22, blue: 0.97))
+                                    .frame(width: 34, height: 34)
+                                    .background(Circle().fill(Color(red: 0.55, green: 0.22, blue: 0.97).opacity(0.12)))
+                                VStack(alignment: .leading, spacing: 2) {
+                                    Text("Manage Premium")
+                                        .font(.system(size: 14, weight: .bold, design: .rounded))
+                                        .foregroundStyle(dark)
+                                    Text("\(firstPremiumRecipient.name)'s receiver-specific plan")
+                                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                                        .foregroundStyle(mid)
+                                }
+                                Spacer()
+                                Image(systemName: "chevron.right")
+                                    .font(.system(size: 13, weight: .bold))
+                                    .foregroundStyle(mid.opacity(0.65))
+                            }
+                            .padding(16)
+                            .background(Color.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
+                            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+                        }
+                        .buttonStyle(.plain)
+                        .padding(.horizontal, 20)
+                        .accessibilityIdentifier("manage-premium-top-button")
+                    }
 
                     if let error {
                         Text(error)
@@ -66,6 +103,7 @@ struct RecipientManagementView: View {
                 }
                 .padding(.top, 20)
             }
+            .accessibilityIdentifier("receiver-management-scroll")
             .background(bg.ignoresSafeArea())
             .navigationTitle("Care Receiver Management")
             .navigationBarTitleDisplayMode(.inline)
@@ -124,6 +162,9 @@ struct RecipientManagementView: View {
             .sheet(item: $paywallRecipient) { recipient in
                 PaywallView(circleId: appState.activeCircle?.id ?? "", recipient: recipient)
                     .environmentObject(appState)
+            }
+            .sheet(item: $managementRecipient) { recipient in
+                ReceiverPremiumManagementView(recipient: recipient)
             }
             .task { await refreshData() }
             .refreshable {
@@ -329,6 +370,16 @@ struct RecipientManagementView: View {
                         Text(recipient.hasPremium ? "Premium plan active" : "Basic plan")
                             .font(.system(size: 12, weight: .bold, design: .rounded))
                             .foregroundStyle(recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid)
+                        if recipient.hasPremium {
+                            Button("Manage") {
+                                managementRecipient = recipient
+                            }
+                            .font(.system(size: 11, weight: .bold, design: .rounded))
+                            .buttonStyle(.bordered)
+                            .controlSize(.mini)
+                            .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                            .accessibilityIdentifier("recipient-manage-plan-\(recipient.id)")
+                        }
                     }
                     .padding(.top, 2)
                 }
@@ -347,6 +398,10 @@ struct RecipientManagementView: View {
                             if !recipient.hasPremium {
                                 Button("Unlock Premium") {
                                     paywallRecipient = recipient
+                                }
+                            } else {
+                                Button("Manage Premium") {
+                                    managementRecipient = recipient
                                 }
                             }
                             if !recipient.isPrimary {
@@ -405,6 +460,18 @@ struct RecipientManagementView: View {
                 .buttonStyle(.borderedProminent)
                 .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
                 .accessibilityIdentifier("recipient-upgrade-\(recipient.id)")
+            } else {
+                Button {
+                    managementRecipient = recipient
+                } label: {
+                    Label("Manage \(recipient.name) plan", systemImage: "gearshape.fill")
+                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                        .frame(maxWidth: .infinity)
+                        .padding(.vertical, 12)
+                }
+                .buttonStyle(.bordered)
+                .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
+                .accessibilityIdentifier("recipient-manage-plan-footer-\(recipient.id)")
             }
         }
         .padding(18)

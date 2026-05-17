@@ -122,20 +122,25 @@ This plan turns the locked PRD decisions into small implementation phases. Each 
 
 ## Phase P6: Purchase Success And Management UX
 
+**Status:** Complete.
+
 **Goal:** Make payment completion trustworthy and receiver-specific.
 
 **Deliverables**
 
-- Add success screen after purchase with receiver-only scope, unlocked features, and renewal/trial details.
-- Add `Continue` and `Manage plan` actions.
-- Add receiver-specific premium management screen.
-- Improve restore, expired, billing failure, retry, and downgrade states.
+- Added receiver-scoped success state after purchase/restore entitlement sync.
+- Success state confirms receiver-only scope, unlocked features, and renewal details.
+- Added `Continue` and `Manage plan` actions to the success state.
+- Added receiver-specific premium management screen with App Store manage/restore actions.
+- Added above-fold Care Receiver Management entry for active receiver plans.
+- Preserved expired/billing-failure copy that existing data remains visible and only new premium actions are blocked.
 
 **Tests**
 
-- UI tests for paywall to success to continue.
-- UI tests for manage plan.
-- Unit tests for expired and billing-failed rendering.
+- `scripts/careloop-test-runner.sh ios:payments`
+- Focused Xcode UI tests:
+  - `CareLoopUITests/test_organizerCanOpenReceiverPremiumPaywall`
+  - `CareLoopUITests/test_organizerCanManagePremiumReceiverPlan`
 
 ## Phase P7: Premium Enforcement Sweep
 

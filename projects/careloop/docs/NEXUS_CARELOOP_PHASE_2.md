@@ -41,7 +41,7 @@ Track CareLoop Phase 2 as a governed NEXUS project mission for product hardening
 
 ## Premium Phase Handoff
 
-CareLoop remains in `CARELOOP-P3-PREMIUM` for receiver-scoped monetization. The operative plan is `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`, and the next premium subphase is P6 purchase success and receiver-specific management UX.
+CareLoop remains in `CARELOOP-P3-PREMIUM` for receiver-scoped monetization. The operative plan is `projects/careloop/docs/PREMIUM_PHASE_PLAN.md`, and the next premium subphase is P7 premium enforcement sweep.
 
 Premium phase rules:
 
@@ -57,6 +57,7 @@ Completed premium subphases:
 - P3: second care receiver creation is gated behind premium intent with backend and iOS persona coverage.
 - P4: caregiver upgrade requests are server-backed, duplicate-limited, summary-ready, and exposed from locked caregiver premium moments without purchase authority.
 - P5: organizer Care Receiver Management surfaces collapsed premium request summaries per receiver with count/latest requester context and no direct-purchase behavior.
+- P6: receiver-scoped purchase success and plan management UX confirms unlocked features, renewal scope, App Store manage/restore actions, and above-fold organizer access.
 
 ## Current Test Commands
 

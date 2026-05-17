@@ -115,6 +115,34 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(app.otherElements["receiver-paywall-screen"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Unlock Premium for David"].waitForExistence(timeout: 3))
+        app.swipeUp()
+        XCTAssertTrue(app.buttons["simulate-premium-success-button"].waitForExistence(timeout: 3))
+        app.buttons["simulate-premium-success-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Premium is active for David"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Receiver-specific Premium"].exists)
+        XCTAssertTrue(app.staticTexts["Recurring routines, insights, unlimited caregivers, and advanced coordination are now unlocked only for this care receiver."].exists)
+    }
+
+    @MainActor
+    func test_organizerCanManagePremiumReceiverPlan() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.staticTexts["Care Receiver Management"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Premium plan active"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Premium receiver features active until"].exists || app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Premium receiver features active until")).count > 0)
+
+        XCTAssertTrue(app.buttons["manage-premium-top-button"].waitForExistence(timeout: 3))
+        app.buttons["manage-premium-top-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Manage Premium for Maya"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Premium applies only to Maya's care workflow in this Care Circle."].exists)
     }
 
     @MainActor
@@ -173,6 +201,9 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
         dashboard.swipeUp()
+        if !app.buttons["quick-action-insights"].exists {
+            dashboard.swipeUp()
+        }
         XCTAssertTrue(app.buttons["quick-action-insights"].waitForExistence(timeout: 3))
         app.buttons["quick-action-insights"].tap()
 
