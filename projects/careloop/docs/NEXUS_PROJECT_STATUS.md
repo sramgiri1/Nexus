@@ -26,6 +26,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Premium P7 is complete: expired receiver entitlements keep existing care data visible while recurring tasks, premium insights, and additional caregiver access remain blocked; iOS now labels expired/revoked plan states explicitly.
 - Premium P8 is complete: the existing `npm run careloop:demo` room launcher now has premium/free/expired/request-pending showcase data, local StoreKit product configuration, and demo readiness validation.
 - Reminder/recurrence hardening is in progress: premium recurring task creation, recurring completion/next occurrence, task detail status changes, comment add/delete, and task detail snooze are now covered through focused Xcode UI automation.
+- Post-premium Phase A has started. A shared Task Detail presentation policy now centralizes task status, overdue/escalated display state, role permissions, inactive-receiver blocking, and recurring-premium blocking for Task Detail and Task Board surfaces.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -51,6 +52,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - `scripts/careloop-test-runner.sh docs:demo` passed after P8 demo/StoreKit contract updates.
 - Backend task suite passed after reminder/recurrence hardening UI coverage.
 - Focused Xcode task suite passed with recurring creation, recurring completion/next-occurrence, task detail status, comment add/delete, and snooze UI coverage.
+- Focused Xcode unit test `CareLoopTests/TaskDetailPresentationTests` passed for the shared Task Detail state model.
+- Focused Xcode UI tests for recurring completion, task detail status, and comments add/delete passed after the shared Task Detail policy integration.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

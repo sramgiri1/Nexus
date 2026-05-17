@@ -59,6 +59,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 
 - Override simulator destination with `CARELOOP_XCODE_DESTINATION`, for example `CARELOOP_XCODE_DESTINATION="platform=iOS Simulator,name=iPhone 17 Pro"`.
 - Focused task-detail validation can be run with Xcode UI tests `test_taskDetailCanSnoozeReminder`, `test_taskDetailCanChangeStatusToDone`, `test_taskCommentsCanBeAddedAndDeleted`, `test_organizerCanCreateRecurringTaskForPremiumReceiver`, and `test_completingRecurringTaskCreatesNextOccurrence`.
+- Task Detail state-model validation can be run with Xcode unit test class `CareLoopTests/TaskDetailPresentationTests`.
 - The `task-comments` UI fixture launches directly into the comments screen with local add/delete behavior so agents can validate comments without mutating a live backend.
 - Physical-device only coverage still includes APNs delivery, real universal links, Sign in with Apple entitlement validation, and StoreKit sandbox purchase/restore.
 - New phases must update this runbook and `testability-matrix.md` when adding or moving coverage.

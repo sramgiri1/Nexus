@@ -99,18 +99,22 @@ struct TaskDetailView: View {
     private var userId:   String { appState.currentUser?.id ?? "" }
     private var circleId: String { appState.activeCircle?.id ?? "" }
     private var isAdmin:  Bool   { appState.userRole == .admin }
-    private var isOwn:    Bool   { task.creatorId == userId }
-    private var canEdit:  Bool   { task.capabilities?.canEdit ?? (isAdmin || isOwn) }
-    private var canChangeStatus: Bool { task.capabilities?.canChangeStatus ?? (appState.userRole != .recipient) }
-    private var canAssign: Bool { task.capabilities?.canAssign ?? isAdmin }
-    private var canChangeRecipient: Bool { task.capabilities?.canChangeRecipient ?? canEdit }
-    private var canDelete: Bool { task.capabilities?.canDelete ?? canEdit }
-    private var canSkip: Bool { task.capabilities?.canSkip ?? (isAdmin || isOwn) }
-    private var canSnoozeReminder: Bool {
-        task.dueAt != nil
-        && ![TaskStatus.done, .skipped].contains(status)
-        && (isAdmin || task.assigneeId == userId || task.creatorId == userId)
+    private var detailPresentation: TaskDetailPresentation {
+        TaskWorkflowPolicy.detailPresentation(
+            for: task,
+            currentUserId: userId,
+            role: appState.userRole,
+            selectedRecipient: selectedRecipientModel,
+            statusOverride: status
+        )
     }
+    private var canEdit:  Bool   { detailPresentation.permissions.canEdit }
+    private var canChangeStatus: Bool { detailPresentation.permissions.canChangeStatus }
+    private var canAssign: Bool { detailPresentation.permissions.canAssign }
+    private var canChangeRecipient: Bool { detailPresentation.permissions.canChangeRecipient }
+    private var canDelete: Bool { detailPresentation.permissions.canDelete }
+    private var canSkip: Bool { detailPresentation.permissions.canSkip }
+    private var canSnoozeReminder: Bool { detailPresentation.permissions.canSnoozeReminder }
 
     private var activeRecipients: [CareRecipient] {
         TaskWorkflowPolicy.activeRecipients(appState.activeCircle?.recipients ?? [])
@@ -173,7 +177,9 @@ struct TaskDetailView: View {
                 }
                 notesCard.disabled(!canEdit)
 
-                commentsLink
+                if detailPresentation.permissions.canComment {
+                    commentsLink
+                }
 
                 if canDelete { deleteButton }
 

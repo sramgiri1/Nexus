@@ -807,6 +807,175 @@ final class CircleEventPresentationTests: XCTestCase {
     }
 }
 
+final class TaskDetailPresentationTests: XCTestCase {
+
+    private let now = Date(timeIntervalSince1970: 1_800_000_000)
+
+    private func recipient(
+        id: String = "r1",
+        name: String = "Mom",
+        activationStatus: CareReceiverActivationStatus = .active,
+        premium: CareRecipientPremium = .free
+    ) -> CareRecipient {
+        CareRecipient(
+            id: id,
+            name: name,
+            activationStatus: activationStatus,
+            receiverUserId: "u4",
+            eligibleAssigneeIds: ["u1", "u2", "u4"],
+            premium: premium
+        )
+    }
+
+    private func task(
+        status: TaskStatus = .pending,
+        dueAt: Date? = nil,
+        creatorId: String = "u1",
+        assigneeId: String? = "u2",
+        recipient: CareRecipient? = nil,
+        recurrenceFrequency: TaskRecurrenceFrequency = .none,
+        capabilities: CareTaskCapabilities? = nil
+    ) -> CareTask {
+        CareTask(
+            id: "t1",
+            title: "Refill medication",
+            notes: nil,
+            dueAt: dueAt,
+            status: status,
+            priority: .normal,
+            recurrenceFrequency: recurrenceFrequency,
+            recurrenceInterval: recurrenceFrequency == .none ? nil : 1,
+            completedAt: status == .done ? now : nil,
+            archivedAt: nil,
+            circleId: "c1",
+            recipientId: recipient?.id ?? "r1",
+            recipient: recipient,
+            creatorId: creatorId,
+            assigneeId: assigneeId,
+            assignee: nil,
+            capabilities: capabilities
+        )
+    }
+
+    func test_detailPresentation_allowsOrganizerToManageTask() {
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(creatorId: "u2", assigneeId: "u3"),
+            currentUserId: "u1",
+            role: .admin,
+            selectedRecipient: recipient(),
+            now: now
+        )
+
+        XCTAssertTrue(presentation.permissions.canEdit)
+        XCTAssertTrue(presentation.permissions.canDelete)
+        XCTAssertTrue(presentation.permissions.canAssign)
+        XCTAssertTrue(presentation.permissions.canChangeRecipient)
+        XCTAssertTrue(presentation.permissions.canChangeStatus)
+        XCTAssertTrue(presentation.permissions.canSnoozeReminder == false)
+    }
+
+    func test_detailPresentation_limitsCaregiverToCreatedOrAssignedActions() {
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(dueAt: now.addingTimeInterval(600), creatorId: "u1", assigneeId: "u2"),
+            currentUserId: "u2",
+            role: .member,
+            selectedRecipient: recipient(),
+            now: now
+        )
+
+        XCTAssertFalse(presentation.permissions.canEdit)
+        XCTAssertFalse(presentation.permissions.canDelete)
+        XCTAssertFalse(presentation.permissions.canAssign)
+        XCTAssertFalse(presentation.permissions.canChangeRecipient)
+        XCTAssertTrue(presentation.permissions.canChangeStatus)
+        XCTAssertTrue(presentation.permissions.canMarkDone)
+        XCTAssertTrue(presentation.permissions.canSnoozeReminder)
+    }
+
+    func test_detailPresentation_blocksCareReceiverEditingButAllowsAssignedCompletion() {
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(dueAt: now.addingTimeInterval(600), creatorId: "u1", assigneeId: "u4"),
+            currentUserId: "u4",
+            role: .recipient,
+            selectedRecipient: recipient(),
+            now: now
+        )
+
+        XCTAssertFalse(presentation.permissions.canEdit)
+        XCTAssertFalse(presentation.permissions.canDelete)
+        XCTAssertFalse(presentation.permissions.canAssign)
+        XCTAssertFalse(presentation.permissions.canChangeRecipient)
+        XCTAssertFalse(presentation.permissions.canChangeStatus)
+        XCTAssertTrue(presentation.permissions.canMarkDone)
+        XCTAssertTrue(presentation.permissions.canSnoozeReminder)
+    }
+
+    func test_detailPresentation_usesServerCapabilitiesWhenPresent() {
+        let capabilities = CareTaskCapabilities(
+            canEdit: false,
+            canDelete: false,
+            canAssign: false,
+            canChangeRecipient: false,
+            canChangeStatus: false,
+            canMarkDone: false,
+            canSkip: false,
+            canComment: false
+        )
+
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(dueAt: now.addingTimeInterval(600), capabilities: capabilities),
+            currentUserId: "u1",
+            role: .admin,
+            selectedRecipient: recipient(),
+            now: now
+        )
+
+        XCTAssertFalse(presentation.permissions.canEdit)
+        XCTAssertFalse(presentation.permissions.canDelete)
+        XCTAssertFalse(presentation.permissions.canChangeStatus)
+        XCTAssertFalse(presentation.permissions.canMarkDone)
+        XCTAssertFalse(presentation.permissions.canComment)
+        XCTAssertTrue(presentation.permissions.canSnoozeReminder)
+    }
+
+    func test_detailDisplayState_distinguishesOverdueAndEscalated() {
+        let overdueTask = task(dueAt: now.addingTimeInterval(-60))
+        let escalatedTask = task(dueAt: now.addingTimeInterval(-TaskWorkflowPolicy.escalationGraceInterval - 1))
+
+        XCTAssertEqual(TaskWorkflowPolicy.detailDisplayState(for: overdueTask, now: now), .overdue)
+        XCTAssertEqual(TaskWorkflowPolicy.detailDisplayState(for: escalatedTask, now: now), .escalated)
+    }
+
+    func test_detailPresentation_reportsInactiveReceiverBlockReason() {
+        let invited = recipient(activationStatus: .invited)
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(recipient: invited),
+            currentUserId: "u1",
+            role: .admin,
+            selectedRecipient: invited,
+            now: now
+        )
+
+        XCTAssertEqual(
+            presentation.blockedReason,
+            "Mom must accept the invite or be proxy activated before new task actions are available."
+        )
+    }
+
+    func test_detailPresentation_reportsRecurringPremiumBlockReason() {
+        let freeRecipient = recipient()
+        let presentation = TaskWorkflowPolicy.detailPresentation(
+            for: task(recipient: freeRecipient, recurrenceFrequency: .daily),
+            currentUserId: "u1",
+            role: .admin,
+            selectedRecipient: freeRecipient,
+            now: now
+        )
+
+        XCTAssertEqual(presentation.recurrenceBlockReason, "Recurring tasks require Premium for Mom.")
+    }
+}
+
 final class CircleHomePolicyTests: XCTestCase {
 
     private func makeRecipient(id: String, name: String, userId: String, assignees: [String]) -> CareRecipient {

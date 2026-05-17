@@ -445,20 +445,33 @@ struct CirclesView: View {
     private var isAdmin: Bool   { appState.userRole == .admin }
 
     private func canEdit(_ task: CareTask) -> Bool {
-        task.capabilities?.canEdit ?? (isAdmin || task.creatorId == userId)
+        detailPresentation(for: task).permissions.canEdit
     }
 
     private func canSkip(_ task: CareTask) -> Bool {
-        guard task.status != .done, task.status != .skipped else { return false }
-        return task.capabilities?.canSkip ?? (isAdmin || task.creatorId == userId)
+        detailPresentation(for: task).permissions.canSkip
     }
 
     private func canAssign(_ task: CareTask) -> Bool {
-        task.capabilities?.canAssign ?? isAdmin
+        detailPresentation(for: task).permissions.canAssign
     }
 
     private func canDelete(_ task: CareTask) -> Bool {
-        task.capabilities?.canDelete ?? (isAdmin || task.creatorId == userId)
+        detailPresentation(for: task).permissions.canDelete
+    }
+
+    private func detailPresentation(for task: CareTask) -> TaskDetailPresentation {
+        TaskWorkflowPolicy.detailPresentation(
+            for: task,
+            currentUserId: userId,
+            role: appState.userRole,
+            selectedRecipient: taskRecipient(for: task)
+        )
+    }
+
+    private func taskRecipient(for task: CareTask) -> CareRecipient? {
+        if let recipient = task.recipient { return recipient }
+        return appState.activeCircle?.recipients?.first(where: { $0.id == task.recipientId })
     }
 
     // MARK: – Data operations
