@@ -14,3 +14,4 @@ projects/*/node_modules/
 # Xcode per-user workspace state
 **/*.xcworkspace/xcuserdata/
 **/*.xcodeproj/xcuserdata/
+projects/careloop/docs/qa/videos/
