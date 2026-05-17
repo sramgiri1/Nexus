@@ -1,179 +1,211 @@
 # CareLoop — Product Requirements Document
 
-**Version:** 1.6
-**Status:** Expanded for multi-recipient group operations and invite-based membership. Current local build now includes recurring tasks, weekly weekday selection, occurrence-vs-series recurring edits, pending invite acceptance, admin role management, recipient profiles, recipient-scoped tasks, recipient management, recipient reordering / primary reassignment, recipient-aware admin completion insights, and a two-step multi-group UX (`group list` -> `group hub` -> specific operation). The main remaining product gaps are public invite delivery/acceptance hardening, physical-device push validation, and the paid entitlement layer.
+**Version:** 1.7
+**Status:** Rebased to the current product definition for family-centered Care Circles, explicit care receiver consent and proxy activation, receiver-scoped caregiver access, and per-care-receiver premium entitlements. Current local code partially implements this model but still diverges in visibility rules, entitlement scope, and some receiver flows. This document is now the source of product truth for the next implementation phase.
 **Bundle ID:** com.careloop.ios
 **Compliance:** FTC Health Breach Notification Rule
 **Clinic Integration:** PERMANENTLY OFF ROADMAP
 
-**Terminology note:** the product should speak in terms of **Groups**. The current backend/schema still uses `circle` naming internally. Until the schema is migrated, `circle` in code/API means the same thing as `group` in product UX.
+**Terminology note:** the product should speak in terms of **Care Circle**, **Care Organizer**, **Caregiver**, and **Care Receiver**. The current backend/schema still uses `circle`, `ADMIN`, `MEMBER`, and `RECIPIENT` internally. Until the schema is migrated, those internal names refer to the product terms above.
 
 ---
 
 ## 1. Product Vision
 
-CareLoop eliminates the chaos of coordinating care across a family group. Instead of fragmented group texts, missed tasks, and duplicated effort, CareLoop gives every caregiver a shared, real-time view of who needs care, what needs to happen, and who is doing it.
+CareLoop helps a family coordinate caregiving tasks and reminders for one loved one inside a shared Care Circle, while still supporting more than one care receiver inside the same family when needed. The product is designed to reduce chaos, improve accountability, and give families a calmer operating system for care.
 
-**One sentence:** Coordinate family care for one or more loved ones without the group text chaos.
+**One sentence:** Coordinate family caregiving tasks and reminders for one loved one.
 
 ---
 
 ## 2. Problem
 
-Families caring for one or more loved ones face a coordination problem, not just a care problem:
+Families caring for a loved one face a coordination problem, not just a care problem:
 
-- Tasks fall through the cracks because no one knows who did what
-- Group texts get ignored or lost in noise
-- Siblings feel unequal burden without visibility
-- No single source of truth for each care recipient's status
-- Families often care for more than one person at once, but current tools flatten everything into one stream
+- Tasks fall through the cracks because nobody knows who owns what
+- Group texts create noise instead of reliable follow-through
+- Family members feel guilt, resentment, or unequal burden without visibility
+- Care receivers need consent, dignity, and clarity about who is helping them
+- Families that support more than one loved one need structure, but not a clinical workflow tool
 
 ---
 
 ## 3. User Personas
 
-### Primary — The Coordinator (Admin)
+### Primary buyer — The Family Decision Unit
 
-- Adult child (35–55), typically the one who lives closest
-- Manages most day-to-day care tasks
-- Frustrated by having to chase siblings for updates
-- Wants accountability without conflict
+- In this phase, multiple family members jointly decide whether CareLoop is worth paying for
+- The product is family-first, not clinic-first
+- A paid decision is usually made around one specific care receiver's needs
 
-### Secondary — The Remote Sibling (Member)
+### Primary product owner — The Care Organizer
 
-- Lives further away, contributes less but wants to help
-- Feels guilty, wants visibility
-- Checks in periodically, needs clear tasks with deadlines
+- Main family organizer for a Care Circle
+- Creates the circle, invites care receivers and caregivers, and controls who can access whom
+- Needs visibility across all care receivers and all tasks in the circle
+- Wants accountability without turning the product into surveillance or conflict
 
-### Additional Caregiver / Co-Admin
+### Core participant — The Caregiver
 
-- Spouse, sibling, friend, or trusted helper
-- May need admin privileges even though they are not a care recipient
-- Needs easy invite, acceptance, and clear role boundaries
+- Family member, spouse, sibling, friend, or trusted helper
+- Helps with tasks inside the scope of one or more explicitly assigned care receivers
+- Needs clarity, reminders, and enough context to help effectively
+- Is not the main coordination layer; the Care Organizer is
 
-### Care Receiver (App User)
+### Active participant — The Care Receiver
 
-- Aging parent, disabled adult, spouse, or another adult receiving care who wants visibility and participation in their own care plan
-- A real CareLoop account — invited by an Admin via email, installs the app, and accepts the invite
-- Gets a warm "My Care" experience: sees Today's tasks, Coming Up, Anytime, Done, and their Care Team
-- Can receive tasks assigned directly to them (e.g. "Take your 8pm medication", "Call the physio") and get push notification reminders
-- Can mark their own assigned tasks as done — cannot create, edit, reassign, or delete tasks
-- Must be **18 years or older** — the inviting Admin confirms this at invite time
-- **Minors as care receivers are a next-phase feature** — see Section 7 (Future Phases)
+- Adult receiving care who can participate directly in their own workflow
+- Has their own CareLoop account when they use the app directly
+- In this phase, sees only their own directly assigned tasks and can mark them done
+- Does not create tasks, invite others, or manage the circle
+- Must be **18 years or older** in this phase
 
-### Care Profile (Name-only record)
+### Proxy-authorized support relationship
 
-- Represents a recipient who does **not** use the app (no smartphone, cognitive barriers, or preference)
-- Stored as a profile record with name, relationship, and optional notes
-- Used for task scoping ("this task is for Dad") — no login or invite flow
+- Not a separate visible product role
+- Used when a care receiver cannot or will not operate the app directly
+- A Care Organizer may attest that they have consent and/or external legal authorization to act on that receiver's behalf
+- Proxy activation is a product/legal relationship recorded by CareLoop, not a new role in the UI
 
 ---
 
-## 4. Role Permissions
+## 4. Role And Access Matrix
 
-Every API action and UI affordance must enforce these rules.
+Every API action, screen, and empty state must enforce these product rules.
 
-| Action                                              | Admin   | Member              | Care Receiver      |
-|-----------------------------------------------------|---------|---------------------|--------------------|
-| Create a new group                                  | yes     | yes (becomes Admin) | no                 |
-| Edit group settings                                 | yes     | no                  | no                 |
-| Delete group                                        | yes     | no                  | no                 |
-| Leave group                                         | no      | yes                 | yes                |
-| Add / edit / remove care recipient profiles         | yes     | no                  | no                 |
-| Invite caregiver (Admin/Member/Receiver)            | yes     | no                  | no                 |
-| Remove caregiver / receiver                         | yes     | no                  | no                 |
-| Promote caregiver to Admin                          | yes     | no                  | no                 |
-| Demote caregiver from Admin                         | yes     | no                  | no                 |
-| Switch active group                                 | yes     | yes                 | yes                |
-| Create task                                         | yes     | yes                 | no                 |
-| Edit task (title, notes, due date, priority)        | yes     | own tasks only      | no                 |
-| Reassign task to another caregiver                  | yes     | no                  | no                 |
-| Change task recipient                               | yes     | no                  | no                 |
-| Receive task assigned to them + push reminder       | yes     | yes                 | yes                |
-| Mark task DONE / IN_PROGRESS                        | yes     | yes (any task)      | own assigned only  |
-| Mark task SKIPPED                                   | yes     | own tasks only      | no                 |
-| Delete task                                         | yes     | own tasks only      | no                 |
-| View task board                                     | yes     | yes                 | yes (My Care)      |
+### 4.1 Product role mapping
 
-**Role model:** a group can have multiple Admins. Admins are caregiver accounts, not care recipients. At least one Admin must remain in every group at all times. All members, caregivers, and care receivers must be **18 years or older** — confirmed by the inviting Admin at invite time. Minor support is a next-phase feature.
+| Product term | Internal role | Meaning |
+|--------------|---------------|---------|
+| Care Organizer | `ADMIN` | Full-circle coordinator with visibility across all care receivers and all tasks |
+| Caregiver | `MEMBER` | Supporting participant with explicit receiver-by-receiver access |
+| Care Receiver | `RECIPIENT` | Adult receiving care; sees only their own direct task flow in this phase |
 
-**API enforcement (mutations):** Group-scoped mutating endpoints that change a group, recipient, member, invite, or task must verify the requesting user's role via `CircleMember` (legacy schema name). Return `403` if the action is not permitted. Public auth bootstrap endpoints — `POST /auth/signup`, `POST /auth/login`, `POST /auth/social`, `POST /auth/forgot-password/request`, `POST /auth/forgot-password/verify`, and `POST /auth/forgot-password/reset` — do not require authentication. Authenticated setup endpoints — `POST /circles`, `PATCH /users/:id/push-token`, `PATCH /users/:id/timezone`, and `POST /users/:id/session` — do not require an existing group membership. Invite acceptance happens only after authentication.
+### 4.2 Visibility rules
 
-**API enforcement (reads):** GET endpoints require an authenticated bearer token. Group-scoped reads must enforce membership, and admin-only reads must enforce `ADMIN` role through `CircleMember`. Self-profile reads are self-only.
+| Visibility / access rule | Care Organizer | Caregiver | Care Receiver |
+|--------------------------|----------------|-----------|---------------|
+| See all care receivers in a Care Circle | yes | only if explicitly granted | no |
+| See who has access to a care receiver | yes | no | yes, for themselves as a basic consent right |
+| See tasks assigned to themselves | yes | yes | yes |
+| See tasks assigned directly to a care receiver they support | yes | yes | only if assigned to self |
+| See tasks assigned to another caregiver | yes | no | no |
+| See receiver-level counts / progress | yes | yes, only for receivers they support | limited personal task flow only |
+| See other care receivers in the same Care Circle | yes | only if explicitly granted | no |
 
-**UI enforcement:** Hide or disable affordances the user cannot perform. Do not rely on API `403` as the only gate.
+### 4.3 Action rules
+
+| Action | Care Organizer | Caregiver | Care Receiver |
+|--------|----------------|-----------|---------------|
+| Create a Care Circle | yes | yes (becomes organizer) | no |
+| Edit circle settings | yes | no | no |
+| Delete circle | yes | no | no |
+| Leave circle | no if last organizer; otherwise by transfer/removal flow | yes | yes |
+| Add / invite / activate care receivers | yes | no | no |
+| Invite caregivers | yes | no | no |
+| Decide caregiver access to specific care receivers | yes | no | no |
+| Promote caregiver to organizer | yes | no | no |
+| Create task | yes | yes, within granted receiver scope | no |
+| Assign task | yes | yes, within granted receiver scope | no |
+| Edit or reassign any task | yes | no | no |
+| Edit or reassign a task they created | yes | yes | no |
+| Complete own assigned task | yes | yes | yes |
+| Complete another caregiver's assigned task | yes | no | no |
+| Purchase premium for a care receiver | yes | no | no |
+
+### 4.4 Consent and authorization rules
+
+- A Care Circle may be created before the first care receiver joins.
+- No tasks may be created for a care receiver until that receiver is **active**.
+- A care receiver becomes active in one of two ways:
+  - direct acceptance through their own account
+  - authorized proxy activation recorded by a Care Organizer with attested consent and/or external authorization
+- Both a Care Organizer and the Care Receiver should be able to revoke a support relationship, with an audit trail.
+- Every caregiver enters the circle with **no care receiver access by default**. A Care Organizer must grant access explicitly.
+
+**API enforcement (mutations):** circle-scoped mutations must verify role through `CircleMember` plus receiver-level access rules where relevant. Public auth bootstrap endpoints remain unauthenticated. Product-specific receiver consent and proxy activation rules require additional contract work before full implementation.
+
+**API enforcement (reads):** GET endpoints require authenticated bearer tokens. Circle-scoped reads must enforce both membership and receiver-level visibility, not just circle membership.
+
+**UI enforcement:** hide or disable affordances the user cannot perform. Do not rely on API `403` as the only gate.
 
 ---
 
 ## 5. Core Features
 
-### 5.1 Care Groups
+### 5.1 Care Circles
 
-- A Care Group is the top-level workspace for one family or care team.
-- A group contains:
-  - caregiver members
-  - one or more care recipient profiles
-  - tasks, reminders, events, and settings scoped to that group
-- Members have roles: `ADMIN` or `MEMBER` (see Section 4).
-- **User-facing language:** the app should say `Group`, not `Circle`.
-- **Settings are per group:** archive window, recipient list, member roles, invite state, and future notification preferences belong to the group. Personal account data belongs to the user profile.
-- **Group cap:** one CareLoop user can belong to at most **3 groups total**. The cap applies to creating a new group, accepting an invite, or joining any transitional legacy flow.
+- A Care Circle is the top-level workspace for **one family**.
+- A Care Circle may include one or more care receivers.
+- A Care Circle contains:
+  - Care Organizers
+  - Caregivers
+  - one or more care receiver records
+  - receiver-scoped tasks, reminders, insights, access rules, and settings
+- **User-facing language:** the app should say `Care Circle`, not `Group`.
+- **Settings are per circle:** archive window, care receiver list, caregiver access, invite state, and future notification preferences belong to the circle. Personal account data belongs to the user profile.
+- **Multi-circle model:** one CareLoop user may belong to up to **3 Care Circles total**, mainly to support separate family branches or households.
 
-### 5.1.1 Care recipients inside a group
+### 5.1.1 Care receivers inside a Care Circle
 
-- A group can include multiple people receiving care.
-- Care recipients are profiles inside the group, not login accounts.
-- A recipient profile should include:
+- Every Care Circle should be centered around at least one care receiver.
+- A Care Circle can include multiple people receiving care.
+- Each care receiver may:
+  - use the app directly with their own account
+  - start as a draft profile and activate later
+  - be activated by proxy with recorded authorization
+- Each logged-in Care Receiver account maps to exactly **one** care receiver profile inside the circle.
+- A care receiver record should include:
   - full name
-  - relationship / label (for example `Mom`, `Dad`, `Grandma`, `Neighbor`)
-  - optional avatar / initials
-  - optional non-clinical descriptor for clarity (`Primary contact`, `Lives at home`, etc.)
-- The group dashboard should show each recipient as a distinct card or row with:
+  - family relationship / label (for example `Mom`, `Dad`, `Grandma`)
+  - activation state (`draft`, `invited`, `active`, `proxy-active`)
+  - access list and consent metadata
+  - premium entitlement status
+- The Care Circle dashboard should show each active receiver as a distinct card or row with:
   - due today count
   - overdue count
   - completed today count
   - latest upcoming task
-- v1 should support small-family multi-recipient coordination cleanly. The UX should be optimized for roughly **1–5 care recipients per group** even if backend storage is not hard-capped there initially.
+- v1 should support small-family multi-receiver coordination cleanly. The UX should be optimized for roughly **1–5 care receivers per Care Circle** even if backend storage is not hard-capped there initially.
 
-### 5.1.2 Group membership and invitations
+### 5.1.2 Membership, consent, and caregiver access
 
-- Users do not become members of a group merely because an Admin typed their email.
-- Admin creates an **invite** addressed to a specific email address (phone-based invite can be added later, but email is the required v1 path).
+- Users do not become members of a Care Circle merely because a Care Organizer typed their email.
+- Care Organizer creates an invite addressed to a specific email address.
 - Invite status lifecycle:
   - `PENDING`
   - `ACCEPTED`
   - `REVOKED`
   - `EXPIRED`
-- Invite flow:
-  1. Admin sends invite.
-  2. Invitee receives a link or code.
-  3. Invitee installs the app or opens it.
-  4. Invitee signs up or logs in with the invited email (or a linked provider account resolving to that email).
-  5. App shows pending invites.
-  6. Invitee accepts.
-  7. Membership is created as `MEMBER`.
-- Admin can revoke a pending invite before acceptance.
-- If the invitee already belongs to 3 groups, acceptance must fail with a clear error until they leave another group.
-- **Legacy direct join by group ID** may remain in local/dev builds temporarily, but it is not the intended public product flow.
+- Care receiver activation flow:
+  1. Care Organizer creates the Care Circle.
+  2. Care Organizer adds or invites the first care receiver.
+  3. That care receiver becomes active either by direct acceptance or by authorized proxy activation.
+  4. Only after activation can tasks be created for that receiver.
+- Caregiver access flow:
+  1. Care Organizer invites caregiver into the Care Circle.
+  2. Caregiver joins the circle with no receiver access.
+  3. Care Organizer explicitly grants access to one, many, or all care receivers in that circle.
+- If a caregiver is restricted from a care receiver, they should see **nothing at all** about that receiver or those tasks.
+- Receivers should be able to see who has access to them as a basic consent right, not a premium feature.
+- If the invitee already belongs to 3 Care Circles, acceptance must fail with a clear error until they leave another one.
 
-### 5.1.3 Multi-group operations
+### 5.1.3 Multi-circle operations
 
-- A user has one **active group** at a time in the app session.
-- After authentication, users should first land on a **group list** screen that shows all current memberships plus pending invites.
-- Opening a group from that list should take the user to a **group hub** screen, not directly into a sub-surface. The hub should expose explicit operations such as:
+- A user has one **active Care Circle** at a time in the app session.
+- After authentication, organizers and caregivers should first land on a **Care Circle list** screen that shows memberships plus pending invites.
+- Opening a Care Circle from that list should take the user to a **Care Circle dashboard** screen, not directly into a sub-surface. The dashboard should expose explicit operations such as:
   - task board
-  - members / invites
-  - care recipients
-  - group settings
-  - admin insights
-- Dashboard, recipient list, task list, member list, group settings, and new task creation are always scoped to the active group.
-- Joining a second or third group does not remove access to existing groups.
-- Creating or accepting a fourth group must fail with a clear product error explaining the 3-group limit.
-- Switching groups must reload recipients, tasks, members, permissions, and settings before the user continues working.
-- The app should persist the most recently used active group across relaunch.
-- Push/deep-link task opens must switch into the task's owning group before presenting that task.
-- Task creation is never global. A task is always created in the active group.
-- Returning from an active group back to the group list should be a first-class affordance in the nav chrome.
+  - caregivers and access
+  - care receivers
+  - circle settings
+  - organizer insights
+- Dashboard, receiver list, task list, caregiver access, and settings are always scoped to the active Care Circle.
+- Joining a second or third Care Circle does not remove access to existing ones.
+- Creating or accepting a fourth Care Circle must fail with a clear product error explaining the 3-circle limit.
+- Switching circles must reload care receivers, tasks, members, permissions, and settings before the user continues working.
+- The app should persist the most recently used active Care Circle across relaunch.
+- Push/deep-link task opens must switch into the task's owning Care Circle before presenting that task.
 
 ### 5.2 Task Management
 
@@ -184,19 +216,33 @@ Every API action and UI affordance must enforce these rules.
   - priority (`LOW / NORMAL / HIGH / URGENT`)
   - status
   - assignee
-  - owning group
-  - target care recipient
+  - owning Care Circle
+  - target care receiver
   - recurrence configuration (optional)
-- Every task should belong to exactly one group.
-- Every care task should belong to exactly one recipient profile. If non-recipient operational tasks are needed later, they should use an explicit `GENERAL` scope rather than omitting recipient context silently.
+- Every task should belong to exactly one Care Circle.
+- Every task should belong to exactly one care receiver.
+- Tasks may be created only for care receivers who are `active` or `proxy-active`.
 - Status flow: `PENDING → IN_PROGRESS → DONE` (or `SKIPPED`)
-- Any member can create and complete tasks; reassignment and recipient changes are Admin-only.
+- Care Organizers and Caregivers can create tasks.
+- Care Receivers cannot create tasks in this phase.
+- Care Organizers can assign tasks across any receiver in the circle.
+- Caregivers can assign tasks only inside the scope of receivers they support, and only to:
+  - themselves
+  - the care receiver
+  - another caregiver who also supports that receiver
+- Caregivers can edit or reassign only tasks they created.
+- A caregiver cannot directly complete another caregiver's assigned task.
 - Overdue tasks (`dueAt < now`, `status != DONE`) are highlighted in red.
-- Completed and skipped tasks remain visible in a `Completed` section until the group's `archiveAfterDays` window expires. After that they are archived server-side and excluded from the main task feed.
+- Completed and skipped tasks remain visible in a `Completed` section until the Care Circle's `archiveAfterDays` window expires. After that they are archived server-side and excluded from the main task feed.
+- Visibility rules for tasks:
+  - tasks assigned to a caregiver are visible to the Care Organizer and the assigned caregiver only
+  - other caregivers do not see them
+  - the care receiver does not see them
+  - tasks assigned directly to a care receiver are visible to the Care Organizer, caregivers who support that receiver, and that care receiver
 - The dashboard must support:
-  - all-recipient view
-  - per-recipient filtered task view
-  - recipient-aware counts and status summaries
+  - receiver cards
+  - per-receiver filtered task views
+  - receiver-aware counts and status summaries
 
 ### 5.2.1 Recurring tasks
 
@@ -218,19 +264,21 @@ Every API action and UI affordance must enforce these rules.
   - editing one occurrence and editing the whole series must be distinct actions
   - skipping one occurrence must not cancel future occurrences unless the admin explicitly pauses or ends the series
 - Recurring tasks should remain visible in the normal task list as concrete upcoming instances, not only as abstract templates.
-- Recurring tasks are part of the free collaborative core because recurring care is central to the product's value.
+- Basic one-time tasks and basic reminders belong in the free tier.
+- Advanced recurrence belongs to the premium entitlement scope for that care receiver.
 
-### 5.2.2 Admin completion insights
+### 5.2.2 Organizer completion insights
 
-- Admins should be able to see whether care work is actually getting done over time.
-- Each group should expose an Admin-only completion insights view or dashboard module.
+- Care Organizers should be able to see whether care work is actually getting done over time.
+- Each Care Circle should expose an organizer-only insights view or dashboard module.
 - Minimum insight charts:
   - tasks completed per day over the last 7 / 30 days
-  - completion rate by recipient
+  - completion rate by care receiver
   - overdue vs completed trend
   - top active caregivers by completed task count
-- These charts should be scoped to the active group and, where relevant, filterable by recipient.
+- These charts should be scoped to the active circle and, where relevant, filterable by care receiver.
 - This is not just vanity analytics; it helps the organizer identify whether coordination is working and where follow-through is slipping.
+- Premium insights should only unlock inside the scope of the paid care receiver entitlement.
 
 ### 5.3 Reminder Escalation
 
@@ -242,11 +290,12 @@ Every API action and UI affordance must enforce these rules.
 
 **Escalation logic:**
 
-1. Cron fires reminder → send push (if `pushToken` exists) → mark `Reminder.status = SENT`, set `sentAt`
-2. Cron checks again 15 minutes later: if task still not `DONE` → escalate
-3. Escalation: push to all group members + email via Resend → mark `Reminder.status = ESCALATED`, set `escalatedAt`
+1. Cron fires reminder to the assigned person first
+2. Cron checks again after the escalation window if task still not `DONE`
+3. Escalation notifies the Care Organizer and the relevant supporting caregivers for that care receiver
+4. Reassignment remains under organizer control; escalation is awareness, not automatic takeover
 
-**Push-to-email fallback:** If a member has no `pushToken`, skip push and send email directly. If Resend fails, log the error and mark `Reminder.status = FAILED` — no retry in Sprint 1.
+**Push-to-email fallback:** If the targeted user has no `pushToken`, skip push and send email directly. If Resend fails, log and mark `Reminder.status = FAILED` — no retry in Sprint 1.
 
 **Idempotency:** Cron checks `Reminder.status` before sending. A reminder with `status != PENDING` is skipped. Prevents double-sends on process restart.
 
@@ -254,7 +303,7 @@ Every API action and UI affordance must enforce these rules.
 
 **Schedule:** Cron runs at the top of every hour. For each user, if their local hour (per stored timezone) equals 18 (6pm), send digest.
 
-**Content:** Tasks due today (not done), overdue tasks, and tasks completed today, grouped by care recipient with assignee name.
+**Content:** Tasks due today (not done), overdue tasks, and tasks completed today, grouped by care receiver within that user's visibility scope.
 
 **Delivery:** Resend email, plain HTML. If Resend fails, log and skip — no retry in Sprint 1.
 
@@ -263,9 +312,9 @@ Every API action and UI affordance must enforce these rules.
 ### 5.5 Push Notifications
 
 - Task reminders (15 min before due)
-- Escalation alerts (task overdue, sent to all group members)
-- Task assignment notifications (when Admin assigns a task)
-- Invite notifications (when a caregiver is invited to a group)
+- Escalation alerts (task overdue, sent to the Care Organizer and relevant supporting caregivers)
+- Task assignment notifications
+- Invite notifications
 - Requires APNs — gated on Apple Developer account
 
 ### 5.6 Authentication
@@ -278,10 +327,12 @@ Every API action and UI affordance must enforce these rules.
 - Forgot-password request is enumeration-safe: if the email is unknown, the API still returns `{ "sent": true }` without revealing whether an account exists.
 - Users can also authenticate with Google, Facebook, or Apple through CareLoop-owned OAuth start/callback routes that redirect back into the iOS app via `careloop://auth`.
 - Social sign-in maps to a first-party CareLoop `User` plus a linked `AuthIdentity` record per provider.
-- After authentication, the app should check for pending invites matching the authenticated email identity and surface them before sending the user into normal group selection.
+- After authentication, the app should check for pending invites matching the authenticated email identity and surface them before sending the user into normal circle selection.
 - Transport auth is bearer-token based in the current local build. Account auth issues a first-party CareLoop access token, and all protected reads/mutations execute in the authenticated user context.
 - **Local/dev mode:** social sign-in may complete via provider-returned profile payload while provider credentials are still being finalized. Production mode must validate provider tokens or callback exchanges before identity creation.
-- **Session restore (current implementation):** the iOS app persists `userId` and last attached `circleId`. On relaunch, it restores that circle if possible; otherwise it falls back to the user's first membership.
+- **Session restore (current implementation):** the iOS app persists `userId` and last attached `circleId`. On relaunch:
+  - organizers and caregivers restore into their last active Care Circle if possible
+  - care receivers restore into their own personal care flow
 
 ---
 
@@ -525,7 +576,7 @@ Both PATCH endpoints return the updated user object.
 
 ---
 
-### Care Groups (legacy API paths still use `/circles`)
+### Care Circles (legacy API paths still use `/circles`)
 
 | Method | Endpoint                                 | Auth | Role          |
 |--------|------------------------------------------|------|---------------|
@@ -542,7 +593,7 @@ Both PATCH endpoints return the updated user object.
 | DELETE | /circles/:id/members/:memberId           | bearer | admin         |
 | PATCH  | /circles/:id/members/:memberId/role      | bearer | admin         |
 
-**POST /circles — body:**
+**POST /circles — current local body:**
 
 ```json
 {
@@ -552,7 +603,9 @@ Both PATCH endpoints return the updated user object.
 }
 ```
 
-Creator comes from the authenticated bearer token and is automatically added as Admin. Legacy callers may still send `creatorId`, but it must match the authenticated user. Creating a fourth group for the same user must return a clear `400` limit error. Response 201 returns full group object (see GET response).
+Creator comes from the authenticated bearer token and is automatically added as Admin. Legacy callers may still send `creatorId`, but it must match the authenticated user. Creating a fourth Care Circle for the same user must return a clear `400` limit error. Response 201 returns full group object (see GET response).
+
+**Product contract note:** the target Care Circle setup flow should support creating a circle first, then adding or inviting the first care receiver, with task creation blocked until that receiver becomes `active` or `proxy-active`. The current local contract still compresses this into `firstRecipientName` and should be treated as transitional.
 
 **GET /circles/:id — response 200:**
 
@@ -584,15 +637,17 @@ Creator comes from the authenticated bearer token and is automatically added as 
 }
 ```
 
-**POST /circles/:id/recipients — body:**
+**POST /circles/:id/recipients — current local body:**
 
 ```json
 { "name": "string (required)", "label": "string?", "isPrimary": "boolean?" }
 ```
 
-Adds another care recipient profile inside the group.
+Adds another care recipient profile inside the Care Circle.
 
-**POST /circles/:id/invitations — body:**
+**Product contract note:** this endpoint needs a follow-up evolution to support `draft`, `invited`, `active`, and `proxy-active` receiver states plus consent metadata and explicit access-list behavior.
+
+**POST /circles/:id/invitations — current local body:**
 
 ```json
 {
@@ -603,6 +658,8 @@ Adds another care recipient profile inside the group.
 ```
 
 Creates a pending invite. Admin may invite another caregiver directly as `ADMIN` if desired. Invite acceptance, not invite creation, creates the membership row.
+
+**Product contract note:** the current local API mainly models caregiver or admin invites. The target product model also needs explicit care receiver invite / activation flows and caregiver-to-receiver access grants.
 
 **POST /circles/:id/invitations — response 201:**
 
@@ -722,16 +779,16 @@ Creator comes from the authenticated bearer token. Legacy callers may still send
 
 `GET /circles/:circleId/tasks` returns active and completed tasks for that circle, but excludes tasks with `archivedAt != null`.
 
-**PATCH — patchable fields by role:**
+**PATCH — patchable fields by product role (mapped internally to `ADMIN` / `MEMBER`):**
 
-| Field                                | Admin | Member         |
-|--------------------------------------|-------|----------------|
-| status                               | yes   | yes            |
-| title, notes, dueAt, priority        | yes   | own tasks only |
-| assigneeId                           | yes   | no             |
-| recipientId                          | yes   | no             |
+| Field                                | Care Organizer | Caregiver      |
+|--------------------------------------|----------------|----------------|
+| status                               | yes            | yes            |
+| title, notes, dueAt, priority        | yes            | own tasks only |
+| assigneeId                           | yes            | no             |
+| recipientId                          | yes            | no             |
 
-Errors: `403` if Member tries to edit another user's task or reassign; `404` if task not found in circle.
+Errors: `403` if a Caregiver tries to edit another user's task or reassign; `404` if task not found in circle.
 
 ---
 
@@ -773,10 +830,10 @@ User → DigestLog (messageId)
 
 Key constraints:
 
-- A user can belong to at most 3 groups
-- A group can contain multiple care recipients
+- A user can belong to at most 3 Care Circles
+- A Care Circle can contain multiple care recipients
 - Recurring tasks should be modeled as a series/template plus individual occurrences for completion history
-- Group invites are accepted after auth; invite creation alone does not create a membership
+- Care Circle invites are accepted after auth; invite creation alone does not create a membership
 - A user can have zero or more linked social identities (`AuthIdentity`) and zero or more password reset codes (`PasswordResetCode`)
 - Completed/skipped tasks are soft-retained in the main product until `archivedAt` is set by the scheduler
 - Task notes are limited to 1000 characters — no structured health fields in schema
@@ -804,306 +861,348 @@ This policy must be documented in `docs/incident-response.md` before public laun
 
 ### Screens
 
-1. **Authentication** — login, sign up, and forgot-password flows for email/password; Google/Facebook/Apple provider entry points route through backend-owned OAuth start/callback
-2. **Invite Resolution** — after auth, show pending group invites for the authenticated email and let the user accept or decline
-3. **Group Setup** — if no accepted invite exists, user can create a new group with `group name` + `first care recipient`
-4. **Group Dashboard** — default landing inside an active group. Shows recipient cards, due/overdue/completed summaries, and shortcuts into recipient-scoped tasks. Admins also see completion charts here or from an adjacent insights surface
-5. **Recipient Task List** — tasks for active group, filterable by recipient and split into `Active` and `Completed`
-6. **Task Detail** — opens editable; task fields and status are separate sections. `Save` persists title, notes, due date, priority, assignee, recipient, recurrence, and status, then returns to the task list
-7. **New Task** — title, notes (with health disclaimer), due date picker, priority selector, recipient picker, recurrence controls, and assignee picker. Admin sees reassignment controls
-8. **Member List** — caregiver members with name, email, and role badge. Admins can invite, remove, and promote members from this screen
-9. **Recipient Management** — add, rename, reorder, or remove care recipients inside the active group (Admin only)
-10. **Admin Insights** — per-group completion charts, recipient trends, and caregiver completion activity (Admin only)
-11. **Group Settings** — edit group name and `archiveAfterDays`, manage invite state, and future group-level notification preferences (Admin only)
-12. **Settings** — account info, active group info, all groups, sign out
-13. **Multi-group switching** — one active group at a time. The app includes a group list as the authenticated root plus a per-group hub for explicit operations before the user drills into tasks, members, settings, or insights
+1. **Authentication** — login, sign up, forgot-password, and Google/Facebook/Apple entry points using backend-owned OAuth start/callback routes
+2. **Invite Resolution and Care Circle List** — authenticated root for Care Organizers and Caregivers; shows pending invites plus current Care Circle memberships
+3. **Care Circle Setup** — create a Care Circle, then add or invite the first care receiver; task creation remains blocked until that receiver becomes `active` or `proxy-active`
+4. **Care Receiver Activation** — explicit direct-accept or organizer-recorded proxy activation flow with consent context
+5. **Care Circle Dashboard** — default landing for Care Organizers and Caregivers inside an active circle; shows care receiver cards, due / overdue / completed counts, premium state by receiver, and quick actions
+6. **Care Receiver Home** — default landing for a logged-in Care Receiver in this phase; full-screen next due task plus limited personal task flow
+7. **Receiver Task List** — task list scoped to the active Care Circle and then to a selected care receiver; split into `Active` and `Completed`
+8. **Task Detail** — editable task surface with separate sections for title, notes, due date, priority, recurrence, assignee, receiver, and status; rendered according to role permissions
+9. **New Task** — title, notes with health disclaimer, due date, priority, receiver picker, recurrence controls, assignee picker, and premium-aware reminders / automation affordances
+10. **People and Access** — caregivers, organizers, pending invites, and receiver-by-receiver access grants
+11. **Care Receiver Management** — add, invite, activate, rename, reorder, or remove care receivers inside the active Care Circle; organizer-only
+12. **Organizer Insights** — completion charts, overdue trends, caregiver activity, and receiver-level insights; organizer-only and premium-scoped per receiver
+13. **Care Circle Settings** — edit circle name, archive retention, manage invite state, and future circle-level policies
+14. **Account Settings** — account info, all Care Circles, sign out, notification state, and billing surfaces when implemented
 
 ### Navigation
 
-- Tab bar: Tasks | Settings
-- Active group selector in the top bar
-- Dashboard -> recipient task list -> task detail
-- Sheet or push: New Task, Member List, Recipient Management, Admin Insights, Group Settings
-- Active group state must be visible in the main experience and used as the scope for all task CRUD.
+- Organizer / Caregiver root:
+  - Authentication -> Invite Resolution / Care Circle List -> Care Circle Dashboard -> Receiver Task List -> Task Detail
+- Care Receiver root:
+  - Authentication / invite acceptance -> Care Receiver Home -> personal task detail / personal task history
+- Modal or push flows:
+  - New Task
+  - People and Access
+  - Care Receiver Management
+  - Organizer Insights
+  - Care Circle Settings
+- Active Care Circle state must always be visible for Care Organizers and Caregivers and must scope all task, receiver, access, and settings operations.
+- This phase does **not** require a fixed tab-bar information architecture. Role-based flows are more important than forcing identical navigation for every role.
 
 ---
 
 ## 10. Success Metrics and Required Analytics Events
 
-Sprint 1 measurable metrics require corresponding events logged to the `Event` table. Later-sprint activation metrics add their own event requirements when those features ship.
+Metrics below describe the product truth for the next implementation phase. Event names may continue to use legacy `circle` wording internally until the analytics contract is migrated.
 
-**Sprint 1 measurable metrics**
+### 10.1 Core product metrics
 
-| Metric                        | Target (Day 30) | Required Event                       |
-|-------------------------------|-----------------|--------------------------------------|
-| Care groups created           | 10              | `CIRCLE_CREATED`                     |
-| Tasks created per group/week  | 5+              | `TASK_CREATED`                       |
-| Task completion rate          | >70%            | `TASK_COMPLETED`                     |
-| D7 retention                  | >50%            | `APP_SESSION` (one per user per day) |
+| Metric | Target (Day 30) | Required Event |
+|--------|-----------------|----------------|
+| Care Circles created | 10 | `CIRCLE_CREATED` |
+| Active care receivers per active circle | >=1 | `RECIPIENT_CREATED` / activation event |
+| Tasks created per active care receiver per week | 5+ | `TASK_CREATED` |
+| Task completion rate | >70% | `TASK_COMPLETED` |
+| D7 retention | >50% | `APP_SESSION` |
+| Invite acceptance rate | >60% | `INVITE_ACCEPTED` |
+| Recurring task adoption | >25% of active circles | `TASK_SERIES_CREATED` |
+| Reminder escalation rate | <20% of due tasks | `REMINDER_ESCALATED` |
 
-**Sprint 2 activation metrics**
+**Implementation rule:** every route that triggers a metric-backed action in the active phase must log the corresponding event before returning.
 
-| Metric               | Target (Day 30) | Required Event         |
-|----------------------|-----------------|------------------------|
-| Reminder escalations | <20% of tasks   | `REMINDER_ESCALATED`   |
+**D7 retention definition:** a user made at least one API call on Day 0 and at least one on Day 7 (±1 day), measured via `APP_SESSION`.
 
-**Sprint 3 activation metrics**
+**APP_SESSION capture:** iOS calls `POST /users/:id/session` on every foreground via `scenePhase == .active`. The API deduplicates to one session event per user per UTC day and should include active Care Circle context when relevant.
 
-| Metric                     | Target (Day 30) | Required Event         |
-|----------------------------|-----------------|------------------------|
-| Invite acceptance rate     | >60%            | `INVITE_ACCEPTED`      |
-| Multi-recipient groups     | >30% of groups  | `RECIPIENT_CREATED`    |
-| Weekly active groups/user  | >1.3            | `APP_SESSION` + group context |
-| Recurring task adoption    | >25% of active groups | `TASK_SERIES_CREATED` |
+**Deferred metric:** daily digest open rate remains desirable, but `DIGEST_OPENED` stays deferred until webhook-backed email open tracking is implemented.
 
-**Implementation rule:** Every route that triggers a metric-backed action in the currently active sprint must call `log_event` before returning.
+### 10.2 Monetization metrics
 
-**D7 retention definition:** User made at least one API call on Day 0 and at least one on Day 7 (±1 day). Measured via `APP_SESSION` events.
+These metrics become required once receiver-scoped premium entitlements are live:
 
-**APP_SESSION capture:** iOS calls `POST /users/:id/session` (body: `{ "circleId": "string" }`, legacy field name) on every app foreground via `scenePhase == .active`. The API deduplicates per user per UTC calendar day — at most one `APP_SESSION` event is logged per user per day. The event should carry the active group context.
+| Metric | Target (Day 60) | Required Event |
+|--------|-----------------|----------------|
+| Premium upgrade rate on eligible receivers | >15% | `SUBSCRIPTION_STARTED` |
+| Receiver-scoped renewal retention | >85% | `SUBSCRIPTION_RENEWED` |
+| Premium receiver insights usage | >35% of premium receivers weekly | `INSIGHTS_VIEWED` |
+| Upgrade prompt conversion from locked premium affordances | >10% | `PAYWALL_VIEWED` + purchase event |
 
-**Deferred metric:** Daily digest open rate target remains `>40%`, but it is not measurable in Sprint 1.
+### 10.3 Pricing and entitlements
 
-**DIGEST_OPENED capture (deferred):** Resend open tracking pixel will be enabled on digest emails in the digest scheduler sprint. Resend will send a webhook to `POST /webhooks/resend` when the pixel fires. `DigestLog` will store the Resend `messageId` (field: `messageId String?`) for correlation once webhook support is implemented. That schema addition and webhook endpoint are both deferred and are not part of Sprint 1. `DIGEST_OPENED` is therefore not logged in Sprint 1.
+**Business model:** free tier plus receiver-scoped premium entitlements.
 
-### 10.1 Monetization metrics
+This product should **not** use per-caregiver seat pricing. Premium is purchased by a Care Organizer for a specific care receiver, and premium features apply only inside that receiver's scope.
 
-These metrics become required once subscriptions are enabled:
+**Free tier — Basic Care Receiver**
 
-| Metric                           | Target (Day 60) | Required Event              |
-|----------------------------------|-----------------|-----------------------------|
-| Trial start rate (admins)        | >40%            | `TRIAL_STARTED`             |
-| Trial-to-paid conversion         | >15%            | `SUBSCRIPTION_STARTED`      |
-| Monthly paid group retention     | >85%            | `SUBSCRIPTION_RENEWED`      |
-| Group invite acceptance on paid  | >60%            | `INVITE_ACCEPTED`           |
-| Admin insights weekly usage      | >35% of paid groups | `INSIGHTS_VIEWED`      |
-
-### 10.2 Pricing and entitlements
-
-**Business model:** `free tier + paid tier + introductory free trial`.
-
-This product should not use per-caregiver billing. The natural buyer is the primary organizer of a family group. One paid subscription should unlock premium features for the whole group.
-
-**Free tier — CareLoop Basic**
-
-- 1 group
-- 1 care recipient in that group
-- unlimited invited caregivers in that group
-- core auth, invite acceptance, task viewing, task completion, and basic task creation
-- recurring task creation and completion
+- 1 active care receiver
+- 1 Care Organizer plus 1 Caregiver
+- the care receiver account does **not** count toward the caregiver team limit
+- basic tasks
 - basic reminders
-- fixed archive retention default
+- basic invite acceptance
+- basic task completion
+- no advanced receiver-scoped insights
+- no advanced recurrence / accountability automation
+- no premium receiver-level access-management features beyond core consent rights
 
-**Paid tier — CareLoop Plus**
+**Premium entitlement — one Premium Care Receiver**
 
-- up to 3 groups
-- multiple care recipients per group
-- group dashboard with recipient-level views
-- advanced admin controls
-- admin completion charts and caregiver performance insights
-- configurable archive retention
-- escalation reminders
-- daily digest
-- future premium reporting/export surfaces
+- purchased by a Care Organizer only
+- smallest billable unit is one care receiver
+- entitlement applies only to that receiver's workflow
+- all users who have access to that receiver receive the premium features for that receiver
+- premium receiver may have unlimited Caregivers supporting them
+- premium unlocks:
+  - advanced reminders and escalation automation
+  - advanced recurrence and accountability tools
+  - richer coordination controls for that receiver
+  - receiver-scoped organizer insights
+  - additional premium UX and reporting tied to that receiver
 
-**Trial**
+**Multi-receiver billing rule**
 
-- 14-day free trial of CareLoop Plus
-- Trial should start when an organizer creates their first group or activates a premium feature path, not merely when the app is installed
-- Trial applies to the organizer account and unlocks Plus features for the organizer's group(s)
-
-**Who pays**
-
-- The paying customer is the organizer / Admin
-- Invited caregivers should not be forced through a paywall just to join, view tasks, or complete tasks
-- A paid entitlement should unlock the relevant premium features for all members of the covered group
+- families may keep one active care receiver on the free tier with limited functionality
+- if a Care Circle has multiple care receivers, premium must be unlocked separately for each receiver that needs premium functionality
+- a premium entitlement for Receiver A does **not** unlock premium for Receiver B
+- shared-looking premium surfaces must still filter to the paid receiver's scope only
 
 **Downgrade rules**
 
-- When trial or subscription ends, do not lock users out of their data
-- Keep existing groups readable
-- Keep invited caregivers able to log in, view tasks, and complete tasks
-- Freeze only premium creation/management actions until billing resumes
-- If the account exceeds free-tier limits on downgrade, existing data remains visible but the user cannot add more premium resources until they upgrade again or reduce usage
+- do not lock users out of historical data
+- keep Care Circles readable
+- keep invite acceptance and basic task completion usable
+- freeze only premium creation, premium automation, premium insights, and premium team-scale actions when entitlement is absent
+- if the family exceeds free-tier limits after downgrade, existing data remains visible but new premium-only actions must be blocked until usage is reduced or premium is restored
 
 **Purchase mechanics**
 
 - iOS monetization should use App Store in-app purchase via StoreKit 2
-- Subscription types:
-  - monthly auto-renewing
-  - annual auto-renewing
-- Entitlements must be stored server-side and mapped to group access, not only device-local receipt state
-- Restore purchases must be supported
+- entitlements must be stored server-side and mapped to receiver-level access, not just device-local receipt state
+- restore purchases must be supported
+- receipt verification and entitlement refresh must be safe across multiple devices in the same Care Circle
 
 **Paywall strategy**
 
-- Do not paywall invite acceptance
-- Do not paywall task completion
-- Do not paywall the basic collaborative loop
-- Paywall additional complexity, automation, and multi-group / multi-recipient management
+- do not paywall invite acceptance
+- do not paywall basic task completion
+- do not paywall the core collaborative loop for one basic care receiver
+- use a mix of visible locked premium features plus soft / hard upgrade prompts as families grow into more complexity
 
-**CEO decision:** launch the core product with a generous free collaborative loop and monetize the organizer's need for scale, automation, and multi-recipient coordination. Growth depends on low-friction family participation; revenue should come from the coordinator who needs the system most.
+### 10.4 Monetization items locked
+
+- free forever for one care receiver with limited functionality
+- premium is purchased per care receiver, not per caregiver seat and not per whole circle
+- only a Care Organizer can purchase premium for a receiver
+- all users with access to that receiver benefit from that receiver's premium features
+- premium receiver unlocks unlimited Caregivers for that receiver
+- premium should unlock a bundle of value, not a single isolated feature:
+  - multiple receivers in a family workflow
+  - better accountability
+  - more coordination controls
+  - richer insights
+
+### 10.5 Monetization items still open
+
+- whether Care Circle count itself is limited by plan, or only receiver-level premium capability is monetized
+- pricing numbers for monthly and annual plans
+- whether a trial exists and, if so, its exact duration and trigger
+- final paywall copy and upgrade timing
+- whether any premium feature should unlock at the whole-circle level instead of strictly receiver scope
+- final server-side entitlement object design and billing reconciliation policy
 
 ---
 
-## 11. Scope by Sprint
+## 11. Next Implementation Phases
 
-**Permanently out of scope (all sprints):** Clinic/EHR integration, medication tracking, Android, web app.
+This is a convergence roadmap for the **existing** codebase, not a greenfield build plan.
 
-**Sprint 1 — Core Coordination:** initial single-recipient circle creation/join, task CRUD with role enforcement, session restore, analytics events `CIRCLE_CREATED / TASK_CREATED / TASK_COMPLETED / APP_SESSION`, manual QA checklist, seed/reset flow.
+**Permanently out of scope for this phase:** clinic / EHR integration, medical records, chat or social-network behavior, Android, and web app.
 
-**Sprint 2 — Auth, Reminders, Push, and Multi-group Foundations:** `node-cron` scheduler, reminder at `dueAt - 15m`, escalation, 6pm daily digest via Resend, APNs push end-to-end (reminder + escalation + assignment), `DigestLog.messageId` for digest correlation, push-to-email fallback, CareLoop email/password auth, backend-owned Google/Facebook/Apple OAuth entry, forgot-password flow, group list + group hub multi-group UX, completed-task retention (`archiveAfterDays`) and auto-archiving.
+### Phase 0 — Baseline and test harness
 
-**Sprint 3 — Group Model Upgrade:** multiple care recipients per group, group dashboard, recipient-scoped tasks, recurring task series + occurrences, invite creation and acceptance flow, group-scoped settings, admin invite/remove/promote, and enforced 3-group membership cap.
+- fix stale iOS tests so `xcodebuild test` runs green again
+- add a dedicated iOS UI test target for core journeys
+- verify backend smoke tests for auth, Care Circle, invite, and task routes
+- document current client/server contract mismatches before feature work resumes
 
-**Sprint 4 — Public Launch Hardening and Monetization:** privacy policy live, `incident-response.md` complete, production env separation, TestFlight/App Store submission, StoreKit 2 subscriptions (iOS implementation complete as of 2026-05-01 — `SubscriptionManager.swift` + `PaywallView.swift` + `CircleListView` premium UX; 34 unit tests added), 14-day trial, server-side entitlement sync, group-level premium unlocks, admin insights charts, and launch QA for the full invite-based onboarding path. Post-launch deferrals: distributed scheduler, user-facing activity feed, DIGEST_OPENED webhook, retry logic.
+### Phase 1 — Entry flow and Care Circle setup
 
-**Sprint 4 (continued) — Care Receiver role (iOS implementation, 2026-05-02):** full invite-based Care Receiver flow (email invite → install app → accept → read-only My Care board), role-gated UI for all three roles (Admin/Member/Receiver) across every screen, delete circle (Admin only) and leave circle (Member/Receiver) with confirmation flows, 18+ age confirmation on all invite forms. Minors as care receivers deferred to next phase — see Section 13.
+- authentication
+- pending invite resolution
+- Care Circle list
+- create Care Circle
+- add or invite first care receiver
+- block task creation until receiver activation
 
-Full exit criteria and test plan per sprint: see `docs/sprint-plan.md`.
+### Phase 2 — Dashboard and task core
 
----
+- organizer / caregiver Care Circle dashboard
+- care receiver home
+- receiver-scoped task list
+- new task
+- task detail
+- recurrence and completion flows
 
-## 13. Future Phases
+### Phase 3 — Access control and multi-receiver operations
 
-### Minor Care Receivers (Next Phase)
+- caregiver receiver-access grants
+- care receiver consent and proxy activation
+- multi-receiver Care Circle UX
+- people and access surface
+- care receiver management
+- organizer insights
 
-CareLoop currently requires all members, caregivers, and care receivers to be **18 years or older**. This is enforced at the invite level — the inviting Admin confirms the invitee's age before the invite is sent.
+### Phase 4 — Premium entitlement and launch hardening
 
-Supporting minors as care receivers (children, teenagers, young adults under guardianship) requires:
-
-- **Parental / guardian consent flow** — a parent or legal guardian must approve the minor's participation before they can accept an invite
-- **Restricted data handling** — COPPA compliance for under-13; FERPA awareness for school-age children
-- **Simplified UI** — age-appropriate task view and language for younger care receivers
-- **Guardian as co-account holder** — the minor's account is linked to a guardian's account; guardian can review and approve all circle activity visible to the minor
-- **Backend schema** — `User.dateOfBirth`, `User.guardianUserId`, `GroupInvitation.requiresGuardianApproval` fields
-- **App Store age rating** — current rating must be reviewed and updated before launch
-
-This phase is intentionally deferred from the initial public launch. Admins who attempt to invite a minor should see a clear message directing them to wait for this feature.
+- per-care-receiver premium entitlements
+- StoreKit 2 purchase and restore
+- server-side entitlement sync
+- premium-aware insights and automation
+- privacy policy, incident response, TestFlight, and launch QA
 
 ---
 
 ## 12. Decisions Locked
 
-- **Group creation:** Onboarding supports both create (user becomes Admin) and accept-invite entry. Raw circle-ID join is transitional only
-- **Multi-group membership:** Allowed, capped at 3 total groups per user
-- **Active group model:** A user works in one active group at a time. Dashboard, recipients, tasks, members, and settings are scoped to the active group
-- **Health content in notes:** Prohibited via UI disclaimer. No active sanitization. Accepted risk documented in Section 8
-- **Event log:** Internal/audit only in Sprint 1. Not exposed in iOS app
-- **Invite flow:** Admin sends invite; invitee accepts only after authentication. Membership is created on acceptance, not on invite creation
-- **Multiple recipients per group:** Yes — required for v1 public product
-- **Recurring tasks:** Core product feature, not paywalled
-- **Recurring task model:** series/template + occurrence history, not one mutable row that overwrites prior completions
-- **Admin insights:** group-level completion charts are Admin-only and belong in Plus
-- **Pricing model:** free collaborative core + paid organizer subscription
-- **Trial:** 14-day introductory trial for CareLoop Plus
-- **Billing unit:** one organizer subscription unlocks premium features for the whole group; no per-caregiver seat pricing
-- **Free-tier philosophy:** invite acceptance, task viewing, and task completion must remain usable without payment
-- **Completed task lifecycle:** DONE and SKIPPED tasks remain in the active group's `Completed` section until `archiveAfterDays` elapses; hourly scheduler archives them after that window
-- **Archive retention range:** default 7 days; admin-configurable per group from 1 to 30 days
-- **Digest format:** Plain HTML via Resend
-- **Scheduler:** `node-cron` in-process. Single instance. No distribution in Sprint 1
-- **Timezone:** IANA string stored on User. Auto-detected from device at onboarding via `TimeZone.current.identifier`. Default fallback: `America/New_York`. Digest uses stored timezone; reminders use UTC
-- **Auth:** Bearer-token transport is active in the local build. Role enforcement comes from group membership and self-only user route checks
-- **Self-join:** Not a public product flow. Legacy direct join may exist temporarily for local/dev, but shipped product should prefer invite acceptance
-- **APP_SESSION:** iOS triggers `POST /users/:id/session` on every foreground (`scenePhase == .active`). One event per user per UTC day
-- **DIGEST_OPENED:** Via Resend open tracking webhook. Implementation deferred to digest scheduler sprint. Not tracked in Sprint 1
-- **Auth migration:** CareLoop account auth + OAuth providers now issue bearer tokens in the local build; production launch still requires final provider credentials and callback approvals
-- **Read enforcement:** GET endpoints are authenticated and membership-checked in the local build
-- **User profile reads:** `GET /users/:id` is authenticated + self-only in the local build
-- **User identity field:** `AuthIdentity` records link each CareLoop user to Google/Facebook/Apple identities; backend OAuth start/callback routes own provider configuration and code exchange
-- **DigestLog correlation:** `messageId String?` added to `DigestLog` in Sprint 2 to store Resend email ID for DIGEST_OPENED tracking
-- **Operational analytics:** PostHog added at start of external beta testing (not Sprint 1)
-- **Error tracking:** Sentry added at start of external beta testing (not Sprint 1)
-- **Hosting:** Railway preferred, Render acceptable. Separate local / staging / production env values required before beta
+- **Shared workspace term:** user-facing term is `Care Circle`
+- **Role terms:** `Care Organizer`, `Caregiver`, and `Care Receiver`
+- **Family model:** one Care Circle represents one family, even if that family supports multiple care receivers
+- **Multi-circle membership:** allowed, capped at 3 total Care Circles per user
+- **Care receiver requirement:** every Care Circle is centered on at least one care receiver
+- **Receiver activation rule:** tasks may be created only for `active` or `proxy-active` care receivers
+- **Consent rule:** receiver participation is consent-based; proxy activation requires organizer attestation and/or external authorization
+- **Caregiver access rule:** caregivers enter with no receiver access and must be explicitly assigned by a Care Organizer
+- **Organizer visibility:** Care Organizers always have full circle-wide visibility and management across all care receivers
+- **Caregiver visibility:** caregivers see only receivers they are granted, their own tasks, receiver-assigned tasks for supported receivers, and non-attributed receiver-level progress
+- **Receiver visibility:** care receivers see only their own direct task flow in this phase
+- **Task ownership:** every task belongs to exactly one Care Circle and exactly one care receiver
+- **Task creation:** Care Organizers and Caregivers can create tasks; Care Receivers cannot
+- **Task assignment:** Caregivers may assign only within a supported receiver's scope
+- **Cross-caregiver privacy:** one caregiver does not automatically see another caregiver's assigned tasks
+- **Escalation model:** overdue tasks remind the assignee first, then notify the organizer and relevant supporting caregivers; no silent auto-takeover
+- **Recurring tasks:** advanced recurrence is premium-scoped; recurring task history must preserve individual occurrences
+- **Completed task lifecycle:** `DONE` and `SKIPPED` tasks remain visible until `archiveAfterDays` expires, then archive server-side
+- **Free-tier philosophy:** basic collaboration for one care receiver remains usable without payment
+- **Billing unit:** one premium care receiver is the smallest billable unit
+- **Premium purchaser:** only a Care Organizer may purchase premium for a receiver
+- **Premium scope:** premium features apply only inside the paid receiver's scope, not automatically to the whole Care Circle
+- **Caregiver team limit:** free tier supports one Care Organizer plus one Caregiver; premium receiver unlocks unlimited Caregivers for that receiver
+- **Health content in notes:** prohibited via UI disclaimer; accepted risk remains documented in Section 8
+- **Auth transport:** bearer-token transport is active in the current local build
+- **Provider auth:** Google, Facebook, and Apple remain valid product entry points, but production credentials and callback approvals are still required before launch
 
 ---
 
-## 13. Technology Stack
+## 13. Future Phases
+
+### 13.1 Minor Care Receivers
+
+CareLoop currently requires all members, caregivers, and care receivers to be **18 years or older** in this phase.
+
+Supporting minors later would require:
+
+- parent or guardian approval flow
+- age-specific privacy handling
+- guardian-linked account model
+- simplified receiver UI
+- age / guardian fields in the schema and invite flow
+
+### 13.2 Richer Care Receiver Experience
+
+Not in this phase, but likely next:
+
+- lightweight personal dashboard instead of next-task-only home
+- broader receiver awareness of family support without exposing private caregiver workflow
+- richer personal history, progress, and reassurance surfaces
+
+### 13.3 Professional Caregiver Expansion
+
+The product is family-first in this phase. A later phase may support:
+
+- professional caregiver participation
+- finer-grained access / audit policies
+- organization-level billing and reporting
+
+---
+
+## 14. Technology Stack
 
 Full decision doc: `docs/tech-stack.md`
 
-| Layer                 | Decision                                           | Sprint        |
-|-----------------------|----------------------------------------------------|---------------|
-| Database              | Supabase Postgres                                  | 1             |
-| ORM / schema          | Prisma                                             | 1             |
-| API server            | Fastify (Node.js)                                  | 1             |
-| Hosting               | Railway (preferred) or Render                      | 1             |
-| Email                 | Resend                                             | 1             |
-| Push                  | APNs directly                                      | 2             |
-| Background jobs       | `node-cron` in-process                             | 2             |
-| Auth                  | CareLoop account auth + provider OAuth → bearer tokens | 2         |
-| Billing               | StoreKit 2 + server entitlement sync               | 4             |
-| Operational analytics | PostHog                                            | external beta |
-| Error tracking        | Sentry                                             | external beta |
+| Layer | Current / target decision |
+|-------|---------------------------|
+| iOS app | SwiftUI, iOS 16+ |
+| Backend runtime | Node.js |
+| API server | Fastify |
+| ORM / schema | Prisma |
+| Database | PostgreSQL |
+| Email | Resend |
+| Push | APNs directly |
+| Background jobs | `node-cron` in-process |
+| Auth | CareLoop account auth + provider OAuth -> bearer tokens |
+| Billing | StoreKit 2 + server-side entitlement sync |
+| Analytics | Event table first; PostHog later |
+| Error tracking | Sentry before external beta |
 
-**Architecture constraints:**
+**Architecture constraints**
 
-- Prisma is the single schema source of truth — no business logic in Supabase Edge Functions or database triggers
-- Fastify owns group, invite, recipient, task, and permission logic (`CircleMember.role`)
-- Billing entitlements must be enforced server-side at the group level, not trusted from device state alone
-- Keep current Fastify REST structure — do not replace with Supabase client-side table access
-- Use direct APNs (not Firebase Cloud Messaging) — iOS-only product
-- No file storage product until attachments are a product requirement
+- keep the current Fastify + Prisma + PostgreSQL stack for the next implementation phase
+- do not change backend stack while aligning product behavior, access rules, and tests
+- Prisma remains the schema source of truth
+- Fastify owns circle, receiver, invite, task, access, and entitlement logic
+- receiver-scoped premium entitlements must be enforced server-side, not trusted from device state alone
+- keep REST endpoints and evolve them toward the product contract rather than replacing them wholesale
+- no medical-record storage product and no file-attachment platform in this phase
 
 ---
 
-## 14. Sprint Plan
+## 15. Delivery Plan
 
-**4 sprints × 2 weeks = 8 weeks to public launch.** Scope includes multi-recipient groups, invite acceptance, and monetization readiness before public release.
+Implementation should move in tested vertical slices, not isolated screen paint work.
 
-Full plan with exit criteria, API changes, and test cases: `docs/sprint-plan.md`
+### 15.1 Required testing baseline
 
-### Sprint 1 — Core Coordination Complete
+- iOS app must build locally through Xcode
+- current unit tests must run green before new feature work continues
+- add iOS UI coverage for:
+  - sign up / log in
+  - Care Circle list -> create / join -> dashboard
+  - create recurring task -> complete -> deep-link back from reminder
+- backend smoke coverage must exist for auth, Care Circle, invite, receiver activation, and task routes
 
-Exit criteria (all must pass before Sprint 2 begins):
+### 15.2 Slice order
 
-1. User can create a circle or self-join an existing one
-2. Admin can assign and reassign tasks from the app
-3. Member can complete any task; can edit/skip/delete only their own
-4. App survives relaunch and restores session/circle state
-5. Role-based mutation rules return correct `401/403/404/409` responses
+1. baseline and test harness
+2. authentication
+3. Care Circle entry and setup
+4. dashboard and task core
+5. people, access, and receiver management
+6. notifications and deep links
+7. premium entitlement and billing
 
-### Sprint 2 — Auth, Reminders, Digests, and Push Foundations
+### 15.3 Gate rule
 
-Exit criteria:
+No slice is done until:
 
-1. Task with `dueAt` creates a reminder and sends at the correct time
-2. Overdue task escalates correctly (push + email to all active-group members)
-3. Assignment notification sends when admin assigns or reassigns
-4. User with timezone set receives one digest at 6pm local time
-5. Digest sends are idempotent per user/day
-6. No push token triggers email fallback per PRD rules
+- app build passes
+- targeted automated tests pass
+- backend smoke checks pass
+- simulator manual checklist is complete
+- any device-only item is explicitly signed off or left as a documented blocker
 
-### Sprint 3 — Multi-recipient Groups and Invite Acceptance
+### 15.4 Agent ownership
 
-Exit criteria:
-
-1. A group can contain multiple care recipient profiles and show them clearly on a dashboard
-2. Every care task belongs to a recipient and can be filtered by recipient
-3. Recurring task series create future occurrences correctly without losing completion history
-4. Admin can invite a caregiver by email, and the invitee joins only after authentication and acceptance
-5. Admin can remove a caregiver and promote another caregiver to Admin
-6. Users cannot belong to more than 3 groups
-7. Group settings are scoped per group and stored independently
-
-### Sprint 4 — Public Launch Hardening and Monetization
-
-Exit criteria:
-
-1. Brand-new public user can authenticate, accept an invite, join only authorized groups, and use the app without developer setup
-2. Non-members cannot read group data
-3. Removed users lose access immediately
-4. Reminders, digests, assignment notifications, and invite acceptance work in the production path
-5. Admin completion charts render correct group-level and recipient-level trends
-6. StoreKit 2 subscriptions, trial start, restore purchase, and server-side entitlement sync work correctly
-7. `incident-response.md` complete; privacy policy live; release checklist passed
-8. TestFlight / App Store submission ready
-
-### Agent Ownership
-
-| Domain             | Owner                                                                    |
-|--------------------|--------------------------------------------------------------------------|
-| Sprint gating      | SHEPHERD — documented process owner / human-in-the-loop lane for now; nothing moves to the next sprint without SHEPHERD sign-off |
-| Compliance/privacy | WARDEN — documented process owner / human-in-the-loop lane for now; nothing touching user data ships without WARDEN review |
-| Tester feedback    | RELAY — documented process owner / human-in-the-loop lane for now; clusters bugs and routes product decisions to ATLAS and SENTINEL |
+| Domain | Owner |
+|--------|-------|
+| planning and task graph | `shepherd` |
+| product and UX convergence | `atlas`, `prism` |
+| iOS implementation | `swift` |
+| backend contract and API work | `core` |
+| environment / runtime support | `forge` |
+| code quality gate | `auditor` |
+| simulator and Xcode verification | `sentinel` |
+| privacy / consent / release gate | `warden` |
+| final prioritization and release decision | `nexus` |
