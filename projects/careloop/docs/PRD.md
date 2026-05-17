@@ -1,6 +1,6 @@
 # CareLoop — Product Requirements Document
 
-**Version:** 1.7
+**Version:** 1.8
 **Status:** Rebased to the current product definition for family-centered Care Circles, explicit care receiver consent and proxy activation, receiver-scoped caregiver access, and per-care-receiver premium entitlements. Current local code partially implements this model but still diverges in visibility rules, entitlement scope, and some receiver flows. This document is now the source of product truth for the next implementation phase.
 **Bundle ID:** com.careloop.ios
 **Compliance:** FTC Health Breach Notification Rule
@@ -1098,6 +1098,140 @@ The premium phase must be implemented in small, testable slices. `projects/carel
 - P6: purchase success and management UX
 - P7: premium enforcement sweep
 - P8: demo and StoreKit hardening
+
+### Post-premium implementation phases
+
+After the receiver-scoped premium phase, implementation should continue in small, independently testable phases. Each phase must update the PRD when product behavior changes, update `docs/qa/testability-matrix.md` and `docs/qa/test-runbook.md`, update demo data if the showcase path changes, run focused automated tests, and commit/push before the next phase begins.
+
+#### Phase A — Task Detail Polish
+
+**Goal:** make the most-used task workflow reliable, clear, and role-aware across Care Organizer, Caregiver, and Care Receiver personas.
+
+**Subphases**
+
+1. **Task detail state model**
+   - Normalize task status, overdue, skipped, completed, blocked, and escalated display rules.
+   - Centralize role-based task permissions so views do not duplicate organizer/caregiver/receiver logic.
+   - Tests: model/unit coverage for organizer, caregiver, receiver, completed, overdue, escalated, blocked, free, and premium states.
+2. **Edit task**
+   - Add an edit entry from Task Detail.
+   - Reuse the existing New Task form or shared form components instead of creating a duplicate edit form.
+   - Preserve permission rules: organizers can edit/reassign any task; caregivers can edit/reassign only tasks they created; care receivers cannot edit tasks.
+   - Tests: backend update permission tests plus iOS UI edit happy path and blocked persona path.
+3. **Delete task**
+   - Add destructive confirmation and clear cancel/confirm behavior.
+   - For recurring work, require explicit occurrence-only vs future-series behavior when the backend supports series mutation.
+   - Navigate predictably after deletion and avoid leaving stale detail screens.
+   - Tests: backend delete/scope tests plus iOS UI delete confirmation, cancel, and completion coverage.
+4. **Blocked and error states**
+   - Show clear reasons when actions are unavailable: receiver not active, premium required, unauthorized role, offline/API failure, or stale task.
+   - Empty comments should have a helpful first-comment state.
+   - Tests: iOS UI fixtures for blocked, empty, and failure states; backend tests for rejected mutations.
+5. **Escalation visibility**
+   - Show why a task escalated, who was notified, and what the expected next action is.
+   - Keep escalation informational; do not silently transfer ownership.
+   - Tests: backend escalation data contract plus iOS UI escalated-task fixture.
+6. **Docs, QA, and demo refresh**
+   - Update QA matrix, test runbook, Nexus project status, and demo seed data if any task detail state affects the demo path.
+   - Tests: focused task suite, smoke suite, and demo readiness where demo data changes.
+
+#### Phase B — Invite And Role Flow
+
+**Goal:** finish the full invite lifecycle for Care Organizers, Caregivers, Care Receivers, and proxy-authorized activation.
+
+**Subphases**
+
+1. Pending invite visibility and resend/revoke controls.
+2. Direct care receiver acceptance and declined/expired states.
+3. Caregiver join with no receiver access by default.
+4. Organizer grant/revoke receiver access after caregiver acceptance.
+5. Wrong-user, expired-link, fourth-circle-limit, and already-member edge cases.
+
+**Tests:** backend invite lifecycle tests, iOS UI fixtures for each persona, and simulator manual universal-link checks.
+
+#### Phase C — Care Receiver Management
+
+**Goal:** make receiver lifecycle, access assignment, proxy activation, and paid receiver gating production-ready.
+
+**Subphases**
+
+1. Add/edit/reorder/remove receiver polish.
+2. Direct invite vs proxy activation decision path.
+3. Explicit authorization attestation for proxy activation.
+4. Block task creation until direct acceptance or proxy activation.
+5. Receiver removal/delete blocked states when open tasks, billing, or history require preservation.
+
+**Tests:** backend receiver lifecycle tests plus iOS UI add/edit/remove/access/proxy fixtures.
+
+#### Phase D — Premium Purchase Hardening
+
+**Goal:** harden receiver-scoped billing before external beta.
+
+**Subphases**
+
+1. StoreKit product metadata and local purchase fixtures.
+2. Restore purchases and entitlement refresh.
+3. Expired, revoked, billing retry, and refund states.
+4. Free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits.
+5. Server-side App Store transaction verification readiness.
+
+**Tests:** StoreKit local tests, backend entitlement tests, iOS paywall/restore/expired UI tests, and release-blocker checklist for App Store Connect setup.
+
+#### Phase E — Reports And Insights
+
+**Goal:** make premium reporting useful enough to justify payment.
+
+**Subphases**
+
+1. Receiver adherence summary.
+2. Missed and overdue task trends.
+3. Caregiver activity and load distribution.
+4. Escalation history and response timing.
+5. Free/locked/premium insight states with clear upgrade value.
+
+**Tests:** backend aggregation tests plus iOS UI report fixtures for free, locked, expired, and premium receivers.
+
+#### Phase F — Notification End-to-End
+
+**Goal:** prove reminders, snooze, escalation, deep links, and notification preferences from app state through device behavior.
+
+**Subphases**
+
+1. Reminder preference UX and backend persistence.
+2. Simulator deep-link coverage for pending, wrong-circle, and completed tasks.
+3. Snooze mutation and rescheduled reminder visibility.
+4. Escalation timeline and notification fanout verification.
+5. Physical-device APNs/TestFlight validation.
+
+**Tests:** backend reminder/escalation tests, simulator UI deep-link tests, and physical-device checklist for APNs delivery and notification taps.
+
+#### Phase G — Demo And Investor Showcase
+
+**Goal:** keep the one-command demo representative of the product being pitched.
+
+**Subphases**
+
+1. Four realistic Care Circles with distinct real-world use cases.
+2. Multiple personas per circle with different roles and access scopes.
+3. Mixed task states, history, comments, reminders, premium, expired, and locked states.
+4. One-command launch plus optional screen-recording script.
+5. Demo readiness validation that fails if fixtures drift from the PRD.
+
+**Tests:** demo readiness script, smoke launch, and focused UI fixture checks.
+
+#### Phase H — Release Readiness
+
+**Goal:** ensure the App Store archive contains production app behavior only and no demo/test hooks are reachable in Release.
+
+**Subphases**
+
+1. Xcode target membership audit.
+2. Compile-time gating for UI-test and demo-only app hooks with `DEBUG` or UI-test flags.
+3. Release archive inspection for demo seed data, mock accounts, local StoreKit config, and test-only launch arguments.
+4. Production API base URL, entitlements, privacy strings, push, Sign in with Apple, and StoreKit product ID verification.
+5. TestFlight checklist and final device validation.
+
+**Tests:** release hygiene automation, Release archive inspection, and manual physical-device sign-off for APNs, universal links, StoreKit sandbox purchase/restore, and Sign in with Apple entitlement behavior.
 
 ---
 
