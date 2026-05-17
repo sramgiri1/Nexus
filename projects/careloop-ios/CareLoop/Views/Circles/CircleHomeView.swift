@@ -377,33 +377,34 @@ struct CircleHomeView: View {
                 subtitle: isOrganizer ? "Add, assign, and track care work across the circle" : "Track the work you own and the care tasks you support",
                 icon: "checklist.checked",
                 badge: overdueCount > 0 ? "\(overdueCount) overdue" : nil,
-                badgeColor: .red
+                badgeColor: .red,
+                accessibilityIdentifier: isOrganizer ? "quick-action-task-board" : "quick-action-my-task-board"
             ) {
                 CirclesView().environmentObject(appState)
             }
 
             LazyVGrid(columns: twoColumns, spacing: 14) {
                 if isOrganizer {
-                    secondaryActionLink(title: "Care Receivers", icon: "heart.text.square.fill", tint: rose, subtitle: "Manage active receivers") {
+                    secondaryActionLink(title: "Care Receivers", icon: "heart.text.square.fill", tint: rose, subtitle: "Manage active receivers", accessibilityIdentifier: "quick-action-care-receivers") {
                         RecipientManagementView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "People & Access", icon: "person.2.fill", tint: blue, subtitle: "Invite and scope support") {
+                    secondaryActionLink(title: "People & Access", icon: "person.2.fill", tint: blue, subtitle: "Invite and scope support", accessibilityIdentifier: "quick-action-people-access") {
                         MemberListView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "Insights", icon: "chart.bar.fill", tint: green, subtitle: "See completion patterns") {
+                    secondaryActionLink(title: "Insights", icon: "chart.bar.fill", tint: green, subtitle: "See completion patterns", accessibilityIdentifier: "quick-action-insights") {
                         AdminInsightsView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences") {
+                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences", accessibilityIdentifier: "quick-action-settings") {
                         SettingsView().environmentObject(appState)
                     }
                 } else {
-                    secondaryActionLink(title: "Care Circle", icon: "person.2.fill", tint: blue, subtitle: "See your support team") {
+                    secondaryActionLink(title: "Care Circle", icon: "person.2.fill", tint: blue, subtitle: "See your support team", accessibilityIdentifier: "quick-action-care-circle") {
                         MemberListView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "Activity", icon: "clock.fill", tint: teal, subtitle: "Receiver progress updates") {
+                    secondaryActionLink(title: "Activity", icon: "clock.fill", tint: teal, subtitle: "Receiver progress updates", accessibilityIdentifier: "quick-action-activity") {
                         ActivityFeedView().environmentObject(appState)
                     }
-                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences") {
+                    secondaryActionLink(title: "Settings", icon: "gearshape.fill", tint: mid, subtitle: "Circle preferences", accessibilityIdentifier: "quick-action-settings") {
                         SettingsView().environmentObject(appState)
                     }
                     if let circle = appState.activeCircle {
@@ -624,6 +625,7 @@ struct CircleHomeView: View {
         icon: String,
         badge: String?,
         badgeColor: Color,
+        accessibilityIdentifier: String,
         @ViewBuilder destination: () -> Destination
     ) -> some View {
         NavigationLink {
@@ -632,6 +634,7 @@ struct CircleHomeView: View {
             featuredCard(title: title, subtitle: subtitle, icon: icon, badge: badge, badgeColor: badgeColor)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func featuredCard(title: String, subtitle: String, icon: String, badge: String?, badgeColor: Color) -> some View {
@@ -685,6 +688,7 @@ struct CircleHomeView: View {
         icon: String,
         tint: Color,
         subtitle: String,
+        accessibilityIdentifier: String,
         @ViewBuilder destination: () -> Destination
     ) -> some View {
         NavigationLink {
@@ -693,6 +697,7 @@ struct CircleHomeView: View {
             secondaryCard(title: title, icon: icon, tint: tint, subtitle: subtitle)
         }
         .buttonStyle(.plain)
+        .accessibilityIdentifier(accessibilityIdentifier)
     }
 
     private func secondaryCard(title: String, icon: String, tint: Color, subtitle: String) -> some View {

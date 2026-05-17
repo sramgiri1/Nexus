@@ -19,14 +19,14 @@ struct CircleSettingsView: View {
         NavigationStack {
             Form {
                 Section("Circle") {
-                    TextField("Circle name", text: $name)
+                    TextField("Care Circle name", text: $name)
                     if let circle = appState.activeCircle {
-                        LabeledContent("Care recipients",
+                        LabeledContent("Care receivers",
                                    value: circle.recipientDisplaySummary.isEmpty
-                                          ? "None yet — invite via Members"
+                                          ? "None yet — add one from Care Receiver Management"
                                           : circle.recipientDisplaySummary)
                     }
-                    Button("Manage care recipients") {
+                    Button("Manage care receivers") {
                         showRecipients = true
                     }
                 }
@@ -42,7 +42,7 @@ struct CircleSettingsView: View {
                     Section { Text(error).foregroundColor(.red).font(.caption) }
                 }
             }
-            .navigationTitle("Circle Settings")
+            .navigationTitle("Care Circle Settings")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

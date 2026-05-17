@@ -2,18 +2,21 @@ import SwiftUI
 
 struct SettingsView: View {
     @EnvironmentObject var appState: AppState
-    @State private var showCircleSwitcher  = false
-    @State private var showInsights        = false
-    @State private var showDeleteAlert     = false
-    @State private var showLeaveAlert      = false
-    @State private var dangerLoading       = false
-    @State private var error:              String?
-    @State private var notifAssignments    = true
-    @State private var notifEscalations    = true
-    @State private var notifDigest         = true
-    @State private var savingPrefs         = false
-    @State private var prefsLoaded         = false
-    @State private var saveTask:           Task<Void, Never>? = nil
+    @State private var showCircleSwitcher = false
+    @State private var showInsights = false
+    @State private var showDeleteAlert = false
+    @State private var showLeaveAlert = false
+    @State private var showPeopleAccess = false
+    @State private var showRecipientManagement = false
+    @State private var showCircleSettings = false
+    @State private var dangerLoading = false
+    @State private var error: String?
+    @State private var notifAssignments = true
+    @State private var notifEscalations = true
+    @State private var notifDigest = true
+    @State private var savingPrefs = false
+    @State private var prefsLoaded = false
+    @State private var saveTask: Task<Void, Never>? = nil
 
     private var role: MemberRole { appState.userRole }
     private var isAdmin: Bool { role == .admin }
@@ -33,24 +36,31 @@ struct SettingsView: View {
                 // MARK: Care Circle (read-only info)
                 if let circle = activeCircle {
                     Section("Care Circle") {
-                        LabeledContent("Circle", value: circle.name)
+                        LabeledContent("Active circle", value: circle.name)
                         if !circle.recipientDisplaySummary.isEmpty {
-                            LabeledContent("For", value: circle.recipientDisplaySummary)
+                            LabeledContent("Care receivers", value: circle.recipientDisplaySummary)
                         }
                         LabeledContent("Archive completed tasks",
                                        value: "\(circle.archiveAfterDays) day\(circle.archiveAfterDays == 1 ? "" : "s")")
+                        if isAdmin || role == .member {
+                            Button(isAdmin ? "People & Access" : "Support Team") {
+                                showPeopleAccess = true
+                            }
+                        }
                         if isAdmin {
-                            LabeledContent("Circle ID", value: circle.id)
-                                .font(.caption)
-                            ShareLink("Share Circle ID", item: circle.id)
+                            Button("Care Receiver Management") { showRecipientManagement = true }
+                            Button("Care Circle Settings") { showCircleSettings = true }
                             Button("Completion Insights") { showInsights = true }
+                            LabeledContent("Care Circle code", value: circle.id)
+                                .font(.caption)
+                            ShareLink("Share Care Circle code", item: circle.id)
                         }
                     }
                 }
 
                 // MARK: Your Circles
                 if !appState.circleMemberships.isEmpty {
-                    Section("Your Circles") {
+                    Section("Your Care Circles") {
                         ForEach(appState.circleMemberships) { membership in
                             HStack {
                                 VStack(alignment: .leading, spacing: 4) {
@@ -68,12 +78,12 @@ struct SettingsView: View {
                                                      : .secondary)
                             }
                         }
-                        Button("Manage Circles") { showCircleSwitcher = true }
+                        Button("Manage Care Circles") { showCircleSwitcher = true }
                     }
                 }
 
                 // MARK: Danger Zone
-                if let circle = activeCircle {
+                if let circle = activeCircle, isAdmin || role == .member {
                     Section {
                         if isAdmin {
                             Button(role: .destructive) {
@@ -88,7 +98,7 @@ struct SettingsView: View {
                                 }
                             }
                             .disabled(dangerLoading)
-                        } else {
+                        } else if role == .member {
                             Button(role: .destructive) {
                                 showLeaveAlert = true
                             } label: {
@@ -140,7 +150,7 @@ struct SettingsView: View {
                 }
 
                 Section {
-                    Button("Join or Create Another Circle") { showCircleSwitcher = true }
+                    Button("Join or Create Another Care Circle") { showCircleSwitcher = true }
                     Button("Sign Out", role: .destructive) { appState.signOut() }
                 }
             }
@@ -181,6 +191,17 @@ struct SettingsView: View {
             }
             .sheet(isPresented: $showCircleSwitcher) {
                 CircleSwitcherView().environmentObject(appState)
+            }
+            .sheet(isPresented: $showPeopleAccess) {
+                MemberListView().environmentObject(appState)
+            }
+            .sheet(isPresented: $showRecipientManagement) {
+                RecipientManagementView().environmentObject(appState)
+            }
+            .sheet(isPresented: $showCircleSettings) {
+                if let circle = activeCircle {
+                    CircleSettingsView(circle: circle).environmentObject(appState)
+                }
             }
             .sheet(isPresented: $showInsights) {
                 NavigationStack {

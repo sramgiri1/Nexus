@@ -1,7 +1,7 @@
 import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
-import { activationForAcceptedReceiver } from "../lib/receiver-state.js";
+import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
 import {
   eligibleAssigneeUserIdsForReceiver,
   filterVisibleTasks,
@@ -84,6 +84,22 @@ export default async function circles(app) {
   function normalizedArchiveAfterDays(value) {
     if (!Number.isInteger(value)) return undefined;
     return Math.min(30, Math.max(1, value));
+  }
+
+  async function resetRecipientInviteStateIfUnclaimed(tx, recipientId) {
+    if (!recipientId) return;
+    const recipient = await tx.careRecipient.findUnique({ where: { id: recipientId } });
+    if (!recipient || recipient.receiverUserId) return;
+    await tx.careRecipient.update({
+      where: { id: recipientId },
+      data: {
+        activationStatus: "DRAFT",
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+      },
+    });
   }
 
   async function membershipCount(userId) {
@@ -446,6 +462,49 @@ export default async function circles(app) {
     return recipient;
   });
 
+  // POST /circles/:id/recipients/:recipientId/proxy-activate — admin only
+  app.post("/circles/:id/recipients/:recipientId/proxy-activate", async (req, reply) => {
+    const { userId, consentDocumentReference } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+
+    const existing = await db.careRecipient.findFirst({
+      where: { id: req.params.recipientId, circleId: req.params.id },
+    });
+    if (!existing) return reply.code(404).send({ error: "Recipient not found" });
+
+    const recipient = await db.$transaction(async (tx) => {
+      const updated = await tx.careRecipient.update({
+        where: { id: req.params.recipientId },
+        data: activationForProxyReceiver({
+          attestedById: authenticatedUserId,
+          documentReference: typeof consentDocumentReference === "string"
+            ? consentDocumentReference.trim() || null
+            : null,
+        }),
+      });
+
+      await tx.event.create({
+        data: {
+          type: "RECIPIENT_UPDATED",
+          circleId: req.params.id,
+          actorId: authenticatedUserId,
+          payload: {
+            recipientId: updated.id,
+            activationStatus: updated.activationStatus,
+            proxyActivated: true,
+          },
+        },
+      });
+
+      return updated;
+    });
+
+    return recipient;
+  });
+
   // POST /circles/:id/recipients/reorder — admin only
   app.post("/circles/:id/recipients/reorder", async (req, reply) => {
     const { userId, recipientIds, primaryRecipientId } = req.body ?? {};
@@ -576,6 +635,39 @@ export default async function circles(app) {
     return reply.code(204).send();
   });
 
+  // DELETE /circles/:id/members/me — authenticated self-leave
+  app.delete("/circles/:id/members/me", async (req, reply) => {
+    const { userId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+
+    const member = await db.circleMember.findUnique({
+      where: { userId_circleId: { userId: authenticatedUserId, circleId: req.params.id } },
+    });
+    if (!member) return reply.code(404).send({ error: "Member not found" });
+    if (member.role === "RECIPIENT") {
+      return reply.code(403).send({ error: "Care receivers cannot leave from this screen" });
+    }
+    if (member.role === "ADMIN") {
+      const adminCount = await db.circleMember.count({
+        where: { circleId: req.params.id, role: "ADMIN" },
+      });
+      if (adminCount <= 1) {
+        return reply.code(400).send({ error: "Cannot leave as the last admin" });
+      }
+    }
+
+    await db.circleMember.delete({ where: { id: member.id } });
+    await logEvent(db, {
+      type: "MEMBER_REMOVED",
+      circleId: req.params.id,
+      actorId: authenticatedUserId,
+      payload: { memberId: member.id, selfRemoved: true },
+    });
+    return reply.code(204).send();
+  });
+
   // POST /circles/:id/members — authenticated self-join
   app.post("/circles/:id/members", async (req, reply) => {
     const { userId } = req.body ?? {};
@@ -690,6 +782,13 @@ export default async function circles(app) {
         },
       });
 
+      if (invitedRecipient && invitedRecipient.activationStatus === "DRAFT") {
+        await tx.careRecipient.update({
+          where: { id: invitedRecipient.id },
+          data: { activationStatus: "INVITED" },
+        });
+      }
+
       await tx.event.create({
         data: {
           type: "INVITE_CREATED",
@@ -734,6 +833,7 @@ export default async function circles(app) {
         where: { id: req.params.inviteId },
         data: { status: "REVOKED" },
       });
+      await resetRecipientInviteStateIfUnclaimed(tx, invitation.recipientId);
       await tx.event.create({
         data: {
           type: "INVITE_REVOKED",
@@ -1036,6 +1136,7 @@ export default async function circles(app) {
         where: { id: invitation.id },
         data: { status: "DECLINED" },
       });
+      await resetRecipientInviteStateIfUnclaimed(tx, invitation.recipientId);
       await tx.event.create({
         data: {
           type: "INVITE_DECLINED",

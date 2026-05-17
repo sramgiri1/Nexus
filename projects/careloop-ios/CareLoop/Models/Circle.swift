@@ -88,6 +88,28 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         activationStatus == .active || activationStatus == .proxyActive
     }
 
+    var activationStatusLabel: String {
+        switch activationStatus {
+        case .draft: return "Draft"
+        case .invited: return "Invited"
+        case .active: return "Active"
+        case .proxyActive: return "Proxy Active"
+        }
+    }
+
+    var activationStatusDetail: String {
+        switch activationStatus {
+        case .draft:
+            return "Profile created. Tasks stay blocked until they join or a proxy is authorized."
+        case .invited:
+            return "Invite sent. Tasks stay blocked until they join or a proxy is authorized."
+        case .active:
+            return "Joined and ready for direct task coordination."
+        case .proxyActive:
+            return "Activated by a Care Organizer with recorded consent."
+        }
+    }
+
     private enum CodingKeys: String, CodingKey {
         case id
         case name
@@ -119,6 +141,15 @@ enum CareReceiverActivationStatus: String, Codable, CaseIterable {
     case invited = "INVITED"
     case active = "ACTIVE"
     case proxyActive = "PROXY_ACTIVE"
+
+    var label: String {
+        switch self {
+        case .draft: return "Draft"
+        case .invited: return "Invited"
+        case .active: return "Active"
+        case .proxyActive: return "Proxy Active"
+        }
+    }
 }
 
 struct CircleMember: Identifiable, Codable {
@@ -126,6 +157,65 @@ struct CircleMember: Identifiable, Codable {
     let role: MemberRole
     let userId: String
     var user: CareUser?
+}
+
+struct RecipientAccessSummary: Identifiable, Codable, Hashable {
+    let recipientId: String
+    let name: String
+    let activationStatus: CareReceiverActivationStatus
+    let hasAccess: Bool
+    let grantedAt: Date?
+
+    var id: String { recipientId }
+
+    private enum CodingKeys: String, CodingKey {
+        case recipientId
+        case name
+        case activationStatus
+        case hasAccess
+        case grantedAt
+    }
+
+    init(
+        recipientId: String,
+        name: String,
+        activationStatus: CareReceiverActivationStatus,
+        hasAccess: Bool,
+        grantedAt: Date?
+    ) {
+        self.recipientId = recipientId
+        self.name = name
+        self.activationStatus = activationStatus
+        self.hasAccess = hasAccess
+        self.grantedAt = grantedAt
+    }
+
+    init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        recipientId = try container.decode(String.self, forKey: .recipientId)
+        name = try container.decode(String.self, forKey: .name)
+        activationStatus = try container.decode(CareReceiverActivationStatus.self, forKey: .activationStatus)
+        hasAccess = try container.decode(Bool.self, forKey: .hasAccess)
+
+        if let grantedAtString = try container.decodeIfPresent(String.self, forKey: .grantedAt) {
+            let fractional = ISO8601DateFormatter()
+            fractional.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
+            let basic = ISO8601DateFormatter()
+            basic.formatOptions = [.withInternetDateTime]
+
+            if let date = fractional.date(from: grantedAtString) ?? basic.date(from: grantedAtString) {
+                grantedAt = date
+            } else {
+                throw DecodingError.dataCorruptedError(
+                    forKey: .grantedAt,
+                    in: container,
+                    debugDescription: "Cannot decode ISO8601 date: \(grantedAtString)"
+                )
+            }
+        } else {
+            grantedAt = nil
+        }
+    }
 }
 
 enum MemberRole: String, Codable, CaseIterable {

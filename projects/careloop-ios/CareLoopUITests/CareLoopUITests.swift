@@ -35,6 +35,36 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanOpenPeopleAndAccess() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-people-access"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-people-access"].tap()
+
+        XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Carlos Caregiver"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Nina Caregiver"].exists)
+    }
+
+    @MainActor
+    func test_organizerCanOpenCareReceiverManagement() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.staticTexts["Care Receiver Management"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Activation controls task access"].exists)
+        XCTAssertTrue(app.staticTexts["David"].exists)
+    }
+
+    @MainActor
     func test_caregiverHomeShowsScopedDashboard() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
 

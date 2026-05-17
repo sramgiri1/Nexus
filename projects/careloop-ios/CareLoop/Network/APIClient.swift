@@ -68,6 +68,16 @@ final class APIClient {
         return try await request(path: path, method: "POST", body: data)
     }
 
+    func putAny<T: Decodable>(_ path: String, body: [String: Any]) async throws -> T {
+        let data = try JSONSerialization.data(withJSONObject: body)
+        return try await request(path: path, method: "PUT", body: data)
+    }
+
+    func putAnyVoid(_ path: String, body: [String: Any]) async throws {
+        let data = try JSONSerialization.data(withJSONObject: body)
+        try await requestVoid(path: path, method: "PUT", body: data)
+    }
+
     func deleteVoid(_ path: String, body: [String: Any]? = nil) async throws {
         let data = try body.map { try JSONSerialization.data(withJSONObject: $0) }
         try await requestVoid(path: path, method: "DELETE", body: data)

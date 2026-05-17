@@ -18,6 +18,9 @@ final class AppState: ObservableObject {
     @Published var pendingTaskId: String?
     @Published var shouldPromptNewTask = false
 
+    var uiTestInvitations: [GroupInvitation] = []
+    var uiTestRecipientAccessByMemberId: [String: [RecipientAccessSummary]] = [:]
+
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?
 

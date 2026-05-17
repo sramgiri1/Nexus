@@ -54,6 +54,14 @@ extension APIClient {
         try await deleteVoid("/circles/\(circleId)/recipients/\(recipientId)")
     }
 
+    func proxyActivateRecipient(circleId: String, recipientId: String, consentDocumentReference: String?) async throws -> CareRecipient {
+        var body: [String: Any] = [:]
+        if let consentDocumentReference {
+            body["consentDocumentReference"] = consentDocumentReference
+        }
+        return try await postAny("/circles/\(circleId)/recipients/\(recipientId)/proxy-activate", body: body)
+    }
+
     func reorderRecipients(circleId: String, recipientIds: [String], primaryRecipientId: String? = nil) async throws -> [CareRecipient] {
         var body: [String: Any] = [
             "recipientIds": recipientIds,
@@ -68,13 +76,21 @@ extension APIClient {
         try await post("/circles/\(circleId)/members", body: [String: String]())
     }
 
-    func inviteMember(circleId: String, name: String, email: String, role: MemberRole, phone: String? = nil) async throws -> GroupInvitation {
+    func inviteMember(
+        circleId: String,
+        name: String,
+        email: String,
+        role: MemberRole,
+        phone: String? = nil,
+        recipientId: String? = nil
+    ) async throws -> GroupInvitation {
         var body: [String: Any] = [
             "name": name,
             "email": email,
             "role": role.rawValue,
         ]
         if let phone { body["phone"] = phone }
+        if let recipientId { body["recipientId"] = recipientId }
         return try await postAny("/circles/\(circleId)/members/invite", body: body)
     }
 
@@ -100,6 +116,21 @@ extension APIClient {
 
     func updateMemberRole(circleId: String, memberId: String, role: MemberRole) async throws -> CircleMember {
         try await patch("/circles/\(circleId)/members/\(memberId)/role", body: ["role": role.rawValue])
+    }
+
+    func fetchRecipientAccess(circleId: String, memberId: String) async throws -> [RecipientAccessSummary] {
+        try await get("/circles/\(circleId)/members/\(memberId)/recipient-access")
+    }
+
+    func grantRecipientAccess(circleId: String, memberId: String, recipientId: String) async throws {
+        try await putAnyVoid(
+            "/circles/\(circleId)/members/\(memberId)/recipient-access/\(recipientId)",
+            body: [:]
+        )
+    }
+
+    func revokeRecipientAccess(circleId: String, memberId: String, recipientId: String) async throws {
+        try await deleteVoid("/circles/\(circleId)/members/\(memberId)/recipient-access/\(recipientId)")
     }
 }
 

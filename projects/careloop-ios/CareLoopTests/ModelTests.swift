@@ -461,6 +461,15 @@ final class CareCircleRecipientTests: XCTestCase {
         XCTAssertFalse(CareRecipient(id: "r3", name: "Mia", activationStatus: .invited).isActiveForTasks)
     }
 
+    func test_recipientActivationLabels_matchManagementFlow() {
+        XCTAssertEqual(CareReceiverActivationStatus.draft.label, "Draft")
+        XCTAssertEqual(CareReceiverActivationStatus.invited.label, "Invited")
+        XCTAssertEqual(CareReceiverActivationStatus.active.label, "Active")
+        XCTAssertEqual(CareReceiverActivationStatus.proxyActive.label, "Proxy Active")
+        XCTAssertTrue(CareRecipient(id: "r1", name: "John", activationStatus: .draft).activationStatusDetail.contains("Tasks stay blocked"))
+        XCTAssertTrue(CareRecipient(id: "r2", name: "Jane", activationStatus: .proxyActive).activationStatusDetail.contains("recorded consent"))
+    }
+
     func test_recipientEligibleAssigneeIds_decodeWhenPresent() throws {
         let data = """
         {
@@ -478,6 +487,61 @@ final class CareCircleRecipientTests: XCTestCase {
 
         let recipient = try JSONDecoder().decode(CareRecipient.self, from: data)
         XCTAssertEqual(recipient.eligibleAssigneeIds, ["u1", "u2", "u3"])
+    }
+
+    func test_recipientAccessSummary_decodesReceiverScopeGrant() throws {
+        let data = """
+        {
+          "recipientId": "cr1",
+          "name": "Mom",
+          "activationStatus": "ACTIVE",
+          "hasAccess": true,
+          "grantedAt": "2026-05-16T14:00:00Z"
+        }
+        """.data(using: .utf8)!
+
+        let summary = try JSONDecoder().decode(RecipientAccessSummary.self, from: data)
+        XCTAssertEqual(summary.id, "cr1")
+        XCTAssertEqual(summary.name, "Mom")
+        XCTAssertEqual(summary.activationStatus, .active)
+        XCTAssertTrue(summary.hasAccess)
+    }
+}
+
+final class GroupInvitationTests: XCTestCase {
+
+    func test_groupInvitation_decodesLinkedRecipient() throws {
+        let data = """
+        {
+          "id": "i1",
+          "email": "mom@test.com",
+          "name": "Mom",
+          "role": "RECIPIENT",
+          "status": "PENDING",
+          "circle": {
+            "id": "c1",
+            "name": "Ramgiri Care Circle",
+            "recipientName": "Maya",
+            "archiveAfterDays": 7
+          },
+          "recipient": {
+            "id": "cr1",
+            "name": "Maya",
+            "activationStatus": "INVITED",
+            "receiverUserId": null
+          },
+          "invitedBy": {
+            "id": "u1",
+            "name": "Olivia Organizer",
+            "email": "organizer@test.com"
+          }
+        }
+        """.data(using: .utf8)!
+
+        let invitation = try JSONDecoder().decode(GroupInvitation.self, from: data)
+        XCTAssertEqual(invitation.recipient?.id, "cr1")
+        XCTAssertEqual(invitation.recipient?.activationStatus, .invited)
+        XCTAssertEqual(invitation.circle.name, "Ramgiri Care Circle")
     }
 }
 

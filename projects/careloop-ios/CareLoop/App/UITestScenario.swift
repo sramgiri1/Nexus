@@ -27,6 +27,8 @@ extension AppState {
         let fixture = UITestScenarioFixture.make(scenario)
         currentUser = fixture.user
         activeCircle = fixture.circle
+        uiTestInvitations = fixture.invitations
+        uiTestRecipientAccessByMemberId = fixture.recipientAccessByMemberId
         shouldPromptNewTask = false
     }
 }
@@ -34,6 +36,8 @@ extension AppState {
 private struct UITestScenarioFixture {
     let user: CareUser
     let circle: CareCircle
+    let invitations: [GroupInvitation]
+    let recipientAccessByMemberId: [String: [RecipientAccessSummary]]
 
     static func make(_ scenario: UITestScenario) -> UITestScenarioFixture {
         let organizer = CareUser(id: "u1", email: "organizer@careloop.test", name: "Olivia Organizer", phone: nil, memberships: nil)
@@ -68,9 +72,9 @@ private struct UITestScenarioFixture {
             notes: nil,
             isPrimary: false,
             sortOrder: 1,
-            activationStatus: .active,
-            receiverUserId: dad.id,
-            eligibleAssigneeIds: [organizer.id, backupCaregiver.id, dad.id]
+            activationStatus: .invited,
+            receiverUserId: nil,
+            eligibleAssigneeIds: [organizer.id, backupCaregiver.id]
         )
 
         let organizerTasks = [
@@ -110,7 +114,7 @@ private struct UITestScenarioFixture {
             ),
             CareTask(
                 id: "t3",
-                title: "Weekly grocery run",
+                title: "Evening walk check-in",
                 notes: nil,
                 dueAt: Date().addingTimeInterval(2 * 60 * 60),
                 status: .pending,
@@ -118,8 +122,8 @@ private struct UITestScenarioFixture {
                 completedAt: nil,
                 archivedAt: nil,
                 circleId: "c1",
-                recipientId: dadRecipient.id,
-                recipient: dadRecipient,
+                recipientId: momRecipient.id,
+                recipient: momRecipient,
                 creatorId: organizer.id,
                 assigneeId: backupCaregiver.id,
                 assignee: backupCaregiver,
@@ -135,8 +139,8 @@ private struct UITestScenarioFixture {
                 completedAt: Date().addingTimeInterval(-90 * 60),
                 archivedAt: nil,
                 circleId: "c1",
-                recipientId: dadRecipient.id,
-                recipient: dadRecipient,
+                recipientId: momRecipient.id,
+                recipient: momRecipient,
                 creatorId: organizer.id,
                 assigneeId: organizer.id,
                 assignee: organizer,
@@ -154,9 +158,69 @@ private struct UITestScenarioFixture {
                 recipients: [momRecipient, dadRecipient],
                 tasks: organizerTasks
             )
+            let pendingInvites = [
+                GroupInvitation(
+                    id: "invite-caregiver",
+                    email: "newcaregiver@careloop.test",
+                    name: "Nina Caregiver",
+                    role: .member,
+                    status: .pending,
+                    circle: circle,
+                    recipient: nil,
+                    invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                ),
+                GroupInvitation(
+                    id: "invite-receiver",
+                    email: "dad@careloop.test",
+                    name: "David Receiver",
+                    role: .recipient,
+                    status: .pending,
+                    circle: circle,
+                    recipient: dadRecipient,
+                    invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                ),
+            ]
             var user = organizer
             user.memberships = [CircleMembership(id: "cm1", circleId: circle.id, role: .admin, circle: circle)]
-            return UITestScenarioFixture(user: user, circle: circle)
+            return UITestScenarioFixture(
+                user: user,
+                circle: circle,
+                invitations: pendingInvites,
+                recipientAccessByMemberId: [
+                    "m2": [
+                        RecipientAccessSummary(
+                            recipientId: momRecipient.id,
+                            name: momRecipient.name,
+                            activationStatus: momRecipient.activationStatus,
+                            hasAccess: true,
+                            grantedAt: Date().addingTimeInterval(-2 * 60 * 60)
+                        ),
+                        RecipientAccessSummary(
+                            recipientId: dadRecipient.id,
+                            name: dadRecipient.name,
+                            activationStatus: dadRecipient.activationStatus,
+                            hasAccess: false,
+                            grantedAt: nil
+                        ),
+                    ],
+                    "m3": [
+                        RecipientAccessSummary(
+                            recipientId: momRecipient.id,
+                            name: momRecipient.name,
+                            activationStatus: momRecipient.activationStatus,
+                            hasAccess: true,
+                            grantedAt: Date().addingTimeInterval(-60 * 60)
+                        ),
+                        RecipientAccessSummary(
+                            recipientId: dadRecipient.id,
+                            name: dadRecipient.name,
+                            activationStatus: dadRecipient.activationStatus,
+                            hasAccess: true,
+                            grantedAt: Date().addingTimeInterval(-30 * 60)
+                        ),
+                    ],
+                ]
+            )
 
         case .caregiverHome:
             let visibleTasks = organizerTasks.filter { task in
@@ -172,7 +236,7 @@ private struct UITestScenarioFixture {
             )
             var user = caregiver
             user.memberships = [CircleMembership(id: "cm2", circleId: circle.id, role: .member, circle: circle)]
-            return UITestScenarioFixture(user: user, circle: circle)
+            return UITestScenarioFixture(user: user, circle: circle, invitations: [], recipientAccessByMemberId: [:])
 
         case .receiverHome:
             let receiverTasks = [
@@ -221,7 +285,7 @@ private struct UITestScenarioFixture {
             )
             var user = mom
             user.memberships = [CircleMembership(id: "cm3", circleId: circle.id, role: .recipient, circle: circle)]
-            return UITestScenarioFixture(user: user, circle: circle)
+            return UITestScenarioFixture(user: user, circle: circle, invitations: [], recipientAccessByMemberId: [:])
         }
     }
 }

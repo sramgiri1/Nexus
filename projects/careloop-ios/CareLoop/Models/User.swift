@@ -54,6 +54,7 @@ struct GroupInvitation: Identifiable, Codable {
     let role: MemberRole
     let status: InvitationStatus
     let circle: CareCircle
+    let recipient: CareRecipient?
     let invitedBy: InvitationSender?
 }
 

@@ -4,27 +4,24 @@ struct RecipientManagementView: View {
     @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
 
-    @State private var showInvite        = false
-    @State private var loadingMemberId:  String?
-    @State private var loadingInviteId:  String?
-    @State private var error:            String?
-    @State private var pendingInvites:   [GroupInvitation] = []
+    @State private var showCreateRecipient = false
+    @State private var editingRecipient: CareRecipient?
+    @State private var invitingRecipient: CareRecipient?
+    @State private var proxyRecipient: CareRecipient?
+    @State private var loadingRecipientId: String?
+    @State private var loadingInviteId: String?
+    @State private var error: String?
+    @State private var pendingInvites: [GroupInvitation] = []
 
-    // MARK: – Design tokens
-    private let rose  = Color(red: 0.85, green: 0.30, blue: 0.50)
-    private let blue  = Color(red: 0.13, green: 0.56, blue: 0.87)
-    private let teal  = Color(red: 0.16, green: 0.80, blue: 0.72)
-    private let dark  = Color(red: 0.10, green: 0.16, blue: 0.24)
-    private let mid   = Color(red: 0.43, green: 0.50, blue: 0.60)
-    private let bg    = Color(red: 0.95, green: 0.96, blue: 0.99)
+    private let rose = Color(red: 0.85, green: 0.30, blue: 0.50)
+    private let blue = Color(red: 0.13, green: 0.56, blue: 0.87)
+    private let teal = Color(red: 0.16, green: 0.80, blue: 0.72)
+    private let dark = Color(red: 0.10, green: 0.16, blue: 0.24)
+    private let mid = Color(red: 0.43, green: 0.50, blue: 0.60)
+    private let bg = Color(red: 0.95, green: 0.96, blue: 0.99)
 
-    private var activeRecipients: [CircleMember] {
-        (appState.activeCircle?.members ?? [])
-            .filter { $0.role == .recipient }
-            .sorted {
-                ($0.user?.name ?? $0.userId)
-                    .localizedCaseInsensitiveCompare($1.user?.name ?? $1.userId) == .orderedAscending
-            }
+    private var recipients: [CareRecipient] {
+        appState.activeCircle?.orderedRecipients ?? []
     }
 
     var body: some View {
@@ -34,9 +31,10 @@ struct RecipientManagementView: View {
                     infoBanner
                         .padding(.horizontal, 20)
 
-                    if let err = error {
-                        Text(err)
-                            .font(.footnote).foregroundStyle(.red)
+                    if let error {
+                        Text(error)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
                             .padding(.horizontal, 20)
                     }
 
@@ -45,12 +43,12 @@ struct RecipientManagementView: View {
                             .padding(.horizontal, 20)
                     }
 
-                    if !activeRecipients.isEmpty {
-                        activeSection
+                    if !recipients.isEmpty {
+                        recipientsSection
                             .padding(.horizontal, 20)
                     }
 
-                    if activeRecipients.isEmpty && pendingInvites.isEmpty {
+                    if recipients.isEmpty && pendingInvites.isEmpty {
                         emptyState
                             .padding(.horizontal, 20)
                     }
@@ -60,7 +58,7 @@ struct RecipientManagementView: View {
                 .padding(.top, 20)
             }
             .background(bg.ignoresSafeArea())
-            .navigationTitle("Care Receivers")
+            .navigationTitle("Care Receiver Management")
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -69,27 +67,47 @@ struct RecipientManagementView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button {
                         error = nil
-                        showInvite = true
+                        showCreateRecipient = true
                     } label: {
-                        Image(systemName: "person.badge.plus")
+                        Image(systemName: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showInvite, onDismiss: { Task { await loadPendingInvites() } }) {
-                InviteRecipientSheet()
-                    .environmentObject(appState)
+            .sheet(isPresented: $showCreateRecipient, onDismiss: { Task { await refreshData() } }) {
+                RecipientEditorSheet(title: "Add Care Receiver") { name, relationship, notes, inviteEmail in
+                    try await createRecipient(name: name, relationship: relationship, notes: notes, inviteEmail: inviteEmail)
+                }
+                .environmentObject(appState)
             }
-            .task { await loadPendingInvites() }
+            .sheet(item: $editingRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
+                RecipientEditorSheet(title: "Edit Care Receiver", recipient: recipient) { name, relationship, notes, _ in
+                    try await updateRecipient(recipient, name: name, relationship: relationship, notes: notes)
+                }
+                .environmentObject(appState)
+            }
+            .sheet(item: $invitingRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
+                RecipientInviteSheet(recipient: recipient) { email in
+                    try await sendInvite(for: recipient, email: email)
+                }
+                .environmentObject(appState)
+            }
+            .sheet(item: $proxyRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
+                ProxyActivationSheet(recipient: recipient) { consentDocumentReference in
+                    try await proxyActivate(recipient, consentDocumentReference: consentDocumentReference)
+                }
+                .environmentObject(appState)
+            }
+            .task { await refreshData() }
             .refreshable {
                 if let id = appState.activeCircle?.id {
                     try? await appState.activateCircle(id: id)
                 }
-                await loadPendingInvites()
+                await refreshData()
             }
         }
+        .accessibilityIdentifier("receiver-management-screen")
+        .careLoopBrandBanner()
     }
-
-    // MARK: – Info banner
 
     private var infoBanner: some View {
         HStack(spacing: 14) {
@@ -103,10 +121,10 @@ struct RecipientManagementView: View {
             .frame(width: 44, height: 44)
 
             VStack(alignment: .leading, spacing: 3) {
-                Text("Invite care receivers")
+                Text("Activation controls task access")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                     .foregroundStyle(dark)
-                Text("They'll install CareLoop, see all care activity, and get personal reminders for tasks assigned to them.")
+                Text("Care tasks stay blocked until a care receiver joins directly or is proxy-activated with recorded consent.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(mid)
                     .fixedSize(horizontal: false, vertical: true)
@@ -117,16 +135,14 @@ struct RecipientManagementView: View {
         .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
     }
 
-    // MARK: – Pending invites section
-
     private var pendingSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Pending Invites", icon: "envelope.fill", color: Color(red: 0.96, green: 0.63, blue: 0.28))
+            sectionLabel("Pending Invites", icon: "envelope.fill", color: Color.orange)
 
             VStack(spacing: 0) {
-                ForEach(Array(pendingInvites.enumerated()), id: \.element.id) { idx, invite in
+                ForEach(Array(pendingInvites.enumerated()), id: \.element.id) { index, invite in
                     pendingRow(invite)
-                    if idx < pendingInvites.count - 1 {
+                    if index < pendingInvites.count - 1 {
                         Divider().padding(.leading, 56)
                     }
                 }
@@ -140,18 +156,21 @@ struct RecipientManagementView: View {
         HStack(spacing: 14) {
             ZStack {
                 Circle()
-                    .fill(Color(red: 0.96, green: 0.63, blue: 0.28).opacity(0.12))
+                    .fill(Color.orange.opacity(0.12))
                 Image(systemName: "clock.fill")
                     .font(.system(size: 14))
-                    .foregroundStyle(Color(red: 0.96, green: 0.63, blue: 0.28))
+                    .foregroundStyle(Color.orange)
             }
             .frame(width: 36, height: 36)
 
             VStack(alignment: .leading, spacing: 2) {
-                Text(invite.name)
+                Text(invite.recipient?.name ?? invite.name)
                     .font(.system(size: 15, weight: .semibold, design: .rounded))
                     .foregroundStyle(dark)
                 Text(invite.email)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(mid)
+                Text("Waiting for direct acceptance before tasks can begin.")
                     .font(.system(size: 12, weight: .medium, design: .rounded))
                     .foregroundStyle(mid)
             }
@@ -175,79 +194,112 @@ struct RecipientManagementView: View {
         .padding(.vertical, 12)
     }
 
-    // MARK: – Active recipients section
-
-    private var activeSection: some View {
+    private var recipientsSection: some View {
         VStack(alignment: .leading, spacing: 12) {
-            sectionLabel("Active", icon: "heart.fill", color: rose)
+            sectionLabel("Care Receivers", icon: "heart.fill", color: rose)
 
-            VStack(spacing: 0) {
-                ForEach(Array(activeRecipients.enumerated()), id: \.element.id) { idx, member in
-                    activeRow(member)
-                    if idx < activeRecipients.count - 1 {
-                        Divider().padding(.leading, 56)
-                    }
+            VStack(spacing: 12) {
+                ForEach(Array(recipients.enumerated()), id: \.element.id) { index, recipient in
+                    recipientCard(recipient, index: index)
                 }
             }
-            .background(Color.white, in: RoundedRectangle(cornerRadius: 18, style: .continuous))
-            .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
         }
     }
 
-    private func activeRow(_ member: CircleMember) -> some View {
-        HStack(spacing: 14) {
-            ZStack {
-                Circle()
-                    .fill(LinearGradient(
-                        colors: [rose.opacity(0.25), Color(red: 0.95, green: 0.55, blue: 0.30).opacity(0.20)],
-                        startPoint: .topLeading, endPoint: .bottomTrailing
-                    ))
-                Text(initials(for: member.user?.name ?? "?"))
-                    .font(.system(size: 14, weight: .bold, design: .rounded))
-                    .foregroundStyle(rose)
-            }
-            .frame(width: 36, height: 36)
+    private func recipientCard(_ recipient: CareRecipient, index: Int) -> some View {
+        let statusColor = color(for: recipient.activationStatus)
 
-            VStack(alignment: .leading, spacing: 2) {
-                Text(member.user?.name ?? "Care Receiver")
-                    .font(.system(size: 15, weight: .semibold, design: .rounded))
-                    .foregroundStyle(dark)
-                if let email = member.user?.email {
-                    Text(email)
-                        .font(.system(size: 12, weight: .medium, design: .rounded))
-                        .foregroundStyle(mid)
+        return VStack(alignment: .leading, spacing: 14) {
+            HStack(alignment: .top, spacing: 12) {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 14, style: .continuous)
+                        .fill(statusColor.opacity(0.10))
+                    Image(systemName: "heart.fill")
+                        .font(.system(size: 16, weight: .bold))
+                        .foregroundStyle(statusColor)
                 }
-            }
+                .frame(width: 46, height: 46)
 
-            Spacer()
-
-            HStack(spacing: 10) {
-                Text("Active")
-                    .font(.system(size: 11, weight: .bold, design: .rounded))
-                    .foregroundStyle(Color(red: 0.07, green: 0.68, blue: 0.48))
-                    .padding(.horizontal, 8).padding(.vertical, 4)
-                    .background(Capsule().fill(Color(red: 0.87, green: 0.97, blue: 0.93)))
-
-                if loadingMemberId == member.id {
-                    ProgressView().scaleEffect(0.8)
-                } else {
-                    Menu {
-                        Button("Remove", role: .destructive) {
-                            Task { await removeMember(member) }
+                VStack(alignment: .leading, spacing: 4) {
+                    HStack(spacing: 8) {
+                        Text(recipient.name)
+                            .font(.system(size: 17, weight: .bold, design: .rounded))
+                            .foregroundStyle(dark)
+                        if recipient.isPrimary {
+                            chip("Primary", tint: blue)
                         }
-                    } label: {
-                        Image(systemName: "ellipsis.circle")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundStyle(.secondary)
+                    }
+                    if let relationship = recipient.relationship, !relationship.isEmpty {
+                        Text(relationship)
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundStyle(mid)
+                    }
+                    Text(recipient.activationStatusDetail)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(mid)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+
+                Spacer(minLength: 12)
+
+                VStack(alignment: .trailing, spacing: 8) {
+                    chip(recipient.activationStatus.label, tint: statusColor)
+                    if loadingRecipientId == recipient.id {
+                        ProgressView().scaleEffect(0.8)
+                    } else {
+                        Menu {
+                            Button("Edit Details") {
+                                editingRecipient = recipient
+                            }
+                            if !recipient.isPrimary {
+                                Button("Make Primary") {
+                                    Task { await setPrimary(recipient) }
+                                }
+                            }
+                            if index > 0 {
+                                Button("Move Earlier") {
+                                    Task { await moveRecipient(recipient, direction: -1) }
+                                }
+                            }
+                            if index < recipients.count - 1 {
+                                Button("Move Later") {
+                                    Task { await moveRecipient(recipient, direction: 1) }
+                                }
+                            }
+                            if recipient.receiverUserId == nil {
+                                Button(recipient.activationStatus == .invited ? "Resend Invite" : "Send Invite") {
+                                    invitingRecipient = recipient
+                                }
+                            }
+                            if !recipient.isActiveForTasks {
+                                Button("Proxy Activate") {
+                                    proxyRecipient = recipient
+                                }
+                            }
+                            Button("Remove", role: .destructive) {
+                                Task { await removeRecipient(recipient) }
+                            }
+                        } label: {
+                            Image(systemName: "ellipsis.circle")
+                                .font(.system(size: 18, weight: .semibold))
+                                .foregroundStyle(.secondary)
+                        }
                     }
                 }
             }
-        }
-        .padding(.horizontal, 16)
-        .padding(.vertical, 12)
-    }
 
-    // MARK: – Empty state
+            if let notes = recipient.notes, !notes.isEmpty {
+                Text(notes)
+                    .font(.system(size: 12, weight: .medium, design: .rounded))
+                    .foregroundStyle(dark)
+                    .padding(.top, 2)
+            }
+        }
+        .padding(18)
+        .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
+        .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
+        .accessibilityIdentifier("recipient-card-\(recipient.id)")
+    }
 
     private var emptyState: some View {
         VStack(spacing: 16) {
@@ -263,25 +315,29 @@ struct RecipientManagementView: View {
                 Text("No care receivers yet")
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     .foregroundStyle(dark)
-                Text("Invite them to see all care activity and receive personal reminders for tasks assigned to them.")
+                Text("Add a draft profile or send an invite. Tasks stay blocked until the care receiver becomes active or proxy-active.")
                     .font(.system(size: 14, weight: .medium, design: .rounded))
                     .foregroundStyle(mid)
                     .multilineTextAlignment(.center)
             }
             Button {
                 error = nil
-                showInvite = true
+                showCreateRecipient = true
             } label: {
                 HStack(spacing: 8) {
-                    Image(systemName: "person.badge.plus")
-                    Text("Send Invite")
+                    Image(systemName: "plus")
+                    Text("Add Care Receiver")
                 }
                 .font(.system(size: 15, weight: .bold, design: .rounded))
                 .foregroundStyle(.white)
-                .padding(.horizontal, 28).padding(.vertical, 14)
+                .padding(.horizontal, 28)
+                .padding(.vertical, 14)
                 .background(
-                    LinearGradient(colors: [rose, Color(red: 0.95, green: 0.55, blue: 0.30)],
-                                   startPoint: .leading, endPoint: .trailing),
+                    LinearGradient(
+                        colors: [rose, Color(red: 0.95, green: 0.55, blue: 0.30)],
+                        startPoint: .leading,
+                        endPoint: .trailing
+                    ),
                     in: Capsule()
                 )
             }
@@ -291,8 +347,6 @@ struct RecipientManagementView: View {
         .frame(maxWidth: .infinity)
         .padding(.top, 40)
     }
-
-    // MARK: – Helpers
 
     private func sectionLabel(_ title: String, icon: String, color: Color) -> some View {
         HStack(spacing: 6) {
@@ -305,19 +359,138 @@ struct RecipientManagementView: View {
         .foregroundStyle(color)
     }
 
-    private func initials(for name: String) -> String {
-        let parts = name.split(separator: " ")
-        let raw = parts.prefix(2).compactMap { $0.first.map(String.init) }.joined().uppercased()
-        return raw.isEmpty ? "?" : raw
+    private func chip(_ title: String, tint: Color) -> some View {
+        Text(title)
+            .font(.system(size: 11, weight: .bold, design: .rounded))
+            .foregroundStyle(tint)
+            .padding(.horizontal, 8)
+            .padding(.vertical, 4)
+            .background(tint.opacity(0.10), in: Capsule())
     }
 
-    // MARK: – Actions
+    private func color(for status: CareReceiverActivationStatus) -> Color {
+        switch status {
+        case .draft: return mid
+        case .invited: return Color.orange
+        case .active: return Color(red: 0.07, green: 0.68, blue: 0.48)
+        case .proxyActive: return teal
+        }
+    }
+
+    private func refreshData() async {
+        await loadPendingInvites()
+    }
 
     private func loadPendingInvites() async {
         guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            pendingInvites = appState.uiTestInvitations.filter { $0.role == .recipient }
+            return
+        }
         do {
             let all = try await APIClient.shared.fetchInvitations(circleId: circleId)
             pendingInvites = all.filter { $0.role == .recipient }
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func createRecipient(name: String, relationship: String?, notes: String?, inviteEmail: String?) async throws {
+        guard let circleId = appState.activeCircle?.id else { return }
+        let created = try await APIClient.shared.createRecipient(circleId: circleId, name: name, relationship: relationship, notes: notes)
+        if let inviteEmail, !inviteEmail.isEmpty {
+            _ = try await APIClient.shared.inviteMember(
+                circleId: circleId,
+                name: created.name,
+                email: inviteEmail,
+                role: .recipient,
+                recipientId: created.id
+            )
+        }
+        try await appState.activateCircle(id: circleId)
+        await loadPendingInvites()
+    }
+
+    private func updateRecipient(_ recipient: CareRecipient, name: String, relationship: String?, notes: String?) async throws {
+        guard let circleId = appState.activeCircle?.id else { return }
+        _ = try await APIClient.shared.updateRecipient(
+            circleId: circleId,
+            recipientId: recipient.id,
+            name: name,
+            relationship: relationship,
+            notes: notes,
+            isPrimary: recipient.isPrimary ? true : nil
+        )
+        try await appState.activateCircle(id: circleId)
+    }
+
+    private func sendInvite(for recipient: CareRecipient, email: String) async throws {
+        guard let circleId = appState.activeCircle?.id else { return }
+        _ = try await APIClient.shared.inviteMember(
+            circleId: circleId,
+            name: recipient.name,
+            email: email,
+            role: .recipient,
+            recipientId: recipient.id
+        )
+        try await appState.activateCircle(id: circleId)
+        await loadPendingInvites()
+    }
+
+    private func proxyActivate(_ recipient: CareRecipient, consentDocumentReference: String?) async throws {
+        guard let circleId = appState.activeCircle?.id else { return }
+        _ = try await APIClient.shared.proxyActivateRecipient(
+            circleId: circleId,
+            recipientId: recipient.id,
+            consentDocumentReference: consentDocumentReference
+        )
+        try await appState.activateCircle(id: circleId)
+        await loadPendingInvites()
+    }
+
+    private func setPrimary(_ recipient: CareRecipient) async {
+        guard let circleId = appState.activeCircle?.id else { return }
+        loadingRecipientId = recipient.id
+        error = nil
+        defer { loadingRecipientId = nil }
+
+        do {
+            _ = try await APIClient.shared.updateRecipient(
+                circleId: circleId,
+                recipientId: recipient.id,
+                name: recipient.name,
+                relationship: recipient.relationship,
+                notes: recipient.notes,
+                isPrimary: true
+            )
+            try await appState.activateCircle(id: circleId)
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func moveRecipient(_ recipient: CareRecipient, direction: Int) async {
+        guard let circleId = appState.activeCircle?.id,
+              let currentIndex = recipients.firstIndex(where: { $0.id == recipient.id })
+        else { return }
+
+        let nextIndex = currentIndex + direction
+        guard recipients.indices.contains(nextIndex) else { return }
+
+        loadingRecipientId = recipient.id
+        error = nil
+        defer { loadingRecipientId = nil }
+
+        var reorderedIds = recipients.map(\.id)
+        reorderedIds.swapAt(currentIndex, nextIndex)
+
+        do {
+            _ = try await APIClient.shared.reorderRecipients(
+                circleId: circleId,
+                recipientIds: reorderedIds,
+                primaryRecipientId: recipients.first(where: \.isPrimary)?.id
+            )
+            try await appState.activateCircle(id: circleId)
         } catch {
             self.error = error.localizedDescription
         }
@@ -328,198 +501,118 @@ struct RecipientManagementView: View {
         loadingInviteId = invite.id
         error = nil
         defer { loadingInviteId = nil }
+
         do {
+            if UITestScenario.current != nil {
+                pendingInvites.removeAll { $0.id == invite.id }
+                appState.uiTestInvitations.removeAll { $0.id == invite.id }
+                return
+            }
             try await APIClient.shared.revokeInvitation(circleId: circleId, invitationId: invite.id)
+            try await appState.activateCircle(id: circleId)
             await loadPendingInvites()
         } catch {
             self.error = error.localizedDescription
         }
     }
 
-    private func removeMember(_ member: CircleMember) async {
+    private func removeRecipient(_ recipient: CareRecipient) async {
         guard let circleId = appState.activeCircle?.id else { return }
-        loadingMemberId = member.id
+        loadingRecipientId = recipient.id
         error = nil
-        defer { loadingMemberId = nil }
+        defer { loadingRecipientId = nil }
+
         do {
-            try await APIClient.shared.removeMember(circleId: circleId, memberId: member.id)
+            try await APIClient.shared.deleteRecipient(circleId: circleId, recipientId: recipient.id)
             try await appState.activateCircle(id: circleId)
+            await loadPendingInvites()
         } catch {
             self.error = error.localizedDescription
         }
     }
 }
 
-// MARK: – Invite sheet
-
-private struct InviteRecipientSheet: View {
-    @EnvironmentObject private var appState: AppState
+private struct RecipientEditorSheet: View {
     @Environment(\.dismiss) private var dismiss
 
-    @State private var name           = ""
-    @State private var email          = ""
-    @State private var confirmedAdult = false
-    @State private var loading        = false
-    @State private var error:         String?
+    let title: String
+    let recipient: CareRecipient?
+    let onSave: (String, String?, String?, String?) async throws -> Void
 
-    private let rose = Color(red: 0.85, green: 0.30, blue: 0.50)
-    private let dark = Color(red: 0.10, green: 0.16, blue: 0.24)
-    private let mid  = Color(red: 0.43, green: 0.50, blue: 0.60)
-    private let bg   = Color(red: 0.95, green: 0.96, blue: 0.99)
+    @State private var name = ""
+    @State private var relationship = ""
+    @State private var notes = ""
+    @State private var inviteEmail = ""
+    @State private var loading = false
+    @State private var error: String?
 
-    private var isValid: Bool {
-        !name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty &&
-        email.contains("@") && email.contains(".") &&
-        confirmedAdult && !loading
+    init(title: String, recipient: CareRecipient? = nil, onSave: @escaping (String, String?, String?, String?) async throws -> Void) {
+        self.title = title
+        self.recipient = recipient
+        self.onSave = onSave
+        _name = State(initialValue: recipient?.name ?? "")
+        _relationship = State(initialValue: recipient?.relationship ?? "")
+        _notes = State(initialValue: recipient?.notes ?? "")
     }
 
     var body: some View {
         NavigationStack {
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading, spacing: 28) {
+            Form {
+                Section("Profile") {
+                    TextField("Name", text: $name)
+                    TextField("Relationship", text: $relationship)
+                    TextField("Notes", text: $notes, axis: .vertical)
+                        .lineLimit(3...6)
+                }
 
-                    // Header
-                    VStack(alignment: .leading, spacing: 10) {
-                        ZStack {
-                            RoundedRectangle(cornerRadius: 16, style: .continuous)
-                                .fill(LinearGradient(
-                                    colors: [rose.opacity(0.20), Color(red: 0.95, green: 0.55, blue: 0.30).opacity(0.12)],
-                                    startPoint: .topLeading, endPoint: .bottomTrailing
-                                ))
-                            Image(systemName: "heart.circle.fill")
-                                .font(.system(size: 28))
-                                .foregroundStyle(rose)
-                        }
-                        .frame(width: 56, height: 56)
-
-                        Text("Invite a Care Receiver")
-                            .font(.system(size: 26, weight: .bold, design: .rounded))
-                            .foregroundStyle(dark)
-
-                        Text("They'll receive an email to download CareLoop, see all care activity, and get reminders for tasks assigned to them — like medication or appointments.")
-                            .font(.system(size: 15, weight: .medium, design: .rounded))
-                            .foregroundStyle(mid)
-                            .fixedSize(horizontal: false, vertical: true)
+                if recipient == nil {
+                    Section("Invite Now (Optional)") {
+                        TextField("Email address", text: $inviteEmail)
+                            .keyboardType(.emailAddress)
+                            .textInputAutocapitalization(.never)
+                            .autocorrectionDisabled()
+                        Text("Leave email blank to create a draft receiver profile first.")
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
                     }
+                }
 
-                    // Form card
-                    VStack(alignment: .leading, spacing: 18) {
-                        field("Full name", text: $name,
-                              placeholder: "e.g. Margaret Chen",
-                              keyboard: .default,
-                              capitalize: .words)
-
-                        field("Email address", text: $email,
-                              placeholder: "margaret@example.com",
-                              keyboard: .emailAddress,
-                              capitalize: .never)
-                    }
-                    .padding(22)
-                    .background(Color.white, in: RoundedRectangle(cornerRadius: 24, style: .continuous))
-                    .shadow(color: .black.opacity(0.04), radius: 8, x: 0, y: 3)
-
-                    // Role info card
-                    HStack(spacing: 12) {
-                        Image(systemName: "lock.open.fill")
-                            .font(.system(size: 15))
-                            .foregroundStyle(rose)
-                        Text("Care Receiver access — they see all tasks, receive personal reminders, and can mark their own assigned tasks as done. They cannot create or edit tasks.")
-                            .font(.system(size: 13, weight: .medium, design: .rounded))
-                            .foregroundStyle(mid)
-                            .fixedSize(horizontal: false, vertical: true)
-                    }
-                    .padding(16)
-                    .background(rose.opacity(0.06), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
-
-                    // Age confirmation
-                    Button {
-                        confirmedAdult.toggle()
-                    } label: {
-                        HStack(spacing: 12) {
-                            ZStack {
-                                RoundedRectangle(cornerRadius: 6, style: .continuous)
-                                    .fill(confirmedAdult ? rose : Color(red: 0.86, green: 0.90, blue: 0.95))
-                                    .frame(width: 22, height: 22)
-                                if confirmedAdult {
-                                    Image(systemName: "checkmark")
-                                        .font(.system(size: 12, weight: .bold))
-                                        .foregroundStyle(.white)
-                                }
-                            }
-                            Text("I confirm this person is 18 years or older")
-                                .font(.system(size: 14, weight: .medium, design: .rounded))
-                                .foregroundStyle(dark)
-                                .multilineTextAlignment(.leading)
-                            Spacer()
-                        }
-                    }
-                    .buttonStyle(.plain)
-
-                    if let error {
+                if let error {
+                    Section {
                         Text(error)
                             .font(.footnote)
                             .foregroundStyle(.red)
-                            .frame(maxWidth: .infinity, alignment: .leading)
                     }
-
-                    // Send button
-                    Button {
-                        Task { await sendInvite() }
-                    } label: {
-                        HStack {
-                            Spacer()
-                            if loading {
-                                ProgressView().tint(.white)
-                            } else {
-                                Image(systemName: "paperplane.fill")
-                                Text("Send Invite")
-                                    .font(.system(size: 17, weight: .bold, design: .rounded))
-                            }
-                            Spacer()
-                        }
-                        .padding(.vertical, 18)
-                        .background(
-                            LinearGradient(
-                                colors: [rose, Color(red: 0.95, green: 0.55, blue: 0.30)],
-                                startPoint: .leading, endPoint: .trailing
-                            ),
-                            in: Capsule()
-                        )
-                        .foregroundStyle(.white)
-                    }
-                    .buttonStyle(.plain)
-                    .disabled(!isValid)
-                    .opacity(isValid ? 1 : 0.50)
                 }
-                .padding(.horizontal, 24)
-                .padding(.top, 24)
-                .padding(.bottom, 40)
             }
-            .background(bg.ignoresSafeArea())
-            .navigationBarHidden(true)
-            .overlay(alignment: .topLeading) {
-                Button { dismiss() } label: {
-                    Image(systemName: "xmark.circle.fill")
-                        .font(.system(size: 28))
-                        .foregroundStyle(Color(red: 0.70, green: 0.76, blue: 0.86))
-                        .symbolRenderingMode(.hierarchical)
+            .navigationTitle(title)
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
                 }
-                .padding(.top, 20)
-                .padding(.leading, 20)
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(recipient == nil ? "Add" : "Save") {
+                        Task { await save() }
+                    }
+                    .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || loading)
+                }
             }
         }
     }
 
-    private func sendInvite() async {
-        guard let circleId = appState.activeCircle?.id else { return }
+    private func save() async {
         loading = true
         error = nil
         do {
-            _ = try await APIClient.shared.inviteMember(
-                circleId: circleId,
-                name: name.trimmingCharacters(in: .whitespacesAndNewlines),
-                email: email.trimmingCharacters(in: .whitespacesAndNewlines),
-                role: .recipient
+            let normalizedRelationship = relationship.trimmingCharacters(in: .whitespacesAndNewlines)
+            let normalizedNotes = notes.trimmingCharacters(in: .whitespacesAndNewlines)
+            let normalizedInvite = inviteEmail.trimmingCharacters(in: .whitespacesAndNewlines)
+            try await onSave(
+                name.trimmingCharacters(in: .whitespacesAndNewlines),
+                normalizedRelationship.isEmpty ? nil : normalizedRelationship,
+                normalizedNotes.isEmpty ? nil : normalizedNotes,
+                normalizedInvite.isEmpty ? nil : normalizedInvite
             )
             dismiss()
         } catch {
@@ -527,30 +620,122 @@ private struct InviteRecipientSheet: View {
             loading = false
         }
     }
+}
 
-    private func field(
-        _ label: String, text: Binding<String>,
-        placeholder: String,
-        keyboard: UIKeyboardType,
-        capitalize: TextInputAutocapitalization
-    ) -> some View {
-        VStack(alignment: .leading, spacing: 8) {
-            Text(label)
-                .font(.system(size: 13, weight: .semibold, design: .rounded))
-                .foregroundStyle(mid)
-            TextField(placeholder, text: text)
-                .keyboardType(keyboard)
-                .textInputAutocapitalization(capitalize)
-                .autocorrectionDisabled()
-                .font(.system(size: 18, weight: .medium, design: .rounded))
-                .padding(.horizontal, 18)
-                .padding(.vertical, 16)
-                .background(Color(red: 0.97, green: 0.98, blue: 0.99))
-                .clipShape(RoundedRectangle(cornerRadius: 18, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: 18, style: .continuous)
-                        .stroke(Color(red: 0.86, green: 0.90, blue: 0.95), lineWidth: 1.5)
-                )
+private struct RecipientInviteSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let recipient: CareRecipient
+    let onSend: (String) async throws -> Void
+
+    @State private var email = ""
+    @State private var loading = false
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Invite \(recipient.name)") {
+                    TextField("Email address", text: $email)
+                        .keyboardType(.emailAddress)
+                        .textInputAutocapitalization(.never)
+                        .autocorrectionDisabled()
+                    Text("They need to accept the invite before tasks can begin, unless a Care Organizer records proxy authorization.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                }
+
+                if let error {
+                    Section {
+                        Text(error)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                    }
+                }
+            }
+            .navigationTitle("Send Invite")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Send") {
+                        Task { await send() }
+                    }
+                    .disabled(!email.contains("@") || loading)
+                }
+            }
+        }
+    }
+
+    private func send() async {
+        loading = true
+        error = nil
+        do {
+            try await onSend(email.trimmingCharacters(in: .whitespacesAndNewlines))
+            dismiss()
+        } catch {
+            self.error = error.localizedDescription
+            loading = false
+        }
+    }
+}
+
+private struct ProxyActivationSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let recipient: CareRecipient
+    let onActivate: (String?) async throws -> Void
+
+    @State private var documentReference = ""
+    @State private var loading = false
+    @State private var error: String?
+
+    var body: some View {
+        NavigationStack {
+            Form {
+                Section("Proxy Activation") {
+                    Text("Use this only when a Care Organizer has consent and/or external authorization to coordinate care on behalf of \(recipient.name).")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                    TextField("Consent reference (optional)", text: $documentReference)
+                }
+
+                if let error {
+                    Section {
+                        Text(error)
+                            .font(.footnote)
+                            .foregroundStyle(.red)
+                    }
+                }
+            }
+            .navigationTitle("Proxy Activate")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+                ToolbarItem(placement: .confirmationAction) {
+                    Button("Activate") {
+                        Task { await activate() }
+                    }
+                    .disabled(loading)
+                }
+            }
+        }
+    }
+
+    private func activate() async {
+        loading = true
+        error = nil
+        do {
+            let normalizedReference = documentReference.trimmingCharacters(in: .whitespacesAndNewlines)
+            try await onActivate(normalizedReference.isEmpty ? nil : normalizedReference)
+            dismiss()
+        } catch {
+            self.error = error.localizedDescription
+            loading = false
         }
     }
 }
