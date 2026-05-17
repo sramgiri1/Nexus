@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver } from "../lib/receiver-state.js";
+import { filterVisibleTasks, isCareOrganizer, loadReceiverAccessContext } from "../lib/access.js";
 
 const circleInclude = {
   members: { include: { user: { select: { id: true, name: true, email: true } } } },
@@ -17,6 +18,46 @@ const MAX_CIRCLES_PER_USER = 3;
 
 export default async function circles(app) {
   const db = app.db;
+
+  function filteredCircleForMember(circle, member, accessContext) {
+    if (isCareOrganizer(member)) return circle;
+    const filteredRecipients = accessContext.recipients;
+    const filteredTasks = filterVisibleTasks(circle.tasks ?? [], {
+      member,
+      userId: member.userId,
+      accessContext,
+    });
+    return {
+      ...circle,
+      recipientName: filteredRecipients[0]?.name ?? "",
+      recipients: filteredRecipients,
+      tasks: filteredTasks,
+    };
+  }
+
+  function eventVisibleToMember(event, member, accessContext, visibleTaskIds) {
+    if (isCareOrganizer(member)) return true;
+    const payload = event.payload ?? {};
+    if (payload.taskId) return visibleTaskIds.has(payload.taskId);
+    if (payload.recipientId && accessContext.recipientIds.has(payload.recipientId)) return true;
+    return event.actorId === member.userId;
+  }
+
+  async function caregiverMemberOrReply(circleId, memberId, reply) {
+    const member = await db.circleMember.findUnique({
+      where: { id: memberId },
+      include: { user: { select: { id: true, name: true, email: true } } },
+    });
+    if (!member || member.circleId !== circleId) {
+      reply.code(404).send({ error: "Member not found" });
+      return null;
+    }
+    if (member.role !== "MEMBER") {
+      reply.code(400).send({ error: "Receiver access can only be managed for caregivers" });
+      return null;
+    }
+    return member;
+  }
 
   function normalizedArchiveAfterDays(value) {
     if (!Number.isInteger(value)) return undefined;
@@ -105,13 +146,19 @@ export default async function circles(app) {
 
   // GET /circles/:id
   app.get("/circles/:id", async (req, reply) => {
-    if (!await assertRequestMember(db, req.params.id, req, reply)) return;
+    const member = await assertRequestMember(db, req.params.id, req, reply);
+    if (!member) return;
     const circle = await db.careCircle.findUnique({
       where:   { id: req.params.id },
       include: circleInclude,
     });
     if (!circle) return reply.code(404).send({ error: "Not found" });
-    return circle;
+    const accessContext = await loadReceiverAccessContext(db, {
+      circleId: req.params.id,
+      member,
+      userId: member.userId,
+    });
+    return filteredCircleForMember(circle, member, accessContext);
   });
 
   // GET /circles/:id/insights/completion — admin only
@@ -276,11 +323,14 @@ export default async function circles(app) {
 
   // GET /circles/:id/recipients — members can view recipients
   app.get("/circles/:id/recipients", async (req, reply) => {
-    if (!await assertRequestMember(db, req.params.id, req, reply)) return;
-    return db.careRecipient.findMany({
-      where: { circleId: req.params.id },
-      orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+    const member = await assertRequestMember(db, req.params.id, req, reply);
+    if (!member) return;
+    const accessContext = await loadReceiverAccessContext(db, {
+      circleId: req.params.id,
+      member,
+      userId: member.userId,
     });
+    return accessContext.recipients;
   });
 
   // POST /circles/:id/recipients — admin only
@@ -732,6 +782,113 @@ export default async function circles(app) {
     return updated;
   });
 
+  // GET /circles/:id/members/:memberId/recipient-access — admin only
+  app.get("/circles/:id/members/:memberId/recipient-access", async (req, reply) => {
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+    const caregiver = await caregiverMemberOrReply(req.params.id, req.params.memberId, reply);
+    if (!caregiver) return;
+
+    const [recipients, grants] = await Promise.all([
+      db.careRecipient.findMany({
+        where: { circleId: req.params.id },
+        orderBy: [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }],
+      }),
+      db.careRecipientAccess.findMany({
+        where: { memberId: caregiver.id, revokedAt: null },
+      }),
+    ]);
+    const grantByRecipientId = new Map(grants.map((grant) => [grant.recipientId, grant]));
+    return recipients.map((recipient) => ({
+      recipientId: recipient.id,
+      name: recipient.name,
+      activationStatus: recipient.activationStatus,
+      hasAccess: grantByRecipientId.has(recipient.id),
+      grantedAt: grantByRecipientId.get(recipient.id)?.grantedAt ?? null,
+    }));
+  });
+
+  // PUT /circles/:id/members/:memberId/recipient-access/:recipientId — admin only
+  app.put("/circles/:id/members/:memberId/recipient-access/:recipientId", async (req, reply) => {
+    const { userId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+
+    const caregiver = await caregiverMemberOrReply(req.params.id, req.params.memberId, reply);
+    if (!caregiver) return;
+    const recipient = await db.careRecipient.findFirst({
+      where: { id: req.params.recipientId, circleId: req.params.id },
+    });
+    if (!recipient) return reply.code(404).send({ error: "Care receiver not found" });
+
+    const [existingGrant] = await db.careRecipientAccess.findMany({
+      where: { memberId: caregiver.id, recipientId: recipient.id },
+    });
+    let grant;
+    if (existingGrant && !existingGrant.revokedAt) {
+      grant = existingGrant;
+    } else if (existingGrant) {
+      grant = await db.careRecipientAccess.update({
+        where: { id: existingGrant.id },
+        data: {
+          revokedAt: null,
+          grantedAt: new Date(),
+          grantedById: authenticatedUserId,
+        },
+      });
+    } else {
+      grant = await db.careRecipientAccess.create({
+        data: {
+          memberId: caregiver.id,
+          recipientId: recipient.id,
+          grantedById: authenticatedUserId,
+        },
+      });
+    }
+
+    await logEvent(db, {
+      type: "RECIPIENT_ACCESS_GRANTED",
+      circleId: req.params.id,
+      actorId: authenticatedUserId,
+      payload: { memberId: caregiver.id, recipientId: recipient.id },
+    });
+    return grant;
+  });
+
+  // DELETE /circles/:id/members/:memberId/recipient-access/:recipientId — admin only
+  app.delete("/circles/:id/members/:memberId/recipient-access/:recipientId", async (req, reply) => {
+    const { userId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+
+    const caregiver = await caregiverMemberOrReply(req.params.id, req.params.memberId, reply);
+    if (!caregiver) return;
+    const recipient = await db.careRecipient.findFirst({
+      where: { id: req.params.recipientId, circleId: req.params.id },
+    });
+    if (!recipient) return reply.code(404).send({ error: "Care receiver not found" });
+
+    const [existingGrant] = await db.careRecipientAccess.findMany({
+      where: { memberId: caregiver.id, recipientId: recipient.id, revokedAt: null },
+    });
+    if (!existingGrant) return reply.code(404).send({ error: "Receiver access grant not found" });
+
+    await db.careRecipientAccess.update({
+      where: { id: existingGrant.id },
+      data: { revokedAt: new Date() },
+    });
+    await logEvent(db, {
+      type: "RECIPIENT_ACCESS_REVOKED",
+      circleId: req.params.id,
+      actorId: authenticatedUserId,
+      payload: { memberId: caregiver.id, recipientId: recipient.id },
+    });
+    return reply.code(204).send();
+  });
+
   // POST /invitations/:inviteId/accept — authenticated user accepts own pending invite
   app.post("/invitations/:inviteId/accept", async (req, reply) => {
     const { userId } = req.body ?? {};
@@ -869,12 +1026,29 @@ export default async function circles(app) {
 
   // GET /circles/:circleId/events
   app.get("/circles/:circleId/events", async (req, reply) => {
-    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
-    return db.event.findMany({
-      where:   { circleId: req.params.circleId },
-      orderBy: { createdAt: "desc" },
-      take:    100,
-      include: { actor: { select: { id: true, name: true } } },
-    });
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
+    const [events, tasks, accessContext] = await Promise.all([
+      db.event.findMany({
+        where:   { circleId: req.params.circleId },
+        orderBy: { createdAt: "desc" },
+        take:    100,
+        include: { actor: { select: { id: true, name: true } } },
+      }),
+      db.task.findMany({
+        where: { circleId: req.params.circleId, archivedAt: null },
+        orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
+      }),
+      loadReceiverAccessContext(db, {
+        circleId: req.params.circleId,
+        member,
+        userId: member.userId,
+      }),
+    ]);
+    if (isCareOrganizer(member)) return events;
+    const visibleTaskIds = new Set(
+      filterVisibleTasks(tasks, { member, userId: member.userId, accessContext }).map((task) => task.id),
+    );
+    return events.filter((event) => eventVisibleToMember(event, member, accessContext, visibleTaskIds));
   });
 }

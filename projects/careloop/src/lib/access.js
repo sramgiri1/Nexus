@@ -43,3 +43,71 @@ export function canEditTask({ member, userId, task }) {
   if (isCareReceiver(member)) return false;
   return task.creatorId === userId;
 }
+
+const recipientOrder = [{ isPrimary: "desc" }, { sortOrder: "asc" }, { createdAt: "asc" }];
+
+export async function loadReceiverAccessContext(db, { circleId, member, userId }) {
+  const recipients = await db.careRecipient.findMany({
+    where: { circleId },
+    orderBy: recipientOrder,
+  });
+
+  if (isCareOrganizer(member)) {
+    return {
+      recipients,
+      recipientIds: new Set(recipients.map((recipient) => recipient.id)),
+      accessGrantByRecipientId: new Map(),
+    };
+  }
+
+  if (isCareReceiver(member)) {
+    const visibleRecipients = recipients.filter((recipient) => recipient.receiverUserId === userId);
+    return {
+      recipients: visibleRecipients,
+      recipientIds: new Set(visibleRecipients.map((recipient) => recipient.id)),
+      accessGrantByRecipientId: new Map(),
+    };
+  }
+
+  const accessGrants = await db.careRecipientAccess.findMany({
+    where: { memberId: member.id, revokedAt: null },
+  });
+  const accessGrantByRecipientId = new Map(
+    accessGrants.map((grant) => [grant.recipientId, grant]),
+  );
+  const visibleRecipients = recipients.filter((recipient) => accessGrantByRecipientId.has(recipient.id));
+
+  return {
+    recipients: visibleRecipients,
+    recipientIds: new Set(visibleRecipients.map((recipient) => recipient.id)),
+    accessGrantByRecipientId,
+  };
+}
+
+export function canAccessReceiverById(accessContext, recipientId) {
+  if (!recipientId) return false;
+  return accessContext.recipientIds.has(recipientId);
+}
+
+export function filterVisibleTasks(tasks, { member, userId, accessContext }) {
+  const recipientById = new Map(accessContext.recipients.map((recipient) => [recipient.id, recipient]));
+  return tasks.filter((task) => {
+    const receiver = recipientById.get(task.recipientId);
+    if (!receiver) return false;
+    return canViewTask({
+      member,
+      userId,
+      task,
+      receiver,
+      accessGrant: accessContext.accessGrantByRecipientId.get(task.recipientId) ?? null,
+    });
+  });
+}
+
+export function canCreateTaskWithAccess({ member, receiver, accessContext }) {
+  return canCreateTaskForReceiver({
+    member,
+    receiver,
+    accessGrant: accessContext.accessGrantByRecipientId.get(receiver.id) ?? null,
+  });
+}

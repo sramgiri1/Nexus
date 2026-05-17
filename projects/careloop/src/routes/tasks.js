@@ -9,6 +9,11 @@ import {
   recurrenceFields,
 } from "../lib/recurrence.js";
 import { canCreateTasksForReceiver } from "../lib/receiver-state.js";
+import {
+  canCreateTaskWithAccess,
+  filterVisibleTasks,
+  loadReceiverAccessContext,
+} from "../lib/access.js";
 
 const taskInclude = {
   assignee: { select: { id: true, email: true, name: true, phone: true, pushToken: true, timezone: true } },
@@ -37,6 +42,12 @@ function nextSeriesScope(raw) {
   return String(raw ?? "THIS_OCCURRENCE").toUpperCase() === "SERIES"
     ? "SERIES"
     : "THIS_OCCURRENCE";
+}
+
+function createHttpError(message, statusCode = 400) {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
 }
 
 async function syncReminderForTask(tx, taskId, dueAt) {
@@ -103,6 +114,31 @@ async function ensureNextRecurringOccurrence(tx, task) {
 
 export default async function tasks(app) {
   const db = app.db;
+
+  async function accessContextForMember(circleId, member) {
+    return loadReceiverAccessContext(db, {
+      circleId,
+      member,
+      userId: member.userId,
+    });
+  }
+
+  async function findVisibleTask(circleId, taskId, member, include = taskInclude) {
+    const [task, accessContext] = await Promise.all([
+      db.task.findFirst({
+        where: { id: taskId, circleId },
+        include,
+      }),
+      accessContextForMember(circleId, member),
+    ]);
+    if (!task) return { task: null, accessContext };
+    const visibleTask = filterVisibleTasks([task], {
+      member,
+      userId: member.userId,
+      accessContext,
+    })[0] ?? null;
+    return { task: visibleTask, accessContext };
+  }
 
   async function resolveRecipientId(tx, circleId, requestedRecipientId, assigneeId) {
     if (requestedRecipientId) {
@@ -184,7 +220,15 @@ export default async function tasks(app) {
       task = await db.$transaction(async (tx) => {
         const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId, assigneeId);
         if (!resolvedRecipientId) throw new Error("recipientId is required");
-        await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+        const receiver = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+        const accessContext = await loadReceiverAccessContext(tx, {
+          circleId: req.params.circleId,
+          member,
+          userId: authenticatedUserId,
+        });
+        if (!canCreateTaskWithAccess({ member, receiver, accessContext })) {
+          throw createHttpError("You do not have access to create tasks for this care receiver", 403);
+        }
 
         const createdTask = await createTaskRecord(tx, {
           title,
@@ -220,7 +264,7 @@ export default async function tasks(app) {
         return createdTask;
       });
     } catch (error) {
-      return reply.code(400).send({ error: error.message });
+      return reply.code(error.statusCode ?? 400).send({ error: error.message });
     }
 
     if (task.assigneeId) {
@@ -237,11 +281,20 @@ export default async function tasks(app) {
 
   // GET /circles/:circleId/tasks
   app.get("/circles/:circleId/tasks", async (req, reply) => {
-    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
-    return db.task.findMany({
-      where: { circleId: req.params.circleId, archivedAt: null },
-      orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
-      include: taskInclude,
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
+    const [tasks, accessContext] = await Promise.all([
+      db.task.findMany({
+        where: { circleId: req.params.circleId, archivedAt: null },
+        orderBy: [{ completedAt: "asc" }, { dueAt: "asc" }, { createdAt: "desc" }],
+        include: taskInclude,
+      }),
+      accessContextForMember(req.params.circleId, member),
+    ]);
+    return filterVisibleTasks(tasks, {
+      member,
+      userId: member.userId,
+      accessContext,
     });
   });
 
@@ -259,9 +312,7 @@ export default async function tasks(app) {
     const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
 
-    const task = await db.task.findFirst({
-      where: { id: req.params.taskId, circleId: req.params.circleId },
-    });
+    const { task, accessContext } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
     if (!task) return reply.code(404).send({ error: "Task not found" });
 
     if (title !== undefined && title.length > 200)
@@ -343,7 +394,10 @@ export default async function tasks(app) {
         if (recipientId !== undefined) {
           const resolvedRecipientId = await resolveRecipientId(tx, req.params.circleId, recipientId);
           if (!resolvedRecipientId) throw new Error("recipientId is required");
-          await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+          const receiver = await assertTaskableRecipient(tx, req.params.circleId, resolvedRecipientId);
+          if (!canCreateTaskWithAccess({ member, receiver, accessContext })) {
+            throw createHttpError("You do not have access to assign tasks for this care receiver", 403);
+          }
           data.recipientId = resolvedRecipientId;
         }
 
@@ -430,7 +484,7 @@ export default async function tasks(app) {
         return nextTask;
       });
     } catch (error) {
-      return reply.code(400).send({ error: error.message });
+      return reply.code(error.statusCode ?? 400).send({ error: error.message });
     }
 
     if (status === "DONE" && task.status !== "DONE") {
@@ -502,9 +556,7 @@ export default async function tasks(app) {
     const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
 
-    const task = await db.task.findFirst({
-      where: { id: req.params.taskId, circleId: req.params.circleId },
-    });
+    const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member, undefined);
     if (!task) return reply.code(404).send({ error: "Task not found" });
 
     if (member.role === "MEMBER" && task.creatorId !== authenticatedUserId)
@@ -528,11 +580,9 @@ export default async function tasks(app) {
   app.get("/circles/:circleId/tasks/:taskId/comments", async (req, reply) => {
     const authenticatedUserId = requireAuthenticatedUser(req, reply);
     if (!authenticatedUserId) return;
-    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
-    const task = await db.task.findFirst({
-      where: { id: req.params.taskId, circleId: req.params.circleId },
-      select: { id: true },
-    });
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
+    const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
     if (!task) return reply.code(404).send({ error: "Task not found" });
     return db.taskComment.findMany({
       where: { taskId: req.params.taskId },
@@ -545,13 +595,11 @@ export default async function tasks(app) {
   app.post("/circles/:circleId/tasks/:taskId/comments", async (req, reply) => {
     const authenticatedUserId = requireAuthenticatedUser(req, reply);
     if (!authenticatedUserId) return;
-    if (!await assertRequestMember(db, req.params.circleId, req, reply)) return;
+    const member = await assertRequestMember(db, req.params.circleId, req, reply);
+    if (!member) return;
     const { body } = req.body ?? {};
     if (!body?.trim()) return reply.code(400).send({ error: "body is required" });
-    const task = await db.task.findFirst({
-      where: { id: req.params.taskId, circleId: req.params.circleId },
-      select: { id: true },
-    });
+    const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
     if (!task) return reply.code(404).send({ error: "Task not found" });
     const comment = await db.taskComment.create({
       data: { body: body.trim(), taskId: req.params.taskId, authorId: authenticatedUserId },
@@ -566,6 +614,8 @@ export default async function tasks(app) {
     if (!authenticatedUserId) return;
     const member = await assertRequestMember(db, req.params.circleId, req, reply);
     if (!member) return;
+    const { task } = await findVisibleTask(req.params.circleId, req.params.taskId, member);
+    if (!task) return reply.code(404).send({ error: "Task not found" });
     const comment = await db.taskComment.findFirst({
       where: { id: req.params.commentId, taskId: req.params.taskId },
       select: { id: true, authorId: true },

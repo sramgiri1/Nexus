@@ -66,8 +66,10 @@ function buildDb(seed = {}) {
       createdAt: new Date(),
       updatedAt: new Date(),
     })))],
+    recipientAccesses: [...(seed.recipientAccesses || [])],
     members:    [...(seed.members    || [])],
     tasks:      [...(seed.tasks      || [])],
+    taskComments: [...(seed.taskComments || [])],
     reminders:  [...(seed.reminders  || [])],
     events:     [...(seed.events     || [])],
   };
@@ -79,8 +81,10 @@ function buildDb(seed = {}) {
     ...S.circles.map((item) => item.id),
     ...S.invitations.map((item) => item.id),
     ...S.recipients.map((item) => item.id),
+    ...S.recipientAccesses.map((item) => item.id),
     ...S.members.map((item) => item.id),
     ...S.tasks.map((item) => item.id),
+    ...S.taskComments.map((item) => item.id),
     ...S.reminders.map((item) => item.id),
     ...S.events.map((item) => item.id),
   ];
@@ -424,6 +428,37 @@ function buildDb(seed = {}) {
     };
   }
 
+  function careRecipientAccessRepo(s) {
+    return {
+      create: async ({ data: d }) => {
+        const access = {
+          id: uid("cra"),
+          grantedAt: new Date(),
+          revokedAt: null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          grantedById: null,
+          ...d,
+        };
+        s.recipientAccesses.push(access);
+        return access;
+      },
+      findMany: async ({ where } = {}) =>
+        s.recipientAccesses.filter((access) => {
+          if (where?.recipientId && access.recipientId !== where.recipientId) return false;
+          if (where?.memberId && access.memberId !== where.memberId) return false;
+          if (where?.revokedAt === null && access.revokedAt !== null) return false;
+          return true;
+        }),
+      update: async ({ where, data: d }) => {
+        const access = s.recipientAccesses.find((item) => item.id === where.id);
+        if (!access) throw Object.assign(new Error("NotFound"), { code: "P2025" });
+        Object.assign(access, d, { updatedAt: new Date() });
+        return access;
+      },
+    };
+  }
+
   function memberRepo(s) {
     return {
       create: async ({ data: d }) => {
@@ -593,9 +628,67 @@ function buildDb(seed = {}) {
     };
   }
 
+  function taskCommentRepo(s) {
+    return {
+      create: async ({ data: d, include }) => {
+        const comment = {
+          id: uid("tc"),
+          createdAt: new Date(),
+          updatedAt: new Date(),
+          ...d,
+        };
+        s.taskComments.push(comment);
+        if (!include?.author) return comment;
+        return {
+          ...comment,
+          author: s.users.find((user) => user.id === comment.authorId) ?? null,
+        };
+      },
+      findMany: async ({ where, include } = {}) =>
+        s.taskComments
+          .filter((comment) => {
+            if (where?.taskId && comment.taskId !== where.taskId) return false;
+            return true;
+          })
+          .map((comment) => ({
+            ...comment,
+            author: include?.author ? (s.users.find((user) => user.id === comment.authorId) ?? null) : undefined,
+          })),
+      findFirst: async ({ where, select } = {}) => {
+        const comment = s.taskComments.find((item) => {
+          if (where?.id && item.id !== where.id) return false;
+          if (where?.taskId && item.taskId !== where.taskId) return false;
+          return true;
+        }) ?? null;
+        if (!comment || !select) return comment;
+        return Object.fromEntries(Object.keys(select).map((key) => [key, comment[key]]));
+      },
+      delete: async ({ where }) => {
+        const index = s.taskComments.findIndex((item) => item.id === where.id);
+        if (index === -1) throw Object.assign(new Error("NotFound"), { code: "P2025" });
+        const [deleted] = s.taskComments.splice(index, 1);
+        return deleted;
+      },
+    };
+  }
+
   function eventRepo(s) {
     return {
       create:   async ({ data: d }) => { const e = { id: uid("e"), createdAt: new Date(), payload: {}, ...d }; s.events.push(e); return e; },
+      findMany: async ({ where, orderBy, take, include } = {}) => {
+        let items = s.events.filter((event) => {
+          if (where?.circleId && event.circleId !== where.circleId) return false;
+          return true;
+        });
+        if (orderBy?.createdAt === "desc") {
+          items = [...items].sort((lhs, rhs) => rhs.createdAt - lhs.createdAt);
+        }
+        if (typeof take === "number") items = items.slice(0, take);
+        return items.map((event) => ({
+          ...event,
+          actor: include?.actor ? (s.users.find((user) => user.id === event.actorId) ?? null) : undefined,
+        }));
+      },
       findFirst: async () => null,
     };
   }
@@ -605,10 +698,12 @@ function buildDb(seed = {}) {
     careCircle:   circleRepo(s),
     invitation:   invitationRepo(s),
     careRecipient: careRecipientRepo(s),
+    careRecipientAccess: careRecipientAccessRepo(s),
     circleMember: memberRepo(s),
     authIdentity: authIdentityRepo(s),
     passwordResetCode: passwordResetCodeRepo(s),
     task:         taskRepo(s),
+    taskComment:  taskCommentRepo(s),
     reminder:     reminderRepo(s),
     event:        eventRepo(s),
   });
@@ -621,8 +716,10 @@ function buildDb(seed = {}) {
     passwordResetCode: passwordResetCodeRepo(S),
     careCircle:   circleRepo(S),
     careRecipient: careRecipientRepo(S),
+    careRecipientAccess: careRecipientAccessRepo(S),
     circleMember: memberRepo(S),
     task:         taskRepo(S),
+    taskComment:  taskCommentRepo(S),
     reminder:     reminderRepo(S),
     event:        eventRepo(S),
     $transaction: async (fn) => fn(txProxy(S)),
@@ -1627,6 +1724,322 @@ describe("auth hardening and protected reads", () => {
       headers: memberHeaders,
     });
     assert.equal(memberInsights.statusCode, 403);
+    await app.close();
+  });
+});
+
+describe("receiver-scoped access control", () => {
+  function scopedAccessSeed() {
+    const now = new Date("2026-04-29T12:00:00.000Z");
+    return {
+      users: [
+        { id: "u1", name: "Organizer", email: "organizer@test.com" },
+        { id: "u2", name: "Caregiver A", email: "caregiver-a@test.com" },
+        { id: "u3", name: "Caregiver B", email: "caregiver-b@test.com" },
+        { id: "u4", name: "Receiver One", email: "receiver-1@test.com" },
+        { id: "u5", name: "Receiver Two", email: "receiver-2@test.com" },
+        { id: "u6", name: "Caregiver No Access", email: "caregiver-none@test.com" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Receiver One", archiveAfterDays: 7 }],
+      recipients: [
+        {
+          id: "cr1",
+          circleId: "c1",
+          name: "Receiver One",
+          relationship: "Parent",
+          notes: null,
+          isPrimary: true,
+          sortOrder: 0,
+          activationStatus: "ACTIVE",
+          activatedAt: now,
+          receiverUserId: "u4",
+          consentAttestedAt: null,
+          consentAttestedById: null,
+          proxyAuthorizedById: null,
+          consentDocumentReference: null,
+          createdAt: now,
+          updatedAt: now,
+        },
+        {
+          id: "cr2",
+          circleId: "c1",
+          name: "Receiver Two",
+          relationship: "Grandparent",
+          notes: null,
+          isPrimary: false,
+          sortOrder: 1,
+          activationStatus: "ACTIVE",
+          activatedAt: now,
+          receiverUserId: "u5",
+          consentAttestedAt: null,
+          consentAttestedById: null,
+          proxyAuthorizedById: null,
+          consentDocumentReference: null,
+          createdAt: now,
+          updatedAt: now,
+        },
+      ],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u2", circleId: "c1", role: "MEMBER" },
+        { id: "m3", userId: "u3", circleId: "c1", role: "MEMBER" },
+        { id: "m4", userId: "u4", circleId: "c1", role: "RECIPIENT" },
+        { id: "m5", userId: "u5", circleId: "c1", role: "RECIPIENT" },
+        { id: "m6", userId: "u6", circleId: "c1", role: "MEMBER" },
+      ],
+      recipientAccesses: [
+        { id: "cra1", memberId: "m2", recipientId: "cr1", grantedById: "u1", grantedAt: now, revokedAt: null, createdAt: now, updatedAt: now },
+      ],
+      tasks: [
+        {
+          id: "t1",
+          title: "Caregiver A private task",
+          status: "PENDING",
+          priority: "NORMAL",
+          circleId: "c1",
+          creatorId: "u1",
+          assigneeId: "u2",
+          completedById: null,
+          completedAt: null,
+          dueAt: new Date("2026-04-30T12:00:00.000Z"),
+          archivedAt: null,
+          createdAt: now,
+          updatedAt: now,
+          recurrenceFrequency: "NONE",
+          recurrenceInterval: null,
+          recurrenceWeekdays: [],
+          recurrenceEndsAt: null,
+          seriesId: null,
+          recipientId: "cr1",
+        },
+        {
+          id: "t2",
+          title: "Receiver one self task",
+          status: "PENDING",
+          priority: "HIGH",
+          circleId: "c1",
+          creatorId: "u1",
+          assigneeId: "u4",
+          completedById: null,
+          completedAt: null,
+          dueAt: new Date("2026-04-30T15:00:00.000Z"),
+          archivedAt: null,
+          createdAt: now,
+          updatedAt: now,
+          recurrenceFrequency: "NONE",
+          recurrenceInterval: null,
+          recurrenceWeekdays: [],
+          recurrenceEndsAt: null,
+          seriesId: null,
+          recipientId: "cr1",
+        },
+        {
+          id: "t3",
+          title: "Caregiver B private task",
+          status: "PENDING",
+          priority: "NORMAL",
+          circleId: "c1",
+          creatorId: "u1",
+          assigneeId: "u3",
+          completedById: null,
+          completedAt: null,
+          dueAt: new Date("2026-04-30T18:00:00.000Z"),
+          archivedAt: null,
+          createdAt: now,
+          updatedAt: now,
+          recurrenceFrequency: "NONE",
+          recurrenceInterval: null,
+          recurrenceWeekdays: [],
+          recurrenceEndsAt: null,
+          seriesId: null,
+          recipientId: "cr1",
+        },
+        {
+          id: "t4",
+          title: "Receiver two self task",
+          status: "PENDING",
+          priority: "NORMAL",
+          circleId: "c1",
+          creatorId: "u1",
+          assigneeId: "u5",
+          completedById: null,
+          completedAt: null,
+          dueAt: new Date("2026-05-01T10:00:00.000Z"),
+          archivedAt: null,
+          createdAt: now,
+          updatedAt: now,
+          recurrenceFrequency: "NONE",
+          recurrenceInterval: null,
+          recurrenceWeekdays: [],
+          recurrenceEndsAt: null,
+          seriesId: null,
+          recipientId: "cr2",
+        },
+      ],
+      events: [
+        { id: "e1", type: "TASK_CREATED", circleId: "c1", actorId: "u1", payload: { taskId: "t1", recipientId: "cr1" }, createdAt: new Date("2026-04-30T12:00:00.000Z") },
+        { id: "e2", type: "TASK_CREATED", circleId: "c1", actorId: "u1", payload: { taskId: "t3", recipientId: "cr1" }, createdAt: new Date("2026-04-30T13:00:00.000Z") },
+        { id: "e3", type: "TASK_CREATED", circleId: "c1", actorId: "u1", payload: { taskId: "t4", recipientId: "cr2" }, createdAt: new Date("2026-04-30T14:00:00.000Z") },
+        { id: "e4", type: "APP_SESSION_STARTED", circleId: "c1", actorId: "u2", payload: {}, createdAt: new Date("2026-04-30T15:00:00.000Z") },
+      ],
+    };
+  }
+
+  test("filters circle, recipient, and task reads by caregiver and receiver scope", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+    const receiverHeaders = await authHeaders({ id: "u4", email: "receiver-1@test.com", name: "Receiver One" });
+    const noAccessHeaders = await authHeaders({ id: "u6", email: "caregiver-none@test.com", name: "Caregiver No Access" });
+
+    const caregiverCircle = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: caregiverHeaders,
+    });
+    assert.equal(caregiverCircle.statusCode, 200);
+    assert.deepEqual(caregiverCircle.json().recipients.map((recipient) => recipient.id), ["cr1"]);
+    assert.deepEqual(caregiverCircle.json().tasks.map((task) => task.id), ["t1", "t2"]);
+
+    const caregiverRecipients = await app.inject({
+      method: "GET",
+      url: "/circles/c1/recipients",
+      headers: caregiverHeaders,
+    });
+    assert.equal(caregiverRecipients.statusCode, 200);
+    assert.deepEqual(caregiverRecipients.json().map((recipient) => recipient.id), ["cr1"]);
+
+    const receiverTasks = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: receiverHeaders,
+    });
+    assert.equal(receiverTasks.statusCode, 200);
+    assert.deepEqual(receiverTasks.json().map((task) => task.id), ["t2"]);
+
+    const noAccessCircle = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: noAccessHeaders,
+    });
+    assert.equal(noAccessCircle.statusCode, 200);
+    assert.deepEqual(noAccessCircle.json().recipients, []);
+    assert.deepEqual(noAccessCircle.json().tasks, []);
+    await app.close();
+  });
+
+  test("lets organizers grant and revoke caregiver receiver access", async () => {
+    const db = buildDb(scopedAccessSeed());
+    const app = await buildApp(db);
+    const adminHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+    const noAccessHeaders = await authHeaders({ id: "u6", email: "caregiver-none@test.com", name: "Caregiver No Access" });
+
+    const before = await app.inject({
+      method: "GET",
+      url: "/circles/c1/members/m6/recipient-access",
+      headers: adminHeaders,
+    });
+    assert.equal(before.statusCode, 200);
+    assert.equal(before.json().find((item) => item.recipientId === "cr1").hasAccess, false);
+
+    const grant = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/members/m6/recipient-access/cr1",
+      headers: adminHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(grant.statusCode, 200);
+
+    const afterGrant = await app.inject({
+      method: "GET",
+      url: "/circles/c1/members/m6/recipient-access",
+      headers: adminHeaders,
+    });
+    assert.equal(afterGrant.json().find((item) => item.recipientId === "cr1").hasAccess, true);
+
+    const tasksAfterGrant = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: noAccessHeaders,
+    });
+    assert.equal(tasksAfterGrant.statusCode, 200);
+    assert.deepEqual(tasksAfterGrant.json().map((task) => task.id), ["t2"]);
+
+    const revoke = await app.inject({
+      method: "DELETE",
+      url: "/circles/c1/members/m6/recipient-access/cr1",
+      headers: adminHeaders,
+      payload: { userId: "u1" },
+    });
+    assert.equal(revoke.statusCode, 204);
+
+    const tasksAfterRevoke = await app.inject({
+      method: "GET",
+      url: "/circles/c1/tasks",
+      headers: noAccessHeaders,
+    });
+    assert.equal(tasksAfterRevoke.statusCode, 200);
+    assert.deepEqual(tasksAfterRevoke.json(), []);
+    await app.close();
+  });
+
+  test("blocks caregivers from creating tasks outside their granted receiver scope", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+
+    const denied = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: caregiverHeaders,
+      payload: { title: "Unsupported receiver task", creatorId: "u2", recipientId: "cr2" },
+    });
+    assert.equal(denied.statusCode, 403);
+    assert.equal(denied.json().error, "You do not have access to create tasks for this care receiver");
+
+    const allowed = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks",
+      headers: caregiverHeaders,
+      payload: { title: "Supported receiver task", creatorId: "u2", recipientId: "cr1", assigneeId: "u2" },
+    });
+    assert.equal(allowed.statusCode, 201);
+    assert.equal(allowed.json().recipientId, "cr1");
+    await app.close();
+  });
+
+  test("filters activity events to visible task scope", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+
+    const res = await app.inject({
+      method: "GET",
+      url: "/circles/c1/events",
+      headers: caregiverHeaders,
+    });
+    assert.equal(res.statusCode, 200);
+    assert.deepEqual(res.json().map((event) => event.id), ["e4", "e1"]);
+    await app.close();
+  });
+
+  test("returns 404 for hidden task mutations and comments outside the visible scope", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver-a@test.com", name: "Caregiver A" });
+    const receiverHeaders = await authHeaders({ id: "u4", email: "receiver-1@test.com", name: "Receiver One" });
+
+    const hiddenUpdate = await app.inject({
+      method: "PATCH",
+      url: "/circles/c1/tasks/t3",
+      headers: caregiverHeaders,
+      payload: { userId: "u2", status: "DONE" },
+    });
+    assert.equal(hiddenUpdate.statusCode, 404);
+
+    const hiddenComment = await app.inject({
+      method: "POST",
+      url: "/circles/c1/tasks/t1/comments",
+      headers: receiverHeaders,
+      payload: { body: "I can’t see this task" },
+    });
+    assert.equal(hiddenComment.statusCode, 404);
     await app.close();
   });
 });
