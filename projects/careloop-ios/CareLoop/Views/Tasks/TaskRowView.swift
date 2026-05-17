@@ -72,6 +72,7 @@ struct TaskRowView: View {
         .disabled(!task.canToggleCompletion)
         .opacity(task.canToggleCompletion ? 1 : 0.45)
         .padding(.top, 1)
+        .accessibilityIdentifier("task-toggle-\(task.id)")
     }
 
     private var checkboxIcon: String {

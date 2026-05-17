@@ -600,6 +600,33 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_completingRecurringTaskCreatesNextOccurrence() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let recurringTaskTitle = "Daily mobility check"
+
+        XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
+        tapQuickAction("quick-action-task-board", in: app)
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        app.buttons["add-task-button"].tap()
+        typeText(into: app.textFields["new-task-title-field"], text: recurringTaskTitle)
+        app.buttons["task-mode-repeating-button"].tap()
+        app.buttons["new-task-submit-button"].tap()
+
+        XCTAssertTrue(app.staticTexts[recurringTaskTitle].waitForExistence(timeout: 5))
+        let recurringToggle = app.buttons.matching(
+            NSPredicate(format: "identifier BEGINSWITH %@", "task-toggle-ui-task-")
+        ).firstMatch
+        XCTAssertTrue(recurringToggle.waitForExistence(timeout: 5))
+        recurringToggle.tap()
+
+        let nextOccurrence = app.buttons.matching(
+            NSPredicate(format: "label CONTAINS %@ AND label CONTAINS %@", recurringTaskTitle, "Tomorrow")
+        ).firstMatch
+        XCTAssertTrue(nextOccurrence.waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

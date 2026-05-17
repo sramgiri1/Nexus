@@ -48,7 +48,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Sign in / create account contract | `backend:auth`, `ios:onboarding` |
 | Group list -> create/join -> group hub | `backend:circles`, `ios:onboarding`, `ios:personas` |
 | Invite member / invite care receiver | `backend:circles`, `ios:personas` |
-| Create recurring task -> complete -> next occurrence | `backend:tasks`, `ios:tasks` for premium recurring creation; next occurrence remains backend-automated |
+| Create recurring task -> complete -> next occurrence | `backend:tasks`, focused iOS UI tests for premium recurring creation and next occurrence |
 | Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders` |
 | 50 dummy users / real-user simulation | `backend:scale` |
 | One user across multiple circles in different roles | `backend:scale`, `ios:personas` |

@@ -482,6 +482,10 @@ struct CirclesView: View {
         guard let circleId = appState.activeCircle?.id else { return }
         guard task.canToggleCompletion else { return }
         let next: TaskStatus = task.status == .done ? .pending : .done
+        if UITestScenario.current != nil {
+            applyUITestTaskStatus(task, next)
+            return
+        }
         if let updated = try? await APIClient.shared.updateTaskStatus(
             circleId: circleId, taskId: task.id, status: next
         ) { updateInList(updated) }
@@ -502,6 +506,69 @@ struct CirclesView: View {
 
     private func updateInList(_ task: CareTask) {
         tasks = tasks.map { $0.id == task.id ? task : $0 }
+    }
+
+    private func applyUITestTaskStatus(_ task: CareTask, _ status: TaskStatus) {
+        let updated = task.withUpdatedStatus(
+            status,
+            completedAt: status == .done ? Date() : nil,
+            completedBy: status == .done ? appState.currentUser : nil
+        )
+        tasks = tasks.map { $0.id == task.id ? updated : $0 }
+
+        if status == .done, let nextOccurrence = makeNextUITestOccurrence(after: updated) {
+            tasks.insert(nextOccurrence, at: 0)
+        }
+
+        if var circle = appState.activeCircle {
+            circle.tasks = tasks
+            appState.activeCircle = circle
+        }
+    }
+
+    private func makeNextUITestOccurrence(after task: CareTask) -> CareTask? {
+        guard let recurrence = task.recurrence,
+              let dueAt = task.dueAt,
+              let nextDueAt = nextDueDate(after: dueAt, recurrence: recurrence)
+        else { return nil }
+
+        return CareTask(
+            id: "ui-task-\(UUID().uuidString)",
+            title: task.title,
+            notes: task.notes,
+            dueAt: nextDueAt,
+            status: .pending,
+            priority: task.priority,
+            recurrenceFrequency: task.recurrenceFrequency,
+            recurrenceInterval: task.recurrenceInterval,
+            recurrenceWeekdays: task.recurrenceWeekdays,
+            recurrenceEndsAt: task.recurrenceEndsAt,
+            seriesId: task.seriesId ?? "ui-series-\(UUID().uuidString)",
+            completedAt: nil,
+            archivedAt: nil,
+            circleId: task.circleId,
+            recipientId: task.recipientId,
+            recipient: task.recipient,
+            creatorId: task.creatorId,
+            assigneeId: task.assigneeId,
+            assignee: task.assignee,
+            capabilities: task.capabilities
+        )
+    }
+
+    private func nextDueDate(after date: Date, recurrence: TaskRecurrence) -> Date? {
+        let calendar = Calendar.current
+        let interval = max(1, recurrence.interval ?? 1)
+        switch recurrence.frequency {
+        case .daily, .custom:
+            return calendar.date(byAdding: .day, value: interval, to: date)
+        case .weekly:
+            return calendar.date(byAdding: .weekOfYear, value: interval, to: date)
+        case .monthly:
+            return calendar.date(byAdding: .month, value: interval, to: date)
+        case .none:
+            return nil
+        }
     }
 
     private func removeFromList(_ task: CareTask) {
