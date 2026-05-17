@@ -203,6 +203,7 @@ struct CircleHomeView: View {
             }
         }
         .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 3)
     }
@@ -238,6 +239,7 @@ struct CircleHomeView: View {
             roleBadge
         }
         .padding(18)
+        .frame(maxWidth: .infinity, alignment: .leading)
         .background(Color.white, in: RoundedRectangle(cornerRadius: 22, style: .continuous))
         .shadow(color: .black.opacity(0.05), radius: 8, x: 0, y: 3)
     }

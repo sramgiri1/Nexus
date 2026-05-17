@@ -187,13 +187,18 @@ struct CircleListView: View {
             }
             .frame(width: 52, height: 52)
 
-            // Text
-            VStack(alignment: .leading, spacing: 4) {
+            VStack(alignment: .leading, spacing: 6) {
+                Text(circle.name)
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
+                    .lineLimit(1)
+
+                Text(recipientSubtitle(for: circle, role: role))
+                    .font(.system(size: 13, weight: .medium, design: .rounded))
+                    .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
+                    .lineLimit(1)
+
                 HStack(spacing: 7) {
-                    Text(circle.name)
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
-                        .lineLimit(1)
                     if isActive {
                         Text("Active")
                             .font(.system(size: 10, weight: .bold, design: .rounded))
@@ -201,25 +206,18 @@ struct CircleListView: View {
                             .padding(.horizontal, 7).padding(.vertical, 3)
                             .background(Capsule().fill(Color(red: 0.87, green: 0.97, blue: 0.93)))
                     }
+                    rolePill(role)
                 }
-                Text(recipientSubtitle(for: circle, role: role))
-                    .font(.system(size: 13, weight: .medium, design: .rounded))
-                    .foregroundStyle(Color(red: 0.44, green: 0.52, blue: 0.64))
-                    .lineLimit(1)
             }
 
             Spacer(minLength: 8)
 
-            // Right side
-            VStack(alignment: .trailing, spacing: 7) {
-                rolePill(role)
-                if isLoading {
-                    ProgressView().scaleEffect(0.75)
-                } else {
-                    Image(systemName: "chevron.right")
-                        .font(.system(size: 11, weight: .semibold))
-                        .foregroundStyle(Color(red: 0.65, green: 0.74, blue: 0.88))
-                }
+            if isLoading {
+                ProgressView().scaleEffect(0.75)
+            } else {
+                Image(systemName: "chevron.right")
+                    .font(.system(size: 11, weight: .semibold))
+                    .foregroundStyle(Color(red: 0.65, green: 0.74, blue: 0.88))
             }
         }
         .padding(15)
