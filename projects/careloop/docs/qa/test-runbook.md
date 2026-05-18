@@ -65,7 +65,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Premium billing retry and refund states | Backend premium entitlement regression; `xcodebuild build-for-testing`; focused iOS model `test_careRecipient_exposesBillingRetryAndRefundedPremiumAsLockedButVisible`; focused iOS UI `test_organizerSeesPremiumBillingAndRefundStates` |
 | Free receiver and premium capability gates | Backend cross-surface premium/free policy regression; `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 | App Store Server transaction verification readiness | Backend `app-store-server.test.js`; entitlement sync fail-closed route regression; live Apple calls remain external setup |
-| Receiver adherence, missed-trend, and caregiver-load reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields, daily due/completed/missed trend data, organizer-only caregiver load, and caregiver privacy; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowAdherenceAndMissedTrendForPremiumReceiver` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
+| Receiver adherence, missed-trend, caregiver-load, and escalation reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields, daily due/completed/missed trend data, organizer-only caregiver load, escalation history/response timing, and caregiver privacy; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowPremiumReportSections` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 
 ## Notes
 
@@ -74,7 +74,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused task-edit validation can be run with Xcode UI test `test_organizerCanEditTaskTitleFromDetail`.
 - Focused task-delete validation can be run with Xcode UI test `test_organizerCanCancelAndConfirmTaskDeleteFromDetail`.
 - Focused task-block validation can be run with Xcode UI test `test_taskDetailBlocksActionsForInvitedReceiver`.
-- Focused report validation can be run with backend test `GET /circles/:id/insights/completion`, Xcode model test `CareLoopTests/CompletionInsightModelTests`, and Xcode UI tests `CareLoopUITests/test_insightsShowAdherenceAndMissedTrendForPremiumReceiver` and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade`.
+- Focused report validation can be run with backend test `GET /circles/:id/insights/completion`, Xcode model test `CareLoopTests/CompletionInsightModelTests`, and Xcode UI tests `CareLoopUITests/test_insightsShowPremiumReportSections` and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade`.
 - Focused receiver-delete validation can be run with Xcode UI tests `test_organizerCanAddEditAndRemoveCareReceiverLocally` and `test_organizerSeesBlockedCareReceiverRemovalReason`.
 - Focused StoreKit metadata validation can be run with backend test `validates premium entitlement sync source and App Store transaction identity` and Xcode unit test class `CareLoopTests/SubscriptionManagerProductIdTests`.
 - Focused Premium restore validation can be run with `xcodebuild build-for-testing` and Xcode UI test `test_organizerCanManagePremiumReceiverPlan`.

@@ -99,6 +99,7 @@ export default async function circles(app) {
       taskTrendByDay: [],
       topCaregivers: [],
       caregiverLoad: [],
+      escalationSummary: emptyEscalationSummary(),
       recipientBreakdown: [],
       adherence: emptyAdherenceSummary(),
       totals: {
@@ -142,6 +143,42 @@ export default async function circles(app) {
       missed,
       completionRate: percent(completed.length, dueTasks.length),
       onTimeRate: percent(onTime.length, dueTasks.length),
+    };
+  }
+
+  function emptyEscalationSummary() {
+    return {
+      totalEscalated: 0,
+      averageResponseMinutes: null,
+      recent: [],
+    };
+  }
+
+  function escalationSummaryForReminders(reminders) {
+    if (reminders.length === 0) return emptyEscalationSummary();
+    const responseTimes = reminders
+      .filter((reminder) => reminder.sentAt && reminder.escalatedAt)
+      .map((reminder) => Math.max(0, Math.round((reminder.escalatedAt.getTime() - reminder.sentAt.getTime()) / 60000)));
+    const averageResponseMinutes = responseTimes.length
+      ? Math.round(responseTimes.reduce((sum, value) => sum + value, 0) / responseTimes.length)
+      : null;
+    return {
+      totalEscalated: reminders.length,
+      averageResponseMinutes,
+      recent: reminders
+        .slice()
+        .sort((lhs, rhs) => rhs.escalatedAt - lhs.escalatedAt)
+        .slice(0, 5)
+        .map((reminder) => ({
+          taskId: reminder.taskId,
+          taskTitle: reminder.task?.title ?? "Task",
+          recipientId: reminder.task?.recipientId ?? null,
+          recipientName: reminder.task?.recipient?.name ?? null,
+          escalatedAt: reminder.escalatedAt,
+          responseMinutes: reminder.sentAt && reminder.escalatedAt
+            ? Math.max(0, Math.round((reminder.escalatedAt.getTime() - reminder.sentAt.getTime()) / 60000))
+            : null,
+        })),
     };
   }
 
@@ -399,7 +436,7 @@ export default async function circles(app) {
       ? new Set([recipientId])
       : (!isCareOrganizer(member) ? new Set(scopedRecipientIds) : null);
 
-    const [rawCompletedTasks, rawActiveTasks, rawAllTasks] = await Promise.all([
+    const [rawCompletedTasks, rawActiveTasks, rawAllTasks, rawEscalatedReminders] = await Promise.all([
       db.task.findMany({
         where: {
           circleId: req.params.id,
@@ -435,6 +472,24 @@ export default async function circles(app) {
           recipient: { select: { id: true, name: true } },
         },
       }),
+      db.reminder.findMany({
+        where: {
+          status: "ESCALATED",
+          escalatedAt: { gte: since },
+          task: {
+            circleId: req.params.id,
+            archivedAt: null,
+            ...recipientScope,
+          },
+        },
+        include: {
+          task: {
+            include: {
+              recipient: { select: { id: true, name: true } },
+            },
+          },
+        },
+      }),
     ]);
     const completedTasks = allowedRecipientIds
       ? rawCompletedTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
@@ -445,6 +500,9 @@ export default async function circles(app) {
     const allTasks = allowedRecipientIds
       ? rawAllTasks.filter((task) => allowedRecipientIds.has(task.recipientId))
       : rawAllTasks;
+    const escalatedReminders = allowedRecipientIds
+      ? rawEscalatedReminders.filter((reminder) => allowedRecipientIds.has(reminder.task?.recipientId))
+      : rawEscalatedReminders;
     const circleRecipients = allowedRecipientIds
       ? visibleRecipients.filter((recipient) => allowedRecipientIds.has(recipient.id))
       : visibleRecipients;
@@ -557,6 +615,9 @@ export default async function circles(app) {
           || rhs.completedCount - lhs.completedCount
           || lhs.name.localeCompare(rhs.name),
         ),
+      escalationSummary: isCareOrganizer(member)
+        ? escalationSummaryForReminders(escalatedReminders)
+        : emptyEscalationSummary(),
       recipientBreakdown,
       adherence: adherenceForTasks(allTasks, { since, now }),
       totals: {

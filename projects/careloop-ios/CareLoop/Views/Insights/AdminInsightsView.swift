@@ -200,6 +200,13 @@ struct AdminInsightsView: View {
                     }
                 }
 
+                if insights.escalationSummary.totalEscalated > 0 {
+                    Section("Escalation response") {
+                        escalationSummary(insights.escalationSummary)
+                            .accessibilityIdentifier("insights-escalation-summary")
+                    }
+                }
+
                 if !insights.recipientBreakdown.isEmpty {
                     Section("By recipient") {
                         ForEach(insights.recipientBreakdown) { recipient in
@@ -385,6 +392,43 @@ struct AdminInsightsView: View {
             return "No missed tasks in this window."
         }
         return "\(missed) of \(due) due tasks were missed in this window."
+    }
+
+    @ViewBuilder
+    private func escalationSummary(_ summary: EscalationInsightSummary) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                escalationMetric(title: "Escalated", value: summary.totalLabel, tint: .red)
+                escalationMetric(title: "Response", value: summary.averageResponseLabel, tint: Color(red: 0.13, green: 0.56, blue: 0.87))
+            }
+
+            ForEach(summary.recent.prefix(3)) { item in
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(item.taskTitle)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    Text([item.recipientName, item.responseLabel].compactMap { $0 }.joined(separator: " · "))
+                        .font(.caption)
+                        .foregroundStyle(.secondary)
+                }
+                .padding(.vertical, 2)
+            }
+        }
+        .padding(.vertical, 6)
+    }
+
+    @ViewBuilder
+    private func escalationMetric(title: String, value: String, tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.system(size: 18, weight: .bold, design: .rounded))
+                .foregroundStyle(tint)
+                .lineLimit(2)
+                .minimumScaleFactor(0.82)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
     }
 
     @ViewBuilder

@@ -20,7 +20,7 @@ Coverage includes:
 - multi-user signup → invite → accept → self-join flow
 - reminder/digest delivery and escalation rules
 - recurring tasks and archive behavior
-- admin completion insights, receiver adherence summaries, missed-trend reporting, and caregiver load distribution
+- admin completion insights, receiver adherence summaries, missed-trend reporting, caregiver load distribution, and escalation response reporting
 ```
 
 ### iOS (`xcodebuild test` + Sentinel)

@@ -497,6 +497,20 @@ private struct UITestScenarioFixture {
                             totalAssignedCount: 1
                         ),
                     ],
+                    escalationSummary: EscalationInsightSummary(
+                        totalEscalated: 1,
+                        averageResponseMinutes: 18,
+                        recent: [
+                            EscalationInsightItem(
+                                taskId: "t3",
+                                taskTitle: "Pick up prescriptions",
+                                recipientId: momRecipient.id,
+                                recipientName: momRecipient.name,
+                                escalatedAt: Date().addingTimeInterval(-90 * 60),
+                                responseMinutes: 18
+                            ),
+                        ]
+                    ),
                     recipientBreakdown: [
                         RecipientCompletionInsight(
                             recipientId: momRecipient.id,
@@ -588,6 +602,7 @@ private struct UITestScenarioFixture {
                     ],
                     topCaregivers: [],
                     caregiverLoad: [],
+                    escalationSummary: .empty,
                     recipientBreakdown: [
                         RecipientCompletionInsight(
                             recipientId: momRecipient.id,

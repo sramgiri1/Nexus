@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-E4 is next: implement escalation history and response timing.
+E5 is next: implement free/locked/premium insight states with clear upgrade value.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| E4 | Escalation history and response timing. | Backend reminder/event aggregation; iOS reports. | Backend escalation report tests; iOS report fixture. | Demo can show escalation history. | Planned |
+| E5 | Free/locked/premium insight states with clear upgrade value. | Backend entitlement policy; iOS Insights/paywall links. | Backend entitlement tests; iOS locked/premium report tests. | Demo should include locked and premium report examples. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| E5 | Free/locked/premium insight states with clear upgrade value. | Backend entitlement policy; iOS Insights/paywall links. | Backend entitlement tests; iOS locked/premium report tests. | Demo should include locked and premium report examples. | Planned |
 | F1 | Reminder preference UX and backend persistence. | Backend user notification prefs; iOS Settings. | Backend preference tests; iOS settings UI test. | Optional. | Planned |
 | F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | iOS AppState/deep link routing; task screens. | Xcode UI deep-link tests. | Demo deep links stay stable. | Planned |
 | F3 | Snooze mutation and rescheduled reminder visibility. | Backend reminder routes; iOS Task Detail. | Backend snooze tests; Xcode UI snooze state test. | Demo can show snoozed reminder. | Planned |
@@ -69,6 +68,7 @@ E4 is next: implement escalation history and response timing.
 | E1 | Receiver adherence summary. | Extended the existing completion insights contract with receiver-scoped adherence summaries, displayed adherence cards in organizer insights and caregiver activity, and validated with backend aggregation tests plus focused Xcode model/UI coverage. |
 | E2 | Missed and overdue task trends. | Added daily due/completed/missed trend data to the existing completion insights contract, displayed a missed-trend Insights chart, and validated with backend aggregation tests plus focused Xcode model/UI coverage. |
 | E3 | Caregiver activity and load distribution. | Added organizer-only caregiver load distribution to the existing completion insights contract, displayed active/overdue/completed/total assigned work, and validated caregiver privacy with backend access regressions plus focused Xcode model/UI coverage. |
+| E4 | Escalation history and response timing. | Added organizer-only escalation history and average response timing to the existing completion insights contract, displayed recent escalated tasks in Insights, and validated caregiver privacy with backend access regressions plus focused Xcode model/UI coverage. |
 
 ## Blocked / External Setup
 

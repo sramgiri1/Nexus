@@ -1035,7 +1035,7 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
-    func test_insightsShowAdherenceAndMissedTrendForPremiumReceiver() throws {
+    func test_insightsShowPremiumReportSections() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]
 
@@ -1057,6 +1057,10 @@ final class CareLoopUITests: XCTestCase {
         app.swipeUp()
         XCTAssertTrue(app.staticTexts["Caregiver load"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["2 active · 1 overdue"].waitForExistence(timeout: 3))
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Escalation response"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["1 escalation"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["18 min avg response"].waitForExistence(timeout: 3))
     }
 
     @MainActor

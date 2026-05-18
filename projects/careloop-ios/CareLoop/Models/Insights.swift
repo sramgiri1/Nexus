@@ -7,6 +7,7 @@ struct CircleCompletionInsights: Codable {
     let taskTrendByDay: [TaskTrendDay]
     let topCaregivers: [TopCaregiverInsight]
     let caregiverLoad: [CaregiverLoadInsight]
+    let escalationSummary: EscalationInsightSummary
     let recipientBreakdown: [RecipientCompletionInsight]
     let adherence: AdherenceInsightSummary
     let totals: CompletionInsightTotals
@@ -127,6 +128,47 @@ struct CaregiverLoadInsight: Codable, Identifiable {
 
     var loadSummaryLabel: String {
         "\(activeAssignedCount) active · \(overdueAssignedCount) overdue"
+    }
+}
+
+struct EscalationInsightSummary: Codable, Equatable {
+    let totalEscalated: Int
+    let averageResponseMinutes: Int?
+    let recent: [EscalationInsightItem]
+
+    static let empty = EscalationInsightSummary(
+        totalEscalated: 0,
+        averageResponseMinutes: nil,
+        recent: []
+    )
+
+    var totalLabel: String {
+        totalEscalated == 1 ? "1 escalation" : "\(totalEscalated) escalations"
+    }
+
+    var averageResponseLabel: String {
+        guard let averageResponseMinutes else {
+            return "No response time yet"
+        }
+        return "\(averageResponseMinutes) min avg response"
+    }
+}
+
+struct EscalationInsightItem: Codable, Identifiable, Equatable {
+    let taskId: String
+    let taskTitle: String
+    let recipientId: String?
+    let recipientName: String?
+    let escalatedAt: Date
+    let responseMinutes: Int?
+
+    var id: String { "\(taskId)-\(escalatedAt.timeIntervalSince1970)" }
+
+    var responseLabel: String {
+        guard let responseMinutes else {
+            return "Response time unavailable"
+        }
+        return "\(responseMinutes) min response"
     }
 }
 

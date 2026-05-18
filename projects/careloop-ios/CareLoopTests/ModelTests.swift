@@ -567,6 +567,27 @@ final class CompletionInsightModelTests: XCTestCase {
         XCTAssertEqual(load.loadSummaryLabel, "3 active · 1 overdue")
     }
 
+    func test_escalationInsightSummary_formatsResponseLabels() {
+        let item = EscalationInsightItem(
+            taskId: "t1",
+            taskTitle: "Pick up prescriptions",
+            recipientId: "cr1",
+            recipientName: "Maya",
+            escalatedAt: Date(timeIntervalSince1970: 1_780_000_000),
+            responseMinutes: 18
+        )
+        let summary = EscalationInsightSummary(
+            totalEscalated: 1,
+            averageResponseMinutes: 18,
+            recent: [item]
+        )
+
+        XCTAssertEqual(summary.totalLabel, "1 escalation")
+        XCTAssertEqual(summary.averageResponseLabel, "18 min avg response")
+        XCTAssertEqual(item.responseLabel, "18 min response")
+        XCTAssertEqual(EscalationInsightSummary.empty.averageResponseLabel, "No response time yet")
+    }
+
     func test_adherenceSummary_formatsRatesAndEmptyState() {
         let summary = AdherenceInsightSummary(
             scheduled: 4,

@@ -762,12 +762,16 @@ function buildDb(seed = {}) {
       if (where.status && typeof where.status === "string" && reminder.status !== where.status) return false;
       if (where.status?.in && !where.status.in.includes(reminder.status)) return false;
       if (where.scheduledAt?.lte && !(reminder.scheduledAt && reminder.scheduledAt <= where.scheduledAt.lte)) return false;
+      if (where.escalatedAt?.gte && !(reminder.escalatedAt && reminder.escalatedAt >= where.escalatedAt.gte)) return false;
       if (where.escalationDueAt?.lte && !(reminder.escalationDueAt && reminder.escalationDueAt <= where.escalationDueAt.lte)) return false;
-      if (where.task?.status?.notIn || where.task?.status?.not) {
+      if (where.task) {
         const task = s.tasks.find((item) => item.id === reminder.taskId);
         if (!task) return false;
-        if (where.task.status.notIn?.includes(task.status)) return false;
-        if (where.task.status.not && task.status === where.task.status.not) return false;
+        if (where.task.circleId && task.circleId !== where.task.circleId) return false;
+        if (where.task.recipientId && task.recipientId !== where.task.recipientId) return false;
+        if (where.task.archivedAt === null && task.archivedAt !== null) return false;
+        if (where.task.status?.notIn?.includes(task.status)) return false;
+        if (where.task.status?.not && task.status === where.task.status.not) return false;
       }
       return true;
     }
@@ -781,6 +785,9 @@ function buildDb(seed = {}) {
         ...reminder,
         task: task ? {
           ...task,
+          recipient: include.task.include?.recipient
+            ? (s.recipients.find((recipient) => recipient.id === task.recipientId) ?? null)
+            : undefined,
           circle: include.task.include?.circle?.include?.members
             ? { ...circle, members: s.members.filter((member) => member.circleId === task.circleId) }
             : circle,
@@ -3434,6 +3441,11 @@ describe("auth hardening and protected reads", () => {
       taskTrendByDay: [],
       topCaregivers: [],
       caregiverLoad: [],
+      escalationSummary: {
+        totalEscalated: 0,
+        averageResponseMinutes: null,
+        recent: [],
+      },
       recipientBreakdown: [],
       adherence: {
         scheduled: 0,
@@ -3818,6 +3830,11 @@ describe("receiver-scoped access control", () => {
       });
       assert.deepEqual(res.json().topCaregivers, []);
       assert.deepEqual(res.json().caregiverLoad, []);
+      assert.deepEqual(res.json().escalationSummary, {
+        totalEscalated: 0,
+        averageResponseMinutes: null,
+        recent: [],
+      });
 
       const hiddenRecipient = await app.inject({
         method: "GET",
@@ -4719,6 +4736,19 @@ describe("GET /circles/:id/insights/completion", () => {
           recipientId: "cr2",
         },
       ],
+      reminders: [
+        {
+          id: "rem-escalated-1",
+          taskId: "t3",
+          scheduledAt: new Date("2026-04-27T11:45:00.000Z"),
+          sentAt: new Date("2026-04-27T12:00:00.000Z"),
+          snoozedUntil: null,
+          snoozeCount: 0,
+          escalationDueAt: new Date("2026-04-27T12:15:00.000Z"),
+          escalatedAt: new Date("2026-04-27T12:20:00.000Z"),
+          status: "ESCALATED",
+        },
+      ],
     });
     const app = await buildApp(db);
 
@@ -4794,6 +4824,13 @@ describe("GET /circles/:id/insights/completion", () => {
         overdueAssignedCount: 1,
         totalAssignedCount: 3,
       });
+      assert.equal(body.escalationSummary.totalEscalated, 1);
+      assert.equal(body.escalationSummary.averageResponseMinutes, 20);
+      assert.equal(body.escalationSummary.recent[0].taskId, "t3");
+      assert.equal(body.escalationSummary.recent[0].taskTitle, "Overdue Task");
+      assert.equal(body.escalationSummary.recent[0].recipientId, "cr2");
+      assert.equal(body.escalationSummary.recent[0].recipientName, "Jane Doe");
+      assert.equal(body.escalationSummary.recent[0].responseMinutes, 20);
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-29").count, 1);
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-28").count, 1);
       assert.deepEqual(body.taskTrendByDay.find((item) => item.date === "2026-04-29"), {
