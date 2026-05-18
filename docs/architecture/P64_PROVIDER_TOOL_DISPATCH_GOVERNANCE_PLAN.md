@@ -71,6 +71,12 @@ external network calls, and worker execution disabled.
 Map provider and tool readiness into readable states using existing registries.
 Readiness states may be disabled, preview, approval-required, or blocked.
 
+Status: complete. P64.3 added a read-only readiness matrix that reuses existing
+provider registry, tool registry, and permission matrix helpers. It exposes
+provider/tool readiness as display-safe records and keeps execution, provider
+dispatch, tool execution, project mutation, DB writes, deploy, external network
+calls, and worker execution disabled.
+
 ### P64.4 Dispatch Dry Run
 
 Build dry-run dispatch previews with cost impact, approval requirement, disabled

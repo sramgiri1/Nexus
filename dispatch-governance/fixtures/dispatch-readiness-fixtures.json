@@ -1,0 +1,11 @@
+{
+  "expected": {
+    "minimumProviderCount": 3,
+    "minimumToolCount": 4,
+    "requiredStates": [
+      "preview_only",
+      "planned"
+    ],
+    "executionAllowed": false
+  }
+}

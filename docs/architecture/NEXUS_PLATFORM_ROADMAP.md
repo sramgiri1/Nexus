@@ -280,8 +280,8 @@ Risk level:
 - `P64` Provider + Tool Dispatch Through Governance — in progress
   - `P64.1` Execution Contract + Governance Split — complete
   - `P64.2` Dispatch Policy Envelope — complete
-  - `P64.3` Provider / Tool Readiness Matrix — next
-  - `P64.4` Dispatch Dry Run
+  - `P64.3` Provider / Tool Readiness Matrix — complete
+  - `P64.4` Dispatch Dry Run — next
   - `P64.5` Command Center Dispatch UX
   - `P64.6` Dispatch Tests / Checkers / Docs
   - `P64.7` Final Validation
