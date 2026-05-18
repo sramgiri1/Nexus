@@ -47,7 +47,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | --- | --- |
 | Sign in / create account contract | `backend:auth`, `ios:onboarding` |
 | Group list -> create/join -> group hub | `backend:circles`, `ios:onboarding`, `ios:personas` |
-| Invite member / invite care receiver | `backend:circles`, `ios:personas` |
+| Invite member / invite care receiver | `backend:circles`, `ios:personas`; focused iOS UI coverage for pending caregiver invite resend/revoke |
 | Create recurring task -> complete -> next occurrence | `backend:tasks`, focused iOS UI tests for premium recurring creation and next occurrence |
 | Task detail status / comments | `backend:tasks`, focused iOS UI tests for detail status changes and comment add/delete |
 | Task detail edit | Focused iOS UI test for organizer editing a task title from Task Detail |
@@ -67,6 +67,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused task-delete validation can be run with Xcode UI test `test_organizerCanCancelAndConfirmTaskDeleteFromDetail`.
 - Focused task-block validation can be run with Xcode UI test `test_taskDetailBlocksActionsForInvitedReceiver`.
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
+- Focused pending-invite validation can be run with Xcode UI test `test_organizerCanResendAndRevokePendingCaregiverInvite`.
 - Task Detail state-model validation can be run with Xcode unit test class `CareLoopTests/TaskDetailPresentationTests`.
 - The `task-comments` UI fixture launches directly into the comments screen with local add/delete behavior so agents can validate comments without mutating a live backend.
 - Physical-device only coverage still includes APNs delivery, real universal links, Sign in with Apple entitlement validation, and StoreKit sandbox purchase/restore.

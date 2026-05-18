@@ -165,10 +165,19 @@ struct MemberListView: View {
                         if loadingMemberId == invite.id {
                             ProgressView().scaleEffect(0.8)
                         } else {
-                            Button("Revoke", role: .destructive) {
-                                Task { await revoke(invite) }
+                            VStack(spacing: 8) {
+                                Button("Resend") {
+                                    Task { await resend(invite) }
+                                }
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .accessibilityIdentifier("pending-invite-resend-\(invite.id)")
+
+                                Button("Revoke", role: .destructive) {
+                                    Task { await revoke(invite) }
+                                }
+                                .font(.system(size: 12, weight: .bold, design: .rounded))
+                                .accessibilityIdentifier("pending-invite-revoke-\(invite.id)")
                             }
-                            .font(.system(size: 12, weight: .bold, design: .rounded))
                         }
                     }
                 }
@@ -481,6 +490,27 @@ struct MemberListView: View {
                 return
             }
             try await APIClient.shared.revokeInvitation(circleId: circleId, invitationId: invite.id)
+            await refreshData()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func resend(_ invite: GroupInvitation) async {
+        guard let circleId = appState.activeCircle?.id else { return }
+
+        loadingMemberId = invite.id
+        error = nil
+        defer { loadingMemberId = nil }
+
+        do {
+            if UITestScenario.current != nil {
+                let refreshed = invite.replacingExpiration(Date().addingTimeInterval(14 * 24 * 60 * 60))
+                pendingInvitations.replace(invite, with: refreshed)
+                appState.uiTestInvitations.replace(invite, with: refreshed)
+                return
+            }
+            _ = try await APIClient.shared.resendInvitation(circleId: circleId, invitationId: invite.id)
             await refreshData()
         } catch {
             self.error = error.localizedDescription

@@ -1385,6 +1385,44 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("POST /circles/:id/invitations/:inviteId/resend extends pending invitation", async () => {
+    const originalExpiry = new Date(Date.now() + 24 * 60 * 60 * 1000);
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Bob", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "member@test.com",
+        name: "New Member",
+        role: "MEMBER",
+        status: "PENDING",
+        recipientId: null,
+        invitedById: "u1",
+        acceptedById: null,
+        acceptedAt: null,
+        expiresAt: originalExpiry,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/invitations/i1/resend",
+      headers: HDR,
+      payload: { userId: "u1" },
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().status, "PENDING");
+    assert.ok(new Date(res.json().expiresAt) > originalExpiry);
+    assert.equal(app.db._s.events.at(-1).type, "INVITE_CREATED");
+    assert.equal(app.db._s.events.at(-1).payload.action, "RESENT");
+    await app.close();
+  });
+
   test("recipient invitation marks the linked care receiver as invited", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],

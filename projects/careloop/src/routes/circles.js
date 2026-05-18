@@ -1127,6 +1127,48 @@ export default async function circles(app) {
     return reply.code(201).send(invitation);
   });
 
+  // POST /circles/:id/invitations/:inviteId/resend — admin only, extends a pending invite
+  app.post("/circles/:id/invitations/:inviteId/resend", async (req, reply) => {
+    const { userId } = req.body ?? {};
+    const authenticatedUserId = requireAuthenticatedUser(req, reply);
+    if (!authenticatedUserId) return;
+    if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
+    if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+
+    const invitation = await db.invitation.findUnique({ where: { id: req.params.inviteId } });
+    if (!invitation || invitation.circleId !== req.params.id) {
+      return reply.code(404).send({ error: "Invitation not found" });
+    }
+    if (invitation.status !== "PENDING") {
+      return reply.code(409).send({ error: "Only pending invitations can be resent" });
+    }
+
+    const resent = await db.$transaction(async (tx) => {
+      const updated = await tx.invitation.update({
+        where: { id: req.params.inviteId },
+        data: { expiresAt: invitationExpiryDate() },
+        include: invitationInclude,
+      });
+      await tx.event.create({
+        data: {
+          type: "INVITE_CREATED",
+          circleId: req.params.id,
+          actorId: authenticatedUserId,
+          payload: {
+            invitationId: req.params.inviteId,
+            email: invitation.email,
+            role: invitation.role,
+            recipientId: invitation.recipientId ?? null,
+            action: "RESENT",
+          },
+        },
+      });
+      return updated;
+    });
+
+    return resent;
+  });
+
   // DELETE /circles/:id/invitations/:inviteId — admin only
   app.delete("/circles/:id/invitations/:inviteId", async (req, reply) => {
     const { userId } = req.body ?? {};

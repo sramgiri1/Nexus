@@ -303,14 +303,26 @@ struct RecipientManagementView: View {
             if loadingInviteId == invite.id {
                 ProgressView().scaleEffect(0.8)
             } else {
-                Button(role: .destructive) {
-                    Task { await revokeInvite(invite) }
-                } label: {
-                    Text("Revoke")
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .foregroundStyle(.red)
+                VStack(spacing: 8) {
+                    Button {
+                        Task { await resendInvite(invite) }
+                    } label: {
+                        Text("Resend")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("recipient-invite-resend-\(invite.id)")
+
+                    Button(role: .destructive) {
+                        Task { await revokeInvite(invite) }
+                    } label: {
+                        Text("Revoke")
+                            .font(.system(size: 12, weight: .bold, design: .rounded))
+                            .foregroundStyle(.red)
+                    }
+                    .buttonStyle(.plain)
+                    .accessibilityIdentifier("recipient-invite-revoke-\(invite.id)")
                 }
-                .buttonStyle(.plain)
             }
         }
         .padding(.horizontal, 16)
@@ -763,6 +775,27 @@ struct RecipientManagementView: View {
                 return
             }
             try await APIClient.shared.revokeInvitation(circleId: circleId, invitationId: invite.id)
+            try await appState.activateCircle(id: circleId)
+            await loadPendingInvites()
+        } catch {
+            self.error = error.localizedDescription
+        }
+    }
+
+    private func resendInvite(_ invite: GroupInvitation) async {
+        guard let circleId = appState.activeCircle?.id else { return }
+        loadingInviteId = invite.id
+        error = nil
+        defer { loadingInviteId = nil }
+
+        do {
+            if UITestScenario.current != nil {
+                let refreshed = invite.replacingExpiration(Date().addingTimeInterval(14 * 24 * 60 * 60))
+                pendingInvites.replace(invite, with: refreshed)
+                appState.uiTestInvitations.replace(invite, with: refreshed)
+                return
+            }
+            _ = try await APIClient.shared.resendInvitation(circleId: circleId, invitationId: invite.id)
             try await appState.activateCircle(id: circleId)
             await loadPendingInvites()
         } catch {

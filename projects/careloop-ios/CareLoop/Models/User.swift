@@ -67,6 +67,27 @@ extension GroupInvitation {
         }
         return "Expires \(expiresAt.formatted(.dateTime.month().day().year()))"
     }
+
+    func replacingExpiration(_ expiresAt: Date) -> GroupInvitation {
+        GroupInvitation(
+            id: id,
+            email: email,
+            name: name,
+            role: role,
+            status: status,
+            expiresAt: expiresAt,
+            circle: circle,
+            recipient: recipient,
+            invitedBy: invitedBy
+        )
+    }
+}
+
+extension Array where Element == GroupInvitation {
+    mutating func replace(_ invitation: GroupInvitation, with replacement: GroupInvitation) {
+        guard let index = firstIndex(where: { $0.id == invitation.id }) else { return }
+        self[index] = replacement
+    }
 }
 
 enum InvitationStatus: String, Codable {

@@ -433,6 +433,28 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Carlos Caregiver"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["Nina Caregiver"].exists)
+        XCTAssertTrue(app.buttons["pending-invite-resend-invite-caregiver"].exists)
+        XCTAssertTrue(app.buttons["pending-invite-revoke-invite-caregiver"].exists)
+    }
+
+    @MainActor
+    func test_organizerCanResendAndRevokePendingCaregiverInvite() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-people-access"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-people-access"].tap()
+
+        XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["pending-invite-resend-invite-caregiver"].waitForExistence(timeout: 3))
+        app.buttons["pending-invite-resend-invite-caregiver"].tap()
+        XCTAssertTrue(app.staticTexts["Nina Caregiver"].waitForExistence(timeout: 3))
+
+        XCTAssertTrue(app.buttons["pending-invite-revoke-invite-caregiver"].waitForExistence(timeout: 3))
+        app.buttons["pending-invite-revoke-invite-caregiver"].tap()
+        waitForDisappearance(of: app.staticTexts["Nina Caregiver"], timeout: 5)
     }
 
     @MainActor

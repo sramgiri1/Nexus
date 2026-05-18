@@ -1141,6 +1141,8 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** finish the full invite lifecycle for Care Organizers, Caregivers, Care Receivers, and proxy-authorized activation.
 
+**Implementation status:** in progress on branch `codex/careloop-premium-phases`. Pending invite visibility plus organizer resend/revoke controls are implemented for caregiver and care receiver invite management surfaces.
+
 **Subphases**
 
 1. Pending invite visibility and resend/revoke controls.

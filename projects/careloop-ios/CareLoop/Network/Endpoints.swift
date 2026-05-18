@@ -137,6 +137,10 @@ extension APIClient {
         try await deleteVoid("/circles/\(circleId)/invitations/\(invitationId)")
     }
 
+    func resendInvitation(circleId: String, invitationId: String) async throws -> GroupInvitation {
+        try await postAny("/circles/\(circleId)/invitations/\(invitationId)/resend", body: [:])
+    }
+
     func acceptInvitation(invitationId: String) async throws -> CircleMember {
         try await post("/invitations/\(invitationId)/accept", body: [String: String]())
     }
