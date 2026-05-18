@@ -173,6 +173,15 @@ Primary validation:
 Narrow scope: add local preview storage contracts, retention rules, pruning
 previews, and safe fixture data for snapshots and recovery points.
 
+Implementation shape: `ai-recovery/snapshotStore.js` builds display-safe store
+records from validated snapshot and recovery point inputs, while
+`ai-recovery/retentionPolicy.js` defines preview-only retention classes and
+dry-run pruning. Store records expose only redacted titles, timestamps, scope
+labels, redaction badges, retention labels, recovery posture, and disabled
+action reasons for P63.5. They do not persist raw payloads or enable restore,
+replay, resume, delete, export, provider dispatch, tool dispatch, project
+mutation, DB writes, schema migrations, or deploy behavior.
+
 Required implementation contract:
 `nexus-os-p63-4-snapshot-store-retention-preview`
 

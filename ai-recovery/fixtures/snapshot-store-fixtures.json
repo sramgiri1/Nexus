@@ -1,0 +1,166 @@
+{
+  "records": [
+    {
+      "retentionClass": "short_lived",
+      "createdAt": "2026-05-18T10:00:00.000Z",
+      "snapshot": {
+        "snapshotId": "snapshot_p63_store_preview",
+        "displayTitle": "Recovery preview snapshot",
+        "scopeLabel": "NEXUS OS",
+        "actorLabel": "NEXUS",
+        "correlationId": "corr_p63_store_preview",
+        "commandIntent": "inspect",
+        "promptSummary": "Operator requested a preview-only recovery snapshot.",
+        "responseSummary": "NEXUS produced redacted snapshot metadata for inspection.",
+        "toolPreviewRefs": [
+          {
+            "label": "Snapshot contract report",
+            "path": "reports/ai-snapshot-contract-report.md",
+            "recordId": "snapshot-contract-preview"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "label": "P63 execution contract",
+            "path": "contracts/os-roadmap/p63-execution-contracts.json",
+            "recordId": "p63-contract"
+          }
+        ],
+        "redactionLevel": "internal_redacted",
+        "recoveryEligibility": "inspect_only",
+        "recoveryBlockedReasons": [
+          "Recovery execution is not enabled in P63.4."
+        ],
+        "redactedPayload": {
+          "safeSummary": "Preview data contains only redacted NEXUS OS metadata.",
+          "projectScope": "NEXUS OS"
+        }
+      },
+      "recoveryPoint": {
+        "recoveryPointId": "recovery_snapshot_store_preview",
+        "snapshotId": "snapshot_p63_store_preview",
+        "displayTitle": "Recovery preview snapshot",
+        "state": "inspect_only",
+        "stateLabel": "Inspect only",
+        "resumability": "inspect_only",
+        "blockedReasons": [],
+        "nextSafeActionLabel": "Inspect redacted snapshot details.",
+        "previewOnly": true,
+        "executionEnabled": false,
+        "restoreEnabled": false,
+        "replayEnabled": false,
+        "resumeEnabled": false,
+        "createdAt": "2026-05-18T10:00:00.000Z"
+      }
+    },
+    {
+      "retentionClass": "phase_evidence",
+      "createdAt": "2026-04-01T10:00:00.000Z",
+      "snapshot": {
+        "snapshotId": "snapshot_p63_phase_evidence",
+        "displayTitle": "Phase evidence snapshot",
+        "scopeLabel": "NEXUS OS",
+        "actorLabel": "NEXUS",
+        "correlationId": "corr_p63_phase_evidence",
+        "commandIntent": "validate",
+        "promptSummary": "Operator requested validation evidence for AI recovery planning.",
+        "responseSummary": "NEXUS generated redacted validation evidence and blocked recovery execution.",
+        "toolPreviewRefs": [
+          {
+            "label": "Recovery point report",
+            "path": "reports/ai-recovery-point-model-report.md",
+            "recordId": "recovery-point-preview"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "label": "Recovery point model",
+            "path": "ai-recovery/recoveryPointModel.js",
+            "recordId": "recovery-model"
+          }
+        ],
+        "redactionLevel": "internal_redacted",
+        "recoveryEligibility": "resume_plan_available",
+        "recoveryBlockedReasons": [
+          "Resume remains preview-only."
+        ],
+        "redactedPayload": {
+          "safeSummary": "Validation evidence contains no raw prompt, secret, or project-private payload.",
+          "projectScope": "NEXUS OS"
+        }
+      },
+      "recoveryPoint": {
+        "recoveryPointId": "recovery_snapshot_phase_evidence",
+        "snapshotId": "snapshot_p63_phase_evidence",
+        "displayTitle": "Phase evidence snapshot",
+        "state": "resume_plan_available",
+        "stateLabel": "Resume plan available",
+        "resumability": "resume_plan_available",
+        "blockedReasons": [],
+        "nextSafeActionLabel": "Review resume plan preview.",
+        "previewOnly": true,
+        "executionEnabled": false,
+        "restoreEnabled": false,
+        "replayEnabled": false,
+        "resumeEnabled": false,
+        "createdAt": "2026-04-01T10:00:00.000Z"
+      }
+    },
+    {
+      "retentionClass": "final_validation",
+      "createdAt": "2026-05-18T11:00:00.000Z",
+      "snapshot": {
+        "snapshotId": "snapshot_p63_final_validation",
+        "displayTitle": "Final validation snapshot",
+        "scopeLabel": "NEXUS OS",
+        "actorLabel": "NEXUS",
+        "correlationId": "corr_p63_final_validation",
+        "commandIntent": "final-validation",
+        "promptSummary": "Operator requested final validation coverage for AI recovery safety.",
+        "responseSummary": "NEXUS prepared redacted final validation metadata.",
+        "toolPreviewRefs": [
+          {
+            "label": "OS phase status",
+            "path": "reports/os-phase-status-report.md",
+            "recordId": "phase-status-preview"
+          }
+        ],
+        "evidenceRefs": [
+          {
+            "label": "P63 architecture plan",
+            "path": "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "recordId": "p63-plan"
+          }
+        ],
+        "redactionLevel": "internal_redacted",
+        "recoveryEligibility": "not_recoverable",
+        "recoveryBlockedReasons": [
+          "Final validation snapshots are inspection-only."
+        ],
+        "redactedPayload": {
+          "safeSummary": "Final validation data is redacted and inspection-only.",
+          "projectScope": "NEXUS OS"
+        }
+      },
+      "recoveryPoint": {
+        "recoveryPointId": "recovery_snapshot_final_validation",
+        "snapshotId": "snapshot_p63_final_validation",
+        "displayTitle": "Final validation snapshot",
+        "state": "not_recoverable",
+        "stateLabel": "Not recoverable",
+        "resumability": "not_recoverable",
+        "blockedReasons": [
+          "Final validation snapshots are inspection-only."
+        ],
+        "nextSafeActionLabel": "Inspect recovery point.",
+        "previewOnly": true,
+        "executionEnabled": false,
+        "restoreEnabled": false,
+        "replayEnabled": false,
+        "resumeEnabled": false,
+        "createdAt": "2026-05-18T11:00:00.000Z"
+      }
+    }
+  ],
+  "prunePreviewNow": "2026-05-18T12:00:00.000Z"
+}

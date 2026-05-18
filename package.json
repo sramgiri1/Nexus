@@ -236,7 +236,8 @@
     "check:p63-execution-plan": "node scripts/check-p63-execution-plan.js",
     "check:ai-snapshot-contract": "node scripts/check-ai-snapshot-contract.js",
     "check:ai-interaction-capture": "node scripts/check-ai-interaction-capture.js",
-    "check:ai-recovery-point-model": "node scripts/check-ai-recovery-point-model.js"
+    "check:ai-recovery-point-model": "node scripts/check-ai-recovery-point-model.js",
+    "check:ai-snapshot-store": "node scripts/check-ai-snapshot-store.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
