@@ -2209,17 +2209,36 @@
       "phaseId": "P63",
       "title": "AI Interaction Snapshot + Granular Recovery Layer",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Plan granular, redacted AI interaction snapshots and recovery previews across governed execution.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "4856356",
+      "completedAt": "2026-05-18T14:04:54.211Z",
+      "summary": "Completed preview-only AI interaction snapshots, redaction policy, capture mapping, recovery point modeling, snapshot retention previews, Command Center Recovery UX, replay/resume previews, and final validation.",
+      "checksRun": [
+        "npm run check:ai-snapshot-contract",
+        "npm run check:ai-interaction-capture",
+        "npm run check:ai-recovery-point-model",
+        "npm run check:ai-snapshot-store",
+        "npm run check:command-center-recovery-ux",
+        "npm run check:ai-replay-resume-preview",
+        "npm run check:ai-recovery-final",
+        "npm run check:command-center-ux",
+        "npm run check:p63-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Recovery route is inspection-only|full Command Center routes do not show demo content|OS Roadmap and Projects render cleanly\"",
+        "cd dashboard && npm run test:pages (89/91 pass; two pre-existing project-label assertions remain outside P63 scope)",
+        "npm run check:public-safety (failed on pre-existing root README project references outside P63 scope)",
+        "git diff --check"
       ],
-      "nextPhase": "P63.1",
+      "knownLimitations": [
+        "Recovery remains inspection-only and preview-only.",
+        "Restore, replay, resume, provider dispatch, tool dispatch, worker execution, project mutation, DB writes, deploy, delete, and export remain disabled.",
+        "Full dashboard page suite still has two pre-existing project-label assertions outside this OS phase.",
+        "Public safety checker still reports pre-existing root README project references outside this OS phase."
+      ],
+      "nextPhase": "P64",
       "commandCenterVisible": true
     },
     {
@@ -2377,15 +2396,34 @@
       "phaseId": "P63.7",
       "title": "Recovery Tests + Docs + Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate snapshot contracts, recovery previews, Command Center visibility, docs, and roadmap closure for P63.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "4856356",
+      "completedAt": "2026-05-18T14:04:54.209Z",
+      "summary": "Added final P63 validation evidence, docs, roadmap closure, and P64 next-phase handoff without enabling provider/tool dispatch or recovery execution.",
+      "checksRun": [
+        "npm run check:ai-snapshot-contract",
+        "npm run check:ai-interaction-capture",
+        "npm run check:ai-recovery-point-model",
+        "npm run check:ai-snapshot-store",
+        "npm run check:command-center-recovery-ux",
+        "npm run check:ai-replay-resume-preview",
+        "npm run check:ai-recovery-final",
+        "npm run check:command-center-ux",
+        "npm run check:p63-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Recovery route is inspection-only|full Command Center routes do not show demo content|OS Roadmap and Projects render cleanly\"",
+        "cd dashboard && npm run test:pages (89/91 pass; two pre-existing project-label assertions remain outside P63 scope)",
+        "npm run check:public-safety (failed on pre-existing root README project references outside P63 scope)",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+        "Recovery remains inspection-only and preview-only.",
+        "Restore, replay, resume, provider dispatch, tool dispatch, worker execution, project mutation, DB writes, deploy, delete, and export remain disabled.",
+        "Full dashboard page suite still has two pre-existing project-label assertions outside this OS phase.",
+        "Public safety checker still reports pre-existing root README project references outside this OS phase."
       ],
       "nextPhase": "P64",
       "commandCenterVisible": true
@@ -4665,8 +4703,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T14:01:52.579Z",
+  "updatedAt": "2026-05-18T14:05:37.975Z",
   "currentPhase": "P62.8",
-  "previousPhase": "P62",
-  "nextPhase": "P63"
+  "previousPhase": "P63",
+  "nextPhase": "P64"
 }

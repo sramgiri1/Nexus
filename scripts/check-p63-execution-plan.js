@@ -303,11 +303,13 @@ for (let index = 0; index < expectedPhases.length; index += 1) {
 }
 
 const p63 = phaseStatus.phases.find((phase) => phase.phaseId === "P63");
-if (p63?.nextPhase !== "P63.1") {
-  fail("roadmapStatus", "P63 nextPhase must be P63.1");
+const expectedP63Next = p63?.status === "complete" ? "P64" : "P63.1";
+if (p63?.nextPhase !== expectedP63Next) {
+  fail("roadmapStatus", `P63 nextPhase must be ${expectedP63Next}`);
 }
-if (phaseStatus.nextPhase !== "P63") {
-  fail("roadmapStatus", "Top-level nextPhase must remain P63");
+const expectedTopLevelNext = p63?.status === "complete" ? "P64" : "P63";
+if (phaseStatus.nextPhase !== expectedTopLevelNext) {
+  fail("roadmapStatus", `Top-level nextPhase must be ${expectedTopLevelNext}`);
 }
 
 const plan = read(PLAN_PATH);
