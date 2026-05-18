@@ -4,6 +4,7 @@ struct CircleCompletionInsights: Codable {
     let periodDays: Int
     let selectedRecipientId: String?
     let completedByDay: [CompletedTaskDay]
+    let taskTrendByDay: [TaskTrendDay]
     let topCaregivers: [TopCaregiverInsight]
     let recipientBreakdown: [RecipientCompletionInsight]
     let adherence: AdherenceInsightSummary
@@ -63,11 +64,11 @@ struct CompletedTaskDay: Codable, Identifiable {
     var id: String { date }
 
     var shortLabel: String {
-        Self.displayFormatter.string(from: parsedDate ?? Date())
+        Self.shortLabel(for: date)
     }
 
-    private var parsedDate: Date? {
-        Self.sourceFormatter.date(from: date)
+    static func shortLabel(for date: String) -> String {
+        displayFormatter.string(from: sourceFormatter.date(from: date) ?? Date())
     }
 
     private static let sourceFormatter: DateFormatter = {
@@ -84,6 +85,23 @@ struct CompletedTaskDay: Codable, Identifiable {
         formatter.setLocalizedDateFormatFromTemplate("MMM d")
         return formatter
     }()
+}
+
+struct TaskTrendDay: Codable, Identifiable {
+    let date: String
+    let due: Int
+    let completed: Int
+    let missed: Int
+
+    var id: String { date }
+
+    var shortLabel: String {
+        CompletedTaskDay.shortLabel(for: date)
+    }
+
+    var needsAttention: Bool {
+        missed > 0
+    }
 }
 
 struct TopCaregiverInsight: Codable, Identifiable {

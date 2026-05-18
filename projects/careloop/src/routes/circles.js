@@ -96,6 +96,7 @@ export default async function circles(app) {
       periodDays,
       selectedRecipientId,
       completedByDay: [],
+      taskTrendByDay: [],
       topCaregivers: [],
       recipientBreakdown: [],
       adherence: emptyAdherenceSummary(),
@@ -445,11 +446,18 @@ export default async function circles(app) {
     const overdueCount = activeTasks.filter((task) => task.dueAt && task.dueAt < now).length;
 
     const dailyMap = new Map();
+    const trendMap = new Map();
     for (let offset = 0; offset < periodDays; offset += 1) {
       const day = new Date(since);
       day.setUTCDate(day.getUTCDate() + offset);
       const date = day.toISOString().slice(0, 10);
       dailyMap.set(date, 0);
+      trendMap.set(date, {
+        date,
+        due: 0,
+        completed: 0,
+        missed: 0,
+      });
     }
 
     const caregiverCounts = new Map();
@@ -469,6 +477,18 @@ export default async function circles(app) {
       };
       current.completedCount += 1;
       caregiverCounts.set(caregiver.id, current);
+    }
+
+    for (const task of allTasks) {
+      const dueDate = task.dueAt?.toISOString().slice(0, 10);
+      if (!dueDate || !trendMap.has(dueDate)) continue;
+      const current = trendMap.get(dueDate);
+      current.due += 1;
+      if (task.status === "DONE" && task.completedAt) {
+        current.completed += 1;
+      } else if (["PENDING", "IN_PROGRESS"].includes(task.status) && task.dueAt < now) {
+        current.missed += 1;
+      }
     }
 
     const recipientBreakdown = circleRecipients.map((recipient) => {
@@ -491,6 +511,7 @@ export default async function circles(app) {
       periodDays,
       selectedRecipientId: recipientId,
       completedByDay: [...dailyMap.entries()].map(([date, count]) => ({ date, count })),
+      taskTrendByDay: [...trendMap.values()],
       topCaregivers: isCareOrganizer(member)
         ? [...caregiverCounts.values()]
           .sort((lhs, rhs) => rhs.completedCount - lhs.completedCount || lhs.name.localeCompare(rhs.name))

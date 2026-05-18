@@ -1035,7 +1035,7 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
-    func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
+    func test_insightsShowAdherenceAndMissedTrendForPremiumReceiver() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]
 
@@ -1051,6 +1051,25 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Adherence"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["75%"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["3 of 4 due tasks completed, 2 on time."].waitForExistence(timeout: 3))
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Missed trend"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["1 of 4 due tasks were missed in this window."].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    func test_insightsLockFreeReceiverBehindPremiumUpgrade() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        if !app.buttons["quick-action-insights"].exists {
+            dashboard.swipeUp()
+        }
+        XCTAssertTrue(app.buttons["quick-action-insights"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-insights"].tap()
+
+        XCTAssertTrue(app.staticTexts["Overview"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.buttons["David"].waitForExistence(timeout: 3))
         app.buttons["David"].tap()
 

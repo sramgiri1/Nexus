@@ -546,6 +546,13 @@ final class CompletionInsightModelTests: XCTestCase {
         XCTAssertFalse(day.shortLabel.isEmpty)
     }
 
+    func test_taskTrendDay_reportsAttentionWhenMissedTasksExist() {
+        let day = TaskTrendDay(date: "2026-04-29", due: 3, completed: 2, missed: 1)
+
+        XCTAssertTrue(day.needsAttention)
+        XCTAssertFalse(day.shortLabel.isEmpty)
+    }
+
     func test_adherenceSummary_formatsRatesAndEmptyState() {
         let summary = AdherenceInsightSummary(
             scheduled: 4,

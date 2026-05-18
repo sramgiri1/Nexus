@@ -1190,12 +1190,12 @@ After the receiver-scoped premium phase, implementation should continue in small
 **Subphases**
 
 1. Receiver adherence summary. **Complete.**
-2. Missed and overdue task trends.
+2. Missed and overdue task trends. **Complete.**
 3. Caregiver activity and load distribution.
 4. Escalation history and response timing.
 5. Free/locked/premium insight states with clear upgrade value.
 
-**Tests:** backend aggregation tests plus iOS UI report fixtures for free, locked, expired, and premium receivers. E1 added receiver-level adherence summaries to the existing completion insights contract, including scheduled due tasks, completed tasks, on-time completions, late completions, missed tasks, completion rate, and on-time rate. Focused backend insights coverage, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed.
+**Tests:** backend aggregation tests plus iOS UI report fixtures for free, locked, expired, and premium receivers. E1 added receiver-level adherence summaries to the existing completion insights contract, including scheduled due tasks, completed tasks, on-time completions, late completions, missed tasks, completion rate, and on-time rate. Focused backend insights coverage, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed. E2 added daily due/completed/missed trend data to the same contract and a missed-trend Insights chart; backend insights regressions, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, `CareLoopUITests/test_insightsShowAdherenceAndMissedTrendForPremiumReceiver`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed.
 
 #### Phase F — Notification End-to-End
 

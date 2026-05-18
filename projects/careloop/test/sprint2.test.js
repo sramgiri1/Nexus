@@ -3431,6 +3431,7 @@ describe("auth hardening and protected reads", () => {
       periodDays: 7,
       selectedRecipientId: null,
       completedByDay: [],
+      taskTrendByDay: [],
       topCaregivers: [],
       recipientBreakdown: [],
       adherence: {
@@ -4784,6 +4785,24 @@ describe("GET /circles/:id/insights/completion", () => {
       });
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-29").count, 1);
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-28").count, 1);
+      assert.deepEqual(body.taskTrendByDay.find((item) => item.date === "2026-04-29"), {
+        date: "2026-04-29",
+        due: 1,
+        completed: 1,
+        missed: 0,
+      });
+      assert.deepEqual(body.taskTrendByDay.find((item) => item.date === "2026-04-28"), {
+        date: "2026-04-28",
+        due: 1,
+        completed: 1,
+        missed: 0,
+      });
+      assert.deepEqual(body.taskTrendByDay.find((item) => item.date === "2026-04-27"), {
+        date: "2026-04-27",
+        due: 1,
+        completed: 0,
+        missed: 1,
+      });
 
       const filtered = await app.inject({
         method: "GET",

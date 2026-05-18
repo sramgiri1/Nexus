@@ -116,6 +116,11 @@ struct AdminInsightsView: View {
                         .accessibilityIdentifier("insights-adherence-summary")
                 }
 
+                Section("Missed trend") {
+                    missedTrend(insights.taskTrendByDay)
+                        .accessibilityIdentifier("insights-missed-trend")
+                }
+
                 Section("Completed by day") {
                     Chart(insights.completedByDay) { day in
                         BarMark(
@@ -313,6 +318,45 @@ struct AdminInsightsView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 6)
         .background(Color(.secondarySystemGroupedBackground), in: Capsule(style: .continuous))
+    }
+
+    @ViewBuilder
+    private func missedTrend(_ days: [TaskTrendDay]) -> some View {
+        VStack(alignment: .leading, spacing: 10) {
+            Chart(days) { day in
+                BarMark(
+                    x: .value("Day", day.shortLabel),
+                    y: .value("Due", day.due)
+                )
+                .foregroundStyle(Color(red: 0.78, green: 0.84, blue: 0.90))
+                BarMark(
+                    x: .value("Day", day.shortLabel),
+                    y: .value("Missed", day.missed)
+                )
+                .foregroundStyle(day.needsAttention ? .red : Color(red: 0.12, green: 0.68, blue: 0.49))
+            }
+            .chartYAxis {
+                AxisMarks(position: .leading)
+            }
+            .frame(height: 180)
+
+            Text(trendSummary(days))
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(.secondary)
+        }
+        .padding(.vertical, 6)
+    }
+
+    private func trendSummary(_ days: [TaskTrendDay]) -> String {
+        let missed = days.reduce(0) { $0 + $1.missed }
+        let due = days.reduce(0) { $0 + $1.due }
+        if due == 0 {
+            return "No due tasks in this window yet."
+        }
+        if missed == 0 {
+            return "No missed tasks in this window."
+        }
+        return "\(missed) of \(due) due tasks were missed in this window."
     }
 
     @ViewBuilder

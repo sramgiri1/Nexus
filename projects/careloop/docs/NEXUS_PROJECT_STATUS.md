@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, and Phase E1 receiver adherence reporting implemented and validation complete on the active branch
-- Next action: Start Phase E2 missed and overdue task trends; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, and Phase E1-E2 reports/insights implemented and validation complete on the active branch
+- Next action: Start Phase E3 caregiver activity and load distribution; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -43,6 +43,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase D4 is complete: backend add-receiver policy now requires an active premium receiver instead of trusting client intent alone, while recurrence, insights, and caregiver limits remain enforced through shared entitlement capabilities and covered by focused regression tests.
 - Phase D5 is complete: backend App Store Server API transaction verification is ready behind explicit environment configuration, entitlement sync fails closed when verification is enabled but credentials are missing, and local/demo mode remains deterministic with strict product/transaction identity checks.
 - Phase E1 is complete: receiver adherence summaries now extend the existing completion insights contract with scheduled due tasks, completed tasks, on-time completions, late completions, missed tasks, completion rate, and on-time rate, with organizer Insights and caregiver Activity surfaces reusing the same payload.
+- Phase E2 is complete: daily due/completed/missed trend data now extends the same completion insights contract, and organizer Insights shows a missed-trend chart plus plain-language summary without adding a duplicate reporting endpoint.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -102,6 +103,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode UI tests `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase D4.
 - Backend App Store Server API adapter and entitlement fail-closed regression passed 130 tests after Phase D5.
 - Backend insights aggregation, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase E1 receiver adherence reporting.
+- Backend insights trend aggregation, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, `CareLoopUITests/test_insightsShowAdherenceAndMissedTrendForPremiumReceiver`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase E2 missed/overdue trend reporting.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
