@@ -458,6 +458,36 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanGrantAndRevokeCaregiverReceiverAccess() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-people-access"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-people-access"].tap()
+
+        XCTAssertTrue(app.staticTexts["People & Access"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Supporting Maya only."].waitForExistence(timeout: 3))
+        waitForAnyElement(in: app, identifier: "manage-access-m2", timeout: 3).tap()
+
+        XCTAssertTrue(anyElement(in: app, identifier: "caregiver-access-screen").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.switches["access-toggle-r2"].waitForExistence(timeout: 3))
+        app.switches["access-toggle-r2"].tap()
+        XCTAssertTrue(app.buttons["caregiver-access-done"].waitForExistence(timeout: 3))
+        app.buttons["caregiver-access-done"].tap()
+
+        XCTAssertTrue(app.staticTexts["Supporting Maya and David."].waitForExistence(timeout: 5))
+        waitForAnyElement(in: app, identifier: "manage-access-m2", timeout: 3).tap()
+        XCTAssertTrue(anyElement(in: app, identifier: "caregiver-access-screen").waitForExistence(timeout: 5))
+        XCTAssertTrue(app.switches["access-toggle-r2"].waitForExistence(timeout: 3))
+        app.switches["access-toggle-r2"].tap()
+        app.buttons["caregiver-access-done"].tap()
+
+        XCTAssertTrue(app.staticTexts["Supporting Maya only."].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
     func test_careReceiverCanAcceptPendingInviteFromDirectory() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "recipient-invite"])
         let directory = app.scrollViews["circle-directory-screen"]

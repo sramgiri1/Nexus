@@ -241,6 +241,7 @@ struct MemberListView: View {
                                     }
                                     .font(.system(size: 12, weight: .bold, design: .rounded))
                                     .foregroundStyle(blue)
+                                    .accessibilityIdentifier("manage-access-\(member.id)")
 
                                     Menu {
                                         Button("Manage Receiver Access") {
@@ -257,10 +258,10 @@ struct MemberListView: View {
                                             .font(.system(size: 18, weight: .semibold))
                                             .foregroundStyle(.secondary)
                                     }
+                                    .accessibilityIdentifier("caregiver-actions-\(member.id)")
                                 }
                             }
                         }
-                        .accessibilityIdentifier("caregiver-row-\(member.id)")
                     }
                 }
             }
@@ -583,6 +584,7 @@ private struct CaregiverAccessView: View {
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Done") { dismiss() }
+                        .accessibilityIdentifier("caregiver-access-done")
                 }
             }
         }

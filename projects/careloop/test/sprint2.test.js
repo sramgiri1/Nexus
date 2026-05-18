@@ -3310,6 +3310,14 @@ describe("receiver-scoped access control", () => {
     });
     assert.equal(afterGrant.json().find((item) => item.recipientId === "cr1").hasAccess, true);
 
+    const circleAfterGrant = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: noAccessHeaders,
+    });
+    assert.equal(circleAfterGrant.statusCode, 200);
+    assert.deepEqual(circleAfterGrant.json().recipients.map((recipient) => recipient.id), ["cr1"]);
+
     const tasksAfterGrant = await app.inject({
       method: "GET",
       url: "/circles/c1/tasks",
@@ -3325,6 +3333,15 @@ describe("receiver-scoped access control", () => {
       payload: { userId: "u1" },
     });
     assert.equal(revoke.statusCode, 204);
+
+    const circleAfterRevoke = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: noAccessHeaders,
+    });
+    assert.equal(circleAfterRevoke.statusCode, 200);
+    assert.deepEqual(circleAfterRevoke.json().recipients, []);
+    assert.deepEqual(circleAfterRevoke.json().tasks, []);
 
     const tasksAfterRevoke = await app.inject({
       method: "GET",

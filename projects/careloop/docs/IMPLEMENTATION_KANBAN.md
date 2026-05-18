@@ -16,13 +16,12 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-No active implementation card. Next implementation should start with `B4`.
+No active implementation card. Next implementation should start with `B5`.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| B4 | Organizer grants and revokes receiver access after caregiver acceptance. | Backend recipient access routes; iOS People & Access access sheet; caregiver scoped dashboards/tasks/insights. | Backend grant/revoke scope tests; iOS UI grant/revoke flow proving visibility changes. | Add demo state showing scoped caregiver access. | Planned |
 | B5 | Invite edge cases show clear errors and block invalid joins. | Backend invitation routes; iOS pending invite cards/error copy. | Wrong-user, expired-link, fourth-circle-limit, already-member backend tests plus at least one iOS UI error fixture. | Optional demo only if investor walkthrough needs failure-state proof. | Planned |
 
 ## Backlog
@@ -69,6 +68,7 @@ No active implementation card. Next implementation should start with `B4`.
 | B1 | Pending invite visibility plus organizer resend/revoke controls. | Backend `backend:circles` coverage and Xcode UI pending-invite tests; commit `e8b35cf`. |
 | B2 | Direct care receiver invite acceptance and declined/expired disabled states. | Xcode UI `test_careReceiverCanAcceptPendingInviteFromDirectory`; commit `7d29930`. |
 | B3 | Caregiver invite acceptance with no receiver access by default. | Backend `caregiver invitation acceptance grants no receiver access by default`; Xcode UI `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`. |
+| B4 | Organizer grants and revokes receiver access after caregiver acceptance. | Backend `lets organizers grant and revoke caregiver receiver access`; Xcode UI `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`. |
 
 ## Blocked / External Setup
 
