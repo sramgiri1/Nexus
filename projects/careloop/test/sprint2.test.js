@@ -1964,13 +1964,57 @@ describe("circle membership management", () => {
       method: "POST",
       url: "/circles/c1/recipients/cr1/proxy-activate",
       headers: HDR,
-      payload: { userId: "u1", consentDocumentReference: "family-consent-form" },
+      payload: { userId: "u1", authorizationAttested: true, consentDocumentReference: "family-consent-form" },
     });
 
     assert.equal(res.statusCode, 200);
     assert.equal(app.db._s.recipients[0].activationStatus, "PROXY_ACTIVE");
     assert.equal(app.db._s.recipients[0].proxyAuthorizedById, "u1");
     assert.equal(app.db._s.recipients[0].consentDocumentReference, "family-consent-form");
+    assert.equal(app.db._s.events.at(-1).payload.authorizationAttested, true);
+    assert.equal(app.db._s.events.at(-1).payload.hasConsentDocumentReference, true);
+    assert.equal(app.db._s.events.at(-1).payload.consentDocumentReference, undefined);
+    await app.close();
+  });
+
+  test("POST /circles/:id/recipients/:recipientId/proxy-activate requires explicit authorization attestation", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: "Mother",
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "DRAFT",
+        activatedAt: null,
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients/cr1/proxy-activate",
+      headers: HDR,
+      payload: { userId: "u1", consentDocumentReference: "family-consent-form" },
+    });
+
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "Proxy activation requires explicit authorization attestation");
+    assert.equal(app.db._s.recipients[0].activationStatus, "DRAFT");
+    assert.equal(app.db._s.recipients[0].consentAttestedAt, null);
+    assert.equal(app.db._s.recipients[0].proxyAuthorizedById, null);
+    assert.equal(app.db._s.events.length, 0);
     await app.close();
   });
 
@@ -2009,7 +2053,7 @@ describe("circle membership management", () => {
       method: "POST",
       url: "/circles/c1/recipients/cr1/proxy-activate",
       headers: HDR,
-      payload: { userId: "u1", consentDocumentReference: "family-consent-form" },
+      payload: { userId: "u1", authorizationAttested: true, consentDocumentReference: "family-consent-form" },
     });
 
     assert.equal(res.statusCode, 409);
@@ -2600,7 +2644,7 @@ describe("circle membership management", () => {
       method: "POST",
       url: `/circles/${circleB.id}/recipients/${recipientBId}/proxy-activate`,
       headers: shared.headers,
-      payload: { userId: shared.user.id, consentDocumentReference: "test-proxy-b" },
+      payload: { userId: shared.user.id, authorizationAttested: true, consentDocumentReference: "test-proxy-b" },
     });
     assert.equal(activateB.statusCode, 200);
 
@@ -2614,7 +2658,7 @@ describe("circle membership management", () => {
       method: "POST",
       url: `/circles/${circleC.id}/recipients/${recipientCId}/proxy-activate`,
       headers: circleCOwner.headers,
-      payload: { userId: circleCOwner.user.id, consentDocumentReference: "test-proxy-c" },
+      payload: { userId: circleCOwner.user.id, authorizationAttested: true, consentDocumentReference: "test-proxy-c" },
     });
     assert.equal(activateC.statusCode, 200);
     const sharedMemberC = await inviteAndAccept({

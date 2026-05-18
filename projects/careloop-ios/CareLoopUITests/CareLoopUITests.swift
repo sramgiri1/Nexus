@@ -232,6 +232,7 @@ final class CareLoopUITests: XCTestCase {
             accessToken: accessToken,
             jsonBody: [
                 "userId": userId,
+                "authorizationAttested": true,
                 "consentDocumentReference": "admin-demo-video-consent"
             ]
         )
@@ -669,7 +670,15 @@ final class CareLoopUITests: XCTestCase {
         activationPathButton.tap()
         app.buttons["recipient-activation-choice-proxy-ui-recipient-3"].tap()
         typeText(into: app.textFields["recipient-proxy-consent-field"], text: "Power of attorney on file")
-        app.buttons["recipient-proxy-activate-button"].tap()
+        let proxyActivateButton = app.buttons["recipient-proxy-activate-button"]
+        XCTAssertFalse(proxyActivateButton.isEnabled)
+        let attestationToggle = app.switches["recipient-proxy-attestation-toggle"]
+        XCTAssertTrue(attestationToggle.waitForExistence(timeout: 3))
+        attestationToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.85, dy: 0.5)).tap()
+        let enabledPredicate = NSPredicate(format: "isEnabled == true")
+        let enabledExpectation = XCTNSPredicateExpectation(predicate: enabledPredicate, object: proxyActivateButton)
+        XCTAssertEqual(XCTWaiter.wait(for: [enabledExpectation], timeout: 3), .completed)
+        proxyActivateButton.tap()
 
         XCTAssertTrue(app.staticTexts["Proxy Active"].waitForExistence(timeout: 5))
         waitForDisappearance(of: activationPathButton, timeout: 5)

@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-C3 is next: capture explicit authorization attestation for proxy activation.
+C4 is next: block task creation until receiver accepts directly or is proxy activated.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| C3 | Capture explicit authorization attestation for proxy activation. | Backend consent fields/events; iOS proxy attestation form. | Backend consent persistence/audit tests; iOS UI attestation required-state test. | Include proxy-attested receiver in demo if useful. | Planned |
+| C4 | Block task creation until receiver accepts or is proxy activated. | Backend task create policy; iOS New Task and Task Detail blocked states. | Backend task-create rejection tests; iOS UI blocked create test. | Demo should include an invited receiver with task creation blocked. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| C4 | Block task creation until receiver accepts or is proxy activated. | Backend task create policy; iOS New Task and Task Detail blocked states. | Backend task-create rejection tests; iOS UI blocked create test. | Demo should include an invited receiver with task creation blocked. | Planned |
 | C5 | Handle receiver removal/delete blocked states safely. | Backend delete rules; iOS destructive confirmations and blocked-state copy. | Backend delete/block tests; iOS UI delete confirmation and blocked delete tests. | Optional. | Planned |
 | D1 | Verify StoreKit product metadata and local purchase fixtures. | iOS StoreKit config/paywall; backend entitlement metadata. | StoreKit local tests; iOS paywall metadata tests. | Demo paywall product labels must match. | Planned |
 | D2 | Harden restore purchases and entitlement refresh. | iOS paywall/account restore; backend entitlement refresh. | iOS restore UI tests; backend entitlement refresh tests. | Demo can show restore entry only. | Planned |
@@ -69,6 +68,7 @@ C3 is next: capture explicit authorization attestation for proxy activation.
 | B5 | Invite edge cases show clear errors and block invalid joins. | Backend wrong-user, expired-link, fourth-circle-limit, and already-member acceptance tests; Xcode UI `test_inviteEdgeStatesDisableResponseActions`. |
 | C1 | Add/edit/reorder/remove receiver lifecycle polish. | Backend receiver lifecycle tests for detail update, reorder, active-task delete blocking, last-receiver protection, and primary promotion; Xcode UI `test_organizerCanAddEditAndRemoveCareReceiverLocally` plus premium-gate coverage. |
 | C2 | Direct invite vs proxy activation decision path. | Backend activation conflict tests for direct-joined and proxy-active receivers; Xcode UI `test_organizerChoosesReceiverActivationPath` plus receiver-management regression trio. |
+| C3 | Explicit authorization attestation for proxy activation. | Backend attestation-required and audit-payload tests; Xcode UI `test_organizerChoosesReceiverActivationPath` verifies the proxy action stays disabled until attestation is checked. |
 
 ## Blocked / External Setup
 

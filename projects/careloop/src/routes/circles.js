@@ -617,11 +617,20 @@ export default async function circles(app) {
 
   // POST /circles/:id/recipients/:recipientId/proxy-activate — admin only
   app.post("/circles/:id/recipients/:recipientId/proxy-activate", async (req, reply) => {
-    const { userId, consentDocumentReference } = req.body ?? {};
+    const { userId, authorizationAttested, consentDocumentReference } = req.body ?? {};
     const authenticatedUserId = requireAuthenticatedUser(req, reply);
     if (!authenticatedUserId) return;
     if (rejectUserMismatch(userId, authenticatedUserId, reply)) return;
     if (!await assertRequestAdmin(db, req.params.id, req, reply)) return;
+    if (authorizationAttested !== true) {
+      return reply.code(400).send({ error: "Proxy activation requires explicit authorization attestation" });
+    }
+    const normalizedConsentReference = typeof consentDocumentReference === "string"
+      ? consentDocumentReference.trim()
+      : "";
+    if (normalizedConsentReference.length > 120) {
+      return reply.code(400).send({ error: "Consent reference must be 120 characters or less" });
+    }
 
     const existing = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
@@ -639,9 +648,7 @@ export default async function circles(app) {
         where: { id: req.params.recipientId },
         data: activationForProxyReceiver({
           attestedById: authenticatedUserId,
-          documentReference: typeof consentDocumentReference === "string"
-            ? consentDocumentReference.trim() || null
-            : null,
+          documentReference: normalizedConsentReference || null,
         }),
       });
 
@@ -654,6 +661,8 @@ export default async function circles(app) {
             recipientId: updated.id,
             activationStatus: updated.activationStatus,
             proxyActivated: true,
+            authorizationAttested: true,
+            hasConsentDocumentReference: Boolean(updated.consentDocumentReference),
           },
         },
       });

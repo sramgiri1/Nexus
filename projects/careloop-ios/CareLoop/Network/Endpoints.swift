@@ -55,8 +55,13 @@ extension APIClient {
         try await deleteVoid("/circles/\(circleId)/recipients/\(recipientId)")
     }
 
-    func proxyActivateRecipient(circleId: String, recipientId: String, consentDocumentReference: String?) async throws -> CareRecipient {
-        var body: [String: Any] = [:]
+    func proxyActivateRecipient(
+        circleId: String,
+        recipientId: String,
+        consentDocumentReference: String?,
+        authorizationAttested: Bool
+    ) async throws -> CareRecipient {
+        var body: [String: Any] = ["authorizationAttested": authorizationAttested]
         if let consentDocumentReference {
             body["consentDocumentReference"] = consentDocumentReference
         }

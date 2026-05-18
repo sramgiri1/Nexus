@@ -162,8 +162,12 @@ struct RecipientManagementView: View {
                 )
             }
             .sheet(item: $proxyRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
-                ProxyActivationSheet(recipient: recipient) { consentDocumentReference in
-                    try await proxyActivate(recipient, consentDocumentReference: consentDocumentReference)
+                ProxyActivationSheet(recipient: recipient) { consentDocumentReference, authorizationAttested in
+                    try await proxyActivate(
+                        recipient,
+                        consentDocumentReference: consentDocumentReference,
+                        authorizationAttested: authorizationAttested
+                    )
                 }
                 .environmentObject(appState)
             }
@@ -760,9 +764,16 @@ struct RecipientManagementView: View {
         await loadPendingInvites()
     }
 
-    private func proxyActivate(_ recipient: CareRecipient, consentDocumentReference: String?) async throws {
+    private func proxyActivate(
+        _ recipient: CareRecipient,
+        consentDocumentReference: String?,
+        authorizationAttested: Bool
+    ) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
         if UITestScenario.current != nil {
+            guard authorizationAttested else {
+                throw APIError.httpError(400, "Proxy activation requires explicit authorization attestation")
+            }
             var circle = appState.activeCircle
             let currentRecipients = circle?.recipients ?? []
             circle?.recipients = currentRecipients.map { current in
@@ -777,7 +788,8 @@ struct RecipientManagementView: View {
         _ = try await APIClient.shared.proxyActivateRecipient(
             circleId: circleId,
             recipientId: recipient.id,
-            consentDocumentReference: consentDocumentReference
+            consentDocumentReference: consentDocumentReference,
+            authorizationAttested: authorizationAttested
         )
         try await appState.activateCircle(id: circleId)
         await loadPendingInvites()
@@ -1214,9 +1226,10 @@ private struct ProxyActivationSheet: View {
     @Environment(\.dismiss) private var dismiss
 
     let recipient: CareRecipient
-    let onActivate: (String?) async throws -> Void
+    let onActivate: (String?, Bool) async throws -> Void
 
     @State private var documentReference = ""
+    @State private var authorizationAttested = false
     @State private var loading = false
     @State private var error: String?
 
@@ -1227,8 +1240,16 @@ private struct ProxyActivationSheet: View {
                     Text("Use this only when a Care Organizer has consent and/or external authorization to coordinate care on behalf of \(recipient.name).")
                         .font(.footnote)
                         .foregroundStyle(.secondary)
-                    TextField("Consent reference (optional)", text: $documentReference)
+                    TextField("Authorization reference (optional)", text: $documentReference)
                         .accessibilityIdentifier("recipient-proxy-consent-field")
+                    Toggle(
+                        "I confirm I am authorized to coordinate care for \(recipient.name) and agree to CareLoop's consent terms.",
+                        isOn: $authorizationAttested
+                    )
+                    .accessibilityIdentifier("recipient-proxy-attestation-toggle")
+                    Text("Do not enter medical details here. Use a short document or family authorization reference only.")
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
                 }
 
                 if let error {
@@ -1250,7 +1271,7 @@ private struct ProxyActivationSheet: View {
                         Task { await activate() }
                     }
                     .accessibilityIdentifier("recipient-proxy-activate-button")
-                    .disabled(loading)
+                    .disabled(loading || !authorizationAttested)
                 }
             }
         }
@@ -1261,7 +1282,7 @@ private struct ProxyActivationSheet: View {
         error = nil
         do {
             let normalizedReference = documentReference.trimmingCharacters(in: .whitespacesAndNewlines)
-            try await onActivate(normalizedReference.isEmpty ? nil : normalizedReference)
+            try await onActivate(normalizedReference.isEmpty ? nil : normalizedReference, authorizationAttested)
             dismiss()
         } catch {
             self.error = error.localizedDescription
