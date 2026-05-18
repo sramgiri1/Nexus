@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P63
-- Generated at: 2026-05-17T21:11:33.808Z
-- Validation branch: codex/careloop-premium-phases
-- Validation HEAD: 50abb01
+- Generated at: 2026-05-18T13:34:05.011Z
+- Validation branch: codex/p63-snapshot-contract
+- Validation HEAD: fc018ce
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Contract
