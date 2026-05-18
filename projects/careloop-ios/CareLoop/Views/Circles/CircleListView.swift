@@ -326,7 +326,8 @@ struct CircleListView: View {
                         .fill(Color(red: 0.13, green: 0.56, blue: 0.87)))
                     .foregroundStyle(.white)
                 }
-                .disabled(loadingInviteId != nil || loadingCircleId != nil)
+                .disabled(loadingInviteId != nil || loadingCircleId != nil || !invite.canRespond)
+                .accessibilityIdentifier("circle-list-invite-accept-\(invite.id)")
 
                 Button { Task { await decline(invite) } } label: {
                     Text("Decline")
@@ -336,7 +337,14 @@ struct CircleListView: View {
                             .fill(Color(red: 0.92, green: 0.95, blue: 0.99)))
                         .foregroundStyle(Color(red: 0.35, green: 0.43, blue: 0.56))
                 }
-                .disabled(loadingInviteId != nil || loadingCircleId != nil)
+                .disabled(loadingInviteId != nil || loadingCircleId != nil || !invite.canRespond)
+                .accessibilityIdentifier("circle-list-invite-decline-\(invite.id)")
+            }
+
+            if let responseUnavailableReason = invite.responseUnavailableReason {
+                Text(responseUnavailableReason)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(15)
@@ -472,6 +480,14 @@ struct CircleListView: View {
         loadingInviteId = invite.id; error = nil
         defer { loadingInviteId = nil }
         do {
+            if UITestScenario.current != nil {
+                appState.currentUser?.pendingInvites?.removeAll { $0.id == invite.id }
+                appState.currentUser?.memberships = [
+                    CircleMembership(id: "cm-\(invite.id)", circleId: invite.circle.id, role: invite.role, circle: invite.circle)
+                ]
+                appState.attachCircle(invite.circle)
+                return
+            }
             _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id)
             try await appState.refreshMemberships()
         } catch { self.error = error.localizedDescription }
@@ -482,6 +498,11 @@ struct CircleListView: View {
         loadingInviteId = invite.id; error = nil
         defer { loadingInviteId = nil }
         do {
+            if UITestScenario.current != nil {
+                appState.currentUser?.pendingInvites?.removeAll { $0.id == invite.id }
+                appState.uiTestInvitations.removeAll { $0.id == invite.id }
+                return
+            }
             try await APIClient.shared.declineInvitation(invitationId: invite.id)
             try await appState.refreshMemberships()
         } catch { self.error = error.localizedDescription }

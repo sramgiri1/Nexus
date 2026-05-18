@@ -110,7 +110,8 @@ struct PendingInvitesView: View {
                             )
                         )
                 )
-                .disabled(loadingInviteId != nil)
+                .disabled(loadingInviteId != nil || !invite.canRespond)
+                .accessibilityIdentifier("pending-invite-accept-\(invite.id)")
 
                 Button {
                     Task { await decline(invite) }
@@ -130,7 +131,14 @@ struct PendingInvitesView: View {
                                 .fill(Color.white)
                         )
                 )
-                .disabled(loadingInviteId != nil)
+                .disabled(loadingInviteId != nil || !invite.canRespond)
+                .accessibilityIdentifier("pending-invite-decline-\(invite.id)")
+            }
+
+            if let responseUnavailableReason = invite.responseUnavailableReason {
+                Text(responseUnavailableReason)
+                    .font(.system(size: 13, weight: .semibold, design: .rounded))
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(20)

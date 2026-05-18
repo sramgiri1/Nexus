@@ -1141,12 +1141,12 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** finish the full invite lifecycle for Care Organizers, Caregivers, Care Receivers, and proxy-authorized activation.
 
-**Implementation status:** in progress on branch `codex/careloop-premium-phases`. Pending invite visibility plus organizer resend/revoke controls are implemented for caregiver and care receiver invite management surfaces.
+**Implementation status:** in progress on branch `codex/careloop-premium-phases`. Pending invite visibility, organizer resend/revoke controls, and direct care receiver invite acceptance are implemented across the circle directory, switcher, and pending-invite surfaces. Declined, revoked, and expired invitations now present disabled actions with clear unavailable-state copy.
 
 **Subphases**
 
-1. Pending invite visibility and resend/revoke controls.
-2. Direct care receiver acceptance and declined/expired states.
+1. Pending invite visibility and resend/revoke controls. **Complete.**
+2. Direct care receiver acceptance and declined/expired states. **Complete.**
 3. Caregiver join with no receiver access by default.
 4. Organizer grant/revoke receiver access after caregiver acceptance.
 5. Wrong-user, expired-link, fourth-circle-limit, and already-member edge cases.

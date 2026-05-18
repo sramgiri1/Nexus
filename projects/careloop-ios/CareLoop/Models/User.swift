@@ -60,6 +60,20 @@ struct GroupInvitation: Identifiable, Codable {
 }
 
 extension GroupInvitation {
+    var canRespond: Bool {
+        status == .pending && expirationSummary != "Expired"
+    }
+
+    var responseUnavailableReason: String? {
+        if status != .pending {
+            return "This invitation is \(status.rawValue.lowercased())."
+        }
+        if expirationSummary == "Expired" {
+            return "This invitation expired. Ask the organizer to resend it."
+        }
+        return nil
+    }
+
     var expirationSummary: String? {
         guard let expiresAt else { return nil }
         if status == .expired || Date() >= expiresAt {

@@ -458,6 +458,23 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_careReceiverCanAcceptPendingInviteFromDirectory() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "recipient-invite"])
+        let directory = app.scrollViews["circle-directory-screen"]
+
+        XCTAssertTrue(directory.waitForExistence(timeout: 5))
+        for _ in 0..<4 where !app.buttons["circle-list-invite-accept-invite-receiver"].exists {
+            directory.swipeUp()
+        }
+        XCTAssertTrue(app.staticTexts["Your care is organized in this circle"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["circle-list-invite-accept-invite-receiver"].waitForExistence(timeout: 3))
+        app.buttons["circle-list-invite-accept-invite-receiver"].tap()
+
+        XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Your care plan for right now"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_organizerCanOpenCareReceiverManagement() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

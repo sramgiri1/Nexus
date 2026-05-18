@@ -229,13 +229,21 @@ struct CircleSwitcherView: View {
                 }
                 .buttonStyle(.borderedProminent)
                 .tint(Color(red: 0.13, green: 0.56, blue: 0.87))
-                .disabled(loadingInviteId != nil || loadingCircleId != nil)
+                .disabled(loadingInviteId != nil || loadingCircleId != nil || !invite.canRespond)
+                .accessibilityIdentifier("circle-switcher-invite-accept-\(invite.id)")
 
                 Button("Decline") {
                     Task { await decline(invite) }
                 }
                 .buttonStyle(.bordered)
-                .disabled(loadingInviteId != nil || loadingCircleId != nil)
+                .disabled(loadingInviteId != nil || loadingCircleId != nil || !invite.canRespond)
+                .accessibilityIdentifier("circle-switcher-invite-decline-\(invite.id)")
+            }
+
+            if let responseUnavailableReason = invite.responseUnavailableReason {
+                Text(responseUnavailableReason)
+                    .font(.caption)
+                    .foregroundStyle(.secondary)
             }
         }
         .padding(.vertical, 4)
