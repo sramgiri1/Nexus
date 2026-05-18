@@ -4382,19 +4382,31 @@ describe("POST /circles/:circleId/tasks — Reminder creation", () => {
     assert.equal(create.statusCode, 201);
     const task = create.json();
 
+    const beforeSnooze = Date.now();
     const snooze = await app.inject({
       method: "POST",
       url: `/circles/c1/tasks/${task.id}/reminder/snooze`,
       headers: HDR,
       payload: { minutes: 15 },
     });
+    const afterSnooze = Date.now();
     assert.equal(snooze.statusCode, 200);
-    assert.equal(snooze.json().status, "SNOOZED");
-    assert.equal(snooze.json().snoozeCount, 1);
+    const snoozeBody = snooze.json();
+    assert.equal(snoozeBody.status, "SNOOZED");
+    assert.equal(snoozeBody.snoozeCount, 1);
+    assert.equal(snoozeBody.scheduledAt, snoozeBody.snoozedUntil);
+
+    const expectedMin = beforeSnooze + 15 * 60 * 1000 - 1000;
+    const expectedMax = afterSnooze + 15 * 60 * 1000 + 1000;
+    const rescheduledMs = new Date(snoozeBody.snoozedUntil).getTime();
+    assert.ok(rescheduledMs >= expectedMin, "snoozedUntil is not before the requested delay window");
+    assert.ok(rescheduledMs <= expectedMax, "snoozedUntil is not after the requested delay window");
 
     await processPendingReminders(db);
     const reminder = db._s.reminders.find((item) => item.taskId === task.id);
     assert.equal(reminder.status, "SNOOZED", "scheduler skips reminders snoozed into the future");
+    assert.equal(reminder.scheduledAt.getTime(), rescheduledMs);
+    assert.equal(reminder.snoozedUntil.getTime(), rescheduledMs);
   });
 
   test("rejects invalid snooze durations and completed task snoozes", async () => {

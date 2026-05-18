@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-F3 is next: verify snooze mutation and rescheduled reminder visibility end to end.
+F4 is next: verify escalation timeline and notification fanout.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| F3 | Snooze mutation and rescheduled reminder visibility. | Backend reminder routes; iOS Task Detail. | Backend snooze tests; Xcode UI snooze state test. | Demo can show snoozed reminder. | Planned |
+| F4 | Escalation timeline and notification fanout verification. | Backend reminder scheduler/events; iOS Task Detail/activity. | Backend fanout tests; iOS timeline fixture. | Demo can show escalation trail. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| F4 | Escalation timeline and notification fanout verification. | Backend reminder scheduler/events; iOS Task Detail/activity. | Backend fanout tests; iOS timeline fixture. | Demo can show escalation trail. | Planned |
 | F5 | Physical-device APNs/TestFlight validation. | Apple Developer setup; app entitlements; backend push provider. | Manual physical-device checklist. | No simulator demo dependency. | External Setup |
 | G1 | Maintain four realistic Care Circles with distinct use cases. | Demo seed script and readiness checks. | Demo readiness script; smoke launch. | Required. | Partial |
 | G2 | Multiple personas per circle with roles and access scopes. | Demo seed script and launcher profiles. | Demo readiness script; focused UI fixture checks. | Required. | Partial |
@@ -69,6 +68,7 @@ F3 is next: verify snooze mutation and rescheduled reminder visibility end to en
 | E5 | Free/locked/premium insight states with clear upgrade value. | Clarified premium, selected locked-receiver, and all-recipient locked states in the existing Insights screen, added a premium report value preview, and kept upgrade CTAs receiver-scoped. |
 | F1 | Reminder preference UX and backend persistence. | Persisted task assignment, escalation, and daily digest notification toggles through the existing Settings and user-preferences route, made digest delivery respect `notifDigest`, and validated backend delivery gates plus Settings UI automation. |
 | F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | Added organizer and care receiver UI coverage for pending task deep links, completed task deep links, and wrong-circle guards; focused Xcode UI deep-link suite passed with 6 tests. |
+| F3 | Snooze mutation and rescheduled reminder visibility. | Backend snooze regressions now assert `scheduledAt` and `snoozedUntil` move to the requested future window, and Task Detail shows the rescheduled reminder time with escalation paused copy; focused backend and Xcode UI tests passed. |
 
 ## Blocked / External Setup
 

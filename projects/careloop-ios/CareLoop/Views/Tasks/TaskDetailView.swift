@@ -390,6 +390,7 @@ struct TaskDetailView: View {
                     Text(snoozeMessage ?? "Snooze this reminder and delay escalation.")
                         .font(.system(size: 12, weight: .medium, design: .rounded))
                         .foregroundStyle(.secondary)
+                        .accessibilityIdentifier("snooze-status-message")
                 }
                 Spacer()
             }
@@ -1056,14 +1057,15 @@ struct TaskDetailView: View {
         defer { snoozingMinutes = nil }
 
         if UITestScenario.current != nil {
-            snoozeMessage = "Snoozed for \(snoozeLabel(minutes: minutes))."
+            let until = Date().addingTimeInterval(TimeInterval(minutes * 60))
+            snoozeMessage = snoozeStatusMessage(until: until)
             return
         }
 
         do {
             let result = try await APIClient.shared.snoozeReminder(circleId: circleId, taskId: task.id, minutes: minutes)
             if let until = result.snoozedUntil {
-                snoozeMessage = "Snoozed until \(until.formatted(date: .omitted, time: .shortened))."
+                snoozeMessage = snoozeStatusMessage(until: until)
             } else {
                 snoozeMessage = "Snoozed for \(snoozeLabel(minutes: minutes))."
             }
@@ -1079,6 +1081,10 @@ struct TaskDetailView: View {
         case 1440: return "tomorrow"
         default: return "\(minutes) minutes"
         }
+    }
+
+    private func snoozeStatusMessage(until: Date) -> String {
+        "Reminder rescheduled until \(until.formatted(date: .omitted, time: .shortened)). Escalation is paused until then."
     }
 
     private func performDelete() async {

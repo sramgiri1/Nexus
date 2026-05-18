@@ -80,9 +80,10 @@ curl -X POST http://localhost:3000/circles/<circleId>/tasks \
 - [x] `POST /circles/:circleId/tasks/:taskId/reminder/snooze` accepts 15, 60, or 1440 minutes only
 - [x] Assigned caregiver, task creator, or Care Organizer can snooze an active reminder
 - [x] Snooze moves `scheduledAt`, sets `snoozedUntil`, increments `snoozeCount`, and logs `REMINDER_SNOOZED`
+- [x] Snooze response and stored reminder expose the same rescheduled `scheduledAt` / `snoozedUntil` window
 - [x] Snoozed reminders do not send before the new `scheduledAt`
 - [x] Completed and skipped tasks cannot be snoozed
-- [x] iOS Task Detail exposes 15 min / 1 hour / Tomorrow snooze controls with UI test coverage
+- [x] iOS Task Detail exposes 15 min / 1 hour / Tomorrow snooze controls and confirms the rescheduled reminder time with UI test coverage
 
 ### 4. Escalation — 15-minute window
 

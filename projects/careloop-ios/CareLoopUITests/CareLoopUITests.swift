@@ -1170,7 +1170,11 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Need more time?"].waitForExistence(timeout: 3))
         app.buttons["snooze-15-button"].tap()
-        XCTAssertTrue(app.staticTexts["Snoozed for 15 minutes."].waitForExistence(timeout: 3))
+        let rescheduledMessage = app.staticTexts.matching(
+            NSPredicate(format: "identifier == %@ AND label BEGINSWITH %@", "snooze-status-message", "Reminder rescheduled until")
+        ).firstMatch
+        XCTAssertTrue(rescheduledMessage.waitForExistence(timeout: 3))
+        XCTAssertTrue(rescheduledMessage.label.contains("Escalation is paused until then."))
     }
 
     @MainActor
