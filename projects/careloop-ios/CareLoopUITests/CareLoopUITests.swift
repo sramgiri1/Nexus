@@ -630,6 +630,52 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerChoosesReceiverActivationPath() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.buttons["add-care-receiver-button"].waitForExistence(timeout: 5))
+        app.buttons["add-care-receiver-button"].tap()
+        XCTAssertTrue(app.staticTexts["Premium is required to add another care receiver"].waitForExistence(timeout: 3))
+        app.buttons["Upgrade and add receiver"].tap()
+
+        typeText(into: app.textFields["recipient-editor-name-field"], text: "Aunt Priya")
+        typeText(into: app.textFields["recipient-editor-relationship-field"], text: "Aunt")
+        XCTAssertTrue(app.buttons["recipient-editor-add-button"].waitForExistence(timeout: 3))
+        app.buttons["recipient-editor-add-button"].tap()
+
+        let managementScroll = waitForAnyElement(in: app, identifier: "receiver-management-screen", timeout: 8)
+        let activationPathButton = app.buttons
+            .matching(NSPredicate(format: "identifier == %@ AND label == %@", "recipient-card-ui-recipient-3", "Choose activation path"))
+            .firstMatch
+        for _ in 0..<3 where !activationPathButton.exists {
+            managementScroll.swipeUp()
+        }
+
+        XCTAssertTrue(activationPathButton.waitForExistence(timeout: 3))
+        activationPathButton.tap()
+        XCTAssertTrue(app.staticTexts["Invite Aunt Priya directly"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Record proxy authorization"].waitForExistence(timeout: 3))
+        app.buttons["recipient-activation-choice-invite-ui-recipient-3"].tap()
+        XCTAssertTrue(app.textFields["recipient-invite-email-field"].waitForExistence(timeout: 5))
+        app.buttons["Cancel"].tap()
+
+        XCTAssertTrue(activationPathButton.waitForExistence(timeout: 5))
+        activationPathButton.tap()
+        app.buttons["recipient-activation-choice-proxy-ui-recipient-3"].tap()
+        typeText(into: app.textFields["recipient-proxy-consent-field"], text: "Power of attorney on file")
+        app.buttons["recipient-proxy-activate-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Proxy Active"].waitForExistence(timeout: 5))
+        waitForDisappearance(of: activationPathButton, timeout: 5)
+    }
+
+    @MainActor
     func test_organizerCanOpenReceiverPremiumPaywall() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

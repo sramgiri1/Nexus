@@ -1157,17 +1157,17 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** make receiver lifecycle, access assignment, proxy activation, and paid receiver gating production-ready.
 
-**Implementation status:** in progress on branch `codex/careloop-premium-phases`. C1 receiver lifecycle polish is complete: organizers can add a gated second receiver, edit receiver profile details, remove unused receivers, and the backend preserves safety rules for primary receiver summary updates, reorder, last-receiver protection, active-task removal blocking, and primary promotion after deletion.
+**Implementation status:** in progress on branch `codex/careloop-premium-phases`. C1 receiver lifecycle polish is complete: organizers can add a gated second receiver, edit receiver profile details, remove unused receivers, and the backend preserves safety rules for primary receiver summary updates, reorder, last-receiver protection, active-task removal blocking, and primary promotion after deletion. C2 activation-path polish is complete: organizers choose between direct receiver invite and proxy authorization from one decision sheet, direct/proxy activation conflicts are blocked server-side, and proxy-active receivers no longer show activation actions.
 
 **Subphases**
 
 1. Add/edit/reorder/remove receiver polish. **Complete.**
-2. Direct invite vs proxy activation decision path.
+2. Direct invite vs proxy activation decision path. **Complete.**
 3. Explicit authorization attestation for proxy activation.
 4. Block task creation until direct acceptance or proxy activation.
 5. Receiver removal/delete blocked states when open tasks, billing, or history require preservation.
 
-**Tests:** backend receiver lifecycle tests plus iOS UI add/edit/remove/access/proxy fixtures.
+**Tests:** backend receiver lifecycle and activation-conflict tests plus iOS UI add/edit/remove/access/proxy fixtures.
 
 #### Phase D — Premium Purchase Hardening
 

@@ -10,6 +10,7 @@ struct RecipientManagementView: View {
     @State private var editingRecipient: CareRecipient?
     @State private var invitingRecipient: CareRecipient?
     @State private var proxyRecipient: CareRecipient?
+    @State private var activationDecisionRecipient: CareRecipient?
     @State private var paywallRecipient: CareRecipient?
     @State private var managementRecipient: CareRecipient?
     @State private var loadingRecipientId: String?
@@ -152,6 +153,13 @@ struct RecipientManagementView: View {
                     try await sendInvite(for: recipient, email: email)
                 }
                 .environmentObject(appState)
+            }
+            .sheet(item: $activationDecisionRecipient) { recipient in
+                ReceiverActivationDecisionSheet(
+                    recipient: recipient,
+                    onChooseDirectInvite: { showDirectInvite(for: recipient) },
+                    onChooseProxyActivation: { showProxyActivation(for: recipient) }
+                )
             }
             .sheet(item: $proxyRecipient, onDismiss: { Task { await refreshData() } }) { recipient in
                 ProxyActivationSheet(recipient: recipient) { consentDocumentReference in
@@ -431,14 +439,9 @@ struct RecipientManagementView: View {
                                     Task { await moveRecipient(recipient, direction: 1) }
                                 }
                             }
-                            if recipient.receiverUserId == nil {
-                                Button(recipient.activationStatus == .invited ? "Resend Invite" : "Send Invite") {
-                                    invitingRecipient = recipient
-                                }
-                            }
-                            if !recipient.isActiveForTasks {
-                                Button("Proxy Activate") {
-                                    proxyRecipient = recipient
+                            if canChooseActivationPath(for: recipient) {
+                                Button("Activation Options") {
+                                    activationDecisionRecipient = recipient
                                 }
                             }
                             Button("Remove", role: .destructive) {
@@ -462,31 +465,20 @@ struct RecipientManagementView: View {
                     .padding(.top, 2)
             }
 
-            if recipient.receiverUserId == nil || !recipient.isActiveForTasks {
-                HStack(spacing: 10) {
-                    if recipient.receiverUserId == nil {
-                        Button(recipient.activationStatus == .invited ? "Resend Invite" : "Send Invite") {
-                            invitingRecipient = recipient
-                        }
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                        .tint(blue)
-                        .accessibilityIdentifier("recipient-invite-direct-\(recipient.id)")
+            if canChooseActivationPath(for: recipient) {
+                Button {
+                    activationDecisionRecipient = recipient
+                } label: {
+                    HStack(spacing: 8) {
+                        Image(systemName: "arrow.triangle.branch")
+                        Text("Choose activation path")
                     }
-
-                    if !recipient.isActiveForTasks {
-                        Button("Proxy Activate") {
-                            proxyRecipient = recipient
-                        }
-                        .font(.system(size: 12, weight: .bold, design: .rounded))
-                        .buttonStyle(.bordered)
-                        .controlSize(.small)
-                        .tint(teal)
-                        .accessibilityIdentifier("recipient-proxy-direct-\(recipient.id)")
-                    }
+                    .font(.system(size: 12, weight: .bold, design: .rounded))
                 }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                .buttonStyle(.bordered)
+                .controlSize(.small)
+                .tint(teal)
+                .accessibilityIdentifier("recipient-activation-path-\(recipient.id)")
                 .padding(.top, 6)
             }
 
@@ -520,6 +512,10 @@ struct RecipientManagementView: View {
         .background(Color.white, in: RoundedRectangle(cornerRadius: 20, style: .continuous))
         .shadow(color: .black.opacity(0.04), radius: 6, x: 0, y: 2)
         .accessibilityIdentifier("recipient-card-\(recipient.id)")
+    }
+
+    private func canChooseActivationPath(for recipient: CareRecipient) -> Bool {
+        recipient.activationStatus != .proxyActive && (recipient.receiverUserId == nil || !recipient.isActiveForTasks)
     }
 
     private func premiumStatusIcon(for recipient: CareRecipient) -> some View {
@@ -730,6 +726,29 @@ struct RecipientManagementView: View {
 
     private func sendInvite(for recipient: CareRecipient, email: String) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            guard var circle = appState.activeCircle else { return }
+            let currentRecipients = circle.recipients ?? []
+            circle.recipients = currentRecipients.map { current in
+                guard current.id == recipient.id else { return current }
+                return copyRecipient(current, activationStatus: .invited)
+            }
+            let invite = GroupInvitation(
+                id: "ui-recipient-invite-\(recipient.id)",
+                email: email,
+                name: recipient.name,
+                role: .recipient,
+                status: .pending,
+                expiresAt: Date().addingTimeInterval(14 * 24 * 60 * 60),
+                circle: circle,
+                recipient: recipient,
+                invitedBy: appState.currentUser.map { InvitationSender(id: $0.id, name: $0.name, email: $0.email) }
+            )
+            appState.uiTestInvitations.append(invite)
+            pendingInvites.append(invite)
+            appState.attachCircle(circle)
+            return
+        }
         _ = try await APIClient.shared.inviteMember(
             circleId: circleId,
             name: recipient.name,
@@ -743,6 +762,18 @@ struct RecipientManagementView: View {
 
     private func proxyActivate(_ recipient: CareRecipient, consentDocumentReference: String?) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            var circle = appState.activeCircle
+            let currentRecipients = circle?.recipients ?? []
+            circle?.recipients = currentRecipients.map { current in
+                guard current.id == recipient.id else { return current }
+                return copyRecipient(current, activationStatus: .proxyActive)
+            }
+            if let circle {
+                appState.attachCircle(circle)
+            }
+            return
+        }
         _ = try await APIClient.shared.proxyActivateRecipient(
             circleId: circleId,
             recipientId: recipient.id,
@@ -750,6 +781,20 @@ struct RecipientManagementView: View {
         )
         try await appState.activateCircle(id: circleId)
         await loadPendingInvites()
+    }
+
+    private func showDirectInvite(for recipient: CareRecipient) {
+        activationDecisionRecipient = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            invitingRecipient = recipient
+        }
+    }
+
+    private func showProxyActivation(for recipient: CareRecipient) {
+        activationDecisionRecipient = nil
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+            proxyRecipient = recipient
+        }
     }
 
     private func setPrimary(_ recipient: CareRecipient) async {
@@ -908,6 +953,7 @@ struct RecipientManagementView: View {
         name: String? = nil,
         relationship: String?? = nil,
         notes: String?? = nil,
+        activationStatus: CareReceiverActivationStatus? = nil,
         isPrimary: Bool? = nil,
         sortOrder: Int? = nil,
         preservePrimary: Bool = false
@@ -919,7 +965,7 @@ struct RecipientManagementView: View {
             notes: notes ?? recipient.notes,
             isPrimary: preservePrimary ? recipient.isPrimary : (isPrimary ?? recipient.isPrimary),
             sortOrder: sortOrder ?? recipient.sortOrder,
-            activationStatus: recipient.activationStatus,
+            activationStatus: activationStatus ?? recipient.activationStatus,
             receiverUserId: recipient.receiverUserId,
             eligibleAssigneeIds: recipient.eligibleAssigneeIds,
             premium: recipient.premium
@@ -1021,6 +1067,84 @@ private struct RecipientEditorSheet: View {
             self.error = error.localizedDescription
             loading = false
         }
+    }
+}
+
+private struct ReceiverActivationDecisionSheet: View {
+    @Environment(\.dismiss) private var dismiss
+
+    let recipient: CareRecipient
+    let onChooseDirectInvite: () -> Void
+    let onChooseProxyActivation: () -> Void
+
+    var body: some View {
+        NavigationStack {
+            List {
+                Section {
+                    activationChoice(
+                        title: recipient.activationStatus == .invited ? "Continue direct invite" : "Invite \(recipient.name) directly",
+                        subtitle: "Best when \(recipient.name) can create or use their own account. Tasks unlock only after they accept.",
+                        icon: "envelope.fill",
+                        tint: Color(red: 0.13, green: 0.56, blue: 0.87),
+                        identifier: "recipient-activation-choice-invite-\(recipient.id)",
+                        action: onChooseDirectInvite
+                    )
+
+                    activationChoice(
+                        title: "Record proxy authorization",
+                        subtitle: "Use only when an authorized person has consent to coordinate care for \(recipient.name).",
+                        icon: "checkmark.seal.fill",
+                        tint: Color(red: 0.16, green: 0.80, blue: 0.72),
+                        identifier: "recipient-activation-choice-proxy-\(recipient.id)",
+                        action: onChooseProxyActivation
+                    )
+                } header: {
+                    Text("Choose activation path")
+                } footer: {
+                    Text("The path determines who can unlock tasks. Direct invite links the receiver to their own account; proxy activation records organizer attestation.")
+                }
+            }
+            .navigationTitle("Activate \(recipient.name)")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("Cancel") { dismiss() }
+                }
+            }
+        }
+        .accessibilityIdentifier("recipient-activation-decision-screen")
+    }
+
+    private func activationChoice(
+        title: String,
+        subtitle: String,
+        icon: String,
+        tint: Color,
+        identifier: String,
+        action: @escaping () -> Void
+    ) -> some View {
+        Button {
+            dismiss()
+            action()
+        } label: {
+            HStack(spacing: 14) {
+                Image(systemName: icon)
+                    .font(.system(size: 18, weight: .bold))
+                    .foregroundStyle(tint)
+                    .frame(width: 38, height: 38)
+                    .background(Circle().fill(tint.opacity(0.12)))
+
+                VStack(alignment: .leading, spacing: 4) {
+                    Text(title)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    Text(subtitle)
+                        .font(.system(size: 12, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                }
+            }
+            .padding(.vertical, 8)
+        }
+        .accessibilityIdentifier(identifier)
     }
 }
 

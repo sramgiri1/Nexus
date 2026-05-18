@@ -1974,6 +1974,89 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("POST /circles/:id/recipients/:recipientId/proxy-activate rejects a directly joined receiver", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", email: "admin@test.com", name: "Admin" },
+        { id: "u2", email: "mom@test.com", name: "Mom" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: "Mother",
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "ACTIVE",
+        activatedAt: new Date(),
+        receiverUserId: "u2",
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u2", circleId: "c1", role: "RECIPIENT" },
+      ],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients/cr1/proxy-activate",
+      headers: HDR,
+      payload: { userId: "u1", consentDocumentReference: "family-consent-form" },
+    });
+
+    assert.equal(res.statusCode, 409);
+    assert.equal(res.json().error, "Care receiver already joined directly");
+    assert.equal(app.db._s.recipients[0].activationStatus, "ACTIVE");
+    assert.equal(app.db._s.recipients[0].proxyAuthorizedById, null);
+    await app.close();
+  });
+
+  test("POST /circles/:id/members/invite rejects direct invite for a proxy-activated receiver", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: "Mother",
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "PROXY_ACTIVE",
+        activatedAt: new Date(),
+        receiverUserId: null,
+        consentAttestedAt: new Date(),
+        consentAttestedById: "u1",
+        proxyAuthorizedById: "u1",
+        consentDocumentReference: "family-consent-form",
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/members/invite",
+      headers: HDR,
+      payload: { userId: "u1", name: "Mom", email: "mom@test.com", role: "RECIPIENT", recipientId: "cr1" },
+    });
+
+    assert.equal(res.statusCode, 409);
+    assert.equal(res.json().error, "Care receiver is already proxy-activated");
+    assert.equal(app.db._s.invitations.length, 0);
+    await app.close();
+  });
+
   test("DELETE /circles/:id removes an admin-owned circle and scoped records", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],

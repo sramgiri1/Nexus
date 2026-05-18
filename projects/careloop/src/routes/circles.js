@@ -627,6 +627,12 @@ export default async function circles(app) {
       where: { id: req.params.recipientId, circleId: req.params.id },
     });
     if (!existing) return reply.code(404).send({ error: "Recipient not found" });
+    if (existing.activationStatus === "ACTIVE" && existing.receiverUserId) {
+      return reply.code(409).send({ error: "Care receiver already joined directly" });
+    }
+    if (existing.activationStatus === "PROXY_ACTIVE") {
+      return reply.code(409).send({ error: "Care receiver is already proxy-activated" });
+    }
 
     const recipient = await db.$transaction(async (tx) => {
       const updated = await tx.careRecipient.update({
@@ -1060,6 +1066,9 @@ export default async function circles(app) {
       }
       if (invitedRecipient.receiverUserId) {
         return reply.code(409).send({ error: "Care receiver already has an account" });
+      }
+      if (invitedRecipient.activationStatus === "PROXY_ACTIVE") {
+        return reply.code(409).send({ error: "Care receiver is already proxy-activated" });
       }
     }
 
