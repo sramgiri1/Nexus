@@ -1157,9 +1157,11 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** make receiver lifecycle, access assignment, proxy activation, and paid receiver gating production-ready.
 
+**Implementation status:** in progress on branch `codex/careloop-premium-phases`. C1 receiver lifecycle polish is complete: organizers can add a gated second receiver, edit receiver profile details, remove unused receivers, and the backend preserves safety rules for primary receiver summary updates, reorder, last-receiver protection, active-task removal blocking, and primary promotion after deletion.
+
 **Subphases**
 
-1. Add/edit/reorder/remove receiver polish.
+1. Add/edit/reorder/remove receiver polish. **Complete.**
 2. Direct invite vs proxy activation decision path.
 3. Explicit authorization attestation for proxy activation.
 4. Block task creation until direct acceptance or proxy activation.

@@ -2749,6 +2749,40 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("PATCH /circles/:id/recipients updates receiver details and primary circle summary", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      recipients: [
+        { id: "r1", circleId: "c1", name: "John Doe", relationship: "Dad", notes: null, isPrimary: true, sortOrder: 0 },
+        { id: "r2", circleId: "c1", name: "Jane Doe", relationship: "Mom", notes: "Original", isPrimary: false, sortOrder: 1 },
+      ],
+    }));
+
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/circles/c1/recipients/r2",
+      headers: HDR,
+      payload: {
+        userId: "u1",
+        name: " Jane Ramgiri ",
+        relationship: " Mother ",
+        notes: " Updated notes ",
+        isPrimary: true,
+      },
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().name, "Jane Ramgiri");
+    assert.equal(res.json().relationship, "Mother");
+    assert.equal(res.json().notes, "Updated notes");
+    assert.equal(res.json().isPrimary, true);
+    assert.equal(app.db._s.recipients.find((recipient) => recipient.id === "r1").isPrimary, false);
+    assert.equal(app.db._s.circles[0].recipientName, "Jane Ramgiri");
+    await app.close();
+  });
+
   test("POST /circles/:id/recipients/:recipientId/premium-requests lets a scoped caregiver ask once", async () => {
     const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver@test.com", name: "Caregiver" });
     const app = await buildApp(buildDb({
@@ -2875,6 +2909,76 @@ describe("circle membership management", () => {
 
     assert.equal(res.statusCode, 400);
     assert.equal(res.json().error, "Every circle must keep at least one care recipient.");
+    await app.close();
+  });
+
+  test("DELETE /circles/:id/recipients blocks removal while active tasks exist", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      recipients: [
+        { id: "r1", circleId: "c1", name: "John Doe", relationship: "Dad", notes: null, isPrimary: true, sortOrder: 0 },
+        { id: "r2", circleId: "c1", name: "Jane Doe", relationship: "Mom", notes: null, isPrimary: false, sortOrder: 1 },
+      ],
+      tasks: [{
+        id: "t1",
+        circleId: "c1",
+        recipientId: "r2",
+        title: "Open task",
+        status: "PENDING",
+        priority: "NORMAL",
+        creatorId: "u1",
+        assigneeId: "u1",
+        dueAt: null,
+        completedAt: null,
+        completedById: null,
+        archivedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        recurrenceFrequency: "NONE",
+        recurrenceInterval: null,
+        recurrenceWeekdays: [],
+        recurrenceEndsAt: null,
+        seriesId: null,
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "DELETE",
+      url: "/circles/c1/recipients/r2",
+      headers: HDR,
+      payload: { userId: "u1" },
+    });
+
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "Move or archive this recipient's tasks before removing them.");
+    assert.equal(app.db._s.recipients.length, 2);
+    await app.close();
+  });
+
+  test("DELETE /circles/:id/recipients removes an unused receiver and promotes a replacement primary", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      recipients: [
+        { id: "r1", circleId: "c1", name: "John Doe", relationship: "Dad", notes: null, isPrimary: true, sortOrder: 0 },
+        { id: "r2", circleId: "c1", name: "Jane Doe", relationship: "Mom", notes: null, isPrimary: false, sortOrder: 1 },
+      ],
+    }));
+
+    const res = await app.inject({
+      method: "DELETE",
+      url: "/circles/c1/recipients/r1",
+      headers: HDR,
+      payload: { userId: "u1" },
+    });
+
+    assert.equal(res.statusCode, 204);
+    assert.deepEqual(app.db._s.recipients.map((recipient) => recipient.id), ["r2"]);
+    assert.equal(app.db._s.recipients[0].isPrimary, true);
+    assert.equal(app.db._s.circles[0].recipientName, "Jane Doe");
     await app.close();
   });
 });

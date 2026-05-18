@@ -581,6 +581,55 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCanAddEditAndRemoveCareReceiverLocally() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.buttons["add-care-receiver-button"].waitForExistence(timeout: 5))
+        app.buttons["add-care-receiver-button"].tap()
+        XCTAssertTrue(app.staticTexts["Premium is required to add another care receiver"].waitForExistence(timeout: 3))
+        app.buttons["Upgrade and add receiver"].tap()
+
+        typeText(into: app.textFields["recipient-editor-name-field"], text: "Aunt Priya")
+        typeText(into: app.textFields["recipient-editor-relationship-field"], text: "Aunt")
+        typeText(into: app.textFields["recipient-editor-notes-field"], text: "Needs weekend check-ins")
+        XCTAssertTrue(app.buttons["recipient-editor-add-button"].waitForExistence(timeout: 3))
+        app.buttons["recipient-editor-add-button"].tap()
+
+        let managementScroll = waitForAnyElement(in: app, identifier: "receiver-management-screen", timeout: 8)
+        for _ in 0..<3 where !app.staticTexts["Aunt Priya"].exists {
+            managementScroll.swipeUp()
+        }
+        XCTAssertTrue(app.staticTexts["Aunt Priya"].waitForExistence(timeout: 3))
+
+        let recipientActions = app.buttons
+            .matching(NSPredicate(format: "identifier == %@ AND label == %@", "recipient-card-ui-recipient-3", "More"))
+            .firstMatch
+        XCTAssertTrue(recipientActions.waitForExistence(timeout: 3))
+        recipientActions.tap()
+        XCTAssertTrue(app.buttons["Edit Details"].waitForExistence(timeout: 3))
+        app.buttons["Edit Details"].tap()
+
+        let nameField = app.textFields["recipient-editor-name-field"]
+        XCTAssertTrue(nameField.waitForExistence(timeout: 3))
+        nameField.tap()
+        nameField.typeText(" Updated")
+        app.buttons["recipient-editor-save-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["Aunt Priya Updated"].waitForExistence(timeout: 5))
+        XCTAssertTrue(recipientActions.waitForExistence(timeout: 3))
+        recipientActions.tap()
+        XCTAssertTrue(app.buttons["Remove"].waitForExistence(timeout: 3))
+        app.buttons["Remove"].tap()
+        waitForDisappearance(of: app.staticTexts["Aunt Priya Updated"], timeout: 5)
+    }
+
+    @MainActor
     func test_organizerCanOpenReceiverPremiumPaywall() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

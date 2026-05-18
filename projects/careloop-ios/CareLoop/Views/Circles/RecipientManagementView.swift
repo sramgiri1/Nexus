@@ -656,6 +656,26 @@ struct RecipientManagementView: View {
 
     private func createRecipient(name: String, relationship: String?, notes: String?, inviteEmail: String?) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            var circle = appState.activeCircle
+            let existingRecipients = circle?.recipients ?? []
+            let created = CareRecipient(
+                id: "ui-recipient-\(existingRecipients.count + 1)",
+                name: name,
+                relationship: relationship,
+                notes: notes,
+                isPrimary: existingRecipients.isEmpty,
+                sortOrder: existingRecipients.count,
+                activationStatus: inviteEmail?.isEmpty == false ? .invited : .draft,
+                premium: .free
+            )
+            circle?.recipients = existingRecipients + [created]
+            if let circle {
+                appState.attachCircle(circle)
+            }
+            addReceiverUsesPremiumIntent = false
+            return
+        }
         let created = try await APIClient.shared.createRecipient(
             circleId: circleId,
             name: name,
@@ -679,6 +699,24 @@ struct RecipientManagementView: View {
 
     private func updateRecipient(_ recipient: CareRecipient, name: String, relationship: String?, notes: String?) async throws {
         guard let circleId = appState.activeCircle?.id else { return }
+        if UITestScenario.current != nil {
+            var circle = appState.activeCircle
+            let currentRecipients = circle?.recipients ?? []
+            circle?.recipients = currentRecipients.map { current in
+                guard current.id == recipient.id else { return current }
+                return copyRecipient(
+                    current,
+                    name: name,
+                    relationship: .some(relationship),
+                    notes: .some(notes),
+                    isPrimary: current.isPrimary
+                )
+            }
+            if let circle {
+                appState.attachCircle(circle)
+            }
+            return
+        }
         _ = try await APIClient.shared.updateRecipient(
             circleId: circleId,
             recipientId: recipient.id,
@@ -721,6 +759,21 @@ struct RecipientManagementView: View {
         defer { loadingRecipientId = nil }
 
         do {
+            if UITestScenario.current != nil {
+                var circle = appState.activeCircle
+                let currentRecipients = circle?.recipients ?? []
+                circle?.recipients = currentRecipients.map { current in
+                    copyRecipient(
+                        current,
+                        isPrimary: current.id == recipient.id,
+                        sortOrder: current.sortOrder
+                    )
+                }
+                if let circle {
+                    appState.attachCircle(circle)
+                }
+                return
+            }
             _ = try await APIClient.shared.updateRecipient(
                 circleId: circleId,
                 recipientId: recipient.id,
@@ -751,6 +804,21 @@ struct RecipientManagementView: View {
         reorderedIds.swapAt(currentIndex, nextIndex)
 
         do {
+            if UITestScenario.current != nil {
+                var circle = appState.activeCircle
+                circle?.recipients = reorderedIds.enumerated().compactMap { index, recipientId in
+                    guard let current = recipients.first(where: { $0.id == recipientId }) else { return nil }
+                    return copyRecipient(
+                        current,
+                        sortOrder: index,
+                        preservePrimary: true
+                    )
+                }
+                if let circle {
+                    appState.attachCircle(circle)
+                }
+                return
+            }
             _ = try await APIClient.shared.reorderRecipients(
                 circleId: circleId,
                 recipientIds: reorderedIds,
@@ -810,12 +878,52 @@ struct RecipientManagementView: View {
         defer { loadingRecipientId = nil }
 
         do {
+            if UITestScenario.current != nil {
+                var circle = appState.activeCircle
+                circle?.recipients?.removeAll { $0.id == recipient.id }
+                if let remaining = circle?.recipients, !remaining.contains(where: \.isPrimary), let first = remaining.first {
+                    circle?.recipients = remaining.map { current in
+                        copyRecipient(
+                            current,
+                            isPrimary: current.id == first.id,
+                            sortOrder: current.sortOrder
+                        )
+                    }
+                }
+                if let circle {
+                    appState.attachCircle(circle)
+                }
+                return
+            }
             try await APIClient.shared.deleteRecipient(circleId: circleId, recipientId: recipient.id)
             try await appState.activateCircle(id: circleId)
             await loadPendingInvites()
         } catch {
             self.error = error.localizedDescription
         }
+    }
+
+    private func copyRecipient(
+        _ recipient: CareRecipient,
+        name: String? = nil,
+        relationship: String?? = nil,
+        notes: String?? = nil,
+        isPrimary: Bool? = nil,
+        sortOrder: Int? = nil,
+        preservePrimary: Bool = false
+    ) -> CareRecipient {
+        CareRecipient(
+            id: recipient.id,
+            name: name ?? recipient.name,
+            relationship: relationship ?? recipient.relationship,
+            notes: notes ?? recipient.notes,
+            isPrimary: preservePrimary ? recipient.isPrimary : (isPrimary ?? recipient.isPrimary),
+            sortOrder: sortOrder ?? recipient.sortOrder,
+            activationStatus: recipient.activationStatus,
+            receiverUserId: recipient.receiverUserId,
+            eligibleAssigneeIds: recipient.eligibleAssigneeIds,
+            premium: recipient.premium
+        )
     }
 }
 
@@ -847,9 +955,12 @@ private struct RecipientEditorSheet: View {
             Form {
                 Section("Profile") {
                     TextField("Name", text: $name)
+                        .accessibilityIdentifier("recipient-editor-name-field")
                     TextField("Relationship", text: $relationship)
+                        .accessibilityIdentifier("recipient-editor-relationship-field")
                     TextField("Notes", text: $notes, axis: .vertical)
                         .lineLimit(3...6)
+                        .accessibilityIdentifier("recipient-editor-notes-field")
                 }
 
                 if recipient == nil {
@@ -858,6 +969,7 @@ private struct RecipientEditorSheet: View {
                             .keyboardType(.emailAddress)
                             .textInputAutocapitalization(.never)
                             .autocorrectionDisabled()
+                            .accessibilityIdentifier("recipient-editor-invite-email-field")
                         Text("Leave email blank to create a draft receiver profile first.")
                             .font(.footnote)
                             .foregroundStyle(.secondary)
@@ -882,6 +994,7 @@ private struct RecipientEditorSheet: View {
                     Button(recipient == nil ? "Add" : "Save") {
                         Task { await save() }
                     }
+                    .accessibilityIdentifier(recipient == nil ? "recipient-editor-add-button" : "recipient-editor-save-button")
                     .disabled(name.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || loading)
                 }
             }
@@ -901,7 +1014,9 @@ private struct RecipientEditorSheet: View {
                 normalizedNotes.isEmpty ? nil : normalizedNotes,
                 normalizedInvite.isEmpty ? nil : normalizedInvite
             )
-            dismiss()
+            await MainActor.run {
+                dismiss()
+            }
         } catch {
             self.error = error.localizedDescription
             loading = false

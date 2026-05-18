@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, and Phase B invite flow implemented and validation complete on the active branch
-- Next action: Configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, and Phase C1 receiver lifecycle polish implemented and validation complete on the active branch
+- Next action: Start Phase C2 direct invite vs proxy activation decision-path polish; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -32,6 +32,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase A blocked-state subphase is complete: Task Detail now resolves the actual task care receiver before applying inactive-receiver policy, displays a blocked-action card for invited receivers, and hides edit/status/comment/snooze/delete actions until the receiver accepts or is proxy activated.
 - Phase A escalation-visibility subphase is complete: Task Detail now surfaces overdue/escalated state from the shared Task Detail policy and keeps actionable status/snooze controls visible for escalated tasks.
 - Post-premium Phase B is complete. Pending invitation visibility now includes explicit organizer resend/revoke controls for caregiver and care receiver invite management, direct care receiver acceptance routes into the receiver home, caregiver invite acceptance lands with no receiver access by default, organizers can grant/revoke caregiver receiver access from People & Access, declined/revoked/expired invite states disable response actions with clear copy, and invalid acceptance attempts return clear errors for wrong-user, expired-link, fourth-circle-limit, and already-member cases.
+- Phase C1 is complete: Care Receiver Management now has UI-testable organizer add/edit/remove receiver lifecycle coverage, and backend lifecycle rules cover receiver detail updates, reorder, active-task removal blocking, last-receiver protection, and primary receiver promotion after deletion.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -69,6 +70,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Backend `caregiver invitation acceptance grants no receiver access by default` and Xcode UI `CareLoopUITests/test_caregiverAcceptsInviteWithNoReceiverAccessByDefault` passed after Phase B caregiver no-access default join.
 - Backend `lets organizers grant and revoke caregiver receiver access` and Xcode UI `CareLoopUITests/test_organizerCanGrantAndRevokeCaregiverReceiverAccess` passed after Phase B organizer grant/revoke access coverage.
 - Backend invitation edge-case tests and Xcode UI `CareLoopUITests/test_inviteEdgeStatesDisableResponseActions` passed after Phase B invalid-invite coverage.
+- Backend receiver lifecycle tests passed after Phase C1 receiver-management coverage.
+- Focused Xcode UI tests `CareLoopUITests/test_addSecondReceiverShowsPremiumGateBeforeForm` and `CareLoopUITests/test_organizerCanAddEditAndRemoveCareReceiverLocally` passed after Phase C1 receiver lifecycle polish.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

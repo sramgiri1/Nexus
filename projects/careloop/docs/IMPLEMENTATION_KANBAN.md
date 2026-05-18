@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-No active implementation card. Next implementation should start with `C1`.
+C2 is next: make the direct invite vs proxy activation decision path explicit.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| C1 | Polish add/edit/reorder/remove receiver lifecycle. | Backend receiver routes; iOS Care Receiver Management. | Backend lifecycle tests; iOS UI add/edit/reorder/remove tests. | Update demo receivers if management flows affect showcase. | Planned |
+| C2 | Make direct invite vs proxy activation decision path explicit. | Backend receiver activation; iOS receiver management activation sheets. | Backend activation decision tests; iOS UI direct-vs-proxy fixture. | Demo can show direct and proxy activation examples. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| C2 | Make direct invite vs proxy activation decision path explicit. | Backend receiver activation; iOS receiver management activation sheets. | Backend activation decision tests; iOS UI direct-vs-proxy fixture. | Demo can show direct and proxy activation examples. | Planned |
 | C3 | Capture explicit authorization attestation for proxy activation. | Backend consent fields/events; iOS proxy attestation form. | Backend consent persistence/audit tests; iOS UI attestation required-state test. | Include proxy-attested receiver in demo if useful. | Planned |
 | C4 | Block task creation until receiver accepts or is proxy activated. | Backend task create policy; iOS New Task and Task Detail blocked states. | Backend task-create rejection tests; iOS UI blocked create test. | Demo should include an invited receiver with task creation blocked. | Planned |
 | C5 | Handle receiver removal/delete blocked states safely. | Backend delete rules; iOS destructive confirmations and blocked-state copy. | Backend delete/block tests; iOS UI delete confirmation and blocked delete tests. | Optional. | Planned |
@@ -69,6 +68,7 @@ No active implementation card. Next implementation should start with `C1`.
 | B3 | Caregiver invite acceptance with no receiver access by default. | Backend `caregiver invitation acceptance grants no receiver access by default`; Xcode UI `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`. |
 | B4 | Organizer grants and revokes receiver access after caregiver acceptance. | Backend `lets organizers grant and revoke caregiver receiver access`; Xcode UI `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`. |
 | B5 | Invite edge cases show clear errors and block invalid joins. | Backend wrong-user, expired-link, fourth-circle-limit, and already-member acceptance tests; Xcode UI `test_inviteEdgeStatesDisableResponseActions`. |
+| C1 | Add/edit/reorder/remove receiver lifecycle polish. | Backend receiver lifecycle tests for detail update, reorder, active-task delete blocking, last-receiver protection, and primary promotion; Xcode UI `test_organizerCanAddEditAndRemoveCareReceiverLocally` plus premium-gate coverage. |
 
 ## Blocked / External Setup
 
