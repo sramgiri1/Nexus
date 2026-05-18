@@ -1203,13 +1203,13 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Subphases**
 
-1. Reminder preference UX and backend persistence.
+1. Reminder preference UX and backend persistence. **Complete.**
 2. Simulator deep-link coverage for pending, wrong-circle, and completed tasks.
 3. Snooze mutation and rescheduled reminder visibility.
 4. Escalation timeline and notification fanout verification.
 5. Physical-device APNs/TestFlight validation.
 
-**Tests:** backend reminder/escalation tests, simulator UI deep-link tests, and physical-device checklist for APNs delivery and notification taps.
+**Tests:** backend reminder/escalation tests, simulator UI deep-link tests, and physical-device checklist for APNs delivery and notification taps. F1 persists task assignment, escalation, and daily digest notification preferences through the existing user settings route, makes daily digest delivery respect `notifDigest`, and covers backend preference persistence/delivery gating plus Settings UI toggle automation.
 
 #### Phase G — Demo And Investor Showcase
 

@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-F1 is next: implement reminder preference UX and backend persistence.
+F2 is next: expand simulator deep-link coverage for pending, wrong-circle, and completed tasks.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| F1 | Reminder preference UX and backend persistence. | Backend user notification prefs; iOS Settings. | Backend preference tests; iOS settings UI test. | Optional. | Planned |
+| F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | iOS AppState/deep link routing; task screens. | Xcode UI deep-link tests. | Demo deep links stay stable. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | iOS AppState/deep link routing; task screens. | Xcode UI deep-link tests. | Demo deep links stay stable. | Planned |
 | F3 | Snooze mutation and rescheduled reminder visibility. | Backend reminder routes; iOS Task Detail. | Backend snooze tests; Xcode UI snooze state test. | Demo can show snoozed reminder. | Planned |
 | F4 | Escalation timeline and notification fanout verification. | Backend reminder scheduler/events; iOS Task Detail/activity. | Backend fanout tests; iOS timeline fixture. | Demo can show escalation trail. | Planned |
 | F5 | Physical-device APNs/TestFlight validation. | Apple Developer setup; app entitlements; backend push provider. | Manual physical-device checklist. | No simulator demo dependency. | External Setup |
@@ -69,6 +68,7 @@ F1 is next: implement reminder preference UX and backend persistence.
 | E3 | Caregiver activity and load distribution. | Added organizer-only caregiver load distribution to the existing completion insights contract, displayed active/overdue/completed/total assigned work, and validated caregiver privacy with backend access regressions plus focused Xcode model/UI coverage. |
 | E4 | Escalation history and response timing. | Added organizer-only escalation history and average response timing to the existing completion insights contract, displayed recent escalated tasks in Insights, and validated caregiver privacy with backend access regressions plus focused Xcode model/UI coverage. |
 | E5 | Free/locked/premium insight states with clear upgrade value. | Clarified premium, selected locked-receiver, and all-recipient locked states in the existing Insights screen, added a premium report value preview, and kept upgrade CTAs receiver-scoped. |
+| F1 | Reminder preference UX and backend persistence. | Persisted task assignment, escalation, and daily digest notification toggles through the existing Settings and user-preferences route, made digest delivery respect `notifDigest`, and validated backend delivery gates plus Settings UI automation. |
 
 ## Blocked / External Setup
 

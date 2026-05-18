@@ -249,6 +249,10 @@ function digestHtml({ userName, digestDate, dueToday, overdue, completedToday })
 }
 
 export async function sendDailyDigest({ user, dueToday, overdue, completedToday, digestDate }) {
+  if (user.notifDigest === false) {
+    return { delivered: false, channel: "NONE", reason: "notifications_disabled_by_user" };
+  }
+
   if (!user.email) {
     return { delivered: false, channel: "NONE", reason: "user_has_no_email" };
   }

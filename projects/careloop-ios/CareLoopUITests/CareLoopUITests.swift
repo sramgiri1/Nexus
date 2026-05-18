@@ -1096,6 +1096,39 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_settingsNotificationPreferencesCanBeChanged() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        if !app.buttons["quick-action-settings"].exists {
+            dashboard.swipeUp()
+        }
+        XCTAssertTrue(app.buttons["quick-action-settings"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-settings"].tap()
+
+        XCTAssertTrue(app.navigationBars["Settings"].waitForExistence(timeout: 5))
+        if !app.staticTexts["Notifications"].exists {
+            app.swipeUp()
+        }
+        if !app.staticTexts["Notifications"].exists {
+            app.swipeUp()
+        }
+        let assignmentToggle = app.switches["Task assignments"]
+        let escalationToggle = app.switches["Escalation alerts"]
+        let digestToggle = app.switches["Daily digest"]
+        XCTAssertTrue(assignmentToggle.waitForExistence(timeout: 3))
+        XCTAssertTrue(escalationToggle.waitForExistence(timeout: 3))
+        XCTAssertTrue(digestToggle.waitForExistence(timeout: 3))
+
+        digestToggle.coordinate(withNormalizedOffset: CGVector(dx: 0.9, dy: 0.5)).tap()
+        let digestOff = NSPredicate(format: "value == %@", "0")
+        expectation(for: digestOff, evaluatedWith: digestToggle)
+        waitForExpectations(timeout: 3)
+    }
+
+    @MainActor
     func test_organizerPendingTaskDeepLinkOpensTaskBoard() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "organizer-home",

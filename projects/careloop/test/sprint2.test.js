@@ -135,6 +135,9 @@ function buildDb(seed = {}) {
           pushToken: null,
           timezone: null,
           phone: null,
+          notifAssignments: true,
+          notifEscalations: true,
+          notifDigest: true,
           ...d,
         };
         s.users.push(u);
@@ -1309,6 +1312,27 @@ describe("deliverTaskNotification", () => {
     const r = await deliverTaskNotification({ db, userId: "u1", task, type: "assignment" });
     assert.equal(r.channel, "PUSH");
     assert.equal(r.simulated, true);
+  });
+
+  test("respects task assignment and escalation notification preferences", async () => {
+    const db = buildDb({
+      users: [{
+        id: "u1",
+        name: "A",
+        email: "a@t.com",
+        pushToken: "tok123",
+        notifAssignments: false,
+        notifEscalations: false,
+      }],
+    });
+
+    const assignment = await deliverTaskNotification({ db, userId: "u1", task, type: "assignment" });
+    const escalation = await deliverTaskNotification({ db, userId: "u1", task, type: "escalation" });
+
+    assert.equal(assignment.delivered, false);
+    assert.equal(assignment.reason, "notifications_disabled_by_user");
+    assert.equal(escalation.delivered, false);
+    assert.equal(escalation.reason, "notifications_disabled_by_user");
   });
 });
 
@@ -3219,6 +3243,17 @@ describe("sendDailyDigest", () => {
     assert.equal(r.channel, "EMAIL");
   });
 
+  test("returns NONE when daily digest is disabled by the user", async () => {
+    const r = await sendDailyDigest({
+      user: { id: "u1", name: "Alice", email: "alice@test.com", notifDigest: false },
+      digestDate: "2026-04-26",
+      dueToday: [], overdue: [], completedToday: [],
+    });
+    assert.equal(r.delivered, false);
+    assert.equal(r.channel, "NONE");
+    assert.equal(r.reason, "notifications_disabled_by_user");
+  });
+
   test("digest is idempotent — same function call returns simulated regardless of content", async () => {
     const user = { id: "u1", name: "Alice", email: "alice@test.com" };
     const [r1, r2] = await Promise.all([
@@ -3301,6 +3336,66 @@ describe("PATCH /users/:id/push-token", () => {
       body: JSON.stringify({ pushToken: "tok" }),
     });
     assert.equal(res.statusCode, 401);
+  });
+});
+
+describe("PATCH /users/:id/notification-preferences", () => {
+  test("persists notification preferences for the authenticated user", async () => {
+    const db = buildDb({
+      users: [{
+        id: "u1",
+        name: "Alice",
+        email: "a@t.com",
+        notifAssignments: true,
+        notifEscalations: true,
+        notifDigest: true,
+      }],
+    });
+    const app = await buildApp(db);
+
+    const res = await app.inject({
+      method: "PATCH",
+      url: "/users/u1/notification-preferences",
+      headers: HDR,
+      body: JSON.stringify({
+        notifAssignments: false,
+        notifEscalations: false,
+        notifDigest: false,
+      }),
+    });
+
+    assert.equal(res.statusCode, 200);
+    assert.equal(res.json().notifAssignments, false);
+    assert.equal(res.json().notifEscalations, false);
+    assert.equal(res.json().notifDigest, false);
+    assert.equal(db._s.users.find((user) => user.id === "u1").notifDigest, false);
+    await app.close();
+  });
+
+  test("rejects empty preference updates and cross-user mutations", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", name: "Alice", email: "a@t.com" },
+        { id: "u2", name: "Bob", email: "b@t.com" },
+      ],
+    }));
+
+    const empty = await app.inject({
+      method: "PATCH",
+      url: "/users/u1/notification-preferences",
+      headers: HDR,
+      body: JSON.stringify({}),
+    });
+    assert.equal(empty.statusCode, 400);
+
+    const crossUser = await app.inject({
+      method: "PATCH",
+      url: "/users/u2/notification-preferences",
+      headers: HDR,
+      body: JSON.stringify({ notifDigest: false }),
+    });
+    assert.equal(crossUser.statusCode, 403);
+    await app.close();
   });
 });
 

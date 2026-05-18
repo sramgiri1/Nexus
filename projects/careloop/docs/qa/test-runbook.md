@@ -55,6 +55,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Task detail blocked actions | Focused iOS UI test for invited care receiver blocking edit/status/comment/snooze/delete actions |
 | Task detail escalation | Focused iOS UI test for escalated task copy plus visible status/snooze recovery actions |
 | Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders` |
+| Notification preferences | Backend `PATCH /users/:id/notification-preferences`, assignment/escalation delivery gates, daily digest opt-out test; `xcodebuild build-for-testing`; focused iOS UI `test_settingsNotificationPreferencesCanBeChanged` |
 | Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, proxy-attestation, and receiver-delete tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerChoosesReceiverActivationPath`, and `test_organizerSeesBlockedCareReceiverRemovalReason` |
 | New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
 | 50 dummy users / real-user simulation | `backend:scale` |

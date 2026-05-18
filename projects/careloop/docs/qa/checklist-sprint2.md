@@ -19,6 +19,7 @@ Coverage includes:
 - member/admin circle authorization
 - multi-user signup → invite → accept → self-join flow
 - reminder/digest delivery and escalation rules
+- notification preference persistence and assignment/escalation/digest opt-out delivery gates
 - recurring tasks and archive behavior
 - admin completion insights, receiver adherence summaries, missed-trend reporting, caregiver load distribution, and escalation response reporting
 ```

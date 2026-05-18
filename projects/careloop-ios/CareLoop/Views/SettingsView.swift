@@ -128,10 +128,13 @@ struct SettingsView: View {
                     Section("Notifications") {
                         Toggle("Task assignments", isOn: $notifAssignments)
                             .onChange(of: notifAssignments) { _ in guard prefsLoaded else { return }; saveNotifPrefs(userId: user.id) }
+                            .accessibilityIdentifier("settings-notif-assignments")
                         Toggle("Escalation alerts", isOn: $notifEscalations)
                             .onChange(of: notifEscalations) { _ in guard prefsLoaded else { return }; saveNotifPrefs(userId: user.id) }
+                            .accessibilityIdentifier("settings-notif-escalations")
                         Toggle("Daily digest", isOn: $notifDigest)
                             .onChange(of: notifDigest) { _ in guard prefsLoaded else { return }; saveNotifPrefs(userId: user.id) }
+                            .accessibilityIdentifier("settings-notif-digest")
                         if savingPrefs {
                             HStack {
                                 Spacer()
@@ -221,12 +224,20 @@ struct SettingsView: View {
             guard !Task.isCancelled else { return }
             savingPrefs = true
             do {
-                let updated = try await APIClient.shared.updateNotificationPreferences(
-                    userId: userId,
-                    notifAssignments: notifAssignments,
-                    notifEscalations: notifEscalations,
-                    notifDigest: notifDigest
-                )
+                let updated: CareUser
+                if UITestScenario.current != nil, var localUser = appState.currentUser {
+                    localUser.notifAssignments = notifAssignments
+                    localUser.notifEscalations = notifEscalations
+                    localUser.notifDigest = notifDigest
+                    updated = localUser
+                } else {
+                    updated = try await APIClient.shared.updateNotificationPreferences(
+                        userId: userId,
+                        notifAssignments: notifAssignments,
+                        notifEscalations: notifEscalations,
+                        notifDigest: notifDigest
+                    )
+                }
                 if appState.currentUser != nil { appState.currentUser = updated }
             } catch {
                 self.error = error.localizedDescription

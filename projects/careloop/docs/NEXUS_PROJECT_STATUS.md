@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, and Phase E1-E5 reports/insights implemented and validation complete on the active branch
-- Next action: Start Phase F1 reminder preference UX and backend persistence; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, and Phase F1 notification preferences implemented and validation complete on the active branch
+- Next action: Start Phase F2 simulator deep-link coverage; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -47,6 +47,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase E3 is complete: organizer-only caregiver load distribution now extends the same completion insights contract with completed, active assigned, overdue assigned, and total assigned counts while caregivers continue receiving no cross-caregiver attribution.
 - Phase E4 is complete: organizer-only escalation history and average response timing now extend the same completion insights contract from escalated reminders, while caregivers receive an empty escalation summary to avoid cross-caregiver attribution.
 - Phase E5 is complete: Insights now clearly distinguishes premium report access, selected locked care receivers, and locked all-recipient reports with receiver-scoped upgrade CTAs and a concise premium value preview.
+- Phase F1 is complete: Settings notification preferences persist task assignment, escalation, and daily digest toggles through the existing user route, and digest delivery now respects `notifDigest` before sending email.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -110,6 +111,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Backend caregiver-load aggregation/privacy regressions, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, `CareLoopUITests/test_insightsShowPremiumReportSections`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase E3 caregiver load reporting.
 - Backend escalation report/privacy regressions, `xcodebuild build-for-testing`, `CareLoopTests/CompletionInsightModelTests`, `CareLoopUITests/test_insightsShowPremiumReportSections`, and `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase E4 escalation response reporting.
 - `xcodebuild build-for-testing` and focused Xcode UI `CareLoopUITests/test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase E5 free/locked/premium insight-state copy and navigation updates.
+- Backend notification preference route/delivery regressions, `xcodebuild build-for-testing`, and focused Xcode UI `CareLoopUITests/test_settingsNotificationPreferencesCanBeChanged` passed after Phase F1 notification preference persistence.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
