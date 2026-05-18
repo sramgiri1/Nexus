@@ -1,0 +1,34 @@
+{
+  "fixtures": [
+    {
+      "name": "provider dry run",
+      "input": {
+        "dispatchId": "dispatch_dry_run_provider",
+        "requestType": "provider.request",
+        "providerId": "openai-preview",
+        "capabilityId": "provider-dispatch-preview",
+        "scopeLabel": "NEXUS OS",
+        "requestSummary": "Preview a governed provider request without execution.",
+        "safeSummary": {
+          "displayLabel": "Provider dry run",
+          "requestSummary": "Preview provider dispatch without execution."
+        }
+      }
+    },
+    {
+      "name": "tool dry run",
+      "input": {
+        "dispatchId": "dispatch_dry_run_tool",
+        "requestType": "tool.call",
+        "toolId": "git-status",
+        "capabilityId": "tool-dispatch-preview",
+        "scopeLabel": "NEXUS OS",
+        "requestSummary": "Preview a governed tool request without execution.",
+        "safeSummary": {
+          "displayLabel": "Tool dry run",
+          "requestSummary": "Preview tool dispatch without execution."
+        }
+      }
+    }
+  ]
+}

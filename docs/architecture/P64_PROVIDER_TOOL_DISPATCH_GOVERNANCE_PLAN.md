@@ -83,6 +83,13 @@ Build dry-run dispatch previews with cost impact, approval requirement, disabled
 reason, evidence location, and activity location. Dry runs must set execution to
 false.
 
+Status: complete. P64.4 added non-executing dry-run previews that combine the
+dispatch envelope, policy decision, readiness matrix, cost estimate, approval
+requirement, evidence location, activity location, blocker, and next action.
+Dry runs set `executed=false` and keep provider dispatch, tool execution,
+project mutation, DB writes, deploy, external network calls, and worker
+execution disabled.
+
 ### P64.5 Command Center Dispatch UX
 
 Expose readiness and dry-run state in existing Command Center governance pages.
