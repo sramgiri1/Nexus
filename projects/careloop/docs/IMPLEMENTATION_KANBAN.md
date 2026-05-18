@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-D1 is next: verify StoreKit product metadata and local purchase fixtures.
+D2 is next: harden restore purchases and entitlement refresh.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D1 | Verify StoreKit product metadata and local purchase fixtures. | iOS StoreKit config/paywall; backend entitlement metadata. | StoreKit local tests; iOS paywall metadata tests. | Demo paywall product labels must match. | Planned |
+| D2 | Harden restore purchases and entitlement refresh. | iOS paywall/account restore; backend entitlement refresh. | iOS restore UI tests; backend entitlement refresh tests. | Demo can show restore entry only. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D2 | Harden restore purchases and entitlement refresh. | iOS paywall/account restore; backend entitlement refresh. | iOS restore UI tests; backend entitlement refresh tests. | Demo can show restore entry only. | Planned |
 | D3 | Cover expired, revoked, billing retry, and refund states. | Backend entitlement states; iOS paywall/locks. | Backend entitlement tests; iOS UI state fixtures. | Demo already has expired/revoked concepts; refresh as needed. | Planned |
 | D4 | Enforce free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits. | Backend entitlement policy; iOS locks across receiver/task/insight/access surfaces. | Cross-surface backend tests; iOS UI lock tests. | Demo should show free vs premium contrast. | Planned |
 | D5 | Prepare server-side App Store transaction verification. | Backend billing adapter; environment config; docs. | Adapter unit tests with signed fixture responses; release checklist. | No local demo dependency. | Planned |
@@ -69,6 +68,7 @@ D1 is next: verify StoreKit product metadata and local purchase fixtures.
 | C3 | Explicit authorization attestation for proxy activation. | Backend attestation-required and audit-payload tests; Xcode UI `test_organizerChoosesReceiverActivationPath` verifies the proxy action stays disabled until attestation is checked. |
 | C4 | Block task creation until direct acceptance or proxy activation. | Backend inactive-receiver task-create rejection test; Xcode UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` verifies New Task explains the blocked state and keeps Add disabled. |
 | C5 | Receiver removal confirmation and blocked delete states. | Backend receiver-delete regression tests; Xcode UI `test_organizerCanAddEditAndRemoveCareReceiverLocally` confirms destructive removal and `test_organizerSeesBlockedCareReceiverRemovalReason` verifies task-preservation copy. |
+| D1 | StoreKit product metadata and local purchase fixtures. | Centralized iOS product metadata, paywall fallback prices aligned to `CareLoop.storekit`, backend unsupported App Store product rejection, backend entitlement metadata regression, and `xcodebuild build-for-testing` after StoreKit parity unit-test additions. |
 
 ## Blocked / External Setup
 

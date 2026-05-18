@@ -177,8 +177,9 @@ struct PaywallView: View {
     private func planCard(yearly: Bool) -> some View {
         let selected = isYearly == yearly
         let product = store.product(yearly: yearly)
-        let price = product?.displayPrice ?? (yearly ? "$39.99" : "$4.99")
-        let period = yearly ? "/ year" : "/ month"
+        let metadata = store.metadata(yearly: yearly)
+        let price = product?.displayPrice ?? metadata.fallbackDisplayPrice
+        let period = "/ \(metadata.periodUnit)"
 
         Button { isYearly = yearly } label: {
             VStack(spacing: 6) {
@@ -452,8 +453,9 @@ struct PaywallView: View {
 
     private var disclosureText: String {
         let product = store.product(yearly: isYearly)
-        let price = product?.displayPrice ?? (isYearly ? "$39.99" : "$4.99")
-        let period = isYearly ? "year" : "month"
+        let metadata = store.metadata(yearly: isYearly)
+        let price = product?.displayPrice ?? metadata.fallbackDisplayPrice
+        let period = metadata.periodUnit
 
         if let offer = store.introOffer(yearly: isYearly) {
             let n = offer.period.value

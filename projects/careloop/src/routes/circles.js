@@ -3,6 +3,7 @@ import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticated
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
 import {
+  isSupportedReceiverPremiumProductId,
   maxCaregiversForReceiver,
   receiverEntitlementCapabilities,
   receiverEntitlementSummary,
@@ -693,6 +694,9 @@ export default async function circles(app) {
     }
     if (normalizedSource === "APP_STORE" && (!appleOriginalTransactionId || !appleProductId)) {
       return reply.code(400).send({ error: "App Store entitlements require appleOriginalTransactionId and appleProductId" });
+    }
+    if (normalizedSource === "APP_STORE" && !isSupportedReceiverPremiumProductId(appleProductId)) {
+      return reply.code(400).send({ error: "Unsupported App Store premium product" });
     }
 
     const recipient = await db.careRecipient.findFirst({

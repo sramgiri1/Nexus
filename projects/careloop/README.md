@@ -80,6 +80,11 @@ The product IDs must stay aligned with `SubscriptionManager` and App Store Conne
 - `com.careloop.ios.premium.monthly`
 - `com.careloop.ios.premium.yearly`
 
+Local fallback prices are centralized in `SubscriptionManager` and must match `CareLoop.storekit`:
+
+- Monthly: `$4.99`
+- Yearly: `$49.99`
+
 External setup still required before production billing validation:
 
 - App Store Connect subscription group and product creation using the exact IDs above.

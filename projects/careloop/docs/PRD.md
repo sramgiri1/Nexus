@@ -1175,13 +1175,13 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Subphases**
 
-1. StoreKit product metadata and local purchase fixtures.
+1. StoreKit product metadata and local purchase fixtures. **Complete.**
 2. Restore purchases and entitlement refresh.
 3. Expired, revoked, billing retry, and refund states.
 4. Free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits.
 5. Server-side App Store transaction verification readiness.
 
-**Tests:** StoreKit local tests, backend entitlement tests, iOS paywall/restore/expired UI tests, and release-blocker checklist for App Store Connect setup.
+**Tests:** StoreKit local metadata/parity tests, backend entitlement tests, iOS paywall/restore/expired UI tests, and release-blocker checklist for App Store Connect setup. D1 added StoreKit fixture parity coverage and backend unsupported-product rejection; iOS build-for-testing passed, while focused simulator unit execution was blocked by local simulator launch denial.
 
 #### Phase E — Reports And Insights
 

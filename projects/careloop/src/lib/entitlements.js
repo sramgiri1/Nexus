@@ -9,6 +9,19 @@ export const RECEIVER_PREMIUM_LIMITS = Object.freeze({
   FREE_CAREGIVER_ACCESS: 1,
 });
 
+export const RECEIVER_PREMIUM_APP_STORE_PRODUCTS = Object.freeze({
+  MONTHLY: "com.careloop.ios.premium.monthly",
+  YEARLY: "com.careloop.ios.premium.yearly",
+});
+
+export const RECEIVER_PREMIUM_APP_STORE_PRODUCT_IDS = Object.freeze(
+  Object.values(RECEIVER_PREMIUM_APP_STORE_PRODUCTS),
+);
+
+export function isSupportedReceiverPremiumProductId(productId) {
+  return RECEIVER_PREMIUM_APP_STORE_PRODUCT_IDS.includes(productId);
+}
+
 export function isReceiverPremium(entitlement, now = new Date()) {
   if (!entitlement || entitlement.status !== RECEIVER_ENTITLEMENT_STATUS.ACTIVE) {
     return false;

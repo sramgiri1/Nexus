@@ -3894,6 +3894,20 @@ describe("receiver-scoped access control", () => {
       "App Store entitlements require appleOriginalTransactionId and appleProductId",
     );
 
+    const unsupportedProduct = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: {
+        userId: "u1",
+        source: "APP_STORE",
+        appleOriginalTransactionId: "otx-unsupported",
+        appleProductId: "com.careloop.ios.premium.family",
+      },
+    });
+    assert.equal(unsupportedProduct.statusCode, 400);
+    assert.equal(unsupportedProduct.json().error, "Unsupported App Store premium product");
+
     const invalidSource = await app.inject({
       method: "PUT",
       url: "/circles/c1/recipients/cr2/entitlement",

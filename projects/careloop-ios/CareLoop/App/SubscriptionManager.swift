@@ -10,6 +10,14 @@ final class SubscriptionManager: ObservableObject {
         let expirationDate: Date?
     }
 
+    struct ProductMetadata: Equatable {
+        let id: String
+        let displayName: String
+        let fallbackDisplayPrice: String
+        let periodUnit: String
+        let storeKitPeriod: String
+    }
+
     static let shared = SubscriptionManager()
 
     enum StartupBehavior {
@@ -19,6 +27,22 @@ final class SubscriptionManager: ObservableObject {
 
     static let monthlyID = "com.careloop.ios.premium.monthly"
     static let yearlyID  = "com.careloop.ios.premium.yearly"
+    static let monthlyMetadata = ProductMetadata(
+        id: monthlyID,
+        displayName: "CareLoop Premium Monthly",
+        fallbackDisplayPrice: "$4.99",
+        periodUnit: "month",
+        storeKitPeriod: "P1M"
+    )
+    static let yearlyMetadata = ProductMetadata(
+        id: yearlyID,
+        displayName: "CareLoop Premium Yearly",
+        fallbackDisplayPrice: "$49.99",
+        periodUnit: "year",
+        storeKitPeriod: "P1Y"
+    )
+    static let supportedProductMetadata = [monthlyMetadata, yearlyMetadata]
+    static let supportedProductIDs = supportedProductMetadata.map(\.id)
 
     @Published private(set) var products: [Product] = []
     @Published private(set) var isPremium = false
@@ -54,6 +78,7 @@ final class SubscriptionManager: ObservableObject {
     var renewalDate:    Date?    { activeTransaction?.expirationDate }
 
     func product(yearly: Bool) -> Product? { yearly ? yearlyProduct : monthlyProduct }
+    func metadata(yearly: Bool) -> ProductMetadata { yearly ? Self.yearlyMetadata : Self.monthlyMetadata }
 
     func introOffer(yearly: Bool) -> Product.SubscriptionOffer? {
         product(yearly: yearly)?.subscription?.introductoryOffer
@@ -126,7 +151,7 @@ final class SubscriptionManager: ObservableObject {
 
     private func loadProducts() async {
         do {
-            products = try await Product.products(for: [Self.monthlyID, Self.yearlyID])
+            products = try await Product.products(for: Self.supportedProductIDs)
                 .sorted { $0.price < $1.price }
         } catch {
             storeError = "Unable to load subscription options."
@@ -139,7 +164,7 @@ final class SubscriptionManager: ObservableObject {
 
         for await result in Transaction.currentEntitlements {
             guard let tx = try? verified(result) else { continue }
-            guard tx.productID == Self.monthlyID || tx.productID == Self.yearlyID else { continue }
+            guard Self.supportedProductIDs.contains(tx.productID) else { continue }
             guard tx.revocationDate == nil else { continue }
             if let exp = tx.expirationDate, exp <= Date() { continue }
             hasPremium = true

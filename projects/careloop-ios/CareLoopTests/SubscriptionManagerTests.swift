@@ -76,12 +76,84 @@ final class SubscriptionManagerProductIdTests: XCTestCase {
         XCTAssertTrue(SubscriptionManager.yearlyID.hasPrefix(prefix))
     }
 
+    func test_supportedProductIds_matchMetadataOrder() {
+        XCTAssertEqual(SubscriptionManager.supportedProductIDs, [
+            SubscriptionManager.monthlyID,
+            SubscriptionManager.yearlyID
+        ])
+    }
+
+    func test_productMetadata_hasLocalFallbackPrices() {
+        XCTAssertEqual(SubscriptionManager.monthlyMetadata.fallbackDisplayPrice, "$4.99")
+        XCTAssertEqual(SubscriptionManager.monthlyMetadata.periodUnit, "month")
+        XCTAssertEqual(SubscriptionManager.yearlyMetadata.fallbackDisplayPrice, "$49.99")
+        XCTAssertEqual(SubscriptionManager.yearlyMetadata.periodUnit, "year")
+    }
+
+    func test_storeKitConfiguration_matchesSubscriptionMetadata() throws {
+        let products = try loadLocalStoreKitProducts()
+        for metadata in SubscriptionManager.supportedProductMetadata {
+            let product = try XCTUnwrap(products[metadata.id], "Missing StoreKit product \(metadata.id)")
+            XCTAssertEqual(try XCTUnwrap(product.displayName), metadata.displayName)
+            XCTAssertEqual(product.displayPrice, metadata.fallbackDisplayPrice.droppingLeadingDollarSign())
+            XCTAssertEqual(product.recurringSubscriptionPeriod, metadata.storeKitPeriod)
+        }
+    }
+
     func test_monthlyId_suffixIsMonthly() {
         XCTAssertTrue(SubscriptionManager.monthlyID.hasSuffix(".monthly"))
     }
 
     func test_yearlyId_suffixIsYearly() {
         XCTAssertTrue(SubscriptionManager.yearlyID.hasSuffix(".yearly"))
+    }
+
+    private struct StoreKitFile: Decodable {
+        let subscriptionGroups: [SubscriptionGroup]
+    }
+
+    private struct SubscriptionGroup: Decodable {
+        let subscriptions: [StoreKitSubscription]
+    }
+
+    private struct StoreKitSubscription: Decodable {
+        let productID: String
+        let displayPrice: String
+        let recurringSubscriptionPeriod: String
+        let localizations: [StoreKitLocalization]
+
+        var displayName: String? {
+            localizations.first { $0.locale == "en_US" }?.displayName ?? localizations.first?.displayName
+        }
+    }
+
+    private struct StoreKitLocalization: Decodable {
+        let locale: String
+        let displayName: String
+    }
+
+    private func loadLocalStoreKitProducts() throws -> [String: StoreKitSubscription] {
+        let testFile = URL(fileURLWithPath: #filePath)
+        let projectRoot = testFile
+            .deletingLastPathComponent()
+            .deletingLastPathComponent()
+        let storeKitURL = projectRoot
+            .appendingPathComponent("CareLoop")
+            .appendingPathComponent("Configuration")
+            .appendingPathComponent("CareLoop.storekit")
+        let data = try Data(contentsOf: storeKitURL)
+        let file = try JSONDecoder().decode(StoreKitFile.self, from: data)
+        return Dictionary(
+            uniqueKeysWithValues: file.subscriptionGroups
+                .flatMap(\.subscriptions)
+                .map { ($0.productID, $0) }
+        )
+    }
+}
+
+private extension String {
+    func droppingLeadingDollarSign() -> String {
+        hasPrefix("$") ? String(dropFirst()) : self
     }
 }
 
