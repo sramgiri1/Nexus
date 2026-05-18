@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, and Phase C1-C4 receiver management polish implemented and validation complete on the active branch
-- Next action: Start Phase C5 receiver removal/delete blocked states; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, and Phase C receiver management polish implemented and validation complete on the active branch
+- Next action: Start Phase D1 StoreKit product metadata and local purchase fixture hardening; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -36,6 +36,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase C2 is complete: Care Receiver Management now presents one explicit activation decision path for direct receiver invite vs proxy authorization, backend routes prevent conflicting direct/proxy activation states, and proxy-active receivers no longer show activation actions.
 - Phase C3 is complete: proxy activation now requires explicit organizer authorization attestation in the API and iOS UI, persists attester/timestamp/reference audit fields, and records only non-PII consent-reference presence in activity payloads.
 - Phase C4 is complete: backend task creation remains blocked until receiver activation, and New Task now surfaces a clear inactive-receiver blocked state instead of hiding inactive receivers behind an empty picker.
+- Phase C5 is complete: Care Receiver Management now requires destructive confirmation before receiver removal and surfaces backend-aligned blocked-delete copy when active tasks require preservation.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -81,6 +82,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode UI test `CareLoopUITests/test_organizerChoosesReceiverActivationPath` passed after Phase C3 attestation-required UI coverage.
 - Backend inactive-receiver task-creation test passed after Phase C4.
 - Focused Xcode UI test `CareLoopUITests/test_newTaskBlocksInactiveCareReceiverUntilActivation` passed after Phase C4 New Task blocked-state coverage.
+- Backend receiver delete regression tests passed after Phase C5.
+- Focused Xcode UI tests `CareLoopUITests/test_organizerCanAddEditAndRemoveCareReceiverLocally` and `CareLoopUITests/test_organizerSeesBlockedCareReceiverRemovalReason` passed after Phase C5 receiver removal confirmation and blocked-state coverage.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
@@ -90,4 +93,4 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Physical-device/TestFlight validation for APNs delivery, notification tap, universal links, and OS permission prompts.
 - Real Google/Facebook/Apple auth credentials and redirect URI configuration.
 - StoreKit sandbox purchase/restore and App Store entitlement verification.
-- UI automation for circle/member/receiver destructive delete flows, full invite email delivery, advanced recurrence variants, and empty/error/offline states.
+- UI automation for circle/member destructive delete flows, full invite email delivery, advanced recurrence variants, and empty/error/offline states.

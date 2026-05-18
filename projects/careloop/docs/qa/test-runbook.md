@@ -55,11 +55,11 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Task detail blocked actions | Focused iOS UI test for invited care receiver blocking edit/status/comment/snooze/delete actions |
 | Task detail escalation | Focused iOS UI test for escalated task copy plus visible status/snooze recovery actions |
 | Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders` |
-| Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, and proxy-attestation tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_organizerChoosesReceiverActivationPath` |
+| Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, proxy-attestation, and receiver-delete tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerChoosesReceiverActivationPath`, and `test_organizerSeesBlockedCareReceiverRemovalReason` |
 | New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
 | 50 dummy users / real-user simulation | `backend:scale` |
 | One user across multiple circles in different roles | `backend:scale`, `ios:personas` |
-| Delete circle/member/receiver scenarios | `backend:circles`; UI delete coverage remains in `testability-matrix.md` backlog |
+| Delete circle/member/receiver scenarios | `backend:circles`; receiver removal confirmation and blocked-delete UI coverage; circle/member UI delete coverage remains in `testability-matrix.md` backlog |
 
 ## Notes
 
@@ -68,6 +68,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused task-edit validation can be run with Xcode UI test `test_organizerCanEditTaskTitleFromDetail`.
 - Focused task-delete validation can be run with Xcode UI test `test_organizerCanCancelAndConfirmTaskDeleteFromDetail`.
 - Focused task-block validation can be run with Xcode UI test `test_taskDetailBlocksActionsForInvitedReceiver`.
+- Focused receiver-delete validation can be run with Xcode UI tests `test_organizerCanAddEditAndRemoveCareReceiverLocally` and `test_organizerSeesBlockedCareReceiverRemovalReason`.
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
 - Focused invite/access validation can be run with Xcode UI tests `test_organizerCanResendAndRevokePendingCaregiverInvite`, `test_careReceiverCanAcceptPendingInviteFromDirectory`, `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`, `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`, and `test_inviteEdgeStatesDisableResponseActions`.
 - Focused receiver lifecycle, activation, and proxy-attestation validation can be run with backend receiver tests in `test/sprint2.test.js` and Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `test_organizerChoosesReceiverActivationPath`.

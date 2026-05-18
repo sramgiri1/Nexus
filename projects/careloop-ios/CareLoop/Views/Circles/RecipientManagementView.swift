@@ -11,6 +11,7 @@ struct RecipientManagementView: View {
     @State private var invitingRecipient: CareRecipient?
     @State private var proxyRecipient: CareRecipient?
     @State private var activationDecisionRecipient: CareRecipient?
+    @State private var removalRecipient: CareRecipient?
     @State private var paywallRecipient: CareRecipient?
     @State private var managementRecipient: CareRecipient?
     @State private var loadingRecipientId: String?
@@ -78,6 +79,7 @@ struct RecipientManagementView: View {
                             .font(.footnote)
                             .foregroundStyle(.red)
                             .padding(.horizontal, 20)
+                            .accessibilityIdentifier("recipient-management-error")
                     }
 
                     if !upgradeRequests.isEmpty {
@@ -177,6 +179,25 @@ struct RecipientManagementView: View {
             }
             .sheet(item: $managementRecipient) { recipient in
                 ReceiverPremiumManagementView(recipient: recipient)
+            }
+            .confirmationDialog(
+                "Remove \(removalRecipient?.name ?? "care receiver")?",
+                isPresented: Binding(
+                    get: { removalRecipient != nil },
+                    set: { if !$0 { removalRecipient = nil } }
+                ),
+                titleVisibility: .visible
+            ) {
+                Button("Remove Care Receiver", role: .destructive) {
+                    guard let recipient = removalRecipient else { return }
+                    removalRecipient = nil
+                    Task { await removeRecipient(recipient) }
+                }
+                Button("Cancel", role: .cancel) {
+                    removalRecipient = nil
+                }
+            } message: {
+                Text("Only unused care receiver profiles can be removed. Move or archive their tasks first, and every circle must keep at least one receiver.")
             }
             .task { await refreshData() }
             .refreshable {
@@ -449,7 +470,7 @@ struct RecipientManagementView: View {
                                 }
                             }
                             Button("Remove", role: .destructive) {
-                                Task { await removeRecipient(recipient) }
+                                removalRecipient = recipient
                             }
                         } label: {
                             Image(systemName: "ellipsis.circle")
@@ -937,6 +958,20 @@ struct RecipientManagementView: View {
         do {
             if UITestScenario.current != nil {
                 var circle = appState.activeCircle
+                let remainingRecipients = circle?.recipients?.filter { $0.id != recipient.id } ?? []
+                if remainingRecipients.isEmpty {
+                    error = "Every circle must keep at least one care recipient."
+                    return
+                }
+
+                let hasActiveTasks = (circle?.tasks ?? []).contains { task in
+                    task.recipientId == recipient.id && task.archivedAt == nil
+                }
+                if hasActiveTasks {
+                    error = "Move or archive this recipient's tasks before removing them."
+                    return
+                }
+
                 circle?.recipients?.removeAll { $0.id == recipient.id }
                 if let remaining = circle?.recipients, !remaining.contains(where: \.isPrimary), let first = remaining.first {
                     circle?.recipients = remaining.map { current in

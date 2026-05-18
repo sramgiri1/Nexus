@@ -627,7 +627,40 @@ final class CareLoopUITests: XCTestCase {
         recipientActions.tap()
         XCTAssertTrue(app.buttons["Remove"].waitForExistence(timeout: 3))
         app.buttons["Remove"].tap()
+        XCTAssertTrue(app.staticTexts["Remove Aunt Priya Updated?"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Remove Care Receiver"].waitForExistence(timeout: 3))
+        app.buttons["Remove Care Receiver"].tap()
         waitForDisappearance(of: app.staticTexts["Aunt Priya Updated"], timeout: 5)
+    }
+
+    @MainActor
+    func test_organizerSeesBlockedCareReceiverRemovalReason() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        let managementScroll = waitForAnyElement(in: app, identifier: "receiver-management-screen", timeout: 8)
+        let recipientActions = app.buttons
+            .matching(NSPredicate(format: "identifier == %@ AND label == %@", "recipient-card-r2", "More"))
+            .firstMatch
+        for _ in 0..<3 where !recipientActions.exists {
+            managementScroll.swipeUp()
+        }
+
+        XCTAssertTrue(recipientActions.waitForExistence(timeout: 3))
+        recipientActions.tap()
+        XCTAssertTrue(app.buttons["Remove"].waitForExistence(timeout: 3))
+        app.buttons["Remove"].tap()
+        XCTAssertTrue(app.staticTexts["Remove David?"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["Remove Care Receiver"].waitForExistence(timeout: 3))
+        app.buttons["Remove Care Receiver"].tap()
+
+        XCTAssertTrue(app.staticTexts["Move or archive this recipient's tasks before removing them."].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["David"].exists)
     }
 
     @MainActor

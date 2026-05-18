@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-C5 is next: handle receiver removal/delete blocked states safely.
+D1 is next: verify StoreKit product metadata and local purchase fixtures.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| C5 | Handle receiver removal/delete blocked states safely. | Backend delete rules; iOS destructive confirmations and blocked-state copy. | Backend delete/block tests; iOS UI delete confirmation and blocked delete tests. | Optional. | Planned |
+| D1 | Verify StoreKit product metadata and local purchase fixtures. | iOS StoreKit config/paywall; backend entitlement metadata. | StoreKit local tests; iOS paywall metadata tests. | Demo paywall product labels must match. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D1 | Verify StoreKit product metadata and local purchase fixtures. | iOS StoreKit config/paywall; backend entitlement metadata. | StoreKit local tests; iOS paywall metadata tests. | Demo paywall product labels must match. | Planned |
 | D2 | Harden restore purchases and entitlement refresh. | iOS paywall/account restore; backend entitlement refresh. | iOS restore UI tests; backend entitlement refresh tests. | Demo can show restore entry only. | Planned |
 | D3 | Cover expired, revoked, billing retry, and refund states. | Backend entitlement states; iOS paywall/locks. | Backend entitlement tests; iOS UI state fixtures. | Demo already has expired/revoked concepts; refresh as needed. | Planned |
 | D4 | Enforce free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits. | Backend entitlement policy; iOS locks across receiver/task/insight/access surfaces. | Cross-surface backend tests; iOS UI lock tests. | Demo should show free vs premium contrast. | Planned |
@@ -69,6 +68,7 @@ C5 is next: handle receiver removal/delete blocked states safely.
 | C2 | Direct invite vs proxy activation decision path. | Backend activation conflict tests for direct-joined and proxy-active receivers; Xcode UI `test_organizerChoosesReceiverActivationPath` plus receiver-management regression trio. |
 | C3 | Explicit authorization attestation for proxy activation. | Backend attestation-required and audit-payload tests; Xcode UI `test_organizerChoosesReceiverActivationPath` verifies the proxy action stays disabled until attestation is checked. |
 | C4 | Block task creation until direct acceptance or proxy activation. | Backend inactive-receiver task-create rejection test; Xcode UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` verifies New Task explains the blocked state and keeps Add disabled. |
+| C5 | Receiver removal confirmation and blocked delete states. | Backend receiver-delete regression tests; Xcode UI `test_organizerCanAddEditAndRemoveCareReceiverLocally` confirms destructive removal and `test_organizerSeesBlockedCareReceiverRemovalReason` verifies task-preservation copy. |
 
 ## Blocked / External Setup
 

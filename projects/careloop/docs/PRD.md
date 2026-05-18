@@ -1157,7 +1157,7 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** make receiver lifecycle, access assignment, proxy activation, and paid receiver gating production-ready.
 
-**Implementation status:** in progress on branch `codex/careloop-premium-phases`. C1 receiver lifecycle polish is complete: organizers can add a gated second receiver, edit receiver profile details, remove unused receivers, and the backend preserves safety rules for primary receiver summary updates, reorder, last-receiver protection, active-task removal blocking, and primary promotion after deletion. C2 activation-path polish is complete: organizers choose between direct receiver invite and proxy authorization from one decision sheet, direct/proxy activation conflicts are blocked server-side, and proxy-active receivers no longer show activation actions. C3 proxy attestation is complete: proxy activation requires explicit organizer authorization attestation, stores audit fields server-side, and avoids copying raw consent references into activity payloads. C4 task-creation blocking is complete: tasks cannot be created until direct acceptance or proxy activation, and New Task explains the inactive-receiver state clearly before users try to save.
+**Implementation status:** complete on branch `codex/careloop-premium-phases`. C1 receiver lifecycle polish is complete: organizers can add a gated second receiver, edit receiver profile details, remove unused receivers, and the backend preserves safety rules for primary receiver summary updates, reorder, last-receiver protection, active-task removal blocking, and primary promotion after deletion. C2 activation-path polish is complete: organizers choose between direct receiver invite and proxy authorization from one decision sheet, direct/proxy activation conflicts are blocked server-side, and proxy-active receivers no longer show activation actions. C3 proxy attestation is complete: proxy activation requires explicit organizer authorization attestation, stores audit fields server-side, and avoids copying raw consent references into activity payloads. C4 task-creation blocking is complete: tasks cannot be created until direct acceptance or proxy activation, and New Task explains the inactive-receiver state clearly before users try to save. C5 receiver removal safety is complete: receiver deletion requires destructive confirmation, blocked removal preserves receiver data, and users see backend-aligned copy when active tasks must be moved or archived first.
 
 **Subphases**
 
@@ -1165,9 +1165,9 @@ After the receiver-scoped premium phase, implementation should continue in small
 2. Direct invite vs proxy activation decision path. **Complete.**
 3. Explicit authorization attestation for proxy activation. **Complete.**
 4. Block task creation until direct acceptance or proxy activation. **Complete.**
-5. Receiver removal/delete blocked states when open tasks, billing, or history require preservation.
+5. Receiver removal/delete blocked states when open tasks, billing, or history require preservation. **Complete.**
 
-**Tests:** backend receiver lifecycle, activation-conflict, attestation-audit, and task-create blocked-state tests plus iOS UI add/edit/remove/access/proxy/New Task fixtures.
+**Tests:** backend receiver lifecycle, activation-conflict, attestation-audit, task-create blocked-state, and receiver-delete regression tests plus iOS UI add/edit/remove/access/proxy/New Task/delete-blocked fixtures.
 
 #### Phase D — Premium Purchase Hardening
 
