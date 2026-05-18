@@ -73,6 +73,7 @@ curl -X POST http://localhost:3000/circles/<circleId>/tasks \
 - [x] Logs `REMINDER_SENT` event  
 - [x] No push token → falls back to email (or NONE if no email either)  
 - [x] Simulated mode (no APNS config) returns `{simulated:true}` without crashing  
+- [x] Simulator deep-link coverage includes organizer and care receiver pending tasks, completed tasks, and wrong-circle guards
 
 ### 3A. Reminder snooze
 

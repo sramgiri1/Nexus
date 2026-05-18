@@ -671,6 +671,25 @@ private struct UITestScenarioFixture {
                     assignee: mom,
                     capabilities: CareTaskCapabilities(canEdit: false, canDelete: false, canAssign: false, canChangeRecipient: false, canChangeStatus: false, canMarkDone: true, canSkip: false, canComment: true)
                 ),
+                CareTask(
+                    id: "t8",
+                    title: "Breakfast medication",
+                    notes: "Completed from a reminder earlier today.",
+                    dueAt: Date().addingTimeInterval(-2 * 60 * 60),
+                    status: .done,
+                    priority: .normal,
+                    completedAt: Date().addingTimeInterval(-90 * 60),
+                    completedById: mom.id,
+                    completedBy: mom,
+                    archivedAt: nil,
+                    circleId: "c1",
+                    recipientId: momRecipient.id,
+                    recipient: momRecipient,
+                    creatorId: organizer.id,
+                    assigneeId: mom.id,
+                    assignee: mom,
+                    capabilities: CareTaskCapabilities(canEdit: false, canDelete: false, canAssign: false, canChangeRecipient: false, canChangeStatus: false, canMarkDone: false, canSkip: false, canComment: true)
+                ),
             ]
             let circle = CareCircle(
                 id: "c1",

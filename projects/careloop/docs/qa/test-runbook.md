@@ -38,7 +38,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | `ios:onboarding` | Onboarding, auth validation, keychain, circle directory. |
 | `ios:personas` | Organizer, caregiver, care receiver dashboards and role switching. |
 | `ios:tasks` | Task board, personal task board, recurrence model, completion flow. |
-| `ios:reminders` | Reminder scheduling model, push deep-link state, snooze UI. |
+| `ios:reminders` | Reminder scheduling model, push deep-link state, pending/completed/wrong-circle UI deep links, snooze UI. |
 | `ios:payments` | Paywall, StoreKit metadata, premium disclosure, premium locks. |
 
 ## Current Critical Journey Coverage

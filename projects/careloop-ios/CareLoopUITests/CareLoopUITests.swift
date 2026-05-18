@@ -1141,6 +1141,21 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerCompletedTaskDeepLinkOpensDoneTask() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t4",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        let doneTask = app.buttons["task-card-t4"]
+        XCTAssertTrue(doneTask.waitForExistence(timeout: 5))
+        XCTAssertEqual(doneTask.value as? String, "Done")
+        XCTAssertTrue(app.staticTexts["Evening check-in"].exists)
+    }
+
+    @MainActor
     func test_taskDetailCanSnoozeReminder() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "organizer-home",
@@ -1168,6 +1183,18 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.scrollViews["task-board-screen"].waitForExistence(timeout: 1))
+    }
+
+    @MainActor
+    func test_receiverWrongCircleDeepLinkStaysOnHome() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "receiver-home",
+            "-careloop-ui-pending-task", "t5",
+            "-careloop-ui-pending-circle", "other-circle"
+        ])
+
+        XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
+        XCTAssertFalse(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 1))
     }
 
     @MainActor
@@ -1203,5 +1230,18 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Take lunchtime medication"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
+    func test_receiverCompletedTaskDeepLinkOpensDoneReminder() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "receiver-home",
+            "-careloop-ui-pending-task", "t8",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Breakfast medication"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Done by Maya"].waitForExistence(timeout: 3))
     }
 }
