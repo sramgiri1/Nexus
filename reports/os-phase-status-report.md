@@ -2,16 +2,16 @@
 
 ## Metadata
 
-- Generated at: 2026-05-18T14:06:15.346Z
-- Validation branch: codex/p63-snapshot-contract
-- Validation HEAD: 4856356
+- Generated at: 2026-05-18T22:59:31.163Z
+- Validation branch: codex/nexus-e2e-phase-validation
+- Validation HEAD: 7aeba11
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase
 
-- Current phase: P62.8
+- Current phase: P64
 - Previous phase: P63
-- Next phase: P64
+- Next phase: P64.1
 
 ## Checks
 

@@ -2432,13 +2432,22 @@
       "phaseId": "P64",
       "title": "Provider + Tool Dispatch Through Governance",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7aeba11",
       "completedAt": "",
-      "summary": "Planned governed provider and tool dispatch phase.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "summary": "P64 has started with a contract-only governance split before any provider or tool dispatch implementation.",
+      "checksRun": [
+        "npm run check:p64-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
+        "P64.1 only defines implementation-grade subphase contracts and validation."
+      ],
       "nextPhase": "P64.1",
       "commandCenterVisible": true
     },
@@ -2447,10 +2456,10 @@
       "title": "Code Mode Runtime + Lazy Tool Loading",
       "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "",
-      "commit": "",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
       "completedAt": "",
-      "summary": "Planned code-mode runtime and lazy tool loading phase.",
+      "summary": "Planned code-mode runtime and lazy tool loading phase after P64 governed dispatch contracts are validated.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P65",
@@ -4703,8 +4712,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T14:05:37.975Z",
-  "currentPhase": "P62.8",
+  "updatedAt": "2026-05-18T23:00:00.000Z",
+  "currentPhase": "P64",
   "previousPhase": "P63",
-  "nextPhase": "P64"
+  "nextPhase": "P64.1"
 }

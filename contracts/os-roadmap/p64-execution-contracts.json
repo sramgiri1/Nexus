@@ -1,0 +1,983 @@
+{
+  "phaseId": "P64",
+  "title": "Provider + Tool Dispatch Through Governance",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p64-1-execution-contract-governance-split",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Create the implementation-grade P64 contract, checker, docs, and phase-status handoff without enabling provider or tool execution.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p64-execution-contracts.json",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p64-execution-plan.js",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-phase-validation-coverage.js",
+        "reports/p64-execution-plan-report.md",
+        "reports/os-phase-status-report.md",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/Projects.jsx",
+        "dashboard/src/pages/CommandCenter.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "b27e330",
+        "narrowScope": "Define the governed dispatch implementation sequence, validation contract, and OS phase handoff only.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Do not expose DemoApp in the full Command Center or show raw project/private IDs in primary UX.",
+          "All future dispatch work must remain behind explicit policy decisions, approval requirements, cost estimates, evidence, and audit records."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "api-batch/providerPolicy.js",
+            "api-batch/providerAdapter.js",
+            "tool-governance/toolGatewayPolicy.js",
+            "tool-governance/toolExecutionPreview.js",
+            "runtime/policyDecision.js",
+            "runtime/evidenceRecord.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse existing provider policy, tool gateway, evidence, redaction, result envelope, and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P64.1.",
+          "required": "Document the required future UX fields: current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p64-execution-contracts.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "scripts/check-p64-execution-plan.js",
+            "reports/p64-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "scripts/check-os-phase-status.js",
+            "scripts/check-phase-validation-coverage.js"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP64ExecutionPlan",
+            "P64_DISPATCH_SUBPHASES"
+          ],
+          "schemas": [
+            "GovernedDispatchRequest",
+            "DispatchPolicyDecision",
+            "DispatchExecutionEnvelope"
+          ],
+          "dataShapes": [
+            "dispatchId, requestType, providerId, toolId, capabilityId, scopeLabel, riskLevel, costEstimateUsd, approvalStatus, evidenceRefs, auditRefs, executionAllowed"
+          ]
+        },
+        "commandCenterUxRequirements": "Future P64 UX must show dispatch readiness, disabled reasons, blockers, next action, owner capability, evidence/activity location, and cost impact without raw IDs, raw logs, raw JSON, DemoApp leakage, or fake working actions.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability for every dispatch-readiness surface.",
+          "Preserve Light theme readability for every dispatch-readiness surface."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required in P64.1 because no UX behavior changes.",
+          "Future Command Center dispatch UX must add Playwright coverage for dark, light, system themes, no DemoApp leakage, no raw dumps, sidebar navigation, and disabled execution reasons."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-execution-plan.js.",
+          "Update phase validation coverage to treat P64 in-progress contract coverage as non-blocking."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-execution-plan.",
+          "Keep check:os-phase-status passing after P64 becomes current."
+        ],
+        "docsRoadmap": [
+          "Add P64 implementation plan doc.",
+          "Update NEXUS platform roadmap to reference the P64 contract."
+        ],
+        "phaseStatusUpdate": "Mark P64 as in_progress, record branch and contract-check evidence, keep nextPhase as P64.1, and do not mark dispatch complete.",
+        "validationCommands": [
+          "npm run check:p64-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes, migrations, deploy, or release action was enabled.",
+          "Confirm no DemoApp full Command Center exposure.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working action was introduced."
+        ],
+        "gitCommands": [
+          "git add contracts/os-roadmap/p64-execution-contracts.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md scripts/check-p64-execution-plan.js scripts/check-os-phase-status.js scripts/check-phase-validation-coverage.js reports/p64-execution-plan-report.md reports/os-phase-status-report.md os-roadmap/phase-status.json package.json",
+          "git commit -m \"docs(nexus): define p64 governed dispatch contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm P64 remains contract-only.",
+          "Report checker results.",
+          "State OS phase status update.",
+          "Confirm forbidden paths were not changed."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P64 is split into implementation-grade subphases.",
+        "P64.1 adds only contract, docs, checker, report, and phase-status handoff.",
+        "No provider dispatch, tool execution, project mutation, DB write, deploy, release, or fake working action is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "low",
+      "blocking": true,
+      "dependsOn": [],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-2-dispatch-policy-envelope",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define the provider/tool dispatch request envelope and policy decision mapping without execution.",
+      "allowedFiles": [
+        "dispatch-governance/dispatchEnvelope.js",
+        "dispatch-governance/dispatchPolicy.js",
+        "dispatch-governance/fixtures/dispatch-envelope-fixtures.json",
+        "scripts/check-p64-dispatch-envelope.js",
+        "reports/p64-dispatch-envelope-report.md",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.1",
+        "narrowScope": "Add pure dispatch envelope and policy-decision normalizers only; no calls or adapter execution.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Denied, preview, and approval-required decisions must be represented explicitly.",
+          "Raw prompts, raw payloads, secrets, and raw project/private IDs must be redacted or excluded from primary shapes."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "runtime/policyDecision.js",
+            "runtime/trafficPlane.js",
+            "api-batch/providerPolicy.js",
+            "tool-governance/toolGatewayPolicy.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js"
+          ],
+          "rule": "Reuse existing policy, redaction, and result envelope helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior unless labels change.",
+          "required": "Define display-safe decision labels and disabled reasons for future Command Center dispatch UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dispatch-governance/dispatchEnvelope.js",
+            "dispatch-governance/dispatchPolicy.js",
+            "dispatch-governance/fixtures/dispatch-envelope-fixtures.json",
+            "scripts/check-p64-dispatch-envelope.js",
+            "reports/p64-dispatch-envelope-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createDispatchEnvelope",
+            "validateDispatchEnvelope",
+            "evaluateDispatchPolicy"
+          ],
+          "schemas": [
+            "GovernedDispatchRequest",
+            "DispatchPolicyDecision"
+          ],
+          "dataShapes": [
+            "dispatchId, requestType, capabilityId, providerId, toolId, scopeLabel, dataClassification, riskLevel, executionAllowed, denialReasons"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show policy state, disabled reason, blockers, owner capability, and next action without raw JSON, raw logs, DemoApp, or raw IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route expected unless UX labels change.",
+          "Preserve route-wide safety tests for no DemoApp leakage, no raw dumps, themes, sidebar, OS roadmap separation, and project milestone separation."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-dispatch-envelope.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-dispatch-envelope."
+        ],
+        "docsRoadmap": [
+          "Document P64.2 dispatch envelope and policy mapping."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.2 complete and keep P64 in_progress.",
+        "validationCommands": [
+          "npm run check:p64-dispatch-envelope",
+          "npm run check:p64-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled."
+        ],
+        "gitCommands": [
+          "git add dispatch-governance/dispatchEnvelope.js dispatch-governance/dispatchPolicy.js dispatch-governance/fixtures/dispatch-envelope-fixtures.json scripts/check-p64-dispatch-envelope.js reports/p64-dispatch-envelope-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): define p64 dispatch envelope\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no runtime dispatch.",
+          "Report validation commands.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dispatch envelope and policy mapping are deterministic and preview-safe.",
+        "Execution remains disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-1-execution-contract-governance-split"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-3-provider-tool-readiness-matrix",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Map provider and tool readiness into a governed dispatch matrix without enabling adapters.",
+      "allowedFiles": [
+        "dispatch-governance/dispatchReadinessMatrix.js",
+        "dispatch-governance/fixtures/dispatch-readiness-fixtures.json",
+        "scripts/check-p64-dispatch-readiness.js",
+        "reports/p64-dispatch-readiness-report.md",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.2",
+        "narrowScope": "Create read-only readiness records for existing provider and tool governance surfaces.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Readiness can only report disabled, preview, approval-required, or blocked states.",
+          "Provider and tool IDs must be secondary metadata; primary labels must be human-readable."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "api-batch/providerRegistry.js",
+            "api-batch/providerAdapter.js",
+            "tool-governance/toolRegistry.js",
+            "tool-governance/toolPermissionMatrix.js",
+            "tool-governance/toolSearch.js"
+          ],
+          "rule": "Reuse provider registry and tool registry helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page change unless future UX needs readiness labels.",
+          "required": "Define display labels for ready, blocked, disabled, approval-required, and cost-required states."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dispatch-governance/dispatchReadinessMatrix.js",
+            "dispatch-governance/fixtures/dispatch-readiness-fixtures.json",
+            "scripts/check-p64-dispatch-readiness.js",
+            "reports/p64-dispatch-readiness-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildDispatchReadinessMatrix",
+            "validateDispatchReadinessMatrix"
+          ],
+          "schemas": [
+            "DispatchReadinessRecord"
+          ],
+          "dataShapes": [
+            "capabilityId, displayLabel, providerLabel, toolLabel, readinessState, disabledReason, approvalRequired, costEstimateRequired, evidenceRequired"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must display readiness, disabled state, and blockers with readable labels, no raw JSON/logs, no DemoApp, and no raw private IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless readiness UX changes.",
+          "Future UX must cover themes, no raw dumps, and disabled reasons."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-dispatch-readiness.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-dispatch-readiness."
+        ],
+        "docsRoadmap": [
+          "Document P64.3 readiness matrix."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.3 complete and keep P64 in_progress.",
+        "validationCommands": [
+          "npm run check:p64-dispatch-readiness",
+          "npm run check:p64-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled."
+        ],
+        "gitCommands": [
+          "git add dispatch-governance/dispatchReadinessMatrix.js dispatch-governance/fixtures/dispatch-readiness-fixtures.json scripts/check-p64-dispatch-readiness.js reports/p64-dispatch-readiness-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p64 dispatch readiness matrix\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no adapters enabled.",
+          "Report validation commands.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Readiness matrix is display-safe and policy aligned.",
+        "No live adapter execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-2-dispatch-policy-envelope"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-4-dispatch-dry-run-execution-envelope",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build dry-run dispatch previews with cost/evidence/audit requirements and no execution.",
+      "allowedFiles": [
+        "dispatch-governance/dispatchDryRun.js",
+        "dispatch-governance/fixtures/dispatch-dry-run-fixtures.json",
+        "scripts/check-p64-dispatch-dry-run.js",
+        "reports/p64-dispatch-dry-run-report.md",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.3",
+        "narrowScope": "Return dry-run execution envelopes that explain what would happen without doing it.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Dry-run outputs must set executed false and executionAllowed false unless a later explicit execution subphase changes the contract.",
+          "Every preview must include disabled reason, approval requirement, cost impact, and evidence expectation."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "tool-governance/toolExecutionPreview.js",
+            "api-batch/costEstimator.js",
+            "runtime/evidenceRecord.js",
+            "activity-log/activityLogger.js",
+            "shared/resultEnvelope.js"
+          ],
+          "rule": "Reuse existing preview, cost, evidence, activity, and result envelope helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No required page behavior change.",
+          "required": "Define dry-run labels that make execution disabled and next action clear."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dispatch-governance/dispatchDryRun.js",
+            "dispatch-governance/fixtures/dispatch-dry-run-fixtures.json",
+            "scripts/check-p64-dispatch-dry-run.js",
+            "reports/p64-dispatch-dry-run-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildDispatchDryRun",
+            "validateDispatchDryRun"
+          ],
+          "schemas": [
+            "DispatchDryRunEnvelope"
+          ],
+          "dataShapes": [
+            "dispatchId, previewOnly, executed, executionAllowed, disabledReason, approvalRequired, costImpact, evidenceLocation, activityLocation"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show dry-run state, next action, blockers, disabled reason, evidence/activity location, and cost impact without fake execution, raw dumps, or DemoApp exposure.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless dry-run UX changes.",
+          "Future UX must assert dry-run previews do not claim execution."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-dispatch-dry-run.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-dispatch-dry-run."
+        ],
+        "docsRoadmap": [
+          "Document P64.4 dry-run dispatch preview."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.4 complete and keep P64 in_progress.",
+        "validationCommands": [
+          "npm run check:p64-dispatch-dry-run",
+          "npm run check:p64-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled."
+        ],
+        "gitCommands": [
+          "git add dispatch-governance/dispatchDryRun.js dispatch-governance/fixtures/dispatch-dry-run-fixtures.json scripts/check-p64-dispatch-dry-run.js reports/p64-dispatch-dry-run-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p64 dispatch dry-run previews\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm dry-run only.",
+          "Report validation commands.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Dry-run envelopes are deterministic and explicitly non-executing.",
+        "Cost, approval, evidence, and disabled reason fields are present."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-3-provider-tool-readiness-matrix"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-5-command-center-dispatch-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose governed dispatch readiness and dry-run previews in Command Center without live execution.",
+      "allowedFiles": [
+        "dashboard/src/pages/ToolGateway.jsx",
+        "dashboard/src/pages/ApiBatch.jsx",
+        "dashboard/src/pages/PolicyCenter.jsx",
+        "dashboard/src/data/dispatchGovernance.js",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p64-command-center-dispatch-ux.js",
+        "reports/p64-command-center-dispatch-ux-report.md",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.4",
+        "narrowScope": "Add display-only dispatch readiness and dry-run UX to existing governance pages.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Buttons may only be disabled or inspection-only and must show disabled reasons.",
+          "Primary UX must not show DemoApp, raw JSON, raw logs, raw policy dumps, or raw private/project IDs."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dashboard/src/components",
+            "dashboard/src/pages/ToolGateway.jsx",
+            "dashboard/src/pages/ApiBatch.jsx",
+            "dashboard/src/pages/PolicyCenter.jsx",
+            "dashboard/src/styles.css"
+          ],
+          "rule": "Reuse existing dashboard tabs, cards, badges, and theme tokens; do not duplicate UI components."
+        },
+        "uxUpdate": {
+          "scope": "Command Center Tool Gateway, API / Batch, and Policy Center display-only dispatch readiness.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/dispatchGovernance.js",
+            "scripts/check-p64-command-center-dispatch-ux.js",
+            "reports/p64-command-center-dispatch-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/ToolGateway.jsx",
+            "dashboard/src/pages/ApiBatch.jsx",
+            "dashboard/src/pages/PolicyCenter.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "dispatchGovernanceSummary",
+            "dispatchReadinessCards"
+          ],
+          "schemas": [
+            "DispatchGovernanceCard"
+          ],
+          "dataShapes": [
+            "title, stateLabel, ownerCapability, disabledReason, blocker, nextAction, evidenceLocation, activityLocation, costImpact"
+          ]
+        },
+        "commandCenterUxRequirements": "Show dispatch readiness and dry-run status in primary UX with readable labels, disabled reasons, no raw dumps, no DemoApp, no fake execution, and full dark/light/system theme support.",
+        "themeRequirements": [
+          "System theme switcher must continue to resolve and persist.",
+          "Dark theme dispatch surfaces must preserve contrast.",
+          "Light theme dispatch surfaces must preserve contrast."
+        ],
+        "playwrightTests": [
+          "Add tests for dispatch readiness labels and disabled reasons.",
+          "Cover dark, light, and system theme rendering.",
+          "Preserve no DemoApp leakage, no raw JSON/log dump, sidebar navigation, OS roadmap separation, and project milestone separation tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-command-center-dispatch-ux.js.",
+          "Update dashboard Playwright route tests."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-command-center-dispatch-ux.",
+          "Keep check:command-center-ux passing."
+        ],
+        "docsRoadmap": [
+          "Document P64.5 Command Center dispatch UX."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.5 complete and keep P64 in_progress.",
+        "validationCommands": [
+          "npm run check:p64-command-center-dispatch-ux",
+          "npm run check:command-center-ux",
+          "cd dashboard && npm run build && npm run test:unit",
+          "cd dashboard && npx playwright test tests/routes.spec.js -g \"dispatch|Tool Gateway|API / Batch|Policy Center|full Command Center routes do not show DemoApp\"",
+          "npm run check:p64-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled.",
+          "Confirm full Command Center does not expose DemoApp or raw IDs."
+        ],
+        "gitCommands": [
+          "git add dashboard/src/pages/ToolGateway.jsx dashboard/src/pages/ApiBatch.jsx dashboard/src/pages/PolicyCenter.jsx dashboard/src/data/dispatchGovernance.js dashboard/tests/routes.spec.js scripts/check-p64-command-center-dispatch-ux.js reports/p64-command-center-dispatch-ux-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): show p64 dispatch governance readiness\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Describe Command Center UX changes.",
+          "Report Playwright and checker results.",
+          "Confirm execution remains disabled."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center shows dispatch readiness and disabled reasons.",
+        "Dark, light, and system themes remain valid.",
+        "No execution or fake working action is introduced."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-4-dispatch-dry-run-execution-envelope"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-6-dispatch-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Complete P64 checker aggregation, docs, and roadmap evidence before any execution enablement decision.",
+      "allowedFiles": [
+        "scripts/check-p64-governed-dispatch-final.js",
+        "reports/p64-governed-dispatch-final-report.md",
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.5",
+        "narrowScope": "Add final aggregation checker/report and docs updates for the non-executing governed dispatch foundation.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Final checks must fail if any P64 module claims execution without explicit approval and evidence.",
+          "Docs must state known limitations honestly."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/checkResultFormatter.js",
+            "shared/reportWriter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse shared checker formatter, report writer, and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new UX unless P64.5 labels need documentation alignment.",
+          "required": "Docs must preserve user-facing disabled-state language."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p64-governed-dispatch-final.js",
+            "reports/p64-governed-dispatch-final-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP64GovernedDispatchFinal"
+          ],
+          "schemas": [
+            "P64FinalValidationReport"
+          ],
+          "dataShapes": [
+            "phaseId, checksRun, executionEnabled, knownLimitations, nextPhase"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve dispatch readiness UX, disabled reasons, no raw dumps, no DemoApp, and no fake execution.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Run focused dispatch UX tests from P64.5.",
+          "Preserve route-wide safety coverage."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p64-governed-dispatch-final.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p64-governed-dispatch-final."
+        ],
+        "docsRoadmap": [
+          "Update P64 docs and roadmap status."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.6 complete and keep P64 in_progress until final validation.",
+        "validationCommands": [
+          "npm run check:p64-governed-dispatch-final",
+          "npm run check:p64-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled."
+        ],
+        "gitCommands": [
+          "git add scripts/check-p64-governed-dispatch-final.js reports/p64-governed-dispatch-final-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"test(nexus): add p64 governed dispatch final checks\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Report final checker status.",
+          "Confirm execution disabled.",
+          "State next validation subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P64 final checker exists and reports no execution enablement.",
+        "Docs and roadmap reflect the true state."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-5-command-center-dispatch-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p64-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P64 with governed dispatch still disabled unless explicitly allowed by a later phase.",
+      "allowedFiles": [
+        "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/p64-governed-dispatch-final-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.6",
+        "narrowScope": "Run final validation, record known limitations, close P64, and hand off to P64.1 code-mode runtime only if all checks pass.",
+        "safetyRules": [
+          "Do not enable provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, or worker execution.",
+          "Do not mark P64 complete unless all required P64 checks pass or known external failures are documented.",
+          "Do not claim real dispatch works unless an explicit later phase enables it."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "os-roadmap/updatePhaseStatus.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js"
+          ],
+          "rule": "Reuse phase status and report helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new UX.",
+          "required": "Final docs must state Command Center dispatch surfaces are governed and disabled unless explicitly enabled later."
+        },
+        "exactFilesModules": {
+          "create": [],
+          "update": [
+            "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/p64-governed-dispatch-final-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "none"
+          ],
+          "schemas": [
+            "P64FinalPhaseStatus"
+          ],
+          "dataShapes": [
+            "phaseId, status, branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, commandCenterVisible"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve dispatch readiness UX, disabled state, and route-wide safety; no raw dumps, no DemoApp, no raw IDs, and no fake working actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Run focused dispatch UX tests.",
+          "Run or document full page suite status with known project-only failures if still present."
+        ],
+        "testsCheckers": [
+          "Run all P64 checkers and OS safety checkers."
+        ],
+        "checkerUpdates": [
+          "No new checker expected unless final validation finds a gap."
+        ],
+        "docsRoadmap": [
+          "Close P64 docs and roadmap status."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64 and P64.7 complete with branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase, and commandCenterVisible.",
+        "validationCommands": [
+          "npm run check:p64-execution-plan",
+          "npm run check:p64-governed-dispatch-final",
+          "npm run check:phase-validation-coverage",
+          "npm run check:command-center-ux",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "cd dashboard && npm run build && npm run test:unit",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool execution was enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes or deploy action was enabled.",
+          "Confirm no fake working dispatch action was introduced."
+        ],
+        "gitCommands": [
+          "git add docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md os-roadmap/phase-status.json reports/os-phase-status-report.md reports/p64-governed-dispatch-final-report.md",
+          "git commit -m \"test(nexus): close p64 governed dispatch foundation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name.",
+          "Commit hash.",
+          "Files changed.",
+          "What was implemented.",
+          "Command Center UX changes.",
+          "Tests/checkers results.",
+          "Docs/roadmap/status updates.",
+          "Safety and forbidden-path confirmations.",
+          "Known limitations.",
+          "Next phase/subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P64 closes only after validation evidence is recorded.",
+        "Known limitations are explicit.",
+        "Provider/tool execution remains disabled unless a later explicit phase enables it."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p64-6-dispatch-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-18T23:00:00.000Z"
+    }
+  ]
+}

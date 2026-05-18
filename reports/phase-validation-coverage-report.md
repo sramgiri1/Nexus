@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-18T22:49:31.312Z
+- Generated at: 2026-05-18T22:59:31.148Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 13aba93
+- Validation HEAD: 7aeba11
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,8 +25,8 @@
 | P63.5 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.7 validation coverage | PASS | 12 checkers, 1 reports |
-| P64 validation coverage | PASS | dedicated_checker, validation_report |
-| P64.1 validation coverage | PASS | dedicated_checker, validation_report |
+| P64 validation coverage | PASS | 5 checkers, 1 reports |
+| P64.1 validation coverage | PASS | dedicated_checker |
 | P65 validation coverage | PASS | dedicated_checker, validation_report |
 | P66 validation coverage | PASS | dedicated_checker, validation_report |
 | P67 validation coverage | PASS | dedicated_checker, validation_report |
@@ -42,23 +42,18 @@
 | P77 validation coverage | PASS | dedicated_checker, validation_report |
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
-| P64 next planned | PASS |  |
+| P64 next planned or current | PASS | current=P64; next=P64.1; status=in_progress |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P64 Provider + Tool Dispatch Through Governance
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P64.1 Code Mode Runtime + Lazy Tool Loading
   - status: planned
   - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+  - reports: 1
+  - gaps: dedicated_checker
 - P65 Batch Intelligence Jobs for Large-Scale Analysis
   - status: planned
   - checkers: 0

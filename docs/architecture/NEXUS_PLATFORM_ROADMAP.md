@@ -277,7 +277,7 @@ Risk level:
   - `P63.5` Command Center Recovery UX — complete
   - `P63.6` Recovery Replay / Resume Preview — complete
   - `P63.7` Recovery Tests + Docs + Final Validation — complete
-- `P64` Provider + Tool Dispatch Through Governance — next
+- `P64` Provider + Tool Dispatch Through Governance — in progress
 - `P64.1` Code Mode Runtime + Lazy Tool Loading
 - `P65` Batch Intelligence Jobs for Large-Scale Analysis
 - `P66` Self-Healing Failure Loop
@@ -1161,4 +1161,10 @@ updates, validation commands, git commands, and final response checklists for
 each subphase.
 P63 does not execute providers, tools, workers, DB writes, project mutation,
 restore, replay, resume, or release/deploy actions. P64 - Provider + Tool
-Dispatch Through Governance remains planned next and was not enabled by P63.
+Dispatch Through Governance is now in progress as a contract-first governance
+split. The detailed plan lives in
+[`P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md`](P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md).
+Implementation must follow
+[`p64-execution-contracts.json`](../../contracts/os-roadmap/p64-execution-contracts.json).
+P64.1 does not enable provider dispatch, tool execution, worker execution, DB
+writes, project mutation, external network calls, release, or deploy actions.

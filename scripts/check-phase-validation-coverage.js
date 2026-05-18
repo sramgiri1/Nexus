@@ -125,7 +125,12 @@ for (const row of rows) {
 }
 
 addCheck("P63 complete", statusById.get("P63")?.status === "complete", statusById.get("P63")?.status || "missing");
-addCheck("P64 next planned", phaseStatus.nextPhase === "P64" && statusById.get("P64")?.status === "planned");
+addCheck(
+  "P64 next planned or current",
+  (phaseStatus.nextPhase === "P64" && statusById.get("P64")?.status === "planned") ||
+    (phaseStatus.currentPhase === "P64" && statusById.get("P64")?.status === "in_progress"),
+  `current=${phaseStatus.currentPhase}; next=${phaseStatus.nextPhase}; status=${statusById.get("P64")?.status || "missing"}`,
+);
 addCheck("public safety report known", fileExists("reports/public-safety-report.md"));
 
 const gaps = rows.filter((row) => row.missing.length > 0);
