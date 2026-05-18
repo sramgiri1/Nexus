@@ -2323,15 +2323,26 @@
       "phaseId": "P63.5",
       "title": "Command Center Recovery UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose preview-only snapshot and recovery point views in Command Center with redacted details and disabled recovery actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "d3492e5",
+      "completedAt": "2026-05-18T13:57:14.044Z",
+      "summary": "Added an inspection-only Command Center Recovery route with redacted snapshot list/detail views, disabled restore/replay/resume previews, route tests, and a UX checker/report.",
+      "checksRun": [
+        "npm run check:command-center-recovery-ux",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Recovery route|full Command Center routes do not show demo content|screenshot audit script contract\"",
+        "cd dashboard && npm run test:pages (89/91 pass; two pre-existing project-label assertions remain outside P63.5 scope)",
+        "npm run check:p63-execution-plan",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+        "Inspection-only; restore, replay, resume, provider dispatch, tool dispatch, project mutation, DB writes, deploy, delete, and export remain disabled.",
+        "Replay and resume plan builders are not added until P63.6.",
+        "Full Playwright page suite still has two pre-existing project-label assertions outside this OS-only subphase."
       ],
       "nextPhase": "P63.6",
       "commandCenterVisible": true
@@ -4645,7 +4656,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T13:47:44.594Z",
+  "updatedAt": "2026-05-18T13:57:58.814Z",
   "currentPhase": "P62.8",
   "previousPhase": "P62",
   "nextPhase": "P63"
