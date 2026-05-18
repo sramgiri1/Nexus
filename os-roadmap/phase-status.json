@@ -2298,15 +2298,23 @@
       "phaseId": "P63.4",
       "title": "Snapshot Store + Retention Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Add local preview storage contracts, retention policy, pruning rules, and public-safe sample records without enabling durable DB writes.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "e2d05cd",
+      "completedAt": "2026-05-18T13:47:27.056Z",
+      "summary": "Added preview-only snapshot store records, retention classes, dry-run pruning, fixture coverage, and a checker/report without enabling DB writes, recovery execution, or project mutation.",
+      "checksRun": [
+        "npm run check:ai-snapshot-store",
+        "npm run check:p63-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:contracts",
+        "npm run check:public-safety (failed on pre-existing root README project references outside P63.4 scope)",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, restore, replay, resume, delete, export, release, or deploy action is enabled.",
+        "Command Center Recovery UX is not added until P63.5.",
+        "Public safety checker still reports pre-existing root README project references outside this OS-only subphase."
       ],
       "nextPhase": "P63.5",
       "commandCenterVisible": true
@@ -4637,7 +4645,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T13:41:55.315Z",
+  "updatedAt": "2026-05-18T13:47:44.594Z",
   "currentPhase": "P62.8",
   "previousPhase": "P62",
   "nextPhase": "P63"
