@@ -269,15 +269,15 @@ Risk level:
   - `P62.6` Command Center Command UX — complete
   - `P62.7` Final Validation — complete
   - `P62.8` Command Center Chat Entry + Conversational UI Fix — complete
-- `P63` AI Interaction Snapshot + Granular Recovery Layer — next
-  - `P63.1` Snapshot Contract + Redaction Policy — planned
-  - `P63.2` Interaction Capture Points — planned
-  - `P63.3` Recovery Point Model — planned
-  - `P63.4` Snapshot Store + Retention Preview — planned
-  - `P63.5` Command Center Recovery UX — planned
-  - `P63.6` Recovery Replay / Resume Preview — planned
-  - `P63.7` Recovery Tests + Docs + Final Validation — planned
-- `P64` Provider + Tool Dispatch Through Governance
+- `P63` AI Interaction Snapshot + Granular Recovery Layer — complete
+  - `P63.1` Snapshot Contract + Redaction Policy — complete
+  - `P63.2` Interaction Capture Points — complete
+  - `P63.3` Recovery Point Model — complete
+  - `P63.4` Snapshot Store + Retention Preview — complete
+  - `P63.5` Command Center Recovery UX — complete
+  - `P63.6` Recovery Replay / Resume Preview — complete
+  - `P63.7` Recovery Tests + Docs + Final Validation — complete
+- `P64` Provider + Tool Dispatch Through Governance — next
 - `P64.1` Code Mode Runtime + Lazy Tool Loading
 - `P65` Batch Intelligence Jobs for Large-Scale Analysis
 - `P66` Self-Healing Failure Loop
@@ -1141,7 +1141,7 @@ AI interaction snapshots, maps capture points across governed preview surfaces,
 models recovery points, adds a local snapshot retention preview, exposes
 Command Center recovery inspection, and builds replay/resume plan previews.
 
-P63 is divided into seven planned subphases:
+P63 completed seven implementation-grade subphases:
 
 - `P63.1` Snapshot Contract + Redaction Policy
 - `P63.2` Interaction Capture Points
@@ -1159,6 +1159,6 @@ the contracts define allowed files, forbidden files, safety rules, reuse checks,
 UX updates, theme and Playwright requirements, tests, docs, phase status
 updates, validation commands, git commands, and final response checklists for
 each subphase.
-P63 does not execute providers, tools, workers, DB writes, project mutation, or
-release/deploy actions. P64 - Provider + Tool Dispatch Through Governance
-remains the next phase after P63 closes.
+P63 does not execute providers, tools, workers, DB writes, project mutation,
+restore, replay, resume, or release/deploy actions. P64 - Provider + Tool
+Dispatch Through Governance remains planned next and was not enabled by P63.

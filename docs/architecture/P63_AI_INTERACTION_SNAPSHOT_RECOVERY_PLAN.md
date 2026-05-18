@@ -246,6 +246,12 @@ Primary validation:
 Narrow scope: run final P63 validation, close the parent phase only with
 evidence, and prepare P64 as next without enabling P64 behavior.
 
+Implementation shape: `scripts/check-ai-recovery-final.js` aggregates the P63
+subphase evidence reports, verifies completed subphase status through P63.6,
+confirms Recovery UX remains inspection-only, and records P64 as planned next.
+Final closure marks P63 and P63.7 complete only after validation evidence is
+available.
+
 Required implementation contract:
 `nexus-os-p63-7-recovery-tests-docs-final-validation`
 

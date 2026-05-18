@@ -1718,7 +1718,7 @@
       "track": "NEXUS_OS",
       "order": 37.9,
       "group": "P63 AI Interaction Snapshot + Granular Recovery Layer",
-      "summary": "Plan granular, redacted AI interaction snapshots and recovery previews across governed execution.",
+      "summary": "Completed granular, redacted AI interaction snapshots and preview-only recovery inspection across governed execution.",
       "commandCenterVisible": true
     },
     {
@@ -1781,7 +1781,7 @@
       "track": "NEXUS_OS",
       "order": 37.97,
       "group": "P63 AI Interaction Snapshot + Granular Recovery Layer",
-      "summary": "Validate snapshot contracts, recovery previews, Command Center visibility, docs, and roadmap closure for P63.",
+      "summary": "Validated snapshot contracts, recovery previews, Command Center visibility, docs, and roadmap closure for P63.",
       "commandCenterVisible": true
     },
     {
