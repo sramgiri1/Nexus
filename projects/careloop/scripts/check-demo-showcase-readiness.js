@@ -27,6 +27,13 @@ function countMatches(pattern) {
   return [...seed.matchAll(pattern)].length;
 }
 
+function scenarioBlock(key) {
+  const start = seed.indexOf(`key: "${key}"`);
+  if (start === -1) return "";
+  const next = seed.indexOf("\n  },\n  {", start);
+  return seed.slice(start, next === -1 ? seed.length : next);
+}
+
 const scenarios = [
   ["aging-parent", "Aging parent support"],
   ["post-surgery", "Post-surgery recovery"],
@@ -46,7 +53,18 @@ check(launcher.includes("refreshManifestTokens"), "launcher must refresh demo to
 for (const [key, useCase] of scenarios) {
   check(seed.includes(`key: "${key}"`), `demo seed missing scenario ${key}`);
   check(seed.includes(`useCase: "${useCase}"`), `demo seed missing use case label ${useCase}`);
+  const block = scenarioBlock(key);
+  check(/caregivers:\s*\[/.test(block), `demo scenario ${key} must include caregivers`);
+  check(/tasks:\s*\[/.test(block), `demo scenario ${key} must include tasks`);
+  check(/status:\s*"PENDING"/.test(block), `demo scenario ${key} must include a pending task`);
+  check(/status:\s*"DONE"/.test(block), `demo scenario ${key} must include task history`);
+  check(/comments:\s*\[/.test(block), `demo scenario ${key} must include task comments/history`);
 }
+
+check(/key:\s*"aging-parent"[\s\S]*activationStatus:\s*"PROXY_ACTIVE"/.test(seed), "aging-parent scenario must include proxy-activated receiver");
+check(/key:\s*"post-surgery"[\s\S]*premiumRequests:\s*\[/.test(seed), "post-surgery scenario must include premium request state");
+check(/key:\s*"new-parent"[\s\S]*com\.careloop\.ios\.premium\.yearly/.test(seed), "new-parent scenario must include active premium state");
+check(/key:\s*"memory-care"[\s\S]*expiresAtHoursFromNow:\s*-/.test(seed), "memory-care scenario must include expired premium state");
 
 check(countMatches(/accessTo:\s*\[/g) >= 8, "demo seed must grant caregiver receiver access across scenarios");
 check(countMatches(/pendingInvites:\s*\[/g) >= 4, "demo seed must include pending invites across scenarios");
