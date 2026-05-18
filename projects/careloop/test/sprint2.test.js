@@ -3970,6 +3970,50 @@ describe("receiver-scoped access control", () => {
     await app.close();
   });
 
+  test("fails closed when App Store verification is enabled without server credentials", async () => {
+    const previousEnabled = process.env.APP_STORE_SERVER_API_ENABLED;
+    const previousIssuer = process.env.APP_STORE_CONNECT_ISSUER_ID;
+    const previousKey = process.env.APP_STORE_CONNECT_KEY_ID;
+    const previousPrivateKey = process.env.APP_STORE_CONNECT_PRIVATE_KEY;
+    const previousBundle = process.env.APP_STORE_BUNDLE_ID;
+    process.env.APP_STORE_SERVER_API_ENABLED = "true";
+    delete process.env.APP_STORE_CONNECT_ISSUER_ID;
+    delete process.env.APP_STORE_CONNECT_KEY_ID;
+    delete process.env.APP_STORE_CONNECT_PRIVATE_KEY;
+    delete process.env.APP_STORE_BUNDLE_ID;
+
+    try {
+      const app = await buildApp(buildDb(scopedAccessSeed()));
+      const adminHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+      const res = await app.inject({
+        method: "PUT",
+        url: "/circles/c1/recipients/cr2/entitlement",
+        headers: adminHeaders,
+        payload: {
+          userId: "u1",
+          source: "APP_STORE",
+          appleOriginalTransactionId: "otx-misconfigured",
+          appleProductId: "com.careloop.ios.premium.monthly",
+        },
+      });
+
+      assert.equal(res.statusCode, 500);
+      assert.equal(res.json().code, "APP_STORE_SERVER_CONFIG_MISSING");
+      await app.close();
+    } finally {
+      if (previousEnabled === undefined) delete process.env.APP_STORE_SERVER_API_ENABLED;
+      else process.env.APP_STORE_SERVER_API_ENABLED = previousEnabled;
+      if (previousIssuer === undefined) delete process.env.APP_STORE_CONNECT_ISSUER_ID;
+      else process.env.APP_STORE_CONNECT_ISSUER_ID = previousIssuer;
+      if (previousKey === undefined) delete process.env.APP_STORE_CONNECT_KEY_ID;
+      else process.env.APP_STORE_CONNECT_KEY_ID = previousKey;
+      if (previousPrivateKey === undefined) delete process.env.APP_STORE_CONNECT_PRIVATE_KEY;
+      else process.env.APP_STORE_CONNECT_PRIVATE_KEY = previousPrivateKey;
+      if (previousBundle === undefined) delete process.env.APP_STORE_BUNDLE_ID;
+      else process.env.APP_STORE_BUNDLE_ID = previousBundle;
+    }
+  });
+
   test("treats billing retry and refunded receiver entitlements as locked but visible", async () => {
     const app = await buildApp(buildDb(scopedAccessSeed()));
     const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });

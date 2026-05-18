@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-D5 is next: prepare server-side App Store transaction verification.
+E1 is next: implement receiver adherence summary reporting.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D5 | Prepare server-side App Store transaction verification. | Backend billing adapter; environment config; docs. | Adapter unit tests with signed fixture responses; release checklist. | No local demo dependency. | Planned |
+| E1 | Receiver adherence summary. | Backend insights aggregation; iOS Insights. | Backend aggregation tests; iOS report fixture. | Demo reports should show useful adherence numbers. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| E1 | Receiver adherence summary. | Backend insights aggregation; iOS Insights. | Backend aggregation tests; iOS report fixture. | Demo reports should show useful adherence numbers. | Planned |
 | E2 | Missed and overdue task trends. | Backend insights aggregation; iOS charts/cards. | Backend trend tests; iOS report fixture. | Demo reports should include missed/overdue contrast. | Planned |
 | E3 | Caregiver activity and load distribution. | Backend insights aggregation; iOS charts/cards. | Backend load tests; iOS report fixture. | Demo should show multiple caregiver activity. | Planned |
 | E4 | Escalation history and response timing. | Backend reminder/event aggregation; iOS reports. | Backend escalation report tests; iOS report fixture. | Demo can show escalation history. | Planned |
@@ -69,6 +68,7 @@ D5 is next: prepare server-side App Store transaction verification.
 | D2 | Restore purchases and entitlement refresh hardening. | Shared iOS receiver entitlement sync helper for purchase/restore, management restore CTA syncs restored active transactions to the selected receiver, `xcodebuild build-for-testing`, and focused Xcode UI `test_organizerCanManagePremiumReceiverPlan`. |
 | D3 | Expired, revoked, billing retry, and refund states. | Added backend/iOS receiver entitlement states for billing retry and refunded, kept locked-but-visible policy centralized in entitlement capabilities, added Prisma migration, backend entitlement regressions, iOS model coverage, and focused Xcode UI `test_organizerSeesPremiumBillingAndRefundStates`. |
 | D4 | Free-one-receiver policy across add receiver, recurrence, insights, and caregiver limits. | Backend now requires an active premium receiver before accepting add-receiver premium intent, existing entitlement capability gates continue to enforce recurrence/insights/caregiver access, and focused backend plus Xcode UI coverage prove the cross-surface free-vs-premium contrast. |
+| D5 | Server-side App Store transaction verification readiness. | Added App Store Server API transaction adapter, optional fail-closed entitlement verification behind `APP_STORE_SERVER_API_ENABLED`, signed transaction fixture tests, route misconfiguration regression, and README/runbook credential documentation. |
 
 ## Blocked / External Setup
 

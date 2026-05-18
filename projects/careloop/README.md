@@ -90,3 +90,13 @@ External setup still required before production billing validation:
 - App Store Connect subscription group and product creation using the exact IDs above.
 - Xcode scheme StoreKit Configuration set to `CareLoop.storekit` for local purchase simulation.
 - Sandbox tester accounts for physical-device/TestFlight purchase and restore validation.
+
+Server-side App Store transaction verification is ready behind `APP_STORE_SERVER_API_ENABLED=true`. Required production/sandbox environment variables:
+
+- `APP_STORE_SERVER_ENVIRONMENT`: `sandbox` or `production`
+- `APP_STORE_CONNECT_ISSUER_ID`
+- `APP_STORE_CONNECT_KEY_ID`
+- `APP_STORE_CONNECT_PRIVATE_KEY`
+- `APP_STORE_BUNDLE_ID`
+
+When verification is disabled, local/demo entitlement sync keeps using product and transaction identity validation only. When enabled but misconfigured, entitlement sync fails closed instead of granting Premium.

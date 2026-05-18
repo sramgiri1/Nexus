@@ -594,4 +594,6 @@ curl http://localhost:3000/users/me -H "Authorization: Bearer $TOKEN"
 - [x] Entitlement sync rejects unsupported sources; `MANUAL` remains available for admin operations/testing
 - [x] Premium receiver unlocks additional caregiver access grants
 - [x] Free receiver blocks recurring schedules with 402
-- [ ] Server-side App Store receipt / transaction verification against Apple production and sandbox APIs
+- [x] Server-side App Store transaction verification adapter is ready for Apple production and sandbox APIs
+- [x] Entitlement sync fails closed when App Store verification is enabled without required credentials
+- [ ] Live Apple transaction verification with App Store Connect credentials and sandbox purchases

@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, and Phase D1-D4 StoreKit/billing/free-policy hardening implemented and validation complete on the active branch
-- Next action: Start Phase D5 server-side App Store transaction verification readiness; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, and Phase D1-D5 StoreKit/billing/free-policy hardening implemented and validation complete on the active branch
+- Next action: Start Phase E1 receiver adherence summary reporting; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -41,6 +41,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase D2 is complete: purchase and restore now share the same receiver entitlement sync helper, Receiver Premium Management restores active App Store transactions back to the selected care receiver, and the restore CTA makes the receiver-scoped sync explicit.
 - Phase D3 is complete: billing retry and refunded receiver entitlement states are represented in backend, Prisma, iOS models, and organizer UI as locked-but-visible states that preserve history while blocking new premium actions.
 - Phase D4 is complete: backend add-receiver policy now requires an active premium receiver instead of trusting client intent alone, while recurrence, insights, and caregiver limits remain enforced through shared entitlement capabilities and covered by focused regression tests.
+- Phase D5 is complete: backend App Store Server API transaction verification is ready behind explicit environment configuration, entitlement sync fails closed when verification is enabled but credentials are missing, and local/demo mode remains deterministic with strict product/transaction identity checks.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -98,12 +99,13 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Backend cross-surface premium/free policy regression passed 124 tests after Phase D4 add-receiver entitlement enforcement.
 - `xcodebuild build-for-testing` passed after Phase D4 free-plan UI alignment.
 - Focused Xcode UI tests `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` passed after Phase D4.
+- Backend App Store Server API adapter and entitlement fail-closed regression passed 130 tests after Phase D5.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 
 ## Remaining Blockers
 
-- App Store Connect subscription products and sandbox testers are not configured in this local repo.
+- App Store Connect subscription products, server API credentials, and sandbox testers are not configured in this local repo.
 - Physical-device/TestFlight validation for APNs delivery, notification tap, universal links, and OS permission prompts.
 - Real Google/Facebook/Apple auth credentials and redirect URI configuration.
 - StoreKit sandbox purchase/restore and App Store entitlement verification.

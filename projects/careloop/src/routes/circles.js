@@ -2,6 +2,7 @@ import { Prisma } from "@prisma/client";
 import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticatedUser } from "../lib/roles.js";
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
+import { AppStoreVerificationError, verifyAppStoreTransaction } from "../lib/app-store-server.js";
 import {
   RECEIVER_ENTITLEMENT_STATUS,
   isSupportedReceiverPremiumProductId,
@@ -731,9 +732,29 @@ export default async function circles(app) {
       }
     }
 
+    let verification = { verified: false };
+    if (normalizedSource === "APP_STORE") {
+      try {
+        verification = await verifyAppStoreTransaction({
+          transactionId: appleOriginalTransactionId,
+          expectedProductId: appleProductId,
+          expectedOriginalTransactionId: appleOriginalTransactionId,
+        });
+      } catch (error) {
+        if (error instanceof AppStoreVerificationError) {
+          return reply.code(error.statusCode ?? 400).send({ error: error.message, code: error.code });
+        }
+        throw error;
+      }
+
+      if (verification.verified) {
+        expirationDate = verification.transaction.expiresAt ?? expirationDate;
+      }
+    }
+
     const updatedRecipient = await db.$transaction(async (tx) => {
       const payload = {
-        status: normalizedStatus,
+        status: verification.verified ? verification.transaction.status : normalizedStatus,
         source: normalizedSource,
         startsAt: recipient.entitlement?.startsAt ?? new Date(),
         expiresAt: expirationDate,
@@ -763,8 +784,9 @@ export default async function circles(app) {
           actorId: authenticatedUserId,
           payload: {
             recipientId: recipient.id,
-            entitlementStatus: normalizedStatus,
+            entitlementStatus: verification.verified ? verification.transaction.status : normalizedStatus,
             appleProductId: appleProductId ?? null,
+            appStoreVerified: verification.verified === true,
           },
         },
       });
