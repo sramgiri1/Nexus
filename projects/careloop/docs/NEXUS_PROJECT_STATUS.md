@@ -30,6 +30,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase A edit-task subphase is in progress: Task Detail now opens in a view-first mode, exposes an explicit organizer `Edit` action for content changes, and keeps status/comment actions available without making every field editable by default.
 - Phase A delete-task subphase is complete: Task Detail now uses an alert-based destructive confirmation, supports cancel/confirm behavior in UI-test fixtures, and removes deleted tasks from the local task board state.
 - Phase A blocked-state subphase is complete: Task Detail now resolves the actual task care receiver before applying inactive-receiver policy, displays a blocked-action card for invited receivers, and hides edit/status/comment/snooze/delete actions until the receiver accepts or is proxy activated.
+- Phase A escalation-visibility subphase is complete: Task Detail now surfaces overdue/escalated state from the shared Task Detail policy and keeps actionable status/snooze controls visible for escalated tasks.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -60,6 +61,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode UI test `CareLoopUITests/test_organizerCanEditTaskTitleFromDetail` passed for organizer task-title editing from Task Detail.
 - Focused Xcode UI test `CareLoopUITests/test_organizerCanCancelAndConfirmTaskDeleteFromDetail` passed for Task Detail delete cancel/confirm behavior.
 - Focused Xcode UI test `CareLoopUITests/test_taskDetailBlocksActionsForInvitedReceiver` passed for inactive receiver task-action blocking.
+- Focused Xcode UI test `CareLoopUITests/test_taskDetailShowsEscalationStateForOverdueTask` passed for Task Detail escalation visibility.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

@@ -716,6 +716,25 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_taskDetailShowsEscalationStateForOverdueTask() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t2",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t2"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t2"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Escalation active"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["This task passed the escalation window. Mark it done, snooze it, or reassign it so the care team has a clear next step."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["task-detail-status-done"].exists)
+        XCTAssertTrue(app.buttons["snooze-15-button"].exists)
+    }
+
+    @MainActor
     func test_taskCommentsCanBeAddedAndDeleted() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "task-comments",

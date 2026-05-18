@@ -154,6 +154,8 @@ struct TaskDetailView: View {
                 titleCard
                 if isTaskBlocked {
                     blockedTaskCard
+                } else if shouldShowUrgencyCard {
+                    urgencyCard
                 }
                 modeToggle.disabled(!canEditContent)
 
@@ -284,6 +286,27 @@ struct TaskDetailView: View {
             .padding(16)
         }
         .accessibilityIdentifier("task-detail-blocked-card")
+    }
+
+    private var urgencyCard: some View {
+        CardShell {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: urgencyIcon)
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(urgencyColor)
+                    .frame(width: 28)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text(urgencyTitle)
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    Text(urgencyMessage)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(16)
+        }
+        .accessibilityIdentifier("task-detail-urgency-card")
     }
 
     // MARK: – Mode toggle
@@ -921,6 +944,33 @@ struct TaskDetailView: View {
 
     private var isTaskBlocked: Bool {
         detailPresentation.blockedReason != nil
+    }
+
+    private var shouldShowUrgencyCard: Bool {
+        detailPresentation.displayState == .overdue || detailPresentation.displayState == .escalated
+    }
+
+    private var urgencyIcon: String {
+        detailPresentation.displayState == .escalated ? "exclamationmark.octagon.fill" : "clock.badge.exclamationmark.fill"
+    }
+
+    private var urgencyColor: Color {
+        detailPresentation.displayState == .escalated ? .red : .orange
+    }
+
+    private var urgencyTitle: String {
+        detailPresentation.displayState == .escalated ? "Escalation active" : "Task is overdue"
+    }
+
+    private var urgencyMessage: String {
+        switch detailPresentation.displayState {
+        case .escalated:
+            return "This task passed the escalation window. Mark it done, snooze it, or reassign it so the care team has a clear next step."
+        case .overdue:
+            return "This task is overdue but still inside the escalation window. Complete or snooze it before it escalates."
+        default:
+            return ""
+        }
     }
 
     private var shouldPromptForSeriesScope: Bool {
