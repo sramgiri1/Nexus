@@ -4,7 +4,7 @@
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
 - Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, and Phase F1-F4 notification/deep-link/snooze/escalation coverage implemented and validation complete on the active branch
-- Next action: Continue Phase G demo readiness locally with G1-G4 seed/launcher/smoke validation while Phase F5 physical-device APNs/TestFlight validation waits on Apple setup
+- Next action: Start Phase H release hygiene locally while Phase F5 physical-device APNs/TestFlight validation waits on Apple setup
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -52,6 +52,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase F3 is complete: snooze persistence now verifies the rescheduled reminder window and Task Detail tells users when the reminder will fire again while escalation is paused.
 - Phase F4 is complete: escalation fanout now logs non-PII delivery summaries, disabled escalation alerts are treated as blocked rather than failed, organizer Activity exposes escalation timeline entries, and focused backend/Xcode coverage verifies the flow.
 - Phase G1-G3 are complete: demo readiness now enforces four real-world Care Circle scenarios, launch personas across organizer/caregiver/care receiver roles, receiver access scopes, and mixed task/reminder/premium/history states.
+- Phase G4 is complete: `npm run careloop:demo:check` now validates the one-command room launcher contract without booting simulator windows on every agent run.
 - Phase G5 is complete: a CareLoop-local demo readiness guard now validates the four showcase scenarios, launch personas, mixed task/reminder/premium states, local-only demo emails, StoreKit product parity, and the one-command launcher contract.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
@@ -121,6 +122,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Backend snooze/scheduler regressions and focused Xcode UI `CareLoopUITests/test_taskDetailCanSnoozeReminder` passed after Phase F3 rescheduled reminder visibility.
 - Backend escalation fanout/sanitized payload regressions, focused Xcode UI `CareLoopUITests/test_organizerActivityShowsEscalationTimelineEntry`, and `xcodebuild build-for-testing` passed after Phase F4 escalation timeline verification.
 - `npm run check:demo-showcase` and direct demo seed validation passed after Phase G5, producing 4 circles, 4 launch profiles, 23 tasks, and 5 care receivers.
+- `npm run careloop:demo:check` passed after Phase G4 one-command launcher contract validation.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

@@ -46,9 +46,17 @@ check(packageJson.scripts?.["qa:seed:showcase"] === "node scripts/seed-demo-show
 check(packageJson.scripts?.["check:demo-showcase"] === "node scripts/check-demo-showcase-readiness.js", "package.json must expose check:demo-showcase");
 check(packageJson.scripts?.["check:careloop-demo-readiness"] === "node scripts/check-demo-showcase-readiness.js", "package.json must expose check:careloop-demo-readiness");
 check(fs.existsSync(launcherPath), "one-command launcher script must exist");
+check(launcher.includes("const apiBaseUrl = \"http://127.0.0.1:3000\""), "launcher must target the local CareLoop API");
+check(launcher.includes("ensureApiRunning()"), "launcher must start or reuse the local API");
+check(launcher.includes("seedManifest()"), "launcher must reseed showcase data before launch");
 check(launcher.includes("selectSimulatorDevices(profiles.length)"), "launcher must open one simulator per launch profile");
 check(launcher.includes("CARELOOP_DEMO_FORCE_BUILD"), "launcher must support force rebuild for fresh demo installs");
+check(launcher.includes("CARELOOP_DEMO_FORCE_INSTALL"), "launcher must support force install for clean simulator demos");
 check(launcher.includes("refreshManifestTokens"), "launcher must refresh demo tokens after seeding");
+check(launcher.includes("SIMCTL_CHILD_CARELOOP_DEMO_ACCESS_TOKEN"), "launcher must pass demo tokens through simulator environment");
+check(launcher.includes("SIMCTL_CHILD_CARELOOP_DEMO_CIRCLE_ID"), "launcher must pass active circle context through simulator environment");
+check(launcher.includes("openSimulatorWindowsForBootedDevices()"), "launcher must open simulator windows for room demos");
+check(launcher.includes("manifestPath") && launcher.includes("sessions:"), "launcher summary must include manifest path and launched sessions");
 
 for (const [key, useCase] of scenarios) {
   check(seed.includes(`key: "${key}"`), `demo seed missing scenario ${key}`);

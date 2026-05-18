@@ -1220,10 +1220,10 @@ After the receiver-scoped premium phase, implementation should continue in small
 1. Four realistic Care Circles with distinct real-world use cases. **Complete.**
 2. Multiple personas per circle with different roles and access scopes. **Complete.**
 3. Mixed task states, history, comments, reminders, premium, expired, and locked states. **Complete.**
-4. One-command launch plus optional screen-recording script.
+4. One-command launch plus optional screen-recording script. **Complete.**
 5. Demo readiness validation that fails if fixtures drift from the PRD. **Complete.**
 
-**Tests:** demo readiness script, smoke launch, and focused UI fixture checks. G1-G3 are enforced by the CareLoop-local demo guard and validated by the emitted seed manifest: 4 circles, 4 launch profiles, 23 tasks, and 5 care receivers across aging parent, post-surgery, postpartum/newborn, and memory-care scenarios. G5 adds `npm run check:demo-showcase` / `npm run check:careloop-demo-readiness` checks for the four real-world scenarios, launch personas, mixed task/reminder/premium states, local-only demo email domains, StoreKit product parity, and one-command launcher contract before demo changes are accepted.
+**Tests:** demo readiness script, smoke launch, and focused UI fixture checks. G1-G3 are enforced by the CareLoop-local demo guard and validated by the emitted seed manifest: 4 circles, 4 launch profiles, 23 tasks, and 5 care receivers across aging parent, post-surgery, postpartum/newborn, and memory-care scenarios. G4 adds `npm run careloop:demo:check` to validate the existing one-command launcher contract without opening simulator windows on every agent run. G5 adds `npm run check:demo-showcase` / `npm run check:careloop-demo-readiness` checks for the four real-world scenarios, launch personas, mixed task/reminder/premium states, local-only demo email domains, StoreKit product parity, and one-command launcher contract before demo changes are accepted.
 
 #### Phase H — Release Readiness
 
