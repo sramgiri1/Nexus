@@ -178,7 +178,10 @@ struct RecipientManagementView: View {
                     .environmentObject(appState)
             }
             .sheet(item: $managementRecipient) { recipient in
-                ReceiverPremiumManagementView(recipient: recipient)
+                ReceiverPremiumManagementView(
+                    circleId: appState.activeCircle?.id ?? "",
+                    recipient: recipient
+                )
             }
             .confirmationDialog(
                 "Remove \(removalRecipient?.name ?? "care receiver")?",

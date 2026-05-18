@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, and Phase D1 StoreKit metadata hardening implemented and validation complete on the active branch
-- Next action: Start Phase D2 restore purchases and entitlement refresh hardening; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, and Phase D1-D2 StoreKit restore hardening implemented and validation complete on the active branch
+- Next action: Start Phase D3 expired, revoked, billing retry, and refund state coverage; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -38,6 +38,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase C4 is complete: backend task creation remains blocked until receiver activation, and New Task now surfaces a clear inactive-receiver blocked state instead of hiding inactive receivers behind an empty picker.
 - Phase C5 is complete: Care Receiver Management now requires destructive confirmation before receiver removal and surfaces backend-aligned blocked-delete copy when active tasks require preservation.
 - Phase D1 is complete: StoreKit product metadata is centralized in iOS, paywall fallback prices now match the local StoreKit fixture, and backend entitlement sync rejects unsupported App Store product IDs.
+- Phase D2 is complete: purchase and restore now share the same receiver entitlement sync helper, Receiver Premium Management restores active App Store transactions back to the selected care receiver, and the restore CTA makes the receiver-scoped sync explicit.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -87,6 +88,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode UI tests `CareLoopUITests/test_organizerCanAddEditAndRemoveCareReceiverLocally` and `CareLoopUITests/test_organizerSeesBlockedCareReceiverRemovalReason` passed after Phase C5 receiver removal confirmation and blocked-state coverage.
 - Backend entitlement metadata test `validates premium entitlement sync source and App Store transaction identity` passed after Phase D1 unsupported product validation.
 - `xcodebuild build-for-testing` passed after Phase D1 StoreKit metadata/parity unit-test additions. Focused unit execution for `CareLoopTests/SubscriptionManagerProductIdTests` was blocked by simulator launch denial (`FBSOpenApplicationServiceErrorDomain Code=1`), not a compile or assertion failure.
+- `xcodebuild build-for-testing` passed after Phase D2 receiver restore sync refactor.
+- Focused Xcode UI test `CareLoopUITests/test_organizerCanManagePremiumReceiverPlan` passed after Phase D2 restore CTA and receiver-scoped sync changes.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

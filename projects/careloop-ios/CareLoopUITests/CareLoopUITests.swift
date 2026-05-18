@@ -757,6 +757,8 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(app.staticTexts["Manage Premium for Maya"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["Premium applies only to Maya's care workflow in this Care Circle."].exists)
+        XCTAssertTrue(app.buttons["restore-premium-purchase-button"].waitForExistence(timeout: 3))
+        XCTAssertEqual(app.buttons["restore-premium-purchase-button"].label, "Restore and sync purchase")
     }
 
     @MainActor

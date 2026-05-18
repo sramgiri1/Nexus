@@ -475,22 +475,21 @@ struct PaywallView: View {
     private func purchaseAndSync(_ product: Product) async {
         syncError = nil
         await store.purchase(product)
-        guard let purchase = store.latestPurchaseSnapshot else {
-            return
-        }
-        await syncEntitlement(
-            productId: purchase.productId,
-            originalTransactionId: String(purchase.originalTransactionId),
-            expiresAt: purchase.expirationDate
-        )
+        await syncLatestPurchaseSnapshot()
     }
 
     private func restoreAndSync() async {
         syncError = nil
         await store.restorePurchases()
-        guard let purchase = store.latestPurchaseSnapshot else {
-            return
-        }
+        await syncLatestPurchaseSnapshot()
+    }
+
+    private func syncLatestPurchaseSnapshot() async {
+        guard let purchase = store.latestPurchaseSnapshot else { return }
+        await syncEntitlement(purchase)
+    }
+
+    private func syncEntitlement(_ purchase: SubscriptionManager.PurchaseSnapshot) async {
         await syncEntitlement(
             productId: purchase.productId,
             originalTransactionId: String(purchase.originalTransactionId),
@@ -503,14 +502,14 @@ struct PaywallView: View {
         defer { isSyncingEntitlement = false }
 
         do {
-            _ = try await APIClient.shared.syncRecipientPremium(
+            try await ReceiverPremiumEntitlementSync.sync(
                 circleId: circleId,
-                recipientId: recipient.id,
+                recipient: recipient,
+                productId: productId,
+                originalTransactionId: originalTransactionId,
                 expiresAt: expiresAt,
-                appleOriginalTransactionId: originalTransactionId,
-                appleProductId: productId
+                appState: appState
             )
-            try await appState.activateCircle(id: circleId)
             showSuccess(productId: productId, expiresAt: expiresAt)
         } catch {
             syncError = error.localizedDescription
@@ -519,6 +518,43 @@ struct PaywallView: View {
 
     private func showSuccess(productId: String, expiresAt: Date?) {
         completion = PremiumPurchaseCompletion(productId: productId, expiresAt: expiresAt)
+    }
+}
+
+@MainActor
+private enum ReceiverPremiumEntitlementSync {
+    static func sync(
+        circleId: String,
+        recipient: CareRecipient,
+        purchase: SubscriptionManager.PurchaseSnapshot,
+        appState: AppState
+    ) async throws {
+        try await sync(
+            circleId: circleId,
+            recipient: recipient,
+            productId: purchase.productId,
+            originalTransactionId: String(purchase.originalTransactionId),
+            expiresAt: purchase.expirationDate,
+            appState: appState
+        )
+    }
+
+    static func sync(
+        circleId: String,
+        recipient: CareRecipient,
+        productId: String,
+        originalTransactionId: String,
+        expiresAt: Date?,
+        appState: AppState
+    ) async throws {
+        _ = try await APIClient.shared.syncRecipientPremium(
+            circleId: circleId,
+            recipientId: recipient.id,
+            expiresAt: expiresAt,
+            appleOriginalTransactionId: originalTransactionId,
+            appleProductId: productId
+        )
+        try await appState.activateCircle(id: circleId)
     }
 }
 
@@ -537,10 +573,15 @@ private struct PremiumPurchaseCompletion: Equatable {
 }
 
 struct ReceiverPremiumManagementView: View {
+    let circleId: String
     let recipient: CareRecipient
 
+    @EnvironmentObject private var appState: AppState
     @Environment(\.dismiss) private var dismiss
     @ObservedObject private var store = SubscriptionManager.shared
+    @State private var isSyncingEntitlement = false
+    @State private var syncMessage: String?
+    @State private var syncError: String?
 
     var body: some View {
         NavigationStack {
@@ -613,22 +654,41 @@ struct ReceiverPremiumManagementView: View {
             .accessibilityIdentifier("manage-in-app-store-button")
 
             Button {
-                Task { await store.restorePurchases() }
+                Task { await restoreAndSync() }
             } label: {
-                Text("Restore purchase")
+                Text("Restore and sync purchase")
                     .font(.system(size: 14, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity)
                     .padding(.vertical, 12)
             }
             .buttonStyle(.bordered)
-            .disabled(store.isLoading)
+            .disabled(store.isLoading || isSyncingEntitlement)
             .accessibilityIdentifier("restore-premium-purchase-button")
 
-            if let message = store.restoreMessage {
+            if isSyncingEntitlement {
+                ProgressView("Syncing entitlement...")
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .accessibilityIdentifier("restore-premium-sync-progress")
+            }
+
+            if let syncError {
+                Text(syncError)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.80, green: 0.20, blue: 0.20))
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("restore-premium-sync-error")
+            } else if let syncMessage {
+                Text(syncMessage)
+                    .font(.system(size: 12, weight: .semibold, design: .rounded))
+                    .foregroundStyle(Color(red: 0.07, green: 0.63, blue: 0.52))
+                    .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("restore-premium-sync-message")
+            } else if let message = store.restoreMessage {
                 Text(message)
                     .font(.system(size: 12, weight: .semibold, design: .rounded))
                     .foregroundStyle(Color(red: 0.42, green: 0.50, blue: 0.64))
                     .multilineTextAlignment(.center)
+                    .accessibilityIdentifier("restore-premium-message")
             }
         }
         .padding(18)
@@ -662,6 +722,31 @@ struct ReceiverPremiumManagementView: View {
                 .font(.system(size: 13, weight: .bold, design: .rounded))
                 .foregroundStyle(Color(red: 0.08, green: 0.12, blue: 0.24))
                 .multilineTextAlignment(.trailing)
+        }
+    }
+
+    private func restoreAndSync() async {
+        syncError = nil
+        syncMessage = nil
+        await store.restorePurchases()
+
+        guard let purchase = store.latestPurchaseSnapshot else {
+            return
+        }
+
+        isSyncingEntitlement = true
+        defer { isSyncingEntitlement = false }
+
+        do {
+            try await ReceiverPremiumEntitlementSync.sync(
+                circleId: circleId,
+                recipient: recipient,
+                purchase: purchase,
+                appState: appState
+            )
+            syncMessage = "Restored purchase synced for \(recipient.name)."
+        } catch {
+            syncError = error.localizedDescription
         }
     }
 }

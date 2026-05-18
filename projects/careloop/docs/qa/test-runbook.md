@@ -61,6 +61,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | One user across multiple circles in different roles | `backend:scale`, `ios:personas` |
 | Delete circle/member/receiver scenarios | `backend:circles`; receiver removal confirmation and blocked-delete UI coverage; circle/member UI delete coverage remains in `testability-matrix.md` backlog |
 | StoreKit product metadata | Backend entitlement metadata test; `xcodebuild build-for-testing`; focused iOS unit coverage in `CareLoopTests/SubscriptionManagerProductIdTests` for product IDs, fallback prices, and local StoreKit fixture parity |
+| Premium restore and entitlement refresh | `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanManagePremiumReceiverPlan` verifies the receiver-scoped restore CTA; purchase and restore reuse the shared receiver entitlement sync helper |
 
 ## Notes
 
@@ -71,6 +72,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused task-block validation can be run with Xcode UI test `test_taskDetailBlocksActionsForInvitedReceiver`.
 - Focused receiver-delete validation can be run with Xcode UI tests `test_organizerCanAddEditAndRemoveCareReceiverLocally` and `test_organizerSeesBlockedCareReceiverRemovalReason`.
 - Focused StoreKit metadata validation can be run with backend test `validates premium entitlement sync source and App Store transaction identity` and Xcode unit test class `CareLoopTests/SubscriptionManagerProductIdTests`.
+- Focused Premium restore validation can be run with `xcodebuild build-for-testing` and Xcode UI test `test_organizerCanManagePremiumReceiverPlan`.
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
 - Focused invite/access validation can be run with Xcode UI tests `test_organizerCanResendAndRevokePendingCaregiverInvite`, `test_careReceiverCanAcceptPendingInviteFromDirectory`, `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`, `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`, and `test_inviteEdgeStatesDisableResponseActions`.
 - Focused receiver lifecycle, activation, and proxy-attestation validation can be run with backend receiver tests in `test/sprint2.test.js` and Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `test_organizerChoosesReceiverActivationPath`.
