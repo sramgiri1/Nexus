@@ -91,9 +91,10 @@ curl -X POST http://localhost:3000/circles/<circleId>/tasks \
 - [x] Reminder with `sentAt <= (now - 14min)` does NOT qualify  
 - [x] `task.status = DONE` suppresses escalation (Prisma filter: `task.status { not: "DONE" }`)  
 - [x] `task.status = SKIPPED` also suppresses reminder send and escalation
-- [x] Escalation fans out to all circle members  
+- [x] Escalation fans out to the assignee, Care Organizers, and caregivers with explicit access to the task's care receiver
 - [x] Updates `Reminder.status=ESCALATED`, `escalatedAt=now`  
-- [x] Logs `REMINDER_ESCALATED` event  
+- [x] Logs `REMINDER_ESCALATED` event with non-PII delivery summary counts/channels instead of raw delivery records
+- [x] User-disabled escalation alerts are counted as blocked and do not force the reminder into `FAILED`
 
 ### 5. Daily digest
 
@@ -461,7 +462,8 @@ curl -X PATCH http://localhost:3000/circles/<circleId>/tasks/<taskId> \
 - [x] `GET /circles/:id/events` includes `actor: { id, name }` via Prisma `include`
 - [x] Response capped at 100 most recent events (ordered descending by `createdAt`)
 - [x] All 20 `EventType` values are present in the Prisma schema
-- [x] System events (REMINDER_SENT, REMINDER_ESCALATED, DIGEST_SENT, DIGEST_OPENED, APP_SESSION) are logged but filtered client-side
+- [x] Reminder events (`REMINDER_SENT`, `REMINDER_ESCALATED`) are logged with non-PII payload summaries and visible in organizer Activity
+- [x] Digest/session system events (`DIGEST_SENT`, `DIGEST_OPENED`, `APP_SESSION`) are logged but filtered client-side
 
 **curl:**
 

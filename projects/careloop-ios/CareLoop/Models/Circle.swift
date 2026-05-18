@@ -446,9 +446,9 @@ struct CircleEvent: Identifiable, Codable {
         case .memberJoined:         return "\(who) joined via circle code"
         case .memberRemoved:        return "\(who) removed a member"
         case .memberRoleUpdated:    return "\(who) updated a member's role"
-        case .reminderSent,
-             .reminderEscalated,
-             .digestSent,
+        case .reminderSent:        return "CareLoop sent a reminder"
+        case .reminderEscalated:   return "CareLoop escalated a task"
+        case .digestSent,
              .digestOpened,
              .appSession,
              .unknown:              return ""
@@ -505,6 +505,8 @@ struct CircleEvent: Identifiable, Codable {
         case .recipientAdded, .recipientUpdated,
              .recipientRemoved:                 return "heart.circle.fill"
         case .circleCreated:                    return "star.circle.fill"
+        case .reminderSent:                     return "bell.circle.fill"
+        case .reminderEscalated:                return "exclamationmark.octagon.fill"
         default:                                return "circle.fill"
         }
     }
@@ -512,6 +514,8 @@ struct CircleEvent: Identifiable, Codable {
     var feedIconColor: (red: Double, green: Double, blue: Double) {
         switch type {
         case .taskCompleted:                    return (0.12, 0.68, 0.49)
+        case .reminderEscalated:                return (0.85, 0.30, 0.30)
+        case .reminderSent:                     return (0.13, 0.56, 0.87)
         case .taskDeleted:                      return (0.85, 0.30, 0.30)
         case .taskCreated, .taskSeriesCreated,
              .taskUpdated:                      return (0.13, 0.56, 0.87)

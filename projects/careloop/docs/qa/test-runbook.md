@@ -38,7 +38,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | `ios:onboarding` | Onboarding, auth validation, keychain, circle directory. |
 | `ios:personas` | Organizer, caregiver, care receiver dashboards and role switching. |
 | `ios:tasks` | Task board, personal task board, recurrence model, completion flow. |
-| `ios:reminders` | Reminder scheduling model, push deep-link state, pending/completed/wrong-circle UI deep links, snooze UI, and rescheduled reminder copy. |
+| `ios:reminders` | Reminder scheduling model, push deep-link state, pending/completed/wrong-circle UI deep links, snooze UI, rescheduled reminder copy, and organizer escalation activity timeline. |
 | `ios:payments` | Paywall, StoreKit metadata, premium disclosure, premium locks. |
 
 ## Current Critical Journey Coverage
@@ -54,7 +54,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Task detail delete | Focused iOS UI test for organizer delete cancel/confirm from Task Detail |
 | Task detail blocked actions | Focused iOS UI test for invited care receiver blocking edit/status/comment/snooze/delete actions |
 | Task detail escalation | Focused iOS UI test for escalated task copy plus visible status/snooze recovery actions |
-| Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders` |
+| Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders`; backend verifies escalation fanout and non-PII delivery summaries, and iOS verifies organizer Activity escalation timeline copy |
 | Notification preferences | Backend `PATCH /users/:id/notification-preferences`, assignment/escalation delivery gates, daily digest opt-out test; `xcodebuild build-for-testing`; focused iOS UI `test_settingsNotificationPreferencesCanBeChanged` |
 | Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, proxy-attestation, and receiver-delete tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerChoosesReceiverActivationPath`, and `test_organizerSeesBlockedCareReceiverRemovalReason` |
 | New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
@@ -83,6 +83,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused free/premium gate validation can be run with backend tests for add-receiver intent, recurring schedules, insights, and caregiver limits, plus Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_insightsLockFreeReceiverBehindPremiumUpgrade`, and `test_organizerCanOpenCareReceiverManagement`.
 - Focused App Store Server verification readiness can be run with `node --test test/app-store-server.test.js` and backend route test `fails closed when App Store verification is enabled without server credentials`.
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
+- Focused escalation fanout/timeline validation can be run with backend test `escalation fanout logs a sanitized timeline summary without blocking on disabled alerts` and Xcode UI test `test_organizerActivityShowsEscalationTimelineEntry`.
 - Focused invite/access validation can be run with Xcode UI tests `test_organizerCanResendAndRevokePendingCaregiverInvite`, `test_careReceiverCanAcceptPendingInviteFromDirectory`, `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`, `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`, and `test_inviteEdgeStatesDisableResponseActions`.
 - Focused receiver lifecycle, activation, and proxy-attestation validation can be run with backend receiver tests in `test/sprint2.test.js` and Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `test_organizerChoosesReceiverActivationPath`.
 - Focused inactive-receiver task-create validation can be run with backend `returns 400 when the care receiver has not accepted or been proxy-activated` and Xcode UI `test_newTaskBlocksInactiveCareReceiverUntilActivation`.

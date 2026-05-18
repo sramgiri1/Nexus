@@ -457,6 +457,7 @@ private struct UITestScenarioFixture {
                     ),
                 ],
                 events: [
+                    CircleEvent(id: "e0", type: .reminderEscalated, createdAt: Date().addingTimeInterval(-20 * 60), actorId: organizer.id, actor: organizerActor),
                     CircleEvent(id: "e1", type: .taskCompleted, createdAt: Date().addingTimeInterval(-45 * 60), actorId: caregiver.id, actor: caregiverActor),
                     CircleEvent(id: "e2", type: .recipientUpdated, createdAt: Date().addingTimeInterval(-90 * 60), actorId: organizer.id, actor: organizerActor),
                     CircleEvent(id: "e3", type: .taskCreated, createdAt: Date().addingTimeInterval(-4 * 60 * 60), actorId: organizer.id, actor: organizerActor),

@@ -1016,6 +1016,18 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerActivityShowsEscalationTimelineEntry() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
+
+        XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
+        tapQuickAction("quick-action-activity", in: app)
+
+        XCTAssertTrue(app.collectionViews["activity-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["CareLoop escalated a task"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Carlos completed a task"].waitForExistence(timeout: 3))
+    }
+
+    @MainActor
     func test_taskCommentsCanBeAddedAndDeleted() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "task-comments",

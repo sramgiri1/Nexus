@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, and Phase F1-F3 notification/deep-link/snooze coverage implemented and validation complete on the active branch
-- Next action: Start Phase F4 escalation timeline and notification fanout verification; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, and Phase F1-F4 notification/deep-link/snooze/escalation coverage implemented and validation complete on the active branch
+- Next action: Phase F5 physical-device APNs/TestFlight validation is external setup; continue local implementation with Phase G demo readiness while App Store Connect products, sandbox testers, APNs, and social-auth credentials are configured
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -50,6 +50,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase F1 is complete: Settings notification preferences persist task assignment, escalation, and daily digest toggles through the existing user route, and digest delivery now respects `notifDigest` before sending email.
 - Phase F2 is complete: simulator deep-link automation now covers organizer and care receiver pending tasks, completed tasks, and wrong-circle guards so reminder taps only route inside the owning circle.
 - Phase F3 is complete: snooze persistence now verifies the rescheduled reminder window and Task Detail tells users when the reminder will fire again while escalation is paused.
+- Phase F4 is complete: escalation fanout now logs non-PII delivery summaries, disabled escalation alerts are treated as blocked rather than failed, organizer Activity exposes escalation timeline entries, and focused backend/Xcode coverage verifies the flow.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -116,6 +117,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Backend notification preference route/delivery regressions, `xcodebuild build-for-testing`, and focused Xcode UI `CareLoopUITests/test_settingsNotificationPreferencesCanBeChanged` passed after Phase F1 notification preference persistence.
 - Focused Xcode UI deep-link suite passed 6 tests after Phase F2: organizer pending, organizer completed, organizer wrong-circle, receiver pending, receiver completed, and receiver wrong-circle.
 - Backend snooze/scheduler regressions and focused Xcode UI `CareLoopUITests/test_taskDetailCanSnoozeReminder` passed after Phase F3 rescheduled reminder visibility.
+- Backend escalation fanout/sanitized payload regressions, focused Xcode UI `CareLoopUITests/test_organizerActivityShowsEscalationTimelineEntry`, and `xcodebuild build-for-testing` passed after Phase F4 escalation timeline verification.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

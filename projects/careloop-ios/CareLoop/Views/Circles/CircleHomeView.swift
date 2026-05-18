@@ -431,6 +431,9 @@ struct CircleHomeView: View {
                     secondaryActionLink(title: "People & Access", icon: "person.2.fill", tint: blue, subtitle: "Invite and scope support", accessibilityIdentifier: "quick-action-people-access") {
                         MemberListView().environmentObject(appState)
                     }
+                    secondaryActionLink(title: "Activity", icon: "clock.fill", tint: teal, subtitle: "Review care timeline", accessibilityIdentifier: "quick-action-activity") {
+                        ActivityFeedView().environmentObject(appState)
+                    }
                     if let upgradeRecipient {
                         secondaryActionButton(
                             title: "Unlock Premium",

@@ -4307,6 +4307,54 @@ describe("receiver-scoped access control", () => {
     assert.equal(blockedSecondGrant.json().error, "Upgrade this care receiver to unlock more caregiver access");
     await app.close();
   });
+
+  test("escalation fanout logs a sanitized timeline summary without blocking on disabled alerts", async () => {
+    const db = buildDb(scopedAccessSeed());
+    db._s.users.find((user) => user.id === "u1").pushToken = "push-admin";
+    db._s.users.find((user) => user.id === "u2").pushToken = "push-assignee";
+    const extraCaregiver = db._s.users.find((user) => user.id === "u6");
+    extraCaregiver.pushToken = "push-support";
+    extraCaregiver.notifEscalations = false;
+    db._s.recipientAccesses.push({
+      id: "cra-escalation-support",
+      memberId: "m6",
+      recipientId: "cr1",
+      grantedById: "u1",
+      grantedAt: new Date(),
+      revokedAt: null,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    });
+    db._s.reminders.push({
+      id: "rem-escalation-fanout",
+      taskId: "t1",
+      status: "SENT",
+      scheduledAt: new Date(Date.now() - 30 * 60 * 1000),
+      sentAt: new Date(Date.now() - 20 * 60 * 1000),
+      snoozedUntil: null,
+      snoozeCount: 0,
+      escalationDueAt: new Date(Date.now() - 1000),
+      escalatedAt: null,
+    });
+
+    await processEscalations(db);
+
+    const reminder = db._s.reminders.find((item) => item.id === "rem-escalation-fanout");
+    assert.equal(reminder.status, "ESCALATED");
+    assert.ok(reminder.escalatedAt);
+
+    const event = db._s.events.find((item) => item.type === "REMINDER_ESCALATED" && item.payload.taskId === "t1");
+    assert.ok(event, "scheduler logs an escalation timeline event");
+    assert.equal(event.payload.recipientId, "cr1");
+    assert.equal(event.payload.status, "ESCALATED");
+    assert.equal(event.payload.recipientCount, 3);
+    assert.equal(event.payload.simulatedCount, 2);
+    assert.equal(event.payload.blockedCount, 1);
+    assert.equal(event.payload.failedCount, 0);
+    assert.deepEqual(event.payload.deliveryChannels, ["NONE", "PUSH"]);
+    assert.equal(event.payload.deliveries, undefined);
+    assert.equal(JSON.stringify(event.payload).includes("@"), false, "timeline payload must not leak emails");
+  });
 });
 
 // ═══════════════════════════════════════════════════════════════════════════════
