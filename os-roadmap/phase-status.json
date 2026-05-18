@@ -2275,15 +2275,21 @@
       "phaseId": "P63.3",
       "title": "Recovery Point Model",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define recovery point metadata, parent-child linkage, resumability flags, and failure-state classification.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "7e8e3cb",
+      "completedAt": "2026-05-18T13:41:55.315Z",
+      "summary": "Defines recovery point records, deterministic recovery state classification, parent-child chains, supersession links, and disabled recovery action flags.",
+      "checksRun": [
+        "npm run check:ai-recovery-point-model",
+        "npm run check:p63-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:state-machine",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+        "Metadata only; no restore, replay, resume, provider dispatch, tool execution, worker execution, DB writes, project mutation, release, deploy, or queue mutation is enabled.",
+        "Command Center Recovery UX is not added until P63.5."
       ],
       "nextPhase": "P63.4",
       "commandCenterVisible": true
@@ -4631,7 +4637,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T13:39:03.203Z",
+  "updatedAt": "2026-05-18T13:41:55.315Z",
   "currentPhase": "P62.8",
   "previousPhase": "P62",
   "nextPhase": "P63"
