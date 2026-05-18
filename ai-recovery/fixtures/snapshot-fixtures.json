@@ -1,0 +1,54 @@
+{
+  "validSnapshots": [
+    {
+      "snapshotId": "snapshot_p63_contract_preview",
+      "displayTitle": "Command preview snapshot",
+      "scopeLabel": "NEXUS OS",
+      "actorLabel": "NEXUS",
+      "correlationId": "corr_p63_contract_preview",
+      "commandIntent": "plan",
+      "promptSummary": "Operator requested a governed NEXUS OS implementation plan.",
+      "responseSummary": "NEXUS produced a redacted subphase plan and validation checklist.",
+      "toolPreviewRefs": [
+        {
+          "label": "OS phase status",
+          "path": "reports/os-phase-status-report.md",
+          "recordId": "phase-status-preview"
+        }
+      ],
+      "evidenceRefs": [
+        {
+          "label": "P63 execution contract",
+          "path": "contracts/os-roadmap/p63-execution-contracts.json",
+          "recordId": "p63-contract"
+        }
+      ],
+      "redactionLevel": "internal_redacted",
+      "recoveryEligibility": "inspect_only",
+      "recoveryBlockedReasons": [
+        "Recovery execution is not enabled in P63.1."
+      ],
+      "redactedPayload": {
+        "safeSummary": "Snapshot payload contains only redacted planning metadata.",
+        "projectScope": "NEXUS OS"
+      }
+    }
+  ],
+  "invalidSnapshots": [
+    {
+      "snapshotId": "snapshot_invalid_secret",
+      "displayTitle": "Invalid secret fixture",
+      "scopeLabel": "NEXUS OS",
+      "actorLabel": "NEXUS",
+      "correlationId": "corr_invalid_secret",
+      "commandIntent": "review",
+      "promptSummary": "Unsafe prompt summary.",
+      "responseSummary": "Unsafe response summary.",
+      "redactionLevel": "internal_redacted",
+      "recoveryEligibility": "inspect_only",
+      "redactedPayload": {
+        "apiKey": "sk-test-secret-value-123456789"
+      }
+    }
+  ]
+}

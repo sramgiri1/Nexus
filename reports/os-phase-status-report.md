@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-17T21:11:41.826Z
-- Validation branch: codex/careloop-premium-phases
-- Validation HEAD: 50abb01
+- Generated at: 2026-05-18T13:33:20.890Z
+- Validation branch: codex/p63-snapshot-contract
+- Validation HEAD: 865164c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Current OS Phase

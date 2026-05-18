@@ -283,8 +283,18 @@ for (let index = 0; index < expectedPhases.length; index += 1) {
   const catalogEntry = phaseIndex.phases.find((phase) => phase.phaseId === phaseId);
   if (!statusEntry) fail("roadmapStatus", `phase-status missing ${phaseId}`);
   if (!catalogEntry) fail("roadmapStatus", `nexus-phases missing ${phaseId}`);
-  if (statusEntry && statusEntry.status !== "planned") {
-    fail("roadmapStatus", `${phaseId} must remain planned until implemented`);
+  if (statusEntry && !["planned", "complete"].includes(statusEntry.status)) {
+    fail("roadmapStatus", `${phaseId} must be planned or complete`);
+  }
+  if (statusEntry?.status === "complete") {
+    if (!statusEntry.branch) fail("roadmapStatus", `${phaseId} complete status must record branch`);
+    if (!statusEntry.commit || statusEntry.commit.includes("pending")) {
+      fail("roadmapStatus", `${phaseId} complete status must record a non-pending commit`);
+    }
+    if (!statusEntry.completedAt) fail("roadmapStatus", `${phaseId} complete status must record completedAt`);
+    if (!Array.isArray(statusEntry.checksRun) || statusEntry.checksRun.length === 0) {
+      fail("roadmapStatus", `${phaseId} complete status must record checksRun`);
+    }
   }
   const expectedNext = index === expectedPhases.length - 1 ? "P64" : expectedPhases[index + 1];
   if (statusEntry && statusEntry.nextPhase !== expectedNext) {

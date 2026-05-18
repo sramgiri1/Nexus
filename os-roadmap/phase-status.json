@@ -2226,15 +2226,22 @@
       "phaseId": "P63.1",
       "title": "Snapshot Contract + Redaction Policy",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define the AI interaction snapshot envelope, redaction rules, allowed evidence fields, and preview-only policy boundaries.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/p63-snapshot-contract",
+      "commit": "pending-status-commit",
+      "completedAt": "2026-05-18T13:32:02.220Z",
+      "summary": "Defines preview-only AI interaction snapshot records, redaction policy, public-safe fixtures, evidence linkage, and validation checker for P63 recovery foundations.",
+      "checksRun": [
+        "npm run check:ai-snapshot-contract",
+        "npm run check:p63-execution-plan",
+        "npm run check:contracts",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, or release/deploy action is enabled.",
-        "Recovery replay and resume actions produce plans only; they do not restore execution state or rerun AI/tool calls."
+        "Preview-only; no provider dispatch, tool execution, worker execution, DB writes, project mutation, release, deploy, replay, resume, or restore action is enabled.",
+        "Command Center Recovery UX is not added until P63.5."
       ],
       "nextPhase": "P63.2",
       "commandCenterVisible": true
@@ -4616,7 +4623,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-17T20:00:00.000Z",
+  "updatedAt": "2026-05-18T13:32:02.220Z",
   "currentPhase": "P62.8",
   "previousPhase": "P62",
   "nextPhase": "P63"

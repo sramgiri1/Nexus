@@ -44,6 +44,26 @@ coding.
 Narrow scope: implement only the snapshot envelope, redaction levels, recovery
 eligibility fields, and public-safe fixtures.
 
+Status: complete locally after validation.
+
+Implemented modules:
+
+- `ai-recovery/snapshotContract.js`
+- `ai-recovery/redactionPolicy.js`
+- `ai-recovery/fixtures/snapshot-fixtures.json`
+- `scripts/check-ai-snapshot-contract.js`
+- `reports/ai-snapshot-contract-report.md`
+
+Exports:
+
+- `normalizeSnapshotRecord`
+- `validateSnapshotRecord`
+- `buildSnapshotPreview`
+- `buildSnapshotEvidenceRecord`
+- `validateSnapshotEvidenceRecord`
+- `redactSnapshotPayload`
+- `validateSnapshotRedaction`
+
 Required implementation contract:
 `nexus-os-p63-1-snapshot-contract-redaction-policy`
 

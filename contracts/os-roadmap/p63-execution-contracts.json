@@ -83,7 +83,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -241,7 +241,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -397,7 +397,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -555,7 +555,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -717,7 +717,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -884,7 +884,7 @@
           "Report validation command results.",
           "State phase-status update performed or explicitly blocked."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
@@ -1050,7 +1050,7 @@
           "Confirm no provider/tool/project mutation/DB/deploy enablement.",
           "Confirm no stale phase status remains."
         ],
-        "startingBranch": "codex/careloop-premium-phases",
+        "startingBranch": "codex/p63-snapshot-contract",
         "expectedBaseCommit": "50abb01",
         "exactFilesModules": {
           "create": [
