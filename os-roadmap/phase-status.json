@@ -2504,7 +2504,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-dispatch-readiness-commit",
+      "commit": "e6ca1f4",
       "completedAt": "2026-05-18T23:22:00.000Z",
       "summary": "Added a read-only provider/tool readiness matrix using existing provider and tool registries while all execution flags remain disabled.",
       "checksRun": [
