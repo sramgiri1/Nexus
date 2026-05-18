@@ -81,6 +81,35 @@ Primary validation:
 Narrow scope: map existing preview surfaces that can produce snapshot-ready
 records and add pure adapter functions for local fixtures only.
 
+Status: complete locally after validation.
+
+Implemented modules:
+
+- `ai-recovery/interactionCaptureMap.js`
+- `ai-recovery/snapshotAdapter.js`
+- `ai-recovery/fixtures/capture-map-fixtures.json`
+- `scripts/check-ai-interaction-capture.js`
+- `reports/ai-interaction-capture-report.md`
+
+Capture sources:
+
+- Command Timeline
+- Mission Composer
+- Worker Queue
+- Tool Preview
+- Approval Preview
+- Activity Event
+
+Exports:
+
+- `CAPTURE_SOURCE_TYPES`
+- `buildInteractionCaptureMap`
+- `getCaptureSource`
+- `validateCaptureSource`
+- `validateInteractionCaptureMap`
+- `adaptPreviewRecordToSnapshot`
+- `adaptPreviewRecordsToSnapshots`
+
 Required implementation contract:
 `nexus-os-p63-2-interaction-capture-points`
 

@@ -1,0 +1,59 @@
+{
+  "records": [
+    {
+      "sourceId": "command_timeline",
+      "record": {
+        "correlationId": "corr_command_preview",
+        "intentType": "plan",
+        "commandSummary": "Operator asked NEXUS to plan an OS subphase.",
+        "nextAction": "Review governed preview before implementation.",
+        "routeStatus": "preview"
+      }
+    },
+    {
+      "sourceId": "mission_composer",
+      "record": {
+        "correlationId": "corr_mission_preview",
+        "missionType": "governed_kickoff",
+        "missionSummary": "Mission composer produced a governed kickoff plan.",
+        "nextAction": "Review task contract before activating work."
+      }
+    },
+    {
+      "sourceId": "worker_queue",
+      "record": {
+        "correlationId": "corr_worker_preview",
+        "taskType": "implementation",
+        "objectiveSummary": "Worker queue item is modeled for future execution.",
+        "queueState": "queued preview"
+      }
+    },
+    {
+      "sourceId": "tool_preview",
+      "record": {
+        "correlationId": "corr_tool_preview",
+        "method": "preview",
+        "toolRequestSummary": "Tool governance evaluated a preview request.",
+        "reason": "Execution remains disabled by policy."
+      }
+    },
+    {
+      "sourceId": "approval",
+      "record": {
+        "correlationId": "corr_approval_preview",
+        "approvalType": "state_transition",
+        "reasonSummary": "Approval posture is available for inspection.",
+        "decision": "requested"
+      }
+    },
+    {
+      "sourceId": "activity",
+      "record": {
+        "correlationId": "corr_activity_preview",
+        "eventType": "roadmap_status_updated",
+        "summary": "Activity event records roadmap status metadata.",
+        "status": "pending"
+      }
+    }
+  ]
+}
