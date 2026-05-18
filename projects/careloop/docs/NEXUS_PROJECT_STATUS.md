@@ -3,7 +3,7 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8 implemented and validation complete on the active branch
+- Status: Premium subphases P1-P8 and post-premium Phase A implemented and validation complete on the active branch
 - Next action: Configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
@@ -26,8 +26,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Premium P7 is complete: expired receiver entitlements keep existing care data visible while recurring tasks, premium insights, and additional caregiver access remain blocked; iOS now labels expired/revoked plan states explicitly.
 - Premium P8 is complete: the existing `npm run careloop:demo` room launcher now has premium/free/expired/request-pending showcase data, local StoreKit product configuration, and demo readiness validation.
 - Reminder/recurrence hardening is in progress: premium recurring task creation, recurring completion/next occurrence, task detail status changes, comment add/delete, and task detail snooze are now covered through focused Xcode UI automation.
-- Post-premium Phase A has started. A shared Task Detail presentation policy now centralizes task status, overdue/escalated display state, role permissions, inactive-receiver blocking, and recurring-premium blocking for Task Detail and Task Board surfaces.
-- Phase A edit-task subphase is in progress: Task Detail now opens in a view-first mode, exposes an explicit organizer `Edit` action for content changes, and keeps status/comment actions available without making every field editable by default.
+- Post-premium Phase A is complete. A shared Task Detail presentation policy now centralizes task status, overdue/escalated display state, role permissions, inactive-receiver blocking, and recurring-premium blocking for Task Detail and Task Board surfaces.
+- Phase A edit-task subphase is complete: Task Detail now opens in a view-first mode, exposes an explicit organizer `Edit` action for content changes, and keeps status/comment actions available without making every field editable by default.
 - Phase A delete-task subphase is complete: Task Detail now uses an alert-based destructive confirmation, supports cancel/confirm behavior in UI-test fixtures, and removes deleted tasks from the local task board state.
 - Phase A blocked-state subphase is complete: Task Detail now resolves the actual task care receiver before applying inactive-receiver policy, displays a blocked-action card for invited receivers, and hides edit/status/comment/snooze/delete actions until the receiver accepts or is proxy activated.
 - Phase A escalation-visibility subphase is complete: Task Detail now surfaces overdue/escalated state from the shared Task Detail policy and keeps actionable status/snooze controls visible for escalated tasks.
@@ -71,4 +71,4 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Physical-device/TestFlight validation for APNs delivery, notification tap, universal links, and OS permission prompts.
 - Real Google/Facebook/Apple auth credentials and redirect URI configuration.
 - StoreKit sandbox purchase/restore and App Store entitlement verification.
-- UI automation for destructive delete flows, full invite email delivery, advanced recurrence variants, and empty/error/offline states.
+- UI automation for circle/member/receiver destructive delete flows, full invite email delivery, advanced recurrence variants, and empty/error/offline states.

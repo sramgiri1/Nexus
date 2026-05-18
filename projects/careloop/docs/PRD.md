@@ -1107,6 +1107,8 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** make the most-used task workflow reliable, clear, and role-aware across Care Organizer, Caregiver, and Care Receiver personas.
 
+**Implementation status:** complete on branch `codex/careloop-premium-phases`. The completed scope includes the shared Task Detail presentation policy, explicit edit mode, destructive delete confirmation, inactive-receiver blocked state, and escalated-task visibility with focused Xcode UI coverage.
+
 **Subphases**
 
 1. **Task detail state model**
