@@ -1768,6 +1768,119 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("POST /invitations/:inviteId/accept rejects wrong authenticated email", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u2", email: "member@test.com", name: "Member" },
+        { id: "u3", email: "wrong@test.com", name: "Wrong User" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Bob", archiveAfterDays: 7 }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "member@test.com",
+        name: "Member",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: null,
+        acceptedById: null,
+        acceptedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/invitations/i1/accept",
+      headers: await authHeaders({ id: "u3", email: "wrong@test.com", name: "Wrong User" }),
+      payload: {},
+    });
+
+    assert.equal(res.statusCode, 403);
+    assert.equal(res.json().error, "Invitation email does not match the authenticated user");
+    assert.equal(app.db._s.invitations[0].status, "PENDING");
+    assert.equal(app.db._s.members.length, 0);
+    await app.close();
+  });
+
+  test("POST /invitations/:inviteId/accept rejects fourth-circle invite acceptance", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "member@test.com", name: "Member" }],
+      circles: [
+        { id: "c1", name: "One", recipientName: "A", archiveAfterDays: 7 },
+        { id: "c2", name: "Two", recipientName: "B", archiveAfterDays: 7 },
+        { id: "c3", name: "Three", recipientName: "C", archiveAfterDays: 7 },
+        { id: "c4", name: "Four", recipientName: "D", archiveAfterDays: 7 },
+      ],
+      members: [
+        { id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" },
+        { id: "m2", userId: "u1", circleId: "c2", role: "MEMBER" },
+        { id: "m3", userId: "u1", circleId: "c3", role: "MEMBER" },
+      ],
+      invitations: [{
+        id: "i1",
+        circleId: "c4",
+        email: "member@test.com",
+        name: "Member",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: null,
+        acceptedById: null,
+        acceptedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/invitations/i1/accept",
+      headers: await authHeaders({ id: "u1", email: "member@test.com", name: "Member" }),
+      payload: {},
+    });
+
+    assert.equal(res.statusCode, 400);
+    assert.equal(res.json().error, "Users can only belong to 3 circles.");
+    assert.equal(app.db._s.invitations[0].status, "PENDING");
+    assert.equal(app.db._s.members.length, 3);
+    await app.close();
+  });
+
+  test("POST /invitations/:inviteId/accept rejects already-member invite acceptance", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u2", email: "member@test.com", name: "Member" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Bob", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u2", circleId: "c1", role: "MEMBER" }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "member@test.com",
+        name: "Member",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: null,
+        acceptedById: null,
+        acceptedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/invitations/i1/accept",
+      headers: await authHeaders({ id: "u2", email: "member@test.com", name: "Member" }),
+      payload: {},
+    });
+
+    assert.equal(res.statusCode, 409);
+    assert.equal(res.json().error, "User is already a member");
+    assert.equal(app.db._s.invitations[0].status, "PENDING");
+    assert.equal(app.db._s.members.length, 1);
+    await app.close();
+  });
+
   test("expired recipient invites reset draft state and allow a fresh invite", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],

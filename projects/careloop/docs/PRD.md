@@ -1141,7 +1141,7 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Goal:** finish the full invite lifecycle for Care Organizers, Caregivers, Care Receivers, and proxy-authorized activation.
 
-**Implementation status:** in progress on branch `codex/careloop-premium-phases`. Pending invite visibility, organizer resend/revoke controls, direct care receiver invite acceptance, caregiver no-access default joining, and organizer grant/revoke receiver access are implemented. Declined, revoked, and expired invitations present disabled actions with clear unavailable-state copy. Caregivers who accept an invite now land in the circle without receiver names, tasks, or receiver-scoped data until an organizer grants explicit access; revoked access removes receiver metadata and task visibility.
+**Implementation status:** complete on branch `codex/careloop-premium-phases`. Pending invite visibility, organizer resend/revoke controls, direct care receiver invite acceptance, caregiver no-access default joining, organizer grant/revoke receiver access, and invalid invite acceptance edge cases are implemented. Declined, revoked, and expired invitations present disabled actions with clear unavailable-state copy. Caregivers who accept an invite now land in the circle without receiver names, tasks, or receiver-scoped data until an organizer grants explicit access; revoked access removes receiver metadata and task visibility.
 
 **Subphases**
 
@@ -1149,7 +1149,7 @@ After the receiver-scoped premium phase, implementation should continue in small
 2. Direct care receiver acceptance and declined/expired states. **Complete.**
 3. Caregiver join with no receiver access by default. **Complete.**
 4. Organizer grant/revoke receiver access after caregiver acceptance. **Complete.**
-5. Wrong-user, expired-link, fourth-circle-limit, and already-member edge cases.
+5. Wrong-user, expired-link, fourth-circle-limit, and already-member edge cases. **Complete.**
 
 **Tests:** backend invite lifecycle tests, iOS UI fixtures for each persona, and simulator manual universal-link checks.
 

@@ -8,6 +8,7 @@ enum UITestScenario: String {
     case taskComments = "task-comments"
     case recipientInvite = "recipient-invite"
     case caregiverInvite = "caregiver-invite"
+    case inviteEdgeStates = "invite-edge-states"
 
     private static let launchArgument = "-careloop-ui-scenario"
     private static let pendingTaskLaunchArgument = "-careloop-ui-pending-task"
@@ -48,10 +49,10 @@ extension AppState {
 
         let fixture = UITestScenarioFixture.make(scenario)
         currentUser = fixture.user
-        if scenario == .recipientInvite || scenario == .caregiverInvite {
+        if scenario == .recipientInvite || scenario == .caregiverInvite || scenario == .inviteEdgeStates {
             currentUser?.pendingInvites = fixture.invitations
         }
-        activeCircle = scenario == .circleDirectory || scenario == .recipientInvite || scenario == .caregiverInvite ? nil : fixture.circle
+        activeCircle = scenario == .circleDirectory || scenario == .recipientInvite || scenario == .caregiverInvite || scenario == .inviteEdgeStates ? nil : fixture.circle
         uiTestInvitations = fixture.invitations
         uiTestRecipientAccessByMemberId = fixture.recipientAccessByMemberId
         uiTestPremiumUpgradeRequests = fixture.premiumUpgradeRequests
@@ -220,7 +221,7 @@ private struct UITestScenarioFixture {
         ]
 
         switch scenario {
-        case .circleDirectory, .recipientInvite, .caregiverInvite:
+        case .circleDirectory, .recipientInvite, .caregiverInvite, .inviteEdgeStates:
             let circle = CareCircle(
                 id: "c1",
                 name: "Ramgiri Care Circle",
@@ -256,6 +257,44 @@ private struct UITestScenarioFixture {
             var user: CareUser
             let visibleInvites: [GroupInvitation]
             switch scenario {
+            case .inviteEdgeStates:
+                user = caregiver
+                user.memberships = []
+                visibleInvites = [
+                    GroupInvitation(
+                        id: "invite-expired",
+                        email: caregiver.email,
+                        name: caregiver.name,
+                        role: .member,
+                        status: .pending,
+                        expiresAt: Date().addingTimeInterval(-60),
+                        circle: circle,
+                        recipient: nil,
+                        invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                    ),
+                    GroupInvitation(
+                        id: "invite-declined",
+                        email: caregiver.email,
+                        name: caregiver.name,
+                        role: .member,
+                        status: .declined,
+                        expiresAt: nil,
+                        circle: circle,
+                        recipient: nil,
+                        invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                    ),
+                    GroupInvitation(
+                        id: "invite-revoked",
+                        email: caregiver.email,
+                        name: caregiver.name,
+                        role: .member,
+                        status: .revoked,
+                        expiresAt: nil,
+                        circle: circle,
+                        recipient: nil,
+                        invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
+                    ),
+                ]
             case .recipientInvite:
                 user = mom
                 user.memberships = []

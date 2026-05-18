@@ -1410,13 +1410,7 @@ export default async function circles(app) {
       include: { user: { select: { id: true, name: true, email: true } } },
     });
     if (existingMembership) {
-      if (invitation.status === "PENDING") {
-        await db.invitation.update({
-          where: { id: invitation.id },
-          data: { status: "ACCEPTED", acceptedAt: new Date(), acceptedById: authenticatedUserId },
-        });
-      }
-      return reply.send(existingMembership);
+      return reply.code(409).send({ error: "User is already a member" });
     }
 
     if (invitation.status !== "PENDING") {

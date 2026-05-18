@@ -523,6 +523,23 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_inviteEdgeStatesDisableResponseActions() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "invite-edge-states"])
+
+        XCTAssertTrue(app.scrollViews["circle-directory-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["This invitation expired. Ask the organizer to resend it."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["This invitation is declined."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["This invitation is revoked."].waitForExistence(timeout: 3))
+
+        XCTAssertFalse(app.buttons["circle-list-invite-accept-invite-expired"].isEnabled)
+        XCTAssertFalse(app.buttons["circle-list-invite-decline-invite-expired"].isEnabled)
+        XCTAssertFalse(app.buttons["circle-list-invite-accept-invite-declined"].isEnabled)
+        XCTAssertFalse(app.buttons["circle-list-invite-decline-invite-declined"].isEnabled)
+        XCTAssertFalse(app.buttons["circle-list-invite-accept-invite-revoked"].isEnabled)
+        XCTAssertFalse(app.buttons["circle-list-invite-decline-invite-revoked"].isEnabled)
+    }
+
+    @MainActor
     func test_organizerCanOpenCareReceiverManagement() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]
