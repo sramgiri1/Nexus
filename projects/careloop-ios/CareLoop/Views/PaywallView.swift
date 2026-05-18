@@ -15,7 +15,11 @@ struct PaywallView: View {
     @State private var completion: PremiumPurchaseCompletion?
 
     private var allowsSimulatedPremiumSync: Bool {
+        #if DEBUG
         ProcessInfo.processInfo.arguments.contains("-careloop-ui-simulate-premium-sync")
+        #else
+        false
+        #endif
     }
 
     private let features: [(icon: String, title: String)] = [

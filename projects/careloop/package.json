@@ -21,6 +21,7 @@
     "check:careloop-demo-readiness": "node scripts/check-demo-showcase-readiness.js",
     "careloop:demo:check": "node scripts/check-demo-showcase-readiness.js",
     "check:ios-release-hygiene": "node scripts/check-ios-release-hygiene.js",
+    "check:ios-release-artifact": "CARELOOP_REQUIRE_RELEASE_APP=1 node scripts/check-ios-release-hygiene.js",
     "test": "node --test test/*.test.js",
     "test:smoke": "node --test test/sprint2.test.js",
     "test:watch": "node --test --watch test/*.test.js"

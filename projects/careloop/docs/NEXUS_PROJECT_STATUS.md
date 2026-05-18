@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, Phase F1-F4 notification/deep-link/snooze/escalation coverage, Phase G demo readiness, and Phase H1-H2 release hygiene implemented and validation complete on the active branch
-- Next action: Start Phase H3 Release archive inspection locally while Phase F5/H4/H5 physical-device APNs/TestFlight/App Store setup waits on Apple setup
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, Phase C receiver management polish, Phase D1-D5 StoreKit/billing/free-policy hardening, Phase E1-E5 reports/insights, Phase F1-F4 notification/deep-link/snooze/escalation coverage, Phase G demo readiness, and Phase H1-H3 local release hygiene implemented and validation complete on the active branch
+- Next action: H4/H5 production API, App Store Connect, Sign in with Apple, APNs, StoreKit sandbox, TestFlight, and physical-device validation wait on external Apple/backend setup
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -55,6 +55,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase G4 is complete: `npm run careloop:demo:check` now validates the one-command room launcher contract without booting simulator windows on every agent run.
 - Phase G5 is complete: a CareLoop-local demo readiness guard now validates the four showcase scenarios, launch personas, mixed task/reminder/premium states, local-only demo emails, StoreKit product parity, and the one-command launcher contract.
 - Phase H1-H2 are complete: the iOS app target membership and Debug-only launch hooks are guarded by `npm run check:ios-release-hygiene`, and Release simulator builds now fall back to production app startup without UI-test fixtures or demo launch activation.
+- Phase H3 is complete: the Release artifact scanner now fails if the built app includes demo seed files, mock account domains, local StoreKit fixtures, demo launch environment keys, or UI-test launch arguments.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -126,6 +127,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - `npm run careloop:demo:check` passed after Phase G4 one-command launcher contract validation.
 - `npm run check:ios-release-hygiene` passed after Phase H1-H2 target/gating checks. It intentionally warns that H4 must replace localhost API config and H3 must prove the local StoreKit fixture is not bundled into Release.
 - `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild build -project CareLoop.xcodeproj -scheme CareLoop -configuration Release -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO` passed after Phase H2 Debug gating.
+- `npm run check:ios-release-artifact` passed after Phase H3 Release artifact scanning. It intentionally still warns that H4 must replace localhost API config before release.
+- `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild build-for-testing -project CareLoop.xcodeproj -scheme CareLoop -destination 'platform=iOS Simulator,name=iPhone 17 Pro' CODE_SIGNING_ALLOWED=NO` passed after Phase H3 Debug fixture gating changes.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

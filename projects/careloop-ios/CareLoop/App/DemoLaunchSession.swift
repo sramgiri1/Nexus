@@ -1,5 +1,6 @@
 import Foundation
 
+#if DEBUG
 struct DemoLaunchSession {
     private enum EnvironmentKeys {
         static let accessToken = "CARELOOP_DEMO_ACCESS_TOKEN"
@@ -43,3 +44,4 @@ struct DemoLaunchSession {
         }
     }
 }
+#endif

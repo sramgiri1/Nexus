@@ -1,5 +1,6 @@
 import Foundation
 
+#if DEBUG
 enum UITestScenario: String {
     case circleDirectory = "circle-directory"
     case organizerHome = "organizer-home"
@@ -49,7 +50,6 @@ enum UITestScenario: String {
     }
 }
 
-#if DEBUG
 extension AppState {
     convenience init(uiTestScenario scenario: UITestScenario) {
         self.init(shouldRestoreSession: false)
@@ -70,9 +70,7 @@ extension AppState {
         shouldPromptNewTask = false
     }
 }
-#endif
 
-#if DEBUG
 private struct UITestScenarioFixture {
     let user: CareUser
     let circle: CareCircle
@@ -720,6 +718,22 @@ private struct UITestScenarioFixture {
                 pendingTaskId: nil
             )
         }
+    }
+}
+#else
+enum UITestScenario {
+    case taskComments
+
+    static var current: UITestScenario? {
+        nil
+    }
+
+    static func pendingTaskId(_ arguments: [String]) -> String? {
+        nil
+    }
+
+    static func pendingTaskCircleId(_ arguments: [String]) -> String? {
+        nil
     }
 }
 #endif

@@ -27,11 +27,25 @@ final class AppState: ObservableObject {
 
     private var cancellables: Set<AnyCancellable> = []
     private var pendingPushToken: String?
+    #if DEBUG
     private let launchSession: DemoLaunchSession?
+    #endif
 
-    init(shouldRestoreSession: Bool = true, launchSession: DemoLaunchSession? = nil) {
+    init(shouldRestoreSession: Bool = true) {
+        #if DEBUG
+        self.launchSession = nil
+        #endif
+        configure(shouldRestoreSession: shouldRestoreSession)
+    }
+
+    #if DEBUG
+    init(shouldRestoreSession: Bool = true, launchSession: DemoLaunchSession?) {
         self.launchSession = launchSession
+        configure(shouldRestoreSession: shouldRestoreSession)
+    }
+    #endif
 
+    private func configure(shouldRestoreSession: Bool) {
         NotificationCenter.default.publisher(for: .careLoopPushTokenRegistered)
             .compactMap { $0.object as? String }
             .receive(on: RunLoop.main)
@@ -47,10 +61,12 @@ final class AppState: ObservableObject {
             }
             .store(in: &cancellables)
 
+        #if DEBUG
         if let launchSession {
             APIClient.shared.setAccessToken(launchSession.accessToken)
             persistSession(userId: nil, circleId: launchSession.circleId)
         }
+        #endif
 
         if shouldRestoreSession {
             Task { await restoreSession() }
@@ -156,6 +172,7 @@ final class AppState: ObservableObject {
     private func restoreSession() async {
         guard APIClient.shared.hasAccessToken else { return }
         do {
+            #if DEBUG
             if let launchSession, launchSession.autoActivateCircle {
                 try await refreshCurrentUser(
                     preferredCircleId: launchSession.circleId,
@@ -163,6 +180,7 @@ final class AppState: ObservableObject {
                 )
                 return
             }
+            #endif
 
             let user = try await APIClient.shared.fetchCurrentUser()
             let rememberedCircleId = resolvedCircleId(from: user, preferredCircleId: storedCircleId)

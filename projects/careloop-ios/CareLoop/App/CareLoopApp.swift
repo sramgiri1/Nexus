@@ -2,9 +2,11 @@ import SwiftUI
 import UIKit
 import UserNotifications
 
+#if DEBUG
 private enum LaunchArguments {
     static let resetSession = "-careloop-ui-reset-session"
 }
+#endif
 
 final class AppDelegate: NSObject, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     func application(
@@ -54,10 +56,10 @@ struct CareLoopApp: App {
     @Environment(\.scenePhase) private var scenePhase
 
     init() {
+        #if DEBUG
         if ProcessInfo.processInfo.arguments.contains(LaunchArguments.resetSession) {
             AppState.resetPersistedSession()
         }
-        #if DEBUG
         if let scenario = UITestScenario.current {
             _appState = StateObject(wrappedValue: AppState(uiTestScenario: scenario))
             return
