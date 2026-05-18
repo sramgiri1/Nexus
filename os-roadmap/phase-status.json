@@ -2527,7 +2527,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-dispatch-dry-run-commit",
+      "commit": "395aec4",
       "completedAt": "2026-05-18T23:32:00.000Z",
       "summary": "Added non-executing dispatch dry-run previews with blocker, next action, evidence/activity location, and cost impact metadata.",
       "checksRun": [
