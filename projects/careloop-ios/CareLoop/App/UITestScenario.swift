@@ -6,6 +6,7 @@ enum UITestScenario: String {
     case caregiverHome = "caregiver-home"
     case receiverHome = "receiver-home"
     case taskComments = "task-comments"
+    case inactiveReceiverTask = "inactive-receiver-task"
     case recipientInvite = "recipient-invite"
     case caregiverInvite = "caregiver-invite"
     case inviteEdgeStates = "invite-edge-states"
@@ -320,14 +321,16 @@ private struct UITestScenarioFixture {
                 pendingTaskId: nil
             )
 
-        case .organizerHome, .taskComments:
+        case .organizerHome, .taskComments, .inactiveReceiverTask:
+            let fixtureRecipients = scenario == .inactiveReceiverTask ? [dadRecipient] : [momRecipient, dadRecipient]
+            let fixtureTasks = scenario == .inactiveReceiverTask ? [] : organizerTasks
             let circle = CareCircle(
                 id: "c1",
                 name: "Ramgiri Care Circle",
                 recipientName: "Maya",
                 members: allMembers,
-                recipients: [momRecipient, dadRecipient],
-                tasks: organizerTasks
+                recipients: fixtureRecipients,
+                tasks: fixtureTasks
             )
             let pendingInvites = [
                 GroupInvitation(

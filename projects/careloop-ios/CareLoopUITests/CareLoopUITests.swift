@@ -808,6 +808,25 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_newTaskBlocksInactiveCareReceiverUntilActivation() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "inactive-receiver-task"])
+
+        XCTAssertTrue(app.scrollViews["organizer-dashboard"].waitForExistence(timeout: 5))
+        tapQuickAction("quick-action-task-board", in: app)
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 5))
+        app.buttons["add-task-button"].tap()
+
+        XCTAssertTrue(app.staticTexts["New Task"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Activate David before creating tasks."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["David must accept a direct invite or be proxy-activated with recorded authorization before tasks can be created."].exists)
+        XCTAssertTrue(waitForAnyElement(in: app, identifier: "new-task-inactive-receiver-block").exists)
+        typeText(into: app.textFields["new-task-title-field"], text: "Create initial care plan")
+        XCTAssertFalse(app.buttons["new-task-submit-button"].isEnabled)
+    }
+
+    @MainActor
     func test_completingRecurringTaskCreatesNextOccurrence() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let recurringTaskTitle = "Daily mobility check"

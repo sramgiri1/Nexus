@@ -56,6 +56,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Task detail escalation | Focused iOS UI test for escalated task copy plus visible status/snooze recovery actions |
 | Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders` |
 | Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, and proxy-attestation tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_organizerChoosesReceiverActivationPath` |
+| New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
 | 50 dummy users / real-user simulation | `backend:scale` |
 | One user across multiple circles in different roles | `backend:scale`, `ios:personas` |
 | Delete circle/member/receiver scenarios | `backend:circles`; UI delete coverage remains in `testability-matrix.md` backlog |
@@ -70,6 +71,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
 - Focused invite/access validation can be run with Xcode UI tests `test_organizerCanResendAndRevokePendingCaregiverInvite`, `test_careReceiverCanAcceptPendingInviteFromDirectory`, `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`, `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`, and `test_inviteEdgeStatesDisableResponseActions`.
 - Focused receiver lifecycle, activation, and proxy-attestation validation can be run with backend receiver tests in `test/sprint2.test.js` and Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `test_organizerChoosesReceiverActivationPath`.
+- Focused inactive-receiver task-create validation can be run with backend `returns 400 when the care receiver has not accepted or been proxy-activated` and Xcode UI `test_newTaskBlocksInactiveCareReceiverUntilActivation`.
 - Task Detail state-model validation can be run with Xcode unit test class `CareLoopTests/TaskDetailPresentationTests`.
 - The `task-comments` UI fixture launches directly into the comments screen with local add/delete behavior so agents can validate comments without mutating a live backend.
 - Physical-device only coverage still includes APNs delivery, real universal links, Sign in with Apple entitlement validation, and StoreKit sandbox purchase/restore.

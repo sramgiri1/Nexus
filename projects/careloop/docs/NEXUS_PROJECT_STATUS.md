@@ -3,8 +3,8 @@
 - Project: CareLoop
 - Active phase: CARELOOP-P3-PREMIUM
 - Mission: CareLoop Premium Receiver-Scoped Monetization
-- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, and Phase C1-C3 receiver management polish implemented and validation complete on the active branch
-- Next action: Start Phase C4 task-creation blocking until direct acceptance or proxy activation; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
+- Status: Premium subphases P1-P8, post-premium Phase A, Phase B invite flow, and Phase C1-C4 receiver management polish implemented and validation complete on the active branch
+- Next action: Start Phase C5 receiver removal/delete blocked states; configure external App Store Connect products, sandbox testers, APNs, and social-auth credentials for release validation
 - Mutation: enabled only through local governed coding workflow
 - Provider calls: disabled
 - Tool execution: local test/build execution enabled by operator request
@@ -35,6 +35,7 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Phase C1 is complete: Care Receiver Management now has UI-testable organizer add/edit/remove receiver lifecycle coverage, and backend lifecycle rules cover receiver detail updates, reorder, active-task removal blocking, last-receiver protection, and primary receiver promotion after deletion.
 - Phase C2 is complete: Care Receiver Management now presents one explicit activation decision path for direct receiver invite vs proxy authorization, backend routes prevent conflicting direct/proxy activation states, and proxy-active receivers no longer show activation actions.
 - Phase C3 is complete: proxy activation now requires explicit organizer authorization attestation in the API and iOS UI, persists attester/timestamp/reference audit fields, and records only non-PII consent-reference presence in activity payloads.
+- Phase C4 is complete: backend task creation remains blocked until receiver activation, and New Task now surfaces a clear inactive-receiver blocked state instead of hiding inactive receivers behind an empty picker.
 - Backend implementation and tests cover auth, circle/invite/member lifecycle, care receiver activation, scoped visibility, recurring tasks, reminder scheduling, snooze, escalation, notification simulation, premium entitlement rules, delete scenarios, 50-user simulation, and multi-circle/multi-role isolation.
 - iOS implementation and tests cover onboarding contracts, circle directory, organizer/caregiver/care receiver dashboards, task deep links, receiver completion, task detail snooze, paywall entry, and role recalculation.
 - Visual QA pass completed for circle directory, organizer home, caregiver home, and care receiver home.
@@ -78,6 +79,8 @@ CareLoop project progress is tracked in project-roadmap files and Command Center
 - Focused Xcode UI tests `CareLoopUITests/test_organizerChoosesReceiverActivationPath`, `CareLoopUITests/test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `CareLoopUITests/test_addSecondReceiverShowsPremiumGateBeforeForm` passed after Phase C2 activation-path polish.
 - Backend receiver attestation tests passed after Phase C3 proxy authorization coverage.
 - Focused Xcode UI test `CareLoopUITests/test_organizerChoosesReceiverActivationPath` passed after Phase C3 attestation-required UI coverage.
+- Backend inactive-receiver task-creation test passed after Phase C4.
+- Focused Xcode UI test `CareLoopUITests/test_newTaskBlocksInactiveCareReceiverUntilActivation` passed after Phase C4 New Task blocked-state coverage.
 - Full Xcode regression passed on iPhone 17 Pro simulator.
 - Backend `npm test` previously passed with expanded reminder/snooze/escalation, 50-user, and multi-role coverage.
 

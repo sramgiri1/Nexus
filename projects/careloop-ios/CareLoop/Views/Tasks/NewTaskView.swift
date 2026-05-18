@@ -347,7 +347,11 @@ struct NewTaskView: View {
     }
 
     private var selectedRecipientModel: CareRecipient? {
-        activeRecipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first
+        recipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first ?? recipients.first
+    }
+
+    private var selectedRecipientIsTaskable: Bool {
+        selectedRecipientModel?.isActiveForTasks == true
     }
 
     private var availableAssignees: [CircleMember] {
@@ -369,12 +373,23 @@ struct NewTaskView: View {
     private var recipientCard: some View {
         if activeRecipients.isEmpty {
             CardShell {
-                Label("Activate a care receiver before creating tasks.", systemImage: "person.crop.circle.badge.exclamationmark")
-                    .font(.system(size: 14, design: .rounded))
-                    .foregroundStyle(.secondary)
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 14)
+                VStack(alignment: .leading, spacing: 8) {
+                    Label(inactiveReceiverTitle, systemImage: "person.crop.circle.badge.exclamationmark")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                        .foregroundStyle(.primary)
+                    Text(inactiveReceiverDetail)
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                    if isAdmin {
+                        Text("Go to Care Receiver Management to send a direct invite or record proxy authorization.")
+                            .font(.system(size: 12, weight: .semibold, design: .rounded))
+                            .foregroundStyle(teal)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 14)
             }
+            .accessibilityIdentifier("new-task-inactive-receiver-block")
         } else {
             CardShell {
                 HStack {
@@ -649,6 +664,7 @@ struct NewTaskView: View {
         title.trimmingCharacters(in: .whitespaces).isEmpty
             || loading
             || recipientId.isEmpty
+            || !selectedRecipientIsTaskable
             || assigneeId == nil
             || recurrenceLocked
     }
@@ -719,6 +735,20 @@ struct NewTaskView: View {
     private var lockedRecurringDetail: String {
         selectedRecipientModel?.premiumStatusDetail
             ?? "Select a premium care receiver to add repeating care routines."
+    }
+
+    private var inactiveReceiverTitle: String {
+        if let recipient = selectedRecipientModel {
+            return "Activate \(recipient.name) before creating tasks."
+        }
+        return "Activate a care receiver before creating tasks."
+    }
+
+    private var inactiveReceiverDetail: String {
+        if let recipient = selectedRecipientModel {
+            return "\(recipient.name) must accept a direct invite or be proxy-activated with recorded authorization before tasks can be created."
+        }
+        return "Tasks unlock after the care receiver accepts a direct invite or a Care Organizer records proxy authorization."
     }
 
     private func requestUpgrade(for recipient: CareRecipient) async {
