@@ -127,6 +127,36 @@ Primary validation:
 Narrow scope: define recovery point shape, parent-child linkage, supersession,
 failure classification, and resumability flags from redacted snapshots.
 
+Status: complete locally after validation.
+
+Implemented modules:
+
+- `ai-recovery/recoveryPointModel.js`
+- `ai-recovery/recoveryClassifier.js`
+- `ai-recovery/fixtures/recovery-point-fixtures.json`
+- `scripts/check-ai-recovery-point-model.js`
+- `reports/ai-recovery-point-model-report.md`
+
+Recovery states:
+
+- `inspect_only`
+- `resume_plan_available`
+- `blocked`
+- `stale`
+- `superseded`
+- `not_recoverable`
+
+Exports:
+
+- `RECOVERY_POINT_STATES`
+- `RECOVERY_RESUMABILITY`
+- `RECOVERY_STATE_LABELS`
+- `buildRecoveryPoint`
+- `validateRecoveryPoint`
+- `buildRecoveryChain`
+- `classifyRecoveryPoint`
+- `classifyRecoveryPoints`
+
 Required implementation contract:
 `nexus-os-p63-3-recovery-point-model`
 

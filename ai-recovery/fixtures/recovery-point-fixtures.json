@@ -1,0 +1,58 @@
+{
+  "points": [
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_inspect_only",
+        "displayTitle": "Inspect-only command snapshot",
+        "recoveryEligibility": "inspect_only"
+      },
+      "expectedState": "inspect_only"
+    },
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_resume_plan",
+        "displayTitle": "Resume-plan command snapshot",
+        "recoveryEligibility": "resume_plan_available"
+      },
+      "expectedState": "resume_plan_available"
+    },
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_blocked",
+        "displayTitle": "Blocked command snapshot",
+        "recoveryEligibility": "inspect_only"
+      },
+      "blocked": true,
+      "blockedReasons": [
+        "Provider dispatch is disabled."
+      ],
+      "expectedState": "blocked"
+    },
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_stale",
+        "displayTitle": "Stale command snapshot",
+        "recoveryEligibility": "inspect_only"
+      },
+      "stale": true,
+      "expectedState": "stale"
+    },
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_superseded",
+        "displayTitle": "Superseded command snapshot",
+        "recoveryEligibility": "inspect_only"
+      },
+      "supersededBy": "recovery_snapshot_resume_plan",
+      "expectedState": "superseded"
+    },
+    {
+      "snapshot": {
+        "snapshotId": "snapshot_not_recoverable",
+        "displayTitle": "Not recoverable command snapshot",
+        "recoveryEligibility": "not_recoverable"
+      },
+      "expectedState": "not_recoverable"
+    }
+  ]
+}
