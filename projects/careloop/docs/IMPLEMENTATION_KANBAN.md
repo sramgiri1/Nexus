@@ -16,13 +16,12 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-No active implementation card. Next implementation should start with `B3`.
+No active implementation card. Next implementation should start with `B4`.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| B3 | Caregiver accepts invite and joins with no receiver access by default. | Backend invite acceptance/access policy; iOS Circle Directory, People & Access, Caregiver Home. | Backend invite/access test; iOS UI caregiver accept/no-access visibility test. | Add or verify a demo caregiver with zero receiver access. | Planned |
 | B4 | Organizer grants and revokes receiver access after caregiver acceptance. | Backend recipient access routes; iOS People & Access access sheet; caregiver scoped dashboards/tasks/insights. | Backend grant/revoke scope tests; iOS UI grant/revoke flow proving visibility changes. | Add demo state showing scoped caregiver access. | Planned |
 | B5 | Invite edge cases show clear errors and block invalid joins. | Backend invitation routes; iOS pending invite cards/error copy. | Wrong-user, expired-link, fourth-circle-limit, already-member backend tests plus at least one iOS UI error fixture. | Optional demo only if investor walkthrough needs failure-state proof. | Planned |
 
@@ -69,6 +68,7 @@ No active implementation card. Next implementation should start with `B3`.
 | A1-A6 | Task Detail policy, edit mode, delete confirmation, inactive receiver blocking, escalation visibility, and docs/test refresh. | Xcode task-detail UI/unit coverage and commits through `a9e2af1`. |
 | B1 | Pending invite visibility plus organizer resend/revoke controls. | Backend `backend:circles` coverage and Xcode UI pending-invite tests; commit `e8b35cf`. |
 | B2 | Direct care receiver invite acceptance and declined/expired disabled states. | Xcode UI `test_careReceiverCanAcceptPendingInviteFromDirectory`; commit `7d29930`. |
+| B3 | Caregiver invite acceptance with no receiver access by default. | Backend `caregiver invitation acceptance grants no receiver access by default`; Xcode UI `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`. |
 
 ## Blocked / External Setup
 
@@ -77,4 +77,3 @@ No active implementation card. Next implementation should start with `B3`.
 | D5/H4 | App Store Connect products, subscription IDs, sandbox testers, and transaction verification credentials. | Apple Developer/App Store Connect setup. |
 | F5/H5 | APNs delivery, push entitlement, notification tap, and TestFlight validation. | Apple Developer account, device, and TestFlight build. |
 | H4 | Google/Facebook/Apple real auth redirect URIs and credentials. | Provider app credentials and callback URLs. |
-

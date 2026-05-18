@@ -290,6 +290,7 @@ struct CircleListView: View {
                         .foregroundStyle(Color(red: 0.09, green: 0.13, blue: 0.22))
                     let inviteSubtitle: String = {
                         if isRecipientInvite { return "Your care is organized in this circle" }
+                        if invite.role == .member { return "Receiver access is granted after you join." }
                         let s = invite.circle.recipientDisplaySummary
                         return s.isEmpty ? "Care circle" : s
                     }()
@@ -481,11 +482,37 @@ struct CircleListView: View {
         defer { loadingInviteId = nil }
         do {
             if UITestScenario.current != nil {
+                var acceptedCircle = invite.circle
+                if invite.role == .member {
+                    let currentUser = appState.currentUser
+                    acceptedCircle = CareCircle(
+                        id: acceptedCircle.id,
+                        name: acceptedCircle.name,
+                        recipientName: "",
+                        archiveAfterDays: acceptedCircle.archiveAfterDays,
+                        members: acceptedCircle.members,
+                        recipients: acceptedCircle.recipients,
+                        tasks: acceptedCircle.tasks
+                    )
+                    acceptedCircle.recipients = []
+                    acceptedCircle.tasks = []
+                    acceptedCircle.members = (acceptedCircle.members ?? []).filter { $0.role == .admin }
+                    if let currentUser {
+                        acceptedCircle.members?.append(
+                            CircleMember(
+                                id: "cm-\(invite.id)",
+                                role: invite.role,
+                                userId: currentUser.id,
+                                user: currentUser
+                            )
+                        )
+                    }
+                }
                 appState.currentUser?.pendingInvites?.removeAll { $0.id == invite.id }
                 appState.currentUser?.memberships = [
-                    CircleMembership(id: "cm-\(invite.id)", circleId: invite.circle.id, role: invite.role, circle: invite.circle)
+                    CircleMembership(id: "cm-\(invite.id)", circleId: acceptedCircle.id, role: invite.role, circle: acceptedCircle)
                 ]
-                appState.attachCircle(invite.circle)
+                appState.attachCircle(acceptedCircle)
                 return
             }
             _ = try await APIClient.shared.acceptInvitation(invitationId: invite.id)

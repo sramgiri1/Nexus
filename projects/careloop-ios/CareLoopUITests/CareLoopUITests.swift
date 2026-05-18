@@ -475,6 +475,24 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_caregiverAcceptsInviteWithNoReceiverAccessByDefault() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-invite"])
+        let directory = app.scrollViews["circle-directory-screen"]
+
+        XCTAssertTrue(directory.waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Receiver access is granted after you join."].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["circle-list-invite-accept-invite-caregiver"].waitForExistence(timeout: 3))
+        app.buttons["circle-list-invite-accept-invite-caregiver"].tap()
+
+        XCTAssertTrue(app.scrollViews["caregiver-dashboard"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Your caregiver dashboard"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["0 care receivers"].exists)
+        XCTAssertTrue(app.staticTexts["No upcoming tasks"].exists)
+        XCTAssertFalse(app.staticTexts["Maya"].exists)
+        XCTAssertFalse(app.staticTexts["David"].exists)
+    }
+
+    @MainActor
     func test_organizerCanOpenCareReceiverManagement() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "organizer-home"])
         let dashboard = app.scrollViews["organizer-dashboard"]

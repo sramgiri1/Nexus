@@ -1516,6 +1516,92 @@ describe("circle membership management", () => {
     await app.close();
   });
 
+  test("caregiver invitation acceptance grants no receiver access by default", async () => {
+    const app = await buildApp(buildDb({
+      users: [
+        { id: "u1", email: "admin@test.com", name: "Admin" },
+        { id: "u2", email: "caregiver@test.com", name: "Caregiver" },
+      ],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "Mom", archiveAfterDays: 7 }],
+      recipients: [{
+        id: "cr1",
+        circleId: "c1",
+        name: "Mom",
+        relationship: "Mother",
+        notes: null,
+        isPrimary: true,
+        sortOrder: 0,
+        activationStatus: "ACTIVE",
+        activatedAt: new Date(),
+        receiverUserId: null,
+        consentAttestedAt: null,
+        consentAttestedById: null,
+        proxyAuthorizedById: null,
+        consentDocumentReference: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+      invitations: [{
+        id: "i1",
+        circleId: "c1",
+        email: "caregiver@test.com",
+        name: "Caregiver",
+        role: "MEMBER",
+        status: "PENDING",
+        invitedById: "u1",
+        acceptedById: null,
+        acceptedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+      }],
+      tasks: [{
+        id: "t1",
+        circleId: "c1",
+        recipientId: "cr1",
+        title: "Medication",
+        status: "PENDING",
+        priority: "NORMAL",
+        creatorId: "u1",
+        assigneeId: "u1",
+        dueAt: null,
+        completedAt: null,
+        completedById: null,
+        archivedAt: null,
+        createdAt: new Date(),
+        updatedAt: new Date(),
+        recurrenceFrequency: "NONE",
+        recurrenceInterval: null,
+        recurrenceWeekdays: [],
+        recurrenceEndsAt: null,
+        seriesId: null,
+      }],
+    }));
+
+    const caregiverHeaders = await authHeaders({ id: "u2", email: "caregiver@test.com", name: "Caregiver" });
+    const accept = await app.inject({
+      method: "POST",
+      url: "/invitations/i1/accept",
+      headers: caregiverHeaders,
+      payload: {},
+    });
+
+    assert.equal(accept.statusCode, 201);
+    assert.equal(accept.json().role, "MEMBER");
+    assert.equal(app.db._s.recipientAccesses.length, 0);
+
+    const circle = await app.inject({
+      method: "GET",
+      url: "/circles/c1",
+      headers: caregiverHeaders,
+    });
+
+    assert.equal(circle.statusCode, 200);
+    assert.deepEqual(circle.json().recipients, []);
+    assert.deepEqual(circle.json().tasks, []);
+    await app.close();
+  });
+
   test("recipient invitation activates the existing care receiver profile on acceptance", async () => {
     const app = await buildApp(buildDb({
       users: [

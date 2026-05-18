@@ -7,6 +7,7 @@ enum UITestScenario: String {
     case receiverHome = "receiver-home"
     case taskComments = "task-comments"
     case recipientInvite = "recipient-invite"
+    case caregiverInvite = "caregiver-invite"
 
     private static let launchArgument = "-careloop-ui-scenario"
     private static let pendingTaskLaunchArgument = "-careloop-ui-pending-task"
@@ -47,10 +48,10 @@ extension AppState {
 
         let fixture = UITestScenarioFixture.make(scenario)
         currentUser = fixture.user
-        if scenario == .recipientInvite {
+        if scenario == .recipientInvite || scenario == .caregiverInvite {
             currentUser?.pendingInvites = fixture.invitations
         }
-        activeCircle = scenario == .circleDirectory || scenario == .recipientInvite ? nil : fixture.circle
+        activeCircle = scenario == .circleDirectory || scenario == .recipientInvite || scenario == .caregiverInvite ? nil : fixture.circle
         uiTestInvitations = fixture.invitations
         uiTestRecipientAccessByMemberId = fixture.recipientAccessByMemberId
         uiTestPremiumUpgradeRequests = fixture.premiumUpgradeRequests
@@ -219,7 +220,7 @@ private struct UITestScenarioFixture {
         ]
 
         switch scenario {
-        case .circleDirectory, .recipientInvite:
+        case .circleDirectory, .recipientInvite, .caregiverInvite:
             let circle = CareCircle(
                 id: "c1",
                 name: "Ramgiri Care Circle",
@@ -252,17 +253,27 @@ private struct UITestScenarioFixture {
                     invitedBy: InvitationSender(id: organizer.id, name: organizer.name, email: organizer.email)
                 ),
             ]
-            var user = scenario == .recipientInvite ? mom : organizer
-            user.memberships = scenario == .recipientInvite
-                ? []
-                : [CircleMembership(id: "cm1", circleId: circle.id, role: .admin, circle: circle)]
-            user.pendingInvites = scenario == .recipientInvite
-                ? [pendingInvites[1]]
-                : nil
+            var user: CareUser
+            let visibleInvites: [GroupInvitation]
+            switch scenario {
+            case .recipientInvite:
+                user = mom
+                user.memberships = []
+                visibleInvites = [pendingInvites[1]]
+            case .caregiverInvite:
+                user = caregiver
+                user.memberships = []
+                visibleInvites = [pendingInvites[0]]
+            default:
+                user = organizer
+                user.memberships = [CircleMembership(id: "cm1", circleId: circle.id, role: .admin, circle: circle)]
+                visibleInvites = pendingInvites
+            }
+            user.pendingInvites = visibleInvites.isEmpty ? nil : visibleInvites
             return UITestScenarioFixture(
                 user: user,
                 circle: circle,
-                invitations: scenario == .recipientInvite ? [pendingInvites[1]] : pendingInvites,
+                invitations: visibleInvites,
                 recipientAccessByMemberId: [:],
                 premiumUpgradeRequests: [],
                 events: [],
