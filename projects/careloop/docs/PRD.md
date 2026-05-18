@@ -1101,7 +1101,7 @@ The premium phase must be implemented in small, testable slices. `projects/carel
 
 ### Post-premium implementation phases
 
-After the receiver-scoped premium phase, implementation should continue in small, independently testable phases. Each phase must update the PRD when product behavior changes, update `docs/qa/testability-matrix.md` and `docs/qa/test-runbook.md`, update demo data if the showcase path changes, run focused automated tests, and commit/push before the next phase begins.
+After the receiver-scoped premium phase, implementation should continue in small, independently testable phases. Each phase must update the PRD when product behavior changes, update `docs/qa/testability-matrix.md` and `docs/qa/test-runbook.md`, update demo data if the showcase path changes, run focused automated tests, and commit/push before the next phase begins. Execution state is tracked in `docs/IMPLEMENTATION_KANBAN.md`; a subphase is not complete until that board, this PRD, QA docs, and Nexus project status agree.
 
 #### Phase A — Task Detail Polish
 
