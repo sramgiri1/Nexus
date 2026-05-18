@@ -2434,7 +2434,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7aeba11",
+      "commit": "1ebdd87",
       "completedAt": "",
       "summary": "P64 has started with a contract-only governance split before any provider or tool dispatch implementation.",
       "checksRun": [
