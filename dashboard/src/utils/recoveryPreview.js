@@ -55,14 +55,23 @@ const DISABLED_ACTIONS = [
   {
     label: "Restore",
     reason: "Restore is disabled until a later phase explicitly approves recovery execution.",
+    requiredContext: ["Approved restore execution phase"],
+    missingContext: ["Approved restore execution phase"],
+    nextSafeAction: "Inspect snapshot details; restore remains unavailable.",
   },
   {
     label: "Replay",
-    reason: "Replay is disabled; P63.5 shows inspection data only.",
+    reason: "Replay is disabled; preview requires evidence summary and a later approved execution phase.",
+    requiredContext: ["Redacted snapshot metadata", "Recovery point posture", "Evidence summary", "Approved replay execution phase"],
+    missingContext: ["Evidence summary", "Approved replay execution phase"],
+    nextSafeAction: "Review missing replay context; execution remains unavailable.",
   },
   {
     label: "Resume",
-    reason: "Resume is disabled; preview plans do not run AI or tools.",
+    reason: "Resume is disabled; preview requires recovery chain review and a later approved execution phase.",
+    requiredContext: ["Redacted snapshot metadata", "Recovery point chain", "Blocked action review", "Approved resume execution phase"],
+    missingContext: ["Blocked action review", "Approved resume execution phase"],
+    nextSafeAction: "Review missing resume context; execution remains unavailable.",
   },
 ];
 

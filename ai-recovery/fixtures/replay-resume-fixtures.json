@@ -1,0 +1,62 @@
+{
+  "replay": [
+    {
+      "actionPreviewId": "replay_context_missing",
+      "providedContext": [
+        "Redacted snapshot metadata",
+        "Recovery point posture"
+      ],
+      "blockedReasons": [],
+      "evidenceRefs": [
+        "reports/ai-snapshot-store-report.md"
+      ],
+      "expectedState": "missing_context"
+    },
+    {
+      "actionPreviewId": "replay_policy_blocked",
+      "providedContext": [
+        "Redacted snapshot metadata",
+        "Recovery point posture",
+        "Evidence summary",
+        "Approved replay execution phase"
+      ],
+      "blockedReasons": [
+        "Replay execution is not approved in P63.6."
+      ],
+      "evidenceRefs": [
+        "reports/command-center-recovery-ux-report.md"
+      ],
+      "expectedState": "blocked"
+    }
+  ],
+  "resume": [
+    {
+      "actionPreviewId": "resume_context_missing",
+      "providedContext": [
+        "Redacted snapshot metadata",
+        "Recovery point chain"
+      ],
+      "blockedReasons": [],
+      "evidenceRefs": [
+        "reports/ai-recovery-point-model-report.md"
+      ],
+      "expectedState": "missing_context"
+    },
+    {
+      "actionPreviewId": "resume_policy_blocked",
+      "providedContext": [
+        "Redacted snapshot metadata",
+        "Recovery point chain",
+        "Blocked action review",
+        "Approved resume execution phase"
+      ],
+      "blockedReasons": [
+        "Resume execution is not approved in P63.6."
+      ],
+      "evidenceRefs": [
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md"
+      ],
+      "expectedState": "blocked"
+    }
+  ]
+}

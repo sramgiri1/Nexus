@@ -54,6 +54,12 @@ export function RecoverySnapshotDetail({ snapshot, disabledActions = [] }) {
             >
               <span className="ccv2-list-row__title">{action.label}</span>
               <span className="ccv2-list-row__meta" style={{ display: "block", marginTop: 8 }}>{action.reason}</span>
+              <span className="ccv2-list-row__meta" style={{ display: "block", marginTop: 8 }}>
+                Missing context: {(action.missingContext || []).join(", ") || "None"}
+              </span>
+              <span className="ccv2-list-row__meta" style={{ display: "block", marginTop: 8 }}>
+                Next safe action: {action.nextSafeAction}
+              </span>
             </button>
           ))}
         </div>

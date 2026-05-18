@@ -238,7 +238,8 @@
     "check:ai-interaction-capture": "node scripts/check-ai-interaction-capture.js",
     "check:ai-recovery-point-model": "node scripts/check-ai-recovery-point-model.js",
     "check:ai-snapshot-store": "node scripts/check-ai-snapshot-store.js",
-    "check:command-center-recovery-ux": "node scripts/check-command-center-recovery-ux.js"
+    "check:command-center-recovery-ux": "node scripts/check-command-center-recovery-ux.js",
+    "check:ai-replay-resume-preview": "node scripts/check-ai-replay-resume-preview.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

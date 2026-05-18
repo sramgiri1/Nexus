@@ -223,6 +223,12 @@ Primary validation:
 Narrow scope: build deterministic plan previews that explain replay/resume
 requirements, missing context, blocked actions, and next safe operator choices.
 
+Implementation shape: replay and resume builders return preview-only action
+records with disabled reasons, required context, missing context, evidence refs,
+and next safe action labels. Recovery UX may display this metadata, but restore,
+replay, resume, provider dispatch, tool dispatch, worker execution, project
+mutation, DB writes, migrations, and deploy behavior remain disabled.
+
 Required implementation contract:
 `nexus-os-p63-6-recovery-replay-resume-preview`
 
