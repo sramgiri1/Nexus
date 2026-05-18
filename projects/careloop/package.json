@@ -17,6 +17,8 @@
     "qa:reset": "node scripts/reset-db.js",
     "qa:seed:sprint1": "node scripts/seed-sprint1.js",
     "qa:seed:showcase": "node scripts/seed-demo-showcase.js",
+    "check:demo-showcase": "node scripts/check-demo-showcase-readiness.js",
+    "check:careloop-demo-readiness": "node scripts/check-demo-showcase-readiness.js",
     "test": "node --test test/*.test.js",
     "test:smoke": "node --test test/sprint2.test.js",
     "test:watch": "node --test --watch test/*.test.js"

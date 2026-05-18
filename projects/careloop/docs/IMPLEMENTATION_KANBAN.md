@@ -16,23 +16,22 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-F5 is next: physical-device APNs/TestFlight validation. This is external setup because simulator tests cannot prove APNs delivery, OS notification tap behavior, Apple push entitlements, or TestFlight install behavior.
+G1-G4 demo readiness is next locally while F5 remains blocked on physical-device APNs/TestFlight setup.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
 | F5 | Physical-device APNs/TestFlight validation. | Apple Developer setup; app entitlements; backend push provider. | Manual physical-device checklist. | No simulator demo dependency. | External Setup |
+| G1 | Maintain four realistic Care Circles with distinct use cases. | Demo seed script and readiness checks. | Demo readiness script; smoke launch. | Required. | Partial |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| G1 | Maintain four realistic Care Circles with distinct use cases. | Demo seed script and readiness checks. | Demo readiness script; smoke launch. | Required. | Partial |
 | G2 | Multiple personas per circle with roles and access scopes. | Demo seed script and launcher profiles. | Demo readiness script; focused UI fixture checks. | Required. | Partial |
 | G3 | Mixed task states, history, comments, reminders, premium, expired, and locked states. | Demo seed script. | Demo readiness script. | Required. | Partial |
 | G4 | One-command launch plus optional screen-recording script. | Demo launcher scripts; Xcode/simulator launch flow. | Smoke launch; launcher readiness check. | Required. Current launcher works after local DB sync but needs migration cleanup. | Partial |
-| G5 | Demo readiness validation fails if fixtures drift from PRD. | Demo readiness scripts and docs. | Demo readiness script. | Required. | Partial |
 | H1 | Xcode target membership audit. | Xcode project; app/test/demo files. | Release archive inspection script. | No demo dependency. | Planned |
 | H2 | Gate UI-test and demo-only hooks behind Debug/UI-test flags. | iOS app launch/session hooks. | Release build check. | No demo dependency. | Planned |
 | H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | Xcode archive; scripts. | Release hygiene automation. | No demo dependency. | Planned |
@@ -69,6 +68,7 @@ F5 is next: physical-device APNs/TestFlight validation. This is external setup b
 | F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | Added organizer and care receiver UI coverage for pending task deep links, completed task deep links, and wrong-circle guards; focused Xcode UI deep-link suite passed with 6 tests. |
 | F3 | Snooze mutation and rescheduled reminder visibility. | Backend snooze regressions now assert `scheduledAt` and `snoozedUntil` move to the requested future window, and Task Detail shows the rescheduled reminder time with escalation paused copy; focused backend and Xcode UI tests passed. |
 | F4 | Escalation timeline and notification fanout verification. | Scheduler escalation payloads now store non-PII delivery summaries, user-disabled escalation alerts are blocked without failing the reminder, organizer Activity shows escalation timeline entries, and focused backend/Xcode UI tests plus `xcodebuild build-for-testing` passed. |
+| G5 | Demo readiness validation fails if fixtures drift from the PRD. | Added CareLoop-local `npm run check:demo-showcase` / `npm run check:careloop-demo-readiness` guard for four scenarios, launch personas, mixed task/reminder/premium states, safe local emails, StoreKit product parity, and one-command launcher contract; direct seed validation emitted 4 circles, 4 launch profiles, 23 tasks, and 5 care receivers. |
 
 ## Blocked / External Setup
 
