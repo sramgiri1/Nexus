@@ -20,6 +20,12 @@ struct AdminInsightsView: View {
     private var selectedRecipient: CareRecipient? {
         recipientOptions.first(where: { $0.id == selectedRecipientId })
     }
+    private var lockedInsightRecipients: [CareRecipient] {
+        recipientOptions.filter { !ReceiverPremiumPolicy.supportsInsights(for: $0) }
+    }
+    private var premiumInsightRecipients: [CareRecipient] {
+        recipientOptions.filter { ReceiverPremiumPolicy.supportsInsights(for: $0) }
+    }
 
     var body: some View {
         List {
@@ -51,9 +57,7 @@ struct AdminInsightsView: View {
                 Section("Recipient") {
                     ScrollView(.horizontal, showsIndicators: false) {
                         HStack(spacing: 10) {
-                            if canLoadAllInsights {
-                                recipientChip(id: "all", title: "All recipients", locked: false)
-                            }
+                            recipientChip(id: "all", title: "All recipients", locked: !canLoadAllInsights)
                             ForEach(recipientOptions) { recipient in
                                 recipientChip(
                                     id: recipient.id,
@@ -84,16 +88,28 @@ struct AdminInsightsView: View {
                         Text(lockDetail)
                             .font(.system(size: 14, weight: .medium, design: .rounded))
                             .foregroundStyle(.secondary)
-                        if canUpgrade, let lockedRecipient {
+                        insightUpgradeValuePreview()
+                            .accessibilityIdentifier("insights-upgrade-value-preview")
+                        if selectedRecipientId == "all", let firstPremium = premiumInsightRecipients.first {
                             Button {
-                                paywallRecipient = lockedRecipient
+                                selectedRecipientId = firstPremium.id
                             } label: {
-                                Label("Unlock Premium for \(lockedRecipient.name)", systemImage: "crown.fill")
+                                Label("View reports for \(firstPremium.name)", systemImage: "chart.bar.fill")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                             }
-                            .buttonStyle(.borderedProminent)
-                            .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
-                            .accessibilityIdentifier("insights-upgrade-button")
+                            .buttonStyle(.bordered)
+                            .accessibilityIdentifier("insights-view-premium-recipient-button")
+                        }
+                        if canUpgrade {
+                            if let lockedRecipient {
+                                upgradeButton(for: lockedRecipient)
+                                    .accessibilityIdentifier("insights-upgrade-button")
+                            } else if selectedRecipientId == "all" {
+                                ForEach(lockedInsightRecipients) { recipient in
+                                    upgradeButton(for: recipient)
+                                        .accessibilityIdentifier("insights-upgrade-button-\(recipient.id)")
+                                }
+                            }
                         }
                     }
                     .padding(.vertical, 6)
@@ -265,14 +281,17 @@ struct AdminInsightsView: View {
         if let lockedRecipient {
             return "Premium is required for \(lockedRecipient.name)"
         }
-        return "Choose a premium care receiver"
+        return "Upgrade locked care receivers"
     }
 
     private var lockDetail: String {
         if let lockedRecipient {
             return lockedRecipient.premiumStatusDetail
         }
-        return "Completion insights stay inside premium care receiver scopes. Select a premium receiver to continue."
+        if lockedInsightRecipients.isEmpty {
+            return "Completion insights stay inside premium care receiver scopes. Select a premium receiver to continue."
+        }
+        return "All-recipient insights require every visible care receiver to have Premium. Upgrade locked receivers, or view one premium receiver now."
     }
 
     @ViewBuilder
@@ -392,6 +411,38 @@ struct AdminInsightsView: View {
             return "No missed tasks in this window."
         }
         return "\(missed) of \(due) due tasks were missed in this window."
+    }
+
+    @ViewBuilder
+    private func insightUpgradeValuePreview() -> some View {
+        VStack(alignment: .leading, spacing: 8) {
+            Text("Premium reports unlock")
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+            premiumValueRow("Adherence rates by care receiver")
+            premiumValueRow("Missed-task trends and escalation response timing")
+            premiumValueRow("Caregiver load balance without exposing private notes")
+        }
+        .padding(12)
+        .background(Color(red: 0.96, green: 0.92, blue: 1.0), in: RoundedRectangle(cornerRadius: 16, style: .continuous))
+    }
+
+    @ViewBuilder
+    private func premiumValueRow(_ text: String) -> some View {
+        Label(text, systemImage: "checkmark.seal.fill")
+            .font(.system(size: 13, weight: .semibold, design: .rounded))
+            .foregroundStyle(Color(red: 0.32, green: 0.18, blue: 0.62))
+    }
+
+    @ViewBuilder
+    private func upgradeButton(for recipient: CareRecipient) -> some View {
+        Button {
+            paywallRecipient = recipient
+        } label: {
+            Label("Unlock Premium for \(recipient.name)", systemImage: "crown.fill")
+                .font(.system(size: 14, weight: .bold, design: .rounded))
+        }
+        .buttonStyle(.borderedProminent)
+        .tint(Color(red: 0.55, green: 0.22, blue: 0.97))
     }
 
     @ViewBuilder

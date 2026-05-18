@@ -1081,7 +1081,18 @@ final class CareLoopUITests: XCTestCase {
         app.buttons["David"].tap()
 
         XCTAssertTrue(app.staticTexts["Premium is required for David"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Premium reports unlock"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Missed-task trends and escalation response timing"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["insights-upgrade-button"].exists)
+
+        XCTAssertTrue(app.buttons["All recipients"].waitForExistence(timeout: 3))
+        app.buttons["All recipients"].tap()
+        XCTAssertTrue(app.staticTexts["Upgrade locked care receivers"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.buttons["insights-view-premium-recipient-button"].waitForExistence(timeout: 3))
+        if !app.buttons["Unlock Premium for David"].exists {
+            app.swipeUp()
+        }
+        XCTAssertTrue(app.buttons["Unlock Premium for David"].waitForExistence(timeout: 3))
     }
 
     @MainActor
