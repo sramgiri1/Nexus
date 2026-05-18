@@ -98,11 +98,48 @@ export default async function circles(app) {
       completedByDay: [],
       topCaregivers: [],
       recipientBreakdown: [],
+      adherence: emptyAdherenceSummary(),
       totals: {
         completed: 0,
         active: 0,
         overdue: 0,
       },
+    };
+  }
+
+  function emptyAdherenceSummary() {
+    return {
+      scheduled: 0,
+      completed: 0,
+      onTime: 0,
+      late: 0,
+      missed: 0,
+      completionRate: 0,
+      onTimeRate: 0,
+    };
+  }
+
+  function percent(numerator, denominator) {
+    if (!denominator) return 0;
+    return Math.round((numerator / denominator) * 100);
+  }
+
+  function adherenceForTasks(tasks, { since, now }) {
+    const dueTasks = tasks.filter((task) => task.dueAt && task.dueAt >= since && task.dueAt <= now);
+    const completed = dueTasks.filter((task) => task.status === "DONE" && task.completedAt);
+    const onTime = completed.filter((task) => task.completedAt <= task.dueAt);
+    const late = completed.length - onTime.length;
+    const missed = dueTasks.filter((task) =>
+      ["PENDING", "IN_PROGRESS"].includes(task.status) && task.dueAt < now,
+    ).length;
+    return {
+      scheduled: dueTasks.length,
+      completed: completed.length,
+      onTime: onTime.length,
+      late,
+      missed,
+      completionRate: percent(completed.length, dueTasks.length),
+      onTimeRate: percent(onTime.length, dueTasks.length),
     };
   }
 
@@ -439,12 +476,14 @@ export default async function circles(app) {
       const completed = tasksForRecipient.filter((task) => task.status === "DONE" && task.completedAt && task.completedAt >= since).length;
       const active = tasksForRecipient.filter((task) => ["PENDING", "IN_PROGRESS"].includes(task.status)).length;
       const overdue = tasksForRecipient.filter((task) => ["PENDING", "IN_PROGRESS"].includes(task.status) && task.dueAt && task.dueAt < now).length;
+      const adherence = adherenceForTasks(tasksForRecipient, { since, now });
       return {
         recipientId: recipient.id,
         name: recipient.name,
         completed,
         active,
         overdue,
+        adherence,
       };
     });
 
@@ -458,6 +497,7 @@ export default async function circles(app) {
           .slice(0, 5)
         : [],
       recipientBreakdown,
+      adherence: adherenceForTasks(allTasks, { since, now }),
       totals: {
         completed: completedTasks.length,
         active: activeTasks.length,

@@ -111,6 +111,11 @@ struct AdminInsightsView: View {
                     insightCard(title: "Overdue", value: "\(insights.totals.overdue)", tint: insights.totals.overdue > 0 ? .red : .secondary)
                 }
 
+                Section("Adherence") {
+                    adherenceSummary(insights.adherence)
+                        .accessibilityIdentifier("insights-adherence-summary")
+                }
+
                 Section("Completed by day") {
                     Chart(insights.completedByDay) { day in
                         BarMark(
@@ -173,6 +178,7 @@ struct AdminInsightsView: View {
                                     insightMini(label: "Active", value: recipient.active, tint: Color(red: 0.13, green: 0.56, blue: 0.87))
                                     insightMini(label: "Overdue", value: recipient.overdue, tint: recipient.overdue > 0 ? .red : .secondary)
                                 }
+                                adherenceInline(recipient.adherence)
                             }
                             .padding(.vertical, 4)
                         }
@@ -253,6 +259,60 @@ struct AdminInsightsView: View {
                 .foregroundStyle(tint)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private func adherenceSummary(_ adherence: AdherenceInsightSummary) -> some View {
+        VStack(alignment: .leading, spacing: 12) {
+            HStack(spacing: 12) {
+                adherenceMetric(title: "Completed", value: adherence.completionRateLabel, tint: Color(red: 0.12, green: 0.68, blue: 0.49))
+                adherenceMetric(title: "On time", value: adherence.onTimeRateLabel, tint: Color(red: 0.13, green: 0.56, blue: 0.87))
+            }
+            Text(adherence.summaryLabel)
+                .font(.system(size: 13, weight: .medium, design: .rounded))
+                .foregroundStyle(.secondary)
+            HStack(spacing: 10) {
+                adherencePill(label: "Due", value: adherence.scheduled, tint: .secondary)
+                adherencePill(label: "Late", value: adherence.late, tint: adherence.late > 0 ? .orange : .secondary)
+                adherencePill(label: "Missed", value: adherence.missed, tint: adherence.missed > 0 ? .red : .secondary)
+            }
+        }
+        .padding(.vertical, 6)
+    }
+
+    @ViewBuilder
+    private func adherenceInline(_ adherence: AdherenceInsightSummary) -> some View {
+        Text("Adherence \(adherence.completionRateLabel) · On time \(adherence.onTimeRateLabel)")
+            .font(.caption)
+            .foregroundStyle(.secondary)
+            .accessibilityIdentifier("recipient-adherence-\(adherence.scheduled)-due")
+    }
+
+    @ViewBuilder
+    private func adherenceMetric(title: String, value: String, tint: Color) -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            Text(title)
+                .font(.caption)
+                .foregroundStyle(.secondary)
+            Text(value)
+                .font(.system(size: 24, weight: .bold, design: .rounded))
+                .foregroundStyle(tint)
+        }
+        .frame(maxWidth: .infinity, alignment: .leading)
+    }
+
+    @ViewBuilder
+    private func adherencePill(label: String, value: Int, tint: Color) -> some View {
+        HStack(spacing: 4) {
+            Text(label)
+            Text("\(value)")
+                .fontWeight(.bold)
+        }
+        .font(.system(size: 12, weight: .semibold, design: .rounded))
+        .foregroundStyle(tint)
+        .padding(.horizontal, 10)
+        .padding(.vertical, 6)
+        .background(Color(.secondarySystemGroupedBackground), in: Capsule(style: .continuous))
     }
 
     @ViewBuilder

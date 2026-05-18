@@ -20,7 +20,7 @@ Coverage includes:
 - multi-user signup → invite → accept → self-join flow
 - reminder/digest delivery and escalation rules
 - recurring tasks and archive behavior
-- admin completion insights
+- admin completion insights and receiver adherence summaries
 ```
 
 ### iOS (`xcodebuild test` + Sentinel)

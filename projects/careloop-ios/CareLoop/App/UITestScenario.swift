@@ -473,9 +473,40 @@ private struct UITestScenarioFixture {
                         TopCaregiverInsight(userId: caregiver.id, name: caregiver.name, email: caregiver.email, completedCount: 1),
                     ],
                     recipientBreakdown: [
-                        RecipientCompletionInsight(recipientId: momRecipient.id, name: momRecipient.name, completed: 1, active: 2, overdue: 1),
-                        RecipientCompletionInsight(recipientId: dadRecipient.id, name: dadRecipient.name, completed: 0, active: 0, overdue: 0),
+                        RecipientCompletionInsight(
+                            recipientId: momRecipient.id,
+                            name: momRecipient.name,
+                            completed: 1,
+                            active: 2,
+                            overdue: 1,
+                            adherence: AdherenceInsightSummary(
+                                scheduled: 4,
+                                completed: 3,
+                                onTime: 2,
+                                late: 1,
+                                missed: 1,
+                                completionRate: 75,
+                                onTimeRate: 50
+                            )
+                        ),
+                        RecipientCompletionInsight(
+                            recipientId: dadRecipient.id,
+                            name: dadRecipient.name,
+                            completed: 0,
+                            active: 0,
+                            overdue: 0,
+                            adherence: .empty
+                        ),
                     ],
+                    adherence: AdherenceInsightSummary(
+                        scheduled: 4,
+                        completed: 3,
+                        onTime: 2,
+                        late: 1,
+                        missed: 1,
+                        completionRate: 75,
+                        onTimeRate: 50
+                    ),
                     totals: CompletionInsightTotals(completed: 1, active: 2, overdue: 1)
                 ),
                 pendingTaskId: nil
@@ -527,8 +558,32 @@ private struct UITestScenarioFixture {
                     ],
                     topCaregivers: [],
                     recipientBreakdown: [
-                        RecipientCompletionInsight(recipientId: momRecipient.id, name: momRecipient.name, completed: 1, active: 2, overdue: 1),
+                        RecipientCompletionInsight(
+                            recipientId: momRecipient.id,
+                            name: momRecipient.name,
+                            completed: 1,
+                            active: 2,
+                            overdue: 1,
+                            adherence: AdherenceInsightSummary(
+                                scheduled: 3,
+                                completed: 2,
+                                onTime: 1,
+                                late: 1,
+                                missed: 1,
+                                completionRate: 67,
+                                onTimeRate: 33
+                            )
+                        ),
                     ],
+                    adherence: AdherenceInsightSummary(
+                        scheduled: 3,
+                        completed: 2,
+                        onTime: 1,
+                        late: 1,
+                        missed: 1,
+                        completionRate: 67,
+                        onTimeRate: 33
+                    ),
                     totals: CompletionInsightTotals(completed: 1, active: 2, overdue: 1)
                 ),
                 pendingTaskId: nil

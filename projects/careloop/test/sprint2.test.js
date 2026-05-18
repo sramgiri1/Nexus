@@ -3433,6 +3433,15 @@ describe("auth hardening and protected reads", () => {
       completedByDay: [],
       topCaregivers: [],
       recipientBreakdown: [],
+      adherence: {
+        scheduled: 0,
+        completed: 0,
+        onTime: 0,
+        late: 0,
+        missed: 0,
+        completionRate: 0,
+        onTimeRate: 0,
+      },
       totals: {
         completed: 0,
         active: 0,
@@ -3790,6 +3799,15 @@ describe("receiver-scoped access control", () => {
         completed: 0,
         active: 3,
         overdue: 2,
+        adherence: {
+          scheduled: 3,
+          completed: 0,
+          onTime: 0,
+          late: 0,
+          missed: 2,
+          completionRate: 0,
+          onTimeRate: 0,
+        },
       }]);
       assert.deepEqual(res.json().totals, {
         completed: 0,
@@ -4716,6 +4734,15 @@ describe("GET /circles/:id/insights/completion", () => {
       assert.equal(body.totals.completed, 2);
       assert.equal(body.totals.active, 1);
       assert.equal(body.totals.overdue, 1);
+      assert.deepEqual(body.adherence, {
+        scheduled: 3,
+        completed: 2,
+        onTime: 0,
+        late: 2,
+        missed: 1,
+        completionRate: 67,
+        onTimeRate: 0,
+      });
       assert.equal(body.recipientBreakdown.length, 2);
       assert.deepEqual(body.recipientBreakdown.find((item) => item.recipientId === "cr1"), {
         recipientId: "cr1",
@@ -4723,6 +4750,15 @@ describe("GET /circles/:id/insights/completion", () => {
         completed: 2,
         active: 0,
         overdue: 0,
+        adherence: {
+          scheduled: 2,
+          completed: 2,
+          onTime: 0,
+          late: 2,
+          missed: 0,
+          completionRate: 100,
+          onTimeRate: 0,
+        },
       });
       assert.deepEqual(body.recipientBreakdown.find((item) => item.recipientId === "cr2"), {
         recipientId: "cr2",
@@ -4730,6 +4766,15 @@ describe("GET /circles/:id/insights/completion", () => {
         completed: 0,
         active: 1,
         overdue: 1,
+        adherence: {
+          scheduled: 1,
+          completed: 0,
+          onTime: 0,
+          late: 0,
+          missed: 1,
+          completionRate: 0,
+          onTimeRate: 0,
+        },
       });
       assert.deepEqual(body.topCaregivers[0], {
         userId: "u2",
@@ -4751,6 +4796,15 @@ describe("GET /circles/:id/insights/completion", () => {
       assert.equal(filteredBody.totals.completed, 2);
       assert.equal(filteredBody.totals.active, 0);
       assert.equal(filteredBody.totals.overdue, 0);
+      assert.deepEqual(filteredBody.adherence, {
+        scheduled: 2,
+        completed: 2,
+        onTime: 0,
+        late: 2,
+        missed: 0,
+        completionRate: 100,
+        onTimeRate: 0,
+      });
     } finally {
       Date.now = realDateNow;
       await app.close();

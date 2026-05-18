@@ -1048,6 +1048,9 @@ final class CareLoopUITests: XCTestCase {
         app.buttons["quick-action-insights"].tap()
 
         XCTAssertTrue(app.staticTexts["Overview"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Adherence"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["75%"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["3 of 4 due tasks completed, 2 on time."].waitForExistence(timeout: 3))
         XCTAssertTrue(app.buttons["David"].waitForExistence(timeout: 3))
         app.buttons["David"].tap()
 

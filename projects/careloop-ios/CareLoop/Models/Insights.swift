@@ -6,6 +6,7 @@ struct CircleCompletionInsights: Codable {
     let completedByDay: [CompletedTaskDay]
     let topCaregivers: [TopCaregiverInsight]
     let recipientBreakdown: [RecipientCompletionInsight]
+    let adherence: AdherenceInsightSummary
     let totals: CompletionInsightTotals
 }
 
@@ -15,8 +16,44 @@ struct RecipientCompletionInsight: Codable, Identifiable {
     let completed: Int
     let active: Int
     let overdue: Int
+    let adherence: AdherenceInsightSummary
 
     var id: String { recipientId }
+}
+
+struct AdherenceInsightSummary: Codable, Equatable {
+    let scheduled: Int
+    let completed: Int
+    let onTime: Int
+    let late: Int
+    let missed: Int
+    let completionRate: Int
+    let onTimeRate: Int
+
+    static let empty = AdherenceInsightSummary(
+        scheduled: 0,
+        completed: 0,
+        onTime: 0,
+        late: 0,
+        missed: 0,
+        completionRate: 0,
+        onTimeRate: 0
+    )
+
+    var completionRateLabel: String {
+        scheduled == 0 ? "No due tasks" : "\(completionRate)%"
+    }
+
+    var onTimeRateLabel: String {
+        scheduled == 0 ? "No due tasks" : "\(onTimeRate)%"
+    }
+
+    var summaryLabel: String {
+        if scheduled == 0 {
+            return "No due tasks in this window yet."
+        }
+        return "\(completed) of \(scheduled) due tasks completed, \(onTime) on time."
+    }
 }
 
 struct CompletedTaskDay: Codable, Identifiable {

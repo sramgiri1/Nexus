@@ -163,6 +163,10 @@ struct ActivityFeedView: View {
                 progressCard(title: "Overdue", value: "\(insights.totals.overdue)", tint: insights.totals.overdue > 0 ? .red : teal)
             }
             .padding(.vertical, 4)
+            Text("Adherence \(insights.adherence.completionRateLabel) · On time \(insights.adherence.onTimeRateLabel)")
+                .font(.system(size: 13, weight: .semibold, design: .rounded))
+                .foregroundStyle(mid)
+                .accessibilityIdentifier("activity-adherence-summary")
         }
     }
 
@@ -179,6 +183,9 @@ struct ActivityFeedView: View {
                         summaryPill(label: "Active", value: recipient.active, tint: blue)
                         summaryPill(label: "Overdue", value: recipient.overdue, tint: recipient.overdue > 0 ? .red : teal)
                     }
+                    Text("Adherence \(recipient.adherence.completionRateLabel)")
+                        .font(.caption)
+                        .foregroundStyle(mid)
                 }
                 .padding(.vertical, 4)
             }

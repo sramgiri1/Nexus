@@ -545,6 +545,23 @@ final class CompletionInsightModelTests: XCTestCase {
         let day = CompletedTaskDay(date: "2026-04-29", count: 2)
         XCTAssertFalse(day.shortLabel.isEmpty)
     }
+
+    func test_adherenceSummary_formatsRatesAndEmptyState() {
+        let summary = AdherenceInsightSummary(
+            scheduled: 4,
+            completed: 3,
+            onTime: 2,
+            late: 1,
+            missed: 1,
+            completionRate: 75,
+            onTimeRate: 50
+        )
+
+        XCTAssertEqual(summary.completionRateLabel, "75%")
+        XCTAssertEqual(summary.onTimeRateLabel, "50%")
+        XCTAssertEqual(summary.summaryLabel, "3 of 4 due tasks completed, 2 on time.")
+        XCTAssertEqual(AdherenceInsightSummary.empty.completionRateLabel, "No due tasks")
+    }
 }
 
 final class CareCircleRecipientTests: XCTestCase {
