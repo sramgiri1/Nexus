@@ -2448,18 +2448,135 @@
         "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
         "P64.1 only defines implementation-grade subphase contracts and validation."
       ],
-      "nextPhase": "P64.1",
+      "nextPhase": "P64.3",
       "commandCenterVisible": true
     },
     {
       "phaseId": "P64.1",
-      "title": "Code Mode Runtime + Lazy Tool Loading",
+      "title": "Execution Contract + Governance Split",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "1ebdd87",
+      "completedAt": "2026-05-18T22:59:21.000Z",
+      "summary": "Defined implementation-grade P64 governed dispatch contracts, docs, checker, reports, and OS phase handoff without enabling execution.",
+      "checksRun": [
+        "npm run check:p64-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
+        "Full Playwright page suite still has two pre-existing project-label assertions outside this OS-only subphase."
+      ],
+      "nextPhase": "P64.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.2",
+      "title": "Dispatch Policy Envelope",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-dispatch-envelope-commit",
+      "completedAt": "2026-05-18T23:12:00.000Z",
+      "summary": "Added pure governed dispatch envelope and policy decision modules with fixtures and checker coverage while execution remains disabled.",
+      "checksRun": [
+        "npm run check:p64-dispatch-envelope",
+        "npm run check:p64-execution-plan",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
+        "Envelope policy decisions are preview-only and do not call live adapters."
+      ],
+      "nextPhase": "P64.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.3",
+      "title": "Provider / Tool Readiness Matrix",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned code-mode runtime and lazy tool loading phase after P64 governed dispatch contracts are validated.",
+      "summary": "Planned read-only provider and tool readiness matrix for governed dispatch.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.4",
+      "title": "Dispatch Dry Run",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned non-executing dispatch dry-run previews with cost, approval, evidence, activity, and disabled reason metadata.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.5",
+      "title": "Command Center Dispatch UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center dispatch readiness and dry-run UX.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.6",
+      "title": "Dispatch Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned P64 validation aggregation, docs, reports, and safety checks.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation and P64 closure after all governed dispatch subphases pass.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.8",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8",
+      "title": "Code Mode Runtime + Lazy Tool Loading",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned code-mode runtime and lazy tool loading phase after P64 governed dispatch foundation closes.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P65",
@@ -4715,5 +4832,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P64",
   "previousPhase": "P63",
-  "nextPhase": "P64.1"
+  "nextPhase": "P64.3"
 }

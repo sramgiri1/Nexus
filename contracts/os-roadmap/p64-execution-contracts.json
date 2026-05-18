@@ -172,8 +172,10 @@
         "scripts/check-p64-dispatch-envelope.js",
         "reports/p64-dispatch-envelope-report.md",
         "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+        "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
         "reports/os-phase-status-report.md",
+        "scripts/check-os-phase-status.js",
         "package.json"
       ],
       "forbiddenFiles": [
@@ -222,8 +224,10 @@
           "update": [
             "package.json",
             "docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md",
+            "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
-            "reports/os-phase-status-report.md"
+            "reports/os-phase-status-report.md",
+            "scripts/check-os-phase-status.js"
           ]
         },
         "expectedExportsSchemasDataShapes": {
@@ -273,7 +277,7 @@
           "Confirm no DB writes or deploy action was enabled."
         ],
         "gitCommands": [
-          "git add dispatch-governance/dispatchEnvelope.js dispatch-governance/dispatchPolicy.js dispatch-governance/fixtures/dispatch-envelope-fixtures.json scripts/check-p64-dispatch-envelope.js reports/p64-dispatch-envelope-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git add dispatch-governance/dispatchEnvelope.js dispatch-governance/dispatchPolicy.js dispatch-governance/fixtures/dispatch-envelope-fixtures.json scripts/check-p64-dispatch-envelope.js reports/p64-dispatch-envelope-report.md package.json docs/architecture/P64_PROVIDER_TOOL_DISPATCH_GOVERNANCE_PLAN.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/os-phase-status-report.md scripts/check-os-phase-status.js",
           "git commit -m \"feat(nexus): define p64 dispatch envelope\"",
           "git push origin HEAD"
         ],

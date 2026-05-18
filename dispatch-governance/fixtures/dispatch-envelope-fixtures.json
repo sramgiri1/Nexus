@@ -1,0 +1,58 @@
+{
+  "fixtures": [
+    {
+      "name": "provider preview request",
+      "input": {
+        "dispatchId": "dispatch_fixture_provider_preview",
+        "requestType": "provider.request",
+        "providerId": "openai-preview",
+        "capabilityId": "provider-dispatch-preview",
+        "agentId": "nexus-core",
+        "scopeLabel": "NEXUS OS",
+        "riskLevel": "medium",
+        "dataClassification": "internal",
+        "promptClassification": "internal",
+        "responseExpectedClass": "internal",
+        "requestSummary": "Summarize a public-safe architecture note.",
+        "safeSummary": {
+          "displayLabel": "Provider preview",
+          "requestSummary": "Summarize a public-safe architecture note.",
+          "apiKey": "sk-example-redacted-value"
+        },
+        "evidenceRefs": [
+          "reports/p64-dispatch-envelope-report.md"
+        ],
+        "auditRefs": [
+          "local-state/audit/p64-preview.jsonl"
+        ]
+      }
+    },
+    {
+      "name": "tool preview request",
+      "input": {
+        "dispatchId": "dispatch_fixture_tool_preview",
+        "requestType": "tool.call",
+        "toolId": "git-status-preview",
+        "capabilityId": "tool-dispatch-preview",
+        "agentId": "nexus-core",
+        "scopeLabel": "NEXUS OS",
+        "riskLevel": "low",
+        "dataClassification": "internal",
+        "promptClassification": "internal",
+        "responseExpectedClass": "internal",
+        "requestSummary": "Preview whether a governed git status tool would be eligible.",
+        "safeSummary": {
+          "displayLabel": "Tool preview",
+          "requestSummary": "Preview a governed git status tool.",
+          "token": "xoxb-example-redacted-value"
+        },
+        "evidenceRefs": [
+          "reports/p64-dispatch-envelope-report.md"
+        ],
+        "auditRefs": [
+          "local-state/audit/p64-preview.jsonl"
+        ]
+      }
+    }
+  ]
+}

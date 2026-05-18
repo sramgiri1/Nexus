@@ -60,6 +60,12 @@ Create pure dispatch envelope and policy-decision normalizers. The envelope must
 represent denied, preview, and approval-required decisions without calling
 providers or tools.
 
+Status: complete. P64.2 added `dispatch-governance/dispatchEnvelope.js` and
+`dispatch-governance/dispatchPolicy.js` as pure modules. They reuse existing
+cost estimation, redaction, result envelope, and runtime policy decision helpers
+and keep provider dispatch, tool execution, project mutation, DB writes, deploy,
+external network calls, and worker execution disabled.
+
 ### P64.3 Provider / Tool Readiness Matrix
 
 Map provider and tool readiness into readable states using existing registries.

@@ -278,7 +278,14 @@ Risk level:
   - `P63.6` Recovery Replay / Resume Preview — complete
   - `P63.7` Recovery Tests + Docs + Final Validation — complete
 - `P64` Provider + Tool Dispatch Through Governance — in progress
-- `P64.1` Code Mode Runtime + Lazy Tool Loading
+  - `P64.1` Execution Contract + Governance Split — complete
+  - `P64.2` Dispatch Policy Envelope — complete
+  - `P64.3` Provider / Tool Readiness Matrix — next
+  - `P64.4` Dispatch Dry Run
+  - `P64.5` Command Center Dispatch UX
+  - `P64.6` Dispatch Tests / Checkers / Docs
+  - `P64.7` Final Validation
+- `P64.8` Code Mode Runtime + Lazy Tool Loading
 - `P65` Batch Intelligence Jobs for Large-Scale Analysis
 - `P66` Self-Healing Failure Loop
 - `P67` Controlled Source Mutation Expansion

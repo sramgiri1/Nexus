@@ -1948,11 +1948,74 @@
     },
     {
       "phaseId": "P64.1",
+      "title": "Execution Contract + Governance Split",
+      "track": "NEXUS_OS",
+      "order": 39.01,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Define implementation-grade P64 governed dispatch contracts, docs, checkers, and phase handoff without enabling execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.2",
+      "title": "Dispatch Policy Envelope",
+      "track": "NEXUS_OS",
+      "order": 39.02,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Define pure provider/tool dispatch envelopes and policy decisions while execution remains disabled.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.3",
+      "title": "Provider / Tool Readiness Matrix",
+      "track": "NEXUS_OS",
+      "order": 39.03,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Map provider and tool readiness into governed disabled, preview, approval-required, and blocked states.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.4",
+      "title": "Dispatch Dry Run",
+      "track": "NEXUS_OS",
+      "order": 39.04,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Build non-executing dry-run dispatch previews with cost, approval, evidence, and disabled reason metadata.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.5",
+      "title": "Command Center Dispatch UX",
+      "track": "NEXUS_OS",
+      "order": 39.05,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Expose governed dispatch readiness and dry-run state in Command Center without live execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.6",
+      "title": "Dispatch Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 39.06,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Aggregate P64 validation, docs, reports, and safety checks before final closure.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 39.07,
+      "group": "P64 Provider + Tool Dispatch Through Governance",
+      "summary": "Validate and close P64 with dispatch still governed and disabled unless explicitly enabled later.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8",
       "title": "Code Mode Runtime + Lazy Tool Loading",
       "track": "NEXUS_OS",
-      "order": 39,
+      "order": 39.08,
       "group": "Planned OS Phases",
-      "summary": "Add code-mode runtime support with safe lazy-loading of tool capabilities.",
+      "summary": "Add code-mode runtime support with safe lazy-loading of tool capabilities after P64 closes.",
       "commandCenterVisible": true
     },
     {

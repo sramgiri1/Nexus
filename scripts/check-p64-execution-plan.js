@@ -210,11 +210,13 @@ for (const phaseId of expectedPhases) {
 }
 
 const p64 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64");
+const p642 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.2");
+const expectedNextPhase = p642?.status === "complete" ? "P64.3" : "P64.1";
 if (p64?.status !== "in_progress") fail("roadmapStatus", "P64 must be in_progress during P64.1 contract work");
-if (p64?.nextPhase !== "P64.1") fail("roadmapStatus", "P64 nextPhase must be P64.1");
+if (p64?.nextPhase !== expectedNextPhase) fail("roadmapStatus", `P64 nextPhase must be ${expectedNextPhase}`);
 if (phaseStatus.currentPhase !== "P64") fail("roadmapStatus", "Top-level currentPhase must be P64");
 if (phaseStatus.previousPhase !== "P63") fail("roadmapStatus", "Top-level previousPhase must be P63");
-if (phaseStatus.nextPhase !== "P64.1") fail("roadmapStatus", "Top-level nextPhase must be P64.1");
+if (phaseStatus.nextPhase !== expectedNextPhase) fail("roadmapStatus", `Top-level nextPhase must be ${expectedNextPhase}`);
 
 const plan = read(PLAN_PATH);
 const roadmap = read(ROADMAP_PATH);

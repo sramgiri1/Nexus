@@ -242,6 +242,7 @@
     "check:ai-replay-resume-preview": "node scripts/check-ai-replay-resume-preview.js",
     "check:ai-recovery-final": "node scripts/check-ai-recovery-final.js",
     "check:p64-execution-plan": "node scripts/check-p64-execution-plan.js",
+    "check:p64-dispatch-envelope": "node scripts/check-p64-dispatch-envelope.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
