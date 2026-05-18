@@ -16,21 +16,19 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-Phase H release hygiene is next locally while F5 remains blocked on physical-device APNs/TestFlight setup.
+Phase H release archive inspection is next locally while F5 remains blocked on physical-device APNs/TestFlight setup.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
 | F5 | Physical-device APNs/TestFlight validation. | Apple Developer setup; app entitlements; backend push provider. | Manual physical-device checklist. | No simulator demo dependency. | External Setup |
-| H1 | Xcode target membership audit. | Xcode project; app/test/demo files. | Release archive inspection script. | No demo dependency. | Planned |
+| H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | Xcode archive; scripts. | Release hygiene automation. | No demo dependency. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| H2 | Gate UI-test and demo-only hooks behind Debug/UI-test flags. | iOS app launch/session hooks. | Release build check. | No demo dependency. | Planned |
-| H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | Xcode archive; scripts. | Release hygiene automation. | No demo dependency. | Planned |
 | H4 | Verify production API URL, entitlements, privacy strings, push, Sign in with Apple, and StoreKit product IDs. | Xcode config; backend environment; App Store Connect. | Release checklist plus physical-device validation. | No demo dependency. | External Setup |
 | H5 | TestFlight checklist and final device validation. | TestFlight build and devices. | Manual physical-device sign-off. | No demo dependency. | External Setup |
 
@@ -69,6 +67,8 @@ Phase H release hygiene is next locally while F5 remains blocked on physical-dev
 | G3 | Mixed task states, history, reminders, premium, expired, and locked states. | Demo readiness now enforces pending, in-progress, done, skipped, snoozed, escalated, comment/history, premium request, active premium, manual premium, and expired premium states. |
 | G4 | One-command launch plus optional screen-recording script. | CareLoop-local `npm run careloop:demo:check` validates the existing `npm run careloop:demo` launcher contract: local API bootstrap, seed refresh, token refresh, one simulator per profile, active-circle launch env, force build/install flags, simulator window opening, and session summary output. |
 | G5 | Demo readiness validation fails if fixtures drift from the PRD. | Added CareLoop-local `npm run check:demo-showcase` / `npm run check:careloop-demo-readiness` guard for four scenarios, launch personas, mixed task/reminder/premium states, safe local emails, StoreKit product parity, and one-command launcher contract; direct seed validation emitted 4 circles, 4 launch profiles, 23 tasks, and 5 care receivers. |
+| H1 | Xcode target membership audit. | `npm run check:ios-release-hygiene` validates app target membership for demo/UI-test bridge files without changing Nexus OS files. |
+| H2 | Debug-gate UI-test and demo launch hooks. | `UITestScenario.current`, UI-test fixture data, demo launch session parsing, and app launch activation are compile-time gated behind `DEBUG`; the Xcode Release simulator build passes with production `AppState()` fallback outside Debug. |
 
 ## Blocked / External Setup
 

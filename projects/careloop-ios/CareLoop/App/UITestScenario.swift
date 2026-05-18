@@ -17,7 +17,11 @@ enum UITestScenario: String {
     private static let pendingTaskCircleLaunchArgument = "-careloop-ui-pending-circle"
 
     static var current: UITestScenario? {
+        #if DEBUG
         parse(ProcessInfo.processInfo.arguments)
+        #else
+        nil
+        #endif
     }
 
     static func parse(_ arguments: [String]) -> UITestScenario? {
@@ -45,6 +49,7 @@ enum UITestScenario: String {
     }
 }
 
+#if DEBUG
 extension AppState {
     convenience init(uiTestScenario scenario: UITestScenario) {
         self.init(shouldRestoreSession: false)
@@ -65,7 +70,9 @@ extension AppState {
         shouldPromptNewTask = false
     }
 }
+#endif
 
+#if DEBUG
 private struct UITestScenarioFixture {
     let user: CareUser
     let circle: CareCircle
@@ -715,3 +722,4 @@ private struct UITestScenarioFixture {
         }
     }
 }
+#endif

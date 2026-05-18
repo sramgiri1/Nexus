@@ -12,6 +12,7 @@ struct DemoLaunchSession {
     let autoActivateCircle: Bool
 
     static var current: DemoLaunchSession? {
+        #if DEBUG
         let environment = ProcessInfo.processInfo.environment
         guard let rawToken = environment[EnvironmentKeys.accessToken]?
             .trimmingCharacters(in: .whitespacesAndNewlines),
@@ -28,6 +29,9 @@ struct DemoLaunchSession {
             circleId: circleId,
             autoActivateCircle: flagEnabled(environment[EnvironmentKeys.autoActivate]) && circleId != nil
         )
+        #else
+        nil
+        #endif
     }
 
     private static func flagEnabled(_ rawValue: String?) -> Bool {

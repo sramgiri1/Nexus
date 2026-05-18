@@ -1231,13 +1231,13 @@ After the receiver-scoped premium phase, implementation should continue in small
 
 **Subphases**
 
-1. Xcode target membership audit.
-2. Compile-time gating for UI-test and demo-only app hooks with `DEBUG` or UI-test flags.
+1. Xcode target membership audit. **Complete.**
+2. Compile-time gating for UI-test and demo-only app hooks with `DEBUG` or UI-test flags. **Complete.**
 3. Release archive inspection for demo seed data, mock accounts, local StoreKit config, and test-only launch arguments.
 4. Production API base URL, entitlements, privacy strings, push, Sign in with Apple, and StoreKit product ID verification.
 5. TestFlight checklist and final device validation.
 
-**Tests:** release hygiene automation, Release archive inspection, and manual physical-device sign-off for APNs, universal links, StoreKit sandbox purchase/restore, and Sign in with Apple entitlement behavior.
+**Tests:** release hygiene automation, Release archive inspection, and manual physical-device sign-off for APNs, universal links, StoreKit sandbox purchase/restore, and Sign in with Apple entitlement behavior. H1-H2 added `npm run check:ios-release-hygiene` plus an Xcode Release simulator build to verify target membership and ensure UI-test/demo launch hooks are inert outside Debug.
 
 ---
 
