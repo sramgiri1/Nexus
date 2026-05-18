@@ -6,6 +6,7 @@ struct CircleCompletionInsights: Codable {
     let completedByDay: [CompletedTaskDay]
     let taskTrendByDay: [TaskTrendDay]
     let topCaregivers: [TopCaregiverInsight]
+    let caregiverLoad: [CaregiverLoadInsight]
     let recipientBreakdown: [RecipientCompletionInsight]
     let adherence: AdherenceInsightSummary
     let totals: CompletionInsightTotals
@@ -111,6 +112,22 @@ struct TopCaregiverInsight: Codable, Identifiable {
     let completedCount: Int
 
     var id: String { userId }
+}
+
+struct CaregiverLoadInsight: Codable, Identifiable {
+    let userId: String
+    let name: String
+    let email: String
+    let completedCount: Int
+    let activeAssignedCount: Int
+    let overdueAssignedCount: Int
+    let totalAssignedCount: Int
+
+    var id: String { userId }
+
+    var loadSummaryLabel: String {
+        "\(activeAssignedCount) active · \(overdueAssignedCount) overdue"
+    }
 }
 
 struct CompletionInsightTotals: Codable {

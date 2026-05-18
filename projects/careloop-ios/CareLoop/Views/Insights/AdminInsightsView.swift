@@ -172,6 +172,34 @@ struct AdminInsightsView: View {
                     }
                 }
 
+                if !insights.caregiverLoad.isEmpty {
+                    Section("Caregiver load") {
+                        ForEach(insights.caregiverLoad) { caregiver in
+                            VStack(alignment: .leading, spacing: 8) {
+                                HStack {
+                                    VStack(alignment: .leading, spacing: 4) {
+                                        Text(caregiver.name)
+                                            .font(.system(size: 16, weight: .bold, design: .rounded))
+                                        Text(caregiver.email)
+                                            .font(.caption)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    Spacer()
+                                    Text(caregiver.loadSummaryLabel)
+                                        .font(.system(size: 13, weight: .bold, design: .rounded))
+                                        .foregroundStyle(caregiver.overdueAssignedCount > 0 ? .red : Color(red: 0.13, green: 0.56, blue: 0.87))
+                                }
+                                HStack {
+                                    insightMini(label: "Done", value: caregiver.completedCount, tint: Color(red: 0.12, green: 0.68, blue: 0.49))
+                                    insightMini(label: "Active", value: caregiver.activeAssignedCount, tint: Color(red: 0.13, green: 0.56, blue: 0.87))
+                                    insightMini(label: "Total", value: caregiver.totalAssignedCount, tint: .secondary)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                }
+
                 if !insights.recipientBreakdown.isEmpty {
                     Section("By recipient") {
                         ForEach(insights.recipientBreakdown) { recipient in

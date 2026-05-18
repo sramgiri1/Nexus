@@ -553,6 +553,20 @@ final class CompletionInsightModelTests: XCTestCase {
         XCTAssertFalse(day.shortLabel.isEmpty)
     }
 
+    func test_caregiverLoadInsight_formatsActiveAndOverdueSummary() {
+        let load = CaregiverLoadInsight(
+            userId: "u2",
+            name: "Carlos",
+            email: "carlos@test.com",
+            completedCount: 2,
+            activeAssignedCount: 3,
+            overdueAssignedCount: 1,
+            totalAssignedCount: 5
+        )
+
+        XCTAssertEqual(load.loadSummaryLabel, "3 active · 1 overdue")
+    }
+
     func test_adherenceSummary_formatsRatesAndEmptyState() {
         let summary = AdherenceInsightSummary(
             scheduled: 4,

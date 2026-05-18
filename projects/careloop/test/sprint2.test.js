@@ -3433,6 +3433,7 @@ describe("auth hardening and protected reads", () => {
       completedByDay: [],
       taskTrendByDay: [],
       topCaregivers: [],
+      caregiverLoad: [],
       recipientBreakdown: [],
       adherence: {
         scheduled: 0,
@@ -3816,6 +3817,7 @@ describe("receiver-scoped access control", () => {
         overdue: 2,
       });
       assert.deepEqual(res.json().topCaregivers, []);
+      assert.deepEqual(res.json().caregiverLoad, []);
 
       const hiddenRecipient = await app.inject({
         method: "GET",
@@ -4782,6 +4784,15 @@ describe("GET /circles/:id/insights/completion", () => {
         name: "Caregiver",
         email: "caregiver@test.com",
         completedCount: 2,
+      });
+      assert.deepEqual(body.caregiverLoad[0], {
+        userId: "u2",
+        name: "Caregiver",
+        email: "caregiver@test.com",
+        completedCount: 2,
+        activeAssignedCount: 1,
+        overdueAssignedCount: 1,
+        totalAssignedCount: 3,
       });
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-29").count, 1);
       assert.equal(body.completedByDay.find((item) => item.date === "2026-04-28").count, 1);

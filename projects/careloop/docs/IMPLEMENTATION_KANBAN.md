@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-E3 is next: implement caregiver activity and load distribution.
+E4 is next: implement escalation history and response timing.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| E3 | Caregiver activity and load distribution. | Backend insights aggregation; iOS charts/cards. | Backend load tests; iOS report fixture. | Demo should show multiple caregiver activity. | Planned |
+| E4 | Escalation history and response timing. | Backend reminder/event aggregation; iOS reports. | Backend escalation report tests; iOS report fixture. | Demo can show escalation history. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| E4 | Escalation history and response timing. | Backend reminder/event aggregation; iOS reports. | Backend escalation report tests; iOS report fixture. | Demo can show escalation history. | Planned |
 | E5 | Free/locked/premium insight states with clear upgrade value. | Backend entitlement policy; iOS Insights/paywall links. | Backend entitlement tests; iOS locked/premium report tests. | Demo should include locked and premium report examples. | Planned |
 | F1 | Reminder preference UX and backend persistence. | Backend user notification prefs; iOS Settings. | Backend preference tests; iOS settings UI test. | Optional. | Planned |
 | F2 | Simulator deep-link coverage for pending, wrong-circle, and completed tasks. | iOS AppState/deep link routing; task screens. | Xcode UI deep-link tests. | Demo deep links stay stable. | Planned |
@@ -69,6 +68,7 @@ E3 is next: implement caregiver activity and load distribution.
 | D5 | Server-side App Store transaction verification readiness. | Added App Store Server API transaction adapter, optional fail-closed entitlement verification behind `APP_STORE_SERVER_API_ENABLED`, signed transaction fixture tests, route misconfiguration regression, and README/runbook credential documentation. |
 | E1 | Receiver adherence summary. | Extended the existing completion insights contract with receiver-scoped adherence summaries, displayed adherence cards in organizer insights and caregiver activity, and validated with backend aggregation tests plus focused Xcode model/UI coverage. |
 | E2 | Missed and overdue task trends. | Added daily due/completed/missed trend data to the existing completion insights contract, displayed a missed-trend Insights chart, and validated with backend aggregation tests plus focused Xcode model/UI coverage. |
+| E3 | Caregiver activity and load distribution. | Added organizer-only caregiver load distribution to the existing completion insights contract, displayed active/overdue/completed/total assigned work, and validated caregiver privacy with backend access regressions plus focused Xcode model/UI coverage. |
 
 ## Blocked / External Setup
 

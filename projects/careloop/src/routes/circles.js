@@ -98,6 +98,7 @@ export default async function circles(app) {
       completedByDay: [],
       taskTrendByDay: [],
       topCaregivers: [],
+      caregiverLoad: [],
       recipientBreakdown: [],
       adherence: emptyAdherenceSummary(),
       totals: {
@@ -428,7 +429,11 @@ export default async function circles(app) {
           archivedAt: null,
           ...recipientScope,
         },
-        include: { recipient: { select: { id: true, name: true } } },
+        include: {
+          assignee: { select: { id: true, name: true, email: true } },
+          completedBy: { select: { id: true, name: true, email: true } },
+          recipient: { select: { id: true, name: true } },
+        },
       }),
     ]);
     const completedTasks = allowedRecipientIds
@@ -491,6 +496,34 @@ export default async function circles(app) {
       }
     }
 
+    const caregiverLoad = new Map();
+    if (isCareOrganizer(member)) {
+      for (const task of allTasks) {
+        const assignee = task.assignee;
+        if (!assignee) continue;
+        const current = caregiverLoad.get(assignee.id) ?? {
+          userId: assignee.id,
+          name: assignee.name,
+          email: assignee.email,
+          completedCount: 0,
+          activeAssignedCount: 0,
+          overdueAssignedCount: 0,
+          totalAssignedCount: 0,
+        };
+        current.totalAssignedCount += 1;
+        if (task.status === "DONE" && task.completedAt && task.completedAt >= since) {
+          current.completedCount += 1;
+        }
+        if (["PENDING", "IN_PROGRESS"].includes(task.status)) {
+          current.activeAssignedCount += 1;
+          if (task.dueAt && task.dueAt < now) {
+            current.overdueAssignedCount += 1;
+          }
+        }
+        caregiverLoad.set(assignee.id, current);
+      }
+    }
+
     const recipientBreakdown = circleRecipients.map((recipient) => {
       const tasksForRecipient = allTasks.filter((task) => task.recipientId === recipient.id);
       const completed = tasksForRecipient.filter((task) => task.status === "DONE" && task.completedAt && task.completedAt >= since).length;
@@ -517,6 +550,13 @@ export default async function circles(app) {
           .sort((lhs, rhs) => rhs.completedCount - lhs.completedCount || lhs.name.localeCompare(rhs.name))
           .slice(0, 5)
         : [],
+      caregiverLoad: [...caregiverLoad.values()]
+        .sort((lhs, rhs) =>
+          rhs.overdueAssignedCount - lhs.overdueAssignedCount
+          || rhs.activeAssignedCount - lhs.activeAssignedCount
+          || rhs.completedCount - lhs.completedCount
+          || lhs.name.localeCompare(rhs.name),
+        ),
       recipientBreakdown,
       adherence: adherenceForTasks(allTasks, { since, now }),
       totals: {

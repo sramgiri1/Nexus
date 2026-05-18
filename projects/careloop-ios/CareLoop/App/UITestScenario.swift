@@ -477,6 +477,26 @@ private struct UITestScenarioFixture {
                     topCaregivers: [
                         TopCaregiverInsight(userId: caregiver.id, name: caregiver.name, email: caregiver.email, completedCount: 1),
                     ],
+                    caregiverLoad: [
+                        CaregiverLoadInsight(
+                            userId: caregiver.id,
+                            name: caregiver.name,
+                            email: caregiver.email,
+                            completedCount: 1,
+                            activeAssignedCount: 2,
+                            overdueAssignedCount: 1,
+                            totalAssignedCount: 4
+                        ),
+                        CaregiverLoadInsight(
+                            userId: backupCaregiver.id,
+                            name: backupCaregiver.name,
+                            email: backupCaregiver.email,
+                            completedCount: 0,
+                            activeAssignedCount: 1,
+                            overdueAssignedCount: 0,
+                            totalAssignedCount: 1
+                        ),
+                    ],
                     recipientBreakdown: [
                         RecipientCompletionInsight(
                             recipientId: momRecipient.id,
@@ -567,6 +587,7 @@ private struct UITestScenarioFixture {
                         TaskTrendDay(date: "2026-05-16", due: 1, completed: 1, missed: 0),
                     ],
                     topCaregivers: [],
+                    caregiverLoad: [],
                     recipientBreakdown: [
                         RecipientCompletionInsight(
                             recipientId: momRecipient.id,

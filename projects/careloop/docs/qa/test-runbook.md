@@ -65,7 +65,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Premium billing retry and refund states | Backend premium entitlement regression; `xcodebuild build-for-testing`; focused iOS model `test_careRecipient_exposesBillingRetryAndRefundedPremiumAsLockedButVisible`; focused iOS UI `test_organizerSeesPremiumBillingAndRefundStates` |
 | Free receiver and premium capability gates | Backend cross-surface premium/free policy regression; `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 | App Store Server transaction verification readiness | Backend `app-store-server.test.js`; entitlement sync fail-closed route regression; live Apple calls remain external setup |
-| Receiver adherence and missed-trend reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields plus daily due/completed/missed trend data; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowAdherenceAndMissedTrendForPremiumReceiver` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
+| Receiver adherence, missed-trend, and caregiver-load reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields, daily due/completed/missed trend data, organizer-only caregiver load, and caregiver privacy; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowAdherenceAndMissedTrendForPremiumReceiver` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 
 ## Notes
 

@@ -1054,6 +1054,9 @@ final class CareLoopUITests: XCTestCase {
         app.swipeUp()
         XCTAssertTrue(app.staticTexts["Missed trend"].waitForExistence(timeout: 3))
         XCTAssertTrue(app.staticTexts["1 of 4 due tasks were missed in this window."].waitForExistence(timeout: 3))
+        app.swipeUp()
+        XCTAssertTrue(app.staticTexts["Caregiver load"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["2 active · 1 overdue"].waitForExistence(timeout: 3))
     }
 
     @MainActor
