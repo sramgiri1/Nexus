@@ -240,7 +240,8 @@
     "check:ai-snapshot-store": "node scripts/check-ai-snapshot-store.js",
     "check:command-center-recovery-ux": "node scripts/check-command-center-recovery-ux.js",
     "check:ai-replay-resume-preview": "node scripts/check-ai-replay-resume-preview.js",
-    "check:ai-recovery-final": "node scripts/check-ai-recovery-final.js"
+    "check:ai-recovery-final": "node scripts/check-ai-recovery-final.js",
+    "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",
