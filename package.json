@@ -237,7 +237,8 @@
     "check:ai-snapshot-contract": "node scripts/check-ai-snapshot-contract.js",
     "check:ai-interaction-capture": "node scripts/check-ai-interaction-capture.js",
     "check:ai-recovery-point-model": "node scripts/check-ai-recovery-point-model.js",
-    "check:ai-snapshot-store": "node scripts/check-ai-snapshot-store.js"
+    "check:ai-snapshot-store": "node scripts/check-ai-snapshot-store.js",
+    "check:command-center-recovery-ux": "node scripts/check-command-center-recovery-ux.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

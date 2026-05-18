@@ -1391,7 +1391,12 @@ for (const expected of [
   check(commandCenterSource.includes(expected) || viewModelSource.includes(expected), "missionDisplay", `Mission display missing expected copy: ${expected}`);
 }
 check(
-  (viewModelSource.includes("governed-build-mission") || viewModelSource.includes("careloop-phase-2"))
+  (
+    viewModelSource.includes("activeMissionId")
+    || viewModelSource.includes("task-governed-build-summary")
+    || viewModelSource.includes("governed-build-mission")
+    || viewModelSource.includes("careloop-phase-2")
+  )
     && commandCenterSource.includes("humanizeMissionId"),
   "missionDisplay",
   "Mission display should derive a human-readable title from the governed mission id",

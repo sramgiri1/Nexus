@@ -481,6 +481,18 @@ export const COMMAND_CENTER_ROUTES = [
     helpDoc: "docs/usage/UNDERSTANDING_EVIDENCE_AUDIT.md",
   },
   {
+    key: "recovery",
+    path: "/command-center/recovery",
+    name: "Recovery",
+    section: "OS",
+    allowPhaseLabels: false,
+    expectedHeading: "Recovery",
+    status: "implemented",
+    badge: "Preview",
+    scope: "os",
+    helpDoc: "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+  },
+  {
     key: "docs",
     path: "/command-center/docs",
     name: "Docs & Guides",

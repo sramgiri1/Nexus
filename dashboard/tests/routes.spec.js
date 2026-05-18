@@ -28,6 +28,7 @@ const PRIMARY_ROUTE_KEYS = [
   "workers",
   "evidence",
   "safety",
+  "recovery",
   "projects",
   "roadmap",
   "demo",
@@ -38,7 +39,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
 ).filter(Boolean);
 
 const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter(
-  (key) => !["command", "services", "workers", "agentRooms", "skills", "hooks"].includes(key),
+  (key) => !["command", "services", "workers", "agentRooms", "skills", "hooks", "recovery"].includes(key),
 );
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
@@ -2602,6 +2603,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/projects",
       "/command-center/evidence",
       "/command-center/safety",
+      "/command-center/recovery",
       "/command-center/roadmap",
       "/command-center/liveapi",
       "/command-center/database",
@@ -2640,6 +2642,45 @@ test.describe("Command Center route-wide UX", () => {
       expect(body).not.toContain("\"generatedAt\"");
       expect(body).not.toContain("{\"");
     }
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Recovery route is inspection-only and hides raw identifiers", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/recovery");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Recovery");
+    await expect(page.locator("body")).toContainText("Inspection-only recovery preview is available.");
+    await expect(page.locator("body")).toContainText("Recovery preview snapshot");
+    await expect(page.getByRole("button", { name: /Disabled action: Restore/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Replay/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Resume/i })).toBeDisabled();
+
+    await pickTheme(page, "dark");
+    let themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("dark");
+    expect(themeState.shellTheme).toBe("dark");
+
+    await pickTheme(page, "light");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.shellTheme).toBe("light");
+
+    await pickTheme(page, "system");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("system");
+    expect(["dark", "light"]).toContain(themeState.resolvedTheme);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("project_");
+    expect(body).not.toContain("private_");
+    expect(body).not.toContain("snapshotVersion");
+    expect(body).not.toContain("{\"");
+    expect(body).toContain("No provider calls");
+    expect(body).toContain("disabled");
 
     expect(errors).toEqual([]);
   });

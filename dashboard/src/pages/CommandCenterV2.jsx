@@ -64,6 +64,7 @@ import { buildCommandContextPacket } from "../../../command-interface/commandSco
 import { actionBridgeSnapshot } from "../data/actionBridgeSnapshot.js";
 import { runtimeSnapshot } from "../data/runtimeSnapshot.js";
 import { LOCAL_REPORT_SNAPSHOT } from "../data/localReports.js";
+import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
 import { loadWorkbenchView, reviewTask, listWorkbenchItems } from "../api/workbenchActions.js";
@@ -166,6 +167,7 @@ const ROUTE_ICONS = {
   batch: "⊞",
   cost: "$",
   memory: "◌",
+  recovery: "↻",
   roadmap: "◈",
   activity: "☰",
   docs: "☷",
@@ -9473,6 +9475,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "secrets" && <SecretsBoundaryPage />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
+          {currentPage === "recovery" && <Recovery />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

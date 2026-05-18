@@ -198,6 +198,14 @@ Primary validation:
 Narrow scope: add an inspection-only Recovery surface showing redacted
 snapshots, recovery posture, trace links, and disabled action previews.
 
+Implementation shape: `/command-center/recovery` is rendered inside the
+existing Command Center V2 shell and route matrix. The page shows what changed,
+current state, next action, blockers, disabled restore/replay/resume reasons,
+owner agent/capability, evidence/activity locations, and cost impact. It uses
+display-safe labels only; raw project/private IDs, raw JSON, raw logs, DemoApp
+full Command Center exposure, and fake working recovery actions remain
+forbidden.
+
 Required implementation contract:
 `nexus-os-p63-5-command-center-recovery-ux`
 
