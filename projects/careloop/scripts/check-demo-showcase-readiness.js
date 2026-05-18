@@ -89,6 +89,9 @@ check(seed.includes('source: "MANUAL"'), "demo seed must include non-App-Store/m
 check(seed.includes("com.careloop.ios.premium.monthly"), "demo seed must include monthly premium product id");
 check(seed.includes("com.careloop.ios.premium.yearly"), "demo seed must include yearly premium product id");
 check(!/demo\.[^"@\s]+@(gmail|yahoo|outlook|hotmail|icloud)\.com/i.test(seed), "demo seed must not use real consumer email domains");
+check(/anita\.ramgiri@example\.com/.test(seed), "demo seed must use realistic reserved-domain organizer identities");
+check(!/email:\s*"demo\./.test(seed), "visible seeded users and pending invites must not use demo-prefixed emails");
+check(!/email:\s*"[^"]+@careloop\.local"/.test(seed), "visible seeded users and pending invites must not use internal CareLoop-local emails");
 
 const launchProfileKeys = [
   "aging-organizer",

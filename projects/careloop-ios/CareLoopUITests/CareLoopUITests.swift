@@ -24,6 +24,11 @@ private struct DemoRecipientSummary: Decodable {
     let name: String
 }
 
+private struct RecordingLaunchSession {
+    let token: String
+    let circleId: String
+}
+
 final class CareLoopUITests: XCTestCase {
     override func setUpWithError() throws {
         continueAfterFailure = false
@@ -57,6 +62,36 @@ final class CareLoopUITests: XCTestCase {
         let element = anyElement(in: app, identifier: identifier)
         XCTAssertTrue(element.waitForExistence(timeout: timeout), "Expected element '\(identifier)' to appear")
         return element
+    }
+
+    private func waitForStaticText(
+        containing text: String,
+        in app: XCUIApplication,
+        timeout: TimeInterval = 5
+    ) -> XCUIElement {
+        let element = app.staticTexts
+            .matching(NSPredicate(format: "label CONTAINS %@", text))
+            .firstMatch
+        XCTAssertTrue(element.waitForExistence(timeout: timeout), "Expected text containing '\(text)' to appear")
+        return element
+    }
+
+    @MainActor
+    private func returnToPreviousScreen(in app: XCUIApplication) {
+        if app.buttons["task-board-back-to-dashboard-button"].waitForExistence(timeout: 2) {
+            app.buttons["task-board-back-to-dashboard-button"].tap()
+            return
+        }
+
+        if app.buttons["Back"].waitForExistence(timeout: 1) {
+            app.buttons["Back"].tap()
+            return
+        }
+
+        let backButton = app.navigationBars.buttons.firstMatch
+        if backButton.waitForExistence(timeout: 1), backButton.isHittable {
+            backButton.tap()
+        }
     }
 
     private func waitForDisappearance(of element: XCUIElement, timeout: TimeInterval = 5) {
@@ -102,6 +137,55 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(button.waitForExistence(timeout: 5), "Expected quick action '\(identifier)' to appear")
         button.tap()
+    }
+
+    private func recordingSession() throws -> RecordingLaunchSession {
+        let environment = ProcessInfo.processInfo.environment
+        let token = try XCTUnwrap(environment["CARELOOP_RECORDING_ACCESS_TOKEN"])
+        let circleId = try XCTUnwrap(environment["CARELOOP_RECORDING_CIRCLE_ID"])
+        return RecordingLaunchSession(token: token, circleId: circleId)
+    }
+
+    private func loginDemoUser(email: String, password: String = "DemoCare123!") async throws -> DemoAuthResult {
+        try await waitForAPIHealth()
+
+        let body = try JSONSerialization.data(withJSONObject: [
+            "email": email,
+            "password": password
+        ])
+        let url = try XCTUnwrap(URL(string: "http://127.0.0.1:3000/auth/login"))
+        var request = URLRequest(url: url)
+        request.httpMethod = "POST"
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.httpBody = body
+
+        let (data, response) = try await URLSession.shared.data(for: request)
+        let http = try XCTUnwrap(response as? HTTPURLResponse)
+        XCTAssertEqual(http.statusCode, 200)
+        return try JSONDecoder().decode(DemoAuthResult.self, from: data)
+    }
+
+    private func recordingSession(email: String, circleName: String) async throws -> RecordingLaunchSession {
+        let auth = try await loginDemoUser(email: email)
+        let user = try await fetchDemoCurrentUser(accessToken: auth.accessToken)
+        let membership = user.memberships?.first(where: { membership in
+            membership.circle?.name == circleName
+        })
+        let circleId = try XCTUnwrap(membership?.circleId)
+        return RecordingLaunchSession(token: auth.accessToken, circleId: circleId)
+    }
+
+    @MainActor
+    private func launchRecordingApp(email: String, circleName: String) async throws -> XCUIApplication {
+        let session = try await recordingSession(email: email, circleName: circleName)
+        return launchApp(
+            arguments: ["-careloop-ui-reset-session"],
+            environment: [
+                "CARELOOP_DEMO_ACCESS_TOKEN": session.token,
+                "CARELOOP_DEMO_CIRCLE_ID": session.circleId,
+                "CARELOOP_DEMO_AUTO_ACTIVATE": "1"
+            ]
+        )
     }
 
     @MainActor
@@ -168,8 +252,8 @@ final class CareLoopUITests: XCTestCase {
 
         let emailToken = UUID().uuidString.replacingOccurrences(of: "-", with: "").lowercased()
         let payload: [String: String] = [
-            "email": "video.demo.\(emailToken.prefix(10))@careloop.test",
-            "name": "Video Demo Organizer",
+            "email": "anita.ramgiri.\(emailToken.prefix(10))@example.com",
+            "name": "Anita Ramgiri",
             "password": "DemoCare123!"
         ]
         let body = try JSONSerialization.data(withJSONObject: payload)
@@ -298,12 +382,12 @@ final class CareLoopUITests: XCTestCase {
             environment: ["CARELOOP_DEMO_ACCESS_TOKEN": session.accessToken]
         )
 
-        let circleName = "Investor Demo Circle"
-        let recipientName = "Jordan Wells"
-        let recipientEmail = "recipient+\(UUID().uuidString.prefix(8))@careloop.test"
-        let caregiverEmail = "caregiver+\(UUID().uuidString.prefix(8))@careloop.test"
-        let oneTimeTaskTitle = "Confirm pharmacy pickup"
-        let recurringTaskTitle = "Daily care check-in"
+        let circleName = "Ramgiri Family Care"
+        let recipientName = "Lakshmi Ramgiri"
+        let recipientEmail = "lakshmi.ramgiri.\(UUID().uuidString.prefix(8))@example.com"
+        let caregiverEmail = "meera.patel.\(UUID().uuidString.prefix(8))@example.com"
+        let oneTimeTaskTitle = "Confirm diabetes medication pickup"
+        let recurringTaskTitle = "Daily morning care check-in"
 
         openCreateCircleFlow(in: app)
 
@@ -353,7 +437,7 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.buttons["invite-caregiver-button"].waitForExistence(timeout: 5))
         app.buttons["invite-caregiver-button"].tap()
         let caregiverNameField = app.textFields["invite-caregiver-name-field"]
-        typeText(into: caregiverNameField, text: "Nina Caregiver")
+        typeText(into: caregiverNameField, text: "Meera Patel")
         typeText(into: app.textFields["invite-caregiver-email-field"], text: caregiverEmail)
         app.typeText("\n")
         enableInviteActionByConfirmingAdult(in: app)
@@ -404,6 +488,77 @@ final class CareLoopUITests: XCTestCase {
         reopenCircle(in: app, named: circleName)
 
         tapQuickAction("quick-action-insights", in: app)
+    }
+
+    @MainActor
+    func test_recordingOrganizerRealWorldJourney() async throws {
+        let app = try await launchRecordingApp(
+            email: "anita.ramgiri@example.com",
+            circleName: "Ramgiri Family Care"
+        )
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 15))
+        _ = waitForStaticText(containing: "Lakshmi", in: app, timeout: 8)
+        _ = waitForStaticText(containing: "Suresh", in: app, timeout: 5)
+
+        tapQuickAction("quick-action-task-board", in: app)
+        _ = waitForStaticText(containing: "Refill diabetes medication", in: app, timeout: 10)
+        app.swipeUp()
+        _ = waitForStaticText(containing: "Install bathroom grab bars", in: app, timeout: 8)
+    }
+
+    @MainActor
+    func test_recordingCaregiverRealWorldJourney() async throws {
+        let app = try await launchRecordingApp(
+            email: "arjun.shah@example.com",
+            circleName: "Shah New Parent Support"
+        )
+        let dashboard = app.scrollViews["caregiver-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 15))
+        _ = waitForStaticText(containing: "Maya", in: app, timeout: 8)
+        _ = waitForStaticText(containing: "My Task Board", in: app, timeout: 5)
+
+        tapQuickAction("quick-action-my-task-board", in: app)
+        _ = waitForStaticText(containing: "Sanitize bottles", in: app, timeout: 10)
+        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 5))
+        app.buttons["add-task-button"].tap()
+        XCTAssertTrue(app.staticTexts["New Task"].waitForExistence(timeout: 5))
+        if app.buttons["Cancel"].waitForExistence(timeout: 3) {
+            app.buttons["Cancel"].tap()
+        }
+    }
+
+    @MainActor
+    func test_recordingCareReceiverRealWorldJourney() async throws {
+        let app = try await launchRecordingApp(
+            email: "elena.morris@example.com",
+            circleName: "Morris Recovery Plan"
+        )
+
+        XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 15))
+        _ = waitForStaticText(containing: "Take antibiotics with lunch", in: app, timeout: 8)
+        XCTAssertTrue(app.buttons["receiver-next-task-primary"].waitForExistence(timeout: 5))
+        app.buttons["receiver-next-task-primary"].tap()
+        XCTAssertTrue(
+            app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Upload incision photo")).firstMatch.waitForExistence(timeout: 8)
+            || app.buttons["View All My Tasks"].waitForExistence(timeout: 8)
+        )
+    }
+
+    @MainActor
+    func test_recordingMemoryCaregiverRealWorldJourney() async throws {
+        let app = try await launchRecordingApp(
+            email: "emma.wilson@example.com",
+            circleName: "Wilson Memory Care"
+        )
+        let dashboard = app.scrollViews["caregiver-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 15))
+        _ = waitForStaticText(containing: "Robert", in: app, timeout: 8)
+        tapQuickAction("quick-action-my-task-board", in: app)
+        _ = waitForStaticText(containing: "Replace front door sensor battery", in: app, timeout: 10)
     }
 
     @MainActor

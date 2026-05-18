@@ -67,6 +67,21 @@ If the simulator app has not been built or installed yet, run once with:
 CARELOOP_DEMO_FORCE_BUILD=1 CARELOOP_DEMO_FORCE_INSTALL=1 npm run careloop:demo
 ```
 
+## Persona Demo Recordings
+
+Generate end-to-end simulator videos for realistic app usage with:
+
+```bash
+npm run careloop:record-personas
+```
+
+The command seeds realistic reserved-domain users and care scenarios, starts/reuses the local API, runs Xcode UI journeys, and writes MP4 files under the printed `outputDir`. Current recordings cover:
+
+- Anita Ramgiri, organizer for Ramgiri Family Care.
+- Arjun Shah, caregiver for Shah New Parent Support.
+- Elena Morris, care receiver for Morris Recovery Plan.
+- Emma Wilson, caregiver for Wilson Memory Care.
+
 ## StoreKit Local Config
 
 Local StoreKit products live at:

@@ -7,54 +7,73 @@ const db = new PrismaClient();
 
 const DEMO_PASSWORD = process.env.CARELOOP_DEMO_PASSWORD?.trim() || "DemoCare123!";
 const TIMEZONE = "America/New_York";
+const legacyDemoEmails = [
+  "demo.organizer@careloop.local",
+  "demo.aging.caregiver@careloop.local",
+  "demo.aging.backup@careloop.local",
+  "demo.aging.recipient@careloop.local",
+  "demo.recovery.caregiver@careloop.local",
+  "demo.recovery.backup@careloop.local",
+  "demo.recovery.recipient@careloop.local",
+  "demo.newparent.caregiver@careloop.local",
+  "demo.newparent.backup@careloop.local",
+  "demo.newparent.recipient@careloop.local",
+  "demo.memory.caregiver@careloop.local",
+  "demo.memory.backup@careloop.local",
+  "demo.memory.recipient@careloop.local",
+];
 
 const userDirectory = {
-  organizer: { email: "demo.organizer@careloop.local", name: "Olivia Organizer" },
-  agingCaregiver: { email: "demo.aging.caregiver@careloop.local", name: "Nina Ramirez" },
-  agingBackup: { email: "demo.aging.backup@careloop.local", name: "Omar Torres" },
-  agingRecipient: { email: "demo.aging.recipient@careloop.local", name: "Elena Ramirez" },
-  recoveryCaregiver: { email: "demo.recovery.caregiver@careloop.local", name: "Daniel Chen" },
-  recoveryBackup: { email: "demo.recovery.backup@careloop.local", name: "Priya Singh" },
-  recoveryRecipient: { email: "demo.recovery.recipient@careloop.local", name: "Grace Chen" },
-  newParentCaregiver: { email: "demo.newparent.caregiver@careloop.local", name: "Ravi Patel" },
-  newParentBackup: { email: "demo.newparent.backup@careloop.local", name: "Jamie Nguyen" },
-  newParentRecipient: { email: "demo.newparent.recipient@careloop.local", name: "Asha Patel" },
-  memoryCaregiver: { email: "demo.memory.caregiver@careloop.local", name: "Tessa Brooks" },
-  memoryBackup: { email: "demo.memory.backup@careloop.local", name: "Alex Jordan" },
-  memoryRecipient: { email: "demo.memory.recipient@careloop.local", name: "Walter Brooks" },
+  organizer: { email: "anita.ramgiri@example.com", name: "Anita Ramgiri" },
+  agingCaregiver: { email: "ravi.ramgiri@example.com", name: "Ravi Ramgiri" },
+  agingBackup: { email: "meera.patel@example.com", name: "Meera Patel" },
+  agingRecipient: { email: "lakshmi.ramgiri@example.com", name: "Lakshmi Ramgiri" },
+  recoveryOrganizer: { email: "daniel.morris@example.com", name: "Daniel Morris" },
+  recoveryCaregiver: { email: "sophia.morris@example.com", name: "Sophia Morris" },
+  recoveryBackup: { email: "james.lee@example.com", name: "James Lee" },
+  recoveryRecipient: { email: "elena.morris@example.com", name: "Elena Morris" },
+  newParentOrganizer: { email: "priya.shah@example.com", name: "Priya Shah" },
+  newParentCaregiver: { email: "arjun.shah@example.com", name: "Arjun Shah" },
+  newParentBackup: { email: "nina.desai@example.com", name: "Nina Desai" },
+  newParentRecipient: { email: "maya.shah@example.com", name: "Maya Shah" },
+  memoryOrganizer: { email: "thomas.wilson@example.com", name: "Thomas Wilson" },
+  memoryCaregiver: { email: "emma.wilson@example.com", name: "Emma Wilson" },
+  memoryBackup: { email: "olivia.brooks@example.com", name: "Olivia Brooks" },
+  memoryRecipient: { email: "robert.wilson@example.com", name: "Robert Wilson" },
 };
 
 const circleScenarios = [
   {
     key: "aging-parent",
     useCase: "Aging parent support",
-    name: "Ramirez Family Support",
-    recipientName: "Elena Ramirez",
+    organizerKey: "organizer",
+    name: "Ramgiri Family Care",
+    recipientName: "Lakshmi Ramgiri",
     archiveAfterDays: 14,
     recipients: [
       {
         key: "elena",
-        name: "Elena Ramirez",
+        name: "Lakshmi Ramgiri",
         relationship: "Mom",
-        notes: "Needs medication coordination and light mobility support.",
+        notes: "Needs diabetes medication coordination and light mobility support after a dizzy spell last week.",
         isPrimary: true,
         activationStatus: "ACTIVE",
         userKey: "agingRecipient",
         entitlement: {
           status: "ACTIVE",
           source: "APP_STORE",
-          appleOriginalTransactionId: "demo-aging-elena-001",
+          appleOriginalTransactionId: "story-aging-lakshmi-001",
           appleProductId: "com.careloop.ios.premium.yearly",
         },
       },
       {
         key: "luis",
-        name: "Luis Ramirez",
+        name: "Suresh Ramgiri",
         relationship: "Dad",
-        notes: "Proxy-managed after a recent fall. Lives in the same home.",
+        notes: "Proxy-managed by Anita after a recent fall. Lives in the same home.",
         isPrimary: false,
         activationStatus: "PROXY_ACTIVE",
-        proxyDocumentReference: "careloop://consent/luis-ramirez",
+        proxyDocumentReference: "careloop://consent/suresh-ramgiri",
         entitlement: {
           status: "ACTIVE",
           source: "MANUAL",
@@ -66,13 +85,13 @@ const circleScenarios = [
       { userKey: "agingBackup", accessTo: ["elena"] },
     ],
     pendingInvites: [
-      { email: "demo.aging.pharmacist@careloop.local", name: "Marta Pharmacist", role: "MEMBER" },
+      { email: "marta.pharmacy@example.com", name: "Marta Pharmacy", role: "MEMBER" },
     ],
     tasks: [
       {
         key: "aging-med-refill",
-        title: "Refill blood pressure medication",
-        notes: "Call the pharmacy before the evening dose window closes.",
+        title: "Refill diabetes medication",
+        notes: "Call Greenway Pharmacy before the evening dose window closes.",
         recipientKey: "elena",
         creatorKey: "organizer",
         assigneeKey: "agingCaregiver",
@@ -81,14 +100,14 @@ const circleScenarios = [
         dueHoursFromNow: 4,
         createdHoursAgo: 8,
         comments: [
-          { authorKey: "organizer", body: "The last refill was delayed, so please confirm pickup time.", createdHoursAgo: 7.5 },
+          { authorKey: "organizer", body: "The last refill was delayed and Mom was anxious. Please confirm pickup time.", createdHoursAgo: 7.5 },
         ],
         reminder: { status: "PENDING" },
       },
       {
         key: "aging-blood-sugar",
         title: "Morning blood sugar check",
-        notes: "Capture the reading in the shared notebook and confirm breakfast was eaten.",
+        notes: "Capture the reading in the kitchen notebook and confirm breakfast was eaten.",
         recipientKey: "elena",
         creatorKey: "organizer",
         assigneeKey: "agingBackup",
@@ -97,14 +116,14 @@ const circleScenarios = [
         dueHoursFromNow: -0.5,
         createdHoursAgo: 16,
         comments: [
-          { authorKey: "agingBackup", body: "On my way over now. Strips are already in the kitchen drawer.", createdHoursAgo: 0.4 },
+          { authorKey: "agingBackup", body: "On my way over now. Test strips are already in the kitchen drawer.", createdHoursAgo: 0.4 },
         ],
         reminder: { status: "SNOOZED", snoozeMinutes: 60, snoozeCount: 1 },
       },
       {
         key: "aging-grab-bars",
         title: "Install bathroom grab bars",
-        notes: "The hallway bath still needs the contractor quote approved.",
+        notes: "The hallway bath still needs the contractor quote approved after Dad's fall.",
         recipientKey: "luis",
         creatorKey: "organizer",
         assigneeKey: "agingCaregiver",
@@ -113,7 +132,7 @@ const circleScenarios = [
         dueHoursFromNow: -26,
         createdHoursAgo: 72,
         comments: [
-          { authorKey: "agingCaregiver", body: "Contractor availability slipped. Escalating if we cannot book today.", createdHoursAgo: 5 },
+          { authorKey: "agingCaregiver", body: "Contractor availability slipped. Escalating so we do not lose another day.", createdHoursAgo: 5 },
         ],
         reminder: { status: "ESCALATED", escalatedHoursAgo: 2.5 },
       },
@@ -135,7 +154,7 @@ const circleScenarios = [
           interval: 1,
         },
         comments: [
-          { authorKey: "agingRecipient", body: "Completed before breakfast. Felt steadier today.", createdHoursAgo: 19.5 },
+          { authorKey: "agingRecipient", body: "Completed before breakfast. I felt steadier today.", createdHoursAgo: 19.5 },
         ],
       },
       {
@@ -174,15 +193,16 @@ const circleScenarios = [
   {
     key: "post-surgery",
     useCase: "Post-surgery recovery",
-    name: "Chen Recovery Plan",
-    recipientName: "Grace Chen",
+    organizerKey: "recoveryOrganizer",
+    name: "Morris Recovery Plan",
+    recipientName: "Elena Morris",
     archiveAfterDays: 10,
     recipients: [
       {
         key: "grace",
-        name: "Grace Chen",
-        relationship: "Recovery Patient",
-        notes: "Knee replacement recovery. Basic plan stays on the free tier.",
+        name: "Elena Morris",
+        relationship: "Spouse",
+        notes: "Knee replacement recovery. Basic plan stays on the free tier until recurring reminders are needed.",
         isPrimary: true,
         activationStatus: "ACTIVE",
         userKey: "recoveryRecipient",
@@ -197,13 +217,13 @@ const circleScenarios = [
       { recipientKey: "grace", requesterKey: "recoveryBackup", createdHoursAgo: 1 },
     ],
     pendingInvites: [
-      { email: "demo.recovery.volunteer@careloop.local", name: "Casey Volunteer", role: "MEMBER" },
+      { email: "casey.volunteer@example.com", name: "Casey Volunteer", role: "MEMBER" },
     ],
     tasks: [
       {
         key: "recovery-antibiotics",
         title: "Take antibiotics with lunch",
-        notes: "Food first, then the antibiotic within 10 minutes.",
+        notes: "Food first, then the antibiotic within 10 minutes. Mark done so Daniel knows the dose was not missed.",
         recipientKey: "grace",
         creatorKey: "organizer",
         assigneeKey: "recoveryRecipient",
@@ -232,7 +252,7 @@ const circleScenarios = [
       {
         key: "recovery-dressing",
         title: "Change dressing",
-        notes: "Use the sterile kit from the top cabinet.",
+        notes: "Use the sterile kit from the top cabinet and note any redness.",
         recipientKey: "grace",
         creatorKey: "organizer",
         assigneeKey: "recoveryCaregiver",
@@ -261,7 +281,7 @@ const circleScenarios = [
       {
         key: "recovery-followup",
         title: "Schedule post-op follow-up appointment",
-        notes: "Confirm transport before locking the slot.",
+        notes: "Confirm transport before locking the surgeon's follow-up slot.",
         recipientKey: "grace",
         creatorKey: "organizer",
         assigneeKey: "recoveryBackup",
@@ -276,22 +296,23 @@ const circleScenarios = [
   {
     key: "new-parent",
     useCase: "Postpartum and newborn support",
-    name: "Patel New Parent Rotation",
-    recipientName: "Asha Patel",
+    organizerKey: "newParentOrganizer",
+    name: "Shah New Parent Support",
+    recipientName: "Maya Shah",
     archiveAfterDays: 7,
     recipients: [
       {
         key: "asha",
-        name: "Asha Patel",
-        relationship: "New Mom",
-        notes: "Postpartum support plan with premium recurring schedules enabled.",
+        name: "Maya Shah",
+        relationship: "Sister",
+        notes: "Postpartum support plan with recurring overnight coverage and meal coordination.",
         isPrimary: true,
         activationStatus: "ACTIVE",
         userKey: "newParentRecipient",
         entitlement: {
           status: "ACTIVE",
           source: "APP_STORE",
-          appleOriginalTransactionId: "demo-new-parent-asha-001",
+          appleOriginalTransactionId: "story-new-parent-maya-001",
           appleProductId: "com.careloop.ios.premium.yearly",
         },
       },
@@ -301,7 +322,7 @@ const circleScenarios = [
       { userKey: "newParentBackup", accessTo: ["asha"] },
     ],
     pendingInvites: [
-      { email: "demo.newparent.doula@careloop.local", name: "Morgan Doula", role: "MEMBER" },
+      { email: "morgan.doula@example.com", name: "Morgan Doula", role: "MEMBER" },
     ],
     tasks: [
       {
@@ -322,7 +343,7 @@ const circleScenarios = [
           interval: 1,
         },
         comments: [
-          { authorKey: "newParentBackup", body: "Handled the full feeding and settled the baby back to sleep.", createdHoursAgo: 16.8 },
+          { authorKey: "newParentBackup", body: "Handled the full feeding and settled the baby back to sleep. Maya got almost four straight hours.", createdHoursAgo: 16.8 },
         ],
       },
       {
@@ -359,7 +380,7 @@ const circleScenarios = [
       {
         key: "newparent-formula",
         title: "Restock formula and diapers",
-        notes: "Use the bulk order draft saved in the grocery app.",
+        notes: "Use the bulk order draft saved in the grocery app before the weekend rush.",
         recipientKey: "asha",
         creatorKey: "organizer",
         assigneeKey: "newParentCaregiver",
@@ -398,13 +419,14 @@ const circleScenarios = [
   {
     key: "memory-care",
     useCase: "Memory care and home safety",
-    name: "Brooks Memory Care",
-    recipientName: "Walter Brooks",
+    organizerKey: "memoryOrganizer",
+    name: "Wilson Memory Care",
+    recipientName: "Robert Wilson",
     archiveAfterDays: 21,
     recipients: [
       {
         key: "walter",
-        name: "Walter Brooks",
+        name: "Robert Wilson",
         relationship: "Dad",
         notes: "Short-term memory support with safety checks and structured routines.",
         isPrimary: true,
@@ -414,7 +436,7 @@ const circleScenarios = [
           status: "ACTIVE",
           source: "APP_STORE",
           expiresAtHoursFromNow: -48,
-          appleOriginalTransactionId: "demo-memory-walter-expired-001",
+          appleOriginalTransactionId: "story-memory-robert-expired-001",
           appleProductId: "com.careloop.ios.premium.monthly",
         },
       },
@@ -424,13 +446,13 @@ const circleScenarios = [
       { userKey: "memoryBackup", accessTo: ["walter"] },
     ],
     pendingInvites: [
-      { email: "demo.memory.neighbor@careloop.local", name: "Linda Neighbor", role: "MEMBER" },
+      { email: "linda.neighbor@example.com", name: "Linda Neighbor", role: "MEMBER" },
     ],
     tasks: [
       {
         key: "memory-medication",
         title: "Evening medication confirmation",
-        notes: "Confirm the pill organizer was used after dinner.",
+        notes: "Confirm the pill organizer was used after dinner and leave a note if anything looks off.",
         recipientKey: "walter",
         creatorKey: "organizer",
         assigneeKey: "memoryRecipient",
@@ -443,7 +465,7 @@ const circleScenarios = [
       {
         key: "memory-sensor",
         title: "Replace front door sensor battery",
-        notes: "Low battery alert is already firing twice each evening.",
+        notes: "Low battery alert is already firing twice each evening, and Dad missed yesterday's door check.",
         recipientKey: "walter",
         creatorKey: "organizer",
         assigneeKey: "memoryCaregiver",
@@ -594,7 +616,10 @@ function taskEventPayload(taskId, title = null) {
 }
 
 async function cleanupDemoData() {
-  const demoEmails = Object.values(userDirectory).map((user) => user.email);
+  const demoEmails = [
+    ...Object.values(userDirectory).map((user) => user.email),
+    ...legacyDemoEmails,
+  ];
 
   const circles = await db.careCircle.findMany({
     where: {
@@ -639,7 +664,7 @@ async function createUsers() {
 }
 
 async function createCircleScenario(scenario, users, now) {
-  const organizer = users.organizer;
+  const organizer = users[scenario.organizerKey ?? "organizer"];
   const createdCircleAt = hoursFromNow(now, -96 + circleScenarios.findIndex(({ key }) => key === scenario.key) * 6);
 
   return db.$transaction(async (tx) => {
