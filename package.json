@@ -232,7 +232,8 @@
     "check:queue-priority": "node scripts/check-queue-priority.js",
     "check:task-cancellation": "node scripts/check-task-cancellation.js",
     "check:command-interface": "node scripts/check-command-interface.js",
-    "check-command-interface": "node scripts/check-command-interface.js"
+    "check-command-interface": "node scripts/check-command-interface.js",
+    "check:p63-execution-plan": "node scripts/check-p63-execution-plan.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.24.0",

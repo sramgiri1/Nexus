@@ -1153,6 +1153,12 @@ P63 is divided into seven planned subphases:
 
 The detailed plan lives in
 [`P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md`](P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md).
+Implementation must follow
+[`p63-execution-contracts.json`](../../contracts/os-roadmap/p63-execution-contracts.json);
+the contracts define allowed files, forbidden files, safety rules, reuse checks,
+UX updates, theme and Playwright requirements, tests, docs, phase status
+updates, validation commands, git commands, and final response checklists for
+each subphase.
 P63 does not execute providers, tools, workers, DB writes, project mutation, or
 release/deploy actions. P64 - Provider + Tool Dispatch Through Governance
 remains the next phase after P63 closes.

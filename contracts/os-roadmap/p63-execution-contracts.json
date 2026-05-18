@@ -1,0 +1,1127 @@
+{
+  "phaseId": "P63",
+  "title": "AI Interaction Snapshot + Granular Recovery Layer",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p63-1-snapshot-contract-redaction-policy",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.1 snapshot contract and redaction policy foundation without runtime execution side effects.",
+      "allowedFiles": [
+        "ai-recovery/snapshotContract.js",
+        "ai-recovery/redactionPolicy.js",
+        "ai-recovery/fixtures/snapshot-fixtures.json",
+        "scripts/check-ai-snapshot-contract.js",
+        "reports/ai-snapshot-contract-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/CommandCenter.jsx",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.1",
+        "narrowScope": "Define and validate the local snapshot envelope, redaction levels, recovery eligibility fields, and public-safe fixture records only.",
+        "safetyRules": [
+          "Preview-only; do not call providers, dispatch tools, execute workers, write DB records, enable project mutation, or deploy.",
+          "Do not expose private prompts, secrets, DemoApp internals, project raw IDs, private raw IDs, or unredacted tool payloads in primary UX or reports.",
+          "Fixtures must use public-safe synthetic values and stable human-readable labels."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "runtime/evidenceRecord.js",
+            "runtime/identityContext.js",
+            "command-interface/commandTimeline.js",
+            "activity-log/activityEventSchema.js",
+            "secrets/secretRedaction.js"
+          ],
+          "rule": "Reuse existing evidence, identity, command timeline, activity, and redaction helpers where they fit; do not duplicate helpers and document any phase-local shape."
+        },
+        "uxUpdate": {
+          "scope": "No full Command Center UX in P63.1.",
+          "required": "Document the labels and fields later UX may show, using readable names instead of raw IDs."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-snapshot-contract.js.",
+          "Validate schema shape, redaction policy, fixture safety, and no forbidden runtime enablement."
+        ],
+        "docsRoadmap": [
+          "Update P63 plan with P63.1 completion notes.",
+          "Update NEXUS platform roadmap if scope changes.",
+          "Update phase-status P63.1 only after validation passes."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.1 complete, set branch/commit/completedAt/checksRun, and keep P63 parent current until P63.7 closes.",
+        "validationCommands": [
+          "npm run check:ai-snapshot-contract",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:public-safety",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no provider/tool/project mutation/DB/deploy enablement.",
+          "Confirm no DemoApp full Command Center exposure.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "ai-recovery/snapshotContract.js",
+            "ai-recovery/redactionPolicy.js",
+            "ai-recovery/fixtures/snapshot-fixtures.json",
+            "scripts/check-ai-snapshot-contract.js",
+            "reports/ai-snapshot-contract-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "validateSnapshotRecord",
+            "normalizeSnapshotRecord",
+            "buildSnapshotPreview",
+            "redactSnapshotPayload",
+            "SNAPSHOT_REDACTION_LEVELS"
+          ],
+          "schemas": [
+            "AISnapshotRecord",
+            "SnapshotRedactionPolicy",
+            "SnapshotRecoveryEligibility"
+          ],
+          "dataShapes": [
+            "snapshotId, displayTitle, scopeLabel, actorLabel, correlationId, commandIntent, promptSummary, responseSummary, evidenceRefs, redactionLevel, recoveryEligibility"
+          ]
+        },
+        "commandCenterUxRequirements": "No new page. Document display-safe snapshot labels and recovery eligibility fields for later Recovery UX; primary UX must avoid raw IDs and raw payloads.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "No new Playwright route expected unless labels change.",
+          "Preserve existing route-wide safety tests for no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS roadmap separation, and project milestone separation."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-snapshot-contract.js",
+          "Update package.json with check:ai-snapshot-contract"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add ai-recovery/snapshotContract.js ai-recovery/redactionPolicy.js ai-recovery/fixtures/snapshot-fixtures.json scripts/check-ai-snapshot-contract.js reports/ai-snapshot-contract-report.md package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-1 P63.1\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Snapshot contract and redaction policy are implemented as preview-only local modules.",
+        "Fixtures contain only public-safe synthetic values.",
+        "Checker validates contract, redaction, fixture safety, and roadmap status.",
+        "P63.1 phase status is not stale after validation."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "low",
+      "blocking": true,
+      "dependsOn": [],
+      "parentTaskId": null,
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-2-interaction-capture-points",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.2 interaction capture map and preview adapters without enabling live capture side effects.",
+      "allowedFiles": [
+        "ai-recovery/interactionCaptureMap.js",
+        "ai-recovery/snapshotAdapter.js",
+        "ai-recovery/fixtures/capture-map-fixtures.json",
+        "scripts/check-ai-interaction-capture.js",
+        "reports/ai-interaction-capture-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/CommandCenter.jsx",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.2",
+        "narrowScope": "Map existing preview surfaces that can produce snapshot-ready records and add pure adapter functions for local fixtures only.",
+        "safetyRules": [
+          "Do not wire live capture into provider, tool, worker, DB, project mutation, or deploy paths.",
+          "Adapters must return redacted preview records and must not persist records unless P63.4 explicitly allows local preview storage.",
+          "Primary UX copy must use human-readable scope labels, not raw project/private IDs."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "command-interface/commandTimeline.js",
+            "mission-composer/missionComposer.js",
+            "worker-runtime/workerQueue.js",
+            "tool-governance/toolExecutionPreview.js",
+            "approvals/approvalStore.js",
+            "activity-log/activityLogger.js"
+          ],
+          "rule": "Use existing preview record shapes and adapters before creating ai-recovery wrappers; do not duplicate timeline or activity helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new Command Center page in P63.2.",
+          "required": "Add UX field mapping notes for P63.5 so capture source names are readable and raw IDs remain secondary or hidden."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-interaction-capture.js.",
+          "Validate every capture source has owner, source type, redaction posture, exclusion rules, and fixture coverage."
+        ],
+        "docsRoadmap": [
+          "Document capture sources and exclusions in the P63 plan.",
+          "Update phase-status P63.2 after validation passes.",
+          "Keep next phase wired to P63.3."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.2 complete with real evidence and keep P63 parent in progress/planned until final validation.",
+        "validationCommands": [
+          "npm run check:ai-snapshot-contract",
+          "npm run check:ai-interaction-capture",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:public-safety",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List capture sources added.",
+          "Confirm no live capture side effects.",
+          "Confirm no raw project/private IDs in primary UX plans.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "ai-recovery/interactionCaptureMap.js",
+            "ai-recovery/snapshotAdapter.js",
+            "ai-recovery/fixtures/capture-map-fixtures.json",
+            "scripts/check-ai-interaction-capture.js",
+            "reports/ai-interaction-capture-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "CAPTURE_SOURCE_TYPES",
+            "buildInteractionCaptureMap",
+            "adaptPreviewRecordToSnapshot",
+            "validateCaptureSource"
+          ],
+          "schemas": [
+            "InteractionCaptureSource",
+            "SnapshotAdapterInput",
+            "SnapshotAdapterResult"
+          ],
+          "dataShapes": [
+            "sourceId, sourceLabel, sourceType, ownerAgent, redactionRequired, excludedFields, fixtureRef, snapshotMapping"
+          ]
+        },
+        "commandCenterUxRequirements": "No new page. Define display labels for capture source names so P63.5 can show readable source names rather than raw IDs.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "No new Playwright route expected unless capture labels surface in Command Center.",
+          "Preserve route-wide safety tests and add coverage later if any Command Center copy changes."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-interaction-capture.js",
+          "Update package.json with check:ai-interaction-capture"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add ai-recovery/interactionCaptureMap.js ai-recovery/snapshotAdapter.js ai-recovery/fixtures/capture-map-fixtures.json scripts/check-ai-interaction-capture.js reports/ai-interaction-capture-report.md package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-2 P63.2\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Capture map covers command interface, mission composer, worker queue, tool previews, approvals, and activity records.",
+        "Adapters are pure preview transformations.",
+        "Checker validates capture source completeness and forbidden side-effect boundaries.",
+        "P63.2 phase status is updated only with passing validation evidence."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "low",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-1-snapshot-contract-redaction-policy"
+      ],
+      "parentTaskId": "nexus-os-p63-1-snapshot-contract-redaction-policy",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-3-recovery-point-model",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.3 recovery point model and deterministic classification rules.",
+      "allowedFiles": [
+        "ai-recovery/recoveryPointModel.js",
+        "ai-recovery/recoveryClassifier.js",
+        "ai-recovery/fixtures/recovery-point-fixtures.json",
+        "scripts/check-ai-recovery-point-model.js",
+        "reports/ai-recovery-point-model-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/CommandCenter.jsx",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.3",
+        "narrowScope": "Define recovery point shape, parent-child linkage, supersession, failure classification, and resumability flags from redacted snapshots.",
+        "safetyRules": [
+          "Recovery points are metadata only and must not restore files, rerun tasks, call models, enable provider/tool/project mutation/DB/deploy behavior, or mutate queues.",
+          "No fake working recovery actions; unsupported actions must return blocked/preview status.",
+          "Recovery labels must be readable and must not expose private raw IDs in primary UX."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "state-machine/taskStateMachine.js",
+            "state-machine/transitionValidator.js",
+            "worker-runtime/taskCancellation.js",
+            "activity-log/activityTrace.js",
+            "runtime/evidenceRecord.js"
+          ],
+          "rule": "Reuse lifecycle, transition, trace, and evidence vocabulary; do not duplicate state-machine semantics."
+        },
+        "uxUpdate": {
+          "scope": "Plan recovery status labels for P63.5.",
+          "required": "Define primary labels for inspect-only, resume-plan available, blocked, stale, and not recoverable."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-recovery-point-model.js.",
+          "Validate fixture classifications, parent-child chains, stale/superseded states, and no executable actions."
+        ],
+        "docsRoadmap": [
+          "Document recovery point states in the P63 plan.",
+          "Update phase-status P63.3 after validation passes.",
+          "Keep next phase wired to P63.4."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.3 complete only after recovery model checks and OS status checks pass.",
+        "validationCommands": [
+          "npm run check:ai-recovery-point-model",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:state-machine",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List recovery states and blocked actions.",
+          "Confirm no restore/rerun side effects.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "ai-recovery/recoveryPointModel.js",
+            "ai-recovery/recoveryClassifier.js",
+            "ai-recovery/fixtures/recovery-point-fixtures.json",
+            "scripts/check-ai-recovery-point-model.js",
+            "reports/ai-recovery-point-model-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "RECOVERY_POINT_STATES",
+            "buildRecoveryPoint",
+            "classifyRecoveryPoint",
+            "validateRecoveryPoint"
+          ],
+          "schemas": [
+            "RecoveryPointRecord",
+            "RecoveryPointState",
+            "RecoveryEligibilityReason"
+          ],
+          "dataShapes": [
+            "recoveryPointId, snapshotId, displayTitle, state, parentRecoveryPointId, supersedesRecoveryPointId, resumability, blockedReasons, nextSafeActionLabel"
+          ]
+        },
+        "commandCenterUxRequirements": "No new page. Define recovery posture labels for later Recovery UX: inspect-only, resume-plan available, blocked, stale, superseded, and not recoverable.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "No new Playwright route expected unless recovery labels surface in Command Center.",
+          "Preserve route-wide safety tests and add label assertions in P63.5."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-recovery-point-model.js",
+          "Update package.json with check:ai-recovery-point-model"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add ai-recovery/recoveryPointModel.js ai-recovery/recoveryClassifier.js ai-recovery/fixtures/recovery-point-fixtures.json scripts/check-ai-recovery-point-model.js reports/ai-recovery-point-model-report.md package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-3 P63.3\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Recovery point model is deterministic and derived from redacted snapshot data.",
+        "Unsupported recovery actions are represented as blocked previews, not working actions.",
+        "Checker validates state classification and no execution side effects.",
+        "P63.3 phase status is not stale after validation."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "low",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-2-interaction-capture-points"
+      ],
+      "parentTaskId": "nexus-os-p63-2-interaction-capture-points",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-4-snapshot-store-retention-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.4 local snapshot store and retention preview without durable DB writes.",
+      "allowedFiles": [
+        "ai-recovery/snapshotStore.js",
+        "ai-recovery/retentionPolicy.js",
+        "ai-recovery/fixtures/snapshot-store-fixtures.json",
+        "memory/runtime/README.md",
+        "scripts/check-ai-snapshot-store.js",
+        "reports/ai-snapshot-store-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/CommandCenter.jsx",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.4",
+        "narrowScope": "Add local preview storage contracts, retention rules, pruning previews, and safe fixture data for snapshots and recovery points.",
+        "safetyRules": [
+          "No provider, tool, project mutation, DB primary runtime writes, schema migrations, or deploy behavior.",
+          "No private payload persistence; store only redacted fixture and preview records.",
+          "Prune/export operations must be dry-run or fixture-scoped unless explicitly approved in a later phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "memory/memoryStore.js",
+            "memory/runtime/README.md",
+            "activity-log/activityStore.js",
+            "cost-center/costLedgerStore.js",
+            "secrets/secretRedaction.js"
+          ],
+          "rule": "Reuse local store patterns and redaction helpers; do not duplicate file store helpers if an existing pattern fits."
+        },
+        "uxUpdate": {
+          "scope": "Prepare data shape for P63.5 Recovery UX.",
+          "required": "Provide display-safe titles, timestamps, scope labels, redaction badges, and recovery posture without raw IDs."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-snapshot-store.js.",
+          "Validate retention policy, fixture safety, dry-run pruning, and absence of DB writes."
+        ],
+        "docsRoadmap": [
+          "Document storage boundaries and retention rules.",
+          "Update phase-status P63.4 after validation passes.",
+          "Keep next phase wired to P63.5."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.4 complete only after storage checker and OS status checker pass.",
+        "validationCommands": [
+          "npm run check:ai-snapshot-store",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:public-safety",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List store and retention files changed.",
+          "Confirm no DB writes or migrations.",
+          "Confirm stored data is redacted preview data only.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "ai-recovery/snapshotStore.js",
+            "ai-recovery/retentionPolicy.js",
+            "ai-recovery/fixtures/snapshot-store-fixtures.json",
+            "scripts/check-ai-snapshot-store.js",
+            "reports/ai-snapshot-store-report.md"
+          ],
+          "update": [
+            "memory/runtime/README.md",
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildSnapshotStorePreview",
+            "validateSnapshotStoreRecord",
+            "previewSnapshotPrune",
+            "SNAPSHOT_RETENTION_POLICY"
+          ],
+          "schemas": [
+            "SnapshotStoreRecord",
+            "SnapshotRetentionPolicy",
+            "SnapshotPrunePreview"
+          ],
+          "dataShapes": [
+            "storeRecordId, snapshotId, recoveryPointId, displayTitle, createdAt, expiresAt, retentionClass, redactionLevel, prunePreview"
+          ]
+        },
+        "commandCenterUxRequirements": "Prepare display-safe store fields for Recovery UX: title, timestamp, scope label, redaction badge, retention class, and recovery posture.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "No new Playwright route expected until P63.5.",
+          "P63.5 must assert retention/redaction labels render without raw IDs or raw JSON dumps."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-snapshot-store.js",
+          "Update package.json with check:ai-snapshot-store"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add ai-recovery/snapshotStore.js ai-recovery/retentionPolicy.js ai-recovery/fixtures/snapshot-store-fixtures.json scripts/check-ai-snapshot-store.js reports/ai-snapshot-store-report.md memory/runtime/README.md package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-4 P63.4\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Local preview store contract handles snapshot and recovery fixture records.",
+        "Retention and pruning behavior is preview-only.",
+        "Checker validates no DB writes and safe fixture content.",
+        "P63.4 phase status is updated only with validation evidence."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-3-recovery-point-model"
+      ],
+      "parentTaskId": "nexus-os-p63-3-recovery-point-model",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-5-command-center-recovery-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "canvas",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.5 Command Center recovery inspection UX without exposing DemoApp in full Command Center.",
+      "allowedFiles": [
+        "dashboard/src/pages/Recovery.jsx",
+        "dashboard/src/components/recovery/**",
+        "dashboard/src/utils/recoveryPreview.js",
+        "dashboard/src/App.jsx",
+        "dashboard/src/__tests__/recovery*.test.jsx",
+        "scripts/check-command-center-recovery-ux.js",
+        "reports/command-center-recovery-ux-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/Projects.jsx",
+        "dashboard/src/pages/DemoApp.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.5",
+        "narrowScope": "Add an inspection-only Recovery surface showing redacted snapshots, recovery posture, trace links, and disabled action previews.",
+        "safetyRules": [
+          "Do not expose DemoApp in full Command Center.",
+          "Do not show project/private raw IDs in primary UX; use labels and place technical IDs only in secondary debug/detail contexts if needed.",
+          "Do not create working restore, replay, resume, provider, tool, project mutation, DB, or deploy actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dashboard/src/pages/CommandCenter.jsx",
+            "dashboard/src/pages/ActivityLog.jsx",
+            "dashboard/src/pages/WorkerRuntime.jsx",
+            "dashboard/src/components/common",
+            "docs/codebase/DESIGN_SYSTEM.md"
+          ],
+          "rule": "Reuse existing page, badge, empty-state, table/list, and trace-view patterns; do not duplicate shared Command Center helpers."
+        },
+        "uxUpdate": {
+          "scope": "Command Center Recovery UX.",
+          "required": "Add snapshot list, detail view, redaction badge, recovery posture, trace context, empty state, and disabled restore/replay/resume previews with honest copy."
+        },
+        "testsCheckers": [
+          "Add scripts/check-command-center-recovery-ux.js.",
+          "Add dashboard tests for no raw IDs in primary UX, disabled actions, empty state, and no DemoApp full exposure."
+        ],
+        "docsRoadmap": [
+          "Document UX behavior in the P63 plan.",
+          "Update platform roadmap if route naming changes.",
+          "Update phase-status P63.5 after UX checks pass."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.5 complete only after UX, build, and OS status checks pass.",
+        "validationCommands": [
+          "npm run check:command-center-recovery-ux",
+          "npm run check:command-center-ux",
+          "cd dashboard && npm run build && npm run test:unit && npm run test:pages",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List UX surfaces changed.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX hides raw project/private IDs.",
+          "Confirm recovery actions are disabled previews only.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/pages/Recovery.jsx",
+            "dashboard/src/components/recovery/RecoverySnapshotList.jsx",
+            "dashboard/src/components/recovery/RecoverySnapshotDetail.jsx",
+            "dashboard/src/utils/recoveryPreview.js",
+            "scripts/check-command-center-recovery-ux.js",
+            "reports/command-center-recovery-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/App.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "Recovery",
+            "RecoverySnapshotList",
+            "RecoverySnapshotDetail",
+            "buildRecoveryPreviewViewModel",
+            "RECOVERY_ROUTE_ID"
+          ],
+          "schemas": [
+            "RecoveryPreviewViewModel",
+            "RecoverySnapshotListItem",
+            "RecoveryActionPreview"
+          ],
+          "dataShapes": [
+            "routeId, pageTitle, currentState, nextAction, blockers, ownerAgent, evidenceLocation, costImpact, snapshots[], selectedSnapshot, disabledActions[]"
+          ]
+        },
+        "commandCenterUxRequirements": "Add inspection-only Recovery page with what changed, current state, next action, blockers, disabled reason, owner agent/capability, evidence/activity location, and cost impact when relevant. Hide raw IDs in primary UX and never expose DemoApp in full Command Center.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "Add Recovery route dark/light/system coverage through Playwright and existing theme controls."
+        ],
+        "playwrightTests": [
+          "Add route test for Recovery page rendering.",
+          "Assert dark and light themes render Recovery.",
+          "Assert system theme route shell remains stable.",
+          "Assert disabled restore/replay/resume actions show disabled reasons.",
+          "Assert primary UX has no raw JSON, raw logs, DemoApp full exposure, or raw private/project IDs.",
+          "Preserve sidebar navigation and OS/project separation tests."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-command-center-recovery-ux.js",
+          "Update scripts/check-command-center-ux.js only if route metadata needs central coverage",
+          "Update package.json with check:command-center-recovery-ux"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add dashboard/src/pages/Recovery.jsx dashboard/src/components/recovery/RecoverySnapshotList.jsx dashboard/src/components/recovery/RecoverySnapshotDetail.jsx dashboard/src/utils/recoveryPreview.js scripts/check-command-center-recovery-ux.js reports/command-center-recovery-ux-report.md dashboard/src/App.jsx dashboard/tests/routes.spec.js package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-5 P63.5\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Recovery UX is inspection-only and uses redacted display-safe data.",
+        "No DemoApp full Command Center exposure is introduced.",
+        "Primary UX does not show raw project/private IDs.",
+        "P63.5 phase status is updated only with passing validation evidence."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-4-snapshot-store-retention-preview"
+      ],
+      "parentTaskId": "nexus-os-p63-4-snapshot-store-retention-preview",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-6-recovery-replay-resume-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Implement the P63.6 replay and resume preview builders without working execution actions.",
+      "allowedFiles": [
+        "ai-recovery/replayPlanBuilder.js",
+        "ai-recovery/resumePlanBuilder.js",
+        "ai-recovery/fixtures/replay-resume-fixtures.json",
+        "dashboard/src/utils/recoveryPreview.js",
+        "scripts/check-ai-replay-resume-preview.js",
+        "reports/ai-replay-resume-preview-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.6",
+        "narrowScope": "Build deterministic plan previews that explain replay/resume requirements, missing context, blocked actions, and next safe operator choices.",
+        "safetyRules": [
+          "Do not implement working replay, restore, resume, provider dispatch, tool dispatch, worker execution, project mutation, DB writes, or deploy.",
+          "Every action-like output must be labeled as preview, unavailable, blocked, or requires later phase.",
+          "Plans must never contain private raw IDs in primary UX copy."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "orchestrator/dryRunPlan.js",
+            "orchestrator/guardedTaskPlan.js",
+            "command-interface/commandApprovalPreview.js",
+            "implementation-actions/implementationPlan.js",
+            "state-machine/transitionValidator.js"
+          ],
+          "rule": "Reuse dry-run, guarded task, approval preview, and implementation plan concepts; do not duplicate planning helpers without a documented reason."
+        },
+        "uxUpdate": {
+          "scope": "Recovery preview details shown in P63.5 UX.",
+          "required": "Show blocked/missing-context reasons and next safe action labels without fake working buttons."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-replay-resume-preview.js.",
+          "Validate preview plans for allowed states, blocked actions, missing context, and no execution verbs that imply real work."
+        ],
+        "docsRoadmap": [
+          "Document replay/resume preview semantics.",
+          "Update phase-status P63.6 after validation passes.",
+          "Keep next phase wired to P63.7."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63.6 complete only after replay/resume preview checks and OS status checks pass.",
+        "validationCommands": [
+          "npm run check:ai-replay-resume-preview",
+          "npm run check:command-center-recovery-ux",
+          "npm run check:p63-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:public-safety",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List preview builders changed.",
+          "Confirm no working replay/resume actions exist.",
+          "Confirm blocked action copy is honest.",
+          "Report validation command results.",
+          "State phase-status update performed or explicitly blocked."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "ai-recovery/replayPlanBuilder.js",
+            "ai-recovery/resumePlanBuilder.js",
+            "ai-recovery/fixtures/replay-resume-fixtures.json",
+            "scripts/check-ai-replay-resume-preview.js",
+            "reports/ai-replay-resume-preview-report.md"
+          ],
+          "update": [
+            "dashboard/src/utils/recoveryPreview.js",
+            "package.json",
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildReplayPlanPreview",
+            "buildResumePlanPreview",
+            "validateReplayResumePreview",
+            "RECOVERY_ACTION_PREVIEW_STATES"
+          ],
+          "schemas": [
+            "ReplayPlanPreview",
+            "ResumePlanPreview",
+            "BlockedRecoveryAction"
+          ],
+          "dataShapes": [
+            "actionPreviewId, actionLabel, state, disabledReason, requiredContext, missingContext, evidenceRefs, nextSafeActionLabel"
+          ]
+        },
+        "commandCenterUxRequirements": "Update Recovery preview data so blocked/missing-context reasons and next safe action labels are honest preview-only content, not working action buttons.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "Update Recovery page route test if preview copy changes.",
+          "Assert replay/resume actions remain disabled previews with reasons.",
+          "Assert no execution-success copy appears."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-replay-resume-preview.js",
+          "Update package.json with check:ai-replay-resume-preview"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add ai-recovery/replayPlanBuilder.js ai-recovery/resumePlanBuilder.js ai-recovery/fixtures/replay-resume-fixtures.json scripts/check-ai-replay-resume-preview.js reports/ai-replay-resume-preview-report.md dashboard/src/utils/recoveryPreview.js package.json docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-6 P63.6\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Replay/resume outputs are deterministic previews only.",
+        "Blocked and missing-context reasons are explicit.",
+        "Checker prevents fake working actions and runtime side effects.",
+        "P63.6 phase status is updated only with validation evidence."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-5-command-center-recovery-ux"
+      ],
+      "parentTaskId": "nexus-os-p63-5-command-center-recovery-ux",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p63-7-recovery-tests-docs-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "sentinel",
+      "taskType": "verification-plan",
+      "objective": "Validate and close P63 with complete test evidence, docs, roadmap, and phase status updates.",
+      "allowedFiles": [
+        "scripts/check-ai-recovery-final.js",
+        "reports/ai-recovery-final-report.md",
+        "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "providers/**",
+        "tool-governance/adapters/**",
+        "projects/**",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P63.7",
+        "narrowScope": "Run final P63 validation, close the parent phase only with evidence, and prepare P64 as next without enabling P64 behavior.",
+        "safetyRules": [
+          "Do not skip any P63 checker or dashboard validation.",
+          "Do not mark P63 or P63.7 complete without real command output.",
+          "Do not enable provider/tool/project mutation/DB/deploy behavior while preparing P64."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scripts/check-os-phase-status.js",
+            "scripts/check-command-center-ux.js",
+            "scripts/check-public-safety.js",
+            "reports/*final-report.md",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse existing final validation and phase status helper patterns; do not duplicate OS phase status updater behavior."
+        },
+        "uxUpdate": {
+          "scope": "No new UX beyond validating P63.5/P63.6 behavior.",
+          "required": "Confirm Recovery UX remains inspection-only, uses readable labels, hides raw IDs in primary UX, and does not expose DemoApp in full Command Center."
+        },
+        "testsCheckers": [
+          "Add scripts/check-ai-recovery-final.js.",
+          "Run every P63 checker plus Command Center, public safety, format, and OS phase status checks."
+        ],
+        "docsRoadmap": [
+          "Update P63 plan with final validation evidence.",
+          "Update NEXUS platform roadmap with P63 completion.",
+          "Mark P63 parent and P63.7 complete only after all checks pass.",
+          "Set nextPhase to P64."
+        ],
+        "phaseStatusUpdate": "When complete, mark P63 and P63.7 complete with branch, real commit or pending-final-commit only if repository convention allows it, completedAt, checksRun, known limitations, and P64 next.",
+        "validationCommands": [
+          "npm run check:ai-snapshot-contract",
+          "npm run check:ai-interaction-capture",
+          "npm run check:ai-recovery-point-model",
+          "npm run check:ai-snapshot-store",
+          "npm run check:command-center-recovery-ux",
+          "npm run check:ai-replay-resume-preview",
+          "npm run check:ai-recovery-final",
+          "npm run check:p63-execution-plan",
+          "npm run check:command-center-ux",
+          "npm run check:os-phase-status",
+          "npm run check:public-safety",
+          "npm run check:format-readability",
+          "cd dashboard && npm run build && npm run test:unit && npm run test:pages",
+          "git diff --check"
+        ],
+        "finalResponseChecklist": [
+          "List all P63 checks and results.",
+          "List changed files.",
+          "Confirm P63 parent and P63.7 status updates.",
+          "Confirm P64 remains planned and no P64 behavior was enabled.",
+          "Confirm no provider/tool/project mutation/DB/deploy enablement.",
+          "Confirm no stale phase status remains."
+        ],
+        "startingBranch": "codex/careloop-premium-phases",
+        "expectedBaseCommit": "50abb01",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-ai-recovery-final.js",
+            "reports/ai-recovery-final-report.md"
+          ],
+          "update": [
+            "docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "package.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "No runtime exports; final checker aggregates P63 validation evidence."
+          ],
+          "schemas": [
+            "AIRecoveryFinalValidationReport"
+          ],
+          "dataShapes": [
+            "phaseId, subphaseResults[], commandCenterUxResult, publicSafetyResult, osPhaseStatusResult, limitations[], nextPhase"
+          ]
+        },
+        "commandCenterUxRequirements": "No new UX beyond validating P63.5/P63.6. Confirm Recovery UX remains inspection-only and route-wide navigation/theme behavior is preserved.",
+        "themeRequirements": [
+          "Preserve System theme selection and resolved theme attributes.",
+          "Preserve Dark theme readability and route shell contrast.",
+          "Preserve Light theme readability and route shell contrast.",
+          "No direct theme UI changes expected; run existing theme checks if Command Center files change."
+        ],
+        "playwrightTests": [
+          "Run Recovery route tests.",
+          "Run route-wide safety tests for no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS roadmap separation, and project milestone separation."
+        ],
+        "checkerUpdates": [
+          "Add scripts/check-ai-recovery-final.js",
+          "Update package.json with check:ai-recovery-final"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider dispatch was enabled.",
+          "Confirm no tool dispatch was enabled.",
+          "Confirm no project mutation was enabled and no projects/** files changed.",
+          "Confirm no DB writes or migrations were added.",
+          "Confirm no deploy/release action was enabled.",
+          "Confirm DemoApp is not exposed in full Command Center.",
+          "Confirm primary UX does not show raw private/project IDs.",
+          "Confirm no fake working recovery action was introduced."
+        ],
+        "gitCommands": [
+          "git add scripts/check-ai-recovery-final.js reports/ai-recovery-final-report.md docs/architecture/P63_AI_INTERACTION_SNAPSHOT_RECOVERY_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json reports/os-phase-status-report.md package.json contracts/os-roadmap/p63-execution-contracts.json",
+          "git commit -m \"feat(nexus): implement p63-7 P63.7\"",
+          "git push origin HEAD"
+        ]
+      },
+      "acceptanceCriteria": [
+        "All P63 subphase checkers pass with command output.",
+        "Command Center validation passes without DemoApp full exposure or primary raw IDs.",
+        "P63 parent and P63.7 phase status are current and P64 is next.",
+        "Final report records validation evidence and remaining limitations."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p63-6-recovery-replay-resume-preview"
+      ],
+      "parentTaskId": "nexus-os-p63-6-recovery-replay-resume-preview",
+      "createdAt": "2026-05-17T20:00:00.000Z"
+    }
+  ]
+}

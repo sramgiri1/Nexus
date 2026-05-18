@@ -3,116 +3,170 @@
 **Status:** Planned NEXUS OS phase.
 **Track:** NEXUS_OS
 **Parent phase:** `P63`
+**Execution contracts:** `contracts/os-roadmap/p63-execution-contracts.json`
 **Next phase after closure:** `P64` Provider + Tool Dispatch Through Governance
 
-## Goal
+## Contract Rule
 
-P63 adds a governed recovery layer for AI-assisted work. It should make each
-important AI interaction inspectable, redacted, correlated, and recoverable
-without enabling provider dispatch, tool execution, worker execution, DB writes,
-project mutation, or release/deploy actions.
+P63 must be implemented from the task contracts in
+`contracts/os-roadmap/p63-execution-contracts.json`. Those contracts are the
+source of truth for starting branch, expected base commit, allowed files,
+forbidden files, exact files/modules, expected exports/schemas/data shapes,
+narrow scope, safety rules, reuse checks, Command Center UX, theme handling,
+Playwright coverage, checker updates, docs, phase status updates, validation
+commands, final safety checks, git commands, and final response checklists.
 
-## Non-goals
+Do not implement a P63 subphase from this document alone. Run
+`npm run check:p63-execution-plan` before and after subphase edits.
 
-- No live provider calls.
+Each subphase must stay independently commit-ready. If the exact files/modules
+list grows beyond the implementation-control limit, split the subphase before
+coding.
+
+## Global Safety Boundary
+
+- No provider dispatch.
 - No tool dispatch.
 - No worker execution or task reruns.
-- No durable DB-backed runtime writes.
-- No automatic rollback, restore, or mutation.
-- No private project source changes unless a later governed project phase allows
-  them.
+- No project mutation.
+- No DB writes or migrations.
+- No release/deploy action.
+- No DemoApp exposure in full Command Center.
+- No project/private raw IDs in primary UX.
+- No fake working recovery actions.
+- No duplicate helpers when an existing helper can be reused.
+- No stale phase status after validation.
 
-## Subphases
+## Subphase Sequence
 
 ### P63.1 Snapshot Contract + Redaction Policy
 
-Define the snapshot envelope used to describe AI interactions. The contract
-should include correlation IDs, scope, actor, command intent, prompt summary,
-response summary, tool-preview references, approval posture, evidence links,
-redaction level, and recovery eligibility.
+Narrow scope: implement only the snapshot envelope, redaction levels, recovery
+eligibility fields, and public-safe fixtures.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-1-snapshot-contract-redaction-policy`
 
-- snapshot schema
-- redaction and public-safety policy
-- fixture records for safe validation
-- checker for schema and policy conformance
+Primary validation:
+
+- `npm run check:ai-snapshot-contract`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `npm run check:public-safety`
+- `npm run check:format-readability`
+- `git diff --check`
 
 ### P63.2 Interaction Capture Points
 
-Map where NEXUS should emit snapshot-ready records across existing preview
-surfaces.
+Narrow scope: map existing preview surfaces that can produce snapshot-ready
+records and add pure adapter functions for local fixtures only.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-2-interaction-capture-points`
 
-- capture map for command interface, mission composer, worker queue, tool
-  governance previews, approvals, and activity records
-- adapter plan for converting existing local preview records into snapshot
-  records
-- explicit exclusions for private payloads and secrets
+Primary validation:
+
+- `npm run check:ai-snapshot-contract`
+- `npm run check:ai-interaction-capture`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `npm run check:public-safety`
+- `git diff --check`
 
 ### P63.3 Recovery Point Model
 
-Define how snapshots become recovery points and what kind of continuation they
-support.
+Narrow scope: define recovery point shape, parent-child linkage, supersession,
+failure classification, and resumability flags from redacted snapshots.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-3-recovery-point-model`
 
-- recovery point schema
-- parent-child and supersession model
-- failure-state classification
-- resumability flags such as `inspect_only`, `resume_plan_available`, and
-  `not_recoverable`
+Primary validation:
+
+- `npm run check:ai-recovery-point-model`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `npm run check:state-machine`
+- `git diff --check`
 
 ### P63.4 Snapshot Store + Retention Preview
 
-Create the local, preview-only storage contract for snapshots and recovery
-points.
+Narrow scope: add local preview storage contracts, retention rules, pruning
+previews, and safe fixture data for snapshots and recovery points.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-4-snapshot-store-retention-preview`
 
-- file-backed preview store contract
-- retention, pruning, and export rules
-- redacted sample dataset
-- no DB primary runtime dependency
+Primary validation:
+
+- `npm run check:ai-snapshot-store`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `npm run check:public-safety`
+- `git diff --check`
 
 ### P63.5 Command Center Recovery UX
 
-Expose snapshots and recovery points in Command Center as an inspection surface.
+Narrow scope: add an inspection-only Recovery surface showing redacted
+snapshots, recovery posture, trace links, and disabled action previews.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-5-command-center-recovery-ux`
 
-- Recovery page or tab
-- snapshot list, detail, and trace correlation views
-- recovery posture badges
-- disabled action previews for restore, replay, and resume
+Primary validation:
+
+- `npm run check:command-center-recovery-ux`
+- `npm run check:command-center-ux`
+- `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `git diff --check`
 
 ### P63.6 Recovery Replay / Resume Preview
 
-Build deterministic previews that explain what NEXUS would need to resume from a
-recovery point.
+Narrow scope: build deterministic plan previews that explain replay/resume
+requirements, missing context, blocked actions, and next safe operator choices.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-6-recovery-replay-resume-preview`
 
-- replay-plan builder
-- resume-plan builder
-- missing-context and blocked-action explanations
-- no execution side effects
+Primary validation:
+
+- `npm run check:ai-replay-resume-preview`
+- `npm run check:command-center-recovery-ux`
+- `npm run check:p63-execution-plan`
+- `npm run check:os-phase-status`
+- `npm run check:public-safety`
+- `git diff --check`
 
 ### P63.7 Recovery Tests + Docs + Final Validation
 
-Close P63 with validation, docs, and roadmap status updates.
+Narrow scope: run final P63 validation, close the parent phase only with
+evidence, and prepare P64 as next without enabling P64 behavior.
 
-Deliverables:
+Required implementation contract:
+`nexus-os-p63-7-recovery-tests-docs-final-validation`
 
-- contract and fixture checks
-- Command Center UX checks
-- docs update
-- OS phase status update
-- final validation report
+Primary validation:
+
+- `npm run check:ai-snapshot-contract`
+- `npm run check:ai-interaction-capture`
+- `npm run check:ai-recovery-point-model`
+- `npm run check:ai-snapshot-store`
+- `npm run check:command-center-recovery-ux`
+- `npm run check:ai-replay-resume-preview`
+- `npm run check:ai-recovery-final`
+- `npm run check:p63-execution-plan`
+- `npm run check:command-center-ux`
+- `npm run check:os-phase-status`
+- `npm run check:public-safety`
+- `npm run check:format-readability`
+- `cd dashboard && npm run build && npm run test:unit && npm run test:pages`
+- `git diff --check`
 
 ## Completion Standard
 
-P63 is complete when NEXUS can show redacted AI interaction snapshots, explain
-available recovery points, and preview replay/resume plans without executing any
-runtime action.
+P63 is complete only when every P63 subphase contract has real validation
+evidence, P63 parent and P63.7 phase status are current, P64 remains planned,
+and the final response checklist confirms no forbidden runtime capability was
+enabled.
