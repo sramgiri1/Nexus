@@ -2855,10 +2855,42 @@ describe("circle membership management", () => {
     await app.close();
   });
 
-  test("POST /circles/:id/recipients lets an admin add another care recipient after upgrade intent", async () => {
+  test("POST /circles/:id/recipients rejects add-receiver intent without an active premium receiver", async () => {
     const app = await buildApp(buildDb({
       users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
       circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
+    }));
+
+    const res = await app.inject({
+      method: "POST",
+      url: "/circles/c1/recipients",
+      headers: HDR,
+      payload: { userId: "u1", name: "Jane Doe", relationship: "Spouse", premiumIntent: "ADD_RECEIVER" },
+    });
+
+    assert.equal(res.statusCode, 402);
+    assert.equal(res.json().code, "CARE_RECEIVER_LIMIT_REQUIRES_PREMIUM");
+    await app.close();
+  });
+
+  test("POST /circles/:id/recipients lets an admin add another care recipient after active premium", async () => {
+    const app = await buildApp(buildDb({
+      users: [{ id: "u1", email: "admin@test.com", name: "Admin" }],
+      circles: [{ id: "c1", name: "Alpha", recipientName: "John Doe", archiveAfterDays: 7 }],
+      recipientEntitlements: [{
+        id: "cre1",
+        recipientId: "cr1",
+        status: "ACTIVE",
+        source: "APP_STORE",
+        startsAt: new Date("2026-04-01T00:00:00.000Z"),
+        expiresAt: new Date("2026-07-01T00:00:00.000Z"),
+        appleOriginalTransactionId: "otx-add-receiver",
+        appleProductId: "com.careloop.ios.premium.monthly",
+        purchasedById: "u1",
+        createdAt: new Date("2026-04-01T00:00:00.000Z"),
+        updatedAt: new Date("2026-04-01T00:00:00.000Z"),
+      }],
       members: [{ id: "m1", userId: "u1", circleId: "c1", role: "ADMIN" }],
     }));
 

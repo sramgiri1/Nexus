@@ -557,7 +557,7 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["Latest request from Bianca Backup."].exists)
         XCTAssertTrue(app.staticTexts["David"].exists)
         XCTAssertTrue(app.staticTexts["Premium plan active"].waitForExistence(timeout: 3))
-        XCTAssertTrue(app.staticTexts["Basic plan"].exists)
+        XCTAssertTrue(app.staticTexts["Free plan"].exists)
         XCTAssertTrue(app.buttons["Upgrade David"].exists)
         XCTAssertFalse(app.buttons["premium-request-r2"].exists)
     }

@@ -535,8 +535,15 @@ export default async function circles(app) {
       return reply.code(400).send({ error: "name is required" });
     }
 
-    const recipientCount = await db.careRecipient.count({ where: { circleId: req.params.id } });
-    if (recipientCount >= 1 && premiumIntent !== "ADD_RECEIVER") {
+    const existingRecipients = await db.careRecipient.findMany({
+      where: { circleId: req.params.id },
+      include: { entitlement: true },
+    });
+    const recipientCount = existingRecipients.length;
+    const hasPremiumReceiver = existingRecipients.some((recipient) =>
+      receiverEntitlementCapabilities(recipient.entitlement).hasPremium,
+    );
+    if (recipientCount >= 1 && (premiumIntent !== "ADD_RECEIVER" || !hasPremiumReceiver)) {
       return reply.code(402).send({
         error: "Upgrade is required to add another care receiver",
         code: "CARE_RECEIVER_LIMIT_REQUIRES_PREMIUM",

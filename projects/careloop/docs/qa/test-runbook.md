@@ -63,6 +63,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | StoreKit product metadata | Backend entitlement metadata test; `xcodebuild build-for-testing`; focused iOS unit coverage in `CareLoopTests/SubscriptionManagerProductIdTests` for product IDs, fallback prices, and local StoreKit fixture parity |
 | Premium restore and entitlement refresh | `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanManagePremiumReceiverPlan` verifies the receiver-scoped restore CTA; purchase and restore reuse the shared receiver entitlement sync helper |
 | Premium billing retry and refund states | Backend premium entitlement regression; `xcodebuild build-for-testing`; focused iOS model `test_careRecipient_exposesBillingRetryAndRefundedPremiumAsLockedButVisible`; focused iOS UI `test_organizerSeesPremiumBillingAndRefundStates` |
+| Free receiver and premium capability gates | Backend cross-surface premium/free policy regression; `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 
 ## Notes
 
@@ -75,6 +76,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused StoreKit metadata validation can be run with backend test `validates premium entitlement sync source and App Store transaction identity` and Xcode unit test class `CareLoopTests/SubscriptionManagerProductIdTests`.
 - Focused Premium restore validation can be run with `xcodebuild build-for-testing` and Xcode UI test `test_organizerCanManagePremiumReceiverPlan`.
 - Focused Premium billing-state validation can be run with backend test `treats billing retry and refunded receiver entitlements as locked but visible`, Xcode model test `test_careRecipient_exposesBillingRetryAndRefundedPremiumAsLockedButVisible`, and Xcode UI test `test_organizerSeesPremiumBillingAndRefundStates`.
+- Focused free/premium gate validation can be run with backend tests for add-receiver intent, recurring schedules, insights, and caregiver limits, plus Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_insightsLockFreeReceiverBehindPremiumUpgrade`, and `test_organizerCanOpenCareReceiverManagement`.
 - Focused task-escalation validation can be run with Xcode UI test `test_taskDetailShowsEscalationStateForOverdueTask`.
 - Focused invite/access validation can be run with Xcode UI tests `test_organizerCanResendAndRevokePendingCaregiverInvite`, `test_careReceiverCanAcceptPendingInviteFromDirectory`, `test_caregiverAcceptsInviteWithNoReceiverAccessByDefault`, `test_organizerCanGrantAndRevokeCaregiverReceiverAccess`, and `test_inviteEdgeStatesDisableResponseActions`.
 - Focused receiver lifecycle, activation, and proxy-attestation validation can be run with backend receiver tests in `test/sprint2.test.js` and Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerCanAddEditAndRemoveCareReceiverLocally`, and `test_organizerChoosesReceiverActivationPath`.

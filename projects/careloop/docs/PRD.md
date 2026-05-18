@@ -1178,10 +1178,10 @@ After the receiver-scoped premium phase, implementation should continue in small
 1. StoreKit product metadata and local purchase fixtures. **Complete.**
 2. Restore purchases and entitlement refresh. **Complete.**
 3. Expired, revoked, billing retry, and refund states. **Complete.**
-4. Free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits.
+4. Free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits. **Complete.**
 5. Server-side App Store transaction verification readiness.
 
-**Tests:** StoreKit local metadata/parity tests, backend entitlement tests, iOS paywall/restore/expired UI tests, and release-blocker checklist for App Store Connect setup. D1 added StoreKit fixture parity coverage and backend unsupported-product rejection; iOS build-for-testing passed, while focused simulator unit execution was blocked by local simulator launch denial. D2 added a shared receiver entitlement sync helper for purchase/restore, management restore CTA coverage, `xcodebuild build-for-testing`, and focused UI validation in `CareLoopUITests/test_organizerCanManagePremiumReceiverPlan`. D3 added billing retry/refunded entitlement states, backend locked-but-visible regressions, iOS model coverage, and focused UI validation in `CareLoopUITests/test_organizerSeesPremiumBillingAndRefundStates`.
+**Tests:** StoreKit local metadata/parity tests, backend entitlement tests, iOS paywall/restore/expired UI tests, and release-blocker checklist for App Store Connect setup. D1 added StoreKit fixture parity coverage and backend unsupported-product rejection; iOS build-for-testing passed, while focused simulator unit execution was blocked by local simulator launch denial. D2 added a shared receiver entitlement sync helper for purchase/restore, management restore CTA coverage, `xcodebuild build-for-testing`, and focused UI validation in `CareLoopUITests/test_organizerCanManagePremiumReceiverPlan`. D3 added billing retry/refunded entitlement states, backend locked-but-visible regressions, iOS model coverage, and focused UI validation in `CareLoopUITests/test_organizerSeesPremiumBillingAndRefundStates`. D4 tightened add-receiver enforcement so client intent is not enough without an active premium receiver, and revalidated add-receiver, recurrence, insights, and caregiver-limit gates with backend plus Xcode UI coverage.
 
 #### Phase E — Reports And Insights
 
