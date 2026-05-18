@@ -707,7 +707,7 @@ struct ReceiverPremiumManagementView: View {
 
     private var premiumDateText: String {
         guard let expiresAt = recipient.premium.expiresAt else {
-            return recipient.hasPremium ? "Active until cancelled" : recipient.premium.status.rawValue
+            return recipient.hasPremium ? "Active until cancelled" : recipient.premiumStatusLabel
         }
         return expiresAt.formatted(.dateTime.month().day().year())
     }

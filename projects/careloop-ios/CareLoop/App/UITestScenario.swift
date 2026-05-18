@@ -10,6 +10,7 @@ enum UITestScenario: String {
     case recipientInvite = "recipient-invite"
     case caregiverInvite = "caregiver-invite"
     case inviteEdgeStates = "invite-edge-states"
+    case premiumBillingStates = "premium-billing-states"
 
     private static let launchArgument = "-careloop-ui-scenario"
     private static let pendingTaskLaunchArgument = "-careloop-ui-pending-task"
@@ -131,6 +132,48 @@ private struct UITestScenarioFixture {
             receiverUserId: nil,
             eligibleAssigneeIds: [organizer.id, backupCaregiver.id],
             premium: .free
+        )
+        let billingRetryRecipient = CareRecipient(
+            id: "r3",
+            name: "Elena",
+            relationship: "Aunt",
+            notes: nil,
+            isPrimary: false,
+            sortOrder: 2,
+            activationStatus: .active,
+            receiverUserId: nil,
+            eligibleAssigneeIds: [organizer.id, caregiver.id],
+            premium: CareRecipientPremium(
+                status: .billingRetry,
+                source: .appStore,
+                startsAt: Date().addingTimeInterval(-20 * 24 * 60 * 60),
+                expiresAt: Date().addingTimeInterval(10 * 24 * 60 * 60),
+                appleOriginalTransactionId: "ui-billing-retry-elena",
+                appleProductId: "com.careloop.ios.premium.monthly",
+                hasPremium: false,
+                capabilities: .free
+            )
+        )
+        let refundedRecipient = CareRecipient(
+            id: "r4",
+            name: "Robert",
+            relationship: "Uncle",
+            notes: nil,
+            isPrimary: false,
+            sortOrder: 3,
+            activationStatus: .active,
+            receiverUserId: nil,
+            eligibleAssigneeIds: [organizer.id, caregiver.id],
+            premium: CareRecipientPremium(
+                status: .refunded,
+                source: .appStore,
+                startsAt: Date().addingTimeInterval(-20 * 24 * 60 * 60),
+                expiresAt: Date().addingTimeInterval(10 * 24 * 60 * 60),
+                appleOriginalTransactionId: "ui-refunded-robert",
+                appleProductId: "com.careloop.ios.premium.monthly",
+                hasPremium: false,
+                capabilities: .free
+            )
         )
 
         let organizerTasks = [
@@ -321,8 +364,15 @@ private struct UITestScenarioFixture {
                 pendingTaskId: nil
             )
 
-        case .organizerHome, .taskComments, .inactiveReceiverTask:
-            let fixtureRecipients = scenario == .inactiveReceiverTask ? [dadRecipient] : [momRecipient, dadRecipient]
+        case .organizerHome, .taskComments, .inactiveReceiverTask, .premiumBillingStates:
+            let fixtureRecipients: [CareRecipient]
+            if scenario == .inactiveReceiverTask {
+                fixtureRecipients = [dadRecipient]
+            } else if scenario == .premiumBillingStates {
+                fixtureRecipients = [momRecipient, dadRecipient, billingRetryRecipient, refundedRecipient]
+            } else {
+                fixtureRecipients = [momRecipient, dadRecipient]
+            }
             let fixtureTasks = scenario == .inactiveReceiverTask ? [] : organizerTasks
             let circle = CareCircle(
                 id: "c1",

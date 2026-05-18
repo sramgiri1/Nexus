@@ -415,7 +415,7 @@ struct RecipientManagementView: View {
                         .fixedSize(horizontal: false, vertical: true)
                     HStack(spacing: 8) {
                         premiumStatusIcon(for: recipient)
-                        Text(recipient.hasPremium ? "Premium plan active" : "Basic plan")
+                        Text(recipient.premiumPlanSummaryLabel)
                             .font(.system(size: 12, weight: .bold, design: .rounded))
                             .foregroundStyle(recipient.hasPremium ? Color(red: 0.55, green: 0.22, blue: 0.97) : mid)
                         if recipient.hasPremium {

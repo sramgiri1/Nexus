@@ -308,6 +308,8 @@ enum CareRecipientEntitlementStatus {
   ACTIVE
   EXPIRED
   REVOKED
+  BILLING_RETRY
+  REFUNDED
 }
 
 enum CareRecipientEntitlementSource {

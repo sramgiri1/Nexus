@@ -3926,6 +3926,66 @@ describe("receiver-scoped access control", () => {
     assert.equal(manualEntitlement.statusCode, 200);
     assert.equal(manualEntitlement.json().premium.source, "MANUAL");
     assert.equal(manualEntitlement.json().premium.hasPremium, true);
+
+    const invalidManualStatus = await app.inject({
+      method: "PUT",
+      url: "/circles/c1/recipients/cr2/entitlement",
+      headers: adminHeaders,
+      payload: { userId: "u1", source: "MANUAL", status: "REFUNDED" },
+    });
+    assert.equal(invalidManualStatus.statusCode, 400);
+    assert.equal(invalidManualStatus.json().error, "Manual entitlements can only be synced as ACTIVE");
+    await app.close();
+  });
+
+  test("treats billing retry and refunded receiver entitlements as locked but visible", async () => {
+    const app = await buildApp(buildDb(scopedAccessSeed()));
+    const organizerHeaders = await authHeaders({ id: "u1", email: "organizer@test.com", name: "Organizer" });
+
+    for (const status of ["BILLING_RETRY", "REFUNDED"]) {
+      const entitlement = await app.inject({
+        method: "PUT",
+        url: "/circles/c1/recipients/cr2/entitlement",
+        headers: organizerHeaders,
+        payload: {
+          userId: "u1",
+          source: "APP_STORE",
+          status,
+          expiresAt: "2026-07-01T00:00:00.000Z",
+          appleOriginalTransactionId: `otx-${status.toLowerCase()}`,
+          appleProductId: "com.careloop.ios.premium.monthly",
+        },
+      });
+      assert.equal(entitlement.statusCode, 200);
+      assert.equal(entitlement.json().premium.status, status);
+      assert.equal(entitlement.json().premium.hasPremium, false);
+      assert.equal(entitlement.json().premium.capabilities.canUseInsights, false);
+
+      const tasks = await app.inject({
+        method: "GET",
+        url: "/circles/c1/tasks",
+        headers: organizerHeaders,
+      });
+      assert.equal(tasks.statusCode, 200);
+      assert.ok(tasks.json().some((task) => task.recipientId === "cr2"));
+
+      const blockedRecurring = await app.inject({
+        method: "POST",
+        url: "/circles/c1/tasks",
+        headers: organizerHeaders,
+        payload: {
+          title: `${status} plan medication`,
+          creatorId: "u1",
+          recipientId: "cr2",
+          assigneeId: "u5",
+          dueAt: "2026-05-01T18:00:00.000Z",
+          recurrence: { frequency: "DAILY" },
+        },
+      });
+      assert.equal(blockedRecurring.statusCode, 402);
+      assert.equal(blockedRecurring.json().error, "Recurring schedules require premium for this care receiver");
+    }
+
     await app.close();
   });
 

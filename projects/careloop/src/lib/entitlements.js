@@ -3,6 +3,8 @@ export const RECEIVER_ENTITLEMENT_STATUS = Object.freeze({
   ACTIVE: "ACTIVE",
   EXPIRED: "EXPIRED",
   REVOKED: "REVOKED",
+  BILLING_RETRY: "BILLING_RETRY",
+  REFUNDED: "REFUNDED",
 });
 
 export const RECEIVER_PREMIUM_LIMITS = Object.freeze({
@@ -20,6 +22,10 @@ export const RECEIVER_PREMIUM_APP_STORE_PRODUCT_IDS = Object.freeze(
 
 export function isSupportedReceiverPremiumProductId(productId) {
   return RECEIVER_PREMIUM_APP_STORE_PRODUCT_IDS.includes(productId);
+}
+
+export function isSupportedReceiverEntitlementStatus(status) {
+  return Object.values(RECEIVER_ENTITLEMENT_STATUS).includes(status);
 }
 
 export function isReceiverPremium(entitlement, now = new Date()) {

@@ -762,6 +762,25 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_organizerSeesPremiumBillingAndRefundStates() throws {
+        let app = launchApp(arguments: ["-careloop-ui-scenario", "premium-billing-states"])
+        let dashboard = app.scrollViews["organizer-dashboard"]
+
+        XCTAssertTrue(dashboard.waitForExistence(timeout: 5))
+        dashboard.swipeUp()
+        XCTAssertTrue(app.buttons["quick-action-care-receivers"].waitForExistence(timeout: 3))
+        app.buttons["quick-action-care-receivers"].tap()
+
+        XCTAssertTrue(app.staticTexts["Care Receiver Management"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Billing retry plan"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Premium billing needs attention")).firstMatch.exists)
+
+        app.scrollViews.firstMatch.swipeUp()
+        XCTAssertTrue(app.staticTexts["Refunded plan"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts.matching(NSPredicate(format: "label CONTAINS %@", "Premium was refunded")).firstMatch.exists)
+    }
+
+    @MainActor
     func test_caregiverHomeShowsScopedDashboard() throws {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "caregiver-home"])
 

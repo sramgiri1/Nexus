@@ -126,13 +126,17 @@ struct CareRecipient: Identifiable, Codable, Hashable {
     var premiumStatusLabel: String {
         if premium.hasPremium { return "Premium" }
         if premium.status == .revoked { return "Revoked" }
+        if premium.status == .billingRetry { return "Billing retry" }
+        if premium.status == .refunded { return "Refunded" }
         if hasExpiredPremium { return "Expired" }
         return "Free"
     }
 
     var premiumStatusIconName: String {
         if premium.hasPremium { return "crown.fill" }
-        if premium.status == .revoked || hasExpiredPremium { return "exclamationmark.triangle.fill" }
+        if premium.status == .revoked || premium.status == .billingRetry || premium.status == .refunded || hasExpiredPremium {
+            return "exclamationmark.triangle.fill"
+        }
         return "crown"
     }
 
@@ -150,6 +154,12 @@ struct CareRecipient: Identifiable, Codable, Hashable {
         if premium.status == .revoked {
             return "Premium was revoked for this care receiver. Existing care history remains visible, but new premium actions are blocked."
         }
+        if premium.status == .billingRetry {
+            return "Premium billing needs attention for this care receiver. Existing care history remains visible, but new premium actions are blocked until billing recovers."
+        }
+        if premium.status == .refunded {
+            return "Premium was refunded for this care receiver. Existing care history remains visible, but new premium actions are blocked."
+        }
         if hasExpiredPremium {
             if let expiresAt = premium.expiresAt {
                 return "Premium expired on \(expiresAt.formatted(.dateTime.month().day().year())). Existing care history remains visible, but new premium actions are blocked."
@@ -157,6 +167,10 @@ struct CareRecipient: Identifiable, Codable, Hashable {
             return "Premium expired for this care receiver. Existing care history remains visible, but new premium actions are blocked."
         }
         return "Basic tasks and reminders only. Upgrade this care receiver to unlock recurring schedules, insights, and unlimited caregivers."
+    }
+
+    var premiumPlanSummaryLabel: String {
+        hasPremium ? "Premium plan active" : "\(premiumStatusLabel) plan"
     }
 
     var caregiverAccessSummary: String {
@@ -255,6 +269,8 @@ enum CareRecipientEntitlementStatus: String, Codable {
     case active = "ACTIVE"
     case expired = "EXPIRED"
     case revoked = "REVOKED"
+    case billingRetry = "BILLING_RETRY"
+    case refunded = "REFUNDED"
 }
 
 enum CareRecipientEntitlementSource: String, Codable {

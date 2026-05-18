@@ -3,7 +3,9 @@ import { assertRequestAdmin, assertRequestMember, logEvent, requireAuthenticated
 import { normalizeEmail } from "../lib/auth.js";
 import { activationForAcceptedReceiver, activationForProxyReceiver } from "../lib/receiver-state.js";
 import {
+  RECEIVER_ENTITLEMENT_STATUS,
   isSupportedReceiverPremiumProductId,
+  isSupportedReceiverEntitlementStatus,
   maxCaregiversForReceiver,
   receiverEntitlementCapabilities,
   receiverEntitlementSummary,
@@ -31,6 +33,7 @@ const invitationInclude = {
 const MAX_CIRCLES_PER_USER = 3;
 const INVITATION_EXPIRES_AFTER_DAYS = 14;
 const ENTITLEMENT_SOURCES = new Set(["APP_STORE", "MANUAL"]);
+const ACTIVE_ENTITLEMENT_STATUSES = new Set([RECEIVER_ENTITLEMENT_STATUS.ACTIVE]);
 const PREMIUM_REQUEST_VISIBLE_DAYS = 7;
 
 export default async function circles(app) {
@@ -679,6 +682,7 @@ export default async function circles(app) {
     const {
       userId,
       source,
+      status,
       expiresAt,
       appleOriginalTransactionId,
       appleProductId,
@@ -698,6 +702,13 @@ export default async function circles(app) {
     if (normalizedSource === "APP_STORE" && !isSupportedReceiverPremiumProductId(appleProductId)) {
       return reply.code(400).send({ error: "Unsupported App Store premium product" });
     }
+    const normalizedStatus = status ?? RECEIVER_ENTITLEMENT_STATUS.ACTIVE;
+    if (!isSupportedReceiverEntitlementStatus(normalizedStatus)) {
+      return reply.code(400).send({ error: "status must be a supported receiver entitlement status" });
+    }
+    if (normalizedSource === "MANUAL" && !ACTIVE_ENTITLEMENT_STATUSES.has(normalizedStatus)) {
+      return reply.code(400).send({ error: "Manual entitlements can only be synced as ACTIVE" });
+    }
 
     const recipient = await db.careRecipient.findFirst({
       where: { id: req.params.recipientId, circleId: req.params.id },
@@ -715,7 +726,7 @@ export default async function circles(app) {
 
     const updatedRecipient = await db.$transaction(async (tx) => {
       const payload = {
-        status: "ACTIVE",
+        status: normalizedStatus,
         source: normalizedSource,
         startsAt: recipient.entitlement?.startsAt ?? new Date(),
         expiresAt: expirationDate,
@@ -745,7 +756,7 @@ export default async function circles(app) {
           actorId: authenticatedUserId,
           payload: {
             recipientId: recipient.id,
-            entitlementStatus: "ACTIVE",
+            entitlementStatus: normalizedStatus,
             appleProductId: appleProductId ?? null,
           },
         },

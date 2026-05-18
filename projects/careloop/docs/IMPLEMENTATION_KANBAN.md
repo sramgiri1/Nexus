@@ -16,19 +16,18 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-D3 is next: cover expired, revoked, billing retry, and refund states.
+D4 is next: enforce free-one-receiver policy consistently across add receiver, recurrence, insights, and caregiver limits.
 
 ## Ready
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D3 | Cover expired, revoked, billing retry, and refund states. | Backend entitlement states; iOS paywall/locks. | Backend entitlement tests; iOS UI state fixtures. | Demo already has expired/revoked concepts; refresh as needed. | Planned |
+| D4 | Enforce free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits. | Backend entitlement policy; iOS locks across receiver/task/insight/access surfaces. | Cross-surface backend tests; iOS UI lock tests. | Demo should show free vs premium contrast. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| D4 | Enforce free-one-receiver rule across add receiver, recurrence, insights, and caregiver limits. | Backend entitlement policy; iOS locks across receiver/task/insight/access surfaces. | Cross-surface backend tests; iOS UI lock tests. | Demo should show free vs premium contrast. | Planned |
 | D5 | Prepare server-side App Store transaction verification. | Backend billing adapter; environment config; docs. | Adapter unit tests with signed fixture responses; release checklist. | No local demo dependency. | Planned |
 | E1 | Receiver adherence summary. | Backend insights aggregation; iOS Insights. | Backend aggregation tests; iOS report fixture. | Demo reports should show useful adherence numbers. | Planned |
 | E2 | Missed and overdue task trends. | Backend insights aggregation; iOS charts/cards. | Backend trend tests; iOS report fixture. | Demo reports should include missed/overdue contrast. | Planned |
@@ -69,6 +68,7 @@ D3 is next: cover expired, revoked, billing retry, and refund states.
 | C5 | Receiver removal confirmation and blocked delete states. | Backend receiver-delete regression tests; Xcode UI `test_organizerCanAddEditAndRemoveCareReceiverLocally` confirms destructive removal and `test_organizerSeesBlockedCareReceiverRemovalReason` verifies task-preservation copy. |
 | D1 | StoreKit product metadata and local purchase fixtures. | Centralized iOS product metadata, paywall fallback prices aligned to `CareLoop.storekit`, backend unsupported App Store product rejection, backend entitlement metadata regression, and `xcodebuild build-for-testing` after StoreKit parity unit-test additions. |
 | D2 | Restore purchases and entitlement refresh hardening. | Shared iOS receiver entitlement sync helper for purchase/restore, management restore CTA syncs restored active transactions to the selected receiver, `xcodebuild build-for-testing`, and focused Xcode UI `test_organizerCanManagePremiumReceiverPlan`. |
+| D3 | Expired, revoked, billing retry, and refund states. | Added backend/iOS receiver entitlement states for billing retry and refunded, kept locked-but-visible policy centralized in entitlement capabilities, added Prisma migration, backend entitlement regressions, iOS model coverage, and focused Xcode UI `test_organizerSeesPremiumBillingAndRefundStates`. |
 
 ## Blocked / External Setup
 

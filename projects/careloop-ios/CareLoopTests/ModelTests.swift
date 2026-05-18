@@ -189,6 +189,39 @@ final class CareRecipientPremiumTests: XCTestCase {
         XCTAssertFalse(ReceiverPremiumPolicy.supportsInsights(for: recipient))
         XCTAssertFalse(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))
     }
+
+    func test_careRecipient_exposesBillingRetryAndRefundedPremiumAsLockedButVisible() {
+        let statuses: [(CareRecipientEntitlementStatus, String, String)] = [
+            (.billingRetry, "Billing retry", "billing needs attention"),
+            (.refunded, "Refunded", "was refunded"),
+        ]
+
+        for (status, label, detail) in statuses {
+            let recipient = CareRecipient(
+                id: "r1",
+                name: "Maya",
+                premium: CareRecipientPremium(
+                    status: status,
+                    source: .appStore,
+                    startsAt: Date(timeIntervalSince1970: 0),
+                    expiresAt: Date(timeIntervalSince1970: 3_600),
+                    appleOriginalTransactionId: "otx-1",
+                    appleProductId: "com.careloop.ios.premium.monthly",
+                    hasPremium: false,
+                    capabilities: .free
+                )
+            )
+
+            XCTAssertFalse(recipient.hasPremium)
+            XCTAssertEqual(recipient.premiumStatusLabel, label)
+            XCTAssertEqual(recipient.premiumPlanSummaryLabel, "\(label) plan")
+            XCTAssertEqual(recipient.premiumStatusIconName, "exclamationmark.triangle.fill")
+            XCTAssertTrue(recipient.premiumStatusDetail.contains(detail))
+            XCTAssertTrue(recipient.premiumStatusDetail.contains("Existing care history remains visible"))
+            XCTAssertFalse(ReceiverPremiumPolicy.supportsInsights(for: recipient))
+            XCTAssertFalse(ReceiverPremiumPolicy.supportsRecurringSchedules(for: recipient))
+        }
+    }
 }
 
 // MARK: — Sprint 2: AppState push notification state
