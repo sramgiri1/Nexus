@@ -697,6 +697,25 @@ final class CareLoopUITests: XCTestCase {
     }
 
     @MainActor
+    func test_taskDetailBlocksActionsForInvitedReceiver() throws {
+        let app = launchApp(arguments: [
+            "-careloop-ui-scenario", "organizer-home",
+            "-careloop-ui-pending-task", "t7",
+            "-careloop-ui-pending-circle", "c1"
+        ])
+
+        XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.buttons["task-card-t7"].waitForExistence(timeout: 3))
+        app.buttons["task-card-t7"].tap()
+
+        XCTAssertTrue(app.scrollViews["task-detail-screen"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Task actions are blocked"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["David must accept the invite or be proxy activated before new task actions are available."].waitForExistence(timeout: 3))
+        XCTAssertFalse(app.buttons["task-detail-edit-button"].exists)
+        XCTAssertFalse(app.buttons["task-detail-delete-button"].exists)
+    }
+
+    @MainActor
     func test_taskCommentsCanBeAddedAndDeleted() throws {
         let app = launchApp(arguments: [
             "-careloop-ui-scenario", "task-comments",

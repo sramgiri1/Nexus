@@ -122,7 +122,10 @@ struct TaskDetailView: View {
     }
 
     private var selectedRecipientModel: CareRecipient? {
-        activeRecipients.first(where: { $0.id == recipientId }) ?? activeRecipients.first
+        let recipients = appState.activeCircle?.recipients ?? []
+        return recipients.first(where: { $0.id == recipientId })
+            ?? task.recipient
+            ?? activeRecipients.first
     }
 
     private var recurrenceLocked: Bool {
@@ -149,6 +152,9 @@ struct TaskDetailView: View {
         ScrollView(showsIndicators: false) {
             VStack(spacing: 14) {
                 titleCard
+                if isTaskBlocked {
+                    blockedTaskCard
+                }
                 modeToggle.disabled(!canEditContent)
 
                 if taskMode == .once {
@@ -163,11 +169,11 @@ struct TaskDetailView: View {
                     }
                 }
 
-                if canSnoozeReminder {
+                if !isTaskBlocked && canSnoozeReminder {
                     snoozeCard
                 }
 
-                if canChangeStatus { statusCard }
+                if !isTaskBlocked && canChangeStatus { statusCard }
 
                 if activeRecipients.count != 1 || activeRecipients.isEmpty {
                     recipientCard.disabled(!(canChangeRecipient && isEditing))
@@ -178,11 +184,11 @@ struct TaskDetailView: View {
                 }
                 notesCard.disabled(!canEditContent)
 
-                if detailPresentation.permissions.canComment {
+                if !isTaskBlocked && detailPresentation.permissions.canComment {
                     commentsLink
                 }
 
-                if canDelete { deleteButton }
+                if !isTaskBlocked && canDelete { deleteButton }
 
                 if let error {
                     Text(error)
@@ -208,7 +214,7 @@ struct TaskDetailView: View {
                         .fontWeight(.semibold)
                         .disabled(cannotSave)
                         .accessibilityIdentifier("task-detail-save-button")
-                } else if canEdit {
+                } else if canEdit && !isTaskBlocked {
                     Button("Edit") { isEditing = true }
                         .fontWeight(.semibold)
                         .accessibilityIdentifier("task-detail-edit-button")
@@ -257,6 +263,27 @@ struct TaskDetailView: View {
             .background(card, in: RoundedRectangle(cornerRadius: 14, style: .continuous))
             .disabled(!canEditContent)
             .accessibilityIdentifier("task-detail-title-field")
+    }
+
+    private var blockedTaskCard: some View {
+        CardShell {
+            HStack(alignment: .top, spacing: 12) {
+                Image(systemName: "lock.trianglebadge.exclamationmark.fill")
+                    .font(.system(size: 20, weight: .semibold))
+                    .foregroundStyle(.orange)
+                    .frame(width: 28)
+                VStack(alignment: .leading, spacing: 5) {
+                    Text("Task actions are blocked")
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
+                    Text(detailPresentation.blockedReason ?? "This task cannot be changed right now.")
+                        .font(.system(size: 13, weight: .medium, design: .rounded))
+                        .foregroundStyle(.secondary)
+                        .fixedSize(horizontal: false, vertical: true)
+                }
+            }
+            .padding(16)
+        }
+        .accessibilityIdentifier("task-detail-blocked-card")
     }
 
     // MARK: – Mode toggle
@@ -785,6 +812,7 @@ struct TaskDetailView: View {
 
     private var cannotSave: Bool {
         loading
+        || isTaskBlocked
         || (isEditing && (
             title.trimmingCharacters(in: .whitespaces).isEmpty
             || recipientId.isEmpty
@@ -888,7 +916,11 @@ struct TaskDetailView: View {
     }
 
     private var canEditContent: Bool {
-        canEdit && isEditing
+        canEdit && isEditing && !isTaskBlocked
+    }
+
+    private var isTaskBlocked: Bool {
+        detailPresentation.blockedReason != nil
     }
 
     private var shouldPromptForSeriesScope: Bool {

@@ -195,6 +195,23 @@ private struct UITestScenarioFixture {
                 assignee: organizer,
                 capabilities: CareTaskCapabilities(canEdit: true, canDelete: true, canAssign: true, canChangeRecipient: true, canChangeStatus: true, canMarkDone: true, canSkip: true, canComment: true)
             ),
+            CareTask(
+                id: "t7",
+                title: "Set up Dad care plan",
+                notes: nil,
+                dueAt: Date().addingTimeInterval(4 * 60 * 60),
+                status: .pending,
+                priority: .normal,
+                completedAt: nil,
+                archivedAt: nil,
+                circleId: "c1",
+                recipientId: dadRecipient.id,
+                recipient: dadRecipient,
+                creatorId: organizer.id,
+                assigneeId: organizer.id,
+                assignee: organizer,
+                capabilities: CareTaskCapabilities(canEdit: true, canDelete: true, canAssign: true, canChangeRecipient: true, canChangeStatus: true, canMarkDone: true, canSkip: true, canComment: true)
+            ),
         ]
 
         switch scenario {
