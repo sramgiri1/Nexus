@@ -2911,4 +2911,46 @@ test.describe("Command Center route-wide UX", () => {
 
     expect(errors).toEqual([]);
   });
+
+  test("Project Shipping route renders readiness without enabling export", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/shipping");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Project Shipping");
+    await expect(page.locator("body")).toContainText("Shipping readiness is ready for operator review");
+    await expect(page.locator("body")).toContainText("Readiness does not unlock package creation or export execution.");
+    await expect(page.locator("body")).toContainText("No provider calls");
+    await expect(page.locator("body")).toContainText("reports/command-center-shipping-ux-report.md");
+
+    await page.getByRole("tab", { name: /Disabled Actions/i }).click();
+    await expect(page.getByRole("button", { name: /Disabled action: Create package/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Run export/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Ship handoff/i })).toBeDisabled();
+
+    await pickTheme(page, "dark");
+    let themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("dark");
+    expect(themeState.shellTheme).toBe("dark");
+
+    await pickTheme(page, "light");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.shellTheme).toBe("light");
+
+    await pickTheme(page, "system");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("system");
+    expect(["dark", "light"]).toContain(themeState.resolvedTheme);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("project_");
+    expect(body).not.toContain("private_");
+    expect(body).not.toContain("snapshotVersion");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("P71");
+
+    expect(errors).toEqual([]);
+  });
 });

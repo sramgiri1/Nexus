@@ -2332,10 +2332,10 @@
       "track": "NEXUS_OS",
       "order": 46,
       "group": "Planned OS Phases",
-      "summary": "Project shipping and export pipeline is in progress with shipping readiness gates defined and all shipping execution disabled.",
+      "summary": "Project shipping and export pipeline is in progress with Command Center shipping readiness complete and all shipping execution disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P71.5"
+      "nextPhase": "P71.6"
     },
     {
       "phaseId": "P72",
@@ -2681,8 +2681,8 @@
       "track": "NEXUS_OS",
       "order": 46.05,
       "group": "P71 Project Shipping Boundary + Export Pipeline",
-      "status": "planned",
-      "summary": "Expose project shipping readiness without runnable package or export actions.",
+      "status": "complete",
+      "summary": "Exposed project shipping readiness without runnable package or export actions.",
       "nextPhase": "P71.6",
       "commandCenterVisible": true
     },

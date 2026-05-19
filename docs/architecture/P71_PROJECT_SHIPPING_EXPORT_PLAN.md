@@ -122,7 +122,28 @@ Implementation:
 
 Expose project shipping readiness without runnable package or export actions.
 
-Status: planned.
+Status: complete. P71.5 exposes display-only project shipping readiness at
+`/command-center/shipping` using the existing Command Center route matrix, tab
+shell, page summary, cards, pills, disabled buttons, and theme controls. The
+primary UX shows what changed, shipping state, export readiness, next action,
+blockers, disabled reason, owner capability, evidence/activity locations,
+redaction posture, and cost impact without showing raw JSON, raw logs, raw
+evidence, private IDs, DemoApp, or internal phase labels.
+
+Implementation:
+
+- `dashboard/src/data/projectShippingReadiness.js` builds the display-safe
+  project shipping readiness view model from the P71.4 shipping readiness
+  gate.
+- `dashboard/src/data/commandCenterTabs.js` exports
+  `PROJECT_SHIPPING_TABS`.
+- `dashboard/src/data/commandCenterRoutes.js` wires the shipping route.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the shipping readiness
+  page with disabled package/export/shipping controls only.
+- `scripts/check-p715-command-center-shipping-ux.js` validates route wiring,
+  UX data shape, disabled actions, no private IDs, no DemoApp, no raw JSON
+  markers, no primary UX phase labels, and source-level disabled execution
+  posture.
 
 ### P71.6 Tests / Checkers / Docs
 
@@ -159,7 +180,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.4. Package creation, export execution, project
+P71 is in progress through P71.5. Package creation, export execution, project
 mutation, provider dispatch, tool execution, worker execution, DB writes,
 deploy execution, release execution, external network calls, and provider
 spend remain disabled.

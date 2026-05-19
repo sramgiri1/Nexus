@@ -184,6 +184,33 @@ export const DEPLOY_MONITORING_TABS = [
   },
 ];
 
+export const PROJECT_SHIPPING_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Shipping state, export readiness, blockers, and next action",
+    badge: "Preview",
+  },
+  {
+    id: "gate",
+    label: "Shipping Gate",
+    description: "Approval, redaction, evidence, and safety posture",
+    badge: "Read-only",
+  },
+  {
+    id: "evidence",
+    label: "Evidence",
+    description: "Evidence, activity, cost, and blockers",
+    badge: "Read-only",
+  },
+  {
+    id: "disabled",
+    label: "Disabled Actions",
+    description: "Package and export actions that remain unavailable",
+    badge: "Blocked",
+  },
+];
+
 export const WORKSPACE_TABS = [
   {
     id: "recommended",
