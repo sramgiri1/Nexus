@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P84.2
-- Generated at: 2026-05-19T22:00:55.626Z
+- Generated at: 2026-05-19T22:17:35.637Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bbb9050
+- Validation HEAD: 7f04370
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -38,7 +38,7 @@
 - Current state: founder_runtime_lite_ready
 - Next action: Use the Lite screen to collect founder answers, review PRD readiness, and inspect planned agent lanes.
 - Owner capability: NEXUS Founder Runtime Envelope
-- Agent lanes shown: 6
+- Agent lanes shown: 8
 - Cost impact: Local-only. No provider calls, worker runtime, deploy, package creation, network calls, or provider spend.
 ## Validation Commands
 

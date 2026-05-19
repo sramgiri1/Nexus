@@ -41,6 +41,38 @@ function defaultAnswers() {
   };
 }
 
+function normalizeFounderIdeaSummary(value = "") {
+  const trimmed = String(value || "").trim();
+  return trimmed || "Founder wants NEXUS to validate a startup idea and turn it into a governed business build.";
+}
+
+function inferAnswersFromFounderIdea(founderIdeaSummary = "", overrides = {}) {
+  const summary = normalizeFounderIdeaSummary(founderIdeaSummary);
+  const snakeGame = /snake|ios|iphone|app store|game/i.test(summary);
+  const inferred = snakeGame
+    ? {
+        targetCustomer: "casual iPhone players who want a fast arcade game",
+        problem: "classic Snake games are easy to find, but many feel low polish, overloaded with ads, or lack clear mobile-first controls",
+        currentAlternatives: "existing App Store snake games, browser games, and retro arcade bundles",
+        proposedSolution: "a clean SwiftUI and SpriteKit Snake game with responsive touch controls, score tracking, pause/restart states, and a focused App Store launch checklist",
+        businessModel: "free app with optional future cosmetic upgrade or ad-free paid version",
+        goToMarket: "App Store keyword positioning, short gameplay clips, and indie game launch posts",
+        constraints: "small scope, no backend, local build validation first, no provider spend, and no deploy until release admission is approved",
+        successCriteria: "playable MVP, passing game-state tests, clean iPhone layout, release checklist, and launch assets ready for review",
+      }
+    : {
+        ...defaultAnswers(),
+        problem: "the founder needs a feasibility read, PRD, and execution plan before spending build budget",
+        proposedSolution: "NEXUS turns the founder idea into a local PRD and maps it to governed agent workstreams",
+        successCriteria: "clear feasibility summary, complete PRD fields, owner lanes, blockers, validation gates, and a local build plan",
+      };
+  return {
+    ...inferred,
+    ...overrides,
+    founderIdea: summary,
+  };
+}
+
 function toDisplayName(value = "") {
   return String(value)
     .replace(/([a-z])([A-Z])/g, "$1 $2")
@@ -52,7 +84,7 @@ function toDisplayName(value = "") {
 }
 
 function buildAgentFlow(workstreamPlan) {
-  const selected = (workstreamPlan.workstreams || []).slice(0, 6);
+  const selected = workstreamPlan.workstreams || [];
   return selected.map((entry, index) => ({
     step: index + 1,
     lane: toDisplayName(entry.workstream),
@@ -68,7 +100,8 @@ function buildAgentFlow(workstreamPlan) {
 }
 
 export function buildFounderRuntimeEnvelope(input = {}) {
-  const answers = input.answers || defaultAnswers();
+  const founderIdeaSummary = normalizeFounderIdeaSummary(input.founderIdeaSummary);
+  const answers = input.answers || inferAnswersFromFounderIdea(founderIdeaSummary);
   const evidenceRefs = input.evidenceRefs || ["reports/p842-command-center-lite-report.md"];
   const activityRefs = input.activityRefs || ["reports/os-phase-status-report.md"];
   const admission = buildFounderRuntimeAdmission({
@@ -86,7 +119,7 @@ export function buildFounderRuntimeEnvelope(input = {}) {
     activityRefs,
   });
   const intakeEnvelope = createFounderIntakeSessionEnvelope({
-    founderIdeaSummary: input.founderIdeaSummary || "Founder wants NEXUS to validate a startup idea and turn it into a governed business build.",
+    founderIdeaSummary,
     answers,
     evidenceRefs,
     activityRefs,
@@ -118,14 +151,14 @@ export function buildFounderRuntimeEnvelope(input = {}) {
       readinessLabel: "Lite ready",
       chat: {
         title: "Chat with NEXUS",
-        prompt: nextQuestion.prompt,
+        prompt: `I understand the idea as: ${founderIdeaSummary}`,
         suggestedPrompts: [
+          "Build a simple iOS Snake game for the App Store",
           "Validate my startup idea",
-          "What do you need to understand first?",
           "Draft the PRD from what you know",
           "Show which agents will work on this",
         ],
-        nextAction: "Ask the next founder question and update the local PRD envelope.",
+        nextAction: nextQuestion.prompt || "Review the local PRD envelope and agent lanes.",
       },
       founderIntake: {
         answeredFields: intakeEnvelope.data.answerState.answeredFields,

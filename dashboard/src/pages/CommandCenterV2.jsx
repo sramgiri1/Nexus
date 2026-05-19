@@ -2510,9 +2510,17 @@ function buildAskNexusPreview(commandText, vm) {
   };
 }
 
-function buildLiteEnvelope() {
+const LITE_FOUNDER_IDEA_STORAGE_KEY = "nexus-lite-founder-idea";
+const DEFAULT_LITE_FOUNDER_IDEA = "I have a startup idea. Validate if it is feasible and tell me what you need next.";
+
+function getStoredLiteFounderIdea() {
+  if (typeof window === "undefined") return DEFAULT_LITE_FOUNDER_IDEA;
+  return window.localStorage.getItem(LITE_FOUNDER_IDEA_STORAGE_KEY) || DEFAULT_LITE_FOUNDER_IDEA;
+}
+
+function buildLiteEnvelope(founderIdeaSummary = DEFAULT_LITE_FOUNDER_IDEA) {
   return buildFounderRuntimeEnvelope({
-    founderIdeaSummary: "Founder wants NEXUS to validate a startup idea and turn it into a governed business build.",
+    founderIdeaSummary,
   }).data;
 }
 
@@ -2525,9 +2533,13 @@ function formatLiteFieldLabel(value = "") {
 }
 
 function CommandCenterLitePage() {
-  const [envelope] = useState(buildLiteEnvelope);
-  const [message, setMessage] = useState("I have a startup idea. Validate if it is feasible and tell me what you need next.");
+  const [message, setMessage] = useState(getStoredLiteFounderIdea);
+  const envelope = buildLiteEnvelope(message);
   const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
+
+  useEffect(() => {
+    window.localStorage.setItem(LITE_FOUNDER_IDEA_STORAGE_KEY, message);
+  }, [message]);
 
   return (
     <div className="ccv2-content ccv2-lite-page">
@@ -2632,6 +2644,9 @@ function AgentFlowPanel({ envelope }) {
         <div>
           <div className="ccv2-eyebrow">Agent Flow</div>
           <h3>How NEXUS puts agents into action</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            Idea: {envelope.prdDraft.fields?.founderIdea}
+          </div>
         </div>
         <span className="ccv2-pill ccv2-pill--disabled">Planning only</span>
       </div>
@@ -2662,7 +2677,8 @@ function AgentFlowPanel({ envelope }) {
 }
 
 function AgentFlowPage() {
-  const [envelope] = useState(buildLiteEnvelope);
+  const [message] = useState(getStoredLiteFounderIdea);
+  const envelope = buildLiteEnvelope(message);
   return (
     <div className="ccv2-content ccv2-lite-page">
       <div className="ccv2-page-head">

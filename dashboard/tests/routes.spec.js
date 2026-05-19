@@ -183,6 +183,15 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   expect(body).toContain("Provider/model calls, agent dispatch");
   expect(body).not.toContain("DemoApp");
   expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/);
+
+  await page.getByLabel("Founder message").fill("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).toContainText("casual iPhone players");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Legal");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Support");
+  await page.getByRole("link", { name: /Agent Flow/i }).click();
+  await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
   expect(errors).toEqual([]);
 });
 
