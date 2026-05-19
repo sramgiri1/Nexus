@@ -1283,7 +1283,7 @@ auth/session/user/workspace state, or spend provider budget.
 
 ## P83 - Explicit Runtime Admission Activation Contract
 
-P83 is in progress as the governed activation track for turning the Snake iOS
+P83 is complete as the governed activation track for turning the Snake iOS
 founder test into an admitted local build. It starts with a generated workspace
 root and keeps existing project files, DB writes, provider/tool/worker
 execution, deploy/release/package behavior, network calls, auth/session/user
@@ -1313,9 +1313,10 @@ P83.6 is complete. It aggregates the P83.1-P83.5 scripts, reports, docs,
 roadmap status, OS phase status, and Command Center coverage without adding new
 runtime behavior.
 
-Planned P83 subphases:
-
-- `P83.7` Final Validation
+P83.7 is complete. It closes final validation for the local Snake iOS activation
+track and records that simulator launch, signing, deploy, release, package
+creation, provider calls, worker dispatch, DB writes, network calls, and spend
+remain blocked until later explicit admission.
 
 The detailed plan lives in
 [`P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md`](P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md).

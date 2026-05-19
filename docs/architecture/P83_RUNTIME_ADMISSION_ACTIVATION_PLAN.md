@@ -95,7 +95,12 @@ Validation: `npm run check:p836-tests-checkers-docs`.
 Goal: close the local Snake iOS activation track and document remaining blocked
 runtime actions.
 
-Status: planned.
+Status: complete. P83.7 closes the local Snake iOS activation track. The final
+validation confirms local project admission, scaffold planning, generated file
+creation, local validation, Command Center build UX, tests/checkers/docs
+aggregation, and remaining blocked runtime actions.
+
+Validation: `npm run check:p837-final-validation`.
 
 ## Reuse Check
 

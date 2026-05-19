@@ -3672,14 +3672,16 @@
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e0b66c0",
-      "completedAt": "",
-      "summary": "P83 is in progress. Snake iOS local admission, scaffold, validation, Command Center UX, and aggregation are complete; final validation remains.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:25:22.828Z",
+      "summary": "Completed local Snake iOS activation: admitted generated workspace, scaffolded app, validated local build, surfaced Command Center state, and preserved blocked runtime actions.",
       "checksRun": [
+        "npm run check:p837-final-validation",
         "npm run check:p836-tests-checkers-docs",
         "npm run check:p835-command-center-build-ux",
+        "npm run check:p834-local-validation-harness",
         "npm run check:p83-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3687,10 +3689,10 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.6 is aggregation-only. P83.7 must close final validation and record remaining limitations.",
-        "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
+        "P83 completes local generated workspace activation only.",
+        "Simulator launch, signing, App Store/TestFlight, provider calls, worker dispatch, DB writes, deploy, release, package creation, network calls, existing project mutation, and provider spend remain blocked until later explicit admission."
       ],
-      "nextPhase": "P83.7",
+      "nextPhase": "P84",
       "commandCenterVisible": true
     },
     {
@@ -3852,21 +3854,47 @@
       "phaseId": "P83.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:25:22.828Z",
+      "summary": "Closed final validation for the local Snake iOS activation track.",
+      "checksRun": [
+        "npm run check:p837-final-validation",
+        "npm run check:p836-tests-checkers-docs",
+        "npm run check:p835-command-center-build-ux",
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.7 final validation does not enable deploy, release, package, provider, worker, DB, network, simulator, signing, or spend behavior."
+      ],
+      "nextPhase": "P84",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84",
+      "title": "Next Governed Runtime Admission Track",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Close the local Snake iOS activation track.",
+      "summary": "Placeholder handoff after P83 final validation. P84 is not implemented in this change.",
       "checksRun": [],
       "knownLimitations": [
-        "Not implemented yet."
+        "Not planned or implemented yet. Requires its own implementation-grade subphase contract before work starts."
       ],
-      "nextPhase": "P84",
+      "nextPhase": "",
       "commandCenterVisible": true
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.6",
-  "previousPhase": "P83.5",
-  "nextPhase": "P83.7"
+  "currentPhase": "P83.7",
+  "previousPhase": "P83.6",
+  "nextPhase": "P84"
 }

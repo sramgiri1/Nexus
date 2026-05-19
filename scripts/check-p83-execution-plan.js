@@ -56,7 +56,7 @@ addCheck("docs reference contract", plan.includes(CONTRACT_PATH));
 addCheck("docs list all subphases", P83_SUBPHASES.every((phaseId) => plan.includes(phaseId)));
 addCheck(
   "status advanced within P83",
-  statusById.get("P83")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P83")?.status)
     && statusById.get("P83.1")?.status === "complete"
     && validCurrentPhases.includes(status.currentPhase)
     && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),

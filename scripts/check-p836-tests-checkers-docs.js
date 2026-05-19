@@ -41,6 +41,11 @@ function addCheck(name, passed, details = "") {
 const packageJson = readJson("package.json");
 const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
+const validCurrentPhases = ["P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 const docs = readText("docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md");
 const roadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const contract = readText("contracts/os-roadmap/p83-execution-contracts.json");
@@ -50,7 +55,12 @@ const activationData = readText("dashboard/src/data/liveReadyActivation.js");
 addCheck("required P83 scripts registered", REQUIRED_SCRIPTS.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("required P83 reports exist", REQUIRED_REPORTS.every(fileExists));
 addCheck("P83 subphases complete through P83.5", P83_PHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
-addCheck("P83.6 status advanced", statusById.get("P83.6")?.status === "complete" && status.currentPhase === "P83.6" && status.nextPhase === "P83.7");
+addCheck(
+  "P83.6 status remains valid",
+  statusById.get("P83.6")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 addCheck("docs mark P83.1-P83.6 complete", ["P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6"].every((phaseId) => docs.includes(`${phaseId}`)) && docs.includes("Status: complete. P83.6"));
 addCheck("roadmap marks P83.6 complete", roadmap.includes("P83.6 is complete"));
 addCheck("contract references P83.6 checker", contract.includes("check:p836-tests-checkers-docs"));

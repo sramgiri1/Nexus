@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P83.6
-- Generated at: 2026-05-19T20:23:05.653Z
+- Generated at: 2026-05-19T20:25:32.946Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e0b66c0
+- Validation HEAD: 5fdca27
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -19,7 +19,7 @@
 | required P83 scripts registered | PASS |  |
 | required P83 reports exist | PASS |  |
 | P83 subphases complete through P83.5 | PASS |  |
-| P83.6 status advanced | PASS |  |
+| P83.6 status remains valid | PASS |  |
 | docs mark P83.1-P83.6 complete | PASS |  |
 | roadmap marks P83.6 complete | PASS |  |
 | contract references P83.6 checker | PASS |  |
