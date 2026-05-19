@@ -2628,7 +2628,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-contract-commit",
+      "commit": "c4b4047",
       "completedAt": "",
       "summary": "P64.8 has started as a contract-only code-mode runtime and lazy-loading split without enabling execution.",
       "checksRun": [
@@ -2652,7 +2652,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-contract-commit",
+      "commit": "c4b4047",
       "completedAt": "2026-05-19T00:45:00.000Z",
       "summary": "Defined implementation-grade P64.8 code-mode runtime and lazy-loading contracts, docs, checker, reports, and OS phase handoff without enabling execution.",
       "checksRun": [
