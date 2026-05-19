@@ -1162,7 +1162,7 @@
       "title": "Multi-Repo Workspace + Git/PR Lifecycle",
       "status": "complete",
       "branch": "arch/multi-repo-git-pr-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "296a443",
       "completedAt": "2026-05-15T13:56:14.504Z",
       "summary": "Completes dry-run multi-repo registry, ownership, dependency, git workflow, PR draft, review ingestion, merge gate, and rollback planning models.",
       "nextPhase": "P45"
@@ -1191,7 +1191,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scoped-memory-architecture",
-      "commit": "pending-final-commit",
+      "commit": "296a443",
       "completedAt": "2026-05-15T15:57:59.695Z",
       "summary": "Builds scoped memory architecture, safe memory stores, packet selection, access policy, freshness model, and read-only Memory Center.",
       "checksRun": [
