@@ -2009,8 +2009,10 @@ test.describe("Command Center route-wide UX", () => {
       await pickTheme(page, theme);
       await expect(page.locator(".ccv2-page-head__title")).toContainText("Enterprise Preview");
       await expect(page.locator("body")).toContainText("Founder intake");
+      await expect(page.locator("body")).toContainText("Founder-to-Business Path");
       await expect(page.locator("body")).toContainText("PRD preview");
       await expect(page.locator("body")).toContainText("Agent workplan");
+      await expect(page.locator("body")).toContainText("Business build");
       await expect(page.locator("body")).toContainText("Self-healing");
     }
 
@@ -2025,6 +2027,7 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Founder Q&A automation disabled");
     await expect(activeCommandTabPanel(page)).toContainText("PRD generation disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Agent dispatch disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Business build execution disabled");
     await expect(activeCommandTabPanel(page)).toContainText("Self-healing apply disabled");
 
     const body = await page.locator("body").innerText();

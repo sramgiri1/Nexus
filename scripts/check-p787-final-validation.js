@@ -81,6 +81,7 @@ addCheck("Command Center tabs preserved", tabsSource.includes("ENTERPRISE_PREVIE
 addCheck("Command Center renderer preserved", pageSource.includes("EnterprisePreviewPage") && pageSource.includes("buildEnterprisePreviewReadinessViewModel"));
 addCheck("Command Center test preserved", routeTests.includes("Enterprise Preview route renders readiness without runnable founder actions"));
 addCheck("Command Center theme coverage preserved", routeTests.includes('["dark", "light", "system"]') && routeTests.includes("pickTheme(page, theme)"));
+addCheck("founder to business path preserved", serializedReadiness.includes("Founder intake") && serializedReadiness.includes("Business build") && serializedReadiness.includes("Operating loop"));
 addCheck("Enterprise UX omits DemoApp/private ids/tokens", !serializedReadiness.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(serializedReadiness) && !/Bearer\s+|jwt|id_token|access_token/i.test(serializedReadiness));
 addCheck("Enterprise UX omits phase labels", !serializedReadiness.includes("P78"));
 addCheck("founder PRD agent healing disabled", !runtimeSources.includes("founderIntakeExecutionAllowed: true") && !runtimeSources.includes("autonomousQnaAllowed: true") && !runtimeSources.includes("prdGenerationAllowed: true") && !runtimeSources.includes("agentDispatchAllowed: true") && !runtimeSources.includes("selfHealingApplyAllowed: true"));

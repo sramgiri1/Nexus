@@ -2,9 +2,9 @@
 
 ## Metadata
 
-- Generated at: 2026-05-19T15:07:49.791Z
+- Generated at: 2026-05-19T15:11:25.895Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 9350261
+- Validation HEAD: 99e912d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
@@ -30,7 +30,7 @@
 - docs/architecture/TEST_SUITE_MANAGER.md:67:373
 - reports/p786-tests-checkers-docs-report.md:14:306
 - reports/p787-final-validation-report.md:15:306
-- reports/p787-final-validation-report.md:62:313
+- reports/p787-final-validation-report.md:63:313
 
 ## Failures
 
@@ -51,7 +51,7 @@
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:79 (334) — \| `deployment` \| `forge` \| `shepherd`, `core`, `swift`, `pixel` \| `warden` for secret or compliance impact \| task, handoff, approval \| `platform.deploy_plan`, `
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:91 (326) — \| `security` \| `warden` \| `forge`, `auditor`, `sentinel`, `synapse` \| `warden` \| verification, approval \| `security.secret_scan`, `verification.compliance_gate`
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:82 (316) — \| `code_quality` \| `auditor` \| `core`, `swift`, `pixel` as remediation owners \| `auditor` \| verification \| `verification.code_quality_gate` \| none for normal ve
-- reports/p787-final-validation-report.md:62 (313) — - Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worker execution, net
+- reports/p787-final-validation-report.md:63 (313) — - Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worker execution, net
 - reports/p786-tests-checkers-docs-report.md:14 (306) — - Does not enable founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worke
 - reports/p787-final-validation-report.md:15 (306) — - Does not enable founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worke
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:74 (302) — \| `design` \| `prism` \| `atlas`, `pixel`, `swift`, `canvas` \| `warden` when regulated copy or claims exist \| task, handoff \| `orchestration.plan_flow` until a de

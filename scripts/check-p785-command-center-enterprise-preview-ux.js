@@ -28,6 +28,7 @@ addCheck("founder PRD agent healing visible", ["Founder intake", "Q&A readiness"
 addCheck("disabled reason visible", serialized.includes("Enterprise Preview is display-only"));
 addCheck("blockers visible", Array.isArray(vm.blockers) && vm.blockers.length >= 6);
 addCheck("founder rows visible", Array.isArray(vm.founderRows) && vm.founderRows.length >= 4);
+addCheck("founder to business path visible", Array.isArray(vm.journeyRows) && vm.journeyRows.length >= 6 && serialized.includes("Business build"));
 addCheck("PRD rows visible", Array.isArray(vm.prdRows) && vm.prdRows.length >= 5);
 addCheck("workplan gates healing visible", vm.workplanRows.length >= 4 && vm.validationRows.length >= 4 && vm.healingRows.length >= 3);
 addCheck("disabled actions visible", Array.isArray(vm.disabledActions) && vm.disabledActions.length >= 5);
@@ -56,7 +57,7 @@ writeMarkdownReport(
     {
       title: "Command Center UX",
       body:
-        "- Enterprise Preview route shows founder intake, Q&A readiness, PRD preview, agent workplan, self-healing readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact.\n" +
+        "- Enterprise Preview route shows founder intake, Q&A readiness, PRD preview, agent workplan, business build lanes, self-healing readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact.\n" +
         "- Primary UX avoids raw output dumps, raw logs, raw policy dumps, raw tokens, raw private IDs, DemoApp leakage, internal phase labels, and runnable founder, PRD, agent, self-healing, or runtime actions.",
     },
     { title: "Result", body: failed.length === 0 ? "PASS" : `FAIL (${failed.length} failed)` },

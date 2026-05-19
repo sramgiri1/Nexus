@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P78.5
-- Generated at: 2026-05-19T15:06:40.854Z
+- Generated at: 2026-05-19T15:11:11.254Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 31b72b5
+- Validation HEAD: 99e912d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,6 +24,7 @@
 | disabled reason visible | PASS |  |
 | blockers visible | PASS |  |
 | founder rows visible | PASS |  |
+| founder to business path visible | PASS |  |
 | PRD rows visible | PASS |  |
 | workplan gates healing visible | PASS |  |
 | disabled actions visible | PASS |  |
@@ -39,7 +40,7 @@
 | package script registered | PASS |  |
 ## Command Center UX
 
-- Enterprise Preview route shows founder intake, Q&A readiness, PRD preview, agent workplan, self-healing readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact.
+- Enterprise Preview route shows founder intake, Q&A readiness, PRD preview, agent workplan, business build lanes, self-healing readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact.
 - Primary UX avoids raw output dumps, raw logs, raw policy dumps, raw tokens, raw private IDs, DemoApp leakage, internal phase labels, and runnable founder, PRD, agent, self-healing, or runtime actions.
 ## Result
 

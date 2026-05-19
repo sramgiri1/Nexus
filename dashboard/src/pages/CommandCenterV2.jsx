@@ -8413,6 +8413,12 @@ function EnterprisePreviewPage() {
                 </article>
               ))}
             </div>
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Founder-to-Business Path</div>
+              <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                {readiness.journeyRows.map((row) => <li key={row.label}>{row.label}: {row.executionState}</li>)}
+              </ul>
+            </div>
           </CommandTabPanel>
 
           <CommandTabPanel tabId="prd" activeTab={activeTab}>
