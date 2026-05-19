@@ -2794,10 +2794,10 @@
       "track": "NEXUS_OS",
       "order": 53,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "summary": "Continued P78 with preview-only PRD assembly records while runtime mutation remains disabled.",
+      "summary": "Continued P78 with preview-only agent workplan and self-healing readiness records while runtime mutation remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P78.4"
+      "nextPhase": "P78.5"
     },
     {
       "phaseId": "P78.1",
@@ -2838,8 +2838,8 @@
       "track": "NEXUS_OS",
       "order": 53.04,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "status": "planned",
-      "summary": "Planned agent workplan and self-healing preview records without dispatch or runtime execution.",
+      "status": "complete",
+      "summary": "Added preview-only agent workplan and self-healing records with agent dispatch, self-healing apply, project mutation, DB writes, provider execution, network calls, and spend disabled.",
       "nextPhase": "P78.5",
       "commandCenterVisible": true
     },

@@ -65,9 +65,10 @@ activity, owner capability, next action, and cost impact.
 
 Define agent workplan and self-healing preview records.
 
-Status: planned. P78.4 will add preview-only agent workplan records that
-capture owner capabilities, task lanes, validation gates, healing loops,
-blockers, evidence/activity references, and disabled dispatch/runtime state.
+Status: complete. P78.4 adds preview-only agent workplan records that capture
+owner capabilities, task lanes, validation gates, healing loops, blockers,
+evidence/activity references, disabled reason, cost impact, next action, and
+disabled dispatch/runtime/self-healing state.
 
 ### P78.5 Command Center Enterprise Preview UX
 
@@ -119,6 +120,15 @@ P78.2 validation:
 P78.3 validation:
 
 - `npm run check:p783`
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.4 validation:
+
+- `npm run check:p784`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

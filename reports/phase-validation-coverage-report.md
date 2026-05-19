@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T14:51:12.712Z
+- Generated at: 2026-05-19T14:53:56.717Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 54fa8de
+- Validation HEAD: 5ac7220
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -143,28 +143,23 @@
 | P77.5 validation coverage | PASS | 9 checkers, 1 reports |
 | P77.6 validation coverage | PASS | 19 checkers, 10 reports |
 | P77.7 validation coverage | PASS | 26 checkers, 19 reports |
-| P78 validation coverage | PASS | 8 checkers, 3 reports |
+| P78 validation coverage | PASS | 9 checkers, 4 reports |
 | P78.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P78.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P78.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P78.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P78.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P78.5 validation coverage | PASS | dedicated_checker, validation_report |
 | P78.6 validation coverage | PASS | 10 checkers, 10 reports |
 | P78.7 validation coverage | PASS | 19 checkers, 19 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P78; next=P78.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P78; next=P78.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P78.4 Agent Workplan / Self-Healing Preview Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P78.5 Command Center Enterprise Preview UX
   - status: planned
   - checkers: 0

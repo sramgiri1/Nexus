@@ -4542,11 +4542,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "54fa8de",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Continued P78 with preview-only PRD assembly records while runtime mutation remains disabled.",
+      "summary": "Continued P78 with preview-only agent workplan and self-healing readiness records while runtime mutation remains disabled.",
       "checksRun": [
-        "npm run check:p783",
+        "npm run check:p784",
         "npm run check:p78-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -4554,9 +4554,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P78.3 records PRD assembly previews only. PRD generation, project file writes, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+        "P78.4 records agent workplan and self-healing previews only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
       ],
-      "nextPhase": "P78.4",
+      "nextPhase": "P78.5",
       "commandCenterVisible": true
     },
     {
@@ -4631,13 +4631,22 @@
       "phaseId": "P78.4",
       "title": "Agent Workplan / Self-Healing Preview Model",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned agent workplan and self-healing preview records without dispatch or runtime execution.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added preview-only agent workplan and self-healing records with agent dispatch, self-healing apply, project mutation, DB writes, provider execution, network calls, and spend disabled.",
+      "checksRun": [
+        "npm run check:p784",
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78.4 records agent workplan and self-healing previews only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
       "nextPhase": "P78.5",
       "commandCenterVisible": true
     },
@@ -7577,5 +7586,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P78",
   "previousPhase": "P77",
-  "nextPhase": "P78.4"
+  "nextPhase": "P78.5"
 }
