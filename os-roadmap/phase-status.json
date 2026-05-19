@@ -4135,11 +4135,125 @@
       "phaseId": "P76",
       "title": "Tenant / Project Isolation",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Started P76 with implementation-grade tenant and project isolation contracts while tenant/project/access mutation remains disabled.",
+      "checksRun": [
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P76.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.1",
+      "title": "Execution Contract + Isolation Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Defined the P76 execution contract, tenant/project isolation safety boundary, validation checker, roadmap entries, and phase-status records.",
+      "checksRun": [
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.1 defines contracts and boundaries only. Tenant/project/access mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P76.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.2",
+      "title": "Tenant Boundary Contract",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned tenant and project isolation phase.",
+      "summary": "Planned preview-only tenant boundary records without tenant mutation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P76.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.3",
+      "title": "Project Scope Isolation Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned project scope isolation previews without project mutation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P76.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.4",
+      "title": "Access Context Packet Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned access context packet previews without access grants or role mutation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P76.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.5",
+      "title": "Command Center Isolation UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center tenant/project isolation readiness UX.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P76.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P76 validation coverage aggregation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P76.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P76.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final P76 validation and P77 handoff.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P77",
@@ -7067,5 +7181,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P76",
   "previousPhase": "P75",
-  "nextPhase": "P76"
+  "nextPhase": "P76.2"
 }

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T13:42:04.358Z
+- Generated at: 2026-05-19T13:51:11.336Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3f48d99
+- Validation HEAD: 79d7c82
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -127,19 +127,41 @@
 | P75.5 validation coverage | PASS | 9 checkers, 1 reports |
 | P75.6 validation coverage | PASS | 17 checkers, 8 reports |
 | P75.7 validation coverage | PASS | 24 checkers, 17 reports |
-| P76 validation coverage | PASS | dedicated_checker, validation_report |
+| P76 validation coverage | PASS | 5 checkers, 1 reports |
+| P76.1 validation coverage | PASS | 4 checkers, 1 reports |
+| P76.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P76.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P76.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P76.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P76.6 validation coverage | PASS | 8 checkers, 8 reports |
+| P76.7 validation coverage | PASS | 17 checkers, 17 reports |
 | P77 validation coverage | PASS | dedicated_checker, validation_report |
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P76; next=P76; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P76; next=P76.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P76 Tenant / Project Isolation
+- P76.2 Tenant Boundary Contract
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P76.3 Project Scope Isolation Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P76.4 Access Context Packet Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P76.5 Command Center Isolation UX
   - status: planned
   - checkers: 0
   - reports: 0
@@ -156,4 +178,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (117/117)
+PASS (124/124)
