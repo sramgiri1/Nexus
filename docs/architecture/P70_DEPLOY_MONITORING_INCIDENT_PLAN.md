@@ -150,7 +150,7 @@ Status: complete.
 Validate and close P70 with deploy monitoring and incident mitigation execution
 still disabled.
 
-Status: planned.
+Status: complete.
 
 ## Command Center Requirements
 
@@ -174,7 +174,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.6. Deploy execution, incident execution,
+P70 is complete. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
