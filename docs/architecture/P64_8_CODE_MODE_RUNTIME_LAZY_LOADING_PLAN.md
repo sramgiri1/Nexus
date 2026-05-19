@@ -69,6 +69,12 @@ execution payloads.
 Expose code-mode readiness and lazy-loading state in Command Center without
 enabling execution.
 
+Status: complete. P64.8.4 adds display-only Command Center readiness cards for
+code mode and selected lazy tool packets. The UX shows preview state, selected
+contract count, blocked bulk-loading reason, disabled execution reason,
+owner capability, evidence/activity locations, cost impact, and next action
+without raw schema dumps or runnable controls.
+
 ### P64.8.5 Final Validation
 
 Aggregate checks, close P64.8, and hand off to P65.

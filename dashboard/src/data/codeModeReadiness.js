@@ -1,0 +1,28 @@
+export const codeModeReadinessCards = [
+  {
+    title: "Code Mode Readiness",
+    stateLabel: "Preview only",
+    selectedContractCount: 2,
+    disabledReason: "Code execution, provider dispatch, tool execution, worker execution, and project mutation remain disabled.",
+    blocker: "Execution cannot start until final validation, approval, evidence, and explicit runtime enablement exist.",
+    bulkLoadingReason: "Only selected lazy contract summaries are allowed; all-tool and all-MCP schema loading are blocked.",
+    ownerCapability: "Code Mode Runtime",
+    nextAction: "Review selected contract readiness before any future code-mode execution phase.",
+    evidenceLocation: "reports/p648-lazy-tool-selection-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider spend; metadata-only preview.",
+  },
+  {
+    title: "Lazy Tool Packet",
+    stateLabel: "Selected contracts only",
+    selectedContractCount: 2,
+    disabledReason: "Raw tool schemas, raw MCP schemas, and bulk contract payloads are not included in primary UX.",
+    blocker: "Bulk loading requests are represented as blocked preview reasons, not runnable actions.",
+    bulkLoadingReason: "All-tool schema loading is blocked by the lazy context budget.",
+    ownerCapability: "Tool Gateway",
+    nextAction: "Keep packet summaries bounded to selected metadata contracts.",
+    evidenceLocation: "reports/p648-lazy-tool-selection-report.md",
+    activityLocation: "reports/lazy-tool-context-report.md",
+    costImpact: "No direct provider spend.",
+  },
+];

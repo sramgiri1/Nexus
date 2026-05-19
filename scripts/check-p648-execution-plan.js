@@ -160,8 +160,17 @@ const p648 = phaseStatus.get("P64.8");
 const p6481 = phaseStatus.get("P64.8.1");
 const p6482 = phaseStatus.get("P64.8.2");
 const p6483 = phaseStatus.get("P64.8.3");
+const p6484 = phaseStatus.get("P64.8.4");
 const expectedNext =
-  p6483?.status === "complete" ? "P64.8.4" : p6482?.status === "complete" ? "P64.8.3" : p6481?.status === "complete" ? "P64.8.2" : "P64.8.1";
+  p6484?.status === "complete"
+    ? "P64.8.5"
+    : p6483?.status === "complete"
+      ? "P64.8.4"
+      : p6482?.status === "complete"
+        ? "P64.8.3"
+        : p6481?.status === "complete"
+          ? "P64.8.2"
+          : "P64.8.1";
 if (p648?.status !== "in_progress") fail("roadmapStatus", "P64.8 must be in_progress");
 if (p648?.nextPhase !== expectedNext) fail("roadmapStatus", `P64.8 nextPhase must be ${expectedNext}`);
 if (status.currentPhase !== "P64.8") fail("roadmapStatus", "currentPhase must be P64.8");

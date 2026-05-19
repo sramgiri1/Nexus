@@ -2277,6 +2277,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Disabled reason: Tool execution and MCP runtime are disabled.");
     await expect(page.locator("body")).toContainText("Evidence: reports/p64-dispatch-readiness-report.md");
     await expect(page.locator("body")).toContainText("Cost impact: No direct provider spend.");
+    await expect(page.locator("body")).toContainText("Code Mode Readiness");
+    await expect(page.locator("body")).toContainText("Selected contracts: 2");
+    await expect(page.locator("body")).toContainText("Only selected lazy contract summaries are allowed");
+    await expect(page.locator("body")).toContainText("Code execution, provider dispatch, tool execution, worker execution, and project mutation remain disabled.");
     for (const label of [
       "Overview",
       "Tool Registry",
@@ -2304,9 +2308,14 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Git Adapter Preview");
     await commandTab(page, "Lazy Loading").click();
     await expect(activeCommandTabPanel(page)).toContainText("Max contracts per task");
+    await expect(activeCommandTabPanel(page)).toContainText("Code Mode Packet");
+    await expect(activeCommandTabPanel(page)).toContainText("Execution: Disabled");
 
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("private-project");
+    expect(body).not.toContain('"inputSchema"');
+    expect(body).not.toContain('"outputSchema"');
     expect(body).not.toContain("Requires P37");
     expect(body).not.toContain("Requires P38");
 
@@ -2314,6 +2323,36 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
     await pickTheme(page, "light");
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Tool Gateway route shows code mode readiness without enabling execution", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/tools");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Tool Gateway");
+    await expect(page.locator("body")).toContainText("Code Mode Readiness");
+    await expect(page.locator("body")).toContainText("Preview only");
+    await expect(page.locator("body")).toContainText("Selected contracts: 2");
+    await expect(page.locator("body")).toContainText("Bulk loading: Only selected lazy contract summaries are allowed");
+    await expect(page.locator("body")).toContainText("Cost impact: No provider spend; metadata-only preview.");
+    await commandTab(page, "Lazy Loading").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Code Mode Packet");
+    await expect(activeCommandTabPanel(page)).toContainText("all-tool and all-MCP schema loading are blocked.");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("provider executed");
+    expect(body).not.toContain("tool executed");
+    expect(body).not.toContain("worker executed");
+
+    await pickTheme(page, "dark");
+    await expect(activeCommandTabPanel(page)).toContainText("Code Mode Packet");
+    await pickTheme(page, "light");
+    await expect(activeCommandTabPanel(page)).toContainText("Code Mode Packet");
 
     expect(errors).toEqual([]);
   });

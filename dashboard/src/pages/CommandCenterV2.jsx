@@ -48,6 +48,7 @@ import {
   NEXUS_PREVIOUS_COMPLETED_PHASE,
 } from "../data/nexusRoadmap.js";
 import { dispatchGovernanceSummary, dispatchReadinessCards } from "../data/dispatchGovernance.js";
+import { codeModeReadinessCards } from "../data/codeModeReadiness.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
 import {
   PROJECT_SELECTION_STORAGE_KEY,
@@ -6214,6 +6215,25 @@ function ToolGatewayPage({ vm }) {
                 </article>
               ))}
             </div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {codeModeReadinessCards.map((card) => (
+                <article key={card.title} className="ccv2-card">
+                  <div className="ccv2-section-heading">{card.title}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--preview">{card.stateLabel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{card.ownerCapability}</span>
+                  </div>
+                  <div className="ccv2-muted">Selected contracts: {card.selectedContractCount}</div>
+                  <div className="ccv2-muted">Disabled reason: {card.disabledReason}</div>
+                  <div className="ccv2-muted">Blocker: {card.blocker}</div>
+                  <div className="ccv2-muted">Bulk loading: {card.bulkLoadingReason}</div>
+                  <div className="ccv2-muted">Next action: {card.nextAction}</div>
+                  <div className="ccv2-muted">Evidence: {card.evidenceLocation}</div>
+                  <div className="ccv2-muted">Activity: {card.activityLocation}</div>
+                  <div className="ccv2-muted">Cost impact: {card.costImpact}</div>
+                </article>
+              ))}
+            </div>
           </CommandTabPanel>
 
           <CommandTabPanel tabId="tool-registry" activeTab={activeTab}>
@@ -6304,6 +6324,13 @@ function ToolGatewayPage({ vm }) {
                 <div className="ccv2-section-heading">Blocked Bulk Loading</div>
                 <div className="ccv2-muted">All tool schemas allowed: {lazy.allToolSchemasAllowed ? "Yes" : "No"}</div>
                 <div className="ccv2-muted">All MCP schemas allowed: {lazy.allMcpSchemasAllowed ? "Yes" : "No"}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Code Mode Packet</div>
+                <div className="ccv2-muted">State: {codeModeReadinessCards[0].stateLabel}</div>
+                <div className="ccv2-muted">Selected contracts: {codeModeReadinessCards[0].selectedContractCount}</div>
+                <div className="ccv2-muted">Execution: Disabled</div>
+                <div className="ccv2-muted">Bulk loading: {codeModeReadinessCards[0].bulkLoadingReason}</div>
               </article>
             </div>
           </CommandTabPanel>
