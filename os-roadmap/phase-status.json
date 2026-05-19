@@ -8259,7 +8259,7 @@
       "nextPhase": "P82.3",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3ff5808",
       "checksRun": [
         "npm run check:p822-provider-tool-gates",
         "npm run check:p82-execution-plan",
@@ -8303,7 +8303,7 @@
       "nextPhase": "P82.3",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3ff5808",
       "completedAt": "2026-05-19",
       "checksRun": [
         "npm run check:p822-provider-tool-gates",
