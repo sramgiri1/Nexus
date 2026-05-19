@@ -1309,9 +1309,12 @@ P83.5 is complete. It surfaces the generated Snake iOS local build state in
 Command Center Live Readiness with evidence, owner, next action, disabled
 runtime actions, and no raw project IDs or fake runnable actions.
 
+P83.6 is complete. It aggregates the P83.1-P83.5 scripts, reports, docs,
+roadmap status, OS phase status, and Command Center coverage without adding new
+runtime behavior.
+
 Planned P83 subphases:
 
-- `P83.6` Tests / Checkers / Docs
 - `P83.7` Final Validation
 
 The detailed plan lives in

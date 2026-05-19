@@ -3674,14 +3674,12 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2cf6060",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P83 is in progress. Snake iOS local admission, scaffold, validation harness, and Command Center local build UX are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "summary": "P83 is in progress. Snake iOS local admission, scaffold, validation, Command Center UX, and aggregation are complete; final validation remains.",
       "checksRun": [
+        "npm run check:p836-tests-checkers-docs",
         "npm run check:p835-command-center-build-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "cd dashboard && npm run build",
-        "npm run check:p834-local-validation-harness",
         "npm run check:p83-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3689,10 +3687,10 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.5 is display-only. P83.6 must aggregate final test, checker, and docs coverage.",
+        "P83.6 is aggregation-only. P83.7 must close final validation and record remaining limitations.",
         "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
       ],
-      "nextPhase": "P83.6",
+      "nextPhase": "P83.7",
       "commandCenterVisible": true
     },
     {
@@ -3829,14 +3827,23 @@
       "phaseId": "P83.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Aggregate P83 test, checker, docs, and roadmap evidence.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:22:04.239Z",
+      "summary": "Aggregated P83.1-P83.5 scripts, reports, docs, roadmap, status, and Command Center coverage.",
+      "checksRun": [
+        "npm run check:p836-tests-checkers-docs",
+        "npm run check:p835-command-center-build-ux",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P83.6 is aggregation-only and does not add runtime behavior.",
+        "P83.7 will close final validation for the local Snake iOS activation track."
       ],
       "nextPhase": "P83.7",
       "commandCenterVisible": true
@@ -3859,7 +3866,7 @@
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.5",
-  "previousPhase": "P83.4",
-  "nextPhase": "P83.6"
+  "currentPhase": "P83.6",
+  "previousPhase": "P83.5",
+  "nextPhase": "P83.7"
 }

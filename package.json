@@ -385,6 +385,7 @@
     "check:p833-approved-local-file-creation": "node scripts/check-p833-approved-local-file-creation.js",
     "check:p834-local-validation-harness": "node scripts/check-p834-local-validation-harness.js",
     "check:p835-command-center-build-ux": "node scripts/check-p835-command-center-build-ux.js",
+    "check:p836-tests-checkers-docs": "node scripts/check-p836-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

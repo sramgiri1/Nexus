@@ -33,6 +33,12 @@ const buildRow = activation.readinessRows.find((row) => row.label === "Generated
 const packageJson = readJson("package.json");
 const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
+const validCurrentPhases = ["P83.5", "P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.5", "P83.6"],
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 const docs = readText("docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md");
 const contract = readText("contracts/os-roadmap/p83-execution-contracts.json");
 const testsSource = readText("dashboard/tests/routes.spec.js");
@@ -49,7 +55,12 @@ addCheck("Playwright covers local build row", testsSource.includes("Generated Sn
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p835-command-center-build-ux"]));
 addCheck("contract references P83.5 checker", contract.includes("check:p835-command-center-build-ux"));
 addCheck("docs mention P83.5 validation", docs.includes("P83.5 Command Center Build UX") && docs.includes("Status: complete. P83.5"));
-addCheck("phase status advanced", statusById.get("P83.5")?.status === "complete" && status.currentPhase === "P83.5" && status.nextPhase === "P83.6");
+addCheck(
+  "phase status remains valid after P83.5",
+  statusById.get("P83.5")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 addCheck("P83.4 report prerequisite exists", fileExists("reports/p834-local-validation-harness-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

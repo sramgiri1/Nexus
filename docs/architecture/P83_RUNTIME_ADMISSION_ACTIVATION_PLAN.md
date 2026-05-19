@@ -84,7 +84,11 @@ Validation: `npm run check:p835-command-center-build-ux` and
 
 Goal: aggregate P83 validation coverage and keep earlier P80-P82 checks current.
 
-Status: planned.
+Status: complete. P83.6 aggregates P83.1-P83.5 scripts, reports, docs,
+roadmap status, OS phase status, and Command Center coverage into one
+validation checker. It does not add new runtime behavior.
+
+Validation: `npm run check:p836-tests-checkers-docs`.
 
 ## P83.7 Final Validation
 
