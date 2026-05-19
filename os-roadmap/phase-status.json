@@ -3530,7 +3530,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7f5d129",
       "completedAt": "",
       "summary": "Auth, RBAC, and multi-user governance is in progress with Command Center auth governance readiness visible and mutation disabled.",
       "checksRun": [
@@ -3648,7 +3648,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7f5d129",
       "completedAt": "2026-05-19",
       "summary": "Exposed display-only auth governance readiness without runnable auth actions.",
       "checksRun": [
