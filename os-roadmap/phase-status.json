@@ -8259,7 +8259,7 @@
       "nextPhase": "P82.6",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb0cb04",
       "checksRun": [
         "npm run check:p825-deploy-release-admission",
         "npm run check:p824-project-db-admission",
@@ -8378,7 +8378,7 @@
       "nextPhase": "P82.6",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb0cb04",
       "completedAt": "2026-05-19",
       "checksRun": [
         "npm run check:p825-deploy-release-admission",
