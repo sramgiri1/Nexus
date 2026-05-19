@@ -3181,7 +3181,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p67-1-commit",
+      "commit": "2b8112d",
       "completedAt": "",
       "summary": "P67 is in progress with contract-only controlled mutation planning complete; mutation behavior remains disabled.",
       "checksRun": [
@@ -3203,7 +3203,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p67-1-commit",
+      "commit": "2b8112d",
       "completedAt": "2026-05-19T06:10:00.000Z",
       "summary": "Defined the implementation-grade P67 controlled mutation contract, subphase split, safety rules, validation checker, docs, and roadmap handoff.",
       "checksRun": [
