@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P75.1
-- Generated at: 2026-05-19T13:28:26.250Z
+- Generated at: 2026-05-19T13:30:56.723Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ea20628
+- Validation HEAD: 3c5cbfd
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Contract

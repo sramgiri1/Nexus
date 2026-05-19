@@ -3928,10 +3928,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ea20628",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P75 restore plan previews while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Added P75 disaster recovery runbook and safety gate previews while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p754",
         "npm run check:p753",
         "npm run check:p752",
         "npm run check:p75-execution-plan",
@@ -3943,7 +3944,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.4",
+      "nextPhase": "P75.5",
       "commandCenterVisible": true
     },
     {
@@ -4019,13 +4020,24 @@
       "phaseId": "P75.4",
       "title": "Disaster Recovery Runbook + Safety Gate",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned disaster recovery runbook and safety gate previews without failover or restore execution.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added preview-only disaster recovery runbook and safety gate records without enabling failover, restore execution, backup creation, overwrite, delete, DB writes, network calls, or provider spend.",
+      "checksRun": [
+        "npm run check:p754",
+        "npm run check:p753",
+        "npm run check:p752",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.4 records DR runbook and safety gate previews only. Failover, restore execution, backup creation, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75.5",
       "commandCenterVisible": true
     },
@@ -7007,5 +7019,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75.4"
+  "nextPhase": "P75.5"
 }

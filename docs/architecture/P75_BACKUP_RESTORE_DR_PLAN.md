@@ -97,10 +97,26 @@ Implementation:
 Define DR runbook and safety gate previews without failover or restore
 execution.
 
-Status: planned. P75.4 will add preview-only `DisasterRecoveryRunbook`
-records that capture recovery objective, restore plan preview, failover gate,
-disabled failover, disabled restore execution, disabled DB writes, evidence/
-activity references, cost impact, disabled reason, and next action.
+Status: complete. P75.4 adds preview-only `DisasterRecoveryRunbook` records
+that capture recovery objective, restore plan preview, DR mode, safety gate,
+required approval, disabled failover, disabled restore execution, disabled
+backup creation, disabled overwrite/delete behavior, disabled DB writes,
+evidence/activity references, cost impact, disabled reason, owner capability,
+and next action.
+
+Implementation:
+
+- `backup-dr/p75-4-placeholder.js` exports
+  `createDisasterRecoveryRunbook`, `validateDisasterRecoveryRunbook`,
+  `buildDisasterRecoveryRunbookEnvelope`, `P75_4_REQUIRED_FIELDS`, and
+  `P75_4_SAMPLE_RUNBOOKS`.
+- `scripts/check-p754.js` validates source restore preview reuse, DR runbook
+  shape, blocked safety gate, disabled failover/restore/backup, disabled
+  overwrite/delete, disabled DB and project mutation, disabled
+  provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package behavior, disabled auth mutation, hidden
+  private IDs/tokens/storage URLs, evidence/activity, cost impact, and
+  non-runnable disabled reasons.
 
 ### P75.5 Command Center Backup/DR UX
 
