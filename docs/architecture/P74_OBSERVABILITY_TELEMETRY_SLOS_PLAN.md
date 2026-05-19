@@ -159,7 +159,22 @@ Implementation:
 
 Aggregate P74 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P74.6 adds an aggregation checker for P74 scripts, reports,
+docs, roadmap entries, phase status entries, Command Center Observability route
+coverage, route tests, disabled runtime posture, raw-output safety, and stale
+phase-status commit checks before final validation.
+
+Implementation:
+
+- `scripts/check-p746-tests-checkers-docs.js` validates P74.1-P74.6 coverage,
+  required checkers, reports, docs, roadmap/status records, Command Center
+  Observability UX registration, route tests, theme coverage, no unsafe
+  identifiers, disabled telemetry/raw log exposure, disabled SLO/paging/
+  remediation, disabled DB and project mutation, disabled provider/tool/worker
+  execution, disabled network/spend, disabled deploy/release/export/package
+  behavior, disabled auth mutation, and stamped status commits for completed
+  P74 subphases.
+- `reports/p746-tests-checkers-docs-report.md` records aggregation evidence.
 
 ### P74.7 Final Validation
 
@@ -191,7 +206,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.5. External telemetry exporters, raw log
+P74 is in progress through P74.6. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network

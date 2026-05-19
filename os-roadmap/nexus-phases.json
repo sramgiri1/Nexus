@@ -2442,10 +2442,10 @@
       "track": "NEXUS_OS",
       "order": 49,
       "group": "Planned OS Phases",
-      "summary": "Observability, telemetry, and service-level objective readiness is in progress with display-only Command Center observability coverage.",
+      "summary": "Observability, telemetry, and service-level objective readiness is in progress with tests, checkers, docs, and Command Center observability coverage aggregated.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P74.6"
+      "nextPhase": "P74.7"
     },
     {
       "phaseId": "P74.1",
@@ -2508,8 +2508,8 @@
       "track": "NEXUS_OS",
       "order": 49.06,
       "group": "P74 Observability, Telemetry, SLOs",
-      "status": "planned",
-      "summary": "Aggregate P74 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P74 validation coverage before final validation.",
       "nextPhase": "P74.7",
       "commandCenterVisible": true
     },
