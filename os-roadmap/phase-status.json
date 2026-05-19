@@ -1743,7 +1743,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/api-batch-execution-adapter",
-      "commit": "pending-final-commit",
+      "commit": "9be337e",
       "completedAt": "",
       "summary": "Builds preview-only provider request, batch packaging, cost estimation, and reconciliation foundations.",
       "checksRun": [
@@ -1779,7 +1779,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/quality-intelligence-test-gap-detection",
-      "commit": "pending-final-commit",
+      "commit": "9be337e",
       "completedAt": "2026-05-16T03:51:06.605Z",
       "summary": "Preview-only quality intelligence, PRD mapping, gap detection, flaky signals, recommendations, and test proposals.",
       "checksRun": [
