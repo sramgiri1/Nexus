@@ -3414,7 +3414,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6e3776e",
+      "commit": "5504157",
       "completedAt": "",
       "summary": "P69 is in progress with release intent records complete; release and deploy execution remain disabled.",
       "checksRun": [
@@ -4156,7 +4156,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-definition-update-workflow",
-      "commit": "pending-final-commit",
+      "commit": "5504157",
       "completedAt": "2026-05-15T18:20:00.000Z",
       "summary": "Creates proposal schema and policy for modifying agent definitions without mutating agent files.",
       "checksRun": [
@@ -5781,7 +5781,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6e3776e",
       "completedAt": "2026-05-19",
       "summary": "Defined P69 release/deploy contracts only; release and deploy execution remain disabled.",
       "checksRun": [
@@ -5803,7 +5803,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5504157",
       "completedAt": "2026-05-19",
       "summary": "Defined display-safe release intent records without release execution.",
       "checksRun": [
