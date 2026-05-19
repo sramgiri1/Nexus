@@ -53,10 +53,11 @@ and phase-status records.
 
 Define compliance evidence index records without certification or DB writes.
 
-Status: planned. P77.2 will add preview-only `ComplianceEvidenceIndex`
+Status: complete. P77.2 adds preview-only `ComplianceEvidenceIndex`
 records that capture compliance scope, evidence references, audit references,
-disabled certification, disabled export, disabled package creation, cost
-impact, disabled reason, and next action.
+disabled certification, disabled legal attestation, disabled audit export,
+disabled raw log export, disabled package creation, DB/project/runtime safety,
+cost impact, disabled reason, blockers, owner capability, and next action.
 
 ### P77.3 Audit Trail Export Preview
 
@@ -114,6 +115,15 @@ and provider spend remain disabled.
 
 P77.1 validation:
 
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.2 validation:
+
+- `npm run check:p772`
 - `npm run check:p77-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

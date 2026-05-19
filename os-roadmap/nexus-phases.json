@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Start compliance and audit pack readiness with certification, export, package, and runtime mutation disabled.",
+      "summary": "Continue compliance and audit pack readiness with compliance evidence indexes while certification, export, package, and runtime mutation remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P77.2"
+      "nextPhase": "P77.3"
     },
     {
       "phaseId": "P77.1",
@@ -2725,8 +2725,8 @@
     {
       "phaseId": "P77.2",
       "title": "Compliance Evidence Index",
-      "status": "planned",
-      "summary": "Plan compliance evidence index records with certification, export, package creation, DB writes, and runtime mutation disabled.",
+      "status": "complete",
+      "summary": "Added preview-only compliance evidence index records with certification, attestation, export, package, DB, project, runtime, network, and spend behavior disabled.",
       "nextPhase": "P77.3",
       "order": 52.02,
       "track": "NEXUS_OS",
