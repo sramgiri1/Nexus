@@ -3470,7 +3470,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "94ec63b",
       "completedAt": "",
       "summary": "Project shipping and export pipeline is in progress with package/export execution contracts defined and all shipping execution disabled.",
       "checksRun": [
@@ -6144,7 +6144,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "94ec63b",
       "completedAt": "2026-05-19",
       "summary": "Defined P71 project shipping and export pipeline contracts only; package creation and export execution remain disabled.",
       "checksRun": [
