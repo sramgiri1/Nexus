@@ -215,7 +215,10 @@ const p643 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.3");
 const p644 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.4");
 const p645 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.5");
 const p646 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.6");
-const expectedNextPhase = p646?.status === "complete"
+const p647 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.7");
+const expectedNextPhase = p647?.status === "complete"
+  ? "P64.8"
+  : p646?.status === "complete"
   ? "P64.7"
   : p645?.status === "complete"
   ? "P64.6"
@@ -226,7 +229,7 @@ const expectedNextPhase = p646?.status === "complete"
     : p642?.status === "complete"
       ? "P64.3"
       : "P64.1";
-if (p64?.status !== "in_progress") fail("roadmapStatus", "P64 must be in_progress during P64.1 contract work");
+if (!["in_progress", "complete"].includes(p64?.status)) fail("roadmapStatus", "P64 must be in_progress or complete during P64 validation");
 if (p64?.nextPhase !== expectedNextPhase) fail("roadmapStatus", `P64 nextPhase must be ${expectedNextPhase}`);
 if (phaseStatus.currentPhase !== "P64") fail("roadmapStatus", "Top-level currentPhase must be P64");
 if (phaseStatus.previousPhase !== "P63") fail("roadmapStatus", "Top-level previousPhase must be P63");

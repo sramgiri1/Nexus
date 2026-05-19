@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P64.6
-- Generated at: 2026-05-19T00:24:39.765Z
+- Generated at: 2026-05-19T00:25:58.012Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6de079c
+- Validation HEAD: 6c11340
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -19,7 +19,7 @@
 | --- | --- | --- |
 | required reports exist | PASS |  |
 | P64.1-P64.6 status | PASS |  |
-| P64 remains in progress | PASS | in_progress |
+| P64 status valid | PASS | complete |
 | envelope valid | PASS |  |
 | policy valid | PASS |  |
 | readiness valid | PASS |  |

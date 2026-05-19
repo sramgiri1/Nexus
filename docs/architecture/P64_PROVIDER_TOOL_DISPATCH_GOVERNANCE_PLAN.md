@@ -118,6 +118,13 @@ any P64 surface claims execution or mutation enablement.
 Run final validation, record known limitations, close P64, and hand off to the
 next phase only when status and reports are current.
 
+Status: complete. P64.7 closes the governed dispatch foundation after the
+contract, envelope, readiness matrix, dry-run preview, Command Center UX, and
+aggregate final checker all pass. P64 remains a governed, non-executing
+foundation: real provider calls, tool execution, project mutation, DB writes,
+release, deploy, external network calls, and worker execution are still
+disabled until a later explicit phase enables them.
+
 ## Command Center Requirements
 
 Future P64 UX must preserve System, Dark, and Light themes and show:
@@ -137,5 +144,6 @@ private project IDs.
 
 ## Status
 
-P64.1 starts as contract-only. P64 remains in progress until the final validation
-subphase completes. Real provider/tool dispatch is not implemented by this plan.
+P64 is complete as a governed dispatch foundation. Real provider/tool dispatch
+is not implemented by this plan. The next phase is P64.8 Code Mode Runtime +
+Lazy Tool Loading.

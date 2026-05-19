@@ -2432,23 +2432,27 @@
       "phaseId": "P64",
       "title": "Provider + Tool Dispatch Through Governance",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ebdd87",
-      "completedAt": "",
-      "summary": "P64 has started with a contract-only governance split before any provider or tool dispatch implementation.",
+      "commit": "pending-p64-final-validation-commit",
+      "completedAt": "2026-05-19T00:32:00.000Z",
+      "summary": "Completed governed dispatch foundations: contract split, dispatch envelope, policy decision, readiness matrix, dry-run preview, Command Center UX, and aggregate final validation.",
       "checksRun": [
         "npm run check:p64-execution-plan",
+        "npm run check:p64-governed-dispatch-final",
         "npm run check:phase-validation-coverage",
+        "npm run check:command-center-ux",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
         "git diff --check"
       ],
       "knownLimitations": [
         "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
-        "P64.1 only defines implementation-grade subphase contracts and validation."
+        "P64 delivered governed envelopes, readiness, dry-run previews, and display-only UX; real execution requires a later explicit phase.",
+        "Full dashboard page suite still has two pre-existing project-label assertions outside this OS phase."
       ],
-      "nextPhase": "P64.7",
+      "nextPhase": "P64.8",
       "commandCenterVisible": true
     },
     {
@@ -2596,13 +2600,25 @@
       "phaseId": "P64.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned final validation and P64 closure after all governed dispatch subphases pass.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "commit": "pending-p64-final-validation-commit",
+      "completedAt": "2026-05-19T00:32:00.000Z",
+      "summary": "Closed P64 with final validation evidence and handoff to P64.8.",
+      "checksRun": [
+        "npm run check:p64-governed-dispatch-final",
+        "npm run check:p64-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:command-center-ux",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Provider dispatch, tool execution, project mutation, DB writes, release, deploy, external network calls, and worker execution remain disabled.",
+        "Full dashboard page suite still has two pre-existing project-label assertions outside this OS phase."
+      ],
       "nextPhase": "P64.8",
       "commandCenterVisible": true
     },
@@ -4870,5 +4886,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P64",
   "previousPhase": "P63",
-  "nextPhase": "P64.7"
+  "nextPhase": "P64.8"
 }

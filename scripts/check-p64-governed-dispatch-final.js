@@ -56,7 +56,7 @@ const dryRunValidation = validateDispatchDryRun(dryRun);
 
 addCheck("required reports exist", REQUIRED_REPORTS.every((report) => existsSync(join(ROOT, report))), REQUIRED_REPORTS.filter((report) => !existsSync(join(ROOT, report))).join(", "));
 addCheck("P64.1-P64.6 status", ["P64.1", "P64.2", "P64.3", "P64.4", "P64.5", "P64.6"].every((phaseId) => phaseById.get(phaseId)?.status === "complete"));
-addCheck("P64 remains in progress", phaseById.get("P64")?.status === "in_progress", phaseById.get("P64")?.status || "missing");
+addCheck("P64 status valid", ["in_progress", "complete"].includes(phaseById.get("P64")?.status), phaseById.get("P64")?.status || "missing");
 addCheck("envelope valid", envelopeValidation.valid, envelopeValidation.errors.join("; "));
 addCheck("policy valid", policyValidation.valid, policyValidation.errors.join("; "));
 addCheck("readiness valid", readinessValidation.valid, readinessValidation.errors.join("; "));
