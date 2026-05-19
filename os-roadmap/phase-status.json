@@ -3724,12 +3724,13 @@
       "phaseId": "P74",
       "title": "Observability, Telemetry, SLOs",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5a24389",
-      "completedAt": "",
-      "summary": "Observability, telemetry, and service-level objective readiness is in progress with tests, checkers, docs, and Command Center observability coverage aggregated.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Observability, telemetry, and service-level objective readiness is complete with display-only Command Center coverage and runtime automation disabled.",
       "checksRun": [
+        "npm run check:p747-final-validation",
         "npm run check:p746-tests-checkers-docs",
         "npm run check:p745-command-center-observability-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"",
@@ -3743,9 +3744,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P74 has not enabled external telemetry exporters, raw log streaming, DB writes, project mutation, provider/tool execution, worker execution, remediation execution, paging, deploy/release/export execution, package creation, auth mutation, network calls, or provider spend."
+        "P74 did not enable external telemetry exporters, raw log streaming, DB writes, project mutation, provider/tool execution, worker execution, remediation execution, paging, deploy/release/export execution, package creation, auth mutation, network calls, or provider spend."
       ],
-      "nextPhase": "P74.7",
+      "nextPhase": "P75",
       "commandCenterVisible": true
     },
     {
@@ -3897,13 +3898,27 @@
       "phaseId": "P74.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P74 with telemetry export and SLO enforcement still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Validated and closed P74 with telemetry export and SLO enforcement still disabled.",
+      "checksRun": [
+        "npm run check:p747-final-validation",
+        "npm run check:p746-tests-checkers-docs",
+        "npm run check:p745-command-center-observability-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p74-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P74.7 closes observability readiness only. Telemetry export, raw log exposure, SLO enforcement, paging, remediation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75",
       "commandCenterVisible": true
     },
@@ -6855,7 +6870,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T11:18:20.708Z",
-  "currentPhase": "P74",
-  "previousPhase": "P73",
-  "nextPhase": "P74.7"
+  "currentPhase": "P75",
+  "previousPhase": "P74",
+  "nextPhase": "P75"
 }

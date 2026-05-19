@@ -321,6 +321,7 @@
     "check:p744": "node scripts/check-p744.js",
     "check:p745-command-center-observability-ux": "node scripts/check-p745-command-center-observability-ux.js",
     "check:p746-tests-checkers-docs": "node scripts/check-p746-tests-checkers-docs.js",
+    "check:p747-final-validation": "node scripts/check-p747-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

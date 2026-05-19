@@ -181,7 +181,24 @@ Implementation:
 Validate and close P74 with telemetry export, SLO enforcement, paging,
 remediation, and runtime mutation still disabled.
 
-Status: planned.
+Status: complete. P74.7 adds final validation for P74 contracts, preview-only
+telemetry/SLO/health records, Command Center Observability UX, tests,
+checkers, reports, docs, roadmap, phase status, and P75 handoff while
+telemetry export, SLO enforcement, paging, remediation, and runtime mutation
+remain disabled.
+
+Implementation:
+
+- `scripts/check-p747-final-validation.js` validates completed P74 subphases,
+  required reports, stamped prior commits, Command Center Observability route
+  preservation, theme test coverage, hidden raw IDs/tokens/phase labels,
+  disabled telemetry/raw log exposure, disabled SLO/paging/remediation,
+  disabled DB/project mutation, disabled provider/tool/worker execution,
+  disabled network/spend, disabled deploy/release/export/package behavior,
+  disabled auth mutation, forbidden observability/project paths, and P75
+  handoff.
+- `reports/p747-final-validation-report.md` records final P74 validation
+  evidence.
 
 ## Command Center Requirements
 
@@ -206,7 +223,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.6. External telemetry exporters, raw log
+P74 is complete. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network
