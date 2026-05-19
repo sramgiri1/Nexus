@@ -2354,10 +2354,10 @@
       "track": "NEXUS_OS",
       "order": 48,
       "group": "Planned OS Phases",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with tests, checkers, docs, and Command Center auth governance coverage aggregated.",
+      "summary": "Auth, RBAC, and multi-user governance readiness is complete with display-only Command Center coverage and all auth mutation disabled.",
       "commandCenterVisible": true,
-      "status": "in_progress",
-      "nextPhase": "P73.7"
+      "status": "complete",
+      "nextPhase": "P74"
     },
     {
       "phaseId": "P73.1",
@@ -2431,8 +2431,8 @@
       "track": "NEXUS_OS",
       "order": 48.07,
       "group": "P73 Auth, RBAC, Multi-user Governance",
-      "status": "planned",
-      "summary": "Validate and close P73 with login and auth mutation still disabled.",
+      "status": "complete",
+      "summary": "Validated and closed P73 with login and auth mutation still disabled.",
       "nextPhase": "P74",
       "commandCenterVisible": true
     },

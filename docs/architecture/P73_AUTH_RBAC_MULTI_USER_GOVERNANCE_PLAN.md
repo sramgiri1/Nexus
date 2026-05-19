@@ -170,7 +170,22 @@ Implementation:
 
 Validate and close P73 with login and auth mutation still disabled.
 
-Status: planned.
+Status: complete. P73.7 adds final validation for P73 contracts, preview-only
+auth governance records, Command Center Auth Governance UX, tests, checkers,
+reports, docs, roadmap, phase status, and P74 handoff while login and auth
+mutation remain disabled.
+
+Implementation:
+
+- `scripts/check-p737-final-validation.js` validates completed P73 subphases,
+  required reports, stamped prior commits, Command Center Auth Governance route
+  preservation, theme test coverage, hidden raw IDs/tokens/phase labels,
+  disabled login/provider/token/session/user/role/permission/tenant/workspace
+  mutation, disabled DB/project mutation, disabled provider/tool/worker
+  execution, disabled network/spend, disabled deploy/release/export/package
+  execution, forbidden auth/project paths, and P74 handoff.
+- `reports/p737-final-validation-report.md` records final P73 validation
+  evidence.
 
 ## Command Center Requirements
 
@@ -194,8 +209,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.6. Login, identity provider integration,
-user/session/role/tenant mutation, DB writes, project mutation, provider
-dispatch, tool execution, worker execution, deploy execution, release
-execution, export execution, package creation, external network calls, and
-provider spend remain disabled.
+P73 is complete. Login, identity provider integration, user/session/role/tenant
+mutation, DB writes, project mutation, provider dispatch, tool execution,
+worker execution, deploy execution, release execution, export execution,
+package creation, external network calls, and provider spend remain disabled.
