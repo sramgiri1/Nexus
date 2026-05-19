@@ -3386,11 +3386,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "176f443",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P68 is in progress with self-update intent records complete; self-update apply remains disabled.",
+      "summary": "P68 is in progress with self-update proposal previews complete; self-update apply remains disabled.",
       "checksRun": [
-        "npm run check:p682",
+        "npm run check:p683",
         "npm run check:p68-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3398,9 +3398,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P68.2 defines display-safe self-update intent records only. Self-update apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P68.3 creates preview-only self-update proposals. Patch generation, apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P68.3",
+      "nextPhase": "P68.4",
       "commandCenterVisible": true
     },
     {
@@ -5641,13 +5641,22 @@
       "phaseId": "P68.3",
       "title": "Self-Update Proposal Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Build preview-only self-update proposals with scoped files and validation commands.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T10:07:59.412Z",
+      "summary": "Built preview-only self-update proposal records with scoped files, validation commands, rollback posture, blockers, evidence, and disabled apply flags.",
+      "checksRun": [
+        "npm run check:p683",
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.3 creates preview-only self-update proposals. Patch generation, apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P68.4",
       "commandCenterVisible": true
     },
@@ -5709,8 +5718,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T02:13:14.775Z",
+  "updatedAt": "2026-05-19T10:07:59.416Z",
   "currentPhase": "P68",
   "previousPhase": "P67",
-  "nextPhase": "P68.3"
+  "nextPhase": "P68.4"
 }

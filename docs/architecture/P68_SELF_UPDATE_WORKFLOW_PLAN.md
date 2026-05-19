@@ -65,7 +65,22 @@ Implementation:
 Build preview-only self-update proposals with scoped files and validation
 commands.
 
-Status: planned.
+Status: complete. P68.3 adds preview-only `SelfUpdateProposalPreview`
+records derived from P68.2 intent records. Each preview lists allowed files,
+forbidden files, proposed updates, validation commands, rollback posture,
+approval state, blockers, evidence/activity references, owner capability, and
+next action while source apply, project mutation, execution, DB writes, deploy,
+release, and spend remain disabled.
+
+Implementation:
+
+- `self-update/p68-3-placeholder.js` exports
+  `createSelfUpdateProposalPreview`, `validateSelfUpdateProposalPreview`,
+  `buildSelfUpdateProposalEnvelope`, `P68_3_REQUIRED_FIELDS`, and
+  `P68_3_SAMPLE_PROPOSALS`.
+- `scripts/check-p683.js` validates proposal shape, validation commands,
+  rollback posture, project path blocking, disabled apply/execution/spend
+  flags, evidence references, and non-runnable disabled reasons.
 
 ### P68.4 Approval + Rollback Gate
 
