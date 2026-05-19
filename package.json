@@ -311,6 +311,7 @@
     "check:p73-execution-plan": "node scripts/check-p73-execution-plan.js",
     "check:p732": "node scripts/check-p732.js",
     "check:p733": "node scripts/check-p733.js",
+    "check:p734": "node scripts/check-p734.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

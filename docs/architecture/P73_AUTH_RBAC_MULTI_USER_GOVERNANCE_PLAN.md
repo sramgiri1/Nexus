@@ -97,7 +97,26 @@ Implementation:
 Define multi-user workspace boundary records without tenant or workspace
 mutation.
 
-Status: planned.
+Status: complete. P73.4 adds preview-only `MultiUserWorkspaceBoundary`
+records derived from P73.2 identity/session contracts and P73.3 RBAC matrices.
+Each boundary includes workspace mode, tenant boundary, isolation state,
+display-only workspace rows, disabled tenant/workspace/member mutation flags,
+blocked operations, blockers, disabled reason, evidence/activity references,
+cost impact, owner capability, and next action.
+
+Implementation:
+
+- `auth-governance/p73-4-placeholder.js` exports
+  `createMultiUserWorkspaceBoundary`,
+  `validateMultiUserWorkspaceBoundary`,
+  `buildMultiUserWorkspaceBoundaryEnvelope`, `P73_4_REQUIRED_FIELDS`, and
+  `P73_4_SAMPLE_BOUNDARIES`.
+- `scripts/check-p734.js` validates boundary shape, display-only workspace
+  rows, disabled tenant/workspace/user/session/role/permission mutation,
+  disabled login/provider/token exchange, disabled DB and project mutation,
+  disabled provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package execution, hidden private IDs/tokens/auth URLs,
+  evidence/activity, cost impact, and non-runnable disabled reasons.
 
 ### P73.5 Command Center Auth Governance UX
 
@@ -139,7 +158,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.3. Login, identity provider integration,
+P73 is in progress through P73.4. Login, identity provider integration,
 user/session/role/tenant mutation, DB writes, project mutation, provider
 dispatch, tool execution, worker execution, deploy execution, release
 execution, export execution, package creation, external network calls, and
