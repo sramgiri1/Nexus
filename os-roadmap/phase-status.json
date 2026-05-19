@@ -1378,7 +1378,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/projects-page-productization",
-      "commit": "pending-final-commit",
+      "commit": "aad87fd",
       "completedAt": "2026-05-15T18:45:00.000Z",
       "summary": "Closes the governed Agent Definition Update Workflow and follow-on Projects operating surface productization through P49.8.",
       "checksRun": [
@@ -1725,7 +1725,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/trigger-integration-gateway",
-      "commit": "pending-final-commit",
+      "commit": "aad87fd",
       "completedAt": "2026-05-16T00:18:00.000Z",
       "summary": "Trigger Governance Final Validation for preview-only Trigger + Integration Gateway governance.",
       "checksRun": [
