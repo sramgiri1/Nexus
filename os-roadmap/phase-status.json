@@ -2722,7 +2722,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-command-center-code-mode-ux-commit",
+      "commit": "b4e8667",
       "completedAt": "2026-05-19T01:45:00.000Z",
       "summary": "Added display-only Command Center code-mode readiness UX with selected-contract count, blocked bulk-loading reason, disabled execution reason, evidence/activity refs, cost impact, and next action.",
       "checksRun": [
