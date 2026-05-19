@@ -46,7 +46,23 @@ handoff, and phase-status records.
 
 Define display-safe deploy monitor event records.
 
-Status: planned.
+Status: complete. P70.2 adds preview-only `DeployMonitorEvent` records for
+NEXUS OS monitoring readiness. Each event includes monitor identity, deploy
+identity, target kind, environment label, observed state, severity,
+allowed/forbidden files, disabled execution flags, disabled reason, blockers,
+evidence/activity references, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `deploy-monitoring/p70-2-placeholder.js` exports
+  `createDeployMonitorEvent`, `validateDeployMonitorEvent`,
+  `buildDeployMonitorEventEnvelope`, `P70_2_REQUIRED_FIELDS`, and
+  `P70_2_SAMPLE_EVENTS`.
+- `scripts/check-p702.js` validates event shape, project path blocking,
+  disabled deploy/monitor execution, disabled incident/mitigation/rollback
+  execution, disabled alert dispatch, disabled provider/tool/worker execution,
+  disabled DB/network/spend, evidence/activity, cost impact, and non-runnable
+  disabled reasons.
 
 ### P70.3 Incident Signal Preview
 
@@ -104,7 +120,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.1. Deploy execution, incident execution,
+P70 is in progress through P70.2. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
