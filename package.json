@@ -404,6 +404,7 @@
     "check:p856-tests-docs-roadmap": "node scripts/check-p856-tests-docs-roadmap.js",
     "check:p857-final-validation": "node scripts/check-p857-final-validation.js",
     "check:p861-live-capability-admission": "node scripts/check-p861-live-capability-admission.js",
+    "check:p862-capability-state-resolver": "node scripts/check-p862-capability-state-resolver.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -155,9 +155,63 @@
     },
     {
       "id": "nexus-os-p86-2-capability-state-resolver",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architecture",
+      "taskType": "implementation",
       "phaseId": "P86.2",
       "objective": "Resolve live capability rows into operator-facing activation states without enabling execution.",
-      "status": "planned"
+      "status": "complete",
+      "allowedFiles": [
+        "live-ready/governedLiveCapabilityStateResolver.js",
+        "scripts/check-p862-capability-state-resolver.js",
+        "reports/p862-capability-state-resolver-report.md",
+        "reports/p861-live-capability-admission-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "narrowScope": "Capability state resolution only.",
+        "expectedExports": [
+          "P86_CAPABILITY_STATE_RESOLVER_PHASE",
+          "buildGovernedLiveCapabilityStateResolver",
+          "validateGovernedLiveCapabilityStateResolver"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, stateSummary, capabilityStates[], activationRequestCount, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all activation/runtime flags false.",
+        "validationCommands": [
+          "npm run check:p862-capability-state-resolver",
+          "npm run check:p861-live-capability-admission",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ]
+      }
     },
     {
       "id": "nexus-os-p86-3-operator-approval-queue",

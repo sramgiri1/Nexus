@@ -83,7 +83,13 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p861-
 addCheck("contract references P86.1 files", contract.includes("live-ready/governedLiveCapabilityAdmission.js") && contract.includes("check:p861-live-capability-admission"));
 addCheck("docs mention P86.1 validation", docs.includes("P86.1 Schema / Policy / Contract") && docs.includes("npm run check:p861-live-capability-admission"));
 addCheck("platform roadmap records P86", platformRoadmap.includes("## P86 - Governed Live Capability Admission") && platformRoadmap.includes("P86.1 is complete"));
-addCheck("phase status advanced", statusById.get("P86")?.status === "in_progress" && statusById.get("P86.1")?.status === "complete" && status.currentPhase === "P86.1" && status.nextPhase === "P86.2");
+addCheck(
+  "phase status advanced",
+  statusById.get("P86")?.status === "in_progress"
+    && statusById.get("P86.1")?.status === "complete"
+    && ["P86.1", "P86.2"].includes(status.currentPhase)
+    && ["P86.2", "P86.3"].includes(status.nextPhase),
+);
 addCheck("roadmap tracks P86.1", roadmapById.get("P86.1")?.track === "NEXUS_OS" && roadmapById.get("P86.1")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p857-final-validation-report.md") && fileExists("reports/os-phase-status-report.md"));
 

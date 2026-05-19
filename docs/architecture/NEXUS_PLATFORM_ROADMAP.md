@@ -1447,8 +1447,14 @@ evidence, activity location, and cost impact while provider/model calls, agent
 dispatch, tool execution, worker execution, project mutation, DB writes, deploy,
 release, export, package creation, and provider spend remain blocked.
 
-P86.2 is next. It should resolve capability rows into operator-facing activation
-states without executing runtime actions.
+P86.2 is complete. It adds deterministic live capability state resolution for
+operator-facing activation states, risk levels, state reasons, required-before-
+live lists, and next actions. Activation requests, provider/model calls, agent
+dispatch, tool execution, worker execution, project mutation, DB writes, deploy,
+release, export, package creation, and provider spend remain blocked.
+
+P86.3 is next. It should add local operator approval queue records with expiry,
+rollback, and validation requirements while execution remains disabled.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).

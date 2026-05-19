@@ -24,8 +24,12 @@ Validation: `npm run check:p861-live-capability-admission`.
 
 Goal: resolve P86.1 capability rows into operator-facing activation states.
 
-Status: planned. P86.2 should create deterministic state resolution without
-executing runtime actions.
+Status: complete. P86.2 adds `governedLiveCapabilityStateResolver`, a
+deterministic resolver that turns P86.1 admission rows into operator-facing
+activation states, risk levels, state reasons, required-before-live lists, and
+next actions while activation requests and execution stay blocked.
+
+Validation: `npm run check:p862-capability-state-resolver`.
 
 ## P86.3 Operator Approval Queue
 

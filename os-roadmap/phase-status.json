@@ -9086,20 +9086,21 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bb29267",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1 complete.",
+      "summary": "Governed live capability admission in progress with P86.1-P86.2 complete.",
       "checksRun": [
+        "npm run check:p862-capability-state-resolver",
         "npm run check:p861-live-capability-admission",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.1 is admission inventory only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+        "P86.2 resolves live capability states only.",
+        "Activation requests, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
-      "nextPhase": "P86.2",
+      "nextPhase": "P86.3",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -9135,14 +9136,21 @@
       "title": "Capability State Resolver",
       "track": "NEXUS_OS",
       "order": 69.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Resolve capability rows into operator-facing activation states without executing actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:54:40.865Z",
+      "summary": "Added deterministic live capability state resolution with activation state, risk, reasons, required-before-live gates, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p862-capability-state-resolver",
+        "npm run check:p861-live-capability-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86.2 resolves live capability states only.",
+        "Activation requests, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P86.3",
       "commandCenterVisible": true,
@@ -9246,9 +9254,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:51:56.368Z",
-  "currentPhase": "P86.1",
-  "previousPhase": "P85.7",
-  "nextPhase": "P86.2",
+  "updatedAt": "2026-05-19T23:54:40.865Z",
+  "currentPhase": "P86.2",
+  "previousPhase": "P86.1",
+  "nextPhase": "P86.3",
   "currentPhaseStatus": "complete"
 }
