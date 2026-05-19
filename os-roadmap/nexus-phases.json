@@ -2343,10 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "DB-backed runtime primary is in progress with DB runtime primary contracts defined and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with DB migration previews defined and all DB mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P72.3"
+      "nextPhase": "P72.4"
     },
     {
       "phaseId": "P73",
@@ -2738,8 +2738,8 @@
       "track": "NEXUS_OS",
       "order": 47.03,
       "group": "P72 DB-backed Runtime Primary",
-      "status": "planned",
-      "summary": "Create DB migration preview records without writing migration or schema files.",
+      "status": "complete",
+      "summary": "Created DB migration preview records without writing migration or schema files.",
       "nextPhase": "P72.4",
       "commandCenterVisible": true
     },

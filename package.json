@@ -303,6 +303,7 @@
     "check:p717-final-validation": "node scripts/check-p717-final-validation.js",
     "check:p72-execution-plan": "node scripts/check-p72-execution-plan.js",
     "check:p722": "node scripts/check-p722.js",
+    "check:p723": "node scripts/check-p723.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -69,7 +69,24 @@ Implementation:
 
 Create DB migration preview records without writing migration or schema files.
 
-Status: planned.
+Status: complete. P72.3 adds preview-only `DbMigrationPreview` records
+derived from P72.2 DB runtime primary contracts. Each preview includes
+migration state, migration-file-created status, schema-file-changed status,
+affected stores, blocked operations, disabled execution flags, disabled
+reason, evidence/activity references, cost impact, owner capability, and next
+action.
+
+Implementation:
+
+- `db-runtime/p72-3-placeholder.js` exports `createDbMigrationPreview`,
+  `validateDbMigrationPreview`, `buildDbMigrationPreviewEnvelope`,
+  `P72_3_REQUIRED_FIELDS`, and `P72_3_SAMPLE_PREVIEWS`.
+- `scripts/check-p723.js` validates preview shape, no migration/schema files
+  on disk, disabled DB writes/migrations/schema mutation, disabled project
+  mutation, disabled provider/tool/worker execution, disabled network/spend,
+  disabled deploy/release/export/package execution, affected stores, blocked
+  operations, hidden private IDs and DB URLs, evidence/activity, cost impact,
+  and non-runnable disabled reasons.
 
 ### P72.4 DB Readiness Gate
 
@@ -117,7 +134,7 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.2. DB writes, migrations, schema mutation,
+P72 is in progress through P72.3. DB writes, migrations, schema mutation,
 project mutation, provider dispatch, tool execution, worker execution, deploy
 execution, release execution, export execution, package creation, external
 network calls, and provider spend remain disabled.
