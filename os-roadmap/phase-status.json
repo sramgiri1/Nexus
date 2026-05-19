@@ -9084,26 +9084,171 @@
       "phaseId": "P86",
       "title": "Governed Live Capability Admission",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned handoff for explicitly scoped live capability admission after P85 final validation.",
-      "checksRun": [],
-      "knownLimitations": [
-        "P86 is not started. Execution-capable behavior remains disabled until a dedicated P86 contract explicitly scopes and validates it."
+      "summary": "Governed live capability admission in progress with P86.1 complete.",
+      "checksRun": [
+        "npm run check:p861-live-capability-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
-      "nextPhase": "P86.1",
+      "knownLimitations": [
+        "P86.1 is admission inventory only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.2",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
-      "detail": "Planned explicit safety-gated admission for live capabilities after local founder runtime closure."
+      "detail": "Explicit safety-gated admission for live capabilities after local founder runtime closure."
+    },
+    {
+      "phaseId": "P86.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 68.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:50:59.666Z",
+      "summary": "Added governed live capability admission inventory with display-safe owner, state, next action, blockers, evidence, activity, cost, and all runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p861-live-capability-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.1 is admission inventory only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Governed live capability admission inventory and contract."
+    },
+    {
+      "phaseId": "P86.2",
+      "title": "Capability State Resolver",
+      "track": "NEXUS_OS",
+      "order": 69.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Resolve capability rows into operator-facing activation states without executing actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86.3",
+      "commandCenterVisible": true,
+      "label": "Capability State Resolver",
+      "detail": "Resolve capability rows into operator-facing activation states without executing actions."
+    },
+    {
+      "phaseId": "P86.3",
+      "title": "Operator Approval Queue",
+      "track": "NEXUS_OS",
+      "order": 70.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Local approval queue records with expiry, rollback, and validation requirements.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86.4",
+      "commandCenterVisible": true,
+      "label": "Operator Approval Queue",
+      "detail": "Local approval queue records with expiry, rollback, and validation requirements."
+    },
+    {
+      "phaseId": "P86.4",
+      "title": "Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 71.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Command Center live capability state UX without raw IDs or fake runnable actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86.5",
+      "commandCenterVisible": true,
+      "label": "Command Center UX",
+      "detail": "Command Center live capability state UX without raw IDs or fake runnable actions."
+    },
+    {
+      "phaseId": "P86.5",
+      "title": "Activation Dry Run",
+      "track": "NEXUS_OS",
+      "order": 72.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Activation intent dry-run records while live actions remain disabled.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86.6",
+      "commandCenterVisible": true,
+      "label": "Activation Dry Run",
+      "detail": "Activation intent dry-run records while live actions remain disabled."
+    },
+    {
+      "phaseId": "P86.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 73.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P86 validation evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "Aggregate P86 validation evidence."
+    },
+    {
+      "phaseId": "P86.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 74.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Final P86 validation and handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P87",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P86 validation and handoff."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:45:46.730Z",
-  "currentPhase": "P85.7",
-  "previousPhase": "P85.6",
-  "nextPhase": "P86",
+  "updatedAt": "2026-05-19T23:50:59.666Z",
+  "currentPhase": "P86.1",
+  "previousPhase": "P85.7",
+  "nextPhase": "P86.2",
   "currentPhaseStatus": "complete"
 }

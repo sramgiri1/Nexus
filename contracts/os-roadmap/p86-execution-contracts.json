@@ -1,0 +1,193 @@
+{
+  "phase": "P86",
+  "title": "Governed Live Capability Admission",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "11c47b2",
+  "safetyRules": [
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, or provider spend unless a later subphase explicitly permits the narrow action.",
+    "Do not modify project source files or careloop files.",
+    "Do not expose raw private project IDs in primary UX.",
+    "Do not duplicate report writers, mode guards, redaction helpers, check formatters, phase status updaters, route matrices, or evidence/activity helpers."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p86-1-live-capability-admission",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architecture",
+      "taskType": "implementation",
+      "objective": "Define the governed live capability admission schema, policy gates, checker, docs, and roadmap handoff without enabling execution.",
+      "allowedFiles": [
+        "live-ready/governedLiveCapabilityAdmission.js",
+        "scripts/check-p861-live-capability-admission.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p861-live-capability-admission-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P86.1",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "narrowScope": "Live capability admission inventory only.",
+        "exactFilesModulesToCreateOrUpdate": [
+          {
+            "path": "live-ready/governedLiveCapabilityAdmission.js",
+            "action": "create",
+            "exports": [
+              "P86_LIVE_CAPABILITY_ADMISSION_PHASE",
+              "LIVE_CAPABILITY_REQUIRED_GATES",
+              "buildGovernedLiveCapabilityAdmission",
+              "validateGovernedLiveCapabilityAdmission"
+            ],
+            "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, requiredGates, readinessSummary, capabilities[], nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+          },
+          {
+            "path": "scripts/check-p861-live-capability-admission.js",
+            "action": "create",
+            "exports": [],
+            "dataShape": "Node checker that validates P86.1 envelope shape, reuse, package script, docs, roadmap/status, safety flags, and generated report."
+          }
+        ],
+        "reuseCheck": {
+          "mustReuse": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "live-ready/providerToolGateProfiles.js",
+            "live-ready/workerExecutionGate.js",
+            "live-ready/projectDbAdmission.js",
+            "live-ready/deployReleaseAdmission.js",
+            "live-ready/localProjectCreationAdmission.js",
+            "live-ready/enterpriseFounderTaskBoardAdmission.js",
+            "os-roadmap/updatePhaseStatus.js when applicable"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve existing Command Center Lite and Live Readiness UX. P86.1 does not add primary UX.",
+        "themeRequirements": [
+          "No theme changes in P86.1.",
+          "Preserve dark, light, and system theme behavior."
+        ],
+        "playwrightTests": [
+          "No new page test required in P86.1 because no Command Center UX changes are made.",
+          "Preserve existing route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add npm run check:p861-live-capability-admission.",
+          "Update OS phase status checker to recognize P86.1."
+        ],
+        "docsRoadmap": [
+          "Add P86 plan doc.",
+          "Update NEXUS platform roadmap.",
+          "Update OS phase status and roadmap entries."
+        ],
+        "validationCommands": [
+          "npm run check:p861-live-capability-admission",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm every runtime flag remains false.",
+          "Confirm no forbidden roots changed.",
+          "Confirm no fake unsafe runnable actions are exposed."
+        ],
+        "gitCommands": [
+          "git add <P86.1 files>",
+          "git commit -m \"feat(nexus): add governed live capability admission\"",
+          "git commit -m \"chore(nexus): stamp p86 live admission status\"",
+          "git push origin codex/nexus-e2e-phase-validation"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers",
+          "Dashboard build/page results if run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P86.1 exposes implementation-grade live capability admission rows.",
+        "P86.1 reuses existing admission gates.",
+        "All live execution flags remain false.",
+        "Checker, docs, roadmap, and OS status pass."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p85-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p86-2-capability-state-resolver",
+      "phaseId": "P86.2",
+      "objective": "Resolve live capability rows into operator-facing activation states without enabling execution.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p86-3-operator-approval-queue",
+      "phaseId": "P86.3",
+      "objective": "Add local operator approval queue records with expiry and rollback requirements.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p86-4-command-center-ux",
+      "phaseId": "P86.4",
+      "objective": "Surface governed live capability state in Command Center without raw IDs or fake runnable actions.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p86-5-activation-dry-run",
+      "phaseId": "P86.5",
+      "objective": "Add activation intent dry-run records and validation evidence while actions remain disabled.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p86-6-tests-docs-roadmap",
+      "phaseId": "P86.6",
+      "objective": "Aggregate P86 tests, docs, reports, and roadmap evidence.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p86-7-final-validation",
+      "phaseId": "P86.7",
+      "objective": "Close P86 and hand off to the next explicitly scoped live activation phase.",
+      "status": "planned"
+    }
+  ]
+}

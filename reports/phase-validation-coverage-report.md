@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T23:46:01.407Z
+- Generated at: 2026-05-19T23:51:31.425Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6627103
+- Validation HEAD: 11c47b2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -191,21 +191,38 @@
 | P85.5 validation coverage | PASS | 6 checkers, 2 reports |
 | P85.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P85.7 validation coverage | PASS | 32 checkers, 27 reports |
-| P86 validation coverage | PASS | dedicated_checker, validation_report |
+| P86 validation coverage | PASS | 4 checkers, 1 reports |
+| P86.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P86.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P86.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P86.4 validation coverage | PASS | 1 checkers, 1 reports |
+| P86.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P86.6 validation coverage | PASS | 1 checkers, 1 reports |
+| P86.7 validation coverage | PASS | 27 checkers, 27 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P85.7; next=P86; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P86.1; next=P86.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P86 Governed Live Capability Admission
+- P86.2 Capability State Resolver
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P86.3 Operator Approval Queue
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P86.5 Activation Dry Run
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (179/179)
+PASS (186/186)

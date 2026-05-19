@@ -1432,3 +1432,25 @@ The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).
 Implementation must follow
 [`p85-execution-contracts.json`](../../contracts/os-roadmap/p85-execution-contracts.json).
+
+## P86 - Governed Live Capability Admission
+
+P86 is in progress. It moves NEXUS from local founder planning toward governed
+live capability admission by making every unlock explicit, evidence-backed, and
+independently testable.
+
+P86.1 is complete. It adds the governed live capability admission inventory by
+reusing existing provider/tool, worker, project/DB, deploy/release, local
+project creation, and founder task-board admission gates. The inventory exposes
+display-safe capability rows with owner, current state, next action, blockers,
+evidence, activity location, and cost impact while provider/model calls, agent
+dispatch, tool execution, worker execution, project mutation, DB writes, deploy,
+release, export, package creation, and provider spend remain blocked.
+
+P86.2 is next. It should resolve capability rows into operator-facing activation
+states without executing runtime actions.
+
+The detailed plan lives in
+[`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).
+Implementation must follow
+[`p86-execution-contracts.json`](../../contracts/os-roadmap/p86-execution-contracts.json).
