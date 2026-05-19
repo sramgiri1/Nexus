@@ -4540,14 +4540,128 @@
       "phaseId": "P78",
       "title": "Self-Healing Enterprise Developer Preview",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Started P78 with implementation-grade enterprise developer preview contracts while founder automation and runtime mutation remain disabled.",
+      "checksRun": [
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78.1 defines contracts only. Founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P78.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.1",
+      "title": "Execution Contract + Enterprise Preview Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Defined implementation-grade P78 subphase contracts and enterprise developer preview safety boundary.",
+      "checksRun": [
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78.1 defines contracts only. Founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P78.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.2",
+      "title": "Founder Intake / Q&A Preview Model",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned enterprise developer preview phase for self-healing NEXUS flows.",
+      "summary": "Planned founder intake and Q&A preview records with provider execution and project mutation disabled.",
       "checksRun": [],
       "knownLimitations": [],
-      "nextPhase": "",
+      "nextPhase": "P78.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.3",
+      "title": "PRD Assembly Preview Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned PRD assembly preview records without project file generation or mutation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P78.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.4",
+      "title": "Agent Workplan / Self-Healing Preview Model",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned agent workplan and self-healing preview records without dispatch or runtime execution.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P78.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.5",
+      "title": "Command Center Enterprise Preview UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center Enterprise Preview UX with disabled actions and raw output safety.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P78.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P78 validation aggregation across tests, checkers, docs, and roadmap evidence.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P78.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final P78 validation and OS phase closure without enabling runtime mutation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "complete",
       "commandCenterVisible": true
     },
     {
@@ -7444,5 +7558,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P78",
   "previousPhase": "P77",
-  "nextPhase": "P78"
+  "nextPhase": "P78.2"
 }

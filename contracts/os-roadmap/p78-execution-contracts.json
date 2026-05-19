@@ -1,0 +1,1053 @@
+{
+  "phase": "P78",
+  "title": "Self-Healing Enterprise Developer Preview",
+  "classification": "NEXUS_OS_CHANGE",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p78-1-execution-contract-enterprise-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P78 enterprise developer preview execution contracts and safety boundary only.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p78-execution-contracts.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "scripts/check-p78-execution-plan.js",
+        "reports/p78-execution-plan-report.md",
+        "package.json",
+        "scripts/check-os-phase-status.js",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "a3f2ba2",
+        "narrowScope": "Define P78 execution contracts, subphase boundaries, and enterprise preview safety rules only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p78-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.1 complete after validation and set nextPhase to P78.2.",
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p78-execution-contracts.json",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+            "scripts/check-p78-execution-plan.js",
+            "reports/p78-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "scripts/check-os-phase-status.js",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.1 files>",
+          "git commit -m \"docs(nexus): execution contract enterprise boundary\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-2-founder-intake-qa-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "strategist",
+      "taskType": "implementation-plan",
+      "objective": "Define founder intake and Q&A preview records without provider calls or project mutation.",
+      "allowedFiles": [
+        "enterprise-preview/p78-2-placeholder.js",
+        "scripts/check-p782.js",
+        "reports/p782-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.1",
+        "narrowScope": "Create founder intake and Q&A preview model only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p782."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.2 complete after validation and set nextPhase to P78.3.",
+        "exactFilesModules": {
+          "create": [
+            "enterprise-preview/p78-2-placeholder.js",
+            "scripts/check-p782.js",
+            "reports/p782-report.md",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.2 files>",
+          "git commit -m \"feat(nexus): founder intake qa preview\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-1-execution-contract-enterprise-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-3-prd-assembly-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architect",
+      "taskType": "implementation-plan",
+      "objective": "Define PRD assembly preview records without generating project files.",
+      "allowedFiles": [
+        "enterprise-preview/p78-3-placeholder.js",
+        "scripts/check-p783.js",
+        "reports/p783-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.2",
+        "narrowScope": "Create PRD assembly preview model only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p783."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.3 complete after validation and set nextPhase to P78.4.",
+        "exactFilesModules": {
+          "create": [
+            "enterprise-preview/p78-3-placeholder.js",
+            "scripts/check-p783.js",
+            "reports/p783-report.md",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.3 files>",
+          "git commit -m \"feat(nexus): prd assembly preview\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-2-founder-intake-qa-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-4-agent-workplan-self-healing-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "orchestrator",
+      "taskType": "implementation-plan",
+      "objective": "Define agent workplan and self-healing preview records without dispatching agents or tools.",
+      "allowedFiles": [
+        "enterprise-preview/p78-4-placeholder.js",
+        "scripts/check-p784.js",
+        "reports/p784-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.3",
+        "narrowScope": "Create agent workplan and self-healing preview model only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p784."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.4 complete after validation and set nextPhase to P78.5.",
+        "exactFilesModules": {
+          "create": [
+            "enterprise-preview/p78-4-placeholder.js",
+            "scripts/check-p784.js",
+            "reports/p784-report.md",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.4 files>",
+          "git commit -m \"feat(nexus): agent workplan self healing preview\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-3-prd-assembly-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-5-command-center-enterprise-preview-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "pixel",
+      "taskType": "implementation-plan",
+      "objective": "Expose enterprise developer preview readiness in Command Center without runnable actions.",
+      "allowedFiles": [
+        "dashboard/src/data/enterprisePreviewReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p785-command-center-enterprise-preview-ux.js",
+        "reports/command-center-enterprise-preview-ux-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.4",
+        "narrowScope": "Add display-only Command Center Enterprise Preview route.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Enterprise Preview route\""
+        ],
+        "testsCheckers": [
+          "Add check:p785-command-center-enterprise-preview-ux."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.5 complete after validation and set nextPhase to P78.6.",
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/enterprisePreviewReadiness.js",
+            "scripts/check-p785-command-center-enterprise-preview-ux.js",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "reports/command-center-enterprise-preview-ux-report.md",
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.5 files>",
+          "git commit -m \"feat(nexus): command center enterprise preview ux\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-4-agent-workplan-self-healing-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P78 tests, checkers, docs, and status evidence before final validation.",
+      "allowedFiles": [
+        "scripts/check-p786-tests-checkers-docs.js",
+        "reports/p786-tests-checkers-docs-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.5",
+        "narrowScope": "Aggregate P78 validation evidence only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p786-tests-checkers-docs."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.6 complete after validation and set nextPhase to P78.7.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p786-tests-checkers-docs.js",
+            "reports/p786-tests-checkers-docs-report.md",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.6 files>",
+          "git commit -m \"test(nexus): tests checkers docs\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-5-command-center-enterprise-preview-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p78-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Run final P78 validation and close the OS roadmap without enabling runtime mutation.",
+      "allowedFiles": [
+        "scripts/check-p787-final-validation.js",
+        "reports/p787-final-validation-report.md",
+        "package.json",
+        "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P78.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P78.6",
+        "narrowScope": "Close P78 and final OS phase tracking only.",
+        "safetyRules": [
+          "Do not enable founder intake execution, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider execution, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export behavior, package creation, auth/session/user/workspace mutation, compliance certification, legal attestation, or provider spend. All P78 behavior is preview-only until a later explicit phase enables governed runtime operations."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/modeGuard.js",
+            "dashboard/src/pages/CommandCenterV2.jsx"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, result envelope, mode guard, route, tab, card, evidence, activity, audit, cost, and disabled-action patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve or show disabled state, next action, blockers, owner capability, evidence/activity location, cost impact, raw output safety, and no DemoApp/private IDs for founder intake, Q&A, PRD preview, agent workplan, and self-healing readiness.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Enterprise Preview route\""
+        ],
+        "testsCheckers": [
+          "Add check:p787-final-validation."
+        ],
+        "checkerUpdates": [
+          "Register P78 checker in package.json."
+        ],
+        "docsRoadmap": [
+          "Update P78 plan and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P78.7 complete after validation and set nextPhase to complete.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p787-final-validation.js",
+            "reports/p787-final-validation-report.md",
+            "docs/architecture/P78_SELF_HEALING_ENTERPRISE_PREVIEW_PLAN.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakePreview",
+            "createPrdAssemblyPreview",
+            "createAgentWorkplanPreview",
+            "buildEnterprisePreviewReadinessViewModel"
+          ],
+          "schemas": [
+            "FounderIntakePreview",
+            "PrdAssemblyPreview",
+            "AgentWorkplanPreview",
+            "EnterprisePreviewCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "founderIdeaSummary, qnaState, prdPreviewState, agentWorkplanState, selfHealingState, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p78-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm founder intake, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider/tool/worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled.",
+          "Confirm no project files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P78.7 files>",
+          "git commit -m \"feat(nexus): final validation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview-only P78 scope validates.",
+        "No provider/tool/project/runtime mutation is enabled.",
+        "No project files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p78-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T14:00:00.000Z"
+    }
+  ]
+}

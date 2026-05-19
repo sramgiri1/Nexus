@@ -2793,11 +2793,88 @@
       "title": "Self-Healing Enterprise Developer Preview",
       "track": "NEXUS_OS",
       "order": 53,
-      "group": "Planned OS Phases",
-      "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "summary": "Start enterprise developer preview readiness with founder intake, Q&A, PRD, agent workplan, and self-healing execution disabled.",
       "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P78.2"
+    },
+    {
+      "phaseId": "P78.1",
+      "title": "Execution Contract + Enterprise Preview Boundary",
+      "track": "NEXUS_OS",
+      "order": 53.01,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "complete",
+      "summary": "Defined implementation-grade P78 subphase contracts and enterprise developer preview safety boundary.",
+      "nextPhase": "P78.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.2",
+      "title": "Founder Intake / Q&A Preview Model",
+      "track": "NEXUS_OS",
+      "order": 53.019999999999996,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
       "status": "planned",
-      "nextPhase": "P78"
+      "summary": "Planned founder intake and Q&A preview records with provider execution and project mutation disabled.",
+      "nextPhase": "P78.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.3",
+      "title": "PRD Assembly Preview Model",
+      "track": "NEXUS_OS",
+      "order": 53.03,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "planned",
+      "summary": "Planned PRD assembly preview records without project file generation or mutation.",
+      "nextPhase": "P78.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.4",
+      "title": "Agent Workplan / Self-Healing Preview Model",
+      "track": "NEXUS_OS",
+      "order": 53.04,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "planned",
+      "summary": "Planned agent workplan and self-healing preview records without dispatch or runtime execution.",
+      "nextPhase": "P78.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.5",
+      "title": "Command Center Enterprise Preview UX",
+      "track": "NEXUS_OS",
+      "order": 53.05,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "planned",
+      "summary": "Planned display-only Command Center Enterprise Preview UX with disabled actions and raw output safety.",
+      "nextPhase": "P78.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 53.059999999999995,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "planned",
+      "summary": "Planned P78 validation aggregation across tests, checkers, docs, and roadmap evidence.",
+      "nextPhase": "P78.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P78.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 53.07,
+      "group": "P78 Self-Healing Enterprise Developer Preview",
+      "status": "planned",
+      "summary": "Planned final P78 validation and OS phase closure without enabling runtime mutation.",
+      "nextPhase": "complete",
+      "commandCenterVisible": true
     },
     {
       "phaseId": "P68.1",

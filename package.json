@@ -343,6 +343,7 @@
     "check:p775-command-center-compliance-ux": "node scripts/check-p775-command-center-compliance-ux.js",
     "check:p776-tests-checkers-docs": "node scripts/check-p776-tests-checkers-docs.js",
     "check:p777-final-validation": "node scripts/check-p777-final-validation.js",
+    "check:p78-execution-plan": "node scripts/check-p78-execution-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
