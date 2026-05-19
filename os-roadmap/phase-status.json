@@ -4334,14 +4334,128 @@
       "phaseId": "P77",
       "title": "Compliance and Audit Pack",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Started P77 with implementation-grade compliance and audit pack contracts while certification/export/package/runtime mutation remains disabled.",
+      "checksRun": [
+        "npm run check:p77-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Compliance certification, legal attestation, audit export, raw log export, package creation, DB writes, project mutation, tenant/access/auth/workspace mutation, provider/tool/worker execution, network calls, deploy/release/export execution, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P77.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.1",
+      "title": "Execution Contract + Compliance Boundary",
+      "status": "complete",
+      "summary": "Defined implementation-grade P77 subphase contracts and the compliance/audit safety boundary.",
+      "checksRun": [
+        "npm run check:p77-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P77.1 defines contracts only; compliance certification, legal attestation, audit export, package creation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P77.2",
+      "track": "NEXUS_OS",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.2",
+      "title": "Compliance Evidence Index",
       "status": "planned",
+      "summary": "Planned compliance evidence index records with certification, export, package creation, DB writes, and runtime mutation disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P77.3",
+      "track": "NEXUS_OS",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned compliance and audit packaging phase.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.3",
+      "title": "Audit Trail Export Preview",
+      "status": "planned",
+      "summary": "Planned display-only audit trail export previews with raw log export and package creation disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P77.4",
+      "track": "NEXUS_OS",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.4",
+      "title": "Control Mapping / Attestation Preview",
+      "status": "planned",
+      "summary": "Planned control mapping and attestation previews without certification or legal attestation behavior.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P77.5",
+      "track": "NEXUS_OS",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.5",
+      "title": "Command Center Compliance UX",
+      "status": "planned",
+      "summary": "Planned display-only Command Center compliance readiness UX with disabled actions and raw output safety.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P77.6",
+      "track": "NEXUS_OS",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.6",
+      "title": "Tests / Checkers / Docs",
+      "status": "planned",
+      "summary": "Planned P77 validation aggregation across tests, checkers, docs, and roadmap evidence.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P77.7",
+      "track": "NEXUS_OS",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P77.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "summary": "Planned final P77 validation and P78 handoff without enabling runtime mutation.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P78",
+      "track": "NEXUS_OS",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
       "commandCenterVisible": true
     },
     {
@@ -7252,5 +7366,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P77",
   "previousPhase": "P76",
-  "nextPhase": "P77"
+  "nextPhase": "P77.2"
 }

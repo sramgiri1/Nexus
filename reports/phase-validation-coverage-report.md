@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T14:12:57.932Z
+- Generated at: 2026-05-19T14:19:12.439Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8f00076
+- Validation HEAD: 33e60b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -135,18 +135,40 @@
 | P76.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P76.6 validation coverage | PASS | 14 checkers, 9 reports |
 | P76.7 validation coverage | PASS | 25 checkers, 18 reports |
-| P77 validation coverage | PASS | dedicated_checker, validation_report |
+| P77 validation coverage | PASS | 5 checkers, 1 reports |
+| P77.1 validation coverage | PASS | 4 checkers, 1 reports |
+| P77.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P77.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P77.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P77.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P77.6 validation coverage | PASS | 9 checkers, 9 reports |
+| P77.7 validation coverage | PASS | 18 checkers, 18 reports |
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P77; next=P77; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P77; next=P77.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P77 Compliance and Audit Pack
+- P77.2 Compliance Evidence Index
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P77.3 Audit Trail Export Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P77.4 Control Mapping / Attestation Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P77.5 Command Center Compliance UX
   - status: planned
   - checkers: 0
   - reports: 0
@@ -158,4 +180,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (124/124)
+PASS (131/131)
