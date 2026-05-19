@@ -3928,7 +3928,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ea20628",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Added P75 restore plan previews while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
@@ -3997,7 +3997,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ea20628",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Added preview-only restore plan previews without enabling restore execution, overwrite, delete, backup creation, failover, DB writes, network calls, or provider spend.",
       "checksRun": [
