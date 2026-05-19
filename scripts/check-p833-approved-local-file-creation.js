@@ -30,6 +30,14 @@ const plannedFiles = new Set(SNAKE_IOS_SCAFFOLD_FILES.map((file) => `${GENERATED
 const packageJson = readJson("package.json");
 const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
+const validCurrentPhases = ["P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.3", "P83.4"],
+  ["P83.4", "P83.5"],
+  ["P83.5", "P83.6"],
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 const docs = readText("docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md");
 const contract = readText("contracts/os-roadmap/p83-execution-contracts.json");
 const gameState = readText(`${GENERATED_ROOT}/Sources/SnakeIOSApp/GameState.swift`);
@@ -46,7 +54,12 @@ addCheck("unit tests cover expected game behavior", ["testStepMovesSnakeForward"
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p833-approved-local-file-creation"]));
 addCheck("contract references P83.3 files", contract.includes("generated-projects/snake-ios/**") && contract.includes("check:p833-approved-local-file-creation"));
 addCheck("docs mention P83.3 validation", docs.includes("P83.3 Approved Local File Creation") && docs.includes("Status: complete. P83.3"));
-addCheck("phase status advanced", statusById.get("P83.3")?.status === "complete" && status.currentPhase === "P83.3" && status.nextPhase === "P83.4");
+addCheck(
+  "phase status remains valid after P83.3",
+  statusById.get("P83.3")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 addCheck("existing project roots remain forbidden", !contract.includes("\"projects/snake-ios\"") && contract.includes("\"projects/**\""));
 
 const failed = checks.filter((check) => check.status === "FAIL");

@@ -1,0 +1,36 @@
+{
+  "phase": "P83.4",
+  "workspaceRoot": "generated-projects/snake-ios",
+  "mode": "local-only",
+  "commands": [
+    {
+      "name": "game-rule assertions",
+      "command": "swift run SnakeIOSAppTests",
+      "cwd": "generated-projects/snake-ios",
+      "purpose": "Runs deterministic Snake movement, scoring, collision, reverse-direction, and restart assertions."
+    },
+    {
+      "name": "swift package build",
+      "command": "swift build",
+      "cwd": "generated-projects/snake-ios",
+      "purpose": "Builds the SwiftUI/SpriteKit scaffold locally."
+    }
+  ],
+  "forbiddenActions": [
+    "provider calls",
+    "Nexus tool execution",
+    "worker execution",
+    "DB writes",
+    "network calls",
+    "deploy",
+    "release",
+    "export",
+    "package creation",
+    "provider spend",
+    "existing project mutation"
+  ],
+  "evidenceRefs": [
+    "reports/p834-local-validation-harness-report.md"
+  ],
+  "nextAction": "Expose local validation state in Command Center during P83.5."
+}

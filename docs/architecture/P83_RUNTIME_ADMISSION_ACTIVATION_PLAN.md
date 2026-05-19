@@ -57,8 +57,13 @@ Validation: `npm run check:p833-approved-local-file-creation`,
 
 Goal: add local validation commands and reports for the generated iOS scaffold.
 
-Status: planned. No App Store, TestFlight, network, provider, DB, or deploy
-execution is allowed.
+Status: complete. P83.4 adds the local validation manifest and checker for the
+generated Snake iOS workspace. The harness runs `swift run SnakeIOSAppTests` and
+`swift build` inside `generated-projects/snake-ios`, records report evidence,
+and keeps App Store, TestFlight, network, provider, DB, worker, deploy, release,
+package, and spend actions blocked.
+
+Validation: `npm run check:p834-local-validation-harness`.
 
 ## P83.5 Command Center Build UX
 

@@ -1301,9 +1301,12 @@ P83.3 is complete. It creates the admitted Snake iOS Swift package scaffold only
 under `generated-projects/snake-ios`, with local game-state tests and no
 existing project, provider, worker, DB, deploy, network, or spend activation.
 
+P83.4 is complete. It adds the local validation manifest and checker that rerun
+the generated Snake iOS executable game-rule assertions and Swift package build
+without provider, worker, DB, deploy, network, package, or spend activation.
+
 Planned P83 subphases:
 
-- `P83.4` Local Validation Harness
 - `P83.5` Command Center Build UX
 - `P83.6` Tests / Checkers / Docs
 - `P83.7` Final Validation

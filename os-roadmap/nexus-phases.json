@@ -3674,25 +3674,24 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7447b22",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P83 is in progress. Snake iOS local admission, scaffold planning, and approved local file creation are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "summary": "P83 is in progress. Snake iOS local admission, scaffold planning, file creation, and local validation harness are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
+        "npm run check:p834-local-validation-harness",
         "npm run check:p833-approved-local-file-creation",
         "npm run check:p832-snake-ios-scaffold-plan",
-        "npm run check:p831-local-project-creation-admission",
         "npm run check:p83-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
-        "cd generated-projects/snake-ios && swift run SnakeIOSAppTests",
-        "cd generated-projects/snake-ios && swift build",
+        "npm run check:format-readability",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.3 creates a local Swift package scaffold only. P83.4 must add the durable validation harness and Command Center evidence flow.",
+        "P83.4 validates local Swift build/test behavior only. P83.5 must expose this state in Command Center.",
         "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
       ],
-      "nextPhase": "P83.4",
+      "nextPhase": "P83.5",
       "commandCenterVisible": true
     },
     {
@@ -3776,14 +3775,24 @@
       "phaseId": "P83.4",
       "title": "Local Validation Harness",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Validate the generated scaffold locally without deploy or provider execution.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:12:16.405Z",
+      "summary": "Added a local-only validation manifest and checker for the generated Snake iOS workspace.",
+      "checksRun": [
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p833-approved-local-file-creation",
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P83.4 does not deploy, package, sign, run a simulator, call networks, call providers/tools, start workers, write DB state, or spend.",
+        "P83.5 will expose local validation state in Command Center."
       ],
       "nextPhase": "P83.5",
       "commandCenterVisible": true
@@ -3838,7 +3847,7 @@
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.3",
-  "previousPhase": "P83.2",
-  "nextPhase": "P83.4"
+  "currentPhase": "P83.4",
+  "previousPhase": "P83.3",
+  "nextPhase": "P83.5"
 }
