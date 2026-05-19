@@ -7843,18 +7843,46 @@
     {
       "phaseId": "P80",
       "title": "Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Plan governed founder intake runtime for business idea understanding, guided Q&A, comprehension state, and Command Center visibility.",
-      "nextPhase": "P80.1",
-      "commandCenterVisible": true
+      "status": "in_progress",
+      "summary": "Started governed founder intake runtime with schema and blocked runtime policy.",
+      "nextPhase": "P80.2",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p801-founder-intake-schema",
+        "npm run check:p80-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P80 is in progress. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, network calls, and provider spend remain blocked."
+      ]
     },
     {
       "phaseId": "P80.1",
       "title": "Schema / Policy / Contract",
-      "status": "planned",
-      "summary": "Define founder intake schemas and blocked runtime policy.",
+      "status": "complete",
+      "summary": "Defined founder intake schemas, evidence requirements, approval state, and blocked runtime policy.",
       "nextPhase": "P80.2",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p801-founder-intake-schema",
+        "npm run check:p80-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P80.1 is schema/policy only. Local intake session transitions begin in P80.2; provider calls, tool execution, worker execution, project mutation, DB writes, deploy, network calls, and provider spend remain blocked."
+      ]
     },
     {
       "phaseId": "P80.2",
@@ -7906,8 +7934,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T18:35:00.000Z",
-  "currentPhase": "P79.7",
-  "previousPhase": "P79.6",
-  "nextPhase": "P80"
+  "updatedAt": "2026-05-19T18:55:00.000Z",
+  "currentPhase": "P80.1",
+  "previousPhase": "P79.7",
+  "nextPhase": "P80.2"
 }

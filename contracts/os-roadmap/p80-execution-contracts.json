@@ -20,7 +20,10 @@
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p80-execution-plan.js",
+        "reports/p80-execution-plan-report.md",
+        "reports/format-readability-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -93,7 +96,10 @@
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "reports/os-phase-status-report.md",
-            "reports/phase-validation-coverage-report.md"
+            "reports/phase-validation-coverage-report.md",
+            "scripts/check-p80-execution-plan.js",
+            "reports/p80-execution-plan-report.md",
+            "reports/format-readability-report.md"
           ]
         },
         "expectedExportsSchemasDataShapes": {

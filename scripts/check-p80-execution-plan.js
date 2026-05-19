@@ -93,11 +93,18 @@ export function checkP80ExecutionPlan() {
   }
 
   const phaseStatus = new Map((status.phases || []).map((phase) => [phase.phaseId, phase]));
+  const expectedNext = P80_FOUNDER_INTAKE_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "P81";
+  const p80Status = phaseStatus.get("P80")?.status;
+  const atHandoff = status.currentPhase === "P79.7" && status.nextPhase === "P80";
   if (phaseStatus.get("P79")?.status !== "complete") fail("roadmapStatus", "P79 must be complete before P80 starts");
   if (phaseStatus.get("P79.7")?.status !== "complete") fail("roadmapStatus", "P79.7 must be complete before P80 starts");
-  if (phaseStatus.get("P80")?.status !== "planned") fail("roadmapStatus", "P80 must be planned at handoff");
-  if (phaseStatus.get("P80")?.nextPhase !== "P80.1") fail("roadmapStatus", "P80 nextPhase must be P80.1");
-  if (status.currentPhase !== "P79.7" || status.nextPhase !== "P80") fail("roadmapStatus", "Root phase status must hand off from P79.7 to P80");
+  if (!["planned", "in_progress", "complete"].includes(p80Status)) fail("roadmapStatus", "P80 must be planned, in_progress, or complete");
+  if (phaseStatus.get("P80")?.nextPhase !== expectedNext) fail("roadmapStatus", `P80 nextPhase must be ${expectedNext}`);
+  if (atHandoff) {
+    if (expectedNext !== "P80.1") fail("roadmapStatus", "handoff must point to P80.1");
+  } else if (!["P80", ...P80_FOUNDER_INTAKE_SUBPHASES].includes(status.currentPhase) || status.nextPhase !== expectedNext) {
+    fail("roadmapStatus", `Root phase status must be active in P80 with nextPhase ${expectedNext}`);
+  }
 
   const plan = read(PLAN_PATH);
   if (!plan.includes(CONTRACT_PATH)) fail("docs", `${PLAN_PATH} must reference ${CONTRACT_PATH}`);

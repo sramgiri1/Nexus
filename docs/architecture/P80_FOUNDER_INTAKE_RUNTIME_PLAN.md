@@ -12,6 +12,9 @@ budget, rollback, activity evidence, cost evidence, and redaction checks.
 
 Goal: define founder intake session, question set, answer state, comprehension score, approval state, evidence references, and cost-impact schemas.
 
+Status: complete. P80.1 adds `founder-intake/founderIntakeSchema.js` as a schema/policy module only.
+It does not ask founder questions, call providers, create projects, write DB rows, deploy, or spend budget.
+
 Validation: `npm run check:p801-founder-intake-schema` and `npm run check:p80-execution-plan`.
 
 ## P80.2 Core Intake Session Model

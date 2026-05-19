@@ -3354,9 +3354,9 @@
       "title": "Founder Intake Runtime",
       "order": 55,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Plan governed founder intake runtime for business idea understanding, guided Q&A, comprehension state, and Command Center visibility.",
-      "nextPhase": "P80.1",
+      "status": "in_progress",
+      "summary": "Started governed founder intake runtime with schema and blocked runtime policy.",
+      "nextPhase": "P80.2",
       "commandCenterVisible": true
     },
     {
@@ -3364,8 +3364,8 @@
       "title": "Schema / Policy / Contract",
       "order": 55.01,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Define founder intake schemas and blocked runtime policy.",
+      "status": "complete",
+      "summary": "Defined founder intake schemas, evidence requirements, approval state, and blocked runtime policy.",
       "nextPhase": "P80.2",
       "commandCenterVisible": true
     },
