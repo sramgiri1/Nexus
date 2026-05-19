@@ -75,10 +75,11 @@ and next action.
 
 Define access context packet previews without access grants or role mutation.
 
-Status: planned. P76.4 will add preview-only `AccessContextPacketPreview`
+Status: complete. P76.4 adds preview-only `AccessContextPacketPreview`
 records that capture access context mode, tenant boundary, project scope,
-disabled access grants, disabled role/permission mutation, evidence/activity
-references, cost impact, disabled reason, and next action.
+disabled access grants, disabled role/permission/membership mutation,
+required approval state, evidence/activity references, cost impact, disabled
+reason, owner capability, and next action.
 
 ### P76.5 Command Center Isolation UX
 
@@ -134,6 +135,15 @@ P76.2 validation:
 P76.3 validation:
 
 - `npm run check:p763`
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.4 validation:
+
+- `npm run check:p764`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

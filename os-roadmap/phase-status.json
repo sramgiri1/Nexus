@@ -4137,10 +4137,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2fb5b72",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P76.3 preview-only project scope isolation records while tenant/project/access mutation remains disabled.",
+      "summary": "Added P76.4 preview-only access context packets while tenant/project/access mutation remains disabled.",
       "checksRun": [
+        "npm run check:p764",
         "npm run check:p763",
         "npm run check:p762",
         "npm run check:p76-execution-plan",
@@ -4152,7 +4153,7 @@
       "knownLimitations": [
         "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P76.4",
+      "nextPhase": "P76.5",
       "commandCenterVisible": true
     },
     {
@@ -4227,13 +4228,22 @@
       "phaseId": "P76.4",
       "title": "Access Context Packet Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned access context packet previews without access grants or role mutation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Defined preview-only access context packet records with access grants, role mutation, DB writes, runtime execution, network calls, and spend disabled.",
+      "checksRun": [
+        "npm run check:p764",
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.4 records access context packet previews only. Access grants, role mutation, permission mutation, membership mutation, tenant mutation, project mutation, cross-project access, DB writes, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P76.5",
       "commandCenterVisible": true
     },
@@ -7201,5 +7211,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P76",
   "previousPhase": "P75",
-  "nextPhase": "P76.4"
+  "nextPhase": "P76.5"
 }
