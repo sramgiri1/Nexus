@@ -287,6 +287,7 @@
     "check:p695-command-center-release-ux": "node scripts/check-p695-command-center-release-ux.js",
     "check:p696-tests-checkers-docs": "node scripts/check-p696-tests-checkers-docs.js",
     "check:p697-final-validation": "node scripts/check-p697-final-validation.js",
+    "check:p70-execution-plan": "node scripts/check-p70-execution-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

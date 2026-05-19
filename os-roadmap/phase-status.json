@@ -3440,14 +3440,22 @@
       "phaseId": "P70",
       "title": "Deploy Monitoring + Incident Mitigation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned deployment monitoring and incident mitigation phase.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P71",
+      "summary": "P70 is in progress with deploy monitoring and incident mitigation contracts defined; all deploy-adjacent execution remains disabled.",
+      "checksRun": [
+        "npm run check:p70-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P70 has not enabled deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, DB, provider/tool execution, project mutation, network calls, or provider spend."
+      ],
+      "nextPhase": "P70.2",
       "commandCenterVisible": true
     },
     {
@@ -5947,11 +5955,117 @@
       ],
       "nextPhase": "P70",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.1",
+      "title": "Execution Contract + Monitoring Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined P70 deploy monitoring and incident mitigation contracts only; no execution behavior.",
+      "checksRun": [
+        "npm run check:p70-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P70.1 defines contracts only. Deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P70.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.2",
+      "title": "Deploy Monitor Event Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define display-safe deploy monitor event records.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.3",
+      "title": "Incident Signal Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Create incident signal previews without incident execution, alert dispatch, or mitigation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.4",
+      "title": "Mitigation Readiness Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add mitigation readiness gates while keeping mitigation, rollback, alert, and deploy execution disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.5",
+      "title": "Command Center Monitoring UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose deploy monitoring and incident mitigation readiness without runnable monitoring, alert, rollback, deploy, or mitigation actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P70 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P70 with deploy monitoring and incident mitigation execution still disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T11:02:49.308Z",
+  "updatedAt": "2026-05-19T11:06:11.684Z",
   "currentPhase": "P70",
   "previousPhase": "P69",
-  "nextPhase": "P70"
+  "nextPhase": "P70.2"
 }

@@ -1,0 +1,1139 @@
+{
+  "phaseId": "P70",
+  "title": "Deploy Monitoring + Incident Mitigation",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p70-1-execution-contract-monitoring-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P70 deploy monitoring and incident mitigation contracts with disabled execution boundary.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p70-execution-contracts.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "scripts/check-p70-execution-plan.js",
+        "reports/p70-execution-plan-report.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "scripts/check-os-phase-status.js",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.7",
+        "narrowScope": "Define contracts only; no monitoring, alert, incident, rollback, or mitigation execution behavior.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P70.1.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p70-execution-contracts.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "scripts/check-p70-execution-plan.js",
+            "reports/p70-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "scripts/check-os-phase-status.js",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p70-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p70-execution-plan."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.1 complete after validation and set nextPhase to P70.2.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"docs(nexus): define p70 deploy monitoring contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.1 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-2-deploy-monitor-event-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe deploy monitor event records without executing deploy monitors or alert dispatch.",
+      "allowedFiles": [
+        "deploy-monitoring/p70-2-placeholder.js",
+        "scripts/check-p702.js",
+        "reports/p702-report.md",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.1",
+        "narrowScope": "Create deploy monitor event records only.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes; future UX consumes display-safe monitor records.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "deploy-monitoring/p70-2-placeholder.js",
+            "scripts/check-p702.js",
+            "reports/p702-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p702."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p702."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.2 complete after validation and set nextPhase to P70.3.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"feat(nexus): define p70 deploy monitor events\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.2 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-1-execution-contract-monitoring-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-3-incident-signal-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Create incident signal previews from monitor events without incident execution, alert dispatch, or mitigation.",
+      "allowedFiles": [
+        "deploy-monitoring/p70-3-placeholder.js",
+        "scripts/check-p703.js",
+        "reports/p703-report.md",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.2",
+        "narrowScope": "Create incident signal preview records only.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes; future UX consumes display-safe incident previews.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "deploy-monitoring/p70-3-placeholder.js",
+            "scripts/check-p703.js",
+            "reports/p703-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p703."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p703."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.3 complete after validation and set nextPhase to P70.4.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"feat(nexus): add p70 incident signal preview\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.3 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-2-deploy-monitor-event-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-4-mitigation-readiness-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Add mitigation readiness gates while keeping mitigation, rollback, alert, and deploy execution disabled.",
+      "allowedFiles": [
+        "deploy-monitoring/p70-4-placeholder.js",
+        "scripts/check-p704.js",
+        "reports/p704-report.md",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.3",
+        "narrowScope": "Create readiness gate records only.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes; future UX consumes display-safe mitigation gates.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "deploy-monitoring/p70-4-placeholder.js",
+            "scripts/check-p704.js",
+            "reports/p704-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p704."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p704."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.4 complete after validation and set nextPhase to P70.5.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"feat(nexus): add p70 mitigation readiness gate\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.4 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-3-incident-signal-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-5-command-center-monitoring-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Expose deploy monitoring and incident mitigation readiness without runnable monitoring, alert, rollback, deploy, or mitigation actions.",
+      "allowedFiles": [
+        "dashboard/src/data/deployMonitoringReadiness.js",
+        "scripts/check-p705-command-center-monitoring-ux.js",
+        "reports/command-center-monitoring-ux-report.md",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.4",
+        "narrowScope": "Add display-only Command Center monitoring UX.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Command Center must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/deployMonitoringReadiness.js",
+            "scripts/check-p705-command-center-monitoring-ux.js",
+            "reports/command-center-monitoring-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Playwright route coverage for Monitoring route.",
+          "Add check:p705-command-center-monitoring-ux."
+        ],
+        "testsCheckers": [
+          "Add Playwright route coverage for Monitoring route.",
+          "Add check:p705-command-center-monitoring-ux."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p705-command-center-monitoring-ux."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.5 complete after validation and set nextPhase to P70.6.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"feat(nexus): add p70 monitoring command center\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.5 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-4-mitigation-readiness-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P70 validation coverage before final validation.",
+      "allowedFiles": [
+        "scripts/check-p706-tests-checkers-docs.js",
+        "reports/p706-tests-checkers-docs-report.md",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.5",
+        "narrowScope": "Add aggregate checker/report only.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Preserve Command Center monitoring UX; no new route behavior.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p706-tests-checkers-docs.js",
+            "reports/p706-tests-checkers-docs-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p706-tests-checkers-docs."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p706-tests-checkers-docs."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.6 complete after validation and set nextPhase to P70.7.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"test(nexus): aggregate p70 monitoring validation coverage\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.6 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-5-command-center-monitoring-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p70-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P70 with deploy monitoring and incident mitigation execution still disabled.",
+      "allowedFiles": [
+        "scripts/check-p707-final-validation.js",
+        "reports/p707-final-validation-report.md",
+        "package.json",
+        "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P70.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P70.6",
+        "narrowScope": "Close P70 final validation only.",
+        "safetyRules": [
+          "Do not enable deploy execution, incident execution, mitigation execution, rollback execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, alert dispatch, or provider spend.",
+          "Deploy monitoring and incident records must be preview-only, evidence-linked, approval-aware, rollback-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable monitoring/mitigation actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Preserve Command Center monitoring UX; no new route behavior.",
+          "required": "Future or changed UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p707-final-validation.js",
+            "reports/p707-final-validation-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P70_DEPLOY_MONITORING_INCIDENT_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P70_DEPLOY_MONITORING_SUBPHASES",
+            "checkP70ExecutionPlan",
+            "createDeployMonitorEvent",
+            "createIncidentSignalPreview",
+            "createMitigationReadinessGate",
+            "buildDeployMonitoringReadinessViewModel"
+          ],
+          "schemas": [
+            "DeployMonitorEvent",
+            "IncidentSignalPreview",
+            "MitigationReadinessGate",
+            "DeployMonitoringCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "monitorId, deployId, environmentLabel, observedState, incidentState, severity, approvalRequired, rollbackPlan, mitigationAllowed, alertDispatchAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show monitor state, incident state, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable monitoring/alert/rollback/mitigation actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p707-final-validation."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p707-final-validation."
+        ],
+        "docsRoadmap": [
+          "Update P70 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P70.7 complete after validation and set nextPhase to P71.",
+        "validationCommands": [
+          "npm run check:p70-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake monitoring, alert, rollback, or mitigation actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P70 files>",
+          "git commit -m \"test(nexus): close p70 deploy monitoring validation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P70.7 is independently commit-ready.",
+        "No deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    }
+  ]
+}

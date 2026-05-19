@@ -2321,8 +2321,10 @@
       "track": "NEXUS_OS",
       "order": 45,
       "group": "Planned OS Phases",
-      "summary": "Monitor deployments and support governed incident mitigation once release loops exist.",
-      "commandCenterVisible": true
+      "summary": "Deploy monitoring and incident mitigation is in progress with contracts defined; all deploy-adjacent execution remains disabled.",
+      "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P70.2"
     },
     {
       "phaseId": "P71",
@@ -2548,6 +2550,83 @@
       "status": "complete",
       "summary": "Validated and closed P69 with release and deploy execution still disabled.",
       "nextPhase": "P70",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.1",
+      "title": "Execution Contract + Monitoring Boundary",
+      "track": "NEXUS_OS",
+      "order": 45.01,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "complete",
+      "summary": "Defined P70 deploy monitoring and incident mitigation contracts only; no execution behavior.",
+      "nextPhase": "P70.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.2",
+      "title": "Deploy Monitor Event Contract",
+      "track": "NEXUS_OS",
+      "order": 45.02,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Define display-safe deploy monitor event records.",
+      "nextPhase": "P70.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.3",
+      "title": "Incident Signal Preview",
+      "track": "NEXUS_OS",
+      "order": 45.03,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Create incident signal previews without incident execution, alert dispatch, or mitigation.",
+      "nextPhase": "P70.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.4",
+      "title": "Mitigation Readiness Gate",
+      "track": "NEXUS_OS",
+      "order": 45.04,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Add mitigation readiness gates while keeping mitigation, rollback, alert, and deploy execution disabled.",
+      "nextPhase": "P70.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.5",
+      "title": "Command Center Monitoring UX",
+      "track": "NEXUS_OS",
+      "order": 45.05,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Expose deploy monitoring and incident mitigation readiness without runnable monitoring, alert, rollback, deploy, or mitigation actions.",
+      "nextPhase": "P70.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 45.06,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Aggregate P70 validation coverage before final validation.",
+      "nextPhase": "P70.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P70.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 45.07,
+      "group": "P70 Deploy Monitoring + Incident Mitigation",
+      "status": "planned",
+      "summary": "Validate and close P70 with deploy monitoring and incident mitigation execution still disabled.",
+      "nextPhase": "P71",
       "commandCenterVisible": true
     }
   ],

@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-19T11:02:16.270Z
+- Generated at: 2026-05-19T11:06:19.462Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e1f3daf
+- Validation HEAD: 9564e26
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 384
+- Files checked: 386
 
 ## Warnings
 
