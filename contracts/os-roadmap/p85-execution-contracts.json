@@ -668,7 +668,19 @@
       "targetAgent": "qa",
       "taskType": "implementation-plan",
       "objective": "Aggregate P85 tests, docs, reports, and roadmap evidence.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "scripts/check-p856-tests-docs-roadmap.js",
+        "reports/p856-tests-docs-roadmap-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "package.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p85-execution-plan-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -685,8 +697,8 @@
         "phaseId": "P85.6",
         "scopeClassification": "DOCS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.5",
-        "narrowScope": "P85 tests, docs, status, and reports only.",
+        "expectedBaseCommit": "764796e",
+        "narrowScope": "Aggregate P85 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence only.",
         "safetyRules": [
           "Do not enable runtime execution."
         ],
@@ -705,6 +717,8 @@
         ],
         "validationCommands": [
           "npm run check:p856-tests-docs-roadmap",
+          "npm run check:p85-execution-plan",
+          "npm run check:os-phase-status",
           "npm run check:phase-validation-coverage",
           "git diff --check"
         ],
@@ -719,7 +733,21 @@
           "Branch name",
           "Commit hash",
           "Next phase/subphase"
-        ]
+        ],
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p856-tests-docs-roadmap.js",
+            "reports/p856-tests-docs-roadmap-report.md"
+          ],
+          "update": [
+            "contracts/os-roadmap/p85-execution-contracts.json",
+            "package.json",
+            "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ]
+        }
       },
       "acceptanceCriteria": [
         "P85 validation evidence is aggregated."

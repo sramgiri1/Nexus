@@ -37,7 +37,12 @@ addCheck("Playwright coverage added", tests.includes("Command Center Lite route 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p855-command-center-business-runtime-ux"]));
 addCheck("contract references P85.5 files", contract.includes("check:p855-command-center-business-runtime-ux") && contract.includes("dashboard/src/pages/CommandCenterV2.jsx"));
 addCheck("docs mention P85.5 validation", docs.includes("P85.5 Command Center Business Runtime UX") && docs.includes("npm run check:p855-command-center-business-runtime-ux"));
-addCheck("phase status advanced", statusById.get("P85.5")?.status === "complete" && status.currentPhase === "P85.5" && status.nextPhase === "P85.6");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.5")?.status === "complete" &&
+    ["P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.6", "P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p854-task-board-admission-report.md"));
 addCheck("no DemoApp/private IDs in Lite UX source", !dashboardSource.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(dashboardSource));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|create project now/i.test(dashboardSource));

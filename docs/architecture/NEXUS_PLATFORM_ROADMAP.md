@@ -1416,8 +1416,11 @@ detailed panels. The primary founder UX reads as one workflow while raw IDs,
 logs, DemoApp references, fake runnable actions, provider/model calls, dispatch,
 project mutation, DB writes, deploy, package, and spend stay blocked.
 
-P85.6 is next. It should aggregate P85 checks, docs, reports, and roadmap
-evidence before final validation.
+P85.6 is complete. It adds aggregated validation for P85.1-P85.5 scripts,
+reports, package scripts, docs, roadmap/status records, Command Center Lite
+coverage, and safety posture.
+
+P85.7 is next. It should close P85 with final validation and hand off to P86.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).

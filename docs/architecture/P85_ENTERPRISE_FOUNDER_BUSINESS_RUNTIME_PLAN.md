@@ -80,8 +80,11 @@ Validation: `npm run check:p855-command-center-business-runtime-ux`.
 
 Goal: aggregate P85 tests, docs, reports, and roadmap evidence.
 
-Status: planned. P85.6 should add validation aggregation and refresh P85 docs,
-roadmap, and status evidence.
+Status: complete. P85.6 adds `check:p856-tests-docs-roadmap`, an aggregation
+checker for P85.1-P85.5 scripts, reports, package scripts, docs, roadmap,
+status records, Command Center Lite coverage, and safety posture.
+
+Validation: `npm run check:p856-tests-docs-roadmap`.
 
 ## P85.7 Final Validation
 

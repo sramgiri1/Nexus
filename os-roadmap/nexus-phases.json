@@ -4086,12 +4086,12 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "7ecc63c",
       "completedAt": "",
-      "summary": "Enterprise founder business runtime in progress with local session, Q&A, PRD review, task board admission, and Founder Lite UX consolidation complete.",
+      "summary": "Enterprise founder business runtime in progress with P85.1-P85.6 complete.",
       "checksRun": [],
       "knownLimitations": [
         "Provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled."
       ],
-      "nextPhase": "P85.6",
+      "nextPhase": "P85.7",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4215,24 +4215,48 @@
       "title": "Tests / Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 65.07,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P85 checks, docs, status, and roadmap evidence.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:36:30.274Z",
+      "summary": "Aggregated P85 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage"
+      ],
       "knownLimitations": [
-        "Not started."
+        "Aggregation only; execution-capable actions remain disabled."
       ],
       "nextPhase": "P85.7",
       "commandCenterVisible": true,
       "label": "Tests / Docs / Roadmap",
       "detail": "P85 validation, documentation, and roadmap aggregation."
+    },
+    {
+      "phaseId": "P85.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 66.07,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Close P85 enterprise founder business runtime and hand off to P86.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P86",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P85 validation and P86 handoff."
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P85.5",
-  "previousPhase": "P85.4",
-  "nextPhase": "P85.6",
+  "currentPhase": "P85.6",
+  "previousPhase": "P85.5",
+  "nextPhase": "P85.7",
   "currentPhaseStatus": "complete"
 }
