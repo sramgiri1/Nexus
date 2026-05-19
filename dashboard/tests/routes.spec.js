@@ -1941,6 +1941,35 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Isolation route renders readiness without runnable access actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/isolation");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Isolation");
+      await expect(page.locator("body")).toContainText("Tenant posture");
+      await expect(page.locator("body")).toContainText("Project isolation");
+      await expect(page.locator("body")).toContainText("Access context");
+    }
+
+    await expect(page.locator("body")).toContainText("Isolation readiness is display-only");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Tenant mutation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Project mutation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Access grants disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Role or permission changes disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/create tenant|update tenant|delete tenant|create project|update project|delete project|grant access|assign role|change permission|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P76\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 

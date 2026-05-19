@@ -124,6 +124,13 @@ export const BACKUP_DR_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable Backup/DR actions and reasons", badge: "Disabled" },
 ];
 
+export const ISOLATION_TABS = [
+  { id: "overview", label: "Overview", description: "Tenant, project, access posture, and next action", badge: "Preview" },
+  { id: "posture", label: "Posture", description: "Disabled tenant, project, and access posture", badge: "Blocked" },
+  { id: "evidence", label: "Access Context", description: "Access packet, evidence, activity, cost, and blockers", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable isolation actions and reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

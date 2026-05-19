@@ -2619,8 +2619,8 @@
       "order": 51,
       "group": "P76 Tenant / Project Isolation",
       "status": "in_progress",
-      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.4 access context packet previews are complete.",
-      "nextPhase": "P76.5",
+      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.5 Command Center Isolation UX is complete.",
+      "nextPhase": "P76.6",
       "commandCenterVisible": true
     },
     {
@@ -2673,8 +2673,8 @@
       "track": "NEXUS_OS",
       "order": 51.05,
       "group": "P76 Tenant / Project Isolation",
-      "status": "planned",
-      "summary": "Expose display-only tenant and project isolation readiness in Command Center.",
+      "status": "complete",
+      "summary": "Exposed display-only tenant, project, and access isolation readiness in Command Center without runnable mutation actions.",
       "nextPhase": "P76.6",
       "commandCenterVisible": true
     },

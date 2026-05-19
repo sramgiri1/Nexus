@@ -87,13 +87,13 @@ Expose tenant and project isolation readiness in Command Center without
 runnable tenant, project, access, membership, permission, role, session, or
 workspace mutation actions.
 
-Status: planned. P76.5 will add a display-only Command Center route that
-shows tenant posture, project isolation posture, access context posture,
+Status: complete. P76.5 adds a display-only Command Center Isolation route
+that shows tenant posture, project isolation posture, access context posture,
 current state, next action, blockers, disabled reason, owner capability,
-evidence/activity location, safety posture, and cost impact. Primary UX must
-not show raw JSON, raw logs, raw policy dumps, raw private project IDs, raw
-tokens, internal phase labels outside OS Roadmap, or DemoApp in full Command
-Center. System, Dark, and Light themes must remain readable.
+evidence/activity location, safety posture, cost impact, and disabled action
+reasons. Primary UX does not show raw JSON, raw logs, raw policy dumps, raw
+private project IDs, raw tokens, internal phase labels outside OS Roadmap, or
+DemoApp in full Command Center. System, Dark, and Light themes remain covered.
 
 ### P76.6 Tests / Checkers / Docs
 
@@ -144,6 +144,18 @@ P76.3 validation:
 P76.4 validation:
 
 - `npm run check:p764`
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.5 validation:
+
+- `npm run check:p765-command-center-isolation-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Isolation route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

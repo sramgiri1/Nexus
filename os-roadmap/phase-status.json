@@ -4137,10 +4137,14 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "853bbe1",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P76.4 preview-only access context packets while tenant/project/access mutation remains disabled.",
+      "summary": "Added P76.5 display-only Command Center Isolation UX while tenant/project/access mutation remains disabled.",
       "checksRun": [
+        "npm run check:p765-command-center-isolation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Isolation route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "npm run check:p764",
         "npm run check:p763",
         "npm run check:p762",
@@ -4153,7 +4157,7 @@
       "knownLimitations": [
         "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P76.5",
+      "nextPhase": "P76.6",
       "commandCenterVisible": true
     },
     {
@@ -4251,13 +4255,25 @@
       "phaseId": "P76.5",
       "title": "Command Center Isolation UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned display-only Command Center tenant/project isolation readiness UX.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Exposed display-only Command Center Isolation readiness with tenant posture, project isolation, access context, disabled reasons, evidence, activity, cost, and safety state.",
+      "checksRun": [
+        "npm run check:p765-command-center-isolation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Isolation route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.5 exposes readiness UX only. Tenant mutation, project mutation, cross-project access, access grants, role mutation, permission mutation, membership mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P76.6",
       "commandCenterVisible": true
     },
@@ -7211,5 +7227,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P76",
   "previousPhase": "P75",
-  "nextPhase": "P76.5"
+  "nextPhase": "P76.6"
 }
