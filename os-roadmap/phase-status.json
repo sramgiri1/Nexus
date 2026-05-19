@@ -3499,7 +3499,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c5c7663",
       "completedAt": "",
       "summary": "DB-backed runtime primary is in progress with Command Center DB runtime readiness visible and all DB mutation disabled.",
       "checksRun": [
@@ -4293,7 +4293,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-definition-update-workflow",
-      "commit": "pending-final-commit",
+      "commit": "48d90d3",
       "completedAt": "2026-05-15T18:25:00.000Z",
       "summary": "Exposes read-only agent definition updates in Command Center and validates no permission expansion bypasses review.",
       "checksRun": [
@@ -4312,7 +4312,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-definition-update-workflow",
-      "commit": "pending-final-commit",
+      "commit": "b068e32",
       "completedAt": "2026-05-15T18:26:00.000Z",
       "summary": "Validates and closes the P49 Agent Definition Update Workflow and marks P50 next.",
       "checksRun": [
@@ -4334,7 +4334,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/projects-page-productization",
-      "commit": "pending-final-commit",
+      "commit": "c5c7663",
       "completedAt": "2026-05-15T18:45:00.000Z",
       "summary": "Productizes the Projects page into an enterprise Portfolio and Selected Project operating surface with stack, capabilities, milestones, gaps, evidence, and settings tabs.",
       "checksRun": [
