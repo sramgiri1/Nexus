@@ -3410,7 +3410,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/cost-center-budget-enforcement",
-      "commit": "pending-final-commit",
+      "commit": "4086f88",
       "completedAt": "2026-05-16T12:58:31.779Z",
       "checksRun": [
         "npm run check:cost-center-final-validation"
@@ -4236,7 +4236,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "fix/command-center-nexus-chat-entry",
-      "commit": "pending-final-commit",
+      "commit": "4086f88",
       "completedAt": "2026-05-16T19:57:19.996Z",
       "summary": "Added visible Ask NEXUS entry points, a preview-only conversational Command Center route, starter prompts, governed command previews, and UI safety boundaries.",
       "checksRun": [
