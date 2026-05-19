@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T01:40:13.326Z
+- Generated at: 2026-05-19T01:43:55.180Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 468f5aa
+- Validation HEAD: 3da5958
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -55,7 +55,14 @@
 | P66.5 validation coverage | PASS | 8 checkers, 1 reports |
 | P66.6 validation coverage | PASS | 10 checkers, 1 reports |
 | P66.7 validation coverage | PASS | 20 checkers, 10 reports |
-| P67 validation coverage | PASS | dedicated_checker, validation_report |
+| P67 validation coverage | PASS | 5 checkers, 1 reports |
+| P67.1 validation coverage | PASS | 4 checkers, 1 reports |
+| P67.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.7 validation coverage | PASS | 9 checkers, 9 reports |
 | P68 validation coverage | PASS | dedicated_checker, validation_report |
 | P69 validation coverage | PASS | dedicated_checker, validation_report |
 | P70 validation coverage | PASS | dedicated_checker, validation_report |
@@ -69,14 +76,34 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P67; next=P68; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P67; next=P67.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P67 Controlled Source Mutation Expansion
+- P67.2 Mutation Intent Contract
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P67.3 Patch Plan Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P67.4 Approval + Scope Gate
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P67.5 Command Center Controlled Mutation UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P67.6 Tests / Checkers / Docs
   - status: planned
   - checkers: 0
   - reports: 0
@@ -138,4 +165,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (54/54)
+PASS (61/61)

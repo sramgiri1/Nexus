@@ -3179,11 +3179,125 @@
       "phaseId": "P67",
       "title": "Controlled Source Mutation Expansion",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p67-1-commit",
+      "completedAt": "",
+      "summary": "P67 is in progress with contract-only controlled mutation planning complete; mutation behavior remains disabled.",
+      "checksRun": [
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P67.1 does not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, or provider spend."
+      ],
+      "nextPhase": "P67.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.1",
+      "title": "Execution Contract + Mutation Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p67-1-commit",
+      "completedAt": "2026-05-19T06:10:00.000Z",
+      "summary": "Defined the implementation-grade P67 controlled mutation contract, subphase split, safety rules, validation checker, docs, and roadmap handoff.",
+      "checksRun": [
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Contract-only foundation. Project mutation, provider/tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P67.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.2",
+      "title": "Mutation Intent Contract",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned expansion of controlled source mutation capabilities.",
+      "summary": "Define safe source mutation intent records and validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P67.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.3",
+      "title": "Patch Plan Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Build preview-only patch plans with allowed and forbidden file scope.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P67.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.4",
+      "title": "Approval + Scope Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add approval, scope, safety, and rollback gates for patch plans.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P67.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.5",
+      "title": "Command Center Controlled Mutation UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose controlled mutation readiness without runnable apply actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P67.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P67 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P67.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P67 with project mutation still disabled.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P68",
@@ -5397,5 +5511,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
-  "nextPhase": "P68"
+  "nextPhase": "P67.2"
 }

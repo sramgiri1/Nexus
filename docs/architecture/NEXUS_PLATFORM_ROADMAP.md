@@ -307,7 +307,14 @@ Risk level:
   - `P66.5` Command Center Self-Healing UX — complete
   - `P66.6` Tests / Checkers / Docs — complete
   - `P66.7` Final Validation — complete
-- `P67` Controlled Source Mutation Expansion — next
+- `P67` Controlled Source Mutation Expansion — in progress
+  - `P67.1` Execution Contract + Mutation Boundary — complete
+  - `P67.2` Mutation Intent Contract — next
+  - `P67.3` Patch Plan Preview
+  - `P67.4` Approval + Scope Gate
+  - `P67.5` Command Center Controlled Mutation UX
+  - `P67.6` Tests / Checkers / Docs
+  - `P67.7` Final Validation
 - `P68` Self-Update Workflow for NEXUS OS
 - `P69` Release / Deploy Loop
 - `P70` Deploy Monitoring + Incident Mitigation

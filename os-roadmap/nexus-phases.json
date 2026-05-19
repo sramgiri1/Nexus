@@ -2217,6 +2217,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P67.1",
+      "title": "Execution Contract + Mutation Boundary",
+      "track": "NEXUS_OS",
+      "order": 42.01,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Define the P67 implementation contract, safety split, and validation plan before mutation behavior is implemented.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.2",
+      "title": "Mutation Intent Contract",
+      "track": "NEXUS_OS",
+      "order": 42.02,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Define safe source mutation intent records and validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.3",
+      "title": "Patch Plan Preview",
+      "track": "NEXUS_OS",
+      "order": 42.03,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Build preview-only patch plans with allowed and forbidden file scope.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.4",
+      "title": "Approval + Scope Gate",
+      "track": "NEXUS_OS",
+      "order": 42.04,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Add approval, scope, safety, and rollback gates for patch plans.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.5",
+      "title": "Command Center Controlled Mutation UX",
+      "track": "NEXUS_OS",
+      "order": 42.05,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Expose controlled mutation readiness without runnable apply actions.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 42.06,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Aggregate P67 validation coverage before final validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P67.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 42.07,
+      "group": "P67 Controlled Source Mutation Expansion",
+      "summary": "Validate and close P67 with project mutation still disabled.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P68",
       "title": "Self-Update Workflow for NEXUS OS",
       "track": "NEXUS_OS",

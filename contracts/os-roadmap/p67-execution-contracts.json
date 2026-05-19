@@ -1,0 +1,1124 @@
+{
+  "phaseId": "P67",
+  "title": "Controlled Source Mutation Expansion",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p67-1-execution-contract-mutation-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define the P67 implementation contract only; no mutation behavior.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p67-execution-contracts.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "scripts/check-p67-execution-plan.js",
+        "reports/p67-execution-plan-report.md",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-phase-validation-coverage.js"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "3da5958",
+        "narrowScope": "Define the P67 implementation contract only; no mutation behavior.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p67-execution-contracts.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "scripts/check-p67-execution-plan.js",
+            "reports/p67-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md",
+            "scripts/check-os-phase-status.js",
+            "scripts/check-phase-validation-coverage.js"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67 in_progress, mark P67.1 complete after validation, and set nextPhase to P67.2.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.1 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-2-mutation-intent-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe source mutation intent records.",
+      "allowedFiles": [
+        "controlled-mutation/p67-2-placeholder.js",
+        "scripts/check-p672.js",
+        "reports/p672-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.1",
+        "narrowScope": "Define display-safe source mutation intent records.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-2-placeholder.js",
+            "scripts/check-p672.js",
+            "reports/p672-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.2 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.2 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-1-execution-contract-mutation-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-3-patch-plan-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build preview-only patch plans with allowed/forbidden files and validation commands.",
+      "allowedFiles": [
+        "controlled-mutation/p67-3-placeholder.js",
+        "scripts/check-p673.js",
+        "reports/p673-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.2",
+        "narrowScope": "Build preview-only patch plans with allowed/forbidden files and validation commands.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-3-placeholder.js",
+            "scripts/check-p673.js",
+            "reports/p673-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.3 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.3 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-2-mutation-intent-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-4-approval-scope-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Add approval, scope, safety, and rollback gates for patch plans.",
+      "allowedFiles": [
+        "controlled-mutation/p67-4-placeholder.js",
+        "scripts/check-p674.js",
+        "reports/p674-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.3",
+        "narrowScope": "Add approval, scope, safety, and rollback gates for patch plans.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-4-placeholder.js",
+            "scripts/check-p674.js",
+            "reports/p674-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.4 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.4 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-3-patch-plan-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-5-command-center-controlled-mutation-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose controlled mutation readiness without runnable apply actions.",
+      "allowedFiles": [
+        "controlled-mutation/p67-5-placeholder.js",
+        "scripts/check-p675.js",
+        "reports/p675-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.4",
+        "narrowScope": "Expose controlled mutation readiness without runnable apply actions.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Command Center display-only controlled mutation readiness.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-5-placeholder.js",
+            "scripts/check-p675.js",
+            "reports/p675-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Playwright route coverage for controlled mutation readiness labels, disabled apply actions, no raw dumps, theme switching, sidebar navigation, and DemoApp isolation."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.5 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.5 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-4-approval-scope-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P67 validation coverage before final validation.",
+      "allowedFiles": [
+        "controlled-mutation/p67-6-placeholder.js",
+        "scripts/check-p676.js",
+        "reports/p676-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.5",
+        "narrowScope": "Aggregate P67 validation coverage before final validation.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-6-placeholder.js",
+            "scripts/check-p676.js",
+            "reports/p676-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.6 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.6 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-5-command-center-controlled-mutation-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p67-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P67 with project mutation still disabled.",
+      "allowedFiles": [
+        "controlled-mutation/p67-7-placeholder.js",
+        "scripts/check-p677.js",
+        "reports/p677-report.md",
+        "package.json",
+        "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P67.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.6",
+        "narrowScope": "Validate and close P67 with project mutation still disabled.",
+        "safetyRules": [
+          "Do not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P67 starts with NEXUS OS mutation planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Patch previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "docs/architecture/PROJECT_REGISTRY_ADAPTER_FRAMEWORK.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show mutation intent, current state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "controlled-mutation/p67-7-placeholder.js",
+            "scripts/check-p677.js",
+            "reports/p677-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P67_CONTROLLED_SOURCE_MUTATION_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P67_CONTROLLED_MUTATION_SUBPHASES",
+            "checkP67ExecutionPlan"
+          ],
+          "schemas": [
+            "MutationIntentContract",
+            "PatchPlanPreview",
+            "MutationScopeGate",
+            "ControlledMutationReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, diffPreview, approvalRequired, approvalState, rollbackPlan, mutationAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show mutation intent, current state, disabled apply state, allowed files, forbidden files, diff preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P67 UX must cover disabled apply actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P67-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p67-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P67 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P67 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P67.7 complete after validation and advance P67 nextPhase.",
+        "validationCommands": [
+          "npm run check:p67-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P67 files>",
+          "git commit -m \"docs(nexus): define p67 controlled mutation contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P67.7 is independently commit-ready.",
+        "No project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T06:10:00.000Z"
+    }
+  ]
+}
