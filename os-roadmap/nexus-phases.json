@@ -2354,10 +2354,10 @@
       "track": "NEXUS_OS",
       "order": 48,
       "group": "Planned OS Phases",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with multi-user workspace boundaries defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with Command Center auth governance readiness visible and mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P73.5"
+      "nextPhase": "P73.6"
     },
     {
       "phaseId": "P73.1",
@@ -2409,8 +2409,8 @@
       "track": "NEXUS_OS",
       "order": 48.05,
       "group": "P73 Auth, RBAC, Multi-user Governance",
-      "status": "planned",
-      "summary": "Expose auth governance readiness without runnable auth actions.",
+      "status": "complete",
+      "summary": "Exposed display-only auth governance readiness without runnable auth actions.",
       "nextPhase": "P73.6",
       "commandCenterVisible": true
     },

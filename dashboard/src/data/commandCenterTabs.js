@@ -103,6 +103,13 @@ export const API_BATCH_TABS = [
   },
 ];
 
+export const AUTH_GOVERNANCE_TABS = [
+  { id: "overview", label: "Overview", description: "Identity, RBAC, workspace posture, and next action", badge: "Preview" },
+  { id: "governance", label: "Governance", description: "Disabled auth and role mutation posture", badge: "Blocked" },
+  { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable auth actions and reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

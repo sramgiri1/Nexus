@@ -1860,6 +1860,29 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Auth Governance route renders readiness without runnable auth actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/auth-governance");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Auth Governance");
+    await expect(page.locator("body")).toContainText("Identity mode");
+    await expect(page.locator("body")).toContainText("Role posture");
+    await expect(page.locator("body")).toContainText("Workspace boundary");
+    await expect(page.locator("body")).toContainText("Auth governance is display-only");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Sign in disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Assign role disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/sign in now|log in now|assign role now|create workspace now|invite user now|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/[^\s]*auth/i);
+    expect(body).not.toMatch(/P73\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 

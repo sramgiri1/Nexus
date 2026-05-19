@@ -3530,10 +3530,12 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3281cd5",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with multi-user workspace boundaries defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with Command Center auth governance readiness visible and mutation disabled.",
       "checksRun": [
+        "npm run check:p735-command-center-auth-governance-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Auth Governance route\"",
         "npm run check:p734",
         "npm run check:p733",
         "npm run check:p732",
@@ -3546,7 +3548,7 @@
       "knownLimitations": [
         "P73 has not enabled login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P73.5",
+      "nextPhase": "P73.6",
       "commandCenterVisible": true
     },
     {
@@ -3644,13 +3646,23 @@
       "phaseId": "P73.5",
       "title": "Command Center Auth Governance UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose auth governance readiness without runnable auth actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Exposed display-only auth governance readiness without runnable auth actions.",
+      "checksRun": [
+        "npm run check:p735-command-center-auth-governance-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Auth Governance route\"",
+        "npm run check:p73-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P73.5 exposes auth governance readiness only. Login, identity provider integration, token exchange, user/session/role/permission/tenant/workspace mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P73.6",
       "commandCenterVisible": true
     },
@@ -6646,5 +6658,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P73",
   "previousPhase": "P72",
-  "nextPhase": "P73.5"
+  "nextPhase": "P73.6"
 }

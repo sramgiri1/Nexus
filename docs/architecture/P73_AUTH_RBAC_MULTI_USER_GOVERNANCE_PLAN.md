@@ -122,7 +122,29 @@ Implementation:
 
 Expose auth governance readiness without runnable auth actions.
 
-Status: planned.
+Status: complete. P73.5 adds a display-only Auth Governance Command Center
+route. The route shows identity mode, role posture, workspace boundary, next
+action, blockers, disabled reason, owner capability, evidence/activity
+location, safety posture, and cost impact without raw JSON, raw logs, raw
+policy dumps, raw private IDs, raw user IDs, raw tokens, internal phase labels,
+DemoApp leakage, or runnable auth actions.
+
+Implementation:
+
+- `dashboard/src/data/authGovernanceReadiness.js` exports
+  `buildAuthGovernanceReadinessViewModel` and
+  `authGovernanceReadinessViewModel`.
+- `dashboard/src/data/commandCenterRoutes.js` adds the
+  `/command-center/auth-governance` route.
+- `dashboard/src/data/commandCenterTabs.js` adds `AUTH_GOVERNANCE_TABS`.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders Auth Governance readiness,
+  governance posture, blockers, evidence/activity, disabled reason, and
+  disabled actions as display-only content.
+- `dashboard/tests/routes.spec.js` adds focused Playwright coverage for the
+  Auth Governance route.
+- `scripts/check-p735-command-center-auth-governance-ux.js` validates display
+  data, disabled mutation flags, raw-output safety, DemoApp boundary, and
+  Playwright coverage registration.
 
 ### P73.6 Tests / Checkers / Docs
 
@@ -158,7 +180,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.4. Login, identity provider integration,
+P73 is in progress through P73.5. Login, identity provider integration,
 user/session/role/tenant mutation, DB writes, project mutation, provider
 dispatch, tool execution, worker execution, deploy execution, release
 execution, export execution, package creation, external network calls, and

@@ -312,6 +312,7 @@
     "check:p732": "node scripts/check-p732.js",
     "check:p733": "node scripts/check-p733.js",
     "check:p734": "node scripts/check-p734.js",
+    "check:p735-command-center-auth-governance-ux": "node scripts/check-p735-command-center-auth-governance-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

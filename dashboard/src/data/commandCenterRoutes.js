@@ -1,4 +1,5 @@
 import {
+  AUTH_GOVERNANCE_TABS,
   BATCH_QUEUE_TABS,
   API_BATCH_TABS,
   DATA_CONTEXT_TABS,
@@ -539,6 +540,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: PROJECT_SHIPPING_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+  },
+  {
+    key: "authGovernance",
+    path: "/command-center/auth-governance",
+    name: "Auth Governance",
+    section: "OS",
+    allowPhaseLabels: false,
+    expectedHeading: "Auth Governance",
+    status: "implemented",
+    badge: "Preview",
+    scope: "os",
+    tabs: AUTH_GOVERNANCE_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md",
   },
   {
     key: "docs",
