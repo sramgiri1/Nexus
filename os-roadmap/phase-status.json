@@ -3726,7 +3726,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2b7a7ef",
+      "commit": "0ac1c05",
       "completedAt": "",
       "summary": "Observability, telemetry, and service-level objective readiness is in progress with display-only Command Center observability coverage.",
       "checksRun": [
@@ -3847,7 +3847,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0ac1c05",
       "completedAt": "2026-05-19",
       "summary": "Exposed observability readiness without runnable telemetry or incident actions.",
       "checksRun": [
