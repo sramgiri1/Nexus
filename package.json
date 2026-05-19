@@ -359,6 +359,7 @@
     "check:p796-final-validation": "node scripts/check-p796-final-validation.js",
     "check:p80-execution-plan": "node scripts/check-p80-execution-plan.js",
     "check:p801-founder-intake-schema": "node scripts/check-p801-founder-intake-schema.js",
+    "check:p802-founder-intake-session": "node scripts/check-p802-founder-intake-session.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

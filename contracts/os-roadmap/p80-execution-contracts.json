@@ -183,7 +183,11 @@
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "reports/p80-execution-plan-report.md",
+        "reports/format-readability-report.md",
+        "scripts/check-p801-founder-intake-schema.js",
+        "reports/p801-founder-intake-schema-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -257,7 +261,11 @@
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "reports/os-phase-status-report.md",
-            "reports/phase-validation-coverage-report.md"
+            "reports/phase-validation-coverage-report.md",
+            "reports/p80-execution-plan-report.md",
+            "reports/format-readability-report.md",
+            "scripts/check-p801-founder-intake-schema.js",
+            "reports/p801-founder-intake-schema-report.md"
           ]
         },
         "expectedExportsSchemasDataShapes": {

@@ -21,6 +21,9 @@ Validation: `npm run check:p801-founder-intake-schema` and `npm run check:p80-ex
 
 Goal: create local founder intake session state and deterministic state transitions without provider calls or project mutation.
 
+Status: complete. P80.2 adds local session creation, answer advancement, and summary helpers.
+The model does not call providers, execute tools/workers, mutate projects, write DB rows, deploy, or spend budget.
+
 Validation: `npm run check:p802-founder-intake-session` and `npm run check:p80-execution-plan`.
 
 ## P80.3 Guided Q&A Comprehension Loop

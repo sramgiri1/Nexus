@@ -3355,8 +3355,8 @@
       "order": 55,
       "group": "P80 Founder Intake Runtime",
       "status": "in_progress",
-      "summary": "Started governed founder intake runtime with schema and blocked runtime policy.",
-      "nextPhase": "P80.2",
+      "summary": "Added founder intake schema and local session model while runtime mutation remains blocked.",
+      "nextPhase": "P80.3",
       "commandCenterVisible": true
     },
     {
@@ -3374,8 +3374,8 @@
       "title": "Core Intake Session Model",
       "order": 55.02,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Create local founder intake session state and deterministic transitions.",
+      "status": "complete",
+      "summary": "Created deterministic local founder intake session state, answer advancement, and summary helpers.",
       "nextPhase": "P80.3",
       "commandCenterVisible": true
     },

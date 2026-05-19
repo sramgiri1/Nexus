@@ -77,6 +77,7 @@ export function createFounderIntakeSessionEnvelope(input = {}) {
   const redaction = summarizeRedaction({
     founderIdeaSummary: input.founderIdeaSummary || "Founder has a startup idea that needs feasibility, PRD, and agent work planning.",
     founderNotes: input.founderNotes || "",
+    answers: input.answers || {},
   });
   const answers = input.answers && typeof input.answers === "object" ? input.answers : {};
   const answeredFields = FOUNDER_INTAKE_REQUIRED_FIELDS.filter((field) => Boolean(answers[field]));
