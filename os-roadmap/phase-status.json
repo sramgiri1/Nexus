@@ -3726,7 +3726,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "79d1c7e",
       "completedAt": "2026-05-19",
       "summary": "Observability, telemetry, and service-level objective readiness is complete with display-only Command Center coverage and runtime automation disabled.",
       "checksRun": [
@@ -3900,7 +3900,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "79d1c7e",
       "completedAt": "2026-05-19",
       "summary": "Validated and closed P74 with telemetry export and SLO enforcement still disabled.",
       "checksRun": [
