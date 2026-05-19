@@ -111,7 +111,26 @@ Implementation:
 
 Expose controlled mutation readiness without runnable apply actions.
 
-Status: planned.
+Status: complete. P67.5 adds display-only controlled mutation readiness for
+the Command Center Implementation Workflow. The UI shows current state,
+mutation intent, allowed files, forbidden files, diff preview state, blockers,
+approval state, owner capability, evidence/activity location, rollback posture,
+disabled apply state, and next action without raw JSON, raw logs, raw private
+IDs, DemoApp leakage, or internal phase labels in primary UX.
+
+Implementation:
+
+- `controlled-mutation/p67-5-placeholder.js` exports
+  `createControlledMutationReadinessCard`,
+  `validateControlledMutationReadinessCard`,
+  `buildControlledMutationReadinessEnvelope`, `P67_5_REQUIRED_FIELDS`, and
+  `P67_5_SAMPLE_READINESS_CARDS`.
+- `scripts/check-p675.js` validates readiness card shape, disabled
+  apply/mutation/execution/spend flags, project path blocking, visible
+  blockers, and primary-copy safety.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders a display-only readiness
+  card in Implementation Workflow while preserving existing route navigation,
+  System/Dark/Light themes, and route-wide safety tests.
 
 ### P67.6 Tests / Checkers / Docs
 

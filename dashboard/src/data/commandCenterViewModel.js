@@ -78,6 +78,7 @@ import {
   getCareLoopPhaseMilestones,
   summarizeCareLoopPhase2,
 } from "./projectRoadmap.js";
+import { createControlledMutationReadinessCard } from "../../../controlled-mutation/p67-5-placeholder.js";
 
 const SERVICE_ROLE_COPY = {
   "command-center": "Primary operator UI for Mission Control, platform status, and governed workflows.",
@@ -1226,6 +1227,7 @@ export function buildCommandCenterViewModelV2(studio, pvSnapshot, abSnapshot) {
         enabled: true,
         action: "navigate:/command-center/implementation",
       },
+      controlledMutationReadiness: createControlledMutationReadinessCard(),
     },
     agentWorkbench: {
       policyPhase: "P38-LOCAL",

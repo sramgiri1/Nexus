@@ -1737,6 +1737,10 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/implementation");
+    await expect(page.locator("body")).toContainText("Controlled Mutation Readiness");
+    await expect(page.locator("body")).toContainText("Apply disabled");
+    await expect(page.locator("body")).toContainText("Preview a scoped source change before approval or apply exists.");
+    await expect(page.locator("body")).toContainText("reports/p675-report.md");
     for (const label of ["Proposal", "Apply", "Validation", "Rollback", "Activity", "Developer Details"]) {
       await expect(commandTab(page, label)).toBeVisible();
       await commandTab(page, label).click();

@@ -1301,6 +1301,14 @@ for (const expectedTest of [
   check(routeTestSource.includes(expectedTest), "tabbedCorePages", `Route tests missing operational tab coverage: ${expectedTest}`);
 }
 for (const expected of [
+  "Controlled Mutation Readiness",
+  "Apply disabled",
+  "Preview a scoped source change before approval or apply exists.",
+  "reports/p675-report.md",
+]) {
+  check(commandCenterSource.includes(expected) || routeTestSource.includes(expected), "tabbedCorePages", `Controlled mutation readiness UX missing: ${expected}`);
+}
+for (const expected of [
   "Active Project Context",
   "No project selected",
   "Create or import a project",

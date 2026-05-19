@@ -2213,10 +2213,10 @@
       "track": "NEXUS_OS",
       "order": 42,
       "group": "Planned OS Phases",
-      "summary": "Controlled source mutation expansion is in progress with approval and scope gates complete and mutation behavior still disabled.",
+      "summary": "Controlled source mutation expansion is in progress with Command Center readiness complete and mutation behavior still disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P67.5"
+      "nextPhase": "P67.6"
     },
     {
       "phaseId": "P67.1",
@@ -2266,8 +2266,10 @@
       "track": "NEXUS_OS",
       "order": 42.05,
       "group": "P67 Controlled Source Mutation Expansion",
-      "summary": "Expose controlled mutation readiness without runnable apply actions.",
-      "commandCenterVisible": true
+      "summary": "Exposed controlled mutation readiness without runnable apply actions.",
+      "commandCenterVisible": true,
+      "status": "complete",
+      "nextPhase": "P67.6"
     },
     {
       "phaseId": "P67.6",
@@ -2387,5 +2389,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T01:58:47.086Z"
+  "updatedAt": "2026-05-19T02:02:35.019Z"
 }

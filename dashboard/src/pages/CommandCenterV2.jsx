@@ -5356,6 +5356,7 @@ function ImplementationPage({ vm }) {
   const validationStatus = applyResult?.result?.validationStatus || "Not run";
   const rollbackStatus = ci.proposal?.rollbackPlan ? "Available" : "Not needed";
   const productionBehaviorStatus = ci.safety?.productionBehaviorChange === true ? "Yes" : "No";
+  const mutationReadiness = ci.controlledMutationReadiness || {};
 
   return (
     <div className="ccv2-content">
@@ -5395,6 +5396,30 @@ function ImplementationPage({ vm }) {
           <div className="ccv2-stat-chip">
             <div className="ccv2-stat-chip__label">Validation</div>
             <div className={`ccv2-stat-chip__value ccv2-stat-chip__value--${validationStatus === "PASS" ? "green" : validationStatus === "FAIL" ? "red" : "amber"}`}>{validationStatus}</div>
+          </div>
+        </div>
+
+        <div className="ccv2-card">
+          <div className="ccv2-section-heading">Controlled Mutation Readiness</div>
+          <p style={{ marginTop: 6, fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6 }}>
+            Display-only readiness for future controlled source mutation. Apply remains disabled until validation, approval, and final gates are complete.
+          </p>
+          <div className="ccv2-wb-meta-grid" style={{ marginTop: 10 }}>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Current state</span><span className="ccv2-pill ccv2-pill--disabled">{mutationReadiness.currentState || "Blocked - review required"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Intent</span><span className="ccv2-wb-meta-value">{mutationReadiness.intent || "Preview a scoped source change before approval or apply exists."}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Diff preview</span><span className="ccv2-wb-meta-value">{mutationReadiness.diffPreviewState || "Preview only"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Approval state</span><span className="ccv2-wb-meta-value">{mutationReadiness.approvalState || "not_requested"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Owner capability</span><span className="ccv2-wb-meta-value">{mutationReadiness.ownerCapability || "CORE.controlledMutation"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Rollback posture</span><span className="ccv2-wb-meta-value">{mutationReadiness.rollbackPosture || "Documented"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Apply state</span><span className="ccv2-safety-row__value--disabled">Apply disabled</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Evidence location</span><span className="ccv2-wb-meta-value">{mutationReadiness.evidenceLocation || "reports/p675-report.md"}</span></div>
+            <div className="ccv2-wb-meta-row"><span className="ccv2-wb-meta-label">Activity location</span><span className="ccv2-wb-meta-value">{mutationReadiness.activityLocation || "os-roadmap/phase-status.json"}</span></div>
+          </div>
+          <div style={{ marginTop: 10, display: "grid", gap: 8 }}>
+            <div style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>Allowed files: {(mutationReadiness.allowedFiles || []).slice(0, 4).join(", ") || "NEXUS OS controlled mutation files only"}</div>
+            <div style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>Forbidden files: {(mutationReadiness.forbiddenFiles || ["projects/**"]).slice(0, 5).join(", ")}</div>
+            <div style={{ fontSize: 11, color: "var(--v2-muted-2)" }}>Blocker: {(mutationReadiness.blockers || [mutationReadiness.disabledReason || "Apply disabled until final gates are complete."])[0]}</div>
+            <div style={{ fontSize: 12, color: "var(--v2-text)" }}>Next action: {mutationReadiness.nextAction || "Complete tests, docs, and final validation before any future apply gate."}</div>
           </div>
         </div>
 
