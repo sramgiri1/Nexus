@@ -8676,24 +8676,152 @@
     },
     {
       "phaseId": "P84",
-      "title": "Next Governed Runtime Admission Track",
+      "title": "Governed Founder Runtime Admission",
+      "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P84 is in progress. Local deterministic founder runtime admission is defined; provider/model calls, agent dispatch, project mutation, DB writes, deploy, network, auth, and spend remain blocked.",
+      "checksRun": [
+        "npm run check:p841-founder-runtime-admission",
+        "npm run check:p84-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.1 is admission-contract only. P84.2 must create the local Q&A to PRD runtime envelope.",
+        "Provider/model calls, agent dispatch, tool/worker execution, existing project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P84.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.1",
+      "title": "Founder Runtime Admission Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:11:34.639Z",
+      "summary": "Defined governed local founder runtime admission for deterministic Q&A, local PRD drafting, workstream planning, and generated workspace planning without unsafe execution.",
+      "checksRun": [
+        "npm run check:p841-founder-runtime-admission",
+        "npm run check:p84-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.1 does not call providers/models, dispatch agents, write projects, write DB state, deploy, package, call networks, or spend.",
+        "P84.2 will create the local runtime envelope."
+      ],
+      "nextPhase": "P84.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.2",
+      "title": "Live-Local Q&A to PRD Envelope",
       "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Placeholder handoff after P83 final validation. P84 is not implemented in this change.",
+      "summary": "Compose local founder Q&A and PRD drafting runtime envelope.",
       "checksRun": [],
       "knownLimitations": [
-        "Not planned or implemented yet. Requires its own implementation-grade subphase contract before work starts."
+        "Not implemented yet."
       ],
-      "nextPhase": "",
+      "nextPhase": "P84.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.3",
+      "title": "Agent Plan Admission Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Admit local agent/workstream planning without dispatching agents.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P84.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.4",
+      "title": "Command Center Runtime UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Expose governed founder runtime admission in Command Center.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P84.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.5",
+      "title": "Validation Aggregation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Aggregate P84 validation coverage.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P84.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Finalize P84 docs and roadmap evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P84.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P84.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Close P84 governed founder runtime admission.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P85",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.7",
-  "previousPhase": "P83.6",
-  "nextPhase": "P84"
+  "currentPhase": "P84.1",
+  "previousPhase": "P83.7",
+  "nextPhase": "P84.2"
 }

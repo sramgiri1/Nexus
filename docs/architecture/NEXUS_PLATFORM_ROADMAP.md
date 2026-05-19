@@ -1322,3 +1322,31 @@ The detailed plan lives in
 [`P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md`](P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md).
 Implementation must follow
 [`p83-execution-contracts.json`](../../contracts/os-roadmap/p83-execution-contracts.json).
+
+## P84 - Governed Founder Runtime Admission
+
+P84 is in progress as the governed founder runtime admission track. It starts by
+admitting only local deterministic founder intake, Q&A, PRD drafting, workstream
+planning, and generated workspace planning after approval, scope, redaction,
+activity, cost, rollback, and validation gates are present.
+
+P84.1 is complete. It defines the founder runtime admission contract and reuses
+the existing P80 founder-intake helpers, P81 PRD/workstream helpers, and
+live-ready gate/report patterns. Provider/model calls, agent dispatch, tool
+execution, worker execution, project mutation, DB writes, network calls, deploy,
+release, export, package creation, auth/session/user/workspace mutation, and
+provider spend remain blocked.
+
+Planned P84 subphases:
+
+- `P84.2` Live-Local Q&A to PRD Envelope
+- `P84.3` Agent Plan Admission Preview
+- `P84.4` Command Center Runtime UX
+- `P84.5` Validation Aggregation
+- `P84.6` Docs / Roadmap
+- `P84.7` Final Validation
+
+The detailed plan lives in
+[`P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md`](P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md).
+Implementation must follow
+[`p84-execution-contracts.json`](../../contracts/os-roadmap/p84-execution-contracts.json).
