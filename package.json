@@ -328,6 +328,7 @@
     "check:p754": "node scripts/check-p754.js",
     "check:p755-command-center-backup-dr-ux": "node scripts/check-p755-command-center-backup-dr-ux.js",
     "check:p756-tests-checkers-docs": "node scripts/check-p756-tests-checkers-docs.js",
+    "check:p757-final-validation": "node scripts/check-p757-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

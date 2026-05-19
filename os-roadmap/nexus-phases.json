@@ -2530,9 +2530,9 @@
       "track": "NEXUS_OS",
       "order": 50,
       "group": "P75 Backup, Restore, Disaster Recovery",
-      "status": "in_progress",
-      "summary": "Define backup, restore, and disaster-recovery readiness with runtime backup/restore/failover behavior disabled.",
-      "nextPhase": "P75.7",
+      "status": "complete",
+      "summary": "Completed backup, restore, and disaster-recovery readiness with runtime backup/restore/failover behavior disabled.",
+      "nextPhase": "P76",
       "commandCenterVisible": true
     },
     {
@@ -2607,8 +2607,8 @@
       "track": "NEXUS_OS",
       "order": 50.07,
       "group": "P75 Backup, Restore, Disaster Recovery",
-      "status": "planned",
-      "summary": "Close P75 and hand off to P76 with runtime backup/restore/failover behavior still disabled.",
+      "status": "complete",
+      "summary": "Closed P75 and handed off to P76 with runtime backup/restore/failover behavior still disabled.",
       "nextPhase": "P76",
       "commandCenterVisible": true
     },

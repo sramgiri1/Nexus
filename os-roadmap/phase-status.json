@@ -3926,12 +3926,13 @@
       "phaseId": "P75",
       "title": "Backup, Restore, Disaster Recovery",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d214870",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Aggregated P75 tests, checkers, docs, reports, status, and Command Center Backup/DR coverage while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Completed P75 backup, restore, and disaster recovery readiness while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p757-final-validation",
         "npm run check:p756-tests-checkers-docs",
         "npm run check:p755-command-center-backup-dr-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Backup DR route\"",
@@ -3949,7 +3950,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.7",
+      "nextPhase": "P76",
       "commandCenterVisible": true
     },
     {
@@ -4106,13 +4107,27 @@
       "phaseId": "P75.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final P75 validation and P76 handoff.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Closed P75 final validation and handed off to P76 with runtime backup/restore/failover behavior disabled.",
+      "checksRun": [
+        "npm run check:p757-final-validation",
+        "npm run check:p756-tests-checkers-docs",
+        "npm run check:p755-command-center-backup-dr-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Backup DR route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.7 closes Backup/DR readiness only. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P76",
       "commandCenterVisible": true
     },
@@ -7050,7 +7065,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T14:00:00.000Z",
-  "currentPhase": "P75",
-  "previousPhase": "P74",
-  "nextPhase": "P75.7"
+  "currentPhase": "P76",
+  "previousPhase": "P75",
+  "nextPhase": "P76"
 }
