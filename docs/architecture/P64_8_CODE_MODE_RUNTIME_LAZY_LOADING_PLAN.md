@@ -79,6 +79,13 @@ without raw schema dumps or runnable controls.
 
 Aggregate checks, close P64.8, and hand off to P65.
 
+Status: complete. P64.8.5 aggregates the execution contract, code-mode
+session, lazy tool packet, Command Center readiness UX, phase coverage, OS
+status, and dashboard validation. P64.8 closes as a preview-only foundation;
+code execution, provider dispatch, tool execution, worker execution, project
+mutation, DB writes, deploy, network calls, and all-tool context loading remain
+disabled.
+
 ## Command Center Requirements
 
 Future P64.8 UX must preserve System, Dark, and Light themes and show:
@@ -98,4 +105,5 @@ mode, or raw private project IDs.
 
 ## Status
 
-P64.8.1 is contract-only. P64.8 remains in progress until final validation.
+P64.8 is complete as a governed preview foundation. Runtime execution requires a
+later explicit phase and fresh validation.

@@ -52,8 +52,13 @@ addCheck(
   packageJson.scripts?.["check:p648-command-center-code-mode-ux"] === "node scripts/check-p648-command-center-code-mode-ux.js",
 );
 const p6484 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.8.4");
+const p6485 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.8.5");
 addCheck("P64.8.4 phase status", p6484?.status === "complete", p6484?.status || "missing");
-addCheck("next phase", phaseStatus.nextPhase === "P64.8.5", phaseStatus.nextPhase || "missing");
+addCheck(
+  "next phase",
+  phaseStatus.nextPhase === "P64.8.5" || (p6485?.status === "complete" && phaseStatus.nextPhase === "P66"),
+  phaseStatus.nextPhase || "missing",
+);
 
 writeMarkdownReport(
   join(ROOT, REPORT_PATH),

@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-16T03:52:44.460Z
-- Validation branch: arch/quality-intelligence-test-gap-detection
-- Validation HEAD: 1d3498b
+- Generated at: 2026-05-19T00:47:23.827Z
+- Validation branch: codex/nexus-e2e-phase-validation
+- Validation HEAD: 35dec9b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 277
+- Files checked: 344
 
 ## Warnings
 
@@ -52,9 +52,9 @@
 - docs/architecture/TASK_ACTIVATION_AND_AGENT_ASSIGNMENT.md:9 (302) — P36 (Agentic Workspace) showed the operator what NEXUS can do. P37 lets the operator start the process by activating the first safe task. Activation is the brid
 - docs/architecture/AGENT_TASK_CONTEXT.md:5 (300) — Phase 4D adds a lightweight adapter that normalizes task input into a consistent agent context object. It is advisory only in this phase. The adapter gives futu
 - docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md:241 (299) — `memory/safety-events.json` and `memory/system-usage.json` are written by the safety subsystem and budget guard respectively. No agent, hook, or tool can write
+- reports/concurrent-execution-final-report.md:48 (299) — The Worker Runtime page now shows concurrency readiness, policy limits, lock preview readiness, duplicate work preview readiness, priority preview readiness, an
 - docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md:5 (298) — P39 is the first phase where a UI-driven workflow may apply a narrow source change via the action bridge. The target is `projects/careloop/docs/NEXUS_IMPLEMENTA
 - docs/architecture/NEXUS_OS_GLOSSARY.md:308 (297) — A batch task that has been queued to `memory/batch-queue.json` but not yet submitted to the batch API. Deferred batch is the current implementation state — batc
-- docs/architecture/AGENTIC_OS_ARCHITECTURE.md:545 (296) — The state machine is the authoritative record of task, gate, and project state. Agents propose state transitions. The state machine validates and commits them.
 
 ## Result
 

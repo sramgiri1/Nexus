@@ -161,8 +161,11 @@ const p6481 = phaseStatus.get("P64.8.1");
 const p6482 = phaseStatus.get("P64.8.2");
 const p6483 = phaseStatus.get("P64.8.3");
 const p6484 = phaseStatus.get("P64.8.4");
+const p6485 = phaseStatus.get("P64.8.5");
 const expectedNext =
-  p6484?.status === "complete"
+  p6485?.status === "complete"
+    ? "P65"
+    : p6484?.status === "complete"
     ? "P64.8.5"
     : p6483?.status === "complete"
       ? "P64.8.4"
@@ -171,11 +174,17 @@ const expectedNext =
         : p6481?.status === "complete"
           ? "P64.8.2"
           : "P64.8.1";
-if (p648?.status !== "in_progress") fail("roadmapStatus", "P64.8 must be in_progress");
+if (!["in_progress", "complete"].includes(p648?.status)) fail("roadmapStatus", "P64.8 must be in_progress or complete");
 if (p648?.nextPhase !== expectedNext) fail("roadmapStatus", `P64.8 nextPhase must be ${expectedNext}`);
-if (status.currentPhase !== "P64.8") fail("roadmapStatus", "currentPhase must be P64.8");
-if (status.previousPhase !== "P64") fail("roadmapStatus", "previousPhase must be P64");
-if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+if (p6485?.status === "complete") {
+  if (status.currentPhase !== "P65") fail("roadmapStatus", "currentPhase must be P65 after P64.8 closure");
+  if (status.previousPhase !== "P64.8") fail("roadmapStatus", "previousPhase must be P64.8 after P64.8 closure");
+  if (status.nextPhase !== "P66") fail("roadmapStatus", "nextPhase must be P66 after P64.8 closure");
+} else {
+  if (status.currentPhase !== "P64.8") fail("roadmapStatus", "currentPhase must be P64.8");
+  if (status.previousPhase !== "P64") fail("roadmapStatus", "previousPhase must be P64");
+  if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+}
 
 const plan = read(PLAN_PATH);
 if (!plan.includes(CONTRACT_PATH)) fail("docs", `${PLAN_PATH} must reference ${CONTRACT_PATH}`);

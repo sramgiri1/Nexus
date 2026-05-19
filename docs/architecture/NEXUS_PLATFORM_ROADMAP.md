@@ -285,13 +285,13 @@ Risk level:
   - `P64.5` Command Center Dispatch UX — complete
   - `P64.6` Dispatch Tests / Checkers / Docs — complete
   - `P64.7` Final Validation — complete
-- `P64.8` Code Mode Runtime + Lazy Tool Loading — in progress
+- `P64.8` Code Mode Runtime + Lazy Tool Loading — complete
   - `P64.8.1` Execution Contract + Guardrails — complete
-  - `P64.8.2` Code Mode Session Contract — next
-  - `P64.8.3` Lazy Tool Selection Packet
-  - `P64.8.4` Command Center Code Mode Readiness UX
-  - `P64.8.5` Final Validation
-- `P65` Batch Intelligence Jobs for Large-Scale Analysis
+  - `P64.8.2` Code Mode Session Contract — complete
+  - `P64.8.3` Lazy Tool Selection Packet — complete
+  - `P64.8.4` Command Center Code Mode Readiness UX — complete
+  - `P64.8.5` Final Validation — complete
+- `P65` Batch Intelligence Jobs for Large-Scale Analysis — next
 - `P66` Self-Healing Failure Loop
 - `P67` Controlled Source Mutation Expansion
 - `P68` Self-Update Workflow for NEXUS OS
