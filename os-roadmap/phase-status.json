@@ -3442,10 +3442,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d6002be",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P70 is in progress with mitigation readiness gates complete; all deploy-adjacent execution remains disabled.",
+      "summary": "P70 is in progress with Command Center monitoring readiness complete; all deploy-adjacent execution remains disabled.",
       "checksRun": [
+        "npm run check:p705-command-center-monitoring-ux",
         "npm run check:p704",
         "npm run check:p703",
         "npm run check:p702",
@@ -3458,7 +3459,7 @@
       "knownLimitations": [
         "P70 has not enabled deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, DB, provider/tool execution, project mutation, network calls, or provider spend."
       ],
-      "nextPhase": "P70.5",
+      "nextPhase": "P70.6",
       "commandCenterVisible": true
     },
     {
@@ -6054,13 +6055,23 @@
       "phaseId": "P70.5",
       "title": "Command Center Monitoring UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose deploy monitoring and incident mitigation readiness without runnable monitoring, alert, rollback, deploy, or mitigation actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Exposed deploy monitoring and incident mitigation readiness without runnable monitoring, alert, rollback, deploy, or mitigation actions.",
+      "checksRun": [
+        "npm run check:p705-command-center-monitoring-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Deploy Monitoring route\"",
+        "npm run check:p70-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P70.5 exposes monitoring readiness only. Deploy execution, incident execution, mitigation execution, rollback execution, alert dispatch, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P70.6",
       "commandCenterVisible": true
     },
@@ -6094,8 +6105,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T11:13:49.080Z",
+  "updatedAt": "2026-05-19T11:17:33.319Z",
   "currentPhase": "P70",
   "previousPhase": "P69",
-  "nextPhase": "P70.5"
+  "nextPhase": "P70.6"
 }

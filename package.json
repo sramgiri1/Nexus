@@ -291,6 +291,7 @@
     "check:p702": "node scripts/check-p702.js",
     "check:p703": "node scripts/check-p703.js",
     "check:p704": "node scripts/check-p704.js",
+    "check:p705-command-center-monitoring-ux": "node scripts/check-p705-command-center-monitoring-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

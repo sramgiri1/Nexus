@@ -157,6 +157,33 @@ export const RELEASE_CONTROL_TABS = [
   },
 ];
 
+export const DEPLOY_MONITORING_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Monitor state, incident state, blockers, and next action",
+    badge: "Preview",
+  },
+  {
+    id: "gate",
+    label: "Mitigation Gate",
+    description: "Approval, validation, rollback, and safety posture",
+    badge: "Read-only",
+  },
+  {
+    id: "evidence",
+    label: "Evidence",
+    description: "Evidence, activity, cost, and blockers",
+    badge: "Read-only",
+  },
+  {
+    id: "disabled",
+    label: "Disabled Actions",
+    description: "Monitoring and mitigation actions that remain unavailable",
+    badge: "Blocked",
+  },
+];
+
 export const WORKSPACE_TABS = [
   {
     id: "recommended",

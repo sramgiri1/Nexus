@@ -116,7 +116,28 @@ Implementation:
 Expose deploy monitoring and incident mitigation readiness without runnable
 monitoring, alert, rollback, deploy, or mitigation actions.
 
-Status: planned.
+Status: complete. P70.5 exposes display-only deploy monitoring and incident
+mitigation readiness at `/command-center/monitoring` using the existing Command
+Center route matrix, tab shell, page summary, cards, pills, disabled buttons,
+and theme controls. The primary UX shows what changed, monitor state, incident
+state, next action, blockers, disabled reason, owner capability, evidence/
+activity locations, safety posture, and cost impact without showing raw JSON,
+raw logs, private IDs, DemoApp, or internal phase labels.
+
+Implementation:
+
+- `dashboard/src/data/deployMonitoringReadiness.js` builds the display-safe
+  deploy monitoring readiness view model from the P70.4 mitigation readiness
+  gate.
+- `dashboard/src/data/commandCenterTabs.js` exports
+  `DEPLOY_MONITORING_TABS`.
+- `dashboard/src/data/commandCenterRoutes.js` wires the monitoring route.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the monitoring readiness
+  page with disabled alert/rollback/mitigation controls only.
+- `scripts/check-p705-command-center-monitoring-ux.js` validates route wiring,
+  UX data shape, disabled actions, no private IDs, no DemoApp, no raw JSON
+  markers, no primary UX phase labels, and source-level disabled execution
+  posture.
 
 ### P70.6 Tests / Checkers / Docs
 
@@ -153,7 +174,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.4. Deploy execution, incident execution,
+P70 is in progress through P70.5. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
