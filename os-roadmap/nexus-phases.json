@@ -2145,6 +2145,69 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P66.1",
+      "title": "Execution Contract + Safety Split",
+      "track": "NEXUS_OS",
+      "order": 41.01,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Define the P66 implementation contract, safety split, and validation plan before self-healing behavior is implemented.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.2",
+      "title": "Failure Classification Contract",
+      "track": "NEXUS_OS",
+      "order": 41.02,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Define safe failure-class records and validation for self-healing inputs.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.3",
+      "title": "Recovery Plan Preview",
+      "track": "NEXUS_OS",
+      "order": 41.03,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Build read-only recovery plan previews for known failure classes.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.4",
+      "title": "Healing Gate + Loop Guard",
+      "track": "NEXUS_OS",
+      "order": 41.04,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Add safety, approval, retry, loop, and cost gates for recovery proposals.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.5",
+      "title": "Command Center Self-Healing UX",
+      "track": "NEXUS_OS",
+      "order": 41.05,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Expose self-healing readiness and disabled recovery state in Command Center.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 41.06,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Aggregate P66 validation coverage before final validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 41.07,
+      "group": "P66 Self-Healing Failure Loop",
+      "summary": "Validate and close P66 with self-healing still governed and non-mutating.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P67",
       "title": "Controlled Source Mutation Expansion",
       "track": "NEXUS_OS",

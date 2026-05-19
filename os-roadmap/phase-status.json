@@ -2967,11 +2967,125 @@
       "phaseId": "P66",
       "title": "Self-Healing Failure Loop",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-1-commit",
+      "completedAt": "",
+      "summary": "P66 is in progress with contract-only self-healing planning complete; recovery execution remains disabled.",
+      "checksRun": [
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P66.1 does not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, worker execution, automatic retry, DB writes, deploy, release, network calls, or provider spend."
+      ],
+      "nextPhase": "P66.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.1",
+      "title": "Execution Contract + Safety Split",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-1-commit",
+      "completedAt": "2026-05-19T03:45:00.000Z",
+      "summary": "Defined the implementation-grade P66 self-healing contract, subphase split, safety rules, validation checker, docs, and roadmap handoff.",
+      "checksRun": [
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Contract-only foundation. Self-healing recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P66.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.2",
+      "title": "Failure Classification Contract",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned self-healing failure loop phase.",
+      "summary": "Define safe failure-class records and validation for self-healing inputs.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P66.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.3",
+      "title": "Recovery Plan Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Build read-only recovery plan previews for known failure classes.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P66.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.4",
+      "title": "Healing Gate + Loop Guard",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add safety, approval, retry, loop, and cost gates for recovery proposals.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P66.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.5",
+      "title": "Command Center Self-Healing UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose self-healing readiness and disabled recovery state in Command Center.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P66.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P66 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P66.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P66.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P66 with self-healing still governed and non-mutating.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P67",
@@ -5199,5 +5313,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P67"
+  "nextPhase": "P66.2"
 }

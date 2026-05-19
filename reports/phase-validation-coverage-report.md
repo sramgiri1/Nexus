@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T01:17:09.941Z
+- Generated at: 2026-05-19T01:21:15.719Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: aeb4fa2
+- Validation HEAD: f7db24f
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -47,7 +47,14 @@
 | P65.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P65.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P65.7 validation coverage | PASS | 16 checkers, 10 reports |
-| P66 validation coverage | PASS | dedicated_checker, validation_report |
+| P66 validation coverage | PASS | 5 checkers, 1 reports |
+| P66.1 validation coverage | PASS | 4 checkers, 1 reports |
+| P66.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P66.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P66.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P66.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P66.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P66.7 validation coverage | PASS | 9 checkers, 9 reports |
 | P67 validation coverage | PASS | dedicated_checker, validation_report |
 | P68 validation coverage | PASS | dedicated_checker, validation_report |
 | P69 validation coverage | PASS | dedicated_checker, validation_report |
@@ -62,14 +69,34 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P66; next=P67; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P66; next=P66.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P66 Self-Healing Failure Loop
+- P66.2 Failure Classification Contract
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P66.3 Recovery Plan Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P66.4 Healing Gate + Loop Guard
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P66.5 Command Center Self-Healing UX
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P66.6 Tests / Checkers / Docs
   - status: planned
   - checkers: 0
   - reports: 0
@@ -136,4 +163,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (47/47)
+PASS (54/54)

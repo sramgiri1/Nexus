@@ -1,0 +1,1145 @@
+{
+  "phaseId": "P66",
+  "title": "Self-Healing Failure Loop",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p66-1-execution-contract-safety-split",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define the P66 implementation contract only; no self-healing behavior.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p66-execution-contracts.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "scripts/check-p66-execution-plan.js",
+        "reports/p66-execution-plan-report.md",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-phase-validation-coverage.js"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "f7db24f",
+        "narrowScope": "Define the P66 implementation contract only; no self-healing behavior.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p66-execution-contracts.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "scripts/check-p66-execution-plan.js",
+            "reports/p66-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md",
+            "scripts/check-os-phase-status.js",
+            "scripts/check-phase-validation-coverage.js"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66 in_progress, mark P66.1 complete after validation, and set nextPhase to P66.2.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.1 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-2-failure-classification-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define safe failure-class records and validation.",
+      "allowedFiles": [
+        "self-healing/p66-2-placeholder.js",
+        "scripts/check-p662.js",
+        "reports/p662-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.1",
+        "narrowScope": "Define safe failure-class records and validation.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-2-placeholder.js",
+            "scripts/check-p662.js",
+            "reports/p662-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.2 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.2 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-1-execution-contract-safety-split"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-3-recovery-plan-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build read-only recovery plan previews for known failure classes.",
+      "allowedFiles": [
+        "self-healing/p66-3-placeholder.js",
+        "scripts/check-p663.js",
+        "reports/p663-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.2",
+        "narrowScope": "Build read-only recovery plan previews for known failure classes.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-3-placeholder.js",
+            "scripts/check-p663.js",
+            "reports/p663-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.3 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.3 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-2-failure-classification-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-4-healing-gate-loop-guard",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Add safety, approval, retry, loop, and cost gates for proposed recovery.",
+      "allowedFiles": [
+        "self-healing/p66-4-placeholder.js",
+        "scripts/check-p664.js",
+        "reports/p664-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.3",
+        "narrowScope": "Add safety, approval, retry, loop, and cost gates for proposed recovery.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-4-placeholder.js",
+            "scripts/check-p664.js",
+            "reports/p664-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.4 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.4 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-3-recovery-plan-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-5-command-center-self-healing-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose self-healing readiness and disabled recovery state in Command Center.",
+      "allowedFiles": [
+        "self-healing/p66-5-placeholder.js",
+        "scripts/check-p665.js",
+        "reports/p665-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.4",
+        "narrowScope": "Expose self-healing readiness and disabled recovery state in Command Center.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Command Center display-only self-healing readiness cards.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-5-placeholder.js",
+            "scripts/check-p665.js",
+            "reports/p665-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Playwright route coverage for self-healing readiness labels, disabled repair actions, no raw dumps, theme switching, sidebar navigation, and DemoApp isolation."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.5 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.5 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-4-healing-gate-loop-guard"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P66 checker coverage and docs before final validation.",
+      "allowedFiles": [
+        "self-healing/p66-6-placeholder.js",
+        "scripts/check-p666.js",
+        "reports/p666-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.5",
+        "narrowScope": "Aggregate P66 checker coverage and docs before final validation.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-6-placeholder.js",
+            "scripts/check-p666.js",
+            "reports/p666-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.6 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.6 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-5-command-center-self-healing-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p66-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P66 with self-healing still governed and non-mutating.",
+      "allowedFiles": [
+        "self-healing/p66-7-placeholder.js",
+        "scripts/check-p667.js",
+        "reports/p667-report.md",
+        "package.json",
+        "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P66.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P66.6",
+        "narrowScope": "Validate and close P66 with self-healing still governed and non-mutating.",
+        "safetyRules": [
+          "Do not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, or provider spend.",
+          "Self-healing begins as failure classification, recovery preview, and safety gating only.",
+          "Recovery proposals must remain explicit, bounded, evidence-linked, approval-aware, and display-disabled until a later phase explicitly allows execution.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, fake runnable repair actions, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "docs/architecture/RETRY_AND_DEAD_LETTER_MODEL.md",
+            "docs/architecture/RECOVERY_AND_ROLLBACK_MODEL.md",
+            "docs/architecture/INCIDENT_RESPONSE_MODEL.md",
+            "worker-runtime/retryTimeoutModel.js",
+            "worker-runtime/deadLetterQueue.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing retry, recovery, incident, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-healing/p66-7-placeholder.js",
+            "scripts/check-p667.js",
+            "reports/p667-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P66_SELF_HEALING_FAILURE_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P66_SELF_HEALING_SUBPHASES",
+            "checkP66ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfHealingFailureClass",
+            "RecoveryPlanPreview",
+            "HealingSafetyGate",
+            "SelfHealingReadinessCard"
+          ],
+          "dataShapes": [
+            "failureId, failureClass, severity, sourceSurface, ownerCapability, currentState, proposedRecovery, blockers, retryLimit, approvalRequired, mutationAllowed, executionAllowed, disabledReason, costImpact, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show failure class, current state, proposed recovery, blockers, disabled action reason, owner capability, evidence/activity location, cost impact, and next action without raw JSON, raw logs, raw policy dumps, raw private IDs, fake runnable repair actions, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P66 UX must cover disabled repair actions, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P66-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p66-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P66 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P66 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P66.7 complete after validation and advance P66 nextPhase.",
+        "validationCommands": [
+          "npm run check:p66-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm source mutation, project mutation, provider upload, provider dispatch, tool execution, code execution, worker execution, automatic retry, DB writes, deploy, release, external network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working repair actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P66.1 files>",
+          "git commit -m \"docs(nexus): define p66 self-healing contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P66.7 is independently commit-ready.",
+        "No mutation, execution, provider spend, DB write, deploy, release, network call, or project edit is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p66-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T03:45:00.000Z"
+    }
+  ]
+}
