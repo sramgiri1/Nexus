@@ -1,5 +1,6 @@
 import {
   AUTH_GOVERNANCE_TABS,
+  BACKUP_DR_TABS,
   BATCH_QUEUE_TABS,
   API_BATCH_TABS,
   DATA_CONTEXT_TABS,
@@ -569,6 +570,20 @@ export const COMMAND_CENTER_ROUTES = [
     tabs: OBSERVABILITY_TABS,
     defaultTab: "overview",
     helpDoc: "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md",
+  },
+  {
+    key: "backupDr",
+    path: "/command-center/backup-dr",
+    name: "Backup / DR",
+    section: "OS",
+    allowPhaseLabels: false,
+    expectedHeading: "Backup / DR",
+    status: "implemented",
+    badge: "Preview",
+    scope: "os",
+    tabs: BACKUP_DR_TABS,
+    defaultTab: "overview",
+    helpDoc: "docs/architecture/P75_BACKUP_RESTORE_DR_PLAN.md",
   },
   {
     key: "docs",

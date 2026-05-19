@@ -123,13 +123,29 @@ Implementation:
 Expose backup, restore, and disaster recovery readiness in Command Center
 without runnable backup, restore, failover, overwrite, or delete actions.
 
-Status: planned. P75.5 will add a display-only Command Center route that
-shows backup posture, restore posture, DR posture, current state, next action,
+Status: complete. P75.5 adds a display-only Command Center route that shows
+backup posture, restore posture, DR posture, current state, next action,
 blockers, disabled reason, owner capability, evidence/activity location,
-safety posture, and cost impact. Primary UX must not show raw JSON, raw logs,
+safety posture, and cost impact. Primary UX does not show raw JSON, raw logs,
 raw policy dumps, raw private project IDs, raw tokens, internal phase labels
 outside OS Roadmap, or DemoApp in full Command Center. System, Dark, and Light
-themes must remain readable.
+themes remain covered by focused Playwright validation.
+
+Implementation:
+
+- `dashboard/src/data/backupDrReadiness.js` exports
+  `buildBackupDrReadinessViewModel` and `backupDrReadinessViewModel`.
+- `dashboard/src/data/commandCenterRoutes.js` adds the
+  `/command-center/backup-dr` route.
+- `dashboard/src/data/commandCenterTabs.js` adds `BACKUP_DR_TABS`.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders Backup/DR readiness,
+  posture, runbook gate, blockers, disabled reason, and disabled actions as
+  display-only content.
+- `dashboard/tests/routes.spec.js` adds focused Playwright coverage for the
+  Backup/DR route across dark, light, and system themes.
+- `scripts/check-p755-command-center-backup-dr-ux.js` validates display data,
+  disabled runtime flags, raw-output safety, DemoApp boundary, and Playwright
+  coverage registration.
 
 ### P75.6 Tests / Checkers / Docs
 

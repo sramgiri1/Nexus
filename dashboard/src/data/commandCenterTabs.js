@@ -117,6 +117,13 @@ export const OBSERVABILITY_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable observability actions and reasons", badge: "Disabled" },
 ];
 
+export const BACKUP_DR_TABS = [
+  { id: "overview", label: "Overview", description: "Backup, restore, DR posture, and next action", badge: "Preview" },
+  { id: "posture", label: "Posture", description: "Disabled backup, restore, and failover posture", badge: "Blocked" },
+  { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable Backup/DR actions and reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

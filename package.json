@@ -326,6 +326,7 @@
     "check:p752": "node scripts/check-p752.js",
     "check:p753": "node scripts/check-p753.js",
     "check:p754": "node scripts/check-p754.js",
+    "check:p755-command-center-backup-dr-ux": "node scripts/check-p755-command-center-backup-dr-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

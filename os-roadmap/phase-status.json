@@ -3928,10 +3928,14 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4e9e41b",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P75 disaster recovery runbook and safety gate previews while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Added display-only Command Center Backup/DR readiness while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p755-command-center-backup-dr-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Backup DR route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "npm run check:p754",
         "npm run check:p753",
         "npm run check:p752",
@@ -3944,7 +3948,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.5",
+      "nextPhase": "P75.6",
       "commandCenterVisible": true
     },
     {
@@ -4045,13 +4049,28 @@
       "phaseId": "P75.5",
       "title": "Command Center Backup/DR UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned display-only Command Center Backup/DR readiness UX.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added display-only Command Center Backup/DR readiness route without enabling backup creation, restore execution, failover, overwrite, delete, DB writes, network calls, or provider spend.",
+      "checksRun": [
+        "npm run check:p755-command-center-backup-dr-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Backup DR route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p754",
+        "npm run check:p753",
+        "npm run check:p752",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.5 exposes Backup/DR readiness only. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75.6",
       "commandCenterVisible": true
     },
@@ -7019,5 +7038,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75.5"
+  "nextPhase": "P75.6"
 }

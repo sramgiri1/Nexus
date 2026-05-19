@@ -1912,6 +1912,35 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Backup DR route renders readiness without runnable recovery actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/backup-dr");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Backup / DR");
+      await expect(page.locator("body")).toContainText("Backup posture");
+      await expect(page.locator("body")).toContainText("Restore posture");
+      await expect(page.locator("body")).toContainText("DR posture");
+    }
+
+    await expect(page.locator("body")).toContainText("Backup/DR readiness is display-only");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Backup creation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Restore execution disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Failover execution disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Overwrite or delete disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/backup now|create backup|restore now|execute restore|failover now|overwrite now|delete now|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|s3:\/\/|gs:\/\/|https:\/\/[^\s]*(backup|restore|storage|failover)/i);
+    expect(body).not.toMatch(/P75\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 
