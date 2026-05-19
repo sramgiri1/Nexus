@@ -8259,7 +8259,7 @@
       "nextPhase": "P82.2",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fda4572",
       "checksRun": [
         "npm run check:p82-execution-plan",
         "npm run check:p817-final-validation",
@@ -8280,7 +8280,7 @@
       "nextPhase": "P82.2",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fda4572",
       "completedAt": "2026-05-19",
       "checksRun": [
         "npm run check:p82-execution-plan",
