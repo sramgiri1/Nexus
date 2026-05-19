@@ -4137,7 +4137,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "853bbe1",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Added P76.4 preview-only access context packets while tenant/project/access mutation remains disabled.",
       "checksRun": [
@@ -4230,7 +4230,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "853bbe1",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Defined preview-only access context packet records with access grants, role mutation, DB writes, runtime execution, network calls, and spend disabled.",
       "checksRun": [
