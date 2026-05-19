@@ -3412,17 +3412,18 @@
       "phaseId": "P69",
       "title": "Release / Deploy Loop",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bf26f71",
-      "completedAt": "",
-      "summary": "P69 is in progress with tests, checkers, and docs aggregation complete; release and deploy execution remain disabled.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Release/deploy loop completed with Command Center release readiness, validation coverage, and release/deploy execution still disabled.",
       "checksRun": [
+        "npm run check:p697-final-validation",
         "npm run check:p696-tests-checkers-docs",
         "npm run check:p695-command-center-release-ux",
-        "npm run check:p694",
-        "npm run check:p693",
-        "npm run check:p692",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Release Control route\"",
         "npm run check:p69-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3430,9 +3431,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P69 has not enabled release, deploy, DB, provider/tool execution, project mutation, network calls, or provider spend."
+        "P69 closes release/deploy readiness and visibility only. Package creation, release execution, deploy execution, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P69.7",
+      "nextPhase": "P70",
       "commandCenterVisible": true
     },
     {
@@ -5923,20 +5924,34 @@
       "phaseId": "P69.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P69 with release and deploy execution still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Validated and closed P69 with release and deploy execution still disabled.",
+      "checksRun": [
+        "npm run check:p697-final-validation",
+        "npm run check:p696-tests-checkers-docs",
+        "npm run check:p695-command-center-release-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Release Control route\"",
+        "npm run check:p69-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P69 closes release/deploy readiness and visibility only. Package creation, release execution, deploy execution, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P70",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T10:59:37.736Z",
-  "currentPhase": "P69",
-  "previousPhase": "P68",
-  "nextPhase": "P69.7"
+  "updatedAt": "2026-05-19T11:01:26.932Z",
+  "currentPhase": "P70",
+  "previousPhase": "P69",
+  "nextPhase": "P70"
 }

@@ -73,7 +73,7 @@ const completedSubphases = ["P69.1", "P69.2", "P69.3", "P69.4", "P69.5", "P69.6"
 const phaseById = new Map(phases.map((phase) => [phase.phaseId, phase]));
 const statusById = new Map(entries.map((entry) => [entry.phaseId, entry]));
 const preFinalHandoff = status.currentPhase === "P69" && status.nextPhase === "P69.7" && phaseById.get("P69")?.nextPhase === "P69.7";
-const finalHandoff = status.currentPhase === "P70" && status.previousPhase === "P69" && status.nextPhase === "P70.1" && statusById.get("P69.7")?.status === "complete";
+const finalHandoff = status.currentPhase === "P70" && status.previousPhase === "P69" && status.nextPhase === "P70" && statusById.get("P69.7")?.status === "complete";
 const serializedReleaseView = JSON.stringify(releaseViewModel);
 
 addCheck("package scripts registered", requiredScripts.every((script) => packageJson.scripts?.[script]), requiredScripts.join(", "));

@@ -155,7 +155,18 @@ Implementation:
 
 Validate and close P69 with release and deploy execution still disabled.
 
-Status: planned.
+Status: complete. P69.7 closes the Release / Deploy Loop with all P69
+subphases complete, reports present, Command Center Release Control validated,
+roadmap/status handoff recorded, and release/deploy execution still disabled.
+
+Implementation:
+
+- `scripts/check-p697-final-validation.js` validates completed P69 roadmap and
+  phase-status records, required scripts and reports, Command Center release
+  route preservation, release route Playwright coverage, theme coverage, no
+  DemoApp/private IDs/internal phase labels in release UX, disabled execution
+  posture, and P70 handoff.
+- `reports/p697-final-validation-report.md` records final validation evidence.
 
 ## Command Center Requirements
 
@@ -178,7 +189,7 @@ Roadmap, or fake runnable release/deploy actions.
 
 ## Current Status
 
-P69 is in progress through P69.6. Release execution, deploy execution, provider
+P69 is complete. Release execution, deploy execution, provider
 dispatch, tool execution, worker execution, DB writes, project mutation,
 external network calls, and provider spend remain disabled.
 
