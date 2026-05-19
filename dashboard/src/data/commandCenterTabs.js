@@ -152,6 +152,13 @@ export const LIVE_READINESS_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Disabled" },
 ];
 
+export const FOUNDER_INTAKE_TABS = [
+  { id: "overview", label: "Overview", description: "Founder intake state, owner, blockers, and next action", badge: "Local" },
+  { id: "questions", label: "Questions", description: "Next question, captured answers, and missing fields", badge: "Ready" },
+  { id: "readiness", label: "Readiness", description: "Comprehension score, blockers, and evidence", badge: "Review" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable execution and mutation actions", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

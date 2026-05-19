@@ -361,6 +361,7 @@
     "check:p801-founder-intake-schema": "node scripts/check-p801-founder-intake-schema.js",
     "check:p802-founder-intake-session": "node scripts/check-p802-founder-intake-session.js",
     "check:p803-founder-intake-qna": "node scripts/check-p803-founder-intake-qna.js",
+    "check:p804-command-center-founder-intake-ux": "node scripts/check-p804-command-center-founder-intake-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

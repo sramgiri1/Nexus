@@ -39,6 +39,9 @@ Validation: `npm run check:p803-founder-intake-qna` and `npm run check:p80-execu
 
 Goal: add Command Center founder intake UX showing current state, next action, blockers, disabled reason, owner, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, or raw private project IDs.
 
+Status: complete. P80.4 adds the Founder Intake Command Center route, view model, tabs, and route safety coverage.
+The route is display-only and does not expose provider calls, agent dispatch, project mutation, DB writes, deploy, or spend actions.
+
 Validation: `npm run check:p804-command-center-founder-intake-ux`, Playwright route coverage, and `npm run check:p80-execution-plan`.
 
 ## P80.5 Tests / Checkers

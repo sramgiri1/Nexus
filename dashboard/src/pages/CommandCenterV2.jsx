@@ -18,6 +18,7 @@ import {
   DEPLOY_MONITORING_TABS,
   DURABLE_STATE_TABS,
   ENTERPRISE_PREVIEW_TABS,
+  FOUNDER_INTAKE_TABS,
   EVIDENCE_TABS,
   HOOK_REGISTRY_TABS,
   IMPLEMENTATION_TABS,
@@ -90,6 +91,7 @@ import { buildIsolationReadinessViewModel } from "../data/isolationReadiness.js"
 import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.js";
 import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePreviewReadiness.js";
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
+import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -8570,6 +8572,103 @@ function LiveReadinessPage() {
   );
 }
 
+function FounderIntakePage() {
+  const intake = buildFounderIntakeViewModel();
+  const route = COMMAND_CENTER_ROUTE_BY_KEY.founderIntake || {};
+  const tabs = route.tabs || FOUNDER_INTAKE_TABS;
+  const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={intake.routeId}>
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">{intake.pageTitle}</div>
+          <div className="ccv2-page-head__sub">Structured founder idea intake, next question, readiness, blockers, and cost posture.</div>
+        </div>
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{intake.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{intake.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{intake.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{intake.ownerAgent} · {intake.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{intake.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{intake.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{intake.costImpact}</span></div>
+        </div>
+
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{intake.disabledReason}</div>
+
+        <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Founder intake sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {intake.readinessCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="questions" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Next Question</div>
+                <div className="ccv2-muted">{intake.questionState.prompt}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Missing fields: {intake.questionState.missingFields.join(", ")}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Next action: {intake.questionState.nextAction}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Captured Answers</div>
+                {intake.answerRows.map((row) => (
+                  <div className="ccv2-page-summary-row" key={row.field}>
+                    <span className="ccv2-page-summary-label">{row.field}</span>
+                    <span className="ccv2-page-summary-value">{row.answer} · {row.state}</span>
+                  </div>
+                ))}
+              </article>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="readiness" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Comprehension</div>
+                <div className="ccv2-pill ccv2-pill--amber">{Math.round(intake.readiness.score * 100)}%</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Answered: {intake.readiness.answeredCount}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing: {intake.readiness.missingCount}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Blockers</div>
+                {intake.readiness.blockers.map((blocker) => <div className="ccv2-muted" key={blocker}>{blocker}</div>)}
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Evidence</div>
+                <div className="ccv2-muted">Evidence: {intake.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {intake.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {intake.costImpact}</div>
+              </article>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="disabled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {intake.disabledActions.map((action) => (
+                <article className="ccv2-card" key={action.label}>
+                  <div className="ccv2-section-heading">{action.label}</div>
+                  <button className="ccv2-btn ccv2-btn--disabled" type="button" disabled title={action.reason}>{action.label} disabled</button>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{action.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   void vm;
@@ -10731,6 +10830,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "compliance" && <CompliancePage />}
           {currentPage === "enterprisePreview" && <EnterprisePreviewPage />}
           {currentPage === "liveReadiness" && <LiveReadinessPage />}
+          {currentPage === "founderIntake" && <FounderIntakePage />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

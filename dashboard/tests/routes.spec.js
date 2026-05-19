@@ -2926,6 +2926,44 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder Intake route renders local intake posture without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/founder-intake");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Founder Intake");
+      await expect(page.locator("body")).toContainText("structured business answers locally");
+      await expect(page.locator("body")).toContainText("Current state");
+      await expect(page.locator("body")).toContainText("Next action");
+      await expect(page.locator("body")).toContainText("Cost impact");
+      await expect(page.locator("body")).toContainText("Founder intake is local and governed");
+    }
+
+    await commandTab(page, "Questions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Next Question");
+    await expect(activeCommandTabPanel(page)).toContainText("businessModel");
+    await expect(activeCommandTabPanel(page)).toContainText("Captured Answers");
+    await commandTab(page, "Readiness").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Comprehension");
+    await expect(activeCommandTabPanel(page)).toContainText("Evidence");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Calls disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Creation disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P80\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("full Command Center routes do not show DemoApp", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -2949,6 +2987,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/services",
       "/command-center/compliance",
       "/command-center/live-readiness",
+      "/command-center/founder-intake",
     ]) {
       await page.goto(route);
       const body = await page.locator("body").innerText();
