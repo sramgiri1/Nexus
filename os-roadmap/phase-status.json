@@ -8472,7 +8472,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2cf6060",
       "completedAt": "",
       "summary": "P83 is in progress. Snake iOS local admission, scaffold, validation harness, and Command Center local build UX are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
@@ -8602,7 +8602,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2cf6060",
       "completedAt": "2026-05-19T20:18:15.840Z",
       "summary": "Surfaced the generated Snake iOS local build state in Command Center Live Readiness without enabling runtime actions.",
       "checksRun": [
