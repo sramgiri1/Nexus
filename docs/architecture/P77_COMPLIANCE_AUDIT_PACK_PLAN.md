@@ -86,7 +86,7 @@ Expose compliance and audit pack readiness in Command Center without runnable
 certification, attestation, export, package, DB, project, provider, network, or
 spend actions.
 
-Status: planned. P77.5 will add a display-only Command Center route that shows
+Status: complete. P77.5 adds a display-only Command Center route that shows
 compliance posture, audit posture, control mapping posture, current state,
 next action, blockers, disabled reason, owner capability, evidence/activity
 location, safety posture, and cost impact. Primary UX must not show raw JSON,
@@ -144,6 +144,21 @@ P77.3 validation:
 
 P77.4 validation:
 
+- `npm run check:p774`
+- `npm run check:p773`
+- `npm run check:p772`
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.5 validation:
+
+- `npm run check:p775-command-center-compliance-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Compliance route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p774`
 - `npm run check:p773`
 - `npm run check:p772`

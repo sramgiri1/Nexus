@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Continue compliance and audit pack readiness with control mapping previews while attestation, certification, export, package, and runtime mutation remain disabled.",
+      "summary": "Continue compliance and audit pack readiness with display-only Command Center Compliance UX while certification, export, package, and runtime mutation remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P77.5"
+      "nextPhase": "P77.6"
     },
     {
       "phaseId": "P77.1",
@@ -2758,8 +2758,8 @@
     {
       "phaseId": "P77.5",
       "title": "Command Center Compliance UX",
-      "status": "planned",
-      "summary": "Plan display-only Command Center compliance readiness UX with disabled actions and raw output safety.",
+      "status": "complete",
+      "summary": "Added display-only Command Center Compliance readiness UX with certification, attestation, export, package, DB, project, runtime, network, and spend behavior disabled.",
       "nextPhase": "P77.6",
       "order": 52.05,
       "track": "NEXUS_OS",

@@ -1970,6 +1970,36 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Compliance route renders readiness without runnable certification actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/compliance");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Compliance");
+      await expect(page.locator("body")).toContainText("Compliance posture");
+      await expect(page.locator("body")).toContainText("Audit posture");
+      await expect(page.locator("body")).toContainText("Control mapping");
+    }
+
+    await expect(page.locator("body")).toContainText("Compliance readiness is display-only");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Certification disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Legal attestation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Audit export disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Package creation disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/certify now|sign attestation|legal sign|export audit|download package|create package|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P77\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -2839,6 +2869,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/liveapi",
       "/command-center/database",
       "/command-center/services",
+      "/command-center/compliance",
     ]) {
       await page.goto(route);
       const body = await page.locator("body").innerText();

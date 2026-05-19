@@ -131,6 +131,13 @@ export const ISOLATION_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable isolation actions and reasons", badge: "Disabled" },
 ];
 
+export const COMPLIANCE_TABS = [
+  { id: "overview", label: "Overview", description: "Compliance, audit, control posture, and next action", badge: "Preview" },
+  { id: "posture", label: "Posture", description: "Disabled certification, attestation, export, and package posture", badge: "Blocked" },
+  { id: "evidence", label: "Control Mapping", description: "Control rows, evidence, activity, cost, and blockers", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable compliance actions and reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",
