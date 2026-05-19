@@ -3181,7 +3181,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1ba5fc1",
       "completedAt": "",
       "summary": "P67 is in progress with patch plan previews complete; mutation behavior remains disabled.",
       "checksRun": [
@@ -3249,7 +3249,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1ba5fc1",
       "completedAt": "2026-05-19T01:56:10.120Z",
       "summary": "Built preview-only patch plan records with allowed files, forbidden files, validation commands, rollback posture, blockers, evidence, and disabled apply flags.",
       "checksRun": [
@@ -5527,7 +5527,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T01:56:10.121Z",
+  "updatedAt": "2026-05-19T01:57:04.101Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
   "nextPhase": "P67.4"
