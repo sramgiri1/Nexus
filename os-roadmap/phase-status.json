@@ -3468,12 +3468,13 @@
       "phaseId": "P71",
       "title": "Project Shipping Boundary + Export Pipeline",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5a57bc0",
-      "completedAt": "",
-      "summary": "Project shipping and export pipeline is in progress with validation coverage aggregated through P71.6 and all shipping execution disabled.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Project shipping and export pipeline completed with Command Center shipping readiness, validation coverage, and all shipping execution still disabled.",
       "checksRun": [
+        "npm run check:p717-final-validation",
         "npm run check:p716-tests-checkers-docs",
         "npm run check:p715-command-center-shipping-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Project Shipping route\"",
@@ -3489,7 +3490,7 @@
       "knownLimitations": [
         "P71 has not enabled package creation, export execution, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, or provider spend."
       ],
-      "nextPhase": "P71.7",
+      "nextPhase": "P72",
       "commandCenterVisible": true
     },
     {
@@ -6288,20 +6289,34 @@
       "phaseId": "P71.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P71 with package creation and export execution still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Validated and closed P71 with package creation and export execution still disabled.",
+      "checksRun": [
+        "npm run check:p717-final-validation",
+        "npm run check:p716-tests-checkers-docs",
+        "npm run check:p715-command-center-shipping-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Project Shipping route\"",
+        "npm run check:p71-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P71 closes project shipping and export readiness only. Package creation, export execution, artifact creation, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P72",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T11:18:20.708Z",
-  "currentPhase": "P71",
-  "previousPhase": "P70",
-  "nextPhase": "P71.7"
+  "currentPhase": "P72",
+  "previousPhase": "P71",
+  "nextPhase": "P72"
 }

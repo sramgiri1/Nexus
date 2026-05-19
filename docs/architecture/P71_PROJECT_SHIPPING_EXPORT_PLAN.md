@@ -156,7 +156,7 @@ Status: complete.
 Validate and close P71 with package creation and export execution still
 disabled.
 
-Status: planned.
+Status: complete.
 
 ## Command Center Requirements
 
@@ -180,7 +180,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.6. Package creation, export execution, project
-mutation, provider dispatch, tool execution, worker execution, DB writes,
-deploy execution, release execution, external network calls, and provider
-spend remain disabled.
+P71 is complete. Package creation, export execution, project mutation,
+provider dispatch, tool execution, worker execution, DB writes, deploy
+execution, release execution, external network calls, and provider spend
+remain disabled.

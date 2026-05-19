@@ -300,6 +300,7 @@
     "check:p714": "node scripts/check-p714.js",
     "check:p715-command-center-shipping-ux": "node scripts/check-p715-command-center-shipping-ux.js",
     "check:p716-tests-checkers-docs": "node scripts/check-p716-tests-checkers-docs.js",
+    "check:p717-final-validation": "node scripts/check-p717-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
