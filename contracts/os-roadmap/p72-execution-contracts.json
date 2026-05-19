@@ -1,0 +1,350 @@
+{
+  "phaseId": "P72",
+  "title": "DB-backed Runtime Primary",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p72-1-execution-contract-db-runtime-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P72 DB-backed runtime primary contracts with DB writes and migrations disabled.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p72-execution-contracts.json",
+        "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md",
+        "scripts/check-p72-execution-plan.js",
+        "reports/p72-execution-plan-report.md",
+        "package.json",
+        "scripts/check-os-phase-status.js",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        "scripts/db*.js",
+        "scripts/migrate*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P72.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "b097cc4",
+        "narrowScope": "Define DB-backed runtime contracts only; no DB writes, migrations, schema mutation, or runtime storage mutation.",
+        "safetyRules": [
+          "Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend.",
+          "DB runtime records must be preview-only, fallback-aware, evidence-linked, approval-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, raw DB URLs, fake runnable DB actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, redaction, mode guard, phase status, Command Center, durable state, evidence, activity, and cost patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P72.1.",
+          "required": "Future or changed UX must show DB primary state, fallback state, migration readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p72-execution-contracts.json",
+            "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md",
+            "scripts/check-p72-execution-plan.js",
+            "reports/p72-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "scripts/check-os-phase-status.js",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P72_DB_RUNTIME_SUBPHASES",
+            "checkP72ExecutionPlan",
+            "createDbRuntimePrimaryContract",
+            "createDbMigrationPreview",
+            "createDbReadinessGate",
+            "buildDbRuntimeReadinessViewModel"
+          ],
+          "schemas": [
+            "DbRuntimePrimaryContract",
+            "DbMigrationPreview",
+            "DbReadinessGate",
+            "DbRuntimeCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "runtimeId, dbPrimaryState, fallbackState, migrationState, dbWritesAllowed, migrationsAllowed, schemaMutationAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show DB primary state, fallback state, migration readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, raw DB URLs, DemoApp leakage, internal phase labels, or fake runnable DB actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p72-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p72-execution-plan."
+        ],
+        "docsRoadmap": [
+          "Add P72 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P72.1 complete after validation and set nextPhase to P72.2.",
+        "validationCommands": [
+          "npm run check:p72-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy/release/export execution, package creation, and provider spend were not enabled.",
+          "Confirm no projects/**, project-roadmap/**, db/**, prisma/**, or migrations/** files changed.",
+          "Confirm no fake DB actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, raw DB URLs, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P72 files>",
+          "git commit -m \"docs(nexus): define p72 db runtime contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P72.1 is independently commit-ready.",
+        "No DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, network call, deploy/release/export execution, package creation, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-2-db-runtime-primary-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe DB runtime primary contract records without DB writes.",
+      "allowedFiles": ["db-runtime/p72-2-placeholder.js", "scripts/check-p722.js", "reports/p722-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.1",
+        "narrowScope": "Create DB runtime primary contract records only.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["shared/resultEnvelope.js", "shared/redaction.js", "shared/reportWriter.js"], "rule": "Reuse shared result, redaction, and report helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake DB actions.",
+        "exactFilesModules": {"create": ["db-runtime/p72-2-placeholder.js", "scripts/check-p722.js", "reports/p722-report.md"], "update": ["package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p722", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["DB runtime primary contract records validate.", "DB writes and migrations remain disabled.", "No DB, prisma, migrations, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-1-execution-contract-db-runtime-boundary"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-3-migration-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Create DB migration preview records without writing migrations or schema changes.",
+      "allowedFiles": ["db-runtime/p72-3-placeholder.js", "scripts/check-p723.js", "reports/p723-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.2",
+        "narrowScope": "Create DB migration preview records only.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["db-runtime/p72-2-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse prior P72 records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake DB actions.",
+        "exactFilesModules": {"create": ["db-runtime/p72-3-placeholder.js", "scripts/check-p723.js", "reports/p723-report.md"], "update": ["package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p723", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["Migration preview records validate.", "No migration file is created.", "DB writes remain disabled."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-2-db-runtime-primary-contract"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-4-db-readiness-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Add DB readiness gate records while DB writes and migrations remain disabled.",
+      "allowedFiles": ["db-runtime/p72-4-placeholder.js", "scripts/check-p724.js", "reports/p724-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.3",
+        "narrowScope": "Create DB readiness gate records only.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["db-runtime/p72-2-placeholder.js", "db-runtime/p72-3-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse prior P72 records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake DB actions.",
+        "exactFilesModules": {"create": ["db-runtime/p72-4-placeholder.js", "scripts/check-p724.js", "reports/p724-report.md"], "update": ["package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p724", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["DB readiness gate records validate.", "DB writes and migrations remain disabled.", "No DB files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-3-migration-preview"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-5-command-center-db-runtime-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Expose DB runtime readiness in Command Center without runnable DB actions.",
+      "allowedFiles": ["dashboard/src/data/dbRuntimeReadiness.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p725-command-center-db-runtime-ux.js", "reports/command-center-db-runtime-ux-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.4",
+        "narrowScope": "Add display-only Command Center DB runtime readiness UX.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js"], "rule": "Reuse existing Command Center route matrix, tabs, page sections, disabled buttons, and theme controls; do not duplicate UI primitives."},
+        "commandCenterUxRequirements": "Show DB primary state, fallback state, migration readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact. Hide raw JSON/logs/DB URLs, DemoApp, raw private IDs, and phase labels.",
+        "exactFilesModules": {"create": ["dashboard/src/data/dbRuntimeReadiness.js", "scripts/check-p725-command-center-db-runtime-ux.js", "reports/command-center-db-runtime-ux-report.md"], "update": ["dashboard/src/data/commandCenterTabs.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p725-command-center-db-runtime-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["Command Center DB runtime readiness is display-only.", "Themes and route-wide safety tests pass.", "No DB writes or migrations are enabled."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-4-db-readiness-gate"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P72 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+      "allowedFiles": ["scripts/check-p726-tests-checkers-docs.js", "reports/p726-tests-checkers-docs-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.5",
+        "narrowScope": "Aggregate validation coverage only.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["scripts/check-p716-tests-checkers-docs.js", "shared/reportWriter.js", "shared/checkResultFormatter.js"], "rule": "Reuse existing aggregation checker and shared reporting patterns; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve P72 Command Center UX, disabled state, next action, raw output safety, and route-wide safety coverage.",
+        "exactFilesModules": {"create": ["scripts/check-p726-tests-checkers-docs.js", "reports/p726-tests-checkers-docs-report.md"], "update": ["package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p726-tests-checkers-docs", "npm run check:p725-command-center-db-runtime-ux", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["P72 validation aggregation passes.", "Command Center route coverage remains safe.", "No DB writes or migrations are enabled."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-5-command-center-db-runtime-ux"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p72-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Close P72 and hand off to P73 with DB writes and migrations still disabled.",
+      "allowedFiles": ["scripts/check-p727-final-validation.js", "reports/p727-final-validation-report.md", "package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P72.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P72.6",
+        "narrowScope": "Final validation and roadmap handoff only.",
+        "safetyRules": ["Do not enable DB writes, migrations, schema mutation, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["scripts/check-p717-final-validation.js", "shared/reportWriter.js", "shared/checkResultFormatter.js"], "rule": "Reuse final validation checker and shared reporting patterns; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve P72 Command Center UX, disabled state, next action, raw output safety, and safety coverage during handoff.",
+        "exactFilesModules": {"create": ["scripts/check-p727-final-validation.js", "reports/p727-final-validation-report.md"], "update": ["package.json", "docs/architecture/P72_DB_RUNTIME_PRIMARY_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p727-final-validation", "npm run check:p726-tests-checkers-docs", "npm run check:p725-command-center-db-runtime-ux", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:p72-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["P72 is complete and current phase advances to P73.", "DB writes and migrations remain disabled.", "No DB, prisma, migrations, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p72-6-tests-checkers-docs"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    }
+  ]
+}

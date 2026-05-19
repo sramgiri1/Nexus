@@ -2343,8 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "Switch runtime primary storage from file-backed fallback to governed DB-backed runtime.",
-      "commandCenterVisible": true
+      "summary": "DB-backed runtime primary is in progress with DB runtime contracts defined and all DB mutation disabled.",
+      "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P72.2"
     },
     {
       "phaseId": "P73",
@@ -2706,6 +2708,83 @@
       "status": "complete",
       "summary": "Validated and closed P71 with package creation and export execution still disabled.",
       "nextPhase": "P72",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.1",
+      "title": "Execution Contract + DB Runtime Boundary",
+      "track": "NEXUS_OS",
+      "order": 47.01,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "complete",
+      "summary": "Defined P72 DB runtime contracts only; DB writes and migrations remain disabled.",
+      "nextPhase": "P72.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.2",
+      "title": "DB Runtime Primary Contract",
+      "track": "NEXUS_OS",
+      "order": 47.02,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Define display-safe DB runtime primary contract records.",
+      "nextPhase": "P72.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.3",
+      "title": "Migration Preview",
+      "track": "NEXUS_OS",
+      "order": 47.03,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Create DB migration preview records without writing migration or schema files.",
+      "nextPhase": "P72.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.4",
+      "title": "DB Readiness Gate",
+      "track": "NEXUS_OS",
+      "order": 47.04,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Add DB readiness gates while keeping DB writes and migrations disabled.",
+      "nextPhase": "P72.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.5",
+      "title": "Command Center DB Runtime UX",
+      "track": "NEXUS_OS",
+      "order": 47.05,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Expose DB runtime readiness without runnable DB actions.",
+      "nextPhase": "P72.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 47.06,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Aggregate P72 validation coverage before final validation.",
+      "nextPhase": "P72.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 47.07,
+      "group": "P72 DB-backed Runtime Primary",
+      "status": "planned",
+      "summary": "Validate and close P72 with DB writes and migrations still disabled.",
+      "nextPhase": "P73",
       "commandCenterVisible": true
     }
   ],

@@ -3497,14 +3497,22 @@
       "phaseId": "P72",
       "title": "DB-backed Runtime Primary",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned DB-backed runtime primary phase.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P73",
+      "summary": "DB-backed runtime primary is in progress with DB runtime contracts defined and all DB mutation disabled.",
+      "checksRun": [
+        "npm run check:p72-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P72 has not enabled DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
+      ],
+      "nextPhase": "P72.2",
       "commandCenterVisible": true
     },
     {
@@ -6312,11 +6320,117 @@
       ],
       "nextPhase": "P72",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.1",
+      "title": "Execution Contract + DB Runtime Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined P72 DB runtime contracts only; DB writes and migrations remain disabled.",
+      "checksRun": [
+        "npm run check:p72-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P72.1 defines contracts only. DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P72.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.2",
+      "title": "DB Runtime Primary Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define display-safe DB runtime primary contract records.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.3",
+      "title": "Migration Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Create DB migration preview records without writing migration or schema files.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.4",
+      "title": "DB Readiness Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add DB readiness gates while keeping DB writes and migrations disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.5",
+      "title": "Command Center DB Runtime UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose DB runtime readiness without runnable DB actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P72 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P72.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P72 with DB writes and migrations still disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P73",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P72",
   "previousPhase": "P71",
-  "nextPhase": "P72"
+  "nextPhase": "P72.2"
 }
