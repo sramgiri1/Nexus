@@ -1410,9 +1410,14 @@ evidence, activity, and cost posture. Command Center Lite shows the local task
 board while dispatch, workers, tools, project mutation, DB writes, deploy,
 package, and spend remain disabled.
 
-P85.5 is next. It should consolidate the founder-facing business runtime UX
-across chat, PRD review, and task board so the Command Center reads like one
-usable founder workflow.
+P85.5 is complete. Founder Lite now opens with a workflow summary that connects
+chat progress, PRD review, local task board state, and next action before the
+detailed panels. The primary founder UX reads as one workflow while raw IDs,
+logs, DemoApp references, fake runnable actions, provider/model calls, dispatch,
+project mutation, DB writes, deploy, package, and spend stay blocked.
+
+P85.6 is next. It should aggregate P85 checks, docs, reports, and roadmap
+evidence before final validation.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).

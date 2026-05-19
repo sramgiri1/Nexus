@@ -2554,6 +2554,25 @@ function CommandCenterLitePage() {
         </div>
       </div>
 
+      <section className="ccv2-card ccv2-lite-workflow" aria-label="Founder workflow summary">
+        <div>
+          <span>Chat</span>
+          <strong>{envelope.turns.length} messages captured</strong>
+        </div>
+        <div>
+          <span>PRD review</span>
+          <strong>{prdReview.reviewState}</strong>
+        </div>
+        <div>
+          <span>Agent work</span>
+          <strong>{taskBoard.boardState}</strong>
+        </div>
+        <div>
+          <span>Next</span>
+          <strong>{taskBoard.nextAction}</strong>
+        </div>
+      </section>
+
       <div className="ccv2-lite-layout">
         <section className="ccv2-card ccv2-lite-chat" aria-label="Chat with NEXUS">
           <div className="ccv2-lite-chat__thread">

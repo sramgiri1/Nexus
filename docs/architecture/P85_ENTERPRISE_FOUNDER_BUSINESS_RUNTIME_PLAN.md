@@ -68,9 +68,13 @@ Validation: `npm run check:p854-task-board-admission`.
 Goal: expose the P85 runtime session, PRD versions, and local task board in
 founder-facing Command Center UX.
 
-Status: planned. P85.5 should keep Founder Lite focused and useful while showing
-session state, PRD review, local task board, blockers, disabled reason, owner,
-evidence, activity, and cost posture without raw private IDs.
+Status: complete. P85.5 consolidates Founder Lite with a workflow summary that
+shows chat progress, PRD review state, local task board state, and next action
+above the detailed chat, PRD review, agent flow, and task board panels. It keeps
+primary UX founder-focused and avoids raw IDs, raw JSON, logs, fake runnable
+actions, DemoApp leakage, and unsafe execution labels.
+
+Validation: `npm run check:p855-command-center-business-runtime-ux`.
 
 ## P85.6 Tests / Docs / Roadmap
 

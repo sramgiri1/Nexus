@@ -348,6 +348,37 @@
   line-height: 1.55;
 }
 
+.ccv2-lite-workflow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.ccv2-lite-workflow div {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  padding: 10px;
+  border: 1px solid var(--v2-border);
+  border-radius: 8px;
+  background: var(--nexus-panel-soft);
+}
+
+.ccv2-lite-workflow span {
+  color: var(--v2-muted);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.ccv2-lite-workflow strong {
+  color: var(--v2-text);
+  font-size: 12px;
+  line-height: 1.4;
+  font-weight: 700;
+}
+
 .ccv2-lite-layout {
   display: grid;
   grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr);
@@ -5542,9 +5573,10 @@
   .ccv2-grid--3,
   .ccv2-grid--three,
   .ccv2-grid-3,
-  .ccv2-ask-context-strip,
-  .ccv2-ask-result-grid,
-  .ccv2-agent-flow__rail,
+	  .ccv2-ask-context-strip,
+	  .ccv2-ask-result-grid,
+	  .ccv2-lite-workflow,
+	  .ccv2-agent-flow__rail,
   .ccv2-agent-flow__footer {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
@@ -5566,10 +5598,11 @@
   .ccv2-command-interface-preview__context,
   .ccv2-command-interface-preview__grid,
   .ccv2-ask-context-strip,
-  .ccv2-ask-result-grid,
-  .ccv2-ask-history-row,
-  .ccv2-lite-hero,
-  .ccv2-lite-prompt-grid,
+	  .ccv2-ask-result-grid,
+	  .ccv2-ask-history-row,
+	  .ccv2-lite-hero,
+	  .ccv2-lite-workflow,
+	  .ccv2-lite-prompt-grid,
   .ccv2-agent-flow__rail,
   .ccv2-agent-flow__footer {
     grid-template-columns: 1fr;

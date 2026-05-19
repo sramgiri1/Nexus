@@ -80,7 +80,12 @@ addCheck("Playwright coverage added", tests.includes("Command Center Lite route 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p854-task-board-admission"]));
 addCheck("contract references P85.4 files", contract.includes("live-ready/enterpriseFounderTaskBoardAdmission.js") && contract.includes("check:p854-task-board-admission"));
 addCheck("docs mention P85.4 validation", docs.includes("P85.4 Local Agent Task Board Admission") && docs.includes("npm run check:p854-task-board-admission"));
-addCheck("phase status advanced", statusById.get("P85.4")?.status === "complete" && status.currentPhase === "P85.4" && status.nextPhase === "P85.5");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.4")?.status === "complete" &&
+    ["P85.4", "P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.5", "P85.6", "P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p853-prd-review-gate-report.md"));
 addCheck("display payload has no private ids", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(boardText));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|create project now/i.test(boardText));

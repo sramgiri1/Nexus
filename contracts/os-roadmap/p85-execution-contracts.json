@@ -557,7 +557,22 @@
       "targetAgent": "ui",
       "taskType": "implementation-plan",
       "objective": "Expose the P85 runtime session, PRD versions, and local task board in founder-facing Command Center UX.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p855-command-center-business-runtime-ux.js",
+        "reports/p855-command-center-business-runtime-ux-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "package.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p85-execution-plan-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -574,15 +589,15 @@
         "phaseId": "P85.5",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.4",
-        "narrowScope": "Founder-facing Command Center runtime UX only.",
+        "expectedBaseCommit": "925a81f",
+        "narrowScope": "Consolidate Founder Lite business runtime UX summary only.",
         "safetyRules": [
           "Do not add fake runnable actions."
         ],
         "reuseCheck": {
           "rule": "Reuse existing Lite, Agent Flow, Business Build, and tabs/components."
         },
-        "commandCenterUxRequirements": "Show session state, PRD version, task board, next action, blockers, disabled reason, owner capability, evidence, activity, and cost impact without raw IDs.",
+        "commandCenterUxRequirements": "Founder Lite must show a coherent workflow summary for chat, PRD review, task board, and next action without raw internal IDs or unsafe runnable actions.",
         "themeRequirements": [
           "Preserve System, Dark, and Light themes."
         ],
@@ -590,11 +605,16 @@
           "Add founder runtime UX coverage across themes."
         ],
         "testsCheckers": [
-          "Add P85.5 checker."
+          "Add check:p855-command-center-business-runtime-ux.",
+          "Update Playwright Lite route coverage for founder workflow summary."
         ],
         "validationCommands": [
-          "npm run check:p855-command-center-founder-runtime-ux",
+          "npm run check:p855-command-center-business-runtime-ux",
+          "npm run check:p85-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
           "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders founder workflow summary\"",
           "git diff --check"
         ],
         "finalSafetyChecks": [
@@ -608,7 +628,24 @@
           "Branch name",
           "Commit hash",
           "Next phase/subphase"
-        ]
+        ],
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p855-command-center-business-runtime-ux.js",
+            "reports/p855-command-center-business-runtime-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/styles-command-center-v2.css",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p85-execution-contracts.json",
+            "package.json",
+            "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ]
+        }
       },
       "acceptanceCriteria": [
         "Founder runtime UX is usable.",

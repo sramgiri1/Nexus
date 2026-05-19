@@ -288,6 +288,31 @@ test("Command Center Lite route renders local task board", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Command Center Lite route renders founder workflow summary", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+  });
+  await page.goto("/command-center/lite");
+
+  const workflow = page.getByLabel("Founder workflow summary");
+  await expect(workflow).toContainText("Chat");
+  await expect(workflow).toContainText("messages captured");
+  await expect(workflow).toContainText("PRD review");
+  await expect(workflow).toContainText("Agent work");
+  await expect(workflow).toContainText("Next");
+  await expect(workflow).toContainText("Complete founder PRD review before admitting local task-board planning.");
+  await expect(workflow).not.toContainText("P85");
+  await expect(workflow).not.toContainText("founder_qna");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/dispatch agent now|run worker now|execute now|deploy now|apply now|call provider now|create project now/i);
+
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 

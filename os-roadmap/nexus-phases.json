@@ -4086,12 +4086,12 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "73c8625",
       "completedAt": "",
-      "summary": "Enterprise founder business runtime in progress with local session, Q&A, PRD review, and task board admission complete.",
+      "summary": "Enterprise founder business runtime in progress with local session, Q&A, PRD review, task board admission, and Founder Lite UX consolidation complete.",
       "checksRun": [],
       "knownLimitations": [
         "Provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled."
       ],
-      "nextPhase": "P85.5",
+      "nextPhase": "P85.6",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4189,24 +4189,50 @@
       "title": "Command Center Business Runtime UX",
       "track": "NEXUS_OS",
       "order": 64.07,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Finalize founder-facing business runtime UX across chat, PRD review, and local task board.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:32:42.226Z",
+      "summary": "Added Founder Lite workflow summary for chat, PRD review, local task board, and next action.",
+      "checksRun": [
+        "npm run check:p855-command-center-business-runtime-ux",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite founder workflow summary"
+      ],
       "knownLimitations": [
-        "Not started."
+        "UX consolidation only; no provider/model calls, dispatch, workers/tools, project mutation, DB writes, deploy, package, or spend."
       ],
       "nextPhase": "P85.6",
       "commandCenterVisible": true,
       "label": "Command Center Business Runtime UX",
-      "detail": "Founder-facing runtime UX consolidation for P85 session, PRD review, and local task board."
+      "detail": "Founder-facing runtime UX consolidation for chat, PRD review, and local task board."
+    },
+    {
+      "phaseId": "P85.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 65.07,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P85 checks, docs, status, and roadmap evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P85.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "P85 validation, documentation, and roadmap aggregation."
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P85.4",
-  "previousPhase": "P85.3",
-  "nextPhase": "P85.5",
+  "currentPhase": "P85.5",
+  "previousPhase": "P85.4",
+  "nextPhase": "P85.6",
   "currentPhaseStatus": "complete"
 }
