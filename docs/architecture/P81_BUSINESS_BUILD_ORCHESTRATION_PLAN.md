@@ -41,6 +41,11 @@ Validation: `npm run check:p812-prd-schema` and
 Goal: define local agent role and workstream plan records for product, design,
 engineering, go-to-market, finance, operations, legal, and support work.
 
+Status: complete. P81.3 adds deterministic local workstream records with owner
+capabilities, inputs, blockers, disabled reasons, evidence, activity, and cost
+posture. It does not dispatch agents, call providers, execute tools or workers,
+mutate project files, write DB rows, deploy, or spend budget.
+
 Validation: `npm run check:p813-agent-workstreams` and
 `npm run check:p81-execution-plan`.
 

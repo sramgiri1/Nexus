@@ -3435,8 +3435,8 @@
       "order": 56,
       "group": "P81 Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts and a local PRD draft schema for the governed path from founder intake to business build orchestration.",
-      "nextPhase": "P81.3",
+      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, and local business build workstream planner for the governed path from founder intake to business build orchestration.",
+      "nextPhase": "P81.4",
       "commandCenterVisible": true
     },
     {
@@ -3464,8 +3464,8 @@
       "title": "Agent Role / Workstream Planner",
       "order": 56.03,
       "group": "P81 Business Build Orchestration Contract",
-      "status": "planned",
-      "summary": "Define local agent role and workstream plan records without dispatching agents.",
+      "status": "complete",
+      "summary": "Added deterministic local agent role and workstream planning records without dispatching agents.",
       "nextPhase": "P81.4",
       "commandCenterVisible": true
     },
@@ -3510,5 +3510,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T22:55:00.000Z"
+  "updatedAt": "2026-05-19T23:15:00.000Z"
 }

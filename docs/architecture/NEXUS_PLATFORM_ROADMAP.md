@@ -345,8 +345,8 @@ Risk level:
 - `P81` Business Build Orchestration Contract — in progress
   - `P81.1` Execution Contract + Business Build Boundary — complete
   - `P81.2` Founder Idea to PRD Schema — complete
-  - `P81.3` Agent Role / Workstream Planner — next
-  - `P81.4` Safe Dry-Run Business Build Plan
+  - `P81.3` Agent Role / Workstream Planner — complete
+  - `P81.4` Safe Dry-Run Business Build Plan — next
   - `P81.5` Command Center Business Build UX
   - `P81.6` Tests / Checkers / Docs
   - `P81.7` Final Validation
