@@ -93,12 +93,16 @@ behavior, and no project-file changes.
 
 Run final validation and close P78.
 
-Status: planned. P78.7 will verify all P78 subphases are complete, Command
+Status: complete. P78.7 verifies all P78 subphases are complete, Command
 Center Enterprise Preview UX remains display-only, roadmap/status evidence is
 current, and provider/tool/worker execution, project mutation, DB writes,
 network calls, deploy/release/export behavior, package creation, auth/session/
 user/workspace mutation, certification/attestation, and provider spend remain
 disabled.
+
+P78 is complete. It closes the NEXUS OS enterprise developer preview path for
+founder intake, Q&A readiness, PRD preview, agent workplan preview, and
+self-healing readiness without enabling governed runtime mutation.
 
 ## Validation
 
@@ -156,6 +160,23 @@ P78.6 validation:
 - `npm run check:p784`
 - `npm run check:p783`
 - `npm run check:p782`
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.7 validation:
+
+- `npm run check:p787-final-validation`
+- `npm run check:p786-tests-checkers-docs`
+- `npm run check:p785-command-center-enterprise-preview-ux`
+- `npm run check:p784`
+- `npm run check:p783`
+- `npm run check:p782`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Enterprise Preview route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

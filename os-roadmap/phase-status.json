@@ -4540,17 +4540,21 @@
       "phaseId": "P78",
       "title": "Self-Healing Enterprise Developer Preview",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "883606f",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Continued P78 with validation aggregation for tests, checkers, docs, roadmap, and Command Center evidence.",
+      "summary": "Completed P78 enterprise developer preview with founder intake, Q&A readiness, PRD preview, agent workplan preview, self-healing readiness, Command Center UX, and final validation while runtime mutation remains disabled.",
       "checksRun": [
+        "npm run check:p787-final-validation",
         "npm run check:p786-tests-checkers-docs",
         "npm run check:p785-command-center-enterprise-preview-ux",
         "npm run check:p784",
         "npm run check:p783",
         "npm run check:p782",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Enterprise Preview route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "npm run check:p78-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -4558,9 +4562,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P78.6 aggregates tests, checkers, docs, and roadmap evidence only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+        "P78 closes enterprise developer preview readiness only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
       ],
-      "nextPhase": "P78.7",
+      "nextPhase": "complete",
       "commandCenterVisible": true
     },
     {
@@ -4711,13 +4715,30 @@
       "phaseId": "P78.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final P78 validation and OS phase closure without enabling runtime mutation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Closed P78 final validation with all subphases complete, Enterprise Preview UX preserved, status evidence current, and runtime/project/provider mutation disabled.",
+      "checksRun": [
+        "npm run check:p787-final-validation",
+        "npm run check:p786-tests-checkers-docs",
+        "npm run check:p785-command-center-enterprise-preview-ux",
+        "npm run check:p784",
+        "npm run check:p783",
+        "npm run check:p782",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Enterprise Preview route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78 closes enterprise developer preview readiness only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
       "nextPhase": "complete",
       "commandCenterVisible": true
     },
@@ -7614,6 +7635,6 @@
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P78",
-  "previousPhase": "P77",
-  "nextPhase": "P78.7"
+  "previousPhase": "P78",
+  "nextPhase": "P78"
 }

@@ -349,6 +349,7 @@
     "check:p784": "node scripts/check-p784.js",
     "check:p785-command-center-enterprise-preview-ux": "node scripts/check-p785-command-center-enterprise-preview-ux.js",
     "check:p786-tests-checkers-docs": "node scripts/check-p786-tests-checkers-docs.js",
+    "check:p787-final-validation": "node scripts/check-p787-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

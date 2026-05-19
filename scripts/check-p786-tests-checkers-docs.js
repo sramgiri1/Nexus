@@ -73,6 +73,7 @@ const statusCommitSubphases = ["P78.1", "P78.2", "P78.3", "P78.4", "P78.5"];
 const phaseById = new Map(phases.map((phase) => [phase.phaseId, phase]));
 const statusById = new Map(entries.map((entry) => [entry.phaseId, entry]));
 const preFinalHandoff = status.currentPhase === "P78" && status.nextPhase === "P78.7" && phaseById.get("P78")?.nextPhase === "P78.7";
+const finalClosure = status.currentPhase === "P78" && status.previousPhase === "P78" && status.nextPhase === "P78" && statusById.get("P78.7")?.status === "complete";
 
 addCheck("package scripts registered", requiredScripts.every((script) => packageJson.scripts?.[script]), requiredScripts.join(", "));
 addCheck("checker files exist", requiredCheckerFiles.every(fileExists));
@@ -80,8 +81,8 @@ addCheck("reports exist", requiredReports.every(fileExists), requiredReports.joi
 addCheck("docs cover subphases", completedSubphases.every((phaseId) => docs.includes(`### ${phaseId}`) && docs.includes("Status: complete")), completedSubphases.join(", "));
 addCheck("roadmap statuses complete", completedSubphases.every((phaseId) => phaseById.get(phaseId)?.status === "complete"));
 addCheck("phase status entries complete", completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
-addCheck("P78 handoff is valid", preFinalHandoff, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-addCheck("P78.7 remains planned", phaseById.get("P78.7")?.status === "planned" && statusById.get("P78.7")?.status === "planned");
+addCheck("P78 handoff is valid", preFinalHandoff || finalClosure, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("P78.7 remains planned or complete", ["planned", "complete"].includes(phaseById.get("P78.7")?.status) && ["planned", "complete"].includes(statusById.get("P78.7")?.status));
 addCheck("completed status commits stamped", statusCommitSubphases.every((phaseId) => statusById.get(phaseId)?.commit && statusById.get(phaseId)?.commit !== "pending-final-commit"));
 addCheck("Command Center route registered", routeSource.includes('key: "enterprisePreview"') && routeSource.includes("/command-center/enterprise-preview"));
 addCheck("Command Center tabs registered", tabsSource.includes("ENTERPRISE_PREVIEW_TABS") && tabsSource.includes("PRD Preview") && tabsSource.includes("Disabled Actions"));

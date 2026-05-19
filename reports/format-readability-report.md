@@ -2,14 +2,14 @@
 
 ## Metadata
 
-- Generated at: 2026-05-19T15:04:14.560Z
+- Generated at: 2026-05-19T15:07:17.931Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 883606f
+- Validation HEAD: 31b72b5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Summary
 
-- Files checked: 455
+- Files checked: 456
 
 ## Warnings
 
@@ -29,6 +29,8 @@
 - docs/architecture/TEST_SUITE_MANAGER.md:5:382
 - docs/architecture/TEST_SUITE_MANAGER.md:67:373
 - reports/p786-tests-checkers-docs-report.md:14:306
+- reports/p787-final-validation-report.md:15:306
+- reports/p787-final-validation-report.md:62:313
 
 ## Failures
 
@@ -49,13 +51,13 @@
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:79 (334) — \| `deployment` \| `forge` \| `shepherd`, `core`, `swift`, `pixel` \| `warden` for secret or compliance impact \| task, handoff, approval \| `platform.deploy_plan`, `
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:91 (326) — \| `security` \| `warden` \| `forge`, `auditor`, `sentinel`, `synapse` \| `warden` \| verification, approval \| `security.secret_scan`, `verification.compliance_gate`
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:82 (316) — \| `code_quality` \| `auditor` \| `core`, `swift`, `pixel` as remediation owners \| `auditor` \| verification \| `verification.code_quality_gate` \| none for normal ve
+- reports/p787-final-validation-report.md:62 (313) — - Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worker execution, net
 - reports/p786-tests-checkers-docs-report.md:14 (306) — - Does not enable founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worke
+- reports/p787-final-validation-report.md:15 (306) — - Does not enable founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, DB writes, project mutation, provider/tool/worke
 - docs/architecture/DOMAIN_OWNERSHIP_POLICY.md:74 (302) — \| `design` \| `prism` \| `atlas`, `pixel`, `swift`, `canvas` \| `warden` when regulated copy or claims exist \| task, handoff \| `orchestration.plan_flow` until a de
 - docs/architecture/TASK_ACTIVATION_AND_AGENT_ASSIGNMENT.md:9 (302) — P36 (Agentic Workspace) showed the operator what NEXUS can do. P37 lets the operator start the process by activating the first safe task. Activation is the brid
 - docs/architecture/AGENT_TASK_CONTEXT.md:5 (300) — Phase 4D adds a lightweight adapter that normalizes task input into a consistent agent context object. It is advisory only in this phase. The adapter gives futu
 - docs/architecture/CONTROL_EXECUTION_VERIFICATION_PLANES.md:241 (299) — `memory/safety-events.json` and `memory/system-usage.json` are written by the safety subsystem and budget guard respectively. No agent, hook, or tool can write
-- reports/concurrent-execution-final-report.md:48 (299) — The Worker Runtime page now shows concurrency readiness, policy limits, lock preview readiness, duplicate work preview readiness, priority preview readiness, an
-- docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md:5 (298) — P39 is the first phase where a UI-driven workflow may apply a narrow source change via the action bridge. The target is `projects/careloop/docs/NEXUS_IMPLEMENTA
 
 ## Result
 
