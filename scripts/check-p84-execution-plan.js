@@ -45,10 +45,10 @@ addCheck("docs reference contract", plan.includes(CONTRACT_PATH));
 addCheck("docs list all subphases", P84_SUBPHASES.every((phaseId) => plan.includes(phaseId)));
 addCheck(
   "status advanced through P84",
-  statusById.get("P84")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P84")?.status)
     && statusById.get("P84.1")?.status === "complete"
     && P84_SUBPHASES.includes(status.currentPhase)
-    && P84_SUBPHASES.includes(status.nextPhase),
+    && (P84_SUBPHASES.includes(status.nextPhase) || status.nextPhase === "P85"),
 );
 
 const failed = checks.filter((check) => check.status === "FAIL");

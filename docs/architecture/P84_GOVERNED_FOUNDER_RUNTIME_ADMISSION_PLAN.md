@@ -88,7 +88,12 @@ Validation: `npm run check:p846-docs-roadmap`.
 
 Goal: close P84 governed founder runtime admission.
 
-Status: planned.
+Status: complete. P84.7 closes P84 with final validation across founder runtime
+admission, Command Center Lite, local agent plan admission, Live Readiness
+runtime UX, validation aggregation, docs, roadmap, OS phase status, and safety
+evidence.
+
+Validation: `npm run check:p847-final-validation`.
 
 ## Reuse Check
 

@@ -1325,10 +1325,10 @@ Implementation must follow
 
 ## P84 - Governed Founder Runtime Admission
 
-P84 is in progress as the governed founder runtime admission track. It starts by
-admitting only local deterministic founder intake, Q&A, PRD drafting, workstream
-planning, and generated workspace planning after approval, scope, redaction,
-activity, cost, rollback, and validation gates are present.
+P84 is complete as the governed founder runtime admission track. It admits only
+local deterministic founder intake, Q&A, PRD drafting, workstream planning, and
+generated workspace planning after approval, scope, redaction, activity, cost,
+rollback, and validation gates are present.
 
 P84.1 is complete. It defines the founder runtime admission contract and reuses
 the existing P80 founder-intake helpers, P81 PRD/workstream helpers, and
@@ -1363,12 +1363,11 @@ visibility, coverage evidence, and the blocked execution posture.
 
 P84.6 is complete. The P84 docs and roadmap now reflect completed founder
 runtime admission, Command Center Lite, local agent planning admission, Live
-Readiness visibility, and validation aggregation, with P84.7 remaining as the
-final validation closeout.
+Readiness visibility, and validation aggregation.
 
-Planned P84 subphases:
-
-- `P84.7` Final Validation
+P84.7 is complete. Final validation closes governed founder runtime admission
+with all P84 subphase reports, scripts, docs, status records, Command Center
+visibility, dashboard build/page checks, and safety assertions passing.
 
 The detailed plan lives in
 [`P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md`](P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md).

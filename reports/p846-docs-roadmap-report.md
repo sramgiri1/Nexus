@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P84.6
-- Generated at: 2026-05-19T21:58:41.654Z
+- Generated at: 2026-05-19T22:00:55.410Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c84b1ee
+- Validation HEAD: bbb9050
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | P84.1-P84.6 docs marked complete | PASS |  |
 | validation commands documented | PASS |  |
 | roadmap mentions P84.6 | PASS |  |
-| planned list only final validation | PASS |  |
+| roadmap is advanced past docs | PASS |  |
 | P84.6 status advanced | PASS |  |
 | P84.5 report exists | PASS |  |
 | unsafe behavior remains documented as blocked | PASS |  |

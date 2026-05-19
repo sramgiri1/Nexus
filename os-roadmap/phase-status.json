@@ -8678,30 +8678,29 @@
       "phaseId": "P84",
       "title": "Governed Founder Runtime Admission",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c84b1ee",
-      "completedAt": "",
-      "summary": "P84 is in progress. Docs and roadmap evidence are finalized; final validation remains next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T22:00:37.240Z",
+      "summary": "Completed governed local founder runtime admission, focused Command Center Lite, local agent plan admission, Live Readiness visibility, validation aggregation, docs, and final validation while keeping unsafe execution blocked.",
       "checksRun": [
-        "npm run check:p841-founder-runtime-admission",
-        "npm run check:p84-execution-plan",
+        "npm run check:p847-final-validation",
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
-        "git diff --check",
-        "npm run check:p842-command-center-lite",
-        "npm run check:p843-agent-plan-admission-preview",
-        "npm run check:p844-command-center-runtime-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "npm run check:p845-validation-aggregation",
-        "npm run check:p846-docs-roadmap"
+        "git diff --check"
       ],
       "knownLimitations": [
-        "P84.6 is docs and roadmap only; it does not enable runtime behavior.",
-        "P84.7 must run final validation before P84 closes."
+        "P84 completes governed local founder runtime admission and visibility only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled until later explicit admission."
       ],
-      "nextPhase": "P84.7",
+      "nextPhase": "P85",
       "commandCenterVisible": true
     },
     {
@@ -8852,23 +8851,53 @@
       "phaseId": "P84.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T22:00:37.240Z",
+      "summary": "Closed P84 governed founder runtime admission with final validation evidence and safety confirmations.",
+      "checksRun": [
+        "npm run check:p847-final-validation",
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P84.7 closes local admission and visibility only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P85",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P85",
+      "title": "Enterprise Founder Business Runtime",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Close P84 governed founder runtime admission.",
+      "summary": "Planned next phase for enterprise founder-to-business runtime enablement after P84 governed local admission closes.",
       "checksRun": [],
       "knownLimitations": [
-        "Not implemented yet."
+        "Not implemented yet. P84 keeps provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend disabled."
       ],
-      "nextPhase": "P85",
-      "commandCenterVisible": true
+      "nextPhase": "P85.1",
+      "commandCenterVisible": true,
+      "order": 1
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.6",
-  "previousPhase": "P84.5",
-  "nextPhase": "P84.7",
+  "currentPhase": "P84.7",
+  "previousPhase": "P84.6",
+  "nextPhase": "P85",
   "currentPhaseStatus": "complete"
 }

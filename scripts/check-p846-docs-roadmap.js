@@ -54,8 +54,16 @@ addCheck(
 );
 addCheck("validation commands documented", requiredValidationCommands.every((command) => docs.includes(command)));
 addCheck("roadmap mentions P84.6", roadmap.includes("P84.6 is complete"));
-addCheck("planned list only final validation", roadmap.includes("`P84.7` Final Validation") && !roadmap.includes("`P84.6` Docs / Roadmap"));
-addCheck("P84.6 status advanced", statusById.get("P84.6")?.status === "complete" && status.currentPhase === "P84.6" && status.nextPhase === "P84.7");
+addCheck(
+  "roadmap is advanced past docs",
+  (roadmap.includes("`P84.7` Final Validation") || roadmap.includes("P84.7 is complete")) &&
+    !roadmap.includes("`P84.6` Docs / Roadmap"),
+);
+addCheck(
+  "P84.6 status advanced",
+  statusById.get("P84.6")?.status === "complete" &&
+    ["P84.6", "P84.7"].includes(status.currentPhase),
+);
 addCheck("P84.5 report exists", fileExists("reports/p845-validation-aggregation-report.md"));
 addCheck("unsafe behavior remains documented as blocked", docs.includes("provider/model calls") && docs.includes("agent dispatch") && docs.includes("project mutation") && docs.includes("provider spend"));
 
