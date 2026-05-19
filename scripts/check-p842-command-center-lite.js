@@ -70,7 +70,11 @@ addCheck("Playwright coverage added", tests.includes("Command Center Lite keeps 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p842-command-center-lite"]));
 addCheck("contract references P84.2 Lite files", contract.includes("live-ready/founderRuntimeEnvelope.js") && contract.includes("check:p842-command-center-lite"));
 addCheck("docs mention P84.2 validation", docs.includes("P84.2 Live-Local Q&A to PRD Envelope") && docs.includes("npm run check:p842-command-center-lite"));
-addCheck("phase status advanced", statusById.get("P84.2")?.status === "complete" && status.currentPhase === "P84.2" && status.nextPhase === "P84.3");
+addCheck(
+  "phase status advanced",
+  statusById.get("P84.2")?.status === "complete" &&
+    ["P84.2", "P84.3", "P84.4", "P84.5", "P84.6", "P84.7"].includes(status.currentPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p841-founder-runtime-admission-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

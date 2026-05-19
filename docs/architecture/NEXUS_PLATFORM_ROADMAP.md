@@ -1344,9 +1344,15 @@ disabled reasons, owner capability, evidence/activity location, and cost impact.
 Advanced OS/admin routes remain registered for direct access, but they no longer
 clutter the primary founder sidebar.
 
+P84.3 is complete. It admits the local founder agent plan as planning records by
+reusing the P81 business build workstreams and P82 worker execution gate. Each
+lane now records owner capability, prerequisites, blockers, disabled reason,
+evidence/activity location, and cost impact while dispatch, workers, providers,
+project mutation, DB writes, deploy, release, export, package creation, and
+spend remain disabled.
+
 Planned P84 subphases:
 
-- `P84.3` Agent Plan Admission Preview
 - `P84.4` Command Center Runtime UX
 - `P84.5` Validation Aggregation
 - `P84.6` Docs / Roadmap

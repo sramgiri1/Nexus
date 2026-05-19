@@ -8680,9 +8680,9 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3480a60",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P84 is in progress. Local founder runtime admission and Command Center Lite Q&A-to-PRD envelope are complete; unsafe execution remains blocked.",
+      "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, and local agent plan admission are complete; unsafe execution remains blocked.",
       "checksRun": [
         "npm run check:p841-founder-runtime-admission",
         "npm run check:p84-execution-plan",
@@ -8690,13 +8690,14 @@
         "npm run check:os-phase-status",
         "npm run check:format-readability",
         "git diff --check",
-        "npm run check:p842-command-center-lite"
+        "npm run check:p842-command-center-lite",
+        "npm run check:p843-agent-plan-admission-preview"
       ],
       "knownLimitations": [
-        "P84.2 is local planning UX only; it does not call providers/models, dispatch agents, mutate projects, write DB state, deploy, package, call networks, or spend.",
-        "P84.3 must admit local agent planning separately before later runtime UX aggregation."
+        "P84.3 admits local agent/workstream planning records only; it does not dispatch agents, execute workers, mutate projects, write DB state, deploy, release, export, package, call networks, or spend.",
+        "P84.4 must surface the aggregate runtime admission state in Command Center before P84 can close."
       ],
-      "nextPhase": "P84.3",
+      "nextPhase": "P84.4",
       "commandCenterVisible": true
     },
     {
@@ -8749,14 +8750,23 @@
       "phaseId": "P84.3",
       "title": "Agent Plan Admission Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Admit local agent/workstream planning without dispatching agents.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:46:56.984Z",
+      "summary": "Admitted local founder agent/workstream planning records by reusing P81 workstreams and the P82 worker gate while keeping dispatch and execution blocked.",
+      "checksRun": [
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:p842-command-center-lite",
+        "npm run check:p84-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P84.3 is planning admission only; no provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, network calls, deploy, release, export, package creation, or provider spend are enabled.",
+        "Command Center aggregate runtime UX is deferred to P84.4."
       ],
       "nextPhase": "P84.4",
       "commandCenterVisible": true
@@ -8828,7 +8838,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.2",
-  "previousPhase": "P84.1",
-  "nextPhase": "P84.3"
+  "currentPhase": "P84.3",
+  "previousPhase": "P84.2",
+  "nextPhase": "P84.4",
+  "currentPhaseStatus": "complete"
 }

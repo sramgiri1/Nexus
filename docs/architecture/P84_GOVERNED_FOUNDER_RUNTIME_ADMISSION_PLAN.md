@@ -41,7 +41,15 @@ Validation: `npm run check:p842-command-center-lite`.
 
 Goal: admit local agent/workstream planning without dispatching agents.
 
-Status: planned.
+Status: complete. P84.3 adds a local founder agent plan admission envelope
+that reuses the P81 business build workstream planner and P82 worker execution
+gate. It records each owner capability, prerequisite, blocker, disabled reason,
+evidence/activity location, and cost impact while keeping provider/model calls,
+agent dispatch, tool execution, worker execution, project creation, project
+mutation, DB writes, network calls, deploy, release, export, package creation,
+and provider spend disabled.
+
+Validation: `npm run check:p843-agent-plan-admission-preview`.
 
 ## P84.4 Command Center Runtime UX
 
@@ -89,7 +97,9 @@ or activity/evidence appenders.
 ## Safety Rules
 
 P84.1 admits local deterministic founder runtime planning only. P84.2 exposes
-that admission through Command Center Lite and keeps execution blocked.
+that admission through Command Center Lite and keeps execution blocked. P84.3
+admits local agent/workstream planning records while leaving dispatch and worker
+execution blocked.
 
 Still forbidden:
 
@@ -110,6 +120,7 @@ Rollback P84.1 by removing
 `contracts/os-roadmap/p84-execution-contracts.json`,
 `docs/architecture/P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md`,
 `live-ready/founderRuntimeAdmission.js`,
+`live-ready/founderAgentPlanAdmission.js`,
 `scripts/check-p84-execution-plan.js`,
 `scripts/check-p841-founder-runtime-admission.js`, and their reports; removing
 P84 scripts from `package.json`; and returning OS phase status to P83.7 with
