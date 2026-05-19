@@ -9086,7 +9086,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "53af8ca",
       "completedAt": "",
       "summary": "Governed live capability admission in progress with P86.1-P86.2 complete.",
       "checksRun": [
@@ -9138,8 +9138,8 @@
       "order": 69.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:54:40.865Z",
+      "commit": "53af8ca",
+      "completedAt": "2026-05-19T23:55:29.629Z",
       "summary": "Added deterministic live capability state resolution with activation state, risk, reasons, required-before-live gates, and blocked runtime flags.",
       "checksRun": [
         "npm run check:p862-capability-state-resolver",
@@ -9254,7 +9254,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:54:40.865Z",
+  "updatedAt": "2026-05-19T23:55:29.629Z",
   "currentPhase": "P86.2",
   "previousPhase": "P86.1",
   "nextPhase": "P86.3",
