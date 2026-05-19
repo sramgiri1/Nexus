@@ -50,7 +50,24 @@ phase-status records.
 Define display-safe identity and session contract records without login or
 session mutation.
 
-Status: planned.
+Status: complete. P73.2 adds preview-only `IdentitySessionContract` records.
+Each contract includes identity mode, session state, token handling state, auth
+provider state, disabled login/provider/token/session/user/role/tenant flags,
+forbidden files, blocked operations, blockers, disabled reason,
+evidence/activity references, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `auth-governance/p73-2-placeholder.js` exports
+  `createIdentitySessionContract`, `validateIdentitySessionContract`,
+  `buildIdentitySessionContractEnvelope`, `P73_2_REQUIRED_FIELDS`, and
+  `P73_2_SAMPLE_CONTRACTS`.
+- `scripts/check-p732.js` validates contract shape, disabled login/session and
+  identity provider calls, disabled user/role/tenant mutation, disabled DB and
+  project mutation, disabled provider/tool/worker execution, disabled
+  network/spend, disabled deploy/release/export/package execution, forbidden
+  auth/user/RBAC paths, hidden private IDs/tokens/auth URLs, evidence/activity,
+  cost impact, and non-runnable disabled reasons.
 
 ### P73.3 RBAC Permission Matrix
 
@@ -105,7 +122,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.1. Login, identity provider integration,
+P73 is in progress through P73.2. Login, identity provider integration,
 user/session/role/tenant mutation, DB writes, project mutation, provider
 dispatch, tool execution, worker execution, deploy execution, release
 execution, export execution, package creation, external network calls, and

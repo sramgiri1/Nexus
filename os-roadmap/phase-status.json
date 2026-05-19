@@ -3530,10 +3530,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e9357df",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with execution contracts defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with identity/session contracts defined and mutation disabled.",
       "checksRun": [
+        "npm run check:p732",
         "npm run check:p73-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3543,7 +3544,7 @@
       "knownLimitations": [
         "P73 has not enabled login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P73.2",
+      "nextPhase": "P73.3",
       "commandCenterVisible": true
     },
     {
@@ -3572,13 +3573,22 @@
       "phaseId": "P73.2",
       "title": "Identity Session Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define display-safe identity and session contract records without login.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined display-safe identity and session contract records without login.",
+      "checksRun": [
+        "npm run check:p732",
+        "npm run check:p73-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P73.2 records identity/session contracts only. Login, identity provider integration, token exchange, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P73.3",
       "commandCenterVisible": true
     },
@@ -6616,5 +6626,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P73",
   "previousPhase": "P72",
-  "nextPhase": "P73.2"
+  "nextPhase": "P73.3"
 }

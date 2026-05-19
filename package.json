@@ -309,6 +309,7 @@
     "check:p726-tests-checkers-docs": "node scripts/check-p726-tests-checkers-docs.js",
     "check:p727-final-validation": "node scripts/check-p727-final-validation.js",
     "check:p73-execution-plan": "node scripts/check-p73-execution-plan.js",
+    "check:p732": "node scripts/check-p732.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

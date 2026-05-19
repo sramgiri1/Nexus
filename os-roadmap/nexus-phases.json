@@ -2354,10 +2354,10 @@
       "track": "NEXUS_OS",
       "order": 48,
       "group": "Planned OS Phases",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with execution contracts defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with identity/session contracts defined and mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P73.2"
+      "nextPhase": "P73.3"
     },
     {
       "phaseId": "P73.1",
@@ -2376,8 +2376,8 @@
       "track": "NEXUS_OS",
       "order": 48.02,
       "group": "P73 Auth, RBAC, Multi-user Governance",
-      "status": "planned",
-      "summary": "Define display-safe identity and session contract records without login.",
+      "status": "complete",
+      "summary": "Defined display-safe identity and session contract records without login.",
       "nextPhase": "P73.3",
       "commandCenterVisible": true
     },
