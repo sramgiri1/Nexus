@@ -2794,10 +2794,10 @@
       "track": "NEXUS_OS",
       "order": 53,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "summary": "Start enterprise developer preview readiness with founder intake, Q&A, PRD, agent workplan, and self-healing execution disabled.",
+      "summary": "Continue enterprise developer preview readiness with founder intake and Q&A previews while runtime mutation remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P78.2"
+      "nextPhase": "P78.3"
     },
     {
       "phaseId": "P78.1",
@@ -2816,8 +2816,8 @@
       "track": "NEXUS_OS",
       "order": 53.019999999999996,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "status": "planned",
-      "summary": "Planned founder intake and Q&A preview records with provider execution and project mutation disabled.",
+      "status": "complete",
+      "summary": "Added preview-only founder intake and Q&A records with provider execution, PRD generation, agent dispatch, project mutation, DB writes, network calls, and spend disabled.",
       "nextPhase": "P78.3",
       "commandCenterVisible": true
     },

@@ -48,7 +48,7 @@ handoff, and phase-status records.
 
 Define founder idea intake and clarifying Q&A preview records.
 
-Status: planned. P78.2 will add preview-only founder intake records that
+Status: complete. P78.2 adds preview-only founder intake records that
 capture idea summary, Q&A state, readiness gaps, disabled provider execution,
 disabled project mutation, cost impact, disabled reason, and next action.
 
@@ -100,6 +100,15 @@ disabled.
 
 P78.1 validation:
 
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.2 validation:
+
+- `npm run check:p782`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`
