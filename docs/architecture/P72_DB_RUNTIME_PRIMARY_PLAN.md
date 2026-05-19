@@ -47,7 +47,23 @@ phase-status records.
 
 Define display-safe DB runtime primary contract records.
 
-Status: planned.
+Status: complete. P72.2 adds preview-only `DbRuntimePrimaryContract`
+records for NEXUS OS runtime readiness. Each contract includes DB primary
+state, file-backed fallback state, migration state, allowed/forbidden files,
+disabled execution flags, disabled reason, blockers, evidence/activity
+references, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `db-runtime/p72-2-placeholder.js` exports
+  `createDbRuntimePrimaryContract`, `validateDbRuntimePrimaryContract`,
+  `buildDbRuntimePrimaryContractEnvelope`, `P72_2_REQUIRED_FIELDS`, and
+  `P72_2_SAMPLE_CONTRACTS`.
+- `scripts/check-p722.js` validates contract shape, DB/project path blocking,
+  disabled DB writes/migrations/schema mutation, disabled project mutation,
+  disabled provider/tool/worker execution, disabled network/spend,
+  disabled deploy/release/export/package execution, hidden private IDs and DB
+  URLs, evidence/activity, cost impact, and non-runnable disabled reasons.
 
 ### P72.3 Migration Preview
 
@@ -101,7 +117,7 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.1. DB writes, migrations, schema mutation,
+P72 is in progress through P72.2. DB writes, migrations, schema mutation,
 project mutation, provider dispatch, tool execution, worker execution, deploy
 execution, release execution, export execution, package creation, external
 network calls, and provider spend remain disabled.

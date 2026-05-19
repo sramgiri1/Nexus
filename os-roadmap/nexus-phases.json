@@ -2343,10 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "DB-backed runtime primary is in progress with DB runtime contracts defined and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with DB runtime primary contracts defined and all DB mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P72.2"
+      "nextPhase": "P72.3"
     },
     {
       "phaseId": "P73",
@@ -2727,8 +2727,8 @@
       "track": "NEXUS_OS",
       "order": 47.02,
       "group": "P72 DB-backed Runtime Primary",
-      "status": "planned",
-      "summary": "Define display-safe DB runtime primary contract records.",
+      "status": "complete",
+      "summary": "Defined display-safe DB runtime primary contract records without DB writes or migrations.",
       "nextPhase": "P72.3",
       "commandCenterVisible": true
     },
