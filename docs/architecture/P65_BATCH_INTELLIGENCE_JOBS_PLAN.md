@@ -50,6 +50,13 @@ Define preview-only batch intelligence job records and validation. Jobs must
 show state, workload type, request count, disabled upload reason, evidence refs,
 and execution-disabled posture.
 
+Status: complete. P65.2 adds preview-only batch intelligence job records that
+reuse API batch preview, cost estimate, and redaction helpers. Jobs expose
+workload type, request count, disabled upload reason, cost estimate, evidence
+refs, activity refs, and next action while provider upload, batch submission,
+provider polling, provider reconciliation, execution, DB writes, deploy,
+network calls, workers, and project mutation remain disabled.
+
 ### P65.3 Workload Selection Preview
 
 Build redacted workload selection previews for large-scale analysis. Workload

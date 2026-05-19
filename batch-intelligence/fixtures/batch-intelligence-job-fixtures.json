@@ -1,0 +1,37 @@
+{
+  "fixtures": [
+    {
+      "name": "test gap analysis preview",
+      "input": {
+        "jobId": "p65_test_gap_analysis_preview",
+        "workloadType": "test_gap_analysis",
+        "scopeLabel": "NEXUS OS",
+        "requests": [
+          {
+            "custom_id": "gap_analysis_request_1",
+            "inputSummary": "Summarize missing checker coverage from redacted OS validation reports.",
+            "metadata": {
+              "source": "reports/phase-validation-coverage-report.md",
+              "apiKey": "sk-test-secret-value"
+            }
+          },
+          {
+            "custom_id": "gap_analysis_request_2",
+            "inputSummary": "Identify stale roadmap status labels from redacted phase reports.",
+            "metadata": {
+              "source": "reports/os-phase-status-report.md"
+            }
+          }
+        ],
+        "evidenceRefs": ["reports/p65-batch-intelligence-job-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "safeSummary": {
+          "scope": "NEXUS OS",
+          "workload": "test gap analysis",
+          "providerUpload": "disabled"
+        },
+        "createdAt": "2026-05-19T02:20:00.000Z"
+      }
+    }
+  ]
+}

@@ -2783,6 +2783,7 @@
       "summary": "P65 has started as a contract-only batch intelligence split without enabling provider upload, batch submission, or execution.",
       "checksRun": [
         "npm run check:p65-execution-plan",
+        "npm run check:p65-batch-intelligence-job",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
@@ -2792,7 +2793,7 @@
         "Provider upload, batch submission, provider polling, provider reconciliation, provider dispatch, tool execution, code execution, worker execution, DB writes, deploy, release, external network calls, and project mutation remain disabled.",
         "P65.1 only defines implementation-grade subphase contracts and validation."
       ],
-      "nextPhase": "P65.2",
+      "nextPhase": "P65.3",
       "commandCenterVisible": true
     },
     {
@@ -2821,13 +2822,21 @@
       "phaseId": "P65.2",
       "title": "Batch Intelligence Job Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned preview-only batch intelligence job records and validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "commit": "pending-p65-batch-intelligence-job-commit",
+      "completedAt": "2026-05-19T02:20:00.000Z",
+      "summary": "Added preview-only batch intelligence job records with API batch preview, cost estimate, and redaction reuse while provider upload and execution remain disabled.",
+      "checksRun": [
+        "npm run check:p65-batch-intelligence-job",
+        "npm run check:p65-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Batch intelligence jobs are metadata previews only; provider upload, batch submission, provider polling, provider reconciliation, provider dispatch, tool execution, code execution, worker execution, DB writes, deploy, network calls, and project mutation remain disabled."
+      ],
       "nextPhase": "P65.3",
       "commandCenterVisible": true
     },
@@ -5137,5 +5146,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P65",
   "previousPhase": "P64.8",
-  "nextPhase": "P65.2"
+  "nextPhase": "P65.3"
 }
