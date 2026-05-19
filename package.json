@@ -345,6 +345,7 @@
     "check:p777-final-validation": "node scripts/check-p777-final-validation.js",
     "check:p78-execution-plan": "node scripts/check-p78-execution-plan.js",
     "check:p782": "node scripts/check-p782.js",
+    "check:p783": "node scripts/check-p783.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

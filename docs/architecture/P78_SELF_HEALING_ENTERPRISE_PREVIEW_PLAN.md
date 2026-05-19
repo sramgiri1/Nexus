@@ -56,9 +56,10 @@ disabled project mutation, cost impact, disabled reason, and next action.
 
 Define PRD assembly preview records.
 
-Status: planned. P78.3 will add preview-only PRD assembly records that capture
-problem, audience, value proposition, scope, risks, acceptance criteria, and
-disabled generation/project mutation state.
+Status: complete. P78.3 adds preview-only PRD assembly records that capture
+problem, audience, value proposition, scope, risks, acceptance criteria,
+missing founder inputs, disabled generation/project mutation state, evidence,
+activity, owner capability, next action, and cost impact.
 
 ### P78.4 Agent Workplan / Self-Healing Preview Model
 
@@ -109,6 +110,15 @@ P78.1 validation:
 P78.2 validation:
 
 - `npm run check:p782`
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.3 validation:
+
+- `npm run check:p783`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

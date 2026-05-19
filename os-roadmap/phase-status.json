@@ -4542,11 +4542,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "21ae8c8",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Continued P78 with preview-only founder intake and Q&A records while runtime mutation remains disabled.",
+      "summary": "Continued P78 with preview-only PRD assembly records while runtime mutation remains disabled.",
       "checksRun": [
-        "npm run check:p782",
+        "npm run check:p783",
         "npm run check:p78-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -4554,9 +4554,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P78.2 records founder intake and Q&A previews only. Autonomous Q&A, provider calls, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain disabled."
+        "P78.3 records PRD assembly previews only. PRD generation, project file writes, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
       ],
-      "nextPhase": "P78.3",
+      "nextPhase": "P78.4",
       "commandCenterVisible": true
     },
     {
@@ -4608,13 +4608,22 @@
       "phaseId": "P78.3",
       "title": "PRD Assembly Preview Model",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned PRD assembly preview records without project file generation or mutation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added preview-only PRD assembly records with PRD generation, project file writes, agent dispatch, project mutation, DB writes, provider execution, network calls, and spend disabled.",
+      "checksRun": [
+        "npm run check:p783",
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78.3 records PRD assembly previews only. PRD generation, project file writes, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
       "nextPhase": "P78.4",
       "commandCenterVisible": true
     },
@@ -7568,5 +7577,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P78",
   "previousPhase": "P77",
-  "nextPhase": "P78.3"
+  "nextPhase": "P78.4"
 }
