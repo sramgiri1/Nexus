@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Continue compliance and audit pack readiness with compliance evidence indexes while certification, export, package, and runtime mutation remain disabled.",
+      "summary": "Continue compliance and audit pack readiness with audit trail export previews while export, package, certification, and runtime mutation remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P77.3"
+      "nextPhase": "P77.4"
     },
     {
       "phaseId": "P77.1",
@@ -2736,8 +2736,8 @@
     {
       "phaseId": "P77.3",
       "title": "Audit Trail Export Preview",
-      "status": "planned",
-      "summary": "Plan display-only audit trail export previews with raw log export and package creation disabled.",
+      "status": "complete",
+      "summary": "Added preview-only audit trail export records with audit export, raw log export, package creation, certification, DB, project, runtime, network, and spend behavior disabled.",
       "nextPhase": "P77.4",
       "order": 52.03,
       "track": "NEXUS_OS",

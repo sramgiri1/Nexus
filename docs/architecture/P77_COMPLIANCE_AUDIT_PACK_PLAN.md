@@ -64,10 +64,11 @@ cost impact, disabled reason, blockers, owner capability, and next action.
 Define audit trail export previews without exporting raw logs or creating
 packages.
 
-Status: planned. P77.3 will add preview-only `AuditTrailExportPreview`
+Status: complete. P77.3 adds preview-only `AuditTrailExportPreview`
 records that capture audit scope, source evidence index, disabled audit export,
-disabled raw log export, disabled package creation, evidence/activity
-references, cost impact, disabled reason, and next action.
+disabled raw log export, disabled package creation, certification and legal
+attestation safety, evidence/activity references, cost impact, blockers,
+disabled reason, owner capability, and next action.
 
 ### P77.4 Control Mapping / Attestation Preview
 
@@ -123,6 +124,16 @@ P77.1 validation:
 
 P77.2 validation:
 
+- `npm run check:p772`
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.3 validation:
+
+- `npm run check:p773`
 - `npm run check:p772`
 - `npm run check:p77-execution-plan`
 - `npm run check:phase-validation-coverage`

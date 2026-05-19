@@ -338,6 +338,7 @@
     "check:p767-final-validation": "node scripts/check-p767-final-validation.js",
     "check:p77-execution-plan": "node scripts/check-p77-execution-plan.js",
     "check:p772": "node scripts/check-p772.js",
+    "check:p773": "node scripts/check-p773.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
