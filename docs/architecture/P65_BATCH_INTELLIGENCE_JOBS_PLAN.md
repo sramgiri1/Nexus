@@ -86,6 +86,12 @@ workers, and project mutation remain disabled.
 Expose batch intelligence readiness and disabled upload/execution state in
 Command Center without enabling runnable actions.
 
+Status: complete. P65.5 adds display-only Batch Queue and API / Batch readiness
+cards for batch intelligence. The UX shows workload type, request count,
+redaction state, disabled upload/execution reason, cost impact, evidence and
+activity locations, and next action without raw payload dumps or runnable
+controls.
+
 ### P65.6 Tests / Checkers / Docs
 
 Aggregate P65 checker coverage and docs before final validation.

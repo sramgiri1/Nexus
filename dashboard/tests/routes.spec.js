@@ -2401,6 +2401,9 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Current state");
     await expect(page.locator("body")).toContainText("Dry-run only");
     await expect(page.locator("body")).toContainText("Estimate only; no provider spend.");
+    await expect(page.locator("body")).toContainText("Batch Intelligence Readiness");
+    await expect(page.locator("body")).toContainText("Redacted summaries only");
+    await expect(page.locator("body")).toContainText("Provider upload, batch submission, provider spend, and execution remain disabled.");
     for (const label of [
       "Overview",
       "Provider Adapters",
@@ -2425,7 +2428,38 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("DemoApp");
     expect(body).not.toContain("raw JSON");
     expect(body).not.toContain("raw prompt");
+    expect(body).not.toContain("provider submitted");
+    expect(body).not.toContain("batch submitted");
     expect(body).not.toContain("Requires P37");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Batch Queue route shows batch intelligence readiness without upload", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/batch");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Batch Queue");
+    await expect(page.locator("body")).toContainText("Batch API Status");
+    await expect(page.locator("body")).toContainText("Batch Intelligence Readiness");
+    await expect(page.locator("body")).toContainText("Preview only");
+    await expect(page.locator("body")).toContainText("Upload disabled");
+    await expect(page.locator("body")).toContainText("Requests: 2");
+    await expect(page.locator("body")).toContainText("Redaction: Redacted summaries only");
+    await expect(page.locator("body")).toContainText("Cost impact: Estimate only; no provider spend.");
+    await expect(page.locator("body")).toContainText("Evidence: reports/p65-batch-safety-gate-report.md");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toContain("provider submitted");
+    expect(body).not.toContain("batch submitted");
+
+    await pickTheme(page, "dark");
+    await expect(page.locator("body")).toContainText("Batch Intelligence Readiness");
+    await pickTheme(page, "light");
+    await expect(page.locator("body")).toContainText("Batch Intelligence Readiness");
 
     expect(errors).toEqual([]);
   });

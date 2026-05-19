@@ -49,6 +49,7 @@ import {
 } from "../data/nexusRoadmap.js";
 import { dispatchGovernanceSummary, dispatchReadinessCards } from "../data/dispatchGovernance.js";
 import { codeModeReadinessCards } from "../data/codeModeReadiness.js";
+import { batchIntelligenceReadinessCards } from "../data/batchIntelligenceReadiness.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
 import {
   PROJECT_SELECTION_STORAGE_KEY,
@@ -4408,6 +4409,26 @@ function BatchQueuePage({ vm }) {
               </div>
               <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>Batch is not enabled for real execution. Worker runtime and governed provider dispatch are required before real batch jobs can run.</p>
             </div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {batchIntelligenceReadinessCards.map((card) => (
+                <article key={card.title} className="ccv2-card">
+                  <div className="ccv2-section-heading">{card.title}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--preview">{card.stateLabel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">Upload disabled</span>
+                  </div>
+                  <div className="ccv2-muted">Workload: {card.workloadType}</div>
+                  <div className="ccv2-muted">Requests: {card.requestCount}</div>
+                  <div className="ccv2-muted">Redaction: {card.redactionState}</div>
+                  <div className="ccv2-muted">Disabled reason: {card.disabledReason}</div>
+                  <div className="ccv2-muted">Blocker: {card.blocker}</div>
+                  <div className="ccv2-muted">Cost impact: {card.costImpact}</div>
+                  <div className="ccv2-muted">Next action: {card.nextAction}</div>
+                  <div className="ccv2-muted">Evidence: {card.evidenceLocation}</div>
+                  <div className="ccv2-muted">Activity: {card.activityLocation}</div>
+                </article>
+              ))}
+            </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="jobs" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Jobs</div><div className="ccv2-empty-state">Future batch job list. Batch execution is not enabled yet.</div></div></CommandTabPanel>
           <CommandTabPanel tabId="results" activeTab={activeTab}><div className="ccv2-card"><div className="ccv2-section-heading">Results</div><div className="ccv2-empty-state">Future results and reconciliation will appear after batch runtime is enabled.</div></div></CommandTabPanel>
@@ -6558,6 +6579,22 @@ function ApiBatchAdapterPage({ vm }) {
                 <div className="ccv2-empty-state">Next action: {providerDispatchCard.nextAction}</div>
               </div>
             )}
+            <div className="ccv2-grid ccv2-grid--2">
+              {batchIntelligenceReadinessCards.map((card) => (
+                <article key={card.title} className="ccv2-card">
+                  <div className="ccv2-section-heading">{card.title}</div>
+                  <div className="ccv2-page-summary-grid">
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">State</span><span className="ccv2-page-summary-value">{card.stateLabel}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Workload</span><span className="ccv2-page-summary-value">{card.workloadType}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Requests</span><span className="ccv2-page-summary-value">{card.requestCount}</span></div>
+                    <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Redaction</span><span className="ccv2-page-summary-value">{card.redactionState}</span></div>
+                  </div>
+                  <div className="ccv2-muted">Disabled reason: {card.disabledReason}</div>
+                  <div className="ccv2-muted">Cost impact: {card.costImpact}</div>
+                  <div className="ccv2-empty-state">Next action: {card.nextAction}</div>
+                </article>
+              ))}
+            </div>
           </CommandTabPanel>
 
           <CommandTabPanel tabId="providers" activeTab={activeTab}>

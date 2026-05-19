@@ -1,0 +1,28 @@
+export const batchIntelligenceReadinessCards = [
+  {
+    title: "Batch Intelligence Readiness",
+    stateLabel: "Preview only",
+    workloadType: "Test gap analysis",
+    requestCount: 2,
+    redactionState: "Redacted summaries only",
+    disabledReason: "Provider upload, batch submission, provider spend, and execution remain disabled.",
+    blocker: "Final validation, approval, worker runtime, and explicit provider dispatch enablement are required.",
+    costImpact: "Estimate only; no provider spend.",
+    nextAction: "Review cost and safety gate output before any future runtime phase.",
+    evidenceLocation: "reports/p65-batch-safety-gate-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+  },
+  {
+    title: "Workload Selection",
+    stateLabel: "Selection preview",
+    workloadType: "Redacted OS reports",
+    requestCount: 2,
+    redactionState: "Project source not read",
+    disabledReason: "Raw project paths, raw provider payloads, and raw logs are not shown in primary UX.",
+    blocker: "Restricted data and missing redaction evidence block review.",
+    costImpact: "No spend; preview estimate only.",
+    nextAction: "Keep workload inputs as caller-provided redacted summaries.",
+    evidenceLocation: "reports/p65-workload-selection-report.md",
+    activityLocation: "reports/p65-batch-intelligence-job-report.md",
+  },
+];
