@@ -3674,7 +3674,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7608cb9",
       "completedAt": "",
       "summary": "P83 is in progress. Snake iOS local admission, scaffold planning, file creation, and local validation harness are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
@@ -3777,7 +3777,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7608cb9",
       "completedAt": "2026-05-19T20:12:16.405Z",
       "summary": "Added a local-only validation manifest and checker for the generated Snake iOS workspace.",
       "checksRun": [

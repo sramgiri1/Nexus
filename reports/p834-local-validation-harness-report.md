@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P83.4
-- Generated at: 2026-05-19T20:13:32.071Z
+- Generated at: 2026-05-19T20:15:06.751Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 13a1957
+- Validation HEAD: 7608cb9
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -23,11 +23,25 @@
 | forbidden actions are documented | PASS |  |
 | commands avoid external/deploy tokens | PASS |  |
 | game-rule assertions command passes | PASS | Building for debugging...
+[0/7] Write sources
+[2/7] Write SnakeIOSAppTests-entitlement.plist
+[3/7] Write swift-version--1AB21518FC5DEDBE.txt
+[5/13] Emitting module SnakeIOSApp
+[6/13] Compiling SnakeIOSApp Theme.swift
+[7/13] Compiling SnakeIOSApp SnakeTypes.swift
+[8/13] Compiling SnakeIOSApp GameState.swift
+[9/13] Compiling SnakeIOSApp GameScene.swift
+[10/13] Compiling SnakeIOSApp SnakeIOSApp.swift
+[11/15] Compiling SnakeIOSAppTests GameStateTests.swift
+[12/15] Emitting module SnakeIOSAppTests
+[12/15] Write Objects.LinkFileList
+[13/15] Linking SnakeIOSAppTests
+[14/15] Applying SnakeIOSAppTests
+Build of product 'SnakeIOSAppTests' complete! (51.17s) |
+| swift package build command passes | PASS | [0/1] Planning build
+Building for debugging...
 [0/3] Write swift-version--1AB21518FC5DEDBE.txt
-Build of product 'SnakeIOSAppTests' complete! (0.11s) |
-| swift package build command passes | PASS | Building for debugging...
-[0/3] Write swift-version--1AB21518FC5DEDBE.txt
-Build complete! (0.11s) |
+Build complete! (0.12s) |
 | build artifacts are ignored | PASS |  |
 | package script registered | PASS |  |
 | contract references P83.4 files | PASS |  |
