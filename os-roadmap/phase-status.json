@@ -2969,26 +2969,26 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "047898c",
+      "commit": "pending-p66-6-commit",
       "completedAt": "",
-      "summary": "P66 is in progress with Command Center self-healing readiness UX complete; recovery execution remains disabled.",
+      "summary": "P66 is in progress with aggregate self-healing validation complete; final validation remains.",
       "checksRun": [
+        "npm run check:p66-self-healing-final",
         "npm run check:p66-command-center-self-healing-ux",
-        "npm run check:command-center-ux",
-        "cd dashboard && npm run test:unit",
-        "cd dashboard && npm run build",
-        "cd dashboard && npm run test:pages -- --grep \"Recovery route\"",
         "npm run check:p66-healing-safety-gate",
+        "npm run check:p66-recovery-plan-preview",
+        "npm run check:p66-failure-classification",
         "npm run check:p66-execution-plan",
+        "npm run check:command-center-ux",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P66 Command Center UX is display-only and does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
+        "P66 aggregate validation confirms preview-only self-healing. Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P66.6",
+      "nextPhase": "P66.7",
       "commandCenterVisible": true
     },
     {
@@ -3117,13 +3117,27 @@
       "phaseId": "P66.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P66 validation coverage before final validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-6-commit",
+      "completedAt": "2026-05-19T05:30:00.000Z",
+      "summary": "Added aggregate P66 self-healing checker and report across contract, classifier, recovery preview, safety gate, and Command Center UX.",
+      "checksRun": [
+        "npm run check:p66-self-healing-final",
+        "npm run check:p66-command-center-self-healing-ux",
+        "npm run check:p66-healing-safety-gate",
+        "npm run check:p66-recovery-plan-preview",
+        "npm run check:p66-failure-classification",
+        "npm run check:p66-execution-plan",
+        "npm run check:command-center-ux",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Aggregate checker is validation-only and does not enable recovery execution, automatic retry, source/project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
+      ],
       "nextPhase": "P66.7",
       "commandCenterVisible": true
     },
@@ -5363,5 +5377,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P66.6"
+  "nextPhase": "P66.7"
 }

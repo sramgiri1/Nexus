@@ -305,8 +305,8 @@ Risk level:
   - `P66.3` Recovery Plan Preview — complete
   - `P66.4` Healing Gate + Loop Guard — complete
   - `P66.5` Command Center Self-Healing UX — complete
-  - `P66.6` Tests / Checkers / Docs — next
-  - `P66.7` Final Validation
+  - `P66.6` Tests / Checkers / Docs — complete
+  - `P66.7` Final Validation — next
 - `P67` Controlled Source Mutation Expansion
 - `P68` Self-Update Workflow for NEXUS OS
 - `P69` Release / Deploy Loop

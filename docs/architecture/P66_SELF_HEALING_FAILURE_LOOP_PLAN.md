@@ -101,7 +101,12 @@ writes, deploy, release, network calls, and provider spend remain disabled.
 
 Aggregate P66 checker coverage and docs before final validation.
 
-Status: planned.
+Status: complete. P66.6 adds aggregate validation across the P66 execution
+contract, failure classification, recovery plan preview, healing safety gate,
+and Command Center self-healing UX. The aggregate checker confirms self-healing
+remains preview-only with recovery execution, automatic retry, source mutation,
+project mutation, provider/tool execution, DB writes, deploy, release, network
+calls, and provider spend disabled.
 
 ### P66.7 Final Validation
 
