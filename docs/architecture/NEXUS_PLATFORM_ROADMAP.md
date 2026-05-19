@@ -1231,3 +1231,33 @@ Implementation must follow
 [`p64-execution-contracts.json`](../../contracts/os-roadmap/p64-execution-contracts.json).
 P64.1 does not enable provider dispatch, tool execution, worker execution, DB
 writes, project mutation, external network calls, release, or deploy actions.
+
+## P82 - Governed Business Build Execution Activation Contract
+
+P82 is in progress as the live-readiness activation track for the founder
+intake to business build path. It replaces broad preview posture with
+evidence-backed Ready, Needs setup, and Blocked by policy states for provider
+calls, tool execution, worker execution, project mutation, DB writes, deploy,
+release, export, package creation, auth/session/user/workspace mutation, and
+provider spend.
+
+P82.1 is complete. It adds the implementation-grade P82 contracts, activation
+boundary plan, validation checker, roadmap/status tracking, and report evidence
+without enabling runtime execution.
+
+Planned P82 subphases:
+
+- `P82.2` Provider / Tool Live Gates
+- `P82.3` Worker Execution Gate
+- `P82.4` Project / DB Mutation Admission
+- `P82.5` Deploy / Release Admission
+- `P82.6` Command Center Live Ready UX
+- `P82.7` Final Validation
+
+The detailed plan lives in
+[`P82_LIVE_READY_ACTIVATION_PLAN.md`](P82_LIVE_READY_ACTIVATION_PLAN.md).
+Implementation must follow
+[`p82-execution-contracts.json`](../../contracts/os-roadmap/p82-execution-contracts.json).
+P82.1 does not call providers, execute tools or workers, mutate project files,
+write DB state, deploy, release, export, package, change
+auth/session/user/workspace state, or spend provider budget.

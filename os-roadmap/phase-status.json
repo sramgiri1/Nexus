@@ -8254,15 +8254,98 @@
     {
       "phaseId": "P82",
       "title": "Governed Business Build Execution Activation Contract",
+      "status": "in_progress",
+      "summary": "Defined live-ready activation contracts and started the governed path from preview posture to evidence-backed readiness.",
+      "nextPhase": "P82.2",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p82-execution-plan",
+        "npm run check:p817-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82 is in progress. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ]
+    },
+    {
+      "phaseId": "P82.1",
+      "title": "Live Readiness Inventory + Activation Boundary",
+      "status": "complete",
+      "summary": "Added P82 implementation contracts, activation boundary docs, checker, roadmap/status entries, and report evidence without enabling runtime execution.",
+      "nextPhase": "P82.2",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p82-execution-plan",
+        "npm run check:p817-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82.1 is contract-only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ]
+    },
+    {
+      "phaseId": "P82.2",
+      "title": "Provider / Tool Live Gates",
       "status": "planned",
-      "summary": "Plan the governed activation contract for live business build execution after P81 local orchestration validation.",
-      "nextPhase": "P82.1",
+      "summary": "Create provider and tool live-readiness gate records without calling providers or tools.",
+      "nextPhase": "P82.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P82.3",
+      "title": "Worker Execution Gate",
+      "status": "planned",
+      "summary": "Create worker execution readiness gates without starting workers.",
+      "nextPhase": "P82.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P82.4",
+      "title": "Project / DB Mutation Admission",
+      "status": "planned",
+      "summary": "Define project mutation and DB write admission gates without writing project files or DB state.",
+      "nextPhase": "P82.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P82.5",
+      "title": "Deploy / Release Admission",
+      "status": "planned",
+      "summary": "Define deploy, release, export, and package admission gates without executing them.",
+      "nextPhase": "P82.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P82.6",
+      "title": "Command Center Live Ready UX",
+      "status": "planned",
+      "summary": "Expose evidence-backed Ready, Needs setup, and Blocked by policy states in Command Center without fake live actions.",
+      "nextPhase": "P82.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P82.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "summary": "Close P82 after validating live-readiness activation remains governed and evidence-backed.",
+      "nextPhase": "P83",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:59:00.000Z",
-  "currentPhase": "P81.7",
-  "previousPhase": "P81.6",
-  "nextPhase": "P82"
+  "updatedAt": "2026-05-19T23:59:30.000Z",
+  "currentPhase": "P82.1",
+  "previousPhase": "P81.7",
+  "nextPhase": "P82.2"
 }

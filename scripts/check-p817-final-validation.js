@@ -100,8 +100,13 @@ export function checkP81FinalValidation() {
   addCheck("prior P81 commits stamped", ["P81.1", "P81.2", "P81.3", "P81.4", "P81.5", "P81.6"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
   addCheck("final P81 entries are stampable", ["P81", "P81.7"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit)));
   addCheck("P81 handoff to P82", phaseById.get("P81")?.nextPhase === "P82" && statusById.get("P81")?.nextPhase === "P82");
-  addCheck("root status handoff to P82", status.currentPhase === "P81.7" && status.previousPhase === "P81.6" && status.nextPhase === "P82", `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-  addCheck("P82 placeholder exists", phaseById.get("P82")?.status === "planned" && statusById.get("P82")?.status === "planned");
+  addCheck(
+    "root status handoff to P82",
+    (status.currentPhase === "P81.7" && status.previousPhase === "P81.6" && status.nextPhase === "P82") ||
+      (status.currentPhase === "P82.1" && status.previousPhase === "P81.7" && status.nextPhase === "P82.2"),
+    `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
+  );
+  addCheck("P82 handoff exists", ["planned", "in_progress"].includes(phaseById.get("P82")?.status) && ["planned", "in_progress"].includes(statusById.get("P82")?.status));
   addCheck("status checker accepts P82", statusChecker.includes('"P82"'));
   addCheck("docs close P81", planDoc.includes("P81 is complete") && planDoc.includes("hands off to P82"));
   addCheck("Command Center route preserved", routes.includes("key: \"businessBuild\"") && routes.includes("/command-center/business-build"));
@@ -158,7 +163,7 @@ export function checkP81FinalValidation() {
         body: [
           "- P81 closes local business build orchestration only.",
           "- Provider calls, autonomous provider Q&A, PRD generation execution, agent dispatch, project creation, DB writes, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain disabled.",
-          "- P82 is planned only; it must define its own contract before implementation.",
+          "- P82 may be planned or in progress; it must define its own contract before enabling live execution.",
         ].join("\n"),
       },
       { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },

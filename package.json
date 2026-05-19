@@ -372,6 +372,7 @@
     "check:p815-command-center-business-build-ux": "node scripts/check-p815-command-center-business-build-ux.js",
     "check:p816-tests-checkers-docs": "node scripts/check-p816-tests-checkers-docs.js",
     "check:p817-final-validation": "node scripts/check-p817-final-validation.js",
+    "check:p82-execution-plan": "node scripts/check-p82-execution-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
