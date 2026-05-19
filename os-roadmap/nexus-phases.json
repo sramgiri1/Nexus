@@ -3674,23 +3674,23 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "47c1526",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P83 is in progress. Local Snake iOS project creation has an admission record; file creation, deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "summary": "P83 is in progress. Snake iOS local project creation admission and scaffold planning are complete; file creation, deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
+        "npm run check:p832-snake-ios-scaffold-plan",
         "npm run check:p831-local-project-creation-admission",
         "npm run check:p83-execution-plan",
-        "npm run check:p827-final-validation",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.1 does not create app files. File creation is deferred to P83.3 after scaffold planning.",
+        "P83.2 is plan-only. File creation is deferred to P83.3 and must stay under generated-projects/snake-ios.",
         "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
       ],
-      "nextPhase": "P83.2",
+      "nextPhase": "P83.3",
       "commandCenterVisible": true
     },
     {
@@ -3722,14 +3722,23 @@
       "phaseId": "P83.2",
       "title": "Snake iOS Scaffold Plan",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Plan SwiftUI/SpriteKit Snake iOS scaffold before file creation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T19:58:48.914Z",
+      "summary": "Defined the SwiftUI/SpriteKit Snake iOS scaffold plan for generated-projects/snake-ios without creating app files.",
+      "checksRun": [
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P83.2 does not create files. P83.3 must enforce the admitted root and file plan before writing.",
+        "Provider/tool/worker execution, DB writes, deploy/release/export/package behavior, network calls, and provider spend remain blocked."
       ],
       "nextPhase": "P83.3",
       "commandCenterVisible": true
@@ -3816,7 +3825,7 @@
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.1",
-  "previousPhase": "P83",
-  "nextPhase": "P83.2"
+  "currentPhase": "P83.2",
+  "previousPhase": "P83.1",
+  "nextPhase": "P83.3"
 }

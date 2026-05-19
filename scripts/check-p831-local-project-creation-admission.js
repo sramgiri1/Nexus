@@ -59,6 +59,16 @@ const unsafeValidation = validateLocalProjectCreationAdmission(unsafeRoot);
 const packageJson = readJson("package.json");
 const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
+const validCurrentPhases = ["P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.1", "P83.2"],
+  ["P83.2", "P83.3"],
+  ["P83.3", "P83.4"],
+  ["P83.4", "P83.5"],
+  ["P83.5", "P83.6"],
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 const contract = readText("contracts/os-roadmap/p83-execution-contracts.json");
 const docs = readText("docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md");
 const moduleSource = readText("live-ready/localProjectCreationAdmission.js");
@@ -90,7 +100,12 @@ addCheck("no fake unsafe runnable actions", !/deploy now|call provider now|spend
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p831-local-project-creation-admission"]));
 addCheck("contract references P83.1 files", contract.includes("live-ready/localProjectCreationAdmission.js") && contract.includes("check:p831-local-project-creation-admission"));
 addCheck("docs mention P83.1 validation", docs.includes("P83.1 Local Project Creation Admission") && docs.includes("npm run check:p831-local-project-creation-admission"));
-addCheck("phase status advanced", statusById.get("P83.1")?.status === "complete" && status.currentPhase === "P83.1" && status.nextPhase === "P83.2");
+addCheck(
+  "phase status remains valid after P83.1",
+  statusById.get("P83.1")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/founder-snake-ios-test-report.md") && fileExists("reports/p827-final-validation-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

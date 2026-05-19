@@ -30,6 +30,16 @@ const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
 const tasks = Array.isArray(contract.taskContracts) ? contract.taskContracts : [];
 const taskByPhase = new Map(tasks.map((task) => [task.inputs?.phaseId, task]));
+const validCurrentPhases = ["P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.1", "P83.2"],
+  ["P83.2", "P83.3"],
+  ["P83.3", "P83.4"],
+  ["P83.4", "P83.5"],
+  ["P83.5", "P83.6"],
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 
 const requiredForbidden = ["projects/**", "careloop/**", "db/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", ".env.*"];
 const invalidTasks = tasks.flatMap((task) => validateTaskContract(task).valid ? [] : [task.id || "unknown"]);
@@ -44,7 +54,13 @@ addCheck("approval and rollback gates are required", /approval/i.test(allSafetyT
 addCheck("generated workspace root is the only admitted project root", allSafetyText.includes("generated-projects/snake-ios") && !/(^|[^-])projects\/snake-ios/.test(allSafetyText));
 addCheck("docs reference contract", plan.includes(CONTRACT_PATH));
 addCheck("docs list all subphases", P83_SUBPHASES.every((phaseId) => plan.includes(phaseId)));
-addCheck("status advanced to P83.1", statusById.get("P83")?.status === "in_progress" && statusById.get("P83.1")?.status === "complete" && status.currentPhase === "P83.1" && status.nextPhase === "P83.2");
+addCheck(
+  "status advanced within P83",
+  statusById.get("P83")?.status === "in_progress"
+    && statusById.get("P83.1")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 
 const failed = checks.filter((check) => check.status === "FAIL");
 
@@ -55,7 +71,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates P83 implementation-grade runtime admission contracts.",
-        "- Confirms P83.1 admits only a generated workspace root before any file creation.",
+        "- Confirms P83 admission starts with a generated workspace root before any file creation.",
         "- Does not write project files, call providers/tools, start workers, write DB state, deploy, release, package, or spend.",
       ].join("\n"),
     },
@@ -65,6 +81,7 @@ writeMarkdownReport(
       body: [
         "- npm run check:p83-execution-plan",
         "- npm run check:p831-local-project-creation-admission",
+        "- npm run check:p832-snake-ios-scaffold-plan",
         "- npm run check:p827-final-validation",
         "- npm run check:phase-validation-coverage",
         "- npm run check:os-phase-status",
@@ -72,7 +89,7 @@ writeMarkdownReport(
         "- git diff --check",
       ].join("\n"),
     },
-    { title: "Known Limitations", body: "- P83.1 does not create the iOS project files. File creation is planned for P83.3 after scaffold planning." },
+    { title: "Known Limitations", body: "- P83.1 and P83.2 do not create the iOS project files. File creation is planned for P83.3 after scaffold planning." },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
   { title: "P83 Execution Plan Report", phase: "P83" },

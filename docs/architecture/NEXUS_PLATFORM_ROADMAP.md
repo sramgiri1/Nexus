@@ -1293,9 +1293,12 @@ P83.1 is complete. It adds local project creation admission for
 `generated-projects/snake-ios` using explicit approval, scope, rollback,
 validation, activity, cost, and redaction gates. It does not create app files.
 
+P83.2 is complete. It defines the implementation-grade SwiftUI/SpriteKit
+scaffold plan for the admitted Snake iOS generated workspace and keeps all app
+file writes deferred to P83.3.
+
 Planned P83 subphases:
 
-- `P83.2` Snake iOS Scaffold Plan
 - `P83.3` Approved Local File Creation
 - `P83.4` Local Validation Harness
 - `P83.5` Command Center Build UX

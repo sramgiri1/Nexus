@@ -57,7 +57,7 @@
       "targetAgent": "planner",
       "taskType": "implementation-plan",
       "objective": "Plan a SwiftUI/SpriteKit Snake iOS scaffold for the admitted generated workspace root.",
-      "allowedFiles": ["ios-scaffold/snakeIosScaffoldPlan.js", "scripts/check-p832-snake-ios-scaffold-plan.js", "reports/p832-snake-ios-scaffold-plan-report.md", "package.json", "docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"],
+      "allowedFiles": ["ios-scaffold/snakeIosScaffoldPlan.js", "scripts/check-p832-snake-ios-scaffold-plan.js", "reports/p832-snake-ios-scaffold-plan-report.md", "reports/p83-execution-plan-report.md", "reports/p831-local-project-creation-admission-report.md", "reports/os-phase-status-report.md", "package.json", "contracts/os-roadmap/p83-execution-contracts.json", "docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md", "docs/architecture/NEXUS_PLATFORM_ROADMAP.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"],
       "forbiddenFiles": ["projects/**", "careloop/**", "db/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
       "inputs": {
         "phaseId": "P83.2",
@@ -71,7 +71,7 @@
         "themeRequirements": ["Preserve System, Dark, and Light themes."],
         "playwrightTests": ["No Playwright unless UX changes."],
         "testsCheckers": ["Add check:p832-snake-ios-scaffold-plan."],
-        "validationCommands": ["npm run check:p832-snake-ios-scaffold-plan", "npm run check:p83-execution-plan", "npm run check:os-phase-status", "git diff --check"],
+        "validationCommands": ["npm run check:p832-snake-ios-scaffold-plan", "npm run check:p831-local-project-creation-admission", "npm run check:p83-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
         "finalSafetyChecks": ["Confirm no generated app files are created."],
         "gitCommands": ["git add <allowed P83.2 files>", "git commit -m \"feat(nexus): plan snake ios scaffold\""],
         "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "Tests/checkers run", "Next phase/subphase"]

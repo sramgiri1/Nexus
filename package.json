@@ -381,6 +381,7 @@
     "check:p827-final-validation": "node scripts/check-p827-final-validation.js",
     "check:p83-execution-plan": "node scripts/check-p83-execution-plan.js",
     "check:p831-local-project-creation-admission": "node scripts/check-p831-local-project-creation-admission.js",
+    "check:p832-snake-ios-scaffold-plan": "node scripts/check-p832-snake-ios-scaffold-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

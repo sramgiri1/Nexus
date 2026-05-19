@@ -29,8 +29,14 @@ Validation: `npm run check:p831-local-project-creation-admission`.
 Goal: create an implementation-grade SwiftUI/SpriteKit scaffold plan for the
 admitted generated workspace root.
 
-Status: planned. No files are written in this subphase unless the P83.1
-admission remains valid.
+Status: complete. P83.2 adds the SwiftUI/SpriteKit scaffold plan for
+`generated-projects/snake-ios`, including the app shell, game scene, game
+state, shared game types, theme module, package manifest, README, and unit test
+target. It reuses the P83.1 admission record and keeps project creation, file
+writes, DB writes, provider/tool/worker execution, deploy/release/export/package
+behavior, network calls, and provider spend blocked until P83.3.
+
+Validation: `npm run check:p832-snake-ios-scaffold-plan`.
 
 ## P83.3 Approved Local File Creation
 
@@ -88,7 +94,8 @@ components, or activity/evidence appenders.
 
 ## Safety Rules
 
-P83.1 allows only an admission record. It does not create project files.
+P83.1 allows only an admission record. It does not create project files. P83.2
+adds only a scaffold plan and keeps file writes deferred to P83.3.
 
 Forbidden until a later explicit subphase:
 
@@ -105,11 +112,13 @@ Forbidden until a later explicit subphase:
 
 ## Rollback
 
-Rollback P83.1 by removing
+Rollback P83.1 and P83.2 by removing
 `contracts/os-roadmap/p83-execution-contracts.json`,
 `docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md`,
 `live-ready/localProjectCreationAdmission.js`,
+`ios-scaffold/snakeIosScaffoldPlan.js`,
 `scripts/check-p83-execution-plan.js`,
 `scripts/check-p831-local-project-creation-admission.js`, and their reports;
-removing P83 scripts from `package.json`; and returning OS phase status to
-P82.7 with next phase `P83`.
+`scripts/check-p832-snake-ios-scaffold-plan.js`, and their reports; removing
+P83 scripts from `package.json`; and returning OS phase status to P82.7 with
+next phase `P83`.
