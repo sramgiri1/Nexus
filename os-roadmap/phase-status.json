@@ -3926,11 +3926,125 @@
       "phaseId": "P75",
       "title": "Backup, Restore, Disaster Recovery",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Started P75 with implementation-grade backup, restore, and disaster recovery contracts while runtime backup/restore/failover behavior remains disabled.",
+      "checksRun": [
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P75.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.1",
+      "title": "Execution Contract + DR Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Defined the P75 execution contract, backup/restore/DR safety boundary, validation checker, roadmap entries, and phase-status records.",
+      "checksRun": [
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.1 defines contracts and boundaries only. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P75.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.2",
+      "title": "Backup Inventory Contract",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned backup, restore, and disaster recovery phase.",
+      "summary": "Planned preview-only backup inventory contracts without backup creation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P75.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.3",
+      "title": "Restore Plan Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned restore plan previews without restore execution.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P75.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.4",
+      "title": "Disaster Recovery Runbook + Safety Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned disaster recovery runbook and safety gate previews without failover or restore execution.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P75.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.5",
+      "title": "Command Center Backup/DR UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center Backup/DR readiness UX.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P75.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P75 validation coverage aggregation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P75.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P75.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final P75 validation and P76 handoff.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P76",
@@ -6869,8 +6983,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T11:18:20.708Z",
+  "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75"
+  "nextPhase": "P75.2"
 }
