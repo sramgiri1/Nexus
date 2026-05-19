@@ -3516,8 +3516,8 @@
       "order": 57,
       "group": "P82 Governed Business Build Execution Activation Contract",
       "status": "in_progress",
-      "summary": "Defined live-ready activation contracts and started the governed path from preview posture to evidence-backed readiness.",
-      "nextPhase": "P82.2",
+      "summary": "Defined live-ready activation contracts and provider/tool readiness gates while runtime execution remains blocked.",
+      "nextPhase": "P82.3",
       "commandCenterVisible": true
     },
     {
@@ -3537,8 +3537,8 @@
       "track": "NEXUS_OS",
       "order": 57.02,
       "group": "P82 Governed Business Build Execution Activation Contract",
-      "status": "planned",
-      "summary": "Create provider and tool live-readiness gate records without calling providers or tools.",
+      "status": "complete",
+      "summary": "Added provider and tool live-readiness gate profiles with display-safe Ready, Needs setup, and Blocked by policy states while execution remains disabled.",
       "nextPhase": "P82.3",
       "commandCenterVisible": true
     },
@@ -3598,5 +3598,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T23:59:30.000Z"
+  "updatedAt": "2026-05-19T23:59:45.000Z"
 }

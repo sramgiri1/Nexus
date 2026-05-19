@@ -37,8 +37,10 @@ Validation: `npm run check:p82-execution-plan`.
 Goal: add provider and tool gate profiles that explain whether provider calls
 and tool execution are Ready, Need setup, or Blocked by policy.
 
-Status: planned. P82.2 must create local readiness records only. No provider or
-tool execution is allowed.
+Status: complete. P82.2 creates local readiness records for provider calls,
+provider spend, read-only tool contracts, and mutation-capable tools. It does
+not call providers, execute tools, mutate project files, write DB state, deploy,
+or spend budget.
 
 Validation: `npm run check:p822-provider-tool-gates`.
 

@@ -1245,9 +1245,12 @@ P82.1 is complete. It adds the implementation-grade P82 contracts, activation
 boundary plan, validation checker, roadmap/status tracking, and report evidence
 without enabling runtime execution.
 
+P82.2 is complete. It adds provider and tool live-readiness gate profiles with
+display-safe Ready, Needs setup, and Blocked by policy states for later Command
+Center UX. Provider calls, tool execution, and provider spend remain disabled.
+
 Planned P82 subphases:
 
-- `P82.2` Provider / Tool Live Gates
 - `P82.3` Worker Execution Gate
 - `P82.4` Project / DB Mutation Admission
 - `P82.5` Deploy / Release Admission
