@@ -8255,12 +8255,13 @@
       "phaseId": "P82",
       "title": "Governed Business Build Execution Activation Contract",
       "status": "in_progress",
-      "summary": "Defined live-ready activation contracts, provider/tool gates, worker gates, and project/DB admission gates while runtime execution remains blocked.",
-      "nextPhase": "P82.5",
+      "summary": "Defined live-ready activation contracts and admission gates through deploy/release while runtime execution remains blocked.",
+      "nextPhase": "P82.6",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9c4425b",
+      "commit": "pending-final-commit",
       "checksRun": [
+        "npm run check:p825-deploy-release-admission",
         "npm run check:p824-project-db-admission",
         "npm run check:p823-worker-execution-gate",
         "npm run check:p822-provider-tool-gates",
@@ -8372,10 +8373,28 @@
     {
       "phaseId": "P82.5",
       "title": "Deploy / Release Admission",
-      "status": "planned",
-      "summary": "Define deploy, release, export, and package admission gates without executing them.",
+      "status": "complete",
+      "summary": "Added local deploy, release, export, and package admission gates while execution remains disabled.",
       "nextPhase": "P82.6",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p825-deploy-release-admission",
+        "npm run check:p824-project-db-admission",
+        "npm run check:p823-worker-execution-gate",
+        "npm run check:p822-provider-tool-gates",
+        "npm run check:p82-execution-plan",
+        "npm run check:p817-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82.5 creates local admission gates only. Deploy, release, export, package creation, project mutation, DB writes, provider/tool/worker execution, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ]
     },
     {
       "phaseId": "P82.6",
@@ -8395,8 +8414,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:59:58.000Z",
-  "currentPhase": "P82.4",
-  "previousPhase": "P82.3",
-  "nextPhase": "P82.5"
+  "updatedAt": "2026-05-20T00:00:05.000Z",
+  "currentPhase": "P82.5",
+  "previousPhase": "P82.4",
+  "nextPhase": "P82.6"
 }

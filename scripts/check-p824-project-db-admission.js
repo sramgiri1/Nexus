@@ -60,7 +60,12 @@ addCheck("no DemoApp, DB URLs, or raw private IDs", !serialized.includes("DemoAp
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p824-project-db-admission"]));
 addCheck("contract references P82.4 files", contract.includes("live-ready/projectDbAdmission.js") && contract.includes("check:p824-project-db-admission"));
 addCheck("docs mention P82.4 validation", docs.includes("P82.4 Project / DB Mutation Admission") && docs.includes("npm run check:p824-project-db-admission"));
-addCheck("phase status advanced", statusById.get("P82.4")?.status === "complete" && status.currentPhase === "P82.4" && status.nextPhase === "P82.5");
+addCheck(
+  "phase status advanced",
+  statusById.get("P82.4")?.status === "complete" &&
+    ["P82.4", "P82.5", "P82.6", "P82.7"].includes(status.currentPhase),
+  `current=${status.currentPhase}; next=${status.nextPhase}`,
+);
 addCheck("report path is distinct", REPORT_PATH.endsWith("p824-project-db-admission-report.md"));
 addCheck("report prerequisites exist", fileExists("reports/p823-worker-execution-gate-report.md") && fileExists("reports/p724-report.md"));
 

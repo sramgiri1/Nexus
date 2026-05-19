@@ -70,8 +70,10 @@ Validation: `npm run check:p824-project-db-admission`.
 
 Goal: define deploy, release, export, and package admission gates.
 
-Status: planned. P82.5 must not deploy, release, export, package, publish, or
-mutate environment targets.
+Status: complete. P82.5 adds local deploy, release, export, and package
+admission gates that reuse existing deploy readiness and shipping readiness
+helpers. It does not deploy, release, export, package, publish, or mutate
+environment targets.
 
 Validation: `npm run check:p825-deploy-release-admission`.
 

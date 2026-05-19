@@ -1258,9 +1258,13 @@ existing mutation boundary and DB readiness helpers while project source
 mutation, DB writes, migrations, schema mutation, deploy, and provider spend
 remain disabled.
 
+P82.5 is complete. It adds local deploy, release, export, and package admission
+gates using existing deploy readiness and shipping readiness helpers while
+deploy, release, export, package creation, network calls, and provider spend
+remain disabled.
+
 Planned P82 subphases:
 
-- `P82.5` Deploy / Release Admission
 - `P82.6` Command Center Live Ready UX
 - `P82.7` Final Validation
 
