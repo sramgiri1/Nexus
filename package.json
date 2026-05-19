@@ -248,6 +248,7 @@
     "check:p64-command-center-dispatch-ux": "node scripts/check-p64-command-center-dispatch-ux.js",
     "check:p64-governed-dispatch-final": "node scripts/check-p64-governed-dispatch-final.js",
     "check:p648-execution-plan": "node scripts/check-p648-execution-plan.js",
+    "check:p648-code-mode-session": "node scripts/check-p648-code-mode-session.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

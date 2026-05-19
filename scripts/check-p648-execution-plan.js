@@ -158,7 +158,8 @@ for (const phaseId of expectedPhases) {
 const phaseStatus = new Map((status.phases || []).map((phase) => [phase.phaseId, phase]));
 const p648 = phaseStatus.get("P64.8");
 const p6481 = phaseStatus.get("P64.8.1");
-const expectedNext = p6481?.status === "complete" ? "P64.8.2" : "P64.8.1";
+const p6482 = phaseStatus.get("P64.8.2");
+const expectedNext = p6482?.status === "complete" ? "P64.8.3" : p6481?.status === "complete" ? "P64.8.2" : "P64.8.1";
 if (p648?.status !== "in_progress") fail("roadmapStatus", "P64.8 must be in_progress");
 if (p648?.nextPhase !== expectedNext) fail("roadmapStatus", `P64.8 nextPhase must be ${expectedNext}`);
 if (status.currentPhase !== "P64.8") fail("roadmapStatus", "currentPhase must be P64.8");

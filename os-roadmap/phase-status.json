@@ -2643,7 +2643,7 @@
         "Code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, and all-tool context loading remain disabled.",
         "P64.8.1 only defines implementation-grade subphase contracts and validation."
       ],
-      "nextPhase": "P64.8.2",
+      "nextPhase": "P64.8.3",
       "commandCenterVisible": true
     },
     {
@@ -2673,13 +2673,21 @@
       "phaseId": "P64.8.2",
       "title": "Code Mode Session Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned preview-only code-mode session records and validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "commit": "pending-p648-code-mode-session-commit",
+      "completedAt": "2026-05-19T01:02:00.000Z",
+      "summary": "Added preview-only code-mode session records and validation while code execution and mutation remain disabled.",
+      "checksRun": [
+        "npm run check:p648-code-mode-session",
+        "npm run check:p648-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Code-mode sessions are metadata previews only; no code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, network calls, workers, or all-tool context loading is enabled."
+      ],
       "nextPhase": "P64.8.3",
       "commandCenterVisible": true
     },
@@ -4975,5 +4983,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P64.8",
   "previousPhase": "P64",
-  "nextPhase": "P64.8.2"
+  "nextPhase": "P64.8.3"
 }

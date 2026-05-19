@@ -1,0 +1,31 @@
+{
+  "fixtures": [
+    {
+      "name": "bounded code mode preview",
+      "input": {
+        "sessionId": "code_mode_session_preview",
+        "scopeLabel": "NEXUS OS",
+        "intentSummary": "Inspect selected files and propose a patch plan without execution.",
+        "primaryToolId": "git-status",
+        "selectedToolContracts": [
+          "git-status",
+          "git-diff"
+        ],
+        "toolSummaries": [
+          "Git status metadata",
+          "Git diff metadata"
+        ],
+        "evidenceRefs": [
+          "reports/p648-code-mode-session-report.md"
+        ],
+        "activityRefs": [
+          "local-state/runtime/activity.jsonl"
+        ],
+        "safeSummary": {
+          "displayLabel": "Code mode preview",
+          "operatorGoal": "Patch planning only"
+        }
+      }
+    }
+  ]
+}

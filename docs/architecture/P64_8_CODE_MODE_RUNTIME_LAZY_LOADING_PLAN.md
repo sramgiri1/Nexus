@@ -46,6 +46,13 @@ Define preview-only code-mode session records and validation. Sessions must show
 state, disabled reason, selected contract count, evidence refs, and execution
 disabled posture.
 
+Status: complete. P64.8.2 adds preview-only code-mode session records that
+reuse dispatch dry-run and context budget helpers. Sessions expose code-mode
+state, selected contract count, disabled reason, evidence/activity refs, and
+next action while keeping code execution, provider dispatch, tool execution,
+project mutation, DB writes, deploy, network calls, workers, and all-tool
+context loading disabled.
+
 ### P64.8.3 Lazy Tool Selection Packet
 
 Build selected lazy tool contract packets using existing context budget guards.
