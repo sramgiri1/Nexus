@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T10:39:11.473Z
+- Generated at: 2026-05-19T10:41:31.227Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6e3776e
+- Validation HEAD: 4007de4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -71,9 +71,9 @@
 | P68.5 validation coverage | PASS | 7 checkers, 2 reports |
 | P68.6 validation coverage | PASS | 7 checkers, 1 reports |
 | P68.7 validation coverage | PASS | 17 checkers, 10 reports |
-| P69 validation coverage | PASS | 5 checkers, 1 reports |
+| P69 validation coverage | PASS | 7 checkers, 2 reports |
 | P69.1 validation coverage | PASS | 4 checkers, 1 reports |
-| P69.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P69.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P69.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P69.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P69.5 validation coverage | PASS | dedicated_checker, validation_report |
@@ -90,18 +90,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P69; next=P69.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P69; next=P69.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P69.2 Release Intent Contract
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P69.3 Release Candidate Preview
   - status: planned
   - checkers: 0

@@ -3416,8 +3416,9 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "6e3776e",
       "completedAt": "",
-      "summary": "P69 is in progress with execution contracts complete; release and deploy execution remain disabled.",
+      "summary": "P69 is in progress with release intent records complete; release and deploy execution remain disabled.",
       "checksRun": [
+        "npm run check:p692",
         "npm run check:p69-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3427,7 +3428,7 @@
       "knownLimitations": [
         "P69 has not enabled release, deploy, DB, provider/tool execution, project mutation, network calls, or provider spend."
       ],
-      "nextPhase": "P69.2",
+      "nextPhase": "P69.3",
       "commandCenterVisible": true
     },
     {
@@ -5800,13 +5801,22 @@
       "phaseId": "P69.2",
       "title": "Release Intent Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define display-safe release intent records without release execution.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined display-safe release intent records without release execution.",
+      "checksRun": [
+        "npm run check:p692",
+        "npm run check:p69-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P69.2 records release intent only. Release execution, deploy execution, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P69.3",
       "commandCenterVisible": true
     },
@@ -5885,5 +5895,5 @@
   "updatedAt": "2026-05-19T10:08:26.807Z",
   "currentPhase": "P69",
   "previousPhase": "P68",
-  "nextPhase": "P69.2"
+  "nextPhase": "P69.3"
 }

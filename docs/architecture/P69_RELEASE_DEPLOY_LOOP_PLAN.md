@@ -43,7 +43,22 @@ phase-status records.
 
 Define display-safe release intent records.
 
-Status: planned.
+Status: complete. P69.2 adds display-safe `ReleaseIntentContract` records for
+NEXUS OS release planning. Each record includes release target, environment
+label, allowed/forbidden files, disabled release/deploy execution flags,
+approval state, rollback requirement, disabled reason, blockers, evidence,
+activity, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `release-governance/p69-2-placeholder.js` exports
+  `createReleaseIntentContract`, `validateReleaseIntentContract`,
+  `buildReleaseIntentEnvelope`, `P69_2_REQUIRED_FIELDS`, and
+  `P69_2_SAMPLE_INTENTS`.
+- `scripts/check-p692.js` validates release intent shape, project path
+  blocking, disabled release/deploy execution, disabled provider/tool/worker
+  execution, disabled DB/network/spend, approval, rollback, evidence/activity,
+  and non-runnable disabled reasons.
 
 ### P69.3 Release Candidate Preview
 

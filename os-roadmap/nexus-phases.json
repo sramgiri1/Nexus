@@ -2310,10 +2310,10 @@
       "track": "NEXUS_OS",
       "order": 44,
       "group": "Planned OS Phases",
-      "summary": "Release/deploy loop is in progress with execution contracts complete; release and deploy execution remain disabled.",
+      "summary": "Release/deploy loop is in progress with release intent records complete; release and deploy execution remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P69.2"
+      "nextPhase": "P69.3"
     },
     {
       "phaseId": "P70",
@@ -2490,8 +2490,8 @@
       "track": "NEXUS_OS",
       "order": 44.02,
       "group": "P69 Release / Deploy Loop",
-      "status": "planned",
-      "summary": "Define display-safe release intent records without release execution.",
+      "status": "complete",
+      "summary": "Defined display-safe release intent records without release execution.",
       "nextPhase": "P69.3",
       "commandCenterVisible": true
     },

@@ -281,6 +281,7 @@
     "check:p686-tests-checkers-docs": "node scripts/check-p686-tests-checkers-docs.js",
     "check:p687-final-validation": "node scripts/check-p687-final-validation.js",
     "check:p69-execution-plan": "node scripts/check-p69-execution-plan.js",
+    "check:p692": "node scripts/check-p692.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
