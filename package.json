@@ -274,6 +274,7 @@
     "check:p676": "node scripts/check-p676.js",
     "check:p677": "node scripts/check-p677.js",
     "check:p68-execution-plan": "node scripts/check-p68-execution-plan.js",
+    "check:p682": "node scripts/check-p682.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

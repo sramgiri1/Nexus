@@ -2299,10 +2299,10 @@
       "track": "NEXUS_OS",
       "order": 43,
       "group": "Planned OS Phases",
-      "summary": "Self-update workflow is in progress with contract-only self-update boundary complete; self-update apply remains disabled.",
+      "summary": "Self-update workflow is in progress with self-update intent records complete; self-update apply remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P68.2"
+      "nextPhase": "P68.3"
     },
     {
       "phaseId": "P69",
@@ -2411,8 +2411,8 @@
       "track": "NEXUS_OS",
       "order": 43.02,
       "group": "P68 Self-Update Workflow for NEXUS OS",
-      "status": "planned",
-      "summary": "Define display-safe NEXUS OS self-update intent records.",
+      "status": "complete",
+      "summary": "Defined display-safe NEXUS OS self-update intent records.",
       "nextPhase": "P68.3",
       "commandCenterVisible": true
     },
@@ -2472,5 +2472,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T02:10:41.267Z"
+  "updatedAt": "2026-05-19T02:12:48.083Z"
 }

@@ -43,7 +43,22 @@ Status: complete.
 
 Define display-safe NEXUS OS self-update intent records.
 
-Status: planned.
+Status: complete. P68.2 adds display-safe `SelfUpdateIntentContract` records
+for NEXUS OS self-update planning. The records include scope, allowed files,
+forbidden files, preview state, approval state, rollback plan, blockers,
+evidence/activity references, owner capability, and next action while
+self-update apply, project mutation, execution, DB writes, deploy, release, and
+spend remain disabled.
+
+Implementation:
+
+- `self-update/p68-2-placeholder.js` exports
+  `createSelfUpdateIntentContract`, `validateSelfUpdateIntentContract`,
+  `buildSelfUpdateIntentEnvelope`, `P68_2_REQUIRED_FIELDS`, and
+  `P68_2_SAMPLE_INTENTS`.
+- `scripts/check-p682.js` validates required fields, display-safe redaction,
+  project path blocking, disabled self-update/mutation/execution/spend flags,
+  evidence references, and non-runnable disabled reasons.
 
 ### P68.3 Self-Update Proposal Preview
 
