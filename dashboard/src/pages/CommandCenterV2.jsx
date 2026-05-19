@@ -49,7 +49,7 @@ import {
 import { getNexusCommandsForScope } from "../data/nexusCommands.js";
 import {
   COMMAND_CENTER_ROUTE_BY_KEY,
-  getCommandCenterSidebarGroups,
+  getCommandCenterLiteSidebarGroups,
   resolveCommandCenterRoute,
 } from "../data/commandCenterRoutes.js";
 import {
@@ -94,6 +94,7 @@ import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePrev
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
 import { buildBusinessBuildViewModel } from "../data/businessBuild.js";
+import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -133,7 +134,7 @@ import "../styles-command-center-v2.css";
  * Task Activation + Agent Assignment from UI
  */
 
-const NAV_GROUPS_V2 = getCommandCenterSidebarGroups();
+const LITE_NAV_GROUPS_V2 = getCommandCenterLiteSidebarGroups();
 
 /* ─── Sparkline ─── */
 const SPARK_DATA = {
@@ -174,6 +175,8 @@ function MetricCard({ metric }) {
 }
 
 const ROUTE_ICONS = {
+  lite: "⌕",
+  agentFlow: "◇",
   mission: "⬡",
   command: "⌕",
   workspace: "⊹",
@@ -226,6 +229,10 @@ const SIDEBAR_BADGE_SEMANTICS = {
   Ready: {
     tone: "ready",
     title: "READY: capability is available for local operator use.",
+  },
+  Local: {
+    tone: "ready",
+    title: "LOCAL: available as deterministic local planning without external execution.",
   },
   "Read-only": {
     tone: "read-only",
@@ -446,40 +453,40 @@ function buildCommandCapabilitySummary(command, capabilityReadiness) {
 /* ─── Sidebar ─── */
 function Sidebar({ vm, location }) {
   const navigate = useNavigate();
-  const missionPaths = new Set(["/", "/command-center", "/command-center/mission"]);
+  const litePaths = new Set(["/", "/command-center", "/command-center/lite"]);
 
   return (
     <aside className="ccv2-sidebar">
       <div
         className="ccv2-sidebar__brand"
         style={{ cursor: "pointer" }}
-        onClick={() => navigate("/command-center/mission")}
+        onClick={() => navigate("/command-center/lite")}
         role="button"
         tabIndex={0}
-        onKeyDown={(e) => e.key === "Enter" && navigate("/command-center/mission")}
+        onKeyDown={(e) => e.key === "Enter" && navigate("/command-center/lite")}
       >
         <div className="ccv2-sidebar__brand-mark">N</div>
         <div className="ccv2-sidebar__brand-name">{vm.shell.productName}</div>
-        <div className="ccv2-sidebar__brand-ver">{vm.shell.previewLabel || "Local Preview"}</div>
+        <div className="ccv2-sidebar__brand-ver">Founder Lite</div>
       </div>
 
       <nav className="ccv2-nav-groups">
-        {NAV_GROUPS_V2.map((group) => (
+        {LITE_NAV_GROUPS_V2.map((group) => (
           <div key={group.group} className="ccv2-nav-group">
             <div className="ccv2-nav-group__label">{group.group}</div>
             {group.items.map((item) => {
-              const isMissionItem = item.key === "mission";
-              const isMissionActive = isMissionItem && missionPaths.has(location.pathname);
+              const isLiteItem = item.key === "lite";
+              const isLiteActive = isLiteItem && litePaths.has(location.pathname);
               const badgeMeta = SIDEBAR_BADGE_SEMANTICS[item.badge] || null;
 
               return (
                 <NavLink
                   key={item.key}
                   to={item.path}
-                  end={isMissionItem}
+                  end={isLiteItem}
                   title={item.name}
                   className={({ isActive }) => {
-                    const active = isMissionItem ? isMissionActive : isActive;
+                    const active = isLiteItem ? isLiteActive : isActive;
                     return `ccv2-nav-item${active ? " ccv2-nav-item--active" : ""}`;
                   }}
                 >
@@ -2444,7 +2451,9 @@ const ASK_NEXUS_STARTERS = [
 ];
 
 const ROUTE_TARGET_LABELS = {
-  "/command-center": "Mission Control",
+  "/command-center": "Chat with NEXUS",
+  "/command-center/lite": "Chat with NEXUS",
+  "/command-center/agent-flow": "Agent Flow",
   "/command-center/activity": "Activity Log",
   "/command-center/implementation": "Implementation Workflow",
   "/command-center/release": "Release Control",
@@ -2499,6 +2508,172 @@ function buildAskNexusPreview(commandText, vm) {
     routePreview,
     costStatus: "Provider spend disabled. No cost incurred by preview.",
   };
+}
+
+function buildLiteEnvelope() {
+  return buildFounderRuntimeEnvelope({
+    founderIdeaSummary: "Founder wants NEXUS to validate a startup idea and turn it into a governed business build.",
+  }).data;
+}
+
+function formatLiteFieldLabel(value = "") {
+  return String(value)
+    .replace(/([a-z])([A-Z])/g, "$1 $2")
+    .replace(/[-_]+/g, " ")
+    .replace(/\b\w/g, (letter) => letter.toUpperCase())
+    .replace(/\bPrd\b/g, "PRD");
+}
+
+function CommandCenterLitePage() {
+  const [envelope] = useState(buildLiteEnvelope);
+  const [message, setMessage] = useState("I have a startup idea. Validate if it is feasible and tell me what you need next.");
+  const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
+
+  return (
+    <div className="ccv2-content ccv2-lite-page">
+      <div className="ccv2-page-head">
+        <div className="ccv2-page-head__title">Chat with NEXUS</div>
+        <div className="ccv2-page-head__sub">Focused founder workflow: conversation, PRD readiness, and local agent planning.</div>
+      </div>
+      <div className="ccv2-lite-hero">
+        <div>
+          <div className="ccv2-eyebrow">Founder Command Center</div>
+          <h1>Chat with NEXUS and watch the agent plan form.</h1>
+          <p>
+            NEXUS collects the business idea, asks the next founder question, drafts a local PRD envelope,
+            and maps the work to agent lanes before any execution is allowed.
+          </p>
+        </div>
+        <div className="ccv2-lite-hero__status" aria-label="Command Center Lite state">
+          <span className="ccv2-pill ccv2-pill--pass">{envelope.readinessLabel}</span>
+          <span className="ccv2-pill ccv2-pill--disabled">Local-only</span>
+          <span className="ccv2-pill ccv2-pill--disabled">No spend</span>
+        </div>
+      </div>
+
+      <div className="ccv2-lite-layout">
+        <section className="ccv2-card ccv2-lite-chat" aria-label="Chat with NEXUS">
+          <div className="ccv2-lite-chat__thread">
+            <div className="ccv2-lite-message ccv2-lite-message--founder">
+              <span>Founder</span>
+              <p>{message}</p>
+            </div>
+            <div className="ccv2-lite-message ccv2-lite-message--nexus">
+              <span>NEXUS</span>
+              <p>{envelope.chat.prompt}</p>
+              <div className="ccv2-lite-message__meta">Next action: {envelope.chat.nextAction}</div>
+            </div>
+          </div>
+          <label className="ccv2-lite-composer" htmlFor="lite-founder-message">
+            <span>Founder message</span>
+            <textarea
+              id="lite-founder-message"
+              value={message}
+              onChange={(event) => setMessage(event.target.value)}
+              placeholder="Describe the business idea, target customer, problem, and constraints..."
+            />
+          </label>
+          <div className="ccv2-lite-prompt-grid" aria-label="Founder prompt starters">
+            {envelope.chat.suggestedPrompts.map((prompt) => (
+              <button key={prompt} type="button" onClick={() => setMessage(prompt)}>
+                {prompt}
+              </button>
+            ))}
+          </div>
+          <div className="ccv2-lite-disabled-note">
+            {envelope.disabledReason}
+          </div>
+        </section>
+
+        <aside className="ccv2-lite-side">
+          <section className="ccv2-card ccv2-lite-prd" aria-label="Local PRD readiness">
+            <div className="ccv2-card-header-row">
+              <div>
+                <div className="ccv2-eyebrow">Local PRD</div>
+                <h3>{envelope.prdDraft.readinessPercent}% ready</h3>
+              </div>
+              <span className="ccv2-pill ccv2-pill--pass">Drafted locally</span>
+            </div>
+            <div className="ccv2-lite-prd__fields">
+              {primaryFields.map(([field, value]) => (
+                <div key={field}>
+                  <span>{formatLiteFieldLabel(field)}</span>
+                  <strong>{value}</strong>
+                </div>
+              ))}
+            </div>
+            <div className="ccv2-lite-next">
+              <span>Next</span>
+              <strong>{envelope.prdDraft.nextAction}</strong>
+            </div>
+          </section>
+
+          <section className="ccv2-card ccv2-lite-safety" aria-label="Lite safety and cost">
+            <div className="ccv2-eyebrow">Safety</div>
+            <div className="ccv2-lite-safety__grid">
+              <div><span>Owner</span><strong>{envelope.ownerCapability}</strong></div>
+              <div><span>Evidence</span><strong>P84.2 report</strong></div>
+              <div><span>Activity</span><strong>OS phase status</strong></div>
+              <div><span>Cost</span><strong>{envelope.costImpact}</strong></div>
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <AgentFlowPanel envelope={envelope} />
+    </div>
+  );
+}
+
+function AgentFlowPanel({ envelope }) {
+  return (
+    <section className="ccv2-card ccv2-agent-flow" aria-label="Agent action flow">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Agent Flow</div>
+          <h3>How NEXUS puts agents into action</h3>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Planning only</span>
+      </div>
+      <div className="ccv2-agent-flow__rail">
+        {envelope.agentFlow.map((lane) => (
+          <div className="ccv2-agent-flow__node" key={lane.lane}>
+            <div className="ccv2-agent-flow__step">{lane.step}</div>
+            <div className="ccv2-agent-flow__body">
+              <div className="ccv2-agent-flow__lane">{lane.lane}</div>
+              <div className="ccv2-agent-flow__owner">{lane.ownerCapability}</div>
+              <div className="ccv2-agent-flow__state">{lane.currentState}</div>
+              <div className="ccv2-agent-flow__next">{lane.nextAction}</div>
+              <div className="ccv2-agent-flow__blocker">{lane.blocker}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-agent-flow__footer">
+        {envelope.disabledActions.map((action) => (
+          <div key={action.label}>
+            <span>{action.label}</span>
+            <strong>{action.reason}</strong>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function AgentFlowPage() {
+  const [envelope] = useState(buildLiteEnvelope);
+  return (
+    <div className="ccv2-content ccv2-lite-page">
+      <div className="ccv2-page-head">
+        <div className="ccv2-page-head__title">Agent Flow</div>
+        <div className="ccv2-page-head__sub">
+          Local workstream lanes show what each owner capability needs before governed execution can be enabled.
+        </div>
+      </div>
+      <AgentFlowPanel envelope={envelope} />
+    </div>
+  );
 }
 
 function AskNexusPage({ vm }) {
@@ -10904,6 +11079,8 @@ export default function CommandCenterV2({ studio }) {
           onOpenCommandPalette={() => openCommandPalette("plan")}
         />
         <div className="ccv2-content-wrapper">
+          {currentPage === "lite" && <CommandCenterLitePage />}
+          {currentPage === "agentFlow" && <AgentFlowPage />}
           {currentPage === "mission" && (
             <MissionControlPage
               vm={vmWithApi}

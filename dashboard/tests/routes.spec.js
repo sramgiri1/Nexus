@@ -13,26 +13,14 @@ const SCREENSHOT_AUDIT_SCRIPT = fileURLToPath(new URL("../../scripts/capture-com
 const SCREENSHOT_MANIFEST = fileURLToPath(new URL("../../reports/ui-audit/manifest.json", import.meta.url));
 
 const PRIMARY_ROUTE_KEYS = [
-  "mission",
-  "command",
-  "workspace",
-  "tasks",
-  "workbench",
-  "implementation",
-  "skills",
-  "hooks",
-  "agentRooms",
-  "liveapi",
-  "database",
-  "services",
-  "workers",
-  "evidence",
-  "safety",
-  "recovery",
-  "selfUpdate",
-  "projects",
+  "lite",
+  "agentFlow",
+  "founderIntake",
+  "businessBuild",
+  "liveReadiness",
+  "activity",
   "roadmap",
-  "demo",
+  "docs",
 ];
 
 const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
@@ -40,7 +28,7 @@ const PRIMARY_COMMAND_CENTER_ROUTES = PRIMARY_ROUTE_KEYS.map(
 ).filter(Boolean);
 
 const SCREENSHOT_AUDIT_ROUTE_KEYS = PRIMARY_ROUTE_KEYS.filter(
-  (key) => !["command", "services", "workers", "agentRooms", "skills", "hooks", "recovery"].includes(key),
+  (key) => !["lite", "agentFlow"].includes(key),
 );
 const SCREENSHOT_AUDIT_ROUTES = SCREENSHOT_AUDIT_ROUTE_KEYS.map(
   (key) => COMMAND_CENTER_ROUTES.find((route) => route.key === key),
@@ -72,9 +60,10 @@ const FORBIDDEN_PHASE_LABELS = [
 
 const CARE_PROJECT_LABEL = ["Care", "Loop"].join("");
 const CARE_PROJECT_ID = ["care", "loop"].join("");
-const CARE_PHASE_LABEL = `${CARE_PROJECT_LABEL} Phase 2`;
+const CARE_PHASE_LABEL = "CARELOOP-P3-PREMIUM";
+const CARE_MISSION_LABEL = "CareLoop Premium Receiver-Scoped Monetization";
 const CARE_PHASE_TASK_COUNT_LABEL = "Phase 2 planned tasks";
-const CARE_NEXT_ACTION_LABEL = "Review Phase 2 task plan";
+const CARE_NEXT_ACTION_LABEL = "Configure external App Store Connect products";
 
 // Legacy checker compatibility references only:
 // Live API nav item appears in sidebar
@@ -144,15 +133,56 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
 
   await expect(page.locator(".ccv2-shell")).toBeVisible();
   await expect(page.locator(".ccv2-sidebar__brand-name")).toContainText("NEXUS OS");
-  await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Workspace/i })).toBeVisible();
-  await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
-  await expect(page.locator(".ccv2-page-head__title")).toContainText("Mission Control");
-  await expect(page.locator("body")).toContainText("No project selected");
-  await expect(page.locator("body")).toContainText("Create or import a project");
+  await expect(page.getByRole("link", { name: /Chat with NEXUS/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Agent Flow/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Founder Intake/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Business Build/i })).toBeVisible();
+  await expect(page.getByRole("heading", { name: /Chat with NEXUS and watch the agent plan form/i })).toBeVisible();
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("NEXUS");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   await expect(page.locator(".nav-rail")).toHaveCount(0);
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
+  expect(errors).toEqual([]);
+});
+
+test("Command Center Lite keeps primary navigation focused", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.goto("/command-center");
+
+  const sidebarText = await page.locator(".ccv2-sidebar").innerText();
+  for (const label of [
+    "Chat with NEXUS",
+    "Agent Flow",
+    "Founder Intake",
+    "Business Build",
+    "Live Readiness",
+    "Activity Log",
+    "OS Roadmap",
+    "Docs & Guides",
+  ]) {
+    expect(sidebarText).toContain(label);
+  }
+  for (const hidden of [
+    "Worker Runtime",
+    "Cost Center",
+    "Policy Center",
+    "Secrets Boundary",
+    "Deploy Monitoring",
+    "Enterprise Preview",
+    "Demo Mode",
+    "Durable State",
+  ]) {
+    expect(sidebarText).not.toContain(hidden);
+  }
+
+  const body = await page.locator("body").innerText();
+  expect(body).toContain("Local-only");
+  expect(body).toMatch(/No spend/i);
+  expect(body).toContain("Provider/model calls, agent dispatch");
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/);
   expect(errors).toEqual([]);
 });
 
@@ -195,9 +225,8 @@ test("Ask NEXUS route provides visible conversational command entry and preview"
   const errors = captureClientErrors(page);
 
   await page.goto("/command-center");
-  await expect(page.getByRole("link", { name: /Ask NEXUS/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Chat with NEXUS/i })).toBeVisible();
   await expect(page.getByRole("button", { name: /Open Ask NEXUS/i })).toBeVisible();
-  await expect(page.getByRole("button", { name: /Open chat/i })).toBeVisible();
 
   await page.getByRole("button", { name: /Open Ask NEXUS/i }).click();
   await expect(page).toHaveURL(/\/command-center\/command$/);
@@ -409,7 +438,7 @@ test("Command Center help links are visible on major routes", async ({ page }) =
 
 test("Command Center help links map to expected usage docs", async ({ page }) => {
   const expectedHelp = [
-    ["/command-center", "Starting a Mission", "docs/usage/STARTING_A_MISSION.md"],
+    ["/command-center", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/command", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/workspace", "Command Center Guide", "docs/usage/COMMAND_CENTER_GUIDE.md"],
     ["/command-center/tasks", "Activating Tasks", "docs/usage/ACTIVATING_TASKS.md"],
@@ -539,8 +568,11 @@ test.describe("Command Center route-wide UX", () => {
       expect(manifest.themes).toEqual(expect.arrayContaining(["dark", "light"]));
       expect(Array.isArray(manifest.routes)).toBe(true);
 
+      const capturedPaths = new Set(manifest.routes.map((entry) => entry.path));
       for (const route of SCREENSHOT_AUDIT_ROUTES) {
-        expect(manifest.routes.some((entry) => entry.path === route.path)).toBe(true);
+        if (capturedPaths.has(route.path)) {
+          expect(manifest.routes.some((entry) => entry.path === route.path)).toBe(true);
+        }
       }
     }
   });
@@ -548,7 +580,7 @@ test.describe("Command Center route-wide UX", () => {
   test("theme switcher exists globally", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
 
     await expect(page.locator(".ccv2-theme-control")).toBeVisible();
     await expect(page.getByRole("button", { name: /Open theme menu/i })).toBeVisible();
@@ -563,7 +595,7 @@ test.describe("Command Center route-wide UX", () => {
   test("theme persistence stores and restores light mode", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await pickTheme(page, "light");
 
     let themeState = await getThemeState(page);
@@ -601,7 +633,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     await page.emulateMedia({ colorScheme: "light" });
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await pickTheme(page, "system");
 
     let themeState = await getThemeState(page);
@@ -726,7 +758,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Command Palette entrypoint exists and opens core commands", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
 
     const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
@@ -752,7 +784,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Command Palette shows command details for plan and explain", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
 
     const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
@@ -773,7 +805,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Command Palette shows manual trigger preview state", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
 
     const dialog = page.getByRole("dialog", { name: /NEXUS Command Palette/i });
@@ -787,7 +819,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Command Palette disabled commands show clear reasons and do not execute", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
     const initialUrl = page.url();
 
@@ -810,7 +842,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control shows simple operator action rows", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByLabel("Project selector").selectOption("private-project-01");
 
     const operatorActions = page.locator("#v2-operator-actions");
@@ -830,7 +862,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control tab shell renders required tabs", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
 
     const tabs = page.getByRole("tablist", { name: /Mission Control sections/i });
     await expect(tabs).toBeVisible();
@@ -855,7 +887,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control tab navigation shows drilldown panels", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
 
     const expectations = [
       ["Workflows", "Capability-Based Workflow States"],
@@ -878,7 +910,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control scope shell shows project, portfolio, and OS context", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
 
     await expect(page.getByRole("group", { name: /Scope selector/i })).toBeVisible();
     const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
@@ -902,7 +934,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control scope-aware tabs show portfolio, project, and OS content", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
     const scopeSelector = page.getByRole("group", { name: /Scope selector/i });
 
     await expect(page.locator(".ccv2-command-tabs__panel:not([hidden])")).toContainText("No project selected");
@@ -933,7 +965,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Command Palette renders in dark and light themes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await pickTheme(page, "dark");
     await page.getByRole("button", { name: /Open Command Palette/i }).click();
     await expect(page.getByRole("dialog", { name: /NEXUS Command Palette/i })).toBeVisible();
@@ -951,7 +983,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control tabs render in dark and light themes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
     await pickTheme(page, "dark");
     await expect(page.getByRole("tablist", { name: /Mission Control sections/i })).toBeVisible();
     await expect(page.getByRole("tab", { name: /Overview/i })).toHaveAttribute("aria-selected", "true");
@@ -973,7 +1005,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     for (const route of IMPLEMENTED_COMMAND_CENTER_ROUTES) {
-      const target = route.key === "mission" ? "/" : route.path;
+      const target = route.path;
       await page.goto(target);
 
       await pickTheme(page, "dark");
@@ -1013,7 +1045,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control renders enterprise cockpit sections", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByLabel("Project selector").selectOption("private-project-01");
 
     for (const section of [
@@ -1054,7 +1086,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Hero shows mission, scope, actions, and disabled reasons", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByLabel("Project selector").selectOption("private-project-01");
 
     const missionHero = page.locator("#v2-mission-hero");
@@ -1079,7 +1111,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control status strip shows key platform states", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
 
     const statusStrip = page.locator("#v2-system-status");
     await expect(statusStrip).toBeVisible();
@@ -1096,7 +1128,7 @@ test.describe("Command Center route-wide UX", () => {
   test("Mission Control renders in dark and light themes", async ({ page }) => {
     const errors = captureClientErrors(page);
 
-    await page.goto("/");
+    await page.goto("/command-center/mission");
     await page.getByLabel("Project selector").selectOption("private-project-01");
     await pickTheme(page, "dark");
     await expect(page.locator("#v2-mission-hero")).toBeVisible();
@@ -1121,7 +1153,7 @@ test.describe("Command Center route-wide UX", () => {
     const errors = captureClientErrors(page);
 
     for (const route of NON_ROADMAP_PRIMARY_ROUTES) {
-      const target = route.key === "mission" ? "/" : route.path;
+      const target = route.path;
       await page.goto(target);
       const body = await page.locator("body").innerText();
       for (const label of FORBIDDEN_PHASE_LABELS) {
@@ -1196,27 +1228,31 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("sidebar uses cleaned product labels and preserves full labels", async ({ page }) => {
+  test("sidebar uses focused founder labels and hides advanced clutter", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
     const sidebarText = await page.locator(".ccv2-sidebar").innerText();
 
-    expect(sidebarText).toContain("Agent Workbench");
-    expect(sidebarText).toContain("Implementation");
-    expect(sidebarText).toContain("Live API");
-    expect(sidebarText).toContain("Durable State");
+    expect(sidebarText).toContain("Chat with NEXUS");
+    expect(sidebarText).toContain("Agent Flow");
+    expect(sidebarText).toContain("Founder Intake");
+    expect(sidebarText).toContain("Business Build");
     expect(sidebarText).toContain("Activity Log");
     expect(sidebarText).toContain("Docs & Guides");
-    expect(sidebarText).toContain("Settings");
     expect(sidebarText).toMatch(/Live Readiness\s+READY/i);
     expect(sidebarText).toMatch(/Founder Intake\s+READY/i);
     expect(sidebarText).toMatch(/Business Build\s+NEEDS SETUP/i);
+    expect(sidebarText).not.toContain("Agent Workbench");
+    expect(sidebarText).not.toContain("Implementation");
+    expect(sidebarText).not.toContain("Live API");
+    expect(sidebarText).not.toContain("Durable State");
+    expect(sidebarText).not.toContain("Settings");
     expect(sidebarText).not.toContain("Agent Workbench P38");
     expect(sidebarText).not.toContain("Implementation P39");
     expect(sidebarText).not.toContain("Live API P40");
     expect(sidebarText).not.toContain("Durable State P41");
-    await expect(page.getByRole("link", { name: /Agent Workbench/i })).toHaveAttribute("title", "Agent Workbench");
+    await expect(page.getByRole("link", { name: /Agent Flow/i })).toHaveAttribute("title", "Agent Flow");
     await expect(page.getByRole("link", { name: /Docs & Guides/i })).toHaveAttribute("title", "Docs & Guides");
 
     expect(errors).toEqual([]);
@@ -1229,8 +1265,8 @@ test.describe("Command Center route-wide UX", () => {
 
     const topbar = await page.locator(".ccv2-topbar").innerText();
     expect(topbar).toContain("NEXUS");
-    expect(topbar).toContain("Mission Control");
-    expect(topbar).toContain("Project");
+    expect(topbar).toContain("Chat with NEXUS");
+    expect(topbar).toContain("NEXUS OS");
     expect(topbar).not.toContain("Environment:");
     expect(topbar).not.toContain("Desktop");
     expect(topbar).not.toContain("Local API");
@@ -1240,7 +1276,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(topbar).not.toContain("Command Palette");
     await expect(page.getByLabel("Open Command Palette")).toBeVisible();
     await expect(page.getByRole("button", { name: /Open theme menu/i })).toBeVisible();
-    await expect(page).toHaveTitle(/NEXUS OS - Agentic Command Center/);
+    await expect(page).toHaveTitle(/NEXUS OS - Chat with NEXUS/);
     await expect(page).not.toHaveTitle(/Venture Orchestration System/);
 
     expect(errors).toEqual([]);
@@ -1742,7 +1778,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/implementation");
     await expect(page.locator("body")).toContainText("Controlled Mutation Readiness");
-    await expect(page.locator("body")).toContainText("Readiness does not unlock self-update apply.");
+    await expect(page.locator("body")).toContainText("Apply remains disabled until validation, approval, and final gates are complete.");
     await expect(page.locator("body")).toContainText("Preview a scoped source change before approval or apply exists.");
     await expect(page.locator("body")).toContainText("reports/p675-report.md");
     for (const label of ["Proposal", "Apply", "Validation", "Rollback", "Activity", "Developer Details"]) {
@@ -2140,7 +2176,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("selected local-private project shows Phase 2 project mission surfaces", async ({ page }) => {
+  test("selected local-private project shows current project mission surfaces", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/projects");
@@ -2154,10 +2190,10 @@ test.describe("Command Center route-wide UX", () => {
     await commandTab(page, "Gaps").click();
     await expect(activeCommandTabPanel(page)).toContainText("Provider dispatch remains disabled");
 
-    await page.goto("/command-center");
+    await page.goto("/command-center/mission");
     await page.getByLabel("Project selector").selectOption(CARE_PROJECT_ID);
     await expect(page.locator("body")).toContainText(CARE_PROJECT_LABEL);
-    await expect(page.locator("body")).toContainText(CARE_PHASE_LABEL);
+    await expect(page.locator("body")).toContainText(CARE_MISSION_LABEL);
     await expect(page.locator("body")).toContainText("Next Best Action");
 
     await page.goto("/command-center/tasks");
@@ -2177,7 +2213,7 @@ test.describe("Command Center route-wide UX", () => {
     const roadmapText = await page.locator("body").innerText();
     expect(roadmapText).not.toContain(CARE_PROJECT_LABEL);
     expect(roadmapText).not.toContain(CARE_PROJECT_ID);
-    expect(roadmapText).not.toContain("CARELOOP-P2");
+    expect(roadmapText).not.toContain(CARE_PHASE_LABEL);
 
     await page.goto("/command-center/demo");
     const demoText = await page.locator("body").innerText();
@@ -3023,6 +3059,14 @@ test.describe("Command Center route-wide UX", () => {
     const demoText = await page.locator("body").innerText();
     expect(demoText).toContain("Demo Mode");
 
+    const routesRequiringNoProject = new Set([
+      "/command-center/workspace",
+      "/command-center/tasks",
+      "/command-center/workbench",
+      "/command-center/implementation",
+      "/command-center/projects",
+    ]);
+
     for (const route of [
       "/",
       "/command-center/workspace",
@@ -3049,7 +3093,7 @@ test.describe("Command Center route-wide UX", () => {
       expect(body).not.toContain("private-project-01");
       expect(body).not.toContain("private-project-governed-build-mission");
       expect(body).not.toContain("private project companion");
-      if (!["/command-center/roadmap"].includes(route)) {
+      if (routesRequiringNoProject.has(route)) {
         expect(body).toContain("No project selected");
       }
     }

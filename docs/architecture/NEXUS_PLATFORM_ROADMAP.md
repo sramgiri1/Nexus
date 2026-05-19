@@ -1337,9 +1337,15 @@ execution, worker execution, project mutation, DB writes, network calls, deploy,
 release, export, package creation, auth/session/user/workspace mutation, and
 provider spend remain blocked.
 
+P84.2 is complete. It adds the live-local founder runtime envelope and focuses
+the primary Command Center into a Lite founder workflow: chat with NEXUS, local
+PRD readiness, graphical agent workstream planning, visible next action,
+disabled reasons, owner capability, evidence/activity location, and cost impact.
+Advanced OS/admin routes remain registered for direct access, but they no longer
+clutter the primary founder sidebar.
+
 Planned P84 subphases:
 
-- `P84.2` Live-Local Q&A to PRD Envelope
 - `P84.3` Agent Plan Admission Preview
 - `P84.4` Command Center Runtime UX
 - `P84.5` Validation Aggregation

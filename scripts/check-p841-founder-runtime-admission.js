@@ -76,7 +76,7 @@ addCheck("no fake unsafe runnable actions", !/call provider now|dispatch agent n
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p841-founder-runtime-admission"]));
 addCheck("contract references P84.1 files", contract.includes("live-ready/founderRuntimeAdmission.js") && contract.includes("check:p841-founder-runtime-admission"));
 addCheck("docs mention P84.1 validation", docs.includes("P84.1 Founder Runtime Admission Contract") && docs.includes("npm run check:p841-founder-runtime-admission"));
-addCheck("phase status advanced", statusById.get("P84.1")?.status === "complete" && status.currentPhase === "P84.1" && status.nextPhase === "P84.2");
+addCheck("phase status advanced", statusById.get("P84.1")?.status === "complete" && ["P84.1", "P84.2", "P84.3", "P84.4", "P84.5", "P84.6", "P84.7"].includes(status.currentPhase));
 addCheck("report prerequisites exist", fileExists("reports/p837-final-validation-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

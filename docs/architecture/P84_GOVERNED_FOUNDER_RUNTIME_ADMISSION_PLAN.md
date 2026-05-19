@@ -25,9 +25,17 @@ Validation: `npm run check:p841-founder-runtime-admission`.
 ## P84.2 Live-Local Q&A to PRD Envelope
 
 Goal: compose existing P80 founder intake and P81 PRD helpers into a local
-runtime envelope.
+runtime envelope and expose it through a focused Command Center Lite surface.
 
-Status: planned.
+Status: complete. P84.2 adds the local founder runtime envelope that combines
+founder Q&A, PRD readiness, and agent workstream planning without provider/model
+calls or project mutation. It also makes the primary Command Center experience a
+founder-facing Lite surface: chat with NEXUS, local PRD readiness, graphical
+agent flow, next action, disabled reasons, owner capability, evidence/activity
+location, and cost impact. Advanced OS/admin routes remain registered and
+directly addressable, but they are removed from the primary founder sidebar.
+
+Validation: `npm run check:p842-command-center-lite`.
 
 ## P84.3 Agent Plan Admission Preview
 
@@ -80,7 +88,8 @@ or activity/evidence appenders.
 
 ## Safety Rules
 
-P84.1 admits local deterministic founder runtime planning only.
+P84.1 admits local deterministic founder runtime planning only. P84.2 exposes
+that admission through Command Center Lite and keeps execution blocked.
 
 Still forbidden:
 

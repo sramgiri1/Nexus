@@ -389,6 +389,7 @@
     "check:p837-final-validation": "node scripts/check-p837-final-validation.js",
     "check:p84-execution-plan": "node scripts/check-p84-execution-plan.js",
     "check:p841-founder-runtime-admission": "node scripts/check-p841-founder-runtime-admission.js",
+    "check:p842-command-center-lite": "node scripts/check-p842-command-center-lite.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

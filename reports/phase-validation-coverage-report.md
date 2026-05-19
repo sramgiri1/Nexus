@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T21:13:57.931Z
+- Generated at: 2026-05-19T21:38:21.491Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b97fa38
+- Validation HEAD: a37f81c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -175,9 +175,9 @@
 | P83.5 validation coverage | PASS | 7 checkers, 1 reports |
 | P83.6 validation coverage | PASS | 21 checkers, 15 reports |
 | P83.7 validation coverage | PASS | 33 checkers, 25 reports |
-| P84 validation coverage | PASS | 7 checkers, 2 reports |
+| P84 validation coverage | PASS | 9 checkers, 3 reports |
 | P84.1 validation coverage | PASS | 6 checkers, 1 reports |
-| P84.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
 | P84.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P84.4 validation coverage | PASS | 1 checkers, 1 reports |
 | P84.5 validation coverage | PASS | dedicated_checker, validation_report |
@@ -185,18 +185,13 @@
 | P84.7 validation coverage | PASS | 25 checkers, 25 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P84.1; next=P84.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P84.2; next=P84.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P84.2 Live-Local Q&A to PRD Envelope
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P84.3 Agent Plan Admission Preview
   - status: planned
   - checkers: 0

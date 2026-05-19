@@ -8680,22 +8680,23 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b97fa38",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P84 is in progress. Local deterministic founder runtime admission is defined; provider/model calls, agent dispatch, project mutation, DB writes, deploy, network, auth, and spend remain blocked.",
+      "summary": "P84 is in progress. Local founder runtime admission and Command Center Lite Q&A-to-PRD envelope are complete; unsafe execution remains blocked.",
       "checksRun": [
         "npm run check:p841-founder-runtime-admission",
         "npm run check:p84-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
-        "git diff --check"
+        "git diff --check",
+        "npm run check:p842-command-center-lite"
       ],
       "knownLimitations": [
-        "P84.1 is admission-contract only. P84.2 must create the local Q&A to PRD runtime envelope.",
-        "Provider/model calls, agent dispatch, tool/worker execution, existing project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain blocked."
+        "P84.2 is local planning UX only; it does not call providers/models, dispatch agents, mutate projects, write DB state, deploy, package, call networks, or spend.",
+        "P84.3 must admit local agent planning separately before later runtime UX aggregation."
       ],
-      "nextPhase": "P84.2",
+      "nextPhase": "P84.3",
       "commandCenterVisible": true
     },
     {
@@ -8726,14 +8727,20 @@
       "phaseId": "P84.2",
       "title": "Live-Local Q&A to PRD Envelope",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Compose local founder Q&A and PRD drafting runtime envelope.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:27:38.019Z",
+      "summary": "Added the live-local founder Q&A to PRD envelope and focused the primary Command Center into Lite chat plus graphical agent planning.",
+      "checksRun": [
+        "npm run check:p842-command-center-lite",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite|home route\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P84.2 does not dispatch agents, call providers, mutate projects, write DB state, deploy, release, export, package, or spend.",
+        "Advanced routes remain registered for direct URL access but are hidden from primary Lite navigation."
       ],
       "nextPhase": "P84.3",
       "commandCenterVisible": true
@@ -8821,7 +8828,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.1",
-  "previousPhase": "P83.7",
-  "nextPhase": "P84.2"
+  "currentPhase": "P84.2",
+  "previousPhase": "P84.1",
+  "nextPhase": "P84.3"
 }

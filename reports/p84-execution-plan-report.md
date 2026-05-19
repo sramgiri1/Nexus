@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P84
-- Generated at: 2026-05-19T21:13:52.442Z
+- Generated at: 2026-05-19T21:38:15.599Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b97fa38
+- Validation HEAD: a37f81c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | unsafe runtime remains blocked in contract | PASS |  |
 | docs reference contract | PASS |  |
 | docs list all subphases | PASS |  |
-| status advanced to P84.1 | PASS |  |
+| status advanced through P84 | PASS |  |
 ## Validation Commands
 
 - npm run check:p84-execution-plan

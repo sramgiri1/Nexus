@@ -48,9 +48,34 @@ const POLISHED_OS_ROADMAP_TABS = [
 
 export const COMMAND_CENTER_ROUTES = [
   {
+    key: "lite",
+    path: "/command-center/lite",
+    aliases: ["/", "/command-center"],
+    name: "Chat with NEXUS",
+    section: "FOUNDER",
+    allowPhaseLabels: false,
+    expectedHeading: "Chat with NEXUS",
+    status: "implemented",
+    badge: "Ready",
+    scope: "os",
+    helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
+  },
+  {
+    key: "agentFlow",
+    path: "/command-center/agent-flow",
+    name: "Agent Flow",
+    section: "FOUNDER",
+    allowPhaseLabels: false,
+    expectedHeading: "Agent Flow",
+    status: "implemented",
+    badge: "Local",
+    scope: "os",
+    helpDoc: "docs/architecture/P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md",
+  },
+  {
     key: "mission",
-    path: "/command-center",
-    aliases: ["/", "/command-center/mission"],
+    path: "/command-center/mission",
+    aliases: [],
     name: "Mission Control",
     section: "OPERATIONS",
     allowPhaseLabels: false,
@@ -732,4 +757,28 @@ export function getCommandCenterSidebarGroups() {
     group: section,
     items: COMMAND_CENTER_ROUTES.filter((route) => route.section === section),
   }));
+}
+
+export function getCommandCenterLiteSidebarGroups() {
+  const liteRouteKeys = new Set([
+    "lite",
+    "agentFlow",
+    "founderIntake",
+    "businessBuild",
+    "liveReadiness",
+    "activity",
+    "roadmap",
+    "docs",
+  ]);
+  const groupLabels = {
+    FOUNDER: "FOUNDER",
+    OS: "OS",
+  };
+  const orderedSections = ["FOUNDER", "OS"];
+  return orderedSections
+    .map((section) => ({
+      group: groupLabels[section] || section,
+      items: COMMAND_CENTER_ROUTES.filter((route) => route.section === section && liteRouteKeys.has(route.key)),
+    }))
+    .filter((group) => group.items.length > 0);
 }

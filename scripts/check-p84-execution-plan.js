@@ -43,7 +43,13 @@ addCheck("reuse rule names P80 and P81 helpers", allSafetyText.includes("P80") &
 addCheck("unsafe runtime remains blocked in contract", /provider\/model calls|agent dispatch|project mutation|DB writes|provider spend/i.test(allSafetyText));
 addCheck("docs reference contract", plan.includes(CONTRACT_PATH));
 addCheck("docs list all subphases", P84_SUBPHASES.every((phaseId) => plan.includes(phaseId)));
-addCheck("status advanced to P84.1", statusById.get("P84")?.status === "in_progress" && statusById.get("P84.1")?.status === "complete" && status.currentPhase === "P84.1" && status.nextPhase === "P84.2");
+addCheck(
+  "status advanced through P84",
+  statusById.get("P84")?.status === "in_progress"
+    && statusById.get("P84.1")?.status === "complete"
+    && P84_SUBPHASES.includes(status.currentPhase)
+    && P84_SUBPHASES.includes(status.nextPhase),
+);
 
 const failed = checks.filter((check) => check.status === "FAIL");
 
