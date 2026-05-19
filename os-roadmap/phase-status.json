@@ -3410,7 +3410,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/cost-center-budget-enforcement",
-      "commit": "916d3d5",
+      "commit": "c97f1d5",
       "completedAt": "2026-05-16T12:58:31.779Z",
       "checksRun": [
         "npm run check:cost-center-final-validation"
@@ -8120,7 +8120,7 @@
       "nextPhase": "P81.4",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c97f1d5",
       "completedAt": "2026-05-19",
       "checksRun": [
         "npm run check:p813-agent-workstreams",
