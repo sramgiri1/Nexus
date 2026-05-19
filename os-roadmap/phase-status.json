@@ -3499,7 +3499,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c4e1a3f",
       "completedAt": "2026-05-19",
       "summary": "DB-backed runtime primary readiness is complete with DB writes, migrations, and schema mutation disabled.",
       "checksRun": [
@@ -5099,7 +5099,7 @@
       "title": "Codebase Maintainability Guardrails + Shared Utility Foundation",
       "status": "complete",
       "branch": "chore/codebase-maintainability-guardrails",
-      "commit": "pending-final-commit",
+      "commit": "c4e1a3f",
       "completedAt": "2026-05-16T04:06:34.865Z",
       "summary": "Adds shared utility foundations, maintainability docs, reuse inventory, refactor candidates, and codebase maintainability checks.",
       "checksRun": [
@@ -6475,7 +6475,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c4e1a3f",
       "completedAt": "2026-05-19",
       "summary": "Validated and closed P72 with DB writes and migrations still disabled.",
       "checksRun": [
