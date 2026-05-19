@@ -50,10 +50,24 @@ records.
 
 Define backup inventory contract records without creating backups.
 
-Status: planned. P75.2 will add preview-only `BackupInventoryContract`
-records that capture source surface, backup scope, retention state, disabled
-backup creation, disabled restore execution, disabled runtime mutation,
-evidence/activity references, cost impact, disabled reason, and next action.
+Status: complete. P75.2 adds preview-only `BackupInventoryContract` records
+that capture source surface, backup scope, retention state, disabled backup
+creation, disabled restore execution, disabled failover, disabled overwrite
+and delete behavior, disabled runtime mutation, evidence/activity references,
+cost impact, disabled reason, owner capability, and next action.
+
+Implementation:
+
+- `backup-dr/p75-2-placeholder.js` exports
+  `createBackupInventoryContract`, `validateBackupInventoryContract`,
+  `buildBackupInventoryContractEnvelope`, `P75_2_REQUIRED_FIELDS`, and
+  `P75_2_SAMPLE_CONTRACTS`.
+- `scripts/check-p752.js` validates backup inventory contract shape, disabled
+  backup creation, disabled restore/failover, disabled overwrite/delete,
+  disabled DB and project mutation, disabled provider/tool/worker execution,
+  disabled network/spend, disabled deploy/release/export/package behavior,
+  disabled auth mutation, hidden private IDs/tokens/storage URLs,
+  evidence/activity, cost impact, and non-runnable disabled reasons.
 
 ### P75.3 Restore Plan Preview
 

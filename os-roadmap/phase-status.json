@@ -3928,10 +3928,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9879e9c",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Started P75 with implementation-grade backup, restore, and disaster recovery contracts while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Added P75 backup inventory contracts while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p752",
         "npm run check:p75-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3941,7 +3942,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.2",
+      "nextPhase": "P75.3",
       "commandCenterVisible": true
     },
     {
@@ -3970,13 +3971,22 @@
       "phaseId": "P75.2",
       "title": "Backup Inventory Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned preview-only backup inventory contracts without backup creation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added preview-only backup inventory contracts without enabling backup creation, restore execution, failover, overwrite, delete, DB writes, network calls, or provider spend.",
+      "checksRun": [
+        "npm run check:p752",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.2 records backup inventory contracts only. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75.3",
       "commandCenterVisible": true
     },
@@ -6986,5 +6996,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75.2"
+  "nextPhase": "P75.3"
 }
