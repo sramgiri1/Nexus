@@ -60,8 +60,8 @@ addCheck("source has no provider/tool/project imports", !questionSource.includes
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p803-founder-intake-qna"]));
 addCheck("contract references exact modules", contract.includes("founder-intake/founderIntakeQuestions.js") && contract.includes("founder-intake/founderIntakeComprehension.js") && contract.includes("check:p803-founder-intake-qna"));
 addCheck("docs mention P80.3 validation", docs.includes("P80.3 Guided Q&A Comprehension Loop") && docs.includes("npm run check:p803-founder-intake-qna"));
-addCheck("phase status advanced", phaseById.get("P80.3")?.status === "complete" && ["P80.3", "P80.4", "P80.5", "P80.6", "P80.7"].includes(status.currentPhase));
-addCheck("P80 remains in progress", phaseById.get("P80")?.status === "in_progress" && ["P80.4", "P80.5", "P80.6", "P80.7"].includes(phaseById.get("P80")?.nextPhase));
+addCheck("phase status advanced", phaseById.get("P80.3")?.status === "complete" && ["P80.3", "P80.4", "P80.5", "P80.6", "P80.7", "P81"].includes(status.currentPhase));
+addCheck("P80 remains valid", ["in_progress", "complete"].includes(phaseById.get("P80")?.status) && ["P80.4", "P80.5", "P80.6", "P80.7", "P81"].includes(phaseById.get("P80")?.nextPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p803-founder-intake-qna-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

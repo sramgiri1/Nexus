@@ -51,8 +51,8 @@ addCheck("playwright coverage added", tests.includes("Founder Intake route rende
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p804-command-center-founder-intake-ux"]));
 addCheck("contract references UX files", contract.includes("dashboard/src/data/founderIntake.js") && contract.includes("check:p804-command-center-founder-intake-ux"));
 addCheck("docs mention P80.4 validation", docs.includes("P80.4 Command Center Founder Intake UX") && docs.includes("npm run check:p804-command-center-founder-intake-ux"));
-addCheck("phase status advanced", phaseById.get("P80.4")?.status === "complete" && ["P80.4", "P80.5", "P80.6", "P80.7"].includes(status.currentPhase));
-addCheck("P80 remains in progress", phaseById.get("P80")?.status === "in_progress" && ["P80.5", "P80.6", "P80.7"].includes(phaseById.get("P80")?.nextPhase));
+addCheck("phase status advanced", phaseById.get("P80.4")?.status === "complete" && ["P80.4", "P80.5", "P80.6", "P80.7", "P81"].includes(status.currentPhase));
+addCheck("P80 remains valid", ["in_progress", "complete"].includes(phaseById.get("P80")?.status) && ["P80.5", "P80.6", "P80.7", "P81"].includes(phaseById.get("P80")?.nextPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p804-command-center-founder-intake-ux-report.md"));
 addCheck("reports prerequisite exists", fileExists("reports/p803-founder-intake-qna-report.md"));
 

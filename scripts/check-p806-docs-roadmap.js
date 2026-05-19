@@ -46,18 +46,31 @@ export function checkP80DocsRoadmap() {
   addCheck("contract lists checker", contract.includes("scripts/check-p806-docs-roadmap.js") && contract.includes("check:p806-docs-roadmap"));
   addCheck("required reports exist", requiredReports.every(fileExists), `${requiredReports.length} reports`);
   addCheck("P80.6 status complete", statusById.get("P80.6")?.status === "complete" && phaseById.get("P80.6")?.status === "complete");
-  addCheck("root phase advanced", status.currentPhase === "P80.6" && status.previousPhase === "P80.5" && status.nextPhase === "P80.7");
-  addCheck("P80 next phase is final validation", statusById.get("P80")?.status === "in_progress" && statusById.get("P80")?.nextPhase === "P80.7" && phaseById.get("P80")?.nextPhase === "P80.7");
+  addCheck(
+    "root phase advanced",
+    (status.currentPhase === "P80.6" && status.previousPhase === "P80.5" && status.nextPhase === "P80.7") ||
+      (status.currentPhase === "P81" && status.previousPhase === "P80" && status.nextPhase === "P81"),
+  );
+  addCheck(
+    "P80 next phase is final validation or handoff",
+    ["in_progress", "complete"].includes(statusById.get("P80")?.status) &&
+      ["P80.7", "P81"].includes(statusById.get("P80")?.nextPhase) &&
+      ["P80.7", "P81"].includes(phaseById.get("P80")?.nextPhase),
+  );
   addCheck("plan documents P80.6 completion", plan.includes("P80.6 Docs / Roadmap") && plan.includes("Status: complete") && plan.includes("live-local founder intake posture"));
   addCheck("plan keeps runtime blocked", /provider calls[\s\S]+blocked/i.test(plan) && /project mutation[\s\S]+blocked/i.test(plan) && /provider spend[\s\S]+blocked/i.test(plan));
   addCheck("roadmap includes P79 and P80", roadmap.includes("`P79` Live Execution Mode") && roadmap.includes("`P80` Founder Intake Runtime"));
-  addCheck("roadmap shows P80.6 complete and P80.7 next", roadmap.includes("`P80.6` Docs / Roadmap — complete") && roadmap.includes("`P80.7` Final Validation — next"));
+  addCheck(
+    "roadmap shows P80.6 complete and P80.7 next or complete",
+    roadmap.includes("`P80.6` Docs / Roadmap — complete") &&
+      (roadmap.includes("`P80.7` Final Validation — next") || roadmap.includes("`P80.7` Final Validation — complete")),
+  );
   addCheck(
     "roadmap states live-local boundary",
     roadmap.includes("live-local founder intake") &&
       /provider\s+calls,\s+project\s+mutation,\s+DB\s+writes,\s+deploy,\s+and\s+provider\s+spend\s+remain\s+blocked/i.test(roadmap),
   );
-  addCheck("P80.7 remains planned", statusById.get("P80.7")?.status === "planned" && phaseById.get("P80.7")?.status === "planned");
+  addCheck("P80.7 remains planned or complete", ["planned", "complete"].includes(statusById.get("P80.7")?.status) && ["planned", "complete"].includes(phaseById.get("P80.7")?.status));
   addCheck("report path is distinct", REPORT_PATH.endsWith("p806-docs-roadmap-report.md"));
 
   const failed = checks.filter((check) => check.status === "FAIL");

@@ -3354,9 +3354,9 @@
       "title": "Founder Intake Runtime",
       "order": 55,
       "group": "P80 Founder Intake Runtime",
-      "status": "in_progress",
-      "summary": "Added founder intake schema, local session, deterministic Q&A, Command Center UX, validation aggregation, and docs/roadmap updates while runtime mutation remains blocked.",
-      "nextPhase": "P80.7",
+      "status": "complete",
+      "summary": "Completed live-local founder intake with schema, local session, deterministic Q&A, Command Center UX, validation aggregation, docs/roadmap updates, and final validation while runtime mutation remains blocked.",
+      "nextPhase": "P81",
       "commandCenterVisible": true
     },
     {
@@ -3424,11 +3424,21 @@
       "title": "Final Validation",
       "order": 55.07,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Close P80 validation after founder intake runtime is implemented.",
+      "status": "complete",
+      "summary": "Closed P80 final validation and handed off to P81 while provider calls, project mutation, DB writes, deploy, and provider spend remain blocked.",
       "nextPhase": "P81",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81",
+      "title": "Business Build Orchestration Contract",
+      "order": 56,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Plan the governed path from validated founder intake toward PRD generation and business build orchestration.",
+      "nextPhase": "P81.1",
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T21:45:00.000Z"
+  "updatedAt": "2026-05-19T22:10:00.000Z"
 }

@@ -65,6 +65,9 @@ Validation: `npm run check:p806-docs-roadmap` and `npm run check:p80-execution-p
 
 Goal: close P80 after validating founder intake can collect and refine a business idea while provider calls, tool execution, project mutation, DB writes, deploy, and provider spend remain blocked.
 
+Status: complete. P80 is complete and hands off to P81 as a planned next phase.
+P80 closes live-local founder intake only; provider calls, autonomous provider Q&A, PRD generation execution, agent dispatch, project creation, DB writes, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled.
+
 Validation: `npm run check:p807-final-validation`.
 
 ## Reuse Check

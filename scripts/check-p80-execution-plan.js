@@ -96,12 +96,15 @@ export function checkP80ExecutionPlan() {
   const expectedNext = P80_FOUNDER_INTAKE_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "P81";
   const p80Status = phaseStatus.get("P80")?.status;
   const atHandoff = status.currentPhase === "P79.7" && status.nextPhase === "P80";
+  const closedToP81 = expectedNext === "P81" && status.currentPhase === "P81" && status.previousPhase === "P80" && status.nextPhase === "P81";
   if (phaseStatus.get("P79")?.status !== "complete") fail("roadmapStatus", "P79 must be complete before P80 starts");
   if (phaseStatus.get("P79.7")?.status !== "complete") fail("roadmapStatus", "P79.7 must be complete before P80 starts");
   if (!["planned", "in_progress", "complete"].includes(p80Status)) fail("roadmapStatus", "P80 must be planned, in_progress, or complete");
   if (phaseStatus.get("P80")?.nextPhase !== expectedNext) fail("roadmapStatus", `P80 nextPhase must be ${expectedNext}`);
   if (atHandoff) {
     if (expectedNext !== "P80.1") fail("roadmapStatus", "handoff must point to P80.1");
+  } else if (closedToP81) {
+    if (p80Status !== "complete") fail("roadmapStatus", "P80 must be complete after P81 handoff");
   } else if (!["P80", ...P80_FOUNDER_INTAKE_SUBPHASES].includes(status.currentPhase) || status.nextPhase !== expectedNext) {
     fail("roadmapStatus", `Root phase status must be active in P80 with nextPhase ${expectedNext}`);
   }

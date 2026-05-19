@@ -1017,12 +1017,30 @@
       "allowedFiles": [
         "scripts/check-p807-final-validation.js",
         "reports/p807-final-validation-report.md",
+        "scripts/check-p806-docs-roadmap.js",
+        "scripts/check-p805-tests-checkers-docs.js",
+        "scripts/check-p804-command-center-founder-intake-ux.js",
+        "scripts/check-p803-founder-intake-qna.js",
+        "scripts/check-p802-founder-intake-session.js",
+        "scripts/check-p801-founder-intake-schema.js",
+        "scripts/check-p80-execution-plan.js",
+        "scripts/check-os-phase-status.js",
+        "contracts/os-roadmap/p80-execution-contracts.json",
         "package.json",
         "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "reports/p806-docs-roadmap-report.md",
+        "reports/p805-tests-checkers-docs-report.md",
+        "reports/p804-command-center-founder-intake-ux-report.md",
+        "reports/p803-founder-intake-qna-report.md",
+        "reports/p802-founder-intake-session-report.md",
+        "reports/p801-founder-intake-schema-report.md",
+        "reports/p80-execution-plan-report.md",
+        "reports/p797-p80-handoff-report.md",
+        "reports/format-readability-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -1047,7 +1065,7 @@
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P80.6",
-        "narrowScope": "Final validation checker and report only.",
+        "narrowScope": "Final validation checker/report, forward-compatible prerequisite checkers, P81 handoff placeholder, roadmap/status closure, and generated evidence only.",
         "safetyRules": [
           "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
         ],
@@ -1089,12 +1107,30 @@
             "reports/p807-final-validation-report.md"
           ],
           "update": [
+            "scripts/check-p806-docs-roadmap.js",
+            "scripts/check-p805-tests-checkers-docs.js",
+            "scripts/check-p804-command-center-founder-intake-ux.js",
+            "scripts/check-p803-founder-intake-qna.js",
+            "scripts/check-p802-founder-intake-session.js",
+            "scripts/check-p801-founder-intake-schema.js",
+            "scripts/check-p80-execution-plan.js",
+            "scripts/check-os-phase-status.js",
+            "contracts/os-roadmap/p80-execution-contracts.json",
             "package.json",
             "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "reports/os-phase-status-report.md",
-            "reports/phase-validation-coverage-report.md"
+            "reports/phase-validation-coverage-report.md",
+            "reports/p806-docs-roadmap-report.md",
+            "reports/p805-tests-checkers-docs-report.md",
+            "reports/p804-command-center-founder-intake-ux-report.md",
+            "reports/p803-founder-intake-qna-report.md",
+            "reports/p802-founder-intake-session-report.md",
+            "reports/p801-founder-intake-schema-report.md",
+            "reports/p80-execution-plan-report.md",
+            "reports/p797-p80-handoff-report.md",
+            "reports/format-readability-report.md"
           ]
         },
         "expectedExportsSchemasDataShapes": {
@@ -1110,6 +1146,7 @@
         },
         "validationCommands": [
           "npm run check:p807-final-validation",
+          "npm run check:p806-docs-roadmap",
           "npm run check:p805-tests-checkers-docs",
           "npm run check:p804-command-center-founder-intake-ux",
           "npm run check:p803-founder-intake-qna",

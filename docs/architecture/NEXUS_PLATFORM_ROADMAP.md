@@ -334,14 +334,15 @@ Risk level:
   - `P79.5` Tests / Checkers / Docs — complete
   - `P79.6` Final Validation — complete
   - `P79.7` P80 Founder Intake Handoff — complete
-- `P80` Founder Intake Runtime — in progress
+- `P80` Founder Intake Runtime — complete
   - `P80.1` Schema / Policy / Contract — complete
   - `P80.2` Core Intake Session Model — complete
   - `P80.3` Guided Q&A Comprehension Loop — complete
   - `P80.4` Command Center Founder Intake UX — complete
   - `P80.5` Tests / Checkers / Docs — complete
   - `P80.6` Docs / Roadmap — complete
-  - `P80.7` Final Validation — next
+  - `P80.7` Final Validation — complete
+- `P81` Business Build Orchestration Contract — planned
 
 P80 provides live-local founder intake for structured startup idea capture,
 guided Q&A, comprehension readiness, and Command Center visibility. Provider

@@ -80,7 +80,12 @@ addCheck("source has no provider/tool/project imports", !source.includes("../pro
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p801-founder-intake-schema"]));
 addCheck("contract references exact module", contract.includes("founder-intake/founderIntakeSchema.js") && contract.includes("check:p801-founder-intake-schema"));
 addCheck("docs mention P80.1 validation", docs.includes("P80.1 Schema / Policy / Contract") && docs.includes("npm run check:p801-founder-intake-schema"));
-addCheck("phase status advanced", phaseById.get("P80")?.status === "in_progress" && phaseById.get("P80.1")?.status === "complete" && ["P80.1", "P80.2", "P80.3", "P80.4", "P80.5", "P80.6", "P80.7"].includes(status.currentPhase));
+addCheck(
+  "phase status advanced",
+  ["in_progress", "complete"].includes(phaseById.get("P80")?.status) &&
+    phaseById.get("P80.1")?.status === "complete" &&
+    ["P80.1", "P80.2", "P80.3", "P80.4", "P80.5", "P80.6", "P80.7", "P81"].includes(status.currentPhase),
+);
 addCheck("report path is distinct", REPORT_PATH.endsWith("p801-founder-intake-schema-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

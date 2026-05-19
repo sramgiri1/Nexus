@@ -364,6 +364,7 @@
     "check:p804-command-center-founder-intake-ux": "node scripts/check-p804-command-center-founder-intake-ux.js",
     "check:p805-tests-checkers-docs": "node scripts/check-p805-tests-checkers-docs.js",
     "check:p806-docs-roadmap": "node scripts/check-p806-docs-roadmap.js",
+    "check:p807-final-validation": "node scripts/check-p807-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
