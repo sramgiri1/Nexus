@@ -53,7 +53,7 @@ addCheck("package scripts registered", requiredScripts.every((script) => package
 addCheck("reports exist", requiredReports.every(fileExists), requiredReports.join(", "));
 addCheck("completed subphase status present", completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
 addCheck("completed subphase commits present", ["P79.1", "P79.2", "P79.3", "P79.4"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
-addCheck("P79.5 status advanced", statusById.get("P79.5")?.status === "complete" && status.currentPhase === "P79.5" && status.nextPhase === "P79.6");
+addCheck("P79.5 status advanced", statusById.get("P79.5")?.status === "complete" && ["P79.5", "P79.6", "P79.7"].includes(status.currentPhase));
 addCheck("contract lists all P79 subphases", ["P79.1", "P79.2", "P79.3", "P79.4", "P79.5", "P79.6", "P79.7"].every((phaseId) => contract.includes(`\"phaseId\": \"${phaseId}\"`)));
 addCheck("docs list validation commands", ["check:p794-command-center-live-readiness-ux", "check:p793-action-bridge-admission", "check:p792-live-command-intent", "check:p791-live-mode-gate"].every((script) => docs.includes(script)));
 addCheck("Playwright live route coverage present", tests.includes("Live Readiness route renders gated live posture without runnable actions"));

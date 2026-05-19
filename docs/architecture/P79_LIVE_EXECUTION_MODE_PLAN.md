@@ -122,6 +122,10 @@ Validation: `npm run check:p795-tests-checkers-docs`.
 
 Goal: close P79 validation and confirm live readiness remains gated.
 
+Scope: aggregate all P79 gates, Command Center live readiness UX, Playwright route coverage, dashboard unit coverage, dashboard build, docs, contracts, reports, and OS phase status. This subphase does not enable runtime execution.
+
+Safety: provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain blocked.
+
 Validation: `npm run check:p796-final-validation`.
 
 ### P79.7 P80 Handoff

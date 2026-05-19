@@ -7639,7 +7639,7 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "5977082",
       "completedAt": "2026-05-19",
-      "summary": "Aggregated live readiness validation after gates, admission, bridge, and Command Center UX.",
+      "summary": "Completed P79 live readiness final validation while keeping live execution, project mutation, deploy, and provider spend blocked.",
       "checksRun": [
         "npm run check:p791-live-mode-gate",
         "npm run check:p79-execution-plan",
@@ -7651,7 +7651,7 @@
       "knownLimitations": [
         "P79.1 defines live mode gates only. Provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain blocked until later explicit live subphases enable them with approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks."
       ],
-      "nextPhase": "P79.6",
+      "nextPhase": "P79.7",
       "commandCenterVisible": true
     },
     {
@@ -7789,10 +7789,32 @@
       "phaseId": "P79.6",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "summary": "Close P79 validation and confirm live readiness remains gated.",
+      "status": "complete",
+      "summary": "Closed P79 final validation and confirmed live readiness remains gated and display-only.",
       "nextPhase": "P79.7",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p796-final-validation",
+        "npm run check:p795-tests-checkers-docs",
+        "npm run check:p794-command-center-live-readiness-ux",
+        "npm run check:p793-action-bridge-admission",
+        "npm run check:p792-live-command-intent",
+        "npm run check:p791-live-mode-gate",
+        "npm run check:p79-execution-plan",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Readiness route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P79.6 validates live readiness only. Runtime execution, provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ]
     },
     {
       "phaseId": "P79.7",
@@ -7805,8 +7827,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T17:15:00.000Z",
-  "currentPhase": "P79.5",
-  "previousPhase": "P79.4",
-  "nextPhase": "P79.6"
+  "updatedAt": "2026-05-19T17:45:00.000Z",
+  "currentPhase": "P79.6",
+  "previousPhase": "P79.5",
+  "nextPhase": "P79.7"
 }

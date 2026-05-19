@@ -3268,8 +3268,8 @@
       "order": 54,
       "group": "P79 Live Execution Contract + Mode Gates",
       "status": "in_progress",
-      "summary": "Aggregated live readiness validation after gates, admission, bridge, and Command Center UX.",
-      "nextPhase": "P79.6",
+      "summary": "Completed P79 live readiness final validation while keeping live execution, project mutation, deploy, and provider spend blocked.",
+      "nextPhase": "P79.7",
       "commandCenterVisible": true
     },
     {
@@ -3333,8 +3333,8 @@
       "track": "NEXUS_OS",
       "order": 54.06,
       "group": "P79 Live Execution Contract + Mode Gates",
-      "status": "planned",
-      "summary": "Close P79 validation and confirm live readiness remains gated.",
+      "status": "complete",
+      "summary": "Closed P79 final validation and confirmed live readiness remains gated and display-only.",
       "nextPhase": "P79.7",
       "commandCenterVisible": true
     },
