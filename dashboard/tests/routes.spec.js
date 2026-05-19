@@ -2827,4 +2827,46 @@ test.describe("Command Center route-wide UX", () => {
 
     expect(errors).toEqual([]);
   });
+
+  test("Release Control route renders readiness without enabling deploy", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/release");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Release Control");
+    await expect(page.locator("body")).toContainText("Deploy readiness is ready for operator review");
+    await expect(page.locator("body")).toContainText("Readiness does not unlock deploy execution.");
+    await expect(page.locator("body")).toContainText("No provider calls");
+    await expect(page.locator("body")).toContainText("reports/command-center-release-ux-report.md");
+
+    await page.getByRole("tab", { name: /Disabled Actions/i }).click();
+    await expect(page.getByRole("button", { name: /Disabled action: Create release package/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Start deploy/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Override gate/i })).toBeDisabled();
+
+    await pickTheme(page, "dark");
+    let themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("dark");
+    expect(themeState.shellTheme).toBe("dark");
+
+    await pickTheme(page, "light");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.shellTheme).toBe("light");
+
+    await pickTheme(page, "system");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("system");
+    expect(["dark", "light"]).toContain(themeState.resolvedTheme);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("project_");
+    expect(body).not.toContain("private_");
+    expect(body).not.toContain("snapshotVersion");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("P69");
+
+    expect(errors).toEqual([]);
+  });
 });

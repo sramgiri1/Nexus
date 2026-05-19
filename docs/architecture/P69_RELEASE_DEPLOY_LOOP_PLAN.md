@@ -111,7 +111,26 @@ Implementation:
 
 Expose release readiness without runnable release/deploy actions.
 
-Status: planned.
+Status: complete. P69.5 exposes display-only release and deploy readiness at
+`/command-center/release` using the existing Command Center route matrix, tab
+shell, page summary, cards, pills, disabled buttons, and theme controls. The
+primary UX shows what changed, current state, next action, blockers, disabled
+reason, owner capability, evidence/activity locations, rollback posture, and
+cost impact without showing raw JSON, raw logs, private IDs, DemoApp, or
+internal phase labels.
+
+Implementation:
+
+- `dashboard/src/data/releaseReadiness.js` builds the display-safe release
+  readiness view model from the P69.4 deploy readiness gate.
+- `dashboard/src/data/commandCenterTabs.js` exports `RELEASE_CONTROL_TABS`.
+- `dashboard/src/data/commandCenterRoutes.js` wires release route tabs.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the release readiness
+  page with disabled release/package/deploy controls only.
+- `scripts/check-p695-command-center-release-ux.js` validates route wiring,
+  UX data shape, safety-disabled actions, no private IDs, no DemoApp, no raw
+  JSON markers, no primary UX phase labels, and source-level disabled
+  execution posture.
 
 ### P69.6 Tests / Checkers / Docs
 
@@ -146,7 +165,7 @@ Roadmap, or fake runnable release/deploy actions.
 
 ## Current Status
 
-P69 is in progress through P69.4. Release execution, deploy execution, provider
+P69 is in progress through P69.5. Release execution, deploy execution, provider
 dispatch, tool execution, worker execution, DB writes, project mutation,
 external network calls, and provider spend remain disabled.
 

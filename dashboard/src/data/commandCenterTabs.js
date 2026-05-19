@@ -130,6 +130,33 @@ export const SELF_UPDATE_TABS = [
   },
 ];
 
+export const RELEASE_CONTROL_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Release state, owner, blockers, and next action",
+    badge: "Preview",
+  },
+  {
+    id: "gate",
+    label: "Deploy Gate",
+    description: "Approval, validation, rollback, and safety posture",
+    badge: "Read-only",
+  },
+  {
+    id: "evidence",
+    label: "Evidence",
+    description: "Evidence, activity, cost, and blockers",
+    badge: "Read-only",
+  },
+  {
+    id: "disabled",
+    label: "Disabled Actions",
+    description: "Release and deploy actions that remain unavailable",
+    badge: "Blocked",
+  },
+];
+
 export const WORKSPACE_TABS = [
   {
     id: "recommended",

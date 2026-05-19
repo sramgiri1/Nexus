@@ -15,6 +15,7 @@ import {
   PROJECTS_TABS,
   QUALITY_INTELLIGENCE_TABS,
   POLICY_CENTER_TABS,
+  RELEASE_CONTROL_TABS,
   SAFETY_CENTER_TABS,
   SECRETS_BOUNDARY_TABS,
   SELF_UPDATE_TABS,
@@ -196,6 +197,8 @@ export const COMMAND_CENTER_ROUTES = [
     expectedHeading: "Release Control",
     status: "implemented",
     scope: "project",
+    tabs: RELEASE_CONTROL_TABS,
+    defaultTab: "overview",
     helpDoc: "docs/usage/COMMAND_CENTER_GUIDE.md",
   },
   {
