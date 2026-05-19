@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P81.5
-- Generated at: 2026-05-19T18:09:43.059Z
+- Generated at: 2026-05-19T18:13:25.644Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ca6306a
+- Validation HEAD: 7e6501d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -37,7 +37,7 @@
 | package script registered | PASS |  |
 | docs mention P81.5 validation | PASS |  |
 | phase status advanced | PASS |  |
-| P81 remains in progress | PASS |  |
+| P81 remains active or complete | PASS |  |
 | roadmap P81.5 complete | PASS |  |
 | route and tab source mention Business Build | PASS |  |
 | report path is distinct | PASS |  |

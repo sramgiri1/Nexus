@@ -106,7 +106,11 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p813-
 addCheck("contract references exact module", contract.includes("business-build/businessBuildWorkstreams.js") && contract.includes("check:p813-agent-workstreams"));
 addCheck("docs mention P81.3 validation", docs.includes("P81.3 Agent Role / Workstream Planner") && docs.includes("npm run check:p813-agent-workstreams"));
 addCheck("phase status advanced", phaseById.get("P81.3")?.status === "complete" && ["P81.3", "P81.4", "P81.5", "P81.6", "P81.7"].includes(status.currentPhase));
-addCheck("P81 remains in progress", phaseById.get("P81")?.status === "in_progress" && ["P81.4", "P81.5", "P81.6", "P81.7"].includes(phaseById.get("P81")?.nextPhase));
+addCheck(
+  "P81 remains active or complete",
+  (phaseById.get("P81")?.status === "in_progress" && ["P81.4", "P81.5", "P81.6", "P81.7"].includes(phaseById.get("P81")?.nextPhase)) ||
+    (phaseById.get("P81")?.status === "complete" && phaseById.get("P81")?.nextPhase === "P82"),
+);
 addCheck("roadmap P81.3 complete", roadmapById.get("P81.3")?.status === "complete");
 addCheck("report path is distinct", REPORT_PATH.endsWith("p813-agent-workstreams-report.md"));
 

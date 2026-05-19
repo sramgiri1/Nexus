@@ -95,6 +95,11 @@ Validation: `npm run check:p816-tests-checkers-docs` and
 Goal: close P81 after validating the founder idea to PRD to business build
 orchestration path remains local, governed, and display-safe.
 
+Status: complete. P81 is complete and hands off to P82. P81.7 validates PRD
+draft readiness, workstream readiness, dry-run business build readiness,
+Command Center Business Build UX, Playwright coverage, dashboard unit/build
+evidence, docs, roadmap, reports, and OS phase status.
+
 Validation: `npm run check:p817-final-validation`.
 
 ## Reuse Check

@@ -58,7 +58,7 @@ export function checkP81ValidationAggregation() {
     "P81.6 status advanced",
     statusById.get("P81.6")?.status === "complete" &&
       ["P81.6", "P81.7"].includes(status.currentPhase) &&
-      status.nextPhase === "P81.7",
+      ["P81.7", "P82"].includes(status.nextPhase),
   );
   addCheck("docs list validation commands", ["check:p815-command-center-business-build-ux", "check:p814-business-build-plan", "check:p813-agent-workstreams", "check:p812-prd-schema"].every((script) => docs.includes(script)));
   addCheck("Playwright business build route coverage present", tests.includes("Business Build route renders dry-run plan without runnable actions"));

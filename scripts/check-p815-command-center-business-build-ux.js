@@ -74,7 +74,11 @@ addCheck("source has no provider/tool/project imports", !dataSource.includes("..
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p815-command-center-business-build-ux"]));
 addCheck("docs mention P81.5 validation", docs.includes("P81.5 Command Center Business Build UX") && docs.includes("npm run check:p815-command-center-business-build-ux"));
 addCheck("phase status advanced", phaseById.get("P81.5")?.status === "complete" && ["P81.5", "P81.6", "P81.7"].includes(status.currentPhase));
-addCheck("P81 remains in progress", phaseById.get("P81")?.status === "in_progress" && ["P81.6", "P81.7"].includes(phaseById.get("P81")?.nextPhase));
+addCheck(
+  "P81 remains active or complete",
+  (phaseById.get("P81")?.status === "in_progress" && ["P81.6", "P81.7"].includes(phaseById.get("P81")?.nextPhase)) ||
+    (phaseById.get("P81")?.status === "complete" && phaseById.get("P81")?.nextPhase === "P82"),
+);
 addCheck("roadmap P81.5 complete", roadmapById.get("P81.5")?.status === "complete");
 addCheck("route and tab source mention Business Build", routeSource.includes("Business Build") && tabsSource.includes("BUSINESS_BUILD_TABS"));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p815-command-center-business-build-ux-report.md"));
