@@ -8259,7 +8259,7 @@
       "nextPhase": "P82.5",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9c4425b",
       "checksRun": [
         "npm run check:p824-project-db-admission",
         "npm run check:p823-worker-execution-gate",
@@ -8352,7 +8352,7 @@
       "nextPhase": "P82.5",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9c4425b",
       "completedAt": "2026-05-19",
       "checksRun": [
         "npm run check:p824-project-db-admission",
