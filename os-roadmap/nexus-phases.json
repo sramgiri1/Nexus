@@ -4082,7 +4082,7 @@
       "phaseId": "P85",
       "title": "Enterprise Founder Business Runtime",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "in_progress",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
@@ -4093,12 +4093,34 @@
       ],
       "nextPhase": "P85.1",
       "commandCenterVisible": true,
-      "order": 58.07
+      "order": 59.07,
+      "label": "Enterprise Founder Business Runtime",
+      "detail": "Governed local founder business runtime sessions, PRD review, and local agent task planning before execution unlock phases."
+    },
+    {
+      "phaseId": "P85.1",
+      "order": 60.07,
+      "title": "Runtime Session Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "label": "Runtime Session Contract",
+      "detail": "Governed local enterprise founder business runtime session contract and Live Readiness visibility.",
+      "nextPhase": "P85.2"
+    },
+    {
+      "phaseId": "P85.2",
+      "order": 61.07,
+      "title": "Q&A Turn State Machine",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "label": "Q&A Turn State Machine",
+      "detail": "Planned local multi-turn founder Q&A session transitions.",
+      "nextPhase": "P85.3"
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.7",
-  "previousPhase": "P84.6",
-  "nextPhase": "P85",
+  "currentPhase": "P85.1",
+  "previousPhase": "P84.7",
+  "nextPhase": "P85.2",
   "currentPhaseStatus": "complete"
 }

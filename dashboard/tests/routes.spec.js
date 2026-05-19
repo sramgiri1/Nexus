@@ -2964,6 +2964,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Blocked by policy");
     await expect(activeCommandTabPanel(page)).toContainText("Founder Q&A to PRD Runtime");
     await expect(activeCommandTabPanel(page)).toContainText("Founder Agent Plan Admission");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Founder Business Runtime");
+    await expect(activeCommandTabPanel(page)).toContainText("P85.1 creates a governed local founder business runtime session only.");
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS Enterprise Founder Business Runtime");
+    await expect(activeCommandTabPanel(page)).not.toContainText("enterprise_founder_business_session_ready");
     await expect(activeCommandTabPanel(page)).toContainText("agent plan admitted for local planning");
     await expect(activeCommandTabPanel(page)).toContainText("NEXUS Founder Agent Plan Admission");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");

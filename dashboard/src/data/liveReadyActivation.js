@@ -1,4 +1,5 @@
 import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
+import { buildEnterpriseFounderBusinessRuntime } from "../../../live-ready/enterpriseFounderBusinessRuntime.js";
 
 export const LIVE_READY_ACTIVATION_ROUTE_ID = "live-ready-activation";
 export const LIVE_READY_LABELS = ["Ready", "Needs setup", "Blocked by policy"];
@@ -11,6 +12,9 @@ function countByLabel(rows) {
 }
 
 const founderRuntime = buildFounderRuntimeEnvelope();
+const enterpriseFounderRuntime = buildEnterpriseFounderBusinessRuntime({
+  founderIdeaSummary: "Build a simple iOS Snake game for the App Store",
+});
 
 const READINESS_ROWS = [
   {
@@ -51,6 +55,19 @@ const READINESS_ROWS = [
     evidenceLocation: "reports/p843-agent-plan-admission-preview-report.md",
     activityLocation: "os-roadmap/phase-status.json#P84.3",
     costImpact: "No provider calls, agent dispatch, worker runtime, project writes, DB writes, deploy, release, export, package creation, or provider spend.",
+  },
+  {
+    surface: "Founder Runtime",
+    label: "Enterprise Founder Business Runtime",
+    readinessLabel: enterpriseFounderRuntime.data.readinessLabel,
+    currentState: enterpriseFounderRuntime.data.currentState,
+    ownerCapability: enterpriseFounderRuntime.data.ownerCapability,
+    nextAction: enterpriseFounderRuntime.data.nextAction,
+    blockers: [...enterpriseFounderRuntime.data.blockers],
+    disabledReason: enterpriseFounderRuntime.data.disabledReason,
+    evidenceLocation: enterpriseFounderRuntime.data.evidenceRefs[0],
+    activityLocation: enterpriseFounderRuntime.data.activityLocation,
+    costImpact: enterpriseFounderRuntime.data.costImpact,
   },
   {
     surface: "Provider",

@@ -1373,3 +1373,29 @@ The detailed plan lives in
 [`P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md`](P84_GOVERNED_FOUNDER_RUNTIME_ADMISSION_PLAN.md).
 Implementation must follow
 [`p84-execution-contracts.json`](../../contracts/os-roadmap/p84-execution-contracts.json).
+
+## P85 - Enterprise Founder Business Runtime
+
+P85 is in progress. It turns the founder-facing local workflow into a governed
+enterprise founder business runtime that can carry session state, PRD review,
+local agent task planning, blockers, evidence, activity, and cost posture before
+any execution-capable phase is enabled.
+
+P85.1 is complete. It adds the enterprise founder business runtime session
+contract by reusing the browser-safe P84 founder runtime envelope and its agent
+flow. The session has a display-safe public label, submitted founder idea,
+local PRD draft, admitted local agent plan, gate state, next action, blockers,
+owner capability, evidence/activity locations, and cost impact. Live Readiness
+shows the session as an evidence-backed row. Provider/model calls, agent
+dispatch, tool execution, worker execution, project creation, project mutation,
+DB writes, network calls, deploy, release, export, package creation,
+auth/session/user/workspace mutation, and provider spend remain disabled.
+
+P85.2 is next. It should add governed multi-turn founder Q&A state so the chat
+becomes a true session transcript while still avoiding provider calls, DB writes,
+agent dispatch, project mutation, deploy, package, and spend.
+
+The detailed plan lives in
+[`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).
+Implementation must follow
+[`p85-execution-contracts.json`](../../contracts/os-roadmap/p85-execution-contracts.json).

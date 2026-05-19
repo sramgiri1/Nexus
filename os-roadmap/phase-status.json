@@ -8880,24 +8880,67 @@
       "phaseId": "P85",
       "title": "Enterprise Founder Business Runtime",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned next phase for enterprise founder-to-business runtime enablement after P84 governed local admission closes.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Not implemented yet. P84 keeps provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend disabled."
+      "summary": "Enterprise founder business runtime is in progress. P85.1 adds the governed local runtime session contract and Live Readiness visibility.",
+      "checksRun": [
+        "npm run check:p85-execution-plan",
+        "npm run check:p851-enterprise-founder-session"
       ],
-      "nextPhase": "P85.1",
+      "knownLimitations": [
+        "P85 remains local runtime state and UX until later explicit phases enable provider/model calls, agent dispatch, project mutation, DB writes, workers, deploy, package, or spend."
+      ],
+      "nextPhase": "P85.2",
       "commandCenterVisible": true,
       "order": 1
+    },
+    {
+      "phaseId": "P85.1",
+      "title": "Runtime Session Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:00:15.234Z",
+      "summary": "Created a governed local enterprise founder business runtime session contract with PRD draft, admitted local agent plan, gate state, next action, blockers, evidence, activity, cost posture, and Live Readiness visibility.",
+      "checksRun": [
+        "npm run check:p85-execution-plan",
+        "npm run check:p851-enterprise-founder-session",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\""
+      ],
+      "knownLimitations": [
+        "P85.1 creates a local runtime session contract only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P85.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P85.2",
+      "title": "Q&A Turn State Machine",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned governed multi-turn founder Q&A session transitions without provider/model calls, DB writes, dispatch, project mutation, deploy, package, or spend.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P85.3",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.7",
-  "previousPhase": "P84.6",
-  "nextPhase": "P85",
+  "updatedAt": "2026-05-19T23:00:15.234Z",
+  "currentPhase": "P85.1",
+  "previousPhase": "P84.7",
+  "nextPhase": "P85.2",
   "currentPhaseStatus": "complete"
 }
