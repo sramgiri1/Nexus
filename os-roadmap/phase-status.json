@@ -2778,7 +2778,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p65-final-commit",
+      "commit": "aeb4fa2",
       "completedAt": "2026-05-19T03:25:00.000Z",
       "summary": "Completed batch intelligence preview foundation with job contracts, workload selection, safety gates, Command Center readiness UX, aggregate checks, and final validation.",
       "checksRun": [
@@ -2943,7 +2943,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p65-final-commit",
+      "commit": "aeb4fa2",
       "completedAt": "2026-05-19T03:25:00.000Z",
       "summary": "Closed P65 with aggregate validation and P66 handoff while batch intelligence remains non-executing.",
       "checksRun": [
