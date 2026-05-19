@@ -147,7 +147,20 @@ Implementation:
 
 Validate and close P68 with self-update apply still disabled.
 
-Status: planned.
+Status: complete. P68.7 closes P68 after validating all self-update
+contracts, intent records, proposal previews, approval/rollback gates,
+Command Center Self-Update UX, aggregate checkers/docs, dashboard tests,
+dashboard build, roadmap records, phase-status records, and P69 handoff. P68
+is complete. Self-update apply, patch generation, project mutation,
+provider/tool execution, worker execution, DB writes, deploy, release, network
+calls, and provider spend remain disabled.
+
+Implementation:
+
+- `scripts/check-p687-final-validation.js` validates final P68 closure,
+  Command Center safety, disabled runtime posture, and P69 handoff.
+- `reports/p687-final-validation-report.md` records the final validation
+  result and known limitations.
 
 ## Command Center Requirements
 

@@ -58,6 +58,8 @@ const requiredReports = [
 const completedSubphases = ["P68.1", "P68.2", "P68.3", "P68.4", "P68.5", "P68.6"];
 const phaseById = new Map(phases.map((phase) => [phase.phaseId, phase]));
 const statusById = new Map(entries.map((entry) => [entry.phaseId, entry]));
+const preFinalHandoff = status.currentPhase === "P68" && status.nextPhase === "P68.7" && phaseById.get("P68")?.nextPhase === "P68.7";
+const finalHandoff = status.currentPhase === "P69" && status.previousPhase === "P68" && status.nextPhase === "P70" && statusById.get("P68.7")?.status === "complete";
 
 addCheck("package scripts registered", requiredScripts.every((script) => packageJson.scripts?.[script]), requiredScripts.join(", "));
 addCheck("checker files exist", [
@@ -72,8 +74,8 @@ addCheck("reports exist", requiredReports.every(fileExists), requiredReports.joi
 addCheck("docs cover subphases", completedSubphases.every((phaseId) => docs.includes(`### ${phaseId}`) && docs.includes("Status: complete")), completedSubphases.join(", "));
 addCheck("roadmap statuses complete", completedSubphases.every((phaseId) => phaseById.get(phaseId)?.status === "complete"));
 addCheck("phase status entries complete", completedSubphases.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
-addCheck("P68 handoff is P68.7", status.currentPhase === "P68" && status.nextPhase === "P68.7" && phaseById.get("P68")?.nextPhase === "P68.7", `${status.currentPhase}/${status.nextPhase}`);
-addCheck("P68.7 remains planned", phaseById.get("P68.7")?.status === "planned" && statusById.get("P68.7")?.status === "planned");
+addCheck("P68 handoff is valid", preFinalHandoff || finalHandoff, `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+addCheck("P68.7 remains planned or complete", ["planned", "complete"].includes(phaseById.get("P68.7")?.status) && ["planned", "complete"].includes(statusById.get("P68.7")?.status));
 addCheck("Command Center route registered", selfUpdateRoute.includes("key: \"selfUpdate\"") && selfUpdateRoute.includes("/command-center/self-update"));
 addCheck("Command Center test registered", routeTests.includes("Self-Update route renders readiness without enabling apply"));
 addCheck("Command Center themes covered", routeTests.includes("pickTheme(page, \"dark\")") && routeTests.includes("pickTheme(page, \"light\")") && routeTests.includes("pickTheme(page, \"system\")"));

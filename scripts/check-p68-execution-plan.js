@@ -71,11 +71,16 @@ export function checkP68ExecutionPlan() {
   const phaseStatus = new Map((status.phases || []).map((phase) => [phase.phaseId, phase]));
   const p68 = phaseStatus.get("P68");
   const expectedNext = P68_SELF_UPDATE_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "P69";
+  const p68CompleteHandoff = p68?.status === "complete"
+    && p68?.nextPhase === "P69"
+    && status.currentPhase === "P69"
+    && status.previousPhase === "P68"
+    && status.nextPhase === "P70";
   if (!["in_progress", "complete"].includes(p68?.status)) fail("roadmapStatus", "P68 must be in_progress or complete");
   if (p68?.nextPhase !== expectedNext) fail("roadmapStatus", `P68 nextPhase must be ${expectedNext}`);
-  if (status.currentPhase !== "P68") fail("roadmapStatus", "currentPhase must be P68");
-  if (status.previousPhase !== "P67") fail("roadmapStatus", "previousPhase must be P67");
-  if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+  if (!p68CompleteHandoff && status.currentPhase !== "P68") fail("roadmapStatus", "currentPhase must be P68 or P69 after P68 completion");
+  if (!p68CompleteHandoff && status.previousPhase !== "P67") fail("roadmapStatus", "previousPhase must be P67 before P68 completion");
+  if (!p68CompleteHandoff && status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
 
   const plan = read(PLAN_PATH);
   if (!plan.includes(CONTRACT_PATH)) fail("docs", `${PLAN_PATH} must reference ${CONTRACT_PATH}`);

@@ -3384,14 +3384,17 @@
       "phaseId": "P68",
       "title": "Self-Update Workflow for NEXUS OS",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "pending-final-commit",
-      "completedAt": "",
-      "summary": "P68 is in progress with aggregate tests, checkers, and docs validation complete; self-update apply remains disabled.",
+      "completedAt": "2026-05-19",
+      "summary": "Completed P68 final validation with Command Center readiness visible and self-update apply still disabled.",
       "checksRun": [
+        "npm run check:p687-final-validation",
         "npm run check:p686-tests-checkers-docs",
         "npm run check:p685-command-center-self-update-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
         "npm run check:p68-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -3400,9 +3403,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P68.6 aggregates tests, checkers, docs, reports, and Command Center coverage only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P68 closes readiness and visibility only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P68.7",
+      "nextPhase": "P69",
       "commandCenterVisible": true
     },
     {
@@ -3413,9 +3416,11 @@
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned governed release and deployment loop phase.",
+      "summary": "Planned governed release and deployment loop phase; release and deploy execution remain disabled until explicitly implemented.",
       "checksRun": [],
-      "knownLimitations": [],
+      "knownLimitations": [
+        "P69 has not enabled release, deploy, DB, provider/tool execution, project mutation, network calls, or provider spend."
+      ],
       "nextPhase": "P70",
       "commandCenterVisible": true
     },
@@ -5716,7 +5721,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "aad87fd",
       "completedAt": "2026-05-19",
       "summary": "Aggregated P68 tests, checkers, docs, reports, and Command Center coverage before final validation.",
       "checksRun": [
@@ -5739,20 +5744,34 @@
       "phaseId": "P68.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P68 with self-update apply still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Validated and closed P68 with self-update apply still disabled.",
+      "checksRun": [
+        "npm run check:p687-final-validation",
+        "npm run check:p686-tests-checkers-docs",
+        "npm run check:p685-command-center-self-update-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.7 closes readiness and visibility only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P69",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T10:08:26.807Z",
-  "currentPhase": "P68",
-  "previousPhase": "P67",
-  "nextPhase": "P68.7"
+  "currentPhase": "P69",
+  "previousPhase": "P68",
+  "nextPhase": "P70"
 }
