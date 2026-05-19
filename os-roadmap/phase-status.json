@@ -2969,10 +2969,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e0ab9be",
+      "commit": "pending-p66-2-commit",
       "completedAt": "",
-      "summary": "P66 is in progress with contract-only self-healing planning complete; recovery execution remains disabled.",
+      "summary": "P66 is in progress with execution contract and display-safe failure classification complete; recovery execution remains disabled.",
       "checksRun": [
+        "npm run check:p66-failure-classification",
         "npm run check:p66-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -2980,9 +2981,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P66.1 does not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, worker execution, automatic retry, DB writes, deploy, release, network calls, or provider spend."
+        "P66 does not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, worker execution, automatic retry, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P66.2",
+      "nextPhase": "P66.3",
       "commandCenterVisible": true
     },
     {
@@ -3011,13 +3012,22 @@
       "phaseId": "P66.2",
       "title": "Failure Classification Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define safe failure-class records and validation for self-healing inputs.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-2-commit",
+      "completedAt": "2026-05-19T04:05:00.000Z",
+      "summary": "Added display-safe failure classification records, fixtures, envelopes, validation checker, and report for self-healing inputs.",
+      "checksRun": [
+        "npm run check:p66-failure-classification",
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Failure classification is read-only. Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P66.3",
       "commandCenterVisible": true
     },
@@ -5313,5 +5323,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P66.2"
+  "nextPhase": "P66.3"
 }

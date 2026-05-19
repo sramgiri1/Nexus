@@ -1,0 +1,29 @@
+[
+  {
+    "failureId": "failure-transient-preview",
+    "failureClass": "transient_failure",
+    "sourceSurface": "worker-runtime",
+    "summary": "Local preview command timed out before producing evidence.",
+    "evidenceRefs": ["reports/worker-runtime-report.md"],
+    "activityRefs": ["activity:self-healing-preview"],
+    "costImpact": "none"
+  },
+  {
+    "failureId": "failure-policy-preview",
+    "failureClass": "policy_block",
+    "sourceSurface": "governance",
+    "summary": "Policy gate blocked a recovery request that referenced api_key.",
+    "evidenceRefs": ["reports/policy-center-final-report.md"],
+    "activityRefs": ["activity:policy-block"],
+    "costImpact": "none"
+  },
+  {
+    "failureId": "failure-security-preview",
+    "failureClass": "secret_or_security_failure",
+    "sourceSurface": "security",
+    "summary": "sk-previewSecretValue1234567890",
+    "evidenceRefs": ["reports/secrets-boundary-final-report.md"],
+    "activityRefs": ["activity:security-review"],
+    "costImpact": "none"
+  }
+]

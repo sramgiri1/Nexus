@@ -260,6 +260,7 @@
     "check:p65-batch-intelligence-final": "node scripts/check-p65-batch-intelligence-final.js",
     "check:p65-final": "node scripts/check-p65-final.js",
     "check:p66-execution-plan": "node scripts/check-p66-execution-plan.js",
+    "check:p66-failure-classification": "node scripts/check-p66-failure-classification.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

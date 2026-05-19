@@ -51,7 +51,13 @@ Define display-safe failure-class records and validation. Records must show
 failure class, severity, source surface, owner capability, evidence refs,
 activity refs, and disabled recovery posture.
 
-Status: planned.
+Status: complete. P66.2 adds display-safe failure classification records that
+reuse shared redaction and result envelope helpers. Classifications expose
+failure class, severity, source surface, owner capability, current state,
+blocked recovery posture, approval requirement, evidence/activity refs, cost
+impact, and next action while recovery execution, automatic retry, source
+mutation, project mutation, provider/tool execution, DB writes, deploy,
+release, network calls, and provider spend remain disabled.
 
 ### P66.3 Recovery Plan Preview
 
