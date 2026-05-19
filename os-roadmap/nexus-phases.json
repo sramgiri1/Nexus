@@ -3882,7 +3882,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b97fa38",
       "completedAt": "",
       "summary": "P84 is in progress. Local deterministic founder runtime admission is defined; provider/model calls, agent dispatch, project mutation, DB writes, deploy, network, auth, and spend remain blocked.",
       "checksRun": [
@@ -3906,7 +3906,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b97fa38",
       "completedAt": "2026-05-19T21:11:34.634Z",
       "summary": "Defined governed local founder runtime admission for deterministic Q&A, local PRD drafting, workstream planning, and generated workspace planning without unsafe execution.",
       "checksRun": [
