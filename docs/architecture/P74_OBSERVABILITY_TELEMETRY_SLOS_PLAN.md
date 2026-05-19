@@ -53,7 +53,24 @@ records.
 Define redacted telemetry event contract records without external exporters or
 raw log streaming.
 
-Status: planned.
+Status: complete. P74.2 adds preview-only `TelemetryEventContract` records.
+Each contract includes signal type, source surface, metric family, aggregation
+window, redaction state, disabled telemetry export/raw log/raw dump flags,
+blocked operations, blockers, disabled reason, evidence/activity references,
+cost impact, owner capability, and next action.
+
+Implementation:
+
+- `observability/p74-2-placeholder.js` exports
+  `createTelemetryEventContract`, `validateTelemetryEventContract`,
+  `buildTelemetryEventContractEnvelope`, `P74_2_REQUIRED_FIELDS`, and
+  `P74_2_SAMPLE_CONTRACTS`.
+- `scripts/check-p742.js` validates telemetry contract shape, disabled
+  exporters, disabled raw log/JSON/policy dumps, disabled DB and project
+  mutation, disabled provider/tool/worker execution, disabled network/spend,
+  disabled deploy/release/export/package behavior, disabled auth mutation,
+  hidden private IDs/tokens/telemetry URLs, evidence/activity, cost impact, and
+  non-runnable disabled reasons.
 
 ### P74.3 SLO Objective Catalog
 
@@ -112,7 +129,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.1. External telemetry exporters, raw log
+P74 is in progress through P74.2. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network

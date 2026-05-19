@@ -2442,10 +2442,10 @@
       "track": "NEXUS_OS",
       "order": 49,
       "group": "Planned OS Phases",
-      "summary": "Observability, telemetry, and service-level objective readiness is in progress with execution contracts defined.",
+      "summary": "Observability, telemetry, and service-level objective readiness is in progress with preview-only telemetry event contracts defined.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P74.2"
+      "nextPhase": "P74.3"
     },
     {
       "phaseId": "P74.1",
@@ -2464,8 +2464,8 @@
       "track": "NEXUS_OS",
       "order": 49.02,
       "group": "P74 Observability, Telemetry, SLOs",
-      "status": "planned",
-      "summary": "Define redacted telemetry event contract records without external exporters.",
+      "status": "complete",
+      "summary": "Defined redacted telemetry event contract records without external exporters.",
       "nextPhase": "P74.3",
       "commandCenterVisible": true
     },

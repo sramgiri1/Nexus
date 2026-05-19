@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T12:52:19.949Z
+- Generated at: 2026-05-19T12:54:48.554Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0e802fe
+- Validation HEAD: 77a775e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -111,9 +111,9 @@
 | P73.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P73.6 validation coverage | PASS | 12 checkers, 6 reports |
 | P73.7 validation coverage | PASS | 22 checkers, 15 reports |
-| P74 validation coverage | PASS | 5 checkers, 1 reports |
+| P74 validation coverage | PASS | 7 checkers, 2 reports |
 | P74.1 validation coverage | PASS | 4 checkers, 1 reports |
-| P74.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P74.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P74.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P74.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P74.5 validation coverage | PASS | dedicated_checker, validation_report |
@@ -125,18 +125,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P74; next=P74.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P74; next=P74.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P74.2 Telemetry Event Contract
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P74.3 SLO Objective Catalog
   - status: planned
   - checkers: 0
