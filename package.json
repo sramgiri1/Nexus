@@ -377,6 +377,7 @@
     "check:p823-worker-execution-gate": "node scripts/check-p823-worker-execution-gate.js",
     "check:p824-project-db-admission": "node scripts/check-p824-project-db-admission.js",
     "check:p825-deploy-release-admission": "node scripts/check-p825-deploy-release-admission.js",
+    "check:p826-command-center-live-ready-ux": "node scripts/check-p826-command-center-live-ready-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

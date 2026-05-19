@@ -83,10 +83,14 @@ Goal: replace stale preview wording in the relevant Command Center business
 build surfaces with evidence-backed Ready, Needs setup, and Blocked by policy
 states.
 
-Status: planned. P82.6 must show current state, next action, blockers, disabled
-reason, owner capability, evidence/activity location, and cost impact. It must
-preserve System, Dark, and Light themes and avoid raw JSON, raw logs, DemoApp,
-raw private project IDs, and fake runnable actions.
+Status: complete. P82.6 adds a display-safe Command Center live-ready
+activation view model, replaces stale `Gated`, `Local`, and `Dry-run` badges on
+the founder-to-business-build path with evidence-backed `Ready` and
+`Needs setup` labels, and keeps policy-blocked execution surfaces explicit. It
+shows current state, next action, blockers, disabled reason, owner capability,
+evidence/activity location, and cost impact while preserving System, Dark, and
+Light themes and avoiding raw JSON, raw logs, DemoApp, raw private project IDs,
+and fake runnable actions.
 
 Validation: `npm run check:p826-command-center-live-ready-ux`, Playwright route
 coverage, dashboard unit tests, and dashboard build.

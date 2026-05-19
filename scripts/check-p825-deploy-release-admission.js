@@ -65,7 +65,12 @@ addCheck("no DemoApp or raw private IDs", !serialized.includes("DemoApp") && !/(
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p825-deploy-release-admission"]));
 addCheck("contract references P82.5 files", contract.includes("live-ready/deployReleaseAdmission.js") && contract.includes("check:p825-deploy-release-admission"));
 addCheck("docs mention P82.5 validation", docs.includes("P82.5 Deploy / Release Admission") && docs.includes("npm run check:p825-deploy-release-admission"));
-addCheck("phase status advanced", statusById.get("P82.5")?.status === "complete" && status.currentPhase === "P82.5" && status.nextPhase === "P82.6");
+addCheck(
+  "phase status advanced",
+  statusById.get("P82.5")?.status === "complete" &&
+    ["P82.5", "P82.6", "P82.7"].includes(status.currentPhase),
+  `current=${status.currentPhase}; next=${status.nextPhase}`,
+);
 addCheck("report path is distinct", REPORT_PATH.endsWith("p825-deploy-release-admission-report.md"));
 addCheck("report prerequisites exist", fileExists("reports/p824-project-db-admission-report.md") && fileExists("reports/p694-report.md") && fileExists("reports/p714-report.md"));
 

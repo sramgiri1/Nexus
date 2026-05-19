@@ -1209,6 +1209,9 @@ test.describe("Command Center route-wide UX", () => {
     expect(sidebarText).toContain("Activity Log");
     expect(sidebarText).toContain("Docs & Guides");
     expect(sidebarText).toContain("Settings");
+    expect(sidebarText).toMatch(/Live Readiness\s+READY/i);
+    expect(sidebarText).toMatch(/Founder Intake\s+READY/i);
+    expect(sidebarText).toMatch(/Business Build\s+NEEDS SETUP/i);
     expect(sidebarText).not.toContain("Agent Workbench P38");
     expect(sidebarText).not.toContain("Implementation P39");
     expect(sidebarText).not.toContain("Live API P40");
@@ -2888,7 +2891,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Live Readiness route renders gated live posture without runnable actions", async ({ page }) => {
+  test("Live Ready route renders evidence-backed activation labels without runnable actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/live-readiness");
@@ -2896,16 +2899,21 @@ test.describe("Command Center route-wide UX", () => {
     for (const theme of ["dark", "light", "system"]) {
       await pickTheme(page, theme);
       await expect(page.locator(".ccv2-page-head__title")).toContainText("Live Readiness");
-      await expect(page.locator("body")).toContainText("Live mode gates");
+      await expect(page.locator("body")).toContainText("evidence-backed live-ready labels");
       await expect(page.locator("body")).toContainText("Current state");
       await expect(page.locator("body")).toContainText("Next action");
       await expect(page.locator("body")).toContainText("Cost impact");
-      await expect(page.locator("body")).toContainText("Live readiness is display-only");
+      await expect(page.locator("body")).toContainText("Live-ready activation is display-only");
     }
 
     await commandTab(page, "Capability Gates").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Ready");
+    await expect(activeCommandTabPanel(page)).toContainText("Needs setup");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked by policy");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
-    await expect(activeCommandTabPanel(page)).toContainText("Project Mutation");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Source Mutation");
+    await expect(activeCommandTabPanel(page)).toContainText("Worker Execution");
+    await expect(activeCommandTabPanel(page)).toContainText("Deploy / Release");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Spend");
     await commandTab(page, "Bridge Admission").click();
     await expect(activeCommandTabPanel(page)).toContainText("mission.compose");

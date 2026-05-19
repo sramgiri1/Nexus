@@ -146,25 +146,25 @@ export const ENTERPRISE_PREVIEW_TABS = [
 ];
 
 export const LIVE_READINESS_TABS = [
-  { id: "overview", label: "Overview", description: "Live state, owner, blockers, and next action", badge: "Gated" },
-  { id: "gates", label: "Capability Gates", description: "Provider, tool, worker, project, DB, deploy, and spend gates", badge: "Blocked" },
-  { id: "bridge", label: "Bridge Admission", description: "Live action bridge routes and admission posture", badge: "Blocked" },
-  { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Disabled" },
+  { id: "overview", label: "Overview", description: "Live-ready state, owner, blockers, and next action", badge: "Ready" },
+  { id: "gates", label: "Capability Gates", description: "Provider, tool, worker, project, DB, deploy, and spend gates", badge: "Needs setup" },
+  { id: "bridge", label: "Bridge Admission", description: "Live action bridge routes and admission posture", badge: "Blocked by policy" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Blocked by policy" },
 ];
 
 export const FOUNDER_INTAKE_TABS = [
-  { id: "overview", label: "Overview", description: "Founder intake state, owner, blockers, and next action", badge: "Local" },
+  { id: "overview", label: "Overview", description: "Founder intake state, owner, blockers, and next action", badge: "Ready" },
   { id: "questions", label: "Questions", description: "Next question, captured answers, and missing fields", badge: "Ready" },
-  { id: "readiness", label: "Readiness", description: "Comprehension score, blockers, and evidence", badge: "Review" },
-  { id: "disabled", label: "Disabled Actions", description: "Unavailable execution and mutation actions", badge: "Disabled" },
+  { id: "readiness", label: "Readiness", description: "Comprehension score, blockers, and evidence", badge: "Ready" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable execution and mutation actions", badge: "Blocked by policy" },
 ];
 
 export const BUSINESS_BUILD_TABS = [
-  { id: "overview", label: "Overview", description: "Business build state, owner, blockers, and next action", badge: "Dry-run" },
+  { id: "overview", label: "Overview", description: "Business build state, owner, blockers, and next action", badge: "Needs setup" },
   { id: "prd", label: "PRD Readiness", description: "Local PRD readiness, missing fields, and source posture", badge: "Ready" },
   { id: "workstreams", label: "Workstreams", description: "Product, design, engineering, go-to-market, finance, operations, legal, and support lanes", badge: "Ready" },
-  { id: "milestones", label: "Milestones", description: "Dry-run business build milestones and blockers", badge: "Review" },
-  { id: "disabled", label: "Disabled Actions", description: "Unavailable runtime, project, DB, deploy, and spend actions", badge: "Disabled" },
+  { id: "milestones", label: "Milestones", description: "Business build milestones, setup gaps, and blockers", badge: "Needs setup" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable runtime, project, DB, deploy, and spend actions", badge: "Blocked by policy" },
 ];
 
 export const SELF_UPDATE_TABS = [

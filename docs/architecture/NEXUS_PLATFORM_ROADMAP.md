@@ -1263,9 +1263,13 @@ gates using existing deploy readiness and shipping readiness helpers while
 deploy, release, export, package creation, network calls, and provider spend
 remain disabled.
 
+P82.6 is complete. It adds Command Center live-ready activation UX that reuses
+the P82.2-P82.5 gate data and replaces stale founder-to-business-build badges
+with evidence-backed `Ready`, `Needs setup`, and `Blocked by policy` states
+without exposing runnable actions.
+
 Planned P82 subphases:
 
-- `P82.6` Command Center Live Ready UX
 - `P82.7` Final Validation
 
 The detailed plan lives in

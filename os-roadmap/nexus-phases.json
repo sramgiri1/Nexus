@@ -3516,9 +3516,31 @@
       "order": 57,
       "group": "P82 Governed Business Build Execution Activation Contract",
       "status": "in_progress",
-      "summary": "Defined live-ready activation contracts and admission gates through deploy/release while runtime execution remains blocked.",
-      "nextPhase": "P82.6",
-      "commandCenterVisible": true
+      "summary": "P82 live-ready activation is in final validation after Command Center labels were made evidence-backed.",
+      "nextPhase": "P82.7",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "checksRun": [
+        "npm run check:p826-command-center-live-ready-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p825-deploy-release-admission",
+        "npm run check:p824-project-db-admission",
+        "npm run check:p823-worker-execution-gate",
+        "npm run check:p822-provider-tool-gates",
+        "npm run check:p82-execution-plan",
+        "npm run check:p817-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82.6 is display-only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, auth/session/user/workspace mutation, and provider spend remain blocked.",
+        "Runtime-enabling admission remains deferred to an explicit later activation phase."
+      ]
     },
     {
       "phaseId": "P82.1",
@@ -3581,10 +3603,33 @@
       "track": "NEXUS_OS",
       "order": 57.06,
       "group": "P82 Governed Business Build Execution Activation Contract",
-      "status": "planned",
-      "summary": "Expose evidence-backed Ready, Needs setup, and Blocked by policy states in Command Center without fake live actions.",
+      "status": "complete",
+      "summary": "Added Command Center live-ready activation UX using P82.2-P82.5 gate data and replaced stale founder-to-business-build labels with Ready, Needs setup, and Blocked by policy states without enabling runnable actions.",
       "nextPhase": "P82.7",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T19:26:41.086Z",
+      "checksRun": [
+        "npm run check:p826-command-center-live-ready-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p825-deploy-release-admission",
+        "npm run check:p824-project-db-admission",
+        "npm run check:p823-worker-execution-gate",
+        "npm run check:p822-provider-tool-gates",
+        "npm run check:p82-execution-plan",
+        "npm run check:p817-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82.6 is display-only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, auth/session/user/workspace mutation, and provider spend remain blocked.",
+        "Runtime-enabling admission remains deferred to an explicit later activation phase."
+      ]
     },
     {
       "phaseId": "P82.7",
@@ -3595,8 +3640,13 @@
       "status": "planned",
       "summary": "Close P82 after validating live-readiness activation remains governed and evidence-backed.",
       "nextPhase": "P83",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "planned",
+      "commit": "planned"
     }
   ],
-  "updatedAt": "2026-05-20T00:00:05.000Z"
+  "updatedAt": "2026-05-19T19:26:41.086Z",
+  "currentPhase": "P82.6",
+  "previousPhase": "P82.5",
+  "nextPhase": "P82.7"
 }

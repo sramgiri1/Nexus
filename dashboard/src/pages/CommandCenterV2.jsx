@@ -8532,6 +8532,18 @@ function LiveReadinessPage() {
 
           <CommandTabPanel tabId="gates" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--3">
+              {readiness.activationRows.map((gate) => (
+                <article className="ccv2-card" key={`${gate.surface}-${gate.label}`}>
+                  <div className="ccv2-section-heading">{gate.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${gate.readinessLabel === "Ready" ? "pass" : gate.readinessLabel === "Needs setup" ? "amber" : "disabled"}`}>{gate.readinessLabel}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Surface: {gate.surface}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{gate.disabledReason}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {gate.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {gate.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {gate.evidenceLocation}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {gate.costImpact}</div>
+                </article>
+              ))}
               {readiness.gateRows.map((gate) => (
                 <article className="ccv2-card" key={gate.label}>
                   <div className="ccv2-section-heading">{gate.label}</div>

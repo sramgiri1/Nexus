@@ -1,5 +1,6 @@
 import { buildLiveExecutionGate } from "../../../live-execution/liveExecutionGate.js";
 import { ACTION_BRIDGE_CAPABILITY_MAP } from "../../../live-execution/actionBridgeAdmissionController.js";
+import { buildLiveReadyActivationViewModel } from "./liveReadyActivation.js";
 
 export const LIVE_READINESS_ROUTE_ID = "live-readiness";
 
@@ -12,6 +13,7 @@ function labelFromCapability(value = "") {
 
 export function buildLiveReadinessViewModel() {
   const gate = buildLiveExecutionGate({ mode: "live" });
+  const activation = buildLiveReadyActivationViewModel();
   const capabilities = gate.data.capabilities || [];
   const bridgeRows = Object.entries(ACTION_BRIDGE_CAPABILITY_MAP).map(([actionType, capability]) => ({
     label: actionType,
@@ -23,24 +25,26 @@ export function buildLiveReadinessViewModel() {
   return {
     routeId: LIVE_READINESS_ROUTE_ID,
     pageTitle: "Live Readiness",
-    whatChanged: "Command Center now shows live execution gates, bridge admission posture, blockers, evidence locations, and cost impact.",
-    currentState: "Live mode is recognized, but runtime execution remains blocked by capability gates.",
-    nextAction: "Complete live Command Center UX validation, then aggregate tests and final readiness before any runtime-enabling phase.",
+    whatChanged: "Command Center now shows evidence-backed live-ready labels, setup gaps, policy blockers, owner capabilities, evidence, activity, and cost posture.",
+    currentState: "Live readiness labels are available; runtime execution remains blocked by governed admission gates.",
+    nextAction: activation.nextAction,
     ownerAgent: "WARDEN",
-    ownerCapability: "NEXUS OS Live Runtime Governance",
-    evidenceLocation: "reports/live-readiness-ux-report.md",
+    ownerCapability: activation.ownerCapability,
+    evidenceLocation: activation.evidenceLocation,
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No provider calls, worker runtime, network execution, DB writes, deploy, package, or provider spend.",
-    disabledReason: "Live readiness is display-only. Founder intake runtime, autonomous Q&A, PRD generation execution, agent dispatch, self-healing apply, provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain disabled.",
+    disabledReason: activation.disabledReason,
+    labelSummary: activation.labelSummary,
     readinessCards: [
-      { label: "Live mode", value: "Recognized", tone: "pass", detail: "Mode guard accepts live as a governed policy state." },
-      { label: "Execution", value: "Blocked", tone: "disabled", detail: "Admission records are not consumed by a runtime executor." },
-      { label: "Bridge", value: "Gated", tone: "amber", detail: "Live bridge routes stop before local action handlers." },
+      { label: "Ready", value: String(activation.labelSummary.Ready), tone: "pass", detail: "Local, display-safe Command Center capabilities with evidence." },
+      { label: "Needs setup", value: String(activation.labelSummary["Needs setup"]), tone: "amber", detail: "Capabilities with explicit setup gaps and next actions." },
+      { label: "Blocked by policy", value: String(activation.labelSummary["Blocked by policy"]), tone: "disabled", detail: "Mutation, deploy, spend, or execution surfaces blocked by governance." },
       { label: "Cost", value: "No spend", tone: "pass", detail: "Budget evidence is required before future execution phases." },
     ],
+    activationRows: activation.readinessRows,
     gateRows: capabilities.map((capability) => ({
       label: labelFromCapability(capability.capability),
-      currentState: capability.status === "blocked" ? "Blocked" : capability.status,
+      currentState: capability.status === "blocked" ? "Blocked by policy" : capability.status,
       disabledReason: capability.disabledReason,
       blockers: capability.blockers,
       nextAction: capability.nextAction,
