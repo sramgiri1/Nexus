@@ -1249,9 +1249,12 @@ P82.2 is complete. It adds provider and tool live-readiness gate profiles with
 display-safe Ready, Needs setup, and Blocked by policy states for later Command
 Center UX. Provider calls, tool execution, and provider spend remain disabled.
 
+P82.3 is complete. It adds the worker execution readiness gate for business
+build workstreams while workers, leases, agent dispatch, project mutation, DB
+writes, deploy, and provider spend remain disabled.
+
 Planned P82 subphases:
 
-- `P82.3` Worker Execution Gate
 - `P82.4` Project / DB Mutation Admission
 - `P82.5` Deploy / Release Admission
 - `P82.6` Command Center Live Ready UX

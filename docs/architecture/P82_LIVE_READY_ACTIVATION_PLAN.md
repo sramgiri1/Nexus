@@ -48,8 +48,10 @@ Validation: `npm run check:p822-provider-tool-gates`.
 
 Goal: add a worker execution readiness gate for business build workstreams.
 
-Status: planned. P82.3 must not start workers, lease work, execute tasks, or
-dispatch agents.
+Status: complete. P82.3 adds a local worker readiness gate that reuses existing
+worker runtime summaries and P81 business build workstreams. It does not start
+workers, lease work, execute tasks, dispatch agents, mutate project files, write
+DB state, deploy, or spend budget.
 
 Validation: `npm run check:p823-worker-execution-gate`.
 

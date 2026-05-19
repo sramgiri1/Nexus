@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P82.2
-- Generated at: 2026-05-19T18:39:49.196Z
+- Generated at: 2026-05-19T18:43:00.162Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3ff5808
+- Validation HEAD: 39f6667
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | package script registered | PASS |  |
 | contract references P82.2 files | PASS |  |
 | docs mention P82.2 validation | PASS |  |
-| phase status advanced | PASS |  |
+| phase status advanced | PASS | current=P82.3; next=P82.4 |
 | report path is distinct | PASS |  |
 | report prerequisites exist | PASS |  |
 ## Validation Commands
