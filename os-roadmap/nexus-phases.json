@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Continue compliance and audit pack readiness with audit trail export previews while export, package, certification, and runtime mutation remain disabled.",
+      "summary": "Continue compliance and audit pack readiness with control mapping previews while attestation, certification, export, package, and runtime mutation remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P77.4"
+      "nextPhase": "P77.5"
     },
     {
       "phaseId": "P77.1",
@@ -2747,8 +2747,8 @@
     {
       "phaseId": "P77.4",
       "title": "Control Mapping / Attestation Preview",
-      "status": "planned",
-      "summary": "Plan control mapping and attestation previews without certification or legal attestation behavior.",
+      "status": "complete",
+      "summary": "Added preview-only control mapping and attestation records with certification, legal attestation, export, package, DB, project, runtime, network, and spend behavior disabled.",
       "nextPhase": "P77.5",
       "order": 52.04,
       "track": "NEXUS_OS",

@@ -74,10 +74,11 @@ disabled reason, owner capability, and next action.
 
 Define control mapping previews without legal attestation or certification.
 
-Status: planned. P77.4 will add preview-only `ControlMappingPreview` records
-that capture control mapping scope, disabled certification, disabled legal
-attestation, disabled export/package posture, evidence/activity references,
-cost impact, disabled reason, and next action.
+Status: complete. P77.4 adds preview-only `ControlMappingPreview` records
+that capture control mapping scope, source evidence and audit previews,
+disabled certification, disabled legal attestation, disabled export/package
+posture, evidence/activity references, cost impact, blockers, disabled reason,
+owner capability, and next action.
 
 ### P77.5 Command Center Compliance UX
 
@@ -133,6 +134,17 @@ P77.2 validation:
 
 P77.3 validation:
 
+- `npm run check:p773`
+- `npm run check:p772`
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.4 validation:
+
+- `npm run check:p774`
 - `npm run check:p773`
 - `npm run check:p772`
 - `npm run check:p77-execution-plan`

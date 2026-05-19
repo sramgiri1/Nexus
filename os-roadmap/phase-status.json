@@ -4336,10 +4336,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3156c8a",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Continued P77 with preview-only audit trail export records while export/package/certification/runtime mutation remains disabled.",
+      "summary": "Continued P77 with preview-only control mapping records while attestation/certification/export/package/runtime mutation remains disabled.",
       "checksRun": [
+        "npm run check:p774",
         "npm run check:p773",
         "npm run check:p772",
         "npm run check:p77-execution-plan",
@@ -4349,9 +4350,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P77.3 records audit trail export previews only. Audit export, raw log export, package creation, compliance certification, legal attestation, DB writes, project mutation, tenant/access/auth/session/user/workspace mutation, provider/tool/worker execution, network calls, deploy/release/export execution, and provider spend remain disabled."
+        "P77.4 records control mapping and attestation previews only. Compliance certification, legal attestation, audit export, raw log export, package creation, DB writes, project mutation, tenant/access/auth/session/user/workspace mutation, provider/tool/worker execution, network calls, deploy/release/export execution, and provider spend remain disabled."
       ],
-      "nextPhase": "P77.4",
+      "nextPhase": "P77.5",
       "commandCenterVisible": true
     },
     {
@@ -4426,15 +4427,26 @@
     {
       "phaseId": "P77.4",
       "title": "Control Mapping / Attestation Preview",
-      "status": "planned",
-      "summary": "Planned control mapping and attestation previews without certification or legal attestation behavior.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "summary": "Added preview-only control mapping and attestation records with disabled certification, legal attestation, audit export, raw log export, package creation, DB writes, project mutation, runtime execution, network calls, and provider spend.",
+      "checksRun": [
+        "npm run check:p774",
+        "npm run check:p773",
+        "npm run check:p772",
+        "npm run check:p77-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P77.4 records control mapping and attestation previews only. Compliance certification, legal attestation, audit export, raw log export, package creation, DB writes, project mutation, tenant/access/auth/session/user/workspace mutation, provider/tool/worker execution, network calls, deploy/release/export execution, and provider spend remain disabled."
+      ],
       "nextPhase": "P77.5",
       "track": "NEXUS_OS",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
       "commandCenterVisible": true
     },
     {
@@ -7387,5 +7399,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P77",
   "previousPhase": "P76",
-  "nextPhase": "P77.4"
+  "nextPhase": "P77.5"
 }
