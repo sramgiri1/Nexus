@@ -35,7 +35,7 @@ dashboard/src/data/commandCenterViewModel.js
 
 | ID | Label | Category | Risk | Enabled Now | Ships |
 |---|---|---|---|---|---|
-| build-product | Build Product | build | high | no | P37 |
+| build-product | Validate Startup Idea | build | high | no | P37 |
 | fix-failing-test | Fix Failing Test | fix | medium | no | P37 |
 | validate-backend | Validate Backend | validate | low | no | P37 |
 | review-release | Review Release | release | high | no | P39 |

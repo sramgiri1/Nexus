@@ -802,6 +802,25 @@ function MissionComposerCard({ vm }) {
               {bridgeOnline ? "Action bridge online" : "Action bridge offline"}
             </span>
           </div>
+
+          <div className="ccv2-card" style={{ marginTop: 16 }}>
+            <div className="ccv2-section-heading">Founder Idea Lifecycle</div>
+            <div className="ccv2-list" style={{ marginTop: 10 }}>
+              {(vm.mission.lifecycle || []).map((stage) => (
+                <div className="ccv2-list-row" key={stage.label}>
+                  <div>
+                    <div className="ccv2-list-row__title">{stage.label}</div>
+                    <div className="ccv2-list-row__meta">Owner: {stage.owner}</div>
+                    <div className="ccv2-list-row__meta">Next action: {stage.nextAction}</div>
+                  </div>
+                  <span className="ccv2-pill ccv2-pill--preview">{stage.state}</span>
+                </div>
+              ))}
+            </div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>
+              NEXUS must understand the business before execution: Q&A, feasibility validation, PRD, agent assignments, gates, and evidence come first.
+            </div>
+          </div>
         </div>
 
         <div className="ccv2-mission-cockpit__actions">
@@ -1987,7 +2006,7 @@ function CareLoopProgressCard({ clp }) {
 }
 
 /* ─── Workflow Card ───
-   Template labels: Build Product | Fix Failing Test | Validate Backend |
+   Template labels: Validate Startup Idea | Fix Failing Test | Validate Backend |
    Review Release | Plan Sprint | Run Privacy Review | Prepare iOS Validation |
    Govern Agent Work
 ─── */

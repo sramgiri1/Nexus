@@ -243,7 +243,7 @@ const uiChecks = [
   { pat: "What do you want NEXUS to do", label: "workspace prompt text" },
   { pat: "ccv2-wf-grid", label: "workflow grid CSS class" },
   { pat: "ccv2-wf-card", label: "workflow card CSS class" },
-  { pat: "Build Product", label: "Build Product template label" },
+  { pat: "Validate Startup Idea", label: "Validate Startup Idea template label" },
   { pat: "Govern Agent Work", label: "Govern Agent Work template label" },
   { pat: "Start Workflow", label: "Start Workflow button" },
   { pat: "/command-center/workspace", label: "workspace route path" },

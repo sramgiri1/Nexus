@@ -1017,6 +1017,12 @@ test.describe("Command Center route-wide UX", () => {
 
     for (const section of [
       "Mission Control",
+      "Founder Idea Lifecycle",
+      "Idea intake",
+      "Founder Q&A",
+      "Feasibility validation",
+      "PRD creation",
+      "Business buildout",
       "Next Best Action",
       "System Status",
       "Execution Pipeline",

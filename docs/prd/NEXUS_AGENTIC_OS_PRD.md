@@ -188,6 +188,29 @@ These phrases define what NEXUS is optimizing for. Every architectural decision 
 
 A founder defines a product. NEXUS routes design, backend API, database schema, frontend, and infrastructure work to domain agents. AUDITOR gates every build. SENTINEL runs QA. WARDEN validates compliance. NEXUS makes the release decision. The founder approves deployment.
 
+### 7.1A Startup Idea to Business Lifecycle
+
+A founder can arrive with only a startup idea. NEXUS must not jump directly to
+implementation. It first runs a governed intake loop:
+
+- capture the founder's raw idea and intended customer
+- ask clarifying questions until the business model, customer, problem,
+  value proposition, constraints, and success criteria are understood
+- route feasibility validation to the appropriate agents, including product,
+  business strategy, market research, compliance, design, and technical review
+- create a PRD with assumptions, open questions, risks, acceptance criteria,
+  validation plan, agent ownership, and evidence requirements
+- turn the PRD into governed missions, task contracts, gates, and agent
+  assignments
+- keep working through validated plans until the idea becomes a complete
+  business system with product, operations, release, growth, evidence,
+  support, and governance loops
+
+Command Center must make this lifecycle visible as the primary founder
+experience. It should show the current idea stage, questions still needed,
+feasibility status, PRD status, assigned agents, next action, blockers,
+evidence, cost posture, and what NEXUS is not yet allowed to execute.
+
 ### 7.2 Mobile App Development
 
 Parallel iOS and backend development managed by SWIFT and CORE, gated by AUDITOR, tested on simulator by SENTINEL, compliance-checked by WARDEN, distributed to TestFlight by FORGE.

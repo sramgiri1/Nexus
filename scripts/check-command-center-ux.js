@@ -443,7 +443,8 @@ for (const forbidden of ["Requires P37", "Requires P38", "Requires P39", "Requir
   check(!workflowRecommendationSource.includes(forbidden), "workflowLabels", `Workflow recommendations contain stale label: ${forbidden}`);
 }
 for (const expected of [
-  "Available for planning and task activation",
+  "Available for intake, PRD planning, and task activation",
+  "Turn a founder's startup idea into clarifying questions, feasibility validation, PRD, agent work, and governed business buildout.",
   "Available for scoped remediation if failing evidence exists",
   "Available if backend validation bridge is online",
   "Requires release action bridge.",
@@ -548,6 +549,12 @@ for (const expectedTest of [
 // Mission Control layout
 for (const expected of [
   "Mission Hero",
+  "Founder Idea Lifecycle",
+  "Idea intake",
+  "Founder Q&A",
+  "Feasibility validation",
+  "PRD creation",
+  "Business buildout",
   "Next Best Action",
   "System Status",
   "Execution Pipeline",
@@ -561,7 +568,11 @@ for (const expected of [
   "Cost Snapshot",
   "enterprise command surface for governed agentic work",
 ]) {
-  check(commandCenterSource.includes(expected), "missionControlLayout", `Mission Control missing required section or copy: ${expected}`);
+  check(
+    commandCenterSource.includes(expected) || viewModelSource.includes(expected),
+    "missionControlLayout",
+    `Mission Control missing required section or copy: ${expected}`,
+  );
 }
 for (const expectedTest of [
   "Mission Control renders enterprise cockpit sections",
