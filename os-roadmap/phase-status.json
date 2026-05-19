@@ -2969,13 +2969,16 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f489908",
+      "commit": "pending-p66-5-commit",
       "completedAt": "",
-      "summary": "P66 is in progress with failure classification, recovery plan preview, and healing safety gates complete; recovery execution remains disabled.",
+      "summary": "P66 is in progress with Command Center self-healing readiness UX complete; recovery execution remains disabled.",
       "checksRun": [
+        "npm run check:p66-command-center-self-healing-ux",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:pages -- --grep \"Recovery route\"",
         "npm run check:p66-healing-safety-gate",
-        "npm run check:p66-recovery-plan-preview",
-        "npm run check:p66-failure-classification",
         "npm run check:p66-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -2983,9 +2986,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P66 does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
+        "P66 Command Center UX is display-only and does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P66.5",
+      "nextPhase": "P66.6",
       "commandCenterVisible": true
     },
     {
@@ -3086,13 +3089,27 @@
       "phaseId": "P66.5",
       "title": "Command Center Self-Healing UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose self-healing readiness and disabled recovery state in Command Center.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-5-commit",
+      "completedAt": "2026-05-19T05:10:00.000Z",
+      "summary": "Added display-only Command Center Recovery route self-healing readiness cards and route/checker coverage.",
+      "checksRun": [
+        "npm run check:p66-command-center-self-healing-ux",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:pages -- --grep \"Recovery route\"",
+        "npm run check:p66-healing-safety-gate",
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Recovery route cards are display-only. No repair, retry, provider, tool, worker, DB, deploy, or project mutation action is exposed."
+      ],
       "nextPhase": "P66.6",
       "commandCenterVisible": true
     },
@@ -5346,5 +5363,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P66.5"
+  "nextPhase": "P66.6"
 }

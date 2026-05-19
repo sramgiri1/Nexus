@@ -237,6 +237,7 @@ const commandTabsSource = readFile("dashboard/src/data/commandCenterTabs.js");
 const roadmapSource = readFile("dashboard/src/data/nexusRoadmap.js");
 const viewModelSource = readFile("dashboard/src/data/commandCenterViewModel.js");
 const workerRuntimeUxSource = [commandCenterSource, viewModelSource, routeSource, commandTabsSource].join("\n");
+const recoveryPreviewSource = readFile("dashboard/src/utils/recoveryPreview.js");
 const themeHookSource = readFile("dashboard/src/hooks/useNexusTheme.js");
 const themeCssSource = readFile("dashboard/src/styles-command-center-v2.css");
 const routeTestSource = readFile("dashboard/tests/routes.spec.js");
@@ -873,6 +874,23 @@ for (const expected of [
 }
 check(routeSource.includes("/command-center/api-batch"), "apiBatchUx", "Route matrix missing /command-center/api-batch");
 check(routeTestSource.includes("API Batch route renders preview-only provider and batch metadata"), "apiBatchUx", "Route tests missing API Batch coverage");
+
+// Self-Healing Recovery UX
+for (const expected of [
+  "Self-Healing Failure Loop",
+  "Failure class",
+  "Proposed recovery",
+  "Execution disabled",
+  "reports/p66-healing-safety-gate-report.md",
+  "No repair action can run from Command Center.",
+]) {
+  check(
+    commandCenterSource.includes(expected) || recoveryPreviewSource.includes(expected) || routeTestSource.includes(expected),
+    "selfHealingUx",
+    `Self-healing UX missing expected copy: ${expected}`,
+  );
+}
+check(routeTestSource.includes("Recovery route is inspection-only and hides raw identifiers"), "selfHealingUx", "Recovery route test missing self-healing coverage");
 
 // Cost Center UX
 for (const expected of [

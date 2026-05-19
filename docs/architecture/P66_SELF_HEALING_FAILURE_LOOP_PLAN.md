@@ -90,7 +90,12 @@ disabled.
 Expose self-healing readiness and disabled recovery state in Command Center
 without enabling runnable repair actions.
 
-Status: planned.
+Status: complete. P66.5 exposes self-healing readiness on the Command Center
+Recovery route with display-only cards for failure class, current state,
+proposed recovery, blockers, disabled reason, owner capability,
+evidence/activity location, cost impact, and next action. Recovery execution,
+automatic retry, source mutation, project mutation, provider/tool execution, DB
+writes, deploy, release, network calls, and provider spend remain disabled.
 
 ### P66.6 Tests / Checkers / Docs
 

@@ -75,6 +75,37 @@ const DISABLED_ACTIONS = [
   },
 ];
 
+const SELF_HEALING_READINESS = [
+  {
+    title: "Self-Healing Failure Loop",
+    stateLabel: "Preview only",
+    failureClass: "Transient failure",
+    currentState: "Gate review ready",
+    proposedRecovery: "Bounded recovery preview with approval, cost, and loop guards.",
+    blocker: "Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, and provider spend remain disabled.",
+    disabledReason: "P66.5 is display-only. No repair action can run from Command Center.",
+    ownerCapability: "Runtime reliability",
+    evidenceLocation: "reports/p66-healing-safety-gate-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider spend; review metadata only.",
+    nextAction: "Review the healing gate report before tests and final validation.",
+  },
+  {
+    title: "Blocked Recovery Proposal",
+    stateLabel: "Blocked",
+    failureClass: "Secret or security failure",
+    currentState: "Human review required",
+    proposedRecovery: "Escalate security review and require redaction or rotation evidence.",
+    blocker: "Security, policy, data protection, verification, contract, and state-transition failures cannot auto-heal.",
+    disabledReason: "Self-healing remains blocked until an explicit later phase allows governed recovery execution.",
+    ownerCapability: "Security governance",
+    evidenceLocation: "reports/p66-failure-classification-report.md",
+    activityLocation: "reports/p66-recovery-plan-preview-report.md",
+    costImpact: "No runtime spend.",
+    nextAction: "Keep the blocked failure visible and collect remediation evidence.",
+  },
+];
+
 function formatTimestamp(value) {
   const date = new Date(value);
   if (Number.isNaN(date.getTime())) return "Timestamp unavailable";
@@ -109,6 +140,7 @@ export function buildRecoveryPreviewViewModel() {
     snapshots,
     selectedSnapshot: snapshots[0] || null,
     disabledActions: DISABLED_ACTIONS,
+    selfHealingReadiness: SELF_HEALING_READINESS,
     emptyState: {
       title: "No recovery snapshots available",
       body: "Run the P63 snapshot and recovery checkers to regenerate redacted preview metadata.",

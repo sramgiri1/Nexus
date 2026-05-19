@@ -49,6 +49,30 @@ export default function Recovery() {
           {viewModel.blockers.join(" ")}
         </div>
 
+        <div className="ccv2-grid ccv2-grid--2" style={{ marginTop: 16 }}>
+          {viewModel.selfHealingReadiness.map((card) => (
+            <article className="ccv2-card" key={card.title}>
+              <div className="ccv2-section-heading">{card.title}</div>
+              <div className="ccv2-chip-row">
+                <span className="ccv2-pill ccv2-pill--preview">{card.stateLabel}</span>
+                <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
+              </div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Failure class</span><span className="ccv2-page-summary-value">{card.failureClass}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{card.currentState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Proposed recovery</span><span className="ccv2-page-summary-value">{card.proposedRecovery}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{card.disabledReason}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{card.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{card.evidenceLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{card.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{card.costImpact}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{card.nextAction}</span></div>
+              </div>
+              <div className="ccv2-info-banner" style={{ marginTop: 12 }}>{card.blocker}</div>
+            </article>
+          ))}
+        </div>
+
         {viewModel.snapshots.length === 0 ? (
           <div className="ccv2-empty-state" style={{ marginTop: 16 }}>
             <div className="ccv2-section-heading">{viewModel.emptyState.title}</div>

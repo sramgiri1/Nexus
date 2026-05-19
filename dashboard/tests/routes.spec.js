@@ -2738,6 +2738,11 @@ test.describe("Command Center route-wide UX", () => {
 
     await expect(page.locator(".ccv2-page-head__title")).toContainText("Recovery");
     await expect(page.locator("body")).toContainText("Inspection-only recovery preview is available.");
+    await expect(page.locator("body")).toContainText("Self-Healing Failure Loop");
+    await expect(page.locator("body")).toContainText("Failure class");
+    await expect(page.locator("body")).toContainText("Proposed recovery");
+    await expect(page.locator("body")).toContainText("reports/p66-healing-safety-gate-report.md");
+    await expect(page.locator("body")).toContainText("No repair action can run from Command Center.");
     await expect(page.locator("body")).toContainText("Recovery preview snapshot");
     await expect(page.getByRole("button", { name: /Disabled action: Restore/i })).toBeDisabled();
     await expect(page.getByRole("button", { name: /Disabled action: Replay/i })).toBeDisabled();
