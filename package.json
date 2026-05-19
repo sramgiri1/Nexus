@@ -355,6 +355,7 @@
     "check:p792-live-command-intent": "node scripts/check-p792-live-command-intent.js",
     "check:p793-action-bridge-admission": "node scripts/check-p793-action-bridge-admission.js",
     "check:p794-command-center-live-readiness-ux": "node scripts/check-p794-command-center-live-readiness-ux.js",
+    "check:p795-tests-checkers-docs": "node scripts/check-p795-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

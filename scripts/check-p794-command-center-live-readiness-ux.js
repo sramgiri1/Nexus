@@ -47,7 +47,7 @@ addCheck("playwright coverage added", tests.includes("Live Readiness route rende
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p794-command-center-live-readiness-ux"]));
 addCheck("contract references UX files", contract.includes("dashboard/src/data/liveReadiness.js") && contract.includes("check:p794-command-center-live-readiness-ux"));
 addCheck("docs mention P79.4 validation", docs.includes("P79.4 Command Center Live Readiness UX") && docs.includes("npm run check:p794-command-center-live-readiness-ux"));
-addCheck("phase status advanced", statusById.get("P79.4")?.status === "complete" && status.currentPhase === "P79.4" && status.nextPhase === "P79.5");
+addCheck("phase status advanced", statusById.get("P79.4")?.status === "complete" && ["P79.4", "P79.5", "P79.6", "P79.7"].includes(status.currentPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p794-command-center-live-readiness-ux-report.md"));
 addCheck("reports prerequisite exists", fileExists("reports/os-phase-status-report.md"));
 
