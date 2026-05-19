@@ -2321,10 +2321,10 @@
       "track": "NEXUS_OS",
       "order": 45,
       "group": "Planned OS Phases",
-      "summary": "Deploy monitoring and incident mitigation is in progress with Command Center monitoring readiness complete; all deploy-adjacent execution remains disabled.",
+      "summary": "Deploy monitoring and incident mitigation is in progress with validation coverage aggregated through P70.6; all deploy-adjacent execution remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P70.6"
+      "nextPhase": "P70.7"
     },
     {
       "phaseId": "P71",
@@ -2613,8 +2613,8 @@
       "track": "NEXUS_OS",
       "order": 45.06,
       "group": "P70 Deploy Monitoring + Incident Mitigation",
-      "status": "planned",
-      "summary": "Aggregate P70 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P70 tests, checkers, docs, reports, and Command Center monitoring coverage before final validation.",
       "nextPhase": "P70.7",
       "commandCenterVisible": true
     },

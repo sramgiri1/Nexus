@@ -292,6 +292,7 @@
     "check:p703": "node scripts/check-p703.js",
     "check:p704": "node scripts/check-p704.js",
     "check:p705-command-center-monitoring-ux": "node scripts/check-p705-command-center-monitoring-ux.js",
+    "check:p706-tests-checkers-docs": "node scripts/check-p706-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

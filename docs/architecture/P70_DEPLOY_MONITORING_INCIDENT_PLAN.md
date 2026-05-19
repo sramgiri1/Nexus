@@ -143,7 +143,7 @@ Implementation:
 
 Aggregate P70 validation coverage before final validation.
 
-Status: planned.
+Status: complete.
 
 ### P70.7 Final Validation
 
@@ -174,7 +174,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.5. Deploy execution, incident execution,
+P70 is in progress through P70.6. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
