@@ -3435,8 +3435,8 @@
       "order": 56,
       "group": "P81 Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts for the governed path from founder intake to PRD and business build orchestration.",
-      "nextPhase": "P81.2",
+      "summary": "Defined implementation-grade P81 contracts and a local PRD draft schema for the governed path from founder intake to business build orchestration.",
+      "nextPhase": "P81.3",
       "commandCenterVisible": true
     },
     {
@@ -3454,8 +3454,8 @@
       "title": "Founder Idea to PRD Schema",
       "order": 56.02,
       "group": "P81 Business Build Orchestration Contract",
-      "status": "planned",
-      "summary": "Define local PRD draft schemas from founder intake answers without provider calls or project creation.",
+      "status": "complete",
+      "summary": "Added local founder idea to PRD draft schema with readiness, missing fields, evidence, activity, and blocked runtime posture.",
       "nextPhase": "P81.3",
       "commandCenterVisible": true
     },
@@ -3510,5 +3510,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T22:30:00.000Z"
+  "updatedAt": "2026-05-19T22:55:00.000Z"
 }

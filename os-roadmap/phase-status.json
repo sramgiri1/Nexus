@@ -8050,13 +8050,14 @@
       "phaseId": "P81",
       "title": "Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts for the governed path from founder intake to PRD and business build orchestration.",
-      "nextPhase": "P81.2",
+      "summary": "Defined implementation-grade P81 contracts and a local PRD draft schema for the governed path from founder intake to business build orchestration.",
+      "nextPhase": "P81.3",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "pending-final-commit",
       "completedAt": "2026-05-19",
       "checksRun": [
+        "npm run check:p812-prd-schema",
         "npm run check:p81-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -8091,10 +8092,24 @@
     {
       "phaseId": "P81.2",
       "title": "Founder Idea to PRD Schema",
-      "status": "planned",
-      "summary": "Define local PRD draft schemas from founder intake answers without provider calls or project creation.",
+      "status": "complete",
+      "summary": "Added local founder idea to PRD draft schema with readiness, missing fields, evidence, activity, and blocked runtime posture.",
       "nextPhase": "P81.3",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p812-prd-schema",
+        "npm run check:p81-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P81.2 is a local PRD draft schema only. PRD generation execution, agent dispatch, project creation, project mutation, provider calls, DB writes, deploy, and provider spend remain blocked."
+      ]
     },
     {
       "phaseId": "P81.3",
@@ -8138,8 +8153,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T22:30:00.000Z",
-  "currentPhase": "P81.1",
-  "previousPhase": "P81",
-  "nextPhase": "P81.2"
+  "updatedAt": "2026-05-19T22:55:00.000Z",
+  "currentPhase": "P81.2",
+  "previousPhase": "P81.1",
+  "nextPhase": "P81.3"
 }

@@ -28,6 +28,11 @@ Validation: `npm run check:p81-execution-plan`.
 Goal: define local PRD draft input/output schemas from founder intake answers
 without provider calls or project creation.
 
+Status: complete. P81.2 adds a local PRD draft schema that maps founder intake
+answers into product requirements, readiness, missing fields, evidence,
+activity, and cost posture. It does not generate PRDs, dispatch agents, create
+projects, mutate project files, write DB rows, deploy, or spend budget.
+
 Validation: `npm run check:p812-prd-schema` and
 `npm run check:p81-execution-plan`.
 
