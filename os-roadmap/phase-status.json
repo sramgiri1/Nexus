@@ -3470,7 +3470,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a883417",
       "completedAt": "2026-05-19",
       "summary": "Project shipping and export pipeline completed with Command Center shipping readiness, validation coverage, and all shipping execution still disabled.",
       "checksRun": [
@@ -6291,7 +6291,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a883417",
       "completedAt": "2026-05-19",
       "summary": "Validated and closed P71 with package creation and export execution still disabled.",
       "checksRun": [
