@@ -2310,10 +2310,10 @@
       "track": "NEXUS_OS",
       "order": 44,
       "group": "Planned OS Phases",
-      "summary": "Planned governed release and deployment loop phase; release and deploy execution remain disabled until explicitly implemented.",
+      "summary": "Release/deploy loop is in progress with execution contracts complete; release and deploy execution remain disabled.",
       "commandCenterVisible": true,
-      "status": "planned",
-      "nextPhase": "P70"
+      "status": "in_progress",
+      "nextPhase": "P69.2"
     },
     {
       "phaseId": "P70",
@@ -2471,6 +2471,83 @@
       "status": "complete",
       "summary": "Validated and closed P68 with self-update apply still disabled.",
       "nextPhase": "P69",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.1",
+      "title": "Execution Contract + Release/Deploy Boundary",
+      "track": "NEXUS_OS",
+      "order": 44.01,
+      "group": "P69 Release / Deploy Loop",
+      "status": "complete",
+      "summary": "Defined P69 release/deploy contracts only; release and deploy execution remain disabled.",
+      "nextPhase": "P69.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.2",
+      "title": "Release Intent Contract",
+      "track": "NEXUS_OS",
+      "order": 44.02,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Define display-safe release intent records without release execution.",
+      "nextPhase": "P69.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.3",
+      "title": "Release Candidate Preview",
+      "track": "NEXUS_OS",
+      "order": 44.03,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Create release candidate previews without packaging, deploying, or mutating source.",
+      "nextPhase": "P69.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.4",
+      "title": "Deploy Readiness Gate",
+      "track": "NEXUS_OS",
+      "order": 44.04,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Add deploy readiness gates while keeping deploy execution disabled.",
+      "nextPhase": "P69.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.5",
+      "title": "Command Center Release UX",
+      "track": "NEXUS_OS",
+      "order": 44.05,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Expose release readiness without runnable release/deploy actions.",
+      "nextPhase": "P69.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 44.06,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Aggregate P69 validation coverage before final validation.",
+      "nextPhase": "P69.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 44.07,
+      "group": "P69 Release / Deploy Loop",
+      "status": "planned",
+      "summary": "Validate and close P69 with release and deploy execution still disabled.",
+      "nextPhase": "P70",
       "commandCenterVisible": true
     }
   ],

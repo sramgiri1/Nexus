@@ -3412,16 +3412,22 @@
       "phaseId": "P69",
       "title": "Release / Deploy Loop",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned governed release and deployment loop phase; release and deploy execution remain disabled until explicitly implemented.",
-      "checksRun": [],
+      "summary": "P69 is in progress with execution contracts complete; release and deploy execution remain disabled.",
+      "checksRun": [
+        "npm run check:p69-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
         "P69 has not enabled release, deploy, DB, provider/tool execution, project mutation, network calls, or provider spend."
       ],
-      "nextPhase": "P70",
+      "nextPhase": "P69.2",
       "commandCenterVisible": true
     },
     {
@@ -5767,11 +5773,117 @@
       ],
       "nextPhase": "P69",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.1",
+      "title": "Execution Contract + Release/Deploy Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined P69 release/deploy contracts only; release and deploy execution remain disabled.",
+      "checksRun": [
+        "npm run check:p69-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P69.1 is contract-only. Release execution, deploy execution, project mutation, provider/tool execution, worker execution, DB writes, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P69.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.2",
+      "title": "Release Intent Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define display-safe release intent records without release execution.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.3",
+      "title": "Release Candidate Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Create release candidate previews without packaging, deploying, or mutating source.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.4",
+      "title": "Deploy Readiness Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add deploy readiness gates while keeping deploy execution disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.5",
+      "title": "Command Center Release UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose release readiness without runnable release/deploy actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P69 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P69.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P69 with release and deploy execution still disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P70",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T10:08:26.807Z",
   "currentPhase": "P69",
   "previousPhase": "P68",
-  "nextPhase": "P70"
+  "nextPhase": "P69.2"
 }

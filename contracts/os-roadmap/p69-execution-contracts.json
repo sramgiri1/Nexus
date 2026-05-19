@@ -1,0 +1,961 @@
+{
+  "phaseId": "P69",
+  "title": "Release / Deploy Loop",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p69-1-execution-contract-release-deploy-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P69 release/deploy contracts and disabled execution boundary.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p69-execution-contracts.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "scripts/check-p69-execution-plan.js",
+        "reports/p69-execution-plan-report.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "scripts/check-os-phase-status.js",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.7",
+        "narrowScope": "Define release/deploy loop contracts only; no release or deploy execution behavior.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release and deploy records must be preview-only, approval-aware, rollback-aware, evidence-linked, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable release/deploy actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, report, mode guard, phase status, Command Center, evidence, activity, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P69.1.",
+          "required": "Future UX must show release state, deploy state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p69-execution-contracts.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "scripts/check-p69-execution-plan.js",
+            "reports/p69-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "scripts/check-os-phase-status.js",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P69_RELEASE_DEPLOY_SUBPHASES",
+            "checkP69ExecutionPlan"
+          ],
+          "schemas": [
+            "ReleaseIntentContract",
+            "ReleaseCandidatePreview",
+            "DeployReadinessGate",
+            "ReleaseCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "releaseId, targetKind, environmentLabel, allowedFiles, forbiddenFiles, releaseExecutionAllowed, deployExecutionAllowed, approvalRequired, rollbackPlan, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required in P69.1 because no UX route changes are made.",
+          "Future P69 UX must cover disabled release/deploy actions, themes, no raw dumps, no DemoApp leakage, and sidebar navigation."
+        ],
+        "testsCheckers": [
+          "Add check:p69-execution-plan.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p69-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P69 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add P69 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69 in_progress, mark P69.1 complete after validation, and set nextPhase to P69.2.",
+        "validationCommands": [
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake release/deploy actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P69 files>",
+          "git commit -m \"docs(nexus): define p69 release deploy contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P69.1 is independently commit-ready.",
+        "No release execution, deploy execution, project mutation, provider/tool execution, worker execution, DB write, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-2-release-intent-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe release intent records without release execution.",
+      "allowedFiles": [
+        "release-governance/p69-2-placeholder.js",
+        "scripts/check-p692.js",
+        "reports/p692-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.1",
+        "narrowScope": "Define display-safe release intent records only.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release intent records must be evidence-linked, approval-aware, rollback-aware, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse existing result, report, status, evidence, and activity helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes.",
+          "required": "Future UX consumes display-safe release intent state only."
+        },
+        "exactFilesModules": {
+          "create": [
+            "release-governance/p69-2-placeholder.js",
+            "scripts/check-p692.js",
+            "reports/p692-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createReleaseIntentContract",
+            "validateReleaseIntentContract",
+            "buildReleaseIntentEnvelope"
+          ],
+          "schemas": [
+            "ReleaseIntentContract"
+          ],
+          "dataShapes": [
+            "releaseId, targetKind, environmentLabel, allowedFiles, forbiddenFiles, releaseExecutionAllowed, deployExecutionAllowed, approvalRequired, rollbackPlan, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change in P69.2."
+        ],
+        "testsCheckers": [
+          "Add check:p692."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p692."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.2 complete and set nextPhase to P69.3.",
+        "validationCommands": [
+          "npm run check:p692",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.2 files>",
+          "git commit -m \"feat(nexus): define p69 release intent\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Release intent records validate.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-1-execution-contract-release-deploy-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-3-release-candidate-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Create release candidate previews without packaging, deploying, or mutating source.",
+      "allowedFiles": [
+        "release-governance/p69-3-placeholder.js",
+        "scripts/check-p693.js",
+        "reports/p693-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.2",
+        "narrowScope": "Create release candidate previews without packaging, deploying, or mutating source.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release/deploy records must be approval-aware, rollback-aware, evidence-linked, display-safe, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js"
+          ],
+          "rule": "Reuse existing helpers, route matrix, status updater, report writer, result envelope, evidence, and activity patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without runnable release/deploy actions."
+        },
+        "exactFilesModules": {
+          "create": [
+            "release-governance/p69-3-placeholder.js",
+            "scripts/check-p693.js",
+            "reports/p693-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createP693Record",
+            "validateP693Record"
+          ],
+          "schemas": [
+            "ReleaseCandidatePreview"
+          ],
+          "dataShapes": [
+            "id, currentState, releaseExecutionAllowed, deployExecutionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change in P69.3."
+        ],
+        "testsCheckers": [
+          "Add check:p693."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p693."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.3 complete and set nextPhase to P69.4.",
+        "validationCommands": [
+          "npm run check:p693",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.3 files>",
+          "git commit -m \"feat(nexus): complete p69.3\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Release Candidate Preview validates.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-2-release-intent-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-4-deploy-readiness-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Add deploy readiness gates while keeping deploy execution disabled.",
+      "allowedFiles": [
+        "release-governance/p69-4-placeholder.js",
+        "scripts/check-p694.js",
+        "reports/p694-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.3",
+        "narrowScope": "Add deploy readiness gates while keeping deploy execution disabled.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release/deploy records must be approval-aware, rollback-aware, evidence-linked, display-safe, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js"
+          ],
+          "rule": "Reuse existing helpers, route matrix, status updater, report writer, result envelope, evidence, and activity patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without runnable release/deploy actions."
+        },
+        "exactFilesModules": {
+          "create": [
+            "release-governance/p69-4-placeholder.js",
+            "scripts/check-p694.js",
+            "reports/p694-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createP694Record",
+            "validateP694Record"
+          ],
+          "schemas": [
+            "DeployReadinessGate"
+          ],
+          "dataShapes": [
+            "id, currentState, releaseExecutionAllowed, deployExecutionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change in P69.4."
+        ],
+        "testsCheckers": [
+          "Add check:p694."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p694."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.4 complete and set nextPhase to P69.5.",
+        "validationCommands": [
+          "npm run check:p694",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.4 files>",
+          "git commit -m \"feat(nexus): complete p69.4\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Deploy Readiness Gate validates.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-3-release-candidate-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-5-command-center-release-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "prism",
+      "taskType": "implementation-plan",
+      "objective": "Expose release readiness in Command Center without runnable release/deploy actions.",
+      "allowedFiles": [
+        "dashboard/src/data/releaseReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p695-command-center-release-ux.js",
+        "reports/p695-command-center-release-ux-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.4",
+        "narrowScope": "Expose release readiness in Command Center without runnable release/deploy actions.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release/deploy records must be approval-aware, rollback-aware, evidence-linked, display-safe, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js"
+          ],
+          "rule": "Reuse existing helpers, route matrix, status updater, report writer, result envelope, evidence, and activity patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Add display-only Command Center release readiness UX.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without runnable release/deploy actions."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/releaseReadiness.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/tests/routes.spec.js",
+            "scripts/check-p695-command-center-release-ux.js",
+            "reports/p695-command-center-release-ux-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createP695Record",
+            "validateP695Record"
+          ],
+          "schemas": [
+            "CommandCenterReleaseUX"
+          ],
+          "dataShapes": [
+            "id, currentState, releaseExecutionAllowed, deployExecutionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Playwright coverage for disabled release/deploy actions, themes, no raw dumps, no DemoApp leakage, and sidebar navigation."
+        ],
+        "testsCheckers": [
+          "Add check:p695-command-center-release-ux."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p695-command-center-release-ux."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.5 complete and set nextPhase to P69.6.",
+        "validationCommands": [
+          "npm run check:p695-command-center-release-ux",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.5 files>",
+          "git commit -m \"feat(nexus): complete p69.5\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center Release UX validates.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-4-deploy-readiness-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P69 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+      "allowedFiles": [
+        "scripts/check-p696-tests-checkers-docs.js",
+        "reports/p696-tests-checkers-docs-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.5",
+        "narrowScope": "Aggregate P69 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release/deploy records must be approval-aware, rollback-aware, evidence-linked, display-safe, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js"
+          ],
+          "rule": "Reuse existing helpers, route matrix, status updater, report writer, result envelope, evidence, and activity patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without runnable release/deploy actions."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p696-tests-checkers-docs.js",
+            "reports/p696-tests-checkers-docs-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createP696Record",
+            "validateP696Record"
+          ],
+          "schemas": [
+            "TestsCheckersDocs"
+          ],
+          "dataShapes": [
+            "id, currentState, releaseExecutionAllowed, deployExecutionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change in P69.6."
+        ],
+        "testsCheckers": [
+          "Add check:p696-tests-checkers-docs."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p696-tests-checkers-docs."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.6 complete and set nextPhase to P69.7.",
+        "validationCommands": [
+          "npm run check:p696-tests-checkers-docs",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.6 files>",
+          "git commit -m \"feat(nexus): complete p69.6\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Tests Checkers Docs validates.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-5-command-center-release-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p69-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P69 with release and deploy execution still disabled.",
+      "allowedFiles": [
+        "scripts/check-p697-final-validation.js",
+        "reports/p697-final-validation-report.md",
+        "package.json",
+        "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+        "os-roadmap/phase-status.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P69.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P69.6",
+        "narrowScope": "Validate and close P69 with release and deploy execution still disabled.",
+        "safetyRules": [
+          "Do not enable release execution, deploy execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, or provider spend.",
+          "Release/deploy records must be approval-aware, rollback-aware, evidence-linked, display-safe, and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js"
+          ],
+          "rule": "Reuse existing helpers, route matrix, status updater, report writer, result envelope, evidence, and activity patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No direct UX changes.",
+          "required": "Show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without runnable release/deploy actions."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p697-final-validation.js",
+            "reports/p697-final-validation-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P69_RELEASE_DEPLOY_LOOP_PLAN.md",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createP697Record",
+            "validateP697Record"
+          ],
+          "schemas": [
+            "FinalValidation"
+          ],
+          "dataShapes": [
+            "id, currentState, releaseExecutionAllowed, deployExecutionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, rollback posture, and cost impact without raw JSON, raw logs, raw private IDs, DemoApp leakage, internal phase labels, or fake runnable release/deploy actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change in P69.7."
+        ],
+        "testsCheckers": [
+          "Add check:p697-final-validation."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p697-final-validation."
+        ],
+        "docsRoadmap": [
+          "Update P69 plan and phase status."
+        ],
+        "phaseStatusUpdate": "Mark P69.7 complete and set nextPhase to P70.",
+        "validationCommands": [
+          "npm run check:p697-final-validation",
+          "npm run check:p69-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm release/deploy execution and project mutation remain disabled.",
+          "Confirm no projects/** files changed."
+        ],
+        "gitCommands": [
+          "git add <allowed P69.7 files>",
+          "git commit -m \"feat(nexus): complete p69.7\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch, commit, files, checks, safety, next subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Final Validation validates.",
+        "No release/deploy execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p69-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    }
+  ]
+}
