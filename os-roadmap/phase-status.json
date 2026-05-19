@@ -3386,7 +3386,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9be337e",
       "completedAt": "2026-05-19",
       "summary": "Completed P68 final validation with Command Center readiness visible and self-update apply still disabled.",
       "checksRun": [
@@ -5696,7 +5696,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f654509",
       "completedAt": "2026-05-19",
       "summary": "Exposed Command Center self-update readiness without runnable apply actions.",
       "checksRun": [
@@ -5746,7 +5746,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9be337e",
       "completedAt": "2026-05-19",
       "summary": "Validated and closed P68 with self-update apply still disabled.",
       "checksRun": [
