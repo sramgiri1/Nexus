@@ -8680,7 +8680,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec787a5",
       "completedAt": "",
       "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, local agent plan admission, and Live Readiness runtime UX are complete; unsafe execution remains blocked.",
       "checksRun": [
@@ -8779,7 +8779,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ec787a5",
       "completedAt": "2026-05-19T21:50:45.683Z",
       "summary": "Surfaced founder Q&A to PRD runtime and founder agent plan admission rows in Command Center Live Readiness while keeping execution disabled.",
       "checksRun": [
