@@ -3882,7 +3882,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c84b1ee",
       "completedAt": "",
       "summary": "P84 is in progress. Docs and roadmap evidence are finalized; final validation remains next.",
       "checksRun": [
@@ -4032,7 +4032,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c84b1ee",
       "completedAt": "2026-05-19T21:58:03.029Z",
       "summary": "Finalized P84 docs and roadmap evidence for founder runtime admission before final validation.",
       "checksRun": [
