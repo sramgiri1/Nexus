@@ -52,7 +52,12 @@ export function checkP80ValidationAggregation() {
   addCheck("reports exist", requiredReports.every(fileExists), requiredReports.join(", "));
   addCheck("completed subphase status present", ["P80.1", "P80.2", "P80.3", "P80.4", "P80.5"].every((phaseId) => statusById.get(phaseId)?.status === "complete"));
   addCheck("prior commits present", ["P80.1", "P80.2", "P80.3", "P80.4"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
-  addCheck("P80.5 status advanced", statusById.get("P80.5")?.status === "complete" && status.currentPhase === "P80.5" && status.nextPhase === "P80.6");
+  addCheck(
+    "P80.5 status advanced",
+    statusById.get("P80.5")?.status === "complete" &&
+      ["P80.5", "P80.6", "P80.7"].includes(status.currentPhase) &&
+      ["P80.6", "P80.7"].includes(status.nextPhase),
+  );
   addCheck("docs list validation commands", ["check:p804-command-center-founder-intake-ux", "check:p803-founder-intake-qna", "check:p802-founder-intake-session", "check:p801-founder-intake-schema"].every((script) => docs.includes(script)));
   addCheck("Playwright founder route coverage present", tests.includes("Founder Intake route renders local intake posture without runnable actions"));
   addCheck("route-wide DemoApp coverage includes founder intake", tests.includes("/command-center/founder-intake"));

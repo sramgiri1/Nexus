@@ -326,6 +326,27 @@ Risk level:
 - `P76` Tenant / Project Isolation
 - `P77` Compliance and Audit Pack
 - `P78` Self-Healing Enterprise Developer Preview
+- `P79` Live Execution Mode — complete
+  - `P79.1` Live Mode Gate — complete
+  - `P79.2` Live Command Intent — complete
+  - `P79.3` Action Bridge Admission — complete
+  - `P79.4` Command Center Live Readiness UX — complete
+  - `P79.5` Tests / Checkers / Docs — complete
+  - `P79.6` Final Validation — complete
+  - `P79.7` P80 Founder Intake Handoff — complete
+- `P80` Founder Intake Runtime — in progress
+  - `P80.1` Schema / Policy / Contract — complete
+  - `P80.2` Core Intake Session Model — complete
+  - `P80.3` Guided Q&A Comprehension Loop — complete
+  - `P80.4` Command Center Founder Intake UX — complete
+  - `P80.5` Tests / Checkers / Docs — complete
+  - `P80.6` Docs / Roadmap — complete
+  - `P80.7` Final Validation — next
+
+P80 provides live-local founder intake for structured startup idea capture,
+guided Q&A, comprehension readiness, and Command Center visibility. Provider
+calls, project mutation, DB writes, deploy, and provider spend remain blocked
+until a later explicitly approved execution phase.
 
 ---
 

@@ -3355,8 +3355,8 @@
       "order": 55,
       "group": "P80 Founder Intake Runtime",
       "status": "in_progress",
-      "summary": "Added founder intake schema, local session, deterministic Q&A, Command Center UX, and validation aggregation while runtime mutation remains blocked.",
-      "nextPhase": "P80.6",
+      "summary": "Added founder intake schema, local session, deterministic Q&A, Command Center UX, validation aggregation, and docs/roadmap updates while runtime mutation remains blocked.",
+      "nextPhase": "P80.7",
       "commandCenterVisible": true
     },
     {
@@ -3414,8 +3414,8 @@
       "title": "Docs / Roadmap",
       "order": 55.06,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Update founder intake docs, roadmap, reports, and phase status.",
+      "status": "complete",
+      "summary": "Updated founder intake docs, platform roadmap, OS roadmap, phase status, and generated report evidence.",
       "nextPhase": "P80.7",
       "commandCenterVisible": true
     },
@@ -3430,5 +3430,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T21:15:00.000Z"
+  "updatedAt": "2026-05-19T21:45:00.000Z"
 }

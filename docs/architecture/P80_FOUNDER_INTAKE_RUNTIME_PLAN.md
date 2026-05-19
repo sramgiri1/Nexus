@@ -56,6 +56,9 @@ Validation: `npm run check:p805-tests-checkers-docs` and `npm run check:p80-exec
 
 Goal: update docs, README or operator notes if needed, roadmap, reports, and OS phase status for founder intake readiness.
 
+Status: complete. P80.6 records the live-local founder intake posture in the P80 plan, platform roadmap, OS roadmap, phase status, and generated evidence reports.
+Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, network calls, and provider spend remain blocked.
+
 Validation: `npm run check:p806-docs-roadmap` and `npm run check:p80-execution-plan`.
 
 ## P80.7 Final Validation
