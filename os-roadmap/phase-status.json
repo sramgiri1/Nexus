@@ -3499,7 +3499,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b068e32",
       "completedAt": "",
       "summary": "DB-backed runtime primary is in progress with DB readiness gates defined and all DB mutation disabled.",
       "checksRun": [
@@ -4255,7 +4255,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-definition-update-workflow",
-      "commit": "pending-final-commit",
+      "commit": "48d90d3",
       "completedAt": "2026-05-15T18:23:00.000Z",
       "summary": "Defines proposal status transitions and required human approval gates.",
       "checksRun": [
@@ -4273,7 +4273,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/agent-definition-update-workflow",
-      "commit": "pending-final-commit",
+      "commit": "b068e32",
       "completedAt": "2026-05-15T18:24:00.000Z",
       "summary": "Adds dry-run version records and rollback plan metadata for approved proposals.",
       "checksRun": [
