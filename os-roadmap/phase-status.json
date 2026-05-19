@@ -8680,7 +8680,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d9d7b85",
       "completedAt": "",
       "summary": "P84 is in progress. Runtime admission, Command Center visibility, and validation aggregation are complete; unsafe execution remains blocked.",
       "checksRun": [
@@ -8805,7 +8805,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d9d7b85",
       "completedAt": "2026-05-19T21:55:18.833Z",
       "summary": "Aggregated P84.1-P84.4 validation evidence across scripts, reports, phase status, Command Center UX, and safety posture.",
       "checksRun": [
