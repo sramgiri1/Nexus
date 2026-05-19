@@ -57,7 +57,11 @@ const p84Subphases = ["P84.1", "P84.2", "P84.3", "P84.4"];
 addCheck("required P84 scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
 addCheck("required P84 reports exist", requiredReports.every(fileExists));
 addCheck("P84.1-P84.4 complete", p84Subphases.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
-addCheck("P84.5 status advanced", statusById.get("P84.5")?.status === "complete" && status.currentPhase === "P84.5" && status.nextPhase === "P84.6");
+addCheck(
+  "P84.5 status advanced",
+  statusById.get("P84.5")?.status === "complete" &&
+    ["P84.5", "P84.6", "P84.7"].includes(status.currentPhase),
+);
 addCheck("agent admission still validates", agentValidation.valid, agentValidation.errors.join("; "));
 addCheck("Command Center runtime UX still visible", activation.readinessRows.some((row) => row.label === "Founder Agent Plan Admission"));
 addCheck("coverage report exists", fileExists("reports/phase-validation-coverage-report.md"));

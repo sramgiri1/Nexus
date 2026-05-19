@@ -78,7 +78,11 @@ Validation: `npm run check:p845-validation-aggregation`.
 
 Goal: finalize P84 docs and roadmap evidence.
 
-Status: planned.
+Status: complete. P84.6 finalizes the P84 documentation and roadmap evidence
+after founder runtime admission, Command Center Lite, agent plan admission,
+Live Readiness runtime UX, and validation aggregation are complete.
+
+Validation: `npm run check:p846-docs-roadmap`.
 
 ## P84.7 Final Validation
 

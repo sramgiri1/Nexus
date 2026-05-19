@@ -8680,9 +8680,9 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d9d7b85",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P84 is in progress. Runtime admission, Command Center visibility, and validation aggregation are complete; unsafe execution remains blocked.",
+      "summary": "P84 is in progress. Docs and roadmap evidence are finalized; final validation remains next.",
       "checksRun": [
         "npm run check:p841-founder-runtime-admission",
         "npm run check:p84-execution-plan",
@@ -8694,13 +8694,14 @@
         "npm run check:p843-agent-plan-admission-preview",
         "npm run check:p844-command-center-runtime-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "npm run check:p845-validation-aggregation"
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p846-docs-roadmap"
       ],
       "knownLimitations": [
-        "P84.5 is validation aggregation only; it does not enable runtime behavior.",
-        "P84.6 must finalize docs and roadmap evidence before final validation closes P84."
+        "P84.6 is docs and roadmap only; it does not enable runtime behavior.",
+        "P84.7 must run final validation before P84 closes."
       ],
-      "nextPhase": "P84.6",
+      "nextPhase": "P84.7",
       "commandCenterVisible": true
     },
     {
@@ -8827,14 +8828,22 @@
       "phaseId": "P84.6",
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Finalize P84 docs and roadmap evidence.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:58:03.029Z",
+      "summary": "Finalized P84 docs and roadmap evidence for founder runtime admission before final validation.",
+      "checksRun": [
+        "npm run check:p846-docs-roadmap",
+        "npm run check:p845-validation-aggregation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P84.6 changes docs, roadmap, status, and checker evidence only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P84.7",
       "commandCenterVisible": true
@@ -8858,8 +8867,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.5",
-  "previousPhase": "P84.4",
-  "nextPhase": "P84.6",
+  "currentPhase": "P84.6",
+  "previousPhase": "P84.5",
+  "nextPhase": "P84.7",
   "currentPhaseStatus": "complete"
 }

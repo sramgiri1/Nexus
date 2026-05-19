@@ -393,6 +393,7 @@
     "check:p843-agent-plan-admission-preview": "node scripts/check-p843-agent-plan-admission-preview.js",
     "check:p844-command-center-runtime-ux": "node scripts/check-p844-command-center-runtime-ux.js",
     "check:p845-validation-aggregation": "node scripts/check-p845-validation-aggregation.js",
+    "check:p846-docs-roadmap": "node scripts/check-p846-docs-roadmap.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -1361,9 +1361,13 @@ P84.5 is complete. It adds a dedicated validation aggregation checker for
 P84.1-P84.4 scripts, reports, OS phase status, Command Center runtime
 visibility, coverage evidence, and the blocked execution posture.
 
+P84.6 is complete. The P84 docs and roadmap now reflect completed founder
+runtime admission, Command Center Lite, local agent planning admission, Live
+Readiness visibility, and validation aggregation, with P84.7 remaining as the
+final validation closeout.
+
 Planned P84 subphases:
 
-- `P84.6` Docs / Roadmap
 - `P84.7` Final Validation
 
 The detailed plan lives in
