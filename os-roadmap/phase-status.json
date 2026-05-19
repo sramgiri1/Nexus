@@ -8882,7 +8882,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b3d0465",
+      "commit": "3b78c91",
       "completedAt": "",
       "summary": "Enterprise founder business runtime is in progress. P85.1 adds the governed local runtime session contract and Live Readiness visibility.",
       "checksRun": [
@@ -8949,8 +8949,8 @@
       "title": "PRD Version Review Gate",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:19:58.010Z",
+      "commit": "3b78c91",
+      "completedAt": "2026-05-19T23:22:58.709Z",
       "summary": "Added deterministic local PRD version review gate with review state, founder decision, blockers, and downstream execution disabled.",
       "checksRun": [
         "npm run check:p853-prd-review-gate",
