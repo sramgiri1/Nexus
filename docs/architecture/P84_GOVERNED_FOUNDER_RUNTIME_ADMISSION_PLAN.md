@@ -68,7 +68,11 @@ Validation: `npm run check:p844-command-center-runtime-ux`.
 
 Goal: aggregate P84 validation coverage.
 
-Status: planned.
+Status: complete. P84.5 adds a dedicated P84 aggregation checker that verifies
+P84.1-P84.4 scripts, reports, phase status, Command Center runtime visibility,
+coverage evidence, and non-execution safety posture.
+
+Validation: `npm run check:p845-validation-aggregation`.
 
 ## P84.6 Docs / Roadmap
 

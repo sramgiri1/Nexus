@@ -8680,9 +8680,9 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ec787a5",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, local agent plan admission, and Live Readiness runtime UX are complete; unsafe execution remains blocked.",
+      "summary": "P84 is in progress. Runtime admission, Command Center visibility, and validation aggregation are complete; unsafe execution remains blocked.",
       "checksRun": [
         "npm run check:p841-founder-runtime-admission",
         "npm run check:p84-execution-plan",
@@ -8693,13 +8693,14 @@
         "npm run check:p842-command-center-lite",
         "npm run check:p843-agent-plan-admission-preview",
         "npm run check:p844-command-center-runtime-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\""
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:p845-validation-aggregation"
       ],
       "knownLimitations": [
-        "P84.4 is Command Center visibility only; it does not dispatch agents, execute workers, call providers, mutate projects, write DB state, deploy, release, export, package, call networks, or spend.",
-        "P84.5 must aggregate P84 validation coverage before docs/final validation close P84."
+        "P84.5 is validation aggregation only; it does not enable runtime behavior.",
+        "P84.6 must finalize docs and roadmap evidence before final validation closes P84."
       ],
-      "nextPhase": "P84.5",
+      "nextPhase": "P84.6",
       "commandCenterVisible": true
     },
     {
@@ -8802,14 +8803,22 @@
       "phaseId": "P84.5",
       "title": "Validation Aggregation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Aggregate P84 validation coverage.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:55:18.833Z",
+      "summary": "Aggregated P84.1-P84.4 validation evidence across scripts, reports, phase status, Command Center UX, and safety posture.",
+      "checksRun": [
+        "npm run check:p845-validation-aggregation",
+        "npm run check:p844-command-center-runtime-ux",
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P84.5 adds validation aggregation only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P84.6",
       "commandCenterVisible": true
@@ -8849,8 +8858,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.4",
-  "previousPhase": "P84.3",
-  "nextPhase": "P84.5",
+  "currentPhase": "P84.5",
+  "previousPhase": "P84.4",
+  "nextPhase": "P84.6",
   "currentPhaseStatus": "complete"
 }

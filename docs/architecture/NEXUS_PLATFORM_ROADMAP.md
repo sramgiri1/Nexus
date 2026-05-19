@@ -1357,9 +1357,12 @@ reason, owner capability, evidence, activity, and cost impact. The route remains
 display-only and does not expose runnable provider, agent, worker, project, DB,
 deploy, release, export, package, network, or spend actions.
 
+P84.5 is complete. It adds a dedicated validation aggregation checker for
+P84.1-P84.4 scripts, reports, OS phase status, Command Center runtime
+visibility, coverage evidence, and the blocked execution posture.
+
 Planned P84 subphases:
 
-- `P84.5` Validation Aggregation
 - `P84.6` Docs / Roadmap
 - `P84.7` Final Validation
 

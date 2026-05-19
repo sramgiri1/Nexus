@@ -66,7 +66,8 @@ addCheck("package script registered", Boolean(packageJson.scripts?.["check:p844-
 addCheck("docs mention P84.4 validation", docs.includes("P84.4 Command Center Runtime UX") && docs.includes("npm run check:p844-command-center-runtime-ux"));
 addCheck(
   "phase status advanced",
-  statusById.get("P84.4")?.status === "complete" && status.currentPhase === "P84.4" && status.nextPhase === "P84.5",
+  statusById.get("P84.4")?.status === "complete" &&
+    ["P84.4", "P84.5", "P84.6", "P84.7"].includes(status.currentPhase),
 );
 addCheck("report prerequisites exist", fileExists("reports/p843-agent-plan-admission-preview-report.md"));
 

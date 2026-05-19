@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T21:53:46.116Z
+- Generated at: 2026-05-19T21:55:40.398Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ec787a5
+- Validation HEAD: 5c980ca
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -175,28 +175,24 @@
 | P83.5 validation coverage | PASS | 7 checkers, 1 reports |
 | P83.6 validation coverage | PASS | 21 checkers, 15 reports |
 | P83.7 validation coverage | PASS | 33 checkers, 25 reports |
-| P84 validation coverage | PASS | 13 checkers, 5 reports |
+| P84 validation coverage | PASS | 15 checkers, 6 reports |
 | P84.1 validation coverage | PASS | 6 checkers, 1 reports |
 | P84.2 validation coverage | PASS | 1 checkers, 1 reports |
 | P84.3 validation coverage | PASS | 7 checkers, 1 reports |
 | P84.4 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P84.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P84.6 validation coverage | PASS | 1 checkers, 1 reports |
 | P84.7 validation coverage | PASS | 25 checkers, 25 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P84.4; next=P84.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P84.5; next=P84.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P84.5 Validation Aggregation
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (170/170)
