@@ -2964,6 +2964,48 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Business Build route renders dry-run plan without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/business-build");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Business Build");
+      await expect(page.locator("body")).toContainText("Dry-run business build plan");
+      await expect(page.locator("body")).toContainText("Current state");
+      await expect(page.locator("body")).toContainText("Next action");
+      await expect(page.locator("body")).toContainText("Cost impact");
+      await expect(page.locator("body")).toContainText("Runtime execution remains disabled");
+    }
+
+    await commandTab(page, "PRD Readiness").click();
+    await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");
+    await commandTab(page, "Workstreams").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Product");
+    await expect(activeCommandTabPanel(page)).toContainText("Engineering");
+    await expect(activeCommandTabPanel(page)).toContainText("Go To Market");
+    await commandTab(page, "Milestones").click();
+    await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness Review");
+    await expect(activeCommandTabPanel(page)).toContainText("Risk Cost Review");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Calls disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Mutation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Spend disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P81\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("full Command Center routes do not show DemoApp", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -2988,6 +3030,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/compliance",
       "/command-center/live-readiness",
       "/command-center/founder-intake",
+      "/command-center/business-build",
     ]) {
       await page.goto(route);
       const body = await page.locator("body").innerText();

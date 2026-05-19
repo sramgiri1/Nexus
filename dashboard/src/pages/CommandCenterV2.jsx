@@ -12,6 +12,7 @@ import {
   AGENT_ROOMS_TABS,
   API_BATCH_TABS,
   BATCH_QUEUE_TABS,
+  BUSINESS_BUILD_TABS,
   COMPLIANCE_TABS,
   COST_CENTER_TABS,
   DATA_CONTEXT_TABS,
@@ -92,6 +93,7 @@ import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.j
 import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePreviewReadiness.js";
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
+import { buildBusinessBuildViewModel } from "../data/businessBuild.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -205,6 +207,7 @@ const ROUTE_ICONS = {
   docs: "☷",
   settings: "⚙",
   demo: "▶",
+  businessBuild: "◇",
 };
 
 const WORKFLOW_GROUPS = [
@@ -8669,6 +8672,115 @@ function FounderIntakePage() {
   );
 }
 
+function BusinessBuildPage() {
+  const build = buildBusinessBuildViewModel();
+  const route = COMMAND_CENTER_ROUTE_BY_KEY.businessBuild || {};
+  const tabs = route.tabs || BUSINESS_BUILD_TABS;
+  const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={build.routeId}>
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">{build.pageTitle}</div>
+          <div className="ccv2-page-head__sub">Founder idea, PRD readiness, workstreams, milestones, blockers, and cost posture.</div>
+        </div>
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{build.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{build.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{build.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{build.ownerAgent} · {build.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{build.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{build.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{build.costImpact}</span></div>
+        </div>
+
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{build.disabledReason}</div>
+
+        <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {build.readinessCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Blockers</div>
+              <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                {build.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+              </ul>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="prd" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">PRD Readiness</div>
+                <div className="ccv2-pill ccv2-pill--pass">{build.prdReadiness.score}%</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.prdReadiness.source}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>
+                  Missing fields: {build.prdReadiness.missingFields.length ? build.prdReadiness.missingFields.join(", ") : "None"}
+                </div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Evidence</div>
+                <div className="ccv2-muted">Evidence: {build.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.costImpact}</div>
+              </article>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="workstreams" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {build.workstreamRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal">{row.status}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.objective}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {row.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next input: {row.nextInput}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="milestones" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {build.milestoneRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--amber">{row.status}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{row.objective}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {row.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Blocker: {row.blocker}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="disabled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {build.disabledActions.map((action) => (
+                <article className="ccv2-card" key={action.label}>
+                  <div className="ccv2-section-heading">{action.label}</div>
+                  <button className="ccv2-btn ccv2-btn--disabled" type="button" disabled title={action.reason}>{action.label} disabled</button>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{action.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   void vm;
@@ -10831,6 +10943,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "enterprisePreview" && <EnterprisePreviewPage />}
           {currentPage === "liveReadiness" && <LiveReadinessPage />}
           {currentPage === "founderIntake" && <FounderIntakePage />}
+          {currentPage === "businessBuild" && <BusinessBuildPage />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

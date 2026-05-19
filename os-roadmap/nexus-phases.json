@@ -3435,8 +3435,8 @@
       "order": 56,
       "group": "P81 Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, and dry-run business build plan for the governed founder-to-business path.",
-      "nextPhase": "P81.5",
+      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, dry-run business build plan, and Command Center business build UX.",
+      "nextPhase": "P81.6",
       "commandCenterVisible": true
     },
     {
@@ -3484,8 +3484,8 @@
       "title": "Command Center Business Build UX",
       "order": 56.05,
       "group": "P81 Business Build Orchestration Contract",
-      "status": "planned",
-      "summary": "Expose business build readiness, blockers, disabled reasons, evidence, activity, and cost posture in Command Center.",
+      "status": "complete",
+      "summary": "Exposed business build readiness, blockers, disabled reasons, evidence, activity, and cost posture in Command Center.",
       "nextPhase": "P81.6",
       "commandCenterVisible": true
     },
@@ -3510,5 +3510,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T23:35:00.000Z"
+  "updatedAt": "2026-05-19T23:55:00.000Z"
 }

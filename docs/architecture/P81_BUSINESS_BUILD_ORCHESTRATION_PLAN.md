@@ -69,6 +69,12 @@ Goal: expose business build readiness, PRD state, workstreams, blockers,
 disabled reasons, evidence/activity locations, and cost posture in Command
 Center without raw IDs, raw logs, DemoApp, or fake runnable actions.
 
+Status: complete. P81.5 adds a Business Build route with display-safe PRD
+readiness, workstreams, milestones, blockers, disabled actions, evidence,
+activity, and cost posture. It preserves dark, light, and system themes and
+does not expose DemoApp, raw JSON, raw logs, private project IDs, internal phase
+labels, or runnable provider, agent, project, DB, deploy, or spend actions.
+
 Validation: `npm run check:p815-command-center-business-build-ux`,
 Playwright route coverage, and `npm run check:p81-execution-plan`.
 

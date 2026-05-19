@@ -159,6 +159,14 @@ export const FOUNDER_INTAKE_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable execution and mutation actions", badge: "Disabled" },
 ];
 
+export const BUSINESS_BUILD_TABS = [
+  { id: "overview", label: "Overview", description: "Business build state, owner, blockers, and next action", badge: "Dry-run" },
+  { id: "prd", label: "PRD Readiness", description: "Local PRD readiness, missing fields, and source posture", badge: "Ready" },
+  { id: "workstreams", label: "Workstreams", description: "Product, design, engineering, go-to-market, finance, operations, legal, and support lanes", badge: "Ready" },
+  { id: "milestones", label: "Milestones", description: "Dry-run business build milestones and blockers", badge: "Review" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable runtime, project, DB, deploy, and spend actions", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",
