@@ -3414,7 +3414,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6e3776e",
       "completedAt": "",
       "summary": "P69 is in progress with execution contracts complete; release and deploy execution remain disabled.",
       "checksRun": [
@@ -3751,7 +3751,7 @@
       "title": "Multi-Repo Git/PR Final Validation",
       "status": "complete",
       "branch": "arch/multi-repo-git-pr-lifecycle",
-      "commit": "pending-final-commit",
+      "commit": "6e3776e",
       "completedAt": "2026-05-15T13:56:14.504Z",
       "summary": "Finalizes P44 dry-run multi-repo Git/PR lifecycle validation and confirms no git execution, PR creation, provider calls, DB writes, or project mutation are enabled.",
       "nextPhase": "P45"
