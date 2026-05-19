@@ -3530,7 +3530,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3281cd5",
       "completedAt": "",
       "summary": "Auth, RBAC, and multi-user governance is in progress with multi-user workspace boundaries defined and mutation disabled.",
       "checksRun": [
@@ -3623,7 +3623,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3281cd5",
       "completedAt": "2026-05-19",
       "summary": "Defined multi-user workspace boundary records without tenant mutation.",
       "checksRun": [
