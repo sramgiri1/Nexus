@@ -9086,7 +9086,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bb29267",
       "completedAt": "",
       "summary": "Governed live capability admission in progress with P86.1 complete.",
       "checksRun": [
@@ -9112,8 +9112,8 @@
       "order": 68.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:50:59.666Z",
+      "commit": "bb29267",
+      "completedAt": "2026-05-19T23:51:56.368Z",
       "summary": "Added governed live capability admission inventory with display-safe owner, state, next action, blockers, evidence, activity, cost, and all runtime flags blocked.",
       "checksRun": [
         "npm run check:p861-live-capability-admission",
@@ -9246,7 +9246,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:50:59.666Z",
+  "updatedAt": "2026-05-19T23:51:56.368Z",
   "currentPhase": "P86.1",
   "previousPhase": "P85.7",
   "nextPhase": "P86.2",
