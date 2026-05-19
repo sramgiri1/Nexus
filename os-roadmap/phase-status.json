@@ -3928,7 +3928,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3f48d99",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Completed P75 backup, restore, and disaster recovery readiness while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
@@ -4109,7 +4109,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3f48d99",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Closed P75 final validation and handed off to P76 with runtime backup/restore/failover behavior disabled.",
       "checksRun": [
