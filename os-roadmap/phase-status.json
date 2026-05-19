@@ -4336,7 +4336,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "758e0b5",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Aggregated P77 validation coverage before final validation while certification/export/package/runtime mutation remains disabled.",
       "checksRun": [
@@ -4503,7 +4503,7 @@
       "nextPhase": "P77.7",
       "track": "NEXUS_OS",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "758e0b5",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "commandCenterVisible": true
     },
