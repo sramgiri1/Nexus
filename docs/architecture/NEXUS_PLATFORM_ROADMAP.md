@@ -302,8 +302,8 @@ Risk level:
 - `P66` Self-Healing Failure Loop — in progress
   - `P66.1` Execution Contract + Safety Split — complete
   - `P66.2` Failure Classification Contract — complete
-  - `P66.3` Recovery Plan Preview — next
-  - `P66.4` Healing Gate + Loop Guard
+  - `P66.3` Recovery Plan Preview — complete
+  - `P66.4` Healing Gate + Loop Guard — next
   - `P66.5` Command Center Self-Healing UX
   - `P66.6` Tests / Checkers / Docs
   - `P66.7` Final Validation

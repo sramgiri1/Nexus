@@ -1,0 +1,35 @@
+[
+  {
+    "planId": "transient-recovery-preview",
+    "failureId": "failure-transient-preview",
+    "failureClass": "transient_failure",
+    "sourceSurface": "worker-runtime",
+    "summary": "Local preview command timed out before producing evidence.",
+    "evidenceRefs": ["reports/worker-runtime-report.md"],
+    "activityRefs": ["activity:self-healing-preview"],
+    "attempt": 0,
+    "costImpact": "none"
+  },
+  {
+    "planId": "verification-recovery-preview",
+    "failureId": "failure-verification-preview",
+    "failureClass": "verification_failure",
+    "sourceSurface": "verification",
+    "summary": "Required checker failed and needs remediation evidence.",
+    "evidenceRefs": ["reports/phase-validation-coverage-report.md"],
+    "activityRefs": ["activity:verification-review"],
+    "attempt": 1,
+    "costImpact": "none"
+  },
+  {
+    "planId": "security-recovery-preview",
+    "failureId": "failure-security-preview",
+    "failureClass": "secret_or_security_failure",
+    "sourceSurface": "security",
+    "summary": "sk-previewSecretValue1234567890",
+    "evidenceRefs": ["reports/secrets-boundary-final-report.md"],
+    "activityRefs": ["activity:security-review"],
+    "attempt": 1,
+    "costImpact": "none"
+  }
+]

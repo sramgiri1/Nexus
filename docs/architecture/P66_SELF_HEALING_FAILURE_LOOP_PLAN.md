@@ -64,7 +64,13 @@ release, network calls, and provider spend remain disabled.
 Build read-only recovery plan previews for known failure classes. Plans must not
 read or mutate project source files.
 
-Status: planned.
+Status: complete. P66.3 adds preview-only recovery plans built from display-safe
+failure classifications and existing retry timeout preview helpers. Plans expose
+proposed recovery steps, retry preview, approval requirement, blockers,
+evidence/activity refs, cost impact, disabled reason, and next action while
+recovery execution, automatic retry, source mutation, project mutation,
+provider/tool execution, DB writes, deploy, release, network calls, and provider
+spend remain disabled.
 
 ### P66.4 Healing Gate + Loop Guard
 

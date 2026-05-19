@@ -2969,10 +2969,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e6521c5",
+      "commit": "pending-p66-3-commit",
       "completedAt": "",
-      "summary": "P66 is in progress with execution contract and display-safe failure classification complete; recovery execution remains disabled.",
+      "summary": "P66 is in progress with failure classification and recovery plan previews complete; recovery execution remains disabled.",
       "checksRun": [
+        "npm run check:p66-recovery-plan-preview",
         "npm run check:p66-failure-classification",
         "npm run check:p66-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -2981,9 +2982,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P66 does not enable source mutation, project mutation, provider upload, provider dispatch, tool execution, worker execution, automatic retry, DB writes, deploy, release, network calls, or provider spend."
+        "P66 does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P66.3",
+      "nextPhase": "P66.4",
       "commandCenterVisible": true
     },
     {
@@ -3035,13 +3036,23 @@
       "phaseId": "P66.3",
       "title": "Recovery Plan Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Build read-only recovery plan previews for known failure classes.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-3-commit",
+      "completedAt": "2026-05-19T04:25:00.000Z",
+      "summary": "Added preview-only recovery plans with proposed steps, retry preview, blockers, approval requirement, evidence refs, disabled reason, and next action.",
+      "checksRun": [
+        "npm run check:p66-recovery-plan-preview",
+        "npm run check:p66-failure-classification",
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Recovery plans are read-only previews. Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P66.4",
       "commandCenterVisible": true
     },
@@ -5323,5 +5334,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P66.3"
+  "nextPhase": "P66.4"
 }
