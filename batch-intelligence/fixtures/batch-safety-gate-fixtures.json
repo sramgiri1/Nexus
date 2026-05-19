@@ -1,0 +1,61 @@
+{
+  "fixtures": [
+    {
+      "name": "review ready preview",
+      "expectDecision": "review_ready_preview",
+      "input": {
+        "gateId": "p65_batch_gate_review_ready",
+        "redactionEvidencePresent": true,
+        "dataClassification": "internal",
+        "selectionInput": {
+          "selectionId": "p65_gate_selection_ready",
+          "jobId": "p65_gate_job_ready",
+          "workloadType": "test_gap_analysis",
+          "scopeLabel": "NEXUS OS",
+          "items": [
+            {
+              "itemLabel": "Coverage report",
+              "summary": "Analyze redacted coverage gaps.",
+              "sourceType": "report"
+            }
+          ],
+          "evidenceRefs": ["reports/p65-batch-safety-gate-report.md"],
+          "activityRefs": ["reports/os-phase-status-report.md"]
+        },
+        "evidenceRefs": ["reports/p65-batch-safety-gate-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "createdAt": "2026-05-19T02:50:00.000Z"
+      }
+    },
+    {
+      "name": "restricted data blocked",
+      "expectDecision": "blocked_preview",
+      "input": {
+        "gateId": "p65_batch_gate_restricted_blocked",
+        "redactionEvidencePresent": false,
+        "dataClassification": "restricted",
+        "selectionInput": {
+          "selectionId": "p65_gate_selection_blocked",
+          "jobId": "p65_gate_job_blocked",
+          "workloadType": "test_gap_analysis",
+          "scopeLabel": "NEXUS OS",
+          "items": [
+            {
+              "itemLabel": "Restricted payload summary",
+              "summary": "Blocked restricted source summary.",
+              "sourceType": "report",
+              "metadata": {
+                "apiKey": "sk-restricted-test-token"
+              }
+            }
+          ],
+          "evidenceRefs": ["reports/p65-batch-safety-gate-report.md"],
+          "activityRefs": ["reports/os-phase-status-report.md"]
+        },
+        "evidenceRefs": ["reports/p65-batch-safety-gate-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "createdAt": "2026-05-19T02:51:00.000Z"
+      }
+    }
+  ]
+}

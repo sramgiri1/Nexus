@@ -74,6 +74,13 @@ remain disabled.
 Add preview-only cost and safety gates for batch intelligence jobs. Gates must
 block missing redaction evidence and restricted data.
 
+Status: complete. P65.4 adds preview-only cost and safety gate decisions for
+batch intelligence. Gates expose cost estimate, approval requirement, redaction
+evidence state, blocked reasons, disabled upload/spend/execution posture,
+evidence/activity refs, and next action while provider upload, batch
+submission, provider spend, execution, DB writes, deploy, network calls,
+workers, and project mutation remain disabled.
+
 ### P65.5 Command Center Batch Intelligence UX
 
 Expose batch intelligence readiness and disabled upload/execution state in

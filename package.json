@@ -255,6 +255,7 @@
     "check:p65-execution-plan": "node scripts/check-p65-execution-plan.js",
     "check:p65-batch-intelligence-job": "node scripts/check-p65-batch-intelligence-job.js",
     "check:p65-workload-selection": "node scripts/check-p65-workload-selection.js",
+    "check:p65-batch-safety-gate": "node scripts/check-p65-batch-safety-gate.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
