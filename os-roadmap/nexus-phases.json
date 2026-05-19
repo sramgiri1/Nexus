@@ -4279,7 +4279,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3ac3363",
       "completedAt": "",
       "summary": "Governed live capability admission in progress with P86.1-P86.3 complete.",
       "checksRun": [
@@ -4357,8 +4357,8 @@
       "order": 70.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:58:11.868Z",
+      "commit": "3ac3363",
+      "completedAt": "2026-05-19T23:58:58.726Z",
       "summary": "Added local operator approval queue records with expiry posture, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
       "checksRun": [
         "npm run check:p863-operator-approval-queue",
@@ -4453,7 +4453,7 @@
       "detail": "Final P86 validation and handoff."
     }
   ],
-  "updatedAt": "2026-05-19T23:58:11.868Z",
+  "updatedAt": "2026-05-19T23:58:58.726Z",
   "currentPhase": "P86.3",
   "previousPhase": "P86.2",
   "nextPhase": "P86.4",
