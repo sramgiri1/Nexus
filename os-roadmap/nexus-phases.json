@@ -2442,10 +2442,10 @@
       "track": "NEXUS_OS",
       "order": 49,
       "group": "Planned OS Phases",
-      "summary": "Observability, telemetry, and service-level objective readiness is in progress with preview-only telemetry event contracts defined.",
+      "summary": "Observability, telemetry, and service-level objective readiness is in progress with preview-only SLO objective catalogs defined.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P74.3"
+      "nextPhase": "P74.4"
     },
     {
       "phaseId": "P74.1",
@@ -2475,8 +2475,8 @@
       "track": "NEXUS_OS",
       "order": 49.03,
       "group": "P74 Observability, Telemetry, SLOs",
-      "status": "planned",
-      "summary": "Define SLO objective catalog records without enforcement or paging.",
+      "status": "complete",
+      "summary": "Defined SLO objective catalog records without enforcement or paging.",
       "nextPhase": "P74.4",
       "commandCenterVisible": true
     },

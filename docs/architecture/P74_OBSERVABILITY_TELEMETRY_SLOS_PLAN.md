@@ -77,7 +77,26 @@ Implementation:
 Define SLO objective catalog records without enforcement, paging, or incident
 automation.
 
-Status: planned.
+Status: complete. P74.3 adds preview-only `SloObjectiveCatalog` records
+derived from P74.2 telemetry event contracts. Each catalog includes SLO name,
+target, measurement window, error-budget state, objective rows, disabled
+enforcement/paging/remediation flags, blocked operations, blockers, disabled
+reason, evidence/activity references, cost impact, owner capability, and next
+action.
+
+Implementation:
+
+- `observability/p74-3-placeholder.js` exports
+  `createSloObjectiveCatalog`, `validateSloObjectiveCatalog`,
+  `buildSloObjectiveCatalogEnvelope`, `P74_3_REQUIRED_FIELDS`, and
+  `P74_3_SAMPLE_CATALOGS`.
+- `scripts/check-p743.js` validates SLO catalog shape, source telemetry
+  contract reuse, disabled enforcement/paging/remediation, disabled
+  telemetry/raw log exposure, disabled DB and project mutation, disabled
+  provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package behavior, disabled auth mutation, hidden
+  private IDs/tokens/telemetry URLs, evidence/activity, cost impact, and
+  non-runnable disabled reasons.
 
 ### P74.4 Health / Incident Snapshot Preview
 
@@ -129,7 +148,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.2. External telemetry exporters, raw log
+P74 is in progress through P74.3. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network

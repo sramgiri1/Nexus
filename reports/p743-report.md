@@ -1,50 +1,54 @@
-# P74.2 Telemetry Event Contract Report
+# P74.3 SLO Objective Catalog Report
 
 ## Metadata
 
-- Phase: P74.2
-- Generated at: 2026-05-19T12:57:38.317Z
+- Phase: P74.3
+- Generated at: 2026-05-19T12:57:38.323Z
 - Validation branch: codex/nexus-e2e-phase-validation
 - Validation HEAD: 1a68f0b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-- Validates P74.2 preview-only telemetry event contract records.
-- Does not enable external telemetry exporters, raw log streaming, raw JSON dumps, raw policy dumps, DB writes, project mutation, provider/tool/worker execution, network calls, deploy, release, export, package, auth mutation, or provider spend.
+- Validates P74.3 preview-only SLO objective catalog records.
+- Does not enable SLO enforcement, paging, remediation, external telemetry export, raw log exposure, DB writes, project mutation, provider/tool/worker execution, network calls, deploy, release, export, package, auth mutation, or provider spend.
 ## Checks
 
 | Check | Status | Details |
 | --- | --- | --- |
-| required fields listed | PASS | 32 fields |
-| contracts validate | PASS |  |
+| required fields listed | PASS | 34 fields |
+| source telemetry contract validates | PASS |  |
+| catalogs validate | PASS |  |
+| SLO enforcement paging remediation disabled | PASS |  |
 | telemetry export and raw logs disabled | PASS |  |
-| raw JSON and policy dumps disabled | PASS |  |
 | project mutation and DB writes disabled | PASS |  |
 | provider/tool/worker disabled | PASS |  |
 | network/spend disabled | PASS |  |
 | deploy/release/export/package disabled | PASS |  |
 | auth mutation disabled | PASS |  |
+| objective rows visible | PASS |  |
 | blocked operations visible | PASS |  |
 | blockers visible | PASS |  |
 | forbidden paths visible | PASS |  |
 | private IDs tokens and telemetry URLs hidden | PASS |  |
 | evidence and activity visible | PASS |  |
 | cost impact visible | PASS |  |
-| no fake runnable telemetry action | PASS |  |
+| no fake runnable SLO action | PASS |  |
 | envelope pass | PASS |  |
-## Contract Shape
+## Catalog Shape
 
-- telemetryContractId
+- sloCatalogId
+- sourceTelemetryContractId
 - signalType
-- sourceSurface
-- metricFamily
-- aggregationWindow
-- redactionState
+- sloName
+- sloTarget
+- measurementWindow
+- errorBudgetState
+- enforcementAllowed
+- pagingAllowed
+- remediationAllowed
 - telemetryExportAllowed
 - rawLogExposureAllowed
-- rawJsonDumpAllowed
-- rawPolicyDumpAllowed
 - dbWritesAllowed
 - projectMutationAllowed
 - providerDispatchAllowed
@@ -57,7 +61,7 @@
 - packageCreationAllowed
 - authMutationAllowed
 - providerSpendAllowed
-- displayFields
+- objectiveRows
 - blockedOperations
 - disabledReason
 - blockers
