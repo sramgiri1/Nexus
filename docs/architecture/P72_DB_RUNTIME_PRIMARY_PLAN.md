@@ -115,7 +115,27 @@ Implementation:
 
 Expose DB runtime readiness without runnable DB actions.
 
-Status: planned.
+Status: complete. P72.5 adds a display-only `DB Runtime` tab to the existing
+Durable State route. The tab shows DB primary state, fallback state, migration
+readiness, blocked readiness decision, next action, blockers, disabled reason,
+owner capability, evidence/activity location, safety posture, and cost impact
+without raw JSON, raw logs, raw DB URLs, raw private IDs, internal phase labels,
+DemoApp leakage, or runnable DB actions.
+
+Implementation:
+
+- `dashboard/src/data/dbRuntimeReadiness.js` exports
+  `buildDbRuntimeReadinessViewModel` and `dbRuntimeReadinessViewModel`.
+- `dashboard/src/data/commandCenterTabs.js` adds the `DB Runtime` Durable
+  State tab.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the DB runtime readiness,
+  blockers, evidence/activity, disabled reason, safety posture, and cost
+  impact as display-only content.
+- `dashboard/tests/routes.spec.js` adds focused Playwright coverage for the
+  DB Runtime tab and updates Durable State tab expectations.
+- `scripts/check-p725-command-center-db-runtime-ux.js` validates the display
+  data, disabled mutation flags, raw-output safety, DemoApp boundary, and
+  Playwright coverage registration.
 
 ### P72.6 Tests / Checkers / Docs
 
@@ -151,7 +171,7 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.4. DB writes, migrations, schema mutation,
+P72 is in progress through P72.5. DB writes, migrations, schema mutation,
 project mutation, provider dispatch, tool execution, worker execution, deploy
 execution, release execution, export execution, package creation, external
 network calls, and provider spend remain disabled.

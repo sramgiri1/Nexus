@@ -2343,10 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "DB-backed runtime primary is in progress with DB readiness gates defined and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with Command Center DB runtime readiness visible and all DB mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P72.5"
+      "nextPhase": "P72.6"
     },
     {
       "phaseId": "P73",
@@ -2760,8 +2760,8 @@
       "track": "NEXUS_OS",
       "order": 47.05,
       "group": "P72 DB-backed Runtime Primary",
-      "status": "planned",
-      "summary": "Expose DB runtime readiness without runnable DB actions.",
+      "status": "complete",
+      "summary": "Exposed display-only DB runtime readiness in Command Center without runnable DB actions.",
       "nextPhase": "P72.6",
       "commandCenterVisible": true
     },

@@ -3499,10 +3499,12 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b068e32",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "DB-backed runtime primary is in progress with DB readiness gates defined and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with Command Center DB runtime readiness visible and all DB mutation disabled.",
       "checksRun": [
+        "npm run check:p725-command-center-db-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"",
         "npm run check:p724",
         "npm run check:p723",
         "npm run check:p722",
@@ -3515,7 +3517,7 @@
       "knownLimitations": [
         "P72 has not enabled DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P72.5",
+      "nextPhase": "P72.6",
       "commandCenterVisible": true
     },
     {
@@ -6419,13 +6421,23 @@
       "phaseId": "P72.5",
       "title": "Command Center DB Runtime UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose DB runtime readiness without runnable DB actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Exposed display-only DB runtime readiness in Command Center without runnable DB actions.",
+      "checksRun": [
+        "npm run check:p725-command-center-db-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"",
+        "npm run check:p72-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P72.5 exposes DB runtime readiness only. DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P72.6",
       "commandCenterVisible": true
     },
@@ -6462,5 +6474,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P72",
   "previousPhase": "P71",
-  "nextPhase": "P72.5"
+  "nextPhase": "P72.6"
 }

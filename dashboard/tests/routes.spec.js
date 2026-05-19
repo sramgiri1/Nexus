@@ -1399,7 +1399,7 @@ test.describe("Command Center route-wide UX", () => {
 
     const tabbedRoutes = [
       ["/command-center/liveapi", ["Overview", "Endpoints", "Action Bridges", "Diagnostics"]],
-      ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"]],
+      ["/command-center/database", ["Overview", "Entities", "Import Plan", "Fallback", "DB Runtime", "Developer Details"]],
       ["/command-center/evidence", ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"]],
       ["/command-center/safety", ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"]],
       ["/command-center/projects", ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"]],
@@ -1831,6 +1831,31 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("DB writes");
     await expect(page.locator("body")).toContainText("Disabled by policy");
     expect(await page.locator("body").innerText()).not.toContain("P41-LOCAL");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("DB Runtime route renders readiness without runnable DB actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+
+    await expect(activeCommandTabPanel(page)).toContainText("DB Runtime Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("DB primary state");
+    await expect(activeCommandTabPanel(page)).toContainText("Fallback state");
+    await expect(activeCommandTabPanel(page)).toContainText("Migration readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Not ready for execution");
+    await expect(activeCommandTabPanel(page)).toContainText("DB writes");
+    await expect(activeCommandTabPanel(page)).toContainText("Disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Blockers");
+    await expect(activeCommandTabPanel(page)).toContainText("Evidence, Activity, And Cost");
+
+    const body = await activeCommandTabPanel(page).innerText();
+    expect(body).not.toMatch(/migrate now|write now|schema now|run db|execute now|enable now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P72\./);
 
     expect(errors).toEqual([]);
   });

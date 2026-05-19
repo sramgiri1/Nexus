@@ -55,7 +55,7 @@ export const PAGE_TAB_PLANS = {
   workbench: ["Review", "Output", "Evidence", "Decision"],
   implementation: ["Proposal", "Validation", "Apply", "Rollback"],
   liveapi: ["Overview", "Endpoints", "Action Bridges", "Diagnostics"],
-  database: ["Overview", "Entities", "Import Plan", "Fallback", "Developer Details"],
+  database: ["Overview", "Entities", "Import Plan", "Fallback", "DB Runtime", "Developer Details"],
   evidence: ["Timeline", "By Task", "By Agent", "By Project", "Developer Details"],
   safety: ["Posture", "Policy Blocks", "Approvals", "Data & Privacy", "Developer Details"],
   projects: ["Portfolio", "Selected Project", "Stack", "Capabilities", "Milestones", "Gaps", "Evidence", "Settings / Adapter"],
@@ -627,6 +627,7 @@ export const DURABLE_STATE_TABS = [
   { id: "entities", label: "Entities", description: "Entity coverage, mapped sources, and readiness", badge: "Read-only" },
   { id: "import-plan", label: "Import Plan", description: "Dry-run import state and missing mappings", badge: "Read-only" },
   { id: "fallback", label: "Fallback", description: "File fallback, snapshot fallback, and DB-primary limitations", badge: "Ready" },
+  { id: "db-runtime", label: "DB Runtime", description: "Readiness gate, blockers, and disabled DB mutation posture", badge: "Blocked" },
   { id: "developer-details", label: "Developer Details", description: "Policy keys and config summaries only", badge: "Read-only" },
 ];
 

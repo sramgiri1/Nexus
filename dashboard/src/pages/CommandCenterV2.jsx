@@ -75,6 +75,7 @@ import { buildSelfUpdateReadinessViewModel } from "../data/selfUpdateReadiness.j
 import { buildReleaseReadinessViewModel } from "../data/releaseReadiness.js";
 import { buildDeployMonitoringReadinessViewModel } from "../data/deployMonitoringReadiness.js";
 import { buildProjectShippingReadinessViewModel } from "../data/projectShippingReadiness.js";
+import { dbRuntimeReadinessViewModel } from "../data/dbRuntimeReadiness.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -7092,6 +7093,7 @@ function DurableStatePage({ vm }) {
   const sourcesAvailable = importPlan.sourcesAvailable ?? "—";
   const sourcesMissing = importPlan.sourcesMissing ?? "Unknown";
   const totalEntities = importPlan.totalEntities ?? entityCount;
+  const dbRuntime = dbRuntimeReadinessViewModel;
 
   return (
     <div className="ccv2-content">
@@ -7162,6 +7164,37 @@ function DurableStatePage({ vm }) {
               <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
                 File fallback and snapshot fallback remain active. DB primary runtime is not enabled yet, and DB disabled is a safety boundary rather than a runtime error.
               </p>
+            </div>
+          </CommandTabPanel>
+          <CommandTabPanel tabId="db-runtime" activeTab={activeTab}>
+            <div className="ccv2-card ccv2-page-summary-card">
+              <div className="ccv2-section-heading">DB Runtime Readiness</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                {dbRuntime.summaryRows.map((row) => (
+                  <div key={row.label} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{row.label}</span><span className="ccv2-page-summary-value">{row.value}</span></div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-stat-chips" style={{ marginBottom: 16 }}>
+              {dbRuntime.statusChips.map((chip) => (
+                <div key={chip.label} className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">{chip.label}</span><span className={`ccv2-stat-chip__value ccv2-stat-chip__value--${chip.tone}`}>{chip.value}</span></div>
+              ))}
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Blockers</div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                {dbRuntime.blockers.map((blocker) => (
+                  <div key={blocker} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{blocker}</span><span className="ccv2-safety-row__value--disabled">Blocked</span></div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Evidence, Activity, And Cost</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                {dbRuntime.evidenceRows.map((row) => (
+                  <div key={row.label} className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">{row.label}</span><span className="ccv2-page-summary-value">{row.value}</span></div>
+                ))}
+              </div>
             </div>
           </CommandTabPanel>
           <CommandTabPanel tabId="developer-details" activeTab={activeTab}>
