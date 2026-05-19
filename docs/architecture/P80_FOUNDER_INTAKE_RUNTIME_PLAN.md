@@ -48,6 +48,8 @@ Validation: `npm run check:p804-command-center-founder-intake-ux`, Playwright ro
 
 Goal: aggregate P80 tests, checker coverage, Command Center route safety, dashboard unit coverage, and build evidence.
 
+Status: complete. P80.5 aggregates P80.1-P80.4 checker, route, unit, build, docs, roadmap, and report evidence.
+
 Validation: `npm run check:p805-tests-checkers-docs` and `npm run check:p80-execution-plan`.
 
 ## P80.6 Docs / Roadmap

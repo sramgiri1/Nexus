@@ -7844,15 +7844,21 @@
       "phaseId": "P80",
       "title": "Founder Intake Runtime",
       "status": "in_progress",
-      "summary": "Added founder intake schema, local session, deterministic Q&A, and Command Center UX while runtime mutation remains blocked.",
-      "nextPhase": "P80.5",
+      "summary": "Added founder intake schema, local session, deterministic Q&A, Command Center UX, and validation aggregation while runtime mutation remains blocked.",
+      "nextPhase": "P80.6",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "259d04f",
       "completedAt": "2026-05-19",
       "checksRun": [
+        "npm run check:p805-tests-checkers-docs",
+        "npm run check:p804-command-center-founder-intake-ux",
+        "npm run check:p803-founder-intake-qna",
+        "npm run check:p802-founder-intake-session",
         "npm run check:p801-founder-intake-schema",
         "npm run check:p80-execution-plan",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
@@ -7959,10 +7965,30 @@
     {
       "phaseId": "P80.5",
       "title": "Tests / Checkers / Docs",
-      "status": "planned",
-      "summary": "Aggregate founder intake validation evidence.",
+      "status": "complete",
+      "summary": "Aggregated P80.1-P80.4 checker, route, unit, build, docs, roadmap, and report evidence.",
       "nextPhase": "P80.6",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p805-tests-checkers-docs",
+        "npm run check:p804-command-center-founder-intake-ux",
+        "npm run check:p803-founder-intake-qna",
+        "npm run check:p802-founder-intake-session",
+        "npm run check:p801-founder-intake-schema",
+        "npm run check:p80-execution-plan",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P80.5 aggregates validation evidence only. Docs/roadmap closure starts in P80.6; provider calls, tool execution, worker execution, project mutation, DB writes, deploy, network calls, and provider spend remain blocked."
+      ]
     },
     {
       "phaseId": "P80.6",
@@ -7982,8 +8008,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T20:45:00.000Z",
-  "currentPhase": "P80.4",
-  "previousPhase": "P80.3",
-  "nextPhase": "P80.5"
+  "updatedAt": "2026-05-19T21:15:00.000Z",
+  "currentPhase": "P80.5",
+  "previousPhase": "P80.4",
+  "nextPhase": "P80.6"
 }

@@ -351,6 +351,7 @@
         "scripts/check-p802-founder-intake-session.js",
         "reports/p802-founder-intake-session-report.md",
         "reports/p801-founder-intake-schema-report.md",
+        "reports/p797-p80-handoff-report.md",
         "reports/p80-execution-plan-report.md",
         "reports/format-readability-report.md"
       ],
@@ -432,6 +433,7 @@
             "scripts/check-p802-founder-intake-session.js",
             "reports/p802-founder-intake-session-report.md",
             "reports/p801-founder-intake-schema-report.md",
+            "reports/p797-p80-handoff-report.md",
             "reports/p80-execution-plan-report.md",
             "reports/format-readability-report.md"
           ]
@@ -684,12 +686,20 @@
       "allowedFiles": [
         "scripts/check-p805-tests-checkers-docs.js",
         "reports/p805-tests-checkers-docs-report.md",
+        "scripts/check-p804-command-center-founder-intake-ux.js",
+        "contracts/os-roadmap/p80-execution-contracts.json",
         "package.json",
         "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
         "os-roadmap/nexus-phases.json",
         "os-roadmap/phase-status.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "reports/p804-command-center-founder-intake-ux-report.md",
+        "reports/p803-founder-intake-qna-report.md",
+        "reports/p802-founder-intake-session-report.md",
+        "reports/p801-founder-intake-schema-report.md",
+        "reports/p80-execution-plan-report.md",
+        "reports/format-readability-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -714,7 +724,7 @@
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P80.4",
-        "narrowScope": "Add validation aggregation checker and report only.",
+        "narrowScope": "Add validation aggregation checker/report and refresh forward-compatible checker, roadmap, docs, and generated evidence only.",
         "safetyRules": [
           "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
         ],
@@ -756,12 +766,20 @@
             "reports/p805-tests-checkers-docs-report.md"
           ],
           "update": [
+            "scripts/check-p804-command-center-founder-intake-ux.js",
+            "contracts/os-roadmap/p80-execution-contracts.json",
             "package.json",
             "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
             "os-roadmap/nexus-phases.json",
             "os-roadmap/phase-status.json",
             "reports/os-phase-status-report.md",
-            "reports/phase-validation-coverage-report.md"
+            "reports/phase-validation-coverage-report.md",
+            "reports/p804-command-center-founder-intake-ux-report.md",
+            "reports/p803-founder-intake-qna-report.md",
+            "reports/p802-founder-intake-session-report.md",
+            "reports/p801-founder-intake-schema-report.md",
+            "reports/p80-execution-plan-report.md",
+            "reports/format-readability-report.md"
           ]
         },
         "expectedExportsSchemasDataShapes": {
