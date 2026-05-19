@@ -3530,7 +3530,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "4b55fe2",
       "completedAt": "2026-05-19",
       "summary": "Auth, RBAC, and multi-user governance readiness is complete with display-only Command Center coverage and all auth mutation disabled.",
       "checksRun": [
@@ -3698,7 +3698,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "4b55fe2",
       "completedAt": "2026-05-19",
       "summary": "Validated and closed P73 with login and auth mutation still disabled.",
       "checksRun": [
