@@ -4542,7 +4542,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9350261",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Completed P78 enterprise developer preview with founder intake, Q&A readiness, PRD preview, agent workplan preview, self-healing readiness, Command Center UX, and final validation while runtime mutation remains disabled.",
       "checksRun": [
@@ -4717,7 +4717,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9350261",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Closed P78 final validation with all subphases complete, Enterprise Preview UX preserved, status evidence current, and runtime/project/provider mutation disabled.",
       "checksRun": [
