@@ -3386,7 +3386,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f767c4b",
       "completedAt": "",
       "summary": "P68 is in progress with self-update proposal previews complete; self-update apply remains disabled.",
       "checksRun": [
@@ -5643,7 +5643,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f767c4b",
       "completedAt": "2026-05-19T10:07:59.412Z",
       "summary": "Built preview-only self-update proposal records with scoped files, validation commands, rollback posture, blockers, evidence, and disabled apply flags.",
       "checksRun": [
@@ -5718,7 +5718,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T10:07:59.416Z",
+  "updatedAt": "2026-05-19T10:08:26.807Z",
   "currentPhase": "P68",
   "previousPhase": "P67",
   "nextPhase": "P68.4"
