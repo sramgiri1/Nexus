@@ -2675,7 +2675,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-code-mode-session-commit",
+      "commit": "257f93c",
       "completedAt": "2026-05-19T01:02:00.000Z",
       "summary": "Added preview-only code-mode session records and validation while code execution and mutation remain disabled.",
       "checksRun": [
