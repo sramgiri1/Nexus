@@ -68,7 +68,7 @@ addCheck("docs mention P82.5 validation", docs.includes("P82.5 Deploy / Release 
 addCheck(
   "phase status advanced",
   statusById.get("P82.5")?.status === "complete" &&
-    ["P82.5", "P82.6", "P82.7"].includes(status.currentPhase),
+    ["P82.5", "P82.6", "P82.7", "P83", "P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"].includes(status.currentPhase),
   `current=${status.currentPhase}; next=${status.nextPhase}`,
 );
 addCheck("report path is distinct", REPORT_PATH.endsWith("p825-deploy-release-admission-report.md"));

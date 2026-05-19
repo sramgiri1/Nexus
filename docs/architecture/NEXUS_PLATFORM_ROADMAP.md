@@ -1280,3 +1280,29 @@ Implementation must follow
 P82.1 does not call providers, execute tools or workers, mutate project files,
 write DB state, deploy, release, export, package, change
 auth/session/user/workspace state, or spend provider budget.
+
+## P83 - Explicit Runtime Admission Activation Contract
+
+P83 is in progress as the governed activation track for turning the Snake iOS
+founder test into an admitted local build. It starts with a generated workspace
+root and keeps existing project files, DB writes, provider/tool/worker
+execution, deploy/release/package behavior, network calls, auth/session/user
+mutation, and provider spend blocked.
+
+P83.1 is complete. It adds local project creation admission for
+`generated-projects/snake-ios` using explicit approval, scope, rollback,
+validation, activity, cost, and redaction gates. It does not create app files.
+
+Planned P83 subphases:
+
+- `P83.2` Snake iOS Scaffold Plan
+- `P83.3` Approved Local File Creation
+- `P83.4` Local Validation Harness
+- `P83.5` Command Center Build UX
+- `P83.6` Tests / Checkers / Docs
+- `P83.7` Final Validation
+
+The detailed plan lives in
+[`P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md`](P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md).
+Implementation must follow
+[`p83-execution-contracts.json`](../../contracts/os-roadmap/p83-execution-contracts.json).

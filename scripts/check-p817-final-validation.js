@@ -100,7 +100,7 @@ export function checkP81FinalValidation() {
   addCheck("prior P81 commits stamped", ["P81.1", "P81.2", "P81.3", "P81.4", "P81.5", "P81.6"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
   addCheck("final P81 entries are stampable", ["P81", "P81.7"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit)));
   addCheck("P81 handoff to P82", phaseById.get("P81")?.nextPhase === "P82" && statusById.get("P81")?.nextPhase === "P82");
-  const p82ActivePhases = ["P82", "P82.1", "P82.2", "P82.3", "P82.4", "P82.5", "P82.6", "P82.7"];
+  const p82ActivePhases = ["P82", "P82.1", "P82.2", "P82.3", "P82.4", "P82.5", "P82.6", "P82.7", "P83", "P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
   const p82ActiveHandoff =
     p82ActivePhases.includes(status.currentPhase) &&
     (status.previousPhase === "P81.7" || p82ActivePhases.includes(status.previousPhase)) &&

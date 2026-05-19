@@ -379,6 +379,8 @@
     "check:p825-deploy-release-admission": "node scripts/check-p825-deploy-release-admission.js",
     "check:p826-command-center-live-ready-ux": "node scripts/check-p826-command-center-live-ready-ux.js",
     "check:p827-final-validation": "node scripts/check-p827-final-validation.js",
+    "check:p83-execution-plan": "node scripts/check-p83-execution-plan.js",
+    "check:p831-local-project-creation-admission": "node scripts/check-p831-local-project-creation-admission.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

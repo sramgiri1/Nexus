@@ -132,7 +132,9 @@ export function checkP82ExecutionPlan() {
   if (phaseStatus.get("P81")?.status !== "complete") fail("roadmapStatus", "P81 must be complete before P82 starts");
   if (!["planned", "in_progress", "complete"].includes(phaseStatus.get("P82")?.status)) fail("roadmapStatus", "P82 must be planned, in_progress, or complete");
   if (phaseStatus.get("P82")?.nextPhase !== expectedNext) fail("roadmapStatus", `P82 nextPhase must be ${expectedNext}`);
-  if (!["P82", ...P82_LIVE_READY_SUBPHASES].includes(status.currentPhase) || status.nextPhase !== expectedNext) {
+  const p83ActivePhases = ["P83", "P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+  const p83Started = p83ActivePhases.includes(status.currentPhase) && phaseStatus.get("P82")?.status === "complete";
+  if ((!["P82", ...P82_LIVE_READY_SUBPHASES].includes(status.currentPhase) || status.nextPhase !== expectedNext) && !p83Started) {
     fail("roadmapStatus", `Root phase status must be active in P82 with nextPhase ${expectedNext}`);
   }
 

@@ -8470,22 +8470,152 @@
       "phaseId": "P83",
       "title": "Explicit Runtime Admission Activation Contract",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P83 is in progress. Local Snake iOS project creation has an admission record; file creation, deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "checksRun": [
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:p827-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.1 does not create app files. File creation is deferred to P83.3 after scaffold planning.",
+        "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P83.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.1",
+      "title": "Local Project Creation Admission",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T19:52:24.399Z",
+      "summary": "Admitted generated-projects/snake-ios for future local file creation after explicit approval, scope, rollback, validation, activity, cost, and redaction gates.",
+      "checksRun": [
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:p827-final-validation",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P83.1 does not create app files. File creation is deferred to P83.3 after scaffold planning.",
+        "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
+      ],
+      "nextPhase": "P83.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.2",
+      "title": "Snake iOS Scaffold Plan",
+      "track": "NEXUS_OS",
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Define the next governed activation contract before any provider, tool, worker, project, DB, deploy, network, auth, or spend action can become live.",
+      "summary": "Plan SwiftUI/SpriteKit Snake iOS scaffold before file creation.",
       "checksRun": [],
       "knownLimitations": [
-        "P83 is not implemented. Runtime and cost-bearing actions remain blocked until a future implementation-grade contract explicitly allows them."
+        "Not implemented yet."
       ],
-      "nextPhase": "P83.1",
+      "nextPhase": "P83.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.3",
+      "title": "Approved Local File Creation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Create scaffold files only under the admitted generated workspace root.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P83.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.4",
+      "title": "Local Validation Harness",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Validate the generated scaffold locally without deploy or provider execution.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P83.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.5",
+      "title": "Command Center Build UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Expose admitted local build state in Command Center.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P83.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Aggregate P83 test, checker, docs, and roadmap evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P83.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P83.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Close the local Snake iOS activation track.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not implemented yet."
+      ],
+      "nextPhase": "P84",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T19:34:05.369Z",
-  "currentPhase": "P82.7",
-  "previousPhase": "P82.6",
-  "nextPhase": "P83"
+  "updatedAt": "2026-05-19T19:52:24.399Z",
+  "currentPhase": "P83.1",
+  "previousPhase": "P83",
+  "nextPhase": "P83.2"
 }

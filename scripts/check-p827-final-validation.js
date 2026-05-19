@@ -94,7 +94,16 @@ addCheck("P82 phases complete in roadmap", P82_PHASES.every((phaseId) => phaseBy
 addCheck("P82 phases complete in phase status", P82_PHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
 addCheck("prior P82 commits stamped", ["P82.1", "P82.2", "P82.3", "P82.4", "P82.5", "P82.6"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
 addCheck("final P82 entries are stampable", ["P82", "P82.7"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit)));
-addCheck("root status hands off to P83", status.currentPhase === "P82.7" && status.previousPhase === "P82.6" && status.nextPhase === "P83", `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
+const p83ActivePhases = ["P83", "P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+const p83Handoff =
+  p83ActivePhases.includes(status.currentPhase) &&
+  (status.previousPhase === "P82.7" || p83ActivePhases.includes(status.previousPhase)) &&
+  (p83ActivePhases.includes(status.nextPhase) || status.nextPhase === "P84");
+addCheck(
+  "root status hands off to P83",
+  (status.currentPhase === "P82.7" && status.previousPhase === "P82.6" && status.nextPhase === "P83") || p83Handoff,
+  `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
+);
 addCheck("docs close P82", planDoc.includes("Status: complete. P82.7") && roadmapDoc.includes("P82 is complete"));
 addCheck("status checker accepts P82.7", statusChecker.includes('"P82.7"'));
 addCheck("Command Center labels are live-ready", /key:\s*"liveReadiness"[\s\S]*?badge:\s*"Ready"/.test(routesSource) && /key:\s*"founderIntake"[\s\S]*?badge:\s*"Ready"/.test(routesSource) && /key:\s*"businessBuild"[\s\S]*?badge:\s*"Needs setup"/.test(routesSource));

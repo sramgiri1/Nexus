@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P80.7
-- Generated at: 2026-05-19T19:39:47.218Z
+- Generated at: 2026-05-19T19:53:50.674Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a08033c
+- Validation HEAD: 6ff82f0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | prior P80 commits stamped | PASS |  |
 | final P80 entries are stampable | PASS |  |
 | P80 handoff to P81 | PASS |  |
-| root status handoff to P81 or later | PASS | P82.7/P82.6/P83 |
+| root status handoff to P81 or later | PASS | P83.1/P83/P83.2 |
 | P81 handoff exists | PASS |  |
 | status checker accepts P81 | PASS |  |
 | docs close P80 | PASS |  |

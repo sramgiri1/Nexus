@@ -84,7 +84,7 @@ addCheck("docs mention P82.6 completion", docs.includes("Status: complete. P82.6
 addCheck(
   "phase status advanced",
   statusById.get("P82.6")?.status === "complete" &&
-    ["P82.6", "P82.7", "P83"].includes(phaseStatus.currentPhase),
+    ["P82.6", "P82.7", "P83", "P83.1", "P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"].includes(phaseStatus.currentPhase),
   `current=${phaseStatus.currentPhase}; next=${phaseStatus.nextPhase}`,
 );
 addCheck("report prerequisites exist", fileExists("reports/p825-deploy-release-admission-report.md") && fileExists("reports/p824-project-db-admission-report.md") && fileExists("reports/p823-worker-execution-gate-report.md") && fileExists("reports/p822-provider-tool-gates-report.md"));
