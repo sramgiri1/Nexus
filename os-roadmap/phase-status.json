@@ -2969,7 +2969,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p66-6-commit",
+      "commit": "e4e2a5c",
       "completedAt": "",
       "summary": "P66 is in progress with aggregate self-healing validation complete; final validation remains.",
       "checksRun": [
@@ -3119,7 +3119,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p66-6-commit",
+      "commit": "e4e2a5c",
       "completedAt": "2026-05-19T05:30:00.000Z",
       "summary": "Added aggregate P66 self-healing checker and report across contract, classifier, recovery preview, safety gate, and Command Center UX.",
       "checksRun": [
