@@ -306,6 +306,7 @@
     "check:p723": "node scripts/check-p723.js",
     "check:p724": "node scripts/check-p724.js",
     "check:p725-command-center-db-runtime-ux": "node scripts/check-p725-command-center-db-runtime-ux.js",
+    "check:p726-tests-checkers-docs": "node scripts/check-p726-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

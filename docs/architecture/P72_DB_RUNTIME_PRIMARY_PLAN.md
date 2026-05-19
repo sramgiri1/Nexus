@@ -141,7 +141,20 @@ Implementation:
 
 Aggregate P72 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P72.6 adds an aggregation checker for P72 scripts, reports,
+docs, roadmap entries, phase status entries, Command Center DB Runtime tab
+coverage, route tests, disabled mutation posture, raw-output safety, and stale
+phase-status commit checks before final validation.
+
+Implementation:
+
+- `scripts/check-p726-tests-checkers-docs.js` validates P72.1-P72.6 coverage,
+  required checkers, reports, docs, roadmap/status records, Command Center DB
+  Runtime UX registration, route tests, no unsafe identifiers, disabled DB
+  writes/migrations/schema mutation, disabled project/provider/tool/worker
+  execution, disabled network/spend, disabled deploy/release/export/package
+  execution, and stamped status commits for completed P72 subphases.
+- `reports/p726-tests-checkers-docs-report.md` records aggregation evidence.
 
 ### P72.7 Final Validation
 
@@ -171,7 +184,7 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.5. DB writes, migrations, schema mutation,
+P72 is in progress through P72.6. DB writes, migrations, schema mutation,
 project mutation, provider dispatch, tool execution, worker execution, deploy
 execution, release execution, export execution, package creation, external
 network calls, and provider spend remain disabled.

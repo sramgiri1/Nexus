@@ -3499,10 +3499,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c5c7663",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "DB-backed runtime primary is in progress with Command Center DB runtime readiness visible and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with tests, checkers, docs, and Command Center DB runtime coverage aggregated.",
       "checksRun": [
+        "npm run check:p726-tests-checkers-docs",
         "npm run check:p725-command-center-db-runtime-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"",
         "npm run check:p724",
@@ -3517,7 +3518,7 @@
       "knownLimitations": [
         "P72 has not enabled DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P72.6",
+      "nextPhase": "P72.7",
       "commandCenterVisible": true
     },
     {
@@ -6377,7 +6378,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "48d90d3",
       "completedAt": "2026-05-19",
       "summary": "Created DB migration preview records without writing migration or schema files.",
       "checksRun": [
@@ -6400,7 +6401,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b068e32",
       "completedAt": "2026-05-19",
       "summary": "Added blocked DB readiness gates while keeping DB writes and migrations disabled.",
       "checksRun": [
@@ -6423,7 +6424,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c5c7663",
       "completedAt": "2026-05-19",
       "summary": "Exposed display-only DB runtime readiness in Command Center without runnable DB actions.",
       "checksRun": [
@@ -6445,13 +6446,23 @@
       "phaseId": "P72.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P72 validation coverage before final validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Aggregated P72 validation coverage before final validation.",
+      "checksRun": [
+        "npm run check:p726-tests-checkers-docs",
+        "npm run check:p725-command-center-db-runtime-ux",
+        "npm run check:p72-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P72.6 aggregates validation only. DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P72.7",
       "commandCenterVisible": true
     },
@@ -6474,5 +6485,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P72",
   "previousPhase": "P71",
-  "nextPhase": "P72.6"
+  "nextPhase": "P72.7"
 }
