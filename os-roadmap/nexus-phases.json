@@ -2332,10 +2332,10 @@
       "track": "NEXUS_OS",
       "order": 46,
       "group": "Planned OS Phases",
-      "summary": "Project shipping and export pipeline is in progress with Command Center shipping readiness complete and all shipping execution disabled.",
+      "summary": "Project shipping and export pipeline is in progress with validation coverage aggregated through P71.6 and all shipping execution disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P71.6"
+      "nextPhase": "P71.7"
     },
     {
       "phaseId": "P72",
@@ -2692,8 +2692,8 @@
       "track": "NEXUS_OS",
       "order": 46.06,
       "group": "P71 Project Shipping Boundary + Export Pipeline",
-      "status": "planned",
-      "summary": "Aggregate P71 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P71 tests, checkers, docs, reports, and Command Center shipping coverage before final validation.",
       "nextPhase": "P71.7",
       "commandCenterVisible": true
     },

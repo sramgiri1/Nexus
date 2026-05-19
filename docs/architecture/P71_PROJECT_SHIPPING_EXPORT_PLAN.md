@@ -149,7 +149,7 @@ Implementation:
 
 Aggregate P71 validation coverage before final validation.
 
-Status: planned.
+Status: complete.
 
 ### P71.7 Final Validation
 
@@ -180,7 +180,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.5. Package creation, export execution, project
+P71 is in progress through P71.6. Package creation, export execution, project
 mutation, provider dispatch, tool execution, worker execution, DB writes,
 deploy execution, release execution, external network calls, and provider
 spend remain disabled.
