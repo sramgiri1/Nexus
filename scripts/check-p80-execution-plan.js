@@ -5,12 +5,13 @@ import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js"
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 
 const ROOT = process.cwd();
-const CONTRACT_PATH = "contracts/os-roadmap/p79-execution-contracts.json";
-const PLAN_PATH = "docs/architecture/P79_LIVE_EXECUTION_MODE_PLAN.md";
+const CONTRACT_PATH = "contracts/os-roadmap/p80-execution-contracts.json";
+const PLAN_PATH = "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md";
 const STATUS_PATH = "os-roadmap/phase-status.json";
-const REPORT_PATH = "reports/p79-execution-plan-report.md";
+const REPORT_PATH = "reports/p80-execution-plan-report.md";
+const HANDOFF_REPORT_PATH = "reports/p797-p80-handoff-report.md";
 
-export const P79_LIVE_SUBPHASES = ["P79.1", "P79.2", "P79.3", "P79.4", "P79.5", "P79.6", "P79.7"];
+export const P80_FOUNDER_INTAKE_SUBPHASES = ["P80.1", "P80.2", "P80.3", "P80.4", "P80.5", "P80.6", "P80.7"];
 
 function read(relativePath) {
   const fullPath = join(ROOT, relativePath);
@@ -25,15 +26,15 @@ function includesAll(text, needles) {
   return needles.every((needle) => text.toLowerCase().includes(needle.toLowerCase()));
 }
 
-export function checkP79ExecutionPlan() {
+export function checkP80ExecutionPlan() {
   const checks = {
     contractFile: true,
     taskContracts: true,
     safetyRules: true,
     reuseCheck: true,
-    liveGateScope: true,
     uxRules: true,
     exactFiles: true,
+    founderIntakeScope: true,
     validationCommands: true,
     roadmapStatus: true,
     docs: true,
@@ -50,7 +51,8 @@ export function checkP79ExecutionPlan() {
   try { status = readJson(STATUS_PATH); } catch (error) { fail("roadmapStatus", `Could not parse ${STATUS_PATH}: ${error.message}`); }
 
   const tasks = Array.isArray(contract.taskContracts) ? contract.taskContracts : [];
-  if (tasks.length !== P79_LIVE_SUBPHASES.length) fail("taskContracts", `Expected ${P79_LIVE_SUBPHASES.length} task contracts, found ${tasks.length}`);
+  if (contract.phase !== "P80") fail("contractFile", "P80 contract must declare phase P80");
+  if (tasks.length !== P80_FOUNDER_INTAKE_SUBPHASES.length) fail("taskContracts", `Expected ${P80_FOUNDER_INTAKE_SUBPHASES.length} task contracts, found ${tasks.length}`);
 
   const taskByPhase = new Map();
   for (const task of tasks) {
@@ -74,30 +76,32 @@ export function checkP79ExecutionPlan() {
       fail("uxRules", `${task.id} UX requirements must include current state, next action, blockers, disabled reason, owner, evidence, and cost impact`);
     }
     if (!Array.isArray(inputs.exactFilesModules?.create) || !Array.isArray(inputs.exactFilesModules?.update)) fail("exactFiles", `${task.id} must define exact create/update files`);
-    if (!(inputs.validationCommands || []).includes("npm run check:p79-execution-plan")) fail("validationCommands", `${task.id} must include npm run check:p79-execution-plan`);
+    if (!(inputs.validationCommands || []).includes("npm run check:p80-execution-plan")) fail("validationCommands", `${task.id} must include npm run check:p80-execution-plan`);
   }
 
-  for (const phaseId of P79_LIVE_SUBPHASES) {
+  for (const phaseId of P80_FOUNDER_INTAKE_SUBPHASES) {
     if (!taskByPhase.has(phaseId)) fail("taskContracts", `Missing task contract for ${phaseId}`);
   }
 
-  const p791 = taskByPhase.get("P79.1");
-  const p791Text = JSON.stringify(p791 || {});
-  if (!includesAll(p791Text, ["live-execution/liveExecutionGate.js", "shared/modeGuard.js", "providerCallsAllowed", "projectMutationAllowed", "providerSpendAllowed"])) {
-    fail("liveGateScope", "P79.1 must define live mode gate files and blocked capability flags");
+  const p801Text = JSON.stringify(taskByPhase.get("P80.1") || {});
+  const p804Text = JSON.stringify(taskByPhase.get("P80.4") || {});
+  if (!includesAll(p801Text, ["founder-intake/founderIntakeSchema.js", "session", "questionSet", "answerState", "comprehensionScore"])) {
+    fail("founderIntakeScope", "P80.1 must define founder intake schemas and data shapes");
+  }
+  if (!includesAll(p804Text, ["dashboard/src/data/founderIntake", "Command Center", "theme", "Playwright"])) {
+    fail("founderIntakeScope", "P80.4 must define Command Center founder intake UX coverage");
   }
 
   const phaseStatus = new Map((status.phases || []).map((phase) => [phase.phaseId, phase]));
-  const p79 = phaseStatus.get("P79");
-  const expectedNext = P79_LIVE_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "P80";
-  if (!["in_progress", "complete"].includes(p79?.status)) fail("roadmapStatus", "P79 must be in_progress or complete");
-  if (p79?.nextPhase !== expectedNext) fail("roadmapStatus", `P79 nextPhase must be ${expectedNext}`);
-  if (!["P79", ...P79_LIVE_SUBPHASES, "P80"].includes(status.currentPhase)) fail("roadmapStatus", "currentPhase must be P79, an active P79 subphase, or P80 after P79 closes");
-  if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+  if (phaseStatus.get("P79")?.status !== "complete") fail("roadmapStatus", "P79 must be complete before P80 starts");
+  if (phaseStatus.get("P79.7")?.status !== "complete") fail("roadmapStatus", "P79.7 must be complete before P80 starts");
+  if (phaseStatus.get("P80")?.status !== "planned") fail("roadmapStatus", "P80 must be planned at handoff");
+  if (phaseStatus.get("P80")?.nextPhase !== "P80.1") fail("roadmapStatus", "P80 nextPhase must be P80.1");
+  if (status.currentPhase !== "P79.7" || status.nextPhase !== "P80") fail("roadmapStatus", "Root phase status must hand off from P79.7 to P80");
 
   const plan = read(PLAN_PATH);
   if (!plan.includes(CONTRACT_PATH)) fail("docs", `${PLAN_PATH} must reference ${CONTRACT_PATH}`);
-  for (const phaseId of P79_LIVE_SUBPHASES) {
+  for (const phaseId of P80_FOUNDER_INTAKE_SUBPHASES) {
     if (!plan.includes(phaseId)) fail("docs", `${PLAN_PATH} missing ${phaseId}`);
   }
   if (!/provider calls[\s\S]+blocked/i.test(plan) || !/project mutation[\s\S]+blocked/i.test(plan) || !/provider spend[\s\S]+blocked/i.test(plan)) {
@@ -108,16 +112,37 @@ export function checkP79ExecutionPlan() {
   writeMarkdownReport(
     REPORT_PATH,
     [
-      { title: "Contract", body: [`- Path: ${CONTRACT_PATH}`, `- Subphases: ${P79_LIVE_SUBPHASES.join(", ")}`].join("\n") },
+      { title: "Contract", body: [`- Path: ${CONTRACT_PATH}`, `- Subphases: ${P80_FOUNDER_INTAKE_SUBPHASES.join(", ")}`].join("\n") },
       { title: "Checks", body: buildCheckTable(rows) },
       { title: "Failures", body: failures.length === 0 ? "- None" : failures.map((failure) => `- ${failure}`).join("\n") },
+      {
+        title: "Known Limitations",
+        body: "- P80 handoff is contract-only. Founder intake runtime implementation starts in P80.1.",
+      },
       { title: "Result", body: failures.length === 0 ? "PASS" : "FAIL" },
     ],
-    { title: "P79 Execution Plan Report", phase: "P79.1" },
+    { title: "P80 Execution Plan Report", phase: "P80" },
+  );
+  writeMarkdownReport(
+    HANDOFF_REPORT_PATH,
+    [
+      {
+        title: "Scope",
+        body: [
+          "- P79.7 closes live readiness and hands off to P80 founder intake runtime planning.",
+          "- This report is generated by check:p80-execution-plan.",
+          "- No provider calls, tool execution, worker execution, project mutation, DB writes, deploy, network calls, or provider spend are enabled.",
+        ].join("\n"),
+      },
+      { title: "Checks", body: buildCheckTable(rows) },
+      { title: "Next Phase", body: "- P80 Founder Intake Runtime" },
+      { title: "Result", body: failures.length === 0 ? "PASS" : "FAIL" },
+    ],
+    { title: "P79.7 P80 Handoff Report", phase: "P79.7" },
   );
   return { rows, failures, result: failures.length === 0 ? "PASS" : "FAIL" };
 }
 
-const result = checkP79ExecutionPlan();
-printCheckReport("P79 Execution Plan Check", result.rows, result.result);
+const result = checkP80ExecutionPlan();
+printCheckReport("P80 Execution Plan Check", result.rows, result.result);
 if (result.failures.length > 0) process.exit(1);

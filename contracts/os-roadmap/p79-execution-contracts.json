@@ -386,7 +386,7 @@
       "targetAgent": "planner",
       "taskType": "implementation-plan",
       "objective": "Prepare P80 founder intake runtime handoff after P79 gates are validated.",
-      "allowedFiles": ["contracts/os-roadmap/p80-execution-contracts.json", "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md", "scripts/check-p80-execution-plan.js", "reports/p80-execution-plan-report.md", "package.json", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "allowedFiles": ["contracts/os-roadmap/p80-execution-contracts.json", "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md", "scripts/check-p80-execution-plan.js", "scripts/check-p79-execution-plan.js", "scripts/check-p796-final-validation.js", "scripts/check-os-phase-status.js", "reports/p80-execution-plan-report.md", "reports/p797-p80-handoff-report.md", "package.json", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/p79-execution-plan-report.md", "reports/p796-final-validation-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/format-readability-report.md"],
       "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
       "inputs": {
         "phaseId": "P79.7",
@@ -403,9 +403,9 @@
         "checkerUpdates": ["Register package script."],
         "docsRoadmap": ["Add P80 plan and OS phase status handoff."],
         "phaseStatusUpdate": "Mark P79.7 complete, mark P79 complete, and set nextPhase to P80.",
-        "exactFilesModules": {"create": ["contracts/os-roadmap/p80-execution-contracts.json", "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md", "scripts/check-p80-execution-plan.js", "reports/p80-execution-plan-report.md"], "update": ["package.json", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "exactFilesModules": {"create": ["contracts/os-roadmap/p80-execution-contracts.json", "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md", "scripts/check-p80-execution-plan.js", "reports/p80-execution-plan-report.md", "reports/p797-p80-handoff-report.md"], "update": ["scripts/check-p79-execution-plan.js", "scripts/check-p796-final-validation.js", "scripts/check-os-phase-status.js", "package.json", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/p79-execution-plan-report.md", "reports/p796-final-validation-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/format-readability-report.md"]},
         "expectedExportsSchemasDataShapes": {"exports": ["P80_FOUNDER_INTAKE_SUBPHASES"], "schemas": ["FounderIntakeRuntimeContract"], "dataShapes": ["session, questionSet, answerState, comprehensionScore, approvalState, evidenceRefs, costImpact"]},
-        "validationCommands": ["npm run check:p80-execution-plan", "npm run check:p79-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "validationCommands": ["npm run check:p80-execution-plan", "npm run check:p79-execution-plan", "npm run check:p796-final-validation", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
         "finalSafetyChecks": ["Confirm P80 handoff is contract-only.", "Confirm no project files changed."],
         "gitCommands": ["git add <allowed P79.7/P80 files>", "git commit -m \"docs(nexus): hand off live readiness to founder intake runtime\"", "git push origin HEAD"],
         "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Docs/roadmap/status update", "Safety confirmations", "Forbidden paths confirmation", "Known limitations", "Next phase/subphase"]

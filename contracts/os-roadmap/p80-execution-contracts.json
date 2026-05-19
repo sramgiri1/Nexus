@@ -1,0 +1,1097 @@
+{
+  "phase": "P80",
+  "title": "Founder Intake Runtime",
+  "classification": "NEXUS_OS_CHANGE",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p80-1-founder-intake-schema-policy-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define founder intake runtime schemas and safety policy without executing providers or mutating projects.",
+      "allowedFiles": [
+        "founder-intake/founderIntakeSchema.js",
+        "scripts/check-p801-founder-intake-schema.js",
+        "reports/p801-founder-intake-schema-report.md",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.1",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P79.7",
+        "narrowScope": "Create founder intake schema, policy constants, and checker only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p801-founder-intake-schema."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80 in progress, mark P80.1 complete after validation, and set nextPhase to P80.2.",
+        "exactFilesModules": {
+          "create": [
+            "founder-intake/founderIntakeSchema.js",
+            "scripts/check-p801-founder-intake-schema.js",
+            "reports/p801-founder-intake-schema-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "FOUNDER_INTAKE_PHASE",
+            "FOUNDER_INTAKE_REQUIRED_FIELDS",
+            "createFounderIntakeSessionEnvelope",
+            "validateFounderIntakeSession"
+          ],
+          "schemas": [
+            "FounderIntakeSession",
+            "FounderQuestionSet",
+            "FounderAnswerState",
+            "FounderComprehensionScore",
+            "FounderApprovalState"
+          ],
+          "dataShapes": [
+            "session, questionSet, answerState, comprehensionScore, approvalState, evidenceRefs, costImpact"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p801-founder-intake-schema",
+          "npm run check:p80-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"feat(nexus): add founder intake schema contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Founder intake schemas validate required fields.",
+        "Runtime mutation and provider spend remain blocked."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p79-7-p80-handoff"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-2-founder-intake-session-model",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "runtime",
+      "taskType": "implementation-plan",
+      "objective": "Create deterministic local founder intake session state transitions.",
+      "allowedFiles": [
+        "founder-intake/founderIntakeSession.js",
+        "scripts/check-p802-founder-intake-session.js",
+        "reports/p802-founder-intake-session-report.md",
+        "founder-intake/founderIntakeSchema.js",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.2",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.1",
+        "narrowScope": "Add local session state builder, reducer, and checker only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p802-founder-intake-session."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80.2 complete after validation and set nextPhase to P80.3.",
+        "exactFilesModules": {
+          "create": [
+            "founder-intake/founderIntakeSession.js",
+            "scripts/check-p802-founder-intake-session.js",
+            "reports/p802-founder-intake-session-report.md"
+          ],
+          "update": [
+            "founder-intake/founderIntakeSchema.js",
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createFounderIntakeSession",
+            "advanceFounderIntakeSession",
+            "summarizeFounderIntakeSession"
+          ],
+          "schemas": [
+            "FounderIntakeSessionState"
+          ],
+          "dataShapes": [
+            "safeSessionKey, stage, answers, missingFields, readiness, evidenceRefs, costImpact"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p802-founder-intake-session",
+          "npm run check:p801-founder-intake-schema",
+          "npm run check:p80-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"feat(nexus): add founder intake session model\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Session transitions are deterministic and local.",
+        "No raw private project IDs are required or displayed."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-1-founder-intake-schema-policy-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-3-guided-qna-comprehension-loop",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "runtime",
+      "taskType": "implementation-plan",
+      "objective": "Add guided Q&A and comprehension readiness without autonomous provider execution.",
+      "allowedFiles": [
+        "founder-intake/founderIntakeQuestions.js",
+        "founder-intake/founderIntakeComprehension.js",
+        "scripts/check-p803-founder-intake-qna.js",
+        "reports/p803-founder-intake-qna-report.md",
+        "founder-intake/founderIntakeSchema.js",
+        "founder-intake/founderIntakeSession.js",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.3",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.2",
+        "narrowScope": "Add deterministic question selection, answer merge, and comprehension scoring only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p803-founder-intake-qna."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80.3 complete after validation and set nextPhase to P80.4.",
+        "exactFilesModules": {
+          "create": [
+            "founder-intake/founderIntakeQuestions.js",
+            "founder-intake/founderIntakeComprehension.js",
+            "scripts/check-p803-founder-intake-qna.js",
+            "reports/p803-founder-intake-qna-report.md"
+          ],
+          "update": [
+            "founder-intake/founderIntakeSchema.js",
+            "founder-intake/founderIntakeSession.js",
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "selectNextFounderQuestion",
+            "mergeFounderAnswer",
+            "scoreFounderComprehension"
+          ],
+          "schemas": [
+            "FounderQuestion",
+            "FounderAnswerMerge",
+            "FounderComprehensionResult"
+          ],
+          "dataShapes": [
+            "questionId, prompt, answer, missingFields, confidence, comprehensionScore, nextAction"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p803-founder-intake-qna",
+          "npm run check:p802-founder-intake-session",
+          "npm run check:p801-founder-intake-schema",
+          "npm run check:p80-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"feat(nexus): add founder intake qna loop\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Q&A loop identifies missing business information.",
+        "Comprehension scoring stays deterministic and local."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-2-founder-intake-session-model"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-4-command-center-founder-intake-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "ui",
+      "taskType": "implementation-plan",
+      "objective": "Expose founder intake state in Command Center without raw IDs or fake runnable actions.",
+      "allowedFiles": [
+        "dashboard/src/data/founderIntake.js",
+        "scripts/check-p804-command-center-founder-intake-ux.js",
+        "reports/p804-command-center-founder-intake-ux-report.md",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.4",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.3",
+        "narrowScope": "Add Command Center founder intake route/data/view and Playwright route coverage only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Command Center Founder Intake route test.",
+          "Preserve route-wide no DemoApp leakage, no raw JSON/log dumps, theme switcher, sidebar navigation, OS Roadmap separation, and project milestone separation tests."
+        ],
+        "testsCheckers": [
+          "Add check:p804-command-center-founder-intake-ux.",
+          "Add Playwright route coverage."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80.4 complete after validation and set nextPhase to P80.5.",
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/founderIntake.js",
+            "scripts/check-p804-command-center-founder-intake-ux.js",
+            "reports/p804-command-center-founder-intake-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildFounderIntakeViewModel",
+            "FOUNDER_INTAKE_TABS"
+          ],
+          "schemas": [
+            "FounderIntakeCommandCenterViewModel"
+          ],
+          "dataShapes": [
+            "currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, questionState"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p804-command-center-founder-intake-ux",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder Intake\"",
+          "cd dashboard && npm run test:unit",
+          "cd dashboard && npm run build",
+          "npm run check:p80-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"feat(nexus): add command center founder intake ux\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center shows founder intake state and next question.",
+        "Primary UX has no DemoApp, raw JSON/log dumps, or raw private project IDs."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-3-guided-qna-comprehension-loop"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-5-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "qa",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P80 checker, Playwright, unit, build, docs, and roadmap evidence.",
+      "allowedFiles": [
+        "scripts/check-p805-tests-checkers-docs.js",
+        "reports/p805-tests-checkers-docs-report.md",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.5",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.4",
+        "narrowScope": "Add validation aggregation checker and report only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p805-tests-checkers-docs."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80.5 complete after validation and set nextPhase to P80.6.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p805-tests-checkers-docs.js",
+            "reports/p805-tests-checkers-docs-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP80ValidationAggregation"
+          ],
+          "schemas": [
+            "P80ValidationAggregation"
+          ],
+          "dataShapes": [
+            "scripts, reports, phaseStatus, playwrightCoverage, unitCoverage, buildCoverage, knownLimitations"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p805-tests-checkers-docs",
+          "npm run check:p804-command-center-founder-intake-ux",
+          "npm run check:p803-founder-intake-qna",
+          "npm run check:p802-founder-intake-session",
+          "npm run check:p801-founder-intake-schema",
+          "npm run check:p80-execution-plan",
+          "cd dashboard && npm run test:unit",
+          "cd dashboard && npm run build",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"test(nexus): aggregate founder intake validation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P80 validation evidence is aggregated.",
+        "No obsolete route safety assertions remain."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-4-command-center-founder-intake-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-6-docs-roadmap",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "docs",
+      "taskType": "implementation-plan",
+      "objective": "Update founder intake runtime docs, roadmap, reports, and operator notes.",
+      "allowedFiles": [
+        "reports/p806-docs-roadmap-report.md",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.6",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.5",
+        "narrowScope": "Docs, roadmap, reports, and status updates only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p806-docs-roadmap."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80.6 complete after validation and set nextPhase to P80.7.",
+        "exactFilesModules": {
+          "create": [
+            "reports/p806-docs-roadmap-report.md"
+          ],
+          "update": [
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P80DocsRoadmapReport"
+          ],
+          "schemas": [
+            "P80DocsRoadmapEvidence"
+          ],
+          "dataShapes": [
+            "docsUpdated, roadmapUpdated, statusUpdated, reportsUpdated, nextPhase"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p806-docs-roadmap",
+          "npm run check:p805-tests-checkers-docs",
+          "npm run check:p80-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"docs(nexus): update founder intake runtime docs\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Founder intake docs are current.",
+        "Roadmap and status match implemented P80 behavior."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-5-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p80-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "qa",
+      "taskType": "implementation-plan",
+      "objective": "Close P80 after validating founder intake can collect and refine a business idea safely.",
+      "allowedFiles": [
+        "scripts/check-p807-final-validation.js",
+        "reports/p807-final-validation-report.md",
+        "package.json",
+        "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P80.7",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P80.6",
+        "narrowScope": "Final validation checker and report only.",
+        "safetyRules": [
+          "Do not enable provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "live-execution/liveExecutionGate.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, and cost helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p807-final-validation."
+        ],
+        "checkerUpdates": [
+          "Register package script and keep existing route-wide safety checks current."
+        ],
+        "docsRoadmap": [
+          "Update P80 plan, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P80 complete after validation and set nextPhase to P81.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p807-final-validation.js",
+            "reports/p807-final-validation-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P80_FOUNDER_INTAKE_RUNTIME_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP80FinalValidation"
+          ],
+          "schemas": [
+            "P80FinalValidation"
+          ],
+          "dataShapes": [
+            "phaseStatus, founderIntakeReadiness, commandCenterCoverage, checksRun, knownLimitations, nextPhase"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p807-final-validation",
+          "npm run check:p805-tests-checkers-docs",
+          "npm run check:p804-command-center-founder-intake-ux",
+          "npm run check:p803-founder-intake-qna",
+          "npm run check:p802-founder-intake-session",
+          "npm run check:p801-founder-intake-schema",
+          "npm run check:p80-execution-plan",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder Intake\"",
+          "cd dashboard && npm run test:unit",
+          "cd dashboard && npm run build",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P80 files>",
+          "git commit -m \"test(nexus): close founder intake runtime validation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Founder intake workflow is validated end to end within P80 scope.",
+        "Provider calls, project mutation, deploy, and provider spend remain blocked."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-6-docs-roadmap"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T18:10:00.000Z"
+    }
+  ]
+}

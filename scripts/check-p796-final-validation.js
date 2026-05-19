@@ -95,8 +95,8 @@ export function checkP79FinalValidation() {
   addCheck("prior reports exist", requiredReports.every(fileExists), requiredReports.join(", "));
   addCheck("P79 subphases complete in phase status", P79_SUBPHASES.every((phaseId) => phaseById.get(phaseId)?.status === "complete"));
   addCheck("P79 subphases complete in roadmap", P79_SUBPHASES.every((phaseId) => roadmapById.get(phaseId)?.status === "complete"));
-  addCheck("P79 next phase is handoff", phaseById.get("P79")?.nextPhase === "P79.7" && roadmapById.get("P79")?.nextPhase === "P79.7");
-  addCheck("root phase status advanced", status.currentPhase === "P79.6" && status.previousPhase === "P79.5" && status.nextPhase === "P79.7");
+  addCheck("P79.6 remains complete after forward progress", phaseById.get("P79.6")?.status === "complete" && roadmapById.get("P79.6")?.status === "complete");
+  addCheck("root phase status advanced", ["P79.6", "P79.7", "P80"].includes(status.currentPhase) && ["P79.7", "P80"].includes(status.nextPhase));
   addCheck("contracts document final validation", contract.includes("check:p796-final-validation") && contract.includes("scripts/check-p796-final-validation.js"));
   addCheck("docs document final validation", docs.includes("P79.6 Final Validation") && docs.includes("npm run check:p796-final-validation"));
   addCheck("Playwright live route test remains present", tests.includes("Live Readiness route renders gated live posture without runnable actions"));
