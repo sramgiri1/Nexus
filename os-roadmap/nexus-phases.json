@@ -2618,9 +2618,9 @@
       "track": "NEXUS_OS",
       "order": 51,
       "group": "P76 Tenant / Project Isolation",
-      "status": "in_progress",
-      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.6 validation aggregation is complete.",
-      "nextPhase": "P76.7",
+      "status": "complete",
+      "summary": "Completed tenant and project isolation readiness with tenant/project/access mutation disabled.",
+      "nextPhase": "P77",
       "commandCenterVisible": true
     },
     {
@@ -2695,8 +2695,8 @@
       "track": "NEXUS_OS",
       "order": 51.07,
       "group": "P76 Tenant / Project Isolation",
-      "status": "planned",
-      "summary": "Close P76 and hand off to P77 with tenant/project/access mutation disabled.",
+      "status": "complete",
+      "summary": "Closed P76 and handed off to P77 with tenant/project/access mutation disabled.",
       "nextPhase": "P77",
       "commandCenterVisible": true
     },

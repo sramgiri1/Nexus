@@ -4135,12 +4135,13 @@
       "phaseId": "P76",
       "title": "Tenant / Project Isolation",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "18190af",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P76.6 validation coverage aggregation while tenant/project/access mutation remains disabled.",
+      "summary": "Completed P76 tenant/project/access isolation readiness and handed off to P77 while mutation remains disabled.",
       "checksRun": [
+        "npm run check:p767-final-validation",
         "npm run check:p766-tests-checkers-docs",
         "npm run check:p765-command-center-isolation-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Isolation route\"",
@@ -4156,9 +4157,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+        "P76 closes isolation readiness only. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P76.7",
+      "nextPhase": "P77",
       "commandCenterVisible": true
     },
     {
@@ -4305,13 +4306,27 @@
       "phaseId": "P76.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final P76 validation and P77 handoff.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Completed final P76 validation, confirmed Command Center Isolation readiness remains display-only, and handed off to P77.",
+      "checksRun": [
+        "npm run check:p767-final-validation",
+        "npm run check:p766-tests-checkers-docs",
+        "npm run check:p765-command-center-isolation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Isolation route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.7 closes isolation readiness only. Tenant mutation, project mutation, cross-project access, access grants, role mutation, permission mutation, membership mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P77",
       "commandCenterVisible": true
     },
@@ -7235,7 +7250,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T14:00:00.000Z",
-  "currentPhase": "P76",
-  "previousPhase": "P75",
-  "nextPhase": "P76.7"
+  "currentPhase": "P77",
+  "previousPhase": "P76",
+  "nextPhase": "P77"
 }

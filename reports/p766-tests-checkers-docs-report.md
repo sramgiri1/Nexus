@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P76.6
-- Generated at: 2026-05-19T14:09:40.152Z
+- Generated at: 2026-05-19T14:12:14.610Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 18190af
+- Validation HEAD: 7218ef2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -22,7 +22,7 @@
 | docs cover subphases | PASS | P76.1, P76.2, P76.3, P76.4, P76.5, P76.6 |
 | roadmap statuses complete | PASS |  |
 | phase status entries complete | PASS |  |
-| P76 handoff is valid | PASS | P76/P75/P76.7 |
+| P76 handoff is valid | PASS | P77/P76/P77 |
 | P76.7 remains planned or complete | PASS |  |
 | completed status commits stamped | PASS |  |
 | Command Center route registered | PASS |  |

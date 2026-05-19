@@ -107,11 +107,13 @@ tenant/project/access behavior, and no project-file changes.
 
 Run final validation, close P76, and hand off to P77.
 
-Status: planned. P76.7 will verify all P76 subphases are complete, Command
+Status: complete. P76.7 verifies all P76 subphases are complete, Command
 Center Isolation UX remains display-only, roadmap/status evidence is current,
 and tenant/project/access/auth/workspace mutation, DB writes, project
 mutation, provider/tool/worker execution, network calls, deploy/release/export
 package behavior, and provider spend remain disabled.
+
+P76 is complete. P77 Compliance and Audit Pack is the next OS phase handoff.
 
 ## Validation
 
@@ -165,6 +167,20 @@ P76.5 validation:
 P76.6 validation:
 
 - `npm run check:p766-tests-checkers-docs`
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.7 validation:
+
+- `npm run check:p767-final-validation`
+- `npm run check:p766-tests-checkers-docs`
+- `npm run check:p765-command-center-isolation-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Isolation route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`
