@@ -1,0 +1,408 @@
+{
+  "phaseId": "P74",
+  "title": "Observability, Telemetry, SLOs",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p74-1-execution-contract-observability-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P74 observability, telemetry, and SLO contracts without enabling live telemetry export or runtime mutation.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p74-execution-contracts.json",
+        "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md",
+        "scripts/check-p74-execution-plan.js",
+        "reports/p74-execution-plan-report.md",
+        "package.json",
+        "scripts/check-os-phase-status.js",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P74.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "1b54210",
+        "narrowScope": "Define P74 execution contracts and observability boundary only.",
+        "safetyRules": [
+          "Do not enable external telemetry exporters, raw log streaming, DB writes, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy execution, release execution, export execution, package creation, auth mutation, or provider spend.",
+          "Observability, telemetry, and SLO records must be preview-only, redacted, evidence-linked, activity-linked, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw policy dumps, raw private project IDs, raw tokens, DemoApp outside demo mode, internal phase labels outside OS Roadmap, or fake runnable observability actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/redaction.js",
+            "observability/index.js",
+            "observability/activityLogger.js",
+            "observability/activityTrace.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse shared report, formatter, redaction, activity, trace, route, tab, card, badge, evidence, audit, and cost patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P74.1.",
+          "required": "Future UX must show current observability state, next action, blockers, disabled reason, owner capability, evidence/activity location, SLO posture, telemetry export state, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p74-execution-contracts.json",
+            "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md",
+            "scripts/check-p74-execution-plan.js",
+            "reports/p74-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "scripts/check-os-phase-status.js",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P74_OBSERVABILITY_SUBPHASES",
+            "checkP74ExecutionPlan",
+            "createTelemetryEventContract",
+            "createSloObjectiveCatalog",
+            "createObservabilityHealthSnapshot",
+            "buildObservabilityReadinessViewModel"
+          ],
+          "schemas": [
+            "TelemetryEventContract",
+            "SloObjectiveCatalog",
+            "ObservabilityHealthSnapshot",
+            "ObservabilityCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "signalType, sourceSurface, metricFamily, aggregationWindow, sloTarget, currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityRefs, costImpact, telemetryExportAllowed, rawLogExposureAllowed, dbWritesAllowed, projectMutationAllowed"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show what changed, current observability state, next action, blockers, disabled reason, owner capability, evidence/activity location, SLO posture, telemetry export state, safety posture, and cost impact without raw JSON, raw logs, raw policy dumps, raw private IDs, raw tokens, DemoApp leakage, internal phase labels, or fake runnable observability actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for P74.1 unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p74-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p74-execution-plan.",
+          "Add P74.1-P74.7 to OS phase status checker."
+        ],
+        "docsRoadmap": [
+          "Add P74 implementation plan doc.",
+          "Update OS roadmap and phase status with P74.1-P74.7."
+        ],
+        "phaseStatusUpdate": "Mark P74.1 complete after validation and set nextPhase to P74.2.",
+        "validationCommands": [
+          "npm run check:p74-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no external telemetry exporter, raw log streaming, DB writes, project mutation, auth mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, or provider spend was enabled.",
+          "Confirm no projects/**, project-roadmap/**, db/**, prisma/**, migrations/**, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, auth/**, users/**, or rbac/** files changed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, raw policy dumps, DemoApp leakage, raw tokens, raw private IDs, or fake runnable observability actions."
+        ],
+        "gitCommands": [
+          "git add <allowed P74.1 files>",
+          "git commit -m \"docs(nexus): define p74 observability contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P74.1 is independently commit-ready.",
+        "No live telemetry export, raw log streaming, DB write, project mutation, provider/tool/worker execution, network call, deploy/release/export/package behavior, auth mutation, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p73-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-2-telemetry-event-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Define redacted telemetry event contract records without external exporters.",
+      "allowedFiles": ["observability/p74-2-placeholder.js", "scripts/check-p742.js", "reports/p742-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.1",
+        "narrowScope": "Create telemetry event contract records only.",
+        "safetyRules": ["Do not enable external telemetry exporters, raw logs, DB writes, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy/release/export/package behavior, auth mutation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["observability/index.js", "observability/redactionPolicy.js", "shared/reportWriter.js"], "rule": "Reuse existing observability and reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and expose telemetry state later with disabled state, next action, blockers, and raw output safety without raw logs, raw JSON, private IDs, or fake exporter actions.",
+        "themeRequirements": ["Preserve System, Dark, and Light themes."],
+        "playwrightTests": ["No new Playwright route unless Command Center route behavior changes."],
+        "testsCheckers": ["Add check:p742."],
+        "checkerUpdates": ["Register check:p742 in package.json."],
+        "docsRoadmap": ["Update P74 plan and OS phase status."],
+        "phaseStatusUpdate": "Mark P74.2 complete and set nextPhase to P74.3.",
+        "exactFilesModules": {"create": ["observability/p74-2-placeholder.js", "scripts/check-p742.js", "reports/p742-report.md"], "update": ["package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["createTelemetryEventContract", "validateTelemetryEventContract", "buildTelemetryEventContractEnvelope"], "schemas": ["TelemetryEventContract"], "dataShapes": ["signalType, metricFamily, aggregationWindow, redactionState, telemetryExportAllowed, rawLogExposureAllowed, evidenceRefs, activityRefs, costImpact, disabledReason, nextAction"]},
+        "validationCommands": ["npm run check:p742", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No external telemetry exporter, raw log stream, DB write, project mutation, provider/tool execution, network call, deploy/release/export/package behavior, auth mutation, or provider spend enabled."],
+        "gitCommands": ["git add <allowed P74.2 files>", "git commit -m \"feat(nexus): add p74 telemetry event contracts\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["Telemetry event contracts validate.", "External telemetry export and raw logs remain disabled.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-1-execution-contract-observability-boundary"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-3-slo-objective-catalog",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Define SLO objective catalog records without enforcement or paging.",
+      "allowedFiles": ["observability/p74-3-placeholder.js", "scripts/check-p743.js", "reports/p743-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.2",
+        "narrowScope": "Create SLO objective catalog records only.",
+        "safetyRules": ["Do not enable telemetry export, SLO enforcement, paging, DB writes, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy/release/export/package behavior, auth mutation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["observability/p74-2-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse P74 telemetry records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and expose SLO posture later with disabled state, next action, blockers, and raw output safety without fake enforcement actions.",
+        "themeRequirements": ["Preserve System, Dark, and Light themes."],
+        "playwrightTests": ["No new Playwright route unless Command Center route behavior changes."],
+        "testsCheckers": ["Add check:p743."],
+        "checkerUpdates": ["Register check:p743 in package.json."],
+        "docsRoadmap": ["Update P74 plan and OS phase status."],
+        "phaseStatusUpdate": "Mark P74.3 complete and set nextPhase to P74.4.",
+        "exactFilesModules": {"create": ["observability/p74-3-placeholder.js", "scripts/check-p743.js", "reports/p743-report.md"], "update": ["package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["createSloObjectiveCatalog", "validateSloObjectiveCatalog", "buildSloObjectiveCatalogEnvelope"], "schemas": ["SloObjectiveCatalog"], "dataShapes": ["sloId, signalType, target, window, errorBudgetState, enforcementAllowed, pagingAllowed, blockers, disabledReason, evidenceRefs, activityRefs, costImpact, nextAction"]},
+        "validationCommands": ["npm run check:p743", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No SLO enforcement, paging, DB write, project mutation, provider/tool execution, network call, deploy/release/export/package behavior, auth mutation, or provider spend enabled."],
+        "gitCommands": ["git add <allowed P74.3 files>", "git commit -m \"feat(nexus): add p74 slo objective catalog\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["SLO catalog records validate.", "SLO enforcement and paging remain disabled.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-2-telemetry-event-contract"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-4-health-incident-snapshot-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Define observability health and incident snapshot previews without remediation execution.",
+      "allowedFiles": ["observability/p74-4-placeholder.js", "scripts/check-p744.js", "reports/p744-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.3",
+        "narrowScope": "Create health and incident snapshot preview records only.",
+        "safetyRules": ["Do not enable telemetry export, remediation execution, paging, DB writes, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy/release/export/package behavior, auth mutation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["observability/p74-2-placeholder.js", "observability/p74-3-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse P74 telemetry/SLO records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and expose health/incident posture later with disabled state, next action, blockers, and raw output safety without fake remediation actions.",
+        "themeRequirements": ["Preserve System, Dark, and Light themes."],
+        "playwrightTests": ["No new Playwright route unless Command Center route behavior changes."],
+        "testsCheckers": ["Add check:p744."],
+        "checkerUpdates": ["Register check:p744 in package.json."],
+        "docsRoadmap": ["Update P74 plan and OS phase status."],
+        "phaseStatusUpdate": "Mark P74.4 complete and set nextPhase to P74.5.",
+        "exactFilesModules": {"create": ["observability/p74-4-placeholder.js", "scripts/check-p744.js", "reports/p744-report.md"], "update": ["package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["createObservabilityHealthSnapshot", "validateObservabilityHealthSnapshot", "buildObservabilityHealthSnapshotEnvelope"], "schemas": ["ObservabilityHealthSnapshot"], "dataShapes": ["healthState, incidentState, affectedSurface, sloState, remediationAllowed, pagingAllowed, blockers, disabledReason, evidenceRefs, activityRefs, costImpact, nextAction"]},
+        "validationCommands": ["npm run check:p744", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No remediation, paging, DB write, project mutation, provider/tool execution, network call, deploy/release/export/package behavior, auth mutation, or provider spend enabled."],
+        "gitCommands": ["git add <allowed P74.4 files>", "git commit -m \"feat(nexus): add p74 observability health snapshots\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["Health snapshot records validate.", "Remediation and paging remain disabled.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-3-slo-objective-catalog"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-5-command-center-observability-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Expose observability readiness in Command Center without runnable telemetry or incident actions.",
+      "allowedFiles": ["dashboard/src/data/observabilityReadiness.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p745-command-center-observability-ux.js", "reports/command-center-observability-ux-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.4",
+        "narrowScope": "Add display-only Command Center observability readiness UX.",
+        "safetyRules": ["Do not enable telemetry export, raw log streaming, DB writes, project mutation, provider dispatch, tool execution, worker execution, network calls, deploy/release/export/package behavior, auth mutation, provider spend, or expose raw logs, raw JSON, raw policy dumps, private IDs, tokens, DemoApp leakage, or runnable telemetry/export/SLO/remediation actions."],
+        "reuseCheck": {"inspectBeforeWriting": ["dashboard/src/pages/CommandCenterV2.jsx", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/tests/routes.spec.js"], "rule": "Reuse existing Command Center route, tab, card, badge, and theme patterns; do not duplicate UI helpers."},
+        "commandCenterUxRequirements": "Show what changed, current observability state, disabled state, next action, blockers, disabled reason, owner capability, evidence/activity location, SLO posture, telemetry export state, raw output safety, safety posture, and cost impact.",
+        "themeRequirements": ["Playwright must cover System, Dark, and Light themes."],
+        "playwrightTests": ["Add focused Command Center observability route coverage."],
+        "testsCheckers": ["Add check:p745-command-center-observability-ux."],
+        "checkerUpdates": ["Register UX checker in package.json."],
+        "docsRoadmap": ["Update P74 plan and OS phase status."],
+        "phaseStatusUpdate": "Mark P74.5 complete and set nextPhase to P74.6.",
+        "exactFilesModules": {"create": ["dashboard/src/data/observabilityReadiness.js", "scripts/check-p745-command-center-observability-ux.js", "reports/command-center-observability-ux-report.md"], "update": ["dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["buildObservabilityReadinessViewModel", "observabilityReadinessViewModel"], "schemas": ["ObservabilityCommandCenterReadiness"], "dataShapes": ["summaryCards, telemetryPosture, sloPosture, healthSnapshot, disabledActions, blockers, evidenceActivity, costImpact, safetyPosture, themeSafeLabels"]},
+        "validationCommands": ["npm run check:p745-command-center-observability-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No raw logs/JSON/policy dumps, private IDs, tokens, DemoApp leakage, or runnable telemetry/export/SLO/remediation actions in primary UX."],
+        "gitCommands": ["git add <allowed P74.5 files>", "git commit -m \"feat(nexus): add observability readiness command center ux\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["Command Center observability readiness route is display-only.", "Dark/light/system theme coverage passes.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-4-health-incident-snapshot-preview"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P74 tests, checkers, docs, reports, and roadmap evidence before final validation.",
+      "allowedFiles": ["scripts/check-p746-tests-checkers-docs.js", "reports/p746-tests-checkers-docs-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.5",
+        "narrowScope": "Aggregate P74 validation coverage only.",
+        "safetyRules": ["Do not enable telemetry export, SLO enforcement, remediation, DB writes, project mutation, provider/tool execution, network calls, deploy/release/export/package behavior, auth mutation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["shared/reportWriter.js", "shared/checkResultFormatter.js", "dashboard/tests/routes.spec.js"], "rule": "Reuse existing checker/report helpers and route tests; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center observability readiness with disabled state, next action, blockers, and raw output safety.",
+        "themeRequirements": ["Confirm System, Dark, and Light route coverage remains registered."],
+        "playwrightTests": ["Verify route test registration and run focused route coverage if needed."],
+        "testsCheckers": ["Add check:p746-tests-checkers-docs."],
+        "checkerUpdates": ["Register aggregation checker in package.json."],
+        "docsRoadmap": ["Update P74 docs and roadmap/status aggregation evidence."],
+        "phaseStatusUpdate": "Mark P74.6 complete and set nextPhase to P74.7.",
+        "exactFilesModules": {"create": ["scripts/check-p746-tests-checkers-docs.js", "reports/p746-tests-checkers-docs-report.md"], "update": ["package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["none"], "schemas": ["P74ValidationAggregation"], "dataShapes": ["requiredScripts, requiredReports, completedSubphases, uxCoverage, disabledMutationPosture, statusCommitCoverage"]},
+        "validationCommands": ["npm run check:p746-tests-checkers-docs", "npm run check:p745-command-center-observability-ux", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No telemetry/export/SLO/remediation runtime behavior enabled; no project files changed."],
+        "gitCommands": ["git add <allowed P74.6 files>", "git commit -m \"chore(nexus): aggregate p74 validation coverage\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["P74 validation aggregation passes.", "No runtime behavior is enabled.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-5-command-center-observability-ux"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p74-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "auditor",
+      "taskType": "implementation-plan",
+      "objective": "Close P74 and hand off to P75 with telemetry export, SLO enforcement, and remediation still disabled.",
+      "allowedFiles": ["scripts/check-p747-final-validation.js", "reports/p747-final-validation-report.md", "package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P74.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P74.6",
+        "narrowScope": "Final P74 validation and P75 handoff only.",
+        "safetyRules": ["Do not enable telemetry export, SLO enforcement, remediation, DB writes, project mutation, provider/tool execution, network calls, deploy/release/export/package behavior, auth mutation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["scripts/check-p746-tests-checkers-docs.js", "scripts/check-p737-final-validation.js", "shared/reportWriter.js"], "rule": "Reuse aggregation/final checker patterns and shared report helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center observability readiness with disabled state, next action, blockers, and raw output safety without runnable actions.",
+        "themeRequirements": ["Confirm System, Dark, and Light validation remains passing."],
+        "playwrightTests": ["Run focused Command Center observability route coverage."],
+        "testsCheckers": ["Add check:p747-final-validation."],
+        "checkerUpdates": ["Register final checker in package.json."],
+        "docsRoadmap": ["Mark P74 complete and P75 current/next."],
+        "phaseStatusUpdate": "Mark P74 and P74.7 complete and set currentPhase/nextPhase to P75.",
+        "exactFilesModules": {"create": ["scripts/check-p747-final-validation.js", "reports/p747-final-validation-report.md"], "update": ["package.json", "docs/architecture/P74_OBSERVABILITY_TELEMETRY_SLOS_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"]},
+        "expectedExportsSchemasDataShapes": {"exports": ["none"], "schemas": ["P74FinalValidation"], "dataShapes": ["completedSubphases, handoffState, commandCenterCoverage, disabledRuntimePosture, knownLimitations"]},
+        "validationCommands": ["npm run check:p747-final-validation", "npm run check:p746-tests-checkers-docs", "npm run check:p745-command-center-observability-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:p74-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"],
+        "finalSafetyChecks": ["No telemetry/export/SLO/remediation runtime behavior enabled; no project files changed; P75 handoff is current."],
+        "gitCommands": ["git add <allowed P74.7 files>", "git commit -m \"chore(nexus): close p74 observability validation\"", "git push origin HEAD"],
+        "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]
+      },
+      "acceptanceCriteria": ["P74 is complete and current phase advances to P75.", "Telemetry export, SLO enforcement, remediation, and runtime mutation remain disabled.", "No project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p74-6-tests-checkers-docs"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T13:00:00.000Z"
+    }
+  ]
+}

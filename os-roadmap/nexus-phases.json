@@ -2442,7 +2442,86 @@
       "track": "NEXUS_OS",
       "order": 49,
       "group": "Planned OS Phases",
-      "summary": "Formalize telemetry, service-level objectives, and deeper platform observability.",
+      "summary": "Observability, telemetry, and service-level objective readiness is in progress with execution contracts defined.",
+      "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P74.2"
+    },
+    {
+      "phaseId": "P74.1",
+      "title": "Execution Contract + Observability Boundary",
+      "track": "NEXUS_OS",
+      "order": 49.01,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "complete",
+      "summary": "Defined P74 observability contracts without enabling telemetry export or SLO enforcement.",
+      "nextPhase": "P74.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.2",
+      "title": "Telemetry Event Contract",
+      "track": "NEXUS_OS",
+      "order": 49.02,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Define redacted telemetry event contract records without external exporters.",
+      "nextPhase": "P74.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.3",
+      "title": "SLO Objective Catalog",
+      "track": "NEXUS_OS",
+      "order": 49.03,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Define SLO objective catalog records without enforcement or paging.",
+      "nextPhase": "P74.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.4",
+      "title": "Health / Incident Snapshot Preview",
+      "track": "NEXUS_OS",
+      "order": 49.04,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Define observability health and incident snapshot previews without remediation execution.",
+      "nextPhase": "P74.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.5",
+      "title": "Command Center Observability UX",
+      "track": "NEXUS_OS",
+      "order": 49.05,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Expose observability readiness without runnable telemetry or incident actions.",
+      "nextPhase": "P74.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 49.06,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Aggregate P74 validation coverage before final validation.",
+      "nextPhase": "P74.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P74.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 49.07,
+      "group": "P74 Observability, Telemetry, SLOs",
+      "status": "planned",
+      "summary": "Validate and close P74 with telemetry export and SLO enforcement still disabled.",
+      "nextPhase": "P75",
       "commandCenterVisible": true
     },
     {
