@@ -334,6 +334,7 @@
     "check:p763": "node scripts/check-p763.js",
     "check:p764": "node scripts/check-p764.js",
     "check:p765-command-center-isolation-ux": "node scripts/check-p765-command-center-isolation-ux.js",
+    "check:p766-tests-checkers-docs": "node scripts/check-p766-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

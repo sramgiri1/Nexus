@@ -4137,10 +4137,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "25f1e2e",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P76.5 display-only Command Center Isolation UX while tenant/project/access mutation remains disabled.",
+      "summary": "Added P76.6 validation coverage aggregation while tenant/project/access mutation remains disabled.",
       "checksRun": [
+        "npm run check:p766-tests-checkers-docs",
         "npm run check:p765-command-center-isolation-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Isolation route\"",
         "cd dashboard && npm run test:unit",
@@ -4157,7 +4158,7 @@
       "knownLimitations": [
         "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P76.6",
+      "nextPhase": "P76.7",
       "commandCenterVisible": true
     },
     {
@@ -4281,13 +4282,22 @@
       "phaseId": "P76.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P76 validation coverage aggregation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Aggregated P76 checker, package script, report, docs, roadmap, status, Command Center, and safety coverage before final validation.",
+      "checksRun": [
+        "npm run check:p766-tests-checkers-docs",
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.6 aggregates validation only. Tenant mutation, project mutation, access grants, role mutation, permission mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P76.7",
       "commandCenterVisible": true
     },
@@ -7227,5 +7237,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P76",
   "previousPhase": "P75",
-  "nextPhase": "P76.6"
+  "nextPhase": "P76.7"
 }

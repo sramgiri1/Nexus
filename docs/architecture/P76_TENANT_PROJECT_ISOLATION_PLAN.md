@@ -99,7 +99,7 @@ DemoApp in full Command Center. System, Dark, and Light themes remain covered.
 
 Aggregate P76 validation coverage before final validation.
 
-Status: planned. P76.6 will verify P76 checker scripts, package scripts,
+Status: complete. P76.6 verifies P76 checker scripts, package scripts,
 reports, docs, phase status, Command Center route coverage, disabled runtime
 tenant/project/access behavior, and no project-file changes.
 
@@ -156,6 +156,15 @@ P76.5 validation:
 - `cd dashboard && npx playwright test tests/routes.spec.js --grep "Isolation route"`
 - `cd dashboard && npm run test:unit`
 - `cd dashboard && npm run build`
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.6 validation:
+
+- `npm run check:p766-tests-checkers-docs`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

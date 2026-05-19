@@ -2619,8 +2619,8 @@
       "order": 51,
       "group": "P76 Tenant / Project Isolation",
       "status": "in_progress",
-      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.5 Command Center Isolation UX is complete.",
-      "nextPhase": "P76.6",
+      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.6 validation aggregation is complete.",
+      "nextPhase": "P76.7",
       "commandCenterVisible": true
     },
     {
@@ -2684,8 +2684,8 @@
       "track": "NEXUS_OS",
       "order": 51.06,
       "group": "P76 Tenant / Project Isolation",
-      "status": "planned",
-      "summary": "Aggregate P76 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P76 validation coverage before final validation.",
       "nextPhase": "P76.7",
       "commandCenterVisible": true
     },
