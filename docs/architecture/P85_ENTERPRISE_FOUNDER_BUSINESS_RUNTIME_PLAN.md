@@ -54,9 +54,14 @@ Validation: `npm run check:p853-prd-review-gate`.
 Goal: convert admitted agent lanes into local task board records without
 dispatch.
 
-Status: planned. P85.4 should map the local PRD and workstreams to task-board
-records with owners, blockers, next inputs, disabled dispatch reasons, and
-validation requirements.
+Status: complete. P85.4 adds `enterpriseFounderTaskBoardAdmission`, a local
+task board admission layer that maps agent lanes into display-safe planning
+tasks with owner capability, task state, next input, blocker, validation
+command, evidence, activity, and cost posture. Command Center Lite shows the
+local task board while dispatch, worker execution, tool execution, project
+mutation, DB writes, deploy, package, and spend remain disabled.
+
+Validation: `npm run check:p854-task-board-admission`.
 
 ## P85.5 Command Center Business Runtime UX
 
@@ -90,6 +95,7 @@ P85 must reuse:
 - `live-ready/enterpriseFounderBusinessRuntime.js`
 - `live-ready/enterpriseFounderQnaTurnState.js`
 - `live-ready/enterpriseFounderPrdReviewGate.js`
+- `live-ready/enterpriseFounderTaskBoardAdmission.js`
 - `live-ready/founderAgentPlanAdmission.js`
 - `founder-intake/founderIntakeSession.js`
 - `business-build/businessBuildPrdSchema.js`
@@ -109,8 +115,9 @@ components, or activity/evidence/audit appenders.
 
 P85 is enterprise founder business runtime state and UX only unless a later
 subphase explicitly says otherwise. P85.1 creates a session record, P85.2
-adds local Q&A turn state, and P85.3 adds local PRD review/version gating that
-later phases can attach real capabilities to.
+adds local Q&A turn state, P85.3 adds local PRD review/version gating, and
+P85.4 admits a non-dispatching local task board that later phases can attach
+real capabilities to.
 
 Still forbidden:
 
@@ -133,8 +140,10 @@ Rollback P85.1/P85.2 by removing
 `live-ready/enterpriseFounderBusinessRuntime.js`,
 `live-ready/enterpriseFounderQnaTurnState.js`,
 `live-ready/enterpriseFounderPrdReviewGate.js`,
+`live-ready/enterpriseFounderTaskBoardAdmission.js`,
 `scripts/check-p85-execution-plan.js`,
 `scripts/check-p851-enterprise-founder-session.js`,
 `scripts/check-p852-founder-turn-state.js`,
-`scripts/check-p853-prd-review-gate.js`, their package scripts and reports, and
-returning OS phase status to `P84.7` with next phase `P85`.
+`scripts/check-p853-prd-review-gate.js`,
+`scripts/check-p854-task-board-admission.js`, their package scripts and
+reports, and returning OS phase status to `P84.7` with next phase `P85`.

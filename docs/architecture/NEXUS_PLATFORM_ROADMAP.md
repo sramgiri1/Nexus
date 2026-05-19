@@ -1404,9 +1404,15 @@ execution posture. Command Center Lite now shows the PRD review gate beside the
 chat and local PRD draft. Provider/model PRD generation, agent dispatch, project
 mutation, DB writes, deploy, package, and spend remain disabled.
 
-P85.4 is next. It should map the approved local PRD/workstreams to a
-non-dispatching task board with owners, blockers, evidence, and validation
-requirements.
+P85.4 is complete. It maps local agent lanes into a non-dispatching task board
+with owner capability, task state, next input, blocker, validation command,
+evidence, activity, and cost posture. Command Center Lite shows the local task
+board while dispatch, workers, tools, project mutation, DB writes, deploy,
+package, and spend remain disabled.
+
+P85.5 is next. It should consolidate the founder-facing business runtime UX
+across chat, PRD review, and task board so the Command Center reads like one
+usable founder workflow.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).

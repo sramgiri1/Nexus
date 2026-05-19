@@ -262,6 +262,32 @@ test("Command Center Lite route renders PRD review gate", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Command Center Lite route renders local task board", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/lite");
+
+  const taskBoard = page.getByLabel("Local agent task board");
+  await expect(taskBoard).toContainText("How NEXUS will assign the work");
+  await expect(taskBoard).toContainText("Blocked on PRD review");
+  await expect(taskBoard).toContainText("Product planning task");
+  await expect(taskBoard).toContainText("Engineering planning task");
+  await expect(taskBoard).toContainText("Dispatch blocked");
+  await expect(taskBoard).toContainText("Complete founder PRD review before admitting local task-board planning.");
+  await expect(taskBoard).not.toContainText("agent_dispatch");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/dispatch agent now|run worker now|execute now|deploy now|apply now|call provider now|create project now/i);
+  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 

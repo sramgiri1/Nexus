@@ -4086,12 +4086,12 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "3b78c91",
       "completedAt": "",
-      "summary": "Enterprise founder business runtime in progress with local session, Q&A turn state, and PRD review gate complete.",
+      "summary": "Enterprise founder business runtime in progress with local session, Q&A, PRD review, and task board admission complete.",
       "checksRun": [],
       "knownLimitations": [
         "Provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled."
       ],
-      "nextPhase": "P85.4",
+      "nextPhase": "P85.5",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4161,14 +4161,21 @@
     {
       "phaseId": "P85.4",
       "title": "Local Agent Task Board Admission",
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Map approved local PRD/workstreams to non-dispatching task board records.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:26:23.360Z",
+      "summary": "Added display-safe non-dispatching local agent task board admission with owner, state, blocker, next input, and validation command per lane.",
+      "checksRun": [
+        "npm run check:p854-task-board-admission",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite local task board"
+      ],
       "knownLimitations": [
-        "Not started."
+        "Planning tasks only; no agent dispatch, worker/tool execution, project mutation, DB writes, deploy, package, or spend."
       ],
       "nextPhase": "P85.5",
       "commandCenterVisible": true,
@@ -4176,11 +4183,30 @@
       "order": 63.07,
       "label": "Local Agent Task Board Admission",
       "detail": "Non-dispatching local task board admission for approved PRD workstreams."
+    },
+    {
+      "phaseId": "P85.5",
+      "title": "Command Center Business Runtime UX",
+      "track": "NEXUS_OS",
+      "order": 64.07,
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Finalize founder-facing business runtime UX across chat, PRD review, and local task board.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P85.6",
+      "commandCenterVisible": true,
+      "label": "Command Center Business Runtime UX",
+      "detail": "Founder-facing runtime UX consolidation for P85 session, PRD review, and local task board."
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P85.3",
-  "previousPhase": "P85.2",
-  "nextPhase": "P85.4",
+  "currentPhase": "P85.4",
+  "previousPhase": "P85.3",
+  "nextPhase": "P85.5",
   "currentPhaseStatus": "complete"
 }

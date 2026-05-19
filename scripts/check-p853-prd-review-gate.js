@@ -85,7 +85,12 @@ addCheck("Playwright coverage added", tests.includes("Command Center Lite route 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p853-prd-review-gate"]));
 addCheck("contract references P85.3 files", contract.includes("live-ready/enterpriseFounderPrdReviewGate.js") && contract.includes("check:p853-prd-review-gate"));
 addCheck("docs mention P85.3 validation", docs.includes("P85.3 PRD Version Review Gate") && docs.includes("npm run check:p853-prd-review-gate"));
-addCheck("phase status advanced", statusById.get("P85.3")?.status === "complete" && status.currentPhase === "P85.3" && status.nextPhase === "P85.4");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.3")?.status === "complete" &&
+    ["P85.3", "P85.4", "P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.4", "P85.5", "P85.6", "P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p852-founder-turn-state-report.md"));
 addCheck("display payload has no private ids", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(reviewText));
 addCheck("no fake unsafe runnable actions", !/generate PRD now|call provider now|dispatch agent now|write project now|deploy now|spend now|create project now/i.test(reviewText));

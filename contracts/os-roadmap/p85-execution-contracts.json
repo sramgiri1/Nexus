@@ -424,7 +424,22 @@
       "targetAgent": "planner",
       "taskType": "implementation-plan",
       "objective": "Convert admitted agent lanes into local task board records without dispatch.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "live-ready/enterpriseFounderTaskBoardAdmission.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p854-task-board-admission.js",
+        "reports/p854-task-board-admission-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "package.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p85-execution-plan-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -441,15 +456,15 @@
         "phaseId": "P85.4",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.3",
-        "narrowScope": "Create local agent task board records only.",
+        "expectedBaseCommit": "9b67329",
+        "narrowScope": "Add display-safe non-dispatching local agent task board admission only.",
         "safetyRules": [
           "Agent dispatch and worker execution remain false."
         ],
         "reuseCheck": {
           "rule": "Reuse P84 agent plan admission and existing Command Center agent flow components."
         },
-        "commandCenterUxRequirements": "Show lane tasks, blockers, next input, and disabled dispatch reason.",
+        "commandCenterUxRequirements": "Founder Lite must show local task board tasks, owner capability, state, next input, blocker, validation command, and disabled dispatch reason without raw internal IDs.",
         "themeRequirements": [
           "Preserve themes."
         ],
@@ -457,10 +472,16 @@
           "Add agent task board coverage."
         ],
         "testsCheckers": [
-          "Add P85.4 checker."
+          "Add check:p854-task-board-admission.",
+          "Update Playwright Lite route coverage for local task board."
         ],
         "validationCommands": [
-          "npm run check:p854-agent-task-board",
+          "npm run check:p854-task-board-admission",
+          "npm run check:p85-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders local task board\"",
           "git diff --check"
         ],
         "finalSafetyChecks": [
@@ -474,7 +495,46 @@
           "Branch name",
           "Commit hash",
           "Next phase/subphase"
-        ]
+        ],
+        "exactFilesModules": {
+          "create": [
+            "live-ready/enterpriseFounderTaskBoardAdmission.js",
+            "scripts/check-p854-task-board-admission.js",
+            "reports/p854-task-board-admission-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p85-execution-contracts.json",
+            "package.json",
+            "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P85_FOUNDER_TASK_BOARD_ADMISSION_PHASE",
+            "buildFounderTaskBoardAdmission",
+            "validateFounderTaskBoardAdmission"
+          ],
+          "dataShapes": [
+            "schemaVersion",
+            "boardState",
+            "taskCount",
+            "tasks[]",
+            "blockers",
+            "nextAction",
+            "dispatchAllowed",
+            "executionAllowed",
+            "safety",
+            "evidenceRefs",
+            "activityLocation",
+            "costImpact",
+            "commandCenterVisible"
+          ]
+        }
       },
       "acceptanceCriteria": [
         "Task board validates.",

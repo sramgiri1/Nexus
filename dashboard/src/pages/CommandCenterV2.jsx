@@ -99,6 +99,7 @@ import {
   resetFounderQnaTurnState,
 } from "../../../live-ready/enterpriseFounderQnaTurnState.js";
 import { buildFounderPrdReviewGate } from "../../../live-ready/enterpriseFounderPrdReviewGate.js";
+import { buildFounderTaskBoardAdmission } from "../../../live-ready/enterpriseFounderTaskBoardAdmission.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -2512,6 +2513,7 @@ function CommandCenterLitePage() {
   const [draftMessage, setDraftMessage] = useState("");
   const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
   const prdReview = buildFounderPrdReviewGate({ qnaState: envelope }).data;
+  const taskBoard = buildFounderTaskBoardAdmission({ qnaState: envelope, prdReview }).data;
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -2653,7 +2655,49 @@ function CommandCenterLitePage() {
       </div>
 
       <AgentFlowPanel envelope={envelope} />
+      <LocalTaskBoardPanel taskBoard={taskBoard} />
     </div>
+  );
+}
+
+function LocalTaskBoardPanel({ taskBoard }) {
+  return (
+    <section className="ccv2-card ccv2-agent-flow" aria-label="Local agent task board">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Local Task Board</div>
+          <h3>How NEXUS will assign the work</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {taskBoard.boardState} · {taskBoard.taskCount} planned tasks
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Dispatch blocked</span>
+      </div>
+      <div className="ccv2-agent-flow__rail">
+        {taskBoard.tasks.map((task) => (
+          <div className="ccv2-agent-flow__node" key={task.title}>
+            <div className="ccv2-agent-flow__step">{task.taskNumber}</div>
+            <div className="ccv2-agent-flow__body">
+              <div className="ccv2-agent-flow__lane">{task.title}</div>
+              <div className="ccv2-agent-flow__owner">{task.ownerCapability}</div>
+              <div className="ccv2-agent-flow__state">{task.state}</div>
+              <div className="ccv2-agent-flow__next">{task.nextInput}</div>
+              <div className="ccv2-agent-flow__blocker">{task.blocker}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-agent-flow__footer">
+        <div>
+          <span>Next</span>
+          <strong>{taskBoard.nextAction}</strong>
+        </div>
+        <div>
+          <span>Disabled</span>
+          <strong>{taskBoard.disabledReason}</strong>
+        </div>
+      </div>
+    </section>
   );
 }
 
