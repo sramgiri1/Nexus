@@ -2628,7 +2628,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-final-commit",
+      "commit": "ea119ea",
       "completedAt": "2026-05-19T02:00:00.000Z",
       "summary": "Completed code-mode runtime and lazy-loading preview foundation with execution contracts, sessions, selected lazy packets, Command Center readiness UX, and final validation.",
       "checksRun": [
@@ -2749,7 +2749,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p648-final-commit",
+      "commit": "ea119ea",
       "completedAt": "2026-05-19T02:00:00.000Z",
       "summary": "Closed P64.8 with aggregate validation and P65 handoff while code-mode runtime remains non-executing.",
       "checksRun": [
