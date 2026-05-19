@@ -73,10 +73,24 @@ Implementation:
 
 Define restore plan preview records without restore execution.
 
-Status: planned. P75.3 will add preview-only `RestorePlanPreview` records
-that capture restore scope, source backup, approval requirement, disabled
-restore execution, disabled overwrite/delete behavior, evidence/activity
-references, cost impact, disabled reason, and next action.
+Status: complete. P75.3 adds preview-only `RestorePlanPreview` records that
+capture restore scope, source backup inventory, approval requirement, disabled
+restore execution, disabled backup creation/failover, disabled overwrite and
+delete behavior, disabled runtime mutation, evidence/activity references, cost
+impact, disabled reason, owner capability, and next action.
+
+Implementation:
+
+- `backup-dr/p75-3-placeholder.js` exports `createRestorePlanPreview`,
+  `validateRestorePlanPreview`, `buildRestorePlanPreviewEnvelope`,
+  `P75_3_REQUIRED_FIELDS`, and `P75_3_SAMPLE_PREVIEWS`.
+- `scripts/check-p753.js` validates source backup inventory reuse, restore
+  preview shape, disabled restore/backup/failover, disabled overwrite/delete,
+  disabled DB and project mutation, disabled provider/tool/worker execution,
+  disabled network/spend, disabled deploy/release/export/package behavior,
+  disabled auth mutation, hidden private IDs/tokens/storage URLs,
+  evidence/activity, cost impact, approval gate, and non-runnable disabled
+  reasons.
 
 ### P75.4 Disaster Recovery Runbook + Safety Gate
 

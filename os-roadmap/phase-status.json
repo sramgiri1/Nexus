@@ -3928,10 +3928,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c62b2f5",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added P75 backup inventory contracts while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Added P75 restore plan previews while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p753",
         "npm run check:p752",
         "npm run check:p75-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -3942,7 +3943,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.3",
+      "nextPhase": "P75.4",
       "commandCenterVisible": true
     },
     {
@@ -3994,13 +3995,23 @@
       "phaseId": "P75.3",
       "title": "Restore Plan Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned restore plan previews without restore execution.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added preview-only restore plan previews without enabling restore execution, overwrite, delete, backup creation, failover, DB writes, network calls, or provider spend.",
+      "checksRun": [
+        "npm run check:p753",
+        "npm run check:p752",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.3 records restore plan previews only. Restore execution, overwrite, delete, backup creation, failover, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75.4",
       "commandCenterVisible": true
     },
@@ -6996,5 +7007,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75.3"
+  "nextPhase": "P75.4"
 }
