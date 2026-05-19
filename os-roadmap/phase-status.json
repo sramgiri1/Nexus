@@ -3181,10 +3181,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2b8112d",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P67 is in progress with contract-only controlled mutation planning complete; mutation behavior remains disabled.",
+      "summary": "P67 is in progress with mutation intent records complete; mutation behavior remains disabled.",
       "checksRun": [
+        "npm run check:p672",
         "npm run check:p67-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3192,9 +3193,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P67.1 does not enable project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, or provider spend."
+        "P67.2 defines display-safe mutation intent records only. Project mutation, provider/tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P67.2",
+      "nextPhase": "P67.3",
       "commandCenterVisible": true
     },
     {
@@ -3223,13 +3224,22 @@
       "phaseId": "P67.2",
       "title": "Mutation Intent Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define safe source mutation intent records and validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T01:53:13.084Z",
+      "summary": "Defined display-safe source mutation intent records with scope, blockers, evidence, approval, rollback, and disabled execution flags.",
+      "checksRun": [
+        "npm run check:p672",
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P67.2 defines display-safe mutation intent records only. Project mutation, provider/tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P67.3",
       "commandCenterVisible": true
     },
@@ -5508,8 +5518,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-18T23:00:00.000Z",
+  "updatedAt": "2026-05-19T01:53:13.085Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
-  "nextPhase": "P67.2"
+  "nextPhase": "P67.3"
 }

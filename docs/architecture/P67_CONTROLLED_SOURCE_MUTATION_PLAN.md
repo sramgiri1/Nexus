@@ -47,7 +47,22 @@ calls, and provider spend remain disabled.
 Define display-safe source mutation intent records with allowed and forbidden
 scope.
 
-Status: planned.
+Status: complete. P67.2 adds a preview-only `MutationIntentContract` shape for
+NEXUS OS source mutation planning. The contract records display-safe scope,
+allowed files, forbidden files, diff preview state, approval state, rollback
+posture, blockers, evidence/activity references, owner capability, and next
+action while mutation, execution, provider dispatch, DB writes, deploy, and
+spend remain disabled.
+
+Implementation:
+
+- `controlled-mutation/p67-2-placeholder.js` exports
+  `createMutationIntentContract`, `validateMutationIntentContract`,
+  `buildMutationIntentEnvelope`, `P67_2_REQUIRED_FIELDS`, and
+  `P67_2_SAMPLE_INTENTS`.
+- `scripts/check-p672.js` validates required fields, display-safe redaction,
+  project path blocking, disabled mutation/execution/spend flags, evidence
+  references, and non-runnable disabled reasons.
 
 ### P67.3 Patch Plan Preview
 

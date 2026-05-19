@@ -169,8 +169,7 @@ export function checkP67ExecutionPlan() {
 
   const phaseStatus = new Map((status.phases || []).map((phase) => [phase.phaseId, phase]));
   const p67 = phaseStatus.get("P67");
-  const p671 = phaseStatus.get("P67.1");
-  const expectedNext = p671?.status === "complete" ? "P67.2" : "P67.1";
+  const expectedNext = P67_CONTROLLED_MUTATION_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "P68";
   if (!["in_progress", "complete"].includes(p67?.status)) fail("roadmapStatus", "P67 must be in_progress or complete");
   if (p67?.nextPhase !== expectedNext) fail("roadmapStatus", `P67 nextPhase must be ${expectedNext}`);
   if (status.currentPhase !== "P67") fail("roadmapStatus", "currentPhase must be P67");
