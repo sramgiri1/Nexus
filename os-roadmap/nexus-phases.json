@@ -2321,10 +2321,10 @@
       "track": "NEXUS_OS",
       "order": 45,
       "group": "Planned OS Phases",
-      "summary": "Deploy monitoring and incident mitigation is in progress with incident signal previews complete; all deploy-adjacent execution remains disabled.",
+      "summary": "Deploy monitoring and incident mitigation is in progress with mitigation readiness gates complete; all deploy-adjacent execution remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P70.4"
+      "nextPhase": "P70.5"
     },
     {
       "phaseId": "P71",
@@ -2591,8 +2591,8 @@
       "track": "NEXUS_OS",
       "order": 45.04,
       "group": "P70 Deploy Monitoring + Incident Mitigation",
-      "status": "planned",
-      "summary": "Add mitigation readiness gates while keeping mitigation, rollback, alert, and deploy execution disabled.",
+      "status": "complete",
+      "summary": "Added mitigation readiness gates while keeping mitigation, rollback, alert, and deploy execution disabled.",
       "nextPhase": "P70.5",
       "commandCenterVisible": true
     },

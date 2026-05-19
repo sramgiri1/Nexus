@@ -92,7 +92,24 @@ Implementation:
 Add mitigation readiness gates while keeping mitigation, rollback, alert, and
 deploy execution disabled.
 
-Status: planned.
+Status: complete. P70.4 adds preview-only `MitigationReadinessGate` records
+derived from P70.3 incident signal previews. Each gate records approval state,
+validation readiness, rollback readiness, evidence readiness, cost review,
+required evidence, blockers, disabled reason, owner capability, evidence/
+activity references, and next action while keeping mitigation, rollback, alert,
+incident, and deploy execution disabled.
+
+Implementation:
+
+- `deploy-monitoring/p70-4-placeholder.js` exports
+  `createMitigationReadinessGate`, `validateMitigationReadinessGate`,
+  `buildMitigationReadinessGateEnvelope`, `P70_4_REQUIRED_FIELDS`, and
+  `P70_4_SAMPLE_GATES`.
+- `scripts/check-p704.js` validates gate shape, approval state, validation
+  readiness, rollback readiness, evidence readiness, cost review, blockers,
+  required evidence, disabled mitigation/rollback/alert/incident/deploy
+  execution, disabled provider/tool/worker execution, disabled DB/network/
+  spend, and non-runnable disabled reasons.
 
 ### P70.5 Command Center Monitoring UX
 
@@ -136,7 +153,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.3. Deploy execution, incident execution,
+P70 is in progress through P70.4. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
