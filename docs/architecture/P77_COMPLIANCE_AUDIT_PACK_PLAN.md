@@ -106,12 +106,18 @@ certification/export/package behavior, and no project-file changes.
 
 Run final validation, close P77, and hand off to P78.
 
-Status: planned. P77.7 will verify all P77 subphases are complete, Command
+Status: complete. P77.7 verifies all P77 subphases are complete, Command
 Center Compliance UX remains display-only, roadmap/status evidence is current,
 and certification, legal attestation, audit export, package creation, DB
 writes, project mutation, provider/tool/worker execution, network calls,
 deploy/release/export package behavior, auth/session/user/workspace mutation,
 and provider spend remain disabled.
+
+P77 is complete. NEXUS OS is handed off to P78 for the self-healing enterprise
+developer preview while compliance certification, legal attestation, audit
+export, raw log export, package creation, DB writes, project mutation,
+provider/tool/worker execution, network calls, deploy/release/export behavior,
+auth/session/user/workspace mutation, and provider spend remain disabled.
 
 ## Validation
 
@@ -175,6 +181,20 @@ P77.6 validation:
 - `npm run check:p774`
 - `npm run check:p773`
 - `npm run check:p772`
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.7 validation:
+
+- `npm run check:p777-final-validation`
+- `npm run check:p776-tests-checkers-docs`
+- `npm run check:p775-command-center-compliance-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Compliance route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p77-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

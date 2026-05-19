@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Aggregate P77 validation coverage before final validation while certification, export, package, and runtime mutation remain disabled.",
+      "summary": "Completed compliance and audit pack readiness with display-only Command Center Compliance UX and P78 handoff.",
       "commandCenterVisible": true,
-      "status": "in_progress",
-      "nextPhase": "P77.7"
+      "status": "complete",
+      "nextPhase": "P78"
     },
     {
       "phaseId": "P77.1",
@@ -2780,8 +2780,8 @@
     {
       "phaseId": "P77.7",
       "title": "Final Validation",
-      "status": "planned",
-      "summary": "Plan final P77 validation and P78 handoff without enabling runtime mutation.",
+      "status": "complete",
+      "summary": "Closed P77 final validation and handed off to P78 while certification, export, package, and runtime mutation remain disabled.",
       "nextPhase": "P78",
       "order": 52.07,
       "track": "NEXUS_OS",
@@ -2795,7 +2795,9 @@
       "order": 53,
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "status": "planned",
+      "nextPhase": "P78"
     },
     {
       "phaseId": "P68.1",
