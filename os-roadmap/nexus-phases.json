@@ -3268,8 +3268,8 @@
       "order": 54,
       "group": "P79 Live Execution Contract + Mode Gates",
       "status": "in_progress",
-      "summary": "Opened live execution readiness with blocked-by-default mode gates.",
-      "nextPhase": "P79.2",
+      "summary": "Opened live execution readiness with live mode gates and command admission records.",
+      "nextPhase": "P79.3",
       "commandCenterVisible": true
     },
     {
@@ -3289,8 +3289,8 @@
       "track": "NEXUS_OS",
       "order": 54.02,
       "group": "P79 Live Execution Contract + Mode Gates",
-      "status": "planned",
-      "summary": "Add live command admission schemas and approval records without executing commands.",
+      "status": "complete",
+      "summary": "Added live command admission records without command execution or runtime mutation.",
       "nextPhase": "P79.3",
       "commandCenterVisible": true
     },
@@ -3350,5 +3350,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T15:00:00.000Z"
+  "updatedAt": "2026-05-19T15:30:00.000Z"
 }

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T16:34:03.861Z
+- Generated at: 2026-05-19T16:37:33.854Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5977082
+- Validation HEAD: 37c516c
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -151,9 +151,9 @@
 | P78.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P78.6 validation coverage | PASS | 20 checkers, 11 reports |
 | P78.7 validation coverage | PASS | 30 checkers, 20 reports |
-| P79 validation coverage | PASS | 7 checkers, 2 reports |
+| P79 validation coverage | PASS | 8 checkers, 3 reports |
 | P79.1 validation coverage | PASS | 5 checkers, 2 reports |
-| P79.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P79.2 validation coverage | PASS | 7 checkers, 1 reports |
 | P79.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P79.4 validation coverage | PASS | 1 checkers, 1 reports |
 | P79.5 validation coverage | PASS | 11 checkers, 11 reports |
@@ -161,18 +161,13 @@
 | P79.7 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P79.1; next=P79.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P79.2; next=P79.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P79.2 Live Command Intent Admission
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P79.3 Local Action Bridge Admission Controller
   - status: planned
   - checkers: 0

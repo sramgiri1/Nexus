@@ -48,6 +48,24 @@ Goal: add live command admission schemas and approval records without executing 
 
 UX: Command Center must explain current admission state, next action, blockers, disabled reason, owner, evidence/activity location, and cost impact.
 
+Expected data shape:
+
+- state: `blocked` or `admitted`
+- capability
+- knownCapability
+- redacted intent
+- missingApprovals
+- executionEnabled: `false`
+- dryRunOnly: `true`
+- provider/tool/worker/project/DB/deploy/spend flags: `false`
+- disabledReason
+- blockers
+- nextAction
+- ownerCapability
+- evidenceLocation
+- activityLocation
+- costImpact
+
 Validation: `npm run check:p792-live-command-intent`.
 
 ### P79.3 Local Action Bridge Admission Controller

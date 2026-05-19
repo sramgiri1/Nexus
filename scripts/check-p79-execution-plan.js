@@ -92,7 +92,7 @@ export function checkP79ExecutionPlan() {
   const expectedNext = P79_LIVE_SUBPHASES.find((phaseId) => phaseStatus.get(phaseId)?.status !== "complete") || "complete";
   if (!["in_progress", "complete"].includes(p79?.status)) fail("roadmapStatus", "P79 must be in_progress or complete");
   if (p79?.nextPhase !== expectedNext) fail("roadmapStatus", `P79 nextPhase must be ${expectedNext}`);
-  if (!["P79", "P79.1"].includes(status.currentPhase)) fail("roadmapStatus", "currentPhase must be P79 or P79.1 during P79.1");
+  if (!["P79", ...P79_LIVE_SUBPHASES].includes(status.currentPhase)) fail("roadmapStatus", "currentPhase must be P79 or an active P79 subphase");
   if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
 
   const plan = read(PLAN_PATH);
