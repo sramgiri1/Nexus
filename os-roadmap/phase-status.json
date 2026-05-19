@@ -4542,7 +4542,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c147183",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Started P78 with implementation-grade enterprise developer preview contracts while founder automation and runtime mutation remain disabled.",
       "checksRun": [
@@ -4564,7 +4564,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c147183",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Defined implementation-grade P78 subphase contracts and enterprise developer preview safety boundary.",
       "checksRun": [
