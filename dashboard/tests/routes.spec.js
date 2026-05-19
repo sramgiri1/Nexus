@@ -140,6 +140,8 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /Chat with NEXUS and watch the agent plan form/i })).toBeVisible();
   await expect(page.getByLabel("Chat with NEXUS")).toContainText("NEXUS");
   await expect(page.getByLabel("Agent action flow")).toContainText("Product");
+  await expect(page.locator(".ccv2-topbar__breadcrumb")).toHaveCount(0);
+  await expect(page.locator(".ccv2-topbar__scope-chip")).toHaveCount(0);
   await expect(page.locator(".nav-rail")).toHaveCount(0);
   await expect(page.locator(".shell-sidebar")).toHaveCount(0);
 
@@ -178,13 +180,18 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   }
 
   const body = await page.locator("body").innerText();
-  expect(body).toContain("Local-only");
-  expect(body).toMatch(/No spend/i);
-  expect(body).toContain("Provider/model calls, agent dispatch");
+  expect(body).toContain("Planning only: NEXUS will not call providers");
+  expect(body).not.toContain("Local-only");
+  expect(body).not.toMatch(/No spend/i);
+  expect(body).not.toContain("P84.2 report");
+  expect(body).not.toContain("OS phase status");
   expect(body).not.toContain("DemoApp");
   expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/);
 
+  await expect(page.getByLabel("Local PRD readiness")).not.toContainText("Build a simple iOS Snake game for the App Store");
   await page.getByLabel("Founder message").fill("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).not.toContainText("Build a simple iOS Snake game for the App Store");
+  await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByLabel("Local PRD readiness")).toContainText("Build a simple iOS Snake game for the App Store");
   await expect(page.getByLabel("Local PRD readiness")).toContainText("casual iPhone players");
   await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
@@ -1249,9 +1256,9 @@ test.describe("Command Center route-wide UX", () => {
     expect(sidebarText).toContain("Business Build");
     expect(sidebarText).toContain("Activity Log");
     expect(sidebarText).toContain("Docs & Guides");
-    expect(sidebarText).toMatch(/Live Readiness\s+READY/i);
-    expect(sidebarText).toMatch(/Founder Intake\s+READY/i);
-    expect(sidebarText).toMatch(/Business Build\s+NEEDS SETUP/i);
+    expect(sidebarText).not.toMatch(/\bREADY\b/i);
+    expect(sidebarText).not.toMatch(/\bLOCAL\b/i);
+    expect(sidebarText).not.toMatch(/\bNEEDS SETUP\b/i);
     expect(sidebarText).not.toContain("Agent Workbench");
     expect(sidebarText).not.toContain("Implementation");
     expect(sidebarText).not.toContain("Live API");

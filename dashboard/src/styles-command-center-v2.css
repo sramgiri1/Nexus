@@ -328,10 +328,7 @@
 }
 
 .ccv2-lite-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  gap: 16px;
-  align-items: end;
+  display: block;
   padding: 18px 0 4px;
 }
 
@@ -349,13 +346,6 @@
   color: var(--v2-muted);
   font-size: 13px;
   line-height: 1.55;
-}
-
-.ccv2-lite-hero__status {
-  display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
-  justify-content: flex-end;
 }
 
 .ccv2-lite-layout {
@@ -419,7 +409,7 @@
   gap: 6px;
 }
 
-.ccv2-lite-composer span {
+.ccv2-lite-composer label {
   color: var(--v2-muted);
   font-size: 11px;
   font-weight: 700;
@@ -435,6 +425,35 @@
   color: var(--v2-text);
   font: inherit;
   line-height: 1.5;
+}
+
+.ccv2-lite-composer__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: space-between;
+}
+
+.ccv2-lite-composer__actions span {
+  color: var(--v2-muted);
+  font-size: 12px;
+}
+
+.ccv2-lite-send {
+  min-width: 92px;
+  min-height: 38px;
+  border: 1px solid var(--v2-border-strong);
+  border-radius: 8px;
+  background: var(--nexus-accent);
+  color: var(--nexus-bg);
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ccv2-lite-send:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 
 .ccv2-lite-prompt-grid {
@@ -615,6 +634,10 @@
   padding: 0 16px;
   gap: 8px;
   flex-shrink: 0;
+}
+
+.ccv2-topbar--founder-lite {
+  justify-content: flex-end;
 }
 
 .ccv2-theme-control {
@@ -5535,9 +5558,5 @@
   .ccv2-agent-flow__rail,
   .ccv2-agent-flow__footer {
     grid-template-columns: 1fr;
-  }
-
-  .ccv2-lite-hero__status {
-    justify-content: flex-start;
   }
 }
