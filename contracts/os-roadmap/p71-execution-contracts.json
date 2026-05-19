@@ -1,0 +1,703 @@
+{
+  "phaseId": "P71",
+  "title": "Project Shipping Boundary + Export Pipeline",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p71-1-execution-contract-shipping-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P71 project shipping and export pipeline contracts with package/export execution disabled.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p71-execution-contracts.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "scripts/check-p71-execution-plan.js",
+        "reports/p71-execution-plan-report.md",
+        "package.json",
+        "scripts/check-os-phase-status.js",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/deploy*.js",
+        "scripts/release*.js",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "04cdac3",
+        "narrowScope": "Define contracts only; no package creation, export execution, or project mutation.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend.",
+          "Project shipping records must be preview-only, redaction-aware, evidence-linked, approval-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, raw evidence, fake runnable package/export actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scope-boundary/exportSafety.js",
+            "scope-boundary/exportRules.js",
+            "scope-boundary/exportSafetyReport.js",
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing export safety, report, result, redaction, mode guard, phase status, Command Center, evidence, activity, and cost patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P71.1.",
+          "required": "Future or changed UX must show shipping state, export readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, redaction posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p71-execution-contracts.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "scripts/check-p71-execution-plan.js",
+            "reports/p71-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "scripts/check-os-phase-status.js",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P71_PROJECT_SHIPPING_SUBPHASES",
+            "checkP71ExecutionPlan",
+            "createProjectShippingManifest",
+            "createExportPackagePreview",
+            "createShippingReadinessGate",
+            "buildProjectShippingReadinessViewModel"
+          ],
+          "schemas": [
+            "ProjectShippingManifest",
+            "ExportPackagePreview",
+            "ShippingReadinessGate",
+            "ProjectShippingCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "shippingId, projectDisplayName, exportTarget, packageState, redactionState, exportAllowed, packageCreationAllowed, disabledReason, blockers, allowedFiles, forbiddenFiles, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show shipping state, export readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, redaction posture, and cost impact without raw JSON, raw logs, raw private IDs, raw evidence, DemoApp leakage, internal phase labels, or fake runnable package/export actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p71-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p71-execution-plan."
+        ],
+        "docsRoadmap": [
+          "Add P71 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P71.1 complete after validation and set nextPhase to P71.2.",
+        "validationCommands": [
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, network calls, deploy/release execution, and provider spend were not enabled.",
+          "Confirm no projects/** or project-roadmap/** files changed.",
+          "Confirm no fake package/export actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, raw evidence, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P71 files>",
+          "git commit -m \"docs(nexus): define p71 project shipping contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P71.1 is independently commit-ready.",
+        "No package creation, export execution, project mutation, provider/tool execution, worker execution, DB write, network call, deploy/release execution, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p70-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-2-project-shipping-manifest-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe project shipping manifest records without package creation or export execution.",
+      "allowedFiles": [
+        "project-shipping/p71-2-placeholder.js",
+        "scripts/check-p712.js",
+        "reports/p712-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.1",
+        "narrowScope": "Create project shipping manifest records only.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend.",
+          "Project shipping records must be preview-only, redaction-aware, evidence-linked, approval-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, raw evidence, fake runnable package/export actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scope-boundary/exportSafety.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js"
+          ],
+          "rule": "Reuse existing export safety and shared reporting/redaction helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve Command Center UX. Future P71 UX must show shipping state, export readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, redaction posture, and cost impact without raw JSON, raw logs, raw evidence, or raw private IDs.",
+        "exactFilesModules": {
+          "create": [
+            "project-shipping/p71-2-placeholder.js",
+            "scripts/check-p712.js",
+            "reports/p712-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p712",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Shipping manifest records validate and remain display-safe.",
+        "Package creation and export execution remain disabled.",
+        "No project source files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-1-execution-contract-shipping-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-3-export-package-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Create export package preview records without writing package artifacts.",
+      "allowedFiles": [
+        "project-shipping/p71-3-placeholder.js",
+        "scripts/check-p713.js",
+        "reports/p713-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "artifacts/project-release/**",
+        "providers/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.2",
+        "narrowScope": "Create export package preview records only.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend.",
+          "Preview records must be redaction-aware and non-executing."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scope-boundary/exportSafety.js",
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js"
+          ],
+          "rule": "Reuse export safety and shared reporting helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and redaction posture without raw JSON, raw logs, raw evidence, raw private IDs, or runnable package/export actions.",
+        "exactFilesModules": {
+          "create": [
+            "project-shipping/p71-3-placeholder.js",
+            "scripts/check-p713.js",
+            "reports/p713-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p713",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Preview records validate.",
+        "No package artifact is created.",
+        "No project source files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-2-project-shipping-manifest-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-4-shipping-readiness-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Add a shipping readiness gate while keeping package/export execution disabled.",
+      "allowedFiles": [
+        "project-shipping/p71-4-placeholder.js",
+        "scripts/check-p714.js",
+        "reports/p714-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "artifacts/project-release/**",
+        "providers/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.3",
+        "narrowScope": "Create shipping readiness gate records only.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "project-shipping/p71-2-placeholder.js",
+            "project-shipping/p71-3-placeholder.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js"
+          ],
+          "rule": "Reuse prior P71 preview records and shared reporting helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and redaction posture without raw JSON, raw logs, raw evidence, raw private IDs, or fake package/export actions.",
+        "exactFilesModules": {
+          "create": [
+            "project-shipping/p71-4-placeholder.js",
+            "scripts/check-p714.js",
+            "reports/p714-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p714",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Readiness gate records validate.",
+        "Package and export execution remain disabled.",
+        "No project source files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-3-export-package-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-5-command-center-shipping-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Expose project shipping readiness in Command Center without runnable package/export actions.",
+      "allowedFiles": [
+        "dashboard/src/data/projectShippingReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p715-command-center-shipping-ux.js",
+        "reports/command-center-shipping-ux-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.4",
+        "narrowScope": "Add display-only Command Center shipping readiness UX.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, raw evidence, DemoApp, or internal phase labels."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js"
+          ],
+          "rule": "Reuse existing Command Center route matrix, tabs, page sections, disabled buttons, and theme controls; do not duplicate UI primitives."
+        },
+        "commandCenterUxRequirements": "Show shipping state, export readiness, next action, blockers, disabled reason, owner capability, evidence/activity location, redaction posture, and cost impact. Hide raw JSON/logs/evidence, DemoApp, raw private IDs, and phase labels.",
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/projectShippingReadiness.js",
+            "scripts/check-p715-command-center-shipping-ux.js",
+            "reports/command-center-shipping-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p715-command-center-shipping-ux",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Project Shipping route\"",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center shipping readiness is display-only.",
+        "Themes and route-wide safety tests pass.",
+        "No package/export execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-4-shipping-readiness-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P71 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+      "allowedFiles": [
+        "scripts/check-p716-tests-checkers-docs.js",
+        "reports/p716-tests-checkers-docs-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.5",
+        "narrowScope": "Aggregate validation coverage only.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scripts/check-p706-tests-checkers-docs.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js"
+          ],
+          "rule": "Reuse existing aggregation checker and shared reporting patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve P71 Command Center UX, disabled state, next action, raw output safety, and route-wide safety coverage.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p716-tests-checkers-docs.js",
+            "reports/p716-tests-checkers-docs-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p716-tests-checkers-docs",
+          "npm run check:p715-command-center-shipping-ux",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P71 validation aggregation passes.",
+        "Command Center route coverage remains safe.",
+        "No package/export execution is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-5-command-center-shipping-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p71-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Close P71 and hand off to P72 with package/export execution still disabled.",
+      "allowedFiles": [
+        "scripts/check-p717-final-validation.js",
+        "reports/p717-final-validation-report.md",
+        "package.json",
+        "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "providers/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        "scripts/export*.js",
+        "scripts/package*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P71.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P71.6",
+        "narrowScope": "Final validation and roadmap handoff only.",
+        "safetyRules": [
+          "Do not enable package creation, export execution, project mutation, provider dispatch, tool execution, worker execution, DB writes, external network calls, deploy execution, release execution, or provider spend."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "scripts/check-p707-final-validation.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js"
+          ],
+          "rule": "Reuse final validation checker and shared reporting patterns; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Preserve P71 Command Center UX, disabled state, next action, raw output safety, and safety coverage during handoff.",
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p717-final-validation.js",
+            "reports/p717-final-validation-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P71_PROJECT_SHIPPING_EXPORT_PLAN.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p717-final-validation",
+          "npm run check:p716-tests-checkers-docs",
+          "npm run check:p715-command-center-shipping-ux",
+          "cd dashboard && npm run test:unit",
+          "cd dashboard && npm run build",
+          "npm run check:p71-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P71 is complete and current phase advances to P72.",
+        "Package creation and export execution remain disabled.",
+        "No project source files change."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p71-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    }
+  ]
+}

@@ -294,6 +294,7 @@
     "check:p705-command-center-monitoring-ux": "node scripts/check-p705-command-center-monitoring-ux.js",
     "check:p706-tests-checkers-docs": "node scripts/check-p706-tests-checkers-docs.js",
     "check:p707-final-validation": "node scripts/check-p707-final-validation.js",
+    "check:p71-execution-plan": "node scripts/check-p71-execution-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

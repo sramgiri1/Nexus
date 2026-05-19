@@ -2332,8 +2332,10 @@
       "track": "NEXUS_OS",
       "order": 46,
       "group": "Planned OS Phases",
-      "summary": "Define how NEXUS packages and exports governed project outputs safely.",
-      "commandCenterVisible": true
+      "summary": "Project shipping and export pipeline is in progress with package/export execution contracts defined and all shipping execution disabled.",
+      "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P71.2"
     },
     {
       "phaseId": "P72",
@@ -2627,6 +2629,83 @@
       "status": "complete",
       "summary": "Validated and closed P70 with deploy monitoring and incident mitigation execution still disabled.",
       "nextPhase": "P71",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 46.01,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "complete",
+      "summary": "Defined P71 project shipping and export pipeline contracts only; package creation and export execution remain disabled.",
+      "nextPhase": "P71.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.2",
+      "title": "Project Shipping Manifest Contract",
+      "track": "NEXUS_OS",
+      "order": 46.02,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Define display-safe project shipping manifest records.",
+      "nextPhase": "P71.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.3",
+      "title": "Export Package Preview",
+      "track": "NEXUS_OS",
+      "order": 46.03,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Create export package preview records without writing package artifacts.",
+      "nextPhase": "P71.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.4",
+      "title": "Shipping Readiness Gate",
+      "track": "NEXUS_OS",
+      "order": 46.04,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Add shipping readiness gates while keeping package creation and export execution disabled.",
+      "nextPhase": "P71.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.5",
+      "title": "Command Center Shipping UX",
+      "track": "NEXUS_OS",
+      "order": 46.05,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Expose project shipping readiness without runnable package or export actions.",
+      "nextPhase": "P71.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 46.06,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Aggregate P71 validation coverage before final validation.",
+      "nextPhase": "P71.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 46.07,
+      "group": "P71 Project Shipping Boundary + Export Pipeline",
+      "status": "planned",
+      "summary": "Validate and close P71 with package creation and export execution still disabled.",
+      "nextPhase": "P72",
       "commandCenterVisible": true
     }
   ],

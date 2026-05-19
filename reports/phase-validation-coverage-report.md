@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T11:25:23.570Z
+- Generated at: 2026-05-19T11:31:52.469Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: aaab5b8
+- Validation HEAD: 04cdac3
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -87,7 +87,14 @@
 | P70.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P70.6 validation coverage | PASS | 9 checkers, 3 reports |
 | P70.7 validation coverage | PASS | 19 checkers, 12 reports |
-| P71 validation coverage | PASS | dedicated_checker, validation_report |
+| P71 validation coverage | PASS | 5 checkers, 1 reports |
+| P71.1 validation coverage | PASS | 4 checkers, 1 reports |
+| P71.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P71.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P71.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P71.5 validation coverage | PASS | dedicated_checker, validation_report |
+| P71.6 validation coverage | PASS | 3 checkers, 3 reports |
+| P71.7 validation coverage | PASS | 12 checkers, 12 reports |
 | P72 validation coverage | PASS | dedicated_checker, validation_report |
 | P73 validation coverage | PASS | dedicated_checker, validation_report |
 | P74 validation coverage | PASS | dedicated_checker, validation_report |
@@ -97,14 +104,29 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P71; next=P71; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P71; next=P71.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P71 Project Shipping Boundary + Export Pipeline
+- P71.2 Project Shipping Manifest Contract
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P71.3 Export Package Preview
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P71.4 Shipping Readiness Gate
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P71.5 Command Center Shipping UX
   - status: planned
   - checkers: 0
   - reports: 0
@@ -146,4 +168,4 @@
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (82/82)
+PASS (89/89)

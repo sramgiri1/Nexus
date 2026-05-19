@@ -3468,14 +3468,22 @@
       "phaseId": "P71",
       "title": "Project Shipping Boundary + Export Pipeline",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned project shipping and export boundary phase.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P72",
+      "summary": "Project shipping and export pipeline is in progress with package/export execution contracts defined and all shipping execution disabled.",
+      "checksRun": [
+        "npm run check:p71-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P71 has not enabled package creation, export execution, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, or provider spend."
+      ],
+      "nextPhase": "P71.2",
       "commandCenterVisible": true
     },
     {
@@ -6129,11 +6137,117 @@
       ],
       "nextPhase": "P71",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined P71 project shipping and export pipeline contracts only; package creation and export execution remain disabled.",
+      "checksRun": [
+        "npm run check:p71-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P71.1 defines contracts only. Package creation, export execution, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P71.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.2",
+      "title": "Project Shipping Manifest Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define display-safe project shipping manifest records.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.3",
+      "title": "Export Package Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Create export package preview records without writing package artifacts.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.4",
+      "title": "Shipping Readiness Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add shipping readiness gates while keeping package creation and export execution disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.5",
+      "title": "Command Center Shipping UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose project shipping readiness without runnable package or export actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P71 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P71.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P71.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P71 with package creation and export execution still disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P72",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P71",
   "previousPhase": "P70",
-  "nextPhase": "P71"
+  "nextPhase": "P71.2"
 }
