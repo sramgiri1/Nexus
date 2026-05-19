@@ -2626,11 +2626,100 @@
       "phaseId": "P64.8",
       "title": "Code Mode Runtime + Lazy Tool Loading",
       "track": "NEXUS_OS",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p648-contract-commit",
+      "completedAt": "",
+      "summary": "P64.8 has started as a contract-only code-mode runtime and lazy-loading split without enabling execution.",
+      "checksRun": [
+        "npm run check:p648-execution-plan",
+        "npm run check:lazy-tool-context",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, and all-tool context loading remain disabled.",
+        "P64.8.1 only defines implementation-grade subphase contracts and validation."
+      ],
+      "nextPhase": "P64.8.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.1",
+      "title": "Execution Contract + Guardrails",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p648-contract-commit",
+      "completedAt": "2026-05-19T00:45:00.000Z",
+      "summary": "Defined implementation-grade P64.8 code-mode runtime and lazy-loading contracts, docs, checker, reports, and OS phase handoff without enabling execution.",
+      "checksRun": [
+        "npm run check:p648-execution-plan",
+        "npm run check:lazy-tool-context",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "No code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading is enabled."
+      ],
+      "nextPhase": "P64.8.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.2",
+      "title": "Code Mode Session Contract",
+      "track": "NEXUS_OS",
       "status": "planned",
-      "branch": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned code-mode runtime and lazy tool loading phase after P64 governed dispatch foundation closes.",
+      "summary": "Planned preview-only code-mode session records and validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.8.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.3",
+      "title": "Lazy Tool Selection Packet",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned selected lazy tool contract packet with context budget guards and blocked bulk loading.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.8.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.4",
+      "title": "Command Center Code Mode Readiness UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center code-mode readiness and lazy-loading UX.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P64.8.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.5",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation and P64.8 closure before P65.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P65",
@@ -4884,7 +4973,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-18T23:00:00.000Z",
-  "currentPhase": "P64",
-  "previousPhase": "P63",
-  "nextPhase": "P64.8"
+  "currentPhase": "P64.8",
+  "previousPhase": "P64",
+  "nextPhase": "P64.8.2"
 }

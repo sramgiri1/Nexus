@@ -1,0 +1,696 @@
+{
+  "phaseId": "P64.8",
+  "title": "Code Mode Runtime + Lazy Tool Loading",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p648-1-execution-contract-guardrails",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Split P64.8 into implementation-grade subphases and add validation before any code-mode runtime behavior is implemented.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p648-execution-contracts.json",
+        "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p648-execution-plan.js",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-phase-validation-coverage.js",
+        "reports/p648-execution-plan-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/pages/Projects.jsx",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.8.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "c07b98b",
+        "narrowScope": "Define the code-mode runtime and lazy-loading implementation contract only; no runtime code-mode behavior.",
+        "safetyRules": [
+          "Do not enable code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading.",
+          "Code mode must start as governed preview metadata and selected lazy contracts only.",
+          "Primary UX must not expose DemoApp in full Command Center, raw project/private IDs, raw JSON, raw logs, raw tool schemas, raw MCP schemas, or raw policy dumps."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "tool-governance/lazyContractPolicy.js",
+            "tool-governance/contextBudgetGuard.js",
+            "tool-governance/toolContractLoader.js",
+            "tool-governance/toolGateway.js",
+            "dispatch-governance/dispatchEnvelope.js",
+            "dispatch-governance/dispatchDryRun.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse existing lazy contract, context budget, gateway, dispatch dry-run, result envelope, redaction, report, and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P64.8.1.",
+          "required": "Document future UX fields: code-mode state, selected contract count, blocked bulk-loading reason, owner capability, evidence/activity location, next action, and disabled execution reason."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p648-execution-contracts.json",
+            "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+            "scripts/check-p648-execution-plan.js",
+            "reports/p648-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md",
+            "scripts/check-os-phase-status.js",
+            "scripts/check-phase-validation-coverage.js"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP648ExecutionPlan",
+            "P648_CODE_MODE_SUBPHASES"
+          ],
+          "schemas": [
+            "CodeModeSessionContract",
+            "LazyToolSelectionPacket",
+            "CodeModeContextBudgetDecision"
+          ],
+          "dataShapes": [
+            "sessionId, modeLabel, scopeLabel, selectedToolContracts, toolSummaryCount, allToolSchemasAllowed, allMcpSchemasAllowed, executionAllowed, disabledReason, evidenceRefs, activityRefs"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show code-mode state, selected contract count, blocked bulk-loading reason, owner capability, evidence/activity location, next action, cost impact if relevant, and disabled execution reason without raw JSON/log dumps, DemoApp leakage, or raw IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required in P64.8.1 because no UX behavior changes.",
+          "Future code-mode UX must cover dark, light, and system themes; no DemoApp leakage; no raw dumps; sidebar navigation; and disabled execution reasons."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p648-execution-plan.js.",
+          "Keep phase validation coverage aligned after P64.8 subphases are added."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p648-execution-plan.",
+          "Keep check:os-phase-status passing after P64.8 becomes current."
+        ],
+        "docsRoadmap": [
+          "Add P64.8 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P64.8 in_progress, mark P64.8.1 complete after validation, and set nextPhase to P64.8.2.",
+        "validationCommands": [
+          "npm run check:p648-execution-plan",
+          "npm run check:lazy-tool-context",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm code execution was not enabled.",
+          "Confirm provider dispatch was not enabled.",
+          "Confirm tool execution was not enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes, deploy, network calls, workers, release actions, or all-tool context loading were enabled."
+        ],
+        "gitCommands": [
+          "git add contracts/os-roadmap/p648-execution-contracts.json docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md scripts/check-p648-execution-plan.js scripts/check-os-phase-status.js scripts/check-phase-validation-coverage.js reports/p648-execution-plan-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json package.json",
+          "git commit -m \"docs(nexus): define p64-8 code mode contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm contract-only scope.",
+          "Report validation commands.",
+          "State next subphase.",
+          "Confirm forbidden paths were not changed."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P64.8 is split into implementation-grade subphases.",
+        "P64.8.1 adds only contract, docs, checker, report, and phase-status handoff.",
+        "No code execution, provider/tool dispatch, project mutation, DB write, deploy, network call, worker execution, or all-tool context loading is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "low",
+      "blocking": true,
+      "dependsOn": [],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p648-2-code-mode-session-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define code-mode session contracts and preview state without code execution.",
+      "allowedFiles": [
+        "code-mode/codeModeSession.js",
+        "code-mode/fixtures/code-mode-session-fixtures.json",
+        "scripts/check-p648-code-mode-session.js",
+        "reports/p648-code-mode-session-report.md",
+        "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.8.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.8.1",
+        "narrowScope": "Create pure code-mode session records and validation only; no shell, tool, or provider execution.",
+        "safetyRules": [
+          "Do not enable code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading.",
+          "Session records must be preview-only and display-safe.",
+          "Raw project/private IDs, raw logs, raw JSON, raw tool schemas, and raw MCP schemas must not be primary UX fields."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dispatch-governance/dispatchEnvelope.js",
+            "dispatch-governance/dispatchDryRun.js",
+            "tool-governance/contextBudgetGuard.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js"
+          ],
+          "rule": "Reuse existing dispatch, context budget, result envelope, and redaction helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page behavior expected.",
+          "required": "Define display-safe code-mode state labels for later Command Center UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "code-mode/codeModeSession.js",
+            "code-mode/fixtures/code-mode-session-fixtures.json",
+            "scripts/check-p648-code-mode-session.js",
+            "reports/p648-code-mode-session-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createCodeModeSession",
+            "validateCodeModeSession"
+          ],
+          "schemas": [
+            "CodeModeSessionContract"
+          ],
+          "dataShapes": [
+            "sessionId, state, scopeLabel, selectedContractCount, executionAllowed, mutationAllowed, disabledReason, evidenceRefs"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show code-mode state, disabled reason, selected contract count, owner capability, evidence/activity location, and next action without raw dumps or fake execution.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless UX labels change."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p648-code-mode-session.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p648-code-mode-session."
+        ],
+        "docsRoadmap": [
+          "Document P64.8.2 code-mode session records."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.8.2 complete and keep P64.8 in_progress.",
+        "validationCommands": [
+          "npm run check:p648-code-mode-session",
+          "npm run check:p648-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, network calls, workers, or all-tool loading were enabled."
+        ],
+        "gitCommands": [
+          "git add code-mode/codeModeSession.js code-mode/fixtures/code-mode-session-fixtures.json scripts/check-p648-code-mode-session.js reports/p648-code-mode-session-report.md package.json docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p64-8 code mode session contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no execution.",
+          "Report validation.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Code-mode session records are preview-only and validation-covered.",
+        "Execution and mutation remain disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p648-1-execution-contract-guardrails"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p648-3-lazy-tool-selection-packet",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build selected lazy tool contract packets for code-mode previews without bulk schema loading.",
+      "allowedFiles": [
+        "code-mode/lazyToolSelectionPacket.js",
+        "code-mode/fixtures/lazy-tool-selection-fixtures.json",
+        "scripts/check-p648-lazy-tool-selection.js",
+        "reports/p648-lazy-tool-selection-report.md",
+        "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.8.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.8.2",
+        "narrowScope": "Create selected-contract packets using existing lazy loading and budget guards.",
+        "safetyRules": [
+          "Do not enable code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading.",
+          "All-tool and all-MCP schema loading must be blocked.",
+          "Only selected contract summaries may enter the packet."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "tool-governance/lazyContractPolicy.js",
+            "tool-governance/contextBudgetGuard.js",
+            "tool-governance/toolContractLoader.js",
+            "shared/redaction.js"
+          ],
+          "rule": "Reuse existing lazy contract and context budget helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page behavior expected.",
+          "required": "Define selected-contract count, blocked bulk-loading reason, and next action for later UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "code-mode/lazyToolSelectionPacket.js",
+            "code-mode/fixtures/lazy-tool-selection-fixtures.json",
+            "scripts/check-p648-lazy-tool-selection.js",
+            "reports/p648-lazy-tool-selection-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildLazyToolSelectionPacket",
+            "validateLazyToolSelectionPacket"
+          ],
+          "schemas": [
+            "LazyToolSelectionPacket"
+          ],
+          "dataShapes": [
+            "packetId, selectedContracts, contractCount, toolSummaryCount, budgetAllowed, blockedReasons, executionAllowed"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show selected contract count, disabled loading state, and blocked bulk-loading reason without raw tool/MCP schemas or raw dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless UX labels change."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p648-lazy-tool-selection.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p648-lazy-tool-selection."
+        ],
+        "docsRoadmap": [
+          "Document P64.8.3 lazy tool selection packet."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.8.3 complete and keep P64.8 in_progress.",
+        "validationCommands": [
+          "npm run check:p648-lazy-tool-selection",
+          "npm run check:lazy-tool-context",
+          "npm run check:p648-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, network calls, workers, or all-tool loading were enabled."
+        ],
+        "gitCommands": [
+          "git add code-mode/lazyToolSelectionPacket.js code-mode/fixtures/lazy-tool-selection-fixtures.json scripts/check-p648-lazy-tool-selection.js reports/p648-lazy-tool-selection-report.md package.json docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p64-8 lazy tool selection packet\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm selected lazy loading only.",
+          "Report validation.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Selected lazy tool packets are budget guarded.",
+        "Bulk loading remains blocked."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p648-2-code-mode-session-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p648-4-command-center-code-mode-readiness-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose code-mode readiness and lazy-loading state in Command Center without execution.",
+      "allowedFiles": [
+        "dashboard/src/data/codeModeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p648-command-center-code-mode-ux.js",
+        "reports/p648-command-center-code-mode-ux-report.md",
+        "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.8.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.8.3",
+        "narrowScope": "Add display-only code-mode readiness UX using existing Command Center patterns.",
+        "safetyRules": [
+          "Do not enable code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading.",
+          "All controls must remain disabled or inspection-only.",
+          "Primary UX must avoid raw JSON, raw logs, raw IDs, raw schemas, and DemoApp leakage."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/dispatchGovernance.js",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/tests/routes.spec.js"
+          ],
+          "rule": "Reuse existing cards, tabs, badges, tests, and theme tokens; do not duplicate UI components."
+        },
+        "uxUpdate": {
+          "scope": "Command Center Tool Gateway or Worker Runtime readiness display.",
+          "required": "Show code-mode state, selected contract count, blocked bulk-loading reason, owner capability, evidence/activity location, next action, and disabled execution reason."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/codeModeReadiness.js",
+            "scripts/check-p648-command-center-code-mode-ux.js",
+            "reports/p648-command-center-code-mode-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "codeModeReadinessCards"
+          ],
+          "schemas": [
+            "CodeModeReadinessCard"
+          ],
+          "dataShapes": [
+            "title, stateLabel, selectedContractCount, disabledReason, blocker, nextAction, evidenceLocation, activityLocation"
+          ]
+        },
+        "commandCenterUxRequirements": "Show code-mode readiness, disabled execution state, and lazy-loading state without raw dumps, raw schemas, DemoApp leakage, or fake execution.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add focused route coverage for code-mode readiness labels and disabled reasons.",
+          "Preserve no DemoApp leakage, no raw dumps, theme switcher, sidebar, OS roadmap separation, and project milestone separation tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p648-command-center-code-mode-ux.js.",
+          "Update dashboard Playwright route tests."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p648-command-center-code-mode-ux."
+        ],
+        "docsRoadmap": [
+          "Document P64.8.4 Command Center code-mode readiness UX."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.8.4 complete and keep P64.8 in_progress.",
+        "validationCommands": [
+          "npm run check:p648-command-center-code-mode-ux",
+          "npm run check:command-center-ux",
+          "cd dashboard && npm run build && npm run test:unit",
+          "cd dashboard && npx playwright test tests/routes.spec.js -g \"Tool Gateway|Worker Runtime|code mode\"",
+          "npm run check:p648-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, network calls, workers, or all-tool loading were enabled."
+        ],
+        "gitCommands": [
+          "git add dashboard/src/data/codeModeReadiness.js dashboard/src/pages/CommandCenterV2.jsx dashboard/tests/routes.spec.js scripts/check-p648-command-center-code-mode-ux.js reports/p648-command-center-code-mode-ux-report.md package.json docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): show p64-8 code mode readiness\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Describe UX changes.",
+          "Report Playwright/checker results.",
+          "Confirm no execution."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center shows code-mode readiness and lazy-loading constraints.",
+        "Execution remains disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p648-3-lazy-tool-selection-packet"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:45:00.000Z"
+    },
+    {
+      "id": "nexus-os-p648-5-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P64.8 while keeping code-mode runtime non-executing.",
+      "allowedFiles": [
+        "scripts/check-p648-final.js",
+        "reports/p648-final-report.md",
+        "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P64.8.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P64.8.4",
+        "narrowScope": "Aggregate P64.8 checks, close phase status, and hand off to P65.",
+        "safetyRules": [
+          "Do not enable code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, worker execution, or all-tool context loading.",
+          "Do not mark P64.8 complete unless checks pass and limitations are recorded.",
+          "Do not claim code mode can run actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse report and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new UX expected.",
+          "required": "Preserve code-mode readiness UX and disabled reasons."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p648-final.js",
+            "reports/p648-final-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP648Final"
+          ],
+          "schemas": [
+            "P648FinalValidationReport"
+          ],
+          "dataShapes": [
+            "phaseId, checksRun, executionEnabled, knownLimitations, nextPhase"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve code-mode readiness UX with disabled execution reason and no raw dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Run focused code-mode readiness route tests if UX changed.",
+          "Preserve route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p648-final.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p648-final."
+        ],
+        "docsRoadmap": [
+          "Close P64.8 docs and roadmap status."
+        ],
+        "phaseStatusUpdate": "When complete, mark P64.8 and P64.8.5 complete with branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase P65, and commandCenterVisible.",
+        "validationCommands": [
+          "npm run check:p648-final",
+          "npm run check:p648-execution-plan",
+          "npm run check:lazy-tool-context",
+          "npm run check:phase-validation-coverage",
+          "npm run check:command-center-ux",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "cd dashboard && npm run build && npm run test:unit",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no code execution, provider dispatch, tool execution, project mutation, DB writes, deploy, network calls, workers, or all-tool loading were enabled."
+        ],
+        "gitCommands": [
+          "git add scripts/check-p648-final.js reports/p648-final-report.md package.json docs/architecture/P64_8_CODE_MODE_RUNTIME_LAZY_LOADING_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"test(nexus): close p64-8 code mode foundation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name.",
+          "Commit hash.",
+          "Files changed.",
+          "What was implemented.",
+          "Tests/checkers.",
+          "Safety confirmations.",
+          "Known limitations.",
+          "Next phase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P64.8 closes with validation evidence.",
+        "Code-mode runtime remains non-executing unless a later explicit phase enables it."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p648-4-command-center-code-mode-readiness-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T00:45:00.000Z"
+    }
+  ]
+}

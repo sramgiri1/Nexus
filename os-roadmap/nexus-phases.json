@@ -2019,6 +2019,51 @@
       "commandCenterVisible": true
     },
     {
+      "phaseId": "P64.8.1",
+      "title": "Execution Contract + Guardrails",
+      "track": "NEXUS_OS",
+      "order": 39.081,
+      "group": "P64.8 Code Mode Runtime + Lazy Tool Loading",
+      "summary": "Define implementation-grade code-mode runtime and lazy-loading contracts without enabling execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.2",
+      "title": "Code Mode Session Contract",
+      "track": "NEXUS_OS",
+      "order": 39.082,
+      "group": "P64.8 Code Mode Runtime + Lazy Tool Loading",
+      "summary": "Define preview-only code-mode session records and validation while execution remains disabled.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.3",
+      "title": "Lazy Tool Selection Packet",
+      "track": "NEXUS_OS",
+      "order": 39.083,
+      "group": "P64.8 Code Mode Runtime + Lazy Tool Loading",
+      "summary": "Build selected lazy tool contract packets with context budget guards and blocked bulk loading.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.4",
+      "title": "Command Center Code Mode Readiness UX",
+      "track": "NEXUS_OS",
+      "order": 39.084,
+      "group": "P64.8 Code Mode Runtime + Lazy Tool Loading",
+      "summary": "Expose code-mode readiness and lazy-loading state in Command Center without execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P64.8.5",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 39.085,
+      "group": "P64.8 Code Mode Runtime + Lazy Tool Loading",
+      "summary": "Validate and close P64.8 with code-mode runtime still non-executing.",
+      "commandCenterVisible": true
+    },
+    {
       "phaseId": "P65",
       "title": "Batch Intelligence Jobs for Large-Scale Analysis",
       "track": "NEXUS_OS",
