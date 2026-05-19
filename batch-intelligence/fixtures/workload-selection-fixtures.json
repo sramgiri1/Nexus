@@ -1,0 +1,40 @@
+{
+  "fixtures": [
+    {
+      "name": "redacted report workload",
+      "input": {
+        "selectionId": "p65_workload_selection_redacted_reports",
+        "jobId": "p65_workload_job_redacted_reports",
+        "workloadType": "test_gap_analysis",
+        "scopeLabel": "NEXUS OS",
+        "items": [
+          {
+            "itemLabel": "Phase coverage report",
+            "summary": "Analyze redacted phase validation coverage gaps.",
+            "sourceType": "report",
+            "metadata": {
+              "sourceLabel": "Phase validation coverage",
+              "token": "sk-redacted-test-token"
+            }
+          },
+          {
+            "itemLabel": "OS status report",
+            "summary": "Analyze redacted OS phase status handoff gaps.",
+            "sourceType": "report",
+            "metadata": {
+              "sourceLabel": "OS phase status"
+            }
+          }
+        ],
+        "evidenceRefs": ["reports/p65-workload-selection-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "safeSummary": {
+          "scope": "NEXUS OS",
+          "itemCount": 2,
+          "providerUpload": "disabled"
+        },
+        "createdAt": "2026-05-19T02:35:00.000Z"
+      }
+    }
+  ]
+}

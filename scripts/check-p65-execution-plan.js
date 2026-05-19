@@ -160,7 +160,8 @@ export function checkP65ExecutionPlan() {
   const p65 = phaseStatus.get("P65");
   const p651 = phaseStatus.get("P65.1");
   const p652 = phaseStatus.get("P65.2");
-  const expectedNext = p652?.status === "complete" ? "P65.3" : p651?.status === "complete" ? "P65.2" : "P65.1";
+  const p653 = phaseStatus.get("P65.3");
+  const expectedNext = p653?.status === "complete" ? "P65.4" : p652?.status === "complete" ? "P65.3" : p651?.status === "complete" ? "P65.2" : "P65.1";
   if (p65?.status !== "in_progress") fail("roadmapStatus", "P65 must be in_progress");
   if (p65?.nextPhase !== expectedNext) fail("roadmapStatus", `P65 nextPhase must be ${expectedNext}`);
   if (status.currentPhase !== "P65") fail("roadmapStatus", "currentPhase must be P65");

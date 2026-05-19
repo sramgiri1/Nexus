@@ -62,6 +62,13 @@ network calls, workers, and project mutation remain disabled.
 Build redacted workload selection previews for large-scale analysis. Workload
 previews must not read or mutate project source files.
 
+Status: complete. P65.3 adds redacted workload selection previews using
+caller-provided summaries only. Selections expose workload type, item count,
+redaction state, disabled upload reason, evidence/activity refs, and next
+action while project source reads, provider upload, batch submission,
+execution, DB writes, deploy, network calls, workers, and project mutation
+remain disabled.
+
 ### P65.4 Cost + Safety Gate
 
 Add preview-only cost and safety gates for batch intelligence jobs. Gates must
