@@ -3928,7 +3928,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d214870",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Aggregated P75 tests, checkers, docs, reports, status, and Command Center Backup/DR coverage while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
@@ -4081,7 +4081,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "d214870",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Aggregated P75 checker, report, docs, roadmap, phase status, and Command Center Backup/DR validation coverage.",
       "checksRun": [
