@@ -2532,7 +2532,7 @@
       "group": "P75 Backup, Restore, Disaster Recovery",
       "status": "in_progress",
       "summary": "Define backup, restore, and disaster-recovery readiness with runtime backup/restore/failover behavior disabled.",
-      "nextPhase": "P75.6",
+      "nextPhase": "P75.7",
       "commandCenterVisible": true
     },
     {
@@ -2596,8 +2596,8 @@
       "track": "NEXUS_OS",
       "order": 50.06,
       "group": "P75 Backup, Restore, Disaster Recovery",
-      "status": "planned",
-      "summary": "Aggregate P75 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P75 validation coverage before final validation.",
       "nextPhase": "P75.7",
       "commandCenterVisible": true
     },

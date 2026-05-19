@@ -151,9 +151,22 @@ Implementation:
 
 Aggregate P75 validation coverage before final validation.
 
-Status: planned. P75.6 will verify P75 checker scripts, package scripts,
+Status: complete. P75.6 verifies P75 checker scripts, package scripts,
 reports, docs, phase status, Command Center route coverage, disabled runtime
-backup/restore behavior, and no project-file changes.
+backup/restore/failover behavior, and no project-file changes.
+
+Implementation:
+
+- `scripts/check-p756-tests-checkers-docs.js` exports no runtime behavior; it
+  reads local P75 files and reports, then writes
+  `reports/p756-tests-checkers-docs-report.md`.
+- The checker validates package scripts, checker files, reports, docs,
+  roadmap/status entries, stamped commits for completed subphases, Backup/DR
+  route and tab registration, Playwright coverage, hidden DemoApp/private IDs,
+  disabled backup/restore/failover/overwrite/delete flags, disabled DB and
+  project mutation, disabled provider/tool/worker execution, disabled
+  network/spend, disabled deploy/release/export/package/auth behavior, and
+  forbidden path visibility.
 
 ### P75.7 Final Validation
 

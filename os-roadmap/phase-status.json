@@ -3928,10 +3928,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bc52854",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Added display-only Command Center Backup/DR readiness while runtime backup/restore/failover behavior remains disabled.",
+      "summary": "Aggregated P75 tests, checkers, docs, reports, status, and Command Center Backup/DR coverage while runtime backup/restore/failover behavior remains disabled.",
       "checksRun": [
+        "npm run check:p756-tests-checkers-docs",
         "npm run check:p755-command-center-backup-dr-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Backup DR route\"",
         "cd dashboard && npm run test:unit",
@@ -3948,7 +3949,7 @@
       "knownLimitations": [
         "P75 is readiness-only so far. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P75.6",
+      "nextPhase": "P75.7",
       "commandCenterVisible": true
     },
     {
@@ -4078,13 +4079,26 @@
       "phaseId": "P75.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P75 validation coverage aggregation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Aggregated P75 checker, report, docs, roadmap, phase status, and Command Center Backup/DR validation coverage.",
+      "checksRun": [
+        "npm run check:p756-tests-checkers-docs",
+        "npm run check:p755-command-center-backup-dr-ux",
+        "npm run check:p754",
+        "npm run check:p753",
+        "npm run check:p752",
+        "npm run check:p75-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P75.6 aggregates validation coverage only. Backup creation, restore execution, failover, overwrite, delete, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P75.7",
       "commandCenterVisible": true
     },
@@ -7038,5 +7052,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P75",
   "previousPhase": "P74",
-  "nextPhase": "P75.6"
+  "nextPhase": "P75.7"
 }
