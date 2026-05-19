@@ -87,7 +87,25 @@ Implementation:
 
 Add deploy readiness gates while keeping deploy execution disabled.
 
-Status: planned.
+Status: complete. P69.4 adds preview-only `DeployReadinessGate` records
+derived from P69.3 release candidate previews. Each gate records approval
+state, validation readiness, rollback readiness, evidence readiness, cost
+review, blockers, disabled reason, owner capability, evidence/activity
+references, and next action while keeping package creation, release execution,
+deploy execution, project mutation, provider/tool/worker execution, DB writes,
+network calls, and provider spend disabled.
+
+Implementation:
+
+- `release-governance/p69-4-placeholder.js` exports
+  `createDeployReadinessGate`, `validateDeployReadinessGate`,
+  `buildDeployReadinessGateEnvelope`, `P69_4_REQUIRED_FIELDS`, and
+  `P69_4_SAMPLE_GATES`.
+- `scripts/check-p694.js` validates gate shape, approval state, validation
+  readiness, rollback readiness, evidence readiness, cost review, blockers,
+  required evidence, disabled release/deploy execution, disabled
+  provider/tool/worker execution, disabled DB/network/spend, and non-runnable
+  disabled reasons.
 
 ### P69.5 Command Center Release UX
 
@@ -128,9 +146,8 @@ Roadmap, or fake runnable release/deploy actions.
 
 ## Current Status
 
-P69 is in progress. P69.1 is a contract-only foundation; release execution,
-deploy execution, provider dispatch, tool execution, worker execution, DB
-writes, project mutation, external network calls, and provider spend remain
-disabled.
+P69 is in progress through P69.4. Release execution, deploy execution, provider
+dispatch, tool execution, worker execution, DB writes, project mutation,
+external network calls, and provider spend remain disabled.
 
 Release execution and deploy execution remain disabled.

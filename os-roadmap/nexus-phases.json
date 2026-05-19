@@ -2310,10 +2310,10 @@
       "track": "NEXUS_OS",
       "order": 44,
       "group": "Planned OS Phases",
-      "summary": "Release/deploy loop is in progress with release candidate previews complete; release and deploy execution remain disabled.",
+      "summary": "Release/deploy loop is in progress with deploy readiness gates complete; release and deploy execution remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P69.4"
+      "nextPhase": "P69.5"
     },
     {
       "phaseId": "P70",
@@ -2512,8 +2512,8 @@
       "track": "NEXUS_OS",
       "order": 44.04,
       "group": "P69 Release / Deploy Loop",
-      "status": "planned",
-      "summary": "Add deploy readiness gates while keeping deploy execution disabled.",
+      "status": "complete",
+      "summary": "Added deploy readiness gates while keeping deploy execution disabled.",
       "nextPhase": "P69.5",
       "commandCenterVisible": true
     },
