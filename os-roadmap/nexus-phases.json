@@ -2332,10 +2332,10 @@
       "track": "NEXUS_OS",
       "order": 46,
       "group": "Planned OS Phases",
-      "summary": "Project shipping and export pipeline is in progress with package/export execution contracts defined and all shipping execution disabled.",
+      "summary": "Project shipping and export pipeline is in progress with display-safe shipping manifests defined and all shipping execution disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P71.2"
+      "nextPhase": "P71.3"
     },
     {
       "phaseId": "P72",
@@ -2648,8 +2648,8 @@
       "track": "NEXUS_OS",
       "order": 46.02,
       "group": "P71 Project Shipping Boundary + Export Pipeline",
-      "status": "planned",
-      "summary": "Define display-safe project shipping manifest records.",
+      "status": "complete",
+      "summary": "Defined display-safe project shipping manifest records without package creation or export execution.",
       "nextPhase": "P71.3",
       "commandCenterVisible": true
     },

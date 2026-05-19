@@ -50,7 +50,25 @@ handoff, and phase-status records.
 
 Define display-safe project shipping manifest records.
 
-Status: planned.
+Status: complete. P71.2 adds preview-only `ProjectShippingManifest`
+records for NEXUS OS shipping readiness. Each manifest includes a
+display-safe project name, export target, manifest state, redaction state,
+allowed/forbidden files, disabled execution flags, disabled reason, blockers,
+sanitized shipping items, evidence/activity references, cost impact, owner
+capability, and next action.
+
+Implementation:
+
+- `project-shipping/p71-2-placeholder.js` exports
+  `createProjectShippingManifest`, `validateProjectShippingManifest`,
+  `buildProjectShippingManifestEnvelope`, `P71_2_REQUIRED_FIELDS`, and
+  `P71_2_SAMPLE_MANIFESTS`.
+- `scripts/check-p712.js` validates manifest shape, project path blocking,
+  hidden private IDs, secret redaction, hidden raw paths, disabled package
+  creation/export execution, disabled project mutation, disabled provider/
+  tool/worker execution, disabled DB/network/spend, disabled deploy/release
+  execution, evidence/activity, cost impact, and non-runnable disabled
+  reasons.
 
 ### P71.3 Export Package Preview
 
@@ -106,7 +124,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.1. Package creation, export execution, project
+P71 is in progress through P71.2. Package creation, export execution, project
 mutation, provider dispatch, tool execution, worker execution, DB writes,
 deploy execution, release execution, external network calls, and provider
 spend remain disabled.
