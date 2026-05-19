@@ -8050,13 +8050,14 @@
       "phaseId": "P81",
       "title": "Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, dry-run business build plan, and Command Center business build UX.",
-      "nextPhase": "P81.6",
+      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, dry-run business build plan, Command Center business build UX, and aggregate validation.",
+      "nextPhase": "P81.7",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "916d3d5",
       "completedAt": "2026-05-19",
       "checksRun": [
+        "npm run check:p816-tests-checkers-docs",
         "npm run check:p815-command-center-business-build-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
         "cd dashboard && npm run test:unit",
@@ -8193,10 +8194,31 @@
     {
       "phaseId": "P81.6",
       "title": "Tests / Checkers / Docs",
-      "status": "planned",
-      "summary": "Aggregate P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
+      "status": "complete",
+      "summary": "Aggregated P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
       "nextPhase": "P81.7",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p816-tests-checkers-docs",
+        "npm run check:p815-command-center-business-build-ux",
+        "npm run check:p814-business-build-plan",
+        "npm run check:p813-agent-workstreams",
+        "npm run check:p812-prd-schema",
+        "npm run check:p81-execution-plan",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P81.6 aggregates validation evidence only. Runtime business build execution remains blocked."
+      ]
     },
     {
       "phaseId": "P81.7",
@@ -8208,8 +8230,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:55:00.000Z",
-  "currentPhase": "P81.5",
-  "previousPhase": "P81.4",
-  "nextPhase": "P81.6"
+  "updatedAt": "2026-05-19T23:58:00.000Z",
+  "currentPhase": "P81.6",
+  "previousPhase": "P81.5",
+  "nextPhase": "P81.7"
 }

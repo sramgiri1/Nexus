@@ -348,8 +348,8 @@ Risk level:
   - `P81.3` Agent Role / Workstream Planner — complete
   - `P81.4` Safe Dry-Run Business Build Plan — complete
   - `P81.5` Command Center Business Build UX — complete
-  - `P81.6` Tests / Checkers / Docs — next
-  - `P81.7` Final Validation
+  - `P81.6` Tests / Checkers / Docs — complete
+  - `P81.7` Final Validation — next
 
 P80 provides live-local founder intake for structured startup idea capture,
 guided Q&A, comprehension readiness, and Command Center visibility. Provider

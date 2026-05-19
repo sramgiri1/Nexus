@@ -83,6 +83,10 @@ Playwright route coverage, and `npm run check:p81-execution-plan`.
 Goal: aggregate P81 checker, Playwright, unit, build, docs, roadmap, phase
 status, and report evidence.
 
+Status: complete. P81.6 adds aggregate validation for P81 scripts, reports,
+subphase status, commits, Business Build Playwright coverage, dashboard unit
+coverage, dashboard build evidence, docs, roadmap, and display-safety posture.
+
 Validation: `npm run check:p816-tests-checkers-docs` and
 `npm run check:p81-execution-plan`.
 

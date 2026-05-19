@@ -3435,8 +3435,8 @@
       "order": 56,
       "group": "P81 Business Build Orchestration Contract",
       "status": "in_progress",
-      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, dry-run business build plan, and Command Center business build UX.",
-      "nextPhase": "P81.6",
+      "summary": "Defined implementation-grade P81 contracts, local PRD draft schema, local workstream planner, dry-run business build plan, Command Center business build UX, and aggregate validation.",
+      "nextPhase": "P81.7",
       "commandCenterVisible": true
     },
     {
@@ -3494,8 +3494,8 @@
       "title": "Tests / Checkers / Docs",
       "order": 56.06,
       "group": "P81 Business Build Orchestration Contract",
-      "status": "planned",
-      "summary": "Aggregate P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
+      "status": "complete",
+      "summary": "Aggregated P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
       "nextPhase": "P81.7",
       "commandCenterVisible": true
     },
@@ -3510,5 +3510,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T23:55:00.000Z"
+  "updatedAt": "2026-05-19T23:58:00.000Z"
 }
