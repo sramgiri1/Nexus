@@ -397,6 +397,7 @@
     "check:p847-final-validation": "node scripts/check-p847-final-validation.js",
     "check:p85-execution-plan": "node scripts/check-p85-execution-plan.js",
     "check:p851-enterprise-founder-session": "node scripts/check-p851-enterprise-founder-session.js",
+    "check:p852-founder-turn-state": "node scripts/check-p852-founder-turn-state.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

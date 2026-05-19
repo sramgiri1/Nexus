@@ -3,15 +3,15 @@
 ## Metadata
 
 - Phase: P85
-- Generated at: 2026-05-19T23:05:54.648Z
+- Generated at: 2026-05-19T23:15:44.003Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 7220103
+- Validation HEAD: 5184e31
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Validates P85 implementation-grade enterprise founder business runtime contracts.
-- Confirms P85 starts with a governed local runtime session record.
+- Confirms P85 starts with a governed local runtime session record and can advance through implementation-grade subphases.
 - Does not call providers/models, dispatch agents, execute tools/workers, mutate projects, write DB state, deploy, release, package, call networks, or spend.
 ## Checks
 
@@ -31,6 +31,7 @@
 
 - npm run check:p85-execution-plan
 - npm run check:p851-enterprise-founder-session
+- npm run check:p852-founder-turn-state
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - cd dashboard && npm run build
@@ -38,7 +39,7 @@
 - git diff --check
 ## Known Limitations
 
-- P85.1 is a local runtime session contract. P85.2 adds multi-turn state.
+- P85 is still local runtime state and UX. Provider/model calls, dispatch, project mutation, DB writes, deploy, package, and spend remain disabled until a later explicit phase.
 ## Result
 
 PASS (10/10)

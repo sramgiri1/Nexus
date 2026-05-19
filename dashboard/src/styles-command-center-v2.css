@@ -366,6 +366,8 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
+  max-height: 460px;
+  overflow: auto;
 }
 
 .ccv2-lite-message {
@@ -378,6 +380,10 @@
 .ccv2-lite-message--nexus {
   border-color: var(--v2-border-strong);
   background: var(--v2-teal-soft);
+}
+
+.ccv2-lite-message--founder {
+  background: var(--nexus-panel-bg);
 }
 
 .ccv2-lite-message span {
@@ -439,16 +445,25 @@
   font-size: 12px;
 }
 
-.ccv2-lite-send {
+.ccv2-lite-send,
+.ccv2-lite-reset {
   min-width: 92px;
   min-height: 38px;
   border: 1px solid var(--v2-border-strong);
   border-radius: 8px;
-  background: var(--nexus-accent);
-  color: var(--nexus-bg);
   font-size: 13px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.ccv2-lite-send {
+  background: var(--nexus-accent);
+  color: var(--nexus-bg);
+}
+
+.ccv2-lite-reset {
+  background: var(--nexus-button-bg);
+  color: var(--v2-text);
 }
 
 .ccv2-lite-send:disabled {

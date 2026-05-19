@@ -27,9 +27,14 @@ Validation: `npm run check:p851-enterprise-founder-session`.
 Goal: add governed multi-turn founder Q&A session transitions without provider
 calls.
 
-Status: planned. P85.2 should persist local submitted turns, next question
-state, answer provenance, and review blockers while keeping provider/model calls
-and DB writes disabled.
+Status: complete. P85.2 adds `enterpriseFounderQnaTurnState`, a deterministic
+local turn state machine that reuses P80 intake sessions/questions and the P85.1
+runtime session shape. Command Center Lite now keeps a chronological
+founder/NEXUS transcript, provides Send and Reset controls, surfaces the next
+question and missing fields, and updates local PRD readiness and agent lanes
+without raw internal IDs or unsafe runnable actions.
+
+Validation: `npm run check:p852-founder-turn-state`.
 
 ## P85.3 PRD Version Review Gate
 
@@ -77,6 +82,8 @@ DB writes, worker execution, deploy, package, and spend.
 P85 must reuse:
 
 - `live-ready/founderRuntimeEnvelope.js`
+- `live-ready/enterpriseFounderBusinessRuntime.js`
+- `live-ready/enterpriseFounderQnaTurnState.js`
 - `live-ready/founderAgentPlanAdmission.js`
 - `founder-intake/founderIntakeSession.js`
 - `business-build/businessBuildPrdSchema.js`
@@ -95,8 +102,8 @@ components, or activity/evidence/audit appenders.
 ## Safety Rules
 
 P85 is enterprise founder business runtime state and UX only unless a later
-subphase explicitly says otherwise. P85.1 creates a session record that later
-phases can attach real capabilities to.
+subphase explicitly says otherwise. P85.1 creates a session record and P85.2
+adds local Q&A turn state that later phases can attach real capabilities to.
 
 Still forbidden:
 
@@ -113,10 +120,12 @@ Still forbidden:
 
 ## Rollback
 
-Rollback P85.1 by removing
+Rollback P85.1/P85.2 by removing
 `contracts/os-roadmap/p85-execution-contracts.json`,
 `docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`,
 `live-ready/enterpriseFounderBusinessRuntime.js`,
+`live-ready/enterpriseFounderQnaTurnState.js`,
 `scripts/check-p85-execution-plan.js`,
-`scripts/check-p851-enterprise-founder-session.js`, their package scripts and
-reports, and returning OS phase status to `P84.7` with next phase `P85`.
+`scripts/check-p851-enterprise-founder-session.js`,
+`scripts/check-p852-founder-turn-state.js`, their package scripts and reports,
+and returning OS phase status to `P84.7` with next phase `P85`.

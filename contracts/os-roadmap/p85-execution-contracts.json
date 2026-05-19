@@ -147,30 +147,135 @@
       "targetAgent": "runtime",
       "taskType": "implementation-plan",
       "objective": "Add governed multi-turn founder Q&A session transitions without provider calls.",
-      "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "allowedFiles": [
+        "live-ready/enterpriseFounderQnaTurnState.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p852-founder-turn-state.js",
+        "reports/p852-founder-turn-state-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "package.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p85-execution-plan-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.2",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.1",
-        "narrowScope": "Persist deterministic multi-turn session transitions in local state only.",
-        "safetyRules": ["No provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."],
-        "reuseCheck": {"rule": "Reuse P80 session helpers and P85.1 runtime session shape."},
-        "commandCenterUxRequirements": "Founder Lite should show submitted turns and next question without raw internal IDs.",
-        "themeRequirements": ["Preserve System, Dark, and Light themes."],
-        "playwrightTests": ["Add multi-turn chat test."],
-        "testsCheckers": ["Add P85.2 checker."],
-        "validationCommands": ["npm run check:p852-founder-turn-state", "git diff --check"],
-        "finalSafetyChecks": ["Confirm no unsafe runtime flags are enabled."],
-        "gitCommands": ["git add <P85.2 files>", "git commit -m \"feat(nexus): add founder qna turn state\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Next phase/subphase"]
+        "expectedBaseCommit": "5184e31",
+        "narrowScope": "Add deterministic local multi-turn founder Q&A state and Lite UX wiring only.",
+        "safetyRules": [
+          "No provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse P80 session helpers and P85.1 runtime session shape."
+        },
+        "commandCenterUxRequirements": "Founder Lite must show submitted turns, NEXUS replies, next question, Send/Reset controls, missing fields, and updated PRD/agent lanes without raw internal IDs.",
+        "themeRequirements": [
+          "Preserve System, Dark, and Light themes."
+        ],
+        "playwrightTests": [
+          "Add multi-turn chat test."
+        ],
+        "testsCheckers": [
+          "Add check:p852-founder-turn-state.",
+          "Update Playwright Lite route coverage for multi-turn chat."
+        ],
+        "validationCommands": [
+          "npm run check:p852-founder-turn-state",
+          "npm run check:p85-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat\"",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no unsafe runtime flags are enabled."
+        ],
+        "gitCommands": [
+          "git add <P85.2 files>",
+          "git commit -m \"feat(nexus): add founder qna turn state\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Next phase/subphase"
+        ],
+        "exactFilesModules": {
+          "create": [
+            "live-ready/enterpriseFounderQnaTurnState.js",
+            "scripts/check-p852-founder-turn-state.js",
+            "reports/p852-founder-turn-state-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/styles-command-center-v2.css",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p85-execution-contracts.json",
+            "package.json",
+            "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P85_FOUNDER_QNA_TURN_STATE_PHASE",
+            "createFounderQnaTurnState",
+            "appendFounderQnaTurn",
+            "resetFounderQnaTurnState",
+            "validateFounderQnaTurnState"
+          ],
+          "dataShapes": [
+            "schemaVersion",
+            "currentState",
+            "founderIdeaSummary",
+            "turns[]",
+            "answers",
+            "missingFields",
+            "answeredFields",
+            "nextQuestion",
+            "prdDraft",
+            "agentFlow",
+            "safety",
+            "disabledReason",
+            "evidenceRefs",
+            "activityLocation",
+            "costImpact",
+            "commandCenterVisible"
+          ]
+        }
       },
-      "acceptanceCriteria": ["Founder turns are tracked locally.", "No provider calls occur."],
+      "acceptanceCriteria": [
+        "Founder turns are tracked locally.",
+        "No provider calls occur."
+      ],
       "requiredSkills": [],
       "riskLevel": "high",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-1-runtime-session-contract"],
+      "dependsOn": [
+        "nexus-os-p85-1-runtime-session-contract"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     },
@@ -183,29 +288,67 @@
       "taskType": "implementation-plan",
       "objective": "Add local PRD versioning and founder review gates.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.3",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P85.2",
         "narrowScope": "Version PRD drafts and require founder review before downstream planning.",
-        "safetyRules": ["No PRD provider generation, project writes, DB writes, or dispatch."],
-        "reuseCheck": {"rule": "Reuse P81 PRD schema and shared result envelopes."},
+        "safetyRules": [
+          "No PRD provider generation, project writes, DB writes, or dispatch."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse P81 PRD schema and shared result envelopes."
+        },
         "commandCenterUxRequirements": "Show PRD version, review state, next action, and blockers.",
-        "themeRequirements": ["Preserve themes."],
-        "playwrightTests": ["Add PRD review state coverage."],
-        "testsCheckers": ["Add P85.3 checker."],
-        "validationCommands": ["npm run check:p853-prd-review-gate", "git diff --check"],
-        "finalSafetyChecks": ["Confirm no project mutation."],
-        "gitCommands": ["git add <P85.3 files>", "git commit -m \"feat(nexus): add prd review gate\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Next phase/subphase"]
+        "themeRequirements": [
+          "Preserve themes."
+        ],
+        "playwrightTests": [
+          "Add PRD review state coverage."
+        ],
+        "testsCheckers": [
+          "Add P85.3 checker."
+        ],
+        "validationCommands": [
+          "npm run check:p853-prd-review-gate",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project mutation."
+        ],
+        "gitCommands": [
+          "git add <P85.3 files>",
+          "git commit -m \"feat(nexus): add prd review gate\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Next phase/subphase"
+        ]
       },
-      "acceptanceCriteria": ["PRD versions validate.", "Review gate blocks downstream execution."],
+      "acceptanceCriteria": [
+        "PRD versions validate.",
+        "Review gate blocks downstream execution."
+      ],
       "requiredSkills": [],
       "riskLevel": "medium",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-2-qna-turn-state-machine"],
+      "dependsOn": [
+        "nexus-os-p85-2-qna-turn-state-machine"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     },
@@ -218,29 +361,67 @@
       "taskType": "implementation-plan",
       "objective": "Convert admitted agent lanes into local task board records without dispatch.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.4",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P85.3",
         "narrowScope": "Create local agent task board records only.",
-        "safetyRules": ["Agent dispatch and worker execution remain false."],
-        "reuseCheck": {"rule": "Reuse P84 agent plan admission and existing Command Center agent flow components."},
+        "safetyRules": [
+          "Agent dispatch and worker execution remain false."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse P84 agent plan admission and existing Command Center agent flow components."
+        },
         "commandCenterUxRequirements": "Show lane tasks, blockers, next input, and disabled dispatch reason.",
-        "themeRequirements": ["Preserve themes."],
-        "playwrightTests": ["Add agent task board coverage."],
-        "testsCheckers": ["Add P85.4 checker."],
-        "validationCommands": ["npm run check:p854-agent-task-board", "git diff --check"],
-        "finalSafetyChecks": ["Confirm dispatch false."],
-        "gitCommands": ["git add <P85.4 files>", "git commit -m \"feat(nexus): add local agent task board\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Next phase/subphase"]
+        "themeRequirements": [
+          "Preserve themes."
+        ],
+        "playwrightTests": [
+          "Add agent task board coverage."
+        ],
+        "testsCheckers": [
+          "Add P85.4 checker."
+        ],
+        "validationCommands": [
+          "npm run check:p854-agent-task-board",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm dispatch false."
+        ],
+        "gitCommands": [
+          "git add <P85.4 files>",
+          "git commit -m \"feat(nexus): add local agent task board\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Next phase/subphase"
+        ]
       },
-      "acceptanceCriteria": ["Task board validates.", "No dispatch occurs."],
+      "acceptanceCriteria": [
+        "Task board validates.",
+        "No dispatch occurs."
+      ],
       "requiredSkills": [],
       "riskLevel": "medium",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-3-prd-version-review-gate"],
+      "dependsOn": [
+        "nexus-os-p85-3-prd-version-review-gate"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     },
@@ -253,29 +434,68 @@
       "taskType": "implementation-plan",
       "objective": "Expose the P85 runtime session, PRD versions, and local task board in founder-facing Command Center UX.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.5",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P85.4",
         "narrowScope": "Founder-facing Command Center runtime UX only.",
-        "safetyRules": ["Do not add fake runnable actions."],
-        "reuseCheck": {"rule": "Reuse existing Lite, Agent Flow, Business Build, and tabs/components."},
+        "safetyRules": [
+          "Do not add fake runnable actions."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse existing Lite, Agent Flow, Business Build, and tabs/components."
+        },
         "commandCenterUxRequirements": "Show session state, PRD version, task board, next action, blockers, disabled reason, owner capability, evidence, activity, and cost impact without raw IDs.",
-        "themeRequirements": ["Preserve System, Dark, and Light themes."],
-        "playwrightTests": ["Add founder runtime UX coverage across themes."],
-        "testsCheckers": ["Add P85.5 checker."],
-        "validationCommands": ["npm run check:p855-command-center-founder-runtime-ux", "cd dashboard && npm run build", "git diff --check"],
-        "finalSafetyChecks": ["Confirm no raw private IDs or fake runnable actions."],
-        "gitCommands": ["git add <P85.5 files>", "git commit -m \"feat(nexus): show founder business runtime\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Next phase/subphase"]
+        "themeRequirements": [
+          "Preserve System, Dark, and Light themes."
+        ],
+        "playwrightTests": [
+          "Add founder runtime UX coverage across themes."
+        ],
+        "testsCheckers": [
+          "Add P85.5 checker."
+        ],
+        "validationCommands": [
+          "npm run check:p855-command-center-founder-runtime-ux",
+          "cd dashboard && npm run build",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no raw private IDs or fake runnable actions."
+        ],
+        "gitCommands": [
+          "git add <P85.5 files>",
+          "git commit -m \"feat(nexus): show founder business runtime\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Next phase/subphase"
+        ]
       },
-      "acceptanceCriteria": ["Founder runtime UX is usable.", "Safety posture remains visible but not cluttered."],
+      "acceptanceCriteria": [
+        "Founder runtime UX is usable.",
+        "Safety posture remains visible but not cluttered."
+      ],
       "requiredSkills": [],
       "riskLevel": "medium",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-4-local-agent-task-board-admission"],
+      "dependsOn": [
+        "nexus-os-p85-4-local-agent-task-board-admission"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     },
@@ -288,29 +508,67 @@
       "taskType": "implementation-plan",
       "objective": "Aggregate P85 tests, docs, reports, and roadmap evidence.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.6",
         "scopeClassification": "DOCS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P85.5",
         "narrowScope": "P85 tests, docs, status, and reports only.",
-        "safetyRules": ["Do not enable runtime execution."],
-        "reuseCheck": {"rule": "Reuse shared report/checker helpers and phase status updater patterns."},
+        "safetyRules": [
+          "Do not enable runtime execution."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse shared report/checker helpers and phase status updater patterns."
+        },
         "commandCenterUxRequirements": "Preserve P85 UX.",
-        "themeRequirements": ["Preserve themes."],
-        "playwrightTests": ["Run relevant route coverage."],
-        "testsCheckers": ["Add P85.6 checker."],
-        "validationCommands": ["npm run check:p856-tests-docs-roadmap", "npm run check:phase-validation-coverage", "git diff --check"],
-        "finalSafetyChecks": ["Confirm no forbidden paths."],
-        "gitCommands": ["git add <P85.6 files>", "git commit -m \"test(nexus): aggregate p85 validation\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Next phase/subphase"]
+        "themeRequirements": [
+          "Preserve themes."
+        ],
+        "playwrightTests": [
+          "Run relevant route coverage."
+        ],
+        "testsCheckers": [
+          "Add P85.6 checker."
+        ],
+        "validationCommands": [
+          "npm run check:p856-tests-docs-roadmap",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no forbidden paths."
+        ],
+        "gitCommands": [
+          "git add <P85.6 files>",
+          "git commit -m \"test(nexus): aggregate p85 validation\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Next phase/subphase"
+        ]
       },
-      "acceptanceCriteria": ["P85 validation evidence is aggregated."],
+      "acceptanceCriteria": [
+        "P85 validation evidence is aggregated."
+      ],
       "requiredSkills": [],
       "riskLevel": "medium",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-5-command-center-business-runtime-ux"],
+      "dependsOn": [
+        "nexus-os-p85-5-command-center-business-runtime-ux"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     },
@@ -323,29 +581,69 @@
       "taskType": "implementation-plan",
       "objective": "Close P85 enterprise founder business runtime.",
       "allowedFiles": [],
-      "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
       "inputs": {
         "phaseId": "P85.7",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
         "expectedBaseCommit": "after-P85.6",
         "narrowScope": "Final P85 validation only.",
-        "safetyRules": ["Do not enable provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."],
-        "reuseCheck": {"rule": "Reuse P85 checkers and report helpers."},
+        "safetyRules": [
+          "Do not enable provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."
+        ],
+        "reuseCheck": {
+          "rule": "Reuse P85 checkers and report helpers."
+        },
         "commandCenterUxRequirements": "Preserve final P85 UX.",
-        "themeRequirements": ["Preserve themes."],
-        "playwrightTests": ["Run final P85 route coverage."],
-        "testsCheckers": ["Add P85.7 checker."],
-        "validationCommands": ["npm run check:p857-final-validation", "npm run check:os-phase-status", "git diff --check"],
-        "finalSafetyChecks": ["Confirm P86 handoff lists remaining execution blockers."],
-        "gitCommands": ["git add <P85.7 files>", "git commit -m \"test(nexus): close p85 founder runtime\""],
-        "finalResponseChecklist": ["Branch name", "Commit hash", "Known limitations", "Next phase/subphase"]
+        "themeRequirements": [
+          "Preserve themes."
+        ],
+        "playwrightTests": [
+          "Run final P85 route coverage."
+        ],
+        "testsCheckers": [
+          "Add P85.7 checker."
+        ],
+        "validationCommands": [
+          "npm run check:p857-final-validation",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm P86 handoff lists remaining execution blockers."
+        ],
+        "gitCommands": [
+          "git add <P85.7 files>",
+          "git commit -m \"test(nexus): close p85 founder runtime\""
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
       },
-      "acceptanceCriteria": ["P85 closes with evidence.", "P86 handoff is explicit."],
+      "acceptanceCriteria": [
+        "P85 closes with evidence.",
+        "P86 handoff is explicit."
+      ],
       "requiredSkills": [],
       "riskLevel": "medium",
       "blocking": true,
-      "dependsOn": ["nexus-os-p85-6-tests-docs-roadmap"],
+      "dependsOn": [
+        "nexus-os-p85-6-tests-docs-roadmap"
+      ],
       "parentTaskId": null,
       "createdAt": "2026-05-19T00:00:00.000Z"
     }

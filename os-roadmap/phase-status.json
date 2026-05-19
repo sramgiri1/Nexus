@@ -8892,7 +8892,7 @@
       "knownLimitations": [
         "P85 remains local runtime state and UX until later explicit phases enable provider/model calls, agent dispatch, project mutation, DB writes, workers, deploy, package, or spend."
       ],
-      "nextPhase": "P85.2",
+      "nextPhase": "P85.3",
       "commandCenterVisible": true,
       "order": 1
     },
@@ -8924,23 +8924,46 @@
       "phaseId": "P85.2",
       "title": "Q&A Turn State Machine",
       "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:11:06.669Z",
+      "summary": "Added deterministic local multi-turn founder Q&A state and Lite UX wiring with Send/Reset, missing fields, PRD readiness, and non-dispatching agent lanes.",
+      "checksRun": [
+        "npm run check:p852-founder-turn-state",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders interactive founder chat\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Deterministic local answer extraction only; provider/model reasoning, agent dispatch, project mutation, DB writes, deploy, package, and spend remain disabled."
+      ],
+      "nextPhase": "P85.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P85.3",
+      "title": "Safe PRD Review",
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned governed multi-turn founder Q&A session transitions without provider/model calls, DB writes, dispatch, project mutation, deploy, package, or spend.",
+      "summary": "Review and structure founder PRD readiness before any execution admission.",
       "checksRun": [],
       "knownLimitations": [
-        "Not implemented yet."
+        "Not started."
       ],
-      "nextPhase": "P85.3",
+      "nextPhase": "P85.4",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T23:00:15.234Z",
-  "currentPhase": "P85.1",
-  "previousPhase": "P84.7",
-  "nextPhase": "P85.2",
+  "currentPhase": "P85.2",
+  "previousPhase": "P85.1",
+  "nextPhase": "P85.3",
   "currentPhaseStatus": "complete"
 }

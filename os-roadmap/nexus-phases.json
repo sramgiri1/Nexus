@@ -4083,7 +4083,7 @@
       "title": "Enterprise Founder Business Runtime",
       "track": "NEXUS_OS",
       "status": "in_progress",
-      "branch": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
       "commit": "7220103",
       "completedAt": "",
       "summary": "Planned next phase for enterprise founder-to-business runtime enablement after P84 governed local admission closes.",
@@ -4091,7 +4091,7 @@
       "knownLimitations": [
         "Not implemented yet. P84 keeps provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend disabled."
       ],
-      "nextPhase": "P85.1",
+      "nextPhase": "P85.3",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4114,10 +4114,38 @@
       "order": 61.07,
       "title": "Q&A Turn State Machine",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "label": "Q&A Turn State Machine",
       "detail": "Planned local multi-turn founder Q&A session transitions.",
-      "nextPhase": "P85.3"
+      "nextPhase": "P85.3",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:11:06.669Z",
+      "summary": "Deterministic local multi-turn founder Q&A state with Send/Reset UX and updated PRD/agent planning.",
+      "checksRun": [
+        "check:p852-founder-turn-state",
+        "dashboard build",
+        "Playwright Lite interactive chat"
+      ],
+      "knownLimitations": [
+        "No provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."
+      ],
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P85.3",
+      "title": "Safe PRD Review",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Review and structure founder PRD readiness before any execution admission.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P85.4",
+      "commandCenterVisible": true
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",

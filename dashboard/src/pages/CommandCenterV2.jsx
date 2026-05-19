@@ -94,7 +94,10 @@ import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePrev
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
 import { buildBusinessBuildViewModel } from "../data/businessBuild.js";
-import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
+import {
+  appendFounderQnaTurn,
+  resetFounderQnaTurnState,
+} from "../../../live-ready/enterpriseFounderQnaTurnState.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -2476,6 +2479,7 @@ function buildAskNexusPreview(commandText, vm) {
 }
 
 const LITE_FOUNDER_IDEA_STORAGE_KEY = "nexus-lite-founder-idea";
+const LITE_FOUNDER_QNA_STORAGE_KEY = "nexus-lite-founder-qna-state";
 const DEFAULT_LITE_FOUNDER_IDEA = "I have a startup idea. Validate if it is feasible and tell me what you need next.";
 
 function getStoredLiteFounderIdea() {
@@ -2483,10 +2487,15 @@ function getStoredLiteFounderIdea() {
   return window.localStorage.getItem(LITE_FOUNDER_IDEA_STORAGE_KEY) || DEFAULT_LITE_FOUNDER_IDEA;
 }
 
-function buildLiteEnvelope(founderIdeaSummary = DEFAULT_LITE_FOUNDER_IDEA) {
-  return buildFounderRuntimeEnvelope({
-    founderIdeaSummary,
-  }).data;
+function getStoredLiteQnaState() {
+  if (typeof window === "undefined") return resetFounderQnaTurnState({ founderIdeaSummary: DEFAULT_LITE_FOUNDER_IDEA }).data;
+  try {
+    const stored = JSON.parse(window.localStorage.getItem(LITE_FOUNDER_QNA_STORAGE_KEY) || "null");
+    if (stored?.schemaVersion === "1.0" && Array.isArray(stored.turns)) return stored;
+  } catch {
+    window.localStorage.removeItem(LITE_FOUNDER_QNA_STORAGE_KEY);
+  }
+  return resetFounderQnaTurnState({ founderIdeaSummary: getStoredLiteFounderIdea() }).data;
 }
 
 function formatLiteFieldLabel(value = "") {
@@ -2498,26 +2507,32 @@ function formatLiteFieldLabel(value = "") {
 }
 
 function CommandCenterLitePage() {
-  const [message, setMessage] = useState(getStoredLiteFounderIdea);
-  const [draftMessage, setDraftMessage] = useState(getStoredLiteFounderIdea);
-  const envelope = buildLiteEnvelope(message);
+  const [envelope, setEnvelope] = useState(getStoredLiteQnaState);
+  const [draftMessage, setDraftMessage] = useState("");
   const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
   useEffect(() => {
-    window.localStorage.setItem(LITE_FOUNDER_IDEA_STORAGE_KEY, message);
-  }, [message]);
+    window.localStorage.setItem(LITE_FOUNDER_IDEA_STORAGE_KEY, envelope.founderIdeaSummary);
+    window.localStorage.setItem(LITE_FOUNDER_QNA_STORAGE_KEY, JSON.stringify(envelope));
+  }, [envelope]);
 
   const submitFounderMessage = (event) => {
     event.preventDefault();
     if (!canSendMessage) return;
-    setMessage(normalizedDraft);
+    setEnvelope(appendFounderQnaTurn(envelope, normalizedDraft).data);
+    setDraftMessage("");
   };
 
   const usePromptStarter = (prompt) => {
-    setDraftMessage(prompt);
-    setMessage(prompt);
+    setEnvelope(appendFounderQnaTurn(envelope, prompt).data);
+    setDraftMessage("");
+  };
+
+  const resetChat = () => {
+    setEnvelope(resetFounderQnaTurnState({ founderIdeaSummary: DEFAULT_LITE_FOUNDER_IDEA }).data);
+    setDraftMessage("");
   };
 
   return (
@@ -2538,14 +2553,16 @@ function CommandCenterLitePage() {
       <div className="ccv2-lite-layout">
         <section className="ccv2-card ccv2-lite-chat" aria-label="Chat with NEXUS">
           <div className="ccv2-lite-chat__thread">
-            <div className="ccv2-lite-message ccv2-lite-message--founder">
-              <span>Founder</span>
-              <p>{message}</p>
-            </div>
+            {envelope.turns.map((turn) => (
+              <div className={`ccv2-lite-message ccv2-lite-message--${turn.speaker}`} key={`${turn.turnNumber}-${turn.speaker}`}>
+                <span>{turn.label}</span>
+                <p>{turn.message}</p>
+              </div>
+            ))}
             <div className="ccv2-lite-message ccv2-lite-message--nexus">
-              <span>NEXUS</span>
-              <p>{envelope.chat.prompt}</p>
-              <div className="ccv2-lite-message__meta">Next action: {envelope.chat.nextAction}</div>
+              <span>NEXUS Next Question</span>
+              <p>{envelope.nextQuestion.prompt}</p>
+              <div className="ccv2-lite-message__meta">Next action: {envelope.nextAction}</div>
             </div>
           </div>
           <form className="ccv2-lite-composer" onSubmit={submitFounderMessage}>
@@ -2560,11 +2577,14 @@ function CommandCenterLitePage() {
               <button className="ccv2-lite-send" type="submit" disabled={!canSendMessage}>
                 Send
               </button>
-              <span>PRD and agent lanes update after you send.</span>
+              <button className="ccv2-lite-reset" type="button" onClick={resetChat}>
+                Reset
+              </button>
+              <span>{envelope.answeredFields.length} answered · {envelope.missingFields.length} needed</span>
             </div>
           </form>
           <div className="ccv2-lite-prompt-grid" aria-label="Founder prompt starters">
-            {envelope.chat.suggestedPrompts.map((prompt) => (
+            {envelope.suggestedPrompts.map((prompt) => (
               <button key={prompt} type="button" onClick={() => usePromptStarter(prompt)}>
                 {prompt}
               </button>
@@ -2594,6 +2614,10 @@ function CommandCenterLitePage() {
             <div className="ccv2-lite-next">
               <span>Next</span>
               <strong>{envelope.prdDraft.nextAction}</strong>
+            </div>
+            <div className="ccv2-lite-next">
+              <span>Missing</span>
+              <strong>{envelope.missingFields.length ? envelope.missingFields.map(formatLiteFieldLabel).join(", ") : "Ready for PRD review"}</strong>
             </div>
           </section>
         </aside>

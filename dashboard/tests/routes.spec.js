@@ -202,6 +202,40 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   expect(errors).toEqual([]);
 });
 
+test("Command Center Lite route renders interactive founder chat", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/lite");
+
+  await expect(page.getByRole("button", { name: "Send" })).toBeVisible();
+  await expect(page.getByRole("button", { name: "Reset" })).toBeVisible();
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("NEXUS Next Question");
+
+  await page.getByLabel("Founder message").fill("The first customers are casual iPhone players who want a clean arcade game.");
+  await page.getByRole("button", { name: "Send" }).click();
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("casual iPhone players");
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("Captured Target Customer");
+
+  await page.getByLabel("Founder message").fill("The problem is that existing Snake games are cluttered with ads and weak touch controls.");
+  await page.getByRole("button", { name: "Send" }).click();
+  await expect(page.getByLabel("Chat with NEXUS")).toContainText("Captured Problem");
+  await expect(page.locator("body")).toContainText("2 answered");
+  await expect(page.getByLabel("Local PRD readiness")).toContainText("casual iPhone players");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("founder_qna_collecting_answers");
+  expect(body).not.toContain("founder_qna_ready_for_prd_review");
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 

@@ -47,8 +47,8 @@ addCheck(
   "status advanced into P85",
   ["in_progress", "complete"].includes(statusById.get("P85")?.status) &&
     statusById.get("P85.1")?.status === "complete" &&
-    status.currentPhase === "P85.1" &&
-    status.nextPhase === "P85.2",
+    ["P85.1", "P85.2", "P85.3", "P85.4", "P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.2", "P85.3", "P85.4", "P85.5", "P85.6", "P85.7", "P86"].includes(status.nextPhase),
 );
 
 const failed = checks.filter((check) => check.status === "FAIL");
@@ -60,7 +60,7 @@ writeMarkdownReport(
       title: "Scope",
       body: [
         "- Validates P85 implementation-grade enterprise founder business runtime contracts.",
-        "- Confirms P85 starts with a governed local runtime session record.",
+        "- Confirms P85 starts with a governed local runtime session record and can advance through implementation-grade subphases.",
         "- Does not call providers/models, dispatch agents, execute tools/workers, mutate projects, write DB state, deploy, release, package, call networks, or spend.",
       ].join("\n"),
     },
@@ -70,6 +70,7 @@ writeMarkdownReport(
       body: [
         "- npm run check:p85-execution-plan",
         "- npm run check:p851-enterprise-founder-session",
+        "- npm run check:p852-founder-turn-state",
         "- npm run check:os-phase-status",
         "- npm run check:phase-validation-coverage",
         "- cd dashboard && npm run build",
@@ -77,7 +78,7 @@ writeMarkdownReport(
         "- git diff --check",
       ].join("\n"),
     },
-    { title: "Known Limitations", body: "- P85.1 is a local runtime session contract. P85.2 adds multi-turn state." },
+    { title: "Known Limitations", body: "- P85 is still local runtime state and UX. Provider/model calls, dispatch, project mutation, DB writes, deploy, package, and spend remain disabled until a later explicit phase." },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
   { title: "P85 Execution Plan Report", phase: "P85" },

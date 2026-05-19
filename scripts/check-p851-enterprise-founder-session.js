@@ -79,7 +79,12 @@ addCheck(
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p851-enterprise-founder-session"]));
 addCheck("contract references P85.1 files", contract.includes("live-ready/enterpriseFounderBusinessRuntime.js") && contract.includes("check:p851-enterprise-founder-session"));
 addCheck("docs mention P85.1 validation", docs.includes("P85.1 Runtime Session Contract") && docs.includes("npm run check:p851-enterprise-founder-session"));
-addCheck("phase status advanced", statusById.get("P85.1")?.status === "complete" && status.currentPhase === "P85.1" && status.nextPhase === "P85.2");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.1")?.status === "complete" &&
+    ["P85.1", "P85.2", "P85.3", "P85.4", "P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.2", "P85.3", "P85.4", "P85.5", "P85.6", "P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p847-final-validation-report.md"));
 addCheck("no fake unsafe runnable actions", !/call provider now|dispatch agent now|write project now|deploy now|spend now|create project now/i.test(runtimeText));
 

@@ -1391,9 +1391,15 @@ dispatch, tool execution, worker execution, project creation, project mutation,
 DB writes, network calls, deploy, release, export, package creation,
 auth/session/user/workspace mutation, and provider spend remain disabled.
 
-P85.2 is next. It should add governed multi-turn founder Q&A state so the chat
-becomes a true session transcript while still avoiding provider calls, DB writes,
-agent dispatch, project mutation, deploy, package, and spend.
+P85.2 is complete. Chat with NEXUS now uses a deterministic local turn state
+machine with chronological founder/NEXUS messages, Send and Reset controls, next
+question guidance, missing-field visibility, and PRD/agent lane updates. It
+reuses P80 founder intake helpers and the P85.1 runtime session shape. Provider
+calls, model calls, DB writes, agent dispatch, project mutation, deploy,
+package, and spend remain disabled.
+
+P85.3 is next. It should add safe local PRD review/versioning so the founder can
+approve or revise the PRD before any execution-capable phase is considered.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).
