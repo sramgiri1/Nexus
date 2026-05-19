@@ -1,0 +1,47 @@
+[
+  {
+    "gateId": "transient-gate-review-preview",
+    "planId": "transient-recovery-preview",
+    "failureId": "failure-transient-preview",
+    "failureClass": "transient_failure",
+    "sourceSurface": "worker-runtime",
+    "summary": "Local preview command timed out before producing evidence.",
+    "evidenceRefs": ["reports/worker-runtime-report.md"],
+    "activityRefs": ["activity:self-healing-preview"],
+    "approvalEvidencePresent": true,
+    "costApproved": true,
+    "priorAttempts": 0,
+    "loopLimit": 2,
+    "costImpact": "none"
+  },
+  {
+    "gateId": "security-gate-blocked-preview",
+    "planId": "security-recovery-preview",
+    "failureId": "failure-security-preview",
+    "failureClass": "secret_or_security_failure",
+    "sourceSurface": "security",
+    "summary": "sk-previewSecretValue1234567890",
+    "evidenceRefs": ["reports/secrets-boundary-final-report.md"],
+    "activityRefs": ["activity:security-review"],
+    "approvalEvidencePresent": true,
+    "costApproved": true,
+    "priorAttempts": 1,
+    "loopLimit": 2,
+    "costImpact": "none"
+  },
+  {
+    "gateId": "loop-gate-blocked-preview",
+    "planId": "provider-recovery-preview",
+    "failureId": "failure-provider-preview",
+    "failureClass": "provider_failure",
+    "sourceSurface": "provider-governance",
+    "summary": "Provider preview failed twice and must stop looping.",
+    "evidenceRefs": ["reports/api-batch-final-report.md"],
+    "activityRefs": ["activity:provider-review"],
+    "approvalEvidencePresent": true,
+    "costApproved": true,
+    "priorAttempts": 2,
+    "loopLimit": 2,
+    "costImpact": "estimated"
+  }
+]

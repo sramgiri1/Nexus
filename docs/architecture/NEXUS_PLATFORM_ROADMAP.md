@@ -303,8 +303,8 @@ Risk level:
   - `P66.1` Execution Contract + Safety Split — complete
   - `P66.2` Failure Classification Contract — complete
   - `P66.3` Recovery Plan Preview — complete
-  - `P66.4` Healing Gate + Loop Guard — next
-  - `P66.5` Command Center Self-Healing UX
+  - `P66.4` Healing Gate + Loop Guard — complete
+  - `P66.5` Command Center Self-Healing UX — next
   - `P66.6` Tests / Checkers / Docs
   - `P66.7` Final Validation
 - `P67` Controlled Source Mutation Expansion

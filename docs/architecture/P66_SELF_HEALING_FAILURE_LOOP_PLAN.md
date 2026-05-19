@@ -77,7 +77,13 @@ spend remain disabled.
 Add safety, approval, retry, loop, and cost gates for recovery proposals. Gates
 must block policy, safety, secret, budget, verification, and ambiguous failures.
 
-Status: planned.
+Status: complete. P66.4 adds preview-only healing safety gates and loop guards
+for recovery plans. Gates expose blocked or review-ready decisions, approval
+evidence state, cost approval state, loop guard state, blockers,
+evidence/activity refs, disabled reason, and next action while recovery
+execution, automatic retry, source mutation, project mutation, provider/tool
+execution, DB writes, deploy, release, network calls, and provider spend remain
+disabled.
 
 ### P66.5 Command Center Self-Healing UX
 

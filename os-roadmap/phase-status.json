@@ -2969,10 +2969,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d86c4ad",
+      "commit": "pending-p66-4-commit",
       "completedAt": "",
-      "summary": "P66 is in progress with failure classification and recovery plan previews complete; recovery execution remains disabled.",
+      "summary": "P66 is in progress with failure classification, recovery plan preview, and healing safety gates complete; recovery execution remains disabled.",
       "checksRun": [
+        "npm run check:p66-healing-safety-gate",
         "npm run check:p66-recovery-plan-preview",
         "npm run check:p66-failure-classification",
         "npm run check:p66-execution-plan",
@@ -2984,7 +2985,7 @@
       "knownLimitations": [
         "P66 does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P66.4",
+      "nextPhase": "P66.5",
       "commandCenterVisible": true
     },
     {
@@ -3060,13 +3061,24 @@
       "phaseId": "P66.4",
       "title": "Healing Gate + Loop Guard",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Add safety, approval, retry, loop, and cost gates for recovery proposals.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-4-commit",
+      "completedAt": "2026-05-19T04:45:00.000Z",
+      "summary": "Added preview-only healing safety gates and loop guards with approval, cost, blocker, and execution-disabled decisions.",
+      "checksRun": [
+        "npm run check:p66-healing-safety-gate",
+        "npm run check:p66-recovery-plan-preview",
+        "npm run check:p66-failure-classification",
+        "npm run check:p66-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Healing gates are read-only previews. Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P66.5",
       "commandCenterVisible": true
     },
@@ -5334,5 +5346,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P66",
   "previousPhase": "P65",
-  "nextPhase": "P66.4"
+  "nextPhase": "P66.5"
 }
