@@ -3384,14 +3384,22 @@
       "phaseId": "P68",
       "title": "Self-Update Workflow for NEXUS OS",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Planned self-update workflow for the NEXUS platform itself.",
-      "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P69",
+      "summary": "P68 is in progress with contract-only self-update planning complete; self-update apply remains disabled.",
+      "checksRun": [
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.1 is contract-only. Self-update apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P68.2",
       "commandCenterVisible": true
     },
     {
@@ -5582,11 +5590,117 @@
       ],
       "nextPhase": "P63",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.1",
+      "title": "Execution Contract + Self-Update Boundary",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T02:10:41.269Z",
+      "summary": "Defined the implementation-grade P68 self-update contract, subphase split, safety rules, validation checker, docs, and roadmap handoff.",
+      "checksRun": [
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.1 is contract-only. Self-update apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
+      "nextPhase": "P68.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.2",
+      "title": "Self-Update Intent Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define display-safe NEXUS OS self-update intent records.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P68.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.3",
+      "title": "Self-Update Proposal Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Build preview-only self-update proposals with scoped files and validation commands.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P68.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.4",
+      "title": "Approval + Rollback Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Add approval, rollback, and safety gates for self-update proposals.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P68.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.5",
+      "title": "Command Center Self-Update UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose self-update readiness without runnable apply actions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P68.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P68 validation coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P68.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Validate and close P68 with self-update apply still disabled.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P69",
+      "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T02:07:58.231Z",
+  "updatedAt": "2026-05-19T02:10:41.269Z",
   "currentPhase": "P68",
   "previousPhase": "P67",
-  "nextPhase": "P68"
+  "nextPhase": "P68.2"
 }

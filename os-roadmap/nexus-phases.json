@@ -2299,8 +2299,10 @@
       "track": "NEXUS_OS",
       "order": 43,
       "group": "Planned OS Phases",
-      "summary": "Allow NEXUS to evolve its own platform under explicit review and safety boundaries.",
-      "commandCenterVisible": true
+      "summary": "Self-update workflow is in progress with contract-only self-update boundary complete; self-update apply remains disabled.",
+      "commandCenterVisible": true,
+      "status": "in_progress",
+      "nextPhase": "P68.2"
     },
     {
       "phaseId": "P69",
@@ -2391,7 +2393,84 @@
       "group": "Planned OS Phases",
       "summary": "Prepare the first enterprise developer preview with governed self-healing behaviors.",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.1",
+      "title": "Execution Contract + Self-Update Boundary",
+      "track": "NEXUS_OS",
+      "order": 43.01,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "complete",
+      "summary": "Define P68 self-update contracts only; no self-update apply behavior.",
+      "nextPhase": "P68.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.2",
+      "title": "Self-Update Intent Contract",
+      "track": "NEXUS_OS",
+      "order": 43.02,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Define display-safe NEXUS OS self-update intent records.",
+      "nextPhase": "P68.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.3",
+      "title": "Self-Update Proposal Preview",
+      "track": "NEXUS_OS",
+      "order": 43.03,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Build preview-only self-update proposals with scoped files and validation commands.",
+      "nextPhase": "P68.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.4",
+      "title": "Approval + Rollback Gate",
+      "track": "NEXUS_OS",
+      "order": 43.04,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Add approval, rollback, and safety gates for self-update proposals.",
+      "nextPhase": "P68.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.5",
+      "title": "Command Center Self-Update UX",
+      "track": "NEXUS_OS",
+      "order": 43.05,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Expose self-update readiness without runnable apply actions.",
+      "nextPhase": "P68.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 43.06,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Aggregate P68 validation coverage before final validation.",
+      "nextPhase": "P68.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P68.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 43.07,
+      "group": "P68 Self-Update Workflow for NEXUS OS",
+      "status": "planned",
+      "summary": "Validate and close P68 with self-update apply still disabled.",
+      "nextPhase": "P69",
+      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T02:07:11.634Z"
+  "updatedAt": "2026-05-19T02:10:41.267Z"
 }

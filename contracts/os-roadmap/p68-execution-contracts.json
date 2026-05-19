@@ -1,0 +1,1113 @@
+{
+  "phaseId": "P68",
+  "title": "Self-Update Workflow for NEXUS OS",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p68-1-execution-contract-self-update-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define P68 self-update contracts only; no self-update apply behavior.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p68-execution-contracts.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "scripts/check-p68-execution-plan.js",
+        "reports/p68-execution-plan-report.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "scripts/check-os-phase-status.js",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P67.7",
+        "narrowScope": "Define P68 self-update contracts only; no self-update apply behavior.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p68-execution-contracts.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "scripts/check-p68-execution-plan.js",
+            "reports/p68-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "scripts/check-os-phase-status.js",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68 in_progress, mark P68.1 complete after validation, and set nextPhase to P68.2.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.1 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p67-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-2-self-update-intent-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe NEXUS OS self-update intent records.",
+      "allowedFiles": [
+        "self-update/p68-2-placeholder.js",
+        "scripts/check-p682.js",
+        "reports/p682-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.1",
+        "narrowScope": "Define display-safe NEXUS OS self-update intent records.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-2-placeholder.js",
+            "scripts/check-p682.js",
+            "reports/p682-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.2 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.2 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-1-execution-contract-self-update-boundary"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-3-self-update-proposal-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build preview-only self-update proposals with scoped files and validation commands.",
+      "allowedFiles": [
+        "self-update/p68-3-placeholder.js",
+        "scripts/check-p683.js",
+        "reports/p683-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.2",
+        "narrowScope": "Build preview-only self-update proposals with scoped files and validation commands.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-3-placeholder.js",
+            "scripts/check-p683.js",
+            "reports/p683-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.3 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.3 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-2-self-update-intent-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-4-approval-rollback-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Add approval, rollback, and safety gates for self-update proposals.",
+      "allowedFiles": [
+        "self-update/p68-4-placeholder.js",
+        "scripts/check-p684.js",
+        "reports/p684-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.3",
+        "narrowScope": "Add approval, rollback, and safety gates for self-update proposals.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-4-placeholder.js",
+            "scripts/check-p684.js",
+            "reports/p684-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.4 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.4 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-3-self-update-proposal-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-5-command-center-self-update-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose self-update readiness without runnable apply actions.",
+      "allowedFiles": [
+        "self-update/p68-5-placeholder.js",
+        "scripts/check-p685.js",
+        "reports/p685-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.4",
+        "narrowScope": "Expose self-update readiness without runnable apply actions.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "Command Center display-only self-update readiness.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-5-placeholder.js",
+            "scripts/check-p685.js",
+            "reports/p685-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add Playwright route coverage for self-update readiness labels, disabled apply actions, no raw dumps, theme switching, sidebar navigation, and DemoApp isolation."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.5 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.5 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-4-approval-rollback-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P68 validation coverage before final validation.",
+      "allowedFiles": [
+        "self-update/p68-6-placeholder.js",
+        "scripts/check-p686.js",
+        "reports/p686-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.5",
+        "narrowScope": "Aggregate P68 validation coverage before final validation.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-6-placeholder.js",
+            "scripts/check-p686.js",
+            "reports/p686-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.6 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.6 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-5-command-center-self-update-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p68-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P68 with self-update apply still disabled.",
+      "allowedFiles": [
+        "self-update/p68-7-placeholder.js",
+        "scripts/check-p687.js",
+        "reports/p687-report.md",
+        "package.json",
+        "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tool-governance/adapters/**",
+        "worker-runtime/workerRunner.js",
+        "worker-runtime/queueRunner.js",
+        "db/**",
+        "prisma/**",
+        "deploy/**",
+        "release/**",
+        "scripts/apply-project-mutation.js",
+        "scripts/deploy*.js",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P68.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P68.6",
+        "narrowScope": "Validate and close P68 with self-update apply still disabled.",
+        "safetyRules": [
+          "Do not enable self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, external network calls, or provider spend.",
+          "P68 starts with NEXUS OS self-update planning only; project source files remain forbidden unless a later explicit phase allows them.",
+          "Self-update previews must be reviewable, scoped, evidence-linked, approval-aware, rollback-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, fake runnable apply actions, internal phase labels outside OS Roadmap, or DemoApp outside demo mode."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "docs/architecture/CONTROLLED_IMPLEMENTATION_WORKFLOW.md",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing result, redaction, report, mode guard, phase status, Command Center, and controlled implementation patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in this subphase unless explicitly listed.",
+          "required": "UX must show self-update intent, current state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "self-update/p68-7-placeholder.js",
+            "scripts/check-p687.js",
+            "reports/p687-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P68_SELF_UPDATE_WORKFLOW_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P68_SELF_UPDATE_SUBPHASES",
+            "checkP68ExecutionPlan"
+          ],
+          "schemas": [
+            "SelfUpdateIntentContract",
+            "SelfUpdateProposalPreview",
+            "SelfUpdateScopeGate",
+            "SelfUpdateReadinessCard"
+          ],
+          "dataShapes": [
+            "intentId, scope, targetKind, allowedFiles, forbiddenFiles, previewState, approvalRequired, approvalState, rollbackPlan, selfUpdateAllowed, projectMutationAllowed, executionAllowed, disabledReason, blockers, evidenceRefs, activityRefs, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center must show self-update intent, current state, disabled apply state, allowed files, forbidden files, preview state, blockers, approval state, owner capability, evidence/activity location, rollback posture, and next action without raw JSON, raw logs, raw private IDs, fake runnable apply actions, internal phase labels, or DemoApp leakage.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required unless UX labels change; future P68 UX must cover disabled apply actions, no raw dumps, themes, navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add or keep P68-specific checker coverage for this subphase.",
+          "Keep backend/kernel behavior covered by checker scripts."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p68-execution-plan.",
+          "Keep check:os-phase-status and check:phase-validation-coverage aligned after P68 subphases are added."
+        ],
+        "docsRoadmap": [
+          "Add or update P68 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P68.7 complete after validation and advance P68 nextPhase.",
+        "validationCommands": [
+          "npm run check:p68-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm self-update apply, project mutation, provider dispatch, tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend were not enabled.",
+          "Confirm no projects/** files changed.",
+          "Confirm no fake working apply actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, or raw private IDs."
+        ],
+        "gitCommands": [
+          "git add <allowed P68 files>",
+          "git commit -m \"docs(nexus): define p68 self-update contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P68.7 is independently commit-ready.",
+        "No self-update apply, project mutation, provider/tool execution, worker execution, DB write, deploy, release, network call, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p68-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T07:30:00.000Z"
+    }
+  ]
+}
