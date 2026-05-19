@@ -1883,6 +1883,35 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Observability route renders readiness without runnable telemetry actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/observability");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Observability");
+      await expect(page.locator("body")).toContainText("Telemetry posture");
+      await expect(page.locator("body")).toContainText("SLO posture");
+      await expect(page.locator("body")).toContainText("Health state");
+    }
+
+    await expect(page.locator("body")).toContainText("Observability readiness is display-only");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Telemetry export disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("SLO enforcement disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Incident paging disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Remediation execution disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/export now|stream logs|send telemetry|enforce now|page now|remediate now|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/[^\s]*(telemetry|metrics|logs|pager)/i);
+    expect(body).not.toMatch(/P74\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 

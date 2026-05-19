@@ -131,7 +131,29 @@ Implementation:
 Expose observability readiness in Command Center without runnable telemetry,
 export, SLO, paging, or remediation actions.
 
-Status: planned.
+Status: complete. P74.5 adds a display-only Observability Command Center
+route. The route shows telemetry posture, SLO posture, health state, current
+state, next action, blockers, disabled reason, owner capability,
+evidence/activity location, safety posture, and cost impact without raw JSON,
+raw logs, raw policy dumps, raw private IDs, raw tokens, internal phase labels,
+DemoApp leakage, or runnable observability actions.
+
+Implementation:
+
+- `dashboard/src/data/observabilityReadiness.js` exports
+  `buildObservabilityReadinessViewModel` and
+  `observabilityReadinessViewModel`.
+- `dashboard/src/data/commandCenterRoutes.js` adds the
+  `/command-center/observability` route.
+- `dashboard/src/data/commandCenterTabs.js` adds `OBSERVABILITY_TABS`.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders Observability readiness,
+  posture, health snapshot, blockers, disabled reason, and disabled actions as
+  display-only content.
+- `dashboard/tests/routes.spec.js` adds focused Playwright coverage for the
+  Observability route across dark, light, and system themes.
+- `scripts/check-p745-command-center-observability-ux.js` validates display
+  data, disabled automation flags, raw-output safety, DemoApp boundary, and
+  Playwright coverage registration.
 
 ### P74.6 Tests / Checkers / Docs
 
@@ -169,7 +191,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.4. External telemetry exporters, raw log
+P74 is in progress through P74.5. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network

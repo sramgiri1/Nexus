@@ -3728,8 +3728,10 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "2b7a7ef",
       "completedAt": "",
-      "summary": "Observability, telemetry, and service-level objective readiness is in progress with preview-only health snapshots defined.",
+      "summary": "Observability, telemetry, and service-level objective readiness is in progress with display-only Command Center observability coverage.",
       "checksRun": [
+        "npm run check:p745-command-center-observability-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"",
         "npm run check:p744",
         "npm run check:p743",
         "npm run check:p742",
@@ -3742,7 +3744,7 @@
       "knownLimitations": [
         "P74 has not enabled external telemetry exporters, raw log streaming, DB writes, project mutation, provider/tool execution, worker execution, remediation execution, paging, deploy/release/export execution, package creation, auth mutation, network calls, or provider spend."
       ],
-      "nextPhase": "P74.5",
+      "nextPhase": "P74.6",
       "commandCenterVisible": true
     },
     {
@@ -3843,13 +3845,26 @@
       "phaseId": "P74.5",
       "title": "Command Center Observability UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose observability readiness without runnable telemetry or incident actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Exposed observability readiness without runnable telemetry or incident actions.",
+      "checksRun": [
+        "npm run check:p745-command-center-observability-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Observability route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p744",
+        "npm run check:p74-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P74.5 exposes observability readiness only. Telemetry export, raw log exposure, SLO enforcement, paging, remediation, DB writes, project mutation, provider/tool execution, worker execution, network calls, deploy/release/export execution, package creation, auth mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P74.6",
       "commandCenterVisible": true
     },
@@ -6831,5 +6846,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P74",
   "previousPhase": "P73",
-  "nextPhase": "P74.5"
+  "nextPhase": "P74.6"
 }

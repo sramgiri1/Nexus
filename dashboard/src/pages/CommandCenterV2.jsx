@@ -21,6 +21,7 @@ import {
   LIVE_API_TABS,
   MEMORY_CENTER_TABS,
   MISSION_CONTROL_TABS,
+  OBSERVABILITY_TABS,
   POLICY_CENTER_TABS,
   PROJECTS_TABS,
   PROJECT_SHIPPING_TABS,
@@ -78,6 +79,7 @@ import { buildDeployMonitoringReadinessViewModel } from "../data/deployMonitorin
 import { buildProjectShippingReadinessViewModel } from "../data/projectShippingReadiness.js";
 import { dbRuntimeReadinessViewModel } from "../data/dbRuntimeReadiness.js";
 import { buildAuthGovernanceReadinessViewModel } from "../data/authGovernanceReadiness.js";
+import { buildObservabilityReadinessViewModel } from "../data/observabilityReadiness.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -8018,6 +8020,93 @@ function AuthGovernancePage() {
   );
 }
 
+function ObservabilityPage() {
+  const readiness = buildObservabilityReadinessViewModel();
+  const route = COMMAND_CENTER_ROUTE_BY_KEY.observability || {};
+  const tabs = route.tabs || OBSERVABILITY_TABS;
+  const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={readiness.routeId}>
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
+          <div className="ccv2-page-head__sub">Display-only telemetry, SLO, health, and incident readiness with exporters and automation disabled.</div>
+        </div>
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{readiness.ownerAgent} · {readiness.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+        </div>
+
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{readiness.disabledReason}</div>
+
+        <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Observability sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {readiness.readinessCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="posture" activeTab={activeTab}>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Observability Posture</div>
+              <div className="ccv2-page-summary" style={{ marginTop: 12 }}>
+                {readiness.postureRows.map((row) => (
+                  <div className="ccv2-page-summary-row" key={row.label}>
+                    <span className="ccv2-page-summary-label">{row.label}</span>
+                    <span className="ccv2-page-summary-value">{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="evidence" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Health Snapshot</div>
+                <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                  {readiness.snapshotRows.map((row) => <li key={row.label}>{row.label}: {row.state}</li>)}
+                </ul>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Blockers</div>
+                <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                  {readiness.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+                </ul>
+              </article>
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="disabled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {readiness.disabledActions.map((action) => (
+                <article className="ccv2-card" key={action.label}>
+                  <div className="ccv2-section-heading">{action.label}</div>
+                  <button className="ccv2-btn ccv2-btn--disabled" type="button" disabled title={action.reason}>{action.label} disabled</button>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{action.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   void vm;
@@ -10173,6 +10262,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "deployMonitoring" && <DeployMonitoringPage />}
           {currentPage === "projectShipping" && <ProjectShippingPage />}
           {currentPage === "authGovernance" && <AuthGovernancePage />}
+          {currentPage === "observability" && <ObservabilityPage />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

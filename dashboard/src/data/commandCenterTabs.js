@@ -110,6 +110,13 @@ export const AUTH_GOVERNANCE_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable auth actions and reasons", badge: "Disabled" },
 ];
 
+export const OBSERVABILITY_TABS = [
+  { id: "overview", label: "Overview", description: "Telemetry, SLO, health posture, and next action", badge: "Preview" },
+  { id: "posture", label: "Posture", description: "Disabled telemetry and incident automation posture", badge: "Blocked" },
+  { id: "evidence", label: "Evidence", description: "Evidence, activity, cost, and blockers", badge: "Read-only" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable observability actions and reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",
