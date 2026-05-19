@@ -282,8 +282,8 @@ Risk level:
   - `P64.2` Dispatch Policy Envelope — complete
   - `P64.3` Provider / Tool Readiness Matrix — complete
   - `P64.4` Dispatch Dry Run — complete
-  - `P64.5` Command Center Dispatch UX — next
-  - `P64.6` Dispatch Tests / Checkers / Docs
+  - `P64.5` Command Center Dispatch UX — complete
+  - `P64.6` Dispatch Tests / Checkers / Docs — next
   - `P64.7` Final Validation
 - `P64.8` Code Mode Runtime + Lazy Tool Loading
 - `P65` Batch Intelligence Jobs for Large-Scale Analysis

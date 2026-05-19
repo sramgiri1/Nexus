@@ -96,6 +96,13 @@ Expose readiness and dry-run state in existing Command Center governance pages.
 The UX must show current state, next action, blockers, disabled reason, owner
 capability, evidence/activity location, and cost impact.
 
+Status: complete. P64.5 adds display-only dispatch readiness and dry-run
+surfaces to Tool Gateway, API / Batch Adapter, and Policy Center. The UX shows
+current state, next action, blockers, disabled reason, owner capability,
+evidence/activity location, and cost impact without raw IDs, raw dumps, DemoApp
+leakage, provider calls, tool execution, project mutation, DB writes, deploy,
+external network calls, or worker execution.
+
 ### P64.6 Tests / Checkers / Docs
 
 Aggregate P64 checks and documentation. The final checker must fail if any P64

@@ -1,0 +1,47 @@
+export const dispatchGovernanceSummary = {
+  phase: "P64.5",
+  currentState: "Dry-run only",
+  nextAction: "Review readiness, cost, evidence, and approval requirements before any future execution phase.",
+  blocker: "Governed dispatch execution is not enabled.",
+  disabledReason: "Provider calls, tool execution, DB writes, deploy, network calls, workers, and project mutation remain disabled.",
+  ownerCapability: "Dispatch Governance",
+  evidenceLocation: "reports/p64-dispatch-dry-run-report.md",
+  activityLocation: "local-state/runtime/activity.jsonl",
+  costImpact: "Estimate only; no provider spend.",
+};
+
+export const dispatchReadinessCards = [
+  {
+    title: "Provider Dispatch",
+    stateLabel: "Dry-run only",
+    ownerCapability: "Provider Governance",
+    disabledReason: "Provider calls are disabled until a later explicit execution phase.",
+    blocker: "Approval, evidence, cost, and policy gates are required.",
+    nextAction: "Use API / Batch previews and dry-run metadata for planning only.",
+    evidenceLocation: "reports/p64-dispatch-dry-run-report.md",
+    activityLocation: "local-state/runtime/activity.jsonl",
+    costImpact: "Estimate only; no provider spend.",
+  },
+  {
+    title: "Tool Dispatch",
+    stateLabel: "Readiness only",
+    ownerCapability: "Tool Gateway",
+    disabledReason: "Tool execution and MCP runtime are disabled.",
+    blocker: "Permission matrix, approval, evidence, and audit records are required.",
+    nextAction: "Review Tool Gateway readiness and lazy contract requirements.",
+    evidenceLocation: "reports/p64-dispatch-readiness-report.md",
+    activityLocation: "local-state/runtime/activity.jsonl",
+    costImpact: "No direct provider spend.",
+  },
+  {
+    title: "Policy Decision",
+    stateLabel: "Preview available",
+    ownerCapability: "Policy Center",
+    disabledReason: "Policy simulation does not apply runtime changes.",
+    blocker: "Execution remains blocked until final validation and explicit enablement.",
+    nextAction: "Use policy simulation to verify denial and approval paths.",
+    evidenceLocation: "reports/p64-dispatch-envelope-report.md",
+    activityLocation: "local-state/runtime/activity.jsonl",
+    costImpact: "No spend; policy metadata only.",
+  },
+];

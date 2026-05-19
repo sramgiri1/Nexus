@@ -2272,6 +2272,11 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("One governed tool gateway");
     await expect(page.locator("body")).toContainText("Execution disabled");
     await expect(page.locator("body")).toContainText("MCP placeholders disabled");
+    await expect(page.locator("body")).toContainText("Tool Dispatch");
+    await expect(page.locator("body")).toContainText("Readiness only");
+    await expect(page.locator("body")).toContainText("Disabled reason: Tool execution and MCP runtime are disabled.");
+    await expect(page.locator("body")).toContainText("Evidence: reports/p64-dispatch-readiness-report.md");
+    await expect(page.locator("body")).toContainText("Cost impact: No direct provider spend.");
     for (const label of [
       "Overview",
       "Tool Registry",
@@ -2353,6 +2358,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Preview-only provider request packaging");
     await expect(page.locator("body")).toContainText("Provider calls disabled");
     await expect(page.locator("body")).toContainText("Upload disabled");
+    await expect(page.locator("body")).toContainText("Governed Dispatch Dry Run");
+    await expect(page.locator("body")).toContainText("Current state");
+    await expect(page.locator("body")).toContainText("Dry-run only");
+    await expect(page.locator("body")).toContainText("Estimate only; no provider spend.");
     for (const label of [
       "Overview",
       "Provider Adapters",
@@ -2514,6 +2523,9 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator("body")).toContainText("Policy registry");
     await expect(page.locator("body")).toContainText("Runtime enforcement changes");
     await expect(page.locator("body")).toContainText("Not enabled");
+    await expect(page.locator("body")).toContainText("Dispatch Governance");
+    await expect(page.locator("body")).toContainText("Policy simulation does not apply runtime changes.");
+    await expect(page.locator("body")).toContainText("reports/p64-dispatch-envelope-report.md");
 
     for (const label of [
       "Registry",

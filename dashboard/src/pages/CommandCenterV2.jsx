@@ -47,6 +47,7 @@ import {
   NEXUS_PLANNED_OS_PHASES,
   NEXUS_PREVIOUS_COMPLETED_PHASE,
 } from "../data/nexusRoadmap.js";
+import { dispatchGovernanceSummary, dispatchReadinessCards } from "../data/dispatchGovernance.js";
 import { privateValidationSnapshot } from "../data/privateValidationSnapshot.js";
 import {
   PROJECT_SELECTION_STORAGE_KEY,
@@ -4543,6 +4544,7 @@ function PolicyCenterPage() {
     { label: "Tool permission expansion", risk: "High", implication: "WARDEN and AUDITOR review preview." },
     { label: "Provider or DB enabling", risk: "Critical", implication: "Denied in preview." },
   ];
+  const policyDispatchCard = dispatchReadinessCards.find((card) => card.title === "Policy Decision");
 
   return (
     <div className="ccv2-content">
@@ -4566,6 +4568,19 @@ function PolicyCenterPage() {
               </div>
               <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Next action: review policy simulation results before P59 Secrets and Credential Boundary. Policy Center does not edit or apply policies in P58.</p>
             </div>
+            {policyDispatchCard && (
+              <div className="ccv2-card ccv2-card--accent">
+                <div className="ccv2-section-heading">Dispatch Governance</div>
+                <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Current state</span><span className="ccv2-safety-row__value--disabled">{policyDispatchCard.stateLabel}</span></div>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Disabled reason</span><span>{policyDispatchCard.disabledReason}</span></div>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Blocker</span><span>{policyDispatchCard.blocker}</span></div>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Evidence</span><span>{policyDispatchCard.evidenceLocation}</span></div>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Activity</span><span>{policyDispatchCard.activityLocation}</span></div>
+                  <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Cost impact</span><span>{policyDispatchCard.costImpact}</span></div>
+                </div>
+              </div>
+            )}
           </CommandTabPanel>
 
           <CommandTabPanel tabId="registry" activeTab={activeTab}>
@@ -6136,6 +6151,7 @@ function ToolGatewayPage({ vm }) {
   const permissions = gateway.permissions || [];
   const adapters = gateway.adapters || [];
   const lazy = gateway.lazyLoading || {};
+  const toolDispatchCards = dispatchReadinessCards.filter((card) => card.title !== "Provider Dispatch");
 
   return (
     <div className="ccv2-content">
@@ -6180,6 +6196,23 @@ function ToolGatewayPage({ vm }) {
               <div className="ccv2-muted">
                 Search summaries, selected contract loading, and execute-preview decisions are available as metadata only.
               </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--2">
+              {toolDispatchCards.map((card) => (
+                <article key={card.title} className="ccv2-card">
+                  <div className="ccv2-section-heading">{card.title}</div>
+                  <div className="ccv2-chip-row">
+                    <span className="ccv2-pill ccv2-pill--disabled">{card.stateLabel}</span>
+                    <span className="ccv2-pill ccv2-pill--disabled">{card.ownerCapability}</span>
+                  </div>
+                  <div className="ccv2-muted">Disabled reason: {card.disabledReason}</div>
+                  <div className="ccv2-muted">Blocker: {card.blocker}</div>
+                  <div className="ccv2-muted">Next action: {card.nextAction}</div>
+                  <div className="ccv2-muted">Evidence: {card.evidenceLocation}</div>
+                  <div className="ccv2-muted">Activity: {card.activityLocation}</div>
+                  <div className="ccv2-muted">Cost impact: {card.costImpact}</div>
+                </article>
+              ))}
             </div>
           </CommandTabPanel>
 
@@ -6438,6 +6471,7 @@ function ApiBatchAdapterPage({ vm }) {
   const apiBatch = vm.apiBatch || {};
   const summary = apiBatch.summary || {};
   const [activeTab, setActiveTab] = useState("overview");
+  const providerDispatchCard = dispatchReadinessCards.find((card) => card.title === "Provider Dispatch");
 
   return (
     <div className="ccv2-content">
@@ -6485,6 +6519,18 @@ function ApiBatchAdapterPage({ vm }) {
                 ))}
               </ul>
             </div>
+            {providerDispatchCard && (
+              <div className="ccv2-card">
+                <div className="ccv2-section-heading">Governed Dispatch Dry Run</div>
+                <div className="ccv2-page-summary-grid">
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{dispatchGovernanceSummary.currentState}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{providerDispatchCard.ownerCapability}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{providerDispatchCard.disabledReason}</span></div>
+                  <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{providerDispatchCard.costImpact}</span></div>
+                </div>
+                <div className="ccv2-empty-state">Next action: {providerDispatchCard.nextAction}</div>
+              </div>
+            )}
           </CommandTabPanel>
 
           <CommandTabPanel tabId="providers" activeTab={activeTab}>

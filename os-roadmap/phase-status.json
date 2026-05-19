@@ -2448,7 +2448,7 @@
         "Provider dispatch, tool execution, project mutation, DB writes, deploy, release, external network calls, and worker execution remain disabled.",
         "P64.1 only defines implementation-grade subphase contracts and validation."
       ],
-      "nextPhase": "P64.5",
+      "nextPhase": "P64.6",
       "commandCenterVisible": true
     },
     {
@@ -2548,13 +2548,24 @@
       "phaseId": "P64.5",
       "title": "Command Center Dispatch UX",
       "track": "NEXUS_OS",
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-only Command Center dispatch readiness and dry-run UX.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "commit": "pending-command-center-dispatch-ux-commit",
+      "completedAt": "2026-05-19T00:10:00.000Z",
+      "summary": "Added display-only dispatch readiness and dry-run surfaces to Tool Gateway, API / Batch Adapter, and Policy Center.",
+      "checksRun": [
+        "npm run check:p64-command-center-dispatch-ux",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run build && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js -g \"Tool Gateway route renders read-only governed tool metadata|API Batch route renders preview-only provider and batch metadata|Policy Center route renders governance admin previews\"",
+        "npm run check:p64-execution-plan",
+        "npm run check:os-phase-status",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Dispatch UX is display-only; provider dispatch, tool execution, workers, DB writes, project mutation, release, deploy, and network calls remain disabled.",
+        "Full Command Center page suite still has two pre-existing project-label assertions outside this OS-only subphase."
+      ],
       "nextPhase": "P64.6",
       "commandCenterVisible": true
     },
@@ -4850,5 +4861,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P64",
   "previousPhase": "P63",
-  "nextPhase": "P64.5"
+  "nextPhase": "P64.6"
 }

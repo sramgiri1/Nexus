@@ -245,6 +245,7 @@
     "check:p64-dispatch-envelope": "node scripts/check-p64-dispatch-envelope.js",
     "check:p64-dispatch-readiness": "node scripts/check-p64-dispatch-readiness.js",
     "check:p64-dispatch-dry-run": "node scripts/check-p64-dispatch-dry-run.js",
+    "check:p64-command-center-dispatch-ux": "node scripts/check-p64-command-center-dispatch-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
