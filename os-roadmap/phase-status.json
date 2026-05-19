@@ -4542,7 +4542,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "54fa8de",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Continued P78 with preview-only PRD assembly records while runtime mutation remains disabled.",
       "checksRun": [
@@ -4610,7 +4610,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "54fa8de",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Added preview-only PRD assembly records with PRD generation, project file writes, agent dispatch, project mutation, DB writes, provider execution, network calls, and spend disabled.",
       "checksRun": [
