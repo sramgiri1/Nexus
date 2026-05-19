@@ -1323,7 +1323,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/scoped-memory-architecture",
-      "commit": "pending-final-commit",
+      "commit": "f654509",
       "completedAt": "2026-05-15T15:57:59.695Z",
       "summary": "Closes P46 with docs, reports, phase status, and validation.",
       "checksRun": [
@@ -1360,7 +1360,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "arch/governed-agentic-mesh",
-      "commit": "pending-final-commit",
+      "commit": "f654509",
       "completedAt": "2026-05-15T17:12:54.000Z",
       "summary": "Finalizes governed message, room, handoff, context-sync, and Command Center Agent Rooms UX without free direct chat or execution.",
       "checksRun": [
