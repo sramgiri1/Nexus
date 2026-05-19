@@ -112,7 +112,11 @@ calls, and provider spend disabled.
 
 Aggregate checks, close P66, and hand off to P67.
 
-Status: planned.
+Status: complete. P66.7 closes P66 with final validation evidence and hands
+off to P67. Self-healing remains a governed preview capability; recovery
+execution, automatic retry, source mutation, project mutation, provider/tool
+execution, DB writes, deploy, release, network calls, and provider spend remain
+disabled.
 
 ## Command Center Requirements
 
@@ -134,5 +138,5 @@ or fake runnable repair actions.
 
 ## Status
 
-P66 is in progress. P66.1 is a contract-only foundation; real self-healing
-execution requires later explicit phases and fresh validation.
+P66 is complete as a governed self-healing preview foundation. Real recovery
+execution requires a later explicit phase and fresh validation.

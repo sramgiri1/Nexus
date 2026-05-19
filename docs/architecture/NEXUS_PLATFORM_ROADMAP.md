@@ -299,15 +299,15 @@ Risk level:
   - `P65.5` Command Center Batch Intelligence UX — complete
   - `P65.6` Tests / Checkers / Docs — complete
   - `P65.7` Final Validation — complete
-- `P66` Self-Healing Failure Loop — in progress
+- `P66` Self-Healing Failure Loop — complete
   - `P66.1` Execution Contract + Safety Split — complete
   - `P66.2` Failure Classification Contract — complete
   - `P66.3` Recovery Plan Preview — complete
   - `P66.4` Healing Gate + Loop Guard — complete
   - `P66.5` Command Center Self-Healing UX — complete
   - `P66.6` Tests / Checkers / Docs — complete
-  - `P66.7` Final Validation — next
-- `P67` Controlled Source Mutation Expansion
+  - `P66.7` Final Validation — complete
+- `P67` Controlled Source Mutation Expansion — next
 - `P68` Self-Update Workflow for NEXUS OS
 - `P69` Release / Deploy Loop
 - `P70` Deploy Monitoring + Incident Mitigation

@@ -265,6 +265,7 @@
     "check:p66-healing-safety-gate": "node scripts/check-p66-healing-safety-gate.js",
     "check:p66-command-center-self-healing-ux": "node scripts/check-p66-command-center-self-healing-ux.js",
     "check:p66-self-healing-final": "node scripts/check-p66-self-healing-final.js",
+    "check:p66-final": "node scripts/check-p66-final.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

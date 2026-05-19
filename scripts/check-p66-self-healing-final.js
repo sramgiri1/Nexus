@@ -63,8 +63,19 @@ addCheck(
   "P66 subphase status",
   ["P66.1", "P66.2", "P66.3", "P66.4", "P66.5", "P66.6"].every((phaseId) => statusById.get(phaseId)?.status === "complete"),
 );
-addCheck("P66 next phase", statusById.get("P66")?.nextPhase === "P66.7", statusById.get("P66")?.nextPhase || "missing");
-addCheck("roadmap pointer", status.currentPhase === "P66" && status.nextPhase === "P66.7", `${status.currentPhase}/${status.nextPhase}`);
+const p66Closed = statusById.get("P66.7")?.status === "complete";
+addCheck(
+  "P66 next phase",
+  statusById.get("P66")?.nextPhase === (p66Closed ? "P67" : "P66.7"),
+  statusById.get("P66")?.nextPhase || "missing",
+);
+addCheck(
+  "roadmap pointer",
+  p66Closed
+    ? status.currentPhase === "P67" && status.previousPhase === "P66" && status.nextPhase === "P68"
+    : status.currentPhase === "P66" && status.nextPhase === "P66.7",
+  `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
+);
 
 const failed = checks.filter((check) => check.status === "FAIL");
 

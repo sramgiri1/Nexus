@@ -2967,12 +2967,13 @@
       "phaseId": "P66",
       "title": "Self-Healing Failure Loop",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e4e2a5c",
-      "completedAt": "",
-      "summary": "P66 is in progress with aggregate self-healing validation complete; final validation remains.",
+      "commit": "pending-p66-final-commit",
+      "completedAt": "2026-05-19T05:50:00.000Z",
+      "summary": "Closed P66 with final validation while self-healing remains governed preview-only.",
       "checksRun": [
+        "npm run check:p66-final",
         "npm run check:p66-self-healing-final",
         "npm run check:p66-command-center-self-healing-ux",
         "npm run check:p66-healing-safety-gate",
@@ -2983,12 +2984,14 @@
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
+        "cd dashboard && npm run test:pages -- --grep \"Recovery route\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P66 aggregate validation confirms preview-only self-healing. Recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P66 does not enable recovery execution, automatic retry, source mutation, project mutation, provider/tool execution, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P66.7",
+      "nextPhase": "P67",
       "commandCenterVisible": true
     },
     {
@@ -3145,13 +3148,30 @@
       "phaseId": "P66.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P66 with self-healing still governed and non-mutating.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p66-final-commit",
+      "completedAt": "2026-05-19T05:50:00.000Z",
+      "summary": "Closed P66, regenerated final validation evidence, and handed off to P67.",
+      "checksRun": [
+        "npm run check:p66-final",
+        "npm run check:p66-self-healing-final",
+        "npm run check:p66-command-center-self-healing-ux",
+        "npm run check:p66-healing-safety-gate",
+        "npm run check:p66-recovery-plan-preview",
+        "npm run check:p66-failure-classification",
+        "npm run check:p66-execution-plan",
+        "npm run check:command-center-ux",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "cd dashboard && npm run build && npm run test:unit",
+        "cd dashboard && npm run test:pages -- --grep \"Recovery route\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Final validation is evidence-only. Recovery execution, automatic retry, source/project mutation, provider/tool execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P67",
       "commandCenterVisible": true
     },
@@ -5375,7 +5395,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-18T23:00:00.000Z",
-  "currentPhase": "P66",
-  "previousPhase": "P65",
-  "nextPhase": "P66.7"
+  "currentPhase": "P67",
+  "previousPhase": "P66",
+  "nextPhase": "P68"
 }
