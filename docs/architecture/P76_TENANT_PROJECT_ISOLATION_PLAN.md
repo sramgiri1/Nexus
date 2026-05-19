@@ -64,11 +64,12 @@ references, cost impact, disabled reason, owner capability, and next action.
 
 Define project scope isolation previews without project mutation.
 
-Status: planned. P76.3 will add preview-only
+Status: complete. P76.3 adds preview-only
 `ProjectScopeIsolationPreview` records that capture project scope, source
 tenant boundary, disabled project mutation, disabled cross-project access,
-approval requirement, evidence/activity references, cost impact, disabled
-reason, and next action.
+required approval state, disabled tenant/access/runtime mutation,
+evidence/activity references, cost impact, disabled reason, owner capability,
+and next action.
 
 ### P76.4 Access Context Packet Preview
 
@@ -124,6 +125,15 @@ P76.1 validation:
 P76.2 validation:
 
 - `npm run check:p762`
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.3 validation:
+
+- `npm run check:p763`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`
