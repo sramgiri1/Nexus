@@ -2893,7 +2893,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p65-command-center-batch-intelligence-ux-commit",
+      "commit": "e8834ca",
       "completedAt": "2026-05-19T03:05:00.000Z",
       "summary": "Added display-only Command Center batch intelligence readiness UX with workload, redaction, cost, disabled upload reason, evidence/activity refs, and next action.",
       "checksRun": [
