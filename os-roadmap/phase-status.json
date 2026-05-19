@@ -8680,7 +8680,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8996dce",
       "completedAt": "2026-05-19T22:00:37.240Z",
       "summary": "Completed governed local founder runtime admission, focused Command Center Lite, local agent plan admission, Live Readiness visibility, validation aggregation, docs, and final validation while keeping unsafe execution blocked.",
       "checksRun": [
@@ -8853,7 +8853,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8996dce",
       "completedAt": "2026-05-19T22:00:37.240Z",
       "summary": "Closed P84 governed founder runtime admission with final validation evidence and safety confirmations.",
       "checksRun": [
