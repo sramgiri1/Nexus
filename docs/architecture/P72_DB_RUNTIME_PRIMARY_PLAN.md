@@ -160,7 +160,21 @@ Implementation:
 
 Validate and close P72 with DB writes and migrations still disabled.
 
-Status: planned.
+Status: complete. P72.7 closes P72 and hands off to P73 Auth, RBAC, and
+Multi-user Governance. Final validation confirms P72 subphases, Command Center
+DB Runtime UX, dashboard checks, reports, docs, roadmap, phase status, and
+handoff state are consistent while DB writes, migrations, schema mutation,
+project mutation, provider/tool/worker execution, network calls,
+deploy/release/export execution, package creation, and provider spend remain
+disabled.
+
+Implementation:
+
+- `scripts/check-p727-final-validation.js` validates completed P72 roadmap and
+  phase-status entries, stamped commits, P73 handoff, Command Center DB Runtime
+  tab preservation, route test preservation, theme coverage, raw-output safety,
+  disabled mutation posture, and final report generation.
+- `reports/p727-final-validation-report.md` records final validation evidence.
 
 ## Command Center Requirements
 
@@ -184,7 +198,8 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.6. DB writes, migrations, schema mutation,
-project mutation, provider dispatch, tool execution, worker execution, deploy
-execution, release execution, export execution, package creation, external
-network calls, and provider spend remain disabled.
+P72 is complete. DB writes, migrations, schema mutation, project mutation,
+provider dispatch, tool execution, worker execution, deploy execution, release
+execution, export execution, package creation, external network calls, and
+provider spend remain disabled. Next phase: P73 Auth, RBAC, and Multi-user
+Governance.

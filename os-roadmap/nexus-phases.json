@@ -2343,10 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "DB-backed runtime primary is in progress with tests, checkers, docs, and Command Center DB runtime coverage aggregated.",
+      "summary": "DB-backed runtime primary readiness is complete with DB writes, migrations, and schema mutation disabled.",
       "commandCenterVisible": true,
-      "status": "in_progress",
-      "nextPhase": "P72.7"
+      "status": "complete",
+      "nextPhase": "P73"
     },
     {
       "phaseId": "P73",
@@ -2782,8 +2782,8 @@
       "track": "NEXUS_OS",
       "order": 47.07,
       "group": "P72 DB-backed Runtime Primary",
-      "status": "planned",
-      "summary": "Validate and close P72 with DB writes and migrations still disabled.",
+      "status": "complete",
+      "summary": "Validated and closed P72 with DB writes and migrations still disabled.",
       "nextPhase": "P73",
       "commandCenterVisible": true
     }

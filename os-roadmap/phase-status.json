@@ -3497,14 +3497,17 @@
       "phaseId": "P72",
       "title": "DB-backed Runtime Primary",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "07e6fd4",
-      "completedAt": "",
-      "summary": "DB-backed runtime primary is in progress with tests, checkers, docs, and Command Center DB runtime coverage aggregated.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "DB-backed runtime primary readiness is complete with DB writes, migrations, and schema mutation disabled.",
       "checksRun": [
+        "npm run check:p727-final-validation",
         "npm run check:p726-tests-checkers-docs",
         "npm run check:p725-command-center-db-runtime-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"",
         "npm run check:p724",
         "npm run check:p723",
@@ -3518,7 +3521,7 @@
       "knownLimitations": [
         "P72 has not enabled DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P72.7",
+      "nextPhase": "P73",
       "commandCenterVisible": true
     },
     {
@@ -6448,7 +6451,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "07e6fd4",
       "completedAt": "2026-05-19",
       "summary": "Aggregated P72 validation coverage before final validation.",
       "checksRun": [
@@ -6470,20 +6473,34 @@
       "phaseId": "P72.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P72 with DB writes and migrations still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Validated and closed P72 with DB writes and migrations still disabled.",
+      "checksRun": [
+        "npm run check:p727-final-validation",
+        "npm run check:p726-tests-checkers-docs",
+        "npm run check:p725-command-center-db-runtime-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB Runtime route\"",
+        "npm run check:p72-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P72.7 closes DB runtime readiness only. DB writes, migrations, schema mutation, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P73",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T11:18:20.708Z",
-  "currentPhase": "P72",
-  "previousPhase": "P71",
-  "nextPhase": "P72.7"
+  "currentPhase": "P73",
+  "previousPhase": "P72",
+  "nextPhase": "P73"
 }
