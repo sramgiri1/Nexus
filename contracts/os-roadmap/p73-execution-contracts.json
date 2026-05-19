@@ -1,0 +1,348 @@
+{
+  "phaseId": "P73",
+  "title": "Auth, RBAC, Multi-user Governance",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p73-1-execution-contract-governance-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define P73 auth, RBAC, and multi-user governance contracts without enabling identity mutation or runtime auth.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p73-execution-contracts.json",
+        "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md",
+        "scripts/check-p73-execution-plan.js",
+        "reports/p73-execution-plan-report.md",
+        "package.json",
+        "scripts/check-os-phase-status.js",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P73.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "fa29be3",
+        "narrowScope": "Define P73 execution contracts and governance boundary only.",
+        "safetyRules": [
+          "Do not enable login, identity provider integration, user mutation, session mutation, role mutation, tenant mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend.",
+          "Auth and RBAC records must be preview-only, evidence-linked, approval-aware, cost-aware, and non-executing.",
+          "Primary UX must not expose raw JSON, raw logs, raw private project IDs, raw user IDs, raw tokens, raw policy dumps, DemoApp outside demo mode, internal phase labels outside OS Roadmap, or fake runnable auth actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/resultEnvelope.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterRoutes.js",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse shared result, report, redaction, mode guard, phase status, Command Center route, tabs, evidence, activity, and cost patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P73.1.",
+          "required": "Future UX must show identity mode, role posture, tenant/workspace boundary, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p73-execution-contracts.json",
+            "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md",
+            "scripts/check-p73-execution-plan.js",
+            "reports/p73-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "scripts/check-os-phase-status.js",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P73_AUTH_GOVERNANCE_SUBPHASES",
+            "checkP73ExecutionPlan",
+            "createIdentitySessionContract",
+            "createRbacPermissionMatrix",
+            "createMultiUserWorkspaceBoundary",
+            "buildAuthGovernanceReadinessViewModel"
+          ],
+          "schemas": [
+            "IdentitySessionContract",
+            "RbacPermissionMatrix",
+            "MultiUserWorkspaceBoundary",
+            "AuthGovernanceCommandCenterReadiness"
+          ],
+          "dataShapes": [
+            "identityMode, sessionState, roleSet, permissionState, workspaceBoundary, userMutationAllowed, roleMutationAllowed, authProviderCallsAllowed, dbWritesAllowed, disabledReason, blockers, evidenceRefs, activityRefs, costImpact, ownerCapability, nextAction"
+          ]
+        },
+        "commandCenterUxRequirements": "Command Center UX must show identity mode, role posture, tenant/workspace boundary, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact without raw JSON, raw logs, raw private IDs, raw user IDs, raw tokens, raw policy dumps, DemoApp leakage, internal phase labels, or fake runnable auth actions.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required for this subphase unless Command Center route behavior changes."
+        ],
+        "testsCheckers": [
+          "Add check:p73-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p73-execution-plan.",
+          "Add P73.1-P73.7 to OS phase status checker."
+        ],
+        "docsRoadmap": [
+          "Add P73 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P73.1 complete after validation and set nextPhase to P73.2.",
+        "validationCommands": [
+          "npm run check:p73-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, and provider spend were not enabled.",
+          "Confirm no projects/**, project-roadmap/**, auth/**, users/**, rbac/**, db/**, prisma/**, or migrations/** files changed.",
+          "Confirm no fake auth actions were exposed.",
+          "Confirm primary UX does not expose raw JSON, raw logs, DemoApp leakage, internal phase labels, raw tokens, raw user IDs, raw private IDs, or raw policy dumps."
+        ],
+        "gitCommands": [
+          "git add <allowed P73 files>",
+          "git commit -m \"docs(nexus): define p73 auth governance contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P73.1 is independently commit-ready.",
+        "No login, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, network call, deploy/release/export execution, package creation, or provider spend is enabled.",
+        "Validation reports pass and OS phase status is current."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p72-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-2-identity-session-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define display-safe identity and session contract records without login or session mutation.",
+      "allowedFiles": ["auth-governance/p73-2-placeholder.js", "scripts/check-p732.js", "reports/p732-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.1",
+        "narrowScope": "Create identity/session contract records only.",
+        "safetyRules": ["Do not enable login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["shared/resultEnvelope.js", "shared/redaction.js", "shared/reportWriter.js"], "rule": "Reuse shared result, redaction, and report helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake auth actions.",
+        "exactFilesModules": {"create": ["auth-governance/p73-2-placeholder.js", "scripts/check-p732.js", "reports/p732-report.md"], "update": ["package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p732", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["Identity/session contract records validate.", "Login and session mutation remain disabled.", "No auth, user, RBAC, DB, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-1-execution-contract-governance-boundary"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-3-rbac-permission-matrix",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define RBAC permission matrix records without role mutation.",
+      "allowedFiles": ["auth-governance/p73-3-placeholder.js", "scripts/check-p733.js", "reports/p733-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.2",
+        "narrowScope": "Create RBAC permission matrix records only.",
+        "safetyRules": ["Do not enable role mutation, permission mutation, user mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["auth-governance/p73-2-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse P73 identity/session records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake RBAC actions.",
+        "exactFilesModules": {"create": ["auth-governance/p73-3-placeholder.js", "scripts/check-p733.js", "reports/p733-report.md"], "update": ["package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p733", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["RBAC matrix records validate.", "Role and permission mutation remain disabled.", "No RBAC, auth, user, DB, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-2-identity-session-contract"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-4-multi-user-workspace-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Define multi-user workspace boundary records without tenant or workspace mutation.",
+      "allowedFiles": ["auth-governance/p73-4-placeholder.js", "scripts/check-p734.js", "reports/p734-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.3",
+        "narrowScope": "Create multi-user workspace boundary records only.",
+        "safetyRules": ["Do not enable tenant mutation, workspace mutation, user mutation, role mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["auth-governance/p73-2-placeholder.js", "auth-governance/p73-3-placeholder.js", "shared/reportWriter.js"], "rule": "Reuse prior P73 records and shared reporting helpers; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve Command Center UX and show disabled state, next action, blockers, and raw output safety without fake tenant/workspace actions.",
+        "exactFilesModules": {"create": ["auth-governance/p73-4-placeholder.js", "scripts/check-p734.js", "reports/p734-report.md"], "update": ["package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p734", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["Multi-user workspace boundary records validate.", "Tenant and workspace mutation remain disabled.", "No auth, user, RBAC, DB, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-3-rbac-permission-matrix"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-5-command-center-auth-governance-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Expose auth governance readiness in Command Center without runnable auth actions.",
+      "allowedFiles": ["dashboard/src/data/authGovernanceReadiness.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p735-command-center-auth-governance-ux.js", "reports/command-center-auth-governance-ux-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.4",
+        "narrowScope": "Add display-only Command Center auth governance readiness UX.",
+        "safetyRules": ["Do not enable login, user/session/role/tenant mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js"], "rule": "Reuse existing Command Center route matrix, tabs, page sections, disabled buttons, and theme controls; do not duplicate UI primitives."},
+        "commandCenterUxRequirements": "Show identity mode, role posture, tenant/workspace boundary, next action, blockers, disabled reason, owner capability, evidence/activity location, safety posture, and cost impact. Hide raw JSON/logs/tokens/user IDs/private IDs, DemoApp, raw policy dumps, and phase labels.",
+        "exactFilesModules": {"create": ["dashboard/src/data/authGovernanceReadiness.js", "scripts/check-p735-command-center-auth-governance-ux.js", "reports/command-center-auth-governance-ux-report.md"], "update": ["dashboard/src/data/commandCenterTabs.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p735-command-center-auth-governance-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Auth Governance route\"", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["Command Center auth governance readiness is display-only.", "Themes and route-wide safety tests pass.", "No login or auth mutation is enabled."],
+      "requiredSkills": [],
+      "riskLevel": "critical",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-4-multi-user-workspace-boundary"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P73 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+      "allowedFiles": ["scripts/check-p736-tests-checkers-docs.js", "reports/p736-tests-checkers-docs-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.5",
+        "narrowScope": "Aggregate validation coverage only.",
+        "safetyRules": ["Do not enable login, user/session/role/tenant mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["scripts/check-p726-tests-checkers-docs.js", "shared/reportWriter.js", "shared/checkResultFormatter.js"], "rule": "Reuse existing aggregation checker and shared reporting patterns; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve P73 Command Center UX, disabled state, next action, raw output safety, and route-wide safety coverage.",
+        "exactFilesModules": {"create": ["scripts/check-p736-tests-checkers-docs.js", "reports/p736-tests-checkers-docs-report.md"], "update": ["package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p736-tests-checkers-docs", "npm run check:p735-command-center-auth-governance-ux", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["P73 validation aggregation passes.", "Command Center route coverage remains safe.", "No login or auth mutation is enabled."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-5-command-center-auth-governance-ux"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    },
+    {
+      "id": "nexus-os-p73-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "warden",
+      "taskType": "implementation-plan",
+      "objective": "Close P73 and hand off to P74 with login and auth mutation still disabled.",
+      "allowedFiles": ["scripts/check-p737-final-validation.js", "reports/p737-final-validation-report.md", "package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "auth/**", "users/**", "rbac/**", "db/**", "prisma/**", "migrations/**", "providers/**", "worker-runtime/**", "deploy/**", "release/**", ".env", ".env.*"],
+      "inputs": {
+        "phaseId": "P73.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P73.6",
+        "narrowScope": "Final validation and roadmap handoff only.",
+        "safetyRules": ["Do not enable login, user/session/role/tenant mutation, DB writes, project mutation, provider dispatch, tool execution, worker execution, external network calls, deploy execution, release execution, export execution, package creation, or provider spend."],
+        "reuseCheck": {"inspectBeforeWriting": ["scripts/check-p727-final-validation.js", "shared/reportWriter.js", "shared/checkResultFormatter.js"], "rule": "Reuse final validation checker and shared reporting patterns; do not duplicate helpers."},
+        "commandCenterUxRequirements": "Preserve P73 Command Center UX, disabled state, next action, raw output safety, and safety coverage during handoff.",
+        "exactFilesModules": {"create": ["scripts/check-p737-final-validation.js", "reports/p737-final-validation-report.md"], "update": ["package.json", "docs/architecture/P73_AUTH_RBAC_MULTI_USER_GOVERNANCE_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md"]},
+        "validationCommands": ["npm run check:p737-final-validation", "npm run check:p736-tests-checkers-docs", "npm run check:p735-command-center-auth-governance-ux", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:p73-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"]
+      },
+      "acceptanceCriteria": ["P73 is complete and current phase advances to P74.", "Login and auth mutation remain disabled.", "No auth, user, RBAC, DB, prisma, migrations, or project files change."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p73-6-tests-checkers-docs"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T12:00:00.000Z"
+    }
+  ]
+}
