@@ -2706,10 +2706,10 @@
       "track": "NEXUS_OS",
       "order": 52,
       "group": "P77 Compliance and Audit Pack",
-      "summary": "Continue compliance and audit pack readiness with display-only Command Center Compliance UX while certification, export, package, and runtime mutation remain disabled.",
+      "summary": "Aggregate P77 validation coverage before final validation while certification, export, package, and runtime mutation remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P77.6"
+      "nextPhase": "P77.7"
     },
     {
       "phaseId": "P77.1",
@@ -2769,8 +2769,8 @@
     {
       "phaseId": "P77.6",
       "title": "Tests / Checkers / Docs",
-      "status": "planned",
-      "summary": "Plan P77 validation aggregation across tests, checkers, docs, and roadmap evidence.",
+      "status": "complete",
+      "summary": "Aggregated P77 tests, checkers, docs, reports, roadmap, phase status, and Command Center Compliance coverage.",
       "nextPhase": "P77.7",
       "order": 52.06,
       "track": "NEXUS_OS",

@@ -98,7 +98,7 @@ Dark, and Light themes must remain readable.
 
 Aggregate P77 validation coverage before final validation.
 
-Status: planned. P77.6 will verify P77 checker scripts, package scripts,
+Status: complete. P77.6 verifies P77 checker scripts, package scripts,
 reports, docs, phase status, Command Center route coverage, disabled
 certification/export/package behavior, and no project-file changes.
 
@@ -159,6 +159,19 @@ P77.5 validation:
 - `cd dashboard && npx playwright test tests/routes.spec.js --grep "Compliance route"`
 - `cd dashboard && npm run test:unit`
 - `cd dashboard && npm run build`
+- `npm run check:p774`
+- `npm run check:p773`
+- `npm run check:p772`
+- `npm run check:p77-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P77.6 validation:
+
+- `npm run check:p776-tests-checkers-docs`
+- `npm run check:p775-command-center-compliance-ux`
 - `npm run check:p774`
 - `npm run check:p773`
 - `npm run check:p772`
