@@ -2969,7 +2969,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p66-3-commit",
+      "commit": "d86c4ad",
       "completedAt": "",
       "summary": "P66 is in progress with failure classification and recovery plan previews complete; recovery execution remains disabled.",
       "checksRun": [
@@ -3038,7 +3038,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p66-3-commit",
+      "commit": "d86c4ad",
       "completedAt": "2026-05-19T04:25:00.000Z",
       "summary": "Added preview-only recovery plans with proposed steps, retry preview, blockers, approval requirement, evidence refs, disabled reason, and next action.",
       "checksRun": [
