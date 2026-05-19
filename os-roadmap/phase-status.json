@@ -7639,7 +7639,7 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "5977082",
       "completedAt": "2026-05-19",
-      "summary": "Opened live execution readiness with live mode gates, command admission records, and action bridge admission control.",
+      "summary": "Opened live execution readiness with live mode gates, command admission, action bridge admission, and Command Center live readiness UX.",
       "checksRun": [
         "npm run check:p791-live-mode-gate",
         "npm run check:p79-execution-plan",
@@ -7651,7 +7651,7 @@
       "knownLimitations": [
         "P79.1 defines live mode gates only. Provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain blocked until later explicit live subphases enable them with approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks."
       ],
-      "nextPhase": "P79.4",
+      "nextPhase": "P79.5",
       "commandCenterVisible": true
     },
     {
@@ -7730,10 +7730,30 @@
       "phaseId": "P79.4",
       "title": "Command Center Live Readiness UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "summary": "Expose live readiness gates in Command Center without runnable live actions.",
+      "status": "complete",
+      "summary": "Exposed Command Center live readiness gates without runnable live actions.",
       "nextPhase": "P79.5",
-      "commandCenterVisible": true
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p794-command-center-live-readiness-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Readiness route\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:p793-action-bridge-admission",
+        "npm run check:p792-live-command-intent",
+        "npm run check:p791-live-mode-gate",
+        "npm run check:p79-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P79.4 adds display-only Command Center live readiness UX. Live runtime execution, provider calls, tool execution, worker execution, project mutation, DB writes, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ]
     },
     {
       "phaseId": "P79.5",
@@ -7764,8 +7784,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T16:15:00.000Z",
-  "currentPhase": "P79.3",
-  "previousPhase": "P79.2",
-  "nextPhase": "P79.4"
+  "updatedAt": "2026-05-19T16:30:00.000Z",
+  "currentPhase": "P79.4",
+  "previousPhase": "P79.3",
+  "nextPhase": "P79.5"
 }

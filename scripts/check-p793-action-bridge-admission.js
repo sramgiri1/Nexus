@@ -69,7 +69,7 @@ addCheck("server blocks live before implementation execution", applyRouteStart >
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p793-action-bridge-admission"]));
 addCheck("contract references controller", contract.includes("live-execution/actionBridgeAdmissionController.js") && contract.includes("check:p793-action-bridge-admission"));
 addCheck("docs mention P79.3 validation", docs.includes("P79.3 Local Action Bridge Admission Controller") && docs.includes("npm run check:p793-action-bridge-admission"));
-addCheck("phase status advanced", statusById.get("P79.3")?.status === "complete" && status.currentPhase === "P79.3" && status.nextPhase === "P79.4");
+addCheck("phase status advanced", statusById.get("P79.3")?.status === "complete" && ["P79.3", "P79.4", "P79.5", "P79.6", "P79.7"].includes(status.currentPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p793-action-bridge-admission-report.md"));
 addCheck("report prerequisites exist", fileExists("reports/os-phase-status-report.md"));
 

@@ -2888,6 +2888,44 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Live Readiness route renders gated live posture without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/live-readiness");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Live Readiness");
+      await expect(page.locator("body")).toContainText("Live mode gates");
+      await expect(page.locator("body")).toContainText("Current state");
+      await expect(page.locator("body")).toContainText("Next action");
+      await expect(page.locator("body")).toContainText("Cost impact");
+      await expect(page.locator("body")).toContainText("Live readiness is display-only");
+    }
+
+    await commandTab(page, "Capability Gates").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
+    await expect(activeCommandTabPanel(page)).toContainText("Project Mutation");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Spend");
+    await commandTab(page, "Bridge Admission").click();
+    await expect(activeCommandTabPanel(page)).toContainText("mission.compose");
+    await expect(activeCommandTabPanel(page)).toContainText("implementation.apply");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked before bridge execution");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Calls disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P79\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("full Command Center routes do not show DemoApp", async ({ page }) => {
     const errors = captureClientErrors(page);
 
@@ -2910,6 +2948,7 @@ test.describe("Command Center route-wide UX", () => {
       "/command-center/database",
       "/command-center/services",
       "/command-center/compliance",
+      "/command-center/live-readiness",
     ]) {
       await page.goto(route);
       const body = await page.locator("body").innerText();

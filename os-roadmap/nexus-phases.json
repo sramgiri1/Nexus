@@ -3268,8 +3268,8 @@
       "order": 54,
       "group": "P79 Live Execution Contract + Mode Gates",
       "status": "in_progress",
-      "summary": "Opened live execution readiness with live mode gates, command admission records, and action bridge admission control.",
-      "nextPhase": "P79.4",
+      "summary": "Opened live execution readiness with live mode gates, command admission, action bridge admission, and Command Center live readiness UX.",
+      "nextPhase": "P79.5",
       "commandCenterVisible": true
     },
     {
@@ -3311,8 +3311,8 @@
       "track": "NEXUS_OS",
       "order": 54.04,
       "group": "P79 Live Execution Contract + Mode Gates",
-      "status": "planned",
-      "summary": "Expose live readiness gates in Command Center without runnable live actions.",
+      "status": "complete",
+      "summary": "Exposed Command Center live readiness gates without runnable live actions.",
       "nextPhase": "P79.5",
       "commandCenterVisible": true
     },
@@ -3350,5 +3350,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T16:00:00.000Z"
+  "updatedAt": "2026-05-19T16:30:00.000Z"
 }

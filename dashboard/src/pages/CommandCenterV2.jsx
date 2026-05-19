@@ -23,6 +23,7 @@ import {
   IMPLEMENTATION_TABS,
   ISOLATION_TABS,
   LIVE_API_TABS,
+  LIVE_READINESS_TABS,
   MEMORY_CENTER_TABS,
   MISSION_CONTROL_TABS,
   OBSERVABILITY_TABS,
@@ -88,6 +89,7 @@ import { buildBackupDrReadinessViewModel } from "../data/backupDrReadiness.js";
 import { buildIsolationReadinessViewModel } from "../data/isolationReadiness.js";
 import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.js";
 import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePreviewReadiness.js";
+import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -8484,6 +8486,90 @@ function EnterprisePreviewPage() {
   );
 }
 
+function LiveReadinessPage() {
+  const readiness = buildLiveReadinessViewModel();
+  const route = COMMAND_CENTER_ROUTE_BY_KEY.liveReadiness || {};
+  const tabs = route.tabs || LIVE_READINESS_TABS;
+  const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
+
+  return (
+    <div className="ccv2-content">
+      <div className="ccv2-page" data-route-id={readiness.routeId}>
+        <div className="ccv2-page-head">
+          <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
+          <div className="ccv2-page-head__sub">Live mode gates, bridge admission, and runtime blockers without runnable live actions.</div>
+        </div>
+
+        <div className="ccv2-page-summary">
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{readiness.nextAction}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{readiness.ownerAgent} · {readiness.ownerCapability}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+        </div>
+
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{readiness.disabledReason}</div>
+
+        <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
+          <CommandTabPanel tabId="overview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {readiness.readinessCards.map((card) => (
+                <article className="ccv2-card" key={card.label}>
+                  <div className="ccv2-section-heading">{card.label}</div>
+                  <div className={`ccv2-pill ccv2-pill--${card.tone}`}>{card.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{card.detail}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="gates" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.gateRows.map((gate) => (
+                <article className="ccv2-card" key={gate.label}>
+                  <div className="ccv2-section-heading">{gate.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{gate.currentState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{gate.disabledReason}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {gate.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {gate.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {gate.evidenceLocation}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="bridge" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--3">
+              {readiness.bridgeRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{row.currentState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Capability: {row.capability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{row.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="disabled" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--4">
+              {readiness.disabledActions.map((action) => (
+                <article className="ccv2-card" key={action.label}>
+                  <div className="ccv2-section-heading">{action.label}</div>
+                  <button className="ccv2-btn ccv2-btn--disabled" type="button" disabled title={action.reason}>{action.label} disabled</button>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{action.reason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+        </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
 /* ─── OS Roadmap Page ─── */
 function OSRoadmapPage({ vm }) {
   void vm;
@@ -10644,6 +10730,7 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "isolation" && <IsolationPage />}
           {currentPage === "compliance" && <CompliancePage />}
           {currentPage === "enterprisePreview" && <EnterprisePreviewPage />}
+          {currentPage === "liveReadiness" && <LiveReadinessPage />}
           {currentPage === "demo" && <DemoModePage vm={vmWithApi} />}
           {currentPage === "docs" && <DocsGuidesPage />}
           {currentPage === "activity" && <ActivityLogPage vm={vmWithApi} />}

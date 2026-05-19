@@ -145,6 +145,13 @@ export const ENTERPRISE_PREVIEW_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable founder, PRD, agent, and runtime actions", badge: "Disabled" },
 ];
 
+export const LIVE_READINESS_TABS = [
+  { id: "overview", label: "Overview", description: "Live state, owner, blockers, and next action", badge: "Gated" },
+  { id: "gates", label: "Capability Gates", description: "Provider, tool, worker, project, DB, deploy, and spend gates", badge: "Blocked" },
+  { id: "bridge", label: "Bridge Admission", description: "Live action bridge routes and admission posture", badge: "Blocked" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

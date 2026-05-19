@@ -108,6 +108,10 @@ Validation:
 - `cd dashboard && npm run test:unit`
 - `cd dashboard && npm run build`
 
+Route: `/command-center/live-readiness`
+
+Tabs: Overview, Capability Gates, Bridge Admission, Disabled Actions.
+
 ### P79.5 Tests / Checkers / Docs
 
 Goal: aggregate P79 validation coverage and documentation evidence.
