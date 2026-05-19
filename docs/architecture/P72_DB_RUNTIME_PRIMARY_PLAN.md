@@ -92,7 +92,24 @@ Implementation:
 
 Add DB readiness gates while keeping DB writes and migrations disabled.
 
-Status: planned.
+Status: complete. P72.4 adds preview-only `DbReadinessGate` records derived
+from P72.2 runtime contracts and P72.3 migration previews. Each gate records
+the blocked readiness decision, DB primary state, fallback state, migration
+state, preconditions, blocked operations, blockers, disabled reason, safety
+posture, evidence/activity references, cost impact, owner capability, and next
+action.
+
+Implementation:
+
+- `db-runtime/p72-4-placeholder.js` exports `createDbReadinessGate`,
+  `validateDbReadinessGate`, `buildDbReadinessGateEnvelope`,
+  `P72_4_REQUIRED_FIELDS`, and `P72_4_SAMPLE_GATES`.
+- `scripts/check-p724.js` validates gate shape, blocked readiness, disabled DB
+  writes/migrations/schema mutation, disabled project mutation, disabled
+  provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package execution, visible preconditions and blocked
+  operations, hidden private IDs and DB URLs, evidence/activity, cost impact,
+  Command Center visibility, and non-runnable disabled reasons.
 
 ### P72.5 Command Center DB Runtime UX
 
@@ -134,7 +151,7 @@ OS Roadmap, or fake runnable DB actions.
 
 ## Current Status
 
-P72 is in progress through P72.3. DB writes, migrations, schema mutation,
+P72 is in progress through P72.4. DB writes, migrations, schema mutation,
 project mutation, provider dispatch, tool execution, worker execution, deploy
 execution, release execution, export execution, package creation, external
 network calls, and provider spend remain disabled.

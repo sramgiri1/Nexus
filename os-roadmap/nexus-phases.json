@@ -2343,10 +2343,10 @@
       "track": "NEXUS_OS",
       "order": 47,
       "group": "Planned OS Phases",
-      "summary": "DB-backed runtime primary is in progress with DB migration previews defined and all DB mutation disabled.",
+      "summary": "DB-backed runtime primary is in progress with DB readiness gates defined and all DB mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P72.4"
+      "nextPhase": "P72.5"
     },
     {
       "phaseId": "P73",
@@ -2749,8 +2749,8 @@
       "track": "NEXUS_OS",
       "order": 47.04,
       "group": "P72 DB-backed Runtime Primary",
-      "status": "planned",
-      "summary": "Add DB readiness gates while keeping DB writes and migrations disabled.",
+      "status": "complete",
+      "summary": "Added blocked DB readiness gates while keeping DB writes and migrations disabled.",
       "nextPhase": "P72.5",
       "commandCenterVisible": true
     },
