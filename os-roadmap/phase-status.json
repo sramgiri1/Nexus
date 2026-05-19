@@ -2550,7 +2550,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-command-center-dispatch-ux-commit",
+      "commit": "8d2a32f",
       "completedAt": "2026-05-19T00:10:00.000Z",
       "summary": "Added display-only dispatch readiness and dry-run surfaces to Tool Gateway, API / Batch Adapter, and Policy Center.",
       "checksRun": [
