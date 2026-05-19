@@ -100,8 +100,11 @@ coverage, dashboard unit tests, and dashboard build.
 Goal: close P82 after validating live readiness is accurate, governed, and
 evidence-backed end to end.
 
-Status: planned. P82.7 must not enable unsafe runtime execution without an
-explicit later activation gate.
+Status: complete. P82.7 closes P82 with final validation across contracts,
+provider/tool gates, worker gates, project/DB admission, deploy/release
+admission, Command Center live-ready UX, docs, roadmap, phase status, and
+safety reports. It does not enable unsafe runtime execution without an explicit
+later activation gate.
 
 Validation: `npm run check:p827-final-validation`.
 

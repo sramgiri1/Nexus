@@ -81,7 +81,12 @@ addCheck("Command Center renders activation rows", pageSource.includes("readines
 addCheck("Playwright coverage updated", testsSource.includes("Live Ready route renders evidence-backed activation labels") && testsSource.includes("Business Build\\s+NEEDS SETUP"));
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p826-command-center-live-ready-ux"]));
 addCheck("docs mention P82.6 completion", docs.includes("Status: complete. P82.6"));
-addCheck("phase status advanced", statusById.get("P82.6")?.status === "complete" && phaseStatus.currentPhase === "P82.6" && phaseStatus.nextPhase === "P82.7");
+addCheck(
+  "phase status advanced",
+  statusById.get("P82.6")?.status === "complete" &&
+    ["P82.6", "P82.7", "P83"].includes(phaseStatus.currentPhase),
+  `current=${phaseStatus.currentPhase}; next=${phaseStatus.nextPhase}`,
+);
 addCheck("report prerequisites exist", fileExists("reports/p825-deploy-release-admission-report.md") && fileExists("reports/p824-project-db-admission-report.md") && fileExists("reports/p823-worker-execution-gate-report.md") && fileExists("reports/p822-provider-tool-gates-report.md"));
 addCheck("no fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now/i.test(`${activationText}\n${readinessText}\n${pageSource}`));
 addCheck("no DemoApp or raw private IDs", !`${activationText}\n${readinessText}`.includes("DemoApp") && !/(?:private-project-|private_project_|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_)/.test(`${activationText}\n${readinessText}`));

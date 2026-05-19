@@ -3515,32 +3515,34 @@
       "track": "NEXUS_OS",
       "order": 57,
       "group": "P82 Governed Business Build Execution Activation Contract",
-      "status": "in_progress",
-      "summary": "P82 live-ready activation is in final validation after Command Center labels were made evidence-backed.",
-      "nextPhase": "P82.7",
+      "status": "complete",
+      "summary": "Completed the governed live-ready activation track with evidence-backed provider/tool, worker, project/DB, deploy/release, and Command Center readiness while keeping runtime execution blocked.",
+      "nextPhase": "P83",
       "commandCenterVisible": true,
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2dee16c",
+      "commit": "pending-final-commit",
       "checksRun": [
+        "npm run check:p827-final-validation",
         "npm run check:p826-command-center-live-ready-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
-        "cd dashboard && npm run test:unit",
-        "cd dashboard && npm run build",
         "npm run check:p825-deploy-release-admission",
         "npm run check:p824-project-db-admission",
         "npm run check:p823-worker-execution-gate",
         "npm run check:p822-provider-tool-gates",
         "npm run check:p82-execution-plan",
-        "npm run check:p817-final-validation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"sidebar uses cleaned\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
         "npm run check:format-readability",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P82.6 is display-only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, auth/session/user/workspace mutation, and provider spend remain blocked.",
-        "Runtime-enabling admission remains deferred to an explicit later activation phase."
-      ]
+        "P82 remains activation readiness only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, auth/session/user/workspace mutation, and provider spend remain blocked.",
+        "Runtime-enabling admission is deferred to a later explicit activation phase."
+      ],
+      "completedAt": "2026-05-19T19:32:13.763Z"
     },
     {
       "phaseId": "P82.1",
@@ -3637,16 +3639,54 @@
       "track": "NEXUS_OS",
       "order": 57.07,
       "group": "P82 Governed Business Build Execution Activation Contract",
-      "status": "planned",
-      "summary": "Close P82 after validating live-readiness activation remains governed and evidence-backed.",
+      "status": "complete",
+      "summary": "Closed P82 with final validation across contracts, gates, Command Center UX, docs, roadmap/status tracking, reports, and safety checks.",
       "nextPhase": "P83",
       "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T19:32:13.763Z",
+      "checksRun": [
+        "npm run check:p827-final-validation",
+        "npm run check:p826-command-center-live-ready-ux",
+        "npm run check:p825-deploy-release-admission",
+        "npm run check:p824-project-db-admission",
+        "npm run check:p823-worker-execution-gate",
+        "npm run check:p822-provider-tool-gates",
+        "npm run check:p82-execution-plan",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"sidebar uses cleaned\"",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npm run build",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P82 remains activation readiness only. Provider calls, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, auth/session/user/workspace mutation, and provider spend remain blocked.",
+        "Runtime-enabling admission is deferred to a later explicit activation phase."
+      ]
+    },
+    {
+      "phaseId": "P83",
+      "title": "Explicit Runtime Admission Activation Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
       "branch": "planned",
-      "commit": "planned"
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Define the next governed activation contract before any provider, tool, worker, project, DB, deploy, network, auth, or spend action can become live.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P83 is not implemented. Runtime and cost-bearing actions remain blocked until a future implementation-grade contract explicitly allows them."
+      ],
+      "nextPhase": "P83.1",
+      "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T19:30:18.015Z",
-  "currentPhase": "P82.6",
-  "previousPhase": "P82.5",
-  "nextPhase": "P82.7"
+  "updatedAt": "2026-05-19T19:33:32.746Z",
+  "currentPhase": "P82.7",
+  "previousPhase": "P82.6",
+  "nextPhase": "P83"
 }

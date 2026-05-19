@@ -1234,7 +1234,7 @@ writes, project mutation, external network calls, release, or deploy actions.
 
 ## P82 - Governed Business Build Execution Activation Contract
 
-P82 is in progress as the live-readiness activation track for the founder
+P82 is complete as the live-readiness activation track for the founder
 intake to business build path. It replaces broad preview posture with
 evidence-backed Ready, Needs setup, and Blocked by policy states for provider
 calls, tool execution, worker execution, project mutation, DB writes, deploy,
@@ -1268,9 +1268,10 @@ the P82.2-P82.5 gate data and replaces stale founder-to-business-build badges
 with evidence-backed `Ready`, `Needs setup`, and `Blocked by policy` states
 without exposing runnable actions.
 
-Planned P82 subphases:
-
-- `P82.7` Final Validation
+P82.7 is complete. It closes the track with final validation across contracts,
+gate data, Command Center UX, docs, roadmap/status tracking, reports, and
+safety checks while handing off to P83 for any later explicitly governed
+activation work.
 
 The detailed plan lives in
 [`P82_LIVE_READY_ACTIVATION_PLAN.md`](P82_LIVE_READY_ACTIVATION_PLAN.md).
