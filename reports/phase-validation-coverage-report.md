@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T11:34:54.464Z
+- Generated at: 2026-05-19T11:37:15.295Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a40afee
+- Validation HEAD: 2ddfcef
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -87,10 +87,10 @@
 | P70.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P70.6 validation coverage | PASS | 9 checkers, 3 reports |
 | P70.7 validation coverage | PASS | 19 checkers, 12 reports |
-| P71 validation coverage | PASS | 7 checkers, 2 reports |
+| P71 validation coverage | PASS | 9 checkers, 3 reports |
 | P71.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P71.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P71.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P71.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P71.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P71.5 validation coverage | PASS | dedicated_checker, validation_report |
 | P71.6 validation coverage | PASS | 3 checkers, 3 reports |
@@ -104,18 +104,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P71; next=P71.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P71; next=P71.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P71.3 Export Package Preview
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P71.4 Shipping Readiness Gate
   - status: planned
   - checkers: 0

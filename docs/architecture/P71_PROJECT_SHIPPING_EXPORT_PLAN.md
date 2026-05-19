@@ -74,7 +74,24 @@ Implementation:
 
 Create export package preview records without writing package artifacts.
 
-Status: planned.
+Status: complete. P71.3 adds preview-only `ExportPackagePreview` records
+derived from P71.2 shipping manifests. Each preview includes package preview
+identity, package state, artifact-created status, disabled execution flags,
+disabled reason, blockers, preview items, blocked items, evidence/activity
+references, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `project-shipping/p71-3-placeholder.js` exports
+  `createExportPackagePreview`, `validateExportPackagePreview`,
+  `buildExportPackagePreviewEnvelope`, `P71_3_REQUIRED_FIELDS`, and
+  `P71_3_SAMPLE_PREVIEWS`.
+- `scripts/check-p713.js` validates preview shape, blocked project/artifact
+  paths, no package artifact on disk, disabled package creation/export
+  execution, disabled project mutation, disabled provider/tool/worker
+  execution, disabled DB/network/spend, disabled deploy/release execution,
+  preview-only items, blocked items, evidence/activity, cost impact, hidden
+  private IDs, and non-runnable disabled reasons.
 
 ### P71.4 Shipping Readiness Gate
 
@@ -124,7 +141,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.2. Package creation, export execution, project
+P71 is in progress through P71.3. Package creation, export execution, project
 mutation, provider dispatch, tool execution, worker execution, DB writes,
 deploy execution, release execution, external network calls, and provider
 spend remain disabled.

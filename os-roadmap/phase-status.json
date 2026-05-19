@@ -3470,10 +3470,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "17c56a3",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Project shipping and export pipeline is in progress with display-safe shipping manifests defined and all shipping execution disabled.",
+      "summary": "Project shipping and export pipeline is in progress with package previews defined and all shipping execution disabled.",
       "checksRun": [
+        "npm run check:p713",
         "npm run check:p712",
         "npm run check:p71-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -3484,7 +3485,7 @@
       "knownLimitations": [
         "P71 has not enabled package creation, export execution, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, or provider spend."
       ],
-      "nextPhase": "P71.3",
+      "nextPhase": "P71.4",
       "commandCenterVisible": true
     },
     {
@@ -6188,13 +6189,22 @@
       "phaseId": "P71.3",
       "title": "Export Package Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Create export package preview records without writing package artifacts.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Created export package preview records without writing package artifacts.",
+      "checksRun": [
+        "npm run check:p713",
+        "npm run check:p71-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P71.3 creates package previews only. Package artifact creation, export execution, project mutation, provider/tool execution, worker execution, DB writes, deploy/release execution, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P71.4",
       "commandCenterVisible": true
     },
@@ -6259,5 +6269,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P71",
   "previousPhase": "P70",
-  "nextPhase": "P71.3"
+  "nextPhase": "P71.4"
 }
