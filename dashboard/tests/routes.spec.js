@@ -29,6 +29,7 @@ const PRIMARY_ROUTE_KEYS = [
   "evidence",
   "safety",
   "recovery",
+  "selfUpdate",
   "projects",
   "roadmap",
   "demo",
@@ -1738,7 +1739,7 @@ test.describe("Command Center route-wide UX", () => {
 
     await page.goto("/command-center/implementation");
     await expect(page.locator("body")).toContainText("Controlled Mutation Readiness");
-    await expect(page.locator("body")).toContainText("Apply disabled");
+    await expect(page.locator("body")).toContainText("Readiness does not unlock self-update apply.");
     await expect(page.locator("body")).toContainText("Preview a scoped source change before approval or apply exists.");
     await expect(page.locator("body")).toContainText("reports/p675-report.md");
     for (const label of ["Proposal", "Apply", "Validation", "Rollback", "Activity", "Developer Details"]) {
@@ -2781,6 +2782,48 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("{\"");
     expect(body).toContain("No provider calls");
     expect(body).toContain("disabled");
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Self-Update route renders readiness without enabling apply", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/self-update");
+
+    await expect(page.locator(".ccv2-page-head__title")).toContainText("Self-Update");
+    await expect(page.locator("body")).toContainText("Approval and rollback gates are ready for operator review.");
+    await expect(page.locator("body")).toContainText("Readiness does not unlock self-update apply.");
+    await expect(page.locator("body")).toContainText("No provider calls");
+    await expect(page.locator("body")).toContainText("reports/command-center-self-update-ux-report.md");
+
+    await page.getByRole("tab", { name: /Disabled Actions/i }).click();
+    await expect(page.getByRole("button", { name: /Disabled action: Apply self-update/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Generate patch/i })).toBeDisabled();
+    await expect(page.getByRole("button", { name: /Disabled action: Dispatch tools/i })).toBeDisabled();
+
+    await pickTheme(page, "dark");
+    let themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("dark");
+    expect(themeState.shellTheme).toBe("dark");
+
+    await pickTheme(page, "light");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("light");
+    expect(themeState.shellTheme).toBe("light");
+
+    await pickTheme(page, "system");
+    themeState = await getThemeState(page);
+    expect(themeState.rootTheme).toBe("system");
+    expect(["dark", "light"]).toContain(themeState.resolvedTheme);
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("project_");
+    expect(body).not.toContain("private_");
+    expect(body).not.toContain("snapshotVersion");
+    expect(body).not.toContain("{\"");
+    expect(body).not.toContain("P68");
 
     expect(errors).toEqual([]);
   });

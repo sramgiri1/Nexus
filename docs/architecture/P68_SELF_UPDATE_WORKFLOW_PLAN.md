@@ -107,7 +107,24 @@ Implementation:
 
 Expose self-update readiness without runnable apply actions.
 
-Status: planned.
+Status: complete. P68.5 adds the Command Center Self-Update route as a
+display-only operator surface. The route shows what changed, current state,
+next action, blockers, disabled reason, owner/capability, evidence/activity
+location, and cost impact without exposing any runnable self-update apply,
+patch generation, provider dispatch, tool dispatch, worker execution, project
+mutation, DB write, deploy, release, network call, or provider-spend action.
+
+Implementation:
+
+- `dashboard/src/data/selfUpdateReadiness.js` exports the display-safe
+  self-update readiness view model.
+- `dashboard/src/data/commandCenterRoutes.js` registers
+  `/command-center/self-update` under the OS section.
+- `dashboard/src/pages/CommandCenterV2.jsx` renders the route through the
+  existing Command Center V2 shell, tabs, cards, pills, and theme controls.
+- `scripts/check-p685-command-center-self-update-ux.js` validates route wiring,
+  primary UX safety, disabled actions, evidence/activity/cost visibility, and
+  non-execution posture.
 
 ### P68.6 Tests / Checkers / Docs
 

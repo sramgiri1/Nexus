@@ -262,6 +262,14 @@ validation:
 - Disabled/not enabled: provider/tool/worker instrumentation, DB-backed activity storage, retention, export, telemetry, SLOs, and production observability stack.
 - Current scope: UI/API/action bridge activity is captured; provider/tool/worker traces are not enabled yet; activity is file-backed/local in P41.8.
 
+## Self-Update
+
+- Purpose: inspect NEXUS OS self-update readiness without enabling apply.
+- Shows: what changed, current state, next action, blockers, disabled reason, owner/capability, evidence/activity location, cost impact, approval state, rollback readiness, validation readiness, and scope boundary.
+- Available actions: tab navigation only.
+- Disabled actions: applying self-updates, generating patches, provider/tool dispatch, worker execution, project mutation, DB writes, deploy, release, network calls, and provider spend.
+- Known limitations: Self-Update is display-only; future execution requires a separate approved phase and fresh validation.
+
 ## Header and Global Controls
 
 - The global header is intentionally compact: `NEXUS / <Current Page>`, a scope/project chip, help icon, command palette icon, and compact theme menu.

@@ -3388,9 +3388,11 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P68 is in progress with approval and rollback gates complete; self-update apply remains disabled.",
+      "summary": "P68 is in progress with Command Center self-update readiness visible; self-update apply remains disabled.",
       "checksRun": [
-        "npm run check:p684",
+        "npm run check:p685-command-center-self-update-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
         "npm run check:p68-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3398,9 +3400,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P68.4 records preview-only approval and rollback gates. Self-update apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P68.5 exposes display-only Command Center self-update readiness. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P68.5",
+      "nextPhase": "P68.6",
       "commandCenterVisible": true
     },
     {
@@ -5687,13 +5689,24 @@
       "phaseId": "P68.5",
       "title": "Command Center Self-Update UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose self-update readiness without runnable apply actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Exposed Command Center self-update readiness without runnable apply actions.",
+      "checksRun": [
+        "npm run check:p685-command-center-self-update-ux",
+        "cd dashboard && npm run test:unit",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.5 is display-only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P68.6",
       "commandCenterVisible": true
     },
@@ -5730,5 +5743,5 @@
   "updatedAt": "2026-05-19T10:08:26.807Z",
   "currentPhase": "P68",
   "previousPhase": "P67",
-  "nextPhase": "P68.5"
+  "nextPhase": "P68.6"
 }

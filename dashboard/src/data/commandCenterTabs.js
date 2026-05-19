@@ -103,6 +103,33 @@ export const API_BATCH_TABS = [
   },
 ];
 
+export const SELF_UPDATE_TABS = [
+  {
+    id: "overview",
+    label: "Overview",
+    description: "Readiness, owner, blockers, and next action",
+    badge: "Preview",
+  },
+  {
+    id: "gate",
+    label: "Gate",
+    description: "Approval, rollback, validation, and safety posture",
+    badge: "Read-only",
+  },
+  {
+    id: "evidence",
+    label: "Evidence",
+    description: "Evidence, activity, and validation references",
+    badge: "Read-only",
+  },
+  {
+    id: "disabled",
+    label: "Disabled Actions",
+    description: "Actions that remain unavailable by policy",
+    badge: "Blocked",
+  },
+];
+
 export const WORKSPACE_TABS = [
   {
     id: "recommended",

@@ -2299,10 +2299,10 @@
       "track": "NEXUS_OS",
       "order": 43,
       "group": "Planned OS Phases",
-      "summary": "Self-update workflow is in progress with approval and rollback gates complete; self-update apply remains disabled.",
+      "summary": "Self-update workflow is in progress with Command Center self-update readiness visible; self-update apply remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P68.5"
+      "nextPhase": "P68.6"
     },
     {
       "phaseId": "P69",
@@ -2444,8 +2444,8 @@
       "track": "NEXUS_OS",
       "order": 43.05,
       "group": "P68 Self-Update Workflow for NEXUS OS",
-      "status": "planned",
-      "summary": "Expose self-update readiness without runnable apply actions.",
+      "status": "complete",
+      "summary": "Exposed Command Center self-update readiness without runnable apply actions.",
       "nextPhase": "P68.6",
       "commandCenterVisible": true
     },
