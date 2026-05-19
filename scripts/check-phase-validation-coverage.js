@@ -130,7 +130,7 @@ addCheck(
   "P64.8 planned, current, or complete",
   (phaseStatus.nextPhase === "P64.8" && statusById.get("P64.8")?.status === "planned") ||
     (phaseStatus.currentPhase === "P64.8" && ["in_progress", "complete"].includes(statusById.get("P64.8")?.status)) ||
-    (phaseStatus.previousPhase === "P64.8" && statusById.get("P64.8")?.status === "complete"),
+    (statusById.get("P64.8")?.status === "complete" && phaseNumber(phaseStatus.currentPhase) >= 65),
   `current=${phaseStatus.currentPhase}; next=${phaseStatus.nextPhase}; status=${statusById.get("P64.8")?.status || "missing"}`,
 );
 addCheck("public safety report known", fileExists("reports/public-safety-report.md"));

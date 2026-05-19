@@ -164,8 +164,11 @@ export function checkP65ExecutionPlan() {
   const p654 = phaseStatus.get("P65.4");
   const p655 = phaseStatus.get("P65.5");
   const p656 = phaseStatus.get("P65.6");
+  const p657 = phaseStatus.get("P65.7");
   const expectedNext =
-    p656?.status === "complete"
+    p657?.status === "complete"
+      ? "P66"
+      : p656?.status === "complete"
       ? "P65.7"
       : p655?.status === "complete"
       ? "P65.6"
@@ -178,11 +181,17 @@ export function checkP65ExecutionPlan() {
             : p651?.status === "complete"
               ? "P65.2"
               : "P65.1";
-  if (p65?.status !== "in_progress") fail("roadmapStatus", "P65 must be in_progress");
+  if (!["in_progress", "complete"].includes(p65?.status)) fail("roadmapStatus", "P65 must be in_progress or complete");
   if (p65?.nextPhase !== expectedNext) fail("roadmapStatus", `P65 nextPhase must be ${expectedNext}`);
-  if (status.currentPhase !== "P65") fail("roadmapStatus", "currentPhase must be P65");
-  if (status.previousPhase !== "P64.8") fail("roadmapStatus", "previousPhase must be P64.8");
-  if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+  if (p657?.status === "complete") {
+    if (status.currentPhase !== "P66") fail("roadmapStatus", "currentPhase must be P66 after P65 closure");
+    if (status.previousPhase !== "P65") fail("roadmapStatus", "previousPhase must be P65 after P65 closure");
+    if (status.nextPhase !== "P67") fail("roadmapStatus", "nextPhase must be P67 after P65 closure");
+  } else {
+    if (status.currentPhase !== "P65") fail("roadmapStatus", "currentPhase must be P65");
+    if (status.previousPhase !== "P64.8") fail("roadmapStatus", "previousPhase must be P64.8");
+    if (status.nextPhase !== expectedNext) fail("roadmapStatus", `nextPhase must be ${expectedNext}`);
+  }
 
   const plan = read(PLAN_PATH);
   if (!plan.includes(CONTRACT_PATH)) fail("docs", `${PLAN_PATH} must reference ${CONTRACT_PATH}`);

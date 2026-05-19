@@ -106,6 +106,11 @@ workers, and project mutation remain disabled.
 
 Aggregate checks, close P65, and hand off to P66.
 
+Status: complete. P65.7 closes P65 with final validation evidence and hands off
+to P66. Batch intelligence remains a governed preview foundation; provider
+upload, batch submission, provider spend, execution, DB writes, deploy, network
+calls, workers, and project mutation remain disabled.
+
 ## Command Center Requirements
 
 Future P65 UX must preserve System, Dark, and Light themes and show:
@@ -127,4 +132,5 @@ raw private project IDs.
 
 ## Status
 
-P65.1 is contract-only. P65 remains in progress until final validation.
+P65 is complete as a governed preview foundation. Real provider batch execution
+requires a later explicit phase and fresh validation.
