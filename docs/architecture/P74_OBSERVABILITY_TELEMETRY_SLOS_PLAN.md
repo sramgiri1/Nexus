@@ -103,7 +103,28 @@ Implementation:
 Define observability health and incident snapshot previews without remediation
 execution.
 
-Status: planned.
+Status: complete. P74.4 adds preview-only
+`ObservabilityHealthSnapshot` records derived from P74.2 telemetry contracts
+and P74.3 SLO catalogs. Each snapshot includes health state, incident state,
+affected surface, SLO state, error-budget state, snapshot rows, disabled
+remediation/paging/enforcement flags, blocked operations, blockers, disabled
+reason, evidence/activity references, cost impact, owner capability, and next
+action.
+
+Implementation:
+
+- `observability/p74-4-placeholder.js` exports
+  `createObservabilityHealthSnapshot`,
+  `validateObservabilityHealthSnapshot`,
+  `buildObservabilityHealthSnapshotEnvelope`, `P74_4_REQUIRED_FIELDS`, and
+  `P74_4_SAMPLE_SNAPSHOTS`.
+- `scripts/check-p744.js` validates health snapshot shape, source telemetry and
+  SLO reuse, disabled remediation/paging/SLO enforcement, disabled
+  telemetry/raw log exposure, disabled DB and project mutation, disabled
+  provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package behavior, disabled auth mutation, hidden
+  private IDs/tokens/telemetry URLs, evidence/activity, cost impact, and
+  non-runnable disabled reasons.
 
 ### P74.5 Command Center Observability UX
 
@@ -148,7 +169,7 @@ outside OS Roadmap, or fake runnable observability actions.
 
 ## Current Status
 
-P74 is in progress through P74.3. External telemetry exporters, raw log
+P74 is in progress through P74.4. External telemetry exporters, raw log
 streaming, DB writes, project mutation, provider dispatch, tool execution,
 worker execution, remediation execution, paging, deploy execution, release
 execution, export execution, package creation, auth mutation, external network
