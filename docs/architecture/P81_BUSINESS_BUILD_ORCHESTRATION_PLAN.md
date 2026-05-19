@@ -54,6 +54,12 @@ Validation: `npm run check:p813-agent-workstreams` and
 Goal: assemble a dry-run business build plan from PRD readiness and agent
 workstreams while execution remains disabled.
 
+Status: complete. P81.4 adds a deterministic local dry-run plan with PRD
+readiness, workstreams, milestones, blockers, disabled actions, owner
+capability, evidence, activity, and cost posture. It does not call providers,
+dispatch agents, execute tools or workers, mutate project files, write DB rows,
+deploy, or spend budget.
+
 Validation: `npm run check:p814-business-build-plan` and
 `npm run check:p81-execution-plan`.
 

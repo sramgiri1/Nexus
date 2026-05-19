@@ -368,6 +368,7 @@
     "check:p81-execution-plan": "node scripts/check-p81-execution-plan.js",
     "check:p812-prd-schema": "node scripts/check-p812-prd-schema.js",
     "check:p813-agent-workstreams": "node scripts/check-p813-agent-workstreams.js",
+    "check:p814-business-build-plan": "node scripts/check-p814-business-build-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
