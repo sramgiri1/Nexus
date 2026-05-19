@@ -86,7 +86,22 @@ Implementation:
 
 Add approval, rollback, and safety gates for self-update proposals.
 
-Status: planned.
+Status: complete. P68.4 adds preview-only `SelfUpdateGate` records derived
+from P68.3 proposal previews. Each gate records approval state, scope readiness,
+rollback readiness, validation readiness, safety posture, disabled apply
+reason, required evidence, evidence/activity references, and next action while
+keeping all apply, mutation, execution, DB, deploy, release, network, and spend
+flags disabled.
+
+Implementation:
+
+- `self-update/p68-4-placeholder.js` exports `createSelfUpdateGate`,
+  `validateSelfUpdateGate`, `buildSelfUpdateGateEnvelope`,
+  `P68_4_REQUIRED_FIELDS`, and `P68_4_SAMPLE_GATES`.
+- `scripts/check-p684.js` validates gate shape, required approval,
+  rollback/validation readiness, project path blocking, disabled
+  apply/execution/spend flags, evidence references, and non-runnable disabled
+  reasons.
 
 ### P68.5 Command Center Self-Update UX
 

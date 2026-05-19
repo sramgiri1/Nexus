@@ -2299,10 +2299,10 @@
       "track": "NEXUS_OS",
       "order": 43,
       "group": "Planned OS Phases",
-      "summary": "Self-update workflow is in progress with proposal previews complete; self-update apply remains disabled.",
+      "summary": "Self-update workflow is in progress with approval and rollback gates complete; self-update apply remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P68.4"
+      "nextPhase": "P68.5"
     },
     {
       "phaseId": "P69",
@@ -2433,8 +2433,8 @@
       "track": "NEXUS_OS",
       "order": 43.04,
       "group": "P68 Self-Update Workflow for NEXUS OS",
-      "status": "planned",
-      "summary": "Add approval, rollback, and safety gates for self-update proposals.",
+      "status": "complete",
+      "summary": "Added preview-only approval and rollback gates for self-update proposals while keeping apply disabled.",
       "nextPhase": "P68.5",
       "commandCenterVisible": true
     },
