@@ -2310,10 +2310,10 @@
       "track": "NEXUS_OS",
       "order": 44,
       "group": "Planned OS Phases",
-      "summary": "Release/deploy loop is in progress with release intent records complete; release and deploy execution remain disabled.",
+      "summary": "Release/deploy loop is in progress with release candidate previews complete; release and deploy execution remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P69.3"
+      "nextPhase": "P69.4"
     },
     {
       "phaseId": "P70",
@@ -2501,8 +2501,8 @@
       "track": "NEXUS_OS",
       "order": 44.03,
       "group": "P69 Release / Deploy Loop",
-      "status": "planned",
-      "summary": "Create release candidate previews without packaging, deploying, or mutating source.",
+      "status": "complete",
+      "summary": "Created release candidate previews without packaging, deploying, or mutating source.",
       "nextPhase": "P69.4",
       "commandCenterVisible": true
     },

@@ -65,7 +65,23 @@ Implementation:
 Create release candidate previews without packaging, deploying, or mutating
 source.
 
-Status: planned.
+Status: complete. P69.3 adds preview-only `ReleaseCandidatePreview` records
+derived from P69.2 release intent records. Each candidate lists validation
+commands, rollback posture, package state, disabled release/deploy flags,
+blockers, evidence/activity references, cost impact, owner capability, and next
+action while keeping package creation, release execution, and deploy execution
+disabled.
+
+Implementation:
+
+- `release-governance/p69-3-placeholder.js` exports
+  `createReleaseCandidatePreview`, `validateReleaseCandidatePreview`,
+  `buildReleaseCandidateEnvelope`, `P69_3_REQUIRED_FIELDS`, and
+  `P69_3_SAMPLE_CANDIDATES`.
+- `scripts/check-p693.js` validates candidate shape, validation commands,
+  project path blocking, disabled package/release/deploy execution, disabled
+  provider/tool/worker execution, disabled DB/network/spend, rollback posture,
+  evidence/activity, cost impact, and non-runnable disabled reasons.
 
 ### P69.4 Deploy Readiness Gate
 
