@@ -150,7 +150,21 @@ Implementation:
 
 Aggregate P73 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P73.6 adds an aggregation checker for P73 scripts, reports,
+docs, roadmap entries, phase status entries, Command Center Auth Governance
+route coverage, route tests, disabled mutation posture, raw-output safety, and
+stale phase-status commit checks before final validation.
+
+Implementation:
+
+- `scripts/check-p736-tests-checkers-docs.js` validates P73.1-P73.6 coverage,
+  required checkers, reports, docs, roadmap/status records, Command Center Auth
+  Governance UX registration, route tests, no unsafe identifiers, disabled
+  login/user/session/role/permission/tenant/workspace mutation, disabled DB and
+  project mutation, disabled provider/tool/worker execution, disabled
+  network/spend, disabled deploy/release/export/package execution, and stamped
+  status commits for completed P73 subphases.
+- `reports/p736-tests-checkers-docs-report.md` records aggregation evidence.
 
 ### P73.7 Final Validation
 
@@ -180,7 +194,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.5. Login, identity provider integration,
+P73 is in progress through P73.6. Login, identity provider integration,
 user/session/role/tenant mutation, DB writes, project mutation, provider
 dispatch, tool execution, worker execution, deploy execution, release
 execution, export execution, package creation, external network calls, and

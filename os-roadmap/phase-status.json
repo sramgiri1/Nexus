@@ -3530,10 +3530,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7f5d129",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with Command Center auth governance readiness visible and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with tests, checkers, docs, and Command Center auth governance coverage aggregated.",
       "checksRun": [
+        "npm run check:p736-tests-checkers-docs",
         "npm run check:p735-command-center-auth-governance-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Auth Governance route\"",
         "npm run check:p734",
@@ -3548,7 +3549,7 @@
       "knownLimitations": [
         "P73 has not enabled login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P73.6",
+      "nextPhase": "P73.7",
       "commandCenterVisible": true
     },
     {
@@ -3670,13 +3671,23 @@
       "phaseId": "P73.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P73 validation coverage before final validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Aggregated P73 validation coverage before final validation.",
+      "checksRun": [
+        "npm run check:p736-tests-checkers-docs",
+        "npm run check:p735-command-center-auth-governance-ux",
+        "npm run check:p73-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P73.6 aggregates validation only. Login, identity provider integration, token exchange, user/session/role/permission/tenant/workspace mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P73.7",
       "commandCenterVisible": true
     },
@@ -6658,5 +6669,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P73",
   "previousPhase": "P72",
-  "nextPhase": "P73.6"
+  "nextPhase": "P73.7"
 }
