@@ -2000,6 +2000,43 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Enterprise Preview route renders readiness without runnable founder actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.goto("/command-center/enterprise-preview");
+
+    for (const theme of ["dark", "light", "system"]) {
+      await pickTheme(page, theme);
+      await expect(page.locator(".ccv2-page-head__title")).toContainText("Enterprise Preview");
+      await expect(page.locator("body")).toContainText("Founder intake");
+      await expect(page.locator("body")).toContainText("PRD preview");
+      await expect(page.locator("body")).toContainText("Agent workplan");
+      await expect(page.locator("body")).toContainText("Self-healing");
+    }
+
+    await expect(page.locator("body")).toContainText("Enterprise Preview is display-only");
+    await commandTab(page, "PRD Preview").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Intake");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD Preview");
+    await commandTab(page, "Agent Workplan").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Validation Gates");
+    await expect(activeCommandTabPanel(page)).toContainText("Self-Healing");
+    await commandTab(page, "Disabled Actions").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Q&A automation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD generation disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Agent dispatch disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Self-healing apply disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/ask founder now|generate prd now|write project now|dispatch agents now|run agents now|apply healing now|execute tools now|start workers now|create project now|execute now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P78\./);
+
+    expect(errors).toEqual([]);
+  });
+
   test("evidence page shows summary and avoids raw payload dumps", async ({ page }) => {
     const errors = captureClientErrors(page);
 

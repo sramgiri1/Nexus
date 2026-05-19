@@ -2794,10 +2794,10 @@
       "track": "NEXUS_OS",
       "order": 53,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "summary": "Continued P78 with preview-only agent workplan and self-healing readiness records while runtime mutation remains disabled.",
+      "summary": "Continued P78 with display-only Command Center Enterprise Preview UX while runtime mutation remains disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P78.5"
+      "nextPhase": "P78.6"
     },
     {
       "phaseId": "P78.1",
@@ -2849,8 +2849,8 @@
       "track": "NEXUS_OS",
       "order": 53.05,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "status": "planned",
-      "summary": "Planned display-only Command Center Enterprise Preview UX with disabled actions and raw output safety.",
+      "status": "complete",
+      "summary": "Added display-only Command Center Enterprise Preview route for founder intake, Q&A, PRD preview, agent workplan, self-healing readiness, blockers, evidence, activity, and cost impact.",
       "nextPhase": "P78.6",
       "commandCenterVisible": true
     },

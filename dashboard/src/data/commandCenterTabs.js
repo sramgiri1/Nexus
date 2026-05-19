@@ -138,6 +138,13 @@ export const COMPLIANCE_TABS = [
   { id: "disabled", label: "Disabled Actions", description: "Unavailable compliance actions and reasons", badge: "Disabled" },
 ];
 
+export const ENTERPRISE_PREVIEW_TABS = [
+  { id: "overview", label: "Overview", description: "Founder workflow state, owner, blockers, and next action", badge: "Preview" },
+  { id: "prd", label: "PRD Preview", description: "Problem, audience, value, scope, and acceptance preview", badge: "Read-only" },
+  { id: "workplan", label: "Agent Workplan", description: "Task lanes, gates, and self-healing readiness", badge: "Blocked" },
+  { id: "disabled", label: "Disabled Actions", description: "Unavailable founder, PRD, agent, and runtime actions", badge: "Disabled" },
+];
+
 export const SELF_UPDATE_TABS = [
   {
     id: "overview",

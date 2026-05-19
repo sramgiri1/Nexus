@@ -74,7 +74,7 @@ disabled dispatch/runtime/self-healing state.
 
 Expose enterprise developer preview readiness in Command Center.
 
-Status: planned. P78.5 will add a display-only Command Center route that shows
+Status: complete. P78.5 adds a display-only Command Center route that shows
 founder intake state, Q&A state, PRD preview state, agent workplan state,
 self-healing readiness, next action, blockers, disabled reason, owner
 capability, evidence/activity location, safety posture, and cost impact.
@@ -129,6 +129,18 @@ P78.3 validation:
 P78.4 validation:
 
 - `npm run check:p784`
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.5 validation:
+
+- `npm run check:p785-command-center-enterprise-preview-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Enterprise Preview route"`
+- `cd dashboard && npm run test:unit`
+- `cd dashboard && npm run build`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`
