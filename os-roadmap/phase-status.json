@@ -2575,7 +2575,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-governed-dispatch-final-commit",
+      "commit": "6de079c",
       "completedAt": "2026-05-19T00:22:00.000Z",
       "summary": "Added aggregate P64 governed dispatch final checker/report covering contract, envelope, policy, readiness, dry-run, and Command Center UX evidence.",
       "checksRun": [
