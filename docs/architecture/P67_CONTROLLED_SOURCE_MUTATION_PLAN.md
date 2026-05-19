@@ -136,7 +136,19 @@ Implementation:
 
 Aggregate P67 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P67.6 aggregates P67 validation coverage for mutation intent
+records, patch plan previews, approval/scope gates, Command Center readiness,
+docs, reports, and OS phase status before final validation.
+
+Implementation:
+
+- `controlled-mutation/p67-6-placeholder.js` exports
+  `buildP676ValidationMatrix`, `validateP676ValidationMatrix`,
+  `buildP676ValidationEnvelope`, `P67_6_REQUIRED_CHECKS`, and
+  `P67_6_REQUIRED_REPORTS`.
+- `scripts/check-p676.js` validates the pre-final matrix, required reports,
+  Command Center coverage, docs/status coverage, disabled apply/mutation flags,
+  and disabled execution/spend flags.
 
 ### P67.7 Final Validation
 

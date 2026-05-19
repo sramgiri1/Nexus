@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T02:03:26.311Z
+- Generated at: 2026-05-19T02:05:13.277Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a450ec9
+- Validation HEAD: d744b1b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -55,13 +55,13 @@
 | P66.5 validation coverage | PASS | 8 checkers, 1 reports |
 | P66.6 validation coverage | PASS | 10 checkers, 1 reports |
 | P66.7 validation coverage | PASS | 20 checkers, 10 reports |
-| P67 validation coverage | PASS | 11 checkers, 5 reports |
+| P67 validation coverage | PASS | 11 checkers, 6 reports |
 | P67.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P67.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.5 validation coverage | PASS | 6 checkers, 1 reports |
-| P67.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.7 validation coverage | PASS | 9 checkers, 9 reports |
 | P68 validation coverage | PASS | dedicated_checker, validation_report |
 | P69 validation coverage | PASS | dedicated_checker, validation_report |
@@ -76,18 +76,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P67; next=P67.6; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P67; next=P67.7; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P67.6 Tests / Checkers / Docs
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P68 Self-Update Workflow for NEXUS OS
   - status: planned
   - checkers: 0
