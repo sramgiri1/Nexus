@@ -2213,10 +2213,10 @@
       "track": "NEXUS_OS",
       "order": 42,
       "group": "Planned OS Phases",
-      "summary": "Controlled source mutation expansion is in progress with mutation intent records complete and mutation behavior still disabled.",
+      "summary": "Controlled source mutation expansion is in progress with patch plan previews complete and mutation behavior still disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P67.3"
+      "nextPhase": "P67.4"
     },
     {
       "phaseId": "P67.1",
@@ -2244,8 +2244,10 @@
       "track": "NEXUS_OS",
       "order": 42.03,
       "group": "P67 Controlled Source Mutation Expansion",
-      "summary": "Build preview-only patch plans with allowed and forbidden file scope.",
-      "commandCenterVisible": true
+      "summary": "Built preview-only patch plans with allowed and forbidden file scope.",
+      "commandCenterVisible": true,
+      "status": "complete",
+      "nextPhase": "P67.4"
     },
     {
       "phaseId": "P67.4",
@@ -2383,5 +2385,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T01:53:13.087Z"
+  "updatedAt": "2026-05-19T01:56:10.123Z"
 }

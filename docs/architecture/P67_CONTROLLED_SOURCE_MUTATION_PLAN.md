@@ -69,7 +69,22 @@ Implementation:
 Build preview-only patch plans with allowed files, forbidden files, validation
 commands, and rollback posture.
 
-Status: planned.
+Status: complete. P67.3 adds a preview-only `PatchPlanPreview` shape derived
+from P67.2 mutation intent records. Each preview lists allowed files, forbidden
+files, proposed changes, validation commands, rollback posture, approval state,
+blockers, evidence/activity references, owner capability, and next action while
+source apply, project mutation, execution, provider dispatch, DB writes,
+deploy, release, and spend remain disabled.
+
+Implementation:
+
+- `controlled-mutation/p67-3-placeholder.js` exports
+  `createPatchPlanPreview`, `validatePatchPlanPreview`,
+  `buildPatchPlanEnvelope`, `P67_3_REQUIRED_FIELDS`, and
+  `P67_3_SAMPLE_PATCH_PLANS`.
+- `scripts/check-p673.js` validates preview shape, validation commands,
+  rollback posture, project path blocking, disabled apply/execution/spend
+  flags, evidence references, and non-runnable disabled reasons.
 
 ### P67.4 Approval + Scope Gate
 

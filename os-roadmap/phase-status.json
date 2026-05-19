@@ -3181,11 +3181,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "816aab7",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P67 is in progress with mutation intent records complete; mutation behavior remains disabled.",
+      "summary": "P67 is in progress with patch plan previews complete; mutation behavior remains disabled.",
       "checksRun": [
-        "npm run check:p672",
+        "npm run check:p673",
         "npm run check:p67-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3193,9 +3193,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P67.2 defines display-safe mutation intent records only. Project mutation, provider/tool execution, worker execution, automatic source apply, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P67.3 creates preview-only patch plan records. Patch generation, automatic apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P67.3",
+      "nextPhase": "P67.4",
       "commandCenterVisible": true
     },
     {
@@ -3247,13 +3247,22 @@
       "phaseId": "P67.3",
       "title": "Patch Plan Preview",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Build preview-only patch plans with allowed and forbidden file scope.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T01:56:10.120Z",
+      "summary": "Built preview-only patch plan records with allowed files, forbidden files, validation commands, rollback posture, blockers, evidence, and disabled apply flags.",
+      "checksRun": [
+        "npm run check:p673",
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P67.3 creates preview-only patch plan records. Patch generation, automatic apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P67.4",
       "commandCenterVisible": true
     },
@@ -5518,8 +5527,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T01:53:49.808Z",
+  "updatedAt": "2026-05-19T01:56:10.121Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
-  "nextPhase": "P67.3"
+  "nextPhase": "P67.4"
 }
