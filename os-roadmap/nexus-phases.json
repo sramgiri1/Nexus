@@ -4084,7 +4084,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "planned",
-      "commit": "planned",
+      "commit": "7220103",
       "completedAt": "",
       "summary": "Planned next phase for enterprise founder-to-business runtime enablement after P84 governed local admission closes.",
       "checksRun": [],
@@ -4105,7 +4105,9 @@
       "status": "complete",
       "label": "Runtime Session Contract",
       "detail": "Governed local enterprise founder business runtime session contract and Live Readiness visibility.",
-      "nextPhase": "P85.2"
+      "nextPhase": "P85.2",
+      "commit": "7220103",
+      "completedAt": "2026-05-19T23:05:54.426Z"
     },
     {
       "phaseId": "P85.2",

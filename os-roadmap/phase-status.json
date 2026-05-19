@@ -8882,7 +8882,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7220103",
       "completedAt": "",
       "summary": "Enterprise founder business runtime is in progress. P85.1 adds the governed local runtime session contract and Live Readiness visibility.",
       "checksRun": [
@@ -8902,8 +8902,8 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:00:15.234Z",
+      "commit": "7220103",
+      "completedAt": "2026-05-19T23:05:54.426Z",
       "summary": "Created a governed local enterprise founder business runtime session contract with PRD draft, admitted local agent plan, gate state, next action, blockers, evidence, activity, cost posture, and Live Readiness visibility.",
       "checksRun": [
         "npm run check:p85-execution-plan",
