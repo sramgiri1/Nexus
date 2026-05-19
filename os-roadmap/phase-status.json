@@ -3470,7 +3470,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8ecde7f",
       "completedAt": "",
       "summary": "Project shipping and export pipeline is in progress with shipping readiness gates defined and all shipping execution disabled.",
       "checksRun": [
@@ -6215,7 +6215,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8ecde7f",
       "completedAt": "2026-05-19",
       "summary": "Added shipping readiness gates while keeping package creation and export execution disabled.",
       "checksRun": [
