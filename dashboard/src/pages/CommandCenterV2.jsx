@@ -8876,7 +8876,8 @@ function FounderIntakePage() {
 }
 
 function BusinessBuildPage() {
-  const build = buildBusinessBuildViewModel();
+  const [founderIdea] = useState(getStoredLiteFounderIdea);
+  const build = buildBusinessBuildViewModel(founderIdea);
   const route = COMMAND_CENTER_ROUTE_BY_KEY.businessBuild || {};
   const tabs = route.tabs || BUSINESS_BUILD_TABS;
   const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
@@ -8886,20 +8887,21 @@ function BusinessBuildPage() {
       <div className="ccv2-page" data-route-id={build.routeId}>
         <div className="ccv2-page-head">
           <div className="ccv2-page-head__title">{build.pageTitle}</div>
-          <div className="ccv2-page-head__sub">Founder idea, PRD readiness, workstreams, milestones, blockers, and cost posture.</div>
+          <div className="ccv2-page-head__sub">Founder idea, feasibility, PRD readiness, agent work plan, and blocked execution boundaries.</div>
         </div>
 
         <div className="ccv2-page-summary">
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{build.whatChanged}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{build.currentState}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{build.nextAction}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{build.ownerAgent} · {build.ownerCapability}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{build.evidenceLocation}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{build.activityLocation}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{build.costImpact}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{build.founderIdea}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Feasibility</span><span className="ccv2-page-summary-value">{build.feasibilityVerdict}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Customer</span><span className="ccv2-page-summary-value">{build.targetCustomer}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next useful step</span><span className="ccv2-page-summary-value">{build.founderNextStep}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Agent plan</span><span className="ccv2-page-summary-value">{build.agentPlanSummary}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Safety</span><span className="ccv2-page-summary-value">{build.safetySummary}</span></div>
         </div>
 
-        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{build.disabledReason}</div>
+        <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
+          Business Build is live for local planning only. Agents are shown as owner lanes; provider calls, dispatch, project writes, DB writes, deploy, package creation, and spend are still disabled.
+        </div>
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -8912,12 +8914,23 @@ function BusinessBuildPage() {
                 </article>
               ))}
             </div>
-            <div className="ccv2-card" style={{ marginTop: 16 }}>
-              <div className="ccv2-section-heading">Blockers</div>
-              <ul className="ccv2-list" style={{ marginTop: 12 }}>
-                {build.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
-              </ul>
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {build.founderHighlights.map((highlight) => (
+                <article className="ccv2-card" key={highlight.label}>
+                  <div className="ccv2-section-heading">{highlight.label}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{highlight.value}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{highlight.detail}</div>
+                </article>
+              ))}
             </div>
+            {build.blockers.length > 0 && (
+              <div className="ccv2-card" style={{ marginTop: 16 }}>
+                <div className="ccv2-section-heading">Blockers</div>
+                <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                  {build.blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+                </ul>
+              </div>
+            )}
           </CommandTabPanel>
 
           <CommandTabPanel tabId="prd" activeTab={activeTab}>
@@ -8931,10 +8944,10 @@ function BusinessBuildPage() {
                 </div>
               </article>
               <article className="ccv2-card">
-                <div className="ccv2-section-heading">Evidence</div>
-                <div className="ccv2-muted">Evidence: {build.evidenceLocation}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.activityLocation}</div>
-                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.costImpact}</div>
+                <div className="ccv2-section-heading">PRD Draft</div>
+                <div className="ccv2-muted">Problem: {build.problem}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Solution: {build.solution}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Success: {build.prdReadiness.fields.successCriteria}</div>
               </article>
             </div>
           </CommandTabPanel>

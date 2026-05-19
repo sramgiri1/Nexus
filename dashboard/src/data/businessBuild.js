@@ -1,6 +1,9 @@
 import { buildBusinessBuildPlan } from "../../../business-build/businessBuildPlan.js";
+import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
+export const DEFAULT_BUSINESS_BUILD_IDEA =
+  "I have a startup idea. Validate if it is feasible and tell me what you need next.";
 
 function toTitle(value = "") {
   return String(value)
@@ -11,30 +14,76 @@ function toTitle(value = "") {
     .replace(/\bDb\b/g, "DB");
 }
 
-export function buildBusinessBuildViewModel() {
-  const plan = buildBusinessBuildPlan({
-    founderIdeaSummary: "Founder wants to validate a workflow automation startup.",
-    answers: {
-      targetCustomer: "operations leaders",
-      problem: "manual handoffs slow launches",
-      currentAlternatives: "spreadsheets and status meetings",
-      proposedSolution: "guided automation workspace",
-      businessModel: "seat-based SaaS",
-      goToMarket: "founder-led sales to operations teams",
-      constraints: "small founding team and limited budget",
-      successCriteria: "reduce launch handoff time by 30 percent",
+function toBusinessBuildAnswers(prdFields = {}) {
+  return {
+    founderIdea: prdFields.founderIdea,
+    targetCustomer: prdFields.targetCustomer,
+    problem: prdFields.problem,
+    proposedSolution: prdFields.solution,
+    businessModel: prdFields.businessModel,
+    goToMarket: prdFields.goToMarket,
+    constraints: prdFields.risks,
+    successCriteria: prdFields.successCriteria,
+  };
+}
+
+function buildFounderHighlights(prdFields = {}) {
+  return [
+    {
+      label: "Idea",
+      value: prdFields.founderIdea || "Founder idea not captured yet.",
+      detail: "NEXUS uses this as the current business build scope.",
     },
+    {
+      label: "Customer",
+      value: prdFields.targetCustomer || "Target customer needs confirmation.",
+      detail: "Agent lanes use this customer definition for product, design, GTM, and support planning.",
+    },
+    {
+      label: "Problem",
+      value: prdFields.problem || "Problem statement needs confirmation.",
+      detail: "This is the pain or market gap the plan is trying to validate.",
+    },
+    {
+      label: "Solution",
+      value: prdFields.solution || "Solution direction needs confirmation.",
+      detail: "This is the MVP direction agents will plan around before any execution is enabled.",
+    },
+  ];
+}
+
+export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const founderEnvelope = buildFounderRuntimeEnvelope({ founderIdeaSummary }).data;
+  const prdFields = founderEnvelope.prdDraft?.fields || {};
+  const plan = buildBusinessBuildPlan({
+    founderIdeaSummary: prdFields.founderIdea,
+    answers: toBusinessBuildAnswers(prdFields),
     evidenceRefs: ["Business build plan evidence report"],
     activityRefs: ["OS phase status evidence report"],
   });
   const data = plan.data;
   const readinessPercent = Math.round((data.prdReadiness.score || 0) * 100);
+  const nextAgentLane = founderEnvelope.agentFlow?.[0];
+  const founderHighlights = buildFounderHighlights(prdFields);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
     pageTitle: "Business Build",
-    whatChanged: "Command Center now shows the founder idea to PRD to workstream to dry-run business build path.",
-    currentState: "Dry-run business build plan is ready for operator review. Runtime execution remains disabled.",
+    founderIdea: prdFields.founderIdea,
+    targetCustomer: prdFields.targetCustomer,
+    problem: prdFields.problem,
+    solution: prdFields.solution,
+    founderHighlights,
+    feasibilityVerdict: data.prdReadiness.readyForWorkstreams
+      ? "Feasible enough for local MVP planning"
+      : "Needs more founder answers before MVP planning",
+    founderNextStep: founderEnvelope.chat?.nextAction || data.nextAction,
+    agentPlanSummary: nextAgentLane
+      ? `${nextAgentLane.lane} starts with ${nextAgentLane.nextAction}`
+      : "NEXUS will map the PRD to owner lanes after intake is complete.",
+    safetySummary: "Planning is live-local. Execution, spend, project writes, DB writes, and deploy remain blocked.",
+    whatChanged: "Business Build now follows the founder idea from Chat with NEXUS into PRD readiness, workstreams, and milestones.",
+    currentState: "Founder plan is ready for local review. Runtime execution remains disabled.",
     nextAction: data.nextAction,
     ownerAgent: "WARDEN",
     ownerCapability: data.ownerCapability,
@@ -43,16 +92,17 @@ export function buildBusinessBuildViewModel() {
     costImpact: data.costImpact,
     disabledReason: "Business Build is a dry-run planning surface. Provider calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, auth/session/user/workspace mutation, and provider spend remain blocked.",
     readinessCards: [
-      { label: "PRD readiness", value: `${readinessPercent}%`, tone: "pass", detail: "Local PRD fields are complete for dry-run planning." },
-      { label: "Workstreams", value: String(data.workstreams.length), tone: "teal", detail: "Owner lanes are planned locally without dispatching agents." },
-      { label: "Milestones", value: String(data.milestones.length), tone: "amber", detail: "Milestones are ready for review, not execution." },
-      { label: "Cost", value: "No spend", tone: "pass", detail: "No provider, worker, project, DB, deploy, or spend path is invoked." },
+      { label: "Founder idea", value: "Captured", tone: "pass", detail: prdFields.founderIdea },
+      { label: "PRD readiness", value: `${readinessPercent}%`, tone: "pass", detail: "Local PRD fields are complete for planning." },
+      { label: "Agent lanes", value: String(data.workstreams.length), tone: "teal", detail: "Product, design, engineering, GTM, finance, operations, legal, and support lanes are mapped." },
+      { label: "Execution", value: "Blocked", tone: "disabled", detail: "No provider, worker, project, DB, deploy, or spend path is invoked." },
     ],
     prdReadiness: {
       ready: data.prdReadiness.readyForWorkstreams,
       score: readinessPercent,
       missingFields: data.prdReadiness.missingFields,
       source: "Founder intake answers mapped to local PRD fields.",
+      fields: prdFields,
     },
     workstreamRows: data.workstreams.map((entry) => ({
       label: toTitle(entry.workstream),
@@ -69,7 +119,7 @@ export function buildBusinessBuildViewModel() {
       objective: entry.objective,
       blocker: entry.blockers[0] || "No blocker",
     })),
-    blockers: data.blockers.length > 0 ? data.blockers : ["Runtime execution remains disabled until a later governed enablement phase."],
+    blockers: data.blockers,
     disabledActions: data.disabledActions.map((action) => ({
       label: toTitle(action),
       reason: "Unavailable from Business Build until explicit approval, scope, budget, rollback, activity, cost, and redaction evidence exist.",

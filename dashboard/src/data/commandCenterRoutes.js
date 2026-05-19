@@ -694,7 +694,7 @@ export const COMMAND_CENTER_ROUTES = [
     allowPhaseLabels: false,
     expectedHeading: "Business Build",
     status: "implemented",
-    badge: "Needs setup",
+    badge: "Ready",
     scope: "os",
     tabs: BUSINESS_BUILD_TABS,
     defaultTab: "overview",

@@ -160,10 +160,10 @@ export const FOUNDER_INTAKE_TABS = [
 ];
 
 export const BUSINESS_BUILD_TABS = [
-  { id: "overview", label: "Overview", description: "Business build state, owner, blockers, and next action", badge: "Needs setup" },
+  { id: "overview", label: "Overview", description: "Founder idea, feasibility, customer, next step, and local agent plan", badge: "Ready" },
   { id: "prd", label: "PRD Readiness", description: "Local PRD readiness, missing fields, and source posture", badge: "Ready" },
   { id: "workstreams", label: "Workstreams", description: "Product, design, engineering, go-to-market, finance, operations, legal, and support lanes", badge: "Ready" },
-  { id: "milestones", label: "Milestones", description: "Business build milestones, setup gaps, and blockers", badge: "Needs setup" },
+  { id: "milestones", label: "Milestones", description: "Business build milestones, review gates, and approval boundaries", badge: "Ready" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable runtime, project, DB, deploy, and spend actions", badge: "Blocked by policy" },
 ];
 

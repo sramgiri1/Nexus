@@ -3026,21 +3026,30 @@ test.describe("Command Center route-wide UX", () => {
   test("Business Build route renders dry-run plan without runnable actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
     await page.goto("/command-center/business-build");
 
     for (const theme of ["dark", "light", "system"]) {
       await pickTheme(page, theme);
       await expect(page.locator(".ccv2-page-head__title")).toContainText("Business Build");
-      await expect(page.locator("body")).toContainText("Dry-run business build plan");
-      await expect(page.locator("body")).toContainText("Current state");
-      await expect(page.locator("body")).toContainText("Next action");
-      await expect(page.locator("body")).toContainText("Cost impact");
-      await expect(page.locator("body")).toContainText("Runtime execution remains disabled");
+      await expect(page.locator("body")).toContainText("Build a simple iOS Snake game for the App Store");
+      await expect(page.locator("body")).toContainText("Feasibility");
+      await expect(page.locator("body")).toContainText("casual iPhone players");
+      await expect(page.locator("body")).toContainText("Next useful step");
+      await expect(page.locator("body")).toContainText("Agent plan");
+      await expect(page.locator("body")).toContainText("provider calls, dispatch, project writes, DB writes, deploy, package creation, and spend are still disabled");
+      await expect(page.locator("body")).not.toContainText("Needs setup");
     }
 
+    await expect(page.locator(".ccv2-page-summary")).not.toContainText("Evidence");
+    await expect(page.locator(".ccv2-page-summary")).not.toContainText("Activity");
+    await expect(page.locator(".ccv2-page-summary")).not.toContainText("Cost impact");
     await commandTab(page, "PRD Readiness").click();
     await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness");
     await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");
+    await expect(activeCommandTabPanel(page)).toContainText("SpriteKit Snake game");
     await commandTab(page, "Workstreams").click();
     await expect(activeCommandTabPanel(page)).toContainText("Product");
     await expect(activeCommandTabPanel(page)).toContainText("Engineering");
