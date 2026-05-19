@@ -4137,7 +4137,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c08bd2f",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Started P76 with implementation-grade tenant and project isolation contracts while tenant/project/access mutation remains disabled.",
       "checksRun": [
@@ -4159,7 +4159,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c08bd2f",
       "completedAt": "2026-05-19T14:00:00.000Z",
       "summary": "Defined the P76 execution contract, tenant/project isolation safety boundary, validation checker, roadmap entries, and phase-status records.",
       "checksRun": [
