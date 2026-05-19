@@ -1,4 +1,4 @@
-const SUPPORTED_MODES = new Set(["local-private", "test", "demo", "public-safe", "unknown"]);
+const SUPPORTED_MODES = new Set(["local-private", "test", "demo", "public-safe", "live", "unknown"]);
 
 export function getNexusMode(env = process.env) {
   const mode = env.NEXUS_MODE || env.MODE || "unknown";
@@ -19,6 +19,10 @@ export function isDemoMode(mode) {
 
 export function isPublicSafeMode(mode) {
   return mode === "public-safe";
+}
+
+export function isLiveMode(mode) {
+  return mode === "live";
 }
 
 export function buildModeGuardResult(mode = "unknown", allowedModes = []) {
