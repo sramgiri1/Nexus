@@ -90,9 +90,11 @@ Validation: `npm run check:p856-tests-docs-roadmap`.
 
 Goal: close P85 enterprise founder business runtime.
 
-Status: planned. P85.7 should close the phase and hand off to P86 with explicit
-remaining blockers for provider/model calls, agent dispatch, project mutation,
-DB writes, worker execution, deploy, package, and spend.
+Status: complete. P85.7 adds `check:p857-final-validation`, closes P85 with
+final evidence across scripts, reports, docs, roadmap, Command Center Lite UX,
+and phase status, and hands off to P86.
+
+Validation: `npm run check:p857-final-validation`.
 
 ## Reuse Check
 

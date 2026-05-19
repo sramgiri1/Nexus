@@ -4082,16 +4082,26 @@
       "phaseId": "P85",
       "title": "Enterprise Founder Business Runtime",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "736823a",
-      "completedAt": "",
-      "summary": "Enterprise founder business runtime in progress with P85.1-P85.6 complete.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled."
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:44:14.590Z",
+      "summary": "Completed governed local enterprise founder business runtime with multi-turn founder chat, local PRD review gate, non-dispatching task board, consolidated Lite UX, and final validation evidence.",
+      "checksRun": [
+        "npm run check:p857-final-validation",
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
+        "git diff --check"
       ],
-      "nextPhase": "P85.7",
+      "knownLimitations": [
+        "P85 closes local founder business runtime planning and UX only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
+      ],
+      "nextPhase": "P86",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4239,24 +4249,53 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 66.07,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Close P85 enterprise founder business runtime and hand off to P86.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:44:14.590Z",
+      "summary": "Closed P85 with final validation across scripts, reports, package scripts, docs, roadmap/status records, Command Center Lite UX, and safety posture.",
+      "checksRun": [
+        "npm run check:p857-final-validation",
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P85 closes local founder business runtime planning and UX only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
       ],
       "nextPhase": "P86",
       "commandCenterVisible": true,
       "label": "Final Validation",
       "detail": "Final P85 validation and P86 handoff."
+    },
+    {
+      "phaseId": "P86",
+      "title": "Governed Live Capability Admission",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned handoff for explicitly scoped live capability admission after P85 final validation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P86 is not started. Execution-capable behavior remains disabled until a dedicated P86 contract explicitly scopes and validates it."
+      ],
+      "nextPhase": "P86.1",
+      "commandCenterVisible": true,
+      "order": 67.07,
+      "label": "Governed Live Capability Admission",
+      "detail": "Planned explicit safety-gated admission for live capabilities after local founder runtime closure."
     }
   ],
-  "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P85.6",
-  "previousPhase": "P85.5",
-  "nextPhase": "P85.7",
+  "updatedAt": "2026-05-19T23:44:14.590Z",
+  "currentPhase": "P85.7",
+  "previousPhase": "P85.6",
+  "nextPhase": "P86",
   "currentPhaseStatus": "complete"
 }

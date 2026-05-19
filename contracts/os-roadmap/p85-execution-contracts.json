@@ -768,8 +768,23 @@
       "sourceAgent": "nexus",
       "targetAgent": "qa",
       "taskType": "implementation-plan",
-      "objective": "Close P85 enterprise founder business runtime.",
-      "allowedFiles": [],
+      "objective": "Close P85 enterprise founder business runtime with final validation evidence and P86 handoff.",
+      "allowedFiles": [
+        "scripts/check-p857-final-validation.js",
+        "scripts/check-p856-tests-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p857-final-validation-report.md",
+        "reports/p856-tests-docs-roadmap-report.md",
+        "reports/p85-execution-plan-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -786,15 +801,49 @@
         "phaseId": "P85.7",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.6",
-        "narrowScope": "Final P85 validation only.",
+        "expectedBaseCommit": "96e8fc1",
+        "narrowScope": "Final P85 validation, phase status closure, report generation, and P86 handoff only.",
         "safetyRules": [
           "Do not enable provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, or spend."
         ],
         "reuseCheck": {
           "rule": "Reuse P85 checkers and report helpers."
         },
-        "commandCenterUxRequirements": "Preserve final P85 UX.",
+        "exactFilesModulesToCreateOrUpdate": [
+          {
+            "path": "scripts/check-p857-final-validation.js",
+            "action": "create",
+            "exports": [],
+            "dataShape": "Local Node checker that reads package/status/roadmap/docs/contract/dashboard/tests and writes reports/p857-final-validation-report.md."
+          },
+          {
+            "path": "reports/p857-final-validation-report.md",
+            "action": "generate",
+            "exports": [],
+            "dataShape": "Markdown report with Scope, Checks, Validation Commands, Known Limitations, and Result sections."
+          },
+          {
+            "path": "package.json",
+            "action": "update",
+            "exports": [
+              "scripts.check:p857-final-validation"
+            ],
+            "dataShape": "npm script string invoking node scripts/check-p857-final-validation.js."
+          },
+          {
+            "path": "os-roadmap/phase-status.json",
+            "action": "update",
+            "exports": [],
+            "dataShape": "P85/P85.7 complete records with branch, commit, completedAt, checksRun, knownLimitations, nextPhase P86, and commandCenterVisible true."
+          },
+          {
+            "path": "os-roadmap/nexus-phases.json",
+            "action": "update",
+            "exports": [],
+            "dataShape": "P85/P85.7 complete OS roadmap records and top-level currentPhase P85.7, previousPhase P85.6, nextPhase P86."
+          }
+        ],
+        "commandCenterUxRequirements": "Preserve final P85 Lite UX: chat, PRD review, local task board, founder workflow summary, no DemoApp leakage, no raw private IDs, and no fake runnable actions.",
         "themeRequirements": [
           "Preserve themes."
         ],
@@ -806,7 +855,12 @@
         ],
         "validationCommands": [
           "npm run check:p857-final-validation",
+          "npm run check:p856-tests-docs-roadmap",
+          "npm run check:p85-execution-plan",
           "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
           "git diff --check"
         ],
         "finalSafetyChecks": [
@@ -814,7 +868,9 @@
         ],
         "gitCommands": [
           "git add <P85.7 files>",
-          "git commit -m \"test(nexus): close p85 founder runtime\""
+          "git commit -m \"chore(nexus): finalize p85 founder runtime\"",
+          "git commit -m \"chore(nexus): stamp p85 final validation status\"",
+          "git push origin codex/nexus-e2e-phase-validation"
         ],
         "finalResponseChecklist": [
           "Branch name",

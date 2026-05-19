@@ -53,11 +53,21 @@ addCheck("subphase statuses complete", P85_SUBPHASES.every((phaseId) => statusBy
 addCheck("subphase commits stamped", P85_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.commit && statusById.get(phaseId)?.commit !== "pending-final-commit"));
 addCheck("roadmap tracks P85 subphases", P85_SUBPHASES.every((phaseId) => roadmapById.get(phaseId)?.track === "NEXUS_OS"));
 addCheck("docs list validations", REQUIRED_SCRIPTS.every((script) => docs.includes(`npm run ${script}`)));
-addCheck("platform roadmap records P85.6 complete", platformRoadmap.includes("P85.5 is complete") && platformRoadmap.includes("P85.6 is complete") && platformRoadmap.includes("P85.7 is next"));
+addCheck(
+  "platform roadmap records P85.6 complete",
+  platformRoadmap.includes("P85.5 is complete")
+    && platformRoadmap.includes("P85.6 is complete")
+    && (platformRoadmap.includes("P85.7 is next") || platformRoadmap.includes("P85.7 is complete")),
+);
 addCheck("contract references aggregate checker", contract.includes("check:p856-tests-docs-roadmap"));
 addCheck("Playwright coverage covers workflow", ["interactive founder chat", "PRD review gate", "local task board", "founder workflow summary"].every((label) => tests.includes(label)));
 addCheck("Command Center workflow remains visible", dashboardSource.includes("Founder workflow summary") && dashboardSource.includes("Local agent task board") && dashboardSource.includes("Local PRD review gate"));
-addCheck("phase status advanced", statusById.get("P85.6")?.status === "complete" && status.currentPhase === "P85.6" && status.nextPhase === "P85.7");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.6")?.status === "complete"
+    && ["P85.6", "P85.7"].includes(status.currentPhase)
+    && ["P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("no DemoApp/private IDs in founder workflow source", !dashboardSource.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(dashboardSource));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|create project now/i.test(dashboardSource));
 

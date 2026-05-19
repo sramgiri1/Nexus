@@ -1376,7 +1376,7 @@ Implementation must follow
 
 ## P85 - Enterprise Founder Business Runtime
 
-P85 is in progress. It turns the founder-facing local workflow into a governed
+P85 is complete. It turns the founder-facing local workflow into a governed
 enterprise founder business runtime that can carry session state, PRD review,
 local agent task planning, blockers, evidence, activity, and cost posture before
 any execution-capable phase is enabled.
@@ -1420,7 +1420,13 @@ P85.6 is complete. It adds aggregated validation for P85.1-P85.5 scripts,
 reports, package scripts, docs, roadmap/status records, Command Center Lite
 coverage, and safety posture.
 
-P85.7 is next. It should close P85 with final validation and hand off to P86.
+P85.7 is complete. It closes P85 with final validation across scripts, reports,
+package scripts, docs, roadmap/status records, Command Center Lite UX, and
+safety posture.
+
+P86 is next. It must remain a separately scoped phase and should only unlock
+execution-capable behavior through explicit contracts, validation, and safety
+gates.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).
