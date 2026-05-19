@@ -8680,7 +8680,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "41dd8eb",
       "completedAt": "",
       "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, and local agent plan admission are complete; unsafe execution remains blocked.",
       "checksRun": [
@@ -8752,7 +8752,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "41dd8eb",
       "completedAt": "2026-05-19T21:46:56.984Z",
       "summary": "Admitted local founder agent/workstream planning records by reusing P81 workstreams and the P82 worker gate while keeping dispatch and execution blocked.",
       "checksRun": [
