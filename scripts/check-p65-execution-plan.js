@@ -163,8 +163,11 @@ export function checkP65ExecutionPlan() {
   const p653 = phaseStatus.get("P65.3");
   const p654 = phaseStatus.get("P65.4");
   const p655 = phaseStatus.get("P65.5");
+  const p656 = phaseStatus.get("P65.6");
   const expectedNext =
-    p655?.status === "complete"
+    p656?.status === "complete"
+      ? "P65.7"
+      : p655?.status === "complete"
       ? "P65.6"
       : p654?.status === "complete"
         ? "P65.5"

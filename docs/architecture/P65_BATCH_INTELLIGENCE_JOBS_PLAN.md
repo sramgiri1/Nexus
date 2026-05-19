@@ -96,6 +96,12 @@ controls.
 
 Aggregate P65 checker coverage and docs before final validation.
 
+Status: complete. P65.6 adds an aggregate checker and report across the P65
+execution plan, job contract, workload selection, safety gate, and Command
+Center UX. P65 remains in progress until final validation; provider upload,
+batch submission, provider spend, execution, DB writes, deploy, network calls,
+workers, and project mutation remain disabled.
+
 ### P65.7 Final Validation
 
 Aggregate checks, close P65, and hand off to P66.
