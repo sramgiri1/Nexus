@@ -69,7 +69,23 @@ Implementation:
 Create incident signal previews without incident execution, alert dispatch, or
 mitigation.
 
-Status: planned.
+Status: complete. P70.3 adds preview-only `IncidentSignalPreview` records
+derived from P70.2 deploy monitor events. Each signal includes incident state,
+severity, summary, environment label, allowed/forbidden files, disabled
+execution flags, disabled reason, blockers, evidence/activity references, cost
+impact, owner capability, and next action.
+
+Implementation:
+
+- `deploy-monitoring/p70-3-placeholder.js` exports
+  `createIncidentSignalPreview`, `validateIncidentSignalPreview`,
+  `buildIncidentSignalEnvelope`, `P70_3_REQUIRED_FIELDS`, and
+  `P70_3_SAMPLE_SIGNALS`.
+- `scripts/check-p703.js` validates incident signal shape, project path
+  blocking, disabled alert dispatch, disabled incident/mitigation/rollback/
+  deploy execution, disabled provider/tool/worker execution, disabled
+  DB/network/spend, evidence/activity, cost impact, and non-runnable disabled
+  reasons.
 
 ### P70.4 Mitigation Readiness Gate
 
@@ -120,7 +136,7 @@ actions.
 
 ## Current Status
 
-P70 is in progress through P70.2. Deploy execution, incident execution,
+P70 is in progress through P70.3. Deploy execution, incident execution,
 mitigation execution, rollback execution, alert dispatch, provider dispatch,
 tool execution, worker execution, DB writes, project mutation, external network
 calls, and provider spend remain disabled.
