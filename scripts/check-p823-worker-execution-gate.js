@@ -58,7 +58,12 @@ addCheck("no DemoApp or raw private IDs", !serialized.includes("DemoApp") && !/(
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p823-worker-execution-gate"]));
 addCheck("contract references P82.3 files", contract.includes("live-ready/workerExecutionGate.js") && contract.includes("check:p823-worker-execution-gate"));
 addCheck("docs mention P82.3 validation", docs.includes("P82.3 Worker Execution Gate") && docs.includes("npm run check:p823-worker-execution-gate"));
-addCheck("phase status advanced", statusById.get("P82.3")?.status === "complete" && status.currentPhase === "P82.3" && status.nextPhase === "P82.4");
+addCheck(
+  "phase status advanced",
+  statusById.get("P82.3")?.status === "complete" &&
+    ["P82.3", "P82.4", "P82.5", "P82.6", "P82.7"].includes(status.currentPhase),
+  `current=${status.currentPhase}; next=${status.nextPhase}`,
+);
 addCheck("report path is distinct", REPORT_PATH.endsWith("p823-worker-execution-gate-report.md"));
 addCheck("report prerequisites exist", fileExists("reports/p822-provider-tool-gates-report.md") && fileExists("reports/os-phase-status-report.md"));
 

@@ -59,8 +59,10 @@ Validation: `npm run check:p823-worker-execution-gate`.
 
 Goal: define project mutation and DB write admission gates for live build work.
 
-Status: planned. P82.4 must not edit `projects/**`, write DB state, create
-migrations, or expose raw private project IDs.
+Status: complete. P82.4 adds local project and DB admission gates that reuse
+the existing mutation boundary and DB readiness helpers. It does not edit
+`projects/**`, write DB state, create migrations, mutate schema, or expose raw
+private project IDs.
 
 Validation: `npm run check:p824-project-db-admission`.
 

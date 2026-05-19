@@ -3516,8 +3516,8 @@
       "order": 57,
       "group": "P82 Governed Business Build Execution Activation Contract",
       "status": "in_progress",
-      "summary": "Defined live-ready activation contracts, provider/tool readiness gates, and worker execution readiness gates while runtime execution remains blocked.",
-      "nextPhase": "P82.4",
+      "summary": "Defined live-ready activation contracts, provider/tool gates, worker gates, and project/DB admission gates while runtime execution remains blocked.",
+      "nextPhase": "P82.5",
       "commandCenterVisible": true
     },
     {
@@ -3559,8 +3559,8 @@
       "track": "NEXUS_OS",
       "order": 57.04,
       "group": "P82 Governed Business Build Execution Activation Contract",
-      "status": "planned",
-      "summary": "Define project mutation and DB write admission gates without writing project files or DB state.",
+      "status": "complete",
+      "summary": "Added local project and DB admission gates while project mutation and DB writes remain disabled.",
       "nextPhase": "P82.5",
       "commandCenterVisible": true
     },
@@ -3598,5 +3598,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T23:59:55.000Z"
+  "updatedAt": "2026-05-19T23:59:58.000Z"
 }
