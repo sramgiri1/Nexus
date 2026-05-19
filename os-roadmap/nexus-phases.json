@@ -2794,10 +2794,10 @@
       "track": "NEXUS_OS",
       "order": 53,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "summary": "Continued P78 with display-only Command Center Enterprise Preview UX while runtime mutation remains disabled.",
+      "summary": "Continued P78 with validation aggregation for tests, checkers, docs, roadmap, and Command Center evidence.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P78.6"
+      "nextPhase": "P78.7"
     },
     {
       "phaseId": "P78.1",
@@ -2860,8 +2860,8 @@
       "track": "NEXUS_OS",
       "order": 53.059999999999995,
       "group": "P78 Self-Healing Enterprise Developer Preview",
-      "status": "planned",
-      "summary": "Planned P78 validation aggregation across tests, checkers, docs, and roadmap evidence.",
+      "status": "complete",
+      "summary": "Added P78 validation aggregation across checker scripts, package scripts, reports, docs, phase status, Command Center route coverage, and disabled runtime posture.",
       "nextPhase": "P78.7",
       "commandCenterVisible": true
     },

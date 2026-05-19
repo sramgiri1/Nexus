@@ -18,6 +18,8 @@ Contract: `contracts/os-roadmap/p78-execution-contracts.json`
   and RBAC mutation files remain forbidden.
 - Founder intake, Q&A, PRD assembly, agent workplans, and self-healing remain
   preview-only until a later explicit runtime phase enables governed execution.
+- Autonomous Q&A remains disabled, PRD generation remains disabled, agent
+  dispatch remains disabled, and self-healing apply remains disabled.
 - Command Center must show current state, next action, blockers, disabled
   reason, owner capability, evidence/activity location, cost impact, and raw
   output safety without DemoApp, private IDs, or fake working actions.
@@ -83,7 +85,7 @@ capability, evidence/activity location, safety posture, and cost impact.
 
 Aggregate P78 validation coverage before final validation.
 
-Status: planned. P78.6 will verify P78 checker scripts, package scripts,
+Status: complete. P78.6 verifies P78 checker scripts, package scripts,
 reports, docs, phase status, Command Center route coverage, disabled runtime
 behavior, and no project-file changes.
 
@@ -141,6 +143,19 @@ P78.5 validation:
 - `cd dashboard && npx playwright test tests/routes.spec.js --grep "Enterprise Preview route"`
 - `cd dashboard && npm run test:unit`
 - `cd dashboard && npm run build`
+- `npm run check:p78-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P78.6 validation:
+
+- `npm run check:p786-tests-checkers-docs`
+- `npm run check:p785-command-center-enterprise-preview-ux`
+- `npm run check:p784`
+- `npm run check:p783`
+- `npm run check:p782`
 - `npm run check:p78-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

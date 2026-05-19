@@ -4542,14 +4542,15 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d824fff",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Continued P78 with display-only Command Center Enterprise Preview UX while runtime mutation remains disabled.",
+      "summary": "Continued P78 with validation aggregation for tests, checkers, docs, roadmap, and Command Center evidence.",
       "checksRun": [
+        "npm run check:p786-tests-checkers-docs",
         "npm run check:p785-command-center-enterprise-preview-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Enterprise Preview route\"",
-        "cd dashboard && npm run test:unit",
-        "cd dashboard && npm run build",
+        "npm run check:p784",
+        "npm run check:p783",
+        "npm run check:p782",
         "npm run check:p78-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -4557,9 +4558,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P78.5 exposes display-only Command Center Enterprise Preview UX. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+        "P78.6 aggregates tests, checkers, docs, and roadmap evidence only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
       ],
-      "nextPhase": "P78.6",
+      "nextPhase": "P78.7",
       "commandCenterVisible": true
     },
     {
@@ -4683,13 +4684,26 @@
       "phaseId": "P78.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P78 validation aggregation across tests, checkers, docs, and roadmap evidence.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Added P78 validation aggregation across checker scripts, package scripts, reports, docs, phase status, Command Center route coverage, and disabled runtime posture.",
+      "checksRun": [
+        "npm run check:p786-tests-checkers-docs",
+        "npm run check:p785-command-center-enterprise-preview-ux",
+        "npm run check:p784",
+        "npm run check:p783",
+        "npm run check:p782",
+        "npm run check:p78-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P78.6 aggregates tests, checkers, docs, and roadmap evidence only. Founder intake execution, autonomous Q&A, PRD generation, agent dispatch, self-healing apply, project mutation, DB writes, provider/tool/worker execution, network calls, deploy/release/export/package behavior, auth/session/user/workspace mutation, certification/attestation, and provider spend remain disabled."
+      ],
       "nextPhase": "P78.7",
       "commandCenterVisible": true
     },
@@ -7601,5 +7615,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P78",
   "previousPhase": "P77",
-  "nextPhase": "P78.6"
+  "nextPhase": "P78.7"
 }
