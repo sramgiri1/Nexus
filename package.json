@@ -285,6 +285,7 @@
     "check:p693": "node scripts/check-p693.js",
     "check:p694": "node scripts/check-p694.js",
     "check:p695-command-center-release-ux": "node scripts/check-p695-command-center-release-ux.js",
+    "check:p696-tests-checkers-docs": "node scripts/check-p696-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

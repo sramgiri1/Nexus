@@ -2310,10 +2310,10 @@
       "track": "NEXUS_OS",
       "order": 44,
       "group": "Planned OS Phases",
-      "summary": "Release/deploy loop is in progress with Command Center release readiness complete; release and deploy execution remain disabled.",
+      "summary": "Release/deploy loop is in progress with tests, checkers, and docs aggregation complete; release and deploy execution remain disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P69.6"
+      "nextPhase": "P69.7"
     },
     {
       "phaseId": "P70",
@@ -2534,8 +2534,8 @@
       "track": "NEXUS_OS",
       "order": 44.06,
       "group": "P69 Release / Deploy Loop",
-      "status": "planned",
-      "summary": "Aggregate P69 validation coverage before final validation.",
+      "status": "complete",
+      "summary": "Aggregated P69 tests, checkers, docs, reports, and Command Center release coverage before final validation.",
       "nextPhase": "P69.7",
       "commandCenterVisible": true
     },

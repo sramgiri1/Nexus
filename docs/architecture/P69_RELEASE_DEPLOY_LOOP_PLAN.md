@@ -136,7 +136,20 @@ Implementation:
 
 Aggregate P69 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P69.6 adds aggregate validation for P69 scripts, reports,
+docs, roadmap state, phase status, Command Center release route coverage,
+Playwright route coverage, and disabled release/deploy safety boundaries.
+
+Implementation:
+
+- `scripts/check-p696-tests-checkers-docs.js` validates P69 package scripts,
+  checker files, reports, docs, roadmap/status entries, release route wiring,
+  release tabs, release renderer, release Playwright coverage, theme coverage,
+  no DemoApp/private IDs/internal phase labels in primary release UX, and
+  disabled package/release/deploy/project mutation/provider/tool/worker/DB/
+  network/spend posture.
+- `reports/p696-tests-checkers-docs-report.md` records the aggregate P69
+  tests/checkers/docs validation result.
 
 ### P69.7 Final Validation
 
@@ -165,7 +178,7 @@ Roadmap, or fake runnable release/deploy actions.
 
 ## Current Status
 
-P69 is in progress through P69.5. Release execution, deploy execution, provider
+P69 is in progress through P69.6. Release execution, deploy execution, provider
 dispatch, tool execution, worker execution, DB writes, project mutation,
 external network calls, and provider spend remain disabled.
 
