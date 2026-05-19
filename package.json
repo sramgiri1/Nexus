@@ -252,6 +252,7 @@
     "check:p648-lazy-tool-selection": "node scripts/check-p648-lazy-tool-selection.js",
     "check:p648-command-center-code-mode-ux": "node scripts/check-p648-command-center-code-mode-ux.js",
     "check:p648-final": "node scripts/check-p648-final.js",
+    "check:p65-execution-plan": "node scripts/check-p65-execution-plan.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

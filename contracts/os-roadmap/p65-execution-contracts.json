@@ -1,0 +1,960 @@
+{
+  "phaseId": "P65",
+  "title": "Batch Intelligence Jobs for Large-Scale Analysis",
+  "contractVersion": "1.0",
+  "status": "planned",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p65-1-execution-contract-safety-split",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Split P65 into implementation-grade subphases and add validation before batch-intelligence behavior is implemented.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p65-execution-contracts.json",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p65-execution-plan.js",
+        "scripts/check-os-phase-status.js",
+        "scripts/check-phase-validation-coverage.js",
+        "reports/p65-execution-plan-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "api-batch/batch-submit.js",
+        "api-batch/batch-poll-openai.js",
+        "api-batch/batch-reconcile-openai.js",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "tool-governance/adapters/**",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.1",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "94bfb0a",
+        "narrowScope": "Define the P65 implementation contract only; no batch-intelligence runtime behavior.",
+        "safetyRules": [
+          "Do not enable provider upload, provider polling, provider reconciliation, batch submission, provider dispatch, tool execution, code execution, worker execution, DB writes, deploy, release, external network calls, or project mutation.",
+          "Batch intelligence starts as preview-only planning metadata and redacted workload summaries.",
+          "Primary UX must not expose raw JSON, raw logs, raw provider payloads, raw private project IDs, or fake runnable batch actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "api-batch/batchJobBuilder.js",
+            "api-batch/costEstimator.js",
+            "api-batch/resultReconciler.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js",
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js"
+          ],
+          "rule": "Reuse existing API batch preview, cost, reconciliation, redaction, report, status, and Command Center patterns; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No Command Center page behavior changes in P65.1.",
+          "required": "Document future UX fields: batch intelligence state, workload type, selected scope, request count, redaction state, cost estimate, blockers, disabled upload reason, evidence/activity location, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p65-execution-contracts.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "scripts/check-p65-execution-plan.js",
+            "reports/p65-execution-plan-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md",
+            "scripts/check-os-phase-status.js",
+            "scripts/check-phase-validation-coverage.js"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP65ExecutionPlan",
+            "P65_BATCH_INTELLIGENCE_SUBPHASES"
+          ],
+          "schemas": [
+            "BatchIntelligenceJobContract",
+            "BatchWorkloadSelectionPreview",
+            "BatchIntelligenceSafetyGate",
+            "BatchIntelligenceReadinessCard"
+          ],
+          "dataShapes": [
+            "jobId, state, workloadType, scopeLabel, requestCount, redactionRequired, uploadAllowed, executionAllowed, disabledReason, costEstimate, evidenceRefs, activityRefs"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show batch intelligence state, workload type, request count, redaction state, cost estimate, disabled provider upload and batch submission reason, owner capability, evidence/activity location, and next action without raw payload dumps, fake execution, DemoApp leakage, or raw private IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No new Playwright route is required in P65.1 because no UX behavior changes.",
+          "Future P65 UX must cover Batch Queue/API Batch readiness labels, disabled upload reasons, no raw dumps, dark/light/system themes, sidebar navigation, and route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-execution-plan.js.",
+          "Keep phase validation coverage aligned after P65 subphases are added."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-execution-plan.",
+          "Keep check:os-phase-status passing after P65 becomes current."
+        ],
+        "docsRoadmap": [
+          "Add P65 implementation plan doc.",
+          "Update NEXUS platform roadmap and OS phase status."
+        ],
+        "phaseStatusUpdate": "Mark P65 in_progress, mark P65.1 complete after validation, and set nextPhase to P65.2.",
+        "validationCommands": [
+          "npm run check:p65-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm provider upload and batch submission were not enabled.",
+          "Confirm provider dispatch and execution were not enabled.",
+          "Confirm tool/code/worker execution was not enabled.",
+          "Confirm no project mutation or projects/** changes were made.",
+          "Confirm no DB writes, deploy, network calls, release actions, or raw provider payload dumps were enabled."
+        ],
+        "gitCommands": [
+          "git add contracts/os-roadmap/p65-execution-contracts.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md scripts/check-p65-execution-plan.js scripts/check-os-phase-status.js scripts/check-phase-validation-coverage.js reports/p65-execution-plan-report.md reports/os-phase-status-report.md reports/phase-validation-coverage-report.md os-roadmap/nexus-phases.json os-roadmap/phase-status.json package.json",
+          "git commit -m \"docs(nexus): define p65 batch intelligence contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm contract-only scope.",
+          "Report validation commands.",
+          "State next subphase.",
+          "Confirm forbidden paths were not changed."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P65 is split into implementation-grade subphases.",
+        "P65.1 adds only contract, docs, checker, report, and phase-status handoff.",
+        "No provider upload, provider polling, provider reconciliation, batch submission, provider dispatch, tool/code/worker execution, project mutation, DB write, deploy, network call, release action, or raw provider payload dump is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p648-5-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-2-batch-intelligence-job-contract",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Define preview-only batch intelligence job records and validation.",
+      "allowedFiles": [
+        "batch-intelligence/batchIntelligenceJob.js",
+        "batch-intelligence/fixtures/batch-intelligence-job-fixtures.json",
+        "scripts/check-p65-batch-intelligence-job.js",
+        "reports/p65-batch-intelligence-job-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.2",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.1",
+        "narrowScope": "Create preview-only batch intelligence job records and validation only.",
+        "safetyRules": [
+          "Do not enable provider upload, batch submission, polling, reconciliation, tool execution, worker execution, DB writes, network calls, deploy, or project mutation.",
+          "Jobs must carry redacted workload summaries only.",
+          "Raw private IDs and raw provider payloads must not be primary UX fields."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "api-batch/batchJobBuilder.js",
+            "api-batch/costEstimator.js",
+            "shared/redaction.js",
+            "shared/resultEnvelope.js"
+          ],
+          "rule": "Reuse existing batch preview and redaction helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page behavior expected.",
+          "required": "Define display-safe batch intelligence state labels for later UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "batch-intelligence/batchIntelligenceJob.js",
+            "batch-intelligence/fixtures/batch-intelligence-job-fixtures.json",
+            "scripts/check-p65-batch-intelligence-job.js",
+            "reports/p65-batch-intelligence-job-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "createBatchIntelligenceJob",
+            "validateBatchIntelligenceJob"
+          ],
+          "schemas": [
+            "BatchIntelligenceJobContract"
+          ],
+          "dataShapes": [
+            "jobId, state, workloadType, scopeLabel, requestCount, uploadAllowed, executionAllowed, disabledReason, evidenceRefs"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show batch intelligence state, request count, disabled upload reason, owner capability, evidence/activity location, and next action without raw payload dumps or fake execution.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless UX labels change."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-batch-intelligence-job.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-batch-intelligence-job."
+        ],
+        "docsRoadmap": [
+          "Document P65.2 batch intelligence job records."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65.2 complete and keep P65 in_progress.",
+        "validationCommands": [
+          "npm run check:p65-batch-intelligence-job",
+          "npm run check:p65-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider upload, batch submission, tool/code/worker execution, project mutation, DB writes, deploy, network calls, or raw provider payload dumps were enabled."
+        ],
+        "gitCommands": [
+          "git add batch-intelligence/batchIntelligenceJob.js batch-intelligence/fixtures/batch-intelligence-job-fixtures.json scripts/check-p65-batch-intelligence-job.js reports/p65-batch-intelligence-job-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p65 batch intelligence job contract\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no provider upload or execution.",
+          "Report validation.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Batch intelligence job records are preview-only and validation-covered.",
+        "Provider upload and execution remain disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-1-execution-contract-safety-split"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-3-workload-selection-preview",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Build redacted workload selection previews for large-scale analysis.",
+      "allowedFiles": [
+        "batch-intelligence/workloadSelectionPreview.js",
+        "batch-intelligence/fixtures/workload-selection-fixtures.json",
+        "scripts/check-p65-workload-selection.js",
+        "reports/p65-workload-selection-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.3",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.2",
+        "narrowScope": "Create workload selection previews with redacted summaries only.",
+        "safetyRules": [
+          "Do not enable provider upload, batch submission, execution, project mutation, DB writes, deploy, network calls, or project source reads.",
+          "Do not include raw project IDs, raw provider payloads, or raw logs.",
+          "Do not submit batch jobs."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/redaction.js",
+            "api-batch/batchJobBuilder.js"
+          ],
+          "rule": "Reuse redaction and batch preview helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page behavior expected.",
+          "required": "Define workload labels, blockers, redaction state, and next action for later UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "batch-intelligence/workloadSelectionPreview.js",
+            "batch-intelligence/fixtures/workload-selection-fixtures.json",
+            "scripts/check-p65-workload-selection.js",
+            "reports/p65-workload-selection-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildWorkloadSelectionPreview",
+            "validateWorkloadSelectionPreview"
+          ],
+          "schemas": [
+            "BatchWorkloadSelectionPreview"
+          ],
+          "dataShapes": [
+            "selectionId, workloadType, scopeLabel, itemCount, redactionApplied, uploadAllowed, executionAllowed, blockedReasons"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show selected workload, item count, redaction state, disabled provider upload and batch submission reason, blocked reason, evidence/activity location, and next action without raw payload dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless UX labels change."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-workload-selection.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-workload-selection."
+        ],
+        "docsRoadmap": [
+          "Document P65.3 workload selection previews."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65.3 complete and keep P65 in_progress.",
+        "validationCommands": [
+          "npm run check:p65-workload-selection",
+          "npm run check:p65-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project source reads or project mutation, provider upload, batch submission, execution, DB writes, deploy, network calls, or raw payload dumps were enabled."
+        ],
+        "gitCommands": [
+          "git add batch-intelligence/workloadSelectionPreview.js batch-intelligence/fixtures/workload-selection-fixtures.json scripts/check-p65-workload-selection.js reports/p65-workload-selection-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p65 workload selection preview\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm selected previews only.",
+          "Report validation.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Workload selection previews are redacted and validation-covered.",
+        "No provider upload or project source mutation is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-2-batch-intelligence-job-contract"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-4-cost-safety-gate",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Add batch intelligence cost and safety gate previews.",
+      "allowedFiles": [
+        "batch-intelligence/batchSafetyGate.js",
+        "batch-intelligence/fixtures/batch-safety-gate-fixtures.json",
+        "scripts/check-p65-batch-safety-gate.js",
+        "reports/p65-batch-safety-gate-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.4",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.3",
+        "narrowScope": "Add cost and safety gate decisions for preview-only batch intelligence jobs.",
+        "safetyRules": [
+          "Do not spend provider budget.",
+          "Do not enable provider upload, batch submission, polling, reconciliation, execution, project mutation, DB writes, deploy, or network calls.",
+          "Safety gate must block restricted data and missing redaction evidence."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "api-batch/costEstimator.js",
+            "shared/resultEnvelope.js",
+            "shared/redaction.js"
+          ],
+          "rule": "Reuse cost estimator, result envelope, and redaction helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No page behavior expected.",
+          "required": "Define cost impact, approval requirement, blocker, disabled reason, and next action for later UX."
+        },
+        "exactFilesModules": {
+          "create": [
+            "batch-intelligence/batchSafetyGate.js",
+            "batch-intelligence/fixtures/batch-safety-gate-fixtures.json",
+            "scripts/check-p65-batch-safety-gate.js",
+            "reports/p65-batch-safety-gate-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "buildBatchIntelligenceSafetyGate",
+            "validateBatchIntelligenceSafetyGate"
+          ],
+          "schemas": [
+            "BatchIntelligenceSafetyGate"
+          ],
+          "dataShapes": [
+            "gateId, decision, costEstimate, approvalRequired, uploadAllowed, executionAllowed, blockedReasons, evidenceRefs"
+          ]
+        },
+        "commandCenterUxRequirements": "Future UX must show cost estimate, approval requirement, disabled provider upload and batch submission reason, blocker, evidence/activity location, and next action without raw payload dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route expected unless UX labels change."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-batch-safety-gate.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-batch-safety-gate."
+        ],
+        "docsRoadmap": [
+          "Document P65.4 cost and safety gate previews."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65.4 complete and keep P65 in_progress.",
+        "validationCommands": [
+          "npm run check:p65-batch-safety-gate",
+          "npm run check:p65-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider spend, provider upload, batch submission, execution, DB writes, deploy, network calls, or project mutation was enabled."
+        ],
+        "gitCommands": [
+          "git add batch-intelligence/batchSafetyGate.js batch-intelligence/fixtures/batch-safety-gate-fixtures.json scripts/check-p65-batch-safety-gate.js reports/p65-batch-safety-gate-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): add p65 batch safety gate\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Confirm no provider spend/upload.",
+          "Report validation.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Cost and safety gate previews are validation-covered.",
+        "Provider spend/upload and execution remain disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-3-workload-selection-preview"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-5-command-center-batch-intelligence-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Expose batch intelligence readiness in Command Center without execution.",
+      "allowedFiles": [
+        "dashboard/src/data/batchIntelligenceReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p65-command-center-batch-intelligence-ux.js",
+        "reports/p65-command-center-batch-intelligence-ux-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.5",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.4",
+        "narrowScope": "Add display-only batch intelligence readiness UX using existing Command Center patterns.",
+        "safetyRules": [
+          "Do not enable provider upload, batch submission, polling, reconciliation, tool execution, worker execution, DB writes, network calls, deploy, or project mutation.",
+          "All controls must remain disabled or inspection-only.",
+          "Primary UX must avoid raw JSON, raw logs, raw IDs, raw provider payloads, and fake working actions."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/src/data/commandCenterTabs.js",
+            "dashboard/tests/routes.spec.js"
+          ],
+          "rule": "Reuse existing cards, tabs, badges, tests, and theme tokens; do not duplicate UI components."
+        },
+        "uxUpdate": {
+          "scope": "Batch Queue and API / Batch readiness display.",
+          "required": "Show batch intelligence state, workload type, selected request count, redaction state, cost estimate, blocked upload reason, owner capability, evidence/activity location, and next action."
+        },
+        "exactFilesModules": {
+          "create": [
+            "dashboard/src/data/batchIntelligenceReadiness.js",
+            "scripts/check-p65-command-center-batch-intelligence-ux.js",
+            "reports/p65-command-center-batch-intelligence-ux-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "batchIntelligenceReadinessCards"
+          ],
+          "schemas": [
+            "BatchIntelligenceReadinessCard"
+          ],
+          "dataShapes": [
+            "title, stateLabel, workloadType, requestCount, disabledReason, blocker, costImpact, nextAction, evidenceLocation, activityLocation"
+          ]
+        },
+        "commandCenterUxRequirements": "Show batch intelligence readiness, disabled upload/execution state, and cost/safety state without raw dumps, raw provider payloads, DemoApp leakage, or fake execution.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Add focused route coverage for batch intelligence readiness labels and disabled upload reasons.",
+          "Preserve no DemoApp leakage, no raw dumps, theme switcher, sidebar, OS roadmap separation, and project milestone separation tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-command-center-batch-intelligence-ux.js.",
+          "Update dashboard Playwright route tests."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-command-center-batch-intelligence-ux."
+        ],
+        "docsRoadmap": [
+          "Document P65.5 Command Center batch intelligence readiness UX."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65.5 complete and keep P65 in_progress.",
+        "validationCommands": [
+          "npm run check:p65-command-center-batch-intelligence-ux",
+          "npm run check:command-center-ux",
+          "cd dashboard && npm run build && npm run test:unit",
+          "cd dashboard && npx playwright test tests/routes.spec.js -g \"Batch Queue|API / Batch|batch intelligence\"",
+          "npm run check:p65-execution-plan",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider upload, batch submission, provider spend, tool/code/worker execution, DB writes, deploy, network calls, or project mutation was enabled."
+        ],
+        "gitCommands": [
+          "git add dashboard/src/data/batchIntelligenceReadiness.js dashboard/src/pages/CommandCenterV2.jsx dashboard/tests/routes.spec.js scripts/check-p65-command-center-batch-intelligence-ux.js reports/p65-command-center-batch-intelligence-ux-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"feat(nexus): show p65 batch intelligence readiness\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Describe UX changes.",
+          "Report Playwright/checker results.",
+          "Confirm no execution/upload."
+        ]
+      },
+      "acceptanceCriteria": [
+        "Command Center shows batch intelligence readiness and disabled upload/execution constraints.",
+        "Provider upload and execution remain disabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-4-cost-safety-gate"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P65 checker coverage before final validation.",
+      "allowedFiles": [
+        "scripts/check-p65-batch-intelligence-final.js",
+        "reports/p65-batch-intelligence-final-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.6",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.5",
+        "narrowScope": "Aggregate P65 validation coverage without new runtime behavior.",
+        "safetyRules": [
+          "Do not enable provider upload, batch submission, polling, reconciliation, execution, DB writes, deploy, network calls, or project mutation.",
+          "Do not mark P65 complete until final validation."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse report/check formatting and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new UX expected.",
+          "required": "Preserve P65.5 readiness UX and disabled reasons."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p65-batch-intelligence-final.js",
+            "reports/p65-batch-intelligence-final-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP65BatchIntelligenceFinal"
+          ],
+          "schemas": [
+            "P65BatchIntelligenceValidationReport"
+          ],
+          "dataShapes": [
+            "phaseId, checksRun, uploadAllowed, executionAllowed, knownLimitations, nextPhase"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve batch intelligence readiness UX with disabled upload/execution reason and no raw dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Run focused batch intelligence route tests if UX changed.",
+          "Preserve route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-batch-intelligence-final.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-batch-intelligence-final."
+        ],
+        "docsRoadmap": [
+          "Document P65.6 aggregate validation."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65.6 complete and keep P65 in_progress.",
+        "validationCommands": [
+          "npm run check:p65-batch-intelligence-final",
+          "npm run check:p65-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:command-center-ux",
+          "npm run check:os-phase-status",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider upload, batch submission, provider spend, execution, DB writes, deploy, network calls, or project mutation was enabled."
+        ],
+        "gitCommands": [
+          "git add scripts/check-p65-batch-intelligence-final.js reports/p65-batch-intelligence-final-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"test(nexus): aggregate p65 batch intelligence checks\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "List changed files.",
+          "Report validation.",
+          "Confirm no execution/upload.",
+          "State next subphase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P65 checker coverage is aggregated.",
+        "P65 remains in_progress until final validation."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-5-command-center-batch-intelligence-ux"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    },
+    {
+      "id": "nexus-os-p65-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "core",
+      "taskType": "implementation-plan",
+      "objective": "Validate and close P65 while keeping batch intelligence non-executing.",
+      "allowedFiles": [
+        "scripts/check-p65-final.js",
+        "reports/p65-final-report.md",
+        "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "scripts/batch-submit.js",
+        "scripts/batch-poll-openai.js",
+        "scripts/batch-reconcile-openai.js",
+        "db/**",
+        "prisma/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P65.7",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "after-P65.6",
+        "narrowScope": "Aggregate P65 checks, close phase status, and hand off to P66.",
+        "safetyRules": [
+          "Do not enable provider upload, batch submission, polling, reconciliation, execution, DB writes, deploy, network calls, worker execution, or project mutation.",
+          "Do not mark P65 complete unless checks pass and limitations are recorded.",
+          "Do not claim batch intelligence can run provider jobs."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js"
+          ],
+          "rule": "Reuse report and phase status helpers; do not duplicate helpers."
+        },
+        "uxUpdate": {
+          "scope": "No new UX expected.",
+          "required": "Preserve batch intelligence readiness UX and disabled reasons."
+        },
+        "exactFilesModules": {
+          "create": [
+            "scripts/check-p65-final.js",
+            "reports/p65-final-report.md"
+          ],
+          "update": [
+            "package.json",
+            "docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP65Final"
+          ],
+          "schemas": [
+            "P65FinalValidationReport"
+          ],
+          "dataShapes": [
+            "phaseId, checksRun, uploadAllowed, executionAllowed, knownLimitations, nextPhase"
+          ]
+        },
+        "commandCenterUxRequirements": "Preserve batch intelligence readiness UX with disabled upload/execution reason and no raw dumps.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "Run focused batch intelligence route tests if UX changed.",
+          "Preserve route-wide safety tests."
+        ],
+        "testsCheckers": [
+          "Add scripts/check-p65-final.js."
+        ],
+        "checkerUpdates": [
+          "Add package script check:p65-final."
+        ],
+        "docsRoadmap": [
+          "Close P65 docs and roadmap status."
+        ],
+        "phaseStatusUpdate": "When complete, mark P65 and P65.7 complete with branch, commit, completedAt, summary, checksRun, knownLimitations, nextPhase P66, and commandCenterVisible.",
+        "validationCommands": [
+          "npm run check:p65-final",
+          "npm run check:p65-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:command-center-ux",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "cd dashboard && npm run build && npm run test:unit",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no provider upload, batch submission, provider spend, execution, DB writes, deploy, network calls, workers, or project mutation were enabled."
+        ],
+        "gitCommands": [
+          "git add scripts/check-p65-final.js reports/p65-final-report.md package.json docs/architecture/P65_BATCH_INTELLIGENCE_JOBS_PLAN.md docs/architecture/NEXUS_PLATFORM_ROADMAP.md os-roadmap/phase-status.json reports/os-phase-status-report.md",
+          "git commit -m \"test(nexus): close p65 batch intelligence foundation\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name.",
+          "Commit hash.",
+          "Files changed.",
+          "What was implemented.",
+          "Tests/checkers.",
+          "Safety confirmations.",
+          "Known limitations.",
+          "Next phase."
+        ]
+      },
+      "acceptanceCriteria": [
+        "P65 closes with validation evidence.",
+        "Batch intelligence remains non-executing unless a later explicit phase enables it."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "medium",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p65-6-tests-checkers-docs"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T02:10:00.000Z"
+    }
+  ]
+}

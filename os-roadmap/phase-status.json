@@ -2776,11 +2776,126 @@
       "phaseId": "P65",
       "title": "Batch Intelligence Jobs for Large-Scale Analysis",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p65-execution-plan-commit",
       "completedAt": "",
-      "summary": "Planned large-scale analysis batch intelligence phase.",
+      "summary": "P65 has started as a contract-only batch intelligence split without enabling provider upload, batch submission, or execution.",
+      "checksRun": [
+        "npm run check:p65-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "Provider upload, batch submission, provider polling, provider reconciliation, provider dispatch, tool execution, code execution, worker execution, DB writes, deploy, release, external network calls, and project mutation remain disabled.",
+        "P65.1 only defines implementation-grade subphase contracts and validation."
+      ],
+      "nextPhase": "P65.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.1",
+      "title": "Execution Contract + Safety Split",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-p65-execution-plan-commit",
+      "completedAt": "2026-05-19T02:10:00.000Z",
+      "summary": "Defined implementation-grade P65 batch intelligence contracts, docs, checker, reports, and OS phase handoff without enabling provider upload or execution.",
+      "checksRun": [
+        "npm run check:p65-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "No provider upload, batch submission, provider polling, provider reconciliation, provider dispatch, tool execution, code execution, worker execution, DB writes, deploy, release, external network calls, or project mutation is enabled."
+      ],
+      "nextPhase": "P65.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.2",
+      "title": "Batch Intelligence Job Contract",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned preview-only batch intelligence job records and validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P65.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.3",
+      "title": "Workload Selection Preview",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned redacted workload selection previews for large-scale analysis.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P65.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.4",
+      "title": "Cost + Safety Gate",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned preview-only batch intelligence cost and safety gate decisions.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P65.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.5",
+      "title": "Command Center Batch Intelligence UX",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-only Command Center batch intelligence readiness UX.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P65.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate P65 checker coverage before final validation.",
+      "checksRun": [],
+      "knownLimitations": [],
+      "nextPhase": "P65.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "status": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation and P65 closure before P66.",
       "checksRun": [],
       "knownLimitations": [],
       "nextPhase": "P66",
@@ -5022,5 +5137,5 @@
   "updatedAt": "2026-05-18T23:00:00.000Z",
   "currentPhase": "P65",
   "previousPhase": "P64.8",
-  "nextPhase": "P66"
+  "nextPhase": "P65.2"
 }

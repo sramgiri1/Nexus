@@ -2068,8 +2068,71 @@
       "title": "Batch Intelligence Jobs for Large-Scale Analysis",
       "track": "NEXUS_OS",
       "order": 40,
-      "group": "Planned OS Phases",
+      "group": "P65 Batch Intelligence Jobs",
       "summary": "Schedule large-scale governed analysis and synthesis jobs in batch form.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.1",
+      "title": "Execution Contract + Safety Split",
+      "track": "NEXUS_OS",
+      "order": 40.01,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Define implementation-grade P65 contracts before batch-intelligence behavior.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.2",
+      "title": "Batch Intelligence Job Contract",
+      "track": "NEXUS_OS",
+      "order": 40.02,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Define preview-only batch intelligence job records and validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.3",
+      "title": "Workload Selection Preview",
+      "track": "NEXUS_OS",
+      "order": 40.03,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Build redacted workload selection previews for large-scale analysis.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.4",
+      "title": "Cost + Safety Gate",
+      "track": "NEXUS_OS",
+      "order": 40.04,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Add preview-only cost and safety gate decisions for batch intelligence.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.5",
+      "title": "Command Center Batch Intelligence UX",
+      "track": "NEXUS_OS",
+      "order": 40.05,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Expose batch intelligence readiness in Command Center without execution.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 40.06,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Aggregate P65 validation coverage before final validation.",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P65.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 40.07,
+      "group": "P65 Batch Intelligence Jobs",
+      "summary": "Validate and close P65 with batch intelligence still non-executing.",
       "commandCenterVisible": true
     },
     {

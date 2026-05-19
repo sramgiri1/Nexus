@@ -291,7 +291,14 @@ Risk level:
   - `P64.8.3` Lazy Tool Selection Packet — complete
   - `P64.8.4` Command Center Code Mode Readiness UX — complete
   - `P64.8.5` Final Validation — complete
-- `P65` Batch Intelligence Jobs for Large-Scale Analysis — next
+- `P65` Batch Intelligence Jobs for Large-Scale Analysis — in progress
+  - `P65.1` Execution Contract + Safety Split — complete
+  - `P65.2` Batch Intelligence Job Contract — next
+  - `P65.3` Workload Selection Preview
+  - `P65.4` Cost + Safety Gate
+  - `P65.5` Command Center Batch Intelligence UX
+  - `P65.6` Tests / Checkers / Docs
+  - `P65.7` Final Validation
 - `P66` Self-Healing Failure Loop
 - `P67` Controlled Source Mutation Expansion
 - `P68` Self-Update Workflow for NEXUS OS
