@@ -70,7 +70,15 @@ Validation: `npm run check:p834-local-validation-harness`.
 Goal: show the admitted local build state in Command Center with current state,
 next action, blockers, owner, evidence, activity, and cost impact.
 
-Status: planned. No fake runnable actions may be exposed.
+Status: complete. P83.5 adds the generated Snake iOS local build state to the
+existing Live Readiness activation rows. Command Center now shows that the
+generated build is local-build validated, links the P83.4 evidence, names the
+owner capability, states the next action, and keeps simulator launch, signing,
+deploy, release, package creation, provider calls, worker dispatch, DB writes,
+network calls, and spend disabled.
+
+Validation: `npm run check:p835-command-center-build-ux` and
+`cd dashboard && npx playwright test tests/routes.spec.js --grep "Live Ready"`.
 
 ## P83.6 Tests / Checkers / Docs
 

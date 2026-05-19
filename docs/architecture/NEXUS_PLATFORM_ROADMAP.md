@@ -1305,9 +1305,12 @@ P83.4 is complete. It adds the local validation manifest and checker that rerun
 the generated Snake iOS executable game-rule assertions and Swift package build
 without provider, worker, DB, deploy, network, package, or spend activation.
 
+P83.5 is complete. It surfaces the generated Snake iOS local build state in
+Command Center Live Readiness with evidence, owner, next action, disabled
+runtime actions, and no raw project IDs or fake runnable actions.
+
 Planned P83 subphases:
 
-- `P83.5` Command Center Build UX
 - `P83.6` Tests / Checkers / Docs
 - `P83.7` Final Validation
 

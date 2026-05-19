@@ -2911,6 +2911,8 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Needs setup");
     await expect(activeCommandTabPanel(page)).toContainText("Blocked by policy");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
+    await expect(activeCommandTabPanel(page)).toContainText("Generated Snake iOS Build");
+    await expect(activeCommandTabPanel(page)).toContainText("local-build validated");
     await expect(activeCommandTabPanel(page)).toContainText("Project Source Mutation");
     await expect(activeCommandTabPanel(page)).toContainText("Worker Execution");
     await expect(activeCommandTabPanel(page)).toContainText("Deploy / Release");

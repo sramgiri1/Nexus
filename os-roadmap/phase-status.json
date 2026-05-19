@@ -8472,13 +8472,14 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7608cb9",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P83 is in progress. Snake iOS local admission, scaffold planning, file creation, and local validation harness are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "summary": "P83 is in progress. Snake iOS local admission, scaffold, validation harness, and Command Center local build UX are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
+        "npm run check:p835-command-center-build-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npm run build",
         "npm run check:p834-local-validation-harness",
-        "npm run check:p833-approved-local-file-creation",
-        "npm run check:p832-snake-ios-scaffold-plan",
         "npm run check:p83-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -8486,10 +8487,10 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.4 validates local Swift build/test behavior only. P83.5 must expose this state in Command Center.",
+        "P83.5 is display-only. P83.6 must aggregate final test, checker, and docs coverage.",
         "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
       ],
-      "nextPhase": "P83.5",
+      "nextPhase": "P83.6",
       "commandCenterVisible": true
     },
     {
@@ -8599,14 +8600,25 @@
       "phaseId": "P83.5",
       "title": "Command Center Build UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Expose admitted local build state in Command Center.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:18:15.840Z",
+      "summary": "Surfaced the generated Snake iOS local build state in Command Center Live Readiness without enabling runtime actions.",
+      "checksRun": [
+        "npm run check:p835-command-center-build-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "cd dashboard && npm run build",
+        "npm run check:p834-local-validation-harness",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P83.5 is display-only and does not add mutation controls, simulator launch, signing, deploy, provider, worker, DB, network, package, or spend actions.",
+        "P83.6 will aggregate P83 test, checker, docs, and roadmap evidence."
       ],
       "nextPhase": "P83.6",
       "commandCenterVisible": true
@@ -8646,7 +8658,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.4",
-  "previousPhase": "P83.3",
-  "nextPhase": "P83.5"
+  "currentPhase": "P83.5",
+  "previousPhase": "P83.4",
+  "nextPhase": "P83.6"
 }
