@@ -1453,8 +1453,13 @@ live lists, and next actions. Activation requests, provider/model calls, agent
 dispatch, tool execution, worker execution, project mutation, DB writes, deploy,
 release, export, package creation, and provider spend remain blocked.
 
-P86.3 is next. It should add local operator approval queue records with expiry,
-rollback, and validation requirements while execution remains disabled.
+P86.3 is complete. It adds local operator approval queue records for resolved
+live capabilities with queue state, approval decision, expiry posture, rollback,
+validation, evidence, missing evidence, next action, disabled reason, and cost
+impact. Approval records cannot execute runtime actions.
+
+P86.4 is next. It should surface governed live capability and approval queue
+state in Command Center without raw IDs or fake runnable actions.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).

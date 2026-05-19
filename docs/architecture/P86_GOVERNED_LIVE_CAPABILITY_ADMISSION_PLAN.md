@@ -36,7 +36,13 @@ Validation: `npm run check:p862-capability-state-resolver`.
 Goal: add local approval queue records with expiry, rollback, and validation
 requirements.
 
-Status: planned. P86.3 should remain local and non-executing.
+Status: complete. P86.3 adds `governedLiveOperatorApprovalQueue`, a local
+approval queue record builder for resolved live capabilities. Queue records
+include owner, queue state, approval decision, expiry posture, rollback,
+validation, evidence, missing evidence, next action, disabled reason, and cost
+impact while approvals remain non-executing.
+
+Validation: `npm run check:p863-operator-approval-queue`.
 
 ## P86.4 Command Center UX
 

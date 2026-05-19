@@ -9086,21 +9086,21 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "53af8ca",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1-P86.2 complete.",
+      "summary": "Governed live capability admission in progress with P86.1-P86.3 complete.",
       "checksRun": [
+        "npm run check:p863-operator-approval-queue",
         "npm run check:p862-capability-state-resolver",
-        "npm run check:p861-live-capability-admission",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.2 resolves live capability states only.",
-        "Activation requests, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+        "P86.3 creates local approval queue records only.",
+        "Approvals cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
-      "nextPhase": "P86.3",
+      "nextPhase": "P86.4",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -9162,14 +9162,21 @@
       "title": "Operator Approval Queue",
       "track": "NEXUS_OS",
       "order": 70.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Local approval queue records with expiry, rollback, and validation requirements.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:58:11.868Z",
+      "summary": "Added local operator approval queue records with expiry posture, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p863-operator-approval-queue",
+        "npm run check:p862-capability-state-resolver",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86.3 creates local approval queue records only.",
+        "Approvals cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P86.4",
       "commandCenterVisible": true,
@@ -9254,9 +9261,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T23:55:29.629Z",
-  "currentPhase": "P86.2",
-  "previousPhase": "P86.1",
-  "nextPhase": "P86.3",
+  "updatedAt": "2026-05-19T23:58:11.868Z",
+  "currentPhase": "P86.3",
+  "previousPhase": "P86.2",
+  "nextPhase": "P86.4",
   "currentPhaseStatus": "complete"
 }

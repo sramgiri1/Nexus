@@ -215,9 +215,64 @@
     },
     {
       "id": "nexus-os-p86-3-operator-approval-queue",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architecture",
+      "taskType": "implementation",
       "phaseId": "P86.3",
       "objective": "Add local operator approval queue records with expiry and rollback requirements.",
-      "status": "planned"
+      "status": "complete",
+      "allowedFiles": [
+        "live-ready/governedLiveOperatorApprovalQueue.js",
+        "scripts/check-p863-operator-approval-queue.js",
+        "scripts/check-p862-capability-state-resolver.js",
+        "reports/p863-operator-approval-queue-report.md",
+        "reports/p862-capability-state-resolver-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "narrowScope": "Local approval queue records only.",
+        "expectedExports": [
+          "P86_OPERATOR_APPROVAL_QUEUE_PHASE",
+          "buildGovernedLiveOperatorApprovalQueue",
+          "validateGovernedLiveOperatorApprovalQueue"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, queueSummary, queueItems[], nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all approval/runtime flags false.",
+        "validationCommands": [
+          "npm run check:p863-operator-approval-queue",
+          "npm run check:p862-capability-state-resolver",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ]
+      }
     },
     {
       "id": "nexus-os-p86-4-command-center-ux",

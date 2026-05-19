@@ -70,8 +70,17 @@ addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p862-capability-state-resolver"]));
 addCheck("contract references P86.2 files", contract.includes("live-ready/governedLiveCapabilityStateResolver.js") && contract.includes("check:p862-capability-state-resolver"));
 addCheck("docs mention P86.2 validation", docs.includes("P86.2 Capability State Resolver") && docs.includes("npm run check:p862-capability-state-resolver"));
-addCheck("platform roadmap records P86.2", platformRoadmap.includes("P86.2 is complete") && platformRoadmap.includes("P86.3 is next"));
-addCheck("phase status advanced", statusById.get("P86.2")?.status === "complete" && status.currentPhase === "P86.2" && status.nextPhase === "P86.3");
+addCheck(
+  "platform roadmap records P86.2",
+  platformRoadmap.includes("P86.2 is complete")
+    && (platformRoadmap.includes("P86.3 is next") || platformRoadmap.includes("P86.3 is complete")),
+);
+addCheck(
+  "phase status advanced",
+  statusById.get("P86.2")?.status === "complete"
+    && ["P86.2", "P86.3"].includes(status.currentPhase)
+    && ["P86.3", "P86.4"].includes(status.nextPhase),
+);
 addCheck("roadmap tracks P86.2", roadmapById.get("P86.2")?.track === "NEXUS_OS" && roadmapById.get("P86.2")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p861-live-capability-admission-report.md") && fileExists("reports/os-phase-status-report.md"));
 
