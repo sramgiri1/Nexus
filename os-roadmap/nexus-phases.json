@@ -3434,11 +3434,81 @@
       "title": "Business Build Orchestration Contract",
       "order": 56,
       "group": "P81 Business Build Orchestration Contract",
+      "status": "in_progress",
+      "summary": "Defined implementation-grade P81 contracts for the governed path from founder intake to PRD and business build orchestration.",
+      "nextPhase": "P81.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.1",
+      "title": "Execution Contract + Business Build Boundary",
+      "order": 56.01,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "complete",
+      "summary": "Defined P81 subphase contracts, safety boundary, validation checker, docs, roadmap, and status tracking.",
+      "nextPhase": "P81.2",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.2",
+      "title": "Founder Idea to PRD Schema",
+      "order": 56.02,
+      "group": "P81 Business Build Orchestration Contract",
       "status": "planned",
-      "summary": "Plan the governed path from validated founder intake toward PRD generation and business build orchestration.",
-      "nextPhase": "P81.1",
+      "summary": "Define local PRD draft schemas from founder intake answers without provider calls or project creation.",
+      "nextPhase": "P81.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.3",
+      "title": "Agent Role / Workstream Planner",
+      "order": 56.03,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Define local agent role and workstream plan records without dispatching agents.",
+      "nextPhase": "P81.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.4",
+      "title": "Safe Dry-Run Business Build Plan",
+      "order": 56.04,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Assemble a dry-run business build plan while execution remains disabled.",
+      "nextPhase": "P81.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.5",
+      "title": "Command Center Business Build UX",
+      "order": 56.05,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Expose business build readiness, blockers, disabled reasons, evidence, activity, and cost posture in Command Center.",
+      "nextPhase": "P81.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.6",
+      "title": "Tests / Checkers / Docs",
+      "order": 56.06,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Aggregate P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
+      "nextPhase": "P81.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.7",
+      "title": "Final Validation",
+      "order": 56.07,
+      "group": "P81 Business Build Orchestration Contract",
+      "status": "planned",
+      "summary": "Close P81 after validating local business build orchestration remains governed and display-safe.",
+      "nextPhase": "P82",
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T22:10:00.000Z"
+  "updatedAt": "2026-05-19T22:30:00.000Z"
 }

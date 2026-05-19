@@ -1,0 +1,277 @@
+{
+  "phase": "P81",
+  "title": "Business Build Orchestration Contract",
+  "classification": "NEXUS_OS_CHANGE",
+  "taskContracts": [
+    {
+      "id": "nexus-os-p81-1-execution-contract-business-build-boundary",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "planner",
+      "taskType": "implementation-plan",
+      "objective": "Define P81 business build orchestration contracts and safety boundary without enabling runtime execution.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p81-execution-contracts.json",
+        "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p81-execution-plan.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p81-execution-plan-report.md",
+        "package.json",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/format-readability-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "project-roadmap/**",
+        "careloop/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "auth/**",
+        "users/**",
+        "rbac/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "phaseId": "P81.1",
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "startingBranch": "codex/nexus-e2e-phase-validation",
+        "expectedBaseCommit": "3056f4f",
+        "narrowScope": "Add P81 contracts, execution plan checker, docs, roadmap/status entries, and generated evidence only.",
+        "safetyRules": [
+          "Do not enable provider calls, autonomous provider Q&A, PRD generation execution, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require operator approval, scope boundary, budget limit, rollback plan, activity evidence, cost evidence, and redaction checks before any later execution-consuming phase."
+        ],
+        "reuseCheck": {
+          "inspectBeforeWriting": [
+            "shared/reportWriter.js",
+            "shared/reportMetadata.js",
+            "shared/resultEnvelope.js",
+            "shared/modeGuard.js",
+            "shared/redaction.js",
+            "shared/checkResultFormatter.js",
+            "os-roadmap/updatePhaseStatus.js",
+            "founder-intake/founderIntakeSchema.js",
+            "founder-intake/founderIntakeSession.js"
+          ],
+          "rule": "Reuse existing report, metadata, result envelope, mode guard, redaction, checker formatter, phase status, Command Center route/card/tab, evidence, activity, audit, cost, and founder intake helpers; do not duplicate helpers."
+        },
+        "commandCenterUxRequirements": "Command Center UX must show current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, DemoApp, internal phase labels outside OS Roadmap, or raw private project IDs.",
+        "themeRequirements": [
+          "Preserve System theme behavior.",
+          "Preserve Dark theme readability.",
+          "Preserve Light theme readability."
+        ],
+        "playwrightTests": [
+          "No Playwright route change unless Command Center UX changes in this subphase."
+        ],
+        "testsCheckers": [
+          "Add check:p81-execution-plan."
+        ],
+        "checkerUpdates": [
+          "Register package script and add P81 phase IDs to OS phase status checker."
+        ],
+        "docsRoadmap": [
+          "Update P81 plan, platform roadmap, OS roadmap, phase status, and generated reports."
+        ],
+        "phaseStatusUpdate": "Mark P81 in_progress, mark P81.1 complete after validation, and set nextPhase to P81.2.",
+        "exactFilesModules": {
+          "create": [
+            "contracts/os-roadmap/p81-execution-contracts.json",
+            "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md",
+            "scripts/check-p81-execution-plan.js",
+            "reports/p81-execution-plan-report.md"
+          ],
+          "update": [
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "scripts/check-os-phase-status.js",
+            "package.json",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json",
+            "reports/os-phase-status-report.md",
+            "reports/phase-validation-coverage-report.md",
+            "reports/format-readability-report.md"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "checkP81ExecutionPlan",
+            "P81_BUSINESS_BUILD_SUBPHASES"
+          ],
+          "schemas": [
+            "P81TaskContractSet"
+          ],
+          "dataShapes": [
+            "phaseId, scopeClassification, exactFilesModules, validationCommands, finalSafetyChecks, nextPhase"
+          ]
+        },
+        "validationCommands": [
+          "npm run check:p81-execution-plan",
+          "npm run check:phase-validation-coverage",
+          "npm run check:os-phase-status",
+          "npm run check:format-readability",
+          "git diff --check"
+        ],
+        "finalSafetyChecks": [
+          "Confirm no project files changed.",
+          "Confirm no provider/tool/worker/project/DB/deploy/spend path is enabled.",
+          "Confirm no DemoApp or raw private project IDs appear in primary UX."
+        ],
+        "gitCommands": [
+          "git add <allowed P81 files>",
+          "git commit -m \"docs(nexus): add business build orchestration contracts\"",
+          "git push origin HEAD"
+        ],
+        "finalResponseChecklist": [
+          "Branch name",
+          "Commit hash",
+          "Files changed",
+          "What was implemented",
+          "Command Center UX changes",
+          "Tests/checkers run",
+          "Docs/roadmap/status update",
+          "Safety confirmations",
+          "Forbidden paths confirmation",
+          "Known limitations",
+          "Next phase/subphase"
+        ]
+      },
+      "acceptanceCriteria": [
+        "P81 has implementation-grade contracts for seven subphases.",
+        "No PRD generation, agent dispatch, project mutation, deploy, or provider spend is enabled."
+      ],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": [
+        "nexus-os-p80-7-final-validation"
+      ],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-2-founder-idea-to-prd-schema",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architect",
+      "taskType": "implementation-plan",
+      "objective": "Define local founder idea to PRD draft schemas without provider calls or project creation.",
+      "allowedFiles": ["business-build/businessBuildPrdSchema.js", "scripts/check-p812-prd-schema.js", "reports/p812-prd-schema-report.md", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.2", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.1", "narrowScope": "Add local PRD draft schema and checker only.", "safetyRules": ["Do not enable provider calls, PRD generation execution, agent dispatch, project mutation, DB writes, deploy, or provider spend. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse result envelopes, redaction, reports, checker formatters, and founder intake helpers; do not duplicate helpers."}, "commandCenterUxRequirements": "Preserve current state, next action, blockers, disabled reason, owner, evidence, activity, and cost impact fields without raw IDs or fake actions.", "themeRequirements": ["Preserve System, Dark, and Light themes."], "playwrightTests": ["No Playwright route change unless Command Center UX changes."], "testsCheckers": ["Add check:p812-prd-schema."], "checkerUpdates": ["Register package script."], "docsRoadmap": ["Update P81 docs, roadmap, status, and reports."], "phaseStatusUpdate": "Mark P81.2 complete and set nextPhase to P81.3.", "exactFilesModules": {"create": ["business-build/businessBuildPrdSchema.js", "scripts/check-p812-prd-schema.js", "reports/p812-prd-schema-report.md"], "update": ["package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"]}, "expectedExportsSchemasDataShapes": {"exports": ["createBusinessBuildPrdDraft"], "schemas": ["BusinessBuildPrdDraft"], "dataShapes": ["founderIdea, problem, targetCustomer, solution, businessModel, risks, evidenceRefs, costImpact"]}, "validationCommands": ["npm run check:p812-prd-schema", "npm run check:p81-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm no project files changed.", "Confirm no runtime mutation is enabled."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"feat(nexus): add business build prd schema\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["PRD draft schema is local and deterministic.", "No provider call or project creation is enabled."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-1-execution-contract-business-build-boundary"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-3-agent-workstream-planner",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "planner",
+      "taskType": "implementation-plan",
+      "objective": "Define local business build agent roles and workstreams without dispatching agents.",
+      "allowedFiles": ["business-build/businessBuildWorkstreams.js", "scripts/check-p813-agent-workstreams.js", "reports/p813-agent-workstreams-report.md", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p812-prd-schema-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.3", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.2", "narrowScope": "Add local workstream role model and checker only.", "safetyRules": ["Do not dispatch agents or enable provider calls, tools, workers, project mutation, DB writes, deploy, or provider spend. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse existing envelopes, reports, check formatters, and Command Center patterns; do not duplicate helpers."}, "commandCenterUxRequirements": "Preserve current state, next action, blockers, disabled reason, owner, evidence, activity, and cost impact fields without raw IDs or fake actions.", "themeRequirements": ["Preserve System, Dark, and Light themes."], "playwrightTests": ["No Playwright route change unless Command Center UX changes."], "testsCheckers": ["Add check:p813-agent-workstreams."], "checkerUpdates": ["Register package script."], "docsRoadmap": ["Update P81 docs, roadmap, status, and reports."], "phaseStatusUpdate": "Mark P81.3 complete and set nextPhase to P81.4.", "exactFilesModules": {"create": ["business-build/businessBuildWorkstreams.js", "scripts/check-p813-agent-workstreams.js", "reports/p813-agent-workstreams-report.md"], "update": ["package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"]}, "expectedExportsSchemasDataShapes": {"exports": ["buildBusinessBuildWorkstreams"], "schemas": ["BusinessBuildWorkstream"], "dataShapes": ["ownerCapability, workstream, objective, inputsNeeded, blockers, disabledReason, costImpact"]}, "validationCommands": ["npm run check:p813-agent-workstreams", "npm run check:p812-prd-schema", "npm run check:p81-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm no project files changed.", "Confirm no agent dispatch is enabled."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"feat(nexus): add business build workstreams\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["Workstreams are local planning records.", "No agent dispatch is enabled."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-2-founder-idea-to-prd-schema"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-4-safe-dry-run-business-build-plan",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "planner",
+      "taskType": "implementation-plan",
+      "objective": "Assemble a dry-run business build plan without executing providers, agents, tools, workers, or project changes.",
+      "allowedFiles": ["business-build/businessBuildPlan.js", "scripts/check-p814-business-build-plan.js", "reports/p814-business-build-plan-report.md", "business-build/businessBuildPrdSchema.js", "business-build/businessBuildWorkstreams.js", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.4", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.3", "narrowScope": "Add dry-run business build plan builder and checker only.", "safetyRules": ["Do not execute providers, agents, tools, workers, project mutation, DB writes, deploy, or provider spend. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse P81 PRD/workstream models and shared report/check helpers; do not duplicate helpers."}, "commandCenterUxRequirements": "Preserve display-safe current state, next action, blockers, disabled reason, owner, evidence, activity, and cost impact.", "themeRequirements": ["Preserve System, Dark, and Light themes."], "playwrightTests": ["No Playwright route change unless Command Center UX changes."], "testsCheckers": ["Add check:p814-business-build-plan."], "checkerUpdates": ["Register package script."], "docsRoadmap": ["Update P81 docs, roadmap, status, and reports."], "phaseStatusUpdate": "Mark P81.4 complete and set nextPhase to P81.5.", "exactFilesModules": {"create": ["business-build/businessBuildPlan.js", "scripts/check-p814-business-build-plan.js", "reports/p814-business-build-plan-report.md"], "update": ["business-build/businessBuildPrdSchema.js", "business-build/businessBuildWorkstreams.js", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"]}, "expectedExportsSchemasDataShapes": {"exports": ["buildBusinessBuildPlan"], "schemas": ["BusinessBuildPlan"], "dataShapes": ["prdReadiness, workstreams, milestones, blockers, disabledActions, costImpact"]}, "validationCommands": ["npm run check:p814-business-build-plan", "npm run check:p813-agent-workstreams", "npm run check:p812-prd-schema", "npm run check:p81-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm dry run only.", "Confirm no runtime mutation is enabled."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"feat(nexus): add dry-run business build plan\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["Business build plan is dry-run only.", "No fake working actions are exposed."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-3-agent-workstream-planner"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-5-command-center-business-build-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "ui",
+      "taskType": "implementation-plan",
+      "objective": "Expose business build readiness in Command Center without raw IDs, DemoApp, or fake runnable actions.",
+      "allowedFiles": ["dashboard/src/data/businessBuild.js", "dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p815-command-center-business-build-ux.js", "reports/p815-command-center-business-build-ux-report.md", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.5", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.4", "narrowScope": "Add Command Center business build route/data/view and Playwright route coverage only.", "safetyRules": ["Do not expose runnable provider, agent, tool, worker, project mutation, DB writes, deploy, or provider spend actions. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse existing Command Center routes, tabs, cards, badges, evidence/activity/cost patterns, and shared check helpers; do not duplicate helpers."}, "commandCenterUxRequirements": "Show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, internal phase labels, DemoApp, or raw private IDs.", "themeRequirements": ["Preserve System theme behavior.", "Preserve Dark theme readability.", "Preserve Light theme readability."], "playwrightTests": ["Add Business Build route test.", "Preserve no DemoApp leakage, no raw dumps, theme switcher, sidebar navigation, OS Roadmap separation, and project milestone separation tests."], "testsCheckers": ["Add check:p815-command-center-business-build-ux."], "checkerUpdates": ["Register package script and update route-wide safety coverage."], "docsRoadmap": ["Update P81 docs, roadmap, status, and reports."], "phaseStatusUpdate": "Mark P81.5 complete and set nextPhase to P81.6.", "exactFilesModules": {"create": ["dashboard/src/data/businessBuild.js", "scripts/check-p815-command-center-business-build-ux.js", "reports/p815-command-center-business-build-ux-report.md"], "update": ["dashboard/src/data/commandCenterRoutes.js", "dashboard/src/data/commandCenterTabs.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json"]}, "expectedExportsSchemasDataShapes": {"exports": ["buildBusinessBuildViewModel", "BUSINESS_BUILD_TABS"], "schemas": ["BusinessBuildCommandCenterViewModel"], "dataShapes": ["currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, disabledActions"]}, "validationCommands": ["npm run check:p815-command-center-business-build-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:p81-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm no DemoApp leakage.", "Confirm no raw private IDs.", "Confirm no runnable business build actions."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"feat(nexus): add command center business build ux\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["Command Center shows business build readiness and disabled reasons.", "Primary UX has no DemoApp, raw JSON/log dumps, or raw private project IDs."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-4-safe-dry-run-business-build-plan"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-6-tests-checkers-docs",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "qa",
+      "taskType": "implementation-plan",
+      "objective": "Aggregate P81 checker, Playwright, unit, build, docs, roadmap, and report evidence.",
+      "allowedFiles": ["scripts/check-p816-tests-checkers-docs.js", "reports/p816-tests-checkers-docs-report.md", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.6", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.5", "narrowScope": "Add validation aggregation checker/report and status evidence only.", "safetyRules": ["Do not enable provider calls, agent dispatch, tools, workers, project mutation, DB writes, deploy, or provider spend. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse shared report writer, checker formatter, redaction, phase status, and Command Center route safety helpers; do not duplicate helpers."}, "commandCenterUxRequirements": "Preserve Business Build UX current state, next action, blockers, disabled reason, owner, evidence/activity, and cost impact without raw IDs or fake actions.", "themeRequirements": ["Preserve System, Dark, and Light themes."], "playwrightTests": ["No new Playwright route unless labels changed."], "testsCheckers": ["Add check:p816-tests-checkers-docs."], "checkerUpdates": ["Register package script and keep route-wide checks current."], "docsRoadmap": ["Update P81 docs, roadmap, phase status, and reports."], "phaseStatusUpdate": "Mark P81.6 complete and set nextPhase to P81.7.", "exactFilesModules": {"create": ["scripts/check-p816-tests-checkers-docs.js", "reports/p816-tests-checkers-docs-report.md"], "update": ["package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"]}, "expectedExportsSchemasDataShapes": {"exports": ["checkP81ValidationAggregation"], "schemas": ["P81ValidationAggregation"], "dataShapes": ["scripts, reports, phaseStatus, playwrightCoverage, unitCoverage, buildCoverage, knownLimitations"]}, "validationCommands": ["npm run check:p816-tests-checkers-docs", "npm run check:p815-command-center-business-build-ux", "npm run check:p814-business-build-plan", "npm run check:p813-agent-workstreams", "npm run check:p812-prd-schema", "npm run check:p81-execution-plan", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm no project files changed.", "Confirm no runtime mutation is enabled."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"test(nexus): aggregate business build validation\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Tests/checkers run", "Safety confirmations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["P81 validation evidence is aggregated.", "No obsolete route safety assertions remain."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-5-command-center-business-build-ux"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    },
+    {
+      "id": "nexus-os-p81-7-final-validation",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "qa",
+      "taskType": "implementation-plan",
+      "objective": "Close P81 after validating local business build orchestration remains governed and display-safe.",
+      "allowedFiles": ["scripts/check-p817-final-validation.js", "reports/p817-final-validation-report.md", "package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"],
+      "forbiddenFiles": ["projects/**", "project-roadmap/**", "careloop/**", "db/**", "prisma/**", "migrations/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "auth/**", "users/**", "rbac/**", ".env", ".env.*"],
+      "inputs": {"phaseId": "P81.7", "scopeClassification": "NEXUS_OS_CHANGE", "startingBranch": "codex/nexus-e2e-phase-validation", "expectedBaseCommit": "after-P81.6", "narrowScope": "Add final validation checker/report and close P81 status only.", "safetyRules": ["Do not enable provider calls, agent dispatch, tools, workers, project mutation, DB writes, deploy, release, export, package creation, auth/session/user/workspace mutation, or provider spend. Require approval, scope, budget, rollback, activity evidence, cost evidence, and redaction checks before later execution."], "reuseCheck": {"rule": "Reuse shared report, checker, redaction, phase status, and Command Center helpers; do not duplicate helpers."}, "commandCenterUxRequirements": "Preserve display-safe Business Build Command Center UX with current state, next action, blockers, disabled reason, owner, evidence, activity, and cost impact.", "themeRequirements": ["Preserve System, Dark, and Light themes."], "playwrightTests": ["Run Business Build route coverage."], "testsCheckers": ["Add check:p817-final-validation."], "checkerUpdates": ["Register package script and keep route-wide safety checks current."], "docsRoadmap": ["Update P81 docs, roadmap, phase status, and reports."], "phaseStatusUpdate": "Mark P81 complete after validation and set nextPhase to P82.", "exactFilesModules": {"create": ["scripts/check-p817-final-validation.js", "reports/p817-final-validation-report.md"], "update": ["package.json", "docs/architecture/P81_BUSINESS_BUILD_ORCHESTRATION_PLAN.md", "os-roadmap/nexus-phases.json", "os-roadmap/phase-status.json", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md", "reports/p81-execution-plan-report.md", "reports/format-readability-report.md"]}, "expectedExportsSchemasDataShapes": {"exports": ["checkP81FinalValidation"], "schemas": ["P81FinalValidation"], "dataShapes": ["phaseStatus, businessBuildReadiness, commandCenterCoverage, checksRun, knownLimitations, nextPhase"]}, "validationCommands": ["npm run check:p817-final-validation", "npm run check:p816-tests-checkers-docs", "npm run check:p815-command-center-business-build-ux", "npm run check:p814-business-build-plan", "npm run check:p813-agent-workstreams", "npm run check:p812-prd-schema", "npm run check:p81-execution-plan", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"", "cd dashboard && npm run test:unit", "cd dashboard && npm run build", "npm run check:phase-validation-coverage", "npm run check:os-phase-status", "npm run check:format-readability", "git diff --check"], "finalSafetyChecks": ["Confirm no project files changed.", "Confirm no runtime mutation is enabled.", "Confirm P82 remains planned only."], "gitCommands": ["git add <allowed P81 files>", "git commit -m \"test(nexus): close business build orchestration validation\"", "git push origin HEAD"], "finalResponseChecklist": ["Branch name", "Commit hash", "Files changed", "What was implemented", "Command Center UX changes", "Tests/checkers run", "Safety confirmations", "Known limitations", "Next phase/subphase"]},
+      "acceptanceCriteria": ["Business build orchestration is validated end to end within P81 scope.", "Provider calls, project mutation, deploy, and provider spend remain blocked."],
+      "requiredSkills": [],
+      "riskLevel": "high",
+      "blocking": true,
+      "dependsOn": ["nexus-os-p81-6-tests-checkers-docs"],
+      "parentTaskId": null,
+      "createdAt": "2026-05-19T22:30:00.000Z"
+    }
+  ]
+}

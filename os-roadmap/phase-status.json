@@ -8049,15 +8049,97 @@
     {
       "phaseId": "P81",
       "title": "Business Build Orchestration Contract",
+      "status": "in_progress",
+      "summary": "Defined implementation-grade P81 contracts for the governed path from founder intake to PRD and business build orchestration.",
+      "nextPhase": "P81.2",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p81-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P81 is contract-first. PRD generation execution, agent dispatch, project creation, project mutation, provider calls, DB writes, deploy, and provider spend remain blocked."
+      ]
+    },
+    {
+      "phaseId": "P81.1",
+      "title": "Execution Contract + Business Build Boundary",
+      "status": "complete",
+      "summary": "Defined P81 subphase contracts, safety boundary, validation checker, docs, roadmap, and status tracking.",
+      "nextPhase": "P81.2",
+      "commandCenterVisible": true,
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "checksRun": [
+        "npm run check:p81-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P81.1 is contract-only. PRD generation execution, agent dispatch, project creation, project mutation, provider calls, DB writes, deploy, and provider spend remain blocked."
+      ]
+    },
+    {
+      "phaseId": "P81.2",
+      "title": "Founder Idea to PRD Schema",
       "status": "planned",
-      "summary": "Plan the governed path from validated founder intake toward PRD generation and business build orchestration.",
-      "nextPhase": "P81.1",
+      "summary": "Define local PRD draft schemas from founder intake answers without provider calls or project creation.",
+      "nextPhase": "P81.3",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.3",
+      "title": "Agent Role / Workstream Planner",
+      "status": "planned",
+      "summary": "Define local agent role and workstream plan records without dispatching agents.",
+      "nextPhase": "P81.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.4",
+      "title": "Safe Dry-Run Business Build Plan",
+      "status": "planned",
+      "summary": "Assemble a dry-run business build plan while execution remains disabled.",
+      "nextPhase": "P81.5",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.5",
+      "title": "Command Center Business Build UX",
+      "status": "planned",
+      "summary": "Expose business build readiness, blockers, disabled reasons, evidence, activity, and cost posture in Command Center.",
+      "nextPhase": "P81.6",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.6",
+      "title": "Tests / Checkers / Docs",
+      "status": "planned",
+      "summary": "Aggregate P81 checker, Playwright, unit, build, docs, roadmap, phase status, and report evidence.",
+      "nextPhase": "P81.7",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P81.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "summary": "Close P81 after validating local business build orchestration remains governed and display-safe.",
+      "nextPhase": "P82",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T22:10:00.000Z",
-  "currentPhase": "P81",
-  "previousPhase": "P80",
-  "nextPhase": "P81"
+  "updatedAt": "2026-05-19T22:30:00.000Z",
+  "currentPhase": "P81.1",
+  "previousPhase": "P81",
+  "nextPhase": "P81.2"
 }

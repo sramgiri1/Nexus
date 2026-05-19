@@ -342,7 +342,14 @@ Risk level:
   - `P80.5` Tests / Checkers / Docs — complete
   - `P80.6` Docs / Roadmap — complete
   - `P80.7` Final Validation — complete
-- `P81` Business Build Orchestration Contract — planned
+- `P81` Business Build Orchestration Contract — in progress
+  - `P81.1` Execution Contract + Business Build Boundary — complete
+  - `P81.2` Founder Idea to PRD Schema — next
+  - `P81.3` Agent Role / Workstream Planner
+  - `P81.4` Safe Dry-Run Business Build Plan
+  - `P81.5` Command Center Business Build UX
+  - `P81.6` Tests / Checkers / Docs
+  - `P81.7` Final Validation
 
 P80 provides live-local founder intake for structured startup idea capture,
 guided Q&A, comprehension readiness, and Command Center visibility. Provider
