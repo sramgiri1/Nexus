@@ -3355,8 +3355,8 @@
       "order": 55,
       "group": "P80 Founder Intake Runtime",
       "status": "in_progress",
-      "summary": "Added founder intake schema and local session model while runtime mutation remains blocked.",
-      "nextPhase": "P80.3",
+      "summary": "Added founder intake schema, local session model, and deterministic Q&A comprehension while runtime mutation remains blocked.",
+      "nextPhase": "P80.4",
       "commandCenterVisible": true
     },
     {
@@ -3384,8 +3384,8 @@
       "title": "Guided Q&A Comprehension Loop",
       "order": 55.03,
       "group": "P80 Founder Intake Runtime",
-      "status": "planned",
-      "summary": "Add guided Q&A, missing-field tracking, and comprehension scoring.",
+      "status": "complete",
+      "summary": "Added deterministic founder intake question selection, answer merge, and comprehension scoring.",
       "nextPhase": "P80.4",
       "commandCenterVisible": true
     },

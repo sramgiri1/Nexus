@@ -59,8 +59,8 @@ addCheck("source has no provider/tool/project imports", !source.includes("../pro
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p802-founder-intake-session"]));
 addCheck("contract references exact module", contract.includes("founder-intake/founderIntakeSession.js") && contract.includes("check:p802-founder-intake-session"));
 addCheck("docs mention P80.2 validation", docs.includes("P80.2 Core Intake Session Model") && docs.includes("npm run check:p802-founder-intake-session"));
-addCheck("phase status advanced", phaseById.get("P80.2")?.status === "complete" && status.currentPhase === "P80.2" && status.nextPhase === "P80.3");
-addCheck("P80 remains in progress", phaseById.get("P80")?.status === "in_progress" && phaseById.get("P80")?.nextPhase === "P80.3");
+addCheck("phase status advanced", phaseById.get("P80.2")?.status === "complete" && ["P80.2", "P80.3", "P80.4", "P80.5", "P80.6", "P80.7"].includes(status.currentPhase));
+addCheck("P80 remains in progress", phaseById.get("P80")?.status === "in_progress" && ["P80.3", "P80.4", "P80.5", "P80.6", "P80.7"].includes(phaseById.get("P80")?.nextPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p802-founder-intake-session-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

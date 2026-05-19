@@ -30,6 +30,9 @@ Validation: `npm run check:p802-founder-intake-session` and `npm run check:p80-e
 
 Goal: add the governed Q&A loop that records missing information, next questions, founder answers, and comprehension readiness without autonomous provider execution.
 
+Status: complete. P80.3 adds deterministic question selection, answer merge, and comprehension scoring.
+It does not call models/providers, dispatch agents, mutate projects, write DB rows, deploy, or spend budget.
+
 Validation: `npm run check:p803-founder-intake-qna` and `npm run check:p80-execution-plan`.
 
 ## P80.4 Command Center Founder Intake UX
