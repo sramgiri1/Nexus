@@ -2434,7 +2434,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p64-final-validation-commit",
+      "commit": "1930732",
       "completedAt": "2026-05-19T00:32:00.000Z",
       "summary": "Completed governed dispatch foundations: contract split, dispatch envelope, policy decision, readiness matrix, dry-run preview, Command Center UX, and aggregate final validation.",
       "checksRun": [
@@ -2602,7 +2602,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-p64-final-validation-commit",
+      "commit": "1930732",
       "completedAt": "2026-05-19T00:32:00.000Z",
       "summary": "Closed P64 with final validation evidence and handoff to P64.8.",
       "checksRun": [
