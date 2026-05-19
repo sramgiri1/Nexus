@@ -79,7 +79,7 @@ addCheck("source does not execute providers/tools/projects", !source.includes("p
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p792-live-command-intent"]));
 addCheck("contract references exact module", contract.includes("command-interface/liveCommandAdmission.js") && contract.includes("check:p792-live-command-intent"));
 addCheck("docs mention P79.2 validation", docs.includes("P79.2 Live Command Intent Admission") && docs.includes("npm run check:p792-live-command-intent"));
-addCheck("phase status advanced", statusById.get("P79.2")?.status === "complete" && status.currentPhase === "P79.2" && status.nextPhase === "P79.3");
+addCheck("phase status advanced", statusById.get("P79.2")?.status === "complete" && ["P79.2", "P79.3", "P79.4", "P79.5", "P79.6", "P79.7"].includes(status.currentPhase));
 addCheck("report path is distinct", REPORT_PATH.endsWith("p792-live-command-intent-report.md"));
 addCheck("report can be written", fileExists("reports/os-phase-status-report.md"));
 

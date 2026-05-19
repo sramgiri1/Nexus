@@ -74,6 +74,14 @@ Goal: route local action bridge requests through live admission checks without e
 
 UX: blocked live actions must return actionable disabled reasons, not fake success states.
 
+Behavior:
+
+- `NEXUS_MODE=live` action bridge POST routes return a blocked admission payload before local bridge execution.
+- `local-private` and `test` behavior stays under the existing local bridge policy.
+- Live admission payloads include capability, disabled reason, blockers, next action, owner capability, evidence/activity location, and cost impact.
+- Raw task IDs from request bodies are replaced with display-safe placeholders in admission data.
+- Bridge execution remains blocked even when admission evidence is complete.
+
 Validation: `npm run check:p793-action-bridge-admission`.
 
 ### P79.4 Command Center Live Readiness UX

@@ -34,6 +34,7 @@ import {
   listImplementationActions,
   getImplementationResult,
 } from "../implementation-actions/implementationBridge.js";
+import { admitLiveActionBridgeRequest } from "../live-execution/actionBridgeAdmissionController.js";
 
 const PORT = 3748;
 const HOST = "127.0.0.1"; // localhost only — never 0.0.0.0
@@ -67,6 +68,25 @@ function json(res, statusCode, data) {
   res.end(body);
 }
 
+function maybeBlockLiveBridge(res, actionType, body = {}) {
+  if ((process.env.NEXUS_MODE || "local-private") !== "live") return false;
+  const admission = admitLiveActionBridgeRequest({
+    mode: "live",
+    actionType,
+    body,
+    approval: body.liveApproval || {},
+  });
+  json(res, 423, {
+    ok: false,
+    status: admission.status,
+    actionType,
+    admission: admission.data,
+    errors: admission.errors,
+    warnings: admission.warnings,
+  });
+  return true;
+}
+
 // ─── Server ────────────────────────────────────────────────────────────────────
 
 const server = http.createServer(async (req, res) => {
@@ -96,6 +116,7 @@ const server = http.createServer(async (req, res) => {
   // ── POST /actions/mission/compose ──
   if (method === "POST" && url === "/actions/mission/compose") {
     const body = await readBody(req);
+    if (maybeBlockLiveBridge(res, "mission.compose", body)) return;
     const reqObj = createMissionActionRequest({
       actionType: "mission.compose",
       mode: process.env.NEXUS_MODE || "local-private",
@@ -136,6 +157,7 @@ const server = http.createServer(async (req, res) => {
   // ── POST /actions/task/activate ──
   if (method === "POST" && url === "/actions/task/activate") {
     const body = await readBody(req);
+    if (maybeBlockLiveBridge(res, "task.activate", body)) return;
     const reqObj = createTaskActivationRequest({
       actionType: "task.activate",
       mode: process.env.NEXUS_MODE || "local-private",
@@ -167,6 +189,7 @@ const server = http.createServer(async (req, res) => {
   // ── POST /actions/workbench/review ──
   if (method === "POST" && url === "/actions/workbench/review") {
     const body = await readBody(req);
+    if (maybeBlockLiveBridge(res, "task.review", body)) return;
     const reqObj = createReviewRequest({
       actionType: "task.review",
       mode: process.env.NEXUS_MODE || "local-private",
@@ -207,6 +230,7 @@ const server = http.createServer(async (req, res) => {
   // ── POST /actions/implementation/propose ──
   if (method === "POST" && url === "/actions/implementation/propose") {
     const body = await readBody(req);
+    if (maybeBlockLiveBridge(res, "implementation.propose", body)) return;
     const reqObj = createImplementationRequest({
       actionType: "implementation.propose",
       mode: process.env.NEXUS_MODE || "local-private",
@@ -227,6 +251,7 @@ const server = http.createServer(async (req, res) => {
   // ── POST /actions/implementation/apply ──
   if (method === "POST" && url === "/actions/implementation/apply") {
     const body = await readBody(req);
+    if (maybeBlockLiveBridge(res, "implementation.apply", body)) return;
     const reqObj = createImplementationRequest({
       actionType: "implementation.apply",
       mode: process.env.NEXUS_MODE || "local-private",
