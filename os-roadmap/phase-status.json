@@ -3442,7 +3442,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "de7c4d3",
       "completedAt": "",
       "summary": "P70 is in progress with validation coverage aggregated through P70.6; all deploy-adjacent execution remains disabled.",
       "checksRun": [
@@ -6082,7 +6082,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "de7c4d3",
       "completedAt": "2026-05-19",
       "summary": "Aggregated P70 tests, checkers, docs, reports, and Command Center monitoring coverage before final validation.",
       "checksRun": [
