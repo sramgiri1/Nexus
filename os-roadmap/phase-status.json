@@ -8882,7 +8882,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7ecc63c",
+      "commit": "736823a",
       "completedAt": "",
       "summary": "Enterprise founder business runtime in progress with P85.1-P85.6 complete.",
       "checksRun": [
@@ -9025,8 +9025,8 @@
       "order": 65.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-19T23:36:30.274Z",
+      "commit": "736823a",
+      "completedAt": "2026-05-19T23:38:57.674Z",
       "summary": "Aggregated P85 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
       "checksRun": [
         "npm run check:p856-tests-docs-roadmap",
