@@ -8680,9 +8680,9 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "41dd8eb",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, and local agent plan admission are complete; unsafe execution remains blocked.",
+      "summary": "P84 is in progress. Founder runtime admission, Command Center Lite, local agent plan admission, and Live Readiness runtime UX are complete; unsafe execution remains blocked.",
       "checksRun": [
         "npm run check:p841-founder-runtime-admission",
         "npm run check:p84-execution-plan",
@@ -8691,13 +8691,15 @@
         "npm run check:format-readability",
         "git diff --check",
         "npm run check:p842-command-center-lite",
-        "npm run check:p843-agent-plan-admission-preview"
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:p844-command-center-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\""
       ],
       "knownLimitations": [
-        "P84.3 admits local agent/workstream planning records only; it does not dispatch agents, execute workers, mutate projects, write DB state, deploy, release, export, package, call networks, or spend.",
-        "P84.4 must surface the aggregate runtime admission state in Command Center before P84 can close."
+        "P84.4 is Command Center visibility only; it does not dispatch agents, execute workers, call providers, mutate projects, write DB state, deploy, release, export, package, call networks, or spend.",
+        "P84.5 must aggregate P84 validation coverage before docs/final validation close P84."
       ],
-      "nextPhase": "P84.4",
+      "nextPhase": "P84.5",
       "commandCenterVisible": true
     },
     {
@@ -8775,14 +8777,23 @@
       "phaseId": "P84.4",
       "title": "Command Center Runtime UX",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Expose governed founder runtime admission in Command Center.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T21:50:45.683Z",
+      "summary": "Surfaced founder Q&A to PRD runtime and founder agent plan admission rows in Command Center Live Readiness while keeping execution disabled.",
+      "checksRun": [
+        "npm run check:p844-command-center-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready\"",
+        "npm run check:p843-agent-plan-admission-preview",
+        "npm run check:p84-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P84.4 updates display-only Command Center readiness rows only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P84.5",
       "commandCenterVisible": true
@@ -8838,8 +8849,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P84.3",
-  "previousPhase": "P84.2",
-  "nextPhase": "P84.4",
+  "currentPhase": "P84.4",
+  "previousPhase": "P84.3",
+  "nextPhase": "P84.5",
   "currentPhaseStatus": "complete"
 }

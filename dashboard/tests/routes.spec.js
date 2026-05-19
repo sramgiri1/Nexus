@@ -2946,6 +2946,10 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Ready");
     await expect(activeCommandTabPanel(page)).toContainText("Needs setup");
     await expect(activeCommandTabPanel(page)).toContainText("Blocked by policy");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Q&A to PRD Runtime");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Agent Plan Admission");
+    await expect(activeCommandTabPanel(page)).toContainText("agent plan admitted for local planning");
+    await expect(activeCommandTabPanel(page)).toContainText("NEXUS Founder Agent Plan Admission");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
     await expect(activeCommandTabPanel(page)).toContainText("Generated Snake iOS Build");
     await expect(activeCommandTabPanel(page)).toContainText("local-build validated");

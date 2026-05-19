@@ -1,3 +1,5 @@
+import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
+
 export const LIVE_READY_ACTIVATION_ROUTE_ID = "live-ready-activation";
 export const LIVE_READY_LABELS = ["Ready", "Needs setup", "Blocked by policy"];
 
@@ -7,6 +9,8 @@ function countByLabel(rows) {
     return summary;
   }, {});
 }
+
+const founderRuntime = buildFounderRuntimeEnvelope();
 
 const READINESS_ROWS = [
   {
@@ -21,6 +25,32 @@ const READINESS_ROWS = [
     evidenceLocation: "reports/p804-command-center-founder-intake-ux-report.md",
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No provider calls or spend.",
+  },
+  {
+    surface: "Founder Runtime",
+    label: "Founder Q&A to PRD Runtime",
+    readinessLabel: "Ready",
+    currentState: founderRuntime.data.currentState,
+    ownerCapability: founderRuntime.data.ownerCapability,
+    nextAction: founderRuntime.data.nextAction,
+    blockers: [...founderRuntime.data.blockers],
+    disabledReason: founderRuntime.data.disabledReason,
+    evidenceLocation: founderRuntime.data.evidenceRefs[0],
+    activityLocation: founderRuntime.data.activityLocation,
+    costImpact: founderRuntime.data.costImpact,
+  },
+  {
+    surface: "Founder Runtime",
+    label: "Founder Agent Plan Admission",
+    readinessLabel: "Ready",
+    currentState: "agent_plan_admitted_for_local_planning",
+    ownerCapability: "NEXUS Founder Agent Plan Admission",
+    nextAction: "Surface admitted founder agent lanes in Command Center while dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled.",
+    blockers: [],
+    disabledReason: "Current state: agent plan admitted for local planning. P84.3 admits local agent planning records only. Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain disabled.",
+    evidenceLocation: "reports/p843-agent-plan-admission-preview-report.md",
+    activityLocation: "os-roadmap/phase-status.json#P84.3",
+    costImpact: "No provider calls, agent dispatch, worker runtime, project writes, DB writes, deploy, release, export, package creation, or provider spend.",
   },
   {
     surface: "Provider",
@@ -174,13 +204,13 @@ export function buildLiveReadyActivationViewModel() {
 
   return {
     routeId: LIVE_READY_ACTIVATION_ROUTE_ID,
-    currentState: "live_ready_activation_labels_available",
+    currentState: "founder_runtime_admission_visible",
     readinessLabel: "Ready",
-    nextAction: "Use these evidence-backed labels to guide operator setup before any later runtime-enabling phase.",
+    nextAction: "Use founder runtime and agent-plan admission rows to guide local setup before any later execution-enabling phase.",
     blockers: readinessRows.filter((row) => row.readinessLabel !== "Ready").map((row) => row.label),
     disabledReason: "Live-ready activation is display-only. It does not create provider calls, execute tools or workers, mutate projects, write DB state, deploy, release, export, package, call networks, mutate auth/session/user/workspace state, or spend provider budget.",
     ownerCapability: "NEXUS Live Ready Activation",
-    evidenceLocation: "reports/p826-command-center-live-ready-ux-report.md",
+    evidenceLocation: "reports/p844-command-center-runtime-ux-report.md",
     activityLocation: "reports/os-phase-status-report.md",
     costImpact: "No spend. All cost-bearing and mutation-capable actions remain blocked until explicit governed admission exists.",
     labelSummary,

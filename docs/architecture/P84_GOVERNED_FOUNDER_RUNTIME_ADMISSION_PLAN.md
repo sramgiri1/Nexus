@@ -55,7 +55,14 @@ Validation: `npm run check:p843-agent-plan-admission-preview`.
 
 Goal: expose governed founder runtime admission in Command Center.
 
-Status: planned.
+Status: complete. P84.4 surfaces founder Q&A to PRD runtime admission and
+founder agent plan admission in the existing Live Readiness route. The route now
+shows founder runtime current state, next action, disabled reason, owner
+capability, evidence/activity location, and cost impact through the same
+evidence-backed readiness rows used by provider, tool, worker, project, DB,
+deploy, release, export, package, and spend gates.
+
+Validation: `npm run check:p844-command-center-runtime-ux`.
 
 ## P84.5 Validation Aggregation
 

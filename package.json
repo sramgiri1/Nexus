@@ -391,6 +391,7 @@
     "check:p841-founder-runtime-admission": "node scripts/check-p841-founder-runtime-admission.js",
     "check:p842-command-center-lite": "node scripts/check-p842-command-center-lite.js",
     "check:p843-agent-plan-admission-preview": "node scripts/check-p843-agent-plan-admission-preview.js",
+    "check:p844-command-center-runtime-ux": "node scripts/check-p844-command-center-runtime-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

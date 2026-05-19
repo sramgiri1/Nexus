@@ -1351,9 +1351,14 @@ evidence/activity location, and cost impact while dispatch, workers, providers,
 project mutation, DB writes, deploy, release, export, package creation, and
 spend remain disabled.
 
+P84.4 is complete. Live Readiness now includes founder Q&A to PRD runtime and
+founder agent plan admission rows with current state, next action, disabled
+reason, owner capability, evidence, activity, and cost impact. The route remains
+display-only and does not expose runnable provider, agent, worker, project, DB,
+deploy, release, export, package, network, or spend actions.
+
 Planned P84 subphases:
 
-- `P84.4` Command Center Runtime UX
 - `P84.5` Validation Aggregation
 - `P84.6` Docs / Roadmap
 - `P84.7` Final Validation

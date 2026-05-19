@@ -86,7 +86,8 @@ addCheck("contract references P84.3 files", contract.includes("live-ready/founde
 addCheck("docs mention P84.3 validation", docs.includes("P84.3 Agent Plan Admission Preview") && docs.includes("npm run check:p843-agent-plan-admission-preview"));
 addCheck(
   "phase status advanced",
-  statusById.get("P84.3")?.status === "complete" && status.currentPhase === "P84.3" && status.nextPhase === "P84.4",
+  statusById.get("P84.3")?.status === "complete" &&
+    ["P84.3", "P84.4", "P84.5", "P84.6", "P84.7"].includes(status.currentPhase),
 );
 addCheck("report prerequisites exist", fileExists("reports/p842-command-center-lite-report.md"));
 
