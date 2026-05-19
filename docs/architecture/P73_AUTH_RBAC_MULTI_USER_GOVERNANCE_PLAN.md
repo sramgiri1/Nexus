@@ -73,7 +73,24 @@ Implementation:
 
 Define RBAC permission matrix records without role or permission mutation.
 
-Status: planned.
+Status: complete. P73.3 adds preview-only `RbacPermissionMatrix` records
+derived from P73.2 identity/session contracts. Each matrix includes role set,
+permission state, assignment state, display-only permission rows, disabled role
+and permission mutation flags, blocked operations, blockers, disabled reason,
+evidence/activity references, cost impact, owner capability, and next action.
+
+Implementation:
+
+- `auth-governance/p73-3-placeholder.js` exports
+  `createRbacPermissionMatrix`, `validateRbacPermissionMatrix`,
+  `buildRbacPermissionMatrixEnvelope`, `P73_3_REQUIRED_FIELDS`, and
+  `P73_3_SAMPLE_MATRICES`.
+- `scripts/check-p733.js` validates matrix shape, visible roles and
+  permission rows, disabled role/permission/user/session/tenant mutation,
+  disabled login/provider/token exchange, disabled DB and project mutation,
+  disabled provider/tool/worker execution, disabled network/spend, disabled
+  deploy/release/export/package execution, hidden private IDs/tokens/auth URLs,
+  evidence/activity, cost impact, and non-runnable disabled reasons.
 
 ### P73.4 Multi-user Workspace Boundary
 
@@ -122,7 +139,7 @@ phase labels outside OS Roadmap, or fake runnable auth actions.
 
 ## Current Status
 
-P73 is in progress through P73.2. Login, identity provider integration,
+P73 is in progress through P73.3. Login, identity provider integration,
 user/session/role/tenant mutation, DB writes, project mutation, provider
 dispatch, tool execution, worker execution, deploy execution, release
 execution, export execution, package creation, external network calls, and

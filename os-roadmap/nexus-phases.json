@@ -2354,10 +2354,10 @@
       "track": "NEXUS_OS",
       "order": 48,
       "group": "Planned OS Phases",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with identity/session contracts defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with RBAC permission matrices defined and mutation disabled.",
       "commandCenterVisible": true,
       "status": "in_progress",
-      "nextPhase": "P73.3"
+      "nextPhase": "P73.4"
     },
     {
       "phaseId": "P73.1",
@@ -2387,8 +2387,8 @@
       "track": "NEXUS_OS",
       "order": 48.03,
       "group": "P73 Auth, RBAC, Multi-user Governance",
-      "status": "planned",
-      "summary": "Define RBAC permission matrix records without role mutation.",
+      "status": "complete",
+      "summary": "Defined RBAC permission matrix records without role mutation.",
       "nextPhase": "P73.4",
       "commandCenterVisible": true
     },

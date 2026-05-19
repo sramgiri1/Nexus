@@ -3530,10 +3530,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3e0a046",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Auth, RBAC, and multi-user governance is in progress with identity/session contracts defined and mutation disabled.",
+      "summary": "Auth, RBAC, and multi-user governance is in progress with RBAC permission matrices defined and mutation disabled.",
       "checksRun": [
+        "npm run check:p733",
         "npm run check:p732",
         "npm run check:p73-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -3544,7 +3545,7 @@
       "knownLimitations": [
         "P73 has not enabled login, identity provider integration, user/session/role/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, or provider spend."
       ],
-      "nextPhase": "P73.3",
+      "nextPhase": "P73.4",
       "commandCenterVisible": true
     },
     {
@@ -3596,13 +3597,22 @@
       "phaseId": "P73.3",
       "title": "RBAC Permission Matrix",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define RBAC permission matrix records without role mutation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Defined RBAC permission matrix records without role mutation.",
+      "checksRun": [
+        "npm run check:p733",
+        "npm run check:p73-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P73.3 records RBAC permission matrices only. Role assignment, permission mutation, login, identity provider integration, token exchange, user/session/tenant mutation, DB writes, project mutation, provider/tool execution, worker execution, deploy/release/export execution, package creation, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P73.4",
       "commandCenterVisible": true
     },
@@ -6626,5 +6636,5 @@
   "updatedAt": "2026-05-19T11:18:20.708Z",
   "currentPhase": "P73",
   "previousPhase": "P72",
-  "nextPhase": "P73.3"
+  "nextPhase": "P73.4"
 }
