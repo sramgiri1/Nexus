@@ -98,7 +98,25 @@ Implementation:
 Add shipping readiness gates while keeping package creation and export
 execution disabled.
 
-Status: planned.
+Status: complete. P71.4 adds preview-only `ShippingReadinessGate` records
+derived from P71.3 export package previews. Each gate records approval state,
+manifest readiness, preview readiness, redaction readiness, evidence
+readiness, cost review readiness, required evidence, blockers, disabled
+reason, owner capability, evidence/activity references, and next action while
+keeping package creation and export execution disabled.
+
+Implementation:
+
+- `project-shipping/p71-4-placeholder.js` exports
+  `createShippingReadinessGate`, `validateShippingReadinessGate`,
+  `buildShippingReadinessGateEnvelope`, `P71_4_REQUIRED_FIELDS`, and
+  `P71_4_SAMPLE_GATES`.
+- `scripts/check-p714.js` validates gate shape, operator approval state,
+  readiness flags, required evidence, no package artifact on disk, disabled
+  package creation/export execution, disabled project mutation, disabled
+  provider/tool/worker execution, disabled DB/network/spend, disabled
+  deploy/release execution, evidence/activity, cost impact, hidden private
+  IDs, and non-runnable disabled reasons.
 
 ### P71.5 Command Center Shipping UX
 
@@ -141,7 +159,7 @@ actions.
 
 ## Current Status
 
-P71 is in progress through P71.3. Package creation, export execution, project
+P71 is in progress through P71.4. Package creation, export execution, project
 mutation, provider dispatch, tool execution, worker execution, DB writes,
 deploy execution, release execution, external network calls, and provider
 spend remain disabled.
