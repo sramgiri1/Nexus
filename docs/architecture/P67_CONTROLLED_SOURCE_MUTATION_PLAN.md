@@ -90,7 +90,22 @@ Implementation:
 
 Add approval, scope, safety, and rollback gates for patch plans.
 
-Status: planned.
+Status: complete. P67.4 adds a preview-only `MutationScopeGate` shape for
+P67.3 patch plans. The gate records approval requirement, approval state, scope
+status, safety state, rollback readiness, validation readiness, required
+evidence, blockers, evidence/activity references, owner capability, and next
+action while apply, mutation, execution, provider dispatch, DB writes, deploy,
+release, and spend remain disabled.
+
+Implementation:
+
+- `controlled-mutation/p67-4-placeholder.js` exports
+  `createMutationScopeGate`, `validateMutationScopeGate`,
+  `buildMutationScopeGateEnvelope`, `P67_4_REQUIRED_FIELDS`, and
+  `P67_4_SAMPLE_SCOPE_GATES`.
+- `scripts/check-p674.js` validates gate shape, approval requirement, scope
+  blocking, rollback readiness, disabled apply/execution/spend flags, required
+  evidence, and non-runnable disabled reasons.
 
 ### P67.5 Command Center Controlled Mutation UX
 

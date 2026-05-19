@@ -269,6 +269,7 @@
     "check:p67-execution-plan": "node scripts/check-p67-execution-plan.js",
     "check:p672": "node scripts/check-p672.js",
     "check:p673": "node scripts/check-p673.js",
+    "check:p674": "node scripts/check-p674.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

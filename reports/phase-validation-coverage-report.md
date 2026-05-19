@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T01:57:04.940Z
+- Generated at: 2026-05-19T01:59:01.244Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1ba5fc1
+- Validation HEAD: 3a8eb33
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -55,11 +55,11 @@
 | P66.5 validation coverage | PASS | 8 checkers, 1 reports |
 | P66.6 validation coverage | PASS | 10 checkers, 1 reports |
 | P66.7 validation coverage | PASS | 20 checkers, 10 reports |
-| P67 validation coverage | PASS | 8 checkers, 3 reports |
+| P67 validation coverage | PASS | 9 checkers, 4 reports |
 | P67.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P67.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P67.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P67.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P67.5 validation coverage | PASS | dedicated_checker, validation_report |
 | P67.6 validation coverage | PASS | dedicated_checker, validation_report |
 | P67.7 validation coverage | PASS | 9 checkers, 9 reports |
@@ -76,18 +76,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P67; next=P67.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P67; next=P67.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P67.4 Approval + Scope Gate
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P67.5 Command Center Controlled Mutation UX
   - status: planned
   - checkers: 0

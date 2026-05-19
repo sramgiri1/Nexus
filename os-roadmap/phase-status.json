@@ -3181,11 +3181,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ba5fc1",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P67 is in progress with patch plan previews complete; mutation behavior remains disabled.",
+      "summary": "P67 is in progress with approval and scope gates complete; mutation behavior remains disabled.",
       "checksRun": [
-        "npm run check:p673",
+        "npm run check:p674",
         "npm run check:p67-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3193,9 +3193,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P67.3 creates preview-only patch plan records. Patch generation, automatic apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P67.4 records preview-only approval and scope gates. Approval does not enable apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, or provider spend."
       ],
-      "nextPhase": "P67.4",
+      "nextPhase": "P67.5",
       "commandCenterVisible": true
     },
     {
@@ -3270,13 +3270,22 @@
       "phaseId": "P67.4",
       "title": "Approval + Scope Gate",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Add approval, scope, safety, and rollback gates for patch plans.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T01:58:47.083Z",
+      "summary": "Added preview-only approval, scope, safety, rollback, validation, evidence, and disabled apply gates for patch plans.",
+      "checksRun": [
+        "npm run check:p674",
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P67.4 records preview-only approval and scope gates. Approval does not enable apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, or provider spend."
+      ],
       "nextPhase": "P67.5",
       "commandCenterVisible": true
     },
@@ -5527,8 +5536,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T01:57:04.101Z",
+  "updatedAt": "2026-05-19T01:58:47.084Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
-  "nextPhase": "P67.4"
+  "nextPhase": "P67.5"
 }
