@@ -43,8 +43,15 @@ Validation: `npm run check:p832-snake-ios-scaffold-plan`.
 Goal: create the initial Snake iOS scaffold under the admitted generated
 workspace root only.
 
-Status: planned. This subphase may write only to the admitted
-`generated-projects/snake-ios` root after validation.
+Status: complete. P83.3 creates the initial Swift package scaffold under
+`generated-projects/snake-ios` only. The scaffold includes a SwiftUI root view,
+SpriteKit game scene, deterministic game-state model, shared game types, theme,
+package manifest, README, and local unit tests for movement, scoring,
+collisions, reverse-direction safety, and restart.
+
+Validation: `npm run check:p833-approved-local-file-creation`,
+`cd generated-projects/snake-ios && swift run SnakeIOSAppTests`, and
+`cd generated-projects/snake-ios && swift build`.
 
 ## P83.4 Local Validation Harness
 

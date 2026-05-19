@@ -31,6 +31,15 @@ const serialized = JSON.stringify(envelope);
 const packageJson = readJson("package.json");
 const status = readJson("os-roadmap/phase-status.json");
 const statusById = new Map((status.phases || []).map((entry) => [entry.phaseId, entry]));
+const validCurrentPhases = ["P83.2", "P83.3", "P83.4", "P83.5", "P83.6", "P83.7"];
+const expectedNextByCurrent = new Map([
+  ["P83.2", "P83.3"],
+  ["P83.3", "P83.4"],
+  ["P83.4", "P83.5"],
+  ["P83.5", "P83.6"],
+  ["P83.6", "P83.7"],
+  ["P83.7", "P84"],
+]);
 const docs = readText("docs/architecture/P83_RUNTIME_ADMISSION_ACTIVATION_PLAN.md");
 const contract = readText("contracts/os-roadmap/p83-execution-contracts.json");
 const moduleSource = readText("ios-scaffold/snakeIosScaffoldPlan.js");
@@ -47,7 +56,12 @@ addCheck("no fake runnable actions", !/write now|deploy now|call provider now|sp
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p832-snake-ios-scaffold-plan"]));
 addCheck("contract references P83.2 files", contract.includes("ios-scaffold/snakeIosScaffoldPlan.js") && contract.includes("check:p832-snake-ios-scaffold-plan"));
 addCheck("docs mention P83.2 validation", docs.includes("P83.2 Snake iOS Scaffold Plan") && docs.includes("Status: complete. P83.2"));
-addCheck("phase status advanced", statusById.get("P83.2")?.status === "complete" && status.currentPhase === "P83.2" && status.nextPhase === "P83.3");
+addCheck(
+  "phase status remains valid after P83.2",
+  statusById.get("P83.2")?.status === "complete"
+    && validCurrentPhases.includes(status.currentPhase)
+    && status.nextPhase === expectedNextByCurrent.get(status.currentPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p831-local-project-creation-admission-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");

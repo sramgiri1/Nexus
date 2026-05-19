@@ -1297,9 +1297,12 @@ P83.2 is complete. It defines the implementation-grade SwiftUI/SpriteKit
 scaffold plan for the admitted Snake iOS generated workspace and keeps all app
 file writes deferred to P83.3.
 
+P83.3 is complete. It creates the admitted Snake iOS Swift package scaffold only
+under `generated-projects/snake-ios`, with local game-state tests and no
+existing project, provider, worker, DB, deploy, network, or spend activation.
+
 Planned P83 subphases:
 
-- `P83.3` Approved Local File Creation
 - `P83.4` Local Validation Harness
 - `P83.5` Command Center Build UX
 - `P83.6` Tests / Checkers / Docs

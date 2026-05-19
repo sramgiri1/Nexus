@@ -8472,23 +8472,25 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7c56a7f",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P83 is in progress. Snake iOS local project creation admission and scaffold planning are complete; file creation, deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
+      "summary": "P83 is in progress. Snake iOS local admission, scaffold planning, and approved local file creation are complete; deploy, provider, worker, DB, network, auth, and spend actions remain blocked.",
       "checksRun": [
+        "npm run check:p833-approved-local-file-creation",
         "npm run check:p832-snake-ios-scaffold-plan",
         "npm run check:p831-local-project-creation-admission",
         "npm run check:p83-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
-        "npm run check:format-readability",
+        "cd generated-projects/snake-ios && swift run SnakeIOSAppTests",
+        "cd generated-projects/snake-ios && swift build",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P83.2 is plan-only. File creation is deferred to P83.3 and must stay under generated-projects/snake-ios.",
+        "P83.3 creates a local Swift package scaffold only. P83.4 must add the durable validation harness and Command Center evidence flow.",
         "Existing project roots, DB writes, provider/tool/worker execution, deploy/release/export/package behavior, network calls, auth/session/user/workspace mutation, and provider spend remain blocked."
       ],
-      "nextPhase": "P83.3",
+      "nextPhase": "P83.4",
       "commandCenterVisible": true
     },
     {
@@ -8545,14 +8547,25 @@
       "phaseId": "P83.3",
       "title": "Approved Local File Creation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Create scaffold files only under the admitted generated workspace root.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T20:04:06.175Z",
+      "summary": "Created the Snake iOS Swift package scaffold only under generated-projects/snake-ios with local game-state tests.",
+      "checksRun": [
+        "npm run check:p833-approved-local-file-creation",
+        "npm run check:p832-snake-ios-scaffold-plan",
+        "npm run check:p831-local-project-creation-admission",
+        "npm run check:p83-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "cd generated-projects/snake-ios && swift run SnakeIOSAppTests",
+        "cd generated-projects/snake-ios && swift build",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not implemented yet."
+        "P83.3 does not deploy, package, call networks, call providers/tools, start workers, write DB state, or spend.",
+        "The active SwiftPM environment does not expose XCTest or Testing, so game-rule assertions run through the local executable test target until P83.4 adds the durable validation harness."
       ],
       "nextPhase": "P83.4",
       "commandCenterVisible": true
@@ -8624,7 +8637,7 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P83.2",
-  "previousPhase": "P83.1",
-  "nextPhase": "P83.3"
+  "currentPhase": "P83.3",
+  "previousPhase": "P83.2",
+  "nextPhase": "P83.4"
 }
