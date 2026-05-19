@@ -3181,7 +3181,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5aae673",
       "completedAt": "",
       "summary": "P67 is in progress with approval and scope gates complete; mutation behavior remains disabled.",
       "checksRun": [
@@ -3272,7 +3272,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5aae673",
       "completedAt": "2026-05-19T01:58:47.083Z",
       "summary": "Added preview-only approval, scope, safety, rollback, validation, evidence, and disabled apply gates for patch plans.",
       "checksRun": [
@@ -5536,7 +5536,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T01:58:47.084Z",
+  "updatedAt": "2026-05-19T01:59:16.176Z",
   "currentPhase": "P67",
   "previousPhase": "P66",
   "nextPhase": "P67.5"
