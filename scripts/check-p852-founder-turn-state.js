@@ -77,7 +77,12 @@ addCheck("Playwright coverage added", tests.includes("Command Center Lite route 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p852-founder-turn-state"]));
 addCheck("contract references P85.2 files", contract.includes("live-ready/enterpriseFounderQnaTurnState.js") && contract.includes("check:p852-founder-turn-state"));
 addCheck("docs mention P85.2 validation", docs.includes("P85.2 Q&A Turn State Machine") && docs.includes("npm run check:p852-founder-turn-state"));
-addCheck("phase status advanced", statusById.get("P85.2")?.status === "complete" && status.currentPhase === "P85.2" && status.nextPhase === "P85.3");
+addCheck(
+  "phase status advanced",
+  statusById.get("P85.2")?.status === "complete" &&
+    ["P85.2", "P85.3", "P85.4", "P85.5", "P85.6", "P85.7"].includes(status.currentPhase) &&
+    ["P85.3", "P85.4", "P85.5", "P85.6", "P85.7", "P86"].includes(status.nextPhase),
+);
 addCheck("report prerequisites exist", fileExists("reports/p851-enterprise-founder-session-report.md"));
 addCheck("display payload has no private ids", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(stateText));
 addCheck("no fake unsafe runnable actions", !/call provider now|dispatch agent now|write project now|deploy now|spend now|create project now/i.test(stateText));

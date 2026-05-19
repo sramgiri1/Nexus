@@ -1398,8 +1398,15 @@ reuses P80 founder intake helpers and the P85.1 runtime session shape. Provider
 calls, model calls, DB writes, agent dispatch, project mutation, deploy,
 package, and spend remain disabled.
 
-P85.3 is next. It should add safe local PRD review/versioning so the founder can
-approve or revise the PRD before any execution-capable phase is considered.
+P85.3 is complete. It adds local PRD version review gating with review state,
+founder decision, missing fields, blockers, next action, and disabled downstream
+execution posture. Command Center Lite now shows the PRD review gate beside the
+chat and local PRD draft. Provider/model PRD generation, agent dispatch, project
+mutation, DB writes, deploy, package, and spend remain disabled.
+
+P85.4 is next. It should map the approved local PRD/workstreams to a
+non-dispatching task board with owners, blockers, evidence, and validation
+requirements.
 
 The detailed plan lives in
 [`P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`](P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md).

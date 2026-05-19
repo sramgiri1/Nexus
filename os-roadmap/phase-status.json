@@ -8892,7 +8892,7 @@
       "knownLimitations": [
         "P85 remains local runtime state and UX until later explicit phases enable provider/model calls, agent dispatch, project mutation, DB writes, workers, deploy, package, or spend."
       ],
-      "nextPhase": "P85.3",
+      "nextPhase": "P85.4",
       "commandCenterVisible": true,
       "order": 1
     },
@@ -8946,24 +8946,46 @@
     },
     {
       "phaseId": "P85.3",
-      "title": "Safe PRD Review",
+      "title": "PRD Version Review Gate",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:19:58.010Z",
+      "summary": "Added deterministic local PRD version review gate with review state, founder decision, blockers, and downstream execution disabled.",
+      "checksRun": [
+        "npm run check:p853-prd-review-gate",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite PRD review gate"
+      ],
+      "knownLimitations": [
+        "Local deterministic PRD review only; no provider/model PRD generation, agent dispatch, project mutation, DB writes, deploy, package, or spend."
+      ],
+      "nextPhase": "P85.4",
+      "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P85.4",
+      "title": "Local Agent Task Board Admission",
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "completedAt": "",
-      "summary": "Review and structure founder PRD readiness before any execution admission.",
+      "summary": "Map approved local PRD/workstreams to non-dispatching task board records.",
       "checksRun": [],
       "knownLimitations": [
         "Not started."
       ],
-      "nextPhase": "P85.4",
+      "nextPhase": "P85.5",
       "commandCenterVisible": true
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-19T23:00:15.234Z",
-  "currentPhase": "P85.2",
-  "previousPhase": "P85.1",
-  "nextPhase": "P85.3",
+  "currentPhase": "P85.3",
+  "previousPhase": "P85.2",
+  "nextPhase": "P85.4",
   "currentPhaseStatus": "complete"
 }

@@ -4086,12 +4086,12 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "b3d0465",
       "completedAt": "",
-      "summary": "Planned next phase for enterprise founder-to-business runtime enablement after P84 governed local admission closes.",
+      "summary": "Enterprise founder business runtime in progress with local session, Q&A turn state, and PRD review gate complete.",
       "checksRun": [],
       "knownLimitations": [
-        "Not implemented yet. P84 keeps provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend disabled."
+        "Provider/model calls, agent dispatch, worker execution, project mutation, DB writes, deploy, release, export, package creation, and spend remain disabled."
       ],
-      "nextPhase": "P85.3",
+      "nextPhase": "P85.4",
       "commandCenterVisible": true,
       "order": 59.07,
       "label": "Enterprise Founder Business Runtime",
@@ -4134,23 +4134,53 @@
     },
     {
       "phaseId": "P85.3",
-      "title": "Safe PRD Review",
+      "title": "PRD Version Review Gate",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T23:19:58.010Z",
+      "summary": "Added deterministic local PRD version review gate with review state, founder decision, blockers, and downstream execution disabled.",
+      "checksRun": [
+        "npm run check:p853-prd-review-gate",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite PRD review gate"
+      ],
+      "knownLimitations": [
+        "Local deterministic PRD review only; no provider/model PRD generation, agent dispatch, project mutation, DB writes, deploy, package, or spend."
+      ],
+      "nextPhase": "P85.4",
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "order": 62.07,
+      "label": "PRD Version Review Gate",
+      "detail": "Local PRD version review state with founder decision, blockers, and disabled execution posture."
+    },
+    {
+      "phaseId": "P85.4",
+      "title": "Local Agent Task Board Admission",
       "status": "planned",
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "",
       "completedAt": "",
-      "summary": "Review and structure founder PRD readiness before any execution admission.",
+      "summary": "Map approved local PRD/workstreams to non-dispatching task board records.",
       "checksRun": [],
       "knownLimitations": [
         "Not started."
       ],
-      "nextPhase": "P85.4",
-      "commandCenterVisible": true
+      "nextPhase": "P85.5",
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "order": 63.07,
+      "label": "Local Agent Task Board Admission",
+      "detail": "Non-dispatching local task board admission for approved PRD workstreams."
     }
   ],
   "updatedAt": "2026-05-19T19:54:45.514Z",
-  "currentPhase": "P85.1",
-  "previousPhase": "P84.7",
-  "nextPhase": "P85.2",
+  "currentPhase": "P85.3",
+  "previousPhase": "P85.2",
+  "nextPhase": "P85.4",
   "currentPhaseStatus": "complete"
 }

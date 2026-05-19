@@ -98,6 +98,7 @@ import {
   appendFounderQnaTurn,
   resetFounderQnaTurnState,
 } from "../../../live-ready/enterpriseFounderQnaTurnState.js";
+import { buildFounderPrdReviewGate } from "../../../live-ready/enterpriseFounderPrdReviewGate.js";
 import Recovery from "./Recovery.jsx";
 import { checkActionBridgeHealth, composeMissionFromCommandCenter } from "../api/missionActions.js";
 import { activateMissionTask } from "../api/taskActions.js";
@@ -2510,6 +2511,7 @@ function CommandCenterLitePage() {
   const [envelope, setEnvelope] = useState(getStoredLiteQnaState);
   const [draftMessage, setDraftMessage] = useState("");
   const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
+  const prdReview = buildFounderPrdReviewGate({ qnaState: envelope }).data;
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -2618,6 +2620,33 @@ function CommandCenterLitePage() {
             <div className="ccv2-lite-next">
               <span>Missing</span>
               <strong>{envelope.missingFields.length ? envelope.missingFields.map(formatLiteFieldLabel).join(", ") : "Ready for PRD review"}</strong>
+            </div>
+          </section>
+          <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
+            <div className="ccv2-card-header-row">
+              <div>
+                <div className="ccv2-eyebrow">PRD Review</div>
+                <h3>{prdReview.versionLabel}</h3>
+              </div>
+              <span className="ccv2-pill ccv2-pill--disabled">Local gate</span>
+            </div>
+            <div className="ccv2-lite-prd__fields">
+              <div>
+                <span>Review state</span>
+                <strong>{prdReview.reviewState}</strong>
+              </div>
+              <div>
+                <span>Founder decision</span>
+                <strong>{formatLiteFieldLabel(prdReview.founderDecision)}</strong>
+              </div>
+              <div>
+                <span>Blocked next</span>
+                <strong>{prdReview.downstreamPlanningAllowed ? "Ready for task-board admission" : prdReview.blockers[0]}</strong>
+              </div>
+            </div>
+            <div className="ccv2-lite-next">
+              <span>Next decision</span>
+              <strong>{prdReview.nextAction}</strong>
             </div>
           </section>
         </aside>

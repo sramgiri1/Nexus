@@ -236,6 +236,32 @@ test("Command Center Lite route renders interactive founder chat", async ({ page
   expect(errors).toEqual([]);
 });
 
+test("Command Center Lite route renders PRD review gate", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/lite");
+
+  const reviewGate = page.getByLabel("Local PRD review gate");
+  await expect(reviewGate).toContainText("PRD v1");
+  await expect(reviewGate).toContainText("Needs founder answers");
+  await expect(reviewGate).toContainText("Founder decision");
+  await expect(reviewGate).toContainText("Pending");
+  await expect(reviewGate).toContainText("Problem needs a founder answer.");
+  await expect(reviewGate).not.toContainText("founder_prd_review");
+  await expect(reviewGate).not.toContainText("raw JSON");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/generate PRD now|run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 

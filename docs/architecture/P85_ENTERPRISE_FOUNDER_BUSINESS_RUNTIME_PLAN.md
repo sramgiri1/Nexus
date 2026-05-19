@@ -40,9 +40,14 @@ Validation: `npm run check:p852-founder-turn-state`.
 
 Goal: add local PRD versioning and founder review gates.
 
-Status: planned. P85.3 should record PRD versions, review state, blocker
-summary, and next required founder decision without generating PRDs through
-providers or writing project files.
+Status: complete. P85.3 adds `enterpriseFounderPrdReviewGate`, a local PRD
+version/review gate that records the display-safe PRD version, founder review
+state, founder decision, missing fields, blockers, next action, and disabled
+execution posture. Command Center Lite shows the PRD review gate alongside the
+chat and PRD draft without provider/model PRD generation, project writes, DB
+writes, dispatch, deploy, package, or spend.
+
+Validation: `npm run check:p853-prd-review-gate`.
 
 ## P85.4 Local Agent Task Board Admission
 
@@ -84,6 +89,7 @@ P85 must reuse:
 - `live-ready/founderRuntimeEnvelope.js`
 - `live-ready/enterpriseFounderBusinessRuntime.js`
 - `live-ready/enterpriseFounderQnaTurnState.js`
+- `live-ready/enterpriseFounderPrdReviewGate.js`
 - `live-ready/founderAgentPlanAdmission.js`
 - `founder-intake/founderIntakeSession.js`
 - `business-build/businessBuildPrdSchema.js`
@@ -102,8 +108,9 @@ components, or activity/evidence/audit appenders.
 ## Safety Rules
 
 P85 is enterprise founder business runtime state and UX only unless a later
-subphase explicitly says otherwise. P85.1 creates a session record and P85.2
-adds local Q&A turn state that later phases can attach real capabilities to.
+subphase explicitly says otherwise. P85.1 creates a session record, P85.2
+adds local Q&A turn state, and P85.3 adds local PRD review/version gating that
+later phases can attach real capabilities to.
 
 Still forbidden:
 
@@ -125,7 +132,9 @@ Rollback P85.1/P85.2 by removing
 `docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md`,
 `live-ready/enterpriseFounderBusinessRuntime.js`,
 `live-ready/enterpriseFounderQnaTurnState.js`,
+`live-ready/enterpriseFounderPrdReviewGate.js`,
 `scripts/check-p85-execution-plan.js`,
 `scripts/check-p851-enterprise-founder-session.js`,
-`scripts/check-p852-founder-turn-state.js`, their package scripts and reports,
-and returning OS phase status to `P84.7` with next phase `P85`.
+`scripts/check-p852-founder-turn-state.js`,
+`scripts/check-p853-prd-review-gate.js`, their package scripts and reports, and
+returning OS phase status to `P84.7` with next phase `P85`.

@@ -398,6 +398,7 @@
     "check:p85-execution-plan": "node scripts/check-p85-execution-plan.js",
     "check:p851-enterprise-founder-session": "node scripts/check-p851-enterprise-founder-session.js",
     "check:p852-founder-turn-state": "node scripts/check-p852-founder-turn-state.js",
+    "check:p853-prd-review-gate": "node scripts/check-p853-prd-review-gate.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -287,7 +287,23 @@
       "targetAgent": "planner",
       "taskType": "implementation-plan",
       "objective": "Add local PRD versioning and founder review gates.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "live-ready/enterpriseFounderPrdReviewGate.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p853-prd-review-gate.js",
+        "reports/p853-prd-review-gate-report.md",
+        "contracts/os-roadmap/p85-execution-contracts.json",
+        "package.json",
+        "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "reports/p85-execution-plan-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "careloop/**",
@@ -304,15 +320,15 @@
         "phaseId": "P85.3",
         "scopeClassification": "NEXUS_OS_CHANGE",
         "startingBranch": "codex/nexus-e2e-phase-validation",
-        "expectedBaseCommit": "after-P85.2",
-        "narrowScope": "Version PRD drafts and require founder review before downstream planning.",
+        "expectedBaseCommit": "9f13771",
+        "narrowScope": "Add deterministic local PRD version review gate only.",
         "safetyRules": [
           "No PRD provider generation, project writes, DB writes, or dispatch."
         ],
         "reuseCheck": {
           "rule": "Reuse P81 PRD schema and shared result envelopes."
         },
-        "commandCenterUxRequirements": "Show PRD version, review state, next action, and blockers.",
+        "commandCenterUxRequirements": "Founder Lite must show PRD version, review state, founder decision, blockers, and next action without raw internal IDs or unsafe runnable actions.",
         "themeRequirements": [
           "Preserve themes."
         ],
@@ -320,10 +336,16 @@
           "Add PRD review state coverage."
         ],
         "testsCheckers": [
-          "Add P85.3 checker."
+          "Add check:p853-prd-review-gate.",
+          "Update Playwright Lite route coverage for PRD review gate."
         ],
         "validationCommands": [
           "npm run check:p853-prd-review-gate",
+          "npm run check:p85-execution-plan",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders PRD review gate\"",
           "git diff --check"
         ],
         "finalSafetyChecks": [
@@ -337,7 +359,49 @@
           "Branch name",
           "Commit hash",
           "Next phase/subphase"
-        ]
+        ],
+        "exactFilesModules": {
+          "create": [
+            "live-ready/enterpriseFounderPrdReviewGate.js",
+            "scripts/check-p853-prd-review-gate.js",
+            "reports/p853-prd-review-gate-report.md"
+          ],
+          "update": [
+            "dashboard/src/pages/CommandCenterV2.jsx",
+            "dashboard/tests/routes.spec.js",
+            "contracts/os-roadmap/p85-execution-contracts.json",
+            "package.json",
+            "docs/architecture/P85_ENTERPRISE_FOUNDER_BUSINESS_RUNTIME_PLAN.md",
+            "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+            "os-roadmap/nexus-phases.json",
+            "os-roadmap/phase-status.json"
+          ]
+        },
+        "expectedExportsSchemasDataShapes": {
+          "exports": [
+            "P85_FOUNDER_PRD_REVIEW_GATE_PHASE",
+            "buildFounderPrdReviewGate",
+            "validateFounderPrdReviewGate"
+          ],
+          "dataShapes": [
+            "schemaVersion",
+            "versionLabel",
+            "reviewState",
+            "founderDecision",
+            "prdFields",
+            "answeredFields",
+            "missingFields",
+            "blockers",
+            "nextAction",
+            "downstreamPlanningAllowed",
+            "executionAllowed",
+            "safety",
+            "evidenceRefs",
+            "activityLocation",
+            "costImpact",
+            "commandCenterVisible"
+          ]
+        }
       },
       "acceptanceCriteria": [
         "PRD versions validate.",

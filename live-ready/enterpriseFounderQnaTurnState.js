@@ -55,6 +55,7 @@ function toDisplayName(value = "") {
 }
 
 function inferFieldFromMessage(message = "", fallbackField = "") {
+  if (FOUNDER_INTAKE_REQUIRED_FIELDS.includes(fallbackField)) return fallbackField;
   const text = message.toLowerCase();
   const keywordMap = [
     ["targetCustomer", /\b(customers?|users?|players?|buyers?|audience|segments?|market)\b/],

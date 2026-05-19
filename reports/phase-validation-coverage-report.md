@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T23:16:43.797Z
+- Generated at: 2026-05-19T23:22:21.534Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b3d0465
+- Validation HEAD: 9f13771
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -183,19 +183,25 @@
 | P84.5 validation coverage | PASS | 6 checkers, 1 reports |
 | P84.6 validation coverage | PASS | 7 checkers, 2 reports |
 | P84.7 validation coverage | PASS | 34 checkers, 26 reports |
-| P85 validation coverage | PASS | 5 checkers, 3 reports |
+| P85 validation coverage | PASS | 6 checkers, 4 reports |
 | P85.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P85.2 validation coverage | PASS | 4 checkers, 1 reports |
+| P85.3 validation coverage | PASS | 4 checkers, 1 reports |
+| P85.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P85.2; next=P85.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P85.3; next=P85.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P85.4 Local Agent Task Board Admission
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (173/173)
+PASS (175/175)
