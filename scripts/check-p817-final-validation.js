@@ -110,7 +110,7 @@ export function checkP81FinalValidation() {
     (status.currentPhase === "P81.7" && status.previousPhase === "P81.6" && status.nextPhase === "P82") || p82ActiveHandoff,
     `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
   );
-  addCheck("P82 handoff exists", ["planned", "in_progress"].includes(phaseById.get("P82")?.status) && ["planned", "in_progress"].includes(statusById.get("P82")?.status));
+  addCheck("P82 handoff exists", ["planned", "in_progress", "complete"].includes(phaseById.get("P82")?.status) && ["planned", "in_progress", "complete"].includes(statusById.get("P82")?.status));
   addCheck("status checker accepts P82", statusChecker.includes('"P82"'));
   addCheck("docs close P81", planDoc.includes("P81 is complete") && planDoc.includes("hands off to P82"));
   addCheck("Command Center route preserved", routes.includes("key: \"businessBuild\"") && routes.includes("/command-center/business-build"));

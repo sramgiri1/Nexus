@@ -86,8 +86,17 @@ export function checkP80FinalValidation() {
   addCheck("prior P80 commits stamped", ["P80.1", "P80.2", "P80.3", "P80.4", "P80.5", "P80.6"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit) && statusById.get(phaseId)?.commit !== "pending-final-commit"));
   addCheck("final P80 entries are stampable", ["P80", "P80.7"].every((phaseId) => Boolean(statusById.get(phaseId)?.commit)));
   addCheck("P80 handoff to P81", phaseById.get("P80")?.nextPhase === "P81" && statusById.get("P80")?.nextPhase === "P81");
-  addCheck("root status handoff to P81", status.currentPhase === "P81" && status.previousPhase === "P80" && status.nextPhase === "P81", `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`);
-  addCheck("P81 placeholder exists", phaseById.get("P81")?.status === "planned" && statusById.get("P81")?.status === "planned");
+  const postP80PhaseIds = ["P81", "P81.1", "P81.2", "P81.3", "P81.4", "P81.5", "P81.6", "P81.7", "P82", "P82.1", "P82.2", "P82.3", "P82.4", "P82.5", "P82.6", "P82.7", "P83"];
+  const postP80Handoff =
+    postP80PhaseIds.includes(status.currentPhase) &&
+    (postP80PhaseIds.includes(status.previousPhase) || status.previousPhase === "P80.7" || status.previousPhase === "P80") &&
+    (postP80PhaseIds.includes(status.nextPhase) || status.nextPhase === "P83.1");
+  addCheck(
+    "root status handoff to P81 or later",
+    (status.currentPhase === "P81" && status.previousPhase === "P80" && status.nextPhase === "P81") || postP80Handoff,
+    `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
+  );
+  addCheck("P81 handoff exists", ["planned", "in_progress", "complete"].includes(phaseById.get("P81")?.status) && ["planned", "in_progress", "complete"].includes(statusById.get("P81")?.status));
   addCheck("status checker accepts P81", statusChecker.includes('"P81"'));
   addCheck("docs close P80", plan.includes("P80 is complete") && plan.includes("hands off to P81"));
   addCheck("Command Center route preserved", routes.includes("key: \"founderIntake\"") && routes.includes("/command-center/founder-intake"));
