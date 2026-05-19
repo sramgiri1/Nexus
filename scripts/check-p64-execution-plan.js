@@ -214,7 +214,10 @@ const p642 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.2");
 const p643 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.3");
 const p644 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.4");
 const p645 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.5");
-const expectedNextPhase = p645?.status === "complete"
+const p646 = phaseStatus.phases?.find((phase) => phase.phaseId === "P64.6");
+const expectedNextPhase = p646?.status === "complete"
+  ? "P64.7"
+  : p645?.status === "complete"
   ? "P64.6"
   : p644?.status === "complete"
   ? "P64.5"

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T00:23:04.184Z
+- Generated at: 2026-05-19T00:24:20.995Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8d2a32f
+- Validation HEAD: 25f270d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,13 +25,13 @@
 | P63.5 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.7 validation coverage | PASS | 12 checkers, 1 reports |
-| P64 validation coverage | PASS | 9 checkers, 5 reports |
+| P64 validation coverage | PASS | 10 checkers, 6 reports |
 | P64.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P64.2 validation coverage | PASS | 3 checkers, 1 reports |
 | P64.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P64.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P64.5 validation coverage | PASS | 5 checkers, 1 reports |
-| P64.6 validation coverage | PASS | dedicated_checker, validation_report |
+| P64.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P64.7 validation coverage | PASS | 9 checkers, 9 reports |
 | P64.8 validation coverage | PASS | dedicated_checker, validation_report |
 | P65 validation coverage | PASS | dedicated_checker, validation_report |
@@ -49,18 +49,13 @@
 | P77 validation coverage | PASS | dedicated_checker, validation_report |
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
-| P64 next planned or current | PASS | current=P64; next=P64.6; status=in_progress |
+| P64 next planned or current | PASS | current=P64; next=P64.7; status=in_progress |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P64.6 Dispatch Tests / Checkers / Docs
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P64.8 Code Mode Runtime + Lazy Tool Loading
   - status: planned
   - checkers: 0

@@ -108,6 +108,11 @@ external network calls, or worker execution.
 Aggregate P64 checks and documentation. The final checker must fail if any P64
 surface claims execution without explicit approval and evidence.
 
+Status: complete. P64.6 adds the governed dispatch final checker/report that
+aggregates the P64 contract, dispatch envelope, policy decision, readiness
+matrix, dry-run preview, and Command Center UX evidence. The checker fails if
+any P64 surface claims execution or mutation enablement.
+
 ### P64.7 Final Validation
 
 Run final validation, record known limitations, close P64, and hand off to the
