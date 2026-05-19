@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T00:35:38.692Z
+- Generated at: 2026-05-19T00:39:11.899Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 257f93c
+- Validation HEAD: 25704b2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -25,7 +25,7 @@
 | P63.5 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.6 validation coverage | PASS | 5 checkers, 1 reports |
 | P63.7 validation coverage | PASS | 12 checkers, 1 reports |
-| P64 validation coverage | PASS | 14 checkers, 8 reports |
+| P64 validation coverage | PASS | 15 checkers, 9 reports |
 | P64.1 validation coverage | PASS | 5 checkers, 1 reports |
 | P64.2 validation coverage | PASS | 3 checkers, 1 reports |
 | P64.3 validation coverage | PASS | 4 checkers, 1 reports |
@@ -33,10 +33,10 @@
 | P64.5 validation coverage | PASS | 5 checkers, 1 reports |
 | P64.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P64.7 validation coverage | PASS | 15 checkers, 9 reports |
-| P64.8 validation coverage | PASS | 5 checkers, 2 reports |
-| P64.8.1 validation coverage | PASS | 5 checkers, 1 reports |
+| P64.8 validation coverage | PASS | 5 checkers, 3 reports |
+| P64.8.1 validation coverage | PASS | 6 checkers, 1 reports |
 | P64.8.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P64.8.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P64.8.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P64.8.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P64.8.5 validation coverage | PASS | 9 checkers, 9 reports |
 | P65 validation coverage | PASS | dedicated_checker, validation_report |
@@ -55,18 +55,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 next planned or current | PASS | current=P64.8; next=P64.8.3; status=in_progress |
+| P64.8 next planned or current | PASS | current=P64.8; next=P64.8.4; status=in_progress |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P64.8.3 Lazy Tool Selection Packet
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P64.8.4 Command Center Code Mode Readiness UX
   - status: planned
   - checkers: 0

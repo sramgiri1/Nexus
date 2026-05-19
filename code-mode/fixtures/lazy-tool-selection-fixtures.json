@@ -1,0 +1,48 @@
+{
+  "fixtures": [
+    {
+      "name": "selected metadata contracts",
+      "expectAllowed": true,
+      "input": {
+        "packetId": "p6483_selected_metadata_contracts",
+        "scope": "NEXUS_OS_CHANGE",
+        "scopeLabel": "NEXUS OS",
+        "selectedToolIds": ["git-status", "git-diff"],
+        "toolSummaries": [
+          { "toolId": "git-status", "label": "Git status metadata" },
+          { "toolId": "git-diff", "label": "Git diff metadata" }
+        ],
+        "evidenceRefs": ["reports/p648-lazy-tool-selection-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "safeSummary": {
+          "scope": "NEXUS OS",
+          "selectedContracts": 2,
+          "bulkLoading": "blocked"
+        },
+        "createdAt": "2026-05-19T01:20:00.000Z"
+      }
+    },
+    {
+      "name": "bulk schema request blocked",
+      "expectAllowed": false,
+      "input": {
+        "packetId": "p6483_bulk_schema_blocked",
+        "scope": "NEXUS_OS_CHANGE",
+        "scopeLabel": "NEXUS OS",
+        "selectedToolIds": ["git-status"],
+        "allToolSchemas": true,
+        "allMcpSchemas": true,
+        "rawMcpSchemas": true,
+        "rawToolContracts": true,
+        "toolSummaries": [{ "toolId": "git-status", "label": "Git status metadata" }],
+        "evidenceRefs": ["reports/p648-lazy-tool-selection-report.md"],
+        "activityRefs": ["reports/os-phase-status-report.md"],
+        "safeSummary": {
+          "scope": "NEXUS OS",
+          "bulkLoading": "blocked"
+        },
+        "createdAt": "2026-05-19T01:21:00.000Z"
+      }
+    }
+  ]
+}

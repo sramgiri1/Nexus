@@ -58,6 +58,12 @@ context loading disabled.
 Build selected lazy tool contract packets using existing context budget guards.
 All-tool and all-MCP schema loading remain blocked.
 
+Status: complete. P64.8.3 adds selected lazy tool selection packets that load
+metadata summaries for explicitly selected contracts only. Packets expose
+selected count, budget state, blocked bulk-loading reasons, evidence/activity
+refs, and next action while excluding raw tool schemas, raw MCP schemas, and
+execution payloads.
+
 ### P64.8.4 Command Center Code Mode Readiness UX
 
 Expose code-mode readiness and lazy-loading state in Command Center without
