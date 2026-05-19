@@ -3388,10 +3388,10 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P68 is in progress with Command Center self-update readiness visible; self-update apply remains disabled.",
+      "summary": "P68 is in progress with aggregate tests, checkers, and docs validation complete; self-update apply remains disabled.",
       "checksRun": [
+        "npm run check:p686-tests-checkers-docs",
         "npm run check:p685-command-center-self-update-ux",
-        "cd dashboard && npm run test:unit",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
         "npm run check:p68-execution-plan",
         "npm run check:phase-validation-coverage",
@@ -3400,9 +3400,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P68.5 exposes display-only Command Center self-update readiness. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P68.6 aggregates tests, checkers, docs, reports, and Command Center coverage only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P68.6",
+      "nextPhase": "P68.7",
       "commandCenterVisible": true
     },
     {
@@ -5668,7 +5668,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "f654509",
       "completedAt": "2026-05-19",
       "summary": "Added preview-only approval and rollback gates for self-update proposals while keeping apply disabled.",
       "checksRun": [
@@ -5714,13 +5714,24 @@
       "phaseId": "P68.6",
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P68 validation coverage before final validation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19",
+      "summary": "Aggregated P68 tests, checkers, docs, reports, and Command Center coverage before final validation.",
+      "checksRun": [
+        "npm run check:p686-tests-checkers-docs",
+        "npm run check:p685-command-center-self-update-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Self-Update route\"",
+        "npm run check:p68-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P68.6 is aggregate validation only. Self-update apply, patch generation, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P68.7",
       "commandCenterVisible": true
     },
@@ -5743,5 +5754,5 @@
   "updatedAt": "2026-05-19T10:08:26.807Z",
   "currentPhase": "P68",
   "previousPhase": "P67",
-  "nextPhase": "P68.6"
+  "nextPhase": "P68.7"
 }

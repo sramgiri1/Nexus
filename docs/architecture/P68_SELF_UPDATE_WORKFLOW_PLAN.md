@@ -130,7 +130,18 @@ Implementation:
 
 Aggregate P68 validation coverage before final validation.
 
-Status: planned.
+Status: complete. P68.6 adds a pre-final aggregate checker that validates P68
+checker registration, reports, docs, roadmap records, phase status records,
+Command Center Self-Update route coverage, theme coverage, no DemoApp/private
+ID leakage, and disabled self-update execution posture. Self-update apply
+remains disabled.
+
+Implementation:
+
+- `scripts/check-p686-tests-checkers-docs.js` validates P68.1 through P68.6
+  evidence before final validation.
+- `reports/p686-tests-checkers-docs-report.md` records the aggregate
+  validation result, reuse notes, and required validation command set.
 
 ### P68.7 Final Validation
 
