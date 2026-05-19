@@ -4137,10 +4137,11 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c08bd2f",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-19T14:00:00.000Z",
-      "summary": "Started P76 with implementation-grade tenant and project isolation contracts while tenant/project/access mutation remains disabled.",
+      "summary": "Added P76.2 preview-only tenant boundary contracts while tenant/project/access mutation remains disabled.",
       "checksRun": [
+        "npm run check:p762",
         "npm run check:p76-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -4150,7 +4151,7 @@
       "knownLimitations": [
         "P76 is readiness-only so far. Tenant creation/update/delete, project creation/update/delete, access grants, membership mutation, permission mutation, role mutation, DB writes, project mutation, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
       ],
-      "nextPhase": "P76.2",
+      "nextPhase": "P76.3",
       "commandCenterVisible": true
     },
     {
@@ -4179,13 +4180,22 @@
       "phaseId": "P76.2",
       "title": "Tenant Boundary Contract",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned preview-only tenant boundary records without tenant mutation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T14:00:00.000Z",
+      "summary": "Defined preview-only tenant boundary contract records with all tenant, access, project, DB, runtime, network, and spend mutation disabled.",
+      "checksRun": [
+        "npm run check:p762",
+        "npm run check:p76-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P76.2 records tenant boundary contracts only. Tenant creation/update/delete, membership mutation, permission mutation, role mutation, access grants, project mutation, cross-project access, DB writes, provider/tool/worker execution, network calls, deploy/release/export execution, package creation, auth/session/user/workspace mutation, and provider spend remain disabled."
+      ],
       "nextPhase": "P76.3",
       "commandCenterVisible": true
     },
@@ -7181,5 +7191,5 @@
   "updatedAt": "2026-05-19T14:00:00.000Z",
   "currentPhase": "P76",
   "previousPhase": "P75",
-  "nextPhase": "P76.2"
+  "nextPhase": "P76.3"
 }

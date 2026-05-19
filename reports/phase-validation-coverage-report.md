@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-19T13:51:44.677Z
+- Generated at: 2026-05-19T13:55:12.307Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c08bd2f
+- Validation HEAD: 241fbda
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -127,9 +127,9 @@
 | P75.5 validation coverage | PASS | 9 checkers, 1 reports |
 | P75.6 validation coverage | PASS | 17 checkers, 8 reports |
 | P75.7 validation coverage | PASS | 24 checkers, 17 reports |
-| P76 validation coverage | PASS | 5 checkers, 1 reports |
+| P76 validation coverage | PASS | 7 checkers, 2 reports |
 | P76.1 validation coverage | PASS | 4 checkers, 1 reports |
-| P76.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P76.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P76.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P76.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P76.5 validation coverage | PASS | dedicated_checker, validation_report |
@@ -139,18 +139,13 @@
 | P78 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P76; next=P76.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P76; next=P76.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P76.2 Tenant Boundary Contract
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P76.3 Project Scope Isolation Preview
   - status: planned
   - checkers: 0

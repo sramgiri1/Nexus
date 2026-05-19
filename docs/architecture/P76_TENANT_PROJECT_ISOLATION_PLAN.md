@@ -54,10 +54,11 @@ phase-status records.
 
 Define tenant boundary contract records without tenant mutation.
 
-Status: planned. P76.2 will add preview-only `TenantBoundaryContract` records
+Status: complete. P76.2 adds preview-only `TenantBoundaryContract` records
 that capture tenant boundary, isolation mode, disabled tenant mutation,
-disabled membership/permission mutation, disabled runtime mutation,
-evidence/activity references, cost impact, disabled reason, and next action.
+disabled membership/permission/role mutation, disabled access grants, disabled
+project mutation, disabled DB writes and runtime execution, evidence/activity
+references, cost impact, disabled reason, owner capability, and next action.
 
 ### P76.3 Project Scope Isolation Preview
 
@@ -114,6 +115,15 @@ package behavior, and provider spend remain disabled.
 
 P76.1 validation:
 
+- `npm run check:p76-execution-plan`
+- `npm run check:phase-validation-coverage`
+- `npm run check:os-phase-status`
+- `npm run check:format-readability`
+- `git diff --check`
+
+P76.2 validation:
+
+- `npm run check:p762`
 - `npm run check:p76-execution-plan`
 - `npm run check:phase-validation-coverage`
 - `npm run check:os-phase-status`

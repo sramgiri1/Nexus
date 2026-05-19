@@ -2619,8 +2619,8 @@
       "order": 51,
       "group": "P76 Tenant / Project Isolation",
       "status": "in_progress",
-      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled.",
-      "nextPhase": "P76.2",
+      "summary": "Define tenant and project isolation readiness with tenant/project/access mutation disabled. P76.2 tenant boundary contracts are complete.",
+      "nextPhase": "P76.3",
       "commandCenterVisible": true
     },
     {
@@ -2640,8 +2640,8 @@
       "track": "NEXUS_OS",
       "order": 51.02,
       "group": "P76 Tenant / Project Isolation",
-      "status": "planned",
-      "summary": "Define preview-only tenant boundary records without tenant mutation.",
+      "status": "complete",
+      "summary": "Defined preview-only tenant boundary records without tenant mutation, access grants, project mutation, DB writes, runtime execution, or provider spend.",
       "nextPhase": "P76.3",
       "commandCenterVisible": true
     },
