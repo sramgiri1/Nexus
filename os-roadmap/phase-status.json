@@ -3179,13 +3179,22 @@
       "phaseId": "P67",
       "title": "Controlled Source Mutation Expansion",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7bca428",
-      "completedAt": "",
-      "summary": "P67 is in progress with pre-final tests, checkers, and docs aggregation complete; mutation behavior remains disabled.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T02:07:11.631Z",
+      "summary": "Completed controlled source mutation expansion planning, preview, gates, Command Center readiness, and final validation while mutation remains disabled.",
       "checksRun": [
+        "npm run check:p677",
+        "npm run check:p672",
+        "npm run check:p673",
+        "npm run check:p674",
+        "npm run check:p675",
         "npm run check:p676",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run test:pages -- --grep \"Implementation Workflow tabs\"",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
         "npm run check:p67-execution-plan",
         "npm run check:phase-validation-coverage",
         "npm run check:os-phase-status",
@@ -3193,9 +3202,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P67.6 aggregates tests/checkers/docs only. Final P67 closeout remains P67.7; apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+        "P67 closes controlled mutation planning and readiness only. Apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P67.7",
+      "nextPhase": "P68",
       "commandCenterVisible": true
     },
     {
@@ -3343,13 +3352,31 @@
       "phaseId": "P67.7",
       "title": "Final Validation",
       "track": "NEXUS_OS",
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate and close P67 with project mutation still disabled.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-19T02:07:11.632Z",
+      "summary": "Validated and closed P67 with project mutation, apply execution, provider/tool execution, DB writes, deploy, release, network calls, and spend still disabled.",
+      "checksRun": [
+        "npm run check:p677",
+        "npm run check:p672",
+        "npm run check:p673",
+        "npm run check:p674",
+        "npm run check:p675",
+        "npm run check:p676",
+        "npm run check:command-center-ux",
+        "cd dashboard && npm run test:pages -- --grep \"Implementation Workflow tabs\"",
+        "cd dashboard && npm run build",
+        "cd dashboard && npm run test:unit",
+        "npm run check:p67-execution-plan",
+        "npm run check:phase-validation-coverage",
+        "npm run check:os-phase-status",
+        "npm run check:format-readability",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P67 closes controlled mutation planning and readiness only. Apply, project mutation, provider/tool execution, worker execution, DB writes, deploy, release, network calls, and provider spend remain disabled."
+      ],
       "nextPhase": "P68",
       "commandCenterVisible": true
     },
@@ -5558,8 +5585,8 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-19T02:05:31.213Z",
-  "currentPhase": "P67",
-  "previousPhase": "P66",
-  "nextPhase": "P67.7"
+  "updatedAt": "2026-05-19T02:07:11.632Z",
+  "currentPhase": "P68",
+  "previousPhase": "P67",
+  "nextPhase": "P68"
 }

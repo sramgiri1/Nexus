@@ -1,35 +1,35 @@
-# P67.6 Tests Checkers Docs Report
+# P67.7 Final Validation Report
 
 ## Metadata
 
-- Phase: P67.6
-- Generated at: 2026-05-19T02:07:19.153Z
+- Phase: P67.7
+- Generated at: 2026-05-19T02:07:18.255Z
 - Validation branch: codex/nexus-e2e-phase-validation
 - Validation HEAD: 1aeba2d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-- Aggregates P67 validation coverage before final validation.
+- Validates and closes P67 with controlled source mutation still disabled.
 - Does not add runnable apply actions, mutate project source, dispatch providers/tools/workers, write DB state, deploy, release, call network services, or spend provider budget.
-- Keeps P67.7 as the final closeout subphase.
+- Hands off to P68 for the next implementation-grade phase.
 ## Checks
 
 | Check | Status | Details |
 | --- | --- | --- |
-| required checks listed | PASS | 10 checks |
-| required reports listed | PASS | 8 reports |
-| matrix validates | PASS |  |
+| final checks listed | PASS | 14 checks |
+| summary validates | PASS |  |
 | reports exist | PASS |  |
-| command center coverage included | PASS |  |
-| docs and status coverage included | PASS |  |
+| P67 status closing | PASS |  |
+| P67.1-P67.6 complete | PASS |  |
+| P68 handoff known | PASS |  |
 | apply disabled | PASS |  |
 | mutation disabled | PASS |  |
 | execution disabled | PASS |  |
 | provider/tool/worker disabled | PASS |  |
 | db/deploy/spend disabled | PASS |  |
 | envelope pass | PASS |  |
-## Required Commands
+## Final Commands
 
 - npm run check:p672
 - npm run check:p673
@@ -41,16 +41,15 @@
 - npm run check:os-phase-status
 - npm run check:format-readability
 - git diff --check
-## Required Reports
+- npm run check:p677
+- cd dashboard && npm run build
+- cd dashboard && npm run test:unit
+- cd dashboard && npm run test:pages -- --grep "Implementation Workflow tabs"
+## Known Limitations
 
-- reports/p672-report.md
-- reports/p673-report.md
-- reports/p674-report.md
-- reports/p675-report.md
-- reports/command-center-ux-report.md
-- reports/p67-execution-plan-report.md
-- reports/phase-validation-coverage-report.md
-- reports/os-phase-status-report.md
+- Controlled source mutation remains preview/display-only.
+- No apply path is enabled by P67.
+- P68 must continue from explicit implementation-grade subphase planning.
 ## Result
 
 PASS

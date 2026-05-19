@@ -2213,10 +2213,10 @@
       "track": "NEXUS_OS",
       "order": 42,
       "group": "Planned OS Phases",
-      "summary": "Controlled source mutation expansion is in progress with pre-final validation aggregation complete and mutation behavior still disabled.",
+      "summary": "Completed controlled source mutation expansion planning, preview, gates, Command Center readiness, and final validation while mutation remains disabled.",
       "commandCenterVisible": true,
-      "status": "in_progress",
-      "nextPhase": "P67.7"
+      "status": "complete",
+      "nextPhase": "P68"
     },
     {
       "phaseId": "P67.1",
@@ -2288,8 +2288,10 @@
       "track": "NEXUS_OS",
       "order": 42.07,
       "group": "P67 Controlled Source Mutation Expansion",
-      "summary": "Validate and close P67 with project mutation still disabled.",
-      "commandCenterVisible": true
+      "summary": "Validated and closed P67 with project mutation still disabled.",
+      "commandCenterVisible": true,
+      "status": "complete",
+      "nextPhase": "P68"
     },
     {
       "phaseId": "P68",
@@ -2391,5 +2393,5 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-19T02:04:53.461Z"
+  "updatedAt": "2026-05-19T02:07:11.634Z"
 }

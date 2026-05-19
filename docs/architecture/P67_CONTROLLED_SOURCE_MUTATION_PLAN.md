@@ -154,7 +154,20 @@ Implementation:
 
 Aggregate checks, close P67, and hand off to P68.
 
-Status: planned.
+Status: complete. P67.7 validates and closes P67 with controlled source
+mutation still disabled. The final validation confirms P67.1-P67.6 are
+complete, required reports exist, Command Center readiness remains display-only,
+and apply, project mutation, provider/tool execution, worker execution, DB
+writes, deploy, release, network calls, and provider spend remain disabled.
+
+Implementation:
+
+- `controlled-mutation/p67-7-placeholder.js` exports
+  `buildP677FinalValidationSummary`,
+  `validateP677FinalValidationSummary`,
+  `buildP677FinalValidationEnvelope`, and `P67_7_FINAL_CHECKS`.
+- `scripts/check-p677.js` validates final P67 closeout evidence and P68
+  handoff readiness.
 
 ## Command Center Requirements
 
@@ -178,5 +191,7 @@ or fake runnable apply actions.
 
 ## Status
 
-P67 is in progress. P67.1 is a contract-only foundation; real mutation behavior
-requires later explicit subphases and fresh validation.
+P67 is complete. It establishes controlled source mutation intent, preview,
+approval/scope gate, Command Center readiness, and validation evidence while
+real project mutation and apply execution remain disabled for a later explicit
+phase.
