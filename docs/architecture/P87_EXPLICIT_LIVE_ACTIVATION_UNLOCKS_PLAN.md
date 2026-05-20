@@ -88,7 +88,11 @@ Validation: `npm run check:p876-tests-docs-roadmap`.
 
 Goal: close P87 and hand off to the next scoped phase.
 
-Status: planned.
+Status: complete. P87.7 adds `check:p877-final-validation` and closes the
+parent P87 phase with final evidence for scripts, reports, docs, roadmap,
+status, Command Center Live Unlocks coverage, and safety posture.
+
+Validation: `npm run check:p877-final-validation`.
 
 ## Reuse Check
 

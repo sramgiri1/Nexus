@@ -52,10 +52,10 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  statusById.get("P87")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P87")?.status)
     && statusById.get("P87.5")?.status === "complete"
-    && ["P87.5", "P87.6"].includes(status.currentPhase)
-    && ["P87.6", "P87.7"].includes(status.nextPhase),
+    && ["P87.5", "P87.6", "P87.7"].includes(status.currentPhase)
+    && ["P87.6", "P87.7", "P88"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P87.5", roadmapById.get("P87.5")?.track === "NEXUS_OS" && roadmapById.get("P87.5")?.status === "complete");
 

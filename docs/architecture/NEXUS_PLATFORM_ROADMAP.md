@@ -1527,8 +1527,16 @@ P87.6 is complete. It aggregates P87.1-P87.5 scripts, reports, package scripts,
 docs, roadmap/status records, Command Center Live Unlocks coverage, and safety
 posture.
 
-P87.7 is next. It should close P87 with final validation and hand off to the
-next scoped phase.
+P87.7 is complete. It closes P87 with final validation evidence for explicit
+live activation contracts, secret/provider readiness, local agent dispatch
+admission, generated workspace admission, Live Unlocks UX, reports, docs,
+roadmap, status, and safety posture.
+
+P88 is next. It must be scoped separately before any execution-capable live
+activation. Provider/model calls, agent dispatch, tool execution, worker
+execution, project mutation, DB writes, deploy, release, export, package
+creation, network calls, and provider spend remain blocked until that future
+phase explicitly allows and validates one narrow lane.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
