@@ -153,7 +153,32 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - browser verification on `/command-center/database`
 
+## P92.6 SQLite Maintenance Closure
+
+P92.6 is complete. It adds local-only SQLite backup maintenance:
+
+- `db/sqliteMaintenance.js`
+- `npm run db:backup:sqlite`
+- `npm run check:p926-sqlite-maintenance-closure`
+
+Backup behavior:
+
+- dry-run by default;
+- `--apply` or `NEXUS_SQLITE_BACKUP_APPLY=1` is required to create a backup;
+- backup files are constrained to `local-state/runtime/backups`;
+- backup path traversal is rejected;
+- hosted DBs, production DBs, provider calls, project mutation, deploy, release,
+  export, package creation, network calls, and spend remain blocked.
+
+Validation:
+
+- `npm run check:p926-sqlite-maintenance-closure`
+- `npm run check:p925-command-center-db-live-state-ux`
+- `npm run check:p924-governed-sqlite-runtime-writes`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
 ## Next Subphases
 
-- P92.6 migration, backup, docs, and roadmap closure.
 - P92.7 final validation.

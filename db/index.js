@@ -53,6 +53,11 @@ export {
   summarizeSqliteRuntimeWriteReadiness,
 } from "./sqliteRuntimeWrites.js";
 export {
+  buildSqliteBackupPlan,
+  createSqliteRuntimeBackup,
+  validateSqliteMaintenance,
+} from "./sqliteMaintenance.js";
+export {
   mapLocalStateToDbEntities,
   mapReportsToDbEntities,
   createDbSeedPreview,

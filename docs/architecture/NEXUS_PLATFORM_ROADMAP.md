@@ -1761,8 +1761,12 @@ owner capability, next action, evidence locations, and cost impact without raw
 DB paths, DB URLs, raw logs, raw JSON, private IDs, DemoApp, or runnable DB
 actions.
 
-P92.6 is next. It must close migration, backup, docs, and roadmap validation for
-the local SQLite lane.
+P92.6 is complete. It adds local-only SQLite backup maintenance with dry-run
+defaults, explicit apply, path guarding under `local-state/runtime/backups`, and
+validation coverage.
+
+P92.7 is next. It must run final validation and close the local SQLite runtime
+lane.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).

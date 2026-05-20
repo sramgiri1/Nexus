@@ -477,6 +477,100 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p92-6-sqlite-maintenance-closure",
+      "phaseId": "P92.6",
+      "objective": "Add local SQLite backup maintenance validation and close docs/roadmap gaps before final validation.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/sqliteMaintenance.js",
+        "db/index.js",
+        "scripts/db-sqlite-backup.js",
+        "scripts/check-p926-sqlite-maintenance-closure.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p926-sqlite-maintenance-closure-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "buildSqliteBackupPlan",
+          "createSqliteRuntimeBackup",
+          "validateSqliteMaintenance"
+        ],
+        "dataShape": "Backup plan/result includes phase, mode, sourceReady, sourceExists, backupRoot, dryRun, created, backupSizeBytes, disabledReason, local-only safety flags, and nextAction."
+      },
+      "commandCenterUxRequirements": "Preserve P92.5 DB live-state UX. Do not add backup buttons or runnable maintenance actions to primary Command Center UX.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Command Center route change in P92.6.",
+        "P92.7 final validation must preserve DB live-state route coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p926-sqlite-maintenance-closure.",
+        "Run P92.1-P92.5 checkers.",
+        "Run check:os-phase-status.",
+        "Run check:phase-validation-coverage."
+      ],
+      "validationCommands": [
+        "npm run check:p926-sqlite-maintenance-closure",
+        "npm run check:p925-command-center-db-live-state-ux",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm backup is dry-run by default.",
+        "Confirm backup output path is constrained to local-state/runtime/backups.",
+        "Confirm no hosted DB, production DB, provider/model, agent, worker, tool, project mutation, deploy, release, package, network, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.6 files>",
+        "git commit -m \"feat(nexus): add sqlite maintenance closure\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }
