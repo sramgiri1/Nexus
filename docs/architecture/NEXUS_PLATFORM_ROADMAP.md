@@ -1556,8 +1556,15 @@ generated workspace admission helpers. The profile defines local-only future
 lanes, required gates, evidence, blockers, disabled reason, owner, activity,
 cost posture, and validation commands. Runtime flags remain false.
 
-P88.2 is next. It must define a local activation request model with operator
-approval and evidence before any executor is wired.
+P88.2 is complete. It adds local-only activation request records that reuse the
+P88.1 scoped activation profile and P86 operator approval queue helpers. Each
+request records requested operations, forbidden operations, required evidence,
+missing evidence, blockers, disabled reason, owner, validation commands,
+activity, and cost posture. Requests cannot execute, activate, dispatch agents,
+write files, call providers, or spend.
+
+P88.3 is next. It must define local executor admission boundaries before any
+executor can be wired or run.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,

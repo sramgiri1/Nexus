@@ -109,6 +109,105 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p88-2-local-activation-request-model",
+      "phaseId": "P88.2",
+      "objective": "Define local activation request records without execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/localActivationRequestModel.js",
+        "scripts/check-p882-local-activation-request-model.js",
+        "scripts/check-p881-scoped-execution-activation-profile.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p882-local-activation-request-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p88-execution-contracts.json",
+        "docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P88_LOCAL_ACTIVATION_REQUEST_MODEL_PHASE",
+          "buildLocalActivationRequestModel",
+          "validateLocalActivationRequestModel"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, requestMode, requestCount, requestSummary, requests[], approvalQueuePhase, approvalQueueSummary, profilePhase, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each request has requestKey, label, ownerCapability, sourceLaneId, requestState, approvalDecision, requestedOperations, forbiddenOperations, requiredEvidence, missingEvidence, requestCanExecute, activationAllowed, executionAllowed, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center Lite and Live Readiness. Prepare display-safe activation request fields for a later UX subphase without adding runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P88.2 because no UI file changes.",
+        "Later P88 UX subphase must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p882-local-activation-request-model."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P88 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p882-local-activation-request-model",
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm every runtime flag remains false.",
+        "Confirm local activation requests cannot execute.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, or tool dispatch is enabled.",
+        "Confirm no project or generated app source mutation is enabled.",
+        "Confirm no DB, deploy, release, export, package, network, or spend action is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P88.2 files>",
+        "git commit -m \"feat(nexus): add local activation request model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

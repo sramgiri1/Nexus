@@ -4697,20 +4697,21 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "0a6bd08",
       "completedAt": "",
-      "summary": "Started scoped execution-capable activation with a local-only activation profile contract. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
+      "summary": "Started scoped execution-capable activation with local-only activation profile and request model contracts. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
       "checksRun": [
+        "npm run check:p882-local-activation-request-model",
         "npm run check:p881-scoped-execution-activation-profile",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P88 is in progress. P88.1 is profile-only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+        "P88 is in progress. P88.2 is request-model only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
       ],
-      "nextPhase": "P88.1",
+      "nextPhase": "P88.3",
       "commandCenterVisible": true,
       "label": "Scoped Execution-Capable Activation",
-      "detail": "Scoped local activation profile is underway; execution remains blocked."
+      "detail": "Scoped local activation request model is underway; execution remains blocked."
     },
     {
       "phaseId": "P88.1",
@@ -4741,24 +4742,49 @@
       "title": "Local Activation Request Model",
       "track": "NEXUS_OS",
       "order": 85.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned local activation request model with operator approval and evidence before any executor is wired.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:56:35.937Z",
+      "summary": "Defined local-only activation request records with requested operations, forbidden operations, evidence, blockers, disabled reason, owner, validation commands, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p882-local-activation-request-model",
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P88.2 is planned and validated."
+        "P88.2 is request-model only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P88.3",
       "commandCenterVisible": true,
       "label": "Local Activation Request Model",
-      "detail": "Planned request envelope before any executor wiring."
+      "detail": "Local-only activation request records; no executor wired."
+    },
+    {
+      "phaseId": "P88.3",
+      "title": "Local Executor Admission",
+      "track": "NEXUS_OS",
+      "order": 86.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned local executor admission boundary before any executor can be wired or run.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P88.3 is planned and validated."
+      ],
+      "nextPhase": "P88.4",
+      "commandCenterVisible": true,
+      "label": "Local Executor Admission",
+      "detail": "Planned executor admission boundary before runtime wiring."
     }
   ],
-  "updatedAt": "2026-05-20T00:51:45.092Z",
-  "currentPhase": "P88.1",
-  "previousPhase": "P87.7",
-  "nextPhase": "P88.2",
+  "updatedAt": "2026-05-20T00:56:35.937Z",
+  "currentPhase": "P88.2",
+  "previousPhase": "P88.1",
+  "nextPhase": "P88.3",
   "currentPhaseStatus": "complete"
 }

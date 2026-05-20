@@ -3,13 +3,12 @@ import { join } from "node:path";
 import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js";
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 import {
-  buildScopedExecutionActivationProfile,
-  P88_REQUIRED_ACTIVATION_GATES,
-  validateScopedExecutionActivationProfile,
-} from "../live-ready/scopedExecutionActivationProfile.js";
+  buildLocalActivationRequestModel,
+  validateLocalActivationRequestModel,
+} from "../live-ready/localActivationRequestModel.js";
 
 const ROOT = process.cwd();
-const REPORT_PATH = "reports/p881-scoped-execution-activation-profile-report.md";
+const REPORT_PATH = "reports/p882-local-activation-request-model-report.md";
 
 function readText(relativePath) {
   return readFileSync(join(ROOT, relativePath), "utf8");
@@ -26,8 +25,8 @@ function addCheck(name, passed, details = "") {
   checks.push({ name, status: passed ? "PASS" : "FAIL", details });
 }
 
-const envelope = buildScopedExecutionActivationProfile();
-const validation = validateScopedExecutionActivationProfile(envelope);
+const envelope = buildLocalActivationRequestModel();
+const validation = validateLocalActivationRequestModel(envelope);
 const data = envelope.data || {};
 const serialized = JSON.stringify(envelope);
 const packageJson = readJson("package.json");
@@ -38,7 +37,7 @@ const roadmapById = new Map((roadmap.phases || []).map((entry) => [entry.phaseId
 const contract = readText("contracts/os-roadmap/p88-execution-contracts.json");
 const docs = readText("docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
-const moduleSource = readText("live-ready/scopedExecutionActivationProfile.js");
+const moduleSource = readText("live-ready/localActivationRequestModel.js");
 
 const runtimeFlags = [
   "providerCallsAllowed",
@@ -57,36 +56,37 @@ const runtimeFlags = [
   "exportExecutionAllowed",
   "packageCreationAllowed",
   "providerSpendAllowed",
+  "requestCanExecute",
   "activationAllowed",
   "executionAllowed",
 ];
 
-addCheck("scoped activation profile envelope passes", envelope.ok === true && envelope.status === "PASS");
+addCheck("local activation request envelope passes", envelope.ok === true && envelope.status === "PASS");
 addCheck("validation passes", validation.valid, validation.errors.join("; "));
-addCheck("activation mode local-only", data.activationMode === "local-only-profile");
-addCheck("three scoped future lanes", data.allowedFutureLanes?.length === 3 && data.allowedFutureLaneCount === 3);
-addCheck("P87 helpers reused", moduleSource.includes("buildExplicitLiveActivationContract") && moduleSource.includes("buildLocalAgentDispatchAdmission") && moduleSource.includes("buildGeneratedProjectWorkspaceAdmission"));
-addCheck("required gates explicit", P88_REQUIRED_ACTIVATION_GATES.every((gate) => data.requiredGates?.includes(gate) && data.allowedFutureLanes?.every((lane) => lane.requiredGates?.includes(gate))));
-addCheck("all runtime flags blocked", runtimeFlags.every((flag) => data[flag] === false && data.runtimeFlags?.[flag] === false && data.allowedFutureLanes?.every((lane) => lane[flag] === false)));
-addCheck("forbidden operations cover unsafe surfaces", ["provider/model calls", "existing project mutation", "DB writes", "provider spend"].every((item) => data.forbiddenOperations?.includes(item)));
+addCheck("request mode local-only review", data.requestMode === "local-only-review");
+addCheck("requests cover P88.1 lanes", data.requests?.length === 3 && data.requestCount === 3);
+addCheck("approval and profile helpers reused", moduleSource.includes("buildScopedExecutionActivationProfile") && moduleSource.includes("buildGovernedLiveOperatorApprovalQueue"));
+addCheck("requests cannot execute", data.requests?.every((request) => request.requestCanExecute === false && request.activationAllowed === false && request.executionAllowed === false));
+addCheck("all runtime flags blocked", runtimeFlags.every((flag) => data[flag] === false && data.requests?.every((request) => request[flag] === false)));
+addCheck("operator evidence required", data.requests?.every((request) => request.requiredEvidence?.includes("operatorApproval") && request.requiredEvidence?.includes("validationCommands") && request.missingEvidence?.includes("executorAdmission")));
 addCheck("primary UX fields present", ["currentState", "readinessLabel", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "activityLocation", "costImpact"].every((field) => serialized.includes(field)));
 addCheck("does not import forbidden runtime roots", !moduleSource.includes("../providers/") && !moduleSource.includes("../tools/") && !moduleSource.includes("../projects/") && !moduleSource.includes("../db/") && !moduleSource.includes("../worker-runtime/"));
 addCheck("no raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(serialized));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now/i.test(serialized));
-addCheck("package script registered", Boolean(packageJson.scripts?.["check:p881-scoped-execution-activation-profile"]));
-addCheck("contract references P88.1 files", contract.includes("live-ready/scopedExecutionActivationProfile.js") && contract.includes("check:p881-scoped-execution-activation-profile"));
-addCheck("docs mention P88.1 validation", docs.includes("P88.1 Scoped Activation Profile / Contract") && docs.includes("npm run check:p881-scoped-execution-activation-profile"));
-addCheck("platform roadmap records P88", platformRoadmap.includes("## P88 - Scoped Execution-Capable Activation") && platformRoadmap.includes("P88.1 is complete"));
+addCheck("package script registered", Boolean(packageJson.scripts?.["check:p882-local-activation-request-model"]));
+addCheck("contract references P88.2 files", contract.includes("live-ready/localActivationRequestModel.js") && contract.includes("check:p882-local-activation-request-model"));
+addCheck("docs mention P88.2 validation", docs.includes("P88.2 Local Activation Request Model") && docs.includes("npm run check:p882-local-activation-request-model"));
+addCheck("platform roadmap records P88.2", platformRoadmap.includes("P88.2 is complete") && platformRoadmap.includes("P88.3 is next"));
 addCheck(
   "phase status advanced",
   statusById.get("P88")?.status === "in_progress"
-    && statusById.get("P88.1")?.status === "complete"
-    && ["P88.1", "P88.2", "P88.3"].includes(status.currentPhase)
-    && ["P87.7", "P88.1", "P88.2"].includes(status.previousPhase)
-    && ["P88.2", "P88.3", "P88.4"].includes(status.nextPhase),
+    && statusById.get("P88.2")?.status === "complete"
+    && status.currentPhase === "P88.2"
+    && status.previousPhase === "P88.1"
+    && status.nextPhase === "P88.3",
 );
-addCheck("roadmap tracks P88.1", roadmapById.get("P88.1")?.track === "NEXUS_OS" && roadmapById.get("P88.1")?.status === "complete");
-addCheck("report prerequisites exist", fileExists("reports/p877-final-validation-report.md") && fileExists("reports/os-phase-status-report.md"));
+addCheck("roadmap tracks P88.2", roadmapById.get("P88.2")?.track === "NEXUS_OS" && roadmapById.get("P88.2")?.status === "complete");
+addCheck("report prerequisites exist", fileExists("reports/p881-scoped-execution-activation-profile-report.md") && fileExists("reports/p863-operator-approval-queue-report.md") && fileExists("reports/os-phase-status-report.md"));
 
 const failed = checks.filter((check) => check.status === "FAIL");
 
@@ -96,16 +96,17 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Validates P88.1 scoped execution-capable activation profile.",
-        "- Reuses P87 live activation, dispatch, and generated workspace admission helpers.",
-        "- Confirms P88.1 defines profile gates only and does not wire any executor.",
+        "- Validates P88.2 local activation request records.",
+        "- Reuses P88.1 scoped activation profile and P86 operator approval queue helpers.",
+        "- Confirms local activation requests cannot execute or unlock runtime actions.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
-    { title: "Allowed Future Lane Count", body: `- ${data.allowedFutureLaneCount || 0} scoped future lanes` },
+    { title: "Request Count", body: `- ${data.requestCount || 0} local activation request records` },
     {
       title: "Validation Commands",
       body: [
+        "- npm run check:p882-local-activation-request-model",
         "- npm run check:p881-scoped-execution-activation-profile",
         "- npm run check:os-phase-status",
         "- npm run check:phase-validation-coverage",
@@ -114,12 +115,12 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P88.1 is profile-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled.",
+      body: "- P88.2 is request-model only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, package, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
-  { title: "P88.1 Scoped Execution Activation Profile Report", phase: "P88.1" },
+  { title: "P88.2 Local Activation Request Model Report", phase: "P88.2" },
 );
 
-printCheckReport("P88.1 Scoped Execution Activation Profile Check", checks, failed.length === 0 ? "PASS" : "FAIL");
+printCheckReport("P88.2 Local Activation Request Model Check", checks, failed.length === 0 ? "PASS" : "FAIL");
 if (failed.length > 0) process.exit(1);

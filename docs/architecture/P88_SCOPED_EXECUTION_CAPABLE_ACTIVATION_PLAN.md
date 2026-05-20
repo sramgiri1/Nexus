@@ -39,10 +39,30 @@ Known limitation: P88.1 is profile-only. It does not wire or run an executor,
 dispatch agents, call providers/models, execute tools/workers, mutate projects,
 write DB state, use network calls, deploy, release, export, package, or spend.
 
+## P88.2 Local Activation Request Model
+
+P88.2 is complete. It adds local-only activation request records that reuse the
+P88.1 scoped activation profile and P86 operator approval queue helpers. Each
+request records requested operations, forbidden operations, required evidence,
+missing evidence, blockers, disabled reason, owner, validation commands,
+activity, and cost posture. Requests cannot execute, activate, dispatch agents,
+write files, call providers, or spend.
+
+Validation:
+
+- `npm run check:p882-local-activation-request-model`
+- `npm run check:p881-scoped-execution-activation-profile`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P88.2 is request-model only. It does not wire or run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P88.2 Local Activation Request Model: define an operator-reviewable activation
-  request envelope without execution.
 - P88.3 Local Executor Admission: define the first executor admission boundary
   without running it.
 - P88.4 Command Center UX: show scoped activation lanes and next actions without
