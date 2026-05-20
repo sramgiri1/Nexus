@@ -339,9 +339,58 @@
     },
     {
       "id": "nexus-os-p86-5-activation-dry-run",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "architecture",
+      "taskType": "implementation",
       "phaseId": "P86.5",
       "objective": "Add activation intent dry-run records and validation evidence while actions remain disabled.",
-      "status": "planned"
+      "status": "complete",
+      "allowedFiles": [
+        "live-ready/governedLiveActivationDryRun.js",
+        "scripts/check-p865-activation-dry-run.js",
+        "scripts/check-p864-command-center-live-admission-ux.js",
+        "reports/p865-activation-dry-run-report.md",
+        "reports/p864-command-center-live-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "narrowScope": "Activation dry-run records only.",
+        "validationCommands": [
+          "npm run check:p865-activation-dry-run",
+          "npm run check:p864-command-center-live-admission-ux",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ]
+      }
     },
     {
       "id": "nexus-os-p86-6-tests-docs-roadmap",

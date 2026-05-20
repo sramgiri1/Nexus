@@ -1464,8 +1464,13 @@ evidence, next action, disabled reason, evidence, activity, and cost posture.
 The page preserves existing themes and does not expose raw IDs or runnable
 actions.
 
-P86.5 is next. It should add activation intent dry-run records while live
-actions remain disabled.
+P86.5 is complete. It adds activation intent dry-run records that reuse local
+approval queue items and record blockers, rollback requirements, validation
+commands, evidence, activity, cost posture, and disabled reason while activation
+and execution remain blocked.
+
+P86.6 is next. It should aggregate P86 tests, docs, reports, and roadmap
+evidence.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).

@@ -59,9 +59,12 @@ Validation: `npm run check:p864-command-center-live-admission-ux`.
 
 Goal: add activation intent dry-run records.
 
-Status: planned. P86.5 should preview activation requirements without enabling
-providers, agents, tools, workers, project mutation, DB writes, deploy, package,
-or spend.
+Status: complete. P86.5 adds `governedLiveActivationDryRun`, a dry-run intent
+builder that reuses local approval queue records and records blockers, rollback
+requirements, validation commands, evidence, activity, cost posture, and disabled
+reason while activation and execution stay blocked.
+
+Validation: `npm run check:p865-activation-dry-run`.
 
 ## P86.6 Tests / Docs / Roadmap
 

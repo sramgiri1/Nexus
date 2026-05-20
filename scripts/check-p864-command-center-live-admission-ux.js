@@ -41,8 +41,17 @@ addCheck("Command Center renders queue panel", pageSource.includes("Governed liv
 addCheck("Playwright covers queue", testsSource.includes("Approval Queue") && testsSource.includes("Governed live approval queue") && testsSource.includes("Not Requestable"));
 addCheck("contract references P86.4 files", contract.includes("dashboard/src/data/liveReadiness.js") && contract.includes("check:p864-command-center-live-admission-ux"));
 addCheck("docs mention P86.4 validation", docs.includes("P86.4 Command Center UX") && docs.includes("npm run check:p864-command-center-live-admission-ux"));
-addCheck("platform roadmap records P86.4", platformRoadmap.includes("P86.4 is complete") && platformRoadmap.includes("P86.5 is next"));
-addCheck("phase status advanced", statusById.get("P86.4")?.status === "complete" && status.currentPhase === "P86.4" && status.nextPhase === "P86.5");
+addCheck(
+  "platform roadmap records P86.4",
+  platformRoadmap.includes("P86.4 is complete")
+    && (platformRoadmap.includes("P86.5 is next") || platformRoadmap.includes("P86.5 is complete")),
+);
+addCheck(
+  "phase status advanced",
+  statusById.get("P86.4")?.status === "complete"
+    && ["P86.4", "P86.5"].includes(status.currentPhase)
+    && ["P86.5", "P86.6"].includes(status.nextPhase),
+);
 addCheck("roadmap tracks P86.4", roadmapById.get("P86.4")?.track === "NEXUS_OS" && roadmapById.get("P86.4")?.status === "complete");
 addCheck("no DemoApp/private IDs in live readiness source", !pageSource.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(pageSource));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now/i.test(`${pageSource}\n${dataSource}`));

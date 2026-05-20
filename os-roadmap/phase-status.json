@@ -9086,23 +9086,21 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fd08b5b",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1-P86.4 complete.",
+      "summary": "Governed live capability admission in progress with P86.1-P86.5 complete.",
       "checksRun": [
+        "npm run check:p865-activation-dry-run",
         "npm run check:p864-command-center-live-admission-ux",
-        "npm run check:p863-operator-approval-queue",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.4 is Command Center UX only.",
-        "Approval queue records cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+        "P86.5 creates activation dry-run records only.",
+        "Activation and execution remain blocked. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
-      "nextPhase": "P86.5",
+      "nextPhase": "P86.6",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -9218,14 +9216,21 @@
       "title": "Activation Dry Run",
       "track": "NEXUS_OS",
       "order": 72.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Activation intent dry-run records while live actions remain disabled.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:08:58.557Z",
+      "summary": "Added activation dry-run records with blockers, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p865-activation-dry-run",
+        "npm run check:p864-command-center-live-admission-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86.5 creates activation dry-run records only.",
+        "Activation and execution remain blocked. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P86.6",
       "commandCenterVisible": true,
@@ -9272,9 +9277,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:05:33.067Z",
-  "currentPhase": "P86.4",
-  "previousPhase": "P86.3",
-  "nextPhase": "P86.5",
+  "updatedAt": "2026-05-20T00:08:58.557Z",
+  "currentPhase": "P86.5",
+  "previousPhase": "P86.4",
+  "nextPhase": "P86.6",
   "currentPhaseStatus": "complete"
 }
