@@ -47,19 +47,27 @@ addCheck("contract tracks P90.6", contract.includes("P90.6") && contract.include
 addCheck("contract keeps P90.7 final handoff", contract.includes("P90.7") && contract.includes("Finalize P90 validation"));
 addCheck("P90 plan doc is closed through P90.6", requiredDocs.every((text) => docs.includes(text)));
 addCheck("P90 plan records validation commands", docs.includes("npm run check:p906-founder-prd-docs-roadmap") && docs.includes("npm run check:p905-founder-prd-lane-validation"));
-addCheck("platform roadmap records P90.6", platformRoadmap.includes("P90.6 is complete") && platformRoadmap.includes("P90.7 is next"));
+addCheck(
+  "platform roadmap records P90.6",
+  platformRoadmap.includes("P90.6 is complete")
+    && (platformRoadmap.includes("P90.7 is next") || platformRoadmap.includes("P90.7 is complete")),
+);
 addCheck("P90.5 validation remains recorded", p905Report.includes("P90.5 Founder PRD Lane Validation Report") && p905Report.includes("PASS"));
 addCheck(
   "phase status advanced",
-  statusById.get("P90")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P90")?.status)
     && statusById.get("P90.6")?.status === "complete"
-    && status.currentPhase === "P90.6"
-    && status.previousPhase === "P90.5"
-    && status.nextPhase === "P90.7",
+    && ["P90.6", "P90.7"].includes(status.currentPhase)
+    && ["P90.5", "P90.6"].includes(status.previousPhase)
+    && ["P90.7", "P91"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P90.6", roadmapById.get("P90.6")?.track === "NEXUS_OS" && roadmapById.get("P90.6")?.status === "complete");
-addCheck("P90.7 planned handoff exists", statusById.get("P90.7")?.status === "planned" && roadmapById.get("P90.7")?.status === "planned");
+addCheck(
+  "P90.7 handoff exists",
+  ["planned", "complete"].includes(statusById.get("P90.7")?.status)
+    && ["planned", "complete"].includes(roadmapById.get("P90.7")?.status),
+);
 addCheck("status checker accepts P90.7", statusChecker.includes("\"P90.7\""));
 addCheck("Command Center Local PRD remains present", commandCenterTabs.includes('id: "localPrd"') && commandCenterPage.includes("Local PRD Artifact"));
 addCheck("Command Center does not expose DemoApp", !/DemoApp/.test(commandCenterPage + commandCenterTabs));

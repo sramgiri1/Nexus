@@ -5125,26 +5125,29 @@
       "title": "Governed Founder PRD Live Authoring Lane",
       "track": "NEXUS_OS",
       "order": 99.07,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fee1764",
-      "completedAt": "",
-      "summary": "Started the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Command Center Local PRD UX, aggregate validation, and docs/roadmap closure. Unsafe runtime execution remains blocked.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T05:25:00.000Z",
+      "summary": "Completed the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Business Build Local PRD UX, aggregate validation, docs/roadmap closure, and final validation. Unsafe runtime execution remains blocked.",
       "checksRun": [
+        "npm run check:p907-founder-prd-final",
         "npm run check:p906-founder-prd-docs-roadmap",
         "npm run check:p905-founder-prd-lane-validation",
         "npm run check:p904-command-center-prd-lane-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P90 is in progress. P90.6 closes docs and roadmap evidence only; no project writes, executor, provider/model calls, agent dispatch, tool/worker execution, DB mutation, deploy, package, network calls, or spend is enabled."
+        "P90 completes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P90.7",
+      "nextPhase": "P91",
       "commandCenterVisible": true,
       "label": "Founder PRD Lane",
-      "detail": "P90.6 docs and roadmap closure complete; execution remains blocked."
+      "detail": "P90 complete; local PRD authoring visible in Business Build."
     },
     {
       "phaseId": "P90.1",
@@ -5306,24 +5309,53 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 106.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned final P90 validation, parent phase closure, and next scoped handoff preparation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T05:25:00.000Z",
+      "summary": "Finalized P90 founder PRD lane validation, closed parent P90, preserved Business Build Local PRD UX, and prepared P91 as the next scoped handoff.",
+      "checksRun": [
+        "npm run check:p907-founder-prd-final",
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P90.7 is planned and validated."
+        "P90.7 finalizes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P91",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned P90 final validation and handoff."
+      "detail": "P90 final validation complete."
+    },
+    {
+      "phaseId": "P91",
+      "title": "Governed Founder Workstream Activation Planning",
+      "track": "NEXUS_OS",
+      "order": 107.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned next scoped handoff after P90 local founder PRD authoring. Must be split into implementation-grade subphases before any additional runtime or mutation capability is enabled.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, network calls, and spend remain blocked until explicitly scoped and validated."
+      ],
+      "nextPhase": "P91.1",
+      "commandCenterVisible": true,
+      "label": "Founder Workstream Activation Planning",
+      "detail": "Planned handoff after P90 local PRD authoring."
     }
   ],
-  "updatedAt": "2026-05-20T05:00:00.000Z",
-  "currentPhase": "P90.6",
-  "previousPhase": "P90.5",
-  "nextPhase": "P90.7",
+  "updatedAt": "2026-05-20T05:25:00.000Z",
+  "currentPhase": "P90.7",
+  "previousPhase": "P90.6",
+  "nextPhase": "P91",
   "currentPhaseStatus": "complete"
 }

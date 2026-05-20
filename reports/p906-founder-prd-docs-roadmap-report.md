@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P90.6
-- Generated at: 2026-05-20T02:56:41.003Z
+- Generated at: 2026-05-20T03:01:38.929Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fee1764
+- Validation HEAD: 7fdabaf
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,9 +24,9 @@
 | P90 plan records validation commands | PASS |  |
 | platform roadmap records P90.6 | PASS |  |
 | P90.5 validation remains recorded | PASS |  |
-| phase status advanced | PASS | P90.6/P90.5/P90.7 |
+| phase status advanced | PASS | P90.7/P90.6/P91 |
 | roadmap tracks P90.6 | PASS |  |
-| P90.7 planned handoff exists | PASS |  |
+| P90.7 handoff exists | PASS |  |
 | status checker accepts P90.7 | PASS |  |
 | Command Center Local PRD remains present | PASS |  |
 | Command Center does not expose DemoApp | PASS |  |

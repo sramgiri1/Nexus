@@ -614,8 +614,103 @@
       "id": "nexus-os-p90-7-final-validation",
       "phaseId": "P90.7",
       "objective": "Finalize P90 validation and prepare the next scoped handoff.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p907-founder-prd-final.js",
+        "scripts/check-p906-founder-prd-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p907-founder-prd-final-report.md",
+        "reports/p906-founder-prd-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p90-execution-contracts.json",
+        "docs/architecture/P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "checkerShape": "P90.7 adds a final checker that verifies P90 is complete, P90.7 is complete, P91 is planned, local PRD authoring remains useful, Business Build Local PRD UX remains safe, and all unsafe runtime operations remain blocked."
+      },
+      "commandCenterUxRequirements": "No new Command Center UX changes. Preserve P90.4 Local PRD UX and verify it remains useful for the founder PRD artifact without raw JSON, raw logs, internal phase labels, DemoApp, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\".",
+        "Confirm Business Build Local PRD tab still renders useful Snake-game PRD content and blocked safety rows."
+      ],
+      "testsCheckers": [
+        "Add check:p907-founder-prd-final.",
+        "Run check:p906-founder-prd-docs-roadmap.",
+        "Run check:p905-founder-prd-lane-validation.",
+        "Run check:p904-command-center-prd-lane-ux.",
+        "Run OS phase status and phase validation coverage checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P90 plan doc to mark P90.7 and P90 complete.",
+        "Update platform roadmap to mark P90 complete and P91 next.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p907-founder-prd-final",
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P90.7 is final validation only.",
+        "Confirm no Command Center runnable actions were added.",
+        "Confirm no project writes are enabled.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P90.7 files>",
+        "git commit -m \"test(nexus): finalize p90 founder prd lane\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build result",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

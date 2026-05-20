@@ -146,6 +146,34 @@ Known limitation: P90.6 is docs and roadmap closure only. It does not write
 project files, dispatch agents, execute tools/workers, call providers/models,
 write DB state, use network calls, deploy, release, export, package, or spend.
 
-## Next Subphases
+## P90.7 Final Validation
 
-- P90.7 Final Validation: close P90 and hand off to the next scoped phase.
+P90.7 is complete. It runs final validation for the governed founder PRD live
+authoring lane, closes parent P90, and prepares P91 as the next scoped handoff.
+P90 is complete as a local founder PRD authoring lane: founder context can be
+mapped into a deterministic in-memory PRD artifact and inspected in Business
+Build Local PRD UX. Project mutation, provider/model calls, agent dispatch,
+DB writes, deploy/release/export/package actions, network calls, and spend
+remain blocked.
+
+Validation:
+
+- `npm run check:p907-founder-prd-final`
+- `npm run check:p906-founder-prd-docs-roadmap`
+- `npm run check:p905-founder-prd-lane-validation`
+- `npm run check:p904-command-center-prd-lane-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.7 finalizes local PRD authoring only. It does not write
+project files, dispatch agents, execute tools/workers, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
+## Phase Status
+
+P90 is complete. P91 is next and must be planned as a separate scoped phase
+before any additional runtime, workstream activation, project mutation, provider
+call, agent dispatch, deploy, package, network, or spend capability is enabled.

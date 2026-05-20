@@ -1685,8 +1685,14 @@ P90.6 is complete. It closes P90 docs, roadmap, contract, and phase-status
 evidence through docs/roadmap closure while preserving the Business Build Local
 PRD UX and blocked runtime boundary.
 
-P90.7 is next. It must run final P90 validation, close the parent P90 phase, and
-prepare the next scoped handoff.
+P90.7 is complete. It runs final P90 validation, closes parent P90, preserves
+Business Build Local PRD UX, and prepares P91 as the next scoped handoff.
+
+P90 is complete.
+
+P91 is next. It must be planned as a separate implementation-grade phase before
+any additional runtime, workstream activation, project mutation, provider call,
+agent dispatch, deploy, package, network, or spend capability is enabled.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).

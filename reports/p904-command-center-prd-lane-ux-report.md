@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P90.4
-- Generated at: 2026-05-20T02:55:55.863Z
+- Generated at: 2026-05-20T03:01:53.964Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cc06947
+- Validation HEAD: 7fdabaf
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,7 +33,7 @@
 | contract tracks P90.4 files | PASS |  |
 | docs record P90.4 | PASS |  |
 | platform roadmap records P90.4 | PASS |  |
-| phase status advanced | PASS | P90.6/P90.5/P90.7 |
+| phase status advanced | PASS | P90.7/P90.6/P91 |
 | roadmap tracks P90.4 | PASS |  |
 | status checker accepts P90.5 | PASS |  |
 ## Validation Commands
