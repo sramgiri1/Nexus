@@ -40,10 +40,29 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P89.2 Core Model
+
+P89.2 is complete. It adds a local founder workstream runtime envelope that
+reuses the P89.1 handoff profile. Each workstream records founder interaction
+state, PRD state, agent lane plan, allowed future local operations, required
+evidence, missing evidence, blockers, disabled reason, validation commands,
+evidence, activity, cost posture, and all runtime flags false.
+
+Validation:
+
+- `npm run check:p892-local-founder-workstream-runtime-envelope`
+- `npm run check:p891-local-enterprise-runtime-handoff-profile`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.2 is a local envelope model only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P89.2 Core Model: define a local founder workstream runtime envelope without
-  dispatching agents.
 - P89.3 Preview / Safe Dry Run: simulate a local founder workstream transition
   without mutation.
 - P89.4 Command Center UX: show founder workstream handoff state and blockers.

@@ -1612,8 +1612,15 @@ profile defines future founder workstream handoff lanes, required gates, missing
 evidence, forbidden operations, validation commands, evidence, activity, cost
 posture, and all runtime flags false.
 
-P89.2 is next. It must define the local founder workstream runtime envelope
-without dispatching agents or running an executor.
+P89.2 is complete. It adds a local founder workstream runtime envelope that
+reuses the P89.1 handoff profile. The envelope defines founder interaction
+state, PRD state, agent lane plan, required evidence, missing evidence, blockers,
+disabled reason, validation commands, evidence, activity, cost posture, and all
+runtime flags false.
+
+P89.3 is next. It must simulate local founder workstream transitions without
+mutation, agent dispatch, executor runs, provider/model calls, network calls, or
+spend.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).
