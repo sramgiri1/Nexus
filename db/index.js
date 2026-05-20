@@ -26,6 +26,14 @@ export {
   writeImportPlanReport,
 } from "./dbImportPlan.js";
 export {
+  getSqliteRuntimeConfig,
+  getSqliteRuntimeStatus,
+  initializeSqliteRuntime,
+  isSqliteCliAvailable,
+  loadSqliteSchema,
+  transformSchemaForSqlite,
+} from "./sqliteRuntime.js";
+export {
   mapLocalStateToDbEntities,
   mapReportsToDbEntities,
   createDbSeedPreview,

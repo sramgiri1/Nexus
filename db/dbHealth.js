@@ -4,18 +4,21 @@
  */
 
 import { loadDbConfig, validateDbConfig } from "./dbConfig.js";
+import { getSqliteRuntimeStatus } from "./sqliteRuntime.js";
 
 export function getDbHealth() {
   const config = loadDbConfig();
   const { valid, errors } = validateDbConfig(config);
+  const sqlite = getSqliteRuntimeStatus({ mode: config.mode, dbPath: config.sqlitePath });
   return {
-    dbBacked: false,
+    dbBacked: sqlite.ready,
     mode: config.mode,
-    fallback: "file-backed",
+    fallback: config.fileFallbackRequired ? "file-backed" : "",
     schemaDefined: true,
     schemaVersion: config.schemaVersion,
     entityCount: config.entityCount,
-    dbWritesEnabled: false,
+    dbWritesEnabled: config.dbWritesEnabled,
+    sqlite,
     fileFallbackRequired: true,
     configValid: valid,
     configErrors: errors,
@@ -30,8 +33,10 @@ export function getDbReadiness() {
     ready: true,
     mode: health.mode,
     fallbackReady: true,
-    dbReady: false,
-    reason: "P41: DB disabled. File-backed fallback is active.",
+    dbReady: health.sqlite.ready,
+    reason: health.sqlite.ready
+      ? "P92.1: local SQLite runtime is initialized. File-backed fallback remains available."
+      : "DB disabled or not initialized. File-backed fallback is active.",
     health,
   };
 }
@@ -39,14 +44,15 @@ export function getDbReadiness() {
 export function summarizeDbStatus() {
   const readiness = getDbReadiness();
   return {
-    status: "FOUNDATION_ONLY",
-    phase: "P41-LOCAL",
+    status: readiness.dbReady ? "SQLITE_LOCAL_READY" : "FOUNDATION_ONLY",
+    phase: readiness.dbReady ? "P92.1" : "P41-LOCAL",
     mode: readiness.mode,
-    dbWritesEnabled: false,
+    dbWritesEnabled: readiness.health.dbWritesEnabled,
     fallbackActive: true,
     schemaArtifactsPresent: true,
-    nextPhase: "P42-LOCAL",
-    nextPhaseAction: "Enable DB writes and migrate file-backed state to DB",
+    sqlite: readiness.health.sqlite,
+    nextPhase: readiness.dbReady ? "P92.2" : "P92.1",
+    nextPhaseAction: readiness.dbReady ? "Wire selected runtime reads to SQLite repositories" : "Initialize local SQLite runtime",
     readiness,
   };
 }

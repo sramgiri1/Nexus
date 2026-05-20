@@ -1,0 +1,104 @@
+{
+  "phase": "P92",
+  "title": "Local SQLite Runtime",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "fe4261f",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Local SQLite writes may only target local-state/runtime and must require explicit local DB flags.",
+    "Do not enable hosted DBs, production DBs, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, deploy, release, export, package creation, network calls, or provider spend.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not expose raw DB paths, raw DB URLs, private IDs, secrets, raw JSON, raw logs, or fake runnable actions in primary UX."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p92-1-local-sqlite-runtime-foundation",
+      "phaseId": "P92.1",
+      "objective": "Add a guarded local SQLite runtime foundation and init command.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/**",
+        "local-api/routes/db.js",
+        "scripts/db-sqlite-init.js",
+        "scripts/check-p921-sqlite-runtime-foundation.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p921-sqlite-runtime-foundation-report.md",
+        "package.json",
+        ".gitignore"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "getSqliteRuntimeConfig",
+          "getSqliteRuntimeStatus",
+          "initializeSqliteRuntime",
+          "isSqliteCliAvailable",
+          "loadSqliteSchema",
+          "transformSchemaForSqlite"
+        ],
+        "dataShape": "SQLite runtime status includes phase, mode, dbPath, sqliteCliAvailable, dbExists, dbWritesEnabled, sqliteLiveAllowed, productionDbAllowed false, externalDbAllowed false, fileFallbackRequired true, ready, and nextAction."
+      },
+      "commandCenterUxRequirements": "Preserve existing Durable State UX. The /db API may expose display-safe sqlite status fields but must not show raw DB URLs, raw logs, raw JSON, secrets, private IDs, hosted DB actions, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Command Center route change in P92.1.",
+        "P92.4 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p921-sqlite-runtime-foundation.",
+        "Run check:db-foundation."
+      ],
+      "validationCommands": [
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:db-foundation",
+        "npm run db:init:sqlite",
+        "NEXUS_DB_MODE=sqlite-live NEXUS_DB_ENABLE_WRITES=1 npm run db:init:sqlite -- --apply --reset",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm default DB mode remains non-writing.",
+        "Confirm local SQLite writes require explicit flags.",
+        "Confirm SQLite DB path cannot leave local-state/runtime.",
+        "Confirm no provider/model, agent, worker, tool, project mutation, deploy, release, package, network, hosted DB, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.1 files>",
+        "git commit -m \"feat(nexus): add local sqlite runtime foundation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "DB mode and init command",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ]
+}

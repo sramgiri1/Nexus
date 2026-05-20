@@ -99,6 +99,7 @@
     "local-api:start": "NEXUS_MODE=local-private node scripts/start-local-api.js",
     "check:live-local-api": "node scripts/check-live-local-api.js",
     "db:status": "node scripts/db-foundation-status.js",
+    "db:init:sqlite": "node scripts/db-sqlite-init.js",
     "check:db-foundation": "node scripts/check-db-foundation.js",
     "nexus:up": "node scripts/nexus-up.js",
     "nexus:dev": "node scripts/nexus-up.js --dev",
@@ -442,6 +443,7 @@
     "check:p912-founder-workstream-activation-model": "node scripts/check-p912-founder-workstream-activation-model.js",
     "check:p913-founder-activation-review-packet": "node scripts/check-p913-founder-activation-review-packet.js",
     "check:p914-command-center-workstream-activation-ux": "node scripts/check-p914-command-center-workstream-activation-ux.js",
+    "check:p921-sqlite-runtime-foundation": "node scripts/check-p921-sqlite-runtime-foundation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

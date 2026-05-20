@@ -15,3 +15,5 @@ projects/*/node_modules/
 **/*.xcworkspace/xcuserdata/
 **/*.xcodeproj/xcuserdata/
 projects/careloop/docs/qa/videos/
+local-state/runtime/*.sqlite
+local-state/runtime/*.sqlite-*

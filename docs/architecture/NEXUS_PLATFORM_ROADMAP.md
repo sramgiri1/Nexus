@@ -1727,6 +1727,28 @@ The detailed plan lives in
 Implementation must follow
 [`p91-execution-contracts.json`](../../contracts/os-roadmap/p91-execution-contracts.json).
 
+## P92 - Local SQLite Runtime
+
+P92 starts the DB implementation lane. NEXUS uses local SQLite as the first
+real durable runtime database because it runs on the operator machine without a
+hosted service or provider spend. Production DBs, external DBs, provider/model
+calls, agent dispatch, project mutation, deploy, package, network calls, and
+spend remain blocked unless a later subphase scopes them.
+
+P92.1 is complete. It adds a guarded SQLite runtime module, SQLite schema
+transformation from the existing DB schema artifact, an explicit local init
+command, DB health status, and validation. Default mode remains non-writing;
+local SQLite writes require `NEXUS_DB_MODE=sqlite-live` and
+`NEXUS_DB_ENABLE_WRITES=1`.
+
+P92.2 is next. It must wire selected runtime repository reads to SQLite while
+preserving file-backed fallback and display-safe Command Center state.
+
+The detailed plan lives in
+[`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).
+Implementation must follow
+[`p92-execution-contracts.json`](../../contracts/os-roadmap/p92-execution-contracts.json).
+
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).
 Implementation must follow
