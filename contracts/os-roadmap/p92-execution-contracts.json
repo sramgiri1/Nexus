@@ -571,6 +571,99 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p92-7-local-sqlite-runtime-final-validation",
+      "phaseId": "P92.7",
+      "objective": "Run final validation and close the local SQLite runtime lane.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p927-sqlite-final-validation.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p927-sqlite-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "check:p927-sqlite-final-validation"
+        ],
+        "dataShape": "Final report records P92 subphase coverage, package scripts, reports, exports, DB live UX, safety boundaries, validation commands, and known limitations."
+      },
+      "commandCenterUxRequirements": "Preserve P92.5 DB live-state UX and route coverage.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"."
+      ],
+      "testsCheckers": [
+        "Add check:p927-sqlite-final-validation.",
+        "Run all P92 checkers.",
+        "Run dashboard build.",
+        "Run check:os-phase-status.",
+        "Run check:phase-validation-coverage."
+      ],
+      "validationCommands": [
+        "npm run check:p927-sqlite-final-validation",
+        "npm run check:p926-sqlite-maintenance-closure",
+        "npm run check:p925-command-center-db-live-state-ux",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P92 is closed with real commit hashes.",
+        "Confirm P93 is registered as planned.",
+        "Confirm no hosted DB, production DB, provider/model, agent, worker, tool, project mutation, deploy, release, package, network, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.7 files>",
+        "git commit -m \"chore(nexus): close sqlite runtime phase\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

@@ -1765,8 +1765,10 @@ P92.6 is complete. It adds local-only SQLite backup maintenance with dry-run
 defaults, explicit apply, path guarding under `local-state/runtime/backups`, and
 validation coverage.
 
-P92.7 is next. It must run final validation and close the local SQLite runtime
-lane.
+P92.7 is complete when final validation passes. It closes the local SQLite
+runtime lane with foundation, CRUD, DB-backed reads, governed ledger writes,
+Command Center DB live-state UX, local backup maintenance, and safety evidence.
+P93 is planned as the next NEXUS OS DB/live-runtime expansion phase.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).

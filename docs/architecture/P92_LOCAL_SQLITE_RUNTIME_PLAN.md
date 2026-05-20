@@ -179,6 +179,30 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
-## Next Subphases
+## P92.7 Final Validation
 
-- P92.7 final validation.
+P92.7 is complete when final validation passes and OS phase status is stamped
+with real commits. The final checker confirms:
+
+- P92.1-P92.6 reports exist;
+- P92 package scripts are registered;
+- SQLite runtime, CRUD, write, and maintenance exports are available;
+- Command Center DB live-state UX is present;
+- docs and contracts cover all P92 subphases;
+- no stale `pending-final-commit` remains in completed P92 entries;
+- hosted DBs, production DBs, provider calls, project mutation, deploy, package,
+  export, network calls, and provider spend remain blocked.
+
+Validation:
+
+- `npm run check:p927-sqlite-final-validation`
+- all P92.1-P92.6 checkers
+- `cd dashboard && npm run build`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+## Next Phase
+
+- P93 is planned for the next NEXUS OS DB/live-runtime expansion.

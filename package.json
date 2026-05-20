@@ -450,6 +450,7 @@
     "check:p924-governed-sqlite-runtime-writes": "node scripts/check-p924-governed-sqlite-runtime-writes.js",
     "check:p925-command-center-db-live-state-ux": "node scripts/check-p925-command-center-db-live-state-ux.js",
     "check:p926-sqlite-maintenance-closure": "node scripts/check-p926-sqlite-maintenance-closure.js",
+    "check:p927-sqlite-final-validation": "node scripts/check-p927-sqlite-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
