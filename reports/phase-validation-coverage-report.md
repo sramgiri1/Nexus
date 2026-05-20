@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T21:40:57.538Z
+- Generated at: 2026-05-20T21:44:14.182Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cf1c157
+- Validation HEAD: b0535e5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -167,22 +167,6 @@
 | P82.5 validation coverage | PASS | 10 checkers, 1 reports |
 | P82.6 validation coverage | PASS | 15 checkers, 5 reports |
 | P82.7 validation coverage | PASS | 43 checkers, 33 reports |
-| P83 validation coverage | PASS | 16 checkers, 8 reports |
-| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
-| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
-| P83.7 validation coverage | PASS | 41 checkers, 33 reports |
-| P84 validation coverage | PASS | 16 checkers, 8 reports |
-| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
-| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
-| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.5 validation coverage | PASS | 6 checkers, 1 reports |
-| P84.6 validation coverage | PASS | 14 checkers, 9 reports |
-| P84.7 validation coverage | PASS | 41 checkers, 33 reports |
 | P85 validation coverage | PASS | 13 checkers, 8 reports |
 | P85.1 validation coverage | PASS | 4 checkers, 1 reports |
 | P85.2 validation coverage | PASS | 4 checkers, 1 reports |
@@ -247,21 +231,54 @@
 | P92.5 validation coverage | PASS | 9 checkers, 2 reports |
 | P92.6 validation coverage | PASS | 8 checkers, 1 reports |
 | P92.7 validation coverage | PASS | 9 checkers, 1 reports |
-| P93 validation coverage | PASS | dedicated_checker, validation_report |
+| P93 validation coverage | PASS | 4 checkers, 1 reports |
+| P93.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P93.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P93.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P93.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P93.5 validation coverage | PASS | 5 checkers, 5 reports |
+| P93.6 validation coverage | PASS | 3 checkers, 3 reports |
+| P93.7 validation coverage | PASS | 33 checkers, 33 reports |
+| P83 validation coverage | PASS | 16 checkers, 8 reports |
+| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
+| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
+| P83.7 validation coverage | PASS | 41 checkers, 33 reports |
+| P84 validation coverage | PASS | 16 checkers, 8 reports |
+| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
+| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
+| P84.5 validation coverage | PASS | 6 checkers, 1 reports |
+| P84.6 validation coverage | PASS | 14 checkers, 9 reports |
+| P84.7 validation coverage | PASS | 41 checkers, 33 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P91.7; next=P93; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P93.1; next=P93.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P93 Enterprise Live Runtime Expansion
+- P93.2 Enterprise Runtime CRUD Plan Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P93.3 Governed Runtime Mutation Request Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P93.4 Local CRUD Execution Admission
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (235/235)
+PASS (242/242)

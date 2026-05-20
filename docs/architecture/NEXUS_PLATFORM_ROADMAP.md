@@ -1784,6 +1784,28 @@ runtime lane with foundation, CRUD, DB-backed reads, governed ledger writes,
 Command Center DB live-state UX, local backup maintenance, and safety evidence.
 P93 is planned as the next NEXUS OS DB/live-runtime expansion phase.
 
+## P93 - Enterprise Live Runtime Expansion
+
+P93 starts the DB-backed live-runtime expansion after local SQLite closure. It
+is about governed local SQLite CRUD for NEXUS OS runtime state, not broad
+runtime execution. Provider/model calls, agent dispatch, tool execution, worker
+execution, project creation, project mutation, hosted DBs, network calls,
+deploy, release, export, package creation, and provider spend remain blocked
+unless a later explicit phase scopes and validates them.
+
+P93.1 is complete. It defines the implementation-grade P93 execution contract,
+subphase split, future exports, data shape, Command Center UX requirements,
+validation commands, and safety checks. P93.1 is contract-only and does not
+modify `db/**` or enable DB writes.
+
+P93.2 is next. It must add the local enterprise runtime CRUD plan model without
+executing mutations.
+
+The detailed plan lives in
+[`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).
+Implementation must follow
+[`p93-execution-contracts.json`](../../contracts/os-roadmap/p93-execution-contracts.json).
+
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).
 Implementation must follow

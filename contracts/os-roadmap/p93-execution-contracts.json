@@ -1,0 +1,159 @@
+{
+  "phase": "P93",
+  "title": "Enterprise Live Runtime Expansion",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "b0535e5",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P93.1 is contract-only and must not modify db/** or enable DB writes.",
+    "Later P93 subphases may only enable governed local SQLite CRUD where explicitly scoped.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, hosted DBs, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p93-1-enterprise-live-runtime-contract",
+      "phaseId": "P93.1",
+      "objective": "Define the P93 enterprise live-runtime expansion contract for governed local SQLite CRUD without enabling mutation yet.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p93-execution-contracts.json",
+        "docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p931-enterprise-live-runtime-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p931-enterprise-live-runtime-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P93_ENTERPRISE_LIVE_RUNTIME_PHASE",
+          "P93_LIVE_RUNTIME_ENTITY_LANES",
+          "buildEnterpriseLiveRuntimeCrudPlan",
+          "validateEnterpriseLiveRuntimeCrudPlan",
+          "buildGovernedRuntimeMutationRequest",
+          "validateGovernedRuntimeMutationRequest"
+        ],
+        "futureDataShape": "Result envelope with schemaVersion, currentState, runtimeMode, dbMode, entityLanes[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve current Command Center UX. Later P93 UX must show DB-backed runtime state, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P93.1 because no UI files change.",
+        "P93 Command Center UX subphase must add focused coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p931-enterprise-live-runtime-contract.",
+        "Update check:os-phase-status to accept P93.1-P93.7."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P93 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P93.1 is contract-only.",
+        "Confirm no db/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P93.1 files>",
+        "git commit -m \"feat(nexus): define enterprise live runtime expansion\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p93-2-enterprise-runtime-crud-plan-model",
+      "phaseId": "P93.2",
+      "objective": "Add a local enterprise runtime CRUD plan model for DB-backed founder/session/PRD/workstream/action-state lanes.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p93-3-governed-runtime-mutation-request-model",
+      "phaseId": "P93.3",
+      "objective": "Add governed local SQLite mutation request envelopes for explicitly scoped OS runtime entities.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p93-4-local-crud-execution-admission",
+      "phaseId": "P93.4",
+      "objective": "Wire allowed local SQLite CRUD execution for approved OS runtime entities only, with project/provider/deploy actions still blocked.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p93-5-command-center-live-runtime-ux",
+      "phaseId": "P93.5",
+      "objective": "Expose useful DB-backed live-runtime state and safe CRUD readiness in Command Center without raw IDs or fake actions.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p93-6-tests-docs-roadmap",
+      "phaseId": "P93.6",
+      "objective": "Aggregate P93 tests, docs, roadmap, checker, and safety evidence.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p93-7-final-validation",
+      "phaseId": "P93.7",
+      "objective": "Finalize P93 validation and prepare the next scoped handoff.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    }
+  ]
+}

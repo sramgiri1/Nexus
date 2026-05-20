@@ -3,6 +3,1806 @@
   "generatedAt": "2026-05-15T13:56:14.504Z",
   "phases": [
     {
+      "phaseId": "P85",
+      "title": "Enterprise Founder Business Runtime",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "6627103",
+      "completedAt": "2026-05-19T23:45:46.730Z",
+      "summary": "Completed governed local enterprise founder business runtime with multi-turn founder chat, local PRD review gate, non-dispatching task board, consolidated Lite UX, and final validation evidence.",
+      "checksRun": [
+        "npm run check:p857-final-validation",
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P85 closes local founder business runtime planning and UX only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
+      ],
+      "nextPhase": "P86",
+      "commandCenterVisible": true,
+      "order": 1,
+      "label": "Enterprise Founder Business Runtime",
+      "detail": "Governed local founder business runtime sessions, PRD review, and local agent task planning before execution unlock phases."
+    },
+    {
+      "phaseId": "P85.4",
+      "title": "Local Agent Task Board Admission",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "73c8625",
+      "completedAt": "2026-05-19T23:29:20.463Z",
+      "summary": "Added display-safe non-dispatching local agent task board admission with owner, state, blocker, next input, and validation command per lane.",
+      "checksRun": [
+        "npm run check:p854-task-board-admission",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite local task board"
+      ],
+      "knownLimitations": [
+        "Planning tasks only; no agent dispatch, worker/tool execution, project mutation, DB writes, deploy, package, or spend."
+      ],
+      "nextPhase": "P85.5",
+      "commandCenterVisible": true,
+      "track": "NEXUS_OS",
+      "order": 63.07,
+      "label": "Local Agent Task Board Admission",
+      "detail": "Non-dispatching local task board admission for approved PRD workstreams."
+    },
+    {
+      "phaseId": "P85.5",
+      "title": "Command Center Business Runtime UX",
+      "track": "NEXUS_OS",
+      "order": 64.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7ecc63c",
+      "completedAt": "2026-05-19T23:34:27.736Z",
+      "summary": "Added Founder Lite workflow summary for chat, PRD review, local task board, and next action.",
+      "checksRun": [
+        "npm run check:p855-command-center-business-runtime-ux",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "dashboard build",
+        "Playwright Lite founder workflow summary"
+      ],
+      "knownLimitations": [
+        "UX consolidation only; no provider/model calls, dispatch, workers/tools, project mutation, DB writes, deploy, package, or spend."
+      ],
+      "nextPhase": "P85.6",
+      "commandCenterVisible": true,
+      "label": "Command Center Business Runtime UX",
+      "detail": "Founder-facing runtime UX consolidation for chat, PRD review, and local task board."
+    },
+    {
+      "phaseId": "P85.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 65.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "736823a",
+      "completedAt": "2026-05-19T23:38:57.674Z",
+      "summary": "Aggregated P85 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage"
+      ],
+      "knownLimitations": [
+        "Aggregation only; execution-capable actions remain disabled."
+      ],
+      "nextPhase": "P85.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "P85 validation, documentation, and roadmap aggregation."
+    },
+    {
+      "phaseId": "P85.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 66.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "6627103",
+      "completedAt": "2026-05-19T23:45:46.730Z",
+      "summary": "Closed P85 with final validation across scripts, reports, package scripts, docs, roadmap/status records, Command Center Lite UX, and safety posture.",
+      "checksRun": [
+        "npm run check:p857-final-validation",
+        "npm run check:p856-tests-docs-roadmap",
+        "npm run check:p85-execution-plan",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P85 closes local founder business runtime planning and UX only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
+      ],
+      "nextPhase": "P86",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P85 validation and P86 handoff."
+    },
+    {
+      "phaseId": "P86",
+      "title": "Governed Live Capability Admission",
+      "track": "NEXUS_OS",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "be839d5",
+      "completedAt": "2026-05-20T00:15:17.202Z",
+      "summary": "Completed governed live capability admission with admission inventory, state resolver, local approval queue, activation dry-run records, Command Center UX, and final validation evidence.",
+      "checksRun": [
+        "npm run check:p867-final-validation",
+        "npm run check:p866-tests-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
+      ],
+      "nextPhase": "P87",
+      "commandCenterVisible": true,
+      "order": 67.07,
+      "label": "Governed Live Capability Admission",
+      "detail": "Explicit safety-gated admission for live capabilities after local founder runtime closure."
+    },
+    {
+      "phaseId": "P86.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 68.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "bb29267",
+      "completedAt": "2026-05-19T23:51:56.368Z",
+      "summary": "Added governed live capability admission inventory with display-safe owner, state, next action, blockers, evidence, activity, cost, and all runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p861-live-capability-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.1 is admission inventory only.",
+        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Governed live capability admission inventory and contract."
+    },
+    {
+      "phaseId": "P86.2",
+      "title": "Capability State Resolver",
+      "track": "NEXUS_OS",
+      "order": 69.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "53af8ca",
+      "completedAt": "2026-05-19T23:55:29.629Z",
+      "summary": "Added deterministic live capability state resolution with activation state, risk, reasons, required-before-live gates, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p862-capability-state-resolver",
+        "npm run check:p861-live-capability-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.2 resolves live capability states only.",
+        "Activation requests, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.3",
+      "commandCenterVisible": true,
+      "label": "Capability State Resolver",
+      "detail": "Resolve capability rows into operator-facing activation states without executing actions."
+    },
+    {
+      "phaseId": "P86.3",
+      "title": "Operator Approval Queue",
+      "track": "NEXUS_OS",
+      "order": 70.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "3ac3363",
+      "completedAt": "2026-05-19T23:58:58.726Z",
+      "summary": "Added local operator approval queue records with expiry posture, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p863-operator-approval-queue",
+        "npm run check:p862-capability-state-resolver",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.3 creates local approval queue records only.",
+        "Approvals cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.4",
+      "commandCenterVisible": true,
+      "label": "Operator Approval Queue",
+      "detail": "Local approval queue records with expiry, rollback, and validation requirements."
+    },
+    {
+      "phaseId": "P86.4",
+      "title": "Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 71.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "fd08b5b",
+      "completedAt": "2026-05-20T00:05:33.067Z",
+      "summary": "Added Live Readiness approval queue UX with local queue records, owner, evidence, next action, disabled reason, and cost posture.",
+      "checksRun": [
+        "npm run check:p864-command-center-live-admission-ux",
+        "npm run check:p863-operator-approval-queue",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.4 is Command Center UX only.",
+        "Approval queue records cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.5",
+      "commandCenterVisible": true,
+      "label": "Command Center UX",
+      "detail": "Command Center live capability state UX without raw IDs or fake runnable actions."
+    },
+    {
+      "phaseId": "P86.5",
+      "title": "Activation Dry Run",
+      "track": "NEXUS_OS",
+      "order": 72.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "3e853ed",
+      "completedAt": "2026-05-20T00:09:45.990Z",
+      "summary": "Added activation dry-run records with blockers, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
+      "checksRun": [
+        "npm run check:p865-activation-dry-run",
+        "npm run check:p864-command-center-live-admission-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.5 creates activation dry-run records only.",
+        "Activation and execution remain blocked. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+      ],
+      "nextPhase": "P86.6",
+      "commandCenterVisible": true,
+      "label": "Activation Dry Run",
+      "detail": "Activation intent dry-run records while live actions remain disabled."
+    },
+    {
+      "phaseId": "P86.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 73.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "8c2b438",
+      "completedAt": "2026-05-20T00:11:59.917Z",
+      "summary": "Aggregated P86 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p866-tests-docs-roadmap",
+        "npm run check:p865-activation-dry-run",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
+      ],
+      "nextPhase": "P86.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "Aggregate P86 validation evidence."
+    },
+    {
+      "phaseId": "P86.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 74.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "be839d5",
+      "completedAt": "2026-05-20T00:15:17.202Z",
+      "summary": "Closed P86 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Readiness queue coverage, and safety posture.",
+      "checksRun": [
+        "npm run check:p867-final-validation",
+        "npm run check:p866-tests-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
+      ],
+      "nextPhase": "P87",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P86 validation and handoff to explicit live activation planning."
+    },
+    {
+      "phaseId": "P87",
+      "title": "Explicit Live Activation Unlocks",
+      "track": "NEXUS_OS",
+      "order": 75.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "1931bb8",
+      "completedAt": "2026-05-20T00:44:39.896Z",
+      "summary": "Completed explicit live activation unlock readiness with contracts, secret/provider readiness, local dispatch admission, generated workspace admission, Live Unlocks UX, and final validation evidence.",
+      "checksRun": [
+        "npm run check:p877-final-validation",
+        "npm run check:p876-tests-docs-roadmap",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87 closes explicit live activation unlock readiness and UX. Actual execution remains blocked for a later explicitly scoped activation phase."
+      ],
+      "nextPhase": "P88",
+      "commandCenterVisible": true,
+      "label": "Explicit Live Activation Unlocks",
+      "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
+    },
+    {
+      "phaseId": "P87.1",
+      "title": "Explicit Activation Contract",
+      "track": "NEXUS_OS",
+      "order": 76.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "0d7cf27",
+      "completedAt": "2026-05-20T00:21:34.534Z",
+      "summary": "Defined explicit live activation contract lanes with required gates, evidence, blockers, rollback, validation, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p871-explicit-live-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.1 is contract-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled."
+      ],
+      "nextPhase": "P87.2",
+      "commandCenterVisible": true,
+      "label": "Explicit Activation Contract",
+      "detail": "Contract-only live activation lanes; no execution enabled."
+    },
+    {
+      "phaseId": "P87.2",
+      "title": "Secret / Provider Readiness",
+      "track": "NEXUS_OS",
+      "order": 77.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "88adc05",
+      "completedAt": "2026-05-20T00:25:32.662Z",
+      "summary": "Added redacted secret/provider readiness metadata for provider call and spend lanes without reading credentials, calling providers, opening network connections, or spending.",
+      "checksRun": [
+        "npm run check:p872-secret-provider-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.2 does not read .env files, store credentials, call providers or models, open network connections, activate tools, or spend."
+      ],
+      "nextPhase": "P87.3",
+      "commandCenterVisible": true,
+      "label": "Secret / Provider Readiness",
+      "detail": "Redacted provider readiness metadata; no secrets read and no provider calls enabled."
+    },
+    {
+      "phaseId": "P87.3",
+      "title": "Local Agent Dispatch Admission",
+      "track": "NEXUS_OS",
+      "order": 78.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "29eab80",
+      "completedAt": "2026-05-20T00:29:29.996Z",
+      "summary": "Added display-safe local agent dispatch admission lanes with scoped context packet shape, blockers, validation, evidence, activity, cost posture, and all dispatch/runtime flags false.",
+      "checksRun": [
+        "npm run check:p873-local-agent-dispatch-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.3 is admission metadata only. It does not dispatch agents, run workers, execute tools, mutate projects, call providers, or spend."
+      ],
+      "nextPhase": "P87.4",
+      "commandCenterVisible": true,
+      "label": "Local Agent Dispatch Admission",
+      "detail": "Local dispatch admission metadata; no agents dispatched."
+    },
+    {
+      "phaseId": "P87.4",
+      "title": "Generated Project Workspace Admission",
+      "track": "NEXUS_OS",
+      "order": 79.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "bdd1e8a",
+      "completedAt": "2026-05-20T00:32:57.310Z",
+      "summary": "Added generated project workspace admission boundaries with allowed future root, forbidden roots, required gates, blockers, validation, evidence, activity, cost posture, and all project write flags false.",
+      "checksRun": [
+        "npm run check:p874-generated-project-workspace-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.4 is workspace boundary metadata only. It does not create directories, write project files, mutate generated app Sources/Tests, deploy, package, or spend."
+      ],
+      "nextPhase": "P87.5",
+      "commandCenterVisible": true,
+      "label": "Generated Project Workspace Admission",
+      "detail": "Generated workspace boundary metadata; no project files created or mutated."
+    },
+    {
+      "phaseId": "P87.5",
+      "title": "Command Center Live Unlock UX",
+      "track": "NEXUS_OS",
+      "order": 80.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "ad539f2",
+      "completedAt": "2026-05-20T00:36:50.185Z",
+      "summary": "Added Command Center Live Readiness Live Unlocks tab for P87.1-P87.4 lanes with state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture without runnable actions.",
+      "checksRun": [
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.5 is UX only. Live unlock rows do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend."
+      ],
+      "nextPhase": "P87.6",
+      "commandCenterVisible": true,
+      "label": "Command Center Live Unlock UX",
+      "detail": "Live Readiness shows P87 unlock lanes as review-only records."
+    },
+    {
+      "phaseId": "P87.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 81.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "c6c02d3",
+      "completedAt": "2026-05-20T00:41:17.287Z",
+      "summary": "Aggregated P87.1-P87.5 scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p876-tests-docs-roadmap",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
+      ],
+      "nextPhase": "P87.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "Aggregate P87 validation evidence."
+    },
+    {
+      "phaseId": "P87.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 82.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "1931bb8",
+      "completedAt": "2026-05-20T00:44:39.896Z",
+      "summary": "Closed P87 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety posture.",
+      "checksRun": [
+        "npm run check:p877-final-validation",
+        "npm run check:p876-tests-docs-roadmap",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87 closes explicit live activation unlock readiness and UX. Actual execution remains blocked for a later explicitly scoped activation phase."
+      ],
+      "nextPhase": "P88",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P87 validation and handoff to the next scoped phase."
+    },
+    {
+      "phaseId": "P88",
+      "title": "Scoped Execution-Capable Activation",
+      "track": "NEXUS_OS",
+      "order": 83.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "478cc27",
+      "completedAt": "2026-05-20T01:31:00.000Z",
+      "summary": "Completed scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, Command Center scoped activation UX, validation aggregation, docs/roadmap closure, and final validation. Execution remains blocked until a later phase explicitly scopes and validates one narrow lane.",
+      "checksRun": [
+        "npm run check:p887-final-validation",
+        "npm run check:p886-docs-roadmap",
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "npm run check:p882-local-activation-request-model",
+        "npm run check:p881-scoped-execution-activation-profile",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88 is complete as activation readiness and admission evidence only. No executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+      ],
+      "nextPhase": "P89",
+      "commandCenterVisible": true,
+      "label": "Scoped Execution-Capable Activation",
+      "detail": "P88 final validation complete; execution remains blocked."
+    },
+    {
+      "phaseId": "P88.1",
+      "title": "Scoped Activation Profile / Contract",
+      "track": "NEXUS_OS",
+      "order": 84.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "0a6bd08",
+      "completedAt": "2026-05-20T00:51:45.092Z",
+      "summary": "Defined a local-only scoped execution-capable activation profile with future lanes, gates, evidence, blockers, disabled reason, owner, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.1 is profile-only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.2",
+      "commandCenterVisible": true,
+      "label": "Scoped Activation Profile",
+      "detail": "Local-only activation profile; no executor wired."
+    },
+    {
+      "phaseId": "P88.2",
+      "title": "Local Activation Request Model",
+      "track": "NEXUS_OS",
+      "order": 85.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "9d4b25a",
+      "completedAt": "2026-05-20T00:56:35.937Z",
+      "summary": "Defined local-only activation request records with requested operations, forbidden operations, evidence, blockers, disabled reason, owner, validation commands, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p882-local-activation-request-model",
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.2 is request-model only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.3",
+      "commandCenterVisible": true,
+      "label": "Local Activation Request Model",
+      "detail": "Local-only activation request records; no executor wired."
+    },
+    {
+      "phaseId": "P88.3",
+      "title": "Local Executor Admission",
+      "track": "NEXUS_OS",
+      "order": 86.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "cf87dcf",
+      "completedAt": "2026-05-20T01:01:33.913Z",
+      "summary": "Defined local executor admission records with executor state, evidence, rollback, post-run review, disabled reason, validation commands, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p883-local-executor-admission",
+        "npm run check:p882-local-activation-request-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.3 is executor admission only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.4",
+      "commandCenterVisible": true,
+      "label": "Local Executor Admission",
+      "detail": "Local executor admission records; executor cannot run."
+    },
+    {
+      "phaseId": "P88.4",
+      "title": "Command Center Scoped Activation UX",
+      "track": "NEXUS_OS",
+      "order": 87.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "4e20994",
+      "completedAt": "2026-05-20T01:07:05.518Z",
+      "summary": "Added Live Readiness Scoped Activation UX for P88 activation, request, and executor admission state with current state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture.",
+      "checksRun": [
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.4 is UX only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.5",
+      "commandCenterVisible": true,
+      "label": "Scoped Activation UX",
+      "detail": "Live Readiness shows scoped activation admission state without runnable actions."
+    },
+    {
+      "phaseId": "P88.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 88.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "18ac7cf",
+      "completedAt": "2026-05-20T01:16:22.717Z",
+      "summary": "Aggregated P88.1-P88.4 scripts, reports, package scripts, docs, roadmap/status records, Command Center scoped activation coverage, Playwright coverage, and safety posture.",
+      "checksRun": [
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.5 is validation aggregation only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "Aggregate P88 validation evidence."
+    },
+    {
+      "phaseId": "P88.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 89.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "d42f65d",
+      "completedAt": "2026-05-20T01:23:12.000Z",
+      "summary": "Closed P88 documentation, roadmap, contract, and status evidence before final validation.",
+      "checksRun": [
+        "npm run check:p886-docs-roadmap",
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "P88 docs and roadmap evidence closed."
+    },
+    {
+      "phaseId": "P88.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 90.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "478cc27",
+      "completedAt": "2026-05-20T01:31:00.000Z",
+      "summary": "Finalized P88 evidence validation, closed the parent P88 status, preserved Command Center scoped activation UX, and created P89 as the next planned handoff.",
+      "checksRun": [
+        "npm run check:p887-final-validation",
+        "npm run check:p886-docs-roadmap",
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.7 is final validation only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Final P88 validation and handoff complete."
+    },
+    {
+      "phaseId": "P89",
+      "title": "Governed Local Enterprise Runtime Handoff",
+      "track": "NEXUS_OS",
+      "order": 91.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "ce1974b",
+      "completedAt": "2026-05-20T02:44:00.000Z",
+      "summary": "Completed governed local enterprise runtime handoff with local-only profile, founder workstream envelope, dry-run records, Business Build Founder Dry Run UX, aggregate validation, docs-roadmap closure, and final validation. Runtime execution remains blocked.",
+      "checksRun": [
+        "npm run check:p897-final-validation",
+        "npm run check:p896-docs-roadmap",
+        "npm run check:p895-tests-checkers",
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "npm run check:p892-local-founder-workstream-runtime-envelope",
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89 is complete as a governed local-only runtime handoff. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90",
+      "commandCenterVisible": true,
+      "label": "Enterprise Runtime Handoff",
+      "detail": "P89 final validation complete; no execution enabled."
+    },
+    {
+      "phaseId": "P89.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 92.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "b56e571",
+      "completedAt": "2026-05-20T01:41:00.000Z",
+      "summary": "Defined a local enterprise runtime handoff profile with future founder workstream lanes, gates, missing evidence, forbidden operations, validation commands, evidence, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Local enterprise runtime handoff profile; no executor wired."
+    },
+    {
+      "phaseId": "P89.2",
+      "title": "Core Model",
+      "track": "NEXUS_OS",
+      "order": 93.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "d1e9285",
+      "completedAt": "2026-05-20T01:49:00.000Z",
+      "summary": "Defined a local founder workstream runtime envelope with founder interaction state, PRD state, agent lane plans, evidence, blockers, disabled reason, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p892-local-founder-workstream-runtime-envelope",
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.2 is a local envelope model only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.3",
+      "commandCenterVisible": true,
+      "label": "Core Model",
+      "detail": "Local founder workstream envelope; no agent dispatch."
+    },
+    {
+      "phaseId": "P89.3",
+      "title": "Preview / Safe Dry Run",
+      "track": "NEXUS_OS",
+      "order": 94.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "d52be03",
+      "completedAt": "2026-05-20T01:56:00.000Z",
+      "summary": "Defined local founder workstream dry-run records that preview founder Q&A, PRD readiness, agent lane planning, and operator review transitions without mutation or execution.",
+      "checksRun": [
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "npm run check:p892-local-founder-workstream-runtime-envelope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.3 is a local dry-run preview only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.4",
+      "commandCenterVisible": true,
+      "label": "Preview / Safe Dry Run",
+      "detail": "Local founder workstream dry run; no mutation."
+    },
+    {
+      "phaseId": "P89.4",
+      "title": "Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 95.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "e57794d",
+      "completedAt": "2026-05-20T02:05:00.000Z",
+      "summary": "Added Business Build Founder Dry Run UX showing founder workstream dry-run state, agent lane planning preview, inputs, outputs, blockers, next action, disabled reason, owner, evidence, activity, and cost posture.",
+      "checksRun": [
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build route renders founder workstream dry-run state\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.4 is UX only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.5",
+      "commandCenterVisible": true,
+      "label": "Command Center UX",
+      "detail": "Business Build shows Founder Dry Run state."
+    },
+    {
+      "phaseId": "P89.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 96.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "1eb469f",
+      "completedAt": "2026-05-20T02:18:00.000Z",
+      "summary": "Aggregated P89.1-P89.4 backend, UX, Playwright, docs, roadmap, and safety validation evidence; added a Founder Dry Run safety regression and tightened display-only disabled reason.",
+      "checksRun": [
+        "npm run check:p895-tests-checkers",
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.5 is validation aggregation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "P89 validation aggregated; no execution enabled."
+    },
+    {
+      "phaseId": "P89.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 97.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "f7fe65e",
+      "completedAt": "2026-05-20T02:31:00.000Z",
+      "summary": "Closed P89 docs, roadmap, contract, and phase-status evidence through P89.6 and prepared P89.7 final validation handoff.",
+      "checksRun": [
+        "npm run check:p896-docs-roadmap",
+        "npm run check:p895-tests-checkers",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "P89 docs and roadmap closure complete."
+    },
+    {
+      "phaseId": "P89.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 98.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "ce1974b",
+      "completedAt": "2026-05-20T02:44:00.000Z",
+      "summary": "Finalized P89 governed local enterprise runtime handoff validation, closed parent P89, and prepared P90 as the next scoped handoff.",
+      "checksRun": [
+        "npm run check:p897-final-validation",
+        "npm run check:p896-docs-roadmap",
+        "npm run check:p895-tests-checkers",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.7 is final validation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "P89 final validation complete."
+    },
+    {
+      "phaseId": "P90",
+      "title": "Governed Founder PRD Live Authoring Lane",
+      "track": "NEXUS_OS",
+      "order": 99.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "5a9fa47",
+      "completedAt": "2026-05-20T05:25:00.000Z",
+      "summary": "Completed the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Business Build Local PRD UX, aggregate validation, docs/roadmap closure, and final validation. Unsafe runtime execution remains blocked.",
+      "checksRun": [
+        "npm run check:p907-founder-prd-final",
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90 completes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91",
+      "commandCenterVisible": true,
+      "label": "Founder PRD Lane",
+      "detail": "P90 complete; local PRD authoring visible in Business Build."
+    },
+    {
+      "phaseId": "P90.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 100.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "c0fdfab",
+      "completedAt": "2026-05-20T03:02:00.000Z",
+      "summary": "Defined the governed local founder PRD live authoring lane contract, subphase split, allowed and forbidden files, future data shape, UX requirements, validation commands, and safety checks.",
+      "checksRun": [
+        "npm run check:p901-founder-prd-live-lane-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Founder PRD live lane contract; no execution enabled."
+    },
+    {
+      "phaseId": "P90.2",
+      "title": "Core Local PRD Model",
+      "track": "NEXUS_OS",
+      "order": 101.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "2165164",
+      "completedAt": "2026-05-20T03:18:00.000Z",
+      "summary": "Defined the deterministic local founder PRD authoring model with founder inputs, PRD sections, readiness evidence, local-only operations, blockers, owner, evidence, activity, cost posture, and all unsafe runtime flags false.",
+      "checksRun": [
+        "npm run check:p902-founder-prd-local-model",
+        "npm run check:p901-founder-prd-live-lane-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.2 is a local model only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.3",
+      "commandCenterVisible": true,
+      "label": "Core Local PRD Model",
+      "detail": "Local PRD model defined; no project writes."
+    },
+    {
+      "phaseId": "P90.3",
+      "title": "Safe Local PRD Authoring",
+      "track": "NEXUS_OS",
+      "order": 102.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "61926b7",
+      "completedAt": "2026-05-20T03:34:00.000Z",
+      "summary": "Added deterministic in-memory PRD authoring from the P90.2 local model with markdown, sections, acceptance criteria, review state, evidence, activity, cost posture, and unsafe runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p903-founder-prd-safe-authoring",
+        "npm run check:p902-founder-prd-local-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.3 authors a deterministic PRD artifact in memory only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.4",
+      "commandCenterVisible": true,
+      "label": "Safe Local PRD Authoring",
+      "detail": "In-memory PRD artifact authored; project writes blocked."
+    },
+    {
+      "phaseId": "P90.4",
+      "title": "Command Center PRD Lane UX",
+      "track": "NEXUS_OS",
+      "order": 103.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "23a29e9",
+      "completedAt": "2026-05-20T04:05:00.000Z",
+      "summary": "Added the Business Build Local PRD tab backed by safe in-memory PRD authoring, with review state, PRD sections, acceptance criteria, owner, evidence, activity, cost posture, and blocked unsafe operations.",
+      "checksRun": [
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:p903-founder-prd-safe-authoring",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.4 is Command Center UX only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.5",
+      "commandCenterVisible": true,
+      "label": "Command Center PRD UX",
+      "detail": "Local PRD artifact visible in Business Build; unsafe actions blocked."
+    },
+    {
+      "phaseId": "P90.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 104.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "043d1ee",
+      "completedAt": "2026-05-20T04:35:00.000Z",
+      "summary": "Added aggregate P90 founder PRD lane validation across contract, local model, safe authoring, Command Center UX, Playwright coverage, docs, roadmap, reports, status, and safety boundaries.",
+      "checksRun": [
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:p903-founder-prd-safe-authoring",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.5 is validation aggregation only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "P90 aggregate validation added; unsafe actions remain blocked."
+    },
+    {
+      "phaseId": "P90.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 105.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "fee1764",
+      "completedAt": "2026-05-20T05:00:00.000Z",
+      "summary": "Closed P90 docs, roadmap, contract, and phase-status evidence through P90.6 while preserving the Business Build Local PRD UX and blocked runtime boundary.",
+      "checksRun": [
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.6 is docs and roadmap closure only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "P90 docs and roadmap closure complete."
+    },
+    {
+      "phaseId": "P90.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 106.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "5a9fa47",
+      "completedAt": "2026-05-20T05:25:00.000Z",
+      "summary": "Finalized P90 founder PRD lane validation, closed parent P90, preserved Business Build Local PRD UX, and prepared P91 as the next scoped handoff.",
+      "checksRun": [
+        "npm run check:p907-founder-prd-final",
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.7 finalizes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "P90 final validation complete."
+    },
+    {
+      "phaseId": "P91",
+      "title": "Governed Founder Workstream Activation Planning",
+      "track": "NEXUS_OS",
+      "order": 107.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "cf1c157",
+      "completedAt": "2026-05-20T21:39:33.254Z",
+      "summary": "Completed governed founder workstream activation planning with contract, local activation model, safe local review packet, Command Center activation review UX, aggregate validation, docs closure, and final validation. Runtime execution remains blocked.",
+      "checksRun": [
+        "npm run check:p917-final-validation",
+        "npm run check:p916-docs-roadmap",
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91 is planning, review, UX, docs, and validation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P93",
+      "commandCenterVisible": true,
+      "label": "Founder Workstream Activation Planning",
+      "detail": "P91 final validation complete; P93 next."
+    },
+    {
+      "phaseId": "P91.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 108.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "eef1e13",
+      "completedAt": "2026-05-20T05:50:00.000Z",
+      "summary": "Defined the governed founder workstream activation planning contract, subphase split, future local data shape, UX requirements, validation commands, and safety checks.",
+      "checksRun": [
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Founder workstream activation planning contract; no execution enabled."
+    },
+    {
+      "phaseId": "P91.2",
+      "title": "Core Workstream Activation Model",
+      "track": "NEXUS_OS",
+      "order": 109.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "00e1801",
+      "completedAt": "2026-05-20T06:15:00.000Z",
+      "summary": "Added the deterministic local founder workstream activation planning model from the P90 PRD artifact with owner lanes, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.2 is a local model only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.3",
+      "commandCenterVisible": true,
+      "label": "Core Workstream Activation Model",
+      "detail": "Local activation planning model defined; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.3",
+      "title": "Safe Activation Review Packet",
+      "track": "NEXUS_OS",
+      "order": 110.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "1ee2f06",
+      "completedAt": "2026-05-20T06:35:00.000Z",
+      "summary": "Added safe local activation review packet with review items, operator checklist, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.3 is a local review packet only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.4",
+      "commandCenterVisible": true,
+      "label": "Safe Activation Review Packet",
+      "detail": "Local activation review packet defined; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.4",
+      "title": "Command Center Workstream Activation UX",
+      "track": "NEXUS_OS",
+      "order": 111.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "02e3ef6",
+      "completedAt": "2026-05-20T10:20:00.000Z",
+      "summary": "Added Business Build Activation Review UX for the local founder activation review packet with readiness, owner lanes, checklist, evidence, activity, cost posture, and blocked safety rows.",
+      "checksRun": [
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.4 is Command Center UX only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.5",
+      "commandCenterVisible": true,
+      "label": "Command Center Workstream Activation UX",
+      "detail": "Business Build activation review UX complete; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 112.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "8549cd0",
+      "completedAt": "2026-05-20T21:32:54.122Z",
+      "summary": "Added aggregate P91 validation across backend activation model, review packet, Command Center UX, Playwright coverage, docs, roadmap, status, and safety boundaries.",
+      "checksRun": [
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.5 is validation aggregation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "P91 aggregate validation complete; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 113.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "28d2aee",
+      "completedAt": "2026-05-20T21:36:50.460Z",
+      "summary": "Closed P91 docs, roadmap, contract, phase-status, and report evidence before final validation while preserving the display-only activation review boundary.",
+      "checksRun": [
+        "npm run check:p916-docs-roadmap",
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "P91 docs and roadmap closure complete; final validation next."
+    },
+    {
+      "phaseId": "P91.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 113.57,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "cf1c157",
+      "completedAt": "2026-05-20T21:39:33.254Z",
+      "summary": "Finalized P91 validation, closed the parent P91 status, preserved display-only Activation Review UX, and handed the active roadmap back to P93.",
+      "checksRun": [
+        "npm run check:p917-final-validation",
+        "npm run check:p916-docs-roadmap",
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.7 is final validation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P93",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "P91 final validation complete; P93 handoff restored."
+    },
+    {
+      "phaseId": "P92",
+      "title": "Local SQLite Runtime",
+      "track": "NEXUS_OS",
+      "order": 114.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "09c48a3",
+      "completedAt": "2026-05-20T12:34:51.000Z",
+      "summary": "Completed local SQLite runtime lane with guarded initialization, schema-driven CRUD, SQLite-backed repository reads, governed evidence/audit/activity ledger writes, display-safe Command Center DB live-state UX, local backup maintenance, and final validation.",
+      "checksRun": [
+        "npm run check:p927-sqlite-final-validation",
+        "npm run check:p926-sqlite-maintenance-closure",
+        "npm run check:p925-command-center-db-live-state-ux",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92 closes local SQLite runtime readiness. Hosted DBs, general entity mutation, provider calls, worker execution, project mutation, deploy, package, export, network calls, and provider spend remain blocked."
+      ],
+      "nextPhase": "P93",
+      "commandCenterVisible": true,
+      "label": "Local SQLite Runtime",
+      "detail": "Local SQLite runtime lane complete; P93 planned next."
+    },
+    {
+      "phaseId": "P92.1",
+      "title": "Local SQLite Runtime Foundation",
+      "track": "NEXUS_OS",
+      "order": 115.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "6e116de",
+      "completedAt": "2026-05-20T10:45:00.000Z",
+      "summary": "Added guarded local SQLite runtime config, schema transformation, init command, health reporting, and validation while preserving non-writing defaults.",
+      "checksRun": [
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:db-foundation",
+        "npm run db:init:sqlite",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.1 initializes a local SQLite DB only. Runtime repositories still use file-backed reads until later P92 subphases wire selected SQLite reads and governed writes."
+      ],
+      "nextPhase": "P92.2",
+      "commandCenterVisible": true,
+      "label": "Local SQLite Runtime Foundation",
+      "detail": "SQLite init foundation complete; repository wiring pending."
+    },
+    {
+      "phaseId": "P92.2",
+      "title": "SQLite CRUD Repository Core",
+      "track": "NEXUS_OS",
+      "order": 116.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "678abbe",
+      "completedAt": "2026-05-20T12:05:36.000Z",
+      "summary": "Added guarded schema-driven SQLite CRUD repository core for NEXUS OS entities with entity/field allowlists, local write gates, array serialization, and CRUD validation.",
+      "checksRun": [
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "git diff --check",
+        "npm run check:phase-validation-coverage"
+      ],
+      "knownLimitations": [
+        "P92.2 provides the CRUD core only. Runtime routes and Command Center screens remain wired in later P92 subphases."
+      ],
+      "nextPhase": "P92.3",
+      "commandCenterVisible": true,
+      "label": "SQLite CRUD Repository Core",
+      "detail": "Schema-driven SQLite CRUD core complete; runtime route wiring pending."
+    },
+    {
+      "phaseId": "P92.3",
+      "title": "SQLite Runtime Read Wiring",
+      "track": "NEXUS_OS",
+      "order": 117.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "7a60b87",
+      "completedAt": "2026-05-20T12:12:31.000Z",
+      "summary": "Wired selected NEXUS OS repository reads to local SQLite when sqlite-live mode is initialized, while preserving file-backed fallback and keeping runtime writes blocked.",
+      "checksRun": [
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.3 wires repository reads only. Governed runtime writes and Command Center DB live-state UX remain pending."
+      ],
+      "nextPhase": "P92.4",
+      "commandCenterVisible": true,
+      "label": "SQLite Runtime Reads",
+      "detail": "SQLite repository read wiring complete; governed writes pending."
+    },
+    {
+      "phaseId": "P92.4",
+      "title": "Governed SQLite Runtime Writes",
+      "track": "NEXUS_OS",
+      "order": 118.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "0a7ade8",
+      "completedAt": "2026-05-20T12:17:40.000Z",
+      "summary": "Added governed SQLite write bridge for evidence, audit, and activity/runtime event ledgers with explicit local DB write flags and file-backed append fallback preserved.",
+      "checksRun": [
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.4 limits SQLite writes to evidence, audit, and activity/runtime event ledgers. Broader entity mutation remains blocked."
+      ],
+      "nextPhase": "P92.5",
+      "commandCenterVisible": true,
+      "label": "SQLite Governed Writes",
+      "detail": "Governed runtime ledger writes complete; DB live-state UX pending."
+    },
+    {
+      "phaseId": "P92.5",
+      "title": "Command Center DB Live State UX",
+      "track": "NEXUS_OS",
+      "order": 119.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "0510353",
+      "completedAt": "2026-05-20T12:24:41.000Z",
+      "summary": "Updated Command Center Durable State DB Runtime UX to show display-safe local SQLite readiness, read wiring, governed ledger write scope, blockers, owner capability, evidence locations, next action, and cost impact.",
+      "checksRun": [
+        "npm run check:p925-command-center-db-live-state-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "browser verification on /command-center/database",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.5 is display-only UX. It does not add DB toggles, hosted DB setup, migrations, general mutation, provider calls, deploy, package, or spend actions."
+      ],
+      "nextPhase": "P92.6",
+      "commandCenterVisible": true,
+      "label": "DB Live State UX",
+      "detail": "Display-safe local SQLite live-state UX complete; migration and backup closure pending."
+    },
+    {
+      "phaseId": "P92.6",
+      "title": "SQLite Migration Backup Docs Closure",
+      "track": "NEXUS_OS",
+      "order": 120.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "00a1ee5",
+      "completedAt": "2026-05-20T12:30:29.000Z",
+      "summary": "Added local-only SQLite backup maintenance with dry-run defaults, explicit apply, backup path guarding, documentation, and validation coverage.",
+      "checksRun": [
+        "npm run check:p926-sqlite-maintenance-closure",
+        "npm run check:p925-command-center-db-live-state-ux",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.6 adds local backup maintenance only. Hosted DB migration, production DBs, and project mutation remain blocked."
+      ],
+      "nextPhase": "P92.7",
+      "commandCenterVisible": true,
+      "label": "SQLite Migration Closure",
+      "detail": "Local SQLite maintenance closure complete; final validation pending."
+    },
+    {
+      "phaseId": "P92.7",
+      "title": "Local SQLite Runtime Final Validation",
+      "track": "NEXUS_OS",
+      "order": 121.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "09c48a3",
+      "completedAt": "2026-05-20T12:34:51.000Z",
+      "summary": "Closed P92 with final validation across SQLite foundation, CRUD, read wiring, governed writes, Command Center DB live-state UX, backup maintenance, docs, roadmap, and safety boundaries.",
+      "checksRun": [
+        "npm run check:p927-sqlite-final-validation",
+        "npm run check:p926-sqlite-maintenance-closure",
+        "npm run check:p925-command-center-db-live-state-ux",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P92.7 is validation closure only. Hosted DBs and broader runtime mutation remain blocked for later explicit phases."
+      ],
+      "nextPhase": "P93",
+      "commandCenterVisible": true,
+      "label": "SQLite Final Validation",
+      "detail": "Final validation complete; next phase planned."
+    },
+    {
+      "phaseId": "P93",
+      "title": "Enterprise Live Runtime Expansion",
+      "track": "NEXUS_OS",
+      "order": 122.07,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Enterprise live-runtime expansion is in progress with the execution contract complete. Governed local SQLite CRUD remains split into later subphases.",
+      "checksRun": [
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P93 is in progress. P93.1 is contract-only and does not modify db/**, enable DB writes, dispatch agents, mutate projects, call providers/models, deploy, use network calls, package, or spend."
+      ],
+      "nextPhase": "P93.2",
+      "commandCenterVisible": true,
+      "label": "Enterprise Live Runtime Expansion",
+      "detail": "P93.1 contract complete; P93.2 next."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.1",
+      "title": "Schema / Policy / Contract",
+      "order": 123.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T21:44:06.143Z",
+      "summary": "Defined the P93 enterprise live-runtime expansion contract, subphase split, future local CRUD data shapes, Command Center UX requirements, validation commands, and safety checks.",
+      "checksRun": [
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P93.1 is contract-only. It does not modify db/**, run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P93.2",
+      "label": "Schema / Policy / Contract",
+      "detail": "P93 contract defined; no mutation enabled."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.2",
+      "title": "Enterprise Runtime CRUD Plan Model",
+      "order": 124.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned local enterprise runtime CRUD plan model for DB-backed founder/session/PRD/workstream/action-state lanes.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime mutation remains blocked."
+      ],
+      "nextPhase": "P93.3",
+      "label": "Runtime CRUD Plan",
+      "detail": "Planned local CRUD plan model."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.3",
+      "title": "Governed Runtime Mutation Request Model",
+      "order": 125.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned governed local SQLite mutation request envelopes for explicitly scoped OS runtime entities.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime mutation remains blocked."
+      ],
+      "nextPhase": "P93.4",
+      "label": "Mutation Request Model",
+      "detail": "Planned governed mutation request model."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.4",
+      "title": "Local CRUD Execution Admission",
+      "order": 126.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned allowed local SQLite CRUD execution for approved OS runtime entities only.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Provider, project, worker, deploy, network, and spend actions remain blocked."
+      ],
+      "nextPhase": "P93.5",
+      "label": "CRUD Admission",
+      "detail": "Planned local CRUD admission."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.5",
+      "title": "Command Center Live Runtime UX",
+      "order": 127.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned Command Center DB-backed live-runtime UX without raw IDs or fake actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P93.6",
+      "label": "Live Runtime UX",
+      "detail": "Planned DB-backed runtime UX."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.6",
+      "title": "Tests / Docs / Roadmap",
+      "order": 128.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P93 tests, docs, roadmap, checker, and safety evidence aggregation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P93.7",
+      "label": "Tests / Docs / Roadmap",
+      "detail": "Planned validation aggregation."
+    },
+    {
+      "track": "NEXUS_OS",
+      "commandCenterVisible": true,
+      "phaseId": "P93.7",
+      "title": "Final Validation",
+      "order": 129.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P93 final validation and next scoped handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P94",
+      "label": "Final Validation",
+      "detail": "Planned final validation."
+    },
+    {
       "phaseId": "P26-P41",
       "title": "Completed Foundation",
       "track": "NEXUS_OS",
@@ -8877,35 +10677,6 @@
       "commandCenterVisible": true
     },
     {
-      "phaseId": "P85",
-      "title": "Enterprise Founder Business Runtime",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6627103",
-      "completedAt": "2026-05-19T23:45:46.730Z",
-      "summary": "Completed governed local enterprise founder business runtime with multi-turn founder chat, local PRD review gate, non-dispatching task board, consolidated Lite UX, and final validation evidence.",
-      "checksRun": [
-        "npm run check:p857-final-validation",
-        "npm run check:p856-tests-docs-roadmap",
-        "npm run check:p85-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P85 closes local founder business runtime planning and UX only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
-      ],
-      "nextPhase": "P86",
-      "commandCenterVisible": true,
-      "order": 1,
-      "label": "Enterprise Founder Business Runtime",
-      "detail": "Governed local founder business runtime sessions, PRD review, and local agent task planning before execution unlock phases."
-    },
-    {
       "phaseId": "P85.1",
       "title": "Runtime Session Contract",
       "track": "NEXUS_OS",
@@ -8974,1640 +10745,12 @@
       ],
       "nextPhase": "P85.4",
       "commandCenterVisible": true
-    },
-    {
-      "phaseId": "P85.4",
-      "title": "Local Agent Task Board Admission",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "73c8625",
-      "completedAt": "2026-05-19T23:29:20.463Z",
-      "summary": "Added display-safe non-dispatching local agent task board admission with owner, state, blocker, next input, and validation command per lane.",
-      "checksRun": [
-        "npm run check:p854-task-board-admission",
-        "npm run check:p85-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "dashboard build",
-        "Playwright Lite local task board"
-      ],
-      "knownLimitations": [
-        "Planning tasks only; no agent dispatch, worker/tool execution, project mutation, DB writes, deploy, package, or spend."
-      ],
-      "nextPhase": "P85.5",
-      "commandCenterVisible": true,
-      "track": "NEXUS_OS",
-      "order": 63.07,
-      "label": "Local Agent Task Board Admission",
-      "detail": "Non-dispatching local task board admission for approved PRD workstreams."
-    },
-    {
-      "phaseId": "P85.5",
-      "title": "Command Center Business Runtime UX",
-      "track": "NEXUS_OS",
-      "order": 64.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7ecc63c",
-      "completedAt": "2026-05-19T23:34:27.736Z",
-      "summary": "Added Founder Lite workflow summary for chat, PRD review, local task board, and next action.",
-      "checksRun": [
-        "npm run check:p855-command-center-business-runtime-ux",
-        "npm run check:p85-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "dashboard build",
-        "Playwright Lite founder workflow summary"
-      ],
-      "knownLimitations": [
-        "UX consolidation only; no provider/model calls, dispatch, workers/tools, project mutation, DB writes, deploy, package, or spend."
-      ],
-      "nextPhase": "P85.6",
-      "commandCenterVisible": true,
-      "label": "Command Center Business Runtime UX",
-      "detail": "Founder-facing runtime UX consolidation for chat, PRD review, and local task board."
-    },
-    {
-      "phaseId": "P85.6",
-      "title": "Tests / Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 65.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "736823a",
-      "completedAt": "2026-05-19T23:38:57.674Z",
-      "summary": "Aggregated P85 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
-      "checksRun": [
-        "npm run check:p856-tests-docs-roadmap",
-        "npm run check:p85-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage"
-      ],
-      "knownLimitations": [
-        "Aggregation only; execution-capable actions remain disabled."
-      ],
-      "nextPhase": "P85.7",
-      "commandCenterVisible": true,
-      "label": "Tests / Docs / Roadmap",
-      "detail": "P85 validation, documentation, and roadmap aggregation."
-    },
-    {
-      "phaseId": "P85.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 66.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6627103",
-      "completedAt": "2026-05-19T23:45:46.730Z",
-      "summary": "Closed P85 with final validation across scripts, reports, package scripts, docs, roadmap/status records, Command Center Lite UX, and safety posture.",
-      "checksRun": [
-        "npm run check:p857-final-validation",
-        "npm run check:p856-tests-docs-roadmap",
-        "npm run check:p85-execution-plan",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Command Center Lite route renders (interactive founder chat|PRD review gate|local task board|founder workflow summary)\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P85 closes local founder business runtime planning and UX only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled until later explicit phases."
-      ],
-      "nextPhase": "P86",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Final P85 validation and P86 handoff."
-    },
-    {
-      "phaseId": "P86",
-      "title": "Governed Live Capability Admission",
-      "track": "NEXUS_OS",
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "be839d5",
-      "completedAt": "2026-05-20T00:15:17.202Z",
-      "summary": "Completed governed live capability admission with admission inventory, state resolver, local approval queue, activation dry-run records, Command Center UX, and final validation evidence.",
-      "checksRun": [
-        "npm run check:p867-final-validation",
-        "npm run check:p866-tests-docs-roadmap",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
-      ],
-      "nextPhase": "P87",
-      "commandCenterVisible": true,
-      "order": 67.07,
-      "label": "Governed Live Capability Admission",
-      "detail": "Explicit safety-gated admission for live capabilities after local founder runtime closure."
-    },
-    {
-      "phaseId": "P86.1",
-      "title": "Schema / Policy / Contract",
-      "track": "NEXUS_OS",
-      "order": 68.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bb29267",
-      "completedAt": "2026-05-19T23:51:56.368Z",
-      "summary": "Added governed live capability admission inventory with display-safe owner, state, next action, blockers, evidence, activity, cost, and all runtime flags blocked.",
-      "checksRun": [
-        "npm run check:p861-live-capability-admission",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.1 is admission inventory only.",
-        "Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P86.2",
-      "commandCenterVisible": true,
-      "label": "Schema / Policy / Contract",
-      "detail": "Governed live capability admission inventory and contract."
-    },
-    {
-      "phaseId": "P86.2",
-      "title": "Capability State Resolver",
-      "track": "NEXUS_OS",
-      "order": 69.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "53af8ca",
-      "completedAt": "2026-05-19T23:55:29.629Z",
-      "summary": "Added deterministic live capability state resolution with activation state, risk, reasons, required-before-live gates, and blocked runtime flags.",
-      "checksRun": [
-        "npm run check:p862-capability-state-resolver",
-        "npm run check:p861-live-capability-admission",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.2 resolves live capability states only.",
-        "Activation requests, provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P86.3",
-      "commandCenterVisible": true,
-      "label": "Capability State Resolver",
-      "detail": "Resolve capability rows into operator-facing activation states without executing actions."
-    },
-    {
-      "phaseId": "P86.3",
-      "title": "Operator Approval Queue",
-      "track": "NEXUS_OS",
-      "order": 70.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3ac3363",
-      "completedAt": "2026-05-19T23:58:58.726Z",
-      "summary": "Added local operator approval queue records with expiry posture, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
-      "checksRun": [
-        "npm run check:p863-operator-approval-queue",
-        "npm run check:p862-capability-state-resolver",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.3 creates local approval queue records only.",
-        "Approvals cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P86.4",
-      "commandCenterVisible": true,
-      "label": "Operator Approval Queue",
-      "detail": "Local approval queue records with expiry, rollback, and validation requirements."
-    },
-    {
-      "phaseId": "P86.4",
-      "title": "Command Center UX",
-      "track": "NEXUS_OS",
-      "order": 71.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fd08b5b",
-      "completedAt": "2026-05-20T00:05:33.067Z",
-      "summary": "Added Live Readiness approval queue UX with local queue records, owner, evidence, next action, disabled reason, and cost posture.",
-      "checksRun": [
-        "npm run check:p864-command-center-live-admission-ux",
-        "npm run check:p863-operator-approval-queue",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.4 is Command Center UX only.",
-        "Approval queue records cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P86.5",
-      "commandCenterVisible": true,
-      "label": "Command Center UX",
-      "detail": "Command Center live capability state UX without raw IDs or fake runnable actions."
-    },
-    {
-      "phaseId": "P86.5",
-      "title": "Activation Dry Run",
-      "track": "NEXUS_OS",
-      "order": 72.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3e853ed",
-      "completedAt": "2026-05-20T00:09:45.990Z",
-      "summary": "Added activation dry-run records with blockers, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
-      "checksRun": [
-        "npm run check:p865-activation-dry-run",
-        "npm run check:p864-command-center-live-admission-ux",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.5 creates activation dry-run records only.",
-        "Activation and execution remain blocked. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
-      ],
-      "nextPhase": "P86.6",
-      "commandCenterVisible": true,
-      "label": "Activation Dry Run",
-      "detail": "Activation intent dry-run records while live actions remain disabled."
-    },
-    {
-      "phaseId": "P86.6",
-      "title": "Tests / Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 73.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8c2b438",
-      "completedAt": "2026-05-20T00:11:59.917Z",
-      "summary": "Aggregated P86 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
-      "checksRun": [
-        "npm run check:p866-tests-docs-roadmap",
-        "npm run check:p865-activation-dry-run",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
-      ],
-      "nextPhase": "P86.7",
-      "commandCenterVisible": true,
-      "label": "Tests / Docs / Roadmap",
-      "detail": "Aggregate P86 validation evidence."
-    },
-    {
-      "phaseId": "P86.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 74.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "be839d5",
-      "completedAt": "2026-05-20T00:15:17.202Z",
-      "summary": "Closed P86 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Readiness queue coverage, and safety posture.",
-      "checksRun": [
-        "npm run check:p867-final-validation",
-        "npm run check:p866-tests-docs-roadmap",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
-      ],
-      "nextPhase": "P87",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Final P86 validation and handoff to explicit live activation planning."
-    },
-    {
-      "phaseId": "P87",
-      "title": "Explicit Live Activation Unlocks",
-      "track": "NEXUS_OS",
-      "order": 75.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1931bb8",
-      "completedAt": "2026-05-20T00:44:39.896Z",
-      "summary": "Completed explicit live activation unlock readiness with contracts, secret/provider readiness, local dispatch admission, generated workspace admission, Live Unlocks UX, and final validation evidence.",
-      "checksRun": [
-        "npm run check:p877-final-validation",
-        "npm run check:p876-tests-docs-roadmap",
-        "npm run check:p875-command-center-live-unlock-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87 closes explicit live activation unlock readiness and UX. Actual execution remains blocked for a later explicitly scoped activation phase."
-      ],
-      "nextPhase": "P88",
-      "commandCenterVisible": true,
-      "label": "Explicit Live Activation Unlocks",
-      "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
-    },
-    {
-      "phaseId": "P87.1",
-      "title": "Explicit Activation Contract",
-      "track": "NEXUS_OS",
-      "order": 76.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0d7cf27",
-      "completedAt": "2026-05-20T00:21:34.534Z",
-      "summary": "Defined explicit live activation contract lanes with required gates, evidence, blockers, rollback, validation, activity, cost posture, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p871-explicit-live-activation-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.1 is contract-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled."
-      ],
-      "nextPhase": "P87.2",
-      "commandCenterVisible": true,
-      "label": "Explicit Activation Contract",
-      "detail": "Contract-only live activation lanes; no execution enabled."
-    },
-    {
-      "phaseId": "P87.2",
-      "title": "Secret / Provider Readiness",
-      "track": "NEXUS_OS",
-      "order": 77.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "88adc05",
-      "completedAt": "2026-05-20T00:25:32.662Z",
-      "summary": "Added redacted secret/provider readiness metadata for provider call and spend lanes without reading credentials, calling providers, opening network connections, or spending.",
-      "checksRun": [
-        "npm run check:p872-secret-provider-readiness",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.2 does not read .env files, store credentials, call providers or models, open network connections, activate tools, or spend."
-      ],
-      "nextPhase": "P87.3",
-      "commandCenterVisible": true,
-      "label": "Secret / Provider Readiness",
-      "detail": "Redacted provider readiness metadata; no secrets read and no provider calls enabled."
-    },
-    {
-      "phaseId": "P87.3",
-      "title": "Local Agent Dispatch Admission",
-      "track": "NEXUS_OS",
-      "order": 78.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "29eab80",
-      "completedAt": "2026-05-20T00:29:29.996Z",
-      "summary": "Added display-safe local agent dispatch admission lanes with scoped context packet shape, blockers, validation, evidence, activity, cost posture, and all dispatch/runtime flags false.",
-      "checksRun": [
-        "npm run check:p873-local-agent-dispatch-admission",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.3 is admission metadata only. It does not dispatch agents, run workers, execute tools, mutate projects, call providers, or spend."
-      ],
-      "nextPhase": "P87.4",
-      "commandCenterVisible": true,
-      "label": "Local Agent Dispatch Admission",
-      "detail": "Local dispatch admission metadata; no agents dispatched."
-    },
-    {
-      "phaseId": "P87.4",
-      "title": "Generated Project Workspace Admission",
-      "track": "NEXUS_OS",
-      "order": 79.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bdd1e8a",
-      "completedAt": "2026-05-20T00:32:57.310Z",
-      "summary": "Added generated project workspace admission boundaries with allowed future root, forbidden roots, required gates, blockers, validation, evidence, activity, cost posture, and all project write flags false.",
-      "checksRun": [
-        "npm run check:p874-generated-project-workspace-admission",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.4 is workspace boundary metadata only. It does not create directories, write project files, mutate generated app Sources/Tests, deploy, package, or spend."
-      ],
-      "nextPhase": "P87.5",
-      "commandCenterVisible": true,
-      "label": "Generated Project Workspace Admission",
-      "detail": "Generated workspace boundary metadata; no project files created or mutated."
-    },
-    {
-      "phaseId": "P87.5",
-      "title": "Command Center Live Unlock UX",
-      "track": "NEXUS_OS",
-      "order": 80.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ad539f2",
-      "completedAt": "2026-05-20T00:36:50.185Z",
-      "summary": "Added Command Center Live Readiness Live Unlocks tab for P87.1-P87.4 lanes with state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture without runnable actions.",
-      "checksRun": [
-        "npm run check:p875-command-center-live-unlock-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.5 is UX only. Live unlock rows do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend."
-      ],
-      "nextPhase": "P87.6",
-      "commandCenterVisible": true,
-      "label": "Command Center Live Unlock UX",
-      "detail": "Live Readiness shows P87 unlock lanes as review-only records."
-    },
-    {
-      "phaseId": "P87.6",
-      "title": "Tests / Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 81.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c6c02d3",
-      "completedAt": "2026-05-20T00:41:17.287Z",
-      "summary": "Aggregated P87.1-P87.5 scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety evidence.",
-      "checksRun": [
-        "npm run check:p876-tests-docs-roadmap",
-        "npm run check:p875-command-center-live-unlock-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
-      ],
-      "nextPhase": "P87.7",
-      "commandCenterVisible": true,
-      "label": "Tests / Docs / Roadmap",
-      "detail": "Aggregate P87 validation evidence."
-    },
-    {
-      "phaseId": "P87.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 82.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1931bb8",
-      "completedAt": "2026-05-20T00:44:39.896Z",
-      "summary": "Closed P87 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety posture.",
-      "checksRun": [
-        "npm run check:p877-final-validation",
-        "npm run check:p876-tests-docs-roadmap",
-        "npm run check:p875-command-center-live-unlock-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P87 closes explicit live activation unlock readiness and UX. Actual execution remains blocked for a later explicitly scoped activation phase."
-      ],
-      "nextPhase": "P88",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Final P87 validation and handoff to the next scoped phase."
-    },
-    {
-      "phaseId": "P88",
-      "title": "Scoped Execution-Capable Activation",
-      "track": "NEXUS_OS",
-      "order": 83.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "478cc27",
-      "completedAt": "2026-05-20T01:31:00.000Z",
-      "summary": "Completed scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, Command Center scoped activation UX, validation aggregation, docs/roadmap closure, and final validation. Execution remains blocked until a later phase explicitly scopes and validates one narrow lane.",
-      "checksRun": [
-        "npm run check:p887-final-validation",
-        "npm run check:p886-docs-roadmap",
-        "npm run check:p885-tests-checkers-docs",
-        "npm run check:p884-command-center-scoped-activation-ux",
-        "npm run check:p883-local-executor-admission",
-        "npm run check:p882-local-activation-request-model",
-        "npm run check:p881-scoped-execution-activation-profile",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88 is complete as activation readiness and admission evidence only. No executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
-      ],
-      "nextPhase": "P89",
-      "commandCenterVisible": true,
-      "label": "Scoped Execution-Capable Activation",
-      "detail": "P88 final validation complete; execution remains blocked."
-    },
-    {
-      "phaseId": "P88.1",
-      "title": "Scoped Activation Profile / Contract",
-      "track": "NEXUS_OS",
-      "order": 84.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0a6bd08",
-      "completedAt": "2026-05-20T00:51:45.092Z",
-      "summary": "Defined a local-only scoped execution-capable activation profile with future lanes, gates, evidence, blockers, disabled reason, owner, activity, cost posture, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p881-scoped-execution-activation-profile",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.1 is profile-only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.2",
-      "commandCenterVisible": true,
-      "label": "Scoped Activation Profile",
-      "detail": "Local-only activation profile; no executor wired."
-    },
-    {
-      "phaseId": "P88.2",
-      "title": "Local Activation Request Model",
-      "track": "NEXUS_OS",
-      "order": 85.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9d4b25a",
-      "completedAt": "2026-05-20T00:56:35.937Z",
-      "summary": "Defined local-only activation request records with requested operations, forbidden operations, evidence, blockers, disabled reason, owner, validation commands, activity, cost posture, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p882-local-activation-request-model",
-        "npm run check:p881-scoped-execution-activation-profile",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.2 is request-model only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.3",
-      "commandCenterVisible": true,
-      "label": "Local Activation Request Model",
-      "detail": "Local-only activation request records; no executor wired."
-    },
-    {
-      "phaseId": "P88.3",
-      "title": "Local Executor Admission",
-      "track": "NEXUS_OS",
-      "order": 86.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "cf87dcf",
-      "completedAt": "2026-05-20T01:01:33.913Z",
-      "summary": "Defined local executor admission records with executor state, evidence, rollback, post-run review, disabled reason, validation commands, activity, cost posture, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p883-local-executor-admission",
-        "npm run check:p882-local-activation-request-model",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.3 is executor admission only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.4",
-      "commandCenterVisible": true,
-      "label": "Local Executor Admission",
-      "detail": "Local executor admission records; executor cannot run."
-    },
-    {
-      "phaseId": "P88.4",
-      "title": "Command Center Scoped Activation UX",
-      "track": "NEXUS_OS",
-      "order": 87.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4e20994",
-      "completedAt": "2026-05-20T01:07:05.518Z",
-      "summary": "Added Live Readiness Scoped Activation UX for P88 activation, request, and executor admission state with current state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture.",
-      "checksRun": [
-        "npm run check:p884-command-center-scoped-activation-ux",
-        "npm run check:p883-local-executor-admission",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.4 is UX only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.5",
-      "commandCenterVisible": true,
-      "label": "Scoped Activation UX",
-      "detail": "Live Readiness shows scoped activation admission state without runnable actions."
-    },
-    {
-      "phaseId": "P88.5",
-      "title": "Tests / Checkers",
-      "track": "NEXUS_OS",
-      "order": 88.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "18ac7cf",
-      "completedAt": "2026-05-20T01:16:22.717Z",
-      "summary": "Aggregated P88.1-P88.4 scripts, reports, package scripts, docs, roadmap/status records, Command Center scoped activation coverage, Playwright coverage, and safety posture.",
-      "checksRun": [
-        "npm run check:p885-tests-checkers-docs",
-        "npm run check:p884-command-center-scoped-activation-ux",
-        "npm run check:p883-local-executor-admission",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.5 is validation aggregation only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.6",
-      "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "Aggregate P88 validation evidence."
-    },
-    {
-      "phaseId": "P88.6",
-      "title": "Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 89.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d42f65d",
-      "completedAt": "2026-05-20T01:23:12.000Z",
-      "summary": "Closed P88 documentation, roadmap, contract, and status evidence before final validation.",
-      "checksRun": [
-        "npm run check:p886-docs-roadmap",
-        "npm run check:p885-tests-checkers-docs",
-        "npm run check:p884-command-center-scoped-activation-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P88.7",
-      "commandCenterVisible": true,
-      "label": "Docs / Roadmap",
-      "detail": "P88 docs and roadmap evidence closed."
-    },
-    {
-      "phaseId": "P88.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 90.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "478cc27",
-      "completedAt": "2026-05-20T01:31:00.000Z",
-      "summary": "Finalized P88 evidence validation, closed the parent P88 status, preserved Command Center scoped activation UX, and created P89 as the next planned handoff.",
-      "checksRun": [
-        "npm run check:p887-final-validation",
-        "npm run check:p886-docs-roadmap",
-        "npm run check:p885-tests-checkers-docs",
-        "npm run check:p884-command-center-scoped-activation-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P88.7 is final validation only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Final P88 validation and handoff complete."
-    },
-    {
-      "phaseId": "P89",
-      "title": "Governed Local Enterprise Runtime Handoff",
-      "track": "NEXUS_OS",
-      "order": 91.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ce1974b",
-      "completedAt": "2026-05-20T02:44:00.000Z",
-      "summary": "Completed governed local enterprise runtime handoff with local-only profile, founder workstream envelope, dry-run records, Business Build Founder Dry Run UX, aggregate validation, docs-roadmap closure, and final validation. Runtime execution remains blocked.",
-      "checksRun": [
-        "npm run check:p897-final-validation",
-        "npm run check:p896-docs-roadmap",
-        "npm run check:p895-tests-checkers",
-        "npm run check:p894-command-center-founder-workstream-ux",
-        "npm run check:p893-local-founder-workstream-dry-run",
-        "npm run check:p892-local-founder-workstream-runtime-envelope",
-        "npm run check:p891-local-enterprise-runtime-handoff-profile",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89 is complete as a governed local-only runtime handoff. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90",
-      "commandCenterVisible": true,
-      "label": "Enterprise Runtime Handoff",
-      "detail": "P89 final validation complete; no execution enabled."
-    },
-    {
-      "phaseId": "P89.1",
-      "title": "Schema / Policy / Contract",
-      "track": "NEXUS_OS",
-      "order": 92.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b56e571",
-      "completedAt": "2026-05-20T01:41:00.000Z",
-      "summary": "Defined a local enterprise runtime handoff profile with future founder workstream lanes, gates, missing evidence, forbidden operations, validation commands, evidence, activity, cost posture, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p891-local-enterprise-runtime-handoff-profile",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.2",
-      "commandCenterVisible": true,
-      "label": "Schema / Policy / Contract",
-      "detail": "Local enterprise runtime handoff profile; no executor wired."
-    },
-    {
-      "phaseId": "P89.2",
-      "title": "Core Model",
-      "track": "NEXUS_OS",
-      "order": 93.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d1e9285",
-      "completedAt": "2026-05-20T01:49:00.000Z",
-      "summary": "Defined a local founder workstream runtime envelope with founder interaction state, PRD state, agent lane plans, evidence, blockers, disabled reason, and all runtime flags false.",
-      "checksRun": [
-        "npm run check:p892-local-founder-workstream-runtime-envelope",
-        "npm run check:p891-local-enterprise-runtime-handoff-profile",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.2 is a local envelope model only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.3",
-      "commandCenterVisible": true,
-      "label": "Core Model",
-      "detail": "Local founder workstream envelope; no agent dispatch."
-    },
-    {
-      "phaseId": "P89.3",
-      "title": "Preview / Safe Dry Run",
-      "track": "NEXUS_OS",
-      "order": 94.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "d52be03",
-      "completedAt": "2026-05-20T01:56:00.000Z",
-      "summary": "Defined local founder workstream dry-run records that preview founder Q&A, PRD readiness, agent lane planning, and operator review transitions without mutation or execution.",
-      "checksRun": [
-        "npm run check:p893-local-founder-workstream-dry-run",
-        "npm run check:p892-local-founder-workstream-runtime-envelope",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.3 is a local dry-run preview only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.4",
-      "commandCenterVisible": true,
-      "label": "Preview / Safe Dry Run",
-      "detail": "Local founder workstream dry run; no mutation."
-    },
-    {
-      "phaseId": "P89.4",
-      "title": "Command Center UX",
-      "track": "NEXUS_OS",
-      "order": 95.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e57794d",
-      "completedAt": "2026-05-20T02:05:00.000Z",
-      "summary": "Added Business Build Founder Dry Run UX showing founder workstream dry-run state, agent lane planning preview, inputs, outputs, blockers, next action, disabled reason, owner, evidence, activity, and cost posture.",
-      "checksRun": [
-        "npm run check:p894-command-center-founder-workstream-ux",
-        "npm run check:p893-local-founder-workstream-dry-run",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build route renders founder workstream dry-run state\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.4 is UX only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.5",
-      "commandCenterVisible": true,
-      "label": "Command Center UX",
-      "detail": "Business Build shows Founder Dry Run state."
-    },
-    {
-      "phaseId": "P89.5",
-      "title": "Tests / Checkers",
-      "track": "NEXUS_OS",
-      "order": 96.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1eb469f",
-      "completedAt": "2026-05-20T02:18:00.000Z",
-      "summary": "Aggregated P89.1-P89.4 backend, UX, Playwright, docs, roadmap, and safety validation evidence; added a Founder Dry Run safety regression and tightened display-only disabled reason.",
-      "checksRun": [
-        "npm run check:p895-tests-checkers",
-        "npm run check:p894-command-center-founder-workstream-ux",
-        "npm run check:p893-local-founder-workstream-dry-run",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.5 is validation aggregation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.6",
-      "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "P89 validation aggregated; no execution enabled."
-    },
-    {
-      "phaseId": "P89.6",
-      "title": "Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 97.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f7fe65e",
-      "completedAt": "2026-05-20T02:31:00.000Z",
-      "summary": "Closed P89 docs, roadmap, contract, and phase-status evidence through P89.6 and prepared P89.7 final validation handoff.",
-      "checksRun": [
-        "npm run check:p896-docs-roadmap",
-        "npm run check:p895-tests-checkers",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P89.7",
-      "commandCenterVisible": true,
-      "label": "Docs / Roadmap",
-      "detail": "P89 docs and roadmap closure complete."
-    },
-    {
-      "phaseId": "P89.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 98.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ce1974b",
-      "completedAt": "2026-05-20T02:44:00.000Z",
-      "summary": "Finalized P89 governed local enterprise runtime handoff validation, closed parent P89, and prepared P90 as the next scoped handoff.",
-      "checksRun": [
-        "npm run check:p897-final-validation",
-        "npm run check:p896-docs-roadmap",
-        "npm run check:p895-tests-checkers",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P89.7 is final validation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "P89 final validation complete."
-    },
-    {
-      "phaseId": "P90",
-      "title": "Governed Founder PRD Live Authoring Lane",
-      "track": "NEXUS_OS",
-      "order": 99.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5a9fa47",
-      "completedAt": "2026-05-20T05:25:00.000Z",
-      "summary": "Completed the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Business Build Local PRD UX, aggregate validation, docs/roadmap closure, and final validation. Unsafe runtime execution remains blocked.",
-      "checksRun": [
-        "npm run check:p907-founder-prd-final",
-        "npm run check:p906-founder-prd-docs-roadmap",
-        "npm run check:p905-founder-prd-lane-validation",
-        "npm run check:p904-command-center-prd-lane-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90 completes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91",
-      "commandCenterVisible": true,
-      "label": "Founder PRD Lane",
-      "detail": "P90 complete; local PRD authoring visible in Business Build."
-    },
-    {
-      "phaseId": "P90.1",
-      "title": "Schema / Policy / Contract",
-      "track": "NEXUS_OS",
-      "order": 100.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c0fdfab",
-      "completedAt": "2026-05-20T03:02:00.000Z",
-      "summary": "Defined the governed local founder PRD live authoring lane contract, subphase split, allowed and forbidden files, future data shape, UX requirements, validation commands, and safety checks.",
-      "checksRun": [
-        "npm run check:p901-founder-prd-live-lane-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.2",
-      "commandCenterVisible": true,
-      "label": "Schema / Policy / Contract",
-      "detail": "Founder PRD live lane contract; no execution enabled."
-    },
-    {
-      "phaseId": "P90.2",
-      "title": "Core Local PRD Model",
-      "track": "NEXUS_OS",
-      "order": 101.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2165164",
-      "completedAt": "2026-05-20T03:18:00.000Z",
-      "summary": "Defined the deterministic local founder PRD authoring model with founder inputs, PRD sections, readiness evidence, local-only operations, blockers, owner, evidence, activity, cost posture, and all unsafe runtime flags false.",
-      "checksRun": [
-        "npm run check:p902-founder-prd-local-model",
-        "npm run check:p901-founder-prd-live-lane-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.2 is a local model only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.3",
-      "commandCenterVisible": true,
-      "label": "Core Local PRD Model",
-      "detail": "Local PRD model defined; no project writes."
-    },
-    {
-      "phaseId": "P90.3",
-      "title": "Safe Local PRD Authoring",
-      "track": "NEXUS_OS",
-      "order": 102.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "61926b7",
-      "completedAt": "2026-05-20T03:34:00.000Z",
-      "summary": "Added deterministic in-memory PRD authoring from the P90.2 local model with markdown, sections, acceptance criteria, review state, evidence, activity, cost posture, and unsafe runtime flags blocked.",
-      "checksRun": [
-        "npm run check:p903-founder-prd-safe-authoring",
-        "npm run check:p902-founder-prd-local-model",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.3 authors a deterministic PRD artifact in memory only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.4",
-      "commandCenterVisible": true,
-      "label": "Safe Local PRD Authoring",
-      "detail": "In-memory PRD artifact authored; project writes blocked."
-    },
-    {
-      "phaseId": "P90.4",
-      "title": "Command Center PRD Lane UX",
-      "track": "NEXUS_OS",
-      "order": 103.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "23a29e9",
-      "completedAt": "2026-05-20T04:05:00.000Z",
-      "summary": "Added the Business Build Local PRD tab backed by safe in-memory PRD authoring, with review state, PRD sections, acceptance criteria, owner, evidence, activity, cost posture, and blocked unsafe operations.",
-      "checksRun": [
-        "npm run check:p904-command-center-prd-lane-ux",
-        "npm run check:p903-founder-prd-safe-authoring",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.4 is Command Center UX only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.5",
-      "commandCenterVisible": true,
-      "label": "Command Center PRD UX",
-      "detail": "Local PRD artifact visible in Business Build; unsafe actions blocked."
-    },
-    {
-      "phaseId": "P90.5",
-      "title": "Tests / Checkers",
-      "track": "NEXUS_OS",
-      "order": 104.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "043d1ee",
-      "completedAt": "2026-05-20T04:35:00.000Z",
-      "summary": "Added aggregate P90 founder PRD lane validation across contract, local model, safe authoring, Command Center UX, Playwright coverage, docs, roadmap, reports, status, and safety boundaries.",
-      "checksRun": [
-        "npm run check:p905-founder-prd-lane-validation",
-        "npm run check:p904-command-center-prd-lane-ux",
-        "npm run check:p903-founder-prd-safe-authoring",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.5 is validation aggregation only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.6",
-      "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "P90 aggregate validation added; unsafe actions remain blocked."
-    },
-    {
-      "phaseId": "P90.6",
-      "title": "Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 105.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fee1764",
-      "completedAt": "2026-05-20T05:00:00.000Z",
-      "summary": "Closed P90 docs, roadmap, contract, and phase-status evidence through P90.6 while preserving the Business Build Local PRD UX and blocked runtime boundary.",
-      "checksRun": [
-        "npm run check:p906-founder-prd-docs-roadmap",
-        "npm run check:p905-founder-prd-lane-validation",
-        "npm run check:p904-command-center-prd-lane-ux",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.6 is docs and roadmap closure only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P90.7",
-      "commandCenterVisible": true,
-      "label": "Docs / Roadmap",
-      "detail": "P90 docs and roadmap closure complete."
-    },
-    {
-      "phaseId": "P90.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 106.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5a9fa47",
-      "completedAt": "2026-05-20T05:25:00.000Z",
-      "summary": "Finalized P90 founder PRD lane validation, closed parent P90, preserved Business Build Local PRD UX, and prepared P91 as the next scoped handoff.",
-      "checksRun": [
-        "npm run check:p907-founder-prd-final",
-        "npm run check:p906-founder-prd-docs-roadmap",
-        "npm run check:p905-founder-prd-lane-validation",
-        "npm run check:p904-command-center-prd-lane-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P90.7 finalizes local PRD authoring only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "P90 final validation complete."
-    },
-    {
-      "phaseId": "P91",
-      "title": "Governed Founder Workstream Activation Planning",
-      "track": "NEXUS_OS",
-      "order": 107.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "cf1c157",
-      "completedAt": "2026-05-20T21:39:33.254Z",
-      "summary": "Completed governed founder workstream activation planning with contract, local activation model, safe local review packet, Command Center activation review UX, aggregate validation, docs closure, and final validation. Runtime execution remains blocked.",
-      "checksRun": [
-        "npm run check:p917-final-validation",
-        "npm run check:p916-docs-roadmap",
-        "npm run check:p915-tests-checkers",
-        "npm run check:p914-command-center-workstream-activation-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91 is planning, review, UX, docs, and validation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P93",
-      "commandCenterVisible": true,
-      "label": "Founder Workstream Activation Planning",
-      "detail": "P91 final validation complete; P93 next."
-    },
-    {
-      "phaseId": "P91.1",
-      "title": "Schema / Policy / Contract",
-      "track": "NEXUS_OS",
-      "order": 108.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "eef1e13",
-      "completedAt": "2026-05-20T05:50:00.000Z",
-      "summary": "Defined the governed founder workstream activation planning contract, subphase split, future local data shape, UX requirements, validation commands, and safety checks.",
-      "checksRun": [
-        "npm run check:p911-founder-workstream-activation-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.2",
-      "commandCenterVisible": true,
-      "label": "Schema / Policy / Contract",
-      "detail": "Founder workstream activation planning contract; no execution enabled."
-    },
-    {
-      "phaseId": "P91.2",
-      "title": "Core Workstream Activation Model",
-      "track": "NEXUS_OS",
-      "order": 109.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "00e1801",
-      "completedAt": "2026-05-20T06:15:00.000Z",
-      "summary": "Added the deterministic local founder workstream activation planning model from the P90 PRD artifact with owner lanes, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
-      "checksRun": [
-        "npm run check:p912-founder-workstream-activation-model",
-        "npm run check:p911-founder-workstream-activation-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.2 is a local model only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.3",
-      "commandCenterVisible": true,
-      "label": "Core Workstream Activation Model",
-      "detail": "Local activation planning model defined; no dispatch or mutation."
-    },
-    {
-      "phaseId": "P91.3",
-      "title": "Safe Activation Review Packet",
-      "track": "NEXUS_OS",
-      "order": 110.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ee2f06",
-      "completedAt": "2026-05-20T06:35:00.000Z",
-      "summary": "Added safe local activation review packet with review items, operator checklist, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
-      "checksRun": [
-        "npm run check:p913-founder-activation-review-packet",
-        "npm run check:p912-founder-workstream-activation-model",
-        "npm run check:p911-founder-workstream-activation-contract",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.3 is a local review packet only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.4",
-      "commandCenterVisible": true,
-      "label": "Safe Activation Review Packet",
-      "detail": "Local activation review packet defined; no dispatch or mutation."
-    },
-    {
-      "phaseId": "P91.4",
-      "title": "Command Center Workstream Activation UX",
-      "track": "NEXUS_OS",
-      "order": 111.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "02e3ef6",
-      "completedAt": "2026-05-20T10:20:00.000Z",
-      "summary": "Added Business Build Activation Review UX for the local founder activation review packet with readiness, owner lanes, checklist, evidence, activity, cost posture, and blocked safety rows.",
-      "checksRun": [
-        "npm run check:p914-command-center-workstream-activation-ux",
-        "npm run check:p913-founder-activation-review-packet",
-        "npm run check:p912-founder-workstream-activation-model",
-        "npm run check:p911-founder-workstream-activation-contract",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.4 is Command Center UX only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.5",
-      "commandCenterVisible": true,
-      "label": "Command Center Workstream Activation UX",
-      "detail": "Business Build activation review UX complete; no dispatch or mutation."
-    },
-    {
-      "phaseId": "P91.5",
-      "title": "Tests / Checkers",
-      "track": "NEXUS_OS",
-      "order": 112.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8549cd0",
-      "completedAt": "2026-05-20T21:32:54.122Z",
-      "summary": "Added aggregate P91 validation across backend activation model, review packet, Command Center UX, Playwright coverage, docs, roadmap, status, and safety boundaries.",
-      "checksRun": [
-        "npm run check:p915-tests-checkers",
-        "npm run check:p914-command-center-workstream-activation-ux",
-        "npm run check:p913-founder-activation-review-packet",
-        "npm run check:p912-founder-workstream-activation-model",
-        "npm run check:p911-founder-workstream-activation-contract",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.5 is validation aggregation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.6",
-      "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "P91 aggregate validation complete; no dispatch or mutation."
-    },
-    {
-      "phaseId": "P91.6",
-      "title": "Docs / Roadmap",
-      "track": "NEXUS_OS",
-      "order": 113.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "28d2aee",
-      "completedAt": "2026-05-20T21:36:50.460Z",
-      "summary": "Closed P91 docs, roadmap, contract, phase-status, and report evidence before final validation while preserving the display-only activation review boundary.",
-      "checksRun": [
-        "npm run check:p916-docs-roadmap",
-        "npm run check:p915-tests-checkers",
-        "npm run check:p914-command-center-workstream-activation-ux",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P91.7",
-      "commandCenterVisible": true,
-      "label": "Docs / Roadmap",
-      "detail": "P91 docs and roadmap closure complete; final validation next."
-    },
-    {
-      "phaseId": "P91.7",
-      "title": "Final Validation",
-      "track": "NEXUS_OS",
-      "order": 113.57,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "cf1c157",
-      "completedAt": "2026-05-20T21:39:33.254Z",
-      "summary": "Finalized P91 validation, closed the parent P91 status, preserved display-only Activation Review UX, and handed the active roadmap back to P93.",
-      "checksRun": [
-        "npm run check:p917-final-validation",
-        "npm run check:p916-docs-roadmap",
-        "npm run check:p915-tests-checkers",
-        "npm run check:p914-command-center-workstream-activation-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
-        "cd dashboard && npm run build",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P91.7 is final validation only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
-      ],
-      "nextPhase": "P93",
-      "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "P91 final validation complete; P93 handoff restored."
-    },
-    {
-      "phaseId": "P92",
-      "title": "Local SQLite Runtime",
-      "track": "NEXUS_OS",
-      "order": 114.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "09c48a3",
-      "completedAt": "2026-05-20T12:34:51.000Z",
-      "summary": "Completed local SQLite runtime lane with guarded initialization, schema-driven CRUD, SQLite-backed repository reads, governed evidence/audit/activity ledger writes, display-safe Command Center DB live-state UX, local backup maintenance, and final validation.",
-      "checksRun": [
-        "npm run check:p927-sqlite-final-validation",
-        "npm run check:p926-sqlite-maintenance-closure",
-        "npm run check:p925-command-center-db-live-state-ux",
-        "npm run check:p924-governed-sqlite-runtime-writes",
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92 closes local SQLite runtime readiness. Hosted DBs, general entity mutation, provider calls, worker execution, project mutation, deploy, package, export, network calls, and provider spend remain blocked."
-      ],
-      "nextPhase": "P93",
-      "commandCenterVisible": true,
-      "label": "Local SQLite Runtime",
-      "detail": "Local SQLite runtime lane complete; P93 planned next."
-    },
-    {
-      "phaseId": "P92.1",
-      "title": "Local SQLite Runtime Foundation",
-      "track": "NEXUS_OS",
-      "order": 115.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6e116de",
-      "completedAt": "2026-05-20T10:45:00.000Z",
-      "summary": "Added guarded local SQLite runtime config, schema transformation, init command, health reporting, and validation while preserving non-writing defaults.",
-      "checksRun": [
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:db-foundation",
-        "npm run db:init:sqlite",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.1 initializes a local SQLite DB only. Runtime repositories still use file-backed reads until later P92 subphases wire selected SQLite reads and governed writes."
-      ],
-      "nextPhase": "P92.2",
-      "commandCenterVisible": true,
-      "label": "Local SQLite Runtime Foundation",
-      "detail": "SQLite init foundation complete; repository wiring pending."
-    },
-    {
-      "phaseId": "P92.2",
-      "title": "SQLite CRUD Repository Core",
-      "track": "NEXUS_OS",
-      "order": 116.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "678abbe",
-      "completedAt": "2026-05-20T12:05:36.000Z",
-      "summary": "Added guarded schema-driven SQLite CRUD repository core for NEXUS OS entities with entity/field allowlists, local write gates, array serialization, and CRUD validation.",
-      "checksRun": [
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:os-phase-status",
-        "git diff --check",
-        "npm run check:phase-validation-coverage"
-      ],
-      "knownLimitations": [
-        "P92.2 provides the CRUD core only. Runtime routes and Command Center screens remain wired in later P92 subphases."
-      ],
-      "nextPhase": "P92.3",
-      "commandCenterVisible": true,
-      "label": "SQLite CRUD Repository Core",
-      "detail": "Schema-driven SQLite CRUD core complete; runtime route wiring pending."
-    },
-    {
-      "phaseId": "P92.3",
-      "title": "SQLite Runtime Read Wiring",
-      "track": "NEXUS_OS",
-      "order": 117.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "7a60b87",
-      "completedAt": "2026-05-20T12:12:31.000Z",
-      "summary": "Wired selected NEXUS OS repository reads to local SQLite when sqlite-live mode is initialized, while preserving file-backed fallback and keeping runtime writes blocked.",
-      "checksRun": [
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.3 wires repository reads only. Governed runtime writes and Command Center DB live-state UX remain pending."
-      ],
-      "nextPhase": "P92.4",
-      "commandCenterVisible": true,
-      "label": "SQLite Runtime Reads",
-      "detail": "SQLite repository read wiring complete; governed writes pending."
-    },
-    {
-      "phaseId": "P92.4",
-      "title": "Governed SQLite Runtime Writes",
-      "track": "NEXUS_OS",
-      "order": 118.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0a7ade8",
-      "completedAt": "2026-05-20T12:17:40.000Z",
-      "summary": "Added governed SQLite write bridge for evidence, audit, and activity/runtime event ledgers with explicit local DB write flags and file-backed append fallback preserved.",
-      "checksRun": [
-        "npm run check:p924-governed-sqlite-runtime-writes",
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.4 limits SQLite writes to evidence, audit, and activity/runtime event ledgers. Broader entity mutation remains blocked."
-      ],
-      "nextPhase": "P92.5",
-      "commandCenterVisible": true,
-      "label": "SQLite Governed Writes",
-      "detail": "Governed runtime ledger writes complete; DB live-state UX pending."
-    },
-    {
-      "phaseId": "P92.5",
-      "title": "Command Center DB Live State UX",
-      "track": "NEXUS_OS",
-      "order": 119.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0510353",
-      "completedAt": "2026-05-20T12:24:41.000Z",
-      "summary": "Updated Command Center Durable State DB Runtime UX to show display-safe local SQLite readiness, read wiring, governed ledger write scope, blockers, owner capability, evidence locations, next action, and cost impact.",
-      "checksRun": [
-        "npm run check:p925-command-center-db-live-state-ux",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
-        "npm run check:p924-governed-sqlite-runtime-writes",
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "browser verification on /command-center/database",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.5 is display-only UX. It does not add DB toggles, hosted DB setup, migrations, general mutation, provider calls, deploy, package, or spend actions."
-      ],
-      "nextPhase": "P92.6",
-      "commandCenterVisible": true,
-      "label": "DB Live State UX",
-      "detail": "Display-safe local SQLite live-state UX complete; migration and backup closure pending."
-    },
-    {
-      "phaseId": "P92.6",
-      "title": "SQLite Migration Backup Docs Closure",
-      "track": "NEXUS_OS",
-      "order": 120.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "00a1ee5",
-      "completedAt": "2026-05-20T12:30:29.000Z",
-      "summary": "Added local-only SQLite backup maintenance with dry-run defaults, explicit apply, backup path guarding, documentation, and validation coverage.",
-      "checksRun": [
-        "npm run check:p926-sqlite-maintenance-closure",
-        "npm run check:p925-command-center-db-live-state-ux",
-        "npm run check:p924-governed-sqlite-runtime-writes",
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.6 adds local backup maintenance only. Hosted DB migration, production DBs, and project mutation remain blocked."
-      ],
-      "nextPhase": "P92.7",
-      "commandCenterVisible": true,
-      "label": "SQLite Migration Closure",
-      "detail": "Local SQLite maintenance closure complete; final validation pending."
-    },
-    {
-      "phaseId": "P92.7",
-      "title": "Local SQLite Runtime Final Validation",
-      "track": "NEXUS_OS",
-      "order": 121.07,
-      "status": "complete",
-      "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "09c48a3",
-      "completedAt": "2026-05-20T12:34:51.000Z",
-      "summary": "Closed P92 with final validation across SQLite foundation, CRUD, read wiring, governed writes, Command Center DB live-state UX, backup maintenance, docs, roadmap, and safety boundaries.",
-      "checksRun": [
-        "npm run check:p927-sqlite-final-validation",
-        "npm run check:p926-sqlite-maintenance-closure",
-        "npm run check:p925-command-center-db-live-state-ux",
-        "npm run check:p924-governed-sqlite-runtime-writes",
-        "npm run check:p923-sqlite-runtime-read-wiring",
-        "npm run check:p922-sqlite-crud-repository",
-        "npm run check:p921-sqlite-runtime-foundation",
-        "cd dashboard && npm run build",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
-        "npm run check:os-phase-status",
-        "npm run check:phase-validation-coverage",
-        "git diff --check"
-      ],
-      "knownLimitations": [
-        "P92.7 is validation closure only. Hosted DBs and broader runtime mutation remain blocked for later explicit phases."
-      ],
-      "nextPhase": "P93",
-      "commandCenterVisible": true,
-      "label": "SQLite Final Validation",
-      "detail": "Final validation complete; next phase planned."
-    },
-    {
-      "phaseId": "P93",
-      "title": "Enterprise Live Runtime Expansion",
-      "track": "NEXUS_OS",
-      "order": 122.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned next NEXUS OS live-runtime expansion after local SQLite closure.",
-      "checksRun": [],
-      "knownLimitations": [
-        "Not started. Scope must be split into implementation-grade subphases before coding."
-      ],
-      "nextPhase": "P93.1",
-      "commandCenterVisible": true,
-      "label": "Enterprise Live Runtime Expansion",
-      "detail": "Planned next live-runtime phase after local SQLite closure."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T21:40:54.896Z",
-  "currentPhase": "P91.7",
-  "previousPhase": "P91.6",
-  "nextPhase": "P93",
+  "updatedAt": "2026-05-20T21:44:06.143Z",
+  "currentPhase": "P93.1",
+  "previousPhase": "P91.7",
+  "nextPhase": "P93.2",
   "currentPhaseStatus": "complete"
 }
