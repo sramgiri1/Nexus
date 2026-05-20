@@ -4490,7 +4490,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "29eab80",
       "completedAt": "",
       "summary": "Explicit live activation unlocks in progress with P87.1-P87.3 complete.",
       "checksRun": [
@@ -4562,7 +4562,7 @@
       "order": 78.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "29eab80",
       "completedAt": "2026-05-20T00:29:29.996Z",
       "summary": "Added display-safe local agent dispatch admission lanes with scoped context packet shape, blockers, validation, evidence, activity, cost posture, and all dispatch/runtime flags false.",
       "checksRun": [
@@ -4656,7 +4656,7 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:29:29.996Z",
+  "updatedAt": "2026-05-20T00:30:23.046Z",
   "currentPhase": "P87.3",
   "previousPhase": "P87.2",
   "nextPhase": "P87.4",
