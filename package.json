@@ -417,6 +417,7 @@
     "check:p875-command-center-live-unlock-ux": "node scripts/check-p875-command-center-live-unlock-ux.js",
     "check:p876-tests-docs-roadmap": "node scripts/check-p876-tests-docs-roadmap.js",
     "check:p877-final-validation": "node scripts/check-p877-final-validation.js",
+    "check:p881-scoped-execution-activation-profile": "node scripts/check-p881-scoped-execution-activation-profile.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

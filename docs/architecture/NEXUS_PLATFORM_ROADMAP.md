@@ -1542,3 +1542,29 @@ The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
 Implementation must follow
 [`p87-execution-contracts.json`](../../contracts/os-roadmap/p87-execution-contracts.json).
+
+## P88 - Scoped Execution-Capable Activation
+
+P88 starts the move from live unlock readiness toward scoped activation. It does
+not create a broad live switch. Each activation lane must be local-only,
+operator-reviewable, separately validated, and reversible before execution can
+be considered.
+
+P88.1 is complete. It adds a scoped execution-capable activation profile that
+reuses P87 explicit live activation, local agent dispatch admission, and
+generated workspace admission helpers. The profile defines local-only future
+lanes, required gates, evidence, blockers, disabled reason, owner, activity,
+cost posture, and validation commands. Runtime flags remain false.
+
+P88.2 is next. It must define a local activation request model with operator
+approval and evidence before any executor is wired.
+
+Provider/model calls, agent dispatch, tool execution, worker execution, project
+mutation, DB writes, deploy, release, export, package creation, network calls,
+and provider spend remain blocked until a later P88 subphase explicitly scopes
+and validates one narrow lane.
+
+The detailed plan lives in
+[`P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md`](P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md).
+Implementation must follow
+[`p88-execution-contracts.json`](../../contracts/os-roadmap/p88-execution-contracts.json).

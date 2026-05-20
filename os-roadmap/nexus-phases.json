@@ -4693,24 +4693,72 @@
       "title": "Scoped Execution-Capable Activation",
       "track": "NEXUS_OS",
       "order": 83.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Future phase for separately scoped execution-capable live activation lanes.",
-      "checksRun": [],
+      "summary": "Started scoped execution-capable activation with a local-only activation profile contract. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
+      "checksRun": [
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Execution-capable live activation remains blocked until P88 subphases are planned and validated."
+        "P88 is in progress. P88.1 is profile-only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
       ],
       "nextPhase": "P88.1",
       "commandCenterVisible": true,
       "label": "Scoped Execution-Capable Activation",
-      "detail": "Planned phase for narrow execution-capable unlocks after P87 validation."
+      "detail": "Scoped local activation profile is underway; execution remains blocked."
+    },
+    {
+      "phaseId": "P88.1",
+      "title": "Scoped Activation Profile / Contract",
+      "track": "NEXUS_OS",
+      "order": 84.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:51:45.092Z",
+      "summary": "Defined a local-only scoped execution-capable activation profile with future lanes, gates, evidence, blockers, disabled reason, owner, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P88.1 is profile-only. It does not wire or run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P88.2",
+      "commandCenterVisible": true,
+      "label": "Scoped Activation Profile",
+      "detail": "Local-only activation profile; no executor wired."
+    },
+    {
+      "phaseId": "P88.2",
+      "title": "Local Activation Request Model",
+      "track": "NEXUS_OS",
+      "order": 85.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned local activation request model with operator approval and evidence before any executor is wired.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P88.2 is planned and validated."
+      ],
+      "nextPhase": "P88.3",
+      "commandCenterVisible": true,
+      "label": "Local Activation Request Model",
+      "detail": "Planned request envelope before any executor wiring."
     }
   ],
-  "updatedAt": "2026-05-20T00:44:39.896Z",
-  "currentPhase": "P87.7",
-  "previousPhase": "P87.6",
-  "nextPhase": "P88",
+  "updatedAt": "2026-05-20T00:51:45.092Z",
+  "currentPhase": "P88.1",
+  "previousPhase": "P87.7",
+  "nextPhase": "P88.2",
   "currentPhaseStatus": "complete"
 }

@@ -1,0 +1,114 @@
+{
+  "phase": "P88",
+  "title": "Scoped Execution-Capable Activation",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "2cdd75d",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, or provider spend unless that specific subphase explicitly scopes and validates the lane.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, db/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not show DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p88-1-scoped-execution-activation-profile",
+      "phaseId": "P88.1",
+      "objective": "Define a scoped execution-capable activation profile without wiring executors.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/scopedExecutionActivationProfile.js",
+        "scripts/check-p881-scoped-execution-activation-profile.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p881-scoped-execution-activation-profile-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p88-execution-contracts.json",
+        "docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P88_SCOPED_EXECUTION_ACTIVATION_PROFILE_PHASE",
+          "P88_REQUIRED_ACTIVATION_GATES",
+          "buildScopedExecutionActivationProfile",
+          "validateScopedExecutionActivationProfile"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, activationMode, parentActivationContractPhase, dispatchAdmissionPhase, workspaceAdmissionPhase, allowedFutureLaneCount, allowedFutureLanes[], forbiddenOperations, requiredGates, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each allowedFutureLane has laneId, label, ownerCapability, objective, sourcePhase, activationState, allowedFutureOperations, forbiddenOperations, requiredGates, requiredEvidence, blockers, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center Lite and Live Readiness. Prepare display-safe profile fields for a later UX subphase without adding runnable action labels.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P88.1 because no UI file changes.",
+        "Later P88 UX subphase must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p881-scoped-execution-activation-profile."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P88 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p881-scoped-execution-activation-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm every runtime flag remains false.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, or tool dispatch is enabled.",
+        "Confirm no project or generated app source mutation is enabled.",
+        "Confirm no DB, deploy, release, export, package, network, or spend action is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P88.1 files>",
+        "git commit -m \"feat(nexus): define scoped execution activation profile\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ]
+}
