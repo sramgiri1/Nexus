@@ -41,10 +41,30 @@ executor, dispatch agents, execute tools/workers, create or mutate projects,
 call providers/models, write DB state, use network calls, deploy, release,
 export, package, or spend.
 
+## P91.2 Core Workstream Activation Model
+
+P91.2 is complete. It adds a deterministic local founder workstream activation
+planning model that reuses the P90 safe PRD artifact and maps it into product,
+design, engineering, go-to-market, finance, operations, legal, and support
+review lanes. The model records lane objectives, owner capabilities, required
+evidence, readiness, blockers, disabled reasons, evidence, activity, cost
+posture, and unsafe runtime flags blocked.
+
+Validation:
+
+- `npm run check:p912-founder-workstream-activation-model`
+- `npm run check:p911-founder-workstream-activation-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P91.2 is a local model only. It does not run an executor,
+dispatch agents, execute tools/workers, create or mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P91.2 Core Workstream Activation Model: define local workstream activation
-  planning data from the P90 PRD artifact.
 - P91.3 Safe Activation Review Packet: build a local review packet without
   dispatch or mutation.
 - P91.4 Command Center UX: show activation planning state, owner lanes,

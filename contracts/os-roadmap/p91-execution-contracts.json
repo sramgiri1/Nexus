@@ -114,8 +114,101 @@
       "id": "nexus-os-p91-2-founder-workstream-activation-model",
       "phaseId": "P91.2",
       "objective": "Define the local founder workstream activation planning model from the P90 PRD artifact without dispatching agents.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderWorkstreamActivationPlan.js",
+        "scripts/check-p912-founder-workstream-activation-model.js",
+        "scripts/check-p911-founder-workstream-activation-contract.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p912-founder-workstream-activation-model-report.md",
+        "reports/p911-founder-workstream-activation-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p91-execution-contracts.json",
+        "docs/architecture/P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P91_FOUNDER_WORKSTREAM_ACTIVATION_PHASE",
+          "P91_WORKSTREAM_ACTIVATION_LANES",
+          "buildFounderWorkstreamActivationPlan",
+          "validateFounderWorkstreamActivationPlan"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, activationMode, sourcePrd, workstreamLanes[], activationReadiness, allowedLocalOperations[], forbiddenOperations[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false. Each lane has lane, ownerCapability, objective, status, requiredEvidence[], missingEvidence[], activationReviewAllowed, agentDispatchAllowed false, projectMutationAllowed false, nextAction, and disabledReason."
+      },
+      "commandCenterUxRequirements": "Preserve existing Business Build and Lite UX. P91.4 must expose workstream activation planning as display-safe review state, not runnable agent dispatch or project mutation.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P91.2 because no UI file changes.",
+        "P91.4 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p912-founder-workstream-activation-model.",
+        "Run check:p911-founder-workstream-activation-contract."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P91 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm the local activation model does not dispatch agents.",
+        "Confirm the local activation model does not write project files.",
+        "Confirm all runtime flags remain false.",
+        "Confirm no provider/model calls, worker/tool execution, project creation, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P91.2 files>",
+        "git commit -m \"feat(nexus): add founder workstream activation model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p91-3-safe-activation-review-packet",

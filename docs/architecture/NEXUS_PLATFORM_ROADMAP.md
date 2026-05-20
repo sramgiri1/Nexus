@@ -1702,8 +1702,14 @@ P91.1 is complete. It defines the implementation-grade P91 execution contract,
 subphase split, future local activation planning data shape, Command Center UX
 requirements, validation commands, and safety checks.
 
-P91.2 is next. It must define the local founder workstream activation planning
-model from the P90 PRD artifact without dispatching agents or mutating projects.
+P91.2 is complete. It defines the local founder workstream activation planning
+model from the P90 PRD artifact. The model maps the PRD into product, design,
+engineering, go-to-market, finance, operations, legal, and support review lanes
+without dispatching agents or mutating projects.
+
+P91.3 is next. It must build a safe local activation review packet for operator
+review without project mutation, provider/model calls, agent dispatch, DB
+writes, deploy, package, network calls, or spend.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).

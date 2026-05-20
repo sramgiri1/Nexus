@@ -10149,20 +10149,21 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "eef1e13",
       "completedAt": "",
-      "summary": "Started governed founder workstream activation planning with an implementation-grade contract. Runtime execution, agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked.",
+      "summary": "Started governed founder workstream activation planning with an implementation-grade contract and local activation planning model. Runtime execution, agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked.",
       "checksRun": [
+        "npm run check:p912-founder-workstream-activation-model",
         "npm run check:p911-founder-workstream-activation-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P91 is in progress. P91.1 is contract-only and does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+        "P91 is in progress. P91.2 is a local model only and does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P91.2",
+      "nextPhase": "P91.3",
       "commandCenterVisible": true,
       "label": "Founder Workstream Activation Planning",
-      "detail": "P91.1 contract complete; execution remains blocked."
+      "detail": "P91.2 local activation model complete; execution remains blocked."
     },
     {
       "phaseId": "P91.1",
@@ -10193,25 +10194,50 @@
       "title": "Core Workstream Activation Model",
       "track": "NEXUS_OS",
       "order": 109.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned local founder workstream activation planning model from the P90 PRD artifact without dispatching agents or mutating projects.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T06:15:00.000Z",
+      "summary": "Added the deterministic local founder workstream activation planning model from the P90 PRD artifact with owner lanes, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked."
+        "P91.2 is a local model only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P91.3",
       "commandCenterVisible": true,
       "label": "Core Workstream Activation Model",
-      "detail": "Planned local activation planning model."
+      "detail": "Local activation planning model defined; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.3",
+      "title": "Safe Activation Review Packet",
+      "track": "NEXUS_OS",
+      "order": 110.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned safe local activation review packet for operator review without agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, or spend.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked."
+      ],
+      "nextPhase": "P91.4",
+      "commandCenterVisible": true,
+      "label": "Safe Activation Review Packet",
+      "detail": "Planned local activation review packet."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T05:50:00.000Z",
-  "currentPhase": "P91.1",
-  "previousPhase": "P90.7",
-  "nextPhase": "P91.2",
+  "updatedAt": "2026-05-20T06:15:00.000Z",
+  "currentPhase": "P91.2",
+  "previousPhase": "P91.1",
+  "nextPhase": "P91.3",
   "currentPhaseStatus": "complete"
 }

@@ -439,6 +439,7 @@
     "check:p906-founder-prd-docs-roadmap": "node scripts/check-p906-founder-prd-docs-roadmap.js",
     "check:p907-founder-prd-final": "node scripts/check-p907-founder-prd-final.js",
     "check:p911-founder-workstream-activation-contract": "node scripts/check-p911-founder-workstream-activation-contract.js",
+    "check:p912-founder-workstream-activation-model": "node scripts/check-p912-founder-workstream-activation-model.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

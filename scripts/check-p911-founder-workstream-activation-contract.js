@@ -39,7 +39,7 @@ const safetyRules = contract.globalSafetyRules || [];
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p911-founder-workstream-activation-contract"]));
 addCheck("contract phase is P91", contract.phase === "P91" && contract.classification === "NEXUS_OS_CHANGE");
 addCheck("contract has seven subphases", Array.isArray(contract.subphases) && contract.subphases.length === 7);
-addCheck("P91.1 complete and P91.2 planned", p911?.status === "complete" && p912?.status === "planned");
+addCheck("P91.1 complete and P91.2 handoff exists", p911?.status === "complete" && ["planned", "complete"].includes(p912?.status));
 addCheck("P91.1 allowed files scoped", p911?.allowedFiles?.includes("contracts/os-roadmap/p91-execution-contracts.json") && p911.allowedFiles.includes("scripts/check-p911-founder-workstream-activation-contract.js"));
 addCheck("forbidden paths listed", ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "db/**", "deploy/**", "packages/**", ".env*"].every((path) => forbiddenFiles.includes(path)));
 addCheck("safety rules block unsafe operations", safetyRules.join(" ").includes("agent dispatch") && safetyRules.join(" ").includes("project mutation") && safetyRules.join(" ").includes("provider spend"));
@@ -47,18 +47,26 @@ addCheck("future exports defined", p911?.expectedExportsSchemasDataShapes?.futur
 addCheck("validation commands defined", validationCommands.includes("npm run check:p911-founder-workstream-activation-contract") && validationCommands.includes("npm run check:os-phase-status"));
 addCheck("Command Center UX requirements present", p911?.commandCenterUxRequirements?.includes("workstream activation planning state") && p911.commandCenterUxRequirements.includes("without showing runnable agent dispatch"));
 addCheck("docs record P91.1", docs.includes("P91.1 is complete") && docs.includes("npm run check:p911-founder-workstream-activation-contract"));
-addCheck("platform roadmap records P91.1", platformRoadmap.includes("P91.1 is complete") && platformRoadmap.includes("P91.2 is next"));
+addCheck(
+  "platform roadmap records P91.1",
+  platformRoadmap.includes("P91.1 is complete")
+    && (platformRoadmap.includes("P91.2 is next") || platformRoadmap.includes("P91.2 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P91")?.status === "in_progress"
     && statusById.get("P91.1")?.status === "complete"
-    && status.currentPhase === "P91.1"
-    && status.previousPhase === "P90.7"
-    && status.nextPhase === "P91.2",
+    && ["P91.1", "P91.2", "P91.3", "P91.4", "P91.5", "P91.6", "P91.7"].includes(status.currentPhase)
+    && ["P90.7", "P91.1", "P91.2", "P91.3", "P91.4", "P91.5", "P91.6"].includes(status.previousPhase)
+    && ["P91.2", "P91.3", "P91.4", "P91.5", "P91.6", "P91.7", "P92"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P91.1", roadmapById.get("P91.1")?.track === "NEXUS_OS" && roadmapById.get("P91.1")?.status === "complete");
-addCheck("P91.2 planned handoff exists", statusById.get("P91.2")?.status === "planned" && roadmapById.get("P91.2")?.status === "planned");
+addCheck(
+  "P91.2 handoff exists",
+  ["planned", "complete"].includes(statusById.get("P91.2")?.status)
+    && ["planned", "complete"].includes(roadmapById.get("P91.2")?.status),
+);
 addCheck("status checker accepts P91.2", statusChecker.includes("\"P91.2\""));
 addCheck("contract does not expose raw private IDs", !/private-project-01|private-project-governed-build-mission|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d/.test(contractSource));
 addCheck("contract does not invent runnable actions", !/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i.test(contractSource));
