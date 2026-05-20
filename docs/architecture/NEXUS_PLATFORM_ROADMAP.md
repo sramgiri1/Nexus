@@ -1747,8 +1747,12 @@ for NEXUS OS entities. CRUD entity names and fields are allowlisted from
 writes require both `NEXUS_DB_MODE=sqlite-live` and
 `NEXUS_DB_ENABLE_WRITES=1`.
 
-P92.3 is next. It must wire selected runtime reads to SQLite while preserving
-file-backed fallback and display-safe Command Center state.
+P92.3 is complete. It wires selected repository read paths to SQLite when local
+SQLite is live and initialized, while preserving file-backed fallback and
+keeping runtime writes blocked.
+
+P92.4 is next. It must add governed SQLite writes for activity, evidence, and
+audit records only.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).

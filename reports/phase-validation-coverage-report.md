@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T12:08:28.984Z
+- Generated at: 2026-05-20T12:13:04.936Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 678abbe
+- Validation HEAD: 02bf26a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -237,24 +237,25 @@
 | P91.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P91.4 validation coverage | PASS | 7 checkers, 1 reports |
 | P91.5 validation coverage | PASS | 17 checkers, 17 reports |
-| P92 validation coverage | PASS | 6 checkers, 2 reports |
+| P92 validation coverage | PASS | 8 checkers, 3 reports |
 | P92.1 validation coverage | PASS | 2 checkers, 1 reports |
 | P92.2 validation coverage | PASS | 5 checkers, 1 reports |
-| P92.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P92.3 validation coverage | PASS | 6 checkers, 1 reports |
+| P92.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P92.2; next=P92.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P92.3; next=P92.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P92.3 SQLite Runtime Read Wiring
+- P92.4 Governed SQLite Runtime Writes
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (228/228)
+PASS (229/229)

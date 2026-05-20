@@ -194,6 +194,97 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p92-3-sqlite-runtime-read-wiring",
+      "phaseId": "P92.3",
+      "objective": "Wire selected NEXUS OS repository reads to local SQLite with file-backed fallback preserved.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/dbRepository.js",
+        "db/index.js",
+        "scripts/check-p923-sqlite-runtime-read-wiring.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p923-sqlite-runtime-read-wiring-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "getRepositoryReadStatus",
+          "getFileBackedRepositoryMode"
+        ],
+        "dataShape": "Repository reads return existing readProjects/readMissions/readTasks/readAgents/readEvidence/readAuditEvents/readRuntimeEvents/readContracts/readRoadmap/readActions shapes. SQLite rows include display-safe _source sqlite metadata. getRepositoryReadStatus returns mode, sqliteReadsEnabled, sqliteLiveAllowed, dbWritesEnabled false, runtimeWritesEnabled false, fileFallbackRequired, and fallbackReason."
+      },
+      "commandCenterUxRequirements": "No Command Center route change in P92.3. Preserve existing pages and labels. Consumers may receive DB-backed repository data only when local SQLite is live, but primary UX must not show raw SQL, raw DB paths, raw private IDs, raw logs, raw JSON, hosted DB controls, provider spend controls, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Command Center route change in P92.3.",
+        "P92.5 must add focused Command Center DB live state coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p923-sqlite-runtime-read-wiring.",
+        "Run check:p922-sqlite-crud-repository.",
+        "Run check:p921-sqlite-runtime-foundation.",
+        "Run check:os-phase-status.",
+        "Run check:phase-validation-coverage."
+      ],
+      "validationCommands": [
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm repository writes remain blocked.",
+        "Confirm file-backed fallback remains available.",
+        "Confirm SQLite read mode requires an initialized local DB and sqlite-live mode.",
+        "Confirm no provider/model, agent, worker, tool, project mutation, deploy, release, package, network, hosted DB, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.3 files>",
+        "git commit -m \"feat(nexus): wire sqlite runtime reads\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

@@ -5492,23 +5492,24 @@
       "order": 114.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "678abbe",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Local SQLite runtime implementation is in progress with guarded local DB initialization and schema-driven SQLite CRUD repository core.",
+      "summary": "Local SQLite runtime implementation is in progress with guarded local DB initialization, schema-driven CRUD, and SQLite-backed repository reads.",
       "checksRun": [
+        "npm run check:p923-sqlite-runtime-read-wiring",
         "npm run check:p922-sqlite-crud-repository",
         "npm run check:p921-sqlite-runtime-foundation",
         "npm run check:os-phase-status",
-        "git diff --check",
-        "npm run check:phase-validation-coverage"
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
       ],
       "knownLimitations": [
-        "P92 is in progress. Runtime routes and Command Center pages are not fully DB-backed until later P92 subphases wire selected reads, governed writes, and DB live-state UX."
+        "P92 is in progress. Governed runtime writes and Command Center DB live-state UX are completed in later P92 subphases."
       ],
-      "nextPhase": "P92.3",
+      "nextPhase": "P92.4",
       "commandCenterVisible": true,
       "label": "Local SQLite Runtime",
-      "detail": "SQLite CRUD core complete; runtime read wiring pending."
+      "detail": "SQLite read wiring complete; governed write wiring pending."
     },
     {
       "phaseId": "P92.1",
@@ -5564,24 +5565,50 @@
       "title": "SQLite Runtime Read Wiring",
       "track": "NEXUS_OS",
       "order": 117.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned selected runtime reads from local SQLite with file-backed fallback preserved.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T12:12:31.000Z",
+      "summary": "Wired selected NEXUS OS repository reads to local SQLite when sqlite-live mode is initialized, while preserving file-backed fallback and keeping runtime writes blocked.",
+      "checksRun": [
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P92.3 wires repository reads only. Governed runtime writes and Command Center DB live-state UX remain pending."
       ],
       "nextPhase": "P92.4",
       "commandCenterVisible": true,
       "label": "SQLite Runtime Reads",
-      "detail": "Planned DB read wiring for selected runtime state."
+      "detail": "SQLite repository read wiring complete; governed writes pending."
+    },
+    {
+      "phaseId": "P92.4",
+      "title": "Governed SQLite Runtime Writes",
+      "track": "NEXUS_OS",
+      "order": 118.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned governed SQLite writes for activity, evidence, and audit records only.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P92.5",
+      "commandCenterVisible": true,
+      "label": "SQLite Governed Writes",
+      "detail": "Planned governed write wiring for selected runtime records."
     }
   ],
-  "updatedAt": "2026-05-20T12:08:09.000Z",
-  "currentPhase": "P92.2",
-  "previousPhase": "P92.1",
-  "nextPhase": "P92.3",
+  "updatedAt": "2026-05-20T12:12:31.000Z",
+  "currentPhase": "P92.3",
+  "previousPhase": "P92.2",
+  "nextPhase": "P92.4",
   "currentPhaseStatus": "complete"
 }

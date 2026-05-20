@@ -445,6 +445,7 @@
     "check:p914-command-center-workstream-activation-ux": "node scripts/check-p914-command-center-workstream-activation-ux.js",
     "check:p921-sqlite-runtime-foundation": "node scripts/check-p921-sqlite-runtime-foundation.js",
     "check:p922-sqlite-crud-repository": "node scripts/check-p922-sqlite-crud-repository.js",
+    "check:p923-sqlite-runtime-read-wiring": "node scripts/check-p923-sqlite-runtime-read-wiring.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

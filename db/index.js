@@ -6,7 +6,9 @@ export { loadDbConfig, validateDbConfig, getDbMode } from "./dbConfig.js";
 export { getDbHealth, getDbReadiness, summarizeDbStatus } from "./dbHealth.js";
 export {
   createDbRepository,
+  getFileBackedRepositoryMode,
   getRepositoryMode,
+  getRepositoryReadStatus,
   readProjects,
   readMissions,
   readTasks,

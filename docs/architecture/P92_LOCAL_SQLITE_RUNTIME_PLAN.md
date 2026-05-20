@@ -59,9 +59,41 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
+## P92.3 SQLite Runtime Read Wiring
+
+P92.3 is complete. It wires `db/dbRepository.js` read paths to the local SQLite
+CRUD layer when SQLite is explicitly live and initialized. If the DB is disabled,
+missing, or unavailable, the repository falls back to the existing file-backed
+readers.
+
+SQLite-backed read paths:
+
+- projects
+- missions
+- mission tasks and runtime tasks
+- agents
+- evidence
+- audit events
+- runtime events
+- contracts
+- roadmap phases
+- actions
+
+Repository writes remain blocked through `writeNotSupportedYet`. P92.3 does not
+enable provider/model calls, agent dispatch, project mutation, hosted DBs,
+deploy, release, export, package creation, network calls, or provider spend.
+
+Validation:
+
+- `npm run check:p923-sqlite-runtime-read-wiring`
+- `npm run check:p922-sqlite-crud-repository`
+- `npm run check:p921-sqlite-runtime-foundation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
 ## Next Subphases
 
-- P92.3 Wire selected runtime reads to SQLite with file-backed fallback.
 - P92.4 Governed SQLite writes for activity, evidence, and audit records.
 - P92.5 Command Center DB live state UX.
 - P92.6 migration, backup, docs, and roadmap closure.

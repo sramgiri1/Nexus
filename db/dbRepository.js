@@ -1,13 +1,16 @@
 /**
- * dbRepository.js — P41-LOCAL read-only repository.
- * All reads come from file-backed sources. DB writes not supported in P41.
+ * dbRepository.js — read-only repository with file-backed fallback.
+ * P92.3 reads from local SQLite when explicitly live and initialized.
  */
 
 import { readFileSync, existsSync } from "node:fs";
 import { join } from "node:path";
 import process from "node:process";
+import { listSqliteEntityRecords } from "./sqliteCrudRepository.js";
+import { getSqliteRuntimeConfig, getSqliteRuntimeStatus } from "./sqliteRuntime.js";
 
 const ROOT = process.cwd();
+const DEFAULT_READ_LIMIT = 500;
 
 function safeReadJson(relPath) {
   const full = join(ROOT, relPath);
@@ -28,18 +31,72 @@ function safeReadJsonl(relPath) {
 }
 
 export function createDbRepository() {
+  const mode = getRepositoryMode();
   return {
-    mode: "file-backed",
+    mode,
     dbWritesEnabled: false,
+    runtimeWritesEnabled: false,
     fileFallbackRequired: true,
+    sqliteReadsEnabled: mode === "sqlite-live",
   };
 }
 
 export function getRepositoryMode() {
+  return sqliteReadsAreReady() ? "sqlite-live" : "file-backed";
+}
+
+function sqliteReadsAreReady() {
+  try {
+    const status = getSqliteRuntimeStatus();
+    return status.ready === true;
+  } catch {
+    return false;
+  }
+}
+
+function tryReadSqlite(entityName, options = {}) {
+  if (!sqliteReadsAreReady()) return null;
+  try {
+    const config = getSqliteRuntimeConfig();
+    const records = listSqliteEntityRecords(
+      entityName,
+      { limit: options.limit || DEFAULT_READ_LIMIT },
+      { mode: config.mode, dbPath: config.dbPath, sqliteCli: config.sqliteCli },
+    );
+    return records.map((record) => ({ ...record, _source: "sqlite" }));
+  } catch {
+    return null;
+  }
+}
+
+function firstSqliteRows(entityName, options = {}) {
+  const rows = tryReadSqlite(entityName, options);
+  return Array.isArray(rows) && rows.length > 0 ? rows : null;
+}
+
+export function getRepositoryReadStatus() {
+  const config = getSqliteRuntimeConfig();
+  const status = getSqliteRuntimeStatus();
+  return {
+    mode: getRepositoryMode(),
+    sqliteReadsEnabled: status.ready === true,
+    sqliteLiveAllowed: config.sqliteLiveAllowed,
+    dbWritesEnabled: false,
+    runtimeWritesEnabled: false,
+    fileFallbackRequired: true,
+    fallbackReason: status.ready
+      ? ""
+      : "SQLite reads require NEXUS_DB_MODE=sqlite-live and an initialized local DB.",
+  };
+}
+
+export function getFileBackedRepositoryMode() {
   return "file-backed";
 }
 
 export function readProjects() {
+  const sqliteRows = firstSqliteRows("projects");
+  if (sqliteRows) return sqliteRows;
   const contract = safeReadJson("contracts/missions/private-project-mission-contract.json");
   if (!contract) return [];
   return [{
@@ -54,6 +111,8 @@ export function readProjects() {
 }
 
 export function readMissions() {
+  const sqliteRows = firstSqliteRows("missions");
+  if (sqliteRows) return sqliteRows;
   const contract = safeReadJson("contracts/missions/private-project-mission-contract.json");
   if (!contract) return [];
   return [{
@@ -68,6 +127,14 @@ export function readMissions() {
 }
 
 export function readTasks() {
+  const sqliteMissionTasks = tryReadSqlite("mission_tasks");
+  const sqliteRuntimeTasks = tryReadSqlite("runtime_tasks");
+  if (sqliteMissionTasks || sqliteRuntimeTasks) {
+    return {
+      missionTasks: sqliteMissionTasks || [],
+      runtimeTasks: sqliteRuntimeTasks || [],
+    };
+  }
   const plan = safeReadJson("contracts/missions/private-project-task-plan.json");
   const runtime = safeReadJson("local-state/runtime/tasks.json");
   const missionTasks = plan?.tasks || [];
@@ -76,6 +143,8 @@ export function readTasks() {
 }
 
 export function readAgents() {
+  const sqliteRows = firstSqliteRows("agents");
+  if (sqliteRows) return sqliteRows;
   const status = safeReadJson("memory/agent-status.json");
   if (!status) return [];
   const agents = Array.isArray(status) ? status : Object.values(status);
@@ -90,18 +159,26 @@ export function readAgents() {
 }
 
 export function readEvidence() {
+  const sqliteRows = tryReadSqlite("evidence");
+  if (sqliteRows) return sqliteRows;
   return safeReadJsonl("local-state/runtime/evidence.jsonl");
 }
 
 export function readAuditEvents() {
+  const sqliteRows = tryReadSqlite("audit_events");
+  if (sqliteRows) return sqliteRows;
   return safeReadJsonl("local-state/runtime/audit.jsonl");
 }
 
 export function readRuntimeEvents() {
+  const sqliteRows = tryReadSqlite("runtime_events");
+  if (sqliteRows) return sqliteRows;
   return safeReadJsonl("local-state/runtime/events.jsonl");
 }
 
 export function readContracts() {
+  const sqliteRows = firstSqliteRows("contracts");
+  if (sqliteRows) return sqliteRows;
   const mission = safeReadJson("contracts/missions/private-project-mission-contract.json");
   const plan = safeReadJson("contracts/missions/private-project-task-plan.json");
   const contracts = [];
@@ -111,10 +188,14 @@ export function readContracts() {
 }
 
 export function readRoadmap() {
+  const sqliteRows = tryReadSqlite("roadmap_phases");
+  if (sqliteRows) return sqliteRows;
   return safeReadJson("reports/command-center-snapshot.json")?.data?.roadmap?.phases || [];
 }
 
 export function readActions() {
+  const sqliteRows = tryReadSqlite("actions");
+  if (sqliteRows) return sqliteRows;
   return safeReadJsonl("local-state/runtime/actions.jsonl");
 }
 
