@@ -77,14 +77,18 @@ addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p883-local-executor-admission"]));
 addCheck("contract references P88.3 files", contract.includes("live-ready/localExecutorAdmission.js") && contract.includes("check:p883-local-executor-admission"));
 addCheck("docs mention P88.3 validation", docs.includes("P88.3 Local Executor Admission") && docs.includes("npm run check:p883-local-executor-admission"));
-addCheck("platform roadmap records P88.3", platformRoadmap.includes("P88.3 is complete") && platformRoadmap.includes("P88.4 is next"));
+addCheck(
+  "platform roadmap records P88.3",
+  platformRoadmap.includes("P88.3 is complete")
+    && (platformRoadmap.includes("P88.4 is next") || platformRoadmap.includes("P88.4 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P88")?.status === "in_progress"
     && statusById.get("P88.3")?.status === "complete"
-    && status.currentPhase === "P88.3"
-    && status.previousPhase === "P88.2"
-    && status.nextPhase === "P88.4",
+    && ["P88.3", "P88.4", "P88.5"].includes(status.currentPhase)
+    && ["P88.2", "P88.3", "P88.4"].includes(status.previousPhase)
+    && ["P88.4", "P88.5", "P88.6"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P88.3", roadmapById.get("P88.3")?.track === "NEXUS_OS" && roadmapById.get("P88.3")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p882-local-activation-request-model-report.md") && fileExists("reports/controlled-local-execution-report.md") && fileExists("reports/guarded-task-execution-report.md"));

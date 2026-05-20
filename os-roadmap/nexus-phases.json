@@ -4697,22 +4697,25 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "cf87dcf",
       "completedAt": "",
-      "summary": "Started scoped execution-capable activation with local-only activation profile, request model, and executor admission contracts. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
+      "summary": "Started scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, and Command Center scoped activation UX. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
       "checksRun": [
+        "npm run check:p884-command-center-scoped-activation-ux",
         "npm run check:p883-local-executor-admission",
         "npm run check:p882-local-activation-request-model",
         "npm run check:p881-scoped-execution-activation-profile",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P88 is in progress. P88.3 is executor admission only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+        "P88 is in progress. P88.4 is UX only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
       ],
-      "nextPhase": "P88.4",
+      "nextPhase": "P88.5",
       "commandCenterVisible": true,
       "label": "Scoped Execution-Capable Activation",
-      "detail": "Scoped local executor admission is underway; execution remains blocked."
+      "detail": "Command Center scoped activation UX is available; execution remains blocked."
     },
     {
       "phaseId": "P88.1",
@@ -4793,24 +4796,51 @@
       "title": "Command Center Scoped Activation UX",
       "track": "NEXUS_OS",
       "order": 87.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned Command Center UX for scoped activation, request, and executor admission state.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T01:07:05.518Z",
+      "summary": "Added Live Readiness Scoped Activation UX for P88 activation, request, and executor admission state with current state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture.",
+      "checksRun": [
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P88.4 is planned and validated."
+        "P88.4 is UX only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P88.5",
       "commandCenterVisible": true,
       "label": "Scoped Activation UX",
-      "detail": "Planned Command Center UX for activation admission state."
+      "detail": "Live Readiness shows scoped activation admission state without runnable actions."
+    },
+    {
+      "phaseId": "P88.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 88.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned aggregation of P88 backend, Command Center, Playwright, docs, roadmap, and safety evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P88.5 is planned and validated."
+      ],
+      "nextPhase": "P88.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "Planned P88 validation aggregation."
     }
   ],
-  "updatedAt": "2026-05-20T01:01:33.913Z",
-  "currentPhase": "P88.3",
-  "previousPhase": "P88.2",
-  "nextPhase": "P88.4",
+  "updatedAt": "2026-05-20T01:07:05.518Z",
+  "currentPhase": "P88.4",
+  "previousPhase": "P88.3",
+  "nextPhase": "P88.5",
   "currentPhaseStatus": "complete"
 }

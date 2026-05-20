@@ -3102,6 +3102,15 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Generated Project Workspace Admission");
     await expect(activeCommandTabPanel(page)).toContainText("review only");
     await expect(activeCommandTabPanel(page)).toContainText("No spend");
+    await commandTab(page, "Scoped Activation").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Scoped activation admission");
+    await expect(activeCommandTabPanel(page)).toContainText("P88 local activation admission visible");
+    await expect(activeCommandTabPanel(page)).toContainText("Local founder task orchestration");
+    await expect(activeCommandTabPanel(page)).toContainText("Generated workspace boundary");
+    await expect(activeCommandTabPanel(page)).toContainText("Live unlock review");
+    await expect(activeCommandTabPanel(page)).toContainText("Executor admission blocked");
+    await expect(activeCommandTabPanel(page)).toContainText("executor cannot run");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p884-command-center-scoped-activation-ux-report.md");
     await commandTab(page, "Bridge Admission").click();
     await expect(activeCommandTabPanel(page)).toContainText("mission.compose");
     await expect(activeCommandTabPanel(page)).toContainText("implementation.apply");

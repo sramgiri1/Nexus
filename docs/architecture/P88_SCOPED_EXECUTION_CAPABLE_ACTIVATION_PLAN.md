@@ -82,10 +82,29 @@ Known limitation: P88.3 is executor admission only. It does not run an executor,
 dispatch agents, execute tools/workers, mutate projects, call providers/models,
 write DB state, use network calls, deploy, release, export, package, or spend.
 
+## P88.4 Command Center Scoped Activation UX
+
+P88.4 is complete. Live Readiness now includes a Scoped Activation tab that
+shows P88 activation/request/executor admission state with current state, next
+action, blockers, disabled reason, owner, evidence, activity, and cost posture.
+The tab is display-only and does not expose runnable actions.
+
+Validation:
+
+- `npm run check:p884-command-center-scoped-activation-ux`
+- `npm run check:p883-local-executor-admission`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Live Ready route renders evidence-backed activation labels without runnable actions"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P88.4 is UX only. It does not run an executor, dispatch
+agents, execute tools/workers, mutate projects, call providers/models, write DB
+state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P88.4 Command Center UX: show scoped activation lanes and next actions without
-  fake runnable actions.
 - P88.5 Tests / Checkers: aggregate backend and UX coverage.
 - P88.6 Docs / Roadmap: close documentation and status evidence.
 - P88.7 Final Validation: final P88 evidence and handoff.

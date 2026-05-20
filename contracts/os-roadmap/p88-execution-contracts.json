@@ -309,6 +309,106 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p88-4-command-center-scoped-activation-ux",
+      "phaseId": "P88.4",
+      "objective": "Expose scoped activation, request, and executor admission state in Command Center without runnable actions.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/liveReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p884-command-center-scoped-activation-ux.js",
+        "scripts/check-p883-local-executor-admission.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p884-command-center-scoped-activation-ux-report.md",
+        "reports/p883-local-executor-admission-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p88-execution-contracts.json",
+        "docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Live Readiness view model includes scopedActivation with currentState, nextAction, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, and rows[]. Each row has label, kind, currentState, ownerCapability, nextAction, blockers, disabledReason, evidenceLocation, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Add a Scoped Activation tab to Live Readiness with current state, next action, blockers, disabled reason, owner, evidence, activity, and cost. Do not add runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Extend focused Live Readiness Playwright coverage to click Scoped Activation and verify dark/light/system themes remain usable."
+      ],
+      "testsCheckers": [
+        "Add check:p884-command-center-scoped-activation-ux.",
+        "Update check:p883-local-executor-admission for downstream P88 phase status."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P88 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no runnable live action is exposed.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, or tool dispatch is enabled.",
+        "Confirm no project or generated app source mutation is enabled.",
+        "Confirm no DB, deploy, release, export, package, network, or spend action is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P88.4 files>",
+        "git commit -m \"feat(nexus): show scoped activation readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

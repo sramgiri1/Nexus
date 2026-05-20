@@ -1570,8 +1570,13 @@ rollback, post-run review, disabled reason, validation commands, activity, and
 cost posture. The executor cannot run, and no executor module is imported,
 wired, or executed.
 
-P88.4 is next. It must expose scoped activation, request, and executor admission
-state in Command Center without fake runnable actions.
+P88.4 is complete. Live Readiness now includes a Scoped Activation tab that
+shows P88 activation/request/executor admission state with current state, next
+action, blockers, disabled reason, owner, evidence, activity, and cost posture.
+The tab is display-only and does not expose runnable actions.
+
+P88.5 is next. It must aggregate P88 backend, Command Center, Playwright, docs,
+roadmap, and safety evidence.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,

@@ -90,6 +90,45 @@ const LIVE_UNLOCK_ROWS = [
   },
 ];
 
+const SCOPED_ACTIVATION_ROWS = [
+  {
+    label: "Local founder task orchestration",
+    kind: "P88 local executor admission",
+    currentState: "Executor admission blocked",
+    ownerCapability: "NEXUS Founder Runtime",
+    nextAction: "Implement P88.5 validation aggregation before any runtime wiring can be considered.",
+    blockers: ["Controlled local execution policy review", "Guarded task execution policy review", "Operator approval", "Executor runtime lock", "Post-run review plan"],
+    disabledReason: "P88.3 defines executor admission only. The local executor cannot run and no agent, tool, worker, provider, file, DB, network, deploy, package, or spend action is enabled.",
+    evidenceLocation: "reports/p883-local-executor-admission-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+  },
+  {
+    label: "Generated workspace boundary",
+    kind: "P88 local executor admission",
+    currentState: "Executor admission blocked",
+    ownerCapability: "NEXUS Generated Workspace Governance",
+    nextAction: "Keep workspace activation blocked until post-run review and file-write admission are separately scoped.",
+    blockers: ["Controlled local execution policy review", "Source/test boundary", "Operator approval", "Executor runtime lock", "Post-run review plan"],
+    disabledReason: "P88.3 defines executor admission only. It does not create directories, mutate generated app source/tests, mutate existing projects, deploy, package, or spend.",
+    evidenceLocation: "reports/p883-local-executor-admission-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No project file writes, DB writes, provider calls, network calls, deploy, package creation, or provider spend.",
+  },
+  {
+    label: "Live unlock review",
+    kind: "P88 local executor admission",
+    currentState: "Executor admission blocked",
+    ownerCapability: "NEXUS Live Activation Governance",
+    nextAction: "Expose scoped activation evidence in Command Center and keep execution blocked until final P88 validation.",
+    blockers: ["Controlled local execution policy review", "Guarded task execution policy review", "Operator approval", "Executor runtime lock", "Post-run review plan"],
+    disabledReason: "P88.3 defines executor admission only. It does not unlock provider/model calls, agent dispatch, worker execution, project mutation, DB writes, network calls, deploy, package, or spend.",
+    evidenceLocation: "reports/p883-local-executor-admission-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+  },
+];
+
 export function buildLiveReadinessViewModel() {
   const gate = buildLiveExecutionGate({ mode: "live" });
   const activation = buildLiveReadyActivationViewModel();
@@ -121,6 +160,7 @@ export function buildLiveReadinessViewModel() {
       { label: "Blocked by policy", value: String(activation.labelSummary["Blocked by policy"]), tone: "disabled", detail: "Mutation, deploy, spend, or execution surfaces blocked by governance." },
       { label: "Approval queue", value: String(approvalRows.length), tone: "disabled", detail: "Local review records only; approvals cannot execute actions." },
       { label: "Live unlocks", value: String(LIVE_UNLOCK_ROWS.length), tone: "amber", detail: "P87 lanes are visible for review only; execution remains disabled." },
+      { label: "Scoped activation", value: String(SCOPED_ACTIVATION_ROWS.length), tone: "disabled", detail: "P88 profile, request, and executor admission state; no executor can run." },
       { label: "Cost", value: "No spend", tone: "pass", detail: "Budget evidence is required before future execution phases." },
     ],
     approvalQueue: {
@@ -143,6 +183,16 @@ export function buildLiveReadinessViewModel() {
       activityLocation: "reports/os-phase-status-report.md",
       costImpact: "No spend.",
       rows: LIVE_UNLOCK_ROWS.map((row) => ({ ...row, blockers: [...row.blockers] })),
+    },
+    scopedActivation: {
+      currentState: "P88 local activation admission visible",
+      nextAction: "Aggregate P88 validation evidence before any runtime wiring can be considered.",
+      disabledReason: "Scoped activation records are display-only. The local executor cannot run, and no provider, agent, worker, project, DB, deploy, package, network, or spend action is enabled.",
+      ownerCapability: "NEXUS Local Executor Governance",
+      evidenceLocation: "reports/p884-command-center-scoped-activation-ux-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+      rows: SCOPED_ACTIVATION_ROWS.map((row) => ({ ...row, blockers: [...row.blockers] })),
     },
     activationRows: activation.readinessRows,
     gateRows: capabilities.map((capability) => ({

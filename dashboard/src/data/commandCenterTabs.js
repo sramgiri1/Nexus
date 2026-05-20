@@ -150,6 +150,7 @@ export const LIVE_READINESS_TABS = [
   { id: "gates", label: "Capability Gates", description: "Provider, tool, worker, project, DB, deploy, and spend gates", badge: "Needs setup" },
   { id: "queue", label: "Approval Queue", description: "Governed local approval records and missing evidence", badge: "Local" },
   { id: "unlocks", label: "Live Unlocks", description: "Explicit P87 unlock lanes, blockers, and evidence", badge: "Review only" },
+  { id: "scoped", label: "Scoped Activation", description: "P88 local activation request and executor admission state", badge: "Blocked" },
   { id: "bridge", label: "Bridge Admission", description: "Live action bridge routes and admission posture", badge: "Blocked by policy" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Blocked by policy" },
 ];

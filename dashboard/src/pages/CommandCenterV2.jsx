@@ -8887,6 +8887,35 @@ function LiveReadinessPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="scoped" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Scoped activation admission">
+              <div className="ccv2-section-heading">Scoped activation admission</div>
+              <div className="ccv2-muted" style={{ marginTop: 8 }}>{readiness.scopedActivation.disabledReason}</div>
+              <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 12 }}>
+                <div className="ccv2-mini-card"><span>Current state</span><strong>{readiness.scopedActivation.currentState}</strong></div>
+                <div className="ccv2-mini-card"><span>Owner</span><strong>{readiness.scopedActivation.ownerCapability}</strong></div>
+                <div className="ccv2-mini-card"><span>Evidence</span><strong>{readiness.scopedActivation.evidenceLocation}</strong></div>
+                <div className="ccv2-mini-card"><span>Cost</span><strong>{readiness.scopedActivation.costImpact}</strong></div>
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+              {readiness.scopedActivation.rows.map((item) => (
+                <article className="ccv2-card" key={item.label}>
+                  <div className="ccv2-section-heading">{item.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{item.currentState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Kind: {item.kind}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {item.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {item.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Blockers: {item.blockers.length ? item.blockers.join(", ") : "None"}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {item.evidenceLocation}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {item.activityLocation}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {item.costImpact}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{item.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="bridge" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--3">
               {readiness.bridgeRows.map((row) => (
