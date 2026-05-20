@@ -5340,7 +5340,7 @@
       "order": 107.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "cf1c157",
       "completedAt": "2026-05-20T21:39:33.254Z",
       "summary": "Completed governed founder workstream activation planning with contract, local activation model, safe local review packet, Command Center activation review UX, aggregate validation, docs closure, and final validation. Runtime execution remains blocked.",
       "checksRun": [
@@ -5529,7 +5529,7 @@
       "order": 113.57,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "cf1c157",
       "completedAt": "2026-05-20T21:39:33.254Z",
       "summary": "Finalized P91 validation, closed the parent P91 status, preserved display-only Activation Review UX, and handed the active roadmap back to P93.",
       "checksRun": [
@@ -5797,7 +5797,7 @@
       "detail": "Planned next live-runtime phase after local SQLite closure."
     }
   ],
-  "updatedAt": "2026-05-20T21:39:33.254Z",
+  "updatedAt": "2026-05-20T21:40:54.899Z",
   "currentPhase": "P91.7",
   "previousPhase": "P91.6",
   "nextPhase": "P93",
