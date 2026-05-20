@@ -5042,7 +5042,7 @@
       "order": 96.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1eb469f",
       "completedAt": "2026-05-20T02:18:00.000Z",
       "summary": "Aggregated P89.1-P89.4 backend, UX, Playwright, docs, roadmap, and safety validation evidence; added a Founder Dry Run safety regression and tightened display-only disabled reason.",
       "checksRun": [
