@@ -461,7 +461,80 @@
       "id": "nexus-os-p87-6-tests-docs-roadmap",
       "phaseId": "P87.6",
       "objective": "Aggregate P87 tests, docs, reports, roadmap, and status evidence.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p876-tests-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p876-tests-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "commandCenterUxRequirements": "Preserve Live Unlocks UX and validate it remains covered by Playwright.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run focused Live Readiness Playwright coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p876-tests-docs-roadmap."
+      ],
+      "validationCommands": [
+        "npm run check:p876-tests-docs-roadmap",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P87.1-P87.5 reports exist.",
+        "Confirm no unsafe runtime actions are exposed.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.6 files>",
+        "git commit -m \"chore(nexus): aggregate p87 validation evidence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p87-7-final-validation",

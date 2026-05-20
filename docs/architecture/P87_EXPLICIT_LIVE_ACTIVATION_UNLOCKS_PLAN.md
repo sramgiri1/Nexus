@@ -77,7 +77,12 @@ Validation: `npm run check:p875-command-center-live-unlock-ux`.
 
 Goal: aggregate P87 validation evidence.
 
-Status: planned.
+Status: complete. P87.6 adds `check:p876-tests-docs-roadmap`, an aggregation
+checker for P87.1-P87.5 scripts, reports, package scripts, docs,
+roadmap/status records, Command Center Live Unlocks coverage, and safety
+posture.
+
+Validation: `npm run check:p876-tests-docs-roadmap`.
 
 ## P87.7 Final Validation
 

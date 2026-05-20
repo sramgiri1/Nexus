@@ -9297,10 +9297,11 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ad539f2",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Explicit live activation unlocks in progress with P87.1-P87.5 complete.",
+      "summary": "Explicit live activation unlocks in progress with P87.1-P87.6 complete.",
       "checksRun": [
+        "npm run check:p876-tests-docs-roadmap",
         "npm run check:p875-command-center-live-unlock-ux",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
         "cd dashboard && npm run build",
@@ -9309,9 +9310,9 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P87.5 is UX only. Live unlock rows do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend."
+        "P87.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
       ],
-      "nextPhase": "P87.6",
+      "nextPhase": "P87.7",
       "commandCenterVisible": true,
       "label": "Explicit Live Activation Unlocks",
       "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
@@ -9443,14 +9444,22 @@
       "title": "Tests / Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 81.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P87 validation evidence.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:41:17.287Z",
+      "summary": "Aggregated P87.1-P87.5 scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p876-tests-docs-roadmap",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+        "P87.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
       ],
       "nextPhase": "P87.7",
       "commandCenterVisible": true,
@@ -9478,9 +9487,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:39:13.399Z",
-  "currentPhase": "P87.5",
-  "previousPhase": "P87.4",
-  "nextPhase": "P87.6",
+  "updatedAt": "2026-05-20T00:41:17.287Z",
+  "currentPhase": "P87.6",
+  "previousPhase": "P87.5",
+  "nextPhase": "P87.7",
   "currentPhaseStatus": "complete"
 }

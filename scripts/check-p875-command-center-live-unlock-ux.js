@@ -45,13 +45,17 @@ addCheck("no browser-unsafe P87 runtime imports", !dataSource.includes("../../..
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p875-command-center-live-unlock-ux"]));
 addCheck("contract references P87.5 files", contract.includes("dashboard/src/data/liveReadiness.js") && contract.includes("check:p875-command-center-live-unlock-ux"));
 addCheck("docs mention P87.5 validation", docs.includes("P87.5 Command Center Live Unlock UX") && docs.includes("npm run check:p875-command-center-live-unlock-ux"));
-addCheck("platform roadmap records P87.5", platformRoadmap.includes("P87.5 is complete") && platformRoadmap.includes("P87.6 is next"));
+addCheck(
+  "platform roadmap records P87.5",
+  platformRoadmap.includes("P87.5 is complete")
+    && (platformRoadmap.includes("P87.6 is next") || platformRoadmap.includes("P87.6 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P87")?.status === "in_progress"
     && statusById.get("P87.5")?.status === "complete"
-    && status.currentPhase === "P87.5"
-    && status.nextPhase === "P87.6",
+    && ["P87.5", "P87.6"].includes(status.currentPhase)
+    && ["P87.6", "P87.7"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P87.5", roadmapById.get("P87.5")?.track === "NEXUS_OS" && roadmapById.get("P87.5")?.status === "complete");
 

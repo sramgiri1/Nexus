@@ -1523,8 +1523,12 @@ lanes with current state, next action, blockers, disabled reason, owner,
 evidence, activity, and cost posture. It exposes no runnable provider, agent,
 worker, project, DB, deploy, package, network, or spend action.
 
-P87.6 is next. It should aggregate P87 tests, docs, reports, roadmap, status,
-Command Center UX coverage, and safety posture.
+P87.6 is complete. It aggregates P87.1-P87.5 scripts, reports, package scripts,
+docs, roadmap/status records, Command Center Live Unlocks coverage, and safety
+posture.
+
+P87.7 is next. It should close P87 with final validation and hand off to the
+next scoped phase.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
