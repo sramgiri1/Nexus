@@ -1469,8 +1469,12 @@ approval queue items and record blockers, rollback requirements, validation
 commands, evidence, activity, cost posture, and disabled reason while activation
 and execution remain blocked.
 
-P86.6 is next. It should aggregate P86 tests, docs, reports, and roadmap
-evidence.
+P86.6 is complete. It aggregates P86.1-P86.5 scripts, reports, package
+scripts, docs, roadmap/status records, Command Center UX coverage, and safety
+posture.
+
+P86.7 is next. It should close P86 with final validation and hand off to the
+next explicitly scoped live activation phase.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).

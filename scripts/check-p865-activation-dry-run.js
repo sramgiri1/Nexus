@@ -50,8 +50,17 @@ addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p865-activation-dry-run"]));
 addCheck("contract references P86.5 files", contract.includes("live-ready/governedLiveActivationDryRun.js") && contract.includes("check:p865-activation-dry-run"));
 addCheck("docs mention P86.5 validation", docs.includes("P86.5 Activation Dry Run") && docs.includes("npm run check:p865-activation-dry-run"));
-addCheck("platform roadmap records P86.5", platformRoadmap.includes("P86.5 is complete") && platformRoadmap.includes("P86.6 is next"));
-addCheck("phase status advanced", statusById.get("P86.5")?.status === "complete" && status.currentPhase === "P86.5" && status.nextPhase === "P86.6");
+addCheck(
+  "platform roadmap records P86.5",
+  platformRoadmap.includes("P86.5 is complete")
+    && (platformRoadmap.includes("P86.6 is next") || platformRoadmap.includes("P86.6 is complete")),
+);
+addCheck(
+  "phase status advanced",
+  statusById.get("P86.5")?.status === "complete"
+    && ["P86.5", "P86.6"].includes(status.currentPhase)
+    && ["P86.6", "P86.7"].includes(status.nextPhase),
+);
 addCheck("roadmap tracks P86.5", roadmapById.get("P86.5")?.track === "NEXUS_OS" && roadmapById.get("P86.5")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p864-command-center-live-admission-ux-report.md") && fileExists("reports/os-phase-status-report.md"));
 

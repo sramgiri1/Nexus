@@ -70,7 +70,11 @@ Validation: `npm run check:p865-activation-dry-run`.
 
 Goal: aggregate P86 validation evidence.
 
-Status: planned.
+Status: complete. P86.6 adds `check:p866-tests-docs-roadmap`, an aggregation
+checker for P86.1-P86.5 scripts, reports, package scripts, docs, roadmap,
+phase status, Command Center UX coverage, and safety posture.
+
+Validation: `npm run check:p866-tests-docs-roadmap`.
 
 ## P86.7 Final Validation
 

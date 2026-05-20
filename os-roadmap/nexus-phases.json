@@ -4279,21 +4279,20 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3e853ed",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1-P86.5 complete.",
+      "summary": "Governed live capability admission in progress with P86.1-P86.6 complete.",
       "checksRun": [
+        "npm run check:p866-tests-docs-roadmap",
         "npm run check:p865-activation-dry-run",
-        "npm run check:p864-command-center-live-admission-ux",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.5 creates activation dry-run records only.",
-        "Activation and execution remain blocked. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+        "P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
       ],
-      "nextPhase": "P86.6",
+      "nextPhase": "P86.7",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -4435,14 +4434,20 @@
       "title": "Tests / Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 73.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Aggregate P86 validation evidence.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:11:19.127Z",
+      "summary": "Aggregated P86 scripts, reports, docs, roadmap, status, Command Center coverage, and safety evidence.",
+      "checksRun": [
+        "npm run check:p866-tests-docs-roadmap",
+        "npm run check:p865-activation-dry-run",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
       ],
       "nextPhase": "P86.7",
       "commandCenterVisible": true,
@@ -4469,9 +4474,9 @@
       "detail": "Final P86 validation and handoff."
     }
   ],
-  "updatedAt": "2026-05-20T00:09:45.990Z",
-  "currentPhase": "P86.5",
-  "previousPhase": "P86.4",
-  "nextPhase": "P86.6",
+  "updatedAt": "2026-05-20T00:11:19.127Z",
+  "currentPhase": "P86.6",
+  "previousPhase": "P86.5",
+  "nextPhase": "P86.7",
   "currentPhaseStatus": "complete"
 }

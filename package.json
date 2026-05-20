@@ -408,6 +408,7 @@
     "check:p863-operator-approval-queue": "node scripts/check-p863-operator-approval-queue.js",
     "check:p864-command-center-live-admission-ux": "node scripts/check-p864-command-center-live-admission-ux.js",
     "check:p865-activation-dry-run": "node scripts/check-p865-activation-dry-run.js",
+    "check:p866-tests-docs-roadmap": "node scripts/check-p866-tests-docs-roadmap.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

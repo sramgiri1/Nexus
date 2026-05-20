@@ -396,7 +396,27 @@
       "id": "nexus-os-p86-6-tests-docs-roadmap",
       "phaseId": "P86.6",
       "objective": "Aggregate P86 tests, docs, reports, and roadmap evidence.",
-      "status": "planned"
+      "status": "complete",
+      "allowedFiles": [
+        "scripts/check-p866-tests-docs-roadmap.js",
+        "reports/p866-tests-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "inputs": {
+        "validationCommands": [
+          "npm run check:p866-tests-docs-roadmap",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "git diff --check"
+        ]
+      }
     },
     {
       "id": "nexus-os-p86-7-final-validation",
