@@ -361,6 +361,106 @@
       "retentionClass": "validation_log",
       "redactionRequired": true,
       "fileFallbackSource": "reports/careloop-backend-validation.json"
+    },
+    {
+      "name": "founder_sessions",
+      "purpose": "Durable founder workflow session records for local Chat with NEXUS and Business Build state.",
+      "primaryKey": "sessionId",
+      "fields": {
+        "sessionId": "string",
+        "publicLabel": "string",
+        "founderIdeaSummary": "string",
+        "currentState": "string",
+        "nextQuestion": "string",
+        "readinessPercent": "integer",
+        "ownerCapability": "string",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": ["sessionId", "publicLabel", "currentState"],
+      "indexes": ["currentState", "ownerCapability", "updatedAt"],
+      "sourceMapping": ["dashboard/src/data/founderIntake.js", "dashboard/src/data/businessBuild.js"],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/founderIntake.js"
+    },
+    {
+      "name": "founder_qna_turns",
+      "purpose": "Durable local Q&A turns for founder intake and PRD comprehension.",
+      "primaryKey": "turnId",
+      "fields": {
+        "turnId": "string",
+        "sessionId": "string",
+        "speaker": "string",
+        "prompt": "string",
+        "responseSummary": "string",
+        "turnState": "string",
+        "createdAt": "datetime"
+      },
+      "requiredFields": ["turnId", "sessionId", "speaker", "turnState"],
+      "indexes": ["sessionId", "speaker", "turnState", "createdAt"],
+      "sourceMapping": ["live-ready/enterpriseFounderQnaTurnState.js", "dashboard/src/data/founderIntake.js"],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/founderIntake.js"
+    },
+    {
+      "name": "founder_prd_artifacts",
+      "purpose": "Durable local PRD artifacts drafted from founder session state before execution is allowed.",
+      "primaryKey": "prdId",
+      "fields": {
+        "prdId": "string",
+        "sessionId": "string",
+        "title": "string",
+        "problemSummary": "string",
+        "customerSummary": "string",
+        "solutionSummary": "string",
+        "businessModelSummary": "string",
+        "readinessPercent": "integer",
+        "currentState": "string",
+        "evidenceRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": ["prdId", "sessionId", "title", "currentState"],
+      "indexes": ["sessionId", "currentState", "readinessPercent", "updatedAt"],
+      "sourceMapping": ["live-ready/founderPrdSafeAuthoring.js", "dashboard/src/data/businessBuild.js"],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "founder_workstream_plans",
+      "purpose": "Durable local agent/workstream plan lanes created from founder PRD readiness before dispatch is allowed.",
+      "primaryKey": "planId",
+      "fields": {
+        "planId": "string",
+        "sessionId": "string",
+        "prdId": "string",
+        "lane": "string",
+        "ownerCapability": "string",
+        "currentState": "string",
+        "nextAction": "string",
+        "blockerSummary": "string",
+        "dispatchAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": ["planId", "sessionId", "lane", "currentState"],
+      "indexes": ["sessionId", "prdId", "lane", "currentState", "ownerCapability"],
+      "sourceMapping": ["live-ready/founderWorkstreamActivationPlan.js", "dashboard/src/data/businessBuild.js"],
+      "piiRisk": "low",
+      "retentionClass": "founder_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
     }
   ]
 }

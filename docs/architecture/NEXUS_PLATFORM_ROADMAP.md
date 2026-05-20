@@ -1859,8 +1859,14 @@ subphase split, future exports, data shape, Command Center UX requirements,
 validation commands, and safety checks. P94.1 is contract-only and does not
 modify `db/**`, dashboard source, live runtime models, or local runtime data.
 
-P94.2 is next. It will add local SQLite schema definitions for durable founder
-sessions, founder Q&A turns, PRD artifacts, and workstream plans.
+P94.2 is complete. It adds local SQLite schema definitions for durable founder
+sessions, founder Q&A turns, PRD artifacts, and workstream plans. These records
+use display-safe session/workflow identifiers, public labels, summaries,
+readiness/current-state fields, owner capability, evidence/activity references,
+timestamps, retention classes, and redaction requirements.
+
+P94.3 is next. It will add the governed local CRUD model and admission wrapper
+for the P94.2 founder workflow entities.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 creation, project mutation, hosted DBs, network calls, deploy, release, export,

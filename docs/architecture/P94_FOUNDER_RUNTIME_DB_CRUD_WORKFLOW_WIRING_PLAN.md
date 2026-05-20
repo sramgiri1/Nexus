@@ -22,14 +22,15 @@ modify `db/**`, dashboard source, live runtime models, or local runtime data.
 
 ### P94.2 Founder Runtime DB Schema
 
-P94.2 will add local SQLite schema definitions for durable founder sessions,
-founder Q&A turns, PRD artifacts, and workstream plans. The schema must use
-display-safe IDs, public labels, summaries, owner capabilities, evidence and
-activity references, timestamps, retention classes, and redaction requirements.
+P94.2 is complete. It adds local SQLite schema definitions for durable founder
+sessions, founder Q&A turns, PRD artifacts, and workstream plans. The schema
+uses display-safe IDs, public labels, summaries, owner capabilities, evidence
+and activity references, timestamps, retention classes, and redaction
+requirements.
 
 ### P94.3 Founder Runtime CRUD Model
 
-P94.3 will add the governed local CRUD model and admission wrapper for the
+P94.3 is next. It will add the governed local CRUD model and admission wrapper for the
 P94.2 entities. It must reuse existing result envelopes, redaction helpers,
 mode guards, SQLite CRUD repository helpers, and P93 local CRUD admission
 patterns instead of duplicating helpers.
@@ -98,6 +99,8 @@ card/tab/status components, or activity/evidence/audit appenders.
 P94.1 validation:
 
 - `npm run check:p941-founder-runtime-db-crud-contract`
+- `npm run check:p942-founder-runtime-db-schema`
+- `npm run check:p922-sqlite-crud-repository`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

@@ -6008,22 +6008,24 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "93ab446",
-      "completedAt": "2026-05-20T22:29:11.000Z",
-      "summary": "Started founder runtime DB CRUD workflow wiring with an implementation-grade contract for durable founder sessions, Q&A turns, PRD artifacts, workstream plans, Command Center UX, validation, and final closure.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:39:00.000Z",
+      "summary": "Continued founder runtime DB CRUD workflow wiring with local SQLite schema definitions for durable founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
       "checksRun": [
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
         "npm run check:p941-founder-runtime-db-crud-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P94.1 is contract-only. Founder DB schema, runtime CRUD wiring, Command Center UX wiring, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
+        "P94.2 is schema-only. Founder workflow CRUD admission, Command Center DB UX wiring, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
       ],
-      "nextPhase": "P94.2",
+      "nextPhase": "P94.3",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB CRUD",
-      "detail": "P94 contract started; founder DB schema next."
+      "detail": "Founder DB schema complete; CRUD model next."
     },
     {
       "phaseId": "P94.1",
@@ -6054,19 +6056,26 @@
       "title": "Founder Runtime DB Schema",
       "track": "NEXUS_OS",
       "order": 130.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned local SQLite schema definitions for durable founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:39:00.000Z",
+      "summary": "Added local SQLite schema definitions for durable founder sessions, founder Q&A turns, PRD artifacts, and workstream plans with redaction, retention, display-safe fields, SQL tables, indexes, and isolated schema validation.",
+      "checksRun": [
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. This subphase must define its scoped plan before implementation."
+        "P94.2 is schema-only. It does not wire Command Center to DB records, add runtime CRUD admission, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P94.3",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB Schema",
-      "detail": "Planned P94 subphase."
+      "detail": "Founder workflow DB schema complete; CRUD model next."
     },
     {
       "phaseId": "P94.3",
@@ -6164,9 +6173,9 @@
       "detail": "Planned P94 subphase."
     }
   ],
-  "updatedAt": "2026-05-20T22:29:11.000Z",
-  "currentPhase": "P94.1",
-  "previousPhase": "P93.7",
-  "nextPhase": "P94.2",
+  "updatedAt": "2026-05-20T22:39:00.000Z",
+  "currentPhase": "P94.2",
+  "previousPhase": "P94.1",
+  "nextPhase": "P94.3",
   "currentPhaseStatus": "complete"
 }

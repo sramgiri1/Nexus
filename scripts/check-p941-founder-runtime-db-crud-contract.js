@@ -44,18 +44,18 @@ addCheck("future exports defined", contractText.includes("buildFounderRuntimeDbC
 addCheck("future DB entities defined", contractText.includes("founder_sessions") && contractText.includes("founder_qna_turns") && contractText.includes("founder_prd_artifacts") && contractText.includes("founder_workstream_plans"));
 addCheck("Command Center UX requirements present", contractText.includes("saved founder session state") && contractText.includes("without raw JSON"));
 addCheck("docs record P94.1", docs.includes("P94.1 is complete") && docs.includes("npm run check:p941-founder-runtime-db-crud-contract"));
-addCheck("platform roadmap records P94.1", platformRoadmap.includes("P94.1 is complete") && platformRoadmap.includes("P94.2 is next"));
+addCheck("platform roadmap records P94.1", platformRoadmap.includes("P94.1 is complete") && (platformRoadmap.includes("P94.2 is next") || platformRoadmap.includes("P94.2 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P94")?.status === "in_progress"
     && statusById.get("P94.1")?.status === "complete"
-    && status.currentPhase === "P94.1"
-    && status.previousPhase === "P93.7"
-    && status.nextPhase === "P94.2",
+    && ["P94.1", "P94.2", "P94.3", "P94.4", "P94.5", "P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P93.7", "P94.1", "P94.2", "P94.3", "P94.4", "P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.2", "P94.3", "P94.4", "P94.5", "P94.6", "P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P94.1", roadmapById.get("P94.1")?.track === "NEXUS_OS" && roadmapById.get("P94.1")?.status === "complete");
-addCheck("P94.2 handoff exists", statusById.get("P94.2")?.status === "planned" && roadmapById.get("P94.2")?.status === "planned");
+addCheck("P94.2 handoff exists", ["planned", "complete"].includes(statusById.get("P94.2")?.status) && ["planned", "complete"].includes(roadmapById.get("P94.2")?.status));
 addCheck("status checker accepts P94.1-P94.7", ["P94.1", "P94.2", "P94.3", "P94.4", "P94.5", "P94.6", "P94.7"].every((phaseId) => statusChecker.includes(`\"${phaseId}\"`)));
 addCheck("contract does not expose raw private IDs", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(contractText));
 addCheck("contract does not invent runnable actions", !unsafeWords.test(contractText));

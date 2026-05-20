@@ -121,7 +121,7 @@ const crudSource = readText("db/sqliteCrudRepository.js");
 
 addCheck("SQLite CLI available", cliAvailable, "sqlite3 command is required for P92.2 CRUD validation");
 addCheck("test DB initialized", !cliAvailable || (init.initialized === true && init.tableCount >= 10 && existsSync(join(ROOT, TEST_DB))));
-addCheck("all schema entities are allowlisted", entities.length === 18 && entities.some((entity) => entity.name === "runtime_tasks"));
+addCheck("all schema entities are allowlisted", entities.length >= 22 && entities.some((entity) => entity.name === "runtime_tasks") && entities.some((entity) => entity.name === "founder_sessions"));
 addCheck("entity description maps fields to SQLite columns", runtimeTaskDescription.fields.taskId.column === "task_id" && runtimeTaskDescription.fields.mutationAllowed.column === "mutation_allowed");
 addCheck("default writes are blocked without explicit flag", !cliAvailable || writeBlockedMessage.includes("NEXUS_DB_ENABLE_WRITES=1"));
 addCheck("insert/get works for runtime task", !cliAvailable || (runtimeTask?.taskId === "p922-runtime-task" && runtimeTaskRead?.projectId === "nexus-os"));

@@ -246,3 +246,83 @@ CREATE TABLE IF NOT EXISTS validation_results (
 );
 CREATE INDEX IF NOT EXISTS idx_validation_results_project_id ON validation_results (project_id);
 CREATE INDEX IF NOT EXISTS idx_validation_results_status     ON validation_results (status);
+
+-- founder_sessions
+CREATE TABLE IF NOT EXISTS founder_sessions (
+  session_id           TEXT        NOT NULL,
+  public_label         TEXT        NOT NULL,
+  founder_idea_summary TEXT,
+  current_state        TEXT        NOT NULL,
+  next_question        TEXT,
+  readiness_percent    INTEGER,
+  owner_capability     TEXT,
+  evidence_refs        JSONB,
+  activity_refs        JSONB,
+  created_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at           TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (session_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_sessions_current_state    ON founder_sessions (current_state);
+CREATE INDEX IF NOT EXISTS idx_founder_sessions_owner_capability ON founder_sessions (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_founder_sessions_updated_at       ON founder_sessions (updated_at);
+
+-- founder_qna_turns
+CREATE TABLE IF NOT EXISTS founder_qna_turns (
+  turn_id          TEXT        NOT NULL,
+  session_id       TEXT        NOT NULL,
+  speaker          TEXT        NOT NULL,
+  prompt           TEXT,
+  response_summary TEXT,
+  turn_state       TEXT        NOT NULL,
+  created_at       TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (turn_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_qna_turns_session_id ON founder_qna_turns (session_id);
+CREATE INDEX IF NOT EXISTS idx_founder_qna_turns_speaker    ON founder_qna_turns (speaker);
+CREATE INDEX IF NOT EXISTS idx_founder_qna_turns_turn_state ON founder_qna_turns (turn_state);
+CREATE INDEX IF NOT EXISTS idx_founder_qna_turns_created_at ON founder_qna_turns (created_at);
+
+-- founder_prd_artifacts
+CREATE TABLE IF NOT EXISTS founder_prd_artifacts (
+  prd_id                 TEXT        NOT NULL,
+  session_id             TEXT        NOT NULL,
+  title                  TEXT        NOT NULL,
+  problem_summary        TEXT,
+  customer_summary       TEXT,
+  solution_summary       TEXT,
+  business_model_summary TEXT,
+  readiness_percent      INTEGER,
+  current_state          TEXT        NOT NULL,
+  evidence_refs          JSONB,
+  created_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (prd_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_prd_artifacts_session_id        ON founder_prd_artifacts (session_id);
+CREATE INDEX IF NOT EXISTS idx_founder_prd_artifacts_current_state     ON founder_prd_artifacts (current_state);
+CREATE INDEX IF NOT EXISTS idx_founder_prd_artifacts_readiness_percent ON founder_prd_artifacts (readiness_percent);
+CREATE INDEX IF NOT EXISTS idx_founder_prd_artifacts_updated_at        ON founder_prd_artifacts (updated_at);
+
+-- founder_workstream_plans
+CREATE TABLE IF NOT EXISTS founder_workstream_plans (
+  plan_id                  TEXT        NOT NULL,
+  session_id               TEXT        NOT NULL,
+  prd_id                   TEXT,
+  lane                     TEXT        NOT NULL,
+  owner_capability         TEXT,
+  current_state            TEXT        NOT NULL,
+  next_action              TEXT,
+  blocker_summary          TEXT,
+  dispatch_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs            JSONB,
+  created_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (plan_id)
+);
+CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_session_id       ON founder_workstream_plans (session_id);
+CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_prd_id           ON founder_workstream_plans (prd_id);
+CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_lane             ON founder_workstream_plans (lane);
+CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_current_state    ON founder_workstream_plans (current_state);
+CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_owner_capability ON founder_workstream_plans (owner_capability);

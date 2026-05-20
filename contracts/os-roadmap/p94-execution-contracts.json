@@ -121,12 +121,13 @@
       "id": "nexus-os-p94-2-founder-runtime-db-schema",
       "phaseId": "P94.2",
       "objective": "Add local SQLite schema definitions for durable founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
         "scripts/check-p942-founder-runtime-db-schema.js",
+        "scripts/check-p922-sqlite-crud-repository.js",
         "package.json",
         "contracts/os-roadmap/p94-execution-contracts.json",
         "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
@@ -179,6 +180,7 @@
       ],
       "validationCommands": [
         "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
         "npm run check:p941-founder-runtime-db-crud-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
