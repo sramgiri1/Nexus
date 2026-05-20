@@ -103,8 +103,30 @@ Known limitation: P90.4 is Command Center UX only. It does not write project
 files, dispatch agents, execute tools/workers, call providers/models, write DB
 state, use network calls, deploy, release, export, package, or spend.
 
+## P90.5 Tests / Checkers
+
+P90.5 is complete. It adds aggregate validation for the P90 founder PRD lane
+across the execution contract, P90.1-P90.4 reports, safe in-memory authoring,
+Business Build Local PRD UX wiring, Playwright coverage, docs, roadmap, phase
+status, and safety boundaries. The aggregate checker verifies the P90.6 handoff
+exists before docs closure begins.
+
+Validation:
+
+- `npm run check:p905-founder-prd-lane-validation`
+- `npm run check:p904-command-center-prd-lane-ux`
+- `npm run check:p903-founder-prd-safe-authoring`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.5 is validation aggregation only. It does not write
+project files, dispatch agents, execute tools/workers, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P90.5 Tests / Checkers: aggregate backend and UX validation.
 - P90.6 Docs / Roadmap: close docs and status evidence.
 - P90.7 Final Validation: close P90 and hand off to the next scoped phase.

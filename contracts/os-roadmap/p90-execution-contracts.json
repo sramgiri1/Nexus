@@ -417,8 +417,101 @@
       "id": "nexus-os-p90-5-tests-checkers",
       "phaseId": "P90.5",
       "objective": "Aggregate P90 backend, UX, Playwright, docs, roadmap, and safety validation.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p905-founder-prd-lane-validation.js",
+        "scripts/check-p904-command-center-prd-lane-ux.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p905-founder-prd-lane-validation-report.md",
+        "reports/p904-command-center-prd-lane-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p90-execution-contracts.json",
+        "docs/architecture/P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "checkerShape": "P90.5 adds an aggregate checker that verifies P90.1-P90.4 scripts, reports, contract coverage, Command Center Local PRD wiring, Playwright coverage, docs, roadmap, phase status, P90.6 handoff, and safety constraints."
+      },
+      "commandCenterUxRequirements": "No new Command Center UX changes. Preserve P90.4 Local PRD UX and verify it remains backed by safe in-memory PRD authoring with blocked unsafe operations.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Reuse P90.4 Business Build route coverage.",
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"."
+      ],
+      "testsCheckers": [
+        "Add check:p905-founder-prd-lane-validation.",
+        "Run check:p904-command-center-prd-lane-ux.",
+        "Run check:p903-founder-prd-safe-authoring.",
+        "Run OS phase status and phase validation coverage checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P90 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:p903-founder-prd-safe-authoring",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P90.5 is validation-only.",
+        "Confirm no Command Center runnable actions were added.",
+        "Confirm no project writes are enabled.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P90.5 files>",
+        "git commit -m \"test(nexus): aggregate p90 founder prd lane validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build result",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p90-6-docs-roadmap",

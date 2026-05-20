@@ -54,14 +54,18 @@ addCheck("Local PRD UX avoids DemoApp/private IDs", !/DemoApp|private-project-01
 addCheck("route tests cover Local PRD", routeTests.includes('commandTab(page, "Local PRD")') && routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact"));
 addCheck("contract tracks P90.4 files", contract.includes("P90.4") && contract.includes("dashboard/src/pages/CommandCenterV2.jsx") && contract.includes("check:p904-command-center-prd-lane-ux"));
 addCheck("docs record P90.4", docs.includes("P90.4 is complete") && docs.includes("npm run check:p904-command-center-prd-lane-ux"));
-addCheck("platform roadmap records P90.4", platformRoadmap.includes("P90.4 is complete") && platformRoadmap.includes("P90.5 is next"));
+addCheck(
+  "platform roadmap records P90.4",
+  platformRoadmap.includes("P90.4 is complete")
+    && (platformRoadmap.includes("P90.5 is next") || platformRoadmap.includes("P90.5 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P90")?.status === "in_progress"
     && statusById.get("P90.4")?.status === "complete"
-    && status.currentPhase === "P90.4"
-    && status.previousPhase === "P90.3"
-    && status.nextPhase === "P90.5",
+    && ["P90.4", "P90.5", "P90.6", "P90.7"].includes(status.currentPhase)
+    && ["P90.3", "P90.4", "P90.5", "P90.6"].includes(status.previousPhase)
+    && ["P90.5", "P90.6", "P90.7", "P91"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P90.4", roadmapById.get("P90.4")?.track === "NEXUS_OS" && roadmapById.get("P90.4")?.status === "complete");

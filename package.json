@@ -435,6 +435,7 @@
     "check:p902-founder-prd-local-model": "node scripts/check-p902-founder-prd-local-model.js",
     "check:p903-founder-prd-safe-authoring": "node scripts/check-p903-founder-prd-safe-authoring.js",
     "check:p904-command-center-prd-lane-ux": "node scripts/check-p904-command-center-prd-lane-ux.js",
+    "check:p905-founder-prd-lane-validation": "node scripts/check-p905-founder-prd-lane-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

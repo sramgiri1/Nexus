@@ -1677,8 +1677,12 @@ owner, evidence, activity, cost posture, and blocked unsafe operations. It does
 not expose raw JSON, raw logs, internal phase labels, fake runnable actions,
 project mutation, agent dispatch, provider calls, or private IDs.
 
-P90.5 is next. It must aggregate backend, UX, Playwright, docs, roadmap, and
-safety validation evidence for P90 before docs closure.
+P90.5 is complete. It aggregates P90.1-P90.4 contract, model, safe authoring,
+Command Center UX, Playwright, docs, roadmap, phase status, and safety evidence
+into one validation checker before docs closure.
+
+P90.6 is next. It must close P90 docs, roadmap, contract, and phase-status
+evidence before final validation.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).
