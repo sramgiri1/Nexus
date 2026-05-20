@@ -214,8 +214,100 @@
       "id": "nexus-os-p93-3-governed-runtime-mutation-request-model",
       "phaseId": "P93.3",
       "objective": "Add governed local SQLite mutation request envelopes for explicitly scoped OS runtime entities.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/governedRuntimeMutationRequest.js",
+        "scripts/check-p933-governed-runtime-mutation-request.js",
+        "package.json",
+        "contracts/os-roadmap/p93-execution-contracts.json",
+        "docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p931-enterprise-live-runtime-contract-report.md",
+        "reports/p932-enterprise-runtime-crud-plan-report.md",
+        "reports/p933-governed-runtime-mutation-request-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P93_GOVERNED_RUNTIME_MUTATION_REQUEST_PHASE",
+          "buildGovernedRuntimeMutationRequest",
+          "validateGovernedRuntimeMutationRequest"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, requestMode, sourceCrudPlan, mutationRequests[], requestReadiness, allowedLocalOperations[], forbiddenOperations[], mutationGate, requestSummary, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false. Each mutation request includes requestKey, lane, ownerCapability, sqliteEntity, sourceLaneStatus, requestedOperation, requestState, payloadShape, requiredEvidence, missingEvidence, operatorApprovalRequired, rollbackRequired, auditRequired, validationRequired, requestCanExecute, sqliteWriteAllowed, dbWritesAllowed, projectMutationAllowed, providerCallAllowed, workerExecutionAllowed, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, costImpact, and commandCenterVisible."
+      },
+      "commandCenterUxRequirements": "Preserve existing Command Center UX. P93.5 must expose request-envelope status, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable mutation/provider/agent/project actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P93.3 because no UI files change.",
+        "P93.5 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p933-governed-runtime-mutation-request.",
+        "Run P93.2 and P93.1 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P93 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P93.3 is a local request-envelope model only.",
+        "Confirm no db/** files changed.",
+        "Confirm no SQLite writes are executed.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P93.3 files>",
+        "git commit -m \"feat(nexus): add governed runtime mutation requests\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p93-4-local-crud-execution-admission",

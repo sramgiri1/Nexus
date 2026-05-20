@@ -1806,8 +1806,16 @@ current create/update/delete, mutation request, provider, worker, project
 mutation, hosted DB, network, deploy, release, export, package, and spend flags
 blocked.
 
-P93.3 is next. It must add governed runtime mutation request envelopes without
-executing SQLite writes.
+P93.3 is complete. It adds governed local mutation request envelopes for the
+P93 enterprise runtime lanes. Each request records the safe request key, owner
+capability, SQLite entity target, field-summary payload shape, required and
+missing evidence, disabled reason, validation commands, evidence/activity
+location, and cost impact while keeping SQLite writes, DB writes, provider/model
+calls, agent dispatch, tool/worker execution, project mutation, hosted DB
+mutation, network calls, deploy, release, export, package, and spend blocked.
+
+P93.4 is next. It must scope local CRUD execution admission for approved OS
+runtime entities only.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

@@ -35,8 +35,6 @@ executor, dispatch agents, execute tools/workers, create or mutate projects,
 call providers/models, write DB state, use network calls, deploy, release,
 export, package, or spend.
 
-## Next Subphases
-
 ## P93.2 Enterprise Runtime CRUD Plan Model
 
 P93.2 is complete. It adds a deterministic local model for enterprise
@@ -61,7 +59,33 @@ SQLite records, run an executor, dispatch agents, execute tools/workers, create
 or mutate projects, call providers/models, use network calls, deploy, release,
 export, package, or spend.
 
+## P93.3 Governed Runtime Mutation Request Model
+
+P93.3 is complete. It adds governed local mutation request envelopes for the
+P93 enterprise runtime lanes. Each envelope records a safe request key, owner
+capability, SQLite entity target, field-summary payload shape, required
+evidence, missing evidence, next action, disabled reason, validation commands,
+activity/evidence locations, and cost impact.
+
+P93.3 does not execute mutations. It keeps request execution, SQLite writes, DB
+writes, provider/model calls, agent dispatch, tool/worker execution, project
+creation, project mutation, hosted DB mutation, network calls, deploy, release,
+export, package, and spend blocked.
+
+Validation:
+
+- `npm run check:p933-governed-runtime-mutation-request`
+- `npm run check:p932-enterprise-runtime-crud-plan`
+- `npm run check:p931-enterprise-live-runtime-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P93.3 is a local request-envelope model only. It does not
+modify `db/**`, write SQLite records, run an executor, dispatch agents, execute
+tools/workers, create or mutate projects, call providers/models, use network
+calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-P93.3 is next. It must add governed runtime mutation request envelopes without
-executing SQLite writes.
+P93.4 is next. It must scope local CRUD execution admission for approved OS
+runtime entities only.

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P93.2
-- Generated at: 2026-05-20T21:48:45.208Z
+- Generated at: 2026-05-20T21:54:45.171Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 62e85f7
+- Validation HEAD: b562cdf
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -31,7 +31,7 @@
 | contract tracks P93.2 files | PASS |  |
 | docs record P93.2 | PASS |  |
 | platform roadmap records P93.2 | PASS |  |
-| phase status advanced | PASS | P93.2/P93.1/P93.3 |
+| phase status advanced | PASS | P93.3/P93.2/P93.4 |
 | roadmap tracks P93.2 | PASS |  |
 | P93.3 handoff exists | PASS |  |
 | no DemoApp/private IDs | PASS |  |
