@@ -94,13 +94,17 @@ addCheck("P89.5 status complete", statusById.get("P89.5")?.status === "complete"
 addCheck("roadmap tracks P89.1-P89.5", trackedSubphases.every((phaseId) => roadmapById.get(phaseId)?.track === "NEXUS_OS" && roadmapById.get(phaseId)?.status === "complete"));
 addCheck("contract tracks P89.1-P89.5", trackedSubphases.every((phaseId) => contract.includes(phaseId)) && contract.includes("check:p895-tests-checkers"));
 addCheck("docs list P89.5 validation", docs.includes("P89.5 Tests / Checkers") && docs.includes("npm run check:p895-tests-checkers"));
-addCheck("platform roadmap records P89.5", platformRoadmap.includes("P89.5 is complete") && platformRoadmap.includes("P89.6 is next"));
+addCheck(
+  "platform roadmap records P89.5",
+  platformRoadmap.includes("P89.5 is complete")
+    && (platformRoadmap.includes("P89.6 is next") || platformRoadmap.includes("P89.6 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P89")?.status === "in_progress"
-    && status.currentPhase === "P89.5"
-    && status.previousPhase === "P89.4"
-    && status.nextPhase === "P89.6",
+    && ["P89.5", "P89.6", "P89.7"].includes(status.currentPhase)
+    && ["P89.4", "P89.5", "P89.6"].includes(status.previousPhase)
+    && ["P89.6", "P89.7", "P90"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("status checker accepts P89.6 handoff", statusChecker.includes("\"P89.6\""));

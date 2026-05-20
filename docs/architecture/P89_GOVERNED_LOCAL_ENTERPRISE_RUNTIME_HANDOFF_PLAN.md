@@ -131,5 +131,30 @@ package, or spend.
 
 ## Next Subphases
 
-- P89.6 Docs / Roadmap: close documentation and status evidence.
+## P89.6 Docs / Roadmap
+
+P89.6 is complete. It closes P89 docs, roadmap, contract, and phase-status
+evidence before final validation. It confirms P89.1-P89.6 are tracked as NEXUS
+OS subphases, P89.7 remains the final validation handoff, and Business Build
+Founder Dry Run UX stays display-only.
+
+Validation:
+
+- `npm run check:p896-docs-roadmap`
+- `npm run check:p895-tests-checkers`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.6 is docs and roadmap closure only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
+## Next Subphases
+
+P89.7 is next.
+
 - P89.7 Final Validation: final P89 evidence and handoff.

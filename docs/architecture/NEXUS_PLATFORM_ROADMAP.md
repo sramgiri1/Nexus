@@ -1635,8 +1635,12 @@ display-only and that provider/model calls, agent dispatch, executor runs,
 project mutation, DB writes, deploy, package, network calls, and spend remain
 disabled.
 
-P89.6 is next. It must close P89 docs, roadmap, and phase-status evidence
-without enabling runtime execution.
+P89.6 is complete. It closes P89 docs, roadmap, contract, and phase-status
+evidence through P89.6 while preserving Business Build Founder Dry Run UX and
+keeping runtime execution blocked.
+
+P89.7 is next. It must run final P89 validation and prepare the next scoped
+handoff without enabling runtime execution.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).

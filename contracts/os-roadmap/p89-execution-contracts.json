@@ -501,6 +501,103 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p89-6-docs-roadmap",
+      "phaseId": "P89.6",
+      "objective": "Close P89 docs, roadmap, contract, and phase-status evidence before final validation without enabling runtime execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p896-docs-roadmap.js",
+        "scripts/check-p895-tests-checkers.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p896-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Docs-roadmap validation report with package script coverage, prior report coverage, P89 contract coverage, plan doc coverage, platform roadmap coverage, OS status coverage, P89.7 handoff coverage, and Command Center UX preservation checks."
+      },
+      "commandCenterUxRequirements": "Preserve Business Build Founder Dry Run and Command Center Lite UX. Do not add runnable actions or expose DemoApp/raw private IDs. P89.6 does not enable runtime execution.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright file update in P89.6 because no UI files change.",
+        "Run existing Business Build coverage from P89.5."
+      ],
+      "testsCheckers": [
+        "Add check:p896-docs-roadmap.",
+        "Run check:p895-tests-checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P89 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p896-docs-roadmap",
+        "npm run check:p895-tests-checkers",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm docs/status only.",
+        "Confirm no runtime flags are enabled.",
+        "Confirm no runnable live actions are exposed.",
+        "Confirm no DemoApp or raw private IDs are exposed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.6 files>",
+        "git commit -m \"docs(nexus): close p89 runtime handoff roadmap\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }
