@@ -26,7 +26,13 @@ Validation: `npm run check:p871-explicit-live-activation-contract`.
 Goal: validate redacted secret and provider profile readiness without provider
 calls or spend.
 
-Status: planned.
+Status: complete. P87.2 adds `secretProviderReadiness`, a redacted readiness
+envelope for provider call and spend lanes. It records secret-reference,
+provider-policy, budget, approval, redaction, activity, cost, rollback, and
+validation requirements while confirming no `.env` files are read and no
+provider/model calls or spend occur.
+
+Validation: `npm run check:p872-secret-provider-readiness`.
 
 ## P87.3 Local Agent Dispatch Admission
 

@@ -112,7 +112,87 @@
       "id": "nexus-os-p87-2-secret-provider-readiness",
       "phaseId": "P87.2",
       "objective": "Validate redacted secret and provider profile readiness without provider calls or spend.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/secretProviderReadiness.js",
+        "scripts/check-p872-secret-provider-readiness.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p872-secret-provider-readiness-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P87_SECRET_PROVIDER_READINESS_PHASE",
+          "buildSecretProviderReadiness",
+          "validateSecretProviderReadiness"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, providerProfileCount, readinessSummary, providerProfiles[], redactionProbe, activationContractPhase, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each provider profile has readinessId, label, ownerCapability, readinessState, secretReferenceRequired, secretReferencePresent, secretMaterialVisible, policyProfileRequired, budgetLimitRequired, costLedgerRequired, requiredBeforeLive, blockers, nextAction, disabledReason, evidenceRefs, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center UX and prepare display-safe provider readiness fields for a later UX subphase. Do not add runnable provider/model actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright required in P87.2 because rendered Command Center routes are preserved."
+      ],
+      "testsCheckers": [
+        "Add check:p872-secret-provider-readiness."
+      ],
+      "validationCommands": [
+        "npm run check:p872-secret-provider-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no .env files are read or written.",
+        "Confirm no provider/model calls or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.2 files>",
+        "git commit -m \"feat(nexus): add secret provider readiness\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p87-3-local-agent-dispatch-admission",

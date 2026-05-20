@@ -411,6 +411,7 @@
     "check:p866-tests-docs-roadmap": "node scripts/check-p866-tests-docs-roadmap.js",
     "check:p867-final-validation": "node scripts/check-p867-final-validation.js",
     "check:p871-explicit-live-activation-contract": "node scripts/check-p871-explicit-live-activation-contract.js",
+    "check:p872-secret-provider-readiness": "node scripts/check-p872-secret-provider-readiness.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

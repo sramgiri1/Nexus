@@ -4490,19 +4490,19 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0d7cf27",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Explicit live activation unlocks started with contract-only activation lanes in P87.1.",
+      "summary": "Explicit live activation unlocks in progress with P87.1 contract and P87.2 secret/provider readiness complete.",
       "checksRun": [
-        "npm run check:p871-explicit-live-activation-contract",
+        "npm run check:p872-secret-provider-readiness",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P87.1 is contract-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled."
+        "P87.2 does not read .env files, store credentials, call providers or models, open network connections, activate tools, or spend."
       ],
-      "nextPhase": "P87.2",
+      "nextPhase": "P87.3",
       "commandCenterVisible": true,
       "label": "Explicit Live Activation Unlocks",
       "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
@@ -4536,19 +4536,24 @@
       "title": "Secret / Provider Readiness",
       "track": "NEXUS_OS",
       "order": 77.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Validate redacted secret and provider profile readiness without provider calls or spend.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:25:32.662Z",
+      "summary": "Added redacted secret/provider readiness metadata for provider call and spend lanes without reading credentials, calling providers, opening network connections, or spending.",
+      "checksRun": [
+        "npm run check:p872-secret-provider-readiness",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+        "P87.2 does not read .env files, store credentials, call providers or models, open network connections, activate tools, or spend."
       ],
       "nextPhase": "P87.3",
       "commandCenterVisible": true,
       "label": "Secret / Provider Readiness",
-      "detail": "Validate redacted secret and provider profile readiness without provider calls or spend."
+      "detail": "Redacted provider readiness metadata; no secrets read and no provider calls enabled."
     },
     {
       "phaseId": "P87.3",
@@ -4646,9 +4651,9 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:22:40.841Z",
-  "currentPhase": "P87.1",
-  "previousPhase": "P86.7",
-  "nextPhase": "P87.2",
+  "updatedAt": "2026-05-20T00:25:32.662Z",
+  "currentPhase": "P87.2",
+  "previousPhase": "P87.1",
+  "nextPhase": "P87.3",
   "currentPhaseStatus": "complete"
 }

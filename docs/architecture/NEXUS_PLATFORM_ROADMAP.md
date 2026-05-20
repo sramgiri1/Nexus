@@ -1501,8 +1501,13 @@ gates, required evidence, blockers, next action, disabled reason, owner,
 rollback, validation, evidence, activity, and cost posture. Runtime flags remain
 false.
 
-P87.2 is next. It should validate redacted secret and provider profile readiness
-without provider calls or spend.
+P87.2 is complete. It adds redacted secret/provider readiness metadata for
+provider call and spend lanes, with secret-reference, policy, budget, approval,
+redaction, activity, cost, rollback, and validation requirements. No `.env`
+files are read, no providers or models are called, and no spend occurs.
+
+P87.3 is next. It should define local agent dispatch admission without
+dispatching agents.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
