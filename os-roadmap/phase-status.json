@@ -10299,7 +10299,7 @@
       "order": 114.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6e116de",
       "completedAt": "",
       "summary": "Local SQLite runtime implementation is in progress with guarded local DB initialization.",
       "checksRun": [
@@ -10322,7 +10322,7 @@
       "order": 115.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6e116de",
       "completedAt": "2026-05-20T10:45:00.000Z",
       "summary": "Added guarded local SQLite runtime config, schema transformation, init command, health reporting, and validation while preserving non-writing defaults.",
       "checksRun": [
