@@ -4490,7 +4490,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ad539f2",
       "completedAt": "",
       "summary": "Explicit live activation unlocks in progress with P87.1-P87.5 complete.",
       "checksRun": [
@@ -4612,7 +4612,7 @@
       "order": 80.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ad539f2",
       "completedAt": "2026-05-20T00:36:50.185Z",
       "summary": "Added Command Center Live Readiness Live Unlocks tab for P87.1-P87.4 lanes with state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture without runnable actions.",
       "checksRun": [
@@ -4670,7 +4670,7 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:36:50.185Z",
+  "updatedAt": "2026-05-20T00:39:13.399Z",
   "currentPhase": "P87.5",
   "previousPhase": "P87.4",
   "nextPhase": "P87.6",
