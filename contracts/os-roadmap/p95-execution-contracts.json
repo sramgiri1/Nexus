@@ -1,0 +1,433 @@
+{
+  "phase": "P95",
+  "title": "Founder Persistence Operator Controls",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "bf6753b",
+  "goal": "Make approved local founder workflow persistence operator-usable while preserving the NEXUS safety boundary.",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P95.1 is contract-only and must not modify db/**, dashboard source, live runtime models, or local-state runtime data.",
+    "Later P95 subphases may only operate on allowlisted NEXUS OS founder workflow records where explicitly scoped.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequirements": [
+    "Reuse shared/reportWriter.js for reports.",
+    "Reuse shared/checkResultFormatter.js for checker output.",
+    "Reuse shared/resultEnvelope.js for runtime envelopes.",
+    "Reuse shared/redaction.js where display-safe text requires redaction.",
+    "Reuse os-roadmap/updatePhaseStatus.js if phase stamping needs a helper.",
+    "Reuse live-ready/founderRuntimeDbCrudWorkflow.js instead of duplicating founder DB CRUD admission.",
+    "Reuse db/sqliteCrudRepository.js instead of adding another CRUD repository.",
+    "Reuse existing Command Center tabs/cards/badges and route matrix."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p95-1-founder-persistence-controls-contract",
+      "phaseId": "P95.1",
+      "objective": "Define the founder persistence operator controls contract before runtime, DB, or UX changes.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p951-founder-persistence-controls-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p951-founder-persistence-controls-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P95_FOUNDER_PERSISTENCE_CONTROLS_PHASE",
+          "P95_FOUNDER_PERSISTENCE_ACTIONS",
+          "buildFounderPersistenceOperatorControls",
+          "validateFounderPersistenceOperatorControls",
+          "executeFounderPersistenceControlAction",
+          "buildFounderPersistenceControlViewModel"
+        ],
+        "futureDataShape": "Result envelope with schemaVersion, currentState, runtimeMode, dbMode, approvalState, approvalEvidence, localEntitySummaries[], pendingControlActions[], allowedLocalCrudOperations[], forbiddenOperations[], rollbackPlan, auditRefs[], evidenceRefs[], activityRefs[], nextAction, blockers[], disabledReason, ownerCapability, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve current Command Center UX in P95.1. Later P95 UX must show saved founder workflow state, explicit local persistence approval state, local read/write posture, rollback/audit evidence, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P95.1 because no UI files change.",
+        "P95 Command Center UX subphase must add focused Lite, Business Build, and DB Runtime route coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p951-founder-persistence-controls-contract.",
+        "Update check:os-phase-status to accept P95.1-P95.7.",
+        "Preserve route-wide safety tests in later UX subphases."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P95 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P95.1 is contract-only.",
+        "Confirm no db/**, dashboard/src/**, dashboard/tests/**, live-ready/**, or local-state/runtime/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB mutation, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P95.1 files>",
+        "git commit -m \"feat(nexus): define founder persistence controls contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-2-founder-persistence-control-model",
+      "phaseId": "P95.2",
+      "objective": "Add the display-safe founder persistence operator control model.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderPersistenceOperatorControls.js",
+        "scripts/check-p952-founder-persistence-control-model.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p952-founder-persistence-control-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/**",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P95_FOUNDER_PERSISTENCE_CONTROLS_PHASE",
+          "P95_FOUNDER_PERSISTENCE_ACTIONS",
+          "buildFounderPersistenceOperatorControls",
+          "validateFounderPersistenceOperatorControls"
+        ],
+        "dataShape": "Result envelope containing approvalState, approvalEvidence, localEntitySummaries, pendingControlActions, rollbackPlan, auditRefs, evidenceRefs, activityRefs, nextAction, blockers, disabledReason, ownerCapability, costImpact, commandCenterVisible, and unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "No UI changes in P95.2; the model must be ready for display without raw IDs or raw JSON.",
+      "validationCommands": [
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-3-approved-local-persistence-adapter",
+      "phaseId": "P95.3",
+      "objective": "Add an approved local persistence adapter that reuses the P94 founder DB CRUD admission helper.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderPersistenceOperatorControls.js",
+        "scripts/check-p953-approved-local-persistence-adapter.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p953-approved-local-persistence-adapter-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "db/schema.sql",
+        "db/schema.json",
+        "local-state/runtime/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "executeFounderPersistenceControlAction"
+        ],
+        "dataShape": "Action result with actionKey, entity, operation, admitted, written, read, rollbackPlan, auditRefs, validationCommands, disabledReason, errors, and unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "No UI changes in P95.3; adapter output must be safe for later display.",
+      "validationCommands": [
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-4-command-center-persistence-controls-ux",
+      "phaseId": "P95.4",
+      "objective": "Expose founder persistence controls and local-only state in Command Center.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p954-command-center-persistence-controls-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p954-command-center-persistence-controls-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "uiShape": "Lite, Business Build, and DB Runtime show local persistence state, approval state, saved entity summaries, next action, blockers, disabled reason, owner, evidence/activity, rollback/audit, and cost impact without raw IDs."
+      },
+      "commandCenterUxRequirements": "Improve Lite, Business Build, and DB Runtime. Preserve system/dark/light themes, sidebar navigation, no DemoApp leakage, no raw JSON/log/policy dumps, and no project/private raw IDs.",
+      "playwrightTests": [
+        "Focused route coverage for Lite, Business Build, and DB Runtime.",
+        "Assertions for no raw IDs, no raw JSON, no DemoApp leakage, visible approval/rollback/audit/cost state, and route navigation."
+      ],
+      "validationCommands": [
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-5-persistence-controls-validation",
+      "phaseId": "P95.5",
+      "objective": "Aggregate checker, temp SQLite, and route safety coverage for P95.1-P95.4.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p955-founder-persistence-controls-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p955-founder-persistence-controls-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "reportShape": "Validation report aggregating contract, model, approved local persistence adapter, Command Center UX, phase status, and forbidden path checks."
+      },
+      "commandCenterUxRequirements": "No new UI unless checker findings require small label fixes scoped to P95.4.",
+      "validationCommands": [
+        "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-6-docs-roadmap-readiness",
+      "phaseId": "P95.6",
+      "objective": "Update README, PRD, docs, roadmap, and reports for P95 readiness.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "scripts/check-p956-founder-persistence-docs-roadmap.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p956-founder-persistence-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "docShape": "Docs describe local persistence controls, explicit safety boundaries, validation commands, known limitations, and P96 handoff without implying unsafe live execution."
+      },
+      "commandCenterUxRequirements": "Document the Command Center persistence control UX without adding UI in this subphase.",
+      "validationCommands": [
+        "npm run check:p956-founder-persistence-docs-roadmap",
+        "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "id": "nexus-os-p95-7-final-validation",
+      "phaseId": "P95.7",
+      "objective": "Run final P95 validation, stamp real commits, close P95, and hand off to P96.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p957-founder-persistence-final-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p95-execution-contracts.json",
+        "docs/architecture/P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p957-founder-persistence-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "reportShape": "Final validation report confirming P95.1-P95.6 complete, checks passed, status stamped, P96 planned, and unsafe execution remains blocked."
+      },
+      "commandCenterUxRequirements": "Confirm the P95 Command Center UX remains display-safe, theme-safe, and route-safe.",
+      "validationCommands": [
+        "npm run check:p957-founder-persistence-final-validation",
+        "npm run check:p956-founder-persistence-docs-roadmap",
+        "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    }
+  ]
+}

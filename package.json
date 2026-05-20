@@ -468,6 +468,7 @@
     "check:p945-command-center-founder-db-ux": "node scripts/check-p945-command-center-founder-db-ux.js",
     "check:p946-founder-db-workflow-validation": "node scripts/check-p946-founder-db-workflow-validation.js",
     "check:p947-founder-db-workflow-final-validation": "node scripts/check-p947-founder-db-workflow-final-validation.js",
+    "check:p951-founder-persistence-controls-contract": "node scripts/check-p951-founder-persistence-controls-contract.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

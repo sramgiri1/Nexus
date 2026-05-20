@@ -1907,6 +1907,25 @@ creation, project mutation, hosted DBs, network calls, deploy, release, export,
 package creation, and provider spend remain blocked unless a later explicit
 phase scopes and validates them.
 
+## P95 - Founder Persistence Operator Controls
+
+P95 makes approved local founder workflow persistence operator-usable while
+preserving the P94 safety boundary. It is limited to display-safe local SQLite
+founder workflow records and must not enable provider/model calls, agent
+dispatch, worker/tool execution, project creation, project mutation, hosted DB
+mutation, network calls, deploy, release, export, package creation, or provider
+spend.
+
+P95.1 is complete. It defines the implementation-grade execution contract,
+subphase split, reuse requirements, Command Center UX requirements, safety
+rules, validation commands, and final response checklist. P95.1 is
+contract-only and does not modify runtime models, DB schema, Command Center UI,
+or project files.
+
+P95.2 is next. It will add display-safe operator control state for local founder
+workflow persistence approval gates without rendering new Command Center UI or
+executing writes.
+
 The detailed plan lives in
 [`P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md`](P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md).
 Implementation must follow
