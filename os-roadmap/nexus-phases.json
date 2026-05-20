@@ -6235,7 +6235,7 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "efa95d7",
       "completedAt": "",
       "summary": "P95.2 founder persistence operator control model is complete; P95.3 approved local persistence adapter is next.",
       "checksRun": [
@@ -6284,7 +6284,7 @@
       "order": 131.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "efa95d7",
       "completedAt": "2026-05-20",
       "summary": "Added the display-safe founder persistence operator control model with approval evidence, local entity summaries, pending control actions, rollback/audit references, next action, blockers, disabled reason, owner, cost, and unsafe runtime flags false.",
       "checksRun": [
