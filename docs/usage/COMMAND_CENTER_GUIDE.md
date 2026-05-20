@@ -43,6 +43,26 @@ not enabled yet.
 - Project boundary: local-private UX shows the selected private project or
   `No project selected`. DemoApp appears only on demo-specific surfaces.
 
+## Founder Persistence Controls
+
+- Routes: `/command-center/lite`, `/command-center/business-build`, and
+  `/command-center/database` on the DB Runtime tab.
+- Purpose: show whether founder workflow records can be persisted locally after
+  the founder idea, Q&A, PRD artifact, and workstream plan are understood.
+- Current live-local scope: approved local SQLite create, read, update, upsert,
+  and list paths for founder workflow records only.
+- Required gates: operator approval, rollback acceptance, audit acceptance,
+  validation command acceptance, `sqlite-live` mode, and local write flags.
+- Shown state: saved founder workflow summary, approval posture, local
+  read/write posture, rollback and audit state, blockers, next action, owner
+  capability, evidence/activity location, and cost impact.
+- Still blocked: delete, raw SQL, hosted DB mutation, project mutation,
+  provider/model calls, agent dispatch, tool execution, worker execution,
+  network calls, deploy, release, export, package creation, and provider spend.
+- UX safety: primary cards must stay display-safe. They should not show raw DB
+  table names, raw private project IDs, raw JSON/log/policy dumps, secrets, or
+  DemoApp in full Command Center.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

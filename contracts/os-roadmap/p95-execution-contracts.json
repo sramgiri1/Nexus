@@ -337,7 +337,7 @@
       "id": "nexus-os-p95-6-docs-roadmap-readiness",
       "phaseId": "P95.6",
       "objective": "Update README, PRD, docs, roadmap, and reports for P95 readiness.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "README.md",
@@ -346,10 +346,12 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "docs/usage/COMMAND_CENTER_GUIDE.md",
         "scripts/check-p956-founder-persistence-docs-roadmap.js",
+        "scripts/check-p955-founder-persistence-controls-validation.js",
         "package.json",
         "contracts/os-roadmap/p95-execution-contracts.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p955-founder-persistence-controls-validation-report.md",
         "reports/p956-founder-persistence-docs-roadmap-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"

@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P94 Founder Runtime DB CRUD Workflow Wiring
+**Status:** Approved; updated through P95 Founder Persistence Operator Controls
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P94
+## 1A. Current Implementation Status Through P95.6
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P94:
+P95.6:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -53,8 +53,17 @@ P94:
   posture.
 - P94.6 refreshes README, PRD, roadmap, OS phase status, and validation evidence
   for P94.1-P94.5 before final P94 closure.
+- P95 adds display-safe founder persistence operator controls for local SQLite
+  founder workflow records.
+- P95.3 admits approved local create/read/update/upsert/list operations only
+  after explicit operator approval, rollback acceptance, audit acceptance,
+  validation command acceptance, `sqlite-live` mode, and local write flags.
+- P95.4 shows founder persistence controls in Command Center Lite, Business
+  Build, and DB Runtime.
+- P95.5 and P95.6 aggregate validation and update docs/roadmap readiness for
+  what is live-local and what remains blocked.
 
-Safety boundary as of P94.5:
+Safety boundary as of P95.6:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
@@ -65,6 +74,11 @@ Safety boundary as of P94.5:
   for allowlisted OS runtime/founder workflow records and only with explicit
   operator approval, rollback acceptance, audit acceptance, validation command
   acceptance, `sqlite-live` mode, and local write flags.
+- P95.3 is the founder persistence control exception: it permits only approved
+  local SQLite founder workflow create/read/update/upsert/list paths and blocks
+  delete, raw SQL, hosted DB mutation, project mutation, provider/model calls,
+  agent dispatch, worker/tool execution, deploy, release, export, package
+  creation, network calls, and provider spend.
 
 ---
 

@@ -31,14 +31,16 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P94
+## Current Status Through P95.6
 
-P41.5 through P94 are complete. The current NEXUS OS focus has moved from
+P41.5 through P95.6 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
-workflow persistence. P94 wires the
-founder-to-business workflow to governed local SQLite CRUD records and shows the
-DB-backed state in Command Center Lite, Business Build, and DB Runtime. P94.7
-closes final validation and records the P95 handoff.
+workflow persistence. P94 wires the founder-to-business workflow to governed
+local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
+Business Build, and DB Runtime. P95 adds operator-facing local persistence
+controls, approved local adapter validation, and docs/readiness evidence for
+the founder workflow persistence boundary. P95.7 is next for final validation
+and P96 handoff.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -89,6 +91,13 @@ The Command Center and local operator surface have:
   turns, PRD artifacts, and workstream plans; governed CRUD admission; shared
   display-safe view models; and Command Center Lite, Business Build, and DB
   Runtime UX for saved founder workflow state
+- P95 founder persistence controls: display-safe operator control state,
+  approved local SQLite create/read/update/upsert/list admission for founder
+  workflow records, Command Center visibility in Lite, Business Build, and DB
+  Runtime, aggregate validation, and docs/roadmap readiness. Delete, raw SQL,
+  hosted DB mutation, project mutation, provider/model calls, agent dispatch,
+  worker/tool execution, deploy, release, export, package creation, network
+  calls, and provider spend remain blocked.
 
 ## CareLoop Project Progress
 

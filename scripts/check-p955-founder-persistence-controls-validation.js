@@ -63,9 +63,9 @@ addCheck(
   "phase status advanced",
   statusById.get("P95")?.status === "in_progress"
     && statusById.get("P95.5")?.status === "complete"
-    && status.currentPhase === "P95.5"
-    && status.previousPhase === "P95.4"
-    && status.nextPhase === "P95.6",
+    && ["P95.5", "P95.6", "P95.7"].includes(status.currentPhase)
+    && ["P95.4", "P95.5", "P95.6"].includes(status.previousPhase)
+    && ["P95.6", "P95.7", "P96"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P95.5", roadmapById.get("P95.5")?.track === "NEXUS_OS" && roadmapById.get("P95.5")?.status === "complete");

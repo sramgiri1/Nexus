@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P95.5
-- Generated at: 2026-05-20T23:39:14.858Z
+- Generated at: 2026-05-20T23:42:43.719Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: ddf35d4
+- Validation HEAD: ed04e2d
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | Playwright safety assertions retained | PASS |  |
 | docs record P95.5 | PASS |  |
 | platform roadmap records P95.5 | PASS |  |
-| phase status advanced | PASS | P95.5/P95.4/P95.6 |
+| phase status advanced | PASS | P95.6/P95.5/P95.7 |
 | roadmap tracks P95.5 | PASS |  |
 | P95.6 handoff exists | PASS |  |
 | no raw private IDs in P95 UX source | PASS |  |

@@ -1940,9 +1940,11 @@ Lite, Business Build, and DB Runtime without raw internals, raw DB table names,
 or fake actions.
 
 P95.5 is complete. It aggregates P95 contract, model, adapter, Command Center
-UX, temp SQLite, route-safety, phase status, and coverage validation. P95.6 is next
-and will update docs, README, PRD, and Command Center guidance for the approved
-local founder persistence boundary.
+UX, temp SQLite, route-safety, phase status, and coverage validation.
+
+P95.6 is complete. It updates README, PRD, Command Center guidance, the P95
+plan, and roadmap/status readiness for the approved local founder persistence
+boundary. P95.7 is next for final validation and P96 handoff.
 
 The detailed plan lives in
 [`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).

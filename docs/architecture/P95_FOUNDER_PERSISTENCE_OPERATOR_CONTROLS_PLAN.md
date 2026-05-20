@@ -133,14 +133,22 @@ Validation:
 
 ### P95.6 Docs And Roadmap
 
-P95.6 is next. It updates README, PRD, Command Center guide if applicable,
-platform roadmap, OS roadmap/status, and reports. It must describe what is
-live-local and what is still blocked without implying unsafe execution.
+P95.6 is complete. It updates README, PRD, Command Center guide, platform
+roadmap, OS roadmap/status, and reports. It describes what is live-local and
+what is still blocked without implying unsafe execution.
+
+Validation:
+
+- `npm run check:p956-founder-persistence-docs-roadmap`
+- `npm run check:p955-founder-persistence-controls-validation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ### P95.7 Final Validation
 
-P95.7 runs final validation, stamps real commits, closes P95, and hands off to
-P96.
+P95.7 is next. It runs final validation, stamps real commits, closes P95, and
+hands off to P96.
 
 ## Known Risks
 
