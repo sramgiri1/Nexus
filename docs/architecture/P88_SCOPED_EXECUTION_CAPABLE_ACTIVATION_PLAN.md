@@ -125,7 +125,32 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P88.6 Docs / Roadmap
+
+P88.6 is complete. It closes P88 documentation, roadmap, contract, and status
+evidence before final validation. It adds a docs/roadmap checker, records P88.6
+as a complete NEXUS OS subphase, and keeps P88.7 as the final validation
+handoff.
+
+Validation:
+
+- `npm run check:p886-docs-roadmap`
+- `npm run check:p885-tests-checkers-docs`
+- `npm run check:p884-command-center-scoped-activation-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Live Ready route renders evidence-backed activation labels without runnable actions"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P88.6 is docs and roadmap closure only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P88.6 Docs / Roadmap: close documentation and status evidence.
+P88.7 is next. It must run final P88 evidence validation and hand off to the
+next scoped enterprise-readiness phase without enabling broad runtime execution.
+
 - P88.7 Final Validation: final P88 evidence and handoff.

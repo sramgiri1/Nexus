@@ -1579,8 +1579,12 @@ P88.5 is complete. It aggregates P88.1-P88.4 scripts, reports, package scripts,
 docs, roadmap/status records, Command Center scoped activation coverage,
 Playwright coverage, and safety posture.
 
-P88.6 is next. It must close P88 docs, roadmap, and status evidence before final
-validation.
+P88.6 is complete. It closes P88 documentation, roadmap, contract, and status
+evidence before final validation. It adds a docs/roadmap checker, records P88.6
+as a complete NEXUS OS subphase, and keeps execution blocked.
+
+P88.7 is next. It must run final P88 evidence validation and hand off to the next
+scoped enterprise-readiness phase without enabling broad runtime execution.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,

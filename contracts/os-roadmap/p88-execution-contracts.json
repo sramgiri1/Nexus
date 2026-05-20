@@ -498,6 +498,100 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p88-6-docs-roadmap",
+      "phaseId": "P88.6",
+      "objective": "Close P88 documentation, roadmap, contract, and status evidence before final validation.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p886-docs-roadmap.js",
+        "scripts/check-p885-tests-checkers-docs.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p886-docs-roadmap-report.md",
+        "reports/p885-tests-checkers-docs-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p88-execution-contracts.json",
+        "docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Docs, roadmap, contract, reports, and OS phase status only. P88.6 does not add runtime exports and does not enable runtime execution."
+      },
+      "commandCenterUxRequirements": "Preserve Live Readiness Scoped Activation UX and verify the documentation/status closure does not introduce runnable action labels.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run focused Live Readiness Playwright coverage from P88.4."
+      ],
+      "testsCheckers": [
+        "Add check:p886-docs-roadmap.",
+        "Keep check:p885-tests-checkers-docs valid after phase status advances."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P88 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p886-docs-roadmap",
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P88 docs and roadmap identify P88.7 as final validation.",
+        "Confirm no unsafe runtime actions are exposed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P88.6 files>",
+        "git commit -m \"chore(nexus): close p88 docs roadmap evidence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

@@ -9502,10 +9502,11 @@
       "order": 83.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "18ac7cf",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Started scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, Command Center scoped activation UX, and validation aggregation. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
+      "summary": "Started scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, Command Center scoped activation UX, validation aggregation, and docs/roadmap closure. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
       "checksRun": [
+        "npm run check:p886-docs-roadmap",
         "npm run check:p885-tests-checkers-docs",
         "npm run check:p884-command-center-scoped-activation-ux",
         "npm run check:p883-local-executor-admission",
@@ -9518,12 +9519,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P88 is in progress. P88.5 is validation aggregation only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+        "P88 is in progress. P88.6 is docs and roadmap closure only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
       ],
-      "nextPhase": "P88.6",
+      "nextPhase": "P88.7",
       "commandCenterVisible": true,
       "label": "Scoped Execution-Capable Activation",
-      "detail": "P88 validation evidence is aggregated; execution remains blocked."
+      "detail": "P88 docs and roadmap evidence are closed; execution remains blocked."
     },
     {
       "phaseId": "P88.1",
@@ -9659,25 +9660,53 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 89.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P88 documentation, roadmap, and status closure before final validation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T01:23:12.000Z",
+      "summary": "Closed P88 documentation, roadmap, contract, and status evidence before final validation.",
+      "checksRun": [
+        "npm run check:p886-docs-roadmap",
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P88.6 is planned and validated."
+        "P88.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P88.7",
       "commandCenterVisible": true,
       "label": "Docs / Roadmap",
-      "detail": "Planned P88 docs and roadmap closure."
+      "detail": "P88 docs and roadmap evidence closed."
+    },
+    {
+      "phaseId": "P88.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 90.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final P88 evidence validation and handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P88.7 is planned and validated."
+      ],
+      "nextPhase": "P89",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned final P88 validation and handoff."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T01:16:22.717Z",
-  "currentPhase": "P88.5",
-  "previousPhase": "P88.4",
-  "nextPhase": "P88.6",
+  "updatedAt": "2026-05-20T01:23:12.000Z",
+  "currentPhase": "P88.6",
+  "previousPhase": "P88.5",
+  "nextPhase": "P88.7",
   "currentPhaseStatus": "complete"
 }
