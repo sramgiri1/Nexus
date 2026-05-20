@@ -9297,7 +9297,7 @@
       "order": 75.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1931bb8",
       "completedAt": "2026-05-20T00:44:39.896Z",
       "summary": "Completed explicit live activation unlock readiness with contracts, secret/provider readiness, local dispatch admission, generated workspace admission, Live Unlocks UX, and final validation evidence.",
       "checksRun": [
@@ -9474,7 +9474,7 @@
       "order": 82.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1931bb8",
       "completedAt": "2026-05-20T00:44:39.896Z",
       "summary": "Closed P87 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety posture.",
       "checksRun": [
