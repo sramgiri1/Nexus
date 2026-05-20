@@ -1690,9 +1690,25 @@ Business Build Local PRD UX, and prepares P91 as the next scoped handoff.
 
 P90 is complete.
 
-P91 is next. It must be planned as a separate implementation-grade phase before
-any additional runtime, workstream activation, project mutation, provider call,
-agent dispatch, deploy, package, network, or spend capability is enabled.
+## P91 - Governed Founder Workstream Activation Planning
+
+P91 starts the next scoped handoff after P90 local founder PRD authoring. It is
+about governed workstream activation planning only. It does not enable
+provider/model calls, agent dispatch, tool execution, worker execution, project
+creation, project mutation, DB writes, deploy, release, export, package
+creation, network calls, or provider spend.
+
+P91.1 is complete. It defines the implementation-grade P91 execution contract,
+subphase split, future local activation planning data shape, Command Center UX
+requirements, validation commands, and safety checks.
+
+P91.2 is next. It must define the local founder workstream activation planning
+model from the P90 PRD artifact without dispatching agents or mutating projects.
+
+The detailed plan lives in
+[`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).
+Implementation must follow
+[`p91-execution-contracts.json`](../../contracts/os-roadmap/p91-execution-contracts.json).
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).

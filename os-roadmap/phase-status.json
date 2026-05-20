@@ -10145,25 +10145,73 @@
       "title": "Governed Founder Workstream Activation Planning",
       "track": "NEXUS_OS",
       "order": 107.07,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Started governed founder workstream activation planning with an implementation-grade contract. Runtime execution, agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked.",
+      "checksRun": [
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91 is in progress. P91.1 is contract-only and does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.2",
+      "commandCenterVisible": true,
+      "label": "Founder Workstream Activation Planning",
+      "detail": "P91.1 contract complete; execution remains blocked."
+    },
+    {
+      "phaseId": "P91.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 108.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T05:50:00.000Z",
+      "summary": "Defined the governed founder workstream activation planning contract, subphase split, future local data shape, UX requirements, validation commands, and safety checks.",
+      "checksRun": [
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P91.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P91.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Founder workstream activation planning contract; no execution enabled."
+    },
+    {
+      "phaseId": "P91.2",
+      "title": "Core Workstream Activation Model",
+      "track": "NEXUS_OS",
+      "order": 109.07,
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned next scoped handoff after P90 local founder PRD authoring. Must be split into implementation-grade subphases before any additional runtime or mutation capability is enabled.",
+      "summary": "Planned local founder workstream activation planning model from the P90 PRD artifact without dispatching agents or mutating projects.",
       "checksRun": [],
       "knownLimitations": [
-        "Not started. Provider/model calls, agent dispatch, project mutation, DB writes, deploy, package, network calls, and spend remain blocked until explicitly scoped and validated."
+        "Not started. Agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked."
       ],
-      "nextPhase": "P91.1",
+      "nextPhase": "P91.3",
       "commandCenterVisible": true,
-      "label": "Founder Workstream Activation Planning",
-      "detail": "Planned handoff after P90 local PRD authoring."
+      "label": "Core Workstream Activation Model",
+      "detail": "Planned local activation planning model."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T05:25:00.000Z",
-  "currentPhase": "P90.7",
-  "previousPhase": "P90.6",
-  "nextPhase": "P91",
+  "updatedAt": "2026-05-20T05:50:00.000Z",
+  "currentPhase": "P91.1",
+  "previousPhase": "P90.7",
+  "nextPhase": "P91.2",
   "currentPhaseStatus": "complete"
 }

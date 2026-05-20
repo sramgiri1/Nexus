@@ -1,0 +1,156 @@
+{
+  "phase": "P91",
+  "title": "Governed Founder Workstream Activation Planning",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "46cef8c",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "P91 may only plan governed founder workstream activation after the exact subphase scopes and validates it.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, network calls, or provider spend unless that exact lane is separately scoped and validated.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, db/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not show DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p91-1-founder-workstream-activation-contract",
+      "phaseId": "P91.1",
+      "objective": "Define the governed founder workstream activation planning contract without enabling dispatch, mutation, or spend.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p91-execution-contracts.json",
+        "docs/architecture/P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md",
+        "scripts/check-p911-founder-workstream-activation-contract.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p911-founder-workstream-activation-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P91_FOUNDER_WORKSTREAM_ACTIVATION_PHASE",
+          "P91_WORKSTREAM_ACTIVATION_LANES",
+          "buildFounderWorkstreamActivationPlan",
+          "validateFounderWorkstreamActivationPlan"
+        ],
+        "dataShape": "P91.1 is contract-only. P91.2 must define a local result envelope with schemaVersion, currentState, activationMode, sourcePrd, workstreamLanes[], activationReadiness, allowedLocalOperations[], forbiddenOperations[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve existing Business Build and Lite UX. Later P91 UX must show workstream activation planning state, next action, blockers, disabled reason, owner lanes, evidence, activity, and cost without showing runnable agent dispatch, project mutation, provider calls, raw JSON/logs, DemoApp, or raw private IDs.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P91.1 because no UI file changes.",
+        "P91 Command Center UX subphase must add focused coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p911-founder-workstream-activation-contract."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P91 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P91.1 is contract-only.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, tool, or executor dispatch is enabled.",
+        "Confirm no project creation, project mutation, DB write, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P91.1 files>",
+        "git commit -m \"feat(nexus): define founder workstream activation contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p91-2-founder-workstream-activation-model",
+      "phaseId": "P91.2",
+      "objective": "Define the local founder workstream activation planning model from the P90 PRD artifact without dispatching agents.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p91-3-safe-activation-review-packet",
+      "phaseId": "P91.3",
+      "objective": "Build a safe local activation review packet for operator review without project mutation or provider calls.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p91-4-command-center-workstream-activation-ux",
+      "phaseId": "P91.4",
+      "objective": "Show governed workstream activation planning in Command Center with blocked unsafe operations.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p91-5-tests-checkers",
+      "phaseId": "P91.5",
+      "objective": "Aggregate P91 backend, UX, Playwright, docs, roadmap, and safety validation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p91-6-docs-roadmap",
+      "phaseId": "P91.6",
+      "objective": "Close P91 docs, roadmap, and phase-status evidence before final validation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p91-7-final-validation",
+      "phaseId": "P91.7",
+      "objective": "Finalize P91 validation and prepare the next scoped handoff.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    }
+  ]
+}
