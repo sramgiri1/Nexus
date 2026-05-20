@@ -9821,7 +9821,7 @@
       "order": 95.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e57794d",
       "completedAt": "2026-05-20T02:05:00.000Z",
       "summary": "Added Business Build Founder Dry Run UX showing founder workstream dry-run state, agent lane planning preview, inputs, outputs, blockers, next action, disabled reason, owner, evidence, activity, and cost posture.",
       "checksRun": [
