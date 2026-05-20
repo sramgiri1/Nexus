@@ -1647,7 +1647,7 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "62e85f7",
       "completedAt": "",
       "summary": "Enterprise live-runtime expansion is in progress with the execution contract and local CRUD plan model complete. Governed local SQLite mutation remains split into later subphases.",
       "checksRun": [
@@ -1697,7 +1697,7 @@
       "order": 124.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "62e85f7",
       "completedAt": "2026-05-20T21:47:40.855Z",
       "summary": "Added the local enterprise live-runtime CRUD plan model with DB-backed lane mapping, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
       "checksRun": [
@@ -10755,7 +10755,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T21:47:40.855Z",
+  "updatedAt": "2026-05-20T21:48:44.952Z",
   "currentPhase": "P93.2",
   "previousPhase": "P93.1",
   "nextPhase": "P93.3",
