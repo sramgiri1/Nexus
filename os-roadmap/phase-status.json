@@ -9297,7 +9297,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bdd1e8a",
       "completedAt": "",
       "summary": "Explicit live activation unlocks in progress with P87.1-P87.4 complete.",
       "checksRun": [
@@ -9393,7 +9393,7 @@
       "order": 79.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "bdd1e8a",
       "completedAt": "2026-05-20T00:32:57.310Z",
       "summary": "Added generated project workspace admission boundaries with allowed future root, forbidden roots, required gates, blockers, validation, evidence, activity, cost posture, and all project write flags false.",
       "checksRun": [
@@ -9469,7 +9469,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:32:57.310Z",
+  "updatedAt": "2026-05-20T00:33:43.690Z",
   "currentPhase": "P87.4",
   "previousPhase": "P87.3",
   "nextPhase": "P87.5",
