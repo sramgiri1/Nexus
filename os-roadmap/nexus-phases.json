@@ -4279,7 +4279,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fd08b5b",
       "completedAt": "",
       "summary": "Governed live capability admission in progress with P86.1-P86.4 complete.",
       "checksRun": [
@@ -4385,8 +4385,8 @@
       "order": 71.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-20T00:02:46.163Z",
+      "commit": "fd08b5b",
+      "completedAt": "2026-05-20T00:05:33.067Z",
       "summary": "Added Live Readiness approval queue UX with local queue records, owner, evidence, next action, disabled reason, and cost posture.",
       "checksRun": [
         "npm run check:p864-command-center-live-admission-ux",
@@ -4464,7 +4464,7 @@
       "detail": "Final P86 validation and handoff."
     }
   ],
-  "updatedAt": "2026-05-20T00:02:46.163Z",
+  "updatedAt": "2026-05-20T00:05:33.067Z",
   "currentPhase": "P86.4",
   "previousPhase": "P86.3",
   "nextPhase": "P86.5",
