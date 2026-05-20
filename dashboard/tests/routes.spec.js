@@ -3168,7 +3168,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Business Build route renders dry-run plan without runnable actions", async ({ page }) => {
+  test("Business Build route renders founder workstream dry-run state without runnable actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
@@ -3199,6 +3199,13 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Product");
     await expect(activeCommandTabPanel(page)).toContainText("Engineering");
     await expect(activeCommandTabPanel(page)).toContainText("Go To Market");
+    await commandTab(page, "Founder Dry Run").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Workstream Dry Run");
+    await expect(activeCommandTabPanel(page)).toContainText("Agent Lane Planning");
+    await expect(activeCommandTabPanel(page)).toContainText("Local founder task orchestration");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD readiness packet outline");
+    await expect(activeCommandTabPanel(page)).toContainText("agent lane plan");
+    await expect(activeCommandTabPanel(page)).toContainText("No provider calls, model calls, network calls");
     await commandTab(page, "Milestones").click();
     await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness Review");
     await expect(activeCommandTabPanel(page)).toContainText("Risk Cost Review");

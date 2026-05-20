@@ -52,6 +52,36 @@ function buildFounderHighlights(prdFields = {}) {
   ];
 }
 
+const FOUNDER_WORKSTREAM_DRY_RUN_ROWS = [
+  {
+    label: "Local founder task orchestration",
+    currentState: "Local envelope defined needs founder answers",
+    previewNextState: "Local preview ready for operator review",
+    founderInputsNeeded: ["problem", "target customer", "solution", "business model", "constraints"],
+    previewOutputs: ["clarifying question plan", "PRD readiness packet outline", "agent lane plan", "operator review checklist"],
+    blockers: ["founder answers missing", "operator approval missing", "runtime policy review missing"],
+    ownerCapability: "NEXUS Founder Runtime",
+  },
+  {
+    label: "Generated workspace boundary",
+    currentState: "Local envelope defined needs founder answers",
+    previewNextState: "Local preview ready for operator review",
+    founderInputsNeeded: ["problem", "target customer", "solution", "business model", "constraints"],
+    previewOutputs: ["PRD readiness packet outline", "solution architecture checklist", "agent lane plan", "workspace boundary review"],
+    blockers: ["source/test boundary review", "operator approval missing", "runtime policy review missing"],
+    ownerCapability: "NEXUS Generated Workspace Governance",
+  },
+  {
+    label: "Live unlock review",
+    currentState: "Local envelope defined needs founder answers",
+    previewNextState: "Local preview ready for operator review",
+    founderInputsNeeded: ["problem", "target customer", "solution", "business model", "constraints"],
+    previewOutputs: ["risk checklist", "cost review packet", "agent lane plan", "operator review checklist"],
+    blockers: ["cost evidence missing", "operator approval missing", "runtime policy review missing"],
+    ownerCapability: "NEXUS Live Activation Governance",
+  },
+];
+
 export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const founderEnvelope = buildFounderRuntimeEnvelope({ founderIdeaSummary }).data;
   const prdFields = founderEnvelope.prdDraft?.fields || {};
@@ -119,6 +149,23 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
       objective: entry.objective,
       blocker: entry.blockers[0] || "No blocker",
     })),
+    founderWorkstreamDryRun: {
+      currentState: "Local Founder Workstream Dry Run Ready Blocked",
+      nextAction: "Use the dry-run preview to complete founder Q&A and PRD readiness before any later execution review.",
+      disabledReason: "Founder Dry Run is display-only. It does not dispatch agents, run executors, mutate projects, write DB state, call providers, use network calls, deploy, package, or spend.",
+      ownerCapability: "NEXUS Founder Workstream Dry Run Governance",
+      evidenceLocation: "reports/p893-local-founder-workstream-dry-run-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+      rows: FOUNDER_WORKSTREAM_DRY_RUN_ROWS.map((run) => ({
+        ...run,
+        nextAction: "Complete founder answers and operator review evidence before any execution-enabling phase.",
+        disabledReason: "Dry-run row is display-only and cannot execute or mutate.",
+        evidenceLocation: "reports/p893-local-founder-workstream-dry-run-report.md",
+        activityLocation: "reports/os-phase-status-report.md",
+        costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+      })),
+    },
     blockers: data.blockers,
     disabledActions: data.disabledActions.map((action) => ({
       label: toTitle(action),

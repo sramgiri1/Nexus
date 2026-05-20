@@ -305,6 +305,103 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p89-4-command-center-founder-workstream-ux",
+      "phaseId": "P89.4",
+      "objective": "Show founder workstream dry-run state and agent lane planning in Command Center without runnable actions.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p894-command-center-founder-workstream-ux.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p894-command-center-founder-workstream-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Business Build view model exposes founderWorkstreamDryRun with currentState, nextAction, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, and rows[]. Each row has label, currentState, previewNextState, founderInputsNeeded, previewOutputs, blockers, ownerCapability, nextAction, disabledReason, evidenceLocation, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Add a Founder Dry Run tab under Business Build showing founder Q&A, PRD readiness, agent lane planning preview, blockers, evidence, activity, cost posture, and disabled reason. Do not show runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Update Business Build route coverage for Founder Dry Run."
+      ],
+      "testsCheckers": [
+        "Add check:p894-command-center-founder-workstream-ux.",
+        "Run check:p893-local-founder-workstream-dry-run."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P89 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build route renders founder workstream dry-run state\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no runnable dry-run actions are exposed.",
+        "Confirm no raw private IDs are exposed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.4 files>",
+        "git commit -m \"feat(nexus): show founder workstream dry run\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

@@ -1623,8 +1623,13 @@ the P89.2 envelope. Each dry run previews founder Q&A, PRD readiness, agent lane
 planning, and operator review transitions while mutation and execution remain
 blocked.
 
-P89.4 is next. It must show founder workstream dry-run state and agent lane
-planning in Command Center without exposing runnable actions.
+P89.4 is complete. Business Build now includes a Founder Dry Run tab showing
+founder workstream dry-run state, agent lane planning preview, founder inputs,
+preview outputs, blockers, next action, disabled reason, owner, evidence,
+activity, and cost posture.
+
+P89.5 is next. It must aggregate P89.1-P89.4 backend, UX, Playwright, docs,
+roadmap, and safety validation evidence.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).

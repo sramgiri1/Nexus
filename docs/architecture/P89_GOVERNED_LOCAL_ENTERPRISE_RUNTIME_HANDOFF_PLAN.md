@@ -81,9 +81,29 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P89.4 Command Center UX
+
+P89.4 is complete. Business Build now includes a Founder Dry Run tab showing
+founder workstream dry-run state, agent lane planning preview, founder inputs,
+preview outputs, blockers, next action, disabled reason, owner, evidence,
+activity, and cost posture.
+
+Validation:
+
+- `npm run check:p894-command-center-founder-workstream-ux`
+- `npm run check:p893-local-founder-workstream-dry-run`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build route renders founder workstream dry-run state"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.4 is UX only. It does not run an executor, dispatch
+agents, execute tools/workers, mutate projects, call providers/models, write DB
+state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P89.4 Command Center UX: show founder workstream handoff state and blockers.
 - P89.5 Tests / Checkers: aggregate backend and UX validation.
 - P89.6 Docs / Roadmap: close documentation and status evidence.
 - P89.7 Final Validation: final P89 evidence and handoff.

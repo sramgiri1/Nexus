@@ -427,6 +427,7 @@
     "check:p891-local-enterprise-runtime-handoff-profile": "node scripts/check-p891-local-enterprise-runtime-handoff-profile.js",
     "check:p892-local-founder-workstream-runtime-envelope": "node scripts/check-p892-local-founder-workstream-runtime-envelope.js",
     "check:p893-local-founder-workstream-dry-run": "node scripts/check-p893-local-founder-workstream-dry-run.js",
+    "check:p894-command-center-founder-workstream-ux": "node scripts/check-p894-command-center-founder-workstream-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -9134,6 +9134,42 @@ function BusinessBuildPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="dryRun" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Founder Workstream Dry Run</div>
+                <div className="ccv2-pill ccv2-pill--disabled">{build.founderWorkstreamDryRun.currentState}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Next action: {build.founderWorkstreamDryRun.nextAction}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.founderWorkstreamDryRun.ownerCapability}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.founderWorkstreamDryRun.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.founderWorkstreamDryRun.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.founderWorkstreamDryRun.costImpact}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>{build.founderWorkstreamDryRun.disabledReason}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Agent Lane Planning</div>
+                <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                  {build.founderWorkstreamDryRun.rows.flatMap((row) => row.previewOutputs).slice(0, 6).map((output, index) => (
+                    <li key={`${output}-${index}`}>{output}</li>
+                  ))}
+                </ul>
+              </article>
+            </div>
+            <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+              {build.founderWorkstreamDryRun.rows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--amber">{row.previewNextState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Current: {row.currentState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Inputs: {row.founderInputsNeeded.join(", ")}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Blockers: {row.blockers.join(", ")}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {row.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next: {row.nextAction}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="milestones" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--3">
               {build.milestoneRows.map((row) => (

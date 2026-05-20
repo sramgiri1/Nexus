@@ -166,6 +166,7 @@ export const BUSINESS_BUILD_TABS = [
   { id: "overview", label: "Overview", description: "Founder idea, feasibility, customer, next step, and local agent plan", badge: "Ready" },
   { id: "prd", label: "PRD Readiness", description: "Local PRD readiness, missing fields, and source posture", badge: "Ready" },
   { id: "workstreams", label: "Workstreams", description: "Product, design, engineering, go-to-market, finance, operations, legal, and support lanes", badge: "Ready" },
+  { id: "dryRun", label: "Founder Dry Run", description: "Founder Q&A, PRD readiness, and agent lane transition preview", badge: "Local" },
   { id: "milestones", label: "Milestones", description: "Business build milestones, review gates, and approval boundaries", badge: "Ready" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable runtime, project, DB, deploy, and spend actions", badge: "Blocked by policy" },
 ];
