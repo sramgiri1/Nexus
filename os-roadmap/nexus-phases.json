@@ -5374,7 +5374,7 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e6c8f73",
       "completedAt": "",
       "summary": "Enterprise live-runtime expansion is in progress with the execution contract complete. Governed local SQLite CRUD remains split into later subphases.",
       "checksRun": [
@@ -5399,7 +5399,7 @@
       "order": 123.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e6c8f73",
       "completedAt": "2026-05-20T21:44:06.143Z",
       "summary": "Defined the P93 enterprise live-runtime expansion contract, subphase split, future local CRUD data shapes, Command Center UX requirements, validation commands, and safety checks.",
       "checksRun": [
@@ -5940,7 +5940,7 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-20T21:44:06.143Z",
+  "updatedAt": "2026-05-20T21:44:43.106Z",
   "currentPhase": "P93.1",
   "previousPhase": "P91.7",
   "nextPhase": "P93.2",
