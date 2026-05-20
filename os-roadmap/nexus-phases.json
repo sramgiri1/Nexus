@@ -5127,7 +5127,7 @@
       "order": 99.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c0fdfab",
       "completedAt": "",
       "summary": "Started the governed local founder PRD live authoring lane with an implementation-grade contract. Runtime execution remains blocked.",
       "checksRun": [
@@ -5151,7 +5151,7 @@
       "order": 100.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c0fdfab",
       "completedAt": "2026-05-20T03:02:00.000Z",
       "summary": "Defined the governed local founder PRD live authoring lane contract, subphase split, allowed and forbidden files, future data shape, UX requirements, validation commands, and safety checks.",
       "checksRun": [
