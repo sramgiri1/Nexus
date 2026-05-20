@@ -39,14 +39,16 @@ sqlite-live mode, and local write flags.
 
 ### P94.4 Founder DB View Model
 
-P94.4 is next. It will add display-safe Command Center data for the DB-backed founder
-workflow. The model must show saved session state, next founder question, PRD
-readiness, workstream lanes, blockers, disabled reason, owner capability,
-evidence/activity locations, and cost posture.
+P94.4 is complete. It adds display-safe Command Center data for the DB-backed
+founder workflow. The model shows saved session state, next founder question,
+PRD readiness, workstream lanes, blockers, disabled reason, owner capability,
+evidence/activity locations, and cost posture. Business Build, Founder Intake,
+and DB Runtime can consume the shared founder DB workflow model without page
+rendering changes.
 
 ### P94.5 Command Center Founder DB UX
 
-P94.5 will wire Lite, Business Build, and DB Runtime to the founder DB workflow
+P94.5 is next. It will wire Lite, Business Build, and DB Runtime to the founder DB workflow
 state. The UX must remain useful for the founder flow and must not expose raw
 JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, raw DB URLs, or
 fake runnable mutation/provider/agent/project actions.
@@ -104,6 +106,7 @@ P94.1 validation:
 - `npm run check:p942-founder-runtime-db-schema`
 - `npm run check:p922-sqlite-crud-repository`
 - `npm run check:p943-founder-runtime-crud-model`
+- `npm run check:p944-founder-db-view-model`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

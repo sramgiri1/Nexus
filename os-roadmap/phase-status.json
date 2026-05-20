@@ -10815,10 +10815,11 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c1d107e",
-      "completedAt": "2026-05-20T22:50:00.000Z",
-      "summary": "Continued founder runtime DB CRUD workflow wiring with governed local SQLite CRUD model/admission for founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T23:03:00.000Z",
+      "summary": "Continued founder runtime DB CRUD workflow wiring with display-safe Command Center view-model data for founder intake, Business Build, and DB Runtime.",
       "checksRun": [
+        "npm run check:p944-founder-db-view-model",
         "npm run check:p943-founder-runtime-crud-model",
         "npm run check:p942-founder-runtime-db-schema",
         "npm run check:p941-founder-runtime-db-crud-contract",
@@ -10827,12 +10828,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P94.3 admits only governed local SQLite CRUD for founder workflow OS records. Command Center DB UX wiring, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
+        "P94.4 is data-only. Command Center rendering, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
       ],
-      "nextPhase": "P94.4",
+      "nextPhase": "P94.5",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB CRUD",
-      "detail": "Founder CRUD model complete; view model next."
+      "detail": "Founder DB view model complete; Command Center UX next."
     },
     {
       "phaseId": "P94.1",
@@ -10915,19 +10916,27 @@
       "title": "Founder DB View Model",
       "track": "NEXUS_OS",
       "order": 130.4,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe Command Center view-model data for DB-backed founder workflow state.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T23:03:00.000Z",
+      "summary": "Added display-safe founder DB workflow data to Business Build, Founder Intake, and DB Runtime view models with saved session state, next question, PRD readiness, lanes, blockers, owner, evidence, activity, disabled reason, and cost posture.",
+      "checksRun": [
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. This subphase must define its scoped plan before implementation."
+        "P94.4 is data-only. It does not render new Command Center sections, dispatch agents, execute workers/tools, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P94.5",
       "commandCenterVisible": true,
       "label": "Founder DB View Model",
-      "detail": "Planned P94 subphase."
+      "detail": "Founder DB workflow data complete; Command Center UX next."
     },
     {
       "phaseId": "P94.5",
@@ -10988,9 +10997,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T22:50:00.000Z",
-  "currentPhase": "P94.3",
-  "previousPhase": "P94.2",
-  "nextPhase": "P94.4",
+  "updatedAt": "2026-05-20T23:03:00.000Z",
+  "currentPhase": "P94.4",
+  "previousPhase": "P94.3",
+  "nextPhase": "P94.5",
   "currentPhaseStatus": "complete"
 }

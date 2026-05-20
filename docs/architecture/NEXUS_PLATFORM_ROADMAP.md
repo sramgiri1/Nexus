@@ -1873,8 +1873,14 @@ flags. Delete, raw SQL, hosted DB mutation, project mutation, provider/model
 calls, agent dispatch, tool/worker execution, deploy, release, export, package,
 and spend remain blocked.
 
-P94.4 is next. It will add display-safe Command Center data for the DB-backed
-founder workflow state.
+P94.4 is complete. It adds display-safe Command Center data for the DB-backed
+founder workflow state. Business Build, Founder Intake, and DB Runtime now have
+shared founder DB workflow data showing saved session state, next question, PRD
+readiness, workstream lanes, blockers, disabled reason, owner capability,
+evidence/activity locations, and cost posture.
+
+P94.5 is next. It will wire Lite, Business Build, and DB Runtime page rendering
+to the founder DB workflow state.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 creation, project mutation, hosted DBs, network calls, deploy, release, export,

@@ -464,6 +464,7 @@
     "check:p941-founder-runtime-db-crud-contract": "node scripts/check-p941-founder-runtime-db-crud-contract.js",
     "check:p942-founder-runtime-db-schema": "node scripts/check-p942-founder-runtime-db-schema.js",
     "check:p943-founder-runtime-crud-model": "node scripts/check-p943-founder-runtime-crud-model.js",
+    "check:p944-founder-db-view-model": "node scripts/check-p944-founder-db-view-model.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -298,7 +298,7 @@
       "id": "nexus-os-p94-4-command-center-founder-db-view-model",
       "phaseId": "P94.4",
       "objective": "Build display-safe Command Center view-model data for DB-backed founder workflow state.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
@@ -313,7 +313,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p944-founder-db-view-model-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p943-founder-runtime-crud-model.js"
       ],
       "forbiddenFiles": [
         "projects/**",

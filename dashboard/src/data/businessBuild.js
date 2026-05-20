@@ -54,6 +54,139 @@ function buildFounderHighlights(prdFields = {}) {
   ];
 }
 
+const FOUNDER_DB_LANES = [
+  { sqliteEntity: "founder_sessions", label: "Founder session" },
+  { sqliteEntity: "founder_qna_turns", label: "Founder Q&A turns" },
+  { sqliteEntity: "founder_prd_artifacts", label: "PRD artifact" },
+  { sqliteEntity: "founder_workstream_plans", label: "Workstream plan" },
+];
+
+const FOUNDER_DB_BLOCKERS = [
+  "Operator approval is required before local founder workflow persistence.",
+  "Rollback acceptance is required before local founder workflow persistence.",
+  "Audit acceptance is required before local founder workflow persistence.",
+  "Validation command acceptance is required before local founder workflow persistence.",
+  "SQLite live mode and local write flags are required before local founder workflow persistence.",
+];
+
+function buildFounderRuntimeDbWorkflowData(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  return {
+    currentState: "founder_runtime_db_view_model_ready",
+    founderSession: {
+      publicLabel: "Founder session",
+      founderIdeaSummary,
+      currentState: "captured_locally",
+      nextQuestion: "Who is the target customer, launch constraint, and success metric?",
+    },
+    qnaTurns: [
+      {
+        speaker: "founder",
+        prompt: founderIdeaSummary,
+        responseSummary: "Founder idea is captured locally for DB-backed PRD and workstream planning.",
+        turnState: "captured_locally",
+      },
+    ],
+    prdArtifact: {
+      title: "Founder App PRD",
+      currentState: "drafted_locally",
+      readinessPercent: 65,
+    },
+    workstreamPlan: {
+      currentState: "planned_locally",
+      dispatchAllowed: false,
+      workerExecutionAllowed: false,
+      projectMutationAllowed: false,
+    },
+    mutationRequests: FOUNDER_DB_LANES.map((lane) => ({
+      ...lane,
+      requestState: "ready_for_operator_review",
+      ownerCapability: "NEXUS Founder Runtime DB",
+      missingEvidence: ["operatorApproval", "rollbackAccepted", "auditAccepted", "validationCommandsAccepted"],
+      evidenceRefs: ["reports/p943-founder-runtime-crud-model-report.md"],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local SQLite only after approval. No provider spend.",
+    })),
+    allowedLocalCrudOperations: ["create", "read", "update", "upsert", "list"],
+    forbiddenOperations: [
+      "delete",
+      "hosted DB mutation",
+      "project mutation",
+      "provider/model calls",
+      "agent dispatch",
+      "worker/tool execution",
+      "deploy/release/export/package",
+      "provider spend",
+    ],
+    nextAction: "Review display-safe founder workflow records before P94.5 Command Center rendering.",
+    blockers: FOUNDER_DB_BLOCKERS,
+    disabledReason:
+      "P94.4 only prepares display-safe founder DB workflow state. Provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Founder Runtime DB View Model",
+    evidenceRefs: ["reports/p944-founder-db-view-model-report.md"],
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Display-safe local model only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+  };
+}
+
+function toDisplayLane(request = {}) {
+  return {
+    label: request.label || toTitle(request.sqliteEntity || "Founder record"),
+    currentState: toTitle(request.requestState || "ready_for_operator_review"),
+    ownerCapability: request.ownerCapability || "NEXUS Founder Runtime DB",
+    nextAction: "Review the local save request and required evidence before approved SQLite admission.",
+    blocker: request.missingEvidence?.[0]
+      ? `${toTitle(request.missingEvidence[0])} required`
+      : "No local approval evidence missing",
+    disabledReason: "Local save remains blocked until operator approval, rollback, audit, validation, sqlite-live mode, and local write flags are present.",
+    evidenceLocation: request.evidenceRefs?.[0] || "reports/p943-founder-runtime-crud-model-report.md",
+    activityLocation: request.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: request.costImpact || "Local SQLite only after approval. No provider spend.",
+  };
+}
+
+export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
+  const session = workflow.founderSession || {};
+  const prd = workflow.prdArtifact || {};
+  const workstream = workflow.workstreamPlan || {};
+  const qnaTurn = workflow.qnaTurns?.[0] || {};
+
+  return {
+    currentState: "DB-backed founder workflow ready for local review",
+    savedSessionState: toTitle(session.currentState || "captured_locally"),
+    founderIdea: session.founderIdeaSummary || founderIdeaSummary,
+    nextQuestion: session.nextQuestion || "Confirm the target customer, launch constraint, and success metric.",
+    prdReadiness: `${prd.readinessPercent || 0}%`,
+    prdState: toTitle(prd.currentState || "drafted_locally"),
+    qnaSummary: qnaTurn.responseSummary || "Founder Q&A turn is ready to persist locally after approval.",
+    workstreamState: toTitle(workstream.currentState || "planned_locally"),
+    nextAction: workflow.nextAction,
+    blockers: workflow.blockers,
+    disabledReason: workflow.disabledReason,
+    ownerCapability: workflow.ownerCapability,
+    evidenceLocation: workflow.evidenceRefs?.[0] || "reports/p943-founder-runtime-crud-model-report.md",
+    activityLocation: workflow.activityLocation,
+    costImpact: workflow.costImpact,
+    allowedLocalCrudOperations: workflow.allowedLocalCrudOperations.map(toTitle),
+    forbiddenOperations: workflow.forbiddenOperations.map(toTitle),
+    lanes: (workflow.mutationRequests || []).map(toDisplayLane),
+    safety: {
+      providerCallsAllowed: false,
+      modelCallsAllowed: false,
+      agentDispatchAllowed: false,
+      toolExecutionAllowed: false,
+      workerExecutionAllowed: false,
+      projectMutationAllowed: false,
+      hostedDbWritesAllowed: false,
+      deployExecutionAllowed: false,
+      releaseExecutionAllowed: false,
+      exportExecutionAllowed: false,
+      packageCreationAllowed: false,
+      providerSpendAllowed: false,
+    },
+  };
+}
+
 const FOUNDER_WORKSTREAM_DRY_RUN_ROWS = [
   {
     label: "Local founder task orchestration",
@@ -99,6 +232,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const readinessPercent = Math.round((data.prdReadiness.score || 0) * 100);
   const nextAgentLane = founderEnvelope.agentFlow?.[0];
   const founderHighlights = buildFounderHighlights(prdFields);
+  const founderDbWorkflow = buildFounderRuntimeDbViewModel(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -201,6 +335,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
         costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
       })),
     },
+    founderDbWorkflow,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),

@@ -1,6 +1,7 @@
 import { scoreFounderComprehension } from "../../../founder-intake/founderIntakeComprehension.js";
 import { selectNextFounderQuestion } from "../../../founder-intake/founderIntakeQuestions.js";
 import { createFounderIntakeSession, summarizeFounderIntakeSession } from "../../../founder-intake/founderIntakeSession.js";
+import { buildFounderRuntimeDbViewModel } from "./businessBuild.js";
 
 export const FOUNDER_INTAKE_ROUTE_ID = "founder-intake";
 
@@ -19,6 +20,7 @@ export function buildFounderIntakeViewModel() {
   const nextQuestion = selectNextFounderQuestion(session);
   const comprehension = scoreFounderComprehension(session);
   const summary = summarizeFounderIntakeSession(session);
+  const founderDbWorkflow = buildFounderRuntimeDbViewModel(session.founderIdeaSummary);
 
   return {
     routeId: FOUNDER_INTAKE_ROUTE_ID,
@@ -57,6 +59,19 @@ export function buildFounderIntakeViewModel() {
       blockers: comprehension.blockers,
       ready: comprehension.ready,
       score: comprehension.comprehensionScore,
+    },
+    founderDbWorkflow: {
+      currentState: founderDbWorkflow.currentState,
+      savedSessionState: founderDbWorkflow.savedSessionState,
+      nextQuestion: founderDbWorkflow.nextQuestion,
+      prdReadiness: founderDbWorkflow.prdReadiness,
+      nextAction: founderDbWorkflow.nextAction,
+      disabledReason: founderDbWorkflow.disabledReason,
+      ownerCapability: founderDbWorkflow.ownerCapability,
+      evidenceLocation: founderDbWorkflow.evidenceLocation,
+      activityLocation: founderDbWorkflow.activityLocation,
+      costImpact: founderDbWorkflow.costImpact,
+      laneCount: founderDbWorkflow.lanes.length,
     },
     disabledActions: [
       { label: "Provider Calls", reason: "Provider calls require later approval, budget, activity, cost, and rollback evidence." },

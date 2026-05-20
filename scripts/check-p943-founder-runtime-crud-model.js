@@ -134,16 +134,16 @@ addCheck("read/list operations work through admission", !cliAvailable || (readRe
 addCheck("update works through admission", !cliAvailable || updateResult.record?.currentState === "prd_ready_locally");
 addCheck("write result keeps unsafe runtime blocked", !cliAvailable || writeResults.every((result) => result.hostedDbWritesAllowed === false && result.projectMutationAllowed === false && result.providerSpendAllowed === false && result.agentDispatchAllowed === false));
 addCheck("docs record P94.3", docs.includes("P94.3 is complete") && docs.includes("npm run check:p943-founder-runtime-crud-model"));
-addCheck("platform roadmap records P94.3", platformRoadmap.includes("P94.3 is complete") && platformRoadmap.includes("P94.4 is next"));
+addCheck("platform roadmap records P94.3", platformRoadmap.includes("P94.3 is complete") && (platformRoadmap.includes("P94.4 is next") || platformRoadmap.includes("P94.4 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P94.3")?.status === "complete"
-    && status.currentPhase === "P94.3"
-    && status.previousPhase === "P94.2"
-    && status.nextPhase === "P94.4",
+    && ["P94.3", "P94.4", "P94.5", "P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P94.2", "P94.3", "P94.4", "P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.4", "P94.5", "P94.6", "P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P94.3", roadmapById.get("P94.3")?.status === "complete" && roadmapById.get("P94.4")?.status === "planned");
+addCheck("roadmap tracks P94.3", roadmapById.get("P94.3")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P94.4")?.status));
 addCheck("no unsafe imports", !/from\s+["'][^"']*(providers|tools|worker-runtime|deploy|release|projects)\//.test(source));
 addCheck("no raw SQL or delete acceptance", !/rawSqlAccepted:\s*true|deleteSqliteEntity/i.test(source) && source.includes("Delete is not admitted in P94.3."));
 addCheck("no fake unsafe runnable actions", !/"dispatch agent now"|"run worker now"|"write project now"|"deploy now"|"spend now"|"call provider now"|"create project now"|"write sqlite now"/i.test(source));
