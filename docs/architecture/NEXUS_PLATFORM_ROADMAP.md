@@ -1814,8 +1814,17 @@ location, and cost impact while keeping SQLite writes, DB writes, provider/model
 calls, agent dispatch, tool/worker execution, project mutation, hosted DB
 mutation, network calls, deploy, release, export, package, and spend blocked.
 
-P93.4 is next. It must scope local CRUD execution admission for approved OS
-runtime entities only.
+P93.4 is complete. It adds governed local SQLite CRUD admission for the P93 OS
+runtime entity allowlist. Default admission remains blocked; writes require
+explicit operator approval, rollback acceptance, audit acceptance, validation
+command acceptance, sqlite-live mode, and local write flags. Delete, raw SQL,
+hosted DB mutation, project mutation, provider/model calls, agent dispatch,
+tool/worker execution, deploy, release, export, package, and spend remain
+blocked.
+
+P93.5 is next. It must expose useful DB-backed live-runtime state in Command
+Center without raw JSON, raw logs, raw private IDs, DemoApp, or fake runnable
+actions.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

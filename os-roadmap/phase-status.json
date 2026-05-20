@@ -1647,10 +1647,11 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9bc58c6",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan model, and governed mutation request envelopes complete. Local CRUD execution admission remains split into later subphases.",
+      "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation request envelopes, and local CRUD execution admission complete. Command Center live-runtime UX remains split into P93.5.",
       "checksRun": [
+        "npm run check:p934-local-crud-execution-admission",
         "npm run check:p933-governed-runtime-mutation-request",
         "npm run check:p932-enterprise-runtime-crud-plan",
         "npm run check:p931-enterprise-live-runtime-contract",
@@ -1659,12 +1660,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P93 is in progress. P93.3 creates governed local mutation request envelopes only and does not modify db/**, enable DB writes, dispatch agents, mutate projects, call providers/models, deploy, use network calls, package, or spend."
+        "P93 is in progress. P93.4 admits local SQLite CRUD only for allowlisted OS runtime entities with explicit approval and local write flags. Provider/model calls, agent dispatch, project mutation, hosted DBs, deploy, network calls, package, and spend remain blocked."
       ],
-      "nextPhase": "P93.4",
+      "nextPhase": "P93.5",
       "commandCenterVisible": true,
       "label": "Enterprise Live Runtime Expansion",
-      "detail": "P93.3 mutation request model complete; P93.4 next."
+      "detail": "P93.4 local CRUD admission complete; P93.5 next."
     },
     {
       "track": "NEXUS_OS",
@@ -1747,18 +1748,26 @@
       "phaseId": "P93.4",
       "title": "Local CRUD Execution Admission",
       "order": 126.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned allowed local SQLite CRUD execution for approved OS runtime entities only.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:01:12.414Z",
+      "summary": "Added governed local CRUD execution admission for P93 OS runtime SQLite entities with explicit operator approval, rollback, audit, validation command acceptance, sqlite-live mode, and local write flags required before writes.",
+      "checksRun": [
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Provider, project, worker, deploy, network, and spend actions remain blocked."
+        "P93.4 admits local SQLite CRUD only for allowlisted OS runtime entities and only with explicit local approval/write flags. It does not mutate project source files, call providers/models, dispatch agents, execute tools/workers, use hosted DBs, network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P93.5",
-      "label": "CRUD Admission",
-      "detail": "Planned local CRUD admission."
+      "label": "Local CRUD Admission",
+      "detail": "Local CRUD execution admission complete; Command Center UX next."
     },
     {
       "track": "NEXUS_OS",
@@ -10763,9 +10772,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T21:55:41.873Z",
-  "currentPhase": "P93.3",
-  "previousPhase": "P93.2",
-  "nextPhase": "P93.4",
+  "updatedAt": "2026-05-20T22:01:12.414Z",
+  "currentPhase": "P93.4",
+  "previousPhase": "P93.3",
+  "nextPhase": "P93.5",
   "currentPhaseStatus": "complete"
 }

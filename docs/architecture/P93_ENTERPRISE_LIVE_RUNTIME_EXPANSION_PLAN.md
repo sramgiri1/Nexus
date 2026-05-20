@@ -87,5 +87,36 @@ calls, deploy, release, export, package, or spend.
 
 ## Next Subphases
 
-P93.4 is next. It must scope local CRUD execution admission for approved OS
-runtime entities only.
+## P93.4 Local CRUD Execution Admission
+
+P93.4 is complete. It adds a governed admission wrapper for local SQLite CRUD
+against the P93 OS runtime entity allowlist: runtime events, contracts, mission
+tasks, actions, runtime tasks, evidence, audit events, and roadmap phases.
+
+P93.4 keeps default admission blocked. Local CRUD writes require an explicit
+approved call with operator approval, rollback acceptance, audit acceptance,
+validation command acceptance, `sqlite-live` mode, and local write flags.
+Delete, raw SQL, hosted DB mutation, project mutation, provider/model calls,
+agent dispatch, tool/worker execution, deploy, release, export, package, and
+spend remain blocked.
+
+Validation:
+
+- `npm run check:p934-local-crud-execution-admission`
+- `npm run check:p933-governed-runtime-mutation-request`
+- `npm run check:p932-enterprise-runtime-crud-plan`
+- `npm run check:p931-enterprise-live-runtime-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P93.4 admits local SQLite CRUD only for allowlisted OS runtime
+entities and only with explicit local approval/write flags. It does not mutate
+project source files, call providers/models, dispatch agents, execute
+tools/workers, use hosted DBs, network calls, deploy, release, export, package,
+or spend.
+
+## Next Subphases
+
+P93.5 is next. It must expose useful DB-backed live-runtime state in Command
+Center without raw JSON, raw logs, raw private IDs, DemoApp, or fake runnable
+actions.
