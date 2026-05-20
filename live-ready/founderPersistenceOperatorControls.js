@@ -2,6 +2,8 @@ import { createPassResult } from "../shared/resultEnvelope.js";
 import { getSqliteRuntimeConfig } from "../db/sqliteRuntime.js";
 import {
   P94_FOUNDER_RUNTIME_DB_ENTITIES,
+  buildSafeFounderRuntimeDbRecord,
+  executeApprovedFounderRuntimeDbCrudRequest,
   buildFounderRuntimeDbCrudWorkflow,
 } from "./founderRuntimeDbCrudWorkflow.js";
 
@@ -13,6 +15,29 @@ export const P95_FOUNDER_PERSISTENCE_ACTIONS = Object.freeze([
   "update_prd_artifact",
   "list_workstream_plans",
 ]);
+
+const ACTION_ADMISSION = Object.freeze({
+  save_founder_session: {
+    actionKey: "save-founder-session",
+    entity: "founder_sessions",
+    operation: "upsert",
+  },
+  read_founder_session: {
+    actionKey: "read-founder-session",
+    entity: "founder_sessions",
+    operation: "read",
+  },
+  update_prd_artifact: {
+    actionKey: "update-prd-artifact",
+    entity: "founder_prd_artifacts",
+    operation: "update",
+  },
+  list_workstream_plans: {
+    actionKey: "list-workstream-plans",
+    entity: "founder_workstream_plans",
+    operation: "list",
+  },
+});
 
 const BLOCKED_RUNTIME_FLAGS = Object.freeze([
   "providerCallsAllowed",
@@ -143,6 +168,137 @@ function buildPendingControlActions(evidence = {}) {
       disabledReason: ready ? "" : "Local workstream persistence requires the complete approval evidence set.",
     },
   ];
+}
+
+function normalizeActionName(value = "") {
+  return String(value || "").replace(/-/g, "_");
+}
+
+function safeRecordSummary(result = {}) {
+  const record = result.record || null;
+  if (!record) {
+    return {
+      present: false,
+      label: "No local record returned",
+      currentState: "not_found_or_not_requested",
+      rawIdsHidden: true,
+    };
+  }
+
+  return {
+    present: true,
+    label: record.publicLabel || record.title || "Founder workflow record",
+    currentState: record.currentState || record.turnState || "captured_locally",
+    readinessPercent: record.readinessPercent ?? null,
+    rawIdsHidden: true,
+  };
+}
+
+function blockedControlActionResult(action, reason, errors = []) {
+  const admission = ACTION_ADMISSION[normalizeActionName(action)] || {};
+  return {
+    ok: errors.length === 0,
+    phase: "P95.3",
+    actionKey: admission.actionKey || String(action || "unknown-action"),
+    entity: admission.entity || "",
+    operation: admission.operation || "none",
+    admitted: false,
+    written: false,
+    read: false,
+    rollbackPlan: {
+      required: true,
+      state: "required",
+      summary: "Local SQLite backup/restore posture is required before approved local persistence.",
+    },
+    auditRefs: ["reports/p953-approved-local-persistence-adapter-report.md"],
+    validationCommands: [
+      "npm run check:p953-approved-local-persistence-adapter",
+      "npm run check:p952-founder-persistence-control-model",
+    ],
+    recordSummary: {
+      present: false,
+      label: "No local record returned",
+      currentState: "blocked",
+      rawIdsHidden: true,
+    },
+    disabledReason: reason,
+    errors,
+    localSqlitePersistenceAllowed: false,
+    dbWritesAllowed: false,
+    sqliteWriteAllowed: false,
+    ...blockedRuntimeFlags(),
+  };
+}
+
+export function executeFounderPersistenceControlAction(action = "", input = {}) {
+  const normalizedAction = normalizeActionName(action || input.action);
+  const admission = ACTION_ADMISSION[normalizedAction];
+  if (!admission) {
+    return blockedControlActionResult(action, "P95.3 only admits allowlisted founder persistence control actions.", [`Action not allowed: ${action || input.action || ""}`]);
+  }
+
+  const operation = input.operation || admission.operation;
+  if (operation === "delete") {
+    return blockedControlActionResult(normalizedAction, "Delete is not admitted in P95.3 founder persistence controls.", ["Delete is outside the P95.3 allowed operation set"]);
+  }
+  if (!["create", "read", "update", "upsert", "list"].includes(operation)) {
+    return blockedControlActionResult(normalizedAction, "Operation is outside the P95.3 allowed local persistence set.", [`Operation not allowed: ${operation}`]);
+  }
+  if (input.operatorConfirmedLocalPersistence !== true) {
+    return blockedControlActionResult(normalizedAction, "P95.3 requires explicit operatorConfirmedLocalPersistence before local CRUD is attempted.");
+  }
+
+  const controls = buildFounderPersistenceOperatorControls(input);
+  if (controls.data?.approvalState?.complete !== true) {
+    return blockedControlActionResult(normalizedAction, "P95.3 requires complete approval evidence before local CRUD is attempted.", controls.data?.blockers || []);
+  }
+
+  const request = {
+    requestKey: `p953-${admission.actionKey}`,
+    sqliteEntity: admission.entity,
+  };
+  const record = input.record || buildSafeFounderRuntimeDbRecord(admission.entity, input);
+  const primaryId = input.id || record.sessionId || record.prdId || record.planId || record.turnId;
+  const adapterInput = {
+    ...input,
+    execute: true,
+    operation,
+    record,
+    id: primaryId,
+  };
+  const result = executeApprovedFounderRuntimeDbCrudRequest(request, adapterInput);
+  const written = result.written === true;
+  const read = result.read === true;
+
+  return {
+    ok: result.ok === true && result.admitted === true,
+    phase: "P95.3",
+    actionKey: admission.actionKey,
+    entity: admission.entity,
+    operation,
+    admitted: result.admitted === true,
+    written,
+    read,
+    rollbackPlan: {
+      required: true,
+      state: input.rollbackAccepted === true ? "accepted" : "required",
+      summary: "Use local SQLite backup/restore procedures before approved local founder persistence writes.",
+    },
+    auditRefs: ["reports/p953-approved-local-persistence-adapter-report.md"],
+    validationCommands: [
+      "npm run check:p953-approved-local-persistence-adapter",
+      "npm run check:p952-founder-persistence-control-model",
+    ],
+    record: result.record,
+    records: result.records,
+    recordSummary: safeRecordSummary(result),
+    disabledReason: result.disabledReason || "",
+    errors: result.errors || [],
+    localSqlitePersistenceAllowed: result.admitted === true,
+    dbWritesAllowed: written,
+    sqliteWriteAllowed: written,
+    ...blockedRuntimeFlags(),
+  };
 }
 
 export function buildFounderPersistenceOperatorControls(input = {}) {

@@ -185,7 +185,7 @@
       "id": "nexus-os-p95-3-approved-local-persistence-adapter",
       "phaseId": "P95.3",
       "objective": "Add an approved local persistence adapter that reuses the P94 founder DB CRUD admission helper.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "live-ready/founderPersistenceOperatorControls.js",

@@ -6235,10 +6235,11 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "efa95d7",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P95.2 founder persistence operator control model is complete; P95.3 approved local persistence adapter is next.",
+      "summary": "P95.3 approved local persistence adapter is complete; P95.4 Command Center UX is next.",
       "checksRun": [
+        "npm run check:p953-approved-local-persistence-adapter",
         "npm run check:p952-founder-persistence-control-model",
         "npm run check:p951-founder-persistence-controls-contract",
         "npm run check:os-phase-status",
@@ -6246,12 +6247,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P95.2 is a display-safe model only. It does not execute SQLite CRUD, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P95 parent remains in progress. P95.3 adds local SQLite adapter behavior only under explicit approval/write gates and does not add Command Center UI."
       ],
-      "nextPhase": "P95.3",
+      "nextPhase": "P95.4",
       "commandCenterVisible": true,
       "label": "Founder Persistence Controls",
-      "detail": "P95 control model complete; approved local persistence adapter next."
+      "detail": "P95 adapter complete; Command Center UX next."
     },
     {
       "phaseId": "P95.1",
@@ -6307,17 +6308,26 @@
       "title": "Local Save Admission Bridge",
       "track": "NEXUS_OS",
       "order": 131.3,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned bridge from approved operator control state to P94 local SQLite CRUD admission for founder workflow records only.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Added approved local persistence action handling that reuses the P94 founder DB CRUD admission helper for local SQLite create/read/update/upsert/list only after explicit approval/write gates.",
+      "checksRun": [
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P95.3 does not add Command Center UI, hosted DB mutation, project mutation, provider/model calls, agent dispatch, worker/tool execution, deploy, release, export, package creation, or provider spend."
+      ],
       "nextPhase": "P95.4",
       "commandCenterVisible": true,
-      "label": "Local Save Admission Bridge",
-      "detail": "Planned P95 subphase."
+      "label": "Approved Local Adapter",
+      "detail": "Approved local adapter complete; Command Center UX next."
     },
     {
       "phaseId": "P95.4",
@@ -6388,9 +6398,9 @@
       "detail": "Planned P95 subphase."
     }
   ],
-  "updatedAt": "2026-05-20T23:20:00.000Z",
-  "currentPhase": "P95.2",
-  "previousPhase": "P95.1",
-  "nextPhase": "P95.3",
+  "updatedAt": "2026-05-20T23:35:00.000Z",
+  "currentPhase": "P95.3",
+  "previousPhase": "P95.2",
+  "nextPhase": "P95.4",
   "currentPhaseStatus": "complete"
 }

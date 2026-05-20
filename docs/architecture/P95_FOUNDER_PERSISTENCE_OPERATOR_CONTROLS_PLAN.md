@@ -78,15 +78,24 @@ Validation:
 
 ### P95.3 Approved Local Persistence Adapter
 
-P95.3 is next. It will add approved local persistence action handling that
-reuses the P94 CRUD admission helper. It may exercise
-create/read/update/upsert/list against local SQLite only after explicit local
-write gates are present. Delete, raw SQL, hosted DB mutation, project mutation,
-dispatch, worker/tool execution, deploy, package, and spend remain blocked.
+P95.3 is complete. It adds approved local persistence action handling that
+reuses the P94 CRUD admission helper. It exercises create/read/update/upsert/list
+against local SQLite only after explicit local write gates are present. Delete,
+raw SQL, hosted DB mutation, project mutation, dispatch, worker/tool execution,
+deploy, package, and spend remain blocked.
+
+Validation:
+
+- `npm run check:p953-approved-local-persistence-adapter`
+- `npm run check:p952-founder-persistence-control-model`
+- `npm run check:p951-founder-persistence-controls-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ### P95.4 Command Center UX
 
-P95.4 exposes the persistence control state in Command Center Lite, Business
+P95.4 is next. It exposes the persistence control state in Command Center Lite, Business
 Build, and DB Runtime. The UX must show saved founder workflow state, approval
 state, read/write posture, rollback/audit evidence, next action, blockers,
 disabled reason, owner capability, evidence/activity location, and cost impact.

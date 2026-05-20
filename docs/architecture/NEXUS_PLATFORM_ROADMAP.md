@@ -1929,8 +1929,14 @@ pending control actions, rollback/audit references, next action, blockers,
 disabled reason, owner capability, cost impact, and unsafe runtime flags set to
 false.
 
-P95.3 is next. It will bridge approved operator control state to the P94 local
-SQLite CRUD admission helper for founder workflow records only.
+P95.3 is complete. It bridges approved operator control state to the P94 local
+SQLite CRUD admission helper for founder workflow records only. The adapter
+supports approved local create/read/update/upsert/list paths and blocks delete,
+raw SQL, hosted DB mutation, project mutation, provider/model calls, dispatch,
+worker/tool execution, deploy, package, and spend.
+
+P95.4 is next. It will expose the persistence control state in Command Center
+Lite, Business Build, and DB Runtime without raw internals or fake actions.
 
 The detailed plan lives in
 [`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).
