@@ -1741,8 +1741,14 @@ command, DB health status, and validation. Default mode remains non-writing;
 local SQLite writes require `NEXUS_DB_MODE=sqlite-live` and
 `NEXUS_DB_ENABLE_WRITES=1`.
 
-P92.2 is next. It must wire selected runtime repository reads to SQLite while
-preserving file-backed fallback and display-safe Command Center state.
+P92.2 is complete. It adds a guarded schema-driven SQLite CRUD repository core
+for NEXUS OS entities. CRUD entity names and fields are allowlisted from
+`db/schema.json`; local SQLite reads require `NEXUS_DB_MODE=sqlite-live`, and
+writes require both `NEXUS_DB_MODE=sqlite-live` and
+`NEXUS_DB_ENABLE_WRITES=1`.
+
+P92.3 is next. It must wire selected runtime reads to SQLite while preserving
+file-backed fallback and display-safe Command Center state.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).

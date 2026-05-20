@@ -34,6 +34,17 @@ export {
   transformSchemaForSqlite,
 } from "./sqliteRuntime.js";
 export {
+  createSqliteCrudRepository,
+  deleteSqliteEntity,
+  describeSqliteCrudEntity,
+  getSqliteEntityById,
+  insertSqliteEntity,
+  listSqliteCrudEntities,
+  listSqliteEntityRecords,
+  updateSqliteEntity,
+  validateSqliteCrudRepository,
+} from "./sqliteCrudRepository.js";
+export {
   mapLocalStateToDbEntities,
   mapReportsToDbEntities,
   createDbSeedPreview,

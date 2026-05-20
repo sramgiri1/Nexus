@@ -29,14 +29,40 @@ Operator commands:
 - `npm run check:db-foundation`
 
 Known limitation: P92.1 initializes the local SQLite DB only. Runtime
-repositories still use file-backed reads until a later P92 subphase wires
-selected reads and governed writes to SQLite.
+repositories still use file-backed reads until later P92 subphases wire CRUD to
+runtime routes and Command Center state.
+
+## P92.2 SQLite CRUD Repository Core
+
+P92.2 is complete. It adds `db/sqliteCrudRepository.js`, a schema-driven CRUD
+repository over the 18 NEXUS OS entities defined in `db/schema.json`.
+
+The repository:
+
+- allowlists entity names and fields from `db/schema.json`;
+- maps JavaScript camelCase fields to SQLite snake_case columns;
+- stores array/object fields as JSON text and restores array fields on reads;
+- supports insert, get, list, update, and delete against local SQLite;
+- rejects unknown entities, unknown fields, and raw SQL-shaped entity names;
+- requires `NEXUS_DB_MODE=sqlite-live` for reads;
+- requires both `NEXUS_DB_MODE=sqlite-live` and `NEXUS_DB_ENABLE_WRITES=1` for
+  writes.
+
+P92.2 does not wire Command Center routes or runtime stores to SQLite yet. It
+only creates the reusable CRUD layer and validates it with a temporary local DB.
+
+Validation:
+
+- `npm run check:p922-sqlite-crud-repository`
+- `npm run check:p921-sqlite-runtime-foundation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## Next Subphases
 
-- P92.2 SQLite repository reads for selected runtime entities.
-- P92.3 governed SQLite writes for activity/evidence/audit only.
-- P92.4 Command Center DB live state UX.
-- P92.5 migration and backup checks.
-- P92.6 docs/roadmap closure.
+- P92.3 Wire selected runtime reads to SQLite with file-backed fallback.
+- P92.4 Governed SQLite writes for activity, evidence, and audit records.
+- P92.5 Command Center DB live state UX.
+- P92.6 migration, backup, docs, and roadmap closure.
 - P92.7 final validation.

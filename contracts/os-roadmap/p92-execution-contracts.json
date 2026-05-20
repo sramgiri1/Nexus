@@ -3,7 +3,7 @@
   "title": "Local SQLite Runtime",
   "classification": "NEXUS_OS_CHANGE",
   "startingBranch": "codex/nexus-e2e-phase-validation",
-  "expectedBaseCommit": "fe4261f",
+  "expectedBaseCommit": "d92f89b",
   "globalSafetyRules": [
     "Implement one subphase at a time.",
     "Local SQLite writes may only target local-state/runtime and must require explicit local DB flags.",
@@ -94,6 +94,101 @@
         "Files changed",
         "What was implemented",
         "DB mode and init command",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p92-2-sqlite-crud-repository-core",
+      "phaseId": "P92.2",
+      "objective": "Add a guarded SQLite CRUD repository core for NEXUS OS schema entities.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/sqliteCrudRepository.js",
+        "db/index.js",
+        "scripts/check-p922-sqlite-crud-repository.js",
+        "scripts/check-os-phase-status.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p922-sqlite-crud-repository-report.md",
+        "reports/os-phase-status-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "createSqliteCrudRepository",
+          "deleteSqliteEntity",
+          "describeSqliteCrudEntity",
+          "getSqliteEntityById",
+          "insertSqliteEntity",
+          "listSqliteCrudEntities",
+          "listSqliteEntityRecords",
+          "updateSqliteEntity",
+          "validateSqliteCrudRepository"
+        ],
+        "dataShape": "CRUD records use db/schema.json entity field names in JavaScript and SQLite snake_case columns internally. Arrays/objects are stored as JSON text. validateSqliteCrudRepository returns phase, entityCount, entities, sqliteLiveAllowed, dbWritesEnabled, fileFallbackRequired, mutationGate, and rawSqlAccepted false."
+      },
+      "commandCenterUxRequirements": "No Command Center route change in P92.2. Preserve primary UX and do not display raw SQL, raw DB paths, raw private IDs, raw logs, raw JSON, fake runnable actions, hosted DB controls, or provider spend controls.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Command Center route change in P92.2.",
+        "P92.4 must add focused Command Center DB live state coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p922-sqlite-crud-repository.",
+        "Run check:p921-sqlite-runtime-foundation.",
+        "Run check:os-phase-status."
+      ],
+      "validationCommands": [
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm CRUD entity names and fields are schema allowlisted.",
+        "Confirm no raw SQL input is accepted.",
+        "Confirm writes require explicit sqlite-live and write-enable flags.",
+        "Confirm no provider/model, agent, worker, tool, project mutation, deploy, release, package, network, hosted DB, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.2 files>",
+        "git commit -m \"feat(nexus): add sqlite crud repository core\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
         "Tests and checker results",
         "Safety and forbidden path confirmations",
         "Known limitations",
