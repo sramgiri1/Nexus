@@ -40,9 +40,27 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P90.2 Core Local PRD Model
+
+P90.2 is complete. It adds a deterministic local founder PRD authoring model
+that maps founder context into PRD sections, readiness evidence, local-only
+operations, blockers, owner capability, evidence, activity, and cost posture.
+All unsafe runtime flags remain false.
+
+Validation:
+
+- `npm run check:p902-founder-prd-local-model`
+- `npm run check:p901-founder-prd-live-lane-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.2 is a local model only. It does not run an executor,
+dispatch agents, execute tools/workers, mutate projects, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P90.2 Core Local PRD Model: define deterministic local PRD authoring records.
 - P90.3 Safe Local PRD Authoring: produce a local result envelope without
   provider calls, agent dispatch, or project mutation.
 - P90.4 Command Center UX: show the PRD lane as real local state with blockers,

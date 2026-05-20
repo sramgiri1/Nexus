@@ -1660,8 +1660,14 @@ for a governed local founder PRD authoring lane. Later P90 subphases must define
 and validate the deterministic local PRD model, safe local authoring result, and
 Command Center UX before any lane is described as live.
 
-P90.2 is next. It must define the local founder PRD authoring model and data
-shape without writing projects or dispatching agents.
+P90.2 is complete. It defines the local founder PRD authoring model and data
+shape without writing projects or dispatching agents. The model maps founder
+context into deterministic PRD sections, readiness evidence, local-only
+operations, blockers, owner capability, evidence, activity, and cost posture.
+
+P90.3 is next. It must produce the safe local PRD authoring result envelope
+without provider calls, agent dispatch, project mutation, DB writes, deploy,
+package, network calls, or spend.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).

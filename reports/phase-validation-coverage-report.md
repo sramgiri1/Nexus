@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T02:21:40.032Z
+- Generated at: 2026-05-20T02:27:17.465Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c0fdfab
+- Validation HEAD: 3ce19b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -223,23 +223,24 @@
 | P89.5 validation coverage | PASS | 22 checkers, 17 reports |
 | P89.6 validation coverage | PASS | 11 checkers, 7 reports |
 | P89.7 validation coverage | PASS | 36 checkers, 31 reports |
-| P90 validation coverage | PASS | 4 checkers, 1 reports |
+| P90 validation coverage | PASS | 6 checkers, 2 reports |
 | P90.1 validation coverage | PASS | 3 checkers, 1 reports |
-| P90.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P90.2 validation coverage | PASS | 4 checkers, 1 reports |
+| P90.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P90.1; next=P90.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P90.2; next=P90.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P90.2 Core Local PRD Model
+- P90.3 Safe Local PRD Authoring
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (213/213)
+PASS (214/214)

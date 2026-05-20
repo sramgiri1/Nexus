@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P90.1
-- Generated at: 2026-05-20T02:21:26.197Z
+- Generated at: 2026-05-20T02:27:06.384Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: c0fdfab
+- Validation HEAD: 3ce19b0
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | package script registered | PASS |  |
 | docs record P90.1 complete | PASS |  |
 | platform roadmap records P90 | PASS |  |
-| phase status advanced | PASS | P90.1/P89.7/P90.2 |
+| phase status advanced | PASS | P90.2/P90.1/P90.3 |
 | roadmap tracks P90.1 | PASS |  |
 | status checker accepts P90.1/P90.2 | PASS |  |
 | no unsafe enabled language | PASS |  |
