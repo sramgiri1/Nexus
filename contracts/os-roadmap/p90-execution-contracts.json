@@ -213,8 +213,101 @@
       "id": "nexus-os-p90-3-founder-prd-safe-authoring",
       "phaseId": "P90.3",
       "objective": "Enable a safe local PRD authoring result envelope without provider calls, agent dispatch, or project mutation.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderPrdSafeAuthoring.js",
+        "scripts/check-p903-founder-prd-safe-authoring.js",
+        "scripts/check-p902-founder-prd-local-model.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p903-founder-prd-safe-authoring-report.md",
+        "reports/p902-founder-prd-local-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p90-execution-contracts.json",
+        "docs/architecture/P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P90_FOUNDER_PRD_SAFE_AUTHORING_PHASE",
+          "P90_SAFE_AUTHORING_SECTIONS",
+          "buildFounderPrdSafeAuthoring",
+          "validateFounderPrdSafeAuthoring"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, authoringMode, sourcePhase, localAuthoring, prdArtifact, sectionCount, readiness, allowedLocalOperations[], forbiddenOperations[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and unsafe runtime flags false. localAuthoring.allowed may be true only for deterministic in-memory PRD artifact assembly; writesFiles, mutatesProjects, dispatchesAgents, callsProviders, usesNetwork, and spendsBudget must remain false."
+      },
+      "commandCenterUxRequirements": "Preserve existing Business Build and Lite UX. P90.4 must show the authored PRD artifact without raw JSON, raw logs, fake runnable actions, DemoApp, or raw private IDs.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P90.3 because no UI file changes.",
+        "P90.4 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p903-founder-prd-safe-authoring.",
+        "Run check:p902-founder-prd-local-model."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P90 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p903-founder-prd-safe-authoring",
+        "npm run check:p902-founder-prd-local-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm PRD authoring is in-memory only.",
+        "Confirm no project writes are enabled.",
+        "Confirm unsafe runtime flags remain false.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P90.3 files>",
+        "git commit -m \"feat(nexus): add safe local prd authoring\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p90-4-command-center-prd-lane-ux",

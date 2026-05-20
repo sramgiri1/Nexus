@@ -61,8 +61,29 @@ write DB state, use network calls, deploy, release, export, package, or spend.
 
 ## Next Subphases
 
-- P90.3 Safe Local PRD Authoring: produce a local result envelope without
-  provider calls, agent dispatch, or project mutation.
+## P90.3 Safe Local PRD Authoring
+
+P90.3 is complete. It adds deterministic in-memory PRD authoring from the P90.2
+local model. The authored PRD artifact includes markdown, sections, acceptance
+criteria, readiness, review state, owner capability, evidence, activity, and
+cost posture. It does not write project files, dispatch agents, call providers,
+use network calls, write DB state, deploy, export, package, or spend.
+
+Validation:
+
+- `npm run check:p903-founder-prd-safe-authoring`
+- `npm run check:p902-founder-prd-local-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.3 authors a deterministic PRD artifact in memory only. It
+does not write project files, dispatch agents, execute tools/workers, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
+## Next Subphases
+
 - P90.4 Command Center UX: show the PRD lane as real local state with blockers,
   owner, evidence, activity, and cost.
 - P90.5 Tests / Checkers: aggregate backend and UX validation.

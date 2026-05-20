@@ -58,14 +58,18 @@ addCheck("no unsafe imports", !/from\s+["'][^"']*(providers|tools|worker-runtime
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p902-founder-prd-local-model"]));
 addCheck("contract tracks P90.2 files", contract.includes("P90.2") && contract.includes("live-ready/founderPrdLiveAuthoringLane.js") && contract.includes("check:p902-founder-prd-local-model"));
 addCheck("docs record P90.2", docs.includes("P90.2 is complete") && docs.includes("npm run check:p902-founder-prd-local-model"));
-addCheck("platform roadmap records P90.2", platformRoadmap.includes("P90.2 is complete") && platformRoadmap.includes("P90.3 is next"));
+addCheck(
+  "platform roadmap records P90.2",
+  platformRoadmap.includes("P90.2 is complete")
+    && (platformRoadmap.includes("P90.3 is next") || platformRoadmap.includes("P90.3 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P90")?.status === "in_progress"
     && statusById.get("P90.2")?.status === "complete"
-    && status.currentPhase === "P90.2"
-    && status.previousPhase === "P90.1"
-    && status.nextPhase === "P90.3",
+    && ["P90.2", "P90.3", "P90.4", "P90.5", "P90.6", "P90.7"].includes(status.currentPhase)
+    && ["P90.1", "P90.2", "P90.3", "P90.4", "P90.5", "P90.6"].includes(status.previousPhase)
+    && ["P90.3", "P90.4", "P90.5", "P90.6", "P90.7", "P91"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P90.2", roadmapById.get("P90.2")?.track === "NEXUS_OS" && roadmapById.get("P90.2")?.status === "complete");

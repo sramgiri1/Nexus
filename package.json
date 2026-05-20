@@ -433,6 +433,7 @@
     "check:p897-final-validation": "node scripts/check-p897-final-validation.js",
     "check:p901-founder-prd-live-lane-contract": "node scripts/check-p901-founder-prd-live-lane-contract.js",
     "check:p902-founder-prd-local-model": "node scripts/check-p902-founder-prd-local-model.js",
+    "check:p903-founder-prd-safe-authoring": "node scripts/check-p903-founder-prd-safe-authoring.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

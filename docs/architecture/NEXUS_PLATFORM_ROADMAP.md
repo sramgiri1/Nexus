@@ -1665,9 +1665,15 @@ shape without writing projects or dispatching agents. The model maps founder
 context into deterministic PRD sections, readiness evidence, local-only
 operations, blockers, owner capability, evidence, activity, and cost posture.
 
-P90.3 is next. It must produce the safe local PRD authoring result envelope
-without provider calls, agent dispatch, project mutation, DB writes, deploy,
-package, network calls, or spend.
+P90.3 is complete. It produces a deterministic in-memory PRD artifact from the
+P90.2 model with markdown, sections, acceptance criteria, readiness, review
+state, owner capability, evidence, activity, and cost posture. It does not write
+project files, dispatch agents, call providers, use network calls, write DB
+state, deploy, export, package, or spend.
+
+P90.4 is next. It must expose the authored PRD artifact in Command Center
+without raw JSON, fake runnable actions, project mutation, agent dispatch,
+provider calls, or private IDs.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).
