@@ -9120,6 +9120,55 @@ function BusinessBuildPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="localPrd" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Local PRD Artifact</div>
+                <div className="ccv2-pill ccv2-pill--pass">{build.founderPrdAuthoring.reviewState}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderPrdAuthoring.title}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Current state: {build.founderPrdAuthoring.currentState}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {build.founderPrdAuthoring.nextAction}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.founderPrdAuthoring.ownerCapability}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Safety Boundary</div>
+                <div className="ccv2-pill ccv2-pill--disabled">Local In Memory Only</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.founderPrdAuthoring.disabledReason}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.founderPrdAuthoring.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.founderPrdAuthoring.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.founderPrdAuthoring.costImpact}</div>
+              </article>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {build.founderPrdAuthoring.safetyRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{row.value}</div>
+                </article>
+              ))}
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {build.founderPrdAuthoring.sections.map((section) => (
+                <article className="ccv2-card" key={section.label}>
+                  <div className="ccv2-section-heading">{section.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal">{section.status}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{section.content}</div>
+                </article>
+              ))}
+            </div>
+
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Operator Review Checklist</div>
+              <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                {build.founderPrdAuthoring.acceptanceCriteria.map((criterion) => (
+                  <li key={criterion}>{criterion}</li>
+                ))}
+              </ul>
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="workstreams" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--4">
               {build.workstreamRows.map((row) => (

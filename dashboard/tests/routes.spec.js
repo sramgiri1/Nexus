@@ -3195,6 +3195,17 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness");
     await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");
     await expect(activeCommandTabPanel(page)).toContainText("SpriteKit Snake game");
+    await commandTab(page, "Local PRD").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Local PRD Artifact");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD - Build a simple iOS Snake game for the App Store");
+    await expect(activeCommandTabPanel(page)).toContainText("Operator Review");
+    await expect(activeCommandTabPanel(page)).toContainText("casual iPhone players");
+    await expect(activeCommandTabPanel(page)).toContainText("Project writes");
+    await expect(activeCommandTabPanel(page)).toContainText("Agent dispatch");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider calls");
+    await expect(activeCommandTabPanel(page)).toContainText("Blocked");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder PRD safety report");
+    await expect(activeCommandTabPanel(page)).toContainText("No provider calls, model calls, network calls");
     await commandTab(page, "Workstreams").click();
     await expect(activeCommandTabPanel(page)).toContainText("Product");
     await expect(activeCommandTabPanel(page)).toContainText("Engineering");
@@ -3222,6 +3233,45 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("raw JSON");
     expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
     expect(body).not.toMatch(/P81\./);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+    await page.goto("/command-center/business-build");
+
+    await commandTab(page, "Local PRD").click();
+    const panel = activeCommandTabPanel(page);
+    await expect(panel).toContainText("Local PRD Artifact");
+    await expect(panel).toContainText("Ready For Operator Review");
+    await expect(panel).toContainText("PRD - Build a simple iOS Snake game for the App Store");
+    await expect(panel).toContainText("Problem");
+    await expect(panel).toContainText("Target Customer");
+    await expect(panel).toContainText("Solution");
+    await expect(panel).toContainText("Business Model");
+    await expect(panel).toContainText("Success Criteria");
+    await expect(panel).toContainText("Operator Review Checklist");
+    await expect(panel).toContainText("Local in-memory authoring only");
+    await expect(panel).toContainText("Project writes");
+    await expect(panel).toContainText("Project mutation");
+    await expect(panel).toContainText("Agent dispatch");
+    await expect(panel).toContainText("Provider calls");
+    await expect(panel).toContainText("Network");
+    await expect(panel).toContainText("Spend");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P90\./);
 
     expect(errors).toEqual([]);
   });

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T02:34:36.019Z
+- Generated at: 2026-05-20T02:42:10.998Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 61926b7
+- Validation HEAD: 1aabb2b
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -223,25 +223,21 @@
 | P89.5 validation coverage | PASS | 22 checkers, 17 reports |
 | P89.6 validation coverage | PASS | 11 checkers, 7 reports |
 | P89.7 validation coverage | PASS | 36 checkers, 31 reports |
-| P90 validation coverage | PASS | 8 checkers, 3 reports |
+| P90 validation coverage | PASS | 8 checkers, 4 reports |
 | P90.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P90.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P90.3 validation coverage | PASS | 4 checkers, 1 reports |
-| P90.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P90.4 validation coverage | PASS | 5 checkers, 1 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P90.3; next=P90.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P90.4; next=P90.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P90.4 Command Center PRD Lane UX
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (215/215)

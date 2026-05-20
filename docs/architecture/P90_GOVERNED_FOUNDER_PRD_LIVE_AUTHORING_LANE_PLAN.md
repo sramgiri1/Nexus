@@ -59,8 +59,6 @@ Known limitation: P90.2 is a local model only. It does not run an executor,
 dispatch agents, execute tools/workers, mutate projects, call providers/models,
 write DB state, use network calls, deploy, release, export, package, or spend.
 
-## Next Subphases
-
 ## P90.3 Safe Local PRD Authoring
 
 P90.3 is complete. It adds deterministic in-memory PRD authoring from the P90.2
@@ -82,10 +80,31 @@ does not write project files, dispatch agents, execute tools/workers, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P90.4 Command Center PRD Lane UX
+
+P90.4 is complete. Business Build now has a Local PRD tab that shows the
+deterministic in-memory PRD artifact as operator-facing state. The tab shows
+review state, current state, next action, owner capability, evidence, activity,
+cost posture, PRD sections, acceptance criteria, and blocked unsafe operations
+without raw JSON, raw logs, internal phase labels, DemoApp, raw private IDs, or
+fake runnable actions.
+
+Validation:
+
+- `npm run check:p904-command-center-prd-lane-ux`
+- `npm run check:p903-founder-prd-safe-authoring`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.4 is Command Center UX only. It does not write project
+files, dispatch agents, execute tools/workers, call providers/models, write DB
+state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P90.4 Command Center UX: show the PRD lane as real local state with blockers,
-  owner, evidence, activity, and cost.
 - P90.5 Tests / Checkers: aggregate backend and UX validation.
 - P90.6 Docs / Roadmap: close docs and status evidence.
 - P90.7 Final Validation: close P90 and hand off to the next scoped phase.

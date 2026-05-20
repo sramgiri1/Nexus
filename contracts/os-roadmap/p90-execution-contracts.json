@@ -313,8 +313,105 @@
       "id": "nexus-os-p90-4-command-center-prd-lane-ux",
       "phaseId": "P90.4",
       "objective": "Show the local PRD authoring lane in Command Center with real local state and disabled unsafe operations.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p904-command-center-prd-lane-ux.js",
+        "scripts/check-p903-founder-prd-safe-authoring.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p904-command-center-prd-lane-ux-report.md",
+        "reports/p903-founder-prd-safe-authoring-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p90-execution-contracts.json",
+        "docs/architecture/P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "viewModelShape": "Business Build view model includes founderPrdAuthoring with title, currentState, reviewState, authoringMode, nextAction, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, localAuthoring, forbiddenOperations, acceptanceCriteria[], sections[], and safetyRows[].",
+        "uxShape": "Business Build adds a Local PRD tab that renders the in-memory PRD artifact, operator review checklist, owner, evidence, activity, cost, and blocked unsafe operations without raw JSON, raw logs, internal phase labels, DemoApp, raw private IDs, or runnable unsafe actions."
+      },
+      "commandCenterUxRequirements": "Show the local PRD artifact as useful operator state in Business Build. Include current state, review state, next action, owner, evidence, activity, cost, PRD sections, acceptance criteria, and disabled unsafe operations. Do not expose raw JSON, raw logs, DemoApp, raw private IDs, or fake working actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Update Business Build route coverage for Local PRD.",
+        "Verify the Local PRD tab renders the Snake game PRD artifact and blocked safety rows.",
+        "Verify no runnable unsafe actions, DemoApp leakage, raw private IDs, raw JSON, provider secrets, or internal phase labels appear in primary Business Build UX."
+      ],
+      "testsCheckers": [
+        "Add check:p904-command-center-prd-lane-ux.",
+        "Run check:p903-founder-prd-safe-authoring.",
+        "Run Business Build Playwright coverage."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P90 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:p903-founder-prd-safe-authoring",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P90.4 is Command Center UX only.",
+        "Confirm the Local PRD surface uses the P90.3 safe authoring helper instead of duplicating PRD helpers.",
+        "Confirm no project writes are enabled.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P90.4 files>",
+        "git commit -m \"feat(nexus): show local prd authoring lane\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build result",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p90-5-tests-checkers",

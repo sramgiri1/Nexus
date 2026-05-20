@@ -1671,9 +1671,14 @@ state, owner capability, evidence, activity, and cost posture. It does not write
 project files, dispatch agents, call providers, use network calls, write DB
 state, deploy, export, package, or spend.
 
-P90.4 is next. It must expose the authored PRD artifact in Command Center
-without raw JSON, fake runnable actions, project mutation, agent dispatch,
-provider calls, or private IDs.
+P90.4 is complete. Business Build now exposes the local PRD artifact in a
+focused Local PRD tab with review state, PRD sections, acceptance criteria,
+owner, evidence, activity, cost posture, and blocked unsafe operations. It does
+not expose raw JSON, raw logs, internal phase labels, fake runnable actions,
+project mutation, agent dispatch, provider calls, or private IDs.
+
+P90.5 is next. It must aggregate backend, UX, Playwright, docs, roadmap, and
+safety validation evidence for P90 before docs closure.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).

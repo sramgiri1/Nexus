@@ -1,4 +1,5 @@
 import { buildBusinessBuildPlan } from "../../../business-build/businessBuildPlan.js";
+import { buildFounderPrdSafeAuthoring } from "../../../live-ready/founderPrdSafeAuthoring.js";
 import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
 
 export const BUSINESS_BUILD_ROUTE_ID = "business-build";
@@ -84,6 +85,7 @@ const FOUNDER_WORKSTREAM_DRY_RUN_ROWS = [
 
 export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const founderEnvelope = buildFounderRuntimeEnvelope({ founderIdeaSummary }).data;
+  const prdAuthoringEnvelope = buildFounderPrdSafeAuthoring({ founderIdeaSummary }).data;
   const prdFields = founderEnvelope.prdDraft?.fields || {};
   const plan = buildBusinessBuildPlan({
     founderIdeaSummary: prdFields.founderIdea,
@@ -133,6 +135,37 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
       missingFields: data.prdReadiness.missingFields,
       source: "Founder intake answers mapped to local PRD fields.",
       fields: prdFields,
+    },
+    founderPrdAuthoring: {
+      title: prdAuthoringEnvelope.prdArtifact?.title || "Local PRD Artifact",
+      currentState: toTitle(prdAuthoringEnvelope.currentState),
+      reviewState: toTitle(prdAuthoringEnvelope.prdArtifact?.reviewState),
+      authoringMode: toTitle(prdAuthoringEnvelope.authoringMode),
+      nextAction: prdAuthoringEnvelope.prdArtifact?.missingSections?.length
+        ? "Collect the missing founder input before operator review."
+        : "Inspect the local PRD artifact and approve the next scoped planning review.",
+      disabledReason:
+        "This lane only authors a deterministic PRD artifact in memory. Project files, provider/model calls, agent dispatch, tool execution, worker execution, local executor runs, DB writes, network calls, deploy, release, export, package creation, and provider spend remain blocked.",
+      ownerCapability: prdAuthoringEnvelope.ownerCapability,
+      evidenceLocation: prdAuthoringEnvelope.evidenceRefs?.[0] ? "Founder PRD safety report" : "Local PRD evidence report",
+      activityLocation: prdAuthoringEnvelope.activityLocation ? "OS phase status report" : "Activity report pending",
+      costImpact: prdAuthoringEnvelope.costImpact,
+      localAuthoring: prdAuthoringEnvelope.localAuthoring,
+      forbiddenOperations: prdAuthoringEnvelope.forbiddenOperations,
+      acceptanceCriteria: prdAuthoringEnvelope.prdArtifact?.acceptanceCriteria || [],
+      sections: (prdAuthoringEnvelope.prdArtifact?.sections || []).map((section) => ({
+        label: section.title,
+        status: toTitle(section.status),
+        content: section.content || "Founder input required before operator review.",
+      })),
+      safetyRows: [
+        { label: "Project writes", value: prdAuthoringEnvelope.localAuthoring?.writesFiles === false ? "Blocked" : "Allowed" },
+        { label: "Project mutation", value: prdAuthoringEnvelope.localAuthoring?.mutatesProjects === false ? "Blocked" : "Allowed" },
+        { label: "Agent dispatch", value: prdAuthoringEnvelope.localAuthoring?.dispatchesAgents === false ? "Blocked" : "Allowed" },
+        { label: "Provider calls", value: prdAuthoringEnvelope.localAuthoring?.callsProviders === false ? "Blocked" : "Allowed" },
+        { label: "Network", value: prdAuthoringEnvelope.localAuthoring?.usesNetwork === false ? "Blocked" : "Allowed" },
+        { label: "Spend", value: prdAuthoringEnvelope.localAuthoring?.spendsBudget === false ? "Blocked" : "Allowed" },
+      ],
     },
     workstreamRows: data.workstreams.map((entry) => ({
       label: toTitle(entry.workstream),
