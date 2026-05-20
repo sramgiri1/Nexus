@@ -459,6 +459,7 @@
     "check:p933-governed-runtime-mutation-request": "node scripts/check-p933-governed-runtime-mutation-request.js",
     "check:p934-local-crud-execution-admission": "node scripts/check-p934-local-crud-execution-admission.js",
     "check:p935-command-center-live-runtime-ux": "node scripts/check-p935-command-center-live-runtime-ux.js",
+    "check:p936-enterprise-runtime-validation-aggregation": "node scripts/check-p936-enterprise-runtime-validation-aggregation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

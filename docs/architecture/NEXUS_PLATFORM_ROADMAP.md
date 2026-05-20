@@ -1831,8 +1831,14 @@ raw policy dumps, DemoApp, raw private IDs, raw DB URLs, provider/model calls,
 agent dispatch, project mutation, hosted DB controls, deploy, release, export,
 package, or spend controls.
 
-P93.6 is next. It must aggregate P93 tests, docs, roadmap, checker, and safety
-evidence.
+P93.6 is complete. It adds the P93 enterprise runtime validation aggregation
+checker, confirming P93.1-P93.5 scripts, reports, source files, contract
+statuses, docs, roadmap, Playwright DB live state coverage, Command Center DB
+Runtime UX content, OS phase status, stale commit posture, and safety language
+are aligned. P93.6 adds no runtime behavior.
+
+P93.7 is next. It must run final P93 validation and close the parent phase with
+a clean next-phase handoff.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

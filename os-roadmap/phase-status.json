@@ -1647,25 +1647,29 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "edacdd5",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation requests, local CRUD admission, and Command Center live-runtime UX complete. Validation aggregation remains split into P93.6.",
+      "summary": "Enterprise live-runtime expansion is in progress with P93.1-P93.6 complete. Final validation and parent closure remain in P93.7.",
       "checksRun": [
+        "npm run check:p936-enterprise-runtime-validation-aggregation",
         "npm run check:p935-command-center-live-runtime-ux",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
         "cd dashboard && npm run build",
-        "npm run check:p934-local-crud-execution-admission",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P93 is in progress. P93.5 is UX-only and does not add mutation buttons, provider/model calls, agent dispatch, project mutation, hosted DB controls, deploy, network calls, package, or spend."
+        "P93 is in progress. P93.6 is validation aggregation only and adds no runtime behavior. Final closure remains in P93.7."
       ],
-      "nextPhase": "P93.6",
+      "nextPhase": "P93.7",
       "commandCenterVisible": true,
       "label": "Enterprise Live Runtime Expansion",
-      "detail": "P93.5 Command Center live-runtime UX complete; P93.6 next."
+      "detail": "P93.6 validation aggregation complete; P93.7 final validation next."
     },
     {
       "track": "NEXUS_OS",
@@ -1802,18 +1806,30 @@
       "phaseId": "P93.6",
       "title": "Tests / Docs / Roadmap",
       "order": 128.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P93 tests, docs, roadmap, checker, and safety evidence aggregation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:12:09.844Z",
+      "summary": "Added P93 validation aggregation across contract, checkers, reports, docs, roadmap, Playwright DB live state coverage, Command Center DB Runtime UX, status, stale commit posture, and safety language.",
+      "checksRun": [
+        "npm run check:p936-enterprise-runtime-validation-aggregation",
+        "npm run check:p935-command-center-live-runtime-ux",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P93.6 is aggregation only. It does not add runtime behavior, provider/model calls, agent dispatch, project mutation, hosted DB mutation, network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P93.7",
       "label": "Tests / Docs / Roadmap",
-      "detail": "Planned validation aggregation."
+      "detail": "P93 validation aggregation complete; final validation next."
     },
     {
       "track": "NEXUS_OS",
@@ -10780,9 +10796,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T22:09:39.412Z",
-  "currentPhase": "P93.5",
-  "previousPhase": "P93.4",
-  "nextPhase": "P93.6",
+  "updatedAt": "2026-05-20T22:12:09.844Z",
+  "currentPhase": "P93.6",
+  "previousPhase": "P93.5",
+  "nextPhase": "P93.7",
   "currentPhaseStatus": "complete"
 }

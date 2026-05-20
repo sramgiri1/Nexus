@@ -516,8 +516,103 @@
       "id": "nexus-os-p93-6-tests-docs-roadmap",
       "phaseId": "P93.6",
       "objective": "Aggregate P93 tests, docs, roadmap, checker, and safety evidence.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p936-enterprise-runtime-validation-aggregation.js",
+        "package.json",
+        "contracts/os-roadmap/p93-execution-contracts.json",
+        "docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p931-enterprise-live-runtime-contract-report.md",
+        "reports/p932-enterprise-runtime-crud-plan-report.md",
+        "reports/p933-governed-runtime-mutation-request-report.md",
+        "reports/p934-local-crud-execution-admission-report.md",
+        "reports/p935-command-center-live-runtime-ux-report.md",
+        "reports/p936-enterprise-runtime-validation-aggregation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Markdown validation report covering package scripts, P93 contract statuses, source/report presence, docs/roadmap status, Playwright DB live state coverage, Command Center UX preservation, OS phase status, stale commit checks, and safety language."
+      },
+      "commandCenterUxRequirements": "No new UI changes. Preserve P93.5 DB Runtime UX and route-wide navigation/theme behavior.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\".",
+        "Confirm P93.6 checker detects this coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p936-enterprise-runtime-validation-aggregation.",
+        "Run P93.1-P93.5 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P93 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p936-enterprise-runtime-validation-aggregation",
+        "npm run check:p935-command-center-live-runtime-ux",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P93.6 adds no runtime behavior.",
+        "Confirm P93.5 UX remains display-only.",
+        "Confirm no stale pending commit in completed P93.1-P93.5 records.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P93.6 files>",
+        "git commit -m \"test(nexus): aggregate enterprise runtime validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build/unit/page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p93-7-final-validation",

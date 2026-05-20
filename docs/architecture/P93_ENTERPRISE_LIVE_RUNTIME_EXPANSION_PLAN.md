@@ -143,5 +143,36 @@ not add DB mutation controls or broaden execution beyond P93.4 local admission.
 
 ## Next Subphases
 
-P93.6 is next. It must aggregate P93 tests, docs, roadmap, checker, and safety
-evidence.
+## P93.6 Tests / Docs / Roadmap
+
+P93.6 is complete. It adds the P93 enterprise runtime validation aggregation
+checker. The checker confirms P93.1-P93.5 scripts, reports, source files,
+contract statuses, docs, roadmap, Playwright DB live state coverage, Command
+Center DB Runtime UX content, OS phase status, stale commit posture, and safety
+language are aligned.
+
+P93.6 adds no runtime behavior. It does not broaden P93.4 local SQLite CRUD
+admission and does not add provider/model calls, agent dispatch, project
+mutation, hosted DB mutation, network calls, deploy, release, export, package,
+or spend.
+
+Validation:
+
+- `npm run check:p936-enterprise-runtime-validation-aggregation`
+- `npm run check:p935-command-center-live-runtime-ux`
+- `npm run check:p934-local-crud-execution-admission`
+- `npm run check:p933-governed-runtime-mutation-request`
+- `npm run check:p932-enterprise-runtime-crud-plan`
+- `npm run check:p931-enterprise-live-runtime-contract`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P93.6 is aggregation only. Final closure and next-phase handoff
+remain in P93.7.
+
+## Next Subphases
+
+P93.7 is next. It must run final P93 validation and close the parent phase with
+a clean next-phase handoff.
