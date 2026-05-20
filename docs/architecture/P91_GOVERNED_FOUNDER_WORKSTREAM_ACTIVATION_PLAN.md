@@ -63,10 +63,29 @@ dispatch agents, execute tools/workers, create or mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P91.3 Safe Activation Review Packet
+
+P91.3 is complete. It builds a deterministic local activation review packet from
+the P91.2 workstream activation model. The packet includes review items,
+operator checklist, readiness, blockers, disabled reasons, evidence, activity,
+cost posture, and unsafe runtime flags blocked.
+
+Validation:
+
+- `npm run check:p913-founder-activation-review-packet`
+- `npm run check:p912-founder-workstream-activation-model`
+- `npm run check:p911-founder-workstream-activation-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P91.3 is a local review packet only. It does not run an
+executor, dispatch agents, execute tools/workers, create or mutate projects,
+call providers/models, write DB state, use network calls, deploy, release,
+export, package, or spend.
+
 ## Next Subphases
 
-- P91.3 Safe Activation Review Packet: build a local review packet without
-  dispatch or mutation.
 - P91.4 Command Center UX: show activation planning state, owner lanes,
   blockers, disabled reasons, evidence, activity, and cost.
 - P91.5 Tests / Checkers: aggregate backend and UX validation.

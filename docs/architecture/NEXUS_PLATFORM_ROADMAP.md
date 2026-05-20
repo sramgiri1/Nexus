@@ -1707,9 +1707,15 @@ model from the P90 PRD artifact. The model maps the PRD into product, design,
 engineering, go-to-market, finance, operations, legal, and support review lanes
 without dispatching agents or mutating projects.
 
-P91.3 is next. It must build a safe local activation review packet for operator
-review without project mutation, provider/model calls, agent dispatch, DB
-writes, deploy, package, network calls, or spend.
+P91.3 is complete. It builds a safe local activation review packet with review
+items, operator checklist, readiness, blockers, disabled reasons, evidence,
+activity, and cost posture while keeping activation, dispatch, mutation,
+provider/model calls, DB writes, deploy, package, network calls, and spend
+blocked.
+
+P91.4 is next. It must expose workstream activation planning in Command Center
+without raw JSON, fake runnable actions, project mutation, agent dispatch,
+provider calls, or private IDs.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).

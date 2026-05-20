@@ -440,6 +440,7 @@
     "check:p907-founder-prd-final": "node scripts/check-p907-founder-prd-final.js",
     "check:p911-founder-workstream-activation-contract": "node scripts/check-p911-founder-workstream-activation-contract.js",
     "check:p912-founder-workstream-activation-model": "node scripts/check-p912-founder-workstream-activation-model.js",
+    "check:p913-founder-activation-review-packet": "node scripts/check-p913-founder-activation-review-packet.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

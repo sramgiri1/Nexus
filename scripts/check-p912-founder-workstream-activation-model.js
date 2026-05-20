@@ -58,18 +58,22 @@ addCheck("no unsafe imports", !/from\s+["'][^"']*(providers|tools|worker-runtime
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p912-founder-workstream-activation-model"]));
 addCheck("contract tracks P91.2 files", contract.includes("P91.2") && contract.includes("live-ready/founderWorkstreamActivationPlan.js") && contract.includes("check:p912-founder-workstream-activation-model"));
 addCheck("docs record P91.2", docs.includes("P91.2 is complete") && docs.includes("npm run check:p912-founder-workstream-activation-model"));
-addCheck("platform roadmap records P91.2", platformRoadmap.includes("P91.2 is complete") && platformRoadmap.includes("P91.3 is next"));
+addCheck(
+  "platform roadmap records P91.2",
+  platformRoadmap.includes("P91.2 is complete")
+    && (platformRoadmap.includes("P91.3 is next") || platformRoadmap.includes("P91.3 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P91")?.status === "in_progress"
     && statusById.get("P91.2")?.status === "complete"
-    && status.currentPhase === "P91.2"
-    && status.previousPhase === "P91.1"
-    && status.nextPhase === "P91.3",
+    && ["P91.2", "P91.3", "P91.4", "P91.5", "P91.6", "P91.7"].includes(status.currentPhase)
+    && ["P91.1", "P91.2", "P91.3", "P91.4", "P91.5", "P91.6"].includes(status.previousPhase)
+    && ["P91.3", "P91.4", "P91.5", "P91.6", "P91.7", "P92"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P91.2", roadmapById.get("P91.2")?.track === "NEXUS_OS" && roadmapById.get("P91.2")?.status === "complete");
-addCheck("P91.3 planned handoff exists", statusById.get("P91.3")?.status === "planned" && roadmapById.get("P91.3")?.status === "planned");
+addCheck("P91.3 handoff exists", ["planned", "complete"].includes(statusById.get("P91.3")?.status) && ["planned", "complete"].includes(roadmapById.get("P91.3")?.status));
 addCheck("status checker accepts P91.3", statusChecker.includes("\"P91.3\""));
 addCheck("no DemoApp/private IDs", !/DemoApp|private-project-01|private-project-governed-build-mission|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d/.test(serialized));
 addCheck("no fake unsafe runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now/i.test(serialized));

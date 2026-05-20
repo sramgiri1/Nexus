@@ -214,8 +214,58 @@
       "id": "nexus-os-p91-3-safe-activation-review-packet",
       "phaseId": "P91.3",
       "objective": "Build a safe local activation review packet for operator review without project mutation or provider calls.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderActivationReviewPacket.js",
+        "scripts/check-p913-founder-activation-review-packet.js",
+        "scripts/check-p912-founder-workstream-activation-model.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p913-founder-activation-review-packet-report.md",
+        "reports/p912-founder-workstream-activation-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p91-execution-contracts.json",
+        "docs/architecture/P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P91_FOUNDER_ACTIVATION_REVIEW_PACKET_PHASE",
+          "buildFounderActivationReviewPacket",
+          "validateFounderActivationReviewPacket"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, packetMode, sourcePrd, reviewItems[], reviewReadiness, operatorChecklist[], allowedLocalOperations[], forbiddenOperations[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve existing Business Build and Lite UX. P91.4 must expose this review packet without raw JSON, fake runnable actions, agent dispatch, project mutation, provider calls, or private IDs.",
+      "validationCommands": [
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "id": "nexus-os-p91-4-command-center-workstream-activation-ux",

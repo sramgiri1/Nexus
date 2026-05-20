@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P91.2
-- Generated at: 2026-05-20T03:12:58.948Z
+- Generated at: 2026-05-20T03:16:43.964Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 00e1801
+- Validation HEAD: d785664
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,9 +32,9 @@
 | contract tracks P91.2 files | PASS |  |
 | docs record P91.2 | PASS |  |
 | platform roadmap records P91.2 | PASS |  |
-| phase status advanced | PASS | P91.2/P91.1/P91.3 |
+| phase status advanced | PASS | P91.3/P91.2/P91.4 |
 | roadmap tracks P91.2 | PASS |  |
-| P91.3 planned handoff exists | PASS |  |
+| P91.3 handoff exists | PASS |  |
 | status checker accepts P91.3 | PASS |  |
 | no DemoApp/private IDs | PASS |  |
 | no fake unsafe runnable actions | PASS |  |
