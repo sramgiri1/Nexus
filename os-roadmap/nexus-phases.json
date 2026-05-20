@@ -6008,7 +6008,7 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "cd6838e",
       "completedAt": "2026-05-20T23:03:00.000Z",
       "summary": "Continued founder runtime DB CRUD workflow wiring with display-safe Command Center view-model data for founder intake, Business Build, and DB Runtime.",
       "checksRun": [
@@ -6111,7 +6111,7 @@
       "order": 130.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "cd6838e",
       "completedAt": "2026-05-20T23:03:00.000Z",
       "summary": "Added display-safe founder DB workflow data to Business Build, Founder Intake, and DB Runtime view models with saved session state, next question, PRD readiness, lanes, blockers, owner, evidence, activity, disabled reason, and cost posture.",
       "checksRun": [
