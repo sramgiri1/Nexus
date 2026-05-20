@@ -1583,13 +1583,17 @@ P88.6 is complete. It closes P88 documentation, roadmap, contract, and status
 evidence before final validation. It adds a docs/roadmap checker, records P88.6
 as a complete NEXUS OS subphase, and keeps execution blocked.
 
-P88.7 is next. It must run final P88 evidence validation and hand off to the next
-scoped enterprise-readiness phase without enabling broad runtime execution.
+P88.7 is complete. It finalizes P88 evidence validation, closes the parent P88
+status, preserves Command Center scoped activation UX, and creates P89 as the
+next planned scoped handoff. P88 is complete.
+
+P89 is next. It must be planned as a narrow, local-only enterprise-readiness
+handoff before any runtime execution lane can be considered.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,
-and provider spend remain blocked until a later P88 subphase explicitly scopes
-and validates one narrow lane.
+and provider spend remain blocked until a later phase explicitly scopes and
+validates one narrow lane.
 
 The detailed plan lives in
 [`P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md`](P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md).

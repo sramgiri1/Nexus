@@ -148,9 +148,30 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
-## Next Subphases
+## P88.7 Final Validation
 
-P88.7 is next. It must run final P88 evidence validation and hand off to the
-next scoped enterprise-readiness phase without enabling broad runtime execution.
+P88.7 is complete. It finalizes P88 evidence validation, closes the parent P88
+status, preserves Command Center scoped activation UX, and creates P89 as the
+next planned scoped handoff. P88 remains an activation readiness and admission
+evidence phase; it does not enable runtime execution.
 
-- P88.7 Final Validation: final P88 evidence and handoff.
+Validation:
+
+- `npm run check:p887-final-validation`
+- `npm run check:p886-docs-roadmap`
+- `npm run check:p885-tests-checkers-docs`
+- `npm run check:p884-command-center-scoped-activation-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Live Ready route renders evidence-backed activation labels without runnable actions"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P88.7 is final validation only. It does not run an executor,
+dispatch agents, execute tools/workers, mutate projects, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
+## Next Phase
+
+P89 is next. It must be planned as a narrow, local-only enterprise-readiness
+handoff before any runtime execution lane can be considered.

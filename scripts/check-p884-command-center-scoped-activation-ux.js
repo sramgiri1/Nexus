@@ -56,11 +56,11 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  statusById.get("P88")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P88")?.status)
     && statusById.get("P88.4")?.status === "complete"
-    && ["P88.4", "P88.5", "P88.6"].includes(status.currentPhase)
-    && ["P88.3", "P88.4", "P88.5"].includes(status.previousPhase)
-    && ["P88.5", "P88.6", "P88.7"].includes(status.nextPhase),
+    && ["P88.4", "P88.5", "P88.6", "P88.7"].includes(status.currentPhase)
+    && ["P88.3", "P88.4", "P88.5", "P88.6"].includes(status.previousPhase)
+    && ["P88.5", "P88.6", "P88.7", "P89"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P88.4", roadmapById.get("P88.4")?.track === "NEXUS_OS" && roadmapById.get("P88.4")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p883-local-executor-admission-report.md") && fileExists("reports/os-phase-status-report.md"));

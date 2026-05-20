@@ -4,7 +4,7 @@ import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js"
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 
 const ROOT = process.cwd();
-const REPORT_PATH = "reports/p886-docs-roadmap-report.md";
+const REPORT_PATH = "reports/p887-final-validation-report.md";
 
 function readText(relativePath) {
   return readFileSync(join(ROOT, relativePath), "utf8");
@@ -32,8 +32,9 @@ const contract = readText("contracts/os-roadmap/p88-execution-contracts.json");
 const docs = readText("docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md");
 const platformRoadmap = readText("docs/architecture/NEXUS_PLATFORM_ROADMAP.md");
 const liveData = readText("dashboard/src/data/liveReadiness.js");
+const tests = readText("dashboard/tests/routes.spec.js");
 
-const p88Subphases = ["P88.1", "P88.2", "P88.3", "P88.4", "P88.5", "P88.6"];
+const p88Subphases = ["P88.1", "P88.2", "P88.3", "P88.4", "P88.5", "P88.6", "P88.7"];
 const requiredScripts = [
   "check:p881-scoped-execution-activation-profile",
   "check:p882-local-activation-request-model",
@@ -41,6 +42,7 @@ const requiredScripts = [
   "check:p884-command-center-scoped-activation-ux",
   "check:p885-tests-checkers-docs",
   "check:p886-docs-roadmap",
+  "check:p887-final-validation",
 ];
 const requiredReports = [
   "reports/p881-scoped-execution-activation-profile-report.md",
@@ -48,33 +50,32 @@ const requiredReports = [
   "reports/p883-local-executor-admission-report.md",
   "reports/p884-command-center-scoped-activation-ux-report.md",
   "reports/p885-tests-checkers-docs-report.md",
+  "reports/p886-docs-roadmap-report.md",
 ];
 
 addCheck("package scripts registered", requiredScripts.every((script) => Boolean(packageJson.scripts?.[script])));
-addCheck("prior P88 reports exist", requiredReports.every(fileExists));
-addCheck("contract tracks P88.1-P88.6", p88Subphases.every((phaseId) => contract.includes(phaseId)));
-addCheck("contract keeps P88.6 docs-only", contract.includes("nexus-os-p88-6-docs-roadmap") && contract.includes("does not enable runtime execution"));
-addCheck("P88 plan documents P88.6 complete", docs.includes("## P88.6 Docs / Roadmap") && docs.includes("P88.6 is complete"));
-addCheck("P88 plan keeps P88.7 final validation next", docs.includes("P88.7 Final Validation") && (docs.includes("P88.7 is next") || docs.includes("P88.7 is complete")));
-addCheck("platform roadmap records P88.6", platformRoadmap.includes("P88.6 is complete") && (platformRoadmap.includes("P88.7 is next") || platformRoadmap.includes("P88.7 is complete")));
-addCheck("roadmap statuses complete through P88.6", p88Subphases.every((phaseId) => roadmapById.get(phaseId)?.track === "NEXUS_OS" && roadmapById.get(phaseId)?.status === "complete"));
-addCheck("status records complete through P88.6", p88Subphases.every((phaseId) => statusById.get(phaseId)?.track === "NEXUS_OS" && statusById.get(phaseId)?.status === "complete"));
-addCheck("P88.7 planned or complete", ["planned", "complete"].includes(statusById.get("P88.7")?.status) && ["planned", "complete"].includes(roadmapById.get("P88.7")?.status));
+addCheck("P88 evidence reports exist", requiredReports.every(fileExists));
+addCheck("contract tracks P88.1-P88.7", p88Subphases.every((phaseId) => contract.includes(phaseId)));
+addCheck("docs mark P88.7 complete", docs.includes("## P88.7 Final Validation") && docs.includes("P88.7 is complete"));
+addCheck("platform roadmap closes P88", platformRoadmap.includes("P88.7 is complete") && platformRoadmap.includes("P88 is complete"));
+addCheck("P89 handoff planned", statusById.get("P89")?.status === "planned" && roadmapById.get("P89")?.status === "planned");
+addCheck("roadmap statuses complete through P88.7", p88Subphases.every((phaseId) => roadmapById.get(phaseId)?.track === "NEXUS_OS" && roadmapById.get(phaseId)?.status === "complete"));
+addCheck("status records complete through P88.7", p88Subphases.every((phaseId) => statusById.get(phaseId)?.track === "NEXUS_OS" && statusById.get(phaseId)?.status === "complete"));
+addCheck(
+  "parent phase closed",
+  statusById.get("P88")?.status === "complete"
+    && roadmapById.get("P88")?.status === "complete"
+    && statusById.get("P88")?.nextPhase === "P89",
+);
 addCheck(
   "phase status advanced",
-  ["in_progress", "complete"].includes(statusById.get("P88")?.status)
-    && statusById.get("P88.6")?.status === "complete"
-    && ["P88.6", "P88.7"].includes(status.currentPhase)
-    && ["P88.5", "P88.6"].includes(status.previousPhase)
-    && ["P88.7", "P89"].includes(status.nextPhase),
+  status.currentPhase === "P88.7"
+    && status.previousPhase === "P88.6"
+    && status.nextPhase === "P89"
+    && status.currentPhaseStatus === "complete",
 );
-addCheck(
-  "Command Center UX preserved",
-  liveData.includes("SCOPED_ACTIVATION_ROWS")
-    && liveData.includes("Local founder task orchestration")
-    && liveData.includes("Generated workspace boundary")
-    && liveData.includes("Live unlock review"),
-);
+addCheck("Command Center scoped activation preserved", liveData.includes("SCOPED_ACTIVATION_ROWS") && tests.includes("Scoped Activation"));
+addCheck("Playwright coverage retained", tests.includes("P88 local activation admission visible") && tests.includes("Executor admission blocked"));
 addCheck("no DemoApp/private IDs", !/DemoApp|private-project-01|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d/.test(liveData));
 addCheck("no fake unsafe runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now/i.test(liveData));
 
@@ -86,15 +87,16 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Closes P88 docs, roadmap, contract, and status evidence before final validation.",
-        "- Confirms P88.1-P88.6 are tracked as NEXUS OS subphases.",
-        "- Confirms P88.7 remains the final validation handoff.",
+        "- Finalizes P88 scoped execution-capable activation validation.",
+        "- Closes P88 and P88.7 status records with P89 planned as the next scoped handoff.",
+        "- Confirms Command Center scoped activation UX remains display-only.",
       ].join("\n"),
     },
     { title: "Checks", body: buildCheckTable(checks) },
     {
       title: "Validation Commands",
       body: [
+        "- npm run check:p887-final-validation",
         "- npm run check:p886-docs-roadmap",
         "- npm run check:p885-tests-checkers-docs",
         "- npm run check:p884-command-center-scoped-activation-ux",
@@ -107,12 +109,12 @@ writeMarkdownReport(
     },
     {
       title: "Known Limitations",
-      body: "- P88.6 is docs and roadmap closure only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, package, or spend.",
+      body: "- P88.7 is final validation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, package, or spend.",
     },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
-  { title: "P88.6 Docs Roadmap Report", phase: "P88.6" },
+  { title: "P88.7 Final Validation Report", phase: "P88.7" },
 );
 
-printCheckReport("P88.6 Docs Roadmap Check", checks, failed.length === 0 ? "PASS" : "FAIL");
+printCheckReport("P88.7 Final Validation Check", checks, failed.length === 0 ? "PASS" : "FAIL");
 if (failed.length > 0) process.exit(1);

@@ -62,7 +62,7 @@ addCheck(
 addCheck("Command Center scoped activation covered", liveData.includes("SCOPED_ACTIVATION_ROWS") && tests.includes("Scoped Activation") && tests.includes("Executor admission blocked"));
 addCheck(
   "phase status advanced",
-  statusById.get("P88")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P88")?.status)
     && statusById.get("P88.5")?.status === "complete"
     && ["P88.5", "P88.6", "P88.7"].includes(status.currentPhase)
     && ["P88.4", "P88.5", "P88.6"].includes(status.previousPhase)
