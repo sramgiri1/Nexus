@@ -4490,19 +4490,19 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "88adc05",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Explicit live activation unlocks in progress with P87.1 contract and P87.2 secret/provider readiness complete.",
+      "summary": "Explicit live activation unlocks in progress with P87.1-P87.3 complete.",
       "checksRun": [
-        "npm run check:p872-secret-provider-readiness",
+        "npm run check:p873-local-agent-dispatch-admission",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P87.2 does not read .env files, store credentials, call providers or models, open network connections, activate tools, or spend."
+        "P87.3 is admission metadata only. It does not dispatch agents, run workers, execute tools, mutate projects, call providers, or spend."
       ],
-      "nextPhase": "P87.3",
+      "nextPhase": "P87.4",
       "commandCenterVisible": true,
       "label": "Explicit Live Activation Unlocks",
       "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
@@ -4560,19 +4560,24 @@
       "title": "Local Agent Dispatch Admission",
       "track": "NEXUS_OS",
       "order": 78.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define local agent dispatch admission without dispatching agents.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:29:29.996Z",
+      "summary": "Added display-safe local agent dispatch admission lanes with scoped context packet shape, blockers, validation, evidence, activity, cost posture, and all dispatch/runtime flags false.",
+      "checksRun": [
+        "npm run check:p873-local-agent-dispatch-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+        "P87.3 is admission metadata only. It does not dispatch agents, run workers, execute tools, mutate projects, call providers, or spend."
       ],
       "nextPhase": "P87.4",
       "commandCenterVisible": true,
       "label": "Local Agent Dispatch Admission",
-      "detail": "Define local agent dispatch admission without dispatching agents."
+      "detail": "Local dispatch admission metadata; no agents dispatched."
     },
     {
       "phaseId": "P87.4",
@@ -4651,9 +4656,9 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:26:44.067Z",
-  "currentPhase": "P87.2",
-  "previousPhase": "P87.1",
-  "nextPhase": "P87.3",
+  "updatedAt": "2026-05-20T00:29:29.996Z",
+  "currentPhase": "P87.3",
+  "previousPhase": "P87.2",
+  "nextPhase": "P87.4",
   "currentPhaseStatus": "complete"
 }

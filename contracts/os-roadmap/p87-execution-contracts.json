@@ -198,7 +198,87 @@
       "id": "nexus-os-p87-3-local-agent-dispatch-admission",
       "phaseId": "P87.3",
       "objective": "Define local agent dispatch admission without dispatching agents.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/localAgentDispatchAdmission.js",
+        "scripts/check-p873-local-agent-dispatch-admission.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p873-local-agent-dispatch-admission-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P87_LOCAL_AGENT_DISPATCH_ADMISSION_PHASE",
+          "buildLocalAgentDispatchAdmission",
+          "validateLocalAgentDispatchAdmission"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, dispatchLaneCount, dispatchSummary, lanes[], contextPacketShape, taskBoardPhase, secretProviderReadinessPhase, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each lane has laneId, label, ownerCapability, objective, admissionState, dispatchAllowed, contextPacketShape, requiredBeforeDispatch, blockers, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center Agent Flow and Live Readiness UX. Prepare display-safe local dispatch admission data for later UX without runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright required in P87.3 because rendered Command Center routes are preserved."
+      ],
+      "testsCheckers": [
+        "Add check:p873-local-agent-dispatch-admission."
+      ],
+      "validationCommands": [
+        "npm run check:p873-local-agent-dispatch-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm agentDispatchAllowed is false.",
+        "Confirm no worker runtime or project mutation is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.3 files>",
+        "git commit -m \"feat(nexus): add local agent dispatch admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p87-4-generated-project-workspace-admission",

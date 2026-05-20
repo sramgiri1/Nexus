@@ -38,7 +38,13 @@ Validation: `npm run check:p872-secret-provider-readiness`.
 
 Goal: define local agent dispatch admission without dispatching agents.
 
-Status: planned.
+Status: complete. P87.3 adds `localAgentDispatchAdmission`, reusing founder
+agent plan admission, task-board admission, and secret/provider readiness
+helpers. It records local dispatch lanes, scoped context packet shape, required
+before-dispatch gates, blockers, validation commands, evidence, activity, cost,
+and disabled reasons while all dispatch and execution flags remain false.
+
+Validation: `npm run check:p873-local-agent-dispatch-admission`.
 
 ## P87.4 Generated Project Workspace Admission
 

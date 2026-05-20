@@ -1506,8 +1506,14 @@ provider call and spend lanes, with secret-reference, policy, budget, approval,
 redaction, activity, cost, rollback, and validation requirements. No `.env`
 files are read, no providers or models are called, and no spend occurs.
 
-P87.3 is next. It should define local agent dispatch admission without
-dispatching agents.
+P87.3 is complete. It adds local agent dispatch admission records that reuse
+founder agent plan, task-board admission, and secret/provider readiness helpers.
+Each lane shows scoped context packet shape, blockers, required gates,
+validation, evidence, activity, and cost posture. Agents are not dispatched and
+execution remains disabled.
+
+P87.4 is next. It should define generated project workspace admission without
+project source mutation.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
