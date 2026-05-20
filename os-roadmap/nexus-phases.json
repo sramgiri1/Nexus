@@ -4913,7 +4913,7 @@
       "order": 91.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ce1974b",
       "completedAt": "2026-05-20T02:44:00.000Z",
       "summary": "Completed governed local enterprise runtime handoff with local-only profile, founder workstream envelope, dry-run records, Business Build Founder Dry Run UX, aggregate validation, docs-roadmap closure, and final validation. Runtime execution remains blocked.",
       "checksRun": [
@@ -5099,7 +5099,7 @@
       "order": 98.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ce1974b",
       "completedAt": "2026-05-20T02:44:00.000Z",
       "summary": "Finalized P89 governed local enterprise runtime handoff validation, closed parent P89, and prepared P90 as the next scoped handoff.",
       "checksRun": [
