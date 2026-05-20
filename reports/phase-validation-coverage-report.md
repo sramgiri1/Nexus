@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T23:50:53.413Z
+- Generated at: 2026-05-20T23:56:02.193Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b94f220
+- Validation HEAD: 77a3aeb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -239,22 +239,6 @@
 | P93.5 validation coverage | PASS | 10 checkers, 6 reports |
 | P93.6 validation coverage | PASS | 11 checkers, 4 reports |
 | P93.7 validation coverage | PASS | 45 checkers, 36 reports |
-| P83 validation coverage | PASS | 16 checkers, 8 reports |
-| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
-| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
-| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
-| P83.7 validation coverage | PASS | 44 checkers, 36 reports |
-| P84 validation coverage | PASS | 16 checkers, 8 reports |
-| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
-| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
-| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
-| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.5 validation coverage | PASS | 7 checkers, 2 reports |
-| P84.6 validation coverage | PASS | 15 checkers, 10 reports |
-| P84.7 validation coverage | PASS | 44 checkers, 36 reports |
 | P94 validation coverage | PASS | 16 checkers, 7 reports |
 | P94.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P94.2 validation coverage | PASS | 7 checkers, 2 reports |
@@ -271,21 +255,49 @@
 | P95.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P95.6 validation coverage | PASS | 14 checkers, 10 reports |
 | P95.7 validation coverage | PASS | 45 checkers, 36 reports |
-| P96 validation coverage | PASS | dedicated_checker, validation_report |
+| P96 validation coverage | PASS | 4 checkers, 1 reports |
+| P96.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P96.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P96.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P96.4 validation coverage | PASS | 1 checkers, 1 reports |
+| P96.5 validation coverage | PASS | 18 checkers, 18 reports |
+| P96.6 validation coverage | PASS | 10 checkers, 10 reports |
+| P96.7 validation coverage | PASS | 36 checkers, 36 reports |
+| P83 validation coverage | PASS | 16 checkers, 8 reports |
+| P83.1 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.2 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.4 validation coverage | PASS | 8 checkers, 1 reports |
+| P83.5 validation coverage | PASS | 7 checkers, 1 reports |
+| P83.6 validation coverage | PASS | 22 checkers, 16 reports |
+| P83.7 validation coverage | PASS | 44 checkers, 36 reports |
+| P84 validation coverage | PASS | 16 checkers, 8 reports |
+| P84.1 validation coverage | PASS | 6 checkers, 1 reports |
+| P84.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P84.3 validation coverage | PASS | 7 checkers, 1 reports |
+| P84.4 validation coverage | PASS | 7 checkers, 2 reports |
+| P84.5 validation coverage | PASS | 7 checkers, 2 reports |
+| P84.6 validation coverage | PASS | 15 checkers, 10 reports |
+| P84.7 validation coverage | PASS | 44 checkers, 36 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P95.7; next=P96; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P96.1; next=P96.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P96 Founder Business Build Local Execution Readiness
+- P96.2 Core Model
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
+- P96.3 Preview / Safe Dry Run
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (259/259)
+PASS (266/266)

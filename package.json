@@ -475,6 +475,7 @@
     "check:p955-founder-persistence-controls-validation": "node scripts/check-p955-founder-persistence-controls-validation.js",
     "check:p956-founder-persistence-docs-roadmap": "node scripts/check-p956-founder-persistence-docs-roadmap.js",
     "check:p957-founder-persistence-final-validation": "node scripts/check-p957-founder-persistence-final-validation.js",
+    "check:p961-founder-business-build-readiness-contract": "node scripts/check-p961-founder-business-build-readiness-contract.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

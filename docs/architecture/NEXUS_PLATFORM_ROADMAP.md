@@ -1960,6 +1960,22 @@ The detailed plan lives in
 Implementation must follow
 [`p95-execution-contracts.json`](../../contracts/os-roadmap/p95-execution-contracts.json).
 
+## P96 - Founder Business Build Local Execution Readiness
+
+P96 moves Business Build from saved local founder workflow state toward
+governed local execution readiness. It does not execute work, dispatch agents,
+call providers/models, run workers/tools, mutate projects, mutate hosted DBs,
+deploy, release, export, package, use network calls, or spend.
+
+P96.1 is complete. It defines the implementation-grade P96 contract, subphase
+sequence, safety boundary, docs handoff, checker, and OS phase status. P96.2 is next
+for the local execution readiness model.
+
+The detailed plan lives in
+[`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).
+Implementation must follow
+[`p96-execution-contracts.json`](../../contracts/os-roadmap/p96-execution-contracts.json).
+
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).
 Implementation must follow
