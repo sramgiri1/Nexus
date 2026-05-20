@@ -111,6 +111,28 @@ package, or spend.
 
 ## Next Subphases
 
-- P91.5 Tests / Checkers: aggregate backend and UX validation.
+## P91.5 Tests / Checkers
+
+P91.5 is complete. It adds aggregate validation for the P91 founder workstream
+activation lane. The checker verifies P91.1 through P91.4 reports, package
+scripts, committed status evidence, activation plan validation, review packet
+validation, Business Build Activation Review wiring, Playwright coverage, docs,
+roadmap, and safety boundaries.
+
+Validation:
+
+- `npm run check:p915-tests-checkers`
+- `npm run check:p914-command-center-workstream-activation-ux`
+- `npm run check:p913-founder-activation-review-packet`
+- `npm run check:p912-founder-workstream-activation-model`
+- `npm run check:p911-founder-workstream-activation-contract`
+
+Known limitation: P91.5 is validation aggregation only. It does not run an
+executor, dispatch agents, execute tools/workers, create or mutate projects,
+call providers/models, write DB state, use network calls, deploy, release,
+export, package, or spend.
+
+## Next Subphases
+
 - P91.6 Docs / Roadmap: close docs and status evidence.
 - P91.7 Final Validation: close P91 and hand off to the next scoped phase.

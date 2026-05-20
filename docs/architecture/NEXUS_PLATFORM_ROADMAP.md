@@ -1719,8 +1719,14 @@ evidence, activity, cost posture, and explicit blocked safety rows. The UX does
 not expose raw JSON, fake runnable actions, project mutation, agent dispatch,
 provider calls, or private IDs.
 
-P91.5 is next. It must aggregate backend model, review packet, Command Center
-UX, Playwright, docs, roadmap, and safety validation for P91.
+P91.5 is complete. It aggregates backend model, review packet, Command Center
+UX, Playwright, docs, roadmap, and safety validation for P91. The aggregate
+checker confirms the Business Build Activation Review remains display-only and
+keeps provider/model calls, agent dispatch, project mutation, DB writes,
+deploy/package actions, network calls, and spend blocked.
+
+P91.6 is next. It must close P91 docs, roadmap, phase status, and report
+evidence before final validation.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).

@@ -55,18 +55,26 @@ addCheck("Playwright coverage added", routeTests.includes("Business Build Activa
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p914-command-center-workstream-activation-ux"]));
 addCheck("contract tracks P91.4", contract.includes("P91.4") && contract.includes("dashboard/src/data/businessBuild.js") && contract.includes("check:p914-command-center-workstream-activation-ux"));
 addCheck("docs record P91.4", docs.includes("P91.4 is complete") && docs.includes("npm run check:p914-command-center-workstream-activation-ux"));
-addCheck("platform roadmap records P91.4", platformRoadmap.includes("P91.4 is complete") && platformRoadmap.includes("P91.5 is next"));
+addCheck(
+  "platform roadmap records P91.4",
+  platformRoadmap.includes("P91.4 is complete")
+    && (platformRoadmap.includes("P91.5 is next") || platformRoadmap.includes("P91.5 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P91")?.status === "in_progress" &&
     statusById.get("P91.4")?.status === "complete" &&
-    status.currentPhase === "P91.4" &&
-    status.previousPhase === "P91.3" &&
-    status.nextPhase === "P91.5",
+    ["P91.4", "P91.5", "P91.6", "P91.7"].includes(status.currentPhase) &&
+    ["P91.3", "P91.4", "P91.5", "P91.6"].includes(status.previousPhase) &&
+    ["P91.5", "P91.6", "P91.7", "P92"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P91.4", roadmapById.get("P91.4")?.track === "NEXUS_OS" && roadmapById.get("P91.4")?.status === "complete");
-addCheck("P91.5 handoff exists", statusById.get("P91.5")?.status === "planned" && roadmapById.get("P91.5")?.status === "planned");
+addCheck(
+  "P91.5 handoff exists",
+  ["planned", "complete"].includes(statusById.get("P91.5")?.status)
+    && ["planned", "complete"].includes(roadmapById.get("P91.5")?.status),
+);
 
 const failed = checks.filter((check) => check.status === "FAIL");
 

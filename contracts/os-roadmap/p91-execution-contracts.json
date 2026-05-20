@@ -371,8 +371,109 @@
       "id": "nexus-os-p91-5-tests-checkers",
       "phaseId": "P91.5",
       "objective": "Aggregate P91 backend, UX, Playwright, docs, roadmap, and safety validation.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p911-founder-workstream-activation-contract.js",
+        "scripts/check-p912-founder-workstream-activation-model.js",
+        "scripts/check-p913-founder-activation-review-packet.js",
+        "scripts/check-p914-command-center-workstream-activation-ux.js",
+        "scripts/check-p915-tests-checkers.js",
+        "package.json",
+        "contracts/os-roadmap/p91-execution-contracts.json",
+        "docs/architecture/P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p911-founder-workstream-activation-contract-report.md",
+        "reports/p912-founder-workstream-activation-model-report.md",
+        "reports/p913-founder-activation-review-packet-report.md",
+        "reports/p914-command-center-workstream-activation-ux-report.md",
+        "reports/p915-tests-checkers-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "validatedShapes": [
+          "P91.2 local founder workstream activation plan envelope",
+          "P91.3 local founder activation review packet envelope",
+          "P91.4 Business Build activationReview view model"
+        ]
+      },
+      "commandCenterUxRequirements": "Preserve Business Build Activation Review UX and validate it remains display-only with current state, next action, blockers, disabled reason, owner capability, evidence, activity, and cost impact. Do not expose raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable activation/dispatch/project mutation actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Require existing Business Build Activation Review coverage in dashboard/tests/routes.spec.js.",
+        "Preserve route-wide no DemoApp, no raw private IDs, no fake runnable actions, and theme coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p915-tests-checkers.",
+        "Run P91.1-P91.4 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P91 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P91.5 is validation only.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, tool, or executor dispatch is enabled.",
+        "Confirm no project creation, project mutation, DB write, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P91.5 files>",
+        "git commit -m \"test(nexus): validate founder workstream activation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p91-6-docs-roadmap",
