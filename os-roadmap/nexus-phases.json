@@ -6235,22 +6235,23 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e1ba5d5",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P95.1 founder persistence operator controls contract is complete; P95.2 operator control model is next.",
+      "summary": "P95.2 founder persistence operator control model is complete; P95.3 approved local persistence adapter is next.",
       "checksRun": [
+        "npm run check:p952-founder-persistence-control-model",
         "npm run check:p951-founder-persistence-controls-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P95 parent remains in progress until later subphases implement and validate operator persistence controls. P95.1 is contract-only."
+        "P95.2 is a display-safe model only. It does not execute SQLite CRUD, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P95.2",
+      "nextPhase": "P95.3",
       "commandCenterVisible": true,
       "label": "Founder Persistence Controls",
-      "detail": "P95 contract complete; operator control model next."
+      "detail": "P95 control model complete; approved local persistence adapter next."
     },
     {
       "phaseId": "P95.1",
@@ -6281,17 +6282,25 @@
       "title": "Operator Control Model",
       "track": "NEXUS_OS",
       "order": 131.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe operator control model for local founder workflow persistence approval gates.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Added the display-safe founder persistence operator control model with approval evidence, local entity summaries, pending control actions, rollback/audit references, next action, blockers, disabled reason, owner, cost, and unsafe runtime flags false.",
+      "checksRun": [
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P95.2 is a display-safe model only. It does not execute SQLite CRUD, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P95.3",
       "commandCenterVisible": true,
-      "label": "Operator Control Model",
-      "detail": "Planned P95 subphase."
+      "label": "Founder Persistence Control Model",
+      "detail": "Display-safe model complete; approved adapter next."
     },
     {
       "phaseId": "P95.3",
@@ -6379,9 +6388,9 @@
       "detail": "Planned P95 subphase."
     }
   ],
-  "updatedAt": "2026-05-20T23:03:00.000Z",
-  "currentPhase": "P95.1",
-  "previousPhase": "P94.7",
-  "nextPhase": "P95.2",
+  "updatedAt": "2026-05-20T23:20:00.000Z",
+  "currentPhase": "P95.2",
+  "previousPhase": "P95.1",
+  "nextPhase": "P95.3",
   "currentPhaseStatus": "complete"
 }

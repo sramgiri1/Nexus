@@ -62,18 +62,27 @@ Validation:
 
 ### P95.2 Core Model
 
-P95.2 adds a display-safe founder persistence operator control model. It must
-surface approval state, approval evidence, local entity summaries, pending
-control actions, rollback/audit references, next action, blockers, disabled
-reason, owner capability, cost impact, and unsafe runtime flags set to false.
+P95.2 is complete. It adds a display-safe founder persistence operator control model.
+It surfaces approval state, approval evidence, local entity summaries,
+pending control actions, rollback/audit references, next action, blockers,
+disabled reason, owner capability, cost impact, and unsafe runtime flags set to
+false without rendering Command Center UI or executing writes.
+
+Validation:
+
+- `npm run check:p952-founder-persistence-control-model`
+- `npm run check:p951-founder-persistence-controls-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ### P95.3 Approved Local Persistence Adapter
 
-P95.3 adds approved local persistence action handling that reuses the P94 CRUD
-admission helper. It may exercise create/read/update/upsert/list against local
-SQLite only after explicit local write gates are present. Delete, raw SQL,
-hosted DB mutation, project mutation, dispatch, worker/tool execution, deploy,
-package, and spend remain blocked.
+P95.3 is next. It will add approved local persistence action handling that
+reuses the P94 CRUD admission helper. It may exercise
+create/read/update/upsert/list against local SQLite only after explicit local
+write gates are present. Delete, raw SQL, hosted DB mutation, project mutation,
+dispatch, worker/tool execution, deploy, package, and spend remain blocked.
 
 ### P95.4 Command Center UX
 

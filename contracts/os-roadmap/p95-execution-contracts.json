@@ -133,7 +133,7 @@
       "id": "nexus-os-p95-2-founder-persistence-control-model",
       "phaseId": "P95.2",
       "objective": "Add the display-safe founder persistence operator control model.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "live-ready/founderPersistenceOperatorControls.js",

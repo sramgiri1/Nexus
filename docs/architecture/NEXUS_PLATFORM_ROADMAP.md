@@ -1922,9 +1922,15 @@ rules, validation commands, and final response checklist. P95.1 is
 contract-only and does not modify runtime models, DB schema, Command Center UI,
 or project files.
 
-P95.2 is next. It will add display-safe operator control state for local founder
+P95.2 is complete. It adds display-safe operator control state for local founder
 workflow persistence approval gates without rendering new Command Center UI or
-executing writes.
+executing writes. The model exposes approval evidence, local entity summaries,
+pending control actions, rollback/audit references, next action, blockers,
+disabled reason, owner capability, cost impact, and unsafe runtime flags set to
+false.
+
+P95.3 is next. It will bridge approved operator control state to the P94 local
+SQLite CRUD admission helper for founder workflow records only.
 
 The detailed plan lives in
 [`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).
