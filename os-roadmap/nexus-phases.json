@@ -4279,7 +4279,7 @@
       "track": "NEXUS_OS",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "be839d5",
       "completedAt": "2026-05-20T00:15:17.202Z",
       "summary": "Completed governed live capability admission with admission inventory, state resolver, local approval queue, activation dry-run records, Command Center UX, and final validation evidence.",
       "checksRun": [
@@ -4463,7 +4463,7 @@
       "order": 74.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "be839d5",
       "completedAt": "2026-05-20T00:15:17.202Z",
       "summary": "Closed P86 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Readiness queue coverage, and safety posture.",
       "checksRun": [
@@ -4503,7 +4503,7 @@
       "detail": "Planned phase for governed live unlocks after P86 validation."
     }
   ],
-  "updatedAt": "2026-05-20T00:16:14.661Z",
+  "updatedAt": "2026-05-20T00:17:25.239Z",
   "currentPhase": "P86.7",
   "previousPhase": "P86.6",
   "nextPhase": "P87",
