@@ -1927,9 +1927,9 @@ workflow persistence approval gates without rendering new Command Center UI or
 executing writes.
 
 The detailed plan lives in
-[`P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md`](P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md).
+[`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).
 Implementation must follow
-[`p94-execution-contracts.json`](../../contracts/os-roadmap/p94-execution-contracts.json).
+[`p95-execution-contracts.json`](../../contracts/os-roadmap/p95-execution-contracts.json).
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

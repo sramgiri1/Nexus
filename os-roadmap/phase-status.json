@@ -11042,7 +11042,7 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e1ba5d5",
       "completedAt": "",
       "summary": "P95.1 founder persistence operator controls contract is complete; P95.2 operator control model is next.",
       "checksRun": [
@@ -11066,7 +11066,7 @@
       "order": 131.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "e1ba5d5",
       "completedAt": "2026-05-20",
       "summary": "Defined the P95 founder persistence operator controls contract, subphase split, reuse requirements, Command Center UX requirements, safety rules, validation commands, and final response checklist without runtime, DB, or UI changes.",
       "checksRun": [

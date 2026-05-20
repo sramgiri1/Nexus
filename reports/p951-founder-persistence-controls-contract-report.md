@@ -3,16 +3,16 @@
 ## Metadata
 
 - Phase: P95.1
-- Generated at: 2026-05-20T23:11:23.050Z
+- Generated at: 2026-05-20T23:11:56.620Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: bf6753b
+- Validation HEAD: e1ba5d5
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
-- Validates the P95.1 founder persistence operator controls execution contract.
-- Confirms P95 is split into implementation-grade subphases before runtime, DB, or UX changes.
-- Confirms safety rules, reuse requirements, docs, roadmap, status, and handoff are present.
+- Validates P95.1 founder persistence operator controls contract.
+- Confirms P95 is split into implementation-grade subphases.
+- Confirms P95.1 is contract-only and does not enable DB schema changes, runtime writes, UI changes, dispatch, project mutation, provider calls, deploy, or spend.
 ## Checks
 
 | Check | Status | Details |
@@ -22,9 +22,11 @@
 | contract has seven subphases | PASS |  |
 | P95.1 complete and P95.2 handoff exists | PASS |  |
 | P95.1 allowed files scoped | PASS |  |
-| P95.1 remains contract-only | PASS |  |
+| P95.1 forbids DB, UI, runtime, and project changes | PASS |  |
 | safety rules block unsafe operations | PASS |  |
-| reuse rules present | PASS |  |
+| reuse requirements name existing helpers | PASS |  |
+| future exports defined | PASS |  |
+| future data shape defined | PASS |  |
 | Command Center UX requirements present | PASS |  |
 | docs record P95.1 | PASS |  |
 | platform roadmap records P95.1 | PASS |  |
@@ -34,7 +36,7 @@
 | status checker accepts P95.1-P95.7 | PASS |  |
 | contract does not expose raw private IDs | PASS |  |
 | contract does not invent runnable actions | PASS |  |
-| forbidden project paths present | PASS |  |
+| P95.1 remains contract-only | PASS |  |
 ## Validation Commands
 
 - npm run check:p951-founder-persistence-controls-contract
@@ -43,7 +45,7 @@
 - git diff --check
 ## Known Limitations
 
-- P95.1 is contract-only. It does not add runtime models, DB schema, Command Center UI, provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, or provider spend.
+- P95.1 is contract-only. It does not modify db/**, dashboard/src/**, dashboard/tests/**, live-ready/**, local-state/runtime/**, execute CRUD, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend.
 ## Result
 
-PASS (18/18)
+PASS (20/20)
