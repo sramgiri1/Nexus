@@ -465,6 +465,7 @@
     "check:p942-founder-runtime-db-schema": "node scripts/check-p942-founder-runtime-db-schema.js",
     "check:p943-founder-runtime-crud-model": "node scripts/check-p943-founder-runtime-crud-model.js",
     "check:p944-founder-db-view-model": "node scripts/check-p944-founder-db-view-model.js",
+    "check:p945-command-center-founder-db-ux": "node scripts/check-p945-command-center-founder-db-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

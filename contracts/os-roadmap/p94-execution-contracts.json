@@ -384,7 +384,7 @@
       "id": "nexus-os-p94-5-command-center-founder-db-ux",
       "phaseId": "P94.5",
       "objective": "Wire Command Center Lite, Business Build, and DB Runtime UX to the founder DB workflow state.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "dashboard/src/pages/CommandCenterV2.jsx",
@@ -398,7 +398,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p945-command-center-founder-db-ux-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p944-founder-db-view-model.js"
       ],
       "forbiddenFiles": [
         "projects/**",

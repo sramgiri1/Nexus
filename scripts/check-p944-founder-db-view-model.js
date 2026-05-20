@@ -55,16 +55,16 @@ addCheck("view model has required operator context", founderDbWorkflow.nextActio
 addCheck("view model blocks unsafe operations", founderDbWorkflow.safety.providerCallsAllowed === false && founderDbWorkflow.safety.agentDispatchAllowed === false && founderDbWorkflow.safety.projectMutationAllowed === false && founderDbWorkflow.safety.hostedDbWritesAllowed === false && founderDbWorkflow.safety.providerSpendAllowed === false);
 addCheck("view model lists local CRUD and forbidden operations", founderDbWorkflow.allowedLocalCrudOperations.includes("Create") && founderDbWorkflow.forbiddenOperations.includes("Hosted DB Mutation"));
 addCheck("docs record P94.4", docs.includes("P94.4 is complete") && docs.includes("npm run check:p944-founder-db-view-model"));
-addCheck("platform roadmap records P94.4", platformRoadmap.includes("P94.4 is complete") && platformRoadmap.includes("P94.5 is next"));
+addCheck("platform roadmap records P94.4", platformRoadmap.includes("P94.4 is complete") && (platformRoadmap.includes("P94.5 is next") || platformRoadmap.includes("P94.5 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P94.4")?.status === "complete"
-    && status.currentPhase === "P94.4"
-    && status.previousPhase === "P94.3"
-    && status.nextPhase === "P94.5",
+    && ["P94.4", "P94.5", "P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P94.3", "P94.4", "P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.5", "P94.6", "P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P94.4", roadmapById.get("P94.4")?.status === "complete" && roadmapById.get("P94.5")?.status === "planned");
+addCheck("roadmap tracks P94.4", roadmapById.get("P94.4")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P94.5")?.status));
 addCheck("no DemoApp/private IDs in view data", !/DemoApp|private-project-|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|token_|Bearer\s+/i.test(serializedData));
 addCheck("no fake runnable actions in view data", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write sqlite now|migrate now/i.test(serializedData));
 addCheck("no mutation controls added in data modules", !/onClick|buttonLabel:\s*["'](?:Run|Execute|Deploy|Write|Migrate|Dispatch)|mutationButton|deployButton|dispatchButton/i.test(sources));

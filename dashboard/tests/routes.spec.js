@@ -337,6 +337,35 @@ test("Command Center Lite route renders founder workflow summary", async ({ page
   expect(errors).toEqual([]);
 });
 
+test("Command Center Lite route renders Founder DB workflow without raw IDs", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/lite");
+
+  const founderDbWorkflow = page.getByLabel("Founder DB workflow");
+  await expect(founderDbWorkflow).toContainText("Saved local state");
+  await expect(founderDbWorkflow).toContainText("DB-ready");
+  await expect(founderDbWorkflow).toContainText("Captured Locally");
+  await expect(founderDbWorkflow).toContainText("65% ready");
+  await expect(founderDbWorkflow).toContainText("4 local records");
+  await expect(founderDbWorkflow).toContainText("Who is the target customer, launch constraint, and success metric?");
+  await expect(founderDbWorkflow).toContainText("Operator approval is required");
+  await expect(founderDbWorkflow).toContainText("No provider calls, model calls, network calls");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("founder_sessions");
+  expect(body).not.toContain("founder_qna_turns");
+  expect(body).not.toContain("p943-session");
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/dispatch agent now|run worker now|write now|migrate now|execute now|deploy now|call provider now/i);
+
+  expect(errors).toEqual([]);
+});
+
 test("conversational command interface preview stays route-first and project-aware", async ({ page }) => {
   const errors = captureClientErrors(page);
 
@@ -2043,11 +2072,17 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Approved local only");
     await expect(activeCommandTabPanel(page)).toContainText("Blockers");
     await expect(activeCommandTabPanel(page)).toContainText("Enterprise Runtime CRUD");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Workflow DB CRUD");
     await expect(activeCommandTabPanel(page)).toContainText("Local CRUD admission ready");
     await expect(activeCommandTabPanel(page)).toContainText("Mutation request envelopes ready for operator review");
     await expect(activeCommandTabPanel(page)).toContainText("Founder conversation events");
     await expect(activeCommandTabPanel(page)).toContainText("PRD artifact contracts");
     await expect(activeCommandTabPanel(page)).toContainText("Runtime task queue");
+    await expect(activeCommandTabPanel(page)).toContainText("DB-backed founder workflow ready for local review");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder session");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder Q&A turns");
+    await expect(activeCommandTabPanel(page)).toContainText("Workstream plan");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p944-founder-db-view-model-report.md");
     await expect(activeCommandTabPanel(page)).toContainText("Delete and raw SQL remain blocked");
     await expect(activeCommandTabPanel(page)).toContainText("Evidence, Activity, And Cost");
     await expect(activeCommandTabPanel(page)).toContainText("reports/p924-governed-sqlite-runtime-writes-report.md");
@@ -2056,9 +2091,57 @@ test.describe("Command Center route-wide UX", () => {
     const body = await activeCommandTabPanel(page).innerText();
     expect(body).not.toMatch(/migrate now|write now|schema now|run db|execute now|enable now/i);
     expect(body).not.toMatch(/raw json|raw logs|raw policy/i);
+    expect(body).not.toContain("founder_sessions");
+    expect(body).not.toContain("founder_qna_turns");
+    expect(body).not.toContain("p943-session");
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/postgres(?:ql)?:\/\//i);
     expect(body).not.toMatch(/P72\./);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Founder DB workflow appears in Lite, Business Build, and DB Runtime", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.removeItem("nexus-lite-founder-qna-state");
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/lite");
+    await expect(page.getByLabel("Founder DB workflow")).toContainText("Saved local state");
+    await expect(page.getByLabel("Founder DB workflow")).toContainText("PRD");
+    await expect(page.getByLabel("Founder DB workflow")).toContainText("Workstreams");
+    await expect(page.getByLabel("Founder DB workflow")).toContainText("Next question");
+
+    await page.goto("/command-center/business-build");
+    const businessWorkflow = page.getByLabel("Founder DB workflow");
+    await expect(businessWorkflow).toContainText("Saved session");
+    await expect(businessWorkflow).toContainText("Next founder question");
+    await expect(businessWorkflow).toContainText("PRD readiness");
+    await expect(businessWorkflow).toContainText("NEXUS Founder Runtime DB View Model");
+    await expect(businessWorkflow).toContainText("reports/p944-founder-db-view-model-report.md");
+    await expect(businessWorkflow).toContainText("Cost impact");
+    await expect(businessWorkflow).toContainText("Founder session");
+    await expect(businessWorkflow).toContainText("Workstream plan");
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+    const dbPanel = activeCommandTabPanel(page);
+    await expect(dbPanel).toContainText("Founder DB Workflow");
+    await expect(dbPanel).toContainText("Saved session");
+    await expect(dbPanel).toContainText("Next founder question");
+    await expect(dbPanel).toContainText("PRD readiness");
+    await expect(dbPanel).toContainText("reports/p944-founder-db-view-model-report.md");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
 
     expect(errors).toEqual([]);
   });
@@ -3228,6 +3311,17 @@ test.describe("Command Center route-wide UX", () => {
     await expect(page.locator(".ccv2-page-summary")).not.toContainText("Evidence");
     await expect(page.locator(".ccv2-page-summary")).not.toContainText("Activity");
     await expect(page.locator(".ccv2-page-summary")).not.toContainText("Cost impact");
+    const founderDbWorkflow = page.getByLabel("Founder DB workflow");
+    await expect(founderDbWorkflow).toContainText("Saved session");
+    await expect(founderDbWorkflow).toContainText("Captured Locally");
+    await expect(founderDbWorkflow).toContainText("Next founder question");
+    await expect(founderDbWorkflow).toContainText("PRD readiness");
+    await expect(founderDbWorkflow).toContainText("Founder session");
+    await expect(founderDbWorkflow).toContainText("Founder Q&A turns");
+    await expect(founderDbWorkflow).toContainText("Workstream plan");
+    await expect(founderDbWorkflow).toContainText("reports/p944-founder-db-view-model-report.md");
+    await expect(founderDbWorkflow).not.toContainText("founder_sessions");
+    await expect(founderDbWorkflow).not.toContainText("p943-session");
     await commandTab(page, "PRD Readiness").click();
     await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness");
     await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");

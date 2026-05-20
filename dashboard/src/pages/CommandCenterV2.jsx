@@ -93,7 +93,7 @@ import { buildComplianceReadinessViewModel } from "../data/complianceReadiness.j
 import { buildEnterprisePreviewReadinessViewModel } from "../data/enterprisePreviewReadiness.js";
 import { buildLiveReadinessViewModel } from "../data/liveReadiness.js";
 import { buildFounderIntakeViewModel } from "../data/founderIntake.js";
-import { buildBusinessBuildViewModel } from "../data/businessBuild.js";
+import { buildBusinessBuildViewModel, buildFounderRuntimeDbViewModel } from "../data/businessBuild.js";
 import {
   appendFounderQnaTurn,
   resetFounderQnaTurnState,
@@ -2514,6 +2514,7 @@ function CommandCenterLitePage() {
   const primaryFields = Object.entries(envelope.prdDraft.fields || {}).slice(0, 5);
   const prdReview = buildFounderPrdReviewGate({ qnaState: envelope }).data;
   const taskBoard = buildFounderTaskBoardAdmission({ qnaState: envelope, prdReview }).data;
+  const liteFounderDbWorkflow = buildFounderRuntimeDbViewModel(envelope.founderIdeaSummary);
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -2614,7 +2615,7 @@ function CommandCenterLitePage() {
             ))}
           </div>
           <div className="ccv2-lite-disabled-note">
-            Planning only: NEXUS will not call providers, dispatch agents, write project files, use a database, deploy, package, or spend.
+            Planning only: NEXUS will not call providers, dispatch agents, write project files, use hosted DBs, deploy, package, or spend. Local SQLite founder records require explicit approval and write flags.
           </div>
         </section>
 
@@ -2642,6 +2643,38 @@ function CommandCenterLitePage() {
               <span>Missing</span>
               <strong>{envelope.missingFields.length ? envelope.missingFields.map(formatLiteFieldLabel).join(", ") : "Ready for PRD review"}</strong>
             </div>
+          </section>
+          <section className="ccv2-card ccv2-lite-prd" aria-label="Founder DB workflow">
+            <div className="ccv2-card-header-row">
+              <div>
+                <div className="ccv2-eyebrow">Founder DB Workflow</div>
+                <h3>Saved local state</h3>
+              </div>
+              <span className="ccv2-pill ccv2-pill--teal">DB-ready</span>
+            </div>
+            <div className="ccv2-lite-prd__fields">
+              <div>
+                <span>Session</span>
+                <strong>{liteFounderDbWorkflow.savedSessionState}</strong>
+              </div>
+              <div>
+                <span>PRD</span>
+                <strong>{liteFounderDbWorkflow.prdReadiness} ready</strong>
+              </div>
+              <div>
+                <span>Workstreams</span>
+                <strong>{liteFounderDbWorkflow.lanes.length} local records</strong>
+              </div>
+            </div>
+            <div className="ccv2-lite-next">
+              <span>Next question</span>
+              <strong>{liteFounderDbWorkflow.nextQuestion}</strong>
+            </div>
+            <div className="ccv2-lite-next">
+              <span>Blocked</span>
+              <strong>{liteFounderDbWorkflow.blockers[0]}</strong>
+            </div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{liteFounderDbWorkflow.costImpact}</div>
           </section>
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -7506,6 +7539,52 @@ function DurableStatePage({ vm }) {
               </div>
             </div>
             <div className="ccv2-card">
+              <div className="ccv2-section-heading">Founder DB Workflow</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.currentState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Saved session</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.savedSessionState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next founder question</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.nextQuestion}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">PRD readiness</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.prdReadiness} · {dbRuntime.founderRuntime.prdState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.evidenceLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.costImpact}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.disabledReason}</span></div>
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {dbRuntime.founderRuntime.lanes.map((lane) => (
+                  <div key={lane.label} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{lane.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{lane.currentState} · {lane.blocker}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-card">
+              <div className="ccv2-section-heading">Founder Workflow DB CRUD</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.currentState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Saved session</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.savedSessionState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next founder question</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.nextQuestion}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">PRD readiness</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.prdReadiness} · {dbRuntime.founderRuntime.prdState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed local CRUD</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.allowedLocalCrudOperations.join(", ")} with explicit approval and local write flags</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.disabledReason}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.evidenceLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{dbRuntime.founderRuntime.costImpact}</span></div>
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {dbRuntime.founderRuntime.lanes.map((lane) => (
+                  <div key={lane.label} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{lane.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{lane.currentState} · {lane.ownerCapability} · {lane.evidenceLocation}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
               <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
                 {dbRuntime.blockers.map((blocker) => (
@@ -9132,6 +9211,35 @@ function BusinessBuildPage() {
                 </ul>
               </div>
             )}
+            <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
+              <div className="ccv2-section-heading">Founder DB Workflow</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Saved session</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.savedSessionState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next founder question</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.nextQuestion}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">PRD readiness</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.prdReadiness} · {build.founderDbWorkflow.prdState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.evidenceLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.costImpact}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{build.founderDbWorkflow.disabledReason}</span></div>
+              </div>
+              <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+                {build.founderDbWorkflow.lanes.map((lane) => (
+                  <div className="ccv2-safety-row" key={lane.label}>
+                    <span className="ccv2-safety-row__label">{lane.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{lane.currentState} · {lane.ownerCapability}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {build.founderDbWorkflow.lanes.map((lane) => (
+                  <div className="ccv2-safety-row" key={`${lane.label}-next`}>
+                    <span className="ccv2-safety-row__label">{lane.nextAction}</span>
+                    <span className="ccv2-safety-row__value--disabled">{lane.blocker}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
           </CommandTabPanel>
 
           <CommandTabPanel tabId="prd" activeTab={activeTab}>

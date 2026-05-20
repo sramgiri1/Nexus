@@ -48,14 +48,16 @@ rendering changes.
 
 ### P94.5 Command Center Founder DB UX
 
-P94.5 is next. It will wire Lite, Business Build, and DB Runtime to the founder DB workflow
-state. The UX must remain useful for the founder flow and must not expose raw
-JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, raw DB URLs, or
-fake runnable mutation/provider/agent/project actions.
+P94.5 is complete. It wires Lite, Business Build, and DB Runtime to the founder
+DB workflow state. The UX shows saved session state, next founder question, PRD
+readiness, workstream lanes, blockers, disabled reason, owner capability,
+evidence/activity locations, and cost posture without exposing raw JSON, raw
+logs, raw policy dumps, DemoApp, raw private IDs, raw DB URLs, or fake runnable
+mutation/provider/agent/project actions.
 
 ### P94.6 Docs / Roadmap / Validation
 
-P94.6 will aggregate validation across P94.1-P94.5 and update README, PRD,
+P94.6 is next. It will aggregate validation across P94.1-P94.5 and update README, PRD,
 architecture docs, roadmap, phase status, and reports.
 
 ### P94.7 Final Validation
@@ -107,6 +109,7 @@ P94.1 validation:
 - `npm run check:p922-sqlite-crud-repository`
 - `npm run check:p943-founder-runtime-crud-model`
 - `npm run check:p944-founder-db-view-model`
+- `npm run check:p945-command-center-founder-db-ux`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
