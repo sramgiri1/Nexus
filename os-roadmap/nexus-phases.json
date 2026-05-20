@@ -5127,7 +5127,7 @@
       "order": 99.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "c0fdfab",
+      "commit": "23a29e9",
       "completedAt": "",
       "summary": "Started the governed local founder PRD live authoring lane with an implementation-grade contract, deterministic local PRD model, safe in-memory PRD authoring, and Command Center Local PRD UX. Unsafe runtime execution remains blocked.",
       "checksRun": [
@@ -5228,7 +5228,7 @@
       "order": 103.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "23a29e9",
       "completedAt": "2026-05-20T04:05:00.000Z",
       "summary": "Added the Business Build Local PRD tab backed by safe in-memory PRD authoring, with review state, PRD sections, acceptance criteria, owner, evidence, activity, cost posture, and blocked unsafe operations.",
       "checksRun": [
