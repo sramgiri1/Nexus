@@ -5340,7 +5340,7 @@
       "order": 107.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "eef1e13",
+      "commit": "00e1801",
       "completedAt": "",
       "summary": "Started governed founder workstream activation planning with an implementation-grade contract and local activation planning model. Runtime execution, agent dispatch, project mutation, provider/model calls, DB writes, deploy, package, network calls, and spend remain blocked.",
       "checksRun": [
@@ -5389,7 +5389,7 @@
       "order": 109.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "00e1801",
       "completedAt": "2026-05-20T06:15:00.000Z",
       "summary": "Added the deterministic local founder workstream activation planning model from the P90 PRD artifact with owner lanes, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
       "checksRun": [
