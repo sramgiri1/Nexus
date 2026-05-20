@@ -410,6 +410,7 @@
     "check:p865-activation-dry-run": "node scripts/check-p865-activation-dry-run.js",
     "check:p866-tests-docs-roadmap": "node scripts/check-p866-tests-docs-roadmap.js",
     "check:p867-final-validation": "node scripts/check-p867-final-validation.js",
+    "check:p871-explicit-live-activation-contract": "node scripts/check-p871-explicit-live-activation-contract.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

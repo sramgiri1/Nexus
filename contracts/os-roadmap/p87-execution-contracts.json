@@ -1,0 +1,148 @@
+{
+  "phase": "P87",
+  "title": "Explicit Live Activation Unlocks",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "bae85ff",
+  "rules": [
+    "Implement one subphase at a time.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, or provider spend unless the subphase explicitly scopes that lane.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, db/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not expose DemoApp, raw logs, raw JSON dumps, policy dumps, raw private IDs, or fake runnable actions in Command Center primary UX."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "existing Live Readiness rows, tabs, cards, badges, evidence, activity, audit, and cost helpers"
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p87-1-explicit-live-activation-contract",
+      "phaseId": "P87.1",
+      "objective": "Define explicit activation contract lanes before any live unlock can be considered.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/explicitLiveActivationContract.js",
+        "scripts/check-p871-explicit-live-activation-contract.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p871-explicit-live-activation-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P87_EXPLICIT_LIVE_ACTIVATION_CONTRACT_PHASE",
+          "LIVE_ACTIVATION_CONTRACT_GATES",
+          "buildExplicitLiveActivationContract",
+          "validateExplicitLiveActivationContract"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, laneSummary, lanes[], nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each lane has laneId, label, ownerCapability, unlockState, allowedOperations, forbiddenOperations, requiredGates, requiredEvidence, blockers, nextAction, disabledReason, rollbackRequired, validationCommands, evidenceRefs, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Preserve Live Readiness UX. Produce display-safe contract data with state, next action, blockers, disabled reason, owner, evidence, activity, and cost impact. Do not add runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright required in P87.1 because rendered Command Center routes are preserved."
+      ],
+      "testsCheckers": [
+        "Add check:p871-explicit-live-activation-contract."
+      ],
+      "validationCommands": [
+        "npm run check:p871-explicit-live-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm all runtime flags are false.",
+        "Confirm no forbidden paths changed.",
+        "Confirm no raw private IDs or fake runnable actions appear."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.1 files>",
+        "git commit -m \"feat(nexus): define explicit live activation contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p87-2-secret-provider-readiness",
+      "phaseId": "P87.2",
+      "objective": "Validate redacted secret and provider profile readiness without provider calls or spend.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p87-3-local-agent-dispatch-admission",
+      "phaseId": "P87.3",
+      "objective": "Define local agent dispatch admission without dispatching agents.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p87-4-generated-project-workspace-admission",
+      "phaseId": "P87.4",
+      "objective": "Define generated project workspace admission without project source mutation.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p87-5-command-center-live-unlock-ux",
+      "phaseId": "P87.5",
+      "objective": "Expose explicit live unlock state in Command Center without runnable actions.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p87-6-tests-docs-roadmap",
+      "phaseId": "P87.6",
+      "objective": "Aggregate P87 tests, docs, reports, roadmap, and status evidence.",
+      "status": "planned"
+    },
+    {
+      "id": "nexus-os-p87-7-final-validation",
+      "phaseId": "P87.7",
+      "objective": "Close P87 with final validation and handoff.",
+      "status": "planned"
+    }
+  ]
+}

@@ -1487,3 +1487,24 @@ The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).
 Implementation must follow
 [`p86-execution-contracts.json`](../../contracts/os-roadmap/p86-execution-contracts.json).
+
+## P87 - Explicit Live Activation Unlocks
+
+P87 moves from P86 governed admission into explicit live activation unlock
+contracts. It does not create a broad live switch. Every provider, agent, tool,
+worker, project, DB, deploy, package, network, or spend lane must be separately
+scoped and validated before execution can be considered.
+
+P87.1 is complete. It adds an explicit live activation contract that reuses P86
+activation dry-run records and produces display-safe unlock lanes with required
+gates, required evidence, blockers, next action, disabled reason, owner,
+rollback, validation, evidence, activity, and cost posture. Runtime flags remain
+false.
+
+P87.2 is next. It should validate redacted secret and provider profile readiness
+without provider calls or spend.
+
+The detailed plan lives in
+[`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
+Implementation must follow
+[`p87-execution-contracts.json`](../../contracts/os-roadmap/p87-execution-contracts.json).

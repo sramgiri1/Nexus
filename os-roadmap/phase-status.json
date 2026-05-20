@@ -9295,25 +9295,168 @@
       "title": "Explicit Live Activation Unlocks",
       "track": "NEXUS_OS",
       "order": 75.07,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Explicit live activation unlocks started with contract-only activation lanes in P87.1.",
+      "checksRun": [
+        "npm run check:p871-explicit-live-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.1 is contract-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled."
+      ],
+      "nextPhase": "P87.2",
+      "commandCenterVisible": true,
+      "label": "Explicit Live Activation Unlocks",
+      "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
+    },
+    {
+      "phaseId": "P87.1",
+      "title": "Explicit Activation Contract",
+      "track": "NEXUS_OS",
+      "order": 76.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:21:34.534Z",
+      "summary": "Defined explicit live activation contract lanes with required gates, evidence, blockers, rollback, validation, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p871-explicit-live-activation-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P87.1 is contract-only. Provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, and spend remain disabled."
+      ],
+      "nextPhase": "P87.2",
+      "commandCenterVisible": true,
+      "label": "Explicit Activation Contract",
+      "detail": "Contract-only live activation lanes; no execution enabled."
+    },
+    {
+      "phaseId": "P87.2",
+      "title": "Secret / Provider Readiness",
+      "track": "NEXUS_OS",
+      "order": 77.07,
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Future phase for separately scoped, explicitly allowed live activation unlocks.",
+      "summary": "Validate redacted secret and provider profile readiness without provider calls or spend.",
       "checksRun": [],
       "knownLimitations": [
-        "Not started. Live execution remains blocked until P87 subphases are planned and validated."
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
       ],
-      "nextPhase": "P87.1",
+      "nextPhase": "P87.3",
       "commandCenterVisible": true,
-      "label": "Explicit Live Activation Unlocks",
-      "detail": "Planned phase for governed live unlocks after P86 validation."
+      "label": "Secret / Provider Readiness",
+      "detail": "Validate redacted secret and provider profile readiness without provider calls or spend."
+    },
+    {
+      "phaseId": "P87.3",
+      "title": "Local Agent Dispatch Admission",
+      "track": "NEXUS_OS",
+      "order": 78.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define local agent dispatch admission without dispatching agents.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+      ],
+      "nextPhase": "P87.4",
+      "commandCenterVisible": true,
+      "label": "Local Agent Dispatch Admission",
+      "detail": "Define local agent dispatch admission without dispatching agents."
+    },
+    {
+      "phaseId": "P87.4",
+      "title": "Generated Project Workspace Admission",
+      "track": "NEXUS_OS",
+      "order": 79.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Define generated project workspace admission without project source mutation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+      ],
+      "nextPhase": "P87.5",
+      "commandCenterVisible": true,
+      "label": "Generated Project Workspace Admission",
+      "detail": "Define generated project workspace admission without project source mutation."
+    },
+    {
+      "phaseId": "P87.5",
+      "title": "Command Center Live Unlock UX",
+      "track": "NEXUS_OS",
+      "order": 80.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Expose explicit live unlock state in Command Center without runnable actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+      ],
+      "nextPhase": "P87.6",
+      "commandCenterVisible": true,
+      "label": "Command Center Live Unlock UX",
+      "detail": "Expose explicit live unlock state in Command Center without runnable actions."
+    },
+    {
+      "phaseId": "P87.6",
+      "title": "Tests / Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 81.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Aggregate P87 validation evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+      ],
+      "nextPhase": "P87.7",
+      "commandCenterVisible": true,
+      "label": "Tests / Docs / Roadmap",
+      "detail": "Aggregate P87 validation evidence."
+    },
+    {
+      "phaseId": "P87.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 82.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Close P87 and hand off to the next scoped phase.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+      ],
+      "nextPhase": "P88",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:17:25.239Z",
-  "currentPhase": "P86.7",
-  "previousPhase": "P86.6",
-  "nextPhase": "P87",
+  "updatedAt": "2026-05-20T00:21:34.534Z",
+  "currentPhase": "P87.1",
+  "previousPhase": "P86.7",
+  "nextPhase": "P87.2",
   "currentPhaseStatus": "complete"
 }
