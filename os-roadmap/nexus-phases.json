@@ -5127,7 +5127,7 @@
       "order": 99.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5a9fa47",
       "completedAt": "2026-05-20T05:25:00.000Z",
       "summary": "Completed the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Business Build Local PRD UX, aggregate validation, docs/roadmap closure, and final validation. Unsafe runtime execution remains blocked.",
       "checksRun": [
@@ -5311,7 +5311,7 @@
       "order": 106.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "5a9fa47",
       "completedAt": "2026-05-20T05:25:00.000Z",
       "summary": "Finalized P90 founder PRD lane validation, closed parent P90, preserved Business Build Local PRD UX, and prepared P91 as the next scoped handoff.",
       "checksRun": [
