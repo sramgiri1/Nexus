@@ -95,18 +95,30 @@ Validation:
 
 ### P95.4 Command Center UX
 
-P95.4 is next. It exposes the persistence control state in Command Center Lite, Business
-Build, and DB Runtime. The UX must show saved founder workflow state, approval
-state, read/write posture, rollback/audit evidence, next action, blockers,
-disabled reason, owner capability, evidence/activity location, and cost impact.
+P95.4 is complete. It exposes the persistence control state in Command Center
+Lite, Business Build, and DB Runtime. The UX shows saved founder workflow state,
+approval state, local read/write posture, rollback/audit evidence, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact.
 
-It must preserve system, dark, and light themes, route-wide navigation, no
-DemoApp leakage, no raw JSON/log/policy dumps, and no raw private IDs.
+It preserves system, dark, and light themes, route-wide navigation, no DemoApp
+leakage, no raw JSON/log/policy dumps, no raw DB table names, and no raw private
+IDs.
+
+Validation:
+
+- `npm run check:p954-command-center-persistence-controls-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder persistence controls"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ### P95.5 Validation
 
-P95.5 aggregates contract, model, adapter, Command Center UX, temp SQLite, and
-route-safety validation. It adds or updates checkers and reports only.
+P95.5 is next. It aggregates contract, model, adapter, Command Center UX, temp
+SQLite, and route-safety validation. It adds or updates checkers and reports
+only.
 
 ### P95.6 Docs And Roadmap
 

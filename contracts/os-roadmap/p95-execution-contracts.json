@@ -235,7 +235,7 @@
       "id": "nexus-os-p95-4-command-center-persistence-controls-ux",
       "phaseId": "P95.4",
       "objective": "Expose founder persistence controls and local-only state in Command Center.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "dashboard/src/pages/CommandCenterV2.jsx",

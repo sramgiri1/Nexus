@@ -1935,8 +1935,11 @@ supports approved local create/read/update/upsert/list paths and blocks delete,
 raw SQL, hosted DB mutation, project mutation, provider/model calls, dispatch,
 worker/tool execution, deploy, package, and spend.
 
-P95.4 is next. It will expose the persistence control state in Command Center
-Lite, Business Build, and DB Runtime without raw internals or fake actions.
+P95.4 is complete. It exposes the persistence control state in Command Center
+Lite, Business Build, and DB Runtime without raw internals, raw DB table names,
+or fake actions. P95.5 is next and will aggregate P95 contract, model, adapter,
+Command Center UX, temp SQLite, route-safety, phase status, and coverage
+validation.
 
 The detailed plan lives in
 [`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).

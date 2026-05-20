@@ -11042,24 +11042,24 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "eccad92",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P95.3 approved local persistence adapter is complete; P95.4 Command Center UX is next.",
+      "summary": "P95.4 Command Center persistence controls UX is complete; P95.5 validation aggregation is next.",
       "checksRun": [
-        "npm run check:p953-approved-local-persistence-adapter",
-        "npm run check:p952-founder-persistence-control-model",
-        "npm run check:p951-founder-persistence-controls-contract",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P95 parent remains in progress. P95.3 adds local SQLite adapter behavior only under explicit approval/write gates and does not add Command Center UI."
+        "P95 parent remains in progress. P95.4 adds read-only Command Center UX only and keeps unsafe runtime operations blocked."
       ],
-      "nextPhase": "P95.4",
+      "nextPhase": "P95.5",
       "commandCenterVisible": true,
       "label": "Founder Persistence Controls",
-      "detail": "P95 adapter complete; Command Center UX next."
+      "detail": "Command Center persistence controls complete; validation aggregation next."
     },
     {
       "phaseId": "P95.1",
@@ -11141,17 +11141,26 @@
       "title": "Command Center Operator UX",
       "track": "NEXUS_OS",
       "order": 131.4,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned Command Center operator persistence controls without raw internals or fake actions.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Exposed display-safe founder persistence operator controls in Command Center Lite, Business Build, and DB Runtime with approval, local read/write posture, rollback, audit, blockers, evidence, activity, disabled reason, owner, and cost impact.",
+      "checksRun": [
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P95.4 is UX-only. It does not add provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
+      ],
       "nextPhase": "P95.5",
       "commandCenterVisible": true,
-      "label": "Command Center Operator UX",
-      "detail": "Planned P95 subphase."
+      "label": "Command Center Persistence UX",
+      "detail": "Display-safe founder persistence controls visible in Lite, Business Build, and DB Runtime."
     },
     {
       "phaseId": "P95.5",
@@ -11206,9 +11215,9 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T23:35:00.000Z",
-  "currentPhase": "P95.3",
-  "previousPhase": "P95.2",
-  "nextPhase": "P95.4",
+  "updatedAt": "2026-05-20T23:27:33.399Z",
+  "currentPhase": "P95.4",
+  "previousPhase": "P95.3",
+  "nextPhase": "P95.5",
   "currentPhaseStatus": "complete"
 }

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T23:21:07.098Z
+- Generated at: 2026-05-20T23:32:26.934Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: eccad92
+- Validation HEAD: fd16069
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -263,28 +263,24 @@
 | P94.5 validation coverage | PASS | 10 checkers, 3 reports |
 | P94.6 validation coverage | PASS | 8 checkers, 1 reports |
 | P94.7 validation coverage | PASS | 44 checkers, 35 reports |
-| P95 validation coverage | PASS | 8 checkers, 3 reports |
+| P95 validation coverage | PASS | 7 checkers, 4 reports |
 | P95.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P95.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P95.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P95.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P95.4 validation coverage | PASS | 3 checkers, 1 reports |
 | P95.5 validation coverage | PASS | 18 checkers, 18 reports |
 | P95.6 validation coverage | PASS | 9 checkers, 9 reports |
 | P95.7 validation coverage | PASS | 35 checkers, 35 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P95.3; next=P95.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P95.4; next=P95.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P95.4 Command Center Operator UX
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (258/258)

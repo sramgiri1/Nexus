@@ -2508,6 +2508,90 @@ function formatLiteFieldLabel(value = "") {
     .replace(/\bPrd\b/g, "PRD");
 }
 
+function buildFounderPersistenceControlsViewModel(founderDbWorkflow = {}) {
+  const lanes = Array.isArray(founderDbWorkflow.lanes) ? founderDbWorkflow.lanes : [];
+  return {
+    approvalState: "Needs approval evidence",
+    writePosture: "Local SQLite gated",
+    savedState: `${founderDbWorkflow.savedSessionState || "Captured locally"} · ${founderDbWorkflow.prdReadiness || "65%"} PRD`,
+    nextAction: "Review approval, rollback, audit, validation, sqlite-live mode, and local write evidence before local persistence.",
+    disabledReason: "Local persistence controls require explicit operator confirmation and local write flags. Provider calls, agent dispatch, project writes, hosted DBs, deploy, package, and spend stay blocked.",
+    ownerCapability: "NEXUS Founder Persistence Controls",
+    rollbackPlan: "Required before any approved local write",
+    auditState: "Operator audit evidence required",
+    evidenceLocation: "Persistence adapter report",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite only. No provider spend.",
+    blockers: [
+      "Operator approval required",
+      "Rollback acceptance required",
+      "Audit acceptance required",
+      "Validation command acceptance required",
+      "SQLite live mode and local write flags required",
+    ],
+    actions: [
+      { label: "Save founder session locally", state: "Approval required" },
+      { label: "Read founder session locally", state: "Approval required" },
+      { label: "Update PRD artifact locally", state: "Approval required" },
+      { label: "List workstream plans locally", state: "Approval required" },
+    ],
+    records: lanes.map((lane) => ({
+      label: lane.label,
+      state: lane.currentState,
+      owner: lane.ownerCapability,
+    })),
+  };
+}
+
+function FounderPersistenceControlsCard({ controls }) {
+  return (
+    <section className="ccv2-card" aria-label="Founder persistence controls">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Founder Persistence</div>
+          <h3>Local controls</h3>
+        </div>
+        <span className="ccv2-pill ccv2-pill--teal">Local-only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval state</span><span className="ccv2-page-summary-value">{controls.approvalState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Write posture</span><span className="ccv2-page-summary-value">{controls.writePosture}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Saved state</span><span className="ccv2-page-summary-value">{controls.savedState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Rollback</span><span className="ccv2-page-summary-value">{controls.rollbackPlan}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Audit</span><span className="ccv2-page-summary-value">{controls.auditState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{controls.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{controls.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{controls.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{controls.costImpact}</span></div>
+      </div>
+      <div className="ccv2-lite-next" style={{ marginTop: 12 }}>
+        <span>Next action</span>
+        <strong>{controls.nextAction}</strong>
+      </div>
+      <div className="ccv2-lite-next" style={{ marginTop: 8 }}>
+        <span>Disabled reason</span>
+        <strong>{controls.disabledReason}</strong>
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {controls.actions.map((action) => (
+          <div className="ccv2-safety-row" key={action.label}>
+            <span className="ccv2-safety-row__label">{action.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{action.state}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 0 }}>
+        {controls.records.map((record) => (
+          <div className="ccv2-stat-chip" key={record.label}>
+            <span className="ccv2-stat-chip__label">{record.label}</span>
+            <span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{record.state}</span>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
 function CommandCenterLitePage() {
   const [envelope, setEnvelope] = useState(getStoredLiteQnaState);
   const [draftMessage, setDraftMessage] = useState("");
@@ -2515,6 +2599,7 @@ function CommandCenterLitePage() {
   const prdReview = buildFounderPrdReviewGate({ qnaState: envelope }).data;
   const taskBoard = buildFounderTaskBoardAdmission({ qnaState: envelope, prdReview }).data;
   const liteFounderDbWorkflow = buildFounderRuntimeDbViewModel(envelope.founderIdeaSummary);
+  const liteFounderPersistenceControls = buildFounderPersistenceControlsViewModel(liteFounderDbWorkflow);
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -2676,6 +2761,7 @@ function CommandCenterLitePage() {
             </div>
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{liteFounderDbWorkflow.costImpact}</div>
           </section>
+          <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
               <div>
@@ -7426,6 +7512,7 @@ function DurableStatePage({ vm }) {
   const sourcesMissing = importPlan.sourcesMissing ?? "Unknown";
   const totalEntities = importPlan.totalEntities ?? entityCount;
   const dbRuntime = dbRuntimeReadinessViewModel;
+  const founderPersistenceControls = buildFounderPersistenceControlsViewModel(dbRuntime.founderRuntime);
 
   return (
     <div className="ccv2-content">
@@ -7584,6 +7671,7 @@ function DurableStatePage({ vm }) {
                 ))}
               </div>
             </div>
+            <FounderPersistenceControlsCard controls={founderPersistenceControls} />
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
               <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
@@ -9158,6 +9246,7 @@ function FounderIntakePage() {
 function BusinessBuildPage() {
   const [founderIdea] = useState(getStoredLiteFounderIdea);
   const build = buildBusinessBuildViewModel(founderIdea);
+  const founderPersistenceControls = buildFounderPersistenceControlsViewModel(build.founderDbWorkflow);
   const route = COMMAND_CENTER_ROUTE_BY_KEY.businessBuild || {};
   const tabs = route.tabs || BUSINESS_BUILD_TABS;
   const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
@@ -9239,6 +9328,9 @@ function BusinessBuildPage() {
                   </div>
                 ))}
               </div>
+            </div>
+            <div style={{ marginTop: 16 }}>
+              <FounderPersistenceControlsCard controls={founderPersistenceControls} />
             </div>
           </CommandTabPanel>
 

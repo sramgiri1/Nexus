@@ -2146,6 +2146,51 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Founder persistence controls appear in Lite, Business Build, and DB Runtime", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.removeItem("nexus-lite-founder-qna-state");
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/lite");
+    const liteControls = page.getByLabel("Founder persistence controls");
+    await expect(liteControls).toContainText("Local controls");
+    await expect(liteControls).toContainText("Needs approval evidence");
+    await expect(liteControls).toContainText("Local SQLite gated");
+    await expect(liteControls).toContainText("Rollback");
+    await expect(liteControls).toContainText("Audit");
+    await expect(liteControls).toContainText("Next action");
+    await expect(liteControls).toContainText("Disabled reason");
+    await expect(liteControls).toContainText("Save founder session locally");
+
+    await page.goto("/command-center/business-build");
+    const businessControls = page.getByLabel("Founder persistence controls");
+    await expect(businessControls).toContainText("NEXUS Founder Persistence Controls");
+    await expect(businessControls).toContainText("Persistence adapter report");
+    await expect(businessControls).toContainText("No provider spend");
+    await expect(businessControls).toContainText("Approval required");
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+    const dbControls = activeCommandTabPanel(page).getByLabel("Founder persistence controls");
+    await expect(dbControls).toContainText("Local-only");
+    await expect(dbControls).toContainText("Write posture");
+    await expect(dbControls).toContainText("Local SQLite gated");
+    await expect(dbControls).toContainText("Founder session");
+    await expect(dbControls).toContainText("Workstream plan");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toMatch(/founder_sessions|founder_qna_turns|p943-session|raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write hosted db now/i);
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|postgres(?:ql)?:\/\//i);
+
+    expect(errors).toEqual([]);
+  });
+
   test("Auth Governance route renders readiness without runnable auth actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
