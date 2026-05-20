@@ -142,16 +142,16 @@ addCheck("isolated founder records can be inserted", !cliAvailable || (session?.
 addCheck("array and boolean fields serialize safely", !cliAvailable || (Array.isArray(session?.evidenceRefs) && workstreamPlan?.dispatchAllowed === false && workstreamPlan?.projectMutationAllowed === false));
 addCheck("isolated founder records can be listed", !cliAvailable || sessionList.some((entry) => entry.sessionId === "p942-session"));
 addCheck("docs record P94.2", docs.includes("P94.2 is complete") && docs.includes("npm run check:p942-founder-runtime-db-schema"));
-addCheck("platform roadmap records P94.2", platformRoadmap.includes("P94.2 is complete") && platformRoadmap.includes("P94.3 is next"));
+addCheck("platform roadmap records P94.2", platformRoadmap.includes("P94.2 is complete") && (platformRoadmap.includes("P94.3 is next") || platformRoadmap.includes("P94.3 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P94.2")?.status === "complete"
-    && status.currentPhase === "P94.2"
-    && status.previousPhase === "P94.1"
-    && status.nextPhase === "P94.3",
+    && ["P94.2", "P94.3", "P94.4", "P94.5", "P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P94.1", "P94.2", "P94.3", "P94.4", "P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.3", "P94.4", "P94.5", "P94.6", "P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P94.2", roadmapById.get("P94.2")?.status === "complete" && roadmapById.get("P94.3")?.status === "planned");
+addCheck("roadmap tracks P94.2", roadmapById.get("P94.2")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P94.3")?.status));
 addCheck("no unsafe runtime imports or URLs", !/from\s+["'][^"']*(providers|tools|worker-runtime|deploy|release|projects)\//.test(unsafeSource) && !/postgres:\/\/|mysql:\/\/|mongodb:\/\/|DATABASE_URL=|Bearer\s+|sk-[A-Za-z0-9]{20,}/i.test(unsafeSource));
 addCheck("no unsafe enablement language", !/provider calls are enabled|agent dispatch is enabled|project mutation is enabled|hosted DB mutation is enabled|deploy is enabled|provider spend is enabled/i.test(`${docs}\n${platformRoadmap}`));
 

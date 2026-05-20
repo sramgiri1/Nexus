@@ -1865,8 +1865,16 @@ use display-safe session/workflow identifiers, public labels, summaries,
 readiness/current-state fields, owner capability, evidence/activity references,
 timestamps, retention classes, and redaction requirements.
 
-P94.3 is next. It will add the governed local CRUD model and admission wrapper
-for the P94.2 founder workflow entities.
+P94.3 is complete. It adds the governed local CRUD model and admission wrapper
+for the P94.2 founder workflow entities. Default admission remains blocked;
+local writes require explicit operator approval, rollback acceptance, audit
+acceptance, validation command acceptance, sqlite-live mode, and local write
+flags. Delete, raw SQL, hosted DB mutation, project mutation, provider/model
+calls, agent dispatch, tool/worker execution, deploy, release, export, package,
+and spend remain blocked.
+
+P94.4 is next. It will add display-safe Command Center data for the DB-backed
+founder workflow state.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 creation, project mutation, hosted DBs, network calls, deploy, release, export,

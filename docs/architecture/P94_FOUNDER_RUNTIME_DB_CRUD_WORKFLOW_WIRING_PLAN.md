@@ -30,14 +30,16 @@ requirements.
 
 ### P94.3 Founder Runtime CRUD Model
 
-P94.3 is next. It will add the governed local CRUD model and admission wrapper for the
-P94.2 entities. It must reuse existing result envelopes, redaction helpers,
-mode guards, SQLite CRUD repository helpers, and P93 local CRUD admission
-patterns instead of duplicating helpers.
+P94.3 is complete. It adds the governed local CRUD model and admission wrapper
+for the P94.2 entities. It reuses existing result envelopes, SQLite runtime
+configuration, SQLite CRUD repository helpers, and the P93 approval pattern.
+Default admission remains blocked; local writes require explicit operator
+approval, rollback acceptance, audit acceptance, validation command acceptance,
+sqlite-live mode, and local write flags.
 
 ### P94.4 Founder DB View Model
 
-P94.4 will add display-safe Command Center data for the DB-backed founder
+P94.4 is next. It will add display-safe Command Center data for the DB-backed founder
 workflow. The model must show saved session state, next founder question, PRD
 readiness, workstream lanes, blockers, disabled reason, owner capability,
 evidence/activity locations, and cost posture.
@@ -101,6 +103,7 @@ P94.1 validation:
 - `npm run check:p941-founder-runtime-db-crud-contract`
 - `npm run check:p942-founder-runtime-db-schema`
 - `npm run check:p922-sqlite-crud-repository`
+- `npm run check:p943-founder-runtime-crud-model`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

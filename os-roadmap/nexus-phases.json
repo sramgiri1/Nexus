@@ -6008,24 +6008,24 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "842cf8c",
-      "completedAt": "2026-05-20T22:39:00.000Z",
-      "summary": "Continued founder runtime DB CRUD workflow wiring with local SQLite schema definitions for durable founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:50:00.000Z",
+      "summary": "Continued founder runtime DB CRUD workflow wiring with governed local SQLite CRUD model/admission for founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
       "checksRun": [
+        "npm run check:p943-founder-runtime-crud-model",
         "npm run check:p942-founder-runtime-db-schema",
-        "npm run check:p922-sqlite-crud-repository",
         "npm run check:p941-founder-runtime-db-crud-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P94.2 is schema-only. Founder workflow CRUD admission, Command Center DB UX wiring, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
+        "P94.3 admits only governed local SQLite CRUD for founder workflow OS records. Command Center DB UX wiring, provider calls, agent dispatch, project mutation, hosted DBs, deploy, package, and spend remain blocked until later scoped subphases."
       ],
-      "nextPhase": "P94.3",
+      "nextPhase": "P94.4",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB CRUD",
-      "detail": "Founder DB schema complete; CRUD model next."
+      "detail": "Founder CRUD model complete; view model next."
     },
     {
       "phaseId": "P94.1",
@@ -6082,19 +6082,26 @@
       "title": "Founder Runtime CRUD Model",
       "track": "NEXUS_OS",
       "order": 130.29999999999998,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned governed local CRUD model/admission for DB-backed founder workflow records.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:50:00.000Z",
+      "summary": "Added governed local SQLite CRUD workflow/admission for P94 founder sessions, Q&A turns, PRD artifacts, and workstream plans with default blocked posture, approval/write gates, isolated CRUD validation, and unsafe runtime actions blocked.",
+      "checksRun": [
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. This subphase must define its scoped plan before implementation."
+        "P94.3 adds local SQLite founder workflow CRUD admission only. It does not wire Command Center to DB records, dispatch agents, execute workers/tools, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P94.4",
       "commandCenterVisible": true,
       "label": "Founder Runtime CRUD Model",
-      "detail": "Planned P94 subphase."
+      "detail": "Founder workflow CRUD model complete; view model next."
     },
     {
       "phaseId": "P94.4",
@@ -6173,9 +6180,9 @@
       "detail": "Planned P94 subphase."
     }
   ],
-  "updatedAt": "2026-05-20T22:39:00.000Z",
-  "currentPhase": "P94.2",
-  "previousPhase": "P94.1",
-  "nextPhase": "P94.3",
+  "updatedAt": "2026-05-20T22:50:00.000Z",
+  "currentPhase": "P94.3",
+  "previousPhase": "P94.2",
+  "nextPhase": "P94.4",
   "currentPhaseStatus": "complete"
 }
