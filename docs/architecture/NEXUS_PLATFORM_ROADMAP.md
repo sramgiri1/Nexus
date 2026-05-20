@@ -1847,7 +1847,30 @@ runtime CRUD planning, governed mutation request envelopes, explicit local
 SQLite CRUD admission for allowlisted OS runtime entities, Command Center DB
 Runtime UX, aggregated validation, and final closure.
 
-P94 is next and must define the next scoped contract before coding.
+## P94 - Founder Runtime DB CRUD Workflow Wiring
+
+P94 wires the founder-to-business workflow to governed local SQLite CRUD
+records. It builds on P93 local CRUD admission and keeps the scope to NEXUS OS
+runtime state: founder session, Q&A turns, PRD artifact, workstream plan,
+activation review, runtime task summaries, evidence, audit, and activity.
+
+P94.1 is complete. It defines the implementation-grade P94 execution contract,
+subphase split, future exports, data shape, Command Center UX requirements,
+validation commands, and safety checks. P94.1 is contract-only and does not
+modify `db/**`, dashboard source, live runtime models, or local runtime data.
+
+P94.2 is next. It will add local SQLite schema definitions for durable founder
+sessions, founder Q&A turns, PRD artifacts, and workstream plans.
+
+Provider/model calls, agent dispatch, tool execution, worker execution, project
+creation, project mutation, hosted DBs, network calls, deploy, release, export,
+package creation, and provider spend remain blocked unless a later explicit
+phase scopes and validates them.
+
+The detailed plan lives in
+[`P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md`](P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md).
+Implementation must follow
+[`p94-execution-contracts.json`](../../contracts/os-roadmap/p94-execution-contracts.json).
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

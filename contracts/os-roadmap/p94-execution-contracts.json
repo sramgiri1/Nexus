@@ -1,0 +1,638 @@
+{
+  "phase": "P94",
+  "title": "Founder Runtime DB CRUD Workflow Wiring",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "88270ef",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P94.1 is contract-only and must not modify db/**, dashboard source, live runtime models, or local-state runtime data.",
+    "Later P94 subphases may only add governed local SQLite CRUD for NEXUS OS founder workflow records where explicitly scoped.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, hosted DBs, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p94-1-founder-runtime-db-crud-contract",
+      "phaseId": "P94.1",
+      "objective": "Define the founder runtime DB CRUD workflow wiring contract before schema, runtime, or UX changes.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p941-founder-runtime-db-crud-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p941-founder-runtime-db-crud-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "live-ready/**",
+        "local-state/runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P94_FOUNDER_RUNTIME_DB_CRUD_PHASE",
+          "P94_FOUNDER_RUNTIME_DB_ENTITIES",
+          "buildFounderRuntimeDbCrudWorkflow",
+          "validateFounderRuntimeDbCrudWorkflow",
+          "executeApprovedFounderRuntimeDbCrudRequest",
+          "buildFounderRuntimeDbViewModel"
+        ],
+        "futureDataShape": "Result envelope with schemaVersion, currentState, runtimeMode, dbMode, founderSession, qnaTurns[], prdArtifact, workstreamPlan, activationReview, runtimeTasks[], evidenceRefs[], auditRefs[], activityRefs[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, activityLocation, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve current Command Center UX. Later P94 UX must make Lite and Business Build useful for founder-to-business flow by showing saved founder session state, next question, PRD readiness, workstream lanes, current DB state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P94.1 because no UI files change.",
+        "P94 Command Center UX subphase must add focused Lite, Business Build, and DB Runtime route coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p941-founder-runtime-db-crud-contract.",
+        "Update check:os-phase-status to accept P94.1-P94.7."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P94 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P94.1 is contract-only.",
+        "Confirm no db/**, dashboard/src/**, dashboard/tests/**, live-ready/**, or local-state/runtime/** files changed.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.1 files>",
+        "git commit -m \"feat(nexus): define founder runtime db crud workflow\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-2-founder-runtime-db-schema",
+      "phaseId": "P94.2",
+      "objective": "Add local SQLite schema definitions for durable founder sessions, Q&A turns, PRD artifacts, and workstream plans.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p942-founder-runtime-db-schema.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p942-founder-runtime-db-schema-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "live-ready/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "schemas": [
+          "founder_sessions",
+          "founder_qna_turns",
+          "founder_prd_artifacts",
+          "founder_workstream_plans"
+        ],
+        "dataShape": "Schema entries and SQL tables with display-safe IDs, public labels, summaries, state, readiness, owner capability, evidence/activity references, timestamps, retention class, and redaction required."
+      },
+      "commandCenterUxRequirements": "No UI files change in P94.2. Later UX must consume display-safe DB-backed records only.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P94.2 because no UI files change."
+      ],
+      "testsCheckers": [
+        "Add check:p942-founder-runtime-db-schema.",
+        "Run P94.1 checker."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P94 plan doc, platform roadmap, phase status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm schema-only DB changes.",
+        "Confirm no DB writes run outside isolated checker DB initialization.",
+        "Confirm unsafe runtime actions remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.2 files>",
+        "git commit -m \"feat(nexus): add founder runtime db schema\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests and checker results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-3-founder-runtime-crud-model",
+      "phaseId": "P94.3",
+      "objective": "Add governed local CRUD model/admission for founder workflow records using the P94.2 schema.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderRuntimeDbCrudWorkflow.js",
+        "scripts/check-p943-founder-runtime-crud-model.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p943-founder-runtime-crud-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P94_FOUNDER_RUNTIME_DB_CRUD_PHASE",
+          "P94_FOUNDER_RUNTIME_DB_ENTITIES",
+          "buildFounderRuntimeDbCrudWorkflow",
+          "validateFounderRuntimeDbCrudWorkflow",
+          "executeApprovedFounderRuntimeDbCrudRequest"
+        ],
+        "dataShape": "Result envelope with founder session, Q&A turns, PRD artifact, workstream plan, activation review, runtime task summaries, CRUD admission state, evidence/audit/activity references, and blocked unsafe runtime flags."
+      },
+      "commandCenterUxRequirements": "No UI files change in P94.3. Later UX must consume this display-safe model.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P94.3 because no UI files change."
+      ],
+      "testsCheckers": [
+        "Add check:p943-founder-runtime-crud-model.",
+        "Run P94.1-P94.2 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P94 plan doc, platform roadmap, phase status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm CRUD is local SQLite only and requires explicit approval/write gates.",
+        "Confirm project mutation, provider calls, dispatch, worker execution, deploy, package, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.3 files>",
+        "git commit -m \"feat(nexus): add founder runtime crud workflow\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests and checker results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-4-command-center-founder-db-view-model",
+      "phaseId": "P94.4",
+      "objective": "Build display-safe Command Center view-model data for DB-backed founder workflow state.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/data/founderIntake.js",
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "scripts/check-p944-founder-db-view-model.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p944-founder-db-view-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "founderDbWorkflow",
+          "buildFounderRuntimeDbViewModel"
+        ],
+        "dataShape": "Display-safe DB-backed founder workflow state with session status, next question, PRD readiness, workstream lanes, blockers, disabled reason, owner, evidence, activity, and cost posture."
+      },
+      "commandCenterUxRequirements": "Prepare data for Lite, Business Build, and DB Runtime without exposing raw IDs, raw JSON/logs/policies, DemoApp, mutation buttons, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P94.4 unless route text changes.",
+        "P94.5 must add route coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p944-founder-db-view-model.",
+        "Run P94.1-P94.3 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P94 plan doc, platform roadmap, phase status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm UX data is display-safe.",
+        "Confirm no runtime controls or fake runnable actions are exposed."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.4 files>",
+        "git commit -m \"feat(nexus): add founder db workflow view model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests and checker results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-5-command-center-founder-db-ux",
+      "phaseId": "P94.5",
+      "objective": "Wire Command Center Lite, Business Build, and DB Runtime UX to the founder DB workflow state.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p945-command-center-founder-db-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p945-command-center-founder-db-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "uxState": "Lite and Business Build display DB-backed founder workflow state; DB Runtime shows founder records and CRUD admission posture."
+      },
+      "commandCenterUxRequirements": "Make the founder flow useful and interactive-looking without unsafe execution: show saved session, next founder question, submit/advance affordance if locally allowed, PRD state, agent workstreams, blockers, owner, evidence/activity, disabled reason, and cost impact. Preserve route-wide navigation and themes.",
+      "themeRequirements": [
+        "Verify System theme.",
+        "Verify Dark theme.",
+        "Verify Light theme."
+      ],
+      "playwrightTests": [
+        "Add Lite founder DB workflow coverage.",
+        "Add Business Build founder DB workflow coverage.",
+        "Add DB Runtime founder records coverage.",
+        "Preserve no DemoApp leakage, no raw JSON/log/policy dumps, theme switcher, sidebar navigation, OS Roadmap only OS phases, and project milestones stay in Projects."
+      ],
+      "testsCheckers": [
+        "Add check:p945-command-center-founder-db-ux.",
+        "Run P94.1-P94.4 checkers and Playwright route tests."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P94 plan doc, platform roadmap, phase status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p945-command-center-founder-db-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder DB workflow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm Command Center shows no raw internals or private IDs.",
+        "Confirm no mutation controls outside approved local CRUD admission.",
+        "Confirm no DemoApp in full Command Center."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.5 files>",
+        "git commit -m \"feat(nexus): show founder db workflow in command center\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-6-docs-roadmap-validation",
+      "phaseId": "P94.6",
+      "objective": "Aggregate P94 validation and update docs/roadmap evidence before final closure.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p946-founder-db-workflow-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p946-founder-db-workflow-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reports": [
+          "reports/p946-founder-db-workflow-validation-report.md"
+        ]
+      },
+      "commandCenterUxRequirements": "Preserve P94.5 Command Center UX and document any limitations.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run P94.5 Playwright coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p946-founder-db-workflow-validation.",
+        "Run P94.1-P94.5 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update README, PRD, P94 plan doc, platform roadmap, OS roadmap/status, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p946-founder-db-workflow-validation",
+        "npm run check:p945-command-center-founder-db-ux",
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm docs do not imply broad runtime enablement.",
+        "Confirm no stale phase status remains."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.6 files>",
+        "git commit -m \"test(nexus): validate founder db workflow phase\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests and checker results",
+        "Docs/roadmap updates",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p94-7-final-validation",
+      "phaseId": "P94.7",
+      "objective": "Close P94 with final validation, reports, status stamping, and next-phase handoff.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p947-founder-db-workflow-final-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p94-execution-contracts.json",
+        "docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p947-founder-db-workflow-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reports": [
+          "reports/p947-founder-db-workflow-final-validation-report.md"
+        ]
+      },
+      "commandCenterUxRequirements": "Preserve the final P94 founder DB workflow UX and no unsafe primary UI content.",
+      "themeRequirements": [
+        "Verify System theme.",
+        "Verify Dark theme.",
+        "Verify Light theme."
+      ],
+      "playwrightTests": [
+        "Run focused P94 Playwright coverage and route-wide safety coverage as needed."
+      ],
+      "testsCheckers": [
+        "Add check:p947-founder-db-workflow-final-validation.",
+        "Run all P94 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Close P94 in docs, README, PRD, roadmap/status, and reports.",
+        "Add P95 handoff if needed."
+      ],
+      "validationCommands": [
+        "npm run check:p947-founder-db-workflow-final-validation",
+        "npm run check:p946-founder-db-workflow-validation",
+        "npm run check:p945-command-center-founder-db-ux",
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P94 is complete and status is not stale.",
+        "Confirm no forbidden paths changed.",
+        "Confirm unsafe runtime operations remain blocked unless explicitly scoped in a completed subphase."
+      ],
+      "gitCommands": [
+        "git add <allowed P94.7 files>",
+        "git commit -m \"test(nexus): finalize founder db workflow phase\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ]
+}
