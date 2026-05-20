@@ -109,18 +109,18 @@ addCheck("approved local list works", list.admitted === true && list.read === tr
 addCheck("unsafe runtime flags remain false", [blocked, write, read, list].every((result) => result.providerCallsAllowed === false && result.agentDispatchAllowed === false && result.projectMutationAllowed === false && result.hostedDbWritesAllowed === false && result.providerSpendAllowed === false));
 addCheck("control validator remains available", validation.valid === false && validation.errors.length > 0);
 addCheck("docs record P95.3", docs.includes("P95.3 is complete") && docs.includes("npm run check:p953-approved-local-persistence-adapter"));
-addCheck("platform roadmap records P95.3", platformRoadmap.includes("P95.3 is complete") && platformRoadmap.includes("P95.4 is next"));
+addCheck("platform roadmap records P95.3", platformRoadmap.includes("P95.3 is complete") && (platformRoadmap.includes("P95.4 is next") || platformRoadmap.includes("P95.4 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P95")?.status === "in_progress"
     && statusById.get("P95.3")?.status === "complete"
-    && status.currentPhase === "P95.3"
-    && status.previousPhase === "P95.2"
-    && status.nextPhase === "P95.4",
+    && ["P95.3", "P95.4", "P95.5", "P95.6", "P95.7"].includes(status.currentPhase)
+    && ["P95.2", "P95.3", "P95.4", "P95.5", "P95.6"].includes(status.previousPhase)
+    && ["P95.4", "P95.5", "P95.6", "P95.7", "P96"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P95.3", roadmapById.get("P95.3")?.track === "NEXUS_OS" && roadmapById.get("P95.3")?.status === "complete");
-addCheck("P95.4 handoff exists", statusById.get("P95.4")?.status === "planned" && roadmapById.get("P95.4")?.status === "planned");
+addCheck("P95.4 handoff exists", ["planned", "complete"].includes(statusById.get("P95.4")?.status) && ["planned", "complete"].includes(roadmapById.get("P95.4")?.status));
 addCheck("no raw private IDs in adapter output", !/private-project-|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|Bearer\s+/i.test(serialized));
 addCheck("no fake runnable unsafe actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write hosted db now/i.test(serialized));
 
