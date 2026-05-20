@@ -5340,24 +5340,27 @@
       "order": 107.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "1ee2f06",
+      "commit": "97b570e",
       "completedAt": "",
-      "summary": "Governed founder workstream activation planning is in progress with contract, local activation model, and safe local review packet. Runtime execution remains blocked.",
+      "summary": "Governed founder workstream activation planning is in progress with contract, local activation model, safe local review packet, and Command Center activation review UX. Runtime execution remains blocked.",
       "checksRun": [
+        "npm run check:p914-command-center-workstream-activation-ux",
         "npm run check:p913-founder-activation-review-packet",
         "npm run check:p912-founder-workstream-activation-model",
         "npm run check:p911-founder-workstream-activation-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P91 is in progress. P91.2 is a local model only and does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+        "P91 is in progress. P91.4 is Command Center UX only and does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P91.4",
+      "nextPhase": "P91.5",
       "commandCenterVisible": true,
       "label": "Founder Workstream Activation Planning",
-      "detail": "P91.3 local review packet complete; execution remains blocked."
+      "detail": "P91.4 Command Center activation review UX complete; execution remains blocked."
     },
     {
       "phaseId": "P91.1",
@@ -5439,24 +5442,53 @@
       "title": "Command Center Workstream Activation UX",
       "track": "NEXUS_OS",
       "order": 111.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned Command Center UX for local workstream activation review packet.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "97b570e",
+      "completedAt": "2026-05-20T10:20:00.000Z",
+      "summary": "Added Business Build Activation Review UX for the local founder activation review packet with readiness, owner lanes, checklist, evidence, activity, cost posture, and blocked safety rows.",
+      "checksRun": [
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "npm run check:p913-founder-activation-review-packet",
+        "npm run check:p912-founder-workstream-activation-model",
+        "npm run check:p911-founder-workstream-activation-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked."
+        "P91.4 is Command Center UX only. It does not run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P91.5",
       "commandCenterVisible": true,
       "label": "Command Center Workstream Activation UX",
-      "detail": "Planned activation review UX."
+      "detail": "Business Build activation review UX complete; no dispatch or mutation."
+    },
+    {
+      "phaseId": "P91.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 112.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned aggregate P91 validation across backend model, review packet, Command Center UX, Playwright, docs, roadmap, and safety boundaries.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked."
+      ],
+      "nextPhase": "P91.6",
+      "commandCenterVisible": true,
+      "label": "Tests / Checkers",
+      "detail": "Planned P91 validation aggregation."
     }
   ],
-  "updatedAt": "2026-05-20T06:35:00.000Z",
-  "currentPhase": "P91.3",
-  "previousPhase": "P91.2",
-  "nextPhase": "P91.4",
+  "updatedAt": "2026-05-20T10:20:00.000Z",
+  "currentPhase": "P91.4",
+  "previousPhase": "P91.3",
+  "nextPhase": "P91.5",
   "currentPhaseStatus": "complete"
 }

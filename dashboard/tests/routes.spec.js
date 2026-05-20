@@ -3234,6 +3234,15 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Product");
     await expect(activeCommandTabPanel(page)).toContainText("Engineering");
     await expect(activeCommandTabPanel(page)).toContainText("Go To Market");
+    await commandTab(page, "Activation Review").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Workstream Activation Review");
+    await expect(activeCommandTabPanel(page)).toContainText("Ready items: 8 of 8");
+    await expect(activeCommandTabPanel(page)).toContainText("Execution blocked");
+    await expect(activeCommandTabPanel(page)).toContainText("Operator Checklist");
+    await expect(activeCommandTabPanel(page)).toContainText("Confirm unsafe runtime operations remain blocked");
+    await expect(activeCommandTabPanel(page)).toContainText("Product");
+    await expect(activeCommandTabPanel(page)).toContainText("Engineering");
+    await expect(activeCommandTabPanel(page)).toContainText("DB writes");
     await commandTab(page, "Founder Dry Run").click();
     await expect(activeCommandTabPanel(page)).toContainText("Founder Workstream Dry Run");
     await expect(activeCommandTabPanel(page)).toContainText("Agent Lane Planning");
@@ -3326,6 +3335,48 @@ test.describe("Command Center route-wide UX", () => {
     expect(body).not.toContain("private-project-governed-build-mission");
     expect(body).not.toContain("raw JSON");
     expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+    expect(errors).toEqual([]);
+  });
+
+  test("Business Build Activation Review tab shows packet without execution", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+    await page.goto("/command-center/business-build");
+
+    await commandTab(page, "Activation Review").click();
+    const panel = activeCommandTabPanel(page);
+    await expect(panel).toContainText("Workstream Activation Review");
+    await expect(panel).toContainText("Local Activation Review Packet Ready For Operator Review");
+    await expect(panel).toContainText("Ready items: 8 of 8");
+    await expect(panel).toContainText("Execution blocked");
+    await expect(panel).toContainText("Operator Checklist");
+    await expect(panel).toContainText("Confirm PRD assumptions remain valid");
+    await expect(panel).toContainText("Confirm each workstream owner capability and objective");
+    await expect(panel).toContainText("Confirm unsafe runtime operations remain blocked");
+    await expect(panel).toContainText("Founder activation review report");
+    await expect(panel).toContainText("No provider calls, model calls, network calls");
+    await expect(panel).toContainText("Product");
+    await expect(panel).toContainText("Design");
+    await expect(panel).toContainText("Engineering");
+    await expect(panel).toContainText("Support");
+    await expect(panel).toContainText("Activation");
+    await expect(panel).toContainText("Agent dispatch");
+    await expect(panel).toContainText("Project mutation");
+    await expect(panel).toContainText("DB writes");
+    await expect(panel).toContainText("Provider spend");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+    expect(body).not.toMatch(/P91\./);
 
     expect(errors).toEqual([]);
   });

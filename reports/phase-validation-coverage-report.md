@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T03:16:56.385Z
+- Generated at: 2026-05-20T10:12:18.869Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d785664
+- Validation HEAD: f882126
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -231,25 +231,22 @@
 | P90.5 validation coverage | PASS | 22 checkers, 18 reports |
 | P90.6 validation coverage | PASS | 13 checkers, 8 reports |
 | P90.7 validation coverage | PASS | 37 checkers, 32 reports |
-| P91 validation coverage | PASS | 8 checkers, 3 reports |
+| P91 validation coverage | PASS | 10 checkers, 4 reports |
 | P91.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P91.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P91.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P91.4 validation coverage | PASS | dedicated_checker, validation_report |
+| P91.4 validation coverage | PASS | 7 checkers, 1 reports |
+| P91.5 validation coverage | PASS | 17 checkers, 17 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P91.3; next=P91.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P91.4; next=P91.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P91.4 Command Center Workstream Activation UX
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
-PASS (223/223)
+PASS (224/224)

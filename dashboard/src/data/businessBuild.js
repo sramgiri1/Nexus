@@ -1,4 +1,5 @@
 import { buildBusinessBuildPlan } from "../../../business-build/businessBuildPlan.js";
+import { buildFounderActivationReviewPacket } from "../../../live-ready/founderActivationReviewPacket.js";
 import { buildFounderPrdSafeAuthoring } from "../../../live-ready/founderPrdSafeAuthoring.js";
 import { buildFounderRuntimeEnvelope } from "../../../live-ready/founderRuntimeEnvelope.js";
 
@@ -86,6 +87,7 @@ const FOUNDER_WORKSTREAM_DRY_RUN_ROWS = [
 export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const founderEnvelope = buildFounderRuntimeEnvelope({ founderIdeaSummary }).data;
   const prdAuthoringEnvelope = buildFounderPrdSafeAuthoring({ founderIdeaSummary }).data;
+  const activationReviewPacket = buildFounderActivationReviewPacket({ founderIdeaSummary }).data;
   const prdFields = founderEnvelope.prdDraft?.fields || {};
   const plan = buildBusinessBuildPlan({
     founderIdeaSummary: prdFields.founderIdea,
@@ -198,6 +200,43 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
         activityLocation: "reports/os-phase-status-report.md",
         costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
       })),
+    },
+    activationReview: {
+      currentState: toTitle(activationReviewPacket.currentState),
+      packetMode: toTitle(activationReviewPacket.packetMode),
+      ready: activationReviewPacket.reviewReadiness?.ready === true,
+      readyItemCount: activationReviewPacket.reviewReadiness?.readyItemCount || 0,
+      totalItemCount: activationReviewPacket.reviewReadiness?.totalItemCount || 0,
+      blockerCount: activationReviewPacket.reviewReadiness?.blockerCount || 0,
+      nextAction: activationReviewPacket.reviewReadiness?.ready
+        ? "Review the activation packet and prepare aggregate validation."
+        : activationReviewPacket.nextAction,
+      disabledReason:
+        "The local activation review packet is review-only. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, network calls, deploy, release, export, package creation, and provider spend remain blocked.",
+      ownerCapability: activationReviewPacket.ownerCapability,
+      evidenceLocation: activationReviewPacket.evidenceRefs?.[0] ? "Founder activation review report" : "Activation review evidence pending",
+      activityLocation: activationReviewPacket.activityLocation ? "OS phase status report" : "Activity report pending",
+      costImpact: activationReviewPacket.costImpact,
+      checklist: activationReviewPacket.operatorChecklist || [],
+      reviewItems: (activationReviewPacket.reviewItems || []).map((item) => ({
+        label: toTitle(item.lane),
+        ownerCapability: item.ownerCapability,
+        status: toTitle(item.status),
+        objective: item.objective,
+        blocker: item.blocker,
+        nextAction: item.nextAction,
+        disabledReason: item.disabledReason,
+        activationAllowed: item.activationAllowed === true ? "Allowed" : "Blocked",
+        requiredEvidence: item.requiredEvidence || [],
+      })),
+      safetyRows: [
+        { label: "Activation", value: activationReviewPacket.activationAllowed === false ? "Blocked" : "Allowed" },
+        { label: "Agent dispatch", value: activationReviewPacket.agentDispatchAllowed === false ? "Blocked" : "Allowed" },
+        { label: "Project mutation", value: activationReviewPacket.projectMutationAllowed === false ? "Blocked" : "Allowed" },
+        { label: "DB writes", value: activationReviewPacket.dbWritesAllowed === false ? "Blocked" : "Allowed" },
+        { label: "Deploy/package", value: activationReviewPacket.deployExecutionAllowed === false && activationReviewPacket.packageCreationAllowed === false ? "Blocked" : "Allowed" },
+        { label: "Provider spend", value: activationReviewPacket.providerSpendAllowed === false ? "Blocked" : "Allowed" },
+      ],
     },
     blockers: data.blockers,
     disabledActions: data.disabledActions.map((action) => ({

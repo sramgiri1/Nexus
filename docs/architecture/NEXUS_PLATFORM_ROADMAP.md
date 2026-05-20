@@ -1713,9 +1713,14 @@ activity, and cost posture while keeping activation, dispatch, mutation,
 provider/model calls, DB writes, deploy, package, network calls, and spend
 blocked.
 
-P91.4 is next. It must expose workstream activation planning in Command Center
-without raw JSON, fake runnable actions, project mutation, agent dispatch,
+P91.4 is complete. It exposes the local workstream activation review packet in
+Business Build with readiness, owner lanes, operator checklist, blockers,
+evidence, activity, cost posture, and explicit blocked safety rows. The UX does
+not expose raw JSON, fake runnable actions, project mutation, agent dispatch,
 provider calls, or private IDs.
+
+P91.5 is next. It must aggregate backend model, review packet, Command Center
+UX, Playwright, docs, roadmap, and safety validation for P91.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).

@@ -9187,6 +9187,65 @@ function BusinessBuildPage() {
             </div>
           </CommandTabPanel>
 
+          <CommandTabPanel tabId="activationReview" activeTab={activeTab}>
+            <div className="ccv2-grid ccv2-grid--2">
+              <article className="ccv2-card" aria-label="Founder activation review packet">
+                <div className="ccv2-section-heading">Workstream Activation Review</div>
+                <div className={`ccv2-pill ccv2-pill--${build.activationReview.ready ? "teal" : "amber"}`}>
+                  {build.activationReview.currentState}
+                </div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Mode: {build.activationReview.packetMode}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>
+                  Ready items: {build.activationReview.readyItemCount} of {build.activationReview.totalItemCount}
+                </div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Blockers: {build.activationReview.blockerCount}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {build.activationReview.nextAction}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.activationReview.ownerCapability}</div>
+              </article>
+              <article className="ccv2-card">
+                <div className="ccv2-section-heading">Safety Boundary</div>
+                <div className="ccv2-pill ccv2-pill--disabled">Execution blocked</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>{build.activationReview.disabledReason}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.activationReview.evidenceLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.activationReview.activityLocation}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Cost: {build.activationReview.costImpact}</div>
+              </article>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {build.activationReview.safetyRows.map((row) => (
+                <article className="ccv2-card" key={row.label}>
+                  <div className="ccv2-section-heading">{row.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{row.value}</div>
+                </article>
+              ))}
+            </div>
+
+            <div className="ccv2-card" style={{ marginTop: 16 }}>
+              <div className="ccv2-section-heading">Operator Checklist</div>
+              <ul className="ccv2-list" style={{ marginTop: 12 }}>
+                {build.activationReview.checklist.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+              {build.activationReview.reviewItems.map((item) => (
+                <article className="ccv2-card" key={item.label}>
+                  <div className="ccv2-section-heading">{item.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal">{item.status}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>{item.objective}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {item.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Required evidence: {item.requiredEvidence.join(", ")}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Blocker: {item.blocker}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next: {item.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{item.disabledReason}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
           <CommandTabPanel tabId="dryRun" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--2">
               <article className="ccv2-card">

@@ -84,10 +84,33 @@ executor, dispatch agents, execute tools/workers, create or mutate projects,
 call providers/models, write DB state, use network calls, deploy, release,
 export, package, or spend.
 
+## P91.4 Command Center Workstream Activation UX
+
+P91.4 is complete. It exposes the P91.3 activation review packet in the
+Business Build Command Center page as a dedicated Activation Review tab. The
+tab shows local review state, readiness count, owner capability, owner lanes,
+operator checklist, blockers, evidence, activity, cost posture, and explicit
+blocked safety rows.
+
+Validation:
+
+- `npm run check:p914-command-center-workstream-activation-ux`
+- `npm run check:p913-founder-activation-review-packet`
+- `npm run check:p912-founder-workstream-activation-model`
+- `npm run check:p911-founder-workstream-activation-contract`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build Activation Review"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P91.4 is Command Center UX only. It does not run an executor,
+dispatch agents, execute tools/workers, create or mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P91.4 Command Center UX: show activation planning state, owner lanes,
-  blockers, disabled reasons, evidence, activity, and cost.
 - P91.5 Tests / Checkers: aggregate backend and UX validation.
 - P91.6 Docs / Roadmap: close docs and status evidence.
 - P91.7 Final Validation: close P91 and hand off to the next scoped phase.

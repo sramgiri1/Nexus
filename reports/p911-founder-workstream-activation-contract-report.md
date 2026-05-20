@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P91.1
-- Generated at: 2026-05-20T03:16:43.959Z
+- Generated at: 2026-05-20T10:12:16.589Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: d785664
+- Validation HEAD: f882126
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | Command Center UX requirements present | PASS |  |
 | docs record P91.1 | PASS |  |
 | platform roadmap records P91.1 | PASS |  |
-| phase status advanced | PASS | P91.3/P91.2/P91.4 |
+| phase status advanced | PASS | P91.4/P91.3/P91.5 |
 | roadmap tracks P91.1 | PASS |  |
 | P91.2 handoff exists | PASS |  |
 | status checker accepts P91.2 | PASS |  |
