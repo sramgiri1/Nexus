@@ -9718,25 +9718,73 @@
       "title": "Governed Local Enterprise Runtime Handoff",
       "track": "NEXUS_OS",
       "order": 91.07,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Started governed local enterprise runtime handoff with a local-only handoff profile that reuses P88 executor admission evidence. Runtime execution remains blocked.",
+      "checksRun": [
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89 is in progress. P89.1 is schema, policy, and contract only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+      ],
+      "nextPhase": "P89.2",
+      "commandCenterVisible": true,
+      "label": "Enterprise Runtime Handoff",
+      "detail": "Local runtime handoff profile defined; no execution enabled."
+    },
+    {
+      "phaseId": "P89.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 92.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T01:41:00.000Z",
+      "summary": "Defined a local enterprise runtime handoff profile with future founder workstream lanes, gates, missing evidence, forbidden operations, validation commands, evidence, activity, cost posture, and all runtime flags false.",
+      "checksRun": [
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P89.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, call providers/models, execute tools/workers, mutate projects, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P89.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Local enterprise runtime handoff profile; no executor wired."
+    },
+    {
+      "phaseId": "P89.2",
+      "title": "Core Model",
+      "track": "NEXUS_OS",
+      "order": 93.07,
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned next scoped enterprise-readiness handoff for governed local runtime activation planning.",
+      "summary": "Planned local founder workstream runtime envelope without dispatching agents or running an executor.",
       "checksRun": [],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P89 is planned in implementation-grade subphases."
+        "Not started. Runtime execution remains blocked until P89.2 is planned and validated."
       ],
-      "nextPhase": "P89.1",
+      "nextPhase": "P89.3",
       "commandCenterVisible": true,
-      "label": "Enterprise Runtime Handoff",
-      "detail": "Planned local runtime handoff; no execution enabled."
+      "label": "Core Model",
+      "detail": "Planned local founder workstream envelope."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T01:31:00.000Z",
-  "currentPhase": "P88.7",
-  "previousPhase": "P88.6",
-  "nextPhase": "P89",
+  "updatedAt": "2026-05-20T01:41:00.000Z",
+  "currentPhase": "P89.1",
+  "previousPhase": "P88.7",
+  "nextPhase": "P89.2",
   "currentPhaseStatus": "complete"
 }

@@ -1,0 +1,114 @@
+{
+  "phase": "P89",
+  "title": "Governed Local Enterprise Runtime Handoff",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "4f1e28a",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, or provider spend unless that exact lane is separately scoped and validated.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, db/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not show DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p89-1-local-enterprise-runtime-handoff-profile",
+      "phaseId": "P89.1",
+      "objective": "Define a governed local enterprise runtime handoff profile without wiring or running executors.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/localEnterpriseRuntimeHandoffProfile.js",
+        "scripts/check-p891-local-enterprise-runtime-handoff-profile.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p891-local-enterprise-runtime-handoff-profile-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P89_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PROFILE_PHASE",
+          "P89_ENTERPRISE_HANDOFF_REQUIRED_GATES",
+          "buildLocalEnterpriseRuntimeHandoffProfile",
+          "validateLocalEnterpriseRuntimeHandoffProfile"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, handoffMode, sourcePhase, handoffLaneCount, handoffSummary, handoffLanes[], requiredGates[], forbiddenOperations[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each handoff lane has laneKey, label, ownerCapability, sourceAdmissionKey, handoffState, handoffCanExecute, allowedFutureOperations, forbiddenOperations, requiredGates, missingEvidence, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center Lite and Live Readiness. Prepare display-safe handoff fields for a later UX subphase without adding runnable action labels.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P89.1 because no UI file changes.",
+        "Later P89 UX subphase must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p891-local-enterprise-runtime-handoff-profile."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P89 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p891-local-enterprise-runtime-handoff-profile",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm every runtime flag remains false.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, or tool dispatch is enabled.",
+        "Confirm no project or generated app source mutation is enabled.",
+        "Confirm no DB, deploy, release, export, package, network, or spend action is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.1 files>",
+        "git commit -m \"feat(nexus): define local enterprise runtime handoff profile\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    }
+  ]
+}

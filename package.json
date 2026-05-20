@@ -424,6 +424,7 @@
     "check:p885-tests-checkers-docs": "node scripts/check-p885-tests-checkers-docs.js",
     "check:p886-docs-roadmap": "node scripts/check-p886-docs-roadmap.js",
     "check:p887-final-validation": "node scripts/check-p887-final-validation.js",
+    "check:p891-local-enterprise-runtime-handoff-profile": "node scripts/check-p891-local-enterprise-runtime-handoff-profile.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

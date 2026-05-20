@@ -1,0 +1,52 @@
+# P89 Governed Local Enterprise Runtime Handoff Plan
+
+P89 starts the handoff from scoped activation evidence toward governed local
+runtime planning. It is not a broad live switch. Each subphase must define one
+narrow lane, reuse existing NEXUS OS helpers, preserve Command Center UX, and
+validate that runtime execution remains blocked unless a later subphase
+explicitly scopes one lane.
+
+## Safety Rules
+
+- NEXUS OS changes only.
+- Do not modify `projects/**`, `careloop/**`, generated app `Sources/Tests`,
+  `providers/**`, `tools/**`, `worker-runtime/**`, DB/prisma/migrations,
+  deploy/release/export/package roots, or `.env*`.
+- Do not enable provider/model calls, agent dispatch, tool execution, worker
+  execution, local executor runs, project mutation, DB writes, deploy, release,
+  export, package creation, network calls, or provider spend unless that exact
+  lane is scoped and validated in its own subphase.
+- Do not expose DemoApp in full Command Center.
+- Do not expose raw private project IDs.
+- Do not invent fake working actions.
+
+## P89.1 Schema / Policy / Contract
+
+P89.1 is complete. It adds a local enterprise runtime handoff profile that
+reuses P88 local executor admission evidence and the shared result envelope. It
+defines future founder workstream handoff lanes, required gates, missing
+evidence, forbidden operations, validation commands, evidence, activity, cost
+posture, and all runtime flags false.
+
+Validation:
+
+- `npm run check:p891-local-enterprise-runtime-handoff-profile`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.1 is schema, policy, and contract only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
+## Next Subphases
+
+- P89.2 Core Model: define a local founder workstream runtime envelope without
+  dispatching agents.
+- P89.3 Preview / Safe Dry Run: simulate a local founder workstream transition
+  without mutation.
+- P89.4 Command Center UX: show founder workstream handoff state and blockers.
+- P89.5 Tests / Checkers: aggregate backend and UX validation.
+- P89.6 Docs / Roadmap: close documentation and status evidence.
+- P89.7 Final Validation: final P89 evidence and handoff.

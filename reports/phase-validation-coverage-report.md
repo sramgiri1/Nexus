@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T01:31:27.742Z
+- Generated at: 2026-05-20T01:36:24.408Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 478cc27
+- Validation HEAD: 4f1e28a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -215,21 +215,23 @@
 | P88.5 validation coverage | PASS | 21 checkers, 16 reports |
 | P88.6 validation coverage | PASS | 11 checkers, 6 reports |
 | P88.7 validation coverage | PASS | 36 checkers, 30 reports |
-| P89 validation coverage | PASS | dedicated_checker, validation_report |
+| P89 validation coverage | PASS | 4 checkers, 1 reports |
+| P89.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P89.2 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P88.7; next=P89; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P89.1; next=P89.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P89 Governed Local Enterprise Runtime Handoff
+- P89.2 Core Model
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (203/203)
+PASS (205/205)

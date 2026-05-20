@@ -1599,3 +1599,23 @@ The detailed plan lives in
 [`P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md`](P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md).
 Implementation must follow
 [`p88-execution-contracts.json`](../../contracts/os-roadmap/p88-execution-contracts.json).
+
+## P89 - Governed Local Enterprise Runtime Handoff
+
+P89 starts the handoff from scoped activation evidence toward governed local
+runtime planning. It does not run executors, dispatch agents, mutate projects,
+call providers/models, use network calls, deploy, package, or spend.
+
+P89.1 is complete. It adds a local enterprise runtime handoff profile that
+reuses P88 local executor admission evidence and the shared result envelope. The
+profile defines future founder workstream handoff lanes, required gates, missing
+evidence, forbidden operations, validation commands, evidence, activity, cost
+posture, and all runtime flags false.
+
+P89.2 is next. It must define the local founder workstream runtime envelope
+without dispatching agents or running an executor.
+
+The detailed plan lives in
+[`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).
+Implementation must follow
+[`p89-execution-contracts.json`](../../contracts/os-roadmap/p89-execution-contracts.json).
