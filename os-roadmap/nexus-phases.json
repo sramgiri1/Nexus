@@ -4277,22 +4277,24 @@
       "phaseId": "P86",
       "title": "Governed Live Capability Admission",
       "track": "NEXUS_OS",
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8c2b438",
-      "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1-P86.6 complete.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:15:17.202Z",
+      "summary": "Completed governed live capability admission with admission inventory, state resolver, local approval queue, activation dry-run records, Command Center UX, and final validation evidence.",
       "checksRun": [
+        "npm run check:p867-final-validation",
         "npm run check:p866-tests-docs-roadmap",
-        "npm run check:p865-activation-dry-run",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled."
+        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
       ],
-      "nextPhase": "P86.7",
+      "nextPhase": "P87",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -4459,24 +4461,51 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 74.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Final P86 validation and handoff.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:15:17.202Z",
+      "summary": "Closed P86 with final evidence for scripts, reports, docs, roadmap, status, Command Center Live Readiness queue coverage, and safety posture.",
+      "checksRun": [
+        "npm run check:p867-final-validation",
+        "npm run check:p866-tests-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86 closes governed admission, approval queue, activation dry-run, and validation only. Execution-capable runtime actions remain disabled until a separately scoped activation phase."
       ],
       "nextPhase": "P87",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Final P86 validation and handoff."
+      "detail": "Final P86 validation and handoff to explicit live activation planning."
+    },
+    {
+      "phaseId": "P87",
+      "title": "Explicit Live Activation Unlocks",
+      "track": "NEXUS_OS",
+      "order": 75.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Future phase for separately scoped, explicitly allowed live activation unlocks.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Live execution remains blocked until P87 subphases are planned and validated."
+      ],
+      "nextPhase": "P87.1",
+      "commandCenterVisible": true,
+      "label": "Explicit Live Activation Unlocks",
+      "detail": "Planned phase for governed live unlocks after P86 validation."
     }
   ],
-  "updatedAt": "2026-05-20T00:11:59.917Z",
-  "currentPhase": "P86.6",
-  "previousPhase": "P86.5",
-  "nextPhase": "P86.7",
+  "updatedAt": "2026-05-20T00:16:14.661Z",
+  "currentPhase": "P86.7",
+  "previousPhase": "P86.6",
+  "nextPhase": "P87",
   "currentPhaseStatus": "complete"
 }

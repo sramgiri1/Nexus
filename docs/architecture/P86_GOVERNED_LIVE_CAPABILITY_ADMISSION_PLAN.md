@@ -81,7 +81,11 @@ Validation: `npm run check:p866-tests-docs-roadmap`.
 Goal: close P86 and hand off to the next explicitly scoped live activation
 phase.
 
-Status: planned.
+Status: complete. P86.7 adds `check:p867-final-validation` and closes the
+parent P86 phase with final evidence for scripts, reports, docs, roadmap,
+status, Command Center Live Readiness queue coverage, and safety posture.
+
+Validation: `npm run check:p867-final-validation`.
 
 ## Reuse Check
 
@@ -102,6 +106,7 @@ evidence/activity appenders.
 
 ## Safety Boundary
 
-P86.1 is admission inventory only. It does not call providers, dispatch agents,
-execute tools or workers, create or mutate project files, write DB state, make
-network calls, deploy, release, export, package, or spend.
+P86 is governed admission, approval queue, dry-run, and validation only. It does
+not call providers, dispatch agents, execute tools or workers, create or mutate
+project files, write DB state, make network calls, deploy, release, export,
+package, or spend.

@@ -4,14 +4,15 @@ import { buildCheckTable, writeMarkdownReport } from "../shared/reportWriter.js"
 import { printCheckReport } from "../shared/checkResultFormatter.js";
 
 const ROOT = process.cwd();
-const REPORT_PATH = "reports/p866-tests-docs-roadmap-report.md";
-const P86_SUBPHASES = ["P86.1", "P86.2", "P86.3", "P86.4", "P86.5"];
+const REPORT_PATH = "reports/p867-final-validation-report.md";
+const P86_SUBPHASES = ["P86.1", "P86.2", "P86.3", "P86.4", "P86.5", "P86.6"];
 const REQUIRED_SCRIPTS = [
   "check:p861-live-capability-admission",
   "check:p862-capability-state-resolver",
   "check:p863-operator-approval-queue",
   "check:p864-command-center-live-admission-ux",
   "check:p865-activation-dry-run",
+  "check:p866-tests-docs-roadmap",
 ];
 const REQUIRED_REPORTS = [
   "reports/p861-live-capability-admission-report.md",
@@ -19,6 +20,7 @@ const REQUIRED_REPORTS = [
   "reports/p863-operator-approval-queue-report.md",
   "reports/p864-command-center-live-admission-ux-report.md",
   "reports/p865-activation-dry-run-report.md",
+  "reports/p866-tests-docs-roadmap-report.md",
 ];
 
 function readText(relativePath) {
@@ -47,28 +49,19 @@ const contract = readText("contracts/os-roadmap/p86-execution-contracts.json");
 const dashboardSource = readText("dashboard/src/pages/CommandCenterV2.jsx");
 const tests = readText("dashboard/tests/routes.spec.js");
 
-addCheck("package scripts registered", REQUIRED_SCRIPTS.every((script) => Boolean(packageJson.scripts?.[script])) && Boolean(packageJson.scripts?.["check:p866-tests-docs-roadmap"]));
+addCheck("P86 status complete", statusById.get("P86")?.status === "complete" && roadmapById.get("P86")?.status === "complete");
+addCheck("P86.7 status complete", statusById.get("P86.7")?.status === "complete" && status.currentPhase === "P86.7" && status.nextPhase === "P87");
+addCheck("all prior subphases complete", P86_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
+addCheck("all prior commits stamped", P86_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.commit && statusById.get(phaseId)?.commit !== "pending-final-commit"));
+addCheck("package scripts registered", REQUIRED_SCRIPTS.every((script) => Boolean(packageJson.scripts?.[script])) && Boolean(packageJson.scripts?.["check:p867-final-validation"]));
 addCheck("reports exist", REQUIRED_REPORTS.every(fileExists));
-addCheck("subphase statuses complete", P86_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.status === "complete"));
-addCheck("subphase commits stamped", P86_SUBPHASES.every((phaseId) => statusById.get(phaseId)?.commit && statusById.get(phaseId)?.commit !== "pending-final-commit"));
-addCheck("roadmap tracks P86 subphases", P86_SUBPHASES.every((phaseId) => roadmapById.get(phaseId)?.track === "NEXUS_OS"));
-addCheck("docs list validations", REQUIRED_SCRIPTS.every((script) => docs.includes(`npm run ${script}`)));
-addCheck(
-  "platform roadmap records P86.6",
-  platformRoadmap.includes("P86.5 is complete")
-    && platformRoadmap.includes("P86.6 is complete")
-    && (platformRoadmap.includes("P86.7 is next") || platformRoadmap.includes("P86.7 is complete")),
-);
-addCheck("contract references aggregate checker", contract.includes("check:p866-tests-docs-roadmap"));
-addCheck("Command Center queue UX covered", dashboardSource.includes("Governed live approval queue") && tests.includes("Approval Queue"));
-addCheck(
-  "phase status advanced",
-  statusById.get("P86.6")?.status === "complete"
-    && ["P86.6", "P86.7"].includes(status.currentPhase)
-    && ["P86.7", "P87"].includes(status.nextPhase),
-);
-addCheck("no DemoApp/private IDs", !dashboardSource.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(dashboardSource));
+addCheck("docs describe P86.7", docs.includes("P86.7 Final Validation") && docs.includes("npm run check:p867-final-validation"));
+addCheck("platform roadmap closes P86", platformRoadmap.includes("P86.7 is complete") && platformRoadmap.includes("P87 is next"));
+addCheck("contract references final checker", contract.includes("check:p867-final-validation"));
+addCheck("Command Center approval queue present", dashboardSource.includes("Governed live approval queue") && tests.includes("Approval Queue"));
+addCheck("no DemoApp/private IDs in Command Center source", !dashboardSource.includes("DemoApp") && !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/.test(dashboardSource));
 addCheck("no fake unsafe runnable actions", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now/i.test(dashboardSource));
+addCheck("unsafe capabilities remain blocked in docs", /provider\/model calls|agent dispatch|project mutation|DB writes|provider spend/i.test(docs));
 
 const failed = checks.filter((check) => check.status === "FAIL");
 
@@ -78,8 +71,8 @@ writeMarkdownReport(
     {
       title: "Scope",
       body: [
-        "- Aggregates P86.1-P86.5 validation evidence.",
-        "- Checks scripts, reports, status, roadmap, docs, Command Center UX coverage, and safety posture.",
+        "- Final validation for P86 governed live capability admission.",
+        "- Confirms P86.1-P86.6 evidence, Command Center Live Readiness queue UX, docs, roadmap, and status closure.",
         "- Does not enable providers, agents, tools, workers, project mutation, DB writes, deploy, package, or spend.",
       ].join("\n"),
     },
@@ -87,17 +80,20 @@ writeMarkdownReport(
     {
       title: "Validation Commands",
       body: [
+        "- npm run check:p867-final-validation",
         "- npm run check:p866-tests-docs-roadmap",
         "- npm run check:os-phase-status",
         "- npm run check:phase-validation-coverage",
+        "- cd dashboard && npm run build",
+        "- cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
         "- git diff --check",
       ].join("\n"),
     },
-    { title: "Known Limitations", body: "- P86.6 is validation aggregation only. Execution-capable runtime actions remain disabled." },
+    { title: "Known Limitations", body: "- P86 closes governed live admission and dry-run UX. Actual live execution remains blocked for a later explicit activation phase." },
     { title: "Result", body: failed.length === 0 ? `PASS (${checks.length}/${checks.length})` : `FAIL (${failed.length} failed)` },
   ],
-  { title: "P86.6 Tests Docs Roadmap Report", phase: "P86.6" },
+  { title: "P86.7 Final Validation Report", phase: "P86.7" },
 );
 
-printCheckReport("P86.6 Tests Docs Roadmap Check", checks, failed.length === 0 ? "PASS" : "FAIL");
+printCheckReport("P86.7 Final Validation Check", checks, failed.length === 0 ? "PASS" : "FAIL");
 if (failed.length > 0) process.exit(1);

@@ -422,7 +422,68 @@
       "id": "nexus-os-p86-7-final-validation",
       "phaseId": "P86.7",
       "objective": "Close P86 and hand off to the next explicitly scoped live activation phase.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p867-final-validation.js",
+        "scripts/check-p866-tests-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p867-final-validation-report.md",
+        "reports/p866-tests-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "inputs": {
+        "validationCommands": [
+          "npm run check:p867-final-validation",
+          "npm run check:p866-tests-docs-roadmap",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+          "git diff --check"
+        ]
+      },
+      "safetyRules": [
+        "Do not enable provider/model calls.",
+        "Do not dispatch agents, tools, or workers.",
+        "Do not mutate project files, DB state, deploy/release/export/package outputs, or provider spend.",
+        "Do not expose DemoApp or raw private IDs in Command Center primary UX."
+      ],
+      "finalResponseChecklist": [
+        "Branch and commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build and focused page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations and next phase"
+      ]
     }
   ]
 }

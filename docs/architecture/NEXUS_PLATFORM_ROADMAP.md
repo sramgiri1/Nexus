@@ -1473,8 +1473,15 @@ P86.6 is complete. It aggregates P86.1-P86.5 scripts, reports, package
 scripts, docs, roadmap/status records, Command Center UX coverage, and safety
 posture.
 
-P86.7 is next. It should close P86 with final validation and hand off to the
-next explicitly scoped live activation phase.
+P86.7 is complete. It closes P86 with final validation evidence for governed
+live admission, approval queue UX, activation dry-run records, reports, docs,
+roadmap, phase status, and safety posture.
+
+P87 is next. It must be scoped separately before any explicit live activation
+unlock. Provider/model calls, agent dispatch, tool execution, worker execution,
+project mutation, DB writes, deploy, release, export, package creation, and
+provider spend remain blocked until that future phase explicitly allows and
+validates them.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).
