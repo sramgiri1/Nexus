@@ -9,6 +9,7 @@ import {
   assertWritePathAllowed,
   sanitizeRecord,
 } from "./writeGuards.js";
+import { appendSqliteEvidence } from "../db/sqliteRuntimeWrites.js";
 
 const ALLOWED_RESULTS = new Set(["PASS", "FAIL", "INFO", "BLOCKED"]);
 const ALLOWED_CLASSIFICATIONS = new Set([
@@ -115,12 +116,14 @@ export function appendEvidence(record = {}) {
     `${JSON.stringify(validation.record)}\n`,
     "utf8"
   );
+  const sqlite = appendSqliteEvidence(validation.record);
 
   return {
     ok: true,
     path: LOCAL_EVIDENCE_FILE,
     record: validation.record,
+    sqlite,
     errors: [],
-    warnings: validation.warnings,
+    warnings: sqlite.ok ? validation.warnings : [...validation.warnings, ...sqlite.errors],
   };
 }

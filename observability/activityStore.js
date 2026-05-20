@@ -6,6 +6,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import { dirname, isAbsolute, join, normalize, relative, resolve } from "node:path";
+import { appendSqliteActivityEvent } from "../db/sqliteRuntimeWrites.js";
 
 export const ACTIVITY_STORE_RELATIVE_PATH = "local-state/runtime/activity.jsonl";
 
@@ -63,13 +64,15 @@ export function appendActivityEvent(event, options = {}) {
 
   const storePath = ensureStoreFile(options);
   appendFileSync(storePath, `${JSON.stringify(event)}\n`, "utf8");
+  const sqlite = appendSqliteActivityEvent(event);
   return {
     ok: true,
     dryRun: false,
     written: true,
     event,
+    sqlite,
     storePath: ACTIVITY_STORE_RELATIVE_PATH,
-    warnings: [],
+    warnings: sqlite.ok ? [] : sqlite.errors,
   };
 }
 

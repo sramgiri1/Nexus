@@ -9,6 +9,7 @@ import {
   assertWritePathAllowed,
   sanitizeRecord,
 } from "./writeGuards.js";
+import { appendSqliteAuditEvent } from "../db/sqliteRuntimeWrites.js";
 
 function getAuditPath() {
   return path.join(getRepoRoot(), LOCAL_AUDIT_FILE);
@@ -88,12 +89,14 @@ export function appendAuditEvent(event = {}) {
     `${JSON.stringify(validation.record)}\n`,
     "utf8"
   );
+  const sqlite = appendSqliteAuditEvent(validation.record);
 
   return {
     ok: true,
     path: LOCAL_AUDIT_FILE,
     record: validation.record,
+    sqlite,
     errors: [],
-    warnings: validation.warnings,
+    warnings: sqlite.ok ? validation.warnings : [...validation.warnings, ...sqlite.errors],
   };
 }

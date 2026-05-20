@@ -92,9 +92,39 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
+## P92.4 Governed SQLite Runtime Writes
+
+P92.4 is complete. It adds `db/sqliteRuntimeWrites.js` and wires the existing
+governed append paths to local SQLite after their current file-backed validation
+and append behavior succeeds.
+
+SQLite write scope is intentionally narrow:
+
+- evidence records map to `evidence`;
+- audit records map to `audit_events`;
+- activity records map to `runtime_events`.
+
+Writes require both `NEXUS_DB_MODE=sqlite-live` and
+`NEXUS_DB_ENABLE_WRITES=1`. If SQLite writes are disabled, the existing JSONL
+append remains the source of truth and the SQLite bridge reports a disabled
+write result instead of mutating the DB.
+
+P92.4 does not enable broader entity mutation, provider/model calls, agent
+dispatch, project mutation, hosted DBs, deploy, release, export, package
+creation, network calls, or provider spend.
+
+Validation:
+
+- `npm run check:p924-governed-sqlite-runtime-writes`
+- `npm run check:p923-sqlite-runtime-read-wiring`
+- `npm run check:p922-sqlite-crud-repository`
+- `npm run check:p921-sqlite-runtime-foundation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
 ## Next Subphases
 
-- P92.4 Governed SQLite writes for activity, evidence, and audit records.
 - P92.5 Command Center DB live state UX.
 - P92.6 migration, backup, docs, and roadmap closure.
 - P92.7 final validation.

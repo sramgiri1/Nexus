@@ -47,6 +47,12 @@ export {
   validateSqliteCrudRepository,
 } from "./sqliteCrudRepository.js";
 export {
+  appendSqliteActivityEvent,
+  appendSqliteAuditEvent,
+  appendSqliteEvidence,
+  summarizeSqliteRuntimeWriteReadiness,
+} from "./sqliteRuntimeWrites.js";
+export {
   mapLocalStateToDbEntities,
   mapReportsToDbEntities,
   createDbSeedPreview,

@@ -285,6 +285,102 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p92-4-governed-sqlite-runtime-writes",
+      "phaseId": "P92.4",
+      "objective": "Add governed SQLite writes for evidence, audit, and activity/runtime event ledgers only.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/sqliteRuntimeWrites.js",
+        "db/index.js",
+        "local-state/appendEvidence.js",
+        "local-state/appendAuditEvent.js",
+        "observability/activityStore.js",
+        "scripts/check-p924-governed-sqlite-runtime-writes.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p924-governed-sqlite-runtime-writes-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "appendSqliteActivityEvent",
+          "appendSqliteAuditEvent",
+          "appendSqliteEvidence",
+          "summarizeSqliteRuntimeWriteReadiness"
+        ],
+        "dataShape": "SQLite runtime write results include ok, entity, written, optional record, errors, and disabledReason. Readiness includes phase, dbWritesEnabled, sqliteLiveAllowed, allowedEntities, mutationScope, projectMutationAllowed false, and providerSpendAllowed false."
+      },
+      "commandCenterUxRequirements": "No Command Center route change in P92.4. Existing pages may read DB-backed evidence/audit/activity records when local SQLite is live. Primary UX must not expose raw SQL, raw DB paths, raw private IDs, raw logs, raw JSON, hosted DB controls, provider spend controls, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Command Center route change in P92.4.",
+        "P92.5 must add focused Command Center DB live state coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p924-governed-sqlite-runtime-writes.",
+        "Run P92.1-P92.3 checkers.",
+        "Run check:os-phase-status.",
+        "Run check:phase-validation-coverage."
+      ],
+      "validationCommands": [
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm SQLite writes are limited to evidence, audit_events, and runtime_events.",
+        "Confirm writes require explicit sqlite-live and write-enable flags.",
+        "Confirm file-backed append behavior remains available.",
+        "Confirm no provider/model, agent, worker, tool, project mutation, deploy, release, package, network, hosted DB, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.4 files>",
+        "git commit -m \"feat(nexus): add governed sqlite runtime writes\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

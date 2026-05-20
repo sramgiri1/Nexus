@@ -1751,8 +1751,12 @@ P92.3 is complete. It wires selected repository read paths to SQLite when local
 SQLite is live and initialized, while preserving file-backed fallback and
 keeping runtime writes blocked.
 
-P92.4 is next. It must add governed SQLite writes for activity, evidence, and
-audit records only.
+P92.4 is complete. It wires governed append paths for evidence, audit, and
+activity records to local SQLite when explicit write flags are enabled. Existing
+JSONL append behavior remains available and broader mutation is still blocked.
+
+P92.5 is next. It must add display-safe Command Center DB live-state UX and
+focused route coverage.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).
