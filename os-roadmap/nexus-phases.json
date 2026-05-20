@@ -4490,7 +4490,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0d7cf27",
       "completedAt": "",
       "summary": "Explicit live activation unlocks started with contract-only activation lanes in P87.1.",
       "checksRun": [
@@ -4514,7 +4514,7 @@
       "order": 76.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0d7cf27",
       "completedAt": "2026-05-20T00:21:34.534Z",
       "summary": "Defined explicit live activation contract lanes with required gates, evidence, blockers, rollback, validation, activity, cost posture, and all runtime flags false.",
       "checksRun": [
@@ -4646,7 +4646,7 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:21:34.534Z",
+  "updatedAt": "2026-05-20T00:22:40.841Z",
   "currentPhase": "P87.1",
   "previousPhase": "P86.7",
   "nextPhase": "P87.2",
