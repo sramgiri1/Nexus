@@ -9720,7 +9720,7 @@
       "order": 91.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b56e571",
       "completedAt": "",
       "summary": "Started governed local enterprise runtime handoff with a local-only handoff profile that reuses P88 executor admission evidence. Runtime execution remains blocked.",
       "checksRun": [
@@ -9744,7 +9744,7 @@
       "order": 92.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b56e571",
       "completedAt": "2026-05-20T01:41:00.000Z",
       "summary": "Defined a local enterprise runtime handoff profile with future founder workstream lanes, gates, missing evidence, forbidden operations, validation commands, evidence, activity, cost posture, and all runtime flags false.",
       "checksRun": [
