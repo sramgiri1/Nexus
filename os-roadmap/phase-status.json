@@ -9502,7 +9502,7 @@
       "order": 83.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0a6bd08",
       "completedAt": "",
       "summary": "Started scoped execution-capable activation with a local-only activation profile contract. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
       "checksRun": [
@@ -9526,7 +9526,7 @@
       "order": 84.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0a6bd08",
       "completedAt": "2026-05-20T00:51:45.092Z",
       "summary": "Defined a local-only scoped execution-capable activation profile with future lanes, gates, evidence, blockers, disabled reason, owner, activity, cost posture, and all runtime flags false.",
       "checksRun": [
