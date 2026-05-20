@@ -31,15 +31,14 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P94.6
+## Current Status Through P94
 
-P41.5 through P93 are complete, and P94.1 through P94.6 are complete. The
-current NEXUS OS focus has moved from preview-only foundations to governed local
-live-runtime state and founder workflow persistence. P94 now wires the
+P41.5 through P94 are complete. The current NEXUS OS focus has moved from
+preview-only foundations to governed local live-runtime state and founder
+workflow persistence. P94 wires the
 founder-to-business workflow to governed local SQLite CRUD records and shows the
-DB-backed state in Command Center Lite, Business Build, and DB Runtime. P94.6
-refreshes README, PRD, roadmap, phase status, and validation evidence before
-P94 final closure.
+DB-backed state in Command Center Lite, Business Build, and DB Runtime. P94.7
+closes final validation and records the P95 handoff.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -274,10 +273,9 @@ npm run nexus:down
 
 ## Next Steps
 
-P94.7 is next. It must run final validation, close P94, stamp the final status
-with real commits, and hand off to the next scoped phase. After P94 closes, the
-next scoped phase should make approved local founder workflow persistence more
-operator-usable while preserving the safety boundary:
+P95 is next. It should be scoped before coding and should make approved local
+founder workflow persistence more operator-usable while preserving the safety
+boundary:
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy/release/export/package, and spend blocked

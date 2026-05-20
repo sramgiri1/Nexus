@@ -553,7 +553,7 @@
       "id": "nexus-os-p94-7-final-validation",
       "phaseId": "P94.7",
       "objective": "Close P94 with final validation, reports, status stamping, and next-phase handoff.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "scripts/check-p947-founder-db-workflow-final-validation.js",
@@ -567,7 +567,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p947-founder-db-workflow-final-validation-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p946-founder-db-workflow-validation.js"
       ],
       "forbiddenFiles": [
         "projects/**",

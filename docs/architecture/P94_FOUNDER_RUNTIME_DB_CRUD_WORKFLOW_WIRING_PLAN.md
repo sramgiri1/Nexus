@@ -65,8 +65,15 @@ aligned.
 
 ### P94.7 Final Validation
 
-P94.7 is next. It will run final validation, close P94, stamp status with real commits,
-and hand off to the next scoped phase.
+P94.7 is complete. It runs final validation, closes P94, stamps status with
+real commits, and hands off to P95.
+
+P94 is complete. It delivered the founder runtime DB CRUD contract, local
+SQLite founder workflow schema, governed local CRUD model/admission, display
+safe Command Center view model, Lite/Business Build/DB Runtime UX, aggregate
+validation, and final closure while keeping provider/model calls, agent
+dispatch, tool/worker execution, project mutation, hosted DB mutation, network
+calls, deploy, release, export, package creation, and provider spend blocked.
 
 ## Reuse Check
 
@@ -114,6 +121,7 @@ P94.1 validation:
 - `npm run check:p944-founder-db-view-model`
 - `npm run check:p945-command-center-founder-db-ux`
 - `npm run check:p946-founder-db-workflow-validation`
+- `npm run check:p947-founder-db-workflow-final-validation`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

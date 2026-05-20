@@ -56,17 +56,17 @@ addCheck("all previous P94 subphases complete in status", p94Subphases.every((ph
 addCheck("all previous P94 subphases complete in roadmap", p94Subphases.every((phaseId) => roadmapById.get(phaseId)?.status === "complete"));
 addCheck(
   "phase status advanced",
-  statusById.get("P94")?.status === "in_progress"
-    && status.currentPhase === "P94.6"
-    && status.previousPhase === "P94.5"
-    && status.nextPhase === "P94.7",
+  ["in_progress", "complete"].includes(statusById.get("P94")?.status)
+    && ["P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P94.7 handoff exists", statusById.get("P94.7")?.status === "planned" && roadmapById.get("P94.7")?.status === "planned");
-addCheck("README records P94.6 current state", readme.includes("Current Status Through P94.6") && readme.includes("P94.7 is next"));
-addCheck("PRD records P94.6 current state", prd.includes("updated through P94.6") && prd.includes("Current Implementation Status Through P94.6"));
-addCheck("P94 plan records P94.6 complete", docs.includes("P94.6 is complete") && docs.includes("npm run check:p946-founder-db-workflow-validation") && docs.includes("P94.7 is next"));
-addCheck("platform roadmap records P94.6 complete", platformRoadmap.includes("P94.6 is complete") && platformRoadmap.includes("P94.7 is next"));
+addCheck("P94.7 handoff exists", ["planned", "complete"].includes(statusById.get("P94.7")?.status) && ["planned", "complete"].includes(roadmapById.get("P94.7")?.status));
+addCheck("README records P94.6 current state", readme.includes("Current Status Through P94") && (readme.includes("P94.7 is next") || readme.includes("P95 is next")));
+addCheck("PRD records P94.6 current state", prd.includes("updated through P94") && prd.includes("Current Implementation Status Through P94"));
+addCheck("P94 plan records P94.6 complete", docs.includes("P94.6 is complete") && docs.includes("npm run check:p946-founder-db-workflow-validation") && (docs.includes("P94.7 is next") || docs.includes("P94.7 is complete")));
+addCheck("platform roadmap records P94.6 complete", platformRoadmap.includes("P94.6 is complete") && (platformRoadmap.includes("P94.7 is next") || platformRoadmap.includes("P94.7 is complete")));
 addCheck("P94 reports exist", requiredReports.every((reportPath) => existsSync(join(ROOT, reportPath))));
 addCheck("P94.5 Playwright coverage retained", routeTests.includes("Founder DB workflow appears in Lite, Business Build, and DB Runtime") && routeTests.includes("Command Center Lite route renders Founder DB workflow without raw IDs"));
 addCheck("docs preserve safety boundary", /Provider\/model calls.*remain blocked|provider\/model calls.*remain blocked/i.test(combinedDocs) && /agent dispatch.*remain blocked/i.test(combinedDocs) && /project.*mutation.*remain blocked/i.test(combinedDocs));

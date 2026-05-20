@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P94.6 Founder Runtime DB CRUD Workflow Validation
+**Status:** Approved; updated through P94 Founder Runtime DB CRUD Workflow Wiring
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P94.6
+## 1A. Current Implementation Status Through P94
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P94.6:
+P94:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business

@@ -10813,29 +10813,32 @@
       "title": "Founder Runtime DB CRUD Workflow Wiring",
       "track": "NEXUS_OS",
       "order": 130.07,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "5990784",
-      "completedAt": "",
-      "summary": "P94.6 aggregate validation and docs/roadmap evidence are complete; P94.7 final validation is next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T23:50:00.000Z",
+      "summary": "Completed founder runtime DB CRUD workflow wiring: contract, local SQLite founder schema, governed CRUD model/admission, display-safe view model, Command Center UX, validation aggregation, and final closure.",
       "checksRun": [
+        "npm run check:p947-founder-db-workflow-final-validation",
         "npm run check:p946-founder-db-workflow-validation",
         "npm run check:p945-command-center-founder-db-ux",
         "npm run check:p944-founder-db-view-model",
         "npm run check:p943-founder-runtime-crud-model",
         "npm run check:p942-founder-runtime-db-schema",
         "npm run check:p941-founder-runtime-db-crud-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder DB workflow\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P94 parent remains in progress until P94.7 final closure is complete."
+        "P94 does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, or provider spend."
       ],
-      "nextPhase": "P94.7",
+      "nextPhase": "P95",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB CRUD",
-      "detail": "P94 aggregate validation complete; final closure next."
+      "detail": "Complete; P95 scoped contract next."
     },
     {
       "phaseId": "P94.1",
@@ -11005,25 +11008,57 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 130.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T23:50:00.000Z",
+      "summary": "Closed P94 with final validation, status/report stamping, and P95 handoff.",
+      "checksRun": [
+        "npm run check:p947-founder-db-workflow-final-validation",
+        "npm run check:p946-founder-db-workflow-validation",
+        "npm run check:p945-command-center-founder-db-ux",
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder DB workflow\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P94.7 adds no runtime behavior and keeps unsafe runtime operations blocked."
+      ],
+      "nextPhase": "P95",
+      "commandCenterVisible": true,
+      "label": "Founder DB Workflow Final Validation",
+      "detail": "P94 final validation complete; P95 planned."
+    },
+    {
+      "phaseId": "P95",
+      "title": "Founder Persistence Operator Controls",
+      "track": "NEXUS_OS",
+      "order": 131,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned final validation, status stamping, and next-phase handoff for P94.",
+      "summary": "Planned next phase for operator-reviewed local founder workflow persistence controls. P95 must start with an implementation-grade execution contract before coding.",
       "checksRun": [],
       "knownLimitations": [
-        "Not started. This subphase must define its scoped plan before implementation."
+        "P95 is a planned handoff only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
       ],
-      "nextPhase": "P95",
+      "nextPhase": "P95.1",
       "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "P94 final validation planned."
+      "label": "Founder Persistence Controls",
+      "detail": "Planned. Requires scoped contract before implementation."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-20T23:03:00.000Z",
-  "currentPhase": "P94.6",
-  "previousPhase": "P94.5",
-  "nextPhase": "P94.7",
+  "currentPhase": "P94.7",
+  "previousPhase": "P94.6",
+  "nextPhase": "P95",
   "currentPhaseStatus": "complete"
 }

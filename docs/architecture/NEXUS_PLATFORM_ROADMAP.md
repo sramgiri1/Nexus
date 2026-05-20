@@ -1891,8 +1891,16 @@ the founder DB workflow contract, schema, CRUD model, view model, Command
 Center UX, safety boundaries, and handoff are aligned without adding runtime
 behavior.
 
-P94.7 is next. It will run final validation, close P94, stamp status with real
-commits, and hand off to the next scoped phase.
+P94.7 is complete. It runs final validation, closes P94, stamps status with
+real commits, and hands off to P95.
+
+P94 is complete. It delivered the founder runtime DB CRUD contract, local
+SQLite founder workflow schema, governed local CRUD model/admission, display
+safe Command Center view model, Lite/Business Build/DB Runtime UX, aggregate
+validation, and final closure while preserving the safety boundary.
+
+P95 is next and must be scoped with an implementation-grade execution contract
+before coding.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 creation, project mutation, hosted DBs, network calls, deploy, release, export,
