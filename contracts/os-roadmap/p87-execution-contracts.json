@@ -370,7 +370,92 @@
       "id": "nexus-os-p87-5-command-center-live-unlock-ux",
       "phaseId": "P87.5",
       "objective": "Expose explicit live unlock state in Command Center without runnable actions.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/liveReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p875-command-center-live-unlock-ux.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p875-command-center-live-unlock-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "buildLiveReadinessViewModel"
+        ],
+        "dataShape": "Live Readiness view model includes liveUnlocks with currentState, nextAction, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, and rows[]. Each row has label, currentState, ownerCapability, nextAction, blockers, disabledReason, evidenceLocation, activityLocation, and costImpact."
+      },
+      "commandCenterUxRequirements": "Add a Live Unlocks tab with what changed, current state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture. Do not show raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Update Live Readiness route coverage to verify the Live Unlocks tab.",
+        "Preserve no DemoApp leakage, no raw dumps, theme switching, and no fake runnable actions."
+      ],
+      "testsCheckers": [
+        "Add check:p875-command-center-live-unlock-ux."
+      ],
+      "validationCommands": [
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no runnable live actions appear.",
+        "Confirm no raw private IDs, raw JSON, raw logs, or DemoApp appear.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.5 files>",
+        "git commit -m \"feat(nexus): show live unlock lanes\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p87-6-tests-docs-roadmap",

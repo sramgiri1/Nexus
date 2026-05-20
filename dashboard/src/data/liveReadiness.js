@@ -43,6 +43,53 @@ const APPROVAL_QUEUE_ROWS = [
   costImpact: "No spend.",
 }));
 
+const LIVE_UNLOCK_ROWS = [
+  {
+    label: "Explicit Activation Contract",
+    currentState: "Contract ready",
+    ownerCapability: "NEXUS Live Activation Governance",
+    nextAction: "Use P87.2-P87.4 evidence before any lane can request execution review.",
+    blockers: ["Per-lane unlock contract", "Operator approval", "Runtime executor policy", "Cost admission"],
+    disabledReason: "P87.1 defines live activation contracts only. It does not unlock or execute live capabilities.",
+    evidenceLocation: "reports/p871-explicit-live-activation-contract-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, worker runtime, deploy, package creation, network calls, or provider spend.",
+  },
+  {
+    label: "Secret / Provider Readiness",
+    currentState: "Needs setup",
+    ownerCapability: "NEXUS Provider Governance",
+    nextAction: "Register redacted secret references, provider policy, budget, cost ledger, rollback, and validation evidence.",
+    blockers: ["Redacted secret reference", "Provider policy profile", "Budget limit", "Operator approval", "Cost ledger"],
+    disabledReason: "P87.2 does not read .env files, reveal secrets, call providers or models, open network connections, activate tools, or spend.",
+    evidenceLocation: "reports/p872-secret-provider-readiness-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, model calls, network calls, or provider spend.",
+  },
+  {
+    label: "Local Agent Dispatch Admission",
+    currentState: "Dispatch review only",
+    ownerCapability: "NEXUS Agent Dispatch Governance",
+    nextAction: "Keep local agent lanes in planning until dispatch execution is separately scoped and approved.",
+    blockers: ["Dispatch executor not enabled", "Worker execution admission", "Project mutation admission", "Per-lane operator approval"],
+    disabledReason: "P87.3 defines local agent dispatch admission records only. It does not dispatch agents or execute workers, tools, providers, or project writes.",
+    evidenceLocation: "reports/p873-local-agent-dispatch-admission-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, agent runtime, worker runtime, project writes, DB writes, network calls, deploy, package, or spend.",
+  },
+  {
+    label: "Generated Project Workspace Admission",
+    currentState: "Workspace review only",
+    ownerCapability: "NEXUS Generated Workspace Governance",
+    nextAction: "Expose this boundary in Command Center before any generated workspace file-write phase.",
+    blockers: ["Operator approval", "New workspace root", "Project type contract", "Source/test boundary", "Workspace creation executor not enabled"],
+    disabledReason: "P87.4 defines generated workspace admission boundaries only. It does not create files, mutate generated app Sources/Tests, mutate existing projects, write DB state, deploy, package, or spend.",
+    evidenceLocation: "reports/p874-generated-project-workspace-admission-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No project file writes, DB writes, provider calls, network calls, deploy, package creation, or provider spend.",
+  },
+];
+
 export function buildLiveReadinessViewModel() {
   const gate = buildLiveExecutionGate({ mode: "live" });
   const activation = buildLiveReadyActivationViewModel();
@@ -73,6 +120,7 @@ export function buildLiveReadinessViewModel() {
       { label: "Needs setup", value: String(activation.labelSummary["Needs setup"]), tone: "amber", detail: "Capabilities with explicit setup gaps and next actions." },
       { label: "Blocked by policy", value: String(activation.labelSummary["Blocked by policy"]), tone: "disabled", detail: "Mutation, deploy, spend, or execution surfaces blocked by governance." },
       { label: "Approval queue", value: String(approvalRows.length), tone: "disabled", detail: "Local review records only; approvals cannot execute actions." },
+      { label: "Live unlocks", value: String(LIVE_UNLOCK_ROWS.length), tone: "amber", detail: "P87 lanes are visible for review only; execution remains disabled." },
       { label: "Cost", value: "No spend", tone: "pass", detail: "Budget evidence is required before future execution phases." },
     ],
     approvalQueue: {
@@ -85,6 +133,16 @@ export function buildLiveReadinessViewModel() {
       costImpact: "No provider calls, network calls, worker runtime, deploy, package creation, or provider spend.",
       queueSummary: { notRequestable: approvalRows.length },
       rows: approvalRows,
+    },
+    liveUnlocks: {
+      currentState: "P87 review-only lanes visible",
+      nextAction: "Complete P87.6 validation aggregation after UX coverage passes.",
+      disabledReason: "Live unlock rows are Command Center guidance only. They do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend.",
+      ownerCapability: "NEXUS Live Activation Governance",
+      evidenceLocation: "reports/p875-command-center-live-unlock-ux-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "No spend.",
+      rows: LIVE_UNLOCK_ROWS.map((row) => ({ ...row, blockers: [...row.blockers] })),
     },
     activationRows: activation.readinessRows,
     gateRows: capabilities.map((capability) => ({

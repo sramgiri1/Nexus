@@ -66,7 +66,12 @@ Validation: `npm run check:p874-generated-project-workspace-admission`.
 Goal: expose explicit live unlock state in Command Center without runnable
 actions.
 
-Status: planned.
+Status: complete. P87.5 adds a Live Unlocks tab to Command Center Live
+Readiness. The tab shows P87.1-P87.4 unlock lanes with current state, next
+action, blockers, disabled reason, owner, evidence, activity, and cost posture
+while exposing no runnable actions.
+
+Validation: `npm run check:p875-command-center-live-unlock-ux`.
 
 ## P87.6 Tests / Docs / Roadmap
 

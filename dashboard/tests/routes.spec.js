@@ -3094,6 +3094,14 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Not Requestable");
     await expect(activeCommandTabPanel(page)).toContainText("Missing evidence");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
+    await commandTab(page, "Live Unlocks").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Explicit live unlock lanes");
+    await expect(activeCommandTabPanel(page)).toContainText("Explicit Activation Contract");
+    await expect(activeCommandTabPanel(page)).toContainText("Secret / Provider Readiness");
+    await expect(activeCommandTabPanel(page)).toContainText("Local Agent Dispatch Admission");
+    await expect(activeCommandTabPanel(page)).toContainText("Generated Project Workspace Admission");
+    await expect(activeCommandTabPanel(page)).toContainText("review only");
+    await expect(activeCommandTabPanel(page)).toContainText("No spend");
     await commandTab(page, "Bridge Admission").click();
     await expect(activeCommandTabPanel(page)).toContainText("mission.compose");
     await expect(activeCommandTabPanel(page)).toContainText("implementation.apply");

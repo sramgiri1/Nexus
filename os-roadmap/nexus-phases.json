@@ -4490,19 +4490,21 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "bdd1e8a",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Explicit live activation unlocks in progress with P87.1-P87.4 complete.",
+      "summary": "Explicit live activation unlocks in progress with P87.1-P87.5 complete.",
       "checksRun": [
-        "npm run check:p874-generated-project-workspace-admission",
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P87.4 is workspace boundary metadata only. It does not create directories, write project files, mutate generated app Sources/Tests, deploy, package, or spend."
+        "P87.5 is UX only. Live unlock rows do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend."
       ],
-      "nextPhase": "P87.5",
+      "nextPhase": "P87.6",
       "commandCenterVisible": true,
       "label": "Explicit Live Activation Unlocks",
       "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
@@ -4608,19 +4610,26 @@
       "title": "Command Center Live Unlock UX",
       "track": "NEXUS_OS",
       "order": 80.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Expose explicit live unlock state in Command Center without runnable actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:36:50.185Z",
+      "summary": "Added Command Center Live Readiness Live Unlocks tab for P87.1-P87.4 lanes with state, next action, blockers, disabled reason, owner, evidence, activity, and cost posture without runnable actions.",
+      "checksRun": [
+        "npm run check:p875-command-center-live-unlock-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+        "P87.5 is UX only. Live unlock rows do not execute provider calls, agent dispatch, worker tasks, project writes, DB writes, deploy, package, network calls, or spend."
       ],
       "nextPhase": "P87.6",
       "commandCenterVisible": true,
       "label": "Command Center Live Unlock UX",
-      "detail": "Expose explicit live unlock state in Command Center without runnable actions."
+      "detail": "Live Readiness shows P87 unlock lanes as review-only records."
     },
     {
       "phaseId": "P87.6",
@@ -4661,9 +4670,9 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:33:43.690Z",
-  "currentPhase": "P87.4",
-  "previousPhase": "P87.3",
-  "nextPhase": "P87.5",
+  "updatedAt": "2026-05-20T00:36:50.185Z",
+  "currentPhase": "P87.5",
+  "previousPhase": "P87.4",
+  "nextPhase": "P87.6",
   "currentPhaseStatus": "complete"
 }

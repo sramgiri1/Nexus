@@ -1518,8 +1518,13 @@ rollback, validation, evidence, activity, and cost posture. It does not create
 directories, write project files, mutate generated app `Sources/Tests`, mutate
 existing projects, write DB state, deploy, package, or spend.
 
-P87.5 is next. It should expose explicit live unlock state in Command Center
-without runnable actions.
+P87.5 is complete. Live Readiness now has a Live Unlocks tab for P87.1-P87.4
+lanes with current state, next action, blockers, disabled reason, owner,
+evidence, activity, and cost posture. It exposes no runnable provider, agent,
+worker, project, DB, deploy, package, network, or spend action.
+
+P87.6 is next. It should aggregate P87 tests, docs, reports, roadmap, status,
+Command Center UX coverage, and safety posture.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).
