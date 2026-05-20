@@ -3,16 +3,16 @@
 ## Metadata
 
 - Phase: P94.5
-- Generated at: 2026-05-20T22:53:51.666Z
+- Generated at: 2026-05-20T22:55:31.090Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2a49887
+- Validation HEAD: 6d4eda2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
 
 - Validates P94.5 Command Center founder DB workflow UX.
-- Confirms Lite, Business Build, and DB Runtime render display-safe founder DB workflow state.
-- Confirms no mutation buttons, provider calls, agent dispatch, project mutation, hosted DB, deploy, package, or spend actions are introduced.
+- Confirms Lite, Business Build, and DB Runtime render display-safe founder workflow records, next action, blockers, owner, evidence, activity, disabled reason, and cost impact.
+- Confirms the UX adds no mutation buttons, raw table names, raw IDs, DemoApp, provider calls, dispatch, project mutation, hosted DB mutation, deploy, package, or spend.
 ## Checks
 
 | Check | Status | Details |
@@ -21,30 +21,39 @@
 | contract tracks P94.5 complete | PASS |  |
 | Lite renders founder DB workflow | PASS |  |
 | Business Build renders founder DB workflow | PASS |  |
-| DB Runtime renders founder DB workflow | PASS |  |
-| UX shows owner evidence activity cost | PASS |  |
-| UX shows disabled reason and blockers | PASS |  |
-| Playwright covers founder DB workflow | PASS |  |
+| DB Runtime renders founder workflow CRUD | PASS |  |
+| UX exposes operator context | PASS |  |
+| UX exposes founder state | PASS |  |
+| Playwright covers Lite founder DB workflow | PASS |  |
+| Playwright covers Business Build founder DB workflow | PASS |  |
+| Playwright covers DB Runtime founder workflow | PASS |  |
 | docs record P94.5 | PASS |  |
 | platform roadmap records P94.5 | PASS |  |
 | phase status advanced | PASS | P94.5/P94.4/P94.6 |
 | roadmap tracks P94.5 | PASS |  |
+| P94.6 handoff exists | PASS |  |
 | no unsafe imports | PASS |  |
-| no DemoApp/private IDs/raw internals | PASS |  |
-| no fake unsafe runnable actions | PASS |  |
-| no mutation controls added | PASS |  |
+| no raw founder DB table names in primary UX | PASS |  |
+| no private IDs or DemoApp in primary UX | PASS |  |
+| no fake runnable actions in founder DB UX | PASS |  |
+| no mutation buttons in founder DB UX | PASS |  |
+| forbidden project paths untouched by contract | PASS |  |
 ## Validation Commands
 
 - npm run check:p945-command-center-founder-db-ux
 - cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder DB workflow"
+- cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"
 - cd dashboard && npm run build
 - npm run check:p944-founder-db-view-model
+- npm run check:p943-founder-runtime-crud-model
+- npm run check:p942-founder-runtime-db-schema
+- npm run check:p941-founder-runtime-db-crud-contract
 - npm run check:os-phase-status
 - npm run check:phase-validation-coverage
 - git diff --check
 ## Known Limitations
 
-- P94.5 is display UX only. It does not add approved local write controls, provider/model calls, agent dispatch, project mutation, hosted DBs, deploy, release, export, package creation, or provider spend.
+- P94.5 is UX-only. It does not add provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend.
 ## Result
 
-PASS (16/16)
+PASS (21/21)

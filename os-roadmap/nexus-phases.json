@@ -6008,7 +6008,7 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6d4eda2",
       "completedAt": "",
       "summary": "P94.5 Command Center founder DB workflow UX is complete; P94.6 aggregate validation is next.",
       "checksRun": [
@@ -6142,7 +6142,7 @@
       "order": 130.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6d4eda2",
       "completedAt": "2026-05-20",
       "summary": "Wired Command Center Lite, Business Build, and DB Runtime to display-safe founder DB workflow state with saved local state, next founder question, PRD readiness, workstream lanes, blockers, owner, evidence/activity, disabled reason, and cost posture.",
       "checksRun": [
