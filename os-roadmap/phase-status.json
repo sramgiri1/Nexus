@@ -11042,7 +11042,7 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "80ccc7f",
       "completedAt": "",
       "summary": "P95.4 Command Center persistence controls UX is complete; P95.5 validation aggregation is next.",
       "checksRun": [
@@ -11143,7 +11143,7 @@
       "order": 131.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "80ccc7f",
       "completedAt": "2026-05-20",
       "summary": "Exposed display-safe founder persistence operator controls in Command Center Lite, Business Build, and DB Runtime with approval, local read/write posture, rollback, audit, blockers, evidence, activity, disabled reason, owner, and cost impact.",
       "checksRun": [
@@ -11215,7 +11215,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T23:27:33.399Z",
+  "updatedAt": "2026-05-20T23:32:53.730Z",
   "currentPhase": "P95.4",
   "previousPhase": "P95.3",
   "nextPhase": "P95.5",
