@@ -6235,7 +6235,7 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "147905a",
       "completedAt": "",
       "summary": "P95.6 docs and roadmap readiness is complete; P95.7 final validation is next.",
       "checksRun": [
@@ -6391,7 +6391,7 @@
       "order": 131.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "147905a",
       "completedAt": "2026-05-20",
       "summary": "Updated README, PRD, Command Center guide, P95 plan, platform roadmap, phase status, and validation evidence for the approved local founder persistence boundary.",
       "checksRun": [
@@ -6427,7 +6427,7 @@
       "detail": "Planned P95 final validation and P96 handoff."
     }
   ],
-  "updatedAt": "2026-05-20T23:42:38.988Z",
+  "updatedAt": "2026-05-20T23:43:09.279Z",
   "currentPhase": "P95.6",
   "previousPhase": "P95.5",
   "nextPhase": "P95.7",
