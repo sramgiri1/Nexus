@@ -1648,6 +1648,26 @@ P89 is complete.
 P90 is next. It must be planned as a narrow, implementation-grade scoped
 handoff before any runtime execution lane can be considered.
 
+## P90 - Governed Founder PRD Live Authoring Lane
+
+P90 starts the first narrow live lane after P89: local founder PRD authoring.
+It does not enable provider/model calls, agent dispatch, tool execution, worker
+execution, project mutation, DB writes, deploy, release, export, package
+creation, network calls, or provider spend.
+
+P90.1 is complete. It defines the implementation-grade P90 execution contract
+for a governed local founder PRD authoring lane. Later P90 subphases must define
+and validate the deterministic local PRD model, safe local authoring result, and
+Command Center UX before any lane is described as live.
+
+P90.2 is next. It must define the local founder PRD authoring model and data
+shape without writing projects or dispatching agents.
+
+The detailed plan lives in
+[`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).
+Implementation must follow
+[`p90-execution-contracts.json`](../../contracts/os-roadmap/p90-execution-contracts.json).
+
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).
 Implementation must follow

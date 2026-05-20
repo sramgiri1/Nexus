@@ -9929,28 +9929,76 @@
     },
     {
       "phaseId": "P90",
-      "title": "Next Scoped Runtime Handoff",
+      "title": "Governed Founder PRD Live Authoring Lane",
       "track": "NEXUS_OS",
       "order": 99.07,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "Started the governed local founder PRD live authoring lane with an implementation-grade contract. Runtime execution remains blocked.",
+      "checksRun": [
+        "npm run check:p901-founder-prd-live-lane-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90 is in progress. P90.1 is contract-only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+      ],
+      "nextPhase": "P90.2",
+      "commandCenterVisible": true,
+      "label": "Founder PRD Lane",
+      "detail": "P90.1 contract defined; no execution enabled."
+    },
+    {
+      "phaseId": "P90.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 100.07,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T03:02:00.000Z",
+      "summary": "Defined the governed local founder PRD live authoring lane contract, subphase split, allowed and forbidden files, future data shape, UX requirements, validation commands, and safety checks.",
+      "checksRun": [
+        "npm run check:p901-founder-prd-live-lane-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P90.1 is schema, policy, and contract only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P90.2",
+      "commandCenterVisible": true,
+      "label": "Schema / Policy / Contract",
+      "detail": "Founder PRD live lane contract; no execution enabled."
+    },
+    {
+      "phaseId": "P90.2",
+      "title": "Core Local PRD Model",
+      "track": "NEXUS_OS",
+      "order": 101.07,
       "status": "planned",
       "branch": "",
       "commit": "",
       "completedAt": "",
-      "summary": "Planned next scoped runtime handoff after P89 final validation.",
+      "summary": "Planned local founder PRD authoring model and deterministic PRD section data shape.",
       "checksRun": [],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P90 is planned and validated."
+        "Not started. Runtime execution remains blocked until P90.2 is planned and validated."
       ],
-      "nextPhase": "P90.1",
+      "nextPhase": "P90.3",
       "commandCenterVisible": true,
-      "label": "Next Runtime Handoff",
-      "detail": "Planned next scoped runtime handoff."
+      "label": "Core Local PRD Model",
+      "detail": "Planned local PRD authoring model."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T02:44:00.000Z",
-  "currentPhase": "P89.7",
-  "previousPhase": "P89.6",
-  "nextPhase": "P90",
+  "updatedAt": "2026-05-20T03:02:00.000Z",
+  "currentPhase": "P90.1",
+  "previousPhase": "P89.7",
+  "nextPhase": "P90.2",
   "currentPhaseStatus": "complete"
 }

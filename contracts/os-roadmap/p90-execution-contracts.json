@@ -1,0 +1,156 @@
+{
+  "phase": "P90",
+  "title": "Governed Founder PRD Live Authoring Lane",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "44b2ee4",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "P90 may only make local founder PRD authoring live after the exact subphase scopes and validates it.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project mutation, DB writes, deploy, release, export, package creation, network calls, or provider spend unless that exact lane is separately scoped and validated.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, db/**, prisma/**, migrations/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "Do not show DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p90-1-founder-prd-live-lane-contract",
+      "phaseId": "P90.1",
+      "objective": "Define the governed local founder PRD authoring live lane contract without enabling execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p90-execution-contracts.json",
+        "docs/architecture/P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md",
+        "scripts/check-p901-founder-prd-live-lane-contract.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p901-founder-prd-live-lane-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P90_FOUNDER_PRD_LIVE_AUTHORING_PHASE",
+          "P90_FOUNDER_PRD_REQUIRED_INPUTS",
+          "buildFounderPrdLiveAuthoringLane",
+          "validateFounderPrdLiveAuthoringLane"
+        ],
+        "dataShape": "P90.1 is contract-only. P90.2 must define a local result envelope with schemaVersion, currentState, laneMode, founderInputs, prdSections, blockers, allowedLocalOperations, forbiddenOperations, runtimeFlags, nextAction, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve existing Business Build and Lite UX. Later P90 UX must show local PRD lane state, next action, blockers, disabled reason, owner, evidence, activity, and cost without showing runnable project mutation, agent dispatch, provider calls, or raw private IDs.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P90.1 because no UI file changes.",
+        "P90 Command Center UX subphase must add focused coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p901-founder-prd-live-lane-contract."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P90 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p901-founder-prd-live-lane-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P90.1 is contract-only.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, tool, or executor dispatch is enabled.",
+        "Confirm no project mutation, DB write, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P90.1 files>",
+        "git commit -m \"feat(nexus): define founder prd live authoring lane\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p90-2-founder-prd-local-model",
+      "phaseId": "P90.2",
+      "objective": "Define the local founder PRD authoring model and deterministic PRD section shape without writing projects.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p90-3-founder-prd-safe-authoring",
+      "phaseId": "P90.3",
+      "objective": "Enable a safe local PRD authoring result envelope without provider calls, agent dispatch, or project mutation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p90-4-command-center-prd-lane-ux",
+      "phaseId": "P90.4",
+      "objective": "Show the local PRD authoring lane in Command Center with real local state and disabled unsafe operations.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p90-5-tests-checkers",
+      "phaseId": "P90.5",
+      "objective": "Aggregate P90 backend, UX, Playwright, docs, roadmap, and safety validation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p90-6-docs-roadmap",
+      "phaseId": "P90.6",
+      "objective": "Close P90 docs, roadmap, and phase-status evidence before final validation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    },
+    {
+      "id": "nexus-os-p90-7-final-validation",
+      "phaseId": "P90.7",
+      "objective": "Finalize P90 validation and prepare the next scoped handoff.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE"
+    }
+  ]
+}
