@@ -1639,8 +1639,14 @@ P89.6 is complete. It closes P89 docs, roadmap, contract, and phase-status
 evidence through P89.6 while preserving Business Build Founder Dry Run UX and
 keeping runtime execution blocked.
 
-P89.7 is next. It must run final P89 validation and prepare the next scoped
-handoff without enabling runtime execution.
+P89.7 is complete. It runs final P89 validation, closes parent P89, preserves
+Business Build Founder Dry Run UX, and prepares P90 as the next scoped handoff
+without enabling runtime execution.
+
+P89 is complete.
+
+P90 is next. It must be planned as a narrow, implementation-grade scoped
+handoff before any runtime execution lane can be considered.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).

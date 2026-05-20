@@ -598,6 +598,104 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p89-7-final-validation",
+      "phaseId": "P89.7",
+      "objective": "Finalize P89 validation, close parent P89, and prepare P90 as the next scoped handoff without enabling runtime execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p897-final-validation.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p897-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Final validation report with P89 evidence reports, package script coverage, contract coverage, docs closure, P90 handoff, parent phase closure, Command Center safety, and Playwright coverage retention."
+      },
+      "commandCenterUxRequirements": "Preserve Business Build Founder Dry Run and Command Center Lite UX. Do not add runnable actions or expose DemoApp/raw private IDs.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright file update in P89.7 because this is final validation only.",
+        "Run existing Business Build coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p897-final-validation.",
+        "Run check:p896-docs-roadmap.",
+        "Run check:p895-tests-checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Mark P89.7 complete.",
+        "Mark P89 complete.",
+        "Add P90 as next planned scoped handoff.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p897-final-validation",
+        "npm run check:p896-docs-roadmap",
+        "npm run check:p895-tests-checkers",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm final validation only.",
+        "Confirm no runtime flags are enabled.",
+        "Confirm no runnable live actions are exposed.",
+        "Confirm no DemoApp or raw private IDs are exposed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.7 files>",
+        "git commit -m \"chore(nexus): finalize p89 runtime handoff validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

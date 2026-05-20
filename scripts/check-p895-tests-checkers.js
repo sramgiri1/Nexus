@@ -101,7 +101,7 @@ addCheck(
 );
 addCheck(
   "phase status advanced",
-  statusById.get("P89")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P89")?.status)
     && ["P89.5", "P89.6", "P89.7"].includes(status.currentPhase)
     && ["P89.4", "P89.5", "P89.6"].includes(status.previousPhase)
     && ["P89.6", "P89.7", "P90"].includes(status.nextPhase),

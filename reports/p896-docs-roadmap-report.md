@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P89.6
-- Generated at: 2026-05-20T02:09:41.900Z
+- Generated at: 2026-05-20T02:13:53.112Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f7fe65e
+- Validation HEAD: 8ec24b6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -27,7 +27,7 @@
 | roadmap statuses complete through P89.6 | PASS |  |
 | status records complete through P89.6 | PASS |  |
 | P89.7 planned or complete | PASS |  |
-| phase status advanced | PASS | P89.6/P89.5/P89.7 |
+| phase status advanced | PASS | P89.7/P89.6/P90 |
 | status checker accepts P89.7 handoff | PASS |  |
 | Command Center UX preserved | PASS |  |
 | no DemoApp/private IDs | PASS |  |

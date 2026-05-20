@@ -430,6 +430,7 @@
     "check:p894-command-center-founder-workstream-ux": "node scripts/check-p894-command-center-founder-workstream-ux.js",
     "check:p895-tests-checkers": "node scripts/check-p895-tests-checkers.js",
     "check:p896-docs-roadmap": "node scripts/check-p896-docs-roadmap.js",
+    "check:p897-final-validation": "node scripts/check-p897-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

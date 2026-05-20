@@ -155,6 +155,30 @@ package, or spend.
 
 ## Next Subphases
 
-P89.7 is next.
+## P89.7 Final Validation
 
-- P89.7 Final Validation: final P89 evidence and handoff.
+P89.7 is complete. It finalizes P89 governed local enterprise runtime handoff
+validation, closes parent P89, and creates P90 as the next scoped handoff. The
+handoff remains local-only and does not enable runtime execution.
+
+Validation:
+
+- `npm run check:p897-final-validation`
+- `npm run check:p896-docs-roadmap`
+- `npm run check:p895-tests-checkers`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.7 is final validation only. It does not run an executor,
+dispatch agents, execute tools/workers, mutate projects, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
+P89 is complete.
+
+## Next Phase
+
+P90 is next. It must be planned as a narrow scoped handoff before any runtime
+execution lane can be considered.

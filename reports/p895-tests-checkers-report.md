@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P89.5
-- Generated at: 2026-05-20T02:08:33.121Z
+- Generated at: 2026-05-20T02:14:24.789Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 71dc665
+- Validation HEAD: 8ec24b6
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | contract tracks P89.1-P89.5 | PASS |  |
 | docs list P89.5 validation | PASS |  |
 | platform roadmap records P89.5 | PASS |  |
-| phase status advanced | PASS | P89.6/P89.5/P89.7 |
+| phase status advanced | PASS | P89.7/P89.6/P90 |
 | status checker accepts P89.6 handoff | PASS |  |
 | runtime builders validate | PASS |  |
 | runtime flags remain false | PASS |  |
