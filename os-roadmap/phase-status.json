@@ -1647,7 +1647,7 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "edacdd5",
       "completedAt": "",
       "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation requests, local CRUD admission, and Command Center live-runtime UX complete. Validation aggregation remains split into P93.6.",
       "checksRun": [
@@ -1777,7 +1777,7 @@
       "order": 127.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "edacdd5",
       "completedAt": "2026-05-20T22:07:47.593Z",
       "summary": "Updated Command Center Durable State / DB Runtime UX to show Enterprise Runtime CRUD state, local CRUD admission readiness, request state, allowed local records, owner, next action, disabled reason, evidence/activity location, and cost posture without runnable mutation controls.",
       "checksRun": [
@@ -10780,7 +10780,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T22:07:47.593Z",
+  "updatedAt": "2026-05-20T22:09:39.412Z",
   "currentPhase": "P93.5",
   "previousPhase": "P93.4",
   "nextPhase": "P93.6",
