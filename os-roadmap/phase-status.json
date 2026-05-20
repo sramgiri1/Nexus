@@ -9934,26 +9934,24 @@
       "order": 99.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "043d1ee",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Started the governed local founder PRD live authoring lane with an implementation-grade contract, deterministic local PRD model, safe in-memory PRD authoring, Command Center Local PRD UX, and aggregate validation. Unsafe runtime execution remains blocked.",
+      "summary": "Started the governed local founder PRD live authoring lane with contract, deterministic local PRD model, safe in-memory authoring, Command Center Local PRD UX, aggregate validation, and docs/roadmap closure. Unsafe runtime execution remains blocked.",
       "checksRun": [
+        "npm run check:p906-founder-prd-docs-roadmap",
         "npm run check:p905-founder-prd-lane-validation",
         "npm run check:p904-command-center-prd-lane-ux",
-        "npm run check:p903-founder-prd-safe-authoring",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
-        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P90 is in progress. P90.5 aggregates validation evidence only; no project writes, executor, provider/model calls, agent dispatch, tool/worker execution, DB mutation, deploy, package, network calls, or spend is enabled."
+        "P90 is in progress. P90.6 closes docs and roadmap evidence only; no project writes, executor, provider/model calls, agent dispatch, tool/worker execution, DB mutation, deploy, package, network calls, or spend is enabled."
       ],
-      "nextPhase": "P90.6",
+      "nextPhase": "P90.7",
       "commandCenterVisible": true,
       "label": "Founder PRD Lane",
-      "detail": "P90.5 aggregate validation complete; execution remains blocked."
+      "detail": "P90.6 docs and roadmap closure complete; execution remains blocked."
     },
     {
       "phaseId": "P90.1",
@@ -10089,25 +10087,51 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 105.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P90 docs, roadmap, contract, and phase-status closure before final validation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T05:00:00.000Z",
+      "summary": "Closed P90 docs, roadmap, contract, and phase-status evidence through P90.6 while preserving the Business Build Local PRD UX and blocked runtime boundary.",
+      "checksRun": [
+        "npm run check:p906-founder-prd-docs-roadmap",
+        "npm run check:p905-founder-prd-lane-validation",
+        "npm run check:p904-command-center-prd-lane-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P90.6 is planned and validated."
+        "P90.6 is docs and roadmap closure only. It does not write project files, dispatch agents, execute tools/workers, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P90.7",
       "commandCenterVisible": true,
       "label": "Docs / Roadmap",
-      "detail": "Planned P90 docs and roadmap closure."
+      "detail": "P90 docs and roadmap closure complete."
+    },
+    {
+      "phaseId": "P90.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 106.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned final P90 validation, parent phase closure, and next scoped handoff preparation.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P90.7 is planned and validated."
+      ],
+      "nextPhase": "P91",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned P90 final validation and handoff."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T04:35:00.000Z",
-  "currentPhase": "P90.5",
-  "previousPhase": "P90.4",
-  "nextPhase": "P90.6",
+  "updatedAt": "2026-05-20T05:00:00.000Z",
+  "currentPhase": "P90.6",
+  "previousPhase": "P90.5",
+  "nextPhase": "P90.7",
   "currentPhaseStatus": "complete"
 }

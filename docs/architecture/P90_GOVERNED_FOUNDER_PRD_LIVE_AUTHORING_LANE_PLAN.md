@@ -126,7 +126,26 @@ Known limitation: P90.5 is validation aggregation only. It does not write
 project files, dispatch agents, execute tools/workers, call providers/models,
 write DB state, use network calls, deploy, release, export, package, or spend.
 
+## P90.6 Docs / Roadmap
+
+P90.6 is complete. It closes P90 docs, roadmap, contract, and phase-status
+evidence through the docs/roadmap subphase. The closure keeps P90.7 as the final
+validation handoff, records the Local PRD lane as Command Center visible, and
+preserves the blocked runtime boundary.
+
+Validation:
+
+- `npm run check:p906-founder-prd-docs-roadmap`
+- `npm run check:p905-founder-prd-lane-validation`
+- `npm run check:p904-command-center-prd-lane-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P90.6 is docs and roadmap closure only. It does not write
+project files, dispatch agents, execute tools/workers, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P90.6 Docs / Roadmap: close docs and status evidence.
 - P90.7 Final Validation: close P90 and hand off to the next scoped phase.

@@ -1681,8 +1681,12 @@ P90.5 is complete. It aggregates P90.1-P90.4 contract, model, safe authoring,
 Command Center UX, Playwright, docs, roadmap, phase status, and safety evidence
 into one validation checker before docs closure.
 
-P90.6 is next. It must close P90 docs, roadmap, contract, and phase-status
-evidence before final validation.
+P90.6 is complete. It closes P90 docs, roadmap, contract, and phase-status
+evidence through docs/roadmap closure while preserving the Business Build Local
+PRD UX and blocked runtime boundary.
+
+P90.7 is next. It must run final P90 validation, close the parent P90 phase, and
+prepare the next scoped handoff.
 
 The detailed plan lives in
 [`P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md`](P90_GOVERNED_FOUNDER_PRD_LIVE_AUTHORING_LANE_PLAN.md).

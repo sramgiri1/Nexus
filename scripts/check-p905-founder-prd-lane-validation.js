@@ -63,18 +63,26 @@ addCheck("P90.4 UX evidence present", contract.includes("P90.4") && p904Report.i
 addCheck("Business Build Playwright coverage present", routeTests.includes("Business Build Local PRD tab shows safe in-memory artifact") && routeTests.includes("Business Build Founder Dry Run tab keeps live execution disabled"));
 addCheck("Local PRD UX still wired to safe authoring", businessBuildData.includes("buildFounderPrdSafeAuthoring") && businessBuildPage.includes('tabId="localPrd"'));
 addCheck("docs record P90.5", docs.includes("P90.5 is complete") && docs.includes("npm run check:p905-founder-prd-lane-validation"));
-addCheck("platform roadmap records P90.5", platformRoadmap.includes("P90.5 is complete") && platformRoadmap.includes("P90.6 is next"));
+addCheck(
+  "platform roadmap records P90.5",
+  platformRoadmap.includes("P90.5 is complete")
+    && (platformRoadmap.includes("P90.6 is next") || platformRoadmap.includes("P90.6 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P90")?.status === "in_progress"
     && statusById.get("P90.5")?.status === "complete"
-    && status.currentPhase === "P90.5"
-    && status.previousPhase === "P90.4"
-    && status.nextPhase === "P90.6",
+    && ["P90.5", "P90.6", "P90.7"].includes(status.currentPhase)
+    && ["P90.4", "P90.5", "P90.6"].includes(status.previousPhase)
+    && ["P90.6", "P90.7", "P91"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P90.5", roadmapById.get("P90.5")?.track === "NEXUS_OS" && roadmapById.get("P90.5")?.status === "complete");
-addCheck("P90.6 planned handoff exists", statusById.get("P90.6")?.status === "planned" && roadmapById.get("P90.6")?.status === "planned");
+addCheck(
+  "P90.6 handoff exists",
+  ["planned", "complete"].includes(statusById.get("P90.6")?.status)
+    && ["planned", "complete"].includes(roadmapById.get("P90.6")?.status),
+);
 addCheck("status checker accepts P90.6", statusChecker.includes("\"P90.6\""));
 addCheck("no forbidden project imports in P90 implementation", !/from\s+["'][^"']*(projects|careloop|generated-projects\/[^/]+\/(?:Sources|Tests)|providers|tools|worker-runtime|db|prisma|migrations|deploy|release|exports|packages)\//.test(implementationSources));
 addCheck("no DemoApp/private IDs in primary implementation surfaces", !/DemoApp|private-project-01|private-project-governed-build-mission|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d/.test(implementationSources));
