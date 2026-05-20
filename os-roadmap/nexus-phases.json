@@ -5340,7 +5340,7 @@
       "order": 107.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "97b570e",
+      "commit": "02e3ef6",
       "completedAt": "",
       "summary": "Governed founder workstream activation planning is in progress with contract, local activation model, safe local review packet, and Command Center activation review UX. Runtime execution remains blocked.",
       "checksRun": [
@@ -5444,7 +5444,7 @@
       "order": 111.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "97b570e",
+      "commit": "02e3ef6",
       "completedAt": "2026-05-20T10:20:00.000Z",
       "summary": "Added Business Build Activation Review UX for the local founder activation review packet with readiness, owner lanes, checklist, evidence, activity, cost posture, and blocked safety rows.",
       "checksRun": [
