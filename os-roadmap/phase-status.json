@@ -9086,7 +9086,7 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3e853ed",
       "completedAt": "",
       "summary": "Governed live capability admission in progress with P86.1-P86.5 complete.",
       "checksRun": [
@@ -9218,8 +9218,8 @@
       "order": 72.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
-      "completedAt": "2026-05-20T00:08:58.557Z",
+      "commit": "3e853ed",
+      "completedAt": "2026-05-20T00:09:45.990Z",
       "summary": "Added activation dry-run records with blockers, rollback, validation, evidence, disabled reason, and blocked runtime flags.",
       "checksRun": [
         "npm run check:p865-activation-dry-run",
@@ -9277,7 +9277,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:08:58.557Z",
+  "updatedAt": "2026-05-20T00:09:45.990Z",
   "currentPhase": "P86.5",
   "previousPhase": "P86.4",
   "nextPhase": "P86.6",
