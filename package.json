@@ -447,6 +447,7 @@
     "check:p922-sqlite-crud-repository": "node scripts/check-p922-sqlite-crud-repository.js",
     "check:p923-sqlite-runtime-read-wiring": "node scripts/check-p923-sqlite-runtime-read-wiring.js",
     "check:p924-governed-sqlite-runtime-writes": "node scripts/check-p924-governed-sqlite-runtime-writes.js",
+    "check:p925-command-center-db-live-state-ux": "node scripts/check-p925-command-center-db-live-state-ux.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

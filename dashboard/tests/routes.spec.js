@@ -2017,29 +2017,33 @@ test.describe("Command Center route-wide UX", () => {
     await page.goto("/command-center/database");
 
     await expect(page.getByText("Durable State Summary", { exact: false })).toBeVisible();
-    await expect(page.locator("body")).toContainText("File-backed");
+    await expect(page.locator("body")).toContainText("Local SQLite capable");
     await expect(page.locator("body")).toContainText("DB writes");
-    await expect(page.locator("body")).toContainText("Disabled by policy");
+    await expect(page.locator("body")).toContainText("Governed ledgers");
     expect(await page.locator("body").innerText()).not.toContain("P41-LOCAL");
 
     expect(errors).toEqual([]);
   });
 
-  test("DB Runtime route renders readiness without runnable DB actions", async ({ page }) => {
+  test("DB live state route renders readiness without runnable DB actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/command-center/database");
     await commandTab(page, "DB Runtime").click();
 
     await expect(activeCommandTabPanel(page)).toContainText("DB Runtime Readiness");
-    await expect(activeCommandTabPanel(page)).toContainText("DB primary state");
+    await expect(activeCommandTabPanel(page)).toContainText("Local SQLite ready when initialized");
+    await expect(activeCommandTabPanel(page)).toContainText("Repository reads");
+    await expect(activeCommandTabPanel(page)).toContainText("Wired");
+    await expect(activeCommandTabPanel(page)).toContainText("Ledger writes");
+    await expect(activeCommandTabPanel(page)).toContainText("Guarded");
     await expect(activeCommandTabPanel(page)).toContainText("Fallback state");
-    await expect(activeCommandTabPanel(page)).toContainText("Migration readiness");
-    await expect(activeCommandTabPanel(page)).toContainText("Not ready for execution");
+    await expect(activeCommandTabPanel(page)).toContainText("SQLite when live; file fallback otherwise");
     await expect(activeCommandTabPanel(page)).toContainText("DB writes");
-    await expect(activeCommandTabPanel(page)).toContainText("Disabled");
+    await expect(activeCommandTabPanel(page)).toContainText("Limited");
     await expect(activeCommandTabPanel(page)).toContainText("Blockers");
     await expect(activeCommandTabPanel(page)).toContainText("Evidence, Activity, And Cost");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p924-governed-sqlite-runtime-writes-report.md");
 
     const body = await activeCommandTabPanel(page).innerText();
     expect(body).not.toMatch(/migrate now|write now|schema now|run db|execute now|enable now/i);

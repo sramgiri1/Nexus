@@ -123,8 +123,37 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
+## P92.5 Command Center DB Live State UX
+
+P92.5 is complete. The Durable State `DB Runtime` tab now shows display-safe
+local SQLite live state:
+
+- local SQLite readiness;
+- repository read wiring;
+- governed evidence/audit/activity ledger write scope;
+- file-backed fallback state;
+- blocked hosted DB, general mutation, project mutation, provider/tool,
+  deploy, export, package, release, network, and spend actions;
+- owner capability;
+- next action;
+- evidence report locations;
+- cost impact.
+
+The UX remains informational only. It exposes no DB toggles, migration buttons,
+hosted DB setup, raw DB paths, raw DB URLs, raw logs, raw JSON, private IDs, or
+DemoApp.
+
+Validation:
+
+- `npm run check:p925-command-center-db-live-state-ux`
+- `cd dashboard && npm run build`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"`
+- `npm run check:p924-governed-sqlite-runtime-writes`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- browser verification on `/command-center/database`
+
 ## Next Subphases
 
-- P92.5 Command Center DB live state UX.
 - P92.6 migration, backup, docs, and roadmap closure.
 - P92.7 final validation.

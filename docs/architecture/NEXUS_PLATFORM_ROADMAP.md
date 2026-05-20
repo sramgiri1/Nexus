@@ -1755,8 +1755,14 @@ P92.4 is complete. It wires governed append paths for evidence, audit, and
 activity records to local SQLite when explicit write flags are enabled. Existing
 JSONL append behavior remains available and broader mutation is still blocked.
 
-P92.5 is next. It must add display-safe Command Center DB live-state UX and
-focused route coverage.
+P92.5 is complete. It updates Command Center Durable State DB Runtime UX to show
+local SQLite readiness, read wiring, governed ledger write scope, blockers,
+owner capability, next action, evidence locations, and cost impact without raw
+DB paths, DB URLs, raw logs, raw JSON, private IDs, DemoApp, or runnable DB
+actions.
+
+P92.6 is next. It must close migration, backup, docs, and roadmap validation for
+the local SQLite lane.
 
 The detailed plan lives in
 [`P92_LOCAL_SQLITE_RUNTIME_PLAN.md`](P92_LOCAL_SQLITE_RUNTIME_PLAN.md).

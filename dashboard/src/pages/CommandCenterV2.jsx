@@ -7407,20 +7407,20 @@ function DurableStatePage({ vm }) {
             <div className="ccv2-card ccv2-page-summary-card">
               <div className="ccv2-section-heading">Durable State Summary</div>
               <div className="ccv2-page-summary-grid">
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current persistence</span><span className="ccv2-page-summary-value">File-backed</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current persistence</span><span className="ccv2-page-summary-value">Local SQLite capable; file fallback active</span></div>
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB foundation</span><span className="ccv2-page-summary-value">Ready</span></div>
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">Disabled by policy</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB writes</span><span className="ccv2-page-summary-value">Governed ledgers only</span></div>
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">File fallback</span><span className="ccv2-page-summary-value">Active</span></div>
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime DB primary</span><span className="ccv2-page-summary-value">Not enabled yet</span></div>
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">DB-backed runtime primary is planned after runtime and governance stabilize.</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Runtime DB primary</span><span className="ccv2-page-summary-value">SQLite reads when live mode is initialized</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next step</span><span className="ccv2-page-summary-value">Review DB Runtime for live state, blockers, owner, evidence, and allowed ledger write scope.</span></div>
               </div>
             </div>
             <div className="ccv2-stat-chips" style={{ marginBottom: 16 }}>
-              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Persistence</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">File-backed</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Persistence</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">SQLite local</span></div>
               <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB foundation</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">Ready</span></div>
               <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Entities</span><span className="ccv2-stat-chip__value">{entityCount}</span></div>
               <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Sources Mapped</span><span className="ccv2-stat-chip__value">{sourcesAvailable} / {totalEntities}</span></div>
-              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB Writes</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--red">Disabled by policy</span></div>
+              <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">DB Writes</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--amber">Governed ledgers</span></div>
               <div className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Live data</span><span className="ccv2-stat-chip__value">{online ? "API" : "Snapshot"}</span></div>
             </div>
           </CommandTabPanel>
@@ -7453,7 +7453,7 @@ function DurableStatePage({ vm }) {
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Mapped sources</span><span className="ccv2-page-summary-value">{sourcesAvailable} / {totalEntities}</span></div>
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Unmapped sources</span><span className="ccv2-page-summary-value">{sourcesMissing}</span></div>
                 <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Import preview</span><span className="ccv2-page-summary-value">{online ? "Available from live API" : "Requires local API for live mapping"}</span></div>
-                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Write posture</span><span className="ccv2-page-summary-value">DB writes disabled by policy; no data is written to any database.</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Write posture</span><span className="ccv2-page-summary-value">SQLite writes are limited to governed evidence, audit, and activity ledgers.</span></div>
               </div>
             </div>
           </CommandTabPanel>
@@ -7461,7 +7461,7 @@ function DurableStatePage({ vm }) {
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Fallback</div>
               <p style={{ fontSize: 12, color: "var(--v2-muted)", lineHeight: 1.6, marginTop: 8 }}>
-                File fallback and snapshot fallback remain active. DB primary runtime is not enabled yet, and DB disabled is a safety boundary rather than a runtime error.
+                File fallback and snapshot fallback remain active. Local SQLite can serve repository reads when live mode is initialized, and governed ledger writes require explicit local DB write flags.
               </p>
             </div>
           </CommandTabPanel>
@@ -7501,11 +7501,11 @@ function DurableStatePage({ vm }) {
               <div className="ccv2-section-heading">Developer Details</div>
               <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
                 {[
-                  { label: "DB writes", value: "Disabled by policy", valueClass: "disabled" },
+                  { label: "DB writes", value: "Governed ledgers only", valueClass: "ready" },
                   { label: "Production DB", value: "Not allowed", valueClass: "disabled" },
                   { label: "External DB", value: "Not allowed", valueClass: "disabled" },
                   { label: "File fallback", value: "Required", valueClass: "ready" },
-                  { label: "Dry-run mapping", value: "Allowed", valueClass: "ready" },
+                  { label: "SQLite CRUD", value: "Local only", valueClass: "ready" },
                 ].map((row) => (
                   <div key={row.label} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{row.label}</span><span className={`ccv2-safety-row__value--${row.valueClass}`}>{row.value}</span></div>
                 ))}

@@ -381,6 +381,102 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p92-5-command-center-db-live-state-ux",
+      "phaseId": "P92.5",
+      "objective": "Show display-safe local SQLite live state in Command Center.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p925-command-center-db-live-state-ux.js",
+        "docs/architecture/P92_LOCAL_SQLITE_RUNTIME_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "contracts/os-roadmap/p92-execution-contracts.json",
+        "reports/p925-command-center-db-live-state-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "os-roadmap/nexus-phases.json",
+        "os-roadmap/phase-status.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "dbRuntimeReadinessViewModel",
+          "buildDbRuntimeReadinessViewModel"
+        ],
+        "dataShape": "DB runtime UX rows include DB primary state, read source, fallback state, governed writes, general mutation, owner capability, next action, status chips, blockers, blocked operations, evidence rows, and safety flags."
+      },
+      "commandCenterUxRequirements": "The Durable State DB Runtime tab must show local SQLite readiness, repository read wiring, governed ledger write scope, blockers, owner capability, evidence locations, next action, and cost impact. It must not expose raw DB paths, raw DB URLs, private IDs, raw logs, raw JSON, hosted DB controls, provider spend controls, runnable DB mutation buttons, or DemoApp.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Update focused DB live state route coverage.",
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"."
+      ],
+      "testsCheckers": [
+        "Add check:p925-command-center-db-live-state-ux.",
+        "Run dashboard build.",
+        "Run P92.1-P92.4 checkers.",
+        "Run check:os-phase-status.",
+        "Run check:phase-validation-coverage."
+      ],
+      "validationCommands": [
+        "npm run check:p925-command-center-db-live-state-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm Command Center DB UX is display-only.",
+        "Confirm no raw DB paths, DB URLs, raw JSON/logs, private IDs, or DemoApp appear.",
+        "Confirm no provider/model, agent, worker, tool, project mutation, deploy, release, package, network, hosted DB, or spend behavior is enabled."
+      ],
+      "gitCommands": [
+        "git add <allowed P92.5 files>",
+        "git commit -m \"feat(nexus): show db live state in command center\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

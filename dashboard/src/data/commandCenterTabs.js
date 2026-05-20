@@ -697,7 +697,7 @@ export const DURABLE_STATE_TABS = [
   { id: "entities", label: "Entities", description: "Entity coverage, mapped sources, and readiness", badge: "Read-only" },
   { id: "import-plan", label: "Import Plan", description: "Dry-run import state and missing mappings", badge: "Read-only" },
   { id: "fallback", label: "Fallback", description: "File fallback, snapshot fallback, and DB-primary limitations", badge: "Ready" },
-  { id: "db-runtime", label: "DB Runtime", description: "Readiness gate, blockers, and disabled DB mutation posture", badge: "Blocked" },
+  { id: "db-runtime", label: "DB Runtime", description: "Local SQLite live state, blockers, and governed ledger write posture", badge: "Local" },
   { id: "developer-details", label: "Developer Details", description: "Policy keys and config summaries only", badge: "Read-only" },
 ];
 

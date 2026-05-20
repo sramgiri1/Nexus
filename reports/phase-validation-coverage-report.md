@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T12:19:02.224Z
+- Generated at: 2026-05-20T12:25:37.828Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 0a7ade8
+- Validation HEAD: bf43ea2
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -100,7 +100,7 @@
 | P72.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P72.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P72.4 validation coverage | PASS | 5 checkers, 1 reports |
-| P72.5 validation coverage | PASS | 6 checkers, 1 reports |
+| P72.5 validation coverage | PASS | 7 checkers, 2 reports |
 | P72.6 validation coverage | PASS | 22 checkers, 16 reports |
 | P72.7 validation coverage | PASS | 38 checkers, 31 reports |
 | P73 validation coverage | PASS | 17 checkers, 7 reports |
@@ -237,22 +237,27 @@
 | P91.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P91.4 validation coverage | PASS | 7 checkers, 1 reports |
 | P91.5 validation coverage | PASS | 17 checkers, 17 reports |
-| P92 validation coverage | PASS | 10 checkers, 4 reports |
+| P92 validation coverage | PASS | 12 checkers, 5 reports |
 | P92.1 validation coverage | PASS | 2 checkers, 1 reports |
 | P92.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P92.3 validation coverage | PASS | 6 checkers, 1 reports |
 | P92.4 validation coverage | PASS | 7 checkers, 1 reports |
-| P92.5 validation coverage | PASS | 1 checkers, 1 reports |
+| P92.5 validation coverage | PASS | 9 checkers, 2 reports |
+| P92.6 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P92.4; next=P92.5; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P92.5; next=P92.6; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- None
+- P92.6 SQLite Migration Backup Docs Closure
+  - status: planned
+  - checkers: 0
+  - reports: 0
+  - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (230/230)
+PASS (231/231)

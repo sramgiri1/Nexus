@@ -5492,25 +5492,29 @@
       "order": 114.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "0a7ade8",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Local SQLite runtime implementation is in progress with guarded initialization, schema-driven CRUD, SQLite-backed reads, and governed runtime ledger writes.",
+      "summary": "Local SQLite runtime implementation is in progress with guarded initialization, schema-driven CRUD, SQLite-backed reads, governed runtime ledger writes, and display-safe Command Center DB live-state UX.",
       "checksRun": [
+        "npm run check:p925-command-center-db-live-state-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
         "npm run check:p924-governed-sqlite-runtime-writes",
         "npm run check:p923-sqlite-runtime-read-wiring",
         "npm run check:p922-sqlite-crud-repository",
         "npm run check:p921-sqlite-runtime-foundation",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
+        "browser verification on /command-center/database",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P92 is in progress. Command Center DB live-state UX and final migration/backup validation are completed in later P92 subphases."
+        "P92 is in progress. Migration/backup closure and final validation remain pending."
       ],
-      "nextPhase": "P92.5",
+      "nextPhase": "P92.6",
       "commandCenterVisible": true,
       "label": "Local SQLite Runtime",
-      "detail": "Governed SQLite writes complete; DB live-state UX pending."
+      "detail": "DB live-state UX complete; migration and backup closure pending."
     },
     {
       "phaseId": "P92.1",
@@ -5619,24 +5623,55 @@
       "title": "Command Center DB Live State UX",
       "track": "NEXUS_OS",
       "order": 119.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned display-safe Command Center DB live-state UX for local SQLite readiness, read source, write scope, blockers, and next action.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T12:24:41.000Z",
+      "summary": "Updated Command Center Durable State DB Runtime UX to show display-safe local SQLite readiness, read wiring, governed ledger write scope, blockers, owner capability, evidence locations, next action, and cost impact.",
+      "checksRun": [
+        "npm run check:p925-command-center-db-live-state-ux",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "npm run check:p924-governed-sqlite-runtime-writes",
+        "npm run check:p923-sqlite-runtime-read-wiring",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p921-sqlite-runtime-foundation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "browser verification on /command-center/database",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P92.5 is display-only UX. It does not add DB toggles, hosted DB setup, migrations, general mutation, provider calls, deploy, package, or spend actions."
       ],
       "nextPhase": "P92.6",
       "commandCenterVisible": true,
       "label": "DB Live State UX",
-      "detail": "Planned Command Center UX for live local SQLite state."
+      "detail": "Display-safe local SQLite live-state UX complete; migration and backup closure pending."
+    },
+    {
+      "phaseId": "P92.6",
+      "title": "SQLite Migration Backup Docs Closure",
+      "track": "NEXUS_OS",
+      "order": 120.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned migration, backup, docs, and roadmap closure for the local SQLite runtime lane.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started."
+      ],
+      "nextPhase": "P92.7",
+      "commandCenterVisible": true,
+      "label": "SQLite Migration Closure",
+      "detail": "Planned migration and backup closure for local SQLite."
     }
   ],
-  "updatedAt": "2026-05-20T12:18:39.000Z",
-  "currentPhase": "P92.4",
-  "previousPhase": "P92.3",
-  "nextPhase": "P92.5",
+  "updatedAt": "2026-05-20T12:24:41.000Z",
+  "currentPhase": "P92.5",
+  "previousPhase": "P92.4",
+  "nextPhase": "P92.6",
   "currentPhaseStatus": "complete"
 }
