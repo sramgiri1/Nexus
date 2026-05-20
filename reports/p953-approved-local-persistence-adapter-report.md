@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P95.3
-- Generated at: 2026-05-20T23:21:04.904Z
+- Generated at: 2026-05-20T23:37:53.777Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: eccad92
+- Validation HEAD: a1a0963
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | control validator remains available | PASS |  |
 | docs record P95.3 | PASS |  |
 | platform roadmap records P95.3 | PASS |  |
-| phase status advanced | PASS | P95.3/P95.2/P95.4 |
+| phase status advanced | PASS | P95.5/P95.4/P95.6 |
 | roadmap tracks P95.3 | PASS |  |
 | P95.4 handoff exists | PASS |  |
 | no raw private IDs in adapter output | PASS |  |

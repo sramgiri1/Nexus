@@ -116,15 +116,26 @@ Validation:
 
 ### P95.5 Validation
 
-P95.5 is next. It aggregates contract, model, adapter, Command Center UX, temp
-SQLite, and route-safety validation. It adds or updates checkers and reports
-only.
+P95.5 is complete. It aggregates contract, model, adapter, Command Center UX,
+temp SQLite, and route-safety validation. It updates the P95.3 checker to accept
+later P95 phase progression without changing runtime behavior.
+
+Validation:
+
+- `npm run check:p955-founder-persistence-controls-validation`
+- `npm run check:p954-command-center-persistence-controls-ux`
+- `npm run check:p953-approved-local-persistence-adapter`
+- `npm run check:p952-founder-persistence-control-model`
+- `npm run check:p951-founder-persistence-controls-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ### P95.6 Docs And Roadmap
 
-P95.6 updates README, PRD, Command Center guide if applicable, platform roadmap,
-OS roadmap/status, and reports. It must describe what is live-local and what is
-still blocked without implying unsafe execution.
+P95.6 is next. It updates README, PRD, Command Center guide if applicable,
+platform roadmap, OS roadmap/status, and reports. It must describe what is
+live-local and what is still blocked without implying unsafe execution.
 
 ### P95.7 Final Validation
 

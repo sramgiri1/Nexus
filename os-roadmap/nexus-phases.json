@@ -6235,11 +6235,15 @@
       "order": 131,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "80ccc7f",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P95.4 Command Center persistence controls UX is complete; P95.5 validation aggregation is next.",
+      "summary": "P95.5 validation aggregation is complete; P95.6 docs and roadmap readiness is next.",
       "checksRun": [
+        "npm run check:p955-founder-persistence-controls-validation",
         "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
         "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
         "cd dashboard && npm run build",
         "npm run check:os-phase-status",
@@ -6247,12 +6251,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P95 parent remains in progress. P95.4 adds read-only Command Center UX only and keeps unsafe runtime operations blocked."
+        "P95.5 is validation aggregation only. It does not add new runtime behavior, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P95.5",
+      "nextPhase": "P95.6",
       "commandCenterVisible": true,
       "label": "Founder Persistence Controls",
-      "detail": "Command Center persistence controls complete; validation aggregation next."
+      "detail": "P95 validation aggregation complete; docs and roadmap next."
     },
     {
       "phaseId": "P95.1",
@@ -6360,17 +6364,30 @@
       "title": "Tests / Checkers",
       "track": "NEXUS_OS",
       "order": 131.5,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned aggregate P95 checker and Playwright coverage.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Aggregated P95 contract, model, adapter, Command Center UX, temp SQLite, route-safety, phase status, and coverage validation.",
+      "checksRun": [
+        "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P95.5 is validation aggregation only. It does not add new runtime behavior, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P95.6",
       "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "Planned P95 subphase."
+      "label": "Founder Persistence Validation",
+      "detail": "Validation aggregation complete; docs and roadmap next."
     },
     {
       "phaseId": "P95.6",
@@ -6407,9 +6424,9 @@
       "detail": "Planned P95 subphase."
     }
   ],
-  "updatedAt": "2026-05-20T23:32:53.734Z",
-  "currentPhase": "P95.4",
-  "previousPhase": "P95.3",
-  "nextPhase": "P95.5",
+  "updatedAt": "2026-05-20T23:55:00.000Z",
+  "currentPhase": "P95.5",
+  "previousPhase": "P95.4",
+  "nextPhase": "P95.6",
   "currentPhaseStatus": "complete"
 }

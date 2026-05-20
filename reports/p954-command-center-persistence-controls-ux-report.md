@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P95.4
-- Generated at: 2026-05-20T23:33:47.058Z
+- Generated at: 2026-05-20T23:37:53.495Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1881ce2
+- Validation HEAD: a1a0963
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -33,7 +33,7 @@
 | Playwright safety assertions retained | PASS |  |
 | docs record P95.4 | PASS |  |
 | platform roadmap records P95.4 | PASS |  |
-| phase status advanced | PASS | P95.4/P95.3/P95.5 |
+| phase status advanced | PASS | P95.5/P95.4/P95.6 |
 | roadmap tracks P95.4 | PASS |  |
 | P95.5 handoff exists | PASS |  |
 | P95.4 avoids forbidden source scope | PASS |  |
