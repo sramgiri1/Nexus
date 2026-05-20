@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T02:27:17.465Z
+- Generated at: 2026-05-20T02:28:21.336Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 3ce19b0
+- Validation HEAD: 2165164
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
