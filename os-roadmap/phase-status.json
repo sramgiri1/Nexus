@@ -1647,7 +1647,7 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb335ff",
       "completedAt": "",
       "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation request envelopes, and local CRUD execution admission complete. Command Center live-runtime UX remains split into P93.5.",
       "checksRun": [
@@ -1750,7 +1750,7 @@
       "order": 126.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb335ff",
       "completedAt": "2026-05-20T22:01:12.414Z",
       "summary": "Added governed local CRUD execution admission for P93 OS runtime SQLite entities with explicit operator approval, rollback, audit, validation command acceptance, sqlite-live mode, and local write flags required before writes.",
       "checksRun": [
@@ -10772,7 +10772,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T22:01:12.414Z",
+  "updatedAt": "2026-05-20T22:02:34.795Z",
   "currentPhase": "P93.4",
   "previousPhase": "P93.3",
   "nextPhase": "P93.5",
