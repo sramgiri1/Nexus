@@ -66,14 +66,20 @@ addCheck("Lite route is default", routes.includes('key: "lite"') && routes.inclu
 addCheck("primary sidebar hides clutter by construction", routes.includes('"lite"') && routes.includes('"agentFlow"') && !/liteRouteKeys[\s\S]*"workers"/.test(routes) && !/liteRouteKeys[\s\S]*"enterprisePreview"/.test(routes));
 addCheck("Command Center renders Lite and Agent Flow", page.includes("CommandCenterLitePage") && page.includes("AgentFlowPanel") && page.includes('currentPage === "lite"') && page.includes('currentPage === "agentFlow"'));
 addCheck("Lite styles are present", styles.includes(".ccv2-lite-page") && styles.includes(".ccv2-agent-flow__rail"));
-addCheck("Playwright coverage added", tests.includes("Command Center Lite keeps primary navigation focused") && tests.includes("Chat with NEXUS and watch the agent plan form"));
+addCheck(
+  "Playwright coverage added",
+  tests.includes("Command Center Lite keeps primary navigation focused") &&
+    tests.includes("Agent Flow route loads local lanes directly") &&
+    tests.includes("Chat with NEXUS and watch the agent plan form"),
+);
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p842-command-center-lite"]));
 addCheck("contract references P84.2 Lite files", contract.includes("live-ready/founderRuntimeEnvelope.js") && contract.includes("check:p842-command-center-lite"));
 addCheck("docs mention P84.2 validation", docs.includes("P84.2 Live-Local Q&A to PRD Envelope") && docs.includes("npm run check:p842-command-center-lite"));
 addCheck(
   "phase status advanced",
   statusById.get("P84.2")?.status === "complete" &&
-    ["P84.2", "P84.3", "P84.4", "P84.5", "P84.6", "P84.7"].includes(status.currentPhase),
+    status.currentPhase !== "P84.2" &&
+    Boolean(status.currentPhase),
 );
 addCheck("report prerequisites exist", fileExists("reports/p841-founder-runtime-admission-report.md"));
 

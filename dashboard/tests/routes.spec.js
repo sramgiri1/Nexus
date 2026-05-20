@@ -193,12 +193,36 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   await expect(page.getByLabel("Local PRD readiness")).not.toContainText("Build a simple iOS Snake game for the App Store");
   await page.getByRole("button", { name: "Send" }).click();
   await expect(page.getByLabel("Local PRD readiness")).toContainText("Build a simple iOS Snake game for the App Store");
-  await expect(page.getByLabel("Local PRD readiness")).toContainText("casual iPhone players");
-  await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Local PRD readiness")).toContainText("Target Customer");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   await expect(page.getByLabel("Agent action flow")).toContainText("Legal");
   await expect(page.getByLabel("Agent action flow")).toContainText("Support");
   await page.getByRole("link", { name: /Agent Flow/i }).click();
+  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
+  expect(errors).toEqual([]);
+});
+
+test("Agent Flow route loads local lanes directly", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.removeItem("nexus-lite-founder-qna-state");
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+  await page.goto("/command-center/agent-flow");
+
+  await expect(page.locator(".ccv2-page-head__title")).toContainText("Agent Flow");
   await expect(page.getByLabel("Agent action flow")).toContainText("Build a simple iOS Snake game for the App Store");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Product");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Engineering");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Agent dispatch");
+  await expect(page.getByLabel("Agent action flow")).toContainText("Project mutation");
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toContain("admitted_for_local_planning");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
   expect(errors).toEqual([]);
 });
 

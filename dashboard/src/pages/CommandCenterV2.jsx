@@ -2721,6 +2721,11 @@ function LocalTaskBoardPanel({ taskBoard }) {
 }
 
 function AgentFlowPanel({ envelope }) {
+  const prdFields = envelope?.prdDraft?.fields || {};
+  const agentFlow = Array.isArray(envelope?.agentFlow) ? envelope.agentFlow : [];
+  const disabledActions = Array.isArray(envelope?.disabledActions) ? envelope.disabledActions : [];
+  const blockedLaneReason = "Execution stays blocked until PRD review and live gates pass.";
+
   return (
     <section className="ccv2-card ccv2-agent-flow" aria-label="Agent action flow">
       <div className="ccv2-card-header-row">
@@ -2728,27 +2733,27 @@ function AgentFlowPanel({ envelope }) {
           <div className="ccv2-eyebrow">Agent Flow</div>
           <h3>How NEXUS puts agents into action</h3>
           <div className="ccv2-muted" style={{ marginTop: 6 }}>
-            Idea: {envelope.prdDraft.fields?.founderIdea}
+            Idea: {prdFields.founderIdea || envelope?.founderIdeaSummary || DEFAULT_LITE_FOUNDER_IDEA}
           </div>
         </div>
         <span className="ccv2-pill ccv2-pill--disabled">Planning only</span>
       </div>
       <div className="ccv2-agent-flow__rail">
-        {envelope.agentFlow.map((lane) => (
-          <div className="ccv2-agent-flow__node" key={lane.lane}>
-            <div className="ccv2-agent-flow__step">{lane.step}</div>
+        {agentFlow.map((lane, index) => (
+          <div className="ccv2-agent-flow__node" key={lane.lane || lane.ownerCapability || index}>
+            <div className="ccv2-agent-flow__step">{lane.step || index + 1}</div>
             <div className="ccv2-agent-flow__body">
               <div className="ccv2-agent-flow__lane">{lane.lane}</div>
               <div className="ccv2-agent-flow__owner">{lane.ownerCapability}</div>
-              <div className="ccv2-agent-flow__state">{lane.currentState}</div>
+              <div className="ccv2-agent-flow__state">{lane.readinessLabel || formatLiteFieldLabel(lane.currentState)}</div>
               <div className="ccv2-agent-flow__next">{lane.nextAction}</div>
-              <div className="ccv2-agent-flow__blocker">{lane.blocker}</div>
+              <div className="ccv2-agent-flow__blocker">{lane.blocker || blockedLaneReason}</div>
             </div>
           </div>
         ))}
       </div>
       <div className="ccv2-agent-flow__footer">
-        {envelope.disabledActions.map((action) => (
+        {disabledActions.map((action) => (
           <div key={action.label}>
             <span>{action.label}</span>
             <strong>{action.reason}</strong>
@@ -2760,8 +2765,7 @@ function AgentFlowPanel({ envelope }) {
 }
 
 function AgentFlowPage() {
-  const [message] = useState(getStoredLiteFounderIdea);
-  const envelope = buildLiteEnvelope(message);
+  const [envelope] = useState(getStoredLiteQnaState);
   return (
     <div className="ccv2-content ccv2-lite-page">
       <div className="ccv2-page-head">
