@@ -6235,7 +6235,7 @@
       "order": 131,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2ae086d",
       "completedAt": "2026-05-20",
       "summary": "Completed founder persistence operator controls, approved local adapter validation, Command Center visibility, docs/readiness updates, and final validation handoff to P96.",
       "checksRun": [
@@ -6423,7 +6423,7 @@
       "order": 131.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2ae086d",
       "completedAt": "2026-05-20",
       "summary": "Ran final P95 validation, confirmed P95.1-P95.6 closure evidence, preserved blocked unsafe execution, and handed off to P96.",
       "checksRun": [
