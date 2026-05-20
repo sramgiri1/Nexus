@@ -9297,7 +9297,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c6c02d3",
       "completedAt": "",
       "summary": "Explicit live activation unlocks in progress with P87.1-P87.6 complete.",
       "checksRun": [
@@ -9446,7 +9446,7 @@
       "order": 81.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "c6c02d3",
       "completedAt": "2026-05-20T00:41:17.287Z",
       "summary": "Aggregated P87.1-P87.5 scripts, reports, docs, roadmap, status, Command Center Live Unlocks coverage, and safety evidence.",
       "checksRun": [
@@ -9487,7 +9487,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:41:17.287Z",
+  "updatedAt": "2026-05-20T00:42:29.859Z",
   "currentPhase": "P87.6",
   "previousPhase": "P87.5",
   "nextPhase": "P87.7",
