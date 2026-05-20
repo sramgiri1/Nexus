@@ -9502,7 +9502,7 @@
       "order": 83.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4e20994",
+      "commit": "18ac7cf",
       "completedAt": "",
       "summary": "Started scoped execution-capable activation with local-only activation profile, request model, executor admission contracts, Command Center scoped activation UX, and validation aggregation. Execution remains blocked until later P88 subphases explicitly scope and validate one narrow lane.",
       "checksRun": [
@@ -9633,7 +9633,7 @@
       "order": 88.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "18ac7cf",
       "completedAt": "2026-05-20T01:16:22.717Z",
       "summary": "Aggregated P88.1-P88.4 scripts, reports, package scripts, docs, roadmap/status records, Command Center scoped activation coverage, Playwright coverage, and safety posture.",
       "checksRun": [
