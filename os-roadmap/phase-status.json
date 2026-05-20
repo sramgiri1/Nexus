@@ -10815,7 +10815,7 @@
       "order": 130.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3085a23",
       "completedAt": "2026-05-20T23:50:00.000Z",
       "summary": "Completed founder runtime DB CRUD workflow wiring: contract, local SQLite founder schema, governed CRUD model/admission, display-safe view model, Command Center UX, validation aggregation, and final closure.",
       "checksRun": [
@@ -11010,7 +11010,7 @@
       "order": 130.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "3085a23",
       "completedAt": "2026-05-20T23:50:00.000Z",
       "summary": "Closed P94 with final validation, status/report stamping, and P95 handoff.",
       "checksRun": [
