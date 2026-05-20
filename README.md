@@ -31,22 +31,24 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P93
+## Current Status Through P94.6
 
-P41.5 through P93 are complete. The current NEXUS OS focus has moved from
-preview-only foundations to governed local live-runtime state. P93 completed
-the Enterprise Live Runtime Expansion: local runtime CRUD planning, governed
-mutation request envelopes, explicit local SQLite CRUD admission for allowlisted
-OS runtime records, and Command Center DB Runtime UX that shows the state
-without exposing raw IDs or runnable mutation controls.
+P41.5 through P93 are complete, and P94.1 through P94.6 are complete. The
+current NEXUS OS focus has moved from preview-only foundations to governed local
+live-runtime state and founder workflow persistence. P94 now wires the
+founder-to-business workflow to governed local SQLite CRUD records and shows the
+DB-backed state in Command Center Lite, Business Build, and DB Runtime. P94.6
+refreshes README, PRD, roadmap, phase status, and validation evidence before
+P94 final closure.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
 package creation, and provider spend remain blocked unless a later phase
-explicitly scopes and validates them. P93.4 is the current exception: it admits
-local SQLite CRUD only for allowlisted NEXUS OS runtime entities and only with
-explicit operator approval, rollback acceptance, audit acceptance, validation
-command acceptance, `sqlite-live` mode, and local write flags.
+explicitly scopes and validates them. P93.4/P94.3 are the current exceptions:
+they admit local SQLite CRUD only for allowlisted NEXUS OS runtime/founder
+workflow entities and only with explicit operator approval, rollback acceptance,
+audit acceptance, validation command acceptance, `sqlite-live` mode, and local
+write flags.
 
 The Command Center and local operator surface have:
 
@@ -84,6 +86,10 @@ The Command Center and local operator surface have:
 - P93 enterprise runtime state: CRUD lane planning, governed mutation request
   envelopes, local CRUD admission for OS runtime records, and DB Runtime UX in
   Command Center
+- P94 founder runtime state: local SQLite schema for founder sessions, Q&A
+  turns, PRD artifacts, and workstream plans; governed CRUD admission; shared
+  display-safe view models; and Command Center Lite, Business Build, and DB
+  Runtime UX for saved founder workflow state
 
 ## CareLoop Project Progress
 
@@ -262,22 +268,23 @@ npm run nexus:down
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
 - Product requirements: [docs/prd/NEXUS_AGENTIC_OS_PRD.md](docs/prd/NEXUS_AGENTIC_OS_PRD.md)
 - P93 Enterprise Live Runtime Expansion: [docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md](docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md)
+- P94 Founder Runtime DB CRUD Workflow Wiring: [docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md](docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md)
 - Conversational command interface: [docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md](docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
 ## Next Steps
 
-P94 is next. It must start with a scoped execution contract before coding. The
-next phase should build on P93 by making founder-to-business work more useful
-while preserving the safety boundary:
+P94.7 is next. It must run final validation, close P94, stamp the final status
+with real commits, and hand off to the next scoped phase. After P94 closes, the
+next scoped phase should make approved local founder workflow persistence more
+operator-usable while preserving the safety boundary:
 
-- define the P94 phase contract and subphases before implementation
-- make the founder workflow more useful from idea intake through PRD, agent
-  workstreams, evidence, and local runtime records
 - keep provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy/release/export/package, and spend blocked
   until explicitly scoped
-- add focused Playwright and checker coverage for any Command Center UX changes
+- keep local founder CRUD limited to allowlisted OS records and explicit
+  approval/write gates
+- add focused Playwright and checker coverage for every Command Center UX change
 - keep OS Roadmap status current after each subphase
 
 ## Codebase Documentation

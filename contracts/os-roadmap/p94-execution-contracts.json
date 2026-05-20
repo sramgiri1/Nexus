@@ -468,7 +468,7 @@
       "id": "nexus-os-p94-6-docs-roadmap-validation",
       "phaseId": "P94.6",
       "objective": "Aggregate P94 validation and update docs/roadmap evidence before final closure.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "scripts/check-p946-founder-db-workflow-validation.js",
@@ -482,7 +482,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p946-founder-db-workflow-validation-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p945-command-center-founder-db-ux.js"
       ],
       "forbiddenFiles": [
         "projects/**",

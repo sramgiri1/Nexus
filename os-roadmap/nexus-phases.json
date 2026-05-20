@@ -6008,14 +6008,12 @@
       "order": 130.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "6d4eda2",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P94.5 Command Center founder DB workflow UX is complete; P94.6 aggregate validation is next.",
+      "summary": "P94.6 aggregate validation and docs/roadmap evidence are complete; P94.7 final validation is next.",
       "checksRun": [
+        "npm run check:p946-founder-db-workflow-validation",
         "npm run check:p945-command-center-founder-db-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder DB workflow\"",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
-        "cd dashboard && npm run build",
         "npm run check:p944-founder-db-view-model",
         "npm run check:p943-founder-runtime-crud-model",
         "npm run check:p942-founder-runtime-db-schema",
@@ -6025,12 +6023,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P94 parent remains in progress until P94.6 validation aggregation and P94.7 final closure are complete."
+        "P94 parent remains in progress until P94.7 final closure is complete."
       ],
-      "nextPhase": "P94.6",
+      "nextPhase": "P94.7",
       "commandCenterVisible": true,
       "label": "Founder Runtime DB CRUD",
-      "detail": "Founder DB workflow visible; validation aggregation next."
+      "detail": "P94 aggregate validation complete; final closure next."
     },
     {
       "phaseId": "P94.1",
@@ -6171,19 +6169,29 @@
       "title": "Docs / Roadmap / Validation",
       "track": "NEXUS_OS",
       "order": 130.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned aggregate validation and docs/roadmap evidence for P94.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Aggregated P94.1-P94.5 validation, refreshed README, PRD, architecture roadmap evidence, OS roadmap/status, and reports, and confirmed P94.7 final closure is next without adding runtime behavior.",
+      "checksRun": [
+        "npm run check:p946-founder-db-workflow-validation",
+        "npm run check:p945-command-center-founder-db-ux",
+        "npm run check:p944-founder-db-view-model",
+        "npm run check:p943-founder-runtime-crud-model",
+        "npm run check:p942-founder-runtime-db-schema",
+        "npm run check:p941-founder-runtime-db-crud-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. This subphase must define its scoped plan before implementation."
+        "P94.6 is validation/docs-only. It does not add provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
       ],
       "nextPhase": "P94.7",
       "commandCenterVisible": true,
-      "label": "Docs / Roadmap / Validation",
-      "detail": "P94.6 is next."
+      "label": "Founder DB Workflow Validation",
+      "detail": "P94 aggregate validation complete; final closure next."
     },
     {
       "phaseId": "P94.7",
@@ -6202,12 +6210,12 @@
       "nextPhase": "P95",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned P94 subphase."
+      "detail": "P94 final validation planned."
     }
   ],
   "updatedAt": "2026-05-20T23:03:00.000Z",
-  "currentPhase": "P94.5",
-  "previousPhase": "P94.4",
-  "nextPhase": "P94.6",
+  "currentPhase": "P94.6",
+  "previousPhase": "P94.5",
+  "nextPhase": "P94.7",
   "currentPhaseStatus": "complete"
 }

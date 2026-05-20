@@ -1,8 +1,8 @@
 # NEXUS Agentic OS — Product Requirements Document
 
-**Version:** 1.1
+**Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P93 Enterprise Live Runtime Expansion
+**Status:** Approved; updated through P94.6 Founder Runtime DB CRUD Workflow Validation
 
 ---
 
@@ -18,10 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P93
+## 1A. Current Implementation Status Through P94.6
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
-governed local live-runtime state. As of P93:
+governed local live-runtime state and founder workflow persistence. As of
+P94.6:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -40,18 +41,30 @@ governed local live-runtime state. As of P93:
 - Command Center Durable State / DB Runtime shows local CRUD admission
   readiness, request-envelope state, allowed local records, owner capability,
   next action, disabled reason, evidence/activity location, and cost impact.
+- P94 adds local SQLite founder workflow schema for founder sessions, Q&A
+  turns, PRD artifacts, and workstream plans.
+- P94 adds governed founder workflow CRUD admission, blocked by default and
+  unlocked only for approved local SQLite operations.
+- P94 adds shared display-safe founder DB workflow view models consumed by
+  Founder Intake, Business Build, and DB Runtime.
+- Command Center Lite, Business Build, and DB Runtime now show saved founder
+  workflow state, next question, PRD readiness, workstream lanes, blockers,
+  owner capability, disabled reason, evidence/activity location, and cost
+  posture.
+- P94.6 refreshes README, PRD, roadmap, OS phase status, and validation evidence
+  for P94.1-P94.5 before final P94 closure.
 
-Safety boundary as of P93:
+Safety boundary as of P94.5:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
 - Project source mutation remains blocked.
 - Hosted DB mutation, migrations, deploy, release, export, package creation,
   network calls, and provider spend remain blocked.
-- P93.4 is the narrow exception: local SQLite CRUD can be admitted only for
-  allowlisted OS runtime records and only with explicit operator approval,
-  rollback acceptance, audit acceptance, validation command acceptance,
-  `sqlite-live` mode, and local write flags.
+- P93.4/P94.3 are the narrow exceptions: local SQLite CRUD can be admitted only
+  for allowlisted OS runtime/founder workflow records and only with explicit
+  operator approval, rollback acceptance, audit acceptance, validation command
+  acceptance, `sqlite-live` mode, and local write flags.
 
 ---
 
@@ -290,8 +303,8 @@ NEXUS achieves its goals when the following are true in runtime behavior:
 | Workers cannot mark final completion directly | State machine rejects direct completion writes from worker agents |
 | README explains the OS architecture in the first 60 seconds | Non-technical reader understands control/execution/verification planes within first 500 words |
 | Founder idea can become structured PRD readiness without execution leakage | Command Center Lite and Business Build show idea, next question, PRD readiness, workstreams, blockers, evidence, and disabled actions |
-| Local runtime state can be persisted only through governed SQLite admission | P93.4 checker proves default blocked state, explicit approval/write flags, entity allowlist, and no hosted DB/project/provider execution |
-| Command Center shows DB runtime state without raw internals | P93.5 Playwright and checker coverage verify Enterprise Runtime CRUD UX, evidence links, no raw JSON/log/policy dumps, no DemoApp/private IDs, and no mutation buttons |
+| Local runtime state can be persisted only through governed SQLite admission | P93.4/P94.3 checkers prove default blocked state, explicit approval/write flags, entity allowlists, and no hosted DB/project/provider execution |
+| Command Center shows DB runtime state without raw internals | P93.5/P94.5 Playwright and checker coverage verify Enterprise Runtime CRUD and Founder DB Workflow UX, evidence links, no raw JSON/log/policy dumps, no DemoApp/private IDs, and no mutation buttons |
 
 ---
 

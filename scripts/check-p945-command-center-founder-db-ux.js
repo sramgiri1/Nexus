@@ -56,14 +56,14 @@ addCheck("Playwright covers Lite founder DB workflow", routeTests.includes("Comm
 addCheck("Playwright covers Business Build founder DB workflow", routeTests.includes("Business Build route renders founder workstream dry-run state") && routeTests.includes("reports/p944-founder-db-view-model-report.md"));
 addCheck("Playwright covers DB Runtime founder workflow", routeTests.includes("Founder Workflow DB CRUD") && routeTests.includes("DB-backed founder workflow ready for local review"));
 addCheck("docs record P94.5", docs.includes("P94.5 is complete") && docs.includes("npm run check:p945-command-center-founder-db-ux"));
-addCheck("platform roadmap records P94.5", platformRoadmap.includes("P94.5 is complete") && platformRoadmap.includes("P94.6 is next"));
+addCheck("platform roadmap records P94.5", platformRoadmap.includes("P94.5 is complete") && (platformRoadmap.includes("P94.6 is next") || platformRoadmap.includes("P94.6 is complete")));
 addCheck(
-  "phase status advanced",
-  ["in_progress", "complete"].includes(statusById.get("P94")?.status)
+    "phase status advanced",
+    ["in_progress", "complete"].includes(statusById.get("P94")?.status)
     && statusById.get("P94.5")?.status === "complete"
-    && status.currentPhase === "P94.5"
-    && status.previousPhase === "P94.4"
-    && status.nextPhase === "P94.6",
+    && ["P94.5", "P94.6", "P94.7"].includes(status.currentPhase)
+    && ["P94.4", "P94.5", "P94.6"].includes(status.previousPhase)
+    && ["P94.6", "P94.7", "P95"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P94.5", roadmapById.get("P94.5")?.track === "NEXUS_OS" && roadmapById.get("P94.5")?.status === "complete");

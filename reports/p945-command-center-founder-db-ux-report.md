@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P94.5
-- Generated at: 2026-05-20T22:55:31.090Z
+- Generated at: 2026-05-20T22:59:31.973Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6d4eda2
+- Validation HEAD: 3530fc7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | Playwright covers DB Runtime founder workflow | PASS |  |
 | docs record P94.5 | PASS |  |
 | platform roadmap records P94.5 | PASS |  |
-| phase status advanced | PASS | P94.5/P94.4/P94.6 |
+| phase status advanced | PASS | P94.6/P94.5/P94.7 |
 | roadmap tracks P94.5 | PASS |  |
 | P94.6 handoff exists | PASS |  |
 | no unsafe imports | PASS |  |

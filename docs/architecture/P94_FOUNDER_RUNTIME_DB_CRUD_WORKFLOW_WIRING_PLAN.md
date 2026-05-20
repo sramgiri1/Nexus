@@ -57,12 +57,15 @@ mutation/provider/agent/project actions.
 
 ### P94.6 Docs / Roadmap / Validation
 
-P94.6 is next. It will aggregate validation across P94.1-P94.5 and update README, PRD,
-architecture docs, roadmap, phase status, and reports.
+P94.6 is complete. It aggregates validation across P94.1-P94.5 and updates
+README, PRD, architecture docs, roadmap, phase status, and reports. It adds no
+runtime behavior and only confirms the founder DB workflow contract, schema,
+CRUD model, view model, Command Center UX, safety boundaries, and handoff are
+aligned.
 
 ### P94.7 Final Validation
 
-P94.7 will run final validation, close P94, stamp status with real commits,
+P94.7 is next. It will run final validation, close P94, stamp status with real commits,
 and hand off to the next scoped phase.
 
 ## Reuse Check
@@ -110,6 +113,7 @@ P94.1 validation:
 - `npm run check:p943-founder-runtime-crud-model`
 - `npm run check:p944-founder-db-view-model`
 - `npm run check:p945-command-center-founder-db-ux`
+- `npm run check:p946-founder-db-workflow-validation`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

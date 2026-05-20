@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P94.4
-- Generated at: 2026-05-20T22:53:51.679Z
+- Generated at: 2026-05-20T22:59:31.969Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2a49887
+- Validation HEAD: 3530fc7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | view model lists local CRUD and forbidden operations | PASS |  |
 | docs record P94.4 | PASS |  |
 | platform roadmap records P94.4 | PASS |  |
-| phase status advanced | PASS | P94.5/P94.4/P94.6 |
+| phase status advanced | PASS | P94.6/P94.5/P94.7 |
 | roadmap tracks P94.4 | PASS |  |
 | no DemoApp/private IDs in view data | PASS |  |
 | no fake runnable actions in view data | PASS |  |
