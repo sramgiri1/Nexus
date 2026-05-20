@@ -104,6 +104,32 @@ state, use network calls, deploy, release, export, package, or spend.
 
 ## Next Subphases
 
-- P89.5 Tests / Checkers: aggregate backend and UX validation.
+## P89.5 Tests / Checkers
+
+P89.5 is complete. It aggregates P89.1-P89.4 backend, UX, Playwright,
+docs, roadmap, and safety validation evidence. It also adds a focused
+Business Build Founder Dry Run safety regression and tightens the display-only
+disabled reason so operators can see that provider/model calls, agent dispatch,
+executor runs, project mutation, DB writes, deploy, package, network calls, and
+spend remain disabled.
+
+Validation:
+
+- `npm run check:p895-tests-checkers`
+- `npm run check:p894-command-center-founder-workstream-ux`
+- `npm run check:p893-local-founder-workstream-dry-run`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.5 is validation aggregation only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
+## Next Subphases
+
 - P89.6 Docs / Roadmap: close documentation and status evidence.
 - P89.7 Final Validation: final P89 evidence and handoff.

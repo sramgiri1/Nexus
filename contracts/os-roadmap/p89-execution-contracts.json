@@ -402,6 +402,105 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p89-5-tests-checkers",
+      "phaseId": "P89.5",
+      "objective": "Aggregate P89.1-P89.4 backend, UX, Playwright, docs, roadmap, and safety validation evidence without enabling runtime execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p895-tests-checkers.js",
+        "scripts/check-p894-command-center-founder-workstream-ux.js",
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p895-tests-checkers-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "dataShape": "Validation report with package script coverage, P89.1-P89.4 report coverage, P89 status coverage, contract/docs/roadmap coverage, runtime validation coverage, runtime flag safety coverage, Playwright safety coverage, and Command Center display-only coverage."
+      },
+      "commandCenterUxRequirements": "Preserve Business Build and Command Center Lite UX. Tighten Founder Dry Run disabled reason so operators see provider/model calls, agent dispatch, executor runs, project mutation, DB writes, deploy, package, network calls, and spend remain disabled.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add Business Build Founder Dry Run safety regression."
+      ],
+      "testsCheckers": [
+        "Add check:p895-tests-checkers.",
+        "Run check:p894-command-center-founder-workstream-ux.",
+        "Run check:p893-local-founder-workstream-dry-run."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P89 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p895-tests-checkers",
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no runtime flags are enabled.",
+        "Confirm no runnable live actions are exposed.",
+        "Confirm no DemoApp or raw private IDs are exposed.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.5 files>",
+        "git commit -m \"test(nexus): aggregate p89 founder runtime validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

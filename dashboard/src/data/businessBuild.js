@@ -152,7 +152,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderWorkstreamDryRun: {
       currentState: "Local Founder Workstream Dry Run Ready Blocked",
       nextAction: "Use the dry-run preview to complete founder Q&A and PRD readiness before any later execution review.",
-      disabledReason: "Founder Dry Run is display-only. It does not dispatch agents, run executors, mutate projects, write DB state, call providers, use network calls, deploy, package, or spend.",
+      disabledReason: "Founder Dry Run is display-only. Provider/model calls, agent dispatch, executor runs, project mutation, DB writes, deploy, package, network calls, and spend remain disabled.",
       ownerCapability: "NEXUS Founder Workstream Dry Run Governance",
       evidenceLocation: "reports/p893-local-founder-workstream-dry-run-report.md",
       activityLocation: "reports/os-phase-status-report.md",

@@ -3226,6 +3226,36 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Business Build Founder Dry Run tab keeps live execution disabled", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+    await page.goto("/command-center/business-build");
+
+    await commandTab(page, "Founder Dry Run").click();
+    const panel = activeCommandTabPanel(page);
+    await expect(panel).toContainText("Founder Workstream Dry Run");
+    await expect(panel).toContainText("Ready Blocked");
+    await expect(panel).toContainText("Founder Dry Run is display-only");
+    await expect(panel).toContainText("Provider/model calls, agent dispatch");
+    await expect(panel).toContainText("project mutation");
+    await expect(panel).toContainText("DB writes");
+    await expect(panel).toContainText("deploy");
+    await expect(panel).toContainText("spend remain disabled");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toContain("private-project-01");
+    expect(body).not.toContain("private-project-governed-build-mission");
+    expect(body).not.toContain("raw JSON");
+    expect(body).not.toMatch(/Bearer\s+|jwt|id_token|access_token|https:\/\/|postgres(?:ql)?:\/\//i);
+
+    expect(errors).toEqual([]);
+  });
+
   test("full Command Center routes do not show DemoApp", async ({ page }) => {
     const errors = captureClientErrors(page);
 

@@ -47,14 +47,18 @@ addCheck("no raw dumps or logs", !/JSON\.stringify\(|raw JSON|raw logs|policy du
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p894-command-center-founder-workstream-ux"]));
 addCheck("contract references P89.4 files", contract.includes("dashboard/src/data/businessBuild.js") && contract.includes("check:p894-command-center-founder-workstream-ux"));
 addCheck("docs mention P89.4 validation", docs.includes("P89.4 Command Center UX") && docs.includes("npm run check:p894-command-center-founder-workstream-ux"));
-addCheck("platform roadmap records P89.4", platformRoadmap.includes("P89.4 is complete") && platformRoadmap.includes("P89.5 is next"));
+addCheck(
+  "platform roadmap records P89.4",
+  platformRoadmap.includes("P89.4 is complete")
+    && (platformRoadmap.includes("P89.5 is next") || platformRoadmap.includes("P89.5 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P89")?.status === "in_progress"
     && statusById.get("P89.4")?.status === "complete"
-    && status.currentPhase === "P89.4"
-    && status.previousPhase === "P89.3"
-    && status.nextPhase === "P89.5",
+    && ["P89.4", "P89.5", "P89.6", "P89.7"].includes(status.currentPhase)
+    && ["P89.3", "P89.4", "P89.5", "P89.6"].includes(status.previousPhase)
+    && ["P89.5", "P89.6", "P89.7", "P90"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P89.4", roadmapById.get("P89.4")?.track === "NEXUS_OS" && roadmapById.get("P89.4")?.status === "complete");
 

@@ -4915,8 +4915,9 @@
       "branch": "codex/nexus-e2e-phase-validation",
       "commit": "b56e571",
       "completedAt": "",
-      "summary": "Started governed local enterprise runtime handoff with a local-only handoff profile, founder workstream runtime envelope, safe dry-run records, and Command Center Founder Dry Run UX. Runtime execution remains blocked.",
+      "summary": "Started governed local enterprise runtime handoff with a local-only handoff profile, founder workstream runtime envelope, safe dry-run records, Command Center Founder Dry Run UX, and aggregate validation evidence. Runtime execution remains blocked.",
       "checksRun": [
+        "npm run check:p895-tests-checkers",
         "npm run check:p894-command-center-founder-workstream-ux",
         "npm run check:p893-local-founder-workstream-dry-run",
         "npm run check:p892-local-founder-workstream-runtime-envelope",
@@ -4926,12 +4927,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P89 is in progress. P89.4 is UX only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
+        "P89 is in progress. P89.5 is validation aggregation only; no executor, provider/model calls, agent dispatch, tool/worker execution, project/DB mutation, deploy, package, network calls, or spend is enabled."
       ],
-      "nextPhase": "P89.5",
+      "nextPhase": "P89.6",
       "commandCenterVisible": true,
       "label": "Enterprise Runtime Handoff",
-      "detail": "Founder Dry Run UX visible; no execution enabled."
+      "detail": "P89 validation aggregated; no execution enabled."
     },
     {
       "phaseId": "P89.1",
@@ -5039,24 +5040,52 @@
       "title": "Tests / Checkers",
       "track": "NEXUS_OS",
       "order": 96.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P89 backend, UX, Playwright, docs, roadmap, and safety validation aggregation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T02:18:00.000Z",
+      "summary": "Aggregated P89.1-P89.4 backend, UX, Playwright, docs, roadmap, and safety validation evidence; added a Founder Dry Run safety regression and tightened display-only disabled reason.",
+      "checksRun": [
+        "npm run check:p895-tests-checkers",
+        "npm run check:p894-command-center-founder-workstream-ux",
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until P89.5 is planned and validated."
+        "P89.5 is validation aggregation only. It does not run an executor, dispatch agents, execute tools/workers, mutate projects, call providers/models, write DB state, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P89.6",
       "commandCenterVisible": true,
       "label": "Tests / Checkers",
-      "detail": "Planned P89 validation aggregation."
+      "detail": "P89 validation aggregated; no execution enabled."
+    },
+    {
+      "phaseId": "P89.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 97.07,
+      "status": "planned",
+      "branch": "",
+      "commit": "",
+      "completedAt": "",
+      "summary": "Planned P89 docs, roadmap, and phase-status closure evidence.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. Runtime execution remains blocked until P89.6 is planned and validated."
+      ],
+      "nextPhase": "P89.7",
+      "commandCenterVisible": true,
+      "label": "Docs / Roadmap",
+      "detail": "Planned P89 docs and roadmap closure."
     }
   ],
-  "updatedAt": "2026-05-20T02:05:00.000Z",
-  "currentPhase": "P89.4",
-  "previousPhase": "P89.3",
-  "nextPhase": "P89.5",
+  "updatedAt": "2026-05-20T02:18:00.000Z",
+  "currentPhase": "P89.5",
+  "previousPhase": "P89.4",
+  "nextPhase": "P89.6",
   "currentPhaseStatus": "complete"
 }

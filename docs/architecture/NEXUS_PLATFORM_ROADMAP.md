@@ -1628,8 +1628,15 @@ founder workstream dry-run state, agent lane planning preview, founder inputs,
 preview outputs, blockers, next action, disabled reason, owner, evidence,
 activity, and cost posture.
 
-P89.5 is next. It must aggregate P89.1-P89.4 backend, UX, Playwright, docs,
-roadmap, and safety validation evidence.
+P89.5 is complete. It aggregates P89.1-P89.4 backend, UX, Playwright,
+docs, roadmap, and safety validation evidence. Business Build now has an
+additional Founder Dry Run safety regression confirming the local workstream is
+display-only and that provider/model calls, agent dispatch, executor runs,
+project mutation, DB writes, deploy, package, network calls, and spend remain
+disabled.
+
+P89.6 is next. It must close P89 docs, roadmap, and phase-status evidence
+without enabling runtime execution.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).
