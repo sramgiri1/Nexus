@@ -276,9 +276,66 @@
     },
     {
       "id": "nexus-os-p86-4-command-center-ux",
+      "contractVersion": "1.0",
+      "projectId": "nexus-os",
+      "sourceAgent": "nexus",
+      "targetAgent": "frontend",
+      "taskType": "implementation",
       "phaseId": "P86.4",
       "objective": "Surface governed live capability state in Command Center without raw IDs or fake runnable actions.",
-      "status": "planned"
+      "status": "complete",
+      "allowedFiles": [
+        "dashboard/src/data/liveReadiness.js",
+        "dashboard/src/data/commandCenterTabs.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p864-command-center-live-admission-ux.js",
+        "reports/p864-command-center-live-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p86-execution-contracts.json",
+        "docs/architecture/P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env",
+        ".env.*"
+      ],
+      "inputs": {
+        "scopeClassification": "NEXUS_OS_CHANGE",
+        "narrowScope": "Command Center Live Readiness approval queue UX only.",
+        "commandCenterUxRequirements": "Show governed live approval queue rows with state, owner, missing evidence, required evidence, next action, disabled reason, and cost impact. Do not show raw IDs or runnable actions.",
+        "themeRequirements": [
+          "Preserve dark, light, and system themes.",
+          "Use existing cards, tabs, pills, and route navigation."
+        ],
+        "validationCommands": [
+          "npm run check:p864-command-center-live-admission-ux",
+          "npm run check:p863-operator-approval-queue",
+          "npm run check:os-phase-status",
+          "npm run check:phase-validation-coverage",
+          "cd dashboard && npm run build",
+          "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+          "git diff --check"
+        ]
+      }
     },
     {
       "id": "nexus-os-p86-5-activation-dry-run",

@@ -48,8 +48,12 @@ Validation: `npm run check:p863-operator-approval-queue`.
 
 Goal: show governed live capability state in Command Center.
 
-Status: planned. P86.4 should preserve dark, light, and system themes, avoid raw
-IDs, and avoid fake runnable actions.
+Status: complete. P86.4 adds an Approval Queue tab to Live Readiness that shows
+local approval records, queue state, owner, missing evidence, required evidence,
+next action, disabled reason, evidence, activity, and cost posture without raw
+IDs or runnable actions.
+
+Validation: `npm run check:p864-command-center-live-admission-ux`.
 
 ## P86.5 Activation Dry Run
 

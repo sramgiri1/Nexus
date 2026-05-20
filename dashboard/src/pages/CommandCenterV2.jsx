@@ -4149,6 +4149,7 @@ function ReleaseControlPage() {
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval queue</span><span className="ccv2-page-summary-value">{readiness.approvalQueue.rows.length} local records; approvals cannot execute actions</span></div>
         </div>
 
         <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
@@ -8826,6 +8827,33 @@ function LiveReadinessPage() {
                   <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {gate.nextAction}</div>
                   <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {gate.ownerCapability}</div>
                   <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {gate.evidenceLocation}</div>
+                </article>
+              ))}
+            </div>
+          </CommandTabPanel>
+
+          <CommandTabPanel tabId="queue" activeTab={activeTab}>
+            <div className="ccv2-card" aria-label="Governed live approval queue">
+              <div className="ccv2-section-heading">Governed live approval queue</div>
+              <div className="ccv2-muted" style={{ marginTop: 8 }}>{readiness.approvalQueue.disabledReason}</div>
+              <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 12 }}>
+                <div className="ccv2-mini-card"><span>Current state</span><strong>{readiness.approvalQueue.currentState}</strong></div>
+                <div className="ccv2-mini-card"><span>Owner</span><strong>{readiness.approvalQueue.ownerCapability}</strong></div>
+                <div className="ccv2-mini-card"><span>Evidence</span><strong>{readiness.approvalQueue.evidenceLocation}</strong></div>
+                <div className="ccv2-mini-card"><span>Cost</span><strong>{readiness.approvalQueue.costImpact}</strong></div>
+              </div>
+            </div>
+            <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+              {readiness.approvalQueue.rows.map((item) => (
+                <article className="ccv2-card" key={item.label}>
+                  <div className="ccv2-section-heading">{item.label}</div>
+                  <div className="ccv2-pill ccv2-pill--disabled">{item.queueState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Decision: {item.approvalDecision}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {item.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Missing evidence: {item.missingEvidence.length ? item.missingEvidence.join(", ") : "None"}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Required evidence: {item.requiredEvidence.join(", ")}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {item.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>{item.disabledReason}</div>
                 </article>
               ))}
             </div>

@@ -148,6 +148,7 @@ export const ENTERPRISE_PREVIEW_TABS = [
 export const LIVE_READINESS_TABS = [
   { id: "overview", label: "Overview", description: "Live-ready state, owner, blockers, and next action", badge: "Ready" },
   { id: "gates", label: "Capability Gates", description: "Provider, tool, worker, project, DB, deploy, and spend gates", badge: "Needs setup" },
+  { id: "queue", label: "Approval Queue", description: "Governed local approval records and missing evidence", badge: "Local" },
   { id: "bridge", label: "Bridge Admission", description: "Live action bridge routes and admission posture", badge: "Blocked by policy" },
   { id: "disabled", label: "Disabled Actions", description: "Unavailable live actions and disabled reasons", badge: "Blocked by policy" },
 ];

@@ -3088,6 +3088,12 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Worker Execution");
     await expect(activeCommandTabPanel(page)).toContainText("Deploy / Release");
     await expect(activeCommandTabPanel(page)).toContainText("Provider Spend");
+    await commandTab(page, "Approval Queue").click();
+    await expect(activeCommandTabPanel(page)).toContainText("Governed live approval queue");
+    await expect(activeCommandTabPanel(page)).toContainText("Approval does not execute");
+    await expect(activeCommandTabPanel(page)).toContainText("Not Requestable");
+    await expect(activeCommandTabPanel(page)).toContainText("Missing evidence");
+    await expect(activeCommandTabPanel(page)).toContainText("Provider Calls");
     await commandTab(page, "Bridge Admission").click();
     await expect(activeCommandTabPanel(page)).toContainText("mission.compose");
     await expect(activeCommandTabPanel(page)).toContainText("implementation.apply");

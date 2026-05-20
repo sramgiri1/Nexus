@@ -4279,21 +4279,23 @@
       "track": "NEXUS_OS",
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3ac3363",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Governed live capability admission in progress with P86.1-P86.3 complete.",
+      "summary": "Governed live capability admission in progress with P86.1-P86.4 complete.",
       "checksRun": [
+        "npm run check:p864-command-center-live-admission-ux",
         "npm run check:p863-operator-approval-queue",
-        "npm run check:p862-capability-state-resolver",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P86.3 creates local approval queue records only.",
-        "Approvals cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
+        "P86.4 is Command Center UX only.",
+        "Approval queue records cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
-      "nextPhase": "P86.4",
+      "nextPhase": "P86.5",
       "commandCenterVisible": true,
       "order": 67.07,
       "label": "Governed Live Capability Admission",
@@ -4381,14 +4383,23 @@
       "title": "Command Center UX",
       "track": "NEXUS_OS",
       "order": 71.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Command Center live capability state UX without raw IDs or fake runnable actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:02:46.163Z",
+      "summary": "Added Live Readiness approval queue UX with local queue records, owner, evidence, next action, disabled reason, and cost posture.",
+      "checksRun": [
+        "npm run check:p864-command-center-live-admission-ux",
+        "npm run check:p863-operator-approval-queue",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "cd dashboard && npm run build",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P86.4 is Command Center UX only.",
+        "Approval queue records cannot execute runtime actions. Provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, DB writes, deploy, release, export, package creation, and provider spend remain disabled."
       ],
       "nextPhase": "P86.5",
       "commandCenterVisible": true,
@@ -4453,9 +4464,9 @@
       "detail": "Final P86 validation and handoff."
     }
   ],
-  "updatedAt": "2026-05-19T23:58:58.726Z",
-  "currentPhase": "P86.3",
-  "previousPhase": "P86.2",
-  "nextPhase": "P86.4",
+  "updatedAt": "2026-05-20T00:02:46.163Z",
+  "currentPhase": "P86.4",
+  "previousPhase": "P86.3",
+  "nextPhase": "P86.5",
   "currentPhaseStatus": "complete"
 }

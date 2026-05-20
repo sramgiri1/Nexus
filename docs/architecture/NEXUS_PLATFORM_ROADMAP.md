@@ -1458,8 +1458,14 @@ live capabilities with queue state, approval decision, expiry posture, rollback,
 validation, evidence, missing evidence, next action, disabled reason, and cost
 impact. Approval records cannot execute runtime actions.
 
-P86.4 is next. It should surface governed live capability and approval queue
-state in Command Center without raw IDs or fake runnable actions.
+P86.4 is complete. Live Readiness now includes a governed Approval Queue tab
+with local queue records, owner, queue state, missing evidence, required
+evidence, next action, disabled reason, evidence, activity, and cost posture.
+The page preserves existing themes and does not expose raw IDs or runnable
+actions.
+
+P86.5 is next. It should add activation intent dry-run records while live
+actions remain disabled.
 
 The detailed plan lives in
 [`P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md`](P86_GOVERNED_LIVE_CAPABILITY_ADMISSION_PLAN.md).
