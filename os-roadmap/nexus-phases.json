@@ -5492,7 +5492,7 @@
       "order": 114.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0a7ade8",
       "completedAt": "",
       "summary": "Local SQLite runtime implementation is in progress with guarded initialization, schema-driven CRUD, SQLite-backed reads, and governed runtime ledger writes.",
       "checksRun": [
@@ -5594,7 +5594,7 @@
       "order": 118.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "0a7ade8",
       "completedAt": "2026-05-20T12:17:40.000Z",
       "summary": "Added governed SQLite write bridge for evidence, audit, and activity/runtime event ledgers with explicit local DB write flags and file-backed append fallback preserved.",
       "checksRun": [
@@ -5634,7 +5634,7 @@
       "detail": "Planned Command Center UX for live local SQLite state."
     }
   ],
-  "updatedAt": "2026-05-20T12:17:40.000Z",
+  "updatedAt": "2026-05-20T12:18:39.000Z",
   "currentPhase": "P92.4",
   "previousPhase": "P92.3",
   "nextPhase": "P92.5",
