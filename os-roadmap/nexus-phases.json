@@ -5374,22 +5374,23 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "e6c8f73",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Enterprise live-runtime expansion is in progress with the execution contract complete. Governed local SQLite CRUD remains split into later subphases.",
+      "summary": "Enterprise live-runtime expansion is in progress with the execution contract and local CRUD plan model complete. Governed local SQLite mutation remains split into later subphases.",
       "checksRun": [
+        "npm run check:p932-enterprise-runtime-crud-plan",
         "npm run check:p931-enterprise-live-runtime-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P93 is in progress. P93.1 is contract-only and does not modify db/**, enable DB writes, dispatch agents, mutate projects, call providers/models, deploy, use network calls, package, or spend."
+        "P93 is in progress. P93.2 is a local model only and does not modify db/**, enable DB writes, dispatch agents, mutate projects, call providers/models, deploy, use network calls, package, or spend."
       ],
-      "nextPhase": "P93.2",
+      "nextPhase": "P93.3",
       "commandCenterVisible": true,
       "label": "Enterprise Live Runtime Expansion",
-      "detail": "P93.1 contract complete; P93.2 next."
+      "detail": "P93.2 CRUD plan model complete; P93.3 next."
     },
     {
       "track": "NEXUS_OS",
@@ -5421,18 +5422,24 @@
       "phaseId": "P93.2",
       "title": "Enterprise Runtime CRUD Plan Model",
       "order": 124.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned local enterprise runtime CRUD plan model for DB-backed founder/session/PRD/workstream/action-state lanes.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T21:47:40.855Z",
+      "summary": "Added the local enterprise live-runtime CRUD plan model with DB-backed lane mapping, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
+      "checksRun": [
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime mutation remains blocked."
+        "P93.2 is a local model only. It does not modify db/**, write SQLite records, run an executor, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use network calls, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P93.3",
       "label": "Runtime CRUD Plan",
-      "detail": "Planned local CRUD plan model."
+      "detail": "Local CRUD plan model complete; no mutation enabled."
     },
     {
       "track": "NEXUS_OS",
@@ -5940,9 +5947,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-20T21:44:43.106Z",
-  "currentPhase": "P93.1",
-  "previousPhase": "P91.7",
-  "nextPhase": "P93.2",
+  "updatedAt": "2026-05-20T21:47:40.855Z",
+  "currentPhase": "P93.2",
+  "previousPhase": "P93.1",
+  "nextPhase": "P93.3",
   "currentPhaseStatus": "complete"
 }

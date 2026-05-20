@@ -1798,8 +1798,16 @@ subphase split, future exports, data shape, Command Center UX requirements,
 validation commands, and safety checks. P93.1 is contract-only and does not
 modify `db/**` or enable DB writes.
 
-P93.2 is next. It must add the local enterprise runtime CRUD plan model without
-executing mutations.
+P93.2 is complete. It adds a deterministic local model for enterprise
+live-runtime CRUD planning. The model maps founder session, PRD artifact,
+workstream plan, activation review, runtime task queue, evidence, audit, and
+Command Center state lanes to local SQLite entity targets while keeping all
+current create/update/delete, mutation request, provider, worker, project
+mutation, hosted DB, network, deploy, release, export, package, and spend flags
+blocked.
+
+P93.3 is next. It must add governed runtime mutation request envelopes without
+executing SQLite writes.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

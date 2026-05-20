@@ -117,8 +117,98 @@
       "id": "nexus-os-p93-2-enterprise-runtime-crud-plan-model",
       "phaseId": "P93.2",
       "objective": "Add a local enterprise runtime CRUD plan model for DB-backed founder/session/PRD/workstream/action-state lanes.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/enterpriseLiveRuntimeCrudPlan.js",
+        "scripts/check-p932-enterprise-runtime-crud-plan.js",
+        "package.json",
+        "contracts/os-roadmap/p93-execution-contracts.json",
+        "docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p932-enterprise-runtime-crud-plan-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P93_ENTERPRISE_LIVE_RUNTIME_PHASE",
+          "P93_LIVE_RUNTIME_ENTITY_LANES",
+          "buildEnterpriseLiveRuntimeCrudPlan",
+          "validateEnterpriseLiveRuntimeCrudPlan"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, runtimeMode, dbMode, sourceReviewPacket, entityLanes[], crudReadiness, allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve existing Command Center UX. P93.5 must expose this CRUD plan without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable mutation/provider/agent/project actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P93.2 because no UI files change.",
+        "P93.5 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p932-enterprise-runtime-crud-plan.",
+        "Run P93.1 checker."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P93 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P93.2 is a local model only.",
+        "Confirm no db/** files changed.",
+        "Confirm no SQLite writes are enabled.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P93.2 files>",
+        "git commit -m \"feat(nexus): add enterprise runtime crud plan\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p93-3-governed-runtime-mutation-request-model",

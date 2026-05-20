@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-20T21:44:45.374Z
+- Generated at: 2026-05-20T21:48:23.676Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e6c8f73
+- Validation HEAD: a0ea214
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -231,9 +231,9 @@
 | P92.5 validation coverage | PASS | 9 checkers, 2 reports |
 | P92.6 validation coverage | PASS | 8 checkers, 1 reports |
 | P92.7 validation coverage | PASS | 9 checkers, 1 reports |
-| P93 validation coverage | PASS | 4 checkers, 1 reports |
+| P93 validation coverage | PASS | 6 checkers, 2 reports |
 | P93.1 validation coverage | PASS | 3 checkers, 1 reports |
-| P93.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P93.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P93.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P93.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P93.5 validation coverage | PASS | 5 checkers, 5 reports |
@@ -257,18 +257,13 @@
 | P84.7 validation coverage | PASS | 41 checkers, 33 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P93.1; next=P93.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P93.2; next=P93.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P93.2 Enterprise Runtime CRUD Plan Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P93.3 Governed Runtime Mutation Request Model
   - status: planned
   - checkers: 0
