@@ -1575,8 +1575,12 @@ shows P88 activation/request/executor admission state with current state, next
 action, blockers, disabled reason, owner, evidence, activity, and cost posture.
 The tab is display-only and does not expose runnable actions.
 
-P88.5 is next. It must aggregate P88 backend, Command Center, Playwright, docs,
-roadmap, and safety evidence.
+P88.5 is complete. It aggregates P88.1-P88.4 scripts, reports, package scripts,
+docs, roadmap/status records, Command Center scoped activation coverage,
+Playwright coverage, and safety posture.
+
+P88.6 is next. It must close P88 docs, roadmap, and status evidence before final
+validation.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,

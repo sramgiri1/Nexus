@@ -421,6 +421,7 @@
     "check:p882-local-activation-request-model": "node scripts/check-p882-local-activation-request-model.js",
     "check:p883-local-executor-admission": "node scripts/check-p883-local-executor-admission.js",
     "check:p884-command-center-scoped-activation-ux": "node scripts/check-p884-command-center-scoped-activation-ux.js",
+    "check:p885-tests-checkers-docs": "node scripts/check-p885-tests-checkers-docs.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

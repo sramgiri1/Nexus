@@ -409,6 +409,95 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p88-5-tests-checkers-docs",
+      "phaseId": "P88.5",
+      "objective": "Aggregate P88 validation evidence across backend, UX, Playwright, docs, roadmap, and safety.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p885-tests-checkers-docs.js",
+        "scripts/check-p884-command-center-scoped-activation-ux.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p885-tests-checkers-docs-report.md",
+        "reports/p884-command-center-scoped-activation-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p88-execution-contracts.json",
+        "docs/architecture/P88_SCOPED_EXECUTION_CAPABLE_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "commandCenterUxRequirements": "Preserve Scoped Activation UX and verify it remains covered by Playwright.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run focused Live Readiness Playwright coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p885-tests-checkers-docs.",
+        "Keep P88.4 UX checker valid after phase status advances."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P88 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p885-tests-checkers-docs",
+        "npm run check:p884-command-center-scoped-activation-ux",
+        "npm run check:p883-local-executor-admission",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live Ready route renders evidence-backed activation labels without runnable actions\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P88.1-P88.4 reports exist.",
+        "Confirm no unsafe runtime actions are exposed.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P88.5 files>",
+        "git commit -m \"chore(nexus): aggregate p88 validation evidence\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Tests and checker results",
+        "Dashboard build and page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

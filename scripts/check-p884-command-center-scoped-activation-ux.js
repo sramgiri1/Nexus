@@ -49,14 +49,18 @@ addCheck("no raw dumps or logs", !/JSON\.stringify\(|raw JSON|raw logs|policy du
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p884-command-center-scoped-activation-ux"]));
 addCheck("contract references P88.4 files", contract.includes("dashboard/src/data/liveReadiness.js") && contract.includes("check:p884-command-center-scoped-activation-ux"));
 addCheck("docs mention P88.4 validation", docs.includes("P88.4 Command Center Scoped Activation UX") && docs.includes("npm run check:p884-command-center-scoped-activation-ux"));
-addCheck("platform roadmap records P88.4", platformRoadmap.includes("P88.4 is complete") && platformRoadmap.includes("P88.5 is next"));
+addCheck(
+  "platform roadmap records P88.4",
+  platformRoadmap.includes("P88.4 is complete")
+    && (platformRoadmap.includes("P88.5 is next") || platformRoadmap.includes("P88.5 is complete")),
+);
 addCheck(
   "phase status advanced",
   statusById.get("P88")?.status === "in_progress"
     && statusById.get("P88.4")?.status === "complete"
-    && status.currentPhase === "P88.4"
-    && status.previousPhase === "P88.3"
-    && status.nextPhase === "P88.5",
+    && ["P88.4", "P88.5", "P88.6"].includes(status.currentPhase)
+    && ["P88.3", "P88.4", "P88.5"].includes(status.previousPhase)
+    && ["P88.5", "P88.6", "P88.7"].includes(status.nextPhase),
 );
 addCheck("roadmap tracks P88.4", roadmapById.get("P88.4")?.track === "NEXUS_OS" && roadmapById.get("P88.4")?.status === "complete");
 addCheck("report prerequisites exist", fileExists("reports/p883-local-executor-admission-report.md") && fileExists("reports/os-phase-status-report.md"));
