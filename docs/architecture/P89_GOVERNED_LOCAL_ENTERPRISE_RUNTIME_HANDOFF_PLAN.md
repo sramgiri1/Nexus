@@ -61,10 +61,28 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P89.3 Preview / Safe Dry Run
+
+P89.3 is complete. It adds local founder workstream dry-run records that reuse
+the P89.2 envelope. Each dry run previews founder Q&A, PRD readiness, agent lane
+planning, and operator review transitions while mutation and execution remain
+blocked.
+
+Validation:
+
+- `npm run check:p893-local-founder-workstream-dry-run`
+- `npm run check:p892-local-founder-workstream-runtime-envelope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P89.3 is a local dry-run preview only. It does not run an
+executor, dispatch agents, execute tools/workers, mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
 ## Next Subphases
 
-- P89.3 Preview / Safe Dry Run: simulate a local founder workstream transition
-  without mutation.
 - P89.4 Command Center UX: show founder workstream handoff state and blockers.
 - P89.5 Tests / Checkers: aggregate backend and UX validation.
 - P89.6 Docs / Roadmap: close documentation and status evidence.

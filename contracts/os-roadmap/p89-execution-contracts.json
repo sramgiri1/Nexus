@@ -208,6 +208,103 @@
         "Known limitations",
         "Next phase/subphase"
       ]
+    },
+    {
+      "id": "nexus-os-p89-3-local-founder-workstream-dry-run",
+      "phaseId": "P89.3",
+      "objective": "Preview local founder workstream transitions without mutation or execution.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/localFounderWorkstreamDryRun.js",
+        "scripts/check-p893-local-founder-workstream-dry-run.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p893-local-founder-workstream-dry-run-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p89-execution-contracts.json",
+        "docs/architecture/P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P89_LOCAL_FOUNDER_WORKSTREAM_DRY_RUN_PHASE",
+          "P89_DRY_RUN_TRANSITION_STEPS",
+          "buildLocalFounderWorkstreamDryRun",
+          "validateLocalFounderWorkstreamDryRun"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, dryRunMode, sourcePhase, dryRunCount, dryRunSummary, transitionSteps[], dryRuns[], runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false. Each dry run has dryRunKey, label, ownerCapability, sourceWorkstreamKey, currentState, previewNextState, transitionSteps, founderInputsNeeded, previewOutputs, blockers, dryRunCanMutate, dryRunCanExecute, nextAction, disabledReason, validationCommands, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center Lite and Live Readiness. Prepare display-safe dry-run fields for a later UX subphase without adding runnable action labels.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P89.3 because no UI file changes.",
+        "P89.4 must add focused Command Center coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p893-local-founder-workstream-dry-run.",
+        "Run check:p892-local-founder-workstream-runtime-envelope."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P89 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p893-local-founder-workstream-dry-run",
+        "npm run check:p892-local-founder-workstream-runtime-envelope",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm every runtime flag remains false.",
+        "Confirm dry runs cannot mutate or execute.",
+        "Confirm no provider/model calls, agent dispatch, worker/tool execution, project mutation, DB writes, deploy, release, export, package, network calls, or spend are enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P89.3 files>",
+        "git commit -m \"feat(nexus): add local founder workstream dry run\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

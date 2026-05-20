@@ -1618,9 +1618,13 @@ state, PRD state, agent lane plan, required evidence, missing evidence, blockers
 disabled reason, validation commands, evidence, activity, cost posture, and all
 runtime flags false.
 
-P89.3 is next. It must simulate local founder workstream transitions without
-mutation, agent dispatch, executor runs, provider/model calls, network calls, or
-spend.
+P89.3 is complete. It adds local founder workstream dry-run records that reuse
+the P89.2 envelope. Each dry run previews founder Q&A, PRD readiness, agent lane
+planning, and operator review transitions while mutation and execution remain
+blocked.
+
+P89.4 is next. It must show founder workstream dry-run state and agent lane
+planning in Command Center without exposing runnable actions.
 
 The detailed plan lives in
 [`P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md`](P89_GOVERNED_LOCAL_ENTERPRISE_RUNTIME_HANDOFF_PLAN.md).
