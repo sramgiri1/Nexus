@@ -35,18 +35,18 @@ const combinedDocs = `${readme}\n${prd}\n${guide}\n${docs}\n${platformRoadmap}`;
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p956-founder-persistence-docs-roadmap"]));
 addCheck("contract tracks P95.6 complete", p956?.status === "complete" && p956.allowedFiles?.includes("README.md") && p956.allowedFiles?.includes("docs/usage/COMMAND_CENTER_GUIDE.md"));
-addCheck("README records P95.6 current state", readme.includes("Current Status Through P95.6") && readme.includes("P95 founder persistence controls"));
-addCheck("PRD records P95.6 current state", prd.includes("updated through P95 Founder Persistence Operator Controls") && prd.includes("Current Implementation Status Through P95.6"));
+addCheck("README records P95.6 current state", (readme.includes("Current Status Through P95.6") || readme.includes("Current Status Through P95")) && readme.includes("P95 founder persistence controls"));
+addCheck("PRD records P95.6 current state", prd.includes("updated through P95 Founder Persistence Operator Controls") && (prd.includes("Current Implementation Status Through P95.6") || prd.includes("Current Implementation Status Through P95")));
 addCheck("Command Center guide documents persistence controls", guide.includes("Founder Persistence Controls") && guide.includes("/command-center/business-build") && guide.includes("approved local SQLite create, read, update, upsert"));
-addCheck("P95 plan records P95.6", docs.includes("P95.6 is complete") && docs.includes("npm run check:p956-founder-persistence-docs-roadmap") && docs.includes("P95.7 is next"));
-addCheck("platform roadmap records P95.6", platformRoadmap.includes("P95.6 is complete") && platformRoadmap.includes("P95.7 is next"));
+addCheck("P95 plan records P95.6", docs.includes("P95.6 is complete") && docs.includes("npm run check:p956-founder-persistence-docs-roadmap") && (docs.includes("P95.7 is next") || docs.includes("P95.7 is complete")));
+addCheck("platform roadmap records P95.6", platformRoadmap.includes("P95.6 is complete") && (platformRoadmap.includes("P95.7 is next") || platformRoadmap.includes("P95.7 is complete")));
 addCheck(
   "phase status advanced",
-  statusById.get("P95")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P95")?.status)
     && statusById.get("P95.6")?.status === "complete"
-    && status.currentPhase === "P95.6"
-    && status.previousPhase === "P95.5"
-    && status.nextPhase === "P95.7",
+    && ["P95.6", "P95.7", "P96"].includes(status.currentPhase)
+    && ["P95.5", "P95.6", "P95.7"].includes(status.previousPhase)
+    && ["P95.7", "P96"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P95.6", roadmapById.get("P95.6")?.track === "NEXUS_OS" && roadmapById.get("P95.6")?.status === "complete");

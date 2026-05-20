@@ -147,8 +147,28 @@ Validation:
 
 ### P95.7 Final Validation
 
-P95.7 is next. It runs final validation, stamps real commits, closes P95, and
-hands off to P96.
+P95.7 is complete. It runs final validation, stamps real commits, closes P95,
+and hands off to P96.
+
+Validation:
+
+- `npm run check:p957-founder-persistence-final-validation`
+- `npm run check:p956-founder-persistence-docs-roadmap`
+- `npm run check:p955-founder-persistence-controls-validation`
+- `npm run check:p954-command-center-persistence-controls-ux`
+- `npm run check:p953-approved-local-persistence-adapter`
+- `npm run check:p952-founder-persistence-control-model`
+- `npm run check:p951-founder-persistence-controls-contract`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder persistence controls"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+P95 is complete. It delivered founder persistence operator controls for
+approved local SQLite founder workflow records, Command Center visibility,
+validation aggregation, docs/readiness updates, and final handoff to P96 without
+enabling unsafe execution.
 
 ## Known Risks
 

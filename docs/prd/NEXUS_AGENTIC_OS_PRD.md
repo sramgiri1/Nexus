@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P95.6
+## 1A. Current Implementation Status Through P95
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P95.6:
+P95:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -62,8 +62,9 @@ P95.6:
   Build, and DB Runtime.
 - P95.5 and P95.6 aggregate validation and update docs/roadmap readiness for
   what is live-local and what remains blocked.
+- P95.7 closes final validation and records the P96 handoff.
 
-Safety boundary as of P95.6:
+Safety boundary as of P95:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.

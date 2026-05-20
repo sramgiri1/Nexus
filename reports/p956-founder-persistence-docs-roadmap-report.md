@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P95.6
-- Generated at: 2026-05-20T23:43:24.115Z
+- Generated at: 2026-05-20T23:49:08.470Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: cd51f57
+- Validation HEAD: f20e348
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -24,7 +24,7 @@
 | Command Center guide documents persistence controls | PASS |  |
 | P95 plan records P95.6 | PASS |  |
 | platform roadmap records P95.6 | PASS |  |
-| phase status advanced | PASS | P95.6/P95.5/P95.7 |
+| phase status advanced | PASS | P95.7/P95.6/P96 |
 | roadmap tracks P95.6 | PASS |  |
 | P95.7 handoff exists | PASS |  |
 | docs explain live-local boundary | PASS |  |

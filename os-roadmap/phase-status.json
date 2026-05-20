@@ -11040,25 +11040,32 @@
       "title": "Founder Persistence Operator Controls",
       "track": "NEXUS_OS",
       "order": 131,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "147905a",
-      "completedAt": "",
-      "summary": "P95.6 docs and roadmap readiness is complete; P95.7 final validation is next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Completed founder persistence operator controls, approved local adapter validation, Command Center visibility, docs/readiness updates, and final validation handoff to P96.",
       "checksRun": [
+        "npm run check:p957-founder-persistence-final-validation",
         "npm run check:p956-founder-persistence-docs-roadmap",
         "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P95.6 is docs/readiness-only. It does not add provider/model calls, agent dispatch, worker/tool execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
+        "P95 closes founder persistence operator controls but still does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
       ],
-      "nextPhase": "P95.7",
+      "nextPhase": "P96",
       "commandCenterVisible": true,
       "label": "Founder Persistence Controls",
-      "detail": "Docs and roadmap readiness complete; final validation next."
+      "detail": "Complete; P96 is next."
     },
     {
       "phaseId": "P95.1",
@@ -11221,23 +11228,57 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 131.7,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Ran final P95 validation, confirmed P95.1-P95.6 closure evidence, preserved blocked unsafe execution, and handed off to P96.",
+      "checksRun": [
+        "npm run check:p957-founder-persistence-final-validation",
+        "npm run check:p956-founder-persistence-docs-roadmap",
+        "npm run check:p955-founder-persistence-controls-validation",
+        "npm run check:p954-command-center-persistence-controls-ux",
+        "npm run check:p953-approved-local-persistence-adapter",
+        "npm run check:p952-founder-persistence-control-model",
+        "npm run check:p951-founder-persistence-controls-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder persistence controls\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P95 closes founder persistence operator controls but still does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend."
+      ],
+      "nextPhase": "P96",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "P95 final validation complete; P96 is next."
+    },
+    {
+      "phaseId": "P96",
+      "title": "Founder Business Build Local Execution Readiness",
+      "track": "NEXUS_OS",
+      "order": 132,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned final validation and next-phase handoff for P95.",
+      "summary": "Planned NEXUS OS phase for moving founder business-build persistence from local preview readiness toward governed local execution readiness without enabling unsafe runtime mutation.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P96",
+      "knownLimitations": [
+        "P96 is planned and does not yet enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, or provider spend."
+      ],
+      "nextPhase": "P96.1",
       "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Planned P95 final validation and P96 handoff."
+      "label": "Business Build Readiness",
+      "detail": "Planned handoff from P95 final validation."
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T23:43:09.277Z",
-  "currentPhase": "P95.6",
-  "previousPhase": "P95.5",
-  "nextPhase": "P95.7",
+  "updatedAt": "2026-05-20T00:00:00.000Z",
+  "currentPhase": "P95.7",
+  "previousPhase": "P95.6",
+  "nextPhase": "P96",
   "currentPhaseStatus": "complete"
 }

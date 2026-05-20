@@ -474,6 +474,7 @@
     "check:p954-command-center-persistence-controls-ux": "node scripts/check-p954-command-center-persistence-controls-ux.js",
     "check:p955-founder-persistence-controls-validation": "node scripts/check-p955-founder-persistence-controls-validation.js",
     "check:p956-founder-persistence-docs-roadmap": "node scripts/check-p956-founder-persistence-docs-roadmap.js",
+    "check:p957-founder-persistence-final-validation": "node scripts/check-p957-founder-persistence-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

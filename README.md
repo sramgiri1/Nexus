@@ -31,16 +31,16 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P95.6
+## Current Status Through P95
 
-P41.5 through P95.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P95 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
 Business Build, and DB Runtime. P95 adds operator-facing local persistence
 controls, approved local adapter validation, and docs/readiness evidence for
-the founder workflow persistence boundary. P95.7 is next for final validation
-and P96 handoff.
+the founder workflow persistence boundary, then closes with final validation
+and a P96 handoff.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,

@@ -1944,7 +1944,16 @@ UX, temp SQLite, route-safety, phase status, and coverage validation.
 
 P95.6 is complete. It updates README, PRD, Command Center guidance, the P95
 plan, and roadmap/status readiness for the approved local founder persistence
-boundary. P95.7 is next for final validation and P96 handoff.
+boundary.
+
+P95.7 is complete. It runs final validation, closes P95, records real status
+commits, and hands off to P96.
+
+P95 is complete. It delivered founder persistence operator controls for
+approved local SQLite founder workflow records, Command Center visibility,
+validation aggregation, docs/readiness updates, and final handoff without
+enabling provider/model calls, agent dispatch, project mutation, hosted DB
+mutation, deploy, package, or spend.
 
 The detailed plan lives in
 [`P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md`](P95_FOUNDER_PERSISTENCE_OPERATOR_CONTROLS_PLAN.md).

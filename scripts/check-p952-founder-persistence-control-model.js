@@ -89,7 +89,7 @@ addCheck("docs record P95.2", docs.includes("P95.2 is complete") && docs.include
 addCheck("platform roadmap records P95.2", platformRoadmap.includes("P95.2 is complete") && (platformRoadmap.includes("P95.3 is next") || platformRoadmap.includes("P95.3 is complete")));
 addCheck(
   "phase status advanced",
-  statusById.get("P95")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P95")?.status)
     && statusById.get("P95.2")?.status === "complete"
     && ["P95.2", "P95.3", "P95.4", "P95.5", "P95.6", "P95.7"].includes(status.currentPhase)
     && ["P95.1", "P95.2", "P95.3", "P95.4", "P95.5", "P95.6"].includes(status.previousPhase)
