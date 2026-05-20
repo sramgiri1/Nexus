@@ -10147,7 +10147,7 @@
       "order": 107.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "00e1801",
+      "commit": "1ee2f06",
       "completedAt": "",
       "summary": "Governed founder workstream activation planning is in progress with contract, local activation model, and safe local review packet. Runtime execution remains blocked.",
       "checksRun": [
@@ -10222,7 +10222,7 @@
       "order": 110.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1ee2f06",
       "completedAt": "2026-05-20T06:35:00.000Z",
       "summary": "Added safe local activation review packet with review items, operator checklist, readiness, blockers, disabled reasons, evidence, activity, cost posture, and unsafe runtime flags blocked.",
       "checksRun": [
