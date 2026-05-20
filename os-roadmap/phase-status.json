@@ -1647,7 +1647,7 @@
       "order": 122.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb2ee76",
       "completedAt": "2026-05-20T22:23:55.834Z",
       "summary": "Completed Enterprise Live Runtime Expansion with contract, local runtime CRUD plan, governed mutation request envelopes, local SQLite CRUD admission for allowlisted OS runtime entities, Command Center DB Runtime UX, README/PRD refresh, validation aggregation, and final closure.",
       "checksRun": [
@@ -1840,7 +1840,7 @@
       "order": 129.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "fb2ee76",
       "completedAt": "2026-05-20T22:23:55.834Z",
       "summary": "Finalized P93 validation, confirmed all P93 subphases and reports, refreshed README/PRD, preserved Command Center DB Runtime UX, closed P93 parent status, and handed off to P94.",
       "checksRun": [
