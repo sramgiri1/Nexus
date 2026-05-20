@@ -419,6 +419,7 @@
     "check:p877-final-validation": "node scripts/check-p877-final-validation.js",
     "check:p881-scoped-execution-activation-profile": "node scripts/check-p881-scoped-execution-activation-profile.js",
     "check:p882-local-activation-request-model": "node scripts/check-p882-local-activation-request-model.js",
+    "check:p883-local-executor-admission": "node scripts/check-p883-local-executor-admission.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

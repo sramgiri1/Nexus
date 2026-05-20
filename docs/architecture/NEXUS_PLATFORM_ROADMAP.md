@@ -1563,8 +1563,15 @@ missing evidence, blockers, disabled reason, owner, validation commands,
 activity, and cost posture. Requests cannot execute, activate, dispatch agents,
 write files, call providers, or spend.
 
-P88.3 is next. It must define local executor admission boundaries before any
-executor can be wired or run.
+P88.3 is complete. It adds local executor admission records that reuse the P88.2
+local activation request model. Each admission records executor state, allowed
+future operations, forbidden operations, required evidence, missing evidence,
+rollback, post-run review, disabled reason, validation commands, activity, and
+cost posture. The executor cannot run, and no executor module is imported,
+wired, or executed.
+
+P88.4 is next. It must expose scoped activation, request, and executor admission
+state in Command Center without fake runnable actions.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 mutation, DB writes, deploy, release, export, package creation, network calls,

@@ -61,10 +61,29 @@ executor, dispatch agents, execute tools/workers, mutate projects, call
 providers/models, write DB state, use network calls, deploy, release, export,
 package, or spend.
 
+## P88.3 Local Executor Admission
+
+P88.3 is complete. It adds local executor admission records that reuse the P88.2
+local activation request model. Each admission records executor state, allowed
+future operations, forbidden operations, required evidence, missing evidence,
+rollback, post-run review, disabled reason, validation commands, activity, and
+cost posture. The executor cannot run, and no executor module is imported,
+wired, or executed.
+
+Validation:
+
+- `npm run check:p883-local-executor-admission`
+- `npm run check:p882-local-activation-request-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+Known limitation: P88.3 is executor admission only. It does not run an executor,
+dispatch agents, execute tools/workers, mutate projects, call providers/models,
+write DB state, use network calls, deploy, release, export, package, or spend.
+
 ## Next Subphases
 
-- P88.3 Local Executor Admission: define the first executor admission boundary
-  without running it.
 - P88.4 Command Center UX: show scoped activation lanes and next actions without
   fake runnable actions.
 - P88.5 Tests / Checkers: aggregate backend and UX coverage.
