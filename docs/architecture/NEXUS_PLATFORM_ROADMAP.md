@@ -1725,8 +1725,13 @@ checker confirms the Business Build Activation Review remains display-only and
 keeps provider/model calls, agent dispatch, project mutation, DB writes,
 deploy/package actions, network calls, and spend blocked.
 
-P91.6 is next. It must close P91 docs, roadmap, phase status, and report
-evidence before final validation.
+P91.6 is complete. It closes the P91 plan doc, platform roadmap, execution
+contract, OS roadmap, phase status, and evidence reports before final
+validation. The closure preserves the display-only activation review boundary
+and keeps unsafe runtime operations blocked.
+
+P91.7 is next. It must close P91 final validation and hand the active roadmap
+back to the post-P92 live-runtime sequence.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).

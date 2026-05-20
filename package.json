@@ -445,6 +445,7 @@
     "check:p913-founder-activation-review-packet": "node scripts/check-p913-founder-activation-review-packet.js",
     "check:p914-command-center-workstream-activation-ux": "node scripts/check-p914-command-center-workstream-activation-ux.js",
     "check:p915-tests-checkers": "node scripts/check-p915-tests-checkers.js",
+    "check:p916-docs-roadmap": "node scripts/check-p916-docs-roadmap.js",
     "check:p921-sqlite-runtime-foundation": "node scripts/check-p921-sqlite-runtime-foundation.js",
     "check:p922-sqlite-crud-repository": "node scripts/check-p922-sqlite-crud-repository.js",
     "check:p923-sqlite-runtime-read-wiring": "node scripts/check-p923-sqlite-runtime-read-wiring.js",

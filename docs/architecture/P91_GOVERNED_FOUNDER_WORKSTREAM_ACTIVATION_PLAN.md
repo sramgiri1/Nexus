@@ -134,5 +134,28 @@ export, package, or spend.
 
 ## Next Subphases
 
-- P91.6 Docs / Roadmap: close docs and status evidence.
-- P91.7 Final Validation: close P91 and hand off to the next scoped phase.
+## P91.6 Docs / Roadmap
+
+P91.6 is complete. It closes the P91 plan doc, platform roadmap, execution
+contract, OS roadmap, phase status, and evidence reports before final
+validation. The closure preserves the display-only activation review boundary
+and keeps the P91.7 handoff explicit.
+
+Validation:
+
+- `npm run check:p916-docs-roadmap`
+- `npm run check:p915-tests-checkers`
+- `npm run check:p914-command-center-workstream-activation-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P91.6 is docs and roadmap closure only. It does not run an
+executor, dispatch agents, execute tools/workers, create or mutate projects,
+call providers/models, write DB state, use network calls, deploy, release,
+export, package, or spend.
+
+## Next Subphases
+
+P91.7 is next.
+
+- P91.7 Final Validation: close P91 and hand off back to the post-P92 live-runtime roadmap.
