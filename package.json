@@ -413,6 +413,7 @@
     "check:p871-explicit-live-activation-contract": "node scripts/check-p871-explicit-live-activation-contract.js",
     "check:p872-secret-provider-readiness": "node scripts/check-p872-secret-provider-readiness.js",
     "check:p873-local-agent-dispatch-admission": "node scripts/check-p873-local-agent-dispatch-admission.js",
+    "check:p874-generated-project-workspace-admission": "node scripts/check-p874-generated-project-workspace-admission.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

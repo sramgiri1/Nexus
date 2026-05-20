@@ -284,7 +284,87 @@
       "id": "nexus-os-p87-4-generated-project-workspace-admission",
       "phaseId": "P87.4",
       "objective": "Define generated project workspace admission without project source mutation.",
-      "status": "planned"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/generatedProjectWorkspaceAdmission.js",
+        "scripts/check-p874-generated-project-workspace-admission.js",
+        "scripts/check-os-phase-status.js",
+        "reports/p874-generated-project-workspace-admission-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "contracts/os-roadmap/p87-execution-contracts.json",
+        "docs/architecture/P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "package.json"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P87_GENERATED_PROJECT_WORKSPACE_ADMISSION_PHASE",
+          "buildGeneratedProjectWorkspaceAdmission",
+          "validateGeneratedProjectWorkspaceAdmission"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, readinessLabel, workspaceRootPolicy, targetRoot, allowedFutureRoots, forbiddenRoots, requiredBeforeFileWrites, blockers, dispatchAdmissionPhase, localProjectAdmissionPhase, projectCreationAllowed, newWorkspaceFileWritesAllowed, existingProjectMutationAllowed, nextAction, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve Command Center UX and prepare display-safe generated workspace boundary data for later UX without runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright required in P87.4 because rendered Command Center routes are preserved."
+      ],
+      "testsCheckers": [
+        "Add check:p874-generated-project-workspace-admission."
+      ],
+      "validationCommands": [
+        "npm run check:p874-generated-project-workspace-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm project creation and workspace file writes remain false.",
+        "Confirm generated app Sources/Tests remain forbidden.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P87.4 files>",
+        "git commit -m \"feat(nexus): add generated project workspace admission\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p87-5-command-center-live-unlock-ux",

@@ -4490,19 +4490,19 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "29eab80",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Explicit live activation unlocks in progress with P87.1-P87.3 complete.",
+      "summary": "Explicit live activation unlocks in progress with P87.1-P87.4 complete.",
       "checksRun": [
-        "npm run check:p873-local-agent-dispatch-admission",
+        "npm run check:p874-generated-project-workspace-admission",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P87.3 is admission metadata only. It does not dispatch agents, run workers, execute tools, mutate projects, call providers, or spend."
+        "P87.4 is workspace boundary metadata only. It does not create directories, write project files, mutate generated app Sources/Tests, deploy, package, or spend."
       ],
-      "nextPhase": "P87.4",
+      "nextPhase": "P87.5",
       "commandCenterVisible": true,
       "label": "Explicit Live Activation Unlocks",
       "detail": "Governed live unlock contracts before any execution-capable lane can be enabled."
@@ -4584,19 +4584,24 @@
       "title": "Generated Project Workspace Admission",
       "track": "NEXUS_OS",
       "order": 79.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Define generated project workspace admission without project source mutation.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T00:32:57.310Z",
+      "summary": "Added generated project workspace admission boundaries with allowed future root, forbidden roots, required gates, blockers, validation, evidence, activity, cost posture, and all project write flags false.",
+      "checksRun": [
+        "npm run check:p874-generated-project-workspace-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started. Runtime execution remains blocked until this subphase is planned and validated."
+        "P87.4 is workspace boundary metadata only. It does not create directories, write project files, mutate generated app Sources/Tests, deploy, package, or spend."
       ],
       "nextPhase": "P87.5",
       "commandCenterVisible": true,
       "label": "Generated Project Workspace Admission",
-      "detail": "Define generated project workspace admission without project source mutation."
+      "detail": "Generated workspace boundary metadata; no project files created or mutated."
     },
     {
       "phaseId": "P87.5",
@@ -4656,9 +4661,9 @@
       "detail": "Close P87 and hand off to the next scoped phase."
     }
   ],
-  "updatedAt": "2026-05-20T00:30:23.046Z",
-  "currentPhase": "P87.3",
-  "previousPhase": "P87.2",
-  "nextPhase": "P87.4",
+  "updatedAt": "2026-05-20T00:32:57.310Z",
+  "currentPhase": "P87.4",
+  "previousPhase": "P87.3",
+  "nextPhase": "P87.5",
   "currentPhaseStatus": "complete"
 }

@@ -1512,8 +1512,14 @@ Each lane shows scoped context packet shape, blockers, required gates,
 validation, evidence, activity, and cost posture. Agents are not dispatched and
 execution remains disabled.
 
-P87.4 is next. It should define generated project workspace admission without
-project source mutation.
+P87.4 is complete. It adds generated project workspace admission boundaries with
+an allowed future generated root, forbidden roots, required gates, blockers,
+rollback, validation, evidence, activity, and cost posture. It does not create
+directories, write project files, mutate generated app `Sources/Tests`, mutate
+existing projects, write DB state, deploy, package, or spend.
+
+P87.5 is next. It should expose explicit live unlock state in Command Center
+without runnable actions.
 
 The detailed plan lives in
 [`P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md`](P87_EXPLICIT_LIVE_ACTIVATION_UNLOCKS_PLAN.md).

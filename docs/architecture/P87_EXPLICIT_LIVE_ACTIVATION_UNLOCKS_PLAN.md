@@ -51,7 +51,15 @@ Validation: `npm run check:p873-local-agent-dispatch-admission`.
 Goal: define generated project workspace admission without project source
 mutation.
 
-Status: planned.
+Status: complete. P87.4 adds `generatedProjectWorkspaceAdmission`, reusing
+local project creation admission and local agent dispatch admission helpers. It
+records generated workspace boundaries, allowed future root, forbidden roots,
+required gates, blockers, next action, disabled reason, owner, evidence,
+activity, and cost posture while project creation, project mutation, generated
+app `Sources/Tests` mutation, DB writes, deploy, package, network calls, and
+spend remain disabled.
+
+Validation: `npm run check:p874-generated-project-workspace-admission`.
 
 ## P87.5 Command Center Live Unlock UX
 
