@@ -10147,7 +10147,7 @@
       "order": 107.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28d2aee",
       "completedAt": "",
       "summary": "Governed founder workstream activation planning is in progress with contract, local activation model, safe local review packet, Command Center activation review UX, aggregate validation, and docs/roadmap closure. Runtime execution remains blocked.",
       "checksRun": [
@@ -10307,7 +10307,7 @@
       "order": 113.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "28d2aee",
       "completedAt": "2026-05-20T21:36:50.460Z",
       "summary": "Closed P91 docs, roadmap, contract, phase-status, and report evidence before final validation while preserving the display-only activation review boundary.",
       "checksRun": [
@@ -10592,7 +10592,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T21:36:50.460Z",
+  "updatedAt": "2026-05-20T21:37:13.383Z",
   "currentPhase": "P91.6",
   "previousPhase": "P91.5",
   "nextPhase": "P91.7",
