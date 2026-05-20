@@ -1837,8 +1837,17 @@ statuses, docs, roadmap, Playwright DB live state coverage, Command Center DB
 Runtime UX content, OS phase status, stale commit posture, and safety language
 are aligned. P93.6 adds no runtime behavior.
 
-P93.7 is next. It must run final P93 validation and close the parent phase with
-a clean next-phase handoff.
+P93.7 is complete. It finalizes P93 validation, confirms all P93 subphases are
+complete, refreshes the root README and NEXUS OS PRD with the latest
+live-runtime state, preserves the P93.5 Command Center DB Runtime UX, records
+the P94 handoff, and closes P93 without adding new runtime behavior.
+
+P93 is complete. It delivered the P93 execution contract, local enterprise
+runtime CRUD planning, governed mutation request envelopes, explicit local
+SQLite CRUD admission for allowlisted OS runtime entities, Command Center DB
+Runtime UX, aggregated validation, and final closure.
+
+P94 is next and must define the next scoped contract before coding.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

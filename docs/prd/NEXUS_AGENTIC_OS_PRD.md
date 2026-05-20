@@ -1,8 +1,8 @@
 # NEXUS Agentic OS — Product Requirements Document
 
-**Version:** 1.0
-**Date:** 2026-05-03
-**Status:** Approved
+**Version:** 1.1
+**Date:** 2026-05-20
+**Status:** Approved; updated through P93 Enterprise Live Runtime Expansion
 
 ---
 
@@ -15,6 +15,43 @@ NEXUS is a governed agentic operating system that converts founder intent into v
 > *Intent in. Verified execution out.*
 
 NEXUS is not a collection of agents that chat. It is an OS — with a control plane, execution plane, verification plane, and observability plane — where every action is authorized, every handoff is typed, every gate is deterministic, and every release decision is backed by evidence.
+
+---
+
+## 1A. Current Implementation Status Through P93
+
+NEXUS OS has progressed beyond preview-only architecture foundations into
+governed local live-runtime state. As of P93:
+
+- Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
+  Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
+  Build, Docs, and Durable State.
+- Founder workflows support idea capture, structured Q&A, local PRD readiness,
+  PRD review gates, agent workstream planning, activation review, and
+  display-safe Business Build visibility.
+- Local SQLite runtime foundations are implemented for schema-backed entity
+  definitions, repository reads, governed evidence/audit/activity ledger writes,
+  maintenance, and final validation.
+- P93 adds enterprise live-runtime CRUD planning for founder session, PRD
+  artifact, workstream plan, activation review, runtime task queue, evidence,
+  audit, and Command Center state lanes.
+- P93 adds governed mutation request envelopes and explicit local SQLite CRUD
+  admission for allowlisted NEXUS OS runtime entities.
+- Command Center Durable State / DB Runtime shows local CRUD admission
+  readiness, request-envelope state, allowed local records, owner capability,
+  next action, disabled reason, evidence/activity location, and cost impact.
+
+Safety boundary as of P93:
+
+- Provider/model calls remain blocked.
+- Agent dispatch, tool execution, and worker execution remain blocked.
+- Project source mutation remains blocked.
+- Hosted DB mutation, migrations, deploy, release, export, package creation,
+  network calls, and provider spend remain blocked.
+- P93.4 is the narrow exception: local SQLite CRUD can be admitted only for
+  allowlisted OS runtime records and only with explicit operator approval,
+  rollback acceptance, audit acceptance, validation command acceptance,
+  `sqlite-live` mode, and local write flags.
 
 ---
 
@@ -169,6 +206,9 @@ The operator is not manually routing tasks between agents. The operator is not w
 | `npm run status` | Live system state |
 | `npm run dashboard` | Visual system view |
 | `memory/founder-actions.json` | Queue of founder decisions NEXUS needs |
+| `/command-center/lite` | Founder-first Chat with NEXUS and agent planning surface |
+| `/command-center/business-build` | Local PRD, workstream, activation review, and business build state |
+| `/command-center/database` | Durable State and DB Runtime visibility for local SQLite runtime posture |
 
 ---
 
@@ -249,6 +289,9 @@ NEXUS achieves its goals when the following are true in runtime behavior:
 | Verifiers cannot modify production source code | Governor file-scope guard blocks verifier writes to `src/`, `app/`, `lib/` |
 | Workers cannot mark final completion directly | State machine rejects direct completion writes from worker agents |
 | README explains the OS architecture in the first 60 seconds | Non-technical reader understands control/execution/verification planes within first 500 words |
+| Founder idea can become structured PRD readiness without execution leakage | Command Center Lite and Business Build show idea, next question, PRD readiness, workstreams, blockers, evidence, and disabled actions |
+| Local runtime state can be persisted only through governed SQLite admission | P93.4 checker proves default blocked state, explicit approval/write flags, entity allowlist, and no hosted DB/project/provider execution |
+| Command Center shows DB runtime state without raw internals | P93.5 Playwright and checker coverage verify Enterprise Runtime CRUD UX, evidence links, no raw JSON/log/policy dumps, no DemoApp/private IDs, and no mutation buttons |
 
 ---
 
@@ -309,10 +352,14 @@ CareLoop parallel execution (CORE + SWIFT building simultaneously, AUDITOR gate 
 
 The following are acknowledged as future directions. They are not in scope for the current architecture pass.
 
-- Formal state machine implementation (currently informal / file-based)
-- Typed contract schema validation at queue write time (currently convention-based)
 - Per-task cost attribution in `system-usage.json`
 - Multi-operator / team mode (currently single-operator)
 - Plugin architecture for external skill modules
-- Web UI for gate review and approval workflows
 - Cross-project dependency tracking at the OS level
+- Provider/model execution admission after explicit cost, policy, rollback, and
+  approval gates
+- Agent dispatch and worker execution after explicit scoped runtime admission
+- Project source mutation, generated app creation, deploy, release, export, and
+  package flows after separate phase contracts and validation
+- Hosted DB adapters and migrations after local SQLite runtime requirements are
+  fully closed and operator approval boundaries are defined

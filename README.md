@@ -31,15 +31,24 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P62
+## Current Status Through P93
 
-P41.5 through P62 are complete. P59 adds Secrets and Credential Boundary
-foundations: secret reference metadata, access policy previews, redaction
-checks, provider credential boundaries, project credential boundaries, and a
-read-only Command Center Secrets Boundary UX. Runtime secret resolution,
-provider/tool dispatch, worker execution, DB writes, deploy, mobile signing,
-and project mutation remain disabled. The Command Center and local operator
-surface have:
+P41.5 through P93 are complete. The current NEXUS OS focus has moved from
+preview-only foundations to governed local live-runtime state. P93 completed
+the Enterprise Live Runtime Expansion: local runtime CRUD planning, governed
+mutation request envelopes, explicit local SQLite CRUD admission for allowlisted
+OS runtime records, and Command Center DB Runtime UX that shows the state
+without exposing raw IDs or runnable mutation controls.
+
+Provider/model calls, agent dispatch, tool execution, worker execution, project
+source mutation, hosted DB mutation, network calls, deploy/release/export,
+package creation, and provider spend remain blocked unless a later phase
+explicitly scopes and validates them. P93.4 is the current exception: it admits
+local SQLite CRUD only for allowlisted NEXUS OS runtime entities and only with
+explicit operator approval, rollback acceptance, audit acceptance, validation
+command acceptance, `sqlite-live` mode, and local write flags.
+
+The Command Center and local operator surface have:
 
 - route-wide stale phase-label cleanup
 - capability-based state messaging
@@ -67,6 +76,14 @@ surface have:
   and project mutation still disabled
 - preview-only worker runtime, concurrency, and conversational command interface
   foundations through P62
+- founder-lite workflows for idea intake, local PRD readiness, agent workstream
+  planning, activation review, and Business Build visibility
+- local SQLite runtime foundation, schema-bound CRUD repository, repository
+  reads, governed evidence/audit/activity ledger writes, and maintenance
+  closure through P92
+- P93 enterprise runtime state: CRUD lane planning, governed mutation request
+  envelopes, local CRUD admission for OS runtime records, and DB Runtime UX in
+  Command Center
 
 ## CareLoop Project Progress
 
@@ -151,16 +168,28 @@ Command Center is the current operator surface for:
 - local approval workflow
 - controlled implementation summaries
 - live local API read surfaces
-- durable state foundation with file-backed persistence
+- durable state foundation with file-backed persistence and local SQLite
+  runtime support
+- approved local SQLite CRUD admission for NEXUS OS runtime records
 - visual QA screenshots and route-wide UX checks
+- founder idea intake, local PRD readiness, and agent workstream planning
+- Command Center Lite / Founder workflow surfaces for Chat with NEXUS, Agent
+  Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business Build,
+  Docs, and Durable State
 
 ## What Is Not Enabled Yet
 
-- worker runtime
-- governed provider dispatch
-- DB-backed runtime writes
+- provider/model calls
+- agent dispatch and worker/tool execution
+- project source mutation
+- hosted DB mutation and migrations
 - release/deploy action bridge
 - broad autonomous source mutation
+- package/export/release automation
+- provider spend
+
+Local SQLite CRUD is available only through the governed P93.4 admission path
+for NEXUS OS runtime records. It is not a general-purpose DB mutation surface.
 
 Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
 
@@ -186,6 +215,13 @@ Retro, Guard, Freeze, and Explain, then shows scope, route, risk, approval,
 blocker, cost, and timeline previews. Command Center exposes this through
 `Ask NEXUS` at `/command-center/command`. It does not enable providers, tools,
 workers, DB writes, project mutation, or release execution.
+
+P93 adds **Enterprise Runtime CRUD** visibility under
+`/command-center/database` -> **DB Runtime**. Operators can see local CRUD
+admission readiness, request-envelope state, allowed local records, owner
+capability, next action, disabled reason, evidence/activity location, and cost
+impact. The UI remains display-only and does not expose raw JSON, raw logs, raw
+policy dumps, raw DB URLs, private project IDs, DemoApp, or mutation buttons.
 
 P41.6.5 also tightens the local operator docs around:
 
@@ -224,8 +260,25 @@ npm run nexus:down
 - Architecture docs: [docs/architecture](docs/architecture/AGENTIC_OS_ARCHITECTURE.md)
 - Architecture diagrams: [docs/architecture/diagrams](docs/architecture/diagrams/README.md)
 - Roadmap: [docs/architecture/NEXUS_PLATFORM_ROADMAP.md](docs/architecture/NEXUS_PLATFORM_ROADMAP.md)
+- Product requirements: [docs/prd/NEXUS_AGENTIC_OS_PRD.md](docs/prd/NEXUS_AGENTIC_OS_PRD.md)
+- P93 Enterprise Live Runtime Expansion: [docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md](docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md)
 - Conversational command interface: [docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md](docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
+
+## Next Steps
+
+P94 is next. It must start with a scoped execution contract before coding. The
+next phase should build on P93 by making founder-to-business work more useful
+while preserving the safety boundary:
+
+- define the P94 phase contract and subphases before implementation
+- make the founder workflow more useful from idea intake through PRD, agent
+  workstreams, evidence, and local runtime records
+- keep provider/model calls, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, deploy/release/export/package, and spend blocked
+  until explicitly scoped
+- add focused Playwright and checker coverage for any Command Center UX changes
+- keep OS Roadmap status current after each subphase
 
 ## Codebase Documentation
 
@@ -1288,8 +1341,9 @@ to stable capability IDs and validates separation-of-duties rules without
 wiring runtime enforcement.
 
 P45.3 adds metadata-only path, tool, data, project-scope, change-scope, and
-approval boundaries for registered agents. No MCP/tool dispatch, provider
-execution, DB writes, worker runtime, or private project mutation is enabled.
+approval boundaries for registered agents. MCP/tool dispatch, provider
+execution, DB writes, worker runtime, and private project mutation remain
+disabled.
 
 P45.4 adds a dry-run boundary compiler that produces agent boundary envelopes
 from agent registry metadata, project registry metadata, scope classification,
@@ -1311,7 +1365,7 @@ remain disabled.
 P46 starts Scoped Memory Architecture + Memory Center. P46.1 defines the
 canonical memory scopes, change scopes, memory item schema, and forbidden memory
 classes. Memory remains metadata-only: no runtime injection, provider dispatch,
-tool dispatch, worker runtime, DB writes, or project mutation is enabled.
+tool dispatch, worker runtime, DB writes, or project mutation is allowed.
 
 P46.2 adds safe local JSONL memory stores for NEXUS OS, project, task, and
 session memory metadata. Stores contain redacted summaries only and reject

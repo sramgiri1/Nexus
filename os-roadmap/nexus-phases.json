@@ -5372,12 +5372,13 @@
       "title": "Enterprise Live Runtime Expansion",
       "track": "NEXUS_OS",
       "order": 122.07,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "65e89ba",
-      "completedAt": "",
-      "summary": "Enterprise live-runtime expansion is in progress with P93.1-P93.6 complete. Final validation and parent closure remain in P93.7.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:23:55.834Z",
+      "summary": "Completed Enterprise Live Runtime Expansion with contract, local runtime CRUD plan, governed mutation request envelopes, local SQLite CRUD admission for allowlisted OS runtime entities, Command Center DB Runtime UX, README/PRD refresh, validation aggregation, and final closure.",
       "checksRun": [
+        "npm run check:p937-enterprise-runtime-final-validation",
         "npm run check:p936-enterprise-runtime-validation-aggregation",
         "npm run check:p935-command-center-live-runtime-ux",
         "npm run check:p934-local-crud-execution-admission",
@@ -5391,12 +5392,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P93 is in progress. P93.6 is validation aggregation only and adds no runtime behavior. Final closure remains in P93.7."
+        "P93 is complete. It admits local SQLite CRUD only for allowlisted OS runtime entities with explicit approval and local write flags. Provider/model calls, agent dispatch, tool/worker execution, project mutation, hosted DB mutation, network calls, deploy, release, export, package, and spend remain blocked."
       ],
-      "nextPhase": "P93.7",
+      "nextPhase": "P94",
       "commandCenterVisible": true,
       "label": "Enterprise Live Runtime Expansion",
-      "detail": "P93.6 validation aggregation complete; P93.7 final validation next."
+      "detail": "P93 complete; P94 next."
     },
     {
       "track": "NEXUS_OS",
@@ -5564,18 +5565,31 @@
       "phaseId": "P93.7",
       "title": "Final Validation",
       "order": 129.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned P93 final validation and next scoped handoff.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:23:55.834Z",
+      "summary": "Finalized P93 validation, confirmed all P93 subphases and reports, refreshed README/PRD, preserved Command Center DB Runtime UX, closed P93 parent status, and handed off to P94.",
+      "checksRun": [
+        "npm run check:p937-enterprise-runtime-final-validation",
+        "npm run check:p936-enterprise-runtime-validation-aggregation",
+        "npm run check:p935-command-center-live-runtime-ux",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:p933-governed-runtime-mutation-request",
+        "npm run check:p932-enterprise-runtime-crud-plan",
+        "npm run check:p931-enterprise-live-runtime-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P93.7 is final validation only. P94 is the next scoped phase and is not implemented by this closure."
       ],
       "nextPhase": "P94",
       "label": "Final Validation",
-      "detail": "Planned final validation."
+      "detail": "P93 final validation complete; P94 next."
     },
     {
       "phaseId": "P83",
@@ -5986,11 +6000,30 @@
       ],
       "nextPhase": "P85",
       "commandCenterVisible": true
+    },
+    {
+      "phaseId": "P94",
+      "title": "Founder Runtime DB CRUD Workflow Wiring",
+      "track": "NEXUS_OS",
+      "order": 130.07,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned next NEXUS OS phase to define the implementation-grade contract for founder runtime DB CRUD workflow wiring after P93 enterprise runtime closure.",
+      "checksRun": [],
+      "knownLimitations": [
+        "Not started. P94 must define its scoped execution contract before coding."
+      ],
+      "nextPhase": "P94.1",
+      "commandCenterVisible": true,
+      "label": "Founder Runtime DB CRUD",
+      "detail": "Planned next phase; contract required before implementation."
     }
   ],
-  "updatedAt": "2026-05-20T22:13:08.436Z",
-  "currentPhase": "P93.6",
-  "previousPhase": "P93.5",
-  "nextPhase": "P93.7",
+  "updatedAt": "2026-05-20T22:24:07.917Z",
+  "currentPhase": "P93.7",
+  "previousPhase": "P93.6",
+  "nextPhase": "P94",
   "currentPhaseStatus": "complete"
 }

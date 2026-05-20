@@ -174,5 +174,43 @@ remain in P93.7.
 
 ## Next Subphases
 
-P93.7 is next. It must run final P93 validation and close the parent phase with
-a clean next-phase handoff.
+## P93.7 Final Validation
+
+P93.7 is complete. It finalizes P93 Enterprise Live Runtime Expansion
+validation, confirms all P93 subphases are complete, refreshes the root README
+and NEXUS OS PRD with the latest live-runtime state, preserves the P93.5 Command
+Center DB Runtime UX, records the P94 handoff, and closes P93 without adding new
+runtime behavior.
+
+P93 is complete. It delivered:
+
+- A P93 execution contract and implementation-grade subphase split.
+- A local enterprise runtime CRUD plan for founder session, PRD artifact,
+  workstream, activation review, runtime task queue, evidence, audit, and
+  Command Center state lanes.
+- Governed local mutation request envelopes.
+- Explicit local SQLite CRUD admission for allowlisted OS runtime entities.
+- Command Center DB Runtime UX that shows local CRUD readiness without runnable
+  mutation controls.
+- Aggregated tests, docs, roadmap, checker, and final validation evidence.
+
+Validation:
+
+- `npm run check:p937-enterprise-runtime-final-validation`
+- `npm run check:p936-enterprise-runtime-validation-aggregation`
+- `npm run check:p935-command-center-live-runtime-ux`
+- `npm run check:p934-local-crud-execution-admission`
+- `npm run check:p933-governed-runtime-mutation-request`
+- `npm run check:p932-enterprise-runtime-crud-plan`
+- `npm run check:p931-enterprise-live-runtime-contract`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P93.7 is final validation only. P94 is next and must define
+the next scoped contract before coding.
+
+## Next Phase
+
+P94 is next.
