@@ -1822,9 +1822,17 @@ hosted DB mutation, project mutation, provider/model calls, agent dispatch,
 tool/worker execution, deploy, release, export, package, and spend remain
 blocked.
 
-P93.5 is next. It must expose useful DB-backed live-runtime state in Command
-Center without raw JSON, raw logs, raw private IDs, DemoApp, or fake runnable
-actions.
+P93.5 is complete. The Command Center Durable State / DB Runtime tab now shows
+Enterprise Runtime CRUD state from the P93.2-P93.4 lane: local CRUD admission
+readiness, request-envelope state, allowed local records, owner capability,
+next action, disabled reason, evidence/activity location, and cost impact. The
+UX remains display-only and does not add mutation buttons, raw JSON, raw logs,
+raw policy dumps, DemoApp, raw private IDs, raw DB URLs, provider/model calls,
+agent dispatch, project mutation, hosted DB controls, deploy, release, export,
+package, or spend controls.
+
+P93.6 is next. It must aggregate P93 tests, docs, roadmap, checker, and safety
+evidence.
 
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).

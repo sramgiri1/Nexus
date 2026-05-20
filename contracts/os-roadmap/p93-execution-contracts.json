@@ -416,8 +416,101 @@
       "id": "nexus-os-p93-5-command-center-live-runtime-ux",
       "phaseId": "P93.5",
       "objective": "Expose useful DB-backed live-runtime state and safe CRUD readiness in Command Center without raw IDs or fake actions.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/dbRuntimeReadiness.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p935-command-center-live-runtime-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p93-execution-contracts.json",
+        "docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p934-local-crud-execution-admission-report.md",
+        "reports/p935-command-center-live-runtime-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "buildDbRuntimeReadinessViewModel",
+          "dbRuntimeReadinessViewModel"
+        ],
+        "dataShape": "DB runtime view model includes summaryRows, statusChips, blockers, blockedOperations, evidenceRows, enterpriseRuntime, and safety. enterpriseRuntime includes currentState, requestState, ownerCapability, nextAction, disabledReason, evidenceLocation, activityLocation, costImpact, allowedOperations[], allowedEntities[], lanes[], and blockedOperations[]."
+      },
+      "commandCenterUxRequirements": "The /command-center/database DB Runtime tab must show Enterprise Runtime CRUD state, local CRUD admission readiness, request state, allowed local records, owner capability, next action, disabled reason, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, raw DB URLs, mutation buttons, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Update dashboard/tests/routes.spec.js DB live state route coverage.",
+        "Run cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"."
+      ],
+      "testsCheckers": [
+        "Add check:p935-command-center-live-runtime-ux.",
+        "Run P93.4 checker and dashboard build."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P93 plan doc.",
+        "Update platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p935-command-center-live-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no mutation buttons were added.",
+        "Confirm no raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or raw DB URLs appear in DB Runtime primary UX.",
+        "Confirm dark/light/system themes are preserved.",
+        "Confirm no provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB, network, deploy, release, export, package, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P93.5 files>",
+        "git commit -m \"feat(nexus): surface enterprise runtime crud state\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests and checker results",
+        "Dashboard build/unit/page results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     },
     {
       "id": "nexus-os-p93-6-tests-docs-roadmap",

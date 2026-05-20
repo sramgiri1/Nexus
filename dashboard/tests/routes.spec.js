@@ -2040,13 +2040,22 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("Fallback state");
     await expect(activeCommandTabPanel(page)).toContainText("SQLite when live; file fallback otherwise");
     await expect(activeCommandTabPanel(page)).toContainText("DB writes");
-    await expect(activeCommandTabPanel(page)).toContainText("Limited");
+    await expect(activeCommandTabPanel(page)).toContainText("Approved local only");
     await expect(activeCommandTabPanel(page)).toContainText("Blockers");
+    await expect(activeCommandTabPanel(page)).toContainText("Enterprise Runtime CRUD");
+    await expect(activeCommandTabPanel(page)).toContainText("Local CRUD admission ready");
+    await expect(activeCommandTabPanel(page)).toContainText("Mutation request envelopes ready for operator review");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder conversation events");
+    await expect(activeCommandTabPanel(page)).toContainText("PRD artifact contracts");
+    await expect(activeCommandTabPanel(page)).toContainText("Runtime task queue");
+    await expect(activeCommandTabPanel(page)).toContainText("Delete and raw SQL remain blocked");
     await expect(activeCommandTabPanel(page)).toContainText("Evidence, Activity, And Cost");
     await expect(activeCommandTabPanel(page)).toContainText("reports/p924-governed-sqlite-runtime-writes-report.md");
+    await expect(activeCommandTabPanel(page)).toContainText("reports/p934-local-crud-execution-admission-report.md");
 
     const body = await activeCommandTabPanel(page).innerText();
     expect(body).not.toMatch(/migrate now|write now|schema now|run db|execute now|enable now/i);
+    expect(body).not.toMatch(/raw json|raw logs|raw policy/i);
     expect(body).not.toContain("DemoApp");
     expect(body).not.toMatch(/postgres(?:ql)?:\/\//i);
     expect(body).not.toMatch(/P72\./);

@@ -5374,25 +5374,25 @@
       "order": 122.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fb335ff",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation request envelopes, and local CRUD execution admission complete. Command Center live-runtime UX remains split into P93.5.",
+      "summary": "Enterprise live-runtime expansion is in progress with the execution contract, local CRUD plan, governed mutation requests, local CRUD admission, and Command Center live-runtime UX complete. Validation aggregation remains split into P93.6.",
       "checksRun": [
+        "npm run check:p935-command-center-live-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
         "npm run check:p934-local-crud-execution-admission",
-        "npm run check:p933-governed-runtime-mutation-request",
-        "npm run check:p932-enterprise-runtime-crud-plan",
-        "npm run check:p931-enterprise-live-runtime-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P93 is in progress. P93.4 admits local SQLite CRUD only for allowlisted OS runtime entities with explicit approval and local write flags. Provider/model calls, agent dispatch, project mutation, hosted DBs, deploy, network calls, package, and spend remain blocked."
+        "P93 is in progress. P93.5 is UX-only and does not add mutation buttons, provider/model calls, agent dispatch, project mutation, hosted DB controls, deploy, network calls, package, or spend."
       ],
-      "nextPhase": "P93.5",
+      "nextPhase": "P93.6",
       "commandCenterVisible": true,
       "label": "Enterprise Live Runtime Expansion",
-      "detail": "P93.4 local CRUD admission complete; P93.5 next."
+      "detail": "P93.5 Command Center live-runtime UX complete; P93.6 next."
     },
     {
       "track": "NEXUS_OS",
@@ -5502,18 +5502,26 @@
       "phaseId": "P93.5",
       "title": "Command Center Live Runtime UX",
       "order": 127.07,
-      "status": "planned",
-      "branch": "",
-      "commit": "",
-      "completedAt": "",
-      "summary": "Planned Command Center DB-backed live-runtime UX without raw IDs or fake actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20T22:07:47.593Z",
+      "summary": "Updated Command Center Durable State / DB Runtime UX to show Enterprise Runtime CRUD state, local CRUD admission readiness, request state, allowed local records, owner, next action, disabled reason, evidence/activity location, and cost posture without runnable mutation controls.",
+      "checksRun": [
+        "npm run check:p935-command-center-live-runtime-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"DB live state\"",
+        "cd dashboard && npm run build",
+        "npm run check:p934-local-crud-execution-admission",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Not started."
+        "P93.5 is UX-only. It surfaces live-runtime DB state but does not add DB mutation controls or broaden execution beyond P93.4 local admission."
       ],
       "nextPhase": "P93.6",
-      "label": "Live Runtime UX",
-      "detail": "Planned DB-backed runtime UX."
+      "label": "Command Center Runtime UX",
+      "detail": "DB Runtime UX now shows enterprise local CRUD state safely."
     },
     {
       "track": "NEXUS_OS",
@@ -5964,9 +5972,9 @@
       "commandCenterVisible": true
     }
   ],
-  "updatedAt": "2026-05-20T22:02:34.795Z",
-  "currentPhase": "P93.4",
-  "previousPhase": "P93.3",
-  "nextPhase": "P93.5",
+  "updatedAt": "2026-05-20T22:07:47.593Z",
+  "currentPhase": "P93.5",
+  "previousPhase": "P93.4",
+  "nextPhase": "P93.6",
   "currentPhaseStatus": "complete"
 }

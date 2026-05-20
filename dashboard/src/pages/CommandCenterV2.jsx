@@ -7480,9 +7480,38 @@ function DurableStatePage({ vm }) {
               ))}
             </div>
             <div className="ccv2-card">
+              <div className="ccv2-section-heading">Enterprise Runtime CRUD</div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.currentState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Request state</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.requestState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed local CRUD</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.allowedOperations.join(", ")} with explicit approval and local write flags</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.disabledReason}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{dbRuntime.enterpriseRuntime.costImpact}</span></div>
+              </div>
+              <div className="ccv2-stat-chips" style={{ marginTop: 12, marginBottom: 8 }}>
+                {dbRuntime.enterpriseRuntime.allowedEntities.map((entity) => (
+                  <div key={entity} className="ccv2-stat-chip"><span className="ccv2-stat-chip__label">Allowed local record</span><span className="ccv2-stat-chip__value ccv2-stat-chip__value--teal">{entity}</span></div>
+                ))}
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
+                {dbRuntime.enterpriseRuntime.lanes.map((lane) => (
+                  <div key={lane.label} className="ccv2-safety-row">
+                    <span className="ccv2-safety-row__label">{lane.label}</span>
+                    <span className="ccv2-safety-row__value--ready">{lane.state} · {lane.owner} · {lane.evidence}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
               <div className="ccv2-safety-grid" style={{ marginTop: 8 }}>
                 {dbRuntime.blockers.map((blocker) => (
+                  <div key={blocker} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{blocker}</span><span className="ccv2-safety-row__value--disabled">Blocked</span></div>
+                ))}
+                {dbRuntime.enterpriseRuntime.blockedOperations.map((blocker) => (
                   <div key={blocker} className="ccv2-safety-row"><span className="ccv2-safety-row__label">{blocker}</span><span className="ccv2-safety-row__value--disabled">Blocked</span></div>
                 ))}
               </div>

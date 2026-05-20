@@ -117,6 +117,31 @@ or spend.
 
 ## Next Subphases
 
-P93.5 is next. It must expose useful DB-backed live-runtime state in Command
-Center without raw JSON, raw logs, raw private IDs, DemoApp, or fake runnable
-actions.
+## P93.5 Command Center Live Runtime UX
+
+P93.5 is complete. The Command Center Durable State / DB Runtime tab now shows
+Enterprise Runtime CRUD state from the P93.2-P93.4 lane: local CRUD admission
+readiness, request-envelope state, allowed local records, owner capability,
+next action, disabled reason, evidence/activity location, and cost impact.
+
+The UX remains display-only. It does not add mutation buttons, raw JSON, raw
+logs, raw policy dumps, DemoApp, raw private IDs, raw DB URLs, provider/model
+calls, agent dispatch, project mutation, hosted DB controls, deploy, release,
+export, package, or spend controls.
+
+Validation:
+
+- `npm run check:p935-command-center-live-runtime-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "DB live state"`
+- `cd dashboard && npm run build`
+- `npm run check:p934-local-crud-execution-admission`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P93.5 is UX-only. It surfaces live-runtime DB state but does
+not add DB mutation controls or broaden execution beyond P93.4 local admission.
+
+## Next Subphases
+
+P93.6 is next. It must aggregate P93 tests, docs, roadmap, checker, and safety
+evidence.
