@@ -5492,7 +5492,7 @@
       "order": 114.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7a60b87",
       "completedAt": "",
       "summary": "Local SQLite runtime implementation is in progress with guarded local DB initialization, schema-driven CRUD, and SQLite-backed repository reads.",
       "checksRun": [
@@ -5567,7 +5567,7 @@
       "order": 117.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "7a60b87",
       "completedAt": "2026-05-20T12:12:31.000Z",
       "summary": "Wired selected NEXUS OS repository reads to local SQLite when sqlite-live mode is initialized, while preserving file-backed fallback and keeping runtime writes blocked.",
       "checksRun": [
@@ -5606,7 +5606,7 @@
       "detail": "Planned governed write wiring for selected runtime records."
     }
   ],
-  "updatedAt": "2026-05-20T12:12:31.000Z",
+  "updatedAt": "2026-05-20T12:13:27.000Z",
   "currentPhase": "P92.3",
   "previousPhase": "P92.2",
   "nextPhase": "P92.4",
