@@ -9297,7 +9297,7 @@
       "order": 75.07,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "88adc05",
       "completedAt": "",
       "summary": "Explicit live activation unlocks in progress with P87.1 contract and P87.2 secret/provider readiness complete.",
       "checksRun": [
@@ -9345,7 +9345,7 @@
       "order": 77.07,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "88adc05",
       "completedAt": "2026-05-20T00:25:32.662Z",
       "summary": "Added redacted secret/provider readiness metadata for provider call and spend lanes without reading credentials, calling providers, opening network connections, or spending.",
       "checksRun": [
@@ -9459,7 +9459,7 @@
     }
   ],
   "track": "NEXUS_OS",
-  "updatedAt": "2026-05-20T00:25:32.662Z",
+  "updatedAt": "2026-05-20T00:26:44.067Z",
   "currentPhase": "P87.2",
   "previousPhase": "P87.1",
   "nextPhase": "P87.3",
