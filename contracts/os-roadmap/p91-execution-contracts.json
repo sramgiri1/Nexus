@@ -575,8 +575,103 @@
       "id": "nexus-os-p91-7-final-validation",
       "phaseId": "P91.7",
       "objective": "Finalize P91 validation and prepare the next scoped handoff.",
-      "status": "planned",
-      "classification": "NEXUS_OS_CHANGE"
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p914-command-center-workstream-activation-ux.js",
+        "scripts/check-p917-final-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p91-execution-contracts.json",
+        "docs/architecture/P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p914-command-center-workstream-activation-ux-report.md",
+        "reports/p917-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "db/**",
+        "prisma/**",
+        "migrations/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "validatedShapes": [
+          "P91.1-P91.7 complete status",
+          "P91 parent complete status",
+          "P93 planned handoff",
+          "Business Build activationReview display-only UX evidence"
+        ]
+      },
+      "commandCenterUxRequirements": "Preserve Business Build Activation Review UX and Command Center Lite. Do not expose raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable activation/dispatch/project mutation actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Run focused Business Build Activation Review coverage.",
+        "Preserve route-wide no DemoApp, no raw private IDs, no fake runnable actions, and theme coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p917-final-validation.",
+        "Run P91.6, P91.5, and P91.4 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Close P91.7 and parent P91 in the P91 plan doc.",
+        "Close P91.7 and parent P91 in the platform roadmap.",
+        "Update os-roadmap/nexus-phases.json and os-roadmap/phase-status.json.",
+        "Regenerate reports."
+      ],
+      "validationCommands": [
+        "npm run check:p917-final-validation",
+        "npm run check:p916-docs-roadmap",
+        "npm run check:p915-tests-checkers",
+        "npm run check:p914-command-center-workstream-activation-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build Activation Review\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P91.7 is final validation only.",
+        "Confirm no provider/model calls are enabled.",
+        "Confirm no agent, worker, tool, or executor dispatch is enabled.",
+        "Confirm no project creation, project mutation, DB write, deploy, release, export, package, network call, or spend is enabled.",
+        "Confirm no forbidden paths changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P91.7 files>",
+        "git commit -m \"test(nexus): finalize founder workstream activation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX preservation",
+        "Tests and checker results",
+        "Docs, roadmap, and OS phase status updates",
+        "Safety and forbidden path confirmations",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
     }
   ]
 }

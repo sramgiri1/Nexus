@@ -156,6 +156,27 @@ export, package, or spend.
 
 ## Next Subphases
 
-P91.7 is next.
+## P91.7 Final Validation
 
-- P91.7 Final Validation: close P91 and hand off back to the post-P92 live-runtime roadmap.
+P91.7 is complete. It finalizes P91 validation, closes the parent P91 status,
+confirms the Command Center Activation Review remains display-only, and hands
+the active roadmap back to P93 after the already-completed local SQLite runtime
+lane.
+
+Validation:
+
+- `npm run check:p917-final-validation`
+- `npm run check:p916-docs-roadmap`
+- `npm run check:p915-tests-checkers`
+- `npm run check:p914-command-center-workstream-activation-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build Activation Review"`
+- `cd dashboard && npm run build`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+
+Known limitation: P91.7 is final validation only. It does not run an executor,
+dispatch agents, execute tools/workers, create or mutate projects, call
+providers/models, write DB state, use network calls, deploy, release, export,
+package, or spend.
+
+P91 is complete. P93 is next.

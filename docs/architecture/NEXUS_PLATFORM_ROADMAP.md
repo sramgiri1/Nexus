@@ -1730,8 +1730,11 @@ contract, OS roadmap, phase status, and evidence reports before final
 validation. The closure preserves the display-only activation review boundary
 and keeps unsafe runtime operations blocked.
 
-P91.7 is next. It must close P91 final validation and hand the active roadmap
-back to the post-P92 live-runtime sequence.
+P91.7 is complete. It finalizes P91 validation, closes the parent P91 status,
+confirms the Command Center Activation Review remains display-only, and hands
+the active roadmap back to the post-P92 live-runtime sequence.
+
+P91 is complete. P93 is next.
 
 The detailed plan lives in
 [`P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md`](P91_GOVERNED_FOUNDER_WORKSTREAM_ACTIVATION_PLAN.md).
