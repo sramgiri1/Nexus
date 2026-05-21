@@ -6455,7 +6455,7 @@
       "order": 132,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "88956ae",
       "completedAt": "2026-05-20",
       "summary": "P96 final validation closes Business Build local execution readiness and hands off to P97.",
       "checksRun": [
@@ -6644,7 +6644,7 @@
       "title": "Final Validation",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "88956ae",
       "completedAt": "2026-05-20",
       "summary": "Final P96 validation closes Business Build local execution readiness and hands off to P97.",
       "checksRun": [
