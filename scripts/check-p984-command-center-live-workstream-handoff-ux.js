@@ -67,7 +67,7 @@ addCheck("UX exposes blocked safety rows", ["Agent dispatch", "Worker/tool execu
 addCheck("view model has display data", model.liveWorkstreamHandoff?.commandCenterVisible === true && model.liveWorkstreamHandoffDryRun?.commandCenterVisible === true && model.liveWorkstreamHandoffDryRun?.lanes?.some((lane) => lane.lane === "iOS"));
 addCheck("Playwright coverage added", routeTests.includes("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime") && routeTests.includes("DB Runtime Live Workstream Handoff"));
 addCheck("docs record P98.4", p98Plan.includes("P98.4 is complete") && p98Plan.includes("npm run check:p984-command-center-live-workstream-handoff-ux"));
-addCheck("platform roadmap records P98.4", platformRoadmap.includes("P98.4 is complete") && (platformRoadmap.includes("P98.5 is next") || platformRoadmap.includes("P98.5 is complete")));
+addCheck("platform roadmap records P98.4", /P98\.4 is\s+complete/.test(platformRoadmap) && (/P98\.5 is\s+next/.test(platformRoadmap) || /P98\.5 is\s+complete/.test(platformRoadmap)));
 addCheck(
   "phase status advanced",
   statusById.get("P98.4")?.status === "complete"

@@ -72,7 +72,7 @@ addCheck("dry run stays non-executable", viewModel.liveWorkstreamHandoffDryRun?.
 addCheck("Command Center UX retained", commandCenterSource.includes("LiveWorkstreamHandoffCard") && commandCenterSource.includes("DB Runtime Live Workstream Handoff"));
 addCheck("Playwright coverage retained", routeTests.includes("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime"));
 addCheck("docs record P98.5", p98Plan.includes("P98.5 is complete") && p98Plan.includes("npm run check:p985-live-workstream-handoff-validation"));
-addCheck("platform roadmap records P98.5", platformRoadmap.includes("P98.5 is complete") && platformRoadmap.includes("P98.6 is next"));
+addCheck("platform roadmap records P98.5", /P98\.5 is\s+complete/.test(platformRoadmap) && /P98\.6 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
   statusById.get("P98.5")?.status === "complete"

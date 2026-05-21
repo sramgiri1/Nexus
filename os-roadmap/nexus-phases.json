@@ -6886,7 +6886,7 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6914163",
       "completedAt": "",
       "summary": "P98.5 aggregate live workstream handoff validation is complete; P98.6 docs and roadmap closure is next.",
       "checksRun": [
@@ -7014,7 +7014,7 @@
       "order": 134.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6914163",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Aggregated P98 live workstream handoff validation across contract, model, dry run, UX, Playwright, docs, and status.",
       "checksRun": [
