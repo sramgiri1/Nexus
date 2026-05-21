@@ -479,6 +479,7 @@
     "check:p962-founder-business-build-readiness-model": "node scripts/check-p962-founder-business-build-readiness-model.js",
     "check:p963-founder-business-build-dry-run-admission": "node scripts/check-p963-founder-business-build-dry-run-admission.js",
     "check:p964-command-center-business-build-readiness-ux": "node scripts/check-p964-command-center-business-build-readiness-ux.js",
+    "check:p965-founder-business-build-readiness-validation": "node scripts/check-p965-founder-business-build-readiness-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

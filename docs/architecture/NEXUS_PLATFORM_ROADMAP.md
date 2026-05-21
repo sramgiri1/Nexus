@@ -1979,8 +1979,11 @@ Business Build lane inspection while keeping dispatch, worker execution,
 project mutation, deploy, package, and spend blocked.
 
 P96.4 is complete. It renders local execution readiness and dry-run admission
-lanes in Business Build without runnable execution controls. P96.5 is next for
-validation aggregation.
+lanes in Business Build without runnable execution controls.
+
+P96.5 is complete. It adds aggregate validation across the P96 contract, model,
+dry-run admission, Command Center UX, reports, status, and route-safety
+coverage. P96.6 is next for docs and roadmap closure.
 
 The detailed plan lives in
 [`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).

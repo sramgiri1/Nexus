@@ -11262,13 +11262,12 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "198c00b",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P96.4 Command Center readiness UX is complete; P96.5 validation aggregation is next.",
+      "summary": "P96.5 validation aggregation is complete; P96.6 docs and roadmap closure is next.",
       "checksRun": [
+        "npm run check:p965-founder-business-build-readiness-validation",
         "npm run check:p964-command-center-business-build-readiness-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"",
-        "cd dashboard && npm run build",
         "npm run check:p963-founder-business-build-dry-run-admission",
         "npm run check:p962-founder-business-build-readiness-model",
         "npm run check:p961-founder-business-build-readiness-contract",
@@ -11277,12 +11276,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P96.4 is Command Center UX only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P96.5 is validation aggregation only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P96.5",
+      "nextPhase": "P96.6",
       "commandCenterVisible": true,
       "label": "Business Build Readiness",
-      "detail": "Command Center readiness UX complete; validation aggregation next."
+      "detail": "Validation aggregation complete; docs and roadmap closure next."
     },
     {
       "phaseId": "P96.1",
@@ -11392,18 +11391,29 @@
       "phaseId": "P96.5",
       "track": "NEXUS_OS",
       "order": 132.5,
-      "title": "Tests / Checkers",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned validation aggregation.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "title": "Validation Aggregation",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Added aggregate validation for P96.1-P96.4 contract, model, dry-run admission, Command Center UX, reports, status, and route safety.",
+      "checksRun": [
+        "npm run check:p965-founder-business-build-readiness-validation",
+        "npm run check:p964-command-center-business-build-readiness-ux",
+        "npm run check:p963-founder-business-build-dry-run-admission",
+        "npm run check:p962-founder-business-build-readiness-model",
+        "npm run check:p961-founder-business-build-readiness-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P96.5 is validation aggregation only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P96.6",
       "commandCenterVisible": true,
-      "label": "Tests / Checkers",
-      "detail": "Planned P96 subphase; next P96.6."
+      "label": "Validation",
+      "detail": "P96.5 validation aggregation complete."
     },
     {
       "phaseId": "P96.6",
@@ -11442,8 +11452,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.4",
-  "previousPhase": "P96.3",
-  "nextPhase": "P96.5",
+  "currentPhase": "P96.5",
+  "previousPhase": "P96.4",
+  "nextPhase": "P96.6",
   "currentPhaseStatus": "complete"
 }

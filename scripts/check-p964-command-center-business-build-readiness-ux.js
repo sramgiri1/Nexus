@@ -88,14 +88,14 @@ addCheck("Playwright covers P96.4 UX and themes", routeTests.includes("Business 
   && routeTests.includes("Dry-run admission report")
   && routeTests.includes("not.toContainText(\"P96.3\")"));
 addCheck("docs record P96.4", docs.includes("P96.4 is complete") && docs.includes("npm run check:p964-command-center-business-build-readiness-ux"));
-addCheck("platform roadmap records P96.4", platformRoadmap.includes("P96.4 is complete") && (platformRoadmap.includes("P96.5 is next") || platformRoadmap.includes("P96.5 is planned")));
+addCheck("platform roadmap records P96.4", platformRoadmap.includes("P96.4 is complete") && (platformRoadmap.includes("P96.5 is next") || platformRoadmap.includes("P96.5 is planned") || platformRoadmap.includes("P96.5 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P96")?.status === "in_progress"
     && statusById.get("P96.4")?.status === "complete"
-    && status.currentPhase === "P96.4"
-    && status.previousPhase === "P96.3"
-    && status.nextPhase === "P96.5",
+    && ["P96.4", "P96.5"].includes(status.currentPhase)
+    && ["P96.3", "P96.4"].includes(status.previousPhase)
+    && ["P96.5", "P96.6"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.4", roadmapById.get("P96.4")?.track === "NEXUS_OS" && roadmapById.get("P96.4")?.status === "complete");

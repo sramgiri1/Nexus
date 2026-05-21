@@ -119,8 +119,9 @@ Validation:
 
 ### P96.5 Validation
 
-P96.5 will aggregate contract, model, dry-run admission, Command Center UX,
-route safety, phase status, and forbidden path checks.
+P96.5 is complete. It aggregates contract, model, dry-run admission, Command
+Center UX, route safety, phase status, report coverage, and forbidden path
+checks.
 
 Validation:
 
