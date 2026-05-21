@@ -78,13 +78,13 @@ addCheck("dry run remains non-executable", dryRun.executableCount === 0 && dryRu
 addCheck("all unsafe runtime flags false", unsafeRuntimeFlags.every((flag) => dryRun.runtimeFlags?.[flag] === false));
 addCheck("P98.2 evidence retained", p982Report.includes("P98.2 Founder Live Workstream Handoff Model Report") && p982Report.includes("PASS"));
 addCheck("docs record P98.3", p98Plan.includes("P98.3 is complete") && p98Plan.includes("npm run check:p983-founder-live-workstream-handoff-dry-run"));
-addCheck("platform roadmap records P98.3", platformRoadmap.includes("P98.3 is complete") && platformRoadmap.includes("P98.4 is next"));
+addCheck("platform roadmap records P98.3", platformRoadmap.includes("P98.3 is complete") && (platformRoadmap.includes("P98.4 is next") || platformRoadmap.includes("P98.4 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P98.3")?.status === "complete"
-    && status.currentPhase === "P98.3"
-    && status.previousPhase === "P98.2"
-    && status.nextPhase === "P98.4",
+    && ["P98.3", "P98.4"].includes(status.currentPhase)
+    && ["P98.2", "P98.3"].includes(status.previousPhase)
+    && ["P98.4", "P98.5"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.3", roadmapById.get("P98.3")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P98.4")?.status));

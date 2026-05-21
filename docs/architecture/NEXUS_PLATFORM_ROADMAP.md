@@ -2047,7 +2047,11 @@ from existing Business Build DB view-model state while keeping execution,
 dispatch, worker/tool, project mutation, hosted DB, deploy, package, network,
 and spend paths blocked. P98.3 is complete. It adds deterministic local handoff
 dry-run records with lane evidence, blockers, disabled reasons, validation
-commands, activity, and cost context. P98.4 is next for Command Center UX.
+commands, activity, and cost context. P98.4 is complete. Command Center Lite,
+Agent Flow, Business Build, and DB Runtime now show the live workstream handoff
+dry-run state, lane previews, owner capabilities, next action, disabled reason,
+evidence/activity location, cost impact, and blocked safety rows. P98.5 is next
+for aggregate validation.
 
 The detailed plan lives in
 [`P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md`](P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md).

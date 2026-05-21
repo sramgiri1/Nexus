@@ -433,7 +433,7 @@
     {
       "phaseId": "P98.4",
       "title": "Command Center UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Expose display-safe live handoff state in Lite, Agent Flow, Business Build, and DB Runtime.",
       "narrowScope": "Command Center UX only; no runtime execution.",
@@ -447,7 +447,9 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p984-command-center-live-workstream-handoff-ux-report.md"
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -467,6 +469,83 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Render display-safe live workstream handoff and dry-run state in Lite, Agent Flow, Business Build, and DB Runtime.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend.",
+        "No raw private IDs, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse existing Command Center card, grid, summary, pill, and safety-row patterns.",
+        "Reuse businessBuildViewModel.liveWorkstreamHandoff and liveWorkstreamHandoffDryRun.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Do not duplicate route matrices, UI tab components, report writers, or DB/runtime helpers."
+      ],
+      "exactFilesToUpdate": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md"
+      ],
+      "expectedExports": [
+        "LiveWorkstreamHandoffCard"
+      ],
+      "expectedDataShapes": {
+        "uxCardProps": [
+          "handoff",
+          "dryRun",
+          "surfaceLabel"
+        ],
+        "visibleFields": [
+          "currentState",
+          "dryRunState",
+          "nextAction",
+          "blockers",
+          "disabledReason",
+          "ownerCapability",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact",
+          "safetyRows"
+        ]
+      },
+      "uxUpdate": "Lite, Agent Flow, Business Build, and DB Runtime show the local live workstream handoff state and dry-run lanes without exposing execution controls.",
+      "themeRequirements": "Use existing Command Center classes and inline layout tokens only; preserve dark, light, and system themes.",
+      "testsAndCheckers": [
+        "Add check:p984-command-center-live-workstream-handoff-ux.",
+        "Keep check:p983-founder-live-workstream-handoff-dry-run forward-compatible after P98.4 advances.",
+        "Add Playwright route coverage for Live workstream handoff across Lite, Business Build, Agent Flow, and DB Runtime.",
+        "Run dashboard production build.",
+        "Preserve no DemoApp, no raw DB table names, no raw private IDs, and no fake runnable actions."
+      ],
+      "docsRoadmap": "Update P98 plan and platform roadmap to record P98.4 complete and P98.5 next.",
+      "phaseStatusUpdate": "P98 in progress; P98.4 complete; current P98.4; previous P98.3; next P98.5.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
       ]
     },
     {

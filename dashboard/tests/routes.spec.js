@@ -3484,6 +3484,48 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/lite");
+    const liteHandoff = page.getByLabel("Live workstream handoff");
+    await expect(liteHandoff).toContainText("Lite Live Workstream Handoff");
+    await expect(liteHandoff).toContainText("Live Workstream Handoff");
+    await expect(liteHandoff).toContainText("Dry run only");
+    await expect(liteHandoff).toContainText("NEXUS Live Workstream Handoff Dry Run");
+    await expect(liteHandoff).toContainText("reports/p983-founder-live-workstream-handoff-dry-run-report.md");
+
+    await page.goto("/command-center/business-build");
+    const businessHandoff = page.getByLabel("Live workstream handoff");
+    await expect(businessHandoff).toContainText("Business Build Live Workstream Handoff");
+    await expect(businessHandoff).toContainText("iOS");
+    await expect(businessHandoff).toContainText("Agent dispatch");
+    await expect(businessHandoff).toContainText("Blocked");
+
+    await page.goto("/command-center/agent-flow");
+    const agentHandoff = page.getByLabel("Live workstream handoff");
+    await expect(agentHandoff).toContainText("Agent Flow Live Workstream Handoff");
+    await expect(agentHandoff).toContainText("Local Handoff Dry Run Ready Execution Blocked");
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+    const dbHandoff = activeCommandTabPanel(page).getByLabel("Live workstream handoff");
+    await expect(dbHandoff).toContainText("DB Runtime Live Workstream Handoff");
+    await expect(dbHandoff).toContainText("Project mutation");
+    await expect(dbHandoff).toContainText("Provider spend");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/business_build_sessions|business_build_execution_requests|business_build_agent_lanes|business_build_prd_snapshots/);
+    expect(body).not.toMatch(/private-project|raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

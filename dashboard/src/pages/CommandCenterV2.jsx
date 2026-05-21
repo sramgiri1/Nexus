@@ -2763,6 +2763,11 @@ function CommandCenterLitePage() {
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{liteFounderDbWorkflow.costImpact}</div>
           </section>
           <BusinessBuildDbCrudCard crud={liteBusinessBuild.businessBuildDbCrud} surfaceLabel="Lite Business Build DB workflow" />
+          <LiveWorkstreamHandoffCard
+            handoff={liteBusinessBuild.liveWorkstreamHandoff}
+            dryRun={liteBusinessBuild.liveWorkstreamHandoffDryRun}
+            surfaceLabel="Lite Live Workstream Handoff"
+          />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -2899,6 +2904,11 @@ function AgentFlowPage() {
       </div>
       <AgentFlowPanel envelope={envelope} />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
+      <LiveWorkstreamHandoffCard
+        handoff={businessBuild.liveWorkstreamHandoff}
+        dryRun={businessBuild.liveWorkstreamHandoffDryRun}
+        surfaceLabel="Agent Flow Live Workstream Handoff"
+      />
     </div>
   );
 }
@@ -7518,7 +7528,8 @@ function DurableStatePage({ vm }) {
   const totalEntities = importPlan.totalEntities ?? entityCount;
   const dbRuntime = dbRuntimeReadinessViewModel;
   const founderPersistenceControls = buildFounderPersistenceControlsViewModel(dbRuntime.founderRuntime);
-  const businessBuildRuntime = buildBusinessBuildViewModel(dbRuntime.founderRuntime?.founderIdea).businessBuildDbCrud;
+  const businessBuildRuntimeView = buildBusinessBuildViewModel(dbRuntime.founderRuntime?.founderIdea);
+  const businessBuildRuntime = businessBuildRuntimeView.businessBuildDbCrud;
 
   return (
     <div className="ccv2-content">
@@ -7678,6 +7689,11 @@ function DurableStatePage({ vm }) {
               </div>
             </div>
             <BusinessBuildDbCrudCard crud={businessBuildRuntime} surfaceLabel="DB Runtime Business Build" />
+            <LiveWorkstreamHandoffCard
+              handoff={businessBuildRuntimeView.liveWorkstreamHandoff}
+              dryRun={businessBuildRuntimeView.liveWorkstreamHandoffDryRun}
+              surfaceLabel="DB Runtime Live Workstream Handoff"
+            />
             <FounderPersistenceControlsCard controls={founderPersistenceControls} />
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
@@ -9353,6 +9369,11 @@ function BusinessBuildPage() {
               </div>
             </div>
             <BusinessBuildDbCrudCard crud={build.businessBuildDbCrud} surfaceLabel="Business Build DB Workflow" />
+            <LiveWorkstreamHandoffCard
+              handoff={build.liveWorkstreamHandoff}
+              dryRun={build.liveWorkstreamHandoffDryRun}
+              surfaceLabel="Business Build Live Workstream Handoff"
+            />
             <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
               <div className="ccv2-section-heading">Founder DB Workflow</div>
               <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
@@ -9607,6 +9628,70 @@ function BusinessBuildPage() {
             </div>
           </CommandTabPanel>
         </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+function LiveWorkstreamHandoffCard({ handoff, dryRun, surfaceLabel = "Live Workstream Handoff" }) {
+  if (!handoff || !dryRun) return null;
+
+  const lanes = Array.isArray(dryRun.lanes) ? dryRun.lanes.slice(0, 6) : [];
+  const fallbackSafetyRows = [
+    { label: "Agent dispatch", value: "Blocked" },
+    { label: "Worker/tool execution", value: "Blocked" },
+    { label: "Project mutation", value: "Blocked" },
+    { label: "Hosted DB", value: "Blocked" },
+    { label: "Deploy/package", value: "Blocked" },
+    { label: "Provider spend", value: "Blocked" },
+  ];
+  const safetyRows = Array.isArray(dryRun.safetyRows) ? dryRun.safetyRows : fallbackSafetyRows;
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Live workstream handoff">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Live Workstream Handoff</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {dryRun.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Dry run only</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Source packet</span><span className="ccv2-page-summary-value">{handoff.currentState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Preview lanes</span><span className="ccv2-page-summary-value">{dryRun.readyPreviewCount || 0} ready of {dryRun.laneCount || lanes.length}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable lanes</span><span className="ccv2-page-summary-value">{dryRun.executableCount || 0}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{dryRun.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{dryRun.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{dryRun.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{dryRun.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{dryRun.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{dryRun.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {lanes.map((lane) => (
+          <div
+            key={lane.lane}
+            aria-label={`${lane.lane} live handoff lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.lane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{lane.dryRunState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.plannedWork}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.previewNextAction}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className={row.value === "Yes" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -52,10 +52,21 @@ Validation:
 
 ## P98.4 Command Center UX
 
-P98.4 is planned. It will expose the handoff packet state in Command Center Lite,
-Agent Flow, Business Build, and DB Runtime with current state, next action,
-blockers, disabled reason, owner capability, evidence/activity location, and
-cost impact.
+P98.4 is complete. It exposes the handoff packet and safe dry-run state in
+Command Center Lite, Agent Flow, Business Build, and DB Runtime with current
+state, next action, blockers, disabled reason, owner capability,
+evidence/activity location, cost impact, lane previews, and blocked safety
+rows. P98.5 is next for aggregate validation.
+
+Validation:
+
+- `npm run check:p984-command-center-live-workstream-handoff-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Live workstream handoff"`
+- `cd dashboard && npm run build`
+- `npm run check:p983-founder-live-workstream-handoff-dry-run`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P98.5 Tests / Checkers
 
