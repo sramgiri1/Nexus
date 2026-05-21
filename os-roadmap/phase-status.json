@@ -12108,7 +12108,7 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a8ca5bc3",
       "completedAt": "",
       "summary": "P100.6 aggregate founder Command Center validation is complete; P100.7 final validation is next.",
       "checksRun": [
@@ -12270,7 +12270,7 @@
       "order": 136.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a8ca5bc3",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added aggregate P100 validation covering scripts, reports, route tests, docs, phase status, and P100.1 through P100.5 completion.",
       "checksRun": [
