@@ -11483,7 +11483,7 @@
       "order": 133,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "f5beff7",
+      "commit": "ae9bb33",
       "completedAt": "",
       "summary": "P97.3 Business Build CRUD model is complete; P97.4 Command Center DB UX is next.",
       "checksRun": [
@@ -11559,7 +11559,7 @@
       "order": 133.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "ae9bb33",
       "completedAt": "2026-05-21",
       "summary": "Added governed local CRUD model and admission for Business Build DB records using the P97.2 schema.",
       "checksRun": [
