@@ -1,0 +1,53 @@
+# P98 Founder Business Build Live Workstream Handoff Plan
+
+P98 moves DB-backed Business Build records toward governed live workstream
+handoff packets. It does not enable provider/model calls, agent dispatch,
+worker/tool execution, project source mutation, hosted DB mutation, deploy,
+release, export, package creation, network calls, or provider spend.
+
+## P98.1 Schema / Policy / Contract
+
+P98.1 is complete. It creates the implementation-grade P98 execution contract,
+splits P98 into scoped subphases, defines future handoff packet exports and data
+shapes, updates OS phase status, and adds contract validation. P98.2 is next for
+the core display-safe handoff packet model.
+
+Validation:
+
+- `npm run check:p981-founder-live-workstream-handoff-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
+
+## P98.2 Core Handoff Packet Model
+
+P98.2 is planned. It will build a display-safe local handoff packet model from
+existing Business Build DB view-model state without adding Command Center UX or
+execution behavior.
+
+## P98.3 Preview / Safe Dry Run
+
+P98.3 is planned. It will add deterministic local handoff readiness preview
+records while keeping all unsafe runtime flags false.
+
+## P98.4 Command Center UX
+
+P98.4 is planned. It will expose the handoff packet state in Command Center Lite,
+Agent Flow, Business Build, and DB Runtime with current state, next action,
+blockers, disabled reason, owner capability, evidence/activity location, and
+cost impact.
+
+## P98.5 Tests / Checkers
+
+P98.5 is planned. It will aggregate P98 checker and Playwright evidence while
+preserving route-wide safety tests.
+
+## P98.6 Docs / Roadmap
+
+P98.6 is planned. It will update README, PRD, usage docs, platform roadmap, OS
+roadmap, phase status, and validation evidence for P98 handoff readiness.
+
+## P98.7 Final Validation
+
+P98.7 is planned. It will run final P98 validation, close the parent P98 phase,
+and prepare the next scoped handoff.

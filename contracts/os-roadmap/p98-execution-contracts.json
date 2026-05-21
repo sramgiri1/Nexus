@@ -1,0 +1,380 @@
+{
+  "phaseId": "P98",
+  "title": "Founder Business Build Live Workstream Handoff",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "branch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "629854a1",
+  "objective": "Move DB-backed Business Build records toward governed live workstream handoff packets while preserving blocked execution.",
+  "safetyRules": [
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project source mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No DemoApp exposure in full Command Center.",
+    "No raw private project IDs, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseCheck": [
+    "Reuse shared/reportWriter.js.",
+    "Reuse shared/checkResultFormatter.js.",
+    "Reuse shared/resultEnvelope.js where runtime envelopes are introduced.",
+    "Reuse shared/redaction.js for display-safe output.",
+    "Reuse existing dashboard tabs/cards/badges.",
+    "Reuse existing Business Build, Founder Runtime DB, and DB CRUD view models.",
+    "Reuse existing evidence/audit/activity references instead of adding duplicate helpers."
+  ],
+  "expectedExports": [
+    "buildFounderLiveWorkstreamHandoffContract",
+    "buildFounderLiveWorkstreamHandoffPacket",
+    "validateFounderLiveWorkstreamHandoffReadiness",
+    "buildFounderLiveWorkstreamHandoffViewModel"
+  ],
+  "expectedDataShapes": {
+    "handoffPacket": {
+      "handoffId": "display-safe local handoff identifier",
+      "source": "Business Build DB CRUD records",
+      "currentState": "planned | ready_for_review | blocked",
+      "nextAction": "operator-visible next step",
+      "disabledReason": "why execution remains unavailable",
+      "ownerCapability": "responsible NEXUS OS capability",
+      "evidenceLocation": "report or activity pointer",
+      "costImpact": "local-only/no-spend posture"
+    },
+    "sourceRecords": [
+      "Business Build session",
+      "Execution requests",
+      "Agent lanes",
+      "PRD snapshots"
+    ],
+    "agentLanes": [
+      "product",
+      "design",
+      "engineering",
+      "ios",
+      "quality",
+      "go-to-market",
+      "finance",
+      "operations",
+      "legal"
+    ],
+    "runtimeFlags": {
+      "providerCallsAllowed": false,
+      "agentDispatchAllowed": false,
+      "workerExecutionAllowed": false,
+      "projectMutationAllowed": false,
+      "hostedDbWritesAllowed": false,
+      "deployAllowed": false,
+      "providerSpendAllowed": false
+    }
+  },
+  "subphases": [
+    {
+      "phaseId": "P98.1",
+      "title": "Schema / Policy / Contract",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Create the implementation-grade P98 contract and checker before coding live handoff behavior.",
+      "narrowScope": "Contract, subphase split, safety boundaries, checker, roadmap, and OS status only.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToUpdate": [
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
+      ],
+      "uxUpdate": "No UI change in P98.1. The contract requires future Command Center Lite, Agent Flow, Business Build, and DB Runtime surfaces to show handoff packet state, owner, next action, blockers, disabled reason, evidence/activity location, and cost impact.",
+      "themeRequirements": "No CSS or theme change. Future UI must preserve System, Dark, and Light themes.",
+      "testsAndCheckers": [
+        "Add check:p981-founder-live-workstream-handoff-contract.",
+        "Update check:os-phase-status to accept P98.1.",
+        "No Playwright test in this contract-only subphase."
+      ],
+      "docsRoadmap": [
+        "Add P98 plan doc.",
+        "Add P98 section to platform roadmap.",
+        "Update OS roadmap and phase status."
+      ],
+      "phaseStatusUpdate": "P98 in progress; P98.1 complete; current P98.1; previous P97.7; next P98.2.",
+      "validationCommands": [
+        "npm run check:p981-founder-live-workstream-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P98.2",
+      "title": "Core Handoff Packet Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Build the display-safe handoff packet model from existing Business Build DB view-model data.",
+      "narrowScope": "Pure model only; no UI and no execution.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p982-founder-live-workstream-handoff-model-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:p981-founder-live-workstream-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P98.3",
+      "title": "Preview / Safe Dry Run",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Add deterministic local handoff readiness preview without dispatching agents or writing projects.",
+      "narrowScope": "Safe dry-run records only.",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p983-founder-live-workstream-handoff-dry-run",
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P98.4",
+      "title": "Command Center UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Expose display-safe live handoff state in Lite, Agent Flow, Business Build, and DB Runtime.",
+      "narrowScope": "Command Center UX only; no runtime execution.",
+      "allowedFiles": [
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p984-command-center-live-workstream-handoff-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Live workstream handoff\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P98.5",
+      "title": "Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Aggregate P98 validation and preserve route-wide safety tests.",
+      "narrowScope": "Validation aggregation only.",
+      "allowedFiles": [
+        "scripts/check-p985-live-workstream-handoff-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p985-live-workstream-handoff-validation-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p985-live-workstream-handoff-validation",
+        "npm run check:p984-command-center-live-workstream-handoff-ux",
+        "npm run check:p983-founder-live-workstream-handoff-dry-run",
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:p981-founder-live-workstream-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P98.6",
+      "title": "Docs / Roadmap",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Update README, PRD, usage docs, roadmap, and reports for live handoff readiness.",
+      "narrowScope": "Docs and status only.",
+      "allowedFiles": [
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p986-live-workstream-handoff-docs-roadmap.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p986-live-workstream-handoff-docs-roadmap-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p986-live-workstream-handoff-docs-roadmap",
+        "npm run check:p985-live-workstream-handoff-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P98.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Run final P98 validation, close P98, and prepare the next scoped handoff.",
+      "narrowScope": "Final validation and status closure only.",
+      "allowedFiles": [
+        "scripts/check-p987-live-workstream-handoff-final-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p987-live-workstream-handoff-final-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p987-live-workstream-handoff-final-validation",
+        "npm run check:p986-live-workstream-handoff-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    }
+  ]
+}

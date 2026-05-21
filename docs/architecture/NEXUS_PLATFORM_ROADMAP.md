@@ -2037,6 +2037,18 @@ P97.7 is complete. It closes P97 with final validation for the Business Build
 DB CRUD contract, schema, CRUD model, Command Center UX, aggregate evidence,
 docs, roadmap, and status. P97 is complete. P98 is next.
 
+## P98 - Founder Business Build Live Workstream Handoff
+
+P98 starts the governed handoff from DB-backed Business Build records into local
+workstream handoff planning. P98.1 is complete. It defines the implementation
+contract, seven-subphase split, safety boundary, validation commands, and OS
+status handoff. P98.2 is next for the display-safe handoff readiness model.
+
+The detailed plan lives in
+[`P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md`](P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md).
+Implementation must follow
+[`p98-execution-contracts.json`](../../contracts/os-roadmap/p98-execution-contracts.json).
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow
