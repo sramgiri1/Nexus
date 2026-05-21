@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P101.1
-- Generated at: 2026-05-21T23:41:31.827Z
+- Generated at: 2026-05-21T23:46:35.350Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 26634cc1
+- Validation HEAD: a9304aab
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -21,7 +21,7 @@
 | P101 contract identity | PASS |  |
 | P101 contract in progress | PASS |  |
 | P101 has seven subphases | PASS |  |
-| P101.1 complete and P101.2 planned | PASS |  |
+| P101.1 complete and P101.2 planned or complete | PASS |  |
 | P101.1 allowed files are exact | PASS | 11 allowed files |
 | P101.1 forbids unsafe roots | PASS |  |
 | P101.1 leaves UI files out of scope | PASS |  |
@@ -29,10 +29,10 @@
 | P101.1 plan doc exists | PASS |  |
 | P101.1 plan records contract fields | PASS |  |
 | platform roadmap records P101.1 | PASS |  |
-| phase status points at P101.1 | PASS | P101.1/P100.7/P101.2 |
+| phase status is within P101 handoff | PASS | P101.2/P101.1/P101.3 |
 | status tracks parent P101 in progress | PASS |  |
 | status tracks P101.1 complete | PASS |  |
-| status tracks P101.2 planned | PASS |  |
+| status tracks P101.2 planned or complete | PASS |  |
 | status tracks P102 handoff | PASS |  |
 | phase status checker accepts P101 subphases | PASS |  |
 | future exports and data shapes are contracted | PASS |  |

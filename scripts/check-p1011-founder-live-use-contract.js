@@ -77,7 +77,7 @@ addCheck("P101 contract exists", exists("contracts/os-roadmap/p101-execution-con
 addCheck("P101 contract identity", contract.phaseId === "P101" && contract.title === "Founder Live Use Hardening");
 addCheck("P101 contract in progress", contract.status === "in_progress" && contract.scopeClassification === "NEXUS_OS_CHANGE");
 addCheck("P101 has seven subphases", p101Subphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P101.1 complete and P101.2 planned", p1011?.status === "complete" && subphaseById.get("P101.2")?.status === "planned");
+addCheck("P101.1 complete and P101.2 planned or complete", p1011?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P101.2")?.status));
 addCheck(
   "P101.1 allowed files are exact",
   p1011AllowedFiles.every((file) => (p1011?.allowedFiles || []).includes(file)),
@@ -90,13 +90,16 @@ addCheck("P101.1 plan doc exists", exists("docs/architecture/P101_FOUNDER_LIVE_U
 addCheck("P101.1 plan records contract fields", /Narrow goal/i.test(planDoc) && /Allowed files/i.test(planDoc) && /Forbidden files/i.test(planDoc));
 addCheck("platform roadmap records P101.1", /P101 - Founder Live Use Hardening/.test(platformRoadmap) && /P101\.1 is\s+complete/.test(platformRoadmap));
 addCheck(
-  "phase status points at P101.1",
-  status.currentPhase === "P101.1" && status.previousPhase === "P100.7" && status.nextPhase === "P101.2" && status.currentPhaseStatus === "complete",
+  "phase status is within P101 handoff",
+  ["P101.1", "P101.2"].includes(status.currentPhase)
+    && ["P100.7", "P101.1"].includes(status.previousPhase)
+    && ["P101.2", "P101.3"].includes(status.nextPhase)
+    && status.currentPhaseStatus === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("status tracks parent P101 in progress", statusById.get("P101")?.status === "in_progress" && roadmapById.get("P101")?.status === "in_progress");
 addCheck("status tracks P101.1 complete", statusById.get("P101.1")?.status === "complete" && roadmapById.get("P101.1")?.status === "complete");
-addCheck("status tracks P101.2 planned", statusById.get("P101.2")?.status === "planned" && roadmapById.get("P101.2")?.status === "planned");
+addCheck("status tracks P101.2 planned or complete", ["planned", "complete"].includes(statusById.get("P101.2")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.2")?.status));
 addCheck("status tracks P102 handoff", statusById.get("P102")?.status === "planned" && roadmapById.get("P102")?.status === "planned");
 addCheck("phase status checker accepts P101 subphases", [...p101Subphases, "P102"].every((phaseId) => phaseStatusSource.includes(`"${phaseId}"`)));
 addCheck(

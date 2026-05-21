@@ -2172,6 +2172,14 @@ Provider/model calls, agent dispatch, worker/tool execution, project mutation,
 hosted DB mutation, deploy, release, export, package, network calls, and
 provider spend remain blocked. P101.2 is next for the deterministic founder
 live-use readiness model.
+P101.2 is complete. It adds the deterministic local founder live-use readiness
+model by composing existing founder runtime admission, PRD safe authoring,
+workstream envelope, Business Build local readiness, dry-run admission, and
+Live Readiness evidence. It exposes founder workflow readiness, six live-use
+lanes, safety flags, blockers, next action, evidence/activity, and cost impact
+while keeping executable, dispatchable, project mutation, provider, DB,
+deploy, release, export, package, network, and spend flags false. P101.3 is
+next for the display-safe review packet.
 
 Implementation follows
 [`p101-execution-contracts.json`](../../contracts/os-roadmap/p101-execution-contracts.json).

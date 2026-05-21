@@ -122,7 +122,7 @@
     {
       "phaseId": "P101.2",
       "title": "Founder Live-Use Readiness Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Create a deterministic local founder live-use readiness model from existing founder intake, PRD, DB, handoff, execution admission, and Live Readiness state.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -138,7 +138,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p1012-founder-live-use-readiness-model-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1011-founder-live-use-contract.js"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -153,7 +154,8 @@
       ],
       "exactFilesToCreateOrUpdate": [
         "live-ready/founderLiveUseReadiness.js",
-        "scripts/check-p1012-founder-live-use-readiness-model.js"
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1011-founder-live-use-contract.js"
       ],
       "expectedExportsSchemasDataShapes": {
         "exports": [

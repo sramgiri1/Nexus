@@ -511,6 +511,7 @@
     "check:p1006-founder-command-center-validation": "node scripts/check-p1006-founder-command-center-validation.js",
     "check:p1007-founder-command-center-final": "node scripts/check-p1007-founder-command-center-final.js",
     "check:p1011-founder-live-use-contract": "node scripts/check-p1011-founder-live-use-contract.js",
+    "check:p1012-founder-live-use-readiness-model": "node scripts/check-p1012-founder-live-use-readiness-model.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
