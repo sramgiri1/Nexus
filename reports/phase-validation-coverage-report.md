@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-21T13:03:34.414Z
+- Generated at: 2026-05-21T23:40:59.101Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 1f5ac2f7
+- Validation HEAD: e726d515
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -311,21 +311,29 @@
 | P100.5 validation coverage | PASS | 3 checkers, 1 reports |
 | P100.6 validation coverage | PASS | 24 checkers, 17 reports |
 | P100.7 validation coverage | PASS | 43 checkers, 41 reports |
-| P101 validation coverage | PASS | dedicated_checker, validation_report |
+| P101 validation coverage | PASS | 4 checkers, 1 reports |
+| P101.1 validation coverage | PASS | 3 checkers, 1 reports |
+| P101.2 validation coverage | PASS | 1 checkers, 1 reports |
+| P101.3 validation coverage | PASS | 1 checkers, 1 reports |
+| P101.4 validation coverage | PASS | 7 checkers, 7 reports |
+| P101.5 validation coverage | PASS | 18 checkers, 18 reports |
+| P101.6 validation coverage | PASS | 13 checkers, 13 reports |
+| P101.7 validation coverage | PASS | 40 checkers, 40 reports |
+| P102 validation coverage | PASS | dedicated_checker, validation_report |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P100.7; next=P101; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P101.1; next=P101.2; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P101 Founder Live Use Hardening
+- P102 Founder Live Handoff
   - status: planned
   - checkers: 0
   - reports: 0
   - gaps: dedicated_checker, validation_report
 ## Result
 
-PASS (299/299)
+PASS (307/307)

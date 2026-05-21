@@ -1,0 +1,579 @@
+{
+  "phaseId": "P101",
+  "title": "Founder Live Use Hardening",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Harden founder live-use workflows after full Command Center enablement without enabling unsafe execution.",
+  "safetyRules": [
+    "No provider/model calls unless a later explicitly scoped phase admits them.",
+    "No agent dispatch unless a later explicitly scoped phase admits it.",
+    "No worker/tool execution unless a later explicitly scoped phase admits it.",
+    "No project creation or mutation unless explicitly allowed by a later phase.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No DemoApp exposure in full Command Center primary UX.",
+    "No raw private project IDs, raw logs, raw JSON dumps, raw policy dumps, or fake runnable actions."
+  ],
+  "reuseRequired": [
+    "shared/reportWriter.js",
+    "shared/reportMetadata.js",
+    "shared/resultEnvelope.js",
+    "shared/modeGuard.js",
+    "shared/redaction.js",
+    "shared/checkResultFormatter.js",
+    "os-roadmap/updatePhaseStatus.js",
+    "dashboard/src/data/businessBuild.js",
+    "existing Live Readiness view model",
+    "existing Founder Intake, Business Build, Agent Flow, Activity Log, and Docs pages",
+    "existing route matrix and founder Command Center boards"
+  ],
+  "subphases": [
+    {
+      "phaseId": "P101.1",
+      "title": "Contract / Scope / Safety Baseline",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Define P101 live-use hardening scope, safety baseline, allowed files, validation requirements, and future data shapes before coding behavior.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "e726d515",
+      "allowedFiles": [
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1011-founder-live-use-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "contractConstants": [
+          "P101_FOUNDER_LIVE_USE_PHASE",
+          "P101_LIVE_USE_HARDENING_STATES",
+          "P101_LIVE_USE_SAFETY_FLAGS"
+        ],
+        "futureEnvelope": "P101.2 must define a result envelope with schemaVersion, currentState, founderLiveUseMode, founderWorkflowReadiness, liveUseLanes[], safetyFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "No UI change in P101.1. Future P101 UX must show founder live-use readiness, current state, next action, blockers, disabled reason, owner lanes, evidence/activity, cost impact, and what remains blocked without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable execution actions.",
+      "themeRequirements": "No theme source change in P101.1. Future UX must preserve system, dark, and light themes.",
+      "playwrightTests": "No Playwright update in P101.1 because no UI files change. P101.4 must add focused route coverage.",
+      "checkerUpdates": [
+        "Add check:p1011-founder-live-use-contract.",
+        "Update check:os-phase-status to accept P101.1-P101.7 and P102."
+      ],
+      "docsRoadmap": "Add P101 plan doc and platform roadmap section.",
+      "phaseStatusUpdate": "P101 in progress; P101.1 complete; current P101.1; previous P100.7; next P101.2.",
+      "validationCommands": [
+        "npm run check:p1011-founder-live-use-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P101.1 is contract-only.",
+        "Confirm no project files changed.",
+        "Confirm no provider/model call, agent dispatch, worker/tool execution, DB mutation, deploy, release, export, package, network, or spend path was added.",
+        "Confirm P101.2 remains planned."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.1 files>",
+        "git commit -m \"feat(nexus): define founder live use hardening contract\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX changes",
+        "Tests/checkers",
+        "Docs/roadmap",
+        "OS phase status",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.2",
+      "title": "Founder Live-Use Readiness Model",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Create a deterministic local founder live-use readiness model from existing founder intake, PRD, DB, handoff, execution admission, and Live Readiness state.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.1 final commit",
+      "allowedFiles": [
+        "live-ready/founderLiveUseReadiness.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1012-founder-live-use-readiness-model-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveUseReadiness.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "P101_FOUNDER_LIVE_USE_PHASE",
+          "P101_LIVE_USE_HARDENING_STATES",
+          "P101_LIVE_USE_SAFETY_FLAGS",
+          "buildFounderLiveUseReadiness"
+        ],
+        "dataShape": "Result envelope with schemaVersion, currentState, founderLiveUseMode, founderWorkflowReadiness, liveUseLanes[], safetyFlags, nextAction, blockers, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, commandCenterVisible, and all unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "No route rendering change. Future UX consumes the model without raw JSON or runnable actions.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No Playwright update in P101.2 because no UI files change.",
+      "checkerUpdates": "Add check:p1012-founder-live-use-readiness-model and keep check:p1011 forward-compatible.",
+      "docsRoadmap": "Record P101.2 complete and P101.3 next.",
+      "phaseStatusUpdate": "P101 in progress; P101.2 complete; current P101.2; previous P101.1; next P101.3.",
+      "validationCommands": [
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm model is deterministic/local.",
+        "Confirm all unsafe runtime flags are false.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.2 files>",
+        "git commit -m \"feat(nexus): add founder live use readiness model\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Model shape",
+        "Checks",
+        "Safety",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.3",
+      "title": "Founder Live-Use Review Packet",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Build a display-safe live-use review packet and operator checklist from the P101.2 readiness model.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.2 final commit",
+      "allowedFiles": [
+        "live-ready/founderLiveUseReviewPacket.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1013-founder-live-use-review-packet-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "live-ready/founderLiveUseReviewPacket.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [
+          "buildFounderLiveUseReviewPacket"
+        ],
+        "dataShape": "Review packet with currentState, reviewMode, ready, readyItemCount, totalItemCount, blockers[], checklist[], laneReviews[], nextAction, disabledReason, ownerCapability, evidenceRefs, activityLocation, costImpact, and runtime flags false."
+      },
+      "commandCenterUxRequirements": "No route rendering change. P101.4 must expose this packet in Command Center without raw JSON or fake runnable actions.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No Playwright update in P101.3 because no UI files change.",
+      "checkerUpdates": "Add check:p1013-founder-live-use-review-packet and run P101.2/P101.1 checks.",
+      "docsRoadmap": "Record P101.3 complete and P101.4 next.",
+      "phaseStatusUpdate": "P101 in progress; P101.3 complete; current P101.3; previous P101.2; next P101.4.",
+      "validationCommands": [
+        "npm run check:p1013-founder-live-use-review-packet",
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm packet is display-safe.",
+        "Confirm no project files changed.",
+        "Confirm no runnable actions are exposed."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.3 files>",
+        "git commit -m \"feat(nexus): add founder live use review packet\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Review packet",
+        "Checks",
+        "Safety",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.4",
+      "title": "Command Center Founder Live-Use UX",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Expose founder live-use readiness on Lite, Business Build, Agent Flow, and Live Readiness without enabling execution.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.3 final commit",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1014-command-center-founder-live-use-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "viewModelShape": "Business Build view model includes founderLiveUseReadiness and founderLiveUseReview with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, safetyRows, laneRows, checklist, and runtime flags false."
+      },
+      "commandCenterUxRequirements": "Lite, Business Build, Agent Flow, and Live Readiness show founder live-use readiness, what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity, and cost. Do not show raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or runnable execution actions.",
+      "themeRequirements": "Preserve system, dark, and light themes.",
+      "playwrightTests": "Add focused route coverage for Founder Live Use readiness across Lite, Agent Flow, Business Build, and Live Readiness.",
+      "checkerUpdates": "Add check:p1014-command-center-founder-live-use-ux and run prior P101 checks.",
+      "docsRoadmap": "Record P101.4 complete and P101.5 next.",
+      "phaseStatusUpdate": "P101 in progress; P101.4 complete; current P101.4; previous P101.3; next P101.5.",
+      "validationCommands": [
+        "npm run check:p1014-command-center-founder-live-use-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1013-founder-live-use-review-packet",
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no runnable live actions.",
+        "Confirm no DemoApp leakage.",
+        "Confirm no raw private IDs.",
+        "Confirm theme and route-wide safety tests remain valid."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.4 files>",
+        "git commit -m \"feat(nexus): show founder live use readiness\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "UX changes",
+        "Playwright",
+        "Checks",
+        "Safety",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.5",
+      "title": "Aggregate Tests / Checkers",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Aggregate P101 contract, model, review packet, UX, Playwright, safety, and route-wide validation.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.4 final commit",
+      "allowedFiles": [
+        "scripts/check-p1015-founder-live-use-validation.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1015-founder-live-use-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1015-founder-live-use-validation.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Aggregate report confirming P101.1-P101.4 checks, reports, Playwright coverage, docs, and status are aligned."
+      },
+      "commandCenterUxRequirements": "No new UX change; preserve P101.4 UX.",
+      "themeRequirements": "Preserve existing theme behavior.",
+      "playwrightTests": "Run focused P101.4 route coverage and route-wide safety tests.",
+      "checkerUpdates": "Add check:p1015-founder-live-use-validation.",
+      "docsRoadmap": "Record P101.5 complete and P101.6 next.",
+      "phaseStatusUpdate": "P101 in progress; P101.5 complete; current P101.5; previous P101.4; next P101.6.",
+      "validationCommands": [
+        "npm run check:p1015-founder-live-use-validation",
+        "npm run check:p1014-command-center-founder-live-use-ux",
+        "npm run check:p1013-founder-live-use-review-packet",
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center routes do not show DemoApp\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm all prior P101 checks pass.",
+        "Confirm route-wide safety tests pass.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.5 files>",
+        "git commit -m \"test(nexus): validate founder live use hardening\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Aggregate checks",
+        "Safety",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.6",
+      "title": "Docs / Roadmap / Operator Guide",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Document founder live-use hardening state, operator flow, limitations, and next handoff.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.5 final commit",
+      "allowedFiles": [
+        "README.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p1016-founder-live-use-docs-roadmap.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1016-founder-live-use-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "README.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "scripts/check-p1016-founder-live-use-docs-roadmap.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Docs report confirming README, guide, plan, roadmap, status, and prior P101 validation evidence are aligned."
+      },
+      "commandCenterUxRequirements": "No UX source change; docs describe existing P101.4 UX and limitations.",
+      "themeRequirements": "No theme source change.",
+      "playwrightTests": "No new Playwright tests; preserve prior P101.4/P101.5 coverage.",
+      "checkerUpdates": "Add check:p1016-founder-live-use-docs-roadmap.",
+      "docsRoadmap": "Record P101.6 complete and P101.7 next.",
+      "phaseStatusUpdate": "P101 in progress; P101.6 complete; current P101.6; previous P101.5; next P101.7.",
+      "validationCommands": [
+        "npm run check:p1016-founder-live-use-docs-roadmap",
+        "npm run check:p1015-founder-live-use-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm docs do not imply live execution is enabled.",
+        "Confirm no project files changed."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.6 files>",
+        "git commit -m \"docs(nexus): document founder live use hardening\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Docs",
+        "Checks",
+        "Safety",
+        "Next subphase"
+      ]
+    },
+    {
+      "phaseId": "P101.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "narrowGoal": "Run final P101 validation, stamp real commits, close P101, and hand off to P102.",
+      "startingBranch": "codex/nexus-e2e-phase-validation",
+      "expectedBaseCommit": "P101.6 final commit",
+      "allowedFiles": [
+        "scripts/check-p1017-founder-live-use-final.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1017-founder-live-use-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "exactFilesToCreateOrUpdate": [
+        "scripts/check-p1017-founder-live-use-final.js"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "reportShape": "Final report confirming P101.1-P101.6 complete, validation passed, P101 closed, and P102 planned."
+      },
+      "commandCenterUxRequirements": "No UX source change; preserve P101.4 UX.",
+      "themeRequirements": "Preserve existing theme behavior.",
+      "playwrightTests": "Run focused P101 route coverage and route-wide safety tests.",
+      "checkerUpdates": "Add check:p1017-founder-live-use-final.",
+      "docsRoadmap": "Record P101 and P101.7 complete with P102 next.",
+      "phaseStatusUpdate": "P101 complete; P101.7 complete; current P101.7; previous P101.6; next P102.",
+      "validationCommands": [
+        "npm run check:p1017-founder-live-use-final",
+        "npm run check:p1016-founder-live-use-docs-roadmap",
+        "npm run check:p1015-founder-live-use-validation",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center routes do not show DemoApp\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P101 is closed.",
+        "Confirm P102 is only planned.",
+        "Confirm no project files changed.",
+        "Confirm unsafe execution remains blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P101.7 files>",
+        "git commit -m \"test(nexus): close founder live use hardening\"",
+        "git push"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "Final validation",
+        "Safety",
+        "Next phase"
+      ]
+    }
+  ]
+}

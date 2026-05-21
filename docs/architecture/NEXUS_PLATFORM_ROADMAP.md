@@ -2162,6 +2162,23 @@ founder live-use hardening; P101 is only a planned status entry here.
 Implementation follows
 [`p100-command-center-founder-contracts.json`](../../contracts/os-roadmap/p100-command-center-founder-contracts.json).
 
+## P101 - Founder Live Use Hardening
+
+P101 hardens the founder live-use workflow after full Command Center
+enablement without enabling unsafe execution. P101.1 is complete. It defines
+the contract, seven-subphase split, NEXUS OS-only scope, safety baseline,
+future envelope shapes, validation commands, and OS phase handoff for P101.
+Provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network calls, and
+provider spend remain blocked. P101.2 is next for the deterministic founder
+live-use readiness model.
+
+Implementation follows
+[`p101-execution-contracts.json`](../../contracts/os-roadmap/p101-execution-contracts.json).
+
+The detailed plan lives in
+[`P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md`](P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md).
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow
