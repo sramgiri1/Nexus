@@ -7301,7 +7301,7 @@
       "order": 136,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "86849ef2",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Full founder Command Center enablement is complete across navigation, operations, governance, delivery, runtime, OS pages, aggregate validation, and final validation.",
       "checksRun": [
@@ -7489,7 +7489,7 @@
       "order": 136.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "86849ef2",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Closed P100 with final founder Command Center validation covering final checker, focused Playwright coverage, dashboard build, OS phase status, phase validation coverage, and whitespace checks.",
       "checksRun": [
