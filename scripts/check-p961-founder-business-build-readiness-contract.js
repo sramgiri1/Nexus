@@ -37,7 +37,7 @@ const rawPrivateIdPattern = /(?:project|private|token|tenant|workspace|founder)_
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p961-founder-business-build-readiness-contract"]));
 addCheck("contract phase is P96", contract.phase === "P96" && contract.title === "Founder Business Build Local Execution Readiness");
 addCheck("contract has seven subphases", contract.subphases?.length === 7);
-addCheck("P96.1 complete and P96.2 handoff exists", p961?.status === "complete" && p962?.status === "planned");
+addCheck("P96.1 complete and P96.2 handoff exists", p961?.status === "complete" && ["planned", "complete"].includes(p962?.status));
 addCheck("P96.1 allowed files scoped", p961?.allowedFiles?.includes("contracts/os-roadmap/p96-execution-contracts.json") && p961.allowedFiles.includes("scripts/check-p961-founder-business-build-readiness-contract.js"));
 addCheck("P96.1 forbids DB, UI, API, runtime, and project changes", p961?.forbiddenFiles?.includes("db/**") && p961.forbiddenFiles.includes("dashboard/src/**") && p961.forbiddenFiles.includes("local-api/**") && p961.forbiddenFiles.includes("live-ready/**") && p961.forbiddenFiles.includes("projects/**"));
 addCheck("safety rules block unsafe operations", contractText.includes("provider/model calls") && contractText.includes("agent dispatch") && contractText.includes("project mutation") && contractText.includes("hosted DB mutation") && contractText.includes("provider spend"));
@@ -46,18 +46,18 @@ addCheck("future exports defined", contractText.includes("buildFounderBusinessBu
 addCheck("future data shape defined", contractText.includes("dbSourceState") && contractText.includes("founderSessionSummary") && contractText.includes("prdArtifactSummary") && contractText.includes("workstreamPlanSummary"));
 addCheck("Command Center UX requirements present", contractText.includes("DB source state") && contractText.includes("without raw JSON") && contractText.includes("no raw table dumps"));
 addCheck("docs record P96.1", docs.includes("P96.1 is complete") && docs.includes("npm run check:p961-founder-business-build-readiness-contract"));
-addCheck("platform roadmap records P96.1", platformRoadmap.includes("P96.1 is complete") && platformRoadmap.includes("P96.2 is next"));
+addCheck("platform roadmap records P96.1", platformRoadmap.includes("P96.1 is complete") && (platformRoadmap.includes("P96.2 is next") || platformRoadmap.includes("P96.2 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P96")?.status === "in_progress"
     && statusById.get("P96.1")?.status === "complete"
-    && status.currentPhase === "P96.1"
-    && status.previousPhase === "P95.7"
-    && status.nextPhase === "P96.2",
+    && ["P96.1", "P96.2"].includes(status.currentPhase)
+    && ["P95.7", "P96.1"].includes(status.previousPhase)
+    && ["P96.2", "P96.3"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.1", roadmapById.get("P96.1")?.track === "NEXUS_OS" && roadmapById.get("P96.1")?.status === "complete");
-addCheck("P96.2 handoff exists", statusById.get("P96.2")?.status === "planned" && roadmapById.get("P96.2")?.status === "planned");
+addCheck("P96.2 handoff exists", ["planned", "complete"].includes(statusById.get("P96.2")?.status) && ["planned", "complete"].includes(roadmapById.get("P96.2")?.status));
 addCheck("status checker accepts P96 and P96.1", ["P96", "P96.1"].every((phaseId) => statusChecker.includes(`"${phaseId}"`)));
 addCheck("contract does not expose raw private IDs", !rawPrivateIdPattern.test(contractText));
 addCheck("contract does not invent runnable actions", !unsafeWords.test(contractText));

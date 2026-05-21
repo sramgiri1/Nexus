@@ -63,16 +63,16 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
-### P96.2 Local CRUD Snapshot Model
+### P96.2 Local Execution Readiness Model
 
-P96.2 will add a display-safe local CRUD snapshot model. It will reuse the P94
-founder runtime DB CRUD workflow and P95 persistence controls, summarize founder
-session, Q&A, PRD artifact, and workstream plan readiness, and keep all unsafe
-runtime flags false.
+P96.2 is complete. It adds a display-safe local Business Build execution
+readiness model. It reuses the P94 founder runtime DB CRUD workflow and P95
+persistence controls, summarizes founder session, Q&A, PRD artifact, and
+workstream plan readiness, and keeps all unsafe runtime flags false.
 
 Validation:
 
-- `npm run check:p962-founder-business-build-crud-snapshot`
+- `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
@@ -87,7 +87,7 @@ writes, network fanout, or project mutation.
 Validation:
 
 - `npm run check:p963-founder-business-build-local-api`
-- `npm run check:p962-founder-business-build-crud-snapshot`
+- `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
@@ -123,7 +123,7 @@ Validation:
 - `npm run check:p965-founder-business-build-readiness-validation`
 - `npm run check:p964-command-center-business-build-readiness-ux`
 - `npm run check:p963-founder-business-build-local-api`
-- `npm run check:p962-founder-business-build-crud-snapshot`
+- `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
@@ -155,7 +155,7 @@ Validation:
 - `npm run check:p965-founder-business-build-readiness-validation`
 - `npm run check:p964-command-center-business-build-readiness-ux`
 - `npm run check:p963-founder-business-build-local-api`
-- `npm run check:p962-founder-business-build-crud-snapshot`
+- `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
 - `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder business build readiness"`
 - `cd dashboard && npm run build`

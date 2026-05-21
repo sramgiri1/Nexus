@@ -1968,8 +1968,11 @@ call providers/models, run workers/tools, mutate projects, mutate hosted DBs,
 deploy, release, export, package, use network calls, or spend.
 
 P96.1 is complete. It defines the implementation-grade P96 contract, subphase
-sequence, safety boundary, docs handoff, checker, and OS phase status. P96.2 is next
-for the local execution readiness model.
+sequence, safety boundary, docs handoff, checker, and OS phase status.
+
+P96.2 is complete. It adds a display-safe local Business Build execution
+readiness model that reuses the P94 founder runtime DB CRUD workflow and P95
+persistence controls. P96.3 is next for safe dry-run admission.
 
 The detailed plan lives in
 [`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).
