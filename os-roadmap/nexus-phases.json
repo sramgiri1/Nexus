@@ -7515,7 +7515,7 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "26634cc1",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P101.1 contract, scope, and safety baseline is complete; P101.2 deterministic founder live-use readiness model is next.",
       "checksRun": [
@@ -7539,7 +7539,7 @@
       "order": 137.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "26634cc1",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Defined P101 implementation contract, subphase split, NEXUS OS-only scope, safety baseline, future data shapes, validation commands, and OS phase handoff.",
       "checksRun": [
