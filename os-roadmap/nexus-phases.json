@@ -7099,7 +7099,7 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a7c5ce00",
       "completedAt": "",
       "summary": "P99.3 approval envelope is complete; P99.4 admission dry-run records are next.",
       "checksRun": [
@@ -7173,7 +7173,7 @@
       "order": 135.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "a7c5ce00",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added the display-safe execution admission approval envelope over the P99.2 admission model.",
       "checksRun": [
