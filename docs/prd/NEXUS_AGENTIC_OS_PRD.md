@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P95 Founder Persistence Operator Controls
+**Status:** Approved; updated through P96 Founder Business Build Local Execution Readiness
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P95
+## 1A. Current Implementation Status Through P96
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P95:
+P96:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -63,8 +63,15 @@ P95:
 - P95.5 and P95.6 aggregate validation and update docs/roadmap readiness for
   what is live-local and what remains blocked.
 - P95.7 closes final validation and records the P96 handoff.
+- P96 adds a display-safe Business Build local execution readiness model over
+  the founder workflow records.
+- P96 renders Business Build local execution readiness and dry-run admission
+  lanes in Command Center without runnable execution controls.
+- P96 aggregate validation and docs/roadmap readiness prove the founder
+  Business Build path is DB-backed locally while unsafe execution remains
+  blocked.
 
-Safety boundary as of P95:
+Safety boundary as of P96:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
@@ -80,6 +87,8 @@ Safety boundary as of P95:
   delete, raw SQL, hosted DB mutation, project mutation, provider/model calls,
   agent dispatch, worker/tool execution, deploy, release, export, package
   creation, network calls, and provider spend.
+- P96 does not add new execution authority. Business Build readiness remains
+  local deterministic readiness plus dry-run admission visibility only.
 
 ---
 

@@ -11262,26 +11262,23 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "62cb82c",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P96.5 validation aggregation is complete; P96.6 docs and roadmap closure is next.",
+      "summary": "P96.6 docs and roadmap closure is complete; P96.7 final validation is next.",
       "checksRun": [
+        "npm run check:p966-founder-business-build-readiness-docs-roadmap",
         "npm run check:p965-founder-business-build-readiness-validation",
-        "npm run check:p964-command-center-business-build-readiness-ux",
-        "npm run check:p963-founder-business-build-dry-run-admission",
-        "npm run check:p962-founder-business-build-readiness-model",
-        "npm run check:p961-founder-business-build-readiness-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P96.5 is validation aggregation only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P96.6 is docs and roadmap only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P96.6",
+      "nextPhase": "P96.7",
       "commandCenterVisible": true,
       "label": "Business Build Readiness",
-      "detail": "Validation aggregation complete; docs and roadmap closure next."
+      "detail": "Docs and roadmap closure complete; final validation next."
     },
     {
       "phaseId": "P96.1",
@@ -11419,18 +11416,26 @@
       "phaseId": "P96.6",
       "track": "NEXUS_OS",
       "order": 132.6,
-      "title": "Docs / Roadmap",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned docs and roadmap readiness.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "title": "Docs And Roadmap",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Updated README, PRD, Command Center guide, P96 plan, platform roadmap, OS status, and reports for Business Build local execution readiness.",
+      "checksRun": [
+        "npm run check:p966-founder-business-build-readiness-docs-roadmap",
+        "npm run check:p965-founder-business-build-readiness-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P96.6 is docs and roadmap only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P96.7",
       "commandCenterVisible": true,
-      "label": "Docs / Roadmap",
-      "detail": "Planned P96 subphase; next P96.7."
+      "label": "Docs Roadmap",
+      "detail": "P96.6 docs and roadmap closure complete."
     },
     {
       "phaseId": "P96.7",
@@ -11452,8 +11457,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.5",
-  "previousPhase": "P96.4",
-  "nextPhase": "P96.6",
+  "currentPhase": "P96.6",
+  "previousPhase": "P96.5",
+  "nextPhase": "P96.7",
   "currentPhaseStatus": "complete"
 }

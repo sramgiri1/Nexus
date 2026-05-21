@@ -63,6 +63,28 @@ not enabled yet.
   table names, raw private project IDs, raw JSON/log/policy dumps, secrets, or
   DemoApp in full Command Center.
 
+## Business Build Local Execution Readiness
+
+- Route: `/command-center/business-build`.
+- Purpose: show whether the founder workflow has enough DB-backed local
+  evidence for later governed execution review.
+- Current live-local scope: Business Build reads display-safe founder session,
+  Q&A, PRD artifact, and workstream plan state and shows dry-run admission lanes.
+- Current P96 posture: readiness and dry-run admission only. Admitted execution
+  count remains `0`.
+- Shown state: DB source state, current readiness state, future review lane
+  count, lane owner capability, blockers, next action, disabled reason,
+  evidence/activity label, and cost impact.
+- Admission state: `Admitted execution` remains `0`; the primary evidence label
+  is `Dry-run admission report`.
+- Still blocked: live execution, agent dispatch, worker/tool execution, project
+  mutation, hosted DB mutation, provider/model calls, network calls, deploy,
+  release, export, package creation, and provider spend.
+- UX safety: Business Build should show useful founder/operator language, not
+  raw table names, raw private IDs, raw JSON/log/policy dumps, internal phase
+  labels, or fake working actions. Primary cards use friendly labels such as
+  `Dry-run admission report` and `OS activity report`.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

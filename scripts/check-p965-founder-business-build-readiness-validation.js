@@ -78,14 +78,14 @@ addCheck("P96.4 UX is preserved", commandCenterSource.includes("Business Build L
 addCheck("Business Build readiness remains browser-safe", !businessBuildSource.includes("founderBusinessBuildExecutionReadiness.js") && !businessBuildSource.includes("node:fs") && !businessBuildSource.includes("node:child_process"));
 addCheck("P96.1-P96.4 checkers tolerate P96.5 status", checkerSources.every((source) => source.includes('"P96.5"') && source.includes('"P96.6"')));
 addCheck("docs record P96.5", docs.includes("P96.5 is complete") && docs.includes("npm run check:p965-founder-business-build-readiness-validation"));
-addCheck("platform roadmap records P96.5", platformRoadmap.includes("P96.5 is complete") && (platformRoadmap.includes("P96.6 is next") || platformRoadmap.includes("P96.6 is planned")));
+addCheck("platform roadmap records P96.5", platformRoadmap.includes("P96.5 is complete") && (platformRoadmap.includes("P96.6 is next") || platformRoadmap.includes("P96.6 is planned") || platformRoadmap.includes("P96.6 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P96")?.status === "in_progress"
     && statusById.get("P96.5")?.status === "complete"
-    && status.currentPhase === "P96.5"
-    && status.previousPhase === "P96.4"
-    && status.nextPhase === "P96.6",
+    && ["P96.5", "P96.6"].includes(status.currentPhase)
+    && ["P96.4", "P96.5"].includes(status.previousPhase)
+    && ["P96.6", "P96.7"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.5", roadmapById.get("P96.5")?.track === "NEXUS_OS" && roadmapById.get("P96.5")?.status === "complete");

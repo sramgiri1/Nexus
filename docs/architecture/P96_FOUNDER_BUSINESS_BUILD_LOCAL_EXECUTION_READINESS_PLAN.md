@@ -136,9 +136,9 @@ Validation:
 
 ### P96.6 Docs And Roadmap
 
-P96.6 will update README, PRD if needed, Command Center guide, platform roadmap,
-OS roadmap/status, and reports. It must describe what is CRUD-backed locally and
-what is still blocked without implying unsafe execution.
+P96.6 is complete. It updates README, PRD, Command Center guide, platform
+roadmap, OS roadmap/status, and reports. It describes what is CRUD-backed
+locally and what is still blocked without implying unsafe execution.
 
 Validation:
 

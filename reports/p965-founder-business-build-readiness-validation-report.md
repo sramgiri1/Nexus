@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P96.5
-- Generated at: 2026-05-21T00:21:05.198Z
+- Generated at: 2026-05-21T00:25:50.790Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 62cb82cf
+- Validation HEAD: 6db012b8
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | P96.1-P96.4 checkers tolerate P96.5 status | PASS |  |
 | docs record P96.5 | PASS |  |
 | platform roadmap records P96.5 | PASS |  |
-| phase status advanced | PASS | P96.5/P96.4/P96.6 |
+| phase status advanced | PASS | P96.6/P96.5/P96.7 |
 | roadmap tracks P96.5 | PASS |  |
 | aggregate validation avoids raw private data | PASS |  |
 | aggregate validation does not invent unsafe runnable actions | PASS |  |

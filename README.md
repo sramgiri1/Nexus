@@ -31,16 +31,18 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P95
+## Current Status Through P96
 
-P41.5 through P95 are complete. The current NEXUS OS focus has moved from
+P41.5 through P96.6 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
 Business Build, and DB Runtime. P95 adds operator-facing local persistence
 controls, approved local adapter validation, and docs/readiness evidence for
-the founder workflow persistence boundary, then closes with final validation
-and a P96 handoff.
+the founder workflow persistence boundary. P96 makes Business Build readiness
+DB-backed and validation-covered: it models local execution readiness, renders
+dry-run admission lanes in Business Build, and documents what is live-local
+versus still blocked before final validation.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -98,6 +100,11 @@ The Command Center and local operator surface have:
   hosted DB mutation, project mutation, provider/model calls, agent dispatch,
   worker/tool execution, deploy, release, export, package creation, network
   calls, and provider spend remain blocked.
+- P96 Business Build local execution readiness: display-safe readiness model,
+  dry-run admission lanes, Business Build Command Center UX, aggregate
+  validation, and docs/roadmap readiness for founder workflow records. It does
+  not dispatch agents, execute workers/tools, mutate project source, use hosted
+  DBs, deploy, package, call providers/models, use network calls, or spend.
 
 ## CareLoop Project Progress
 
@@ -202,8 +209,9 @@ Command Center is the current operator surface for:
 - package/export/release automation
 - provider spend
 
-Local SQLite CRUD is available only through the governed P93.4 admission path
-for NEXUS OS runtime records. It is not a general-purpose DB mutation surface.
+Local SQLite CRUD is available only through governed P93.4/P94.3/P95.3
+admission paths for allowlisted NEXUS OS runtime and founder workflow records.
+It is not a general-purpose DB mutation surface.
 
 Centralized activity log work is planned for P41.8. Project Registry + Adapter Framework is planned for P42.
 
@@ -282,9 +290,8 @@ npm run nexus:down
 
 ## Next Steps
 
-P95 is next. It should be scoped before coding and should make approved local
-founder workflow persistence more operator-usable while preserving the safety
-boundary:
+P96.7 is next. It should close final validation and hand off to P97 while
+preserving the safety boundary:
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy/release/export/package, and spend blocked
