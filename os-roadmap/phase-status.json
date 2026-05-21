@@ -11906,7 +11906,7 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "526748dc",
       "completedAt": "",
       "summary": "P99.2 core execution admission model is complete; P99.3 approval envelope is next.",
       "checksRun": [
@@ -11955,7 +11955,7 @@
       "order": 135.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "526748dc",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added the display-safe local execution admission model over P98 handoff packets and dry-run lanes.",
       "checksRun": [
