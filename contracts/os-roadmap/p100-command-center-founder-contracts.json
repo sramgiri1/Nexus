@@ -142,11 +142,23 @@
     {
       "phaseId": "P100.4",
       "title": "Delivery Pages",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "objective": "Audit Delivery pages for founder-readable agent, skill, tool, implementation, and release usefulness.",
-      "narrowScope": "Delivery page content only.",
-      "allowedFiles": [],
+      "objective": "Add founder-useful action boards to delivery pages.",
+      "narrowScope": "Delivery page content only; no runtime, OS, or execution authority changes.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1004-founder-delivery-pages.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1004-founder-delivery-pages-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -158,7 +170,14 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1004-founder-delivery-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder delivery pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P100.5",

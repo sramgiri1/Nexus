@@ -317,6 +317,50 @@ test("Founder governance pages show useful action boards", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Founder delivery pages show useful action boards", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  for (const route of [
+    { path: "/command-center/projects", title: "Projects", expected: ["Selected project", "Mutation"] },
+    { path: "/command-center/workspace", title: "Workspace", expected: ["Workspace inspection", "Writes"] },
+    { path: "/command-center/implementation", title: "Implementation", expected: ["Apply", "Project mutation"] },
+    { path: "/command-center/workbench", title: "Agent Workbench", expected: ["Workers", "Tools"] },
+    { path: "/command-center/release", title: "Release Control", expected: ["Deploy", "Package"] },
+    { path: "/command-center/agents", title: "Agent Registry", expected: ["Definitions", "Dispatch"] },
+    { path: "/command-center/skills", title: "Skill Registry", expected: ["Install", "Update"] },
+    { path: "/command-center/hooks", title: "Hook Registry", expected: ["Webhooks", "Mutation"] },
+    { path: "/command-center/tools", title: "Tool Gateway", expected: ["Execution", "Policy"] },
+    { path: "/command-center/triggers", title: "Trigger Integration", expected: ["Automation", "Network"] },
+    { path: "/command-center/api-batch", title: "API Batch Adapter", expected: ["Provider", "Cost"] },
+    { path: "/command-center/agent-rooms", title: "Agent Rooms", expected: ["Rooms", "Dispatch"] },
+    { path: "/command-center/tests", title: "Test Center", expected: ["Checkers", "Coverage"] },
+    { path: "/command-center/quality", title: "Quality Intelligence", expected: ["Regressions", "Deploy"] },
+  ]) {
+    await page.goto(route.path);
+    const board = page.getByLabel(`${route.title} founder operations board`);
+    await expect(board).toBeVisible();
+    await expect(board).toContainText("Founder Operations");
+    await expect(board).toContainText("Founder useful");
+    await expect(board).toContainText("Founder use");
+    await expect(board).toContainText("Current state");
+    await expect(board).toContainText("Next action");
+    await expect(board).toContainText("Blocker");
+    await expect(board).toContainText("Owner");
+    await expect(board).toContainText("Evidence");
+    await expect(board).toContainText("Activity");
+    await expect(board).toContainText("Cost impact");
+    for (const text of route.expected) {
+      await expect(board).toContainText(text);
+    }
+  }
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+  expect(errors).toEqual([]);
+});
+
 test("Command Center Lite route renders interactive founder chat", async ({ page }) => {
   const errors = captureClientErrors(page);
 

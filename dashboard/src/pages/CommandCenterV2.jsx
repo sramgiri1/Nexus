@@ -379,6 +379,247 @@ function FounderOperationsBoard({ title, purpose, currentState, nextAction, bloc
   );
 }
 
+const FOUNDER_DELIVERY_BOARDS = {
+  agentRegistry: {
+    title: "Agent Registry",
+    purpose: "Show which agents own delivery work and what evidence or boundaries they require.",
+    currentState: "Registry is readable; agent definition mutation is disabled.",
+    nextAction: "Review owner agents before routing work to delivery pages.",
+    blocker: "Agent file edits and permission expansion require later governed approval.",
+    owner: "WARDEN Agent Registry",
+    evidence: "Agent registry cards and boundary reports",
+    activity: "Activity Log",
+    cost: "No provider spend from registry review",
+    lanes: [
+      { label: "Agents", value: "Readable" },
+      { label: "Definitions", value: "Mutation disabled" },
+      { label: "Permissions", value: "Review only" },
+      { label: "Dispatch", value: "Blocked" },
+    ],
+  },
+  release: {
+    title: "Release Control",
+    purpose: "Show release readiness, approvals, rollback, and blockers before any shipping action.",
+    currentState: "Release readiness is display-only.",
+    nextAction: "Review gate, evidence, approval, rollback, and validation posture.",
+    blocker: "Deploy, release, export, package creation, and signing remain disabled.",
+    owner: "SENTINEL Release Readiness",
+    evidence: "Release readiness evidence tabs",
+    activity: "Activity Log",
+    cost: "No release or provider spend",
+    lanes: [
+      { label: "Approval", value: "Required" },
+      { label: "Rollback", value: "Review" },
+      { label: "Deploy", value: "Disabled" },
+      { label: "Package", value: "Disabled" },
+    ],
+  },
+  projects: {
+    title: "Projects",
+    purpose: "Show selected-project context, portfolio posture, milestones, and gaps without exposing raw IDs.",
+    currentState: "Project data is scoped and display-safe.",
+    nextAction: "Review selected project readiness, milestones, evidence, and missing capabilities.",
+    blocker: "Project creation and project source mutation remain disabled unless explicitly admitted.",
+    owner: "NEXUS Project Context",
+    evidence: "Project evidence tab and roadmap summary",
+    activity: "Activity Log",
+    cost: "No provider spend from project inspection",
+    lanes: [
+      { label: "Portfolio", value: "Readable" },
+      { label: "Selected project", value: "Scoped" },
+      { label: "Milestones", value: "Visible" },
+      { label: "Mutation", value: "Disabled" },
+    ],
+  },
+  skills: {
+    title: "Skill Registry",
+    purpose: "Show which skills are available for future governed agent work.",
+    currentState: "Skill registry is readable; installation and mutation are disabled.",
+    nextAction: "Review skill capabilities and gaps before assigning work.",
+    blocker: "Skill install/update actions are not enabled from Command Center.",
+    owner: "NEXUS Skill Registry",
+    evidence: "Skill registry reports",
+    activity: "Activity Log",
+    cost: "No provider spend from skill review",
+    lanes: [
+      { label: "Skills", value: "Readable" },
+      { label: "Install", value: "Disabled" },
+      { label: "Update", value: "Disabled" },
+      { label: "Dispatch", value: "Blocked" },
+    ],
+  },
+  hooks: {
+    title: "Hook Registry",
+    purpose: "Show future automation hooks and the safety boundary around event-driven work.",
+    currentState: "Hook registry is readable; hook execution is disabled.",
+    nextAction: "Review hook readiness before enabling any event-driven route.",
+    blocker: "Hook mutation, webhook execution, and external network calls remain disabled.",
+    owner: "WARDEN Hook Boundary",
+    evidence: "Hook registry reports",
+    activity: "Activity Log",
+    cost: "No provider spend from hook review",
+    lanes: [
+      { label: "Hooks", value: "Readable" },
+      { label: "Webhooks", value: "Disabled" },
+      { label: "Events", value: "Review only" },
+      { label: "Mutation", value: "Disabled" },
+    ],
+  },
+  workspace: {
+    title: "Workspace",
+    purpose: "Show workspace readiness and what must be true before implementation can happen.",
+    currentState: "Workspace inspection is display-safe.",
+    nextAction: "Review context, tasks, and prerequisites before implementation review.",
+    blocker: "Project source writes and generated workspace mutation remain disabled.",
+    owner: "CORE Workspace Readiness",
+    evidence: "Workspace cards and task context",
+    activity: "Activity Log",
+    cost: "No provider spend from workspace inspection",
+    lanes: [
+      { label: "Context", value: "Readable" },
+      { label: "Tasks", value: "Linked" },
+      { label: "Writes", value: "Disabled" },
+      { label: "Evidence", value: "Required" },
+    ],
+  },
+  implementation: {
+    title: "Implementation",
+    purpose: "Show proposed implementation state, blockers, evidence, and review posture before code changes.",
+    currentState: "Implementation review is available; apply remains governed.",
+    nextAction: "Review proposed changes, tests, and evidence before any future apply action.",
+    blocker: "Project mutation and apply actions remain disabled unless explicitly admitted.",
+    owner: "CORE Implementation Review",
+    evidence: "Implementation evidence and task records",
+    activity: "Activity Log",
+    cost: "No provider spend from implementation review",
+    lanes: [
+      { label: "Proposal", value: "Review" },
+      { label: "Apply", value: "Blocked" },
+      { label: "Tests", value: "Required" },
+      { label: "Evidence", value: "Required" },
+    ],
+  },
+  workbench: {
+    title: "Agent Workbench",
+    purpose: "Show activated task review, outputs, blockers, evidence, and next actions by agent lane.",
+    currentState: "Workbench is review-first; worker execution is not automatic.",
+    nextAction: "Open activated tasks and review output, blockers, evidence, and owner lane.",
+    blocker: "No worker/tool execution runs from this page without governed admission.",
+    owner: "NEXUS Agent Workbench",
+    evidence: "Task evidence and review records",
+    activity: "Workbench activity",
+    cost: "No provider spend from workbench review",
+    lanes: [
+      { label: "Tasks", value: "Review" },
+      { label: "Outputs", value: "Evidence-bound" },
+      { label: "Workers", value: "Blocked" },
+      { label: "Tools", value: "Blocked" },
+    ],
+  },
+  tools: {
+    title: "Tool Gateway",
+    purpose: "Show tool availability and safety before any tool execution is allowed.",
+    currentState: "Tool gateway is readable; tool execution is disabled.",
+    nextAction: "Review allowed capabilities, policy decisions, and evidence needs.",
+    blocker: "Tool execution, MCP mutation, and external network calls remain disabled.",
+    owner: "WARDEN Tool Gateway",
+    evidence: "Tool gateway readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend from tool review",
+    lanes: [
+      { label: "Tools", value: "Readable" },
+      { label: "Execution", value: "Disabled" },
+      { label: "Policy", value: "Required" },
+      { label: "Evidence", value: "Required" },
+    ],
+  },
+  triggers: {
+    title: "Trigger Integration",
+    purpose: "Show integration trigger readiness and what remains blocked before automation can run.",
+    currentState: "Triggers are preview-only.",
+    nextAction: "Review trigger inputs, policy requirements, and disabled reasons.",
+    blocker: "Webhook, external network, and automation execution remain disabled.",
+    owner: "WARDEN Trigger Boundary",
+    evidence: "Trigger integration reports",
+    activity: "Activity Log",
+    cost: "No provider spend from trigger review",
+    lanes: [
+      { label: "Triggers", value: "Preview" },
+      { label: "Webhooks", value: "Disabled" },
+      { label: "Automation", value: "Blocked" },
+      { label: "Network", value: "Disabled" },
+    ],
+  },
+  apiBatch: {
+    title: "API Batch Adapter",
+    purpose: "Show batch adapter posture and cost/readiness before provider-backed batch work exists.",
+    currentState: "Batch adapter is preview-only.",
+    nextAction: "Review request shape, cost estimate, and disabled provider boundary.",
+    blocker: "Provider batch upload, worker runtime, network calls, and spend remain disabled.",
+    owner: "SENTINEL API Batch Boundary",
+    evidence: "API batch adapter reports",
+    activity: "Activity Log",
+    cost: "Estimate only; no provider spend",
+    lanes: [
+      { label: "Requests", value: "Preview" },
+      { label: "Upload", value: "Disabled" },
+      { label: "Provider", value: "Blocked" },
+      { label: "Cost", value: "Estimate" },
+    ],
+  },
+  agentRooms: {
+    title: "Agent Rooms",
+    purpose: "Show planned collaboration rooms and the boundary around multi-agent execution.",
+    currentState: "Agent rooms are readable planning spaces.",
+    nextAction: "Review room ownership, context, and handoff needs.",
+    blocker: "Multi-agent dispatch and live collaboration execution remain disabled.",
+    owner: "NEXUS Agent Rooms",
+    evidence: "Agent room readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend from room review",
+    lanes: [
+      { label: "Rooms", value: "Readable" },
+      { label: "Context", value: "Scoped" },
+      { label: "Dispatch", value: "Blocked" },
+      { label: "Evidence", value: "Required" },
+    ],
+  },
+  tests: {
+    title: "Test Center",
+    purpose: "Show test posture, coverage, and validation blockers before delivery can proceed.",
+    currentState: "Test evidence is display-safe.",
+    nextAction: "Review failing checks, missing coverage, and validation commands.",
+    blocker: "Test execution is local/operator-run; no provider calls or deploy actions start here.",
+    owner: "AUDITOR Test Center",
+    evidence: "Validation reports and route tests",
+    activity: "Activity Log",
+    cost: "No provider spend from test review",
+    lanes: [
+      { label: "Unit", value: "Review" },
+      { label: "Page", value: "Review" },
+      { label: "Checkers", value: "Review" },
+      { label: "Coverage", value: "Required" },
+    ],
+  },
+  quality: {
+    title: "Quality Intelligence",
+    purpose: "Show quality signals, regressions, and gaps before founder delivery decisions.",
+    currentState: "Quality intelligence is read-only.",
+    nextAction: "Review quality gaps and route fixes through implementation review.",
+    blocker: "No autonomous repair, mutation, or deploy action runs from this page.",
+    owner: "AUDITOR Quality Intelligence",
+    evidence: "Quality reports and validation coverage",
+    activity: "Activity Log",
+    cost: "No provider spend from quality review",
+    lanes: [
+      { label: "Signals", value: "Readable" },
+      { label: "Regressions", value: "Review" },
+      { label: "Fixes", value: "Route" },
+      { label: "Deploy", value: "Disabled" },
+    ],
+  },
+};
+
 function countEvidenceForTask(taskId) {
   if (!taskId) return 0;
   const evidence = runtimeSnapshot.runtimeState?.evidence?.recent || [];
@@ -3792,6 +4033,8 @@ function AgentRegistryPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.agentRegistry} />
+
         <div className="ccv2-stats-row">
           <div className="ccv2-stat-chip">
             <div className="ccv2-stat-chip__label">Registered Agents</div>
@@ -4464,6 +4707,7 @@ function SafetyCenterPage({ vm }) {
 /* ─── Release Control Page ─── */
 function ReleaseControlPage() {
   const readiness = buildReleaseReadinessViewModel();
+  const approvalQueueCount = readiness.approvalQueue?.rows?.length || 0;
   const route = COMMAND_CENTER_ROUTE_BY_KEY.release || {};
   const tabs = route.tabs || RELEASE_CONTROL_TABS;
   const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
@@ -4478,6 +4722,8 @@ function ReleaseControlPage() {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.release} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -4486,7 +4732,7 @@ function ReleaseControlPage() {
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{readiness.evidenceLocation}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{readiness.activityLocation}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{readiness.costImpact}</span></div>
-          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval queue</span><span className="ccv2-page-summary-value">{readiness.approvalQueue.rows.length} local records; approvals cannot execute actions</span></div>
+          <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval queue</span><span className="ccv2-page-summary-value">{approvalQueueCount} local records; approvals cannot execute actions</span></div>
         </div>
 
         <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
@@ -4688,6 +4934,8 @@ function ProjectsPage({ vm, studio }) {
             Manage NEXUS workloads, project readiness, stack profiles, boundaries, and project operating state.
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.projects} />
 
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Project Operating Surface</div>
@@ -5633,6 +5881,8 @@ function SkillRegistryPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.skills} />
+
         <CommandTabs tabs={SKILL_REGISTRY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Skill Registry sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--4">
@@ -5763,6 +6013,8 @@ function HookRegistryPage({ vm }) {
             <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.hooks} />
 
         <CommandTabs tabs={HOOK_REGISTRY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Hook Registry sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -5896,6 +6148,8 @@ function WorkspacePage({ vm }) {
           <div className="ccv2-page-head__title">Workspace</div>
           <div className="ccv2-page-head__sub">Plan and choose governed workflows for the active mission and project scope.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.workspace} />
 
         <ProjectContextCard vm={vm} surface="Workspace" />
 
@@ -6131,6 +6385,8 @@ function ImplementationPage({ vm }) {
           <div className="ccv2-page-head__title">Implementation Workflow</div>
           <div className="ccv2-page-head__sub">Review controlled implementation status, scope, validation posture, and safe next actions.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.implementation} />
 
         <ProjectContextCard vm={vm} surface="Implementation Workflow" />
 
@@ -6600,6 +6856,8 @@ function WorkbenchPage({ vm }) {
           <div className="ccv2-page-head__sub">Inspect activated tasks, review governed output, and capture human decisions with evidence context.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.workbench} />
+
         <ProjectContextCard vm={vm} surface="Agent Workbench" />
 
         <div className="ccv2-card ccv2-page-summary-card">
@@ -7002,6 +7260,8 @@ function ToolGatewayPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.tools} />
+
         <CommandTabs tabs={TOOL_GATEWAY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Tool Gateway sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
             <div className="ccv2-grid ccv2-grid--4">
@@ -7209,6 +7469,8 @@ function TriggerIntegrationPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.triggers} />
+
         <CommandTabs
           tabs={TRIGGER_INTEGRATION_TABS}
           activeTab={activeTab}
@@ -7347,6 +7609,8 @@ function ApiBatchAdapterPage({ vm }) {
             <span className="ccv2-pill ccv2-pill--disabled">Upload disabled</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.apiBatch} />
 
         <CommandTabs
           tabs={API_BATCH_TABS}
@@ -7505,6 +7769,8 @@ function AgentRoomsPage({ vm }) {
             <span className="ccv2-pill ccv2-pill--pending">{mesh.mode || "local-private"}</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.agentRooms} />
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Governed Mesh Boundary</div>
@@ -11660,9 +11926,11 @@ function TestCenterPage({ vm }) {
           <div className="ccv2-page-head__actions">
             <span className="ccv2-pill ccv2-pill--disabled">Registry only</span>
             <span className="ccv2-pill ccv2-pill--disabled">Execution disabled</span>
-            <span className="ccv2-pill">Phase: {tsm.policyPhase || "P55"}</span>
+            <span className="ccv2-pill">Policy linked</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.tests} />
 
         <CommandTabs
           tabs={TEST_CENTER_TABS}
@@ -11681,7 +11949,7 @@ function TestCenterPage({ vm }) {
                 <article key={item.label} className="ccv2-card">
                   <div className="ccv2-kpi__label">{item.label}</div>
                   <div className="ccv2-kpi__value">{item.value}</div>
-                  <div className="ccv2-kpi__meta">P55 posture</div>
+                  <div className="ccv2-kpi__meta">Registry posture</div>
                 </article>
               ))}
             </div>
@@ -11851,6 +12119,8 @@ function QualityIntelligencePage({ vm }) {
             <span className="ccv2-pill ccv2-pill--disabled">No project mutation</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_DELIVERY_BOARDS.quality} />
 
         <CommandTabs
           tabs={QUALITY_INTELLIGENCE_TABS}
