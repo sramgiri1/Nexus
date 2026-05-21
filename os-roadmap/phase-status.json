@@ -11906,7 +11906,7 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8d35ea9b",
       "completedAt": "",
       "summary": "P99.1 governed execution admission contract is complete; P99.2 core admission model is next.",
       "checksRun": [
@@ -11930,7 +11930,7 @@
       "order": 135.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8d35ea9b",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Defined the P99 governed execution admission contract, subphase split, safety boundary, validation commands, and status handoff.",
       "checksRun": [
