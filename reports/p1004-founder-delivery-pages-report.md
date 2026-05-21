@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P100.4
-- Generated at: 2026-05-21T12:38:53.845Z
+- Generated at: 2026-05-21T12:59:30.537Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 87c8374e
+- Validation HEAD: ec16b757
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -27,7 +27,7 @@
 | Test Center primary copy avoids raw phase labels | PASS |  |
 | Playwright delivery coverage added | PASS |  |
 | platform roadmap records P100.4 | PASS |  |
-| phase status advanced | PASS | P100.4/P100.3/P100.5 |
+| phase status advanced | PASS | P100.6/P100.5/P100.7 |
 | roadmap tracks P100.4 | PASS |  |
 | P100.5 handoff exists | PASS |  |
 | no raw private IDs or credentials | PASS |  |

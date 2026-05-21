@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P100.3
-- Generated at: 2026-05-21T12:28:12.909Z
+- Generated at: 2026-05-21T12:59:30.518Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 6a19a65b
+- Validation HEAD: ec16b757
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | policy and cost primary copy avoids stale phase labels | PASS |  |
 | Playwright governance coverage added | PASS |  |
 | platform roadmap records P100.3 | PASS |  |
-| phase status advanced | PASS | P100.3/P100.2/P100.4 |
+| phase status advanced | PASS | P100.6/P100.5/P100.7 |
 | roadmap tracks P100.3 | PASS |  |
 | P100.4 handoff exists | PASS |  |
 | no raw private IDs or credentials | PASS |  |

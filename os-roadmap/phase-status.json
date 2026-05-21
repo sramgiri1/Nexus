@@ -12108,24 +12108,27 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "fcbffddd",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P100.5 founder runtime and OS pages are complete; P100.6 aggregate validation is next.",
+      "summary": "P100.6 aggregate founder Command Center validation is complete; P100.7 final validation is next.",
       "checksRun": [
+        "npm run check:p1006-founder-command-center-validation",
+        "npm run check:p1001-full-command-center-founder-shell",
+        "npm run check:p1002-founder-operations-pages",
+        "npm run check:p1003-founder-governance-pages",
+        "npm run check:p1004-founder-delivery-pages",
         "npm run check:p1005-founder-runtime-os-pages",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder runtime and OS pages\"",
-        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P100 remains in progress. P100.5 improves founder runtime and OS page utility only; it does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P100 remains in progress. P100.6 is aggregate validation only; it does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P100.6",
+      "nextPhase": "P100.7",
       "commandCenterVisible": true,
       "label": "Full Command Center",
-      "detail": "Founder runtime and OS pages now show useful action boards; aggregate validation next."
+      "detail": "Aggregate founder Command Center validation complete; final validation next."
     },
     {
       "phaseId": "P100.1",
@@ -12265,19 +12268,29 @@
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
       "order": 136.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned aggregate P100 validation and docs subphase.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added aggregate P100 validation covering scripts, reports, route tests, docs, phase status, and P100.1 through P100.5 completion.",
+      "checksRun": [
+        "npm run check:p1006-founder-command-center-validation",
+        "npm run check:p1001-full-command-center-founder-shell",
+        "npm run check:p1002-founder-operations-pages",
+        "npm run check:p1003-founder-governance-pages",
+        "npm run check:p1004-founder-delivery-pages",
+        "npm run check:p1005-founder-runtime-os-pages",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P100.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P100.6 is validation-only. It does not dispatch agents, execute workers/tools, mutate project source, write hosted DB records, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P100.7",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Validation Docs",
-      "detail": "Planned P100 aggregate validation and docs update."
+      "detail": "Aggregate P100 validation confirms founder Command Center coverage through runtime and OS pages."
     },
     {
       "phaseId": "P100.7",
@@ -12288,7 +12301,7 @@
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned final validation subphase.",
+      "summary": "Planned P100 final validation and phase closure.",
       "checksRun": [],
       "knownLimitations": [
         "P100.7 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
@@ -12296,13 +12309,13 @@
       "nextPhase": "P101",
       "commandCenterVisible": false,
       "label": "Final Validation",
-      "detail": "Planned P100 final validation."
+      "detail": "Planned P100 final validation and phase closure."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P100.5",
-  "previousPhase": "P100.4",
-  "nextPhase": "P100.6",
+  "currentPhase": "P100.6",
+  "previousPhase": "P100.5",
+  "nextPhase": "P100.7",
   "currentPhaseStatus": "complete"
 }

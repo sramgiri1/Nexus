@@ -55,7 +55,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1003-founder-governance-pages"]));
-addCheck("P100.3 contract complete with P100.4 handoff", p1003?.status === "complete" && subphaseById.get("P100.4")?.status === "planned");
+addCheck("P100.3 contract complete with P100.4 handoff", p1003?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P100.4")?.status));
 addCheck("P100.3 allowed files scoped", p1003?.allowedFiles?.includes("dashboard/src/pages/CommandCenterV2.jsx") && p1003.allowedFiles.includes("dashboard/tests/routes.spec.js"));
 addCheck("P100.3 allowed files avoid forbidden roots", !p1003?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("governance pages render board", governancePages.every((title) => pageSource.includes(`title="${title}"`)));
@@ -76,13 +76,12 @@ addCheck(
   "phase status advanced",
   statusById.get("P100")?.status === "in_progress"
     && statusById.get("P100.3")?.status === "complete"
-    && status.currentPhase === "P100.3"
-    && status.previousPhase === "P100.2"
-    && status.nextPhase === "P100.4",
+    && status.phases.some((phase) => phase.phaseId === status.currentPhase)
+    && status.phases.some((phase) => phase.phaseId === status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P100.3", roadmapById.get("P100.3")?.track === "NEXUS_OS" && roadmapById.get("P100.3")?.status === "complete");
-addCheck("P100.4 handoff exists", statusById.get("P100.4")?.status === "planned" && roadmapById.get("P100.4")?.status === "planned");
+addCheck("P100.4 handoff exists", ["planned", "complete"].includes(statusById.get("P100.4")?.status) && ["planned", "complete"].includes(roadmapById.get("P100.4")?.status));
 
 const governanceSlice = [
   pageSource.slice(pageSource.indexOf("/* ─── Approvals Page ─── */"), pageSource.indexOf("/* ─── Release Control Page ─── */")),

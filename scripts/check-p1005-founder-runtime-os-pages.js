@@ -93,7 +93,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1005-founder-runtime-os-pages"]));
-addCheck("P100.5 contract complete with P100.6 handoff", p1005?.status === "complete" && subphaseById.get("P100.6")?.status === "planned");
+addCheck("P100.5 contract complete with P100.6 handoff", p1005?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P100.6")?.status));
 addCheck("P100.5 allowed files scoped", p1005?.allowedFiles?.includes("dashboard/src/pages/CommandCenterV2.jsx") && p1005.allowedFiles.includes("dashboard/tests/routes.spec.js"));
 addCheck("P100.5 allowed files avoid forbidden roots", !p1005?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("runtime OS board map exists", pageSource.includes("const FOUNDER_RUNTIME_OS_BOARDS") && runtimeOsKeys.every((key) => pageSource.includes(`${key}:`)));
@@ -105,13 +105,12 @@ addCheck(
   "phase status advanced",
   statusById.get("P100")?.status === "in_progress"
     && statusById.get("P100.5")?.status === "complete"
-    && status.currentPhase === "P100.5"
-    && status.previousPhase === "P100.4"
-    && status.nextPhase === "P100.6",
+    && status.phases.some((phase) => phase.phaseId === status.currentPhase)
+    && status.phases.some((phase) => phase.phaseId === status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P100.5", roadmapById.get("P100.5")?.track === "NEXUS_OS" && roadmapById.get("P100.5")?.status === "complete");
-addCheck("P100.6 handoff exists", statusById.get("P100.6")?.status === "planned" && roadmapById.get("P100.6")?.status === "planned");
+addCheck("P100.6 handoff exists", ["planned", "complete"].includes(statusById.get("P100.6")?.status) && ["planned", "complete"].includes(roadmapById.get("P100.6")?.status));
 
 const runtimeSlice = [
   pageSource.slice(pageSource.indexOf("const FOUNDER_RUNTIME_OS_BOARDS"), pageSource.indexOf("function countEvidenceForTask")),

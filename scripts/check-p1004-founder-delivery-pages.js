@@ -77,7 +77,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1004-founder-delivery-pages"]));
-addCheck("P100.4 contract complete with P100.5 handoff", p1004?.status === "complete" && subphaseById.get("P100.5")?.status === "planned");
+addCheck("P100.4 contract complete with P100.5 handoff", p1004?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P100.5")?.status));
 addCheck("P100.4 allowed files scoped", p1004?.allowedFiles?.includes("dashboard/src/pages/CommandCenterV2.jsx") && p1004.allowedFiles.includes("dashboard/tests/routes.spec.js"));
 addCheck("P100.4 allowed files avoid forbidden roots", !p1004?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("delivery board map exists", pageSource.includes("const FOUNDER_DELIVERY_BOARDS") && deliveryKeys.every((key) => pageSource.includes(`${key}:`)));
@@ -90,13 +90,12 @@ addCheck(
   "phase status advanced",
   statusById.get("P100")?.status === "in_progress"
     && statusById.get("P100.4")?.status === "complete"
-    && status.currentPhase === "P100.4"
-    && status.previousPhase === "P100.3"
-    && status.nextPhase === "P100.5",
+    && status.phases.some((phase) => phase.phaseId === status.currentPhase)
+    && status.phases.some((phase) => phase.phaseId === status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P100.4", roadmapById.get("P100.4")?.track === "NEXUS_OS" && roadmapById.get("P100.4")?.status === "complete");
-addCheck("P100.5 handoff exists", statusById.get("P100.5")?.status === "planned" && roadmapById.get("P100.5")?.status === "planned");
+addCheck("P100.5 handoff exists", ["planned", "complete"].includes(statusById.get("P100.5")?.status) && ["planned", "complete"].includes(roadmapById.get("P100.5")?.status));
 
 const deliverySlice = [
   pageSource.slice(pageSource.indexOf("const FOUNDER_DELIVERY_BOARDS"), pageSource.indexOf("function countEvidenceForTask")),

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P100.5
-- Generated at: 2026-05-21T12:53:41.968Z
+- Generated at: 2026-05-21T12:59:30.822Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: fcbffddd
+- Validation HEAD: ec16b757
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | runtime OS board titles are registered | PASS |  |
 | Playwright runtime OS coverage added | PASS |  |
 | platform roadmap records P100.5 | PASS |  |
-| phase status advanced | PASS | P100.5/P100.4/P100.6 |
+| phase status advanced | PASS | P100.6/P100.5/P100.7 |
 | roadmap tracks P100.5 | PASS |  |
 | P100.6 handoff exists | PASS |  |
 | no raw private IDs or credentials | PASS |  |

@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P100.1
-- Generated at: 2026-05-21T12:12:54.418Z
+- Generated at: 2026-05-21T12:59:30.476Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: e37d04f1
+- Validation HEAD: ec16b757
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -30,7 +30,7 @@
 | every non-demo route has founder context | PASS |  |
 | Playwright full Command Center coverage added | PASS |  |
 | platform roadmap records P100.1 | PASS |  |
-| phase status advanced | PASS | P100.1/P99.7/P100.2 |
+| phase status advanced | PASS | P100.6/P100.5/P100.7 |
 | roadmap tracks P100.1 | PASS |  |
 | P100.2 handoff exists | PASS |  |
 | no raw private IDs or credentials | PASS |  |

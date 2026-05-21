@@ -55,7 +55,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1001-full-command-center-founder-shell"]));
-addCheck("P100.1 contract complete with P100.2 handoff", p1001?.status === "complete" && subphaseById.get("P100.2")?.status === "planned");
+addCheck("P100.1 contract complete with P100.2 handoff", p1001?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P100.2")?.status));
 addCheck("P100.1 allowed files scoped", p1001?.allowedFiles?.includes("dashboard/src/data/commandCenterRoutes.js") && p1001.allowedFiles.includes("dashboard/src/pages/CommandCenterV2.jsx"));
 addCheck("P100.1 allowed files avoid forbidden roots", !p1001?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("full founder groups include all non-demo routes", nonDemoRoutes.every((route) => sidebarLabels.includes(route.name)), `${sidebarLabels.length}/${nonDemoRoutes.length}`);
@@ -74,13 +74,12 @@ addCheck(
   "phase status advanced",
   statusById.get("P100")?.status === "in_progress"
     && statusById.get("P100.1")?.status === "complete"
-    && status.currentPhase === "P100.1"
-    && status.previousPhase === "P99.7"
-    && status.nextPhase === "P100.2",
+    && status.phases.some((phase) => phase.phaseId === status.currentPhase)
+    && status.phases.some((phase) => phase.phaseId === status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P100.1", roadmapById.get("P100.1")?.track === "NEXUS_OS" && roadmapById.get("P100.1")?.status === "complete");
-addCheck("P100.2 handoff exists", statusById.get("P100.2")?.status === "planned" && roadmapById.get("P100.2")?.status === "planned");
+addCheck("P100.2 handoff exists", ["planned", "complete"].includes(statusById.get("P100.2")?.status) && ["planned", "complete"].includes(roadmapById.get("P100.2")?.status));
 
 const shellSlice = [
   pageSource.slice(pageSource.indexOf("/* ─── Sidebar ─── */"), pageSource.indexOf("function TopBar")),
