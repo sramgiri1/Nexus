@@ -2042,7 +2042,10 @@ docs, roadmap, and status. P97 is complete. P98 is next.
 P98 starts the governed handoff from DB-backed Business Build records into local
 workstream handoff planning. P98.1 is complete. It defines the implementation
 contract, seven-subphase split, safety boundary, validation commands, and OS
-status handoff. P98.2 is next for the display-safe handoff readiness model.
+status handoff. P98.2 is complete. It adds the display-safe handoff packet model
+from existing Business Build DB view-model state while keeping execution,
+dispatch, worker/tool, project mutation, hosted DB, deploy, package, network,
+and spend paths blocked. P98.3 is next for the safe dry-run handoff preview.
 
 The detailed plan lives in
 [`P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md`](P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md).

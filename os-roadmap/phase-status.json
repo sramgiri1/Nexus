@@ -11693,22 +11693,23 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b6a6c6f0",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P98.1 workstream handoff contract is complete; P98.2 handoff readiness model is next.",
+      "summary": "P98.2 handoff packet model is complete; P98.3 safe dry-run handoff preview is next.",
       "checksRun": [
+        "npm run check:p982-founder-live-workstream-handoff-model",
         "npm run check:p981-founder-live-workstream-handoff-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P98 is in progress and contract-only so far. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P98 is in progress and execution remains blocked. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P98.2",
+      "nextPhase": "P98.3",
       "commandCenterVisible": true,
       "label": "Workstream Handoff",
-      "detail": "P98.1 contract complete; P98.2 handoff readiness model next."
+      "detail": "P98.2 model complete; P98.3 safe dry-run handoff preview next."
     },
     {
       "phaseId": "P98.1",
@@ -11736,22 +11737,28 @@
     },
     {
       "phaseId": "P98.2",
-      "title": "Core Handoff Model",
+      "title": "Core Handoff Packet Model",
       "track": "NEXUS_OS",
       "order": 134.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe local handoff readiness model from P97 Business Build DB records.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added the display-safe founder live workstream handoff packet model from Business Build DB view-model state.",
+      "checksRun": [
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:p981-founder-live-workstream-handoff-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P98.2 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P98.2 is model-only. It does not render new Command Center UI, dispatch agents, execute workers/tools, mutate project source, write hosted DB state, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P98.3",
       "commandCenterVisible": true,
       "label": "Handoff Model",
-      "detail": "Planned P98 handoff readiness model."
+      "detail": "Founder live workstream handoff model complete; safe dry-run preview next."
     },
     {
       "phaseId": "P98.3",
@@ -11759,7 +11766,7 @@
       "track": "NEXUS_OS",
       "order": 134.3,
       "status": "planned",
-      "branch": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
       "commit": "planned",
       "completedAt": "",
       "summary": "Planned governed workstream handoff request envelope.",
@@ -11768,7 +11775,7 @@
         "P98.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P98.4",
-      "commandCenterVisible": true,
+      "commandCenterVisible": false,
       "label": "Request Envelope",
       "detail": "Planned P98 request envelope."
     },
@@ -11851,8 +11858,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P98.1",
-  "previousPhase": "P97.7",
-  "nextPhase": "P98.2",
+  "currentPhase": "P98.2",
+  "previousPhase": "P98.1",
+  "nextPhase": "P98.3",
   "currentPhaseStatus": "complete"
 }

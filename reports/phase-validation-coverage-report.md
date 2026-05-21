@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-21T10:40:16.879Z
+- Generated at: 2026-05-21T10:46:08.454Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 77f5d808
+- Validation HEAD: e750fb8a
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -287,9 +287,9 @@
 | P97.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P97.6 validation coverage | PASS | 16 checkers, 12 reports |
 | P97.7 validation coverage | PASS | 42 checkers, 38 reports |
-| P98 validation coverage | PASS | 11 checkers, 8 reports |
+| P98 validation coverage | PASS | 13 checkers, 9 reports |
 | P98.1 validation coverage | PASS | 3 checkers, 1 reports |
-| P98.2 validation coverage | PASS | dedicated_checker, validation_report |
+| P98.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P98.3 validation coverage | PASS | dedicated_checker, validation_report |
 | P98.4 validation coverage | PASS | dedicated_checker, validation_report |
 | P98.5 validation coverage | PASS | 1 checkers, 1 reports |
@@ -297,18 +297,13 @@
 | P98.7 validation coverage | PASS | 38 checkers, 38 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P98.1; next=P98.2; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P98.2; next=P98.3; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P98.2 Core Handoff Model
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
 - P98.3 Request Envelope
   - status: planned
   - checkers: 0

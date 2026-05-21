@@ -68,7 +68,7 @@ const serializedStatus = JSON.stringify([statusById.get("P98"), statusById.get("
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p981-founder-live-workstream-handoff-contract"]));
 addCheck("contract phase is P98", contract.phaseId === "P98" && contract.title === "Founder Business Build Live Workstream Handoff");
 addCheck("contract has seven subphases", allSubphases.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("P98.1 complete and P98.2 handoff exists", p981?.status === "complete" && subphaseById.get("P98.2")?.status === "planned");
+addCheck("P98.1 complete and P98.2 handoff exists", p981?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P98.2")?.status));
 addCheck("P98.1 includes implementation-grade fields", requiredP981Fields.every((field) => Object.prototype.hasOwnProperty.call(p981 || {}, field)));
 addCheck("P98.1 allowed files scoped", p981?.allowedFiles?.includes("contracts/os-roadmap/p98-execution-contracts.json") && p981.allowedFiles.includes("scripts/check-p981-founder-live-workstream-handoff-contract.js"));
 addCheck("P98.1 forbids project and mutation paths", p981?.forbiddenFiles?.includes("projects/**") && p981.forbiddenFiles.includes("providers/**") && p981.forbiddenFiles.includes("worker-runtime/**"));
@@ -80,14 +80,14 @@ addCheck("future data shapes preserve blocked runtime flags", ["handoffPacket", 
 addCheck("Command Center UX requirements present", p981?.uxUpdate?.includes("Lite") && p981.uxUpdate.includes("Agent Flow") && p981.uxUpdate.includes("disabled reason") && p981.uxUpdate.includes("cost impact"));
 addCheck("theme requirements present", p981?.themeRequirements?.includes("System") && p981.themeRequirements.includes("Dark") && p981.themeRequirements.includes("Light"));
 addCheck("docs record P98.1", p98Plan.includes("P98.1 is complete") && p98Plan.includes("npm run check:p981-founder-live-workstream-handoff-contract"));
-addCheck("platform roadmap records P98.1", platformRoadmap.includes("## P98 - Founder Business Build Live Workstream Handoff") && platformRoadmap.includes("P98.1 is complete") && platformRoadmap.includes("P98.2 is next"));
+addCheck("platform roadmap records P98.1", platformRoadmap.includes("## P98 - Founder Business Build Live Workstream Handoff") && platformRoadmap.includes("P98.1 is complete") && (platformRoadmap.includes("P98.2 is next") || platformRoadmap.includes("P98.2 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P98")?.status === "in_progress"
     && statusById.get("P98.1")?.status === "complete"
-    && status.currentPhase === "P98.1"
-    && status.previousPhase === "P97.7"
-    && status.nextPhase === "P98.2",
+    && ["P98.1", "P98.2"].includes(status.currentPhase)
+    && ["P97.7", "P98.1"].includes(status.previousPhase)
+    && ["P98.2", "P98.3"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.1", roadmapById.get("P98")?.status === "in_progress" && roadmapById.get("P98.1")?.status === "complete");

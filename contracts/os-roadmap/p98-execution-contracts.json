@@ -150,12 +150,13 @@
     {
       "phaseId": "P98.2",
       "title": "Core Handoff Packet Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Build the display-safe handoff packet model from existing Business Build DB view-model data.",
       "narrowScope": "Pure model only; no UI and no execution.",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
         "scripts/check-p982-founder-live-workstream-handoff-model.js",
         "package.json",
         "contracts/os-roadmap/p98-execution-contracts.json",
@@ -163,7 +164,8 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p982-founder-live-workstream-handoff-model-report.md"
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -182,6 +184,112 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Create the browser-safe founder live workstream handoff packet from existing Business Build DB view-model state.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend."
+      ],
+      "reuseCheck": [
+        "Reuse dashboard/src/data/businessBuild.js data shaping helpers.",
+        "Reuse existing Business Build DB CRUD view-model data.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Do not duplicate report writers, redaction helpers, route matrices, or DB/runtime helpers."
+      ],
+      "exactFilesToUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
+      ],
+      "expectedExports": [
+        "buildFounderLiveWorkstreamHandoffContract",
+        "buildFounderLiveWorkstreamHandoffPacket",
+        "validateFounderLiveWorkstreamHandoffReadiness",
+        "businessBuildViewModel.liveWorkstreamHandoff"
+      ],
+      "expectedDataShapes": {
+        "handoffPacket": [
+          "handoffId",
+          "currentState",
+          "source",
+          "founderIdea",
+          "sourceRecords",
+          "agentLanes",
+          "requiredEvidence",
+          "blockedOperations",
+          "runtimeFlags",
+          "nextAction",
+          "blockers",
+          "disabledReason",
+          "ownerCapability",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact",
+          "commandCenterVisible",
+          "validation"
+        ],
+        "sourceRecord": [
+          "label",
+          "currentState",
+          "ownerCapability",
+          "nextAction",
+          "blocker",
+          "disabledReason",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact"
+        ],
+        "agentLane": [
+          "lane",
+          "ownerCapability",
+          "plannedWork",
+          "currentState",
+          "nextAction",
+          "blocker",
+          "disabledReason",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact",
+          "dispatchAllowed",
+          "workerExecutionAllowed",
+          "projectMutationAllowed"
+        ]
+      },
+      "uxUpdate": "No route rendering change in P98.2. The exported handoff packet is ready for later Command Center Lite, Agent Flow, Business Build, and DB Runtime display.",
+      "themeRequirements": "No CSS or route UI changes. Existing dark, light, and system theme behavior must remain untouched.",
+      "testsAndCheckers": [
+        "Add check:p982-founder-live-workstream-handoff-model.",
+        "Keep check:p981-founder-live-workstream-handoff-contract forward-compatible after P98.2 advances.",
+        "Validate handoff contract, packet, readiness validation, businessBuildViewModel attachment, blocked runtime flags, no raw DB table names, no private IDs, and no fake runnable actions.",
+        "No Playwright change in this model-only subphase; UX coverage is reserved for P98.4/P98.5."
+      ],
+      "docsRoadmap": "Update P98 plan and platform roadmap to record P98.2 complete and P98.3 next.",
+      "phaseStatusUpdate": "P98 in progress; P98.2 complete; current P98.2; previous P98.1; next P98.3.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
       ]
     },
     {

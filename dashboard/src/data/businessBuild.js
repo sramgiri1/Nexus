@@ -304,6 +304,179 @@ export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_B
   };
 }
 
+const LIVE_WORKSTREAM_HANDOFF_LANES = [
+  {
+    lane: "Product",
+    ownerCapability: "NEXUS Product Definition",
+    plannedWork: "Confirm MVP scope, acceptance criteria, and PRD completeness.",
+  },
+  {
+    lane: "Design",
+    ownerCapability: "NEXUS Design Planning",
+    plannedWork: "Prepare interaction requirements and first-run UX review notes.",
+  },
+  {
+    lane: "Engineering",
+    ownerCapability: "NEXUS Engineering Planning",
+    plannedWork: "Map implementation boundaries, test scope, and source ownership.",
+  },
+  {
+    lane: "iOS",
+    ownerCapability: "NEXUS iOS Delivery Planning",
+    plannedWork: "Identify app target, signing needs, simulator checks, and release blockers.",
+  },
+  {
+    lane: "Quality",
+    ownerCapability: "NEXUS Quality Verification",
+    plannedWork: "Define deterministic checks, Playwright coverage, and release evidence.",
+  },
+  {
+    lane: "Go-to-market",
+    ownerCapability: "NEXUS Launch Planning",
+    plannedWork: "Prepare positioning, App Store readiness notes, and launch checklist.",
+  },
+];
+
+export function buildFounderLiveWorkstreamHandoffContract() {
+  return {
+    phase: "P98.2",
+    mode: "display_safe_local_handoff_model",
+    source: "Business Build DB CRUD view model",
+    allowedSourceRecords: Object.values(BUSINESS_BUILD_DB_RECORD_LABELS),
+    requiredEvidence: [
+      "Business Build session reviewed",
+      "PRD snapshot reviewed",
+      "Agent lane state reviewed",
+      "Execution request remains blocked",
+      "Operator approval not yet granted for dispatch",
+    ],
+    blockedOperations: [
+      "provider/model calls",
+      "agent dispatch",
+      "worker/tool execution",
+      "project source mutation",
+      "hosted DB mutation",
+      "deploy/release/export/package",
+      "network calls",
+      "provider spend",
+    ],
+    runtimeFlags: {
+      providerCallsAllowed: false,
+      modelCallsAllowed: false,
+      agentDispatchAllowed: false,
+      workerExecutionAllowed: false,
+      toolExecutionAllowed: false,
+      projectMutationAllowed: false,
+      hostedDbWritesAllowed: false,
+      deployAllowed: false,
+      releaseAllowed: false,
+      exportAllowed: false,
+      packageCreationAllowed: false,
+      networkCallsAllowed: false,
+      providerSpendAllowed: false,
+    },
+  };
+}
+
+export function validateFounderLiveWorkstreamHandoffReadiness(packet = {}) {
+  const flags = packet.runtimeFlags || {};
+  const unsafeFlags = [
+    "providerCallsAllowed",
+    "modelCallsAllowed",
+    "agentDispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectMutationAllowed",
+    "hostedDbWritesAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageCreationAllowed",
+    "networkCallsAllowed",
+    "providerSpendAllowed",
+  ];
+  const errors = [];
+
+  if (!Array.isArray(packet.sourceRecords) || packet.sourceRecords.length < 4) {
+    errors.push("P98.2 handoff packet must include display-safe Business Build source records.");
+  }
+  if (!Array.isArray(packet.agentLanes) || packet.agentLanes.length < 4) {
+    errors.push("P98.2 handoff packet must include display-safe agent lanes.");
+  }
+  if (!Array.isArray(packet.requiredEvidence) || packet.requiredEvidence.length < 4) {
+    errors.push("P98.2 handoff packet must include required evidence.");
+  }
+  if (unsafeFlags.some((flag) => flags[flag] !== false)) {
+    errors.push("P98.2 handoff packet must keep all unsafe runtime flags false.");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    readyForCommandCenterUx: errors.length === 0,
+    readyForExecution: false,
+  };
+}
+
+export function buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const contract = buildFounderLiveWorkstreamHandoffContract();
+  const businessBuildDbCrud = buildBusinessBuildDbCrudViewModel(founderIdeaSummary);
+  const sourceRecords = (businessBuildDbCrud.lanes || []).map((record) => ({
+    label: record.label,
+    currentState: record.currentState,
+    ownerCapability: record.ownerCapability,
+    nextAction: record.nextAction,
+    blocker: record.blocker,
+    disabledReason: record.disabledReason,
+    evidenceLocation: record.evidenceLocation,
+    activityLocation: record.activityLocation,
+    costImpact: record.costImpact,
+  }));
+  const agentLanes = LIVE_WORKSTREAM_HANDOFF_LANES.map((lane, index) => ({
+    ...lane,
+    currentState: index < 3 ? "Ready For Handoff Review" : "Blocked Until Handoff Evidence",
+    nextAction: "Review the local handoff packet before any dispatch-enabling phase can consider this lane.",
+    blocker: "Agent dispatch and project mutation remain blocked.",
+    disabledReason: "P98.2 only models live workstream handoff readiness. It cannot dispatch agents, run workers/tools, mutate projects, call providers, deploy, package, use hosted DBs, use network calls, or spend.",
+    evidenceLocation: "reports/p982-founder-live-workstream-handoff-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic handoff packet only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    dispatchAllowed: "Blocked",
+    workerExecutionAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+  const packet = {
+    handoffId: "local-business-build-workstream-handoff",
+    currentState: "Ready For Local Handoff Review Execution Blocked",
+    source: contract.source,
+    founderIdea: founderIdeaSummary,
+    sourceRecords,
+    agentLanes,
+    requiredEvidence: contract.requiredEvidence,
+    blockedOperations: contract.blockedOperations,
+    runtimeFlags: contract.runtimeFlags,
+    nextAction: "Review the display-safe handoff packet and keep all execution blocked until a later phase explicitly admits dispatch.",
+    blockers: [
+      "Agent dispatch is blocked.",
+      "Worker/tool execution is blocked.",
+      "Project source mutation is blocked.",
+      "Provider/model calls are blocked.",
+      "Hosted DB mutation, deploy, package, network calls, and provider spend are blocked.",
+    ],
+    disabledReason: "P98.2 is a local handoff model only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Live Workstream Handoff",
+    evidenceLocation: "reports/p982-founder-live-workstream-handoff-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic model only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    commandCenterVisible: true,
+  };
+
+  return {
+    ...packet,
+    validation: validateFounderLiveWorkstreamHandoffReadiness(packet),
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -395,6 +568,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderDbWorkflow = buildFounderRuntimeDbViewModel(founderIdeaSummary);
   const dryRunAdmission = buildBusinessBuildDryRunAdmissionView(founderDbWorkflow);
   const businessBuildDbCrud = buildBusinessBuildDbCrudViewModel(founderIdeaSummary);
+  const liveWorkstreamHandoff = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -519,6 +693,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     },
     businessBuildDbCrud,
     founderDbWorkflow,
+    liveWorkstreamHandoff,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),
