@@ -216,17 +216,22 @@
       "id": "nexus-os-p97-3-business-build-crud-model",
       "phaseId": "P97.3",
       "objective": "Add governed local CRUD model and admission for Business Build DB records using the P97.2 schema.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "live-ready/founderBusinessBuildGovernedExecution.js",
         "scripts/check-p973-business-build-crud-model.js",
+        "scripts/check-p972-business-build-db-schema.js",
+        "scripts/check-p971-founder-business-build-governed-execution-contract.js",
         "package.json",
         "contracts/os-roadmap/p97-execution-contracts.json",
         "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p973-business-build-crud-model-report.md",
+        "reports/p972-business-build-db-schema-report.md",
+        "reports/p971-founder-business-build-governed-execution-contract-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -245,7 +250,14 @@
         ".env*"
       ],
       "expectedExportsSchemasDataShapes": {
-        "dataShape": "Business Build CRUD Model implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+        "exports": [
+          "P97_FOUNDER_BUSINESS_BUILD_EXECUTION_PHASE",
+          "P97_BUSINESS_BUILD_DB_ENTITIES",
+          "buildFounderBusinessBuildExecutionContract",
+          "validateFounderBusinessBuildExecutionContract",
+          "executeApprovedBusinessBuildDbCrudRequest"
+        ],
+        "dataShape": "Result envelope with local CRUD requests, allowed create/read/update/upsert/list operations, mutation gates, evidence, blockers, and blocked unsafe runtime flags."
       },
       "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
       "themeRequirements": [
@@ -265,6 +277,8 @@
       ],
       "validationCommands": [
         "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"

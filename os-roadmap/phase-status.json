@@ -11483,12 +11483,12 @@
       "order": 133,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "4db3d85",
+      "commit": "f5beff7",
       "completedAt": "",
-      "summary": "P97.2 Business Build DB schema is complete; P97.3 CRUD model is next.",
+      "summary": "P97.3 Business Build CRUD model is complete; P97.4 Command Center DB UX is next.",
       "checksRun": [
+        "npm run check:p973-business-build-crud-model",
         "npm run check:p972-business-build-db-schema",
-        "npm run check:p922-sqlite-crud-repository",
         "npm run check:p971-founder-business-build-governed-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -11497,10 +11497,10 @@
       "knownLimitations": [
         "P97.1 is contract-only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
       ],
-      "nextPhase": "P97.3",
+      "nextPhase": "P97.4",
       "commandCenterVisible": true,
       "label": "Execution Contract",
-      "detail": "Business Build DB schema complete; CRUD model next."
+      "detail": "Business Build CRUD model complete; Command Center DB UX next."
     },
     {
       "phaseId": "P97.1",
@@ -11557,19 +11557,26 @@
       "title": "Request Envelope Dry Run",
       "track": "NEXUS_OS",
       "order": 133.3,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned safe review-envelope dry run for governed Business Build execution review.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21",
+      "summary": "Added governed local CRUD model and admission for Business Build DB records using the P97.2 schema.",
+      "checksRun": [
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.3 adds governed local SQLite CRUD admission only. It does not wire Command Center to DB records, dispatch agents, execute workers/tools, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P97.4",
       "commandCenterVisible": true,
       "label": "Request Dry Run",
-      "detail": "Planned P97 subphase; no execution authority enabled."
+      "detail": "Business Build CRUD model complete; Command Center DB UX next."
     },
     {
       "phaseId": "P97.4",
@@ -11650,8 +11657,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P97.2",
-  "previousPhase": "P97.1",
-  "nextPhase": "P97.3",
+  "currentPhase": "P97.3",
+  "previousPhase": "P97.2",
+  "nextPhase": "P97.4",
   "currentPhaseStatus": "complete"
 }

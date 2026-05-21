@@ -36,7 +36,7 @@ Validation:
 
 ### P97.3 Business Build CRUD Model
 
-P97.3 is next. It will add a governed local CRUD model and admission helper for allowlisted
+P97.3 is complete. It adds a governed local CRUD model and admission helper for allowlisted
 Business Build DB records. Delete, raw SQL, hosted DB writes, provider calls,
 agent dispatch, worker/tool execution, project mutation, deploy, package, and
 spend remain forbidden.
@@ -52,7 +52,7 @@ Validation:
 
 ### P97.4 Command Center DB UX
 
-P97.4 will show DB-backed Chat with NEXUS, Business Build, Agent Flow, and DB
+P97.4 is next. It will show DB-backed Chat with NEXUS, Business Build, Agent Flow, and DB
 Runtime state. The primary UX must show saved local state, next action,
 blockers, disabled reason, owner capability, evidence/activity location, and
 cost posture without raw JSON, raw logs, raw policy dumps, DemoApp, raw private

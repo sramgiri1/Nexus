@@ -2016,8 +2016,13 @@ P97.2 is complete. It adds local SQLite schema definitions for Business Build
 sessions, execution requests, agent lane state, and PRD-to-workstream snapshots
 while preserving the existing local DB gates.
 
-P97.3 is next. It will add governed local CRUD admission for the new Business
-Build records.
+P97.3 is complete. It adds governed local CRUD admission for the new Business
+Build records while delete, raw SQL, hosted DB mutation, provider/model calls,
+agent dispatch, worker/tool execution, project mutation, deploy, package,
+network calls, and spend remain blocked.
+
+P97.4 is next. It will expose the DB-backed Business Build state in Command
+Center Lite, Business Build, Agent Flow, and DB Runtime.
 
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).

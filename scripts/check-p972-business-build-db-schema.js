@@ -150,13 +150,13 @@ addCheck("isolated business build records can be inserted", !cliAvailable || (bu
 addCheck("array and boolean fields serialize safely", !cliAvailable || (Array.isArray(buildSession?.evidenceRefs) && executionRequest?.executionAllowed === false && agentLane?.projectMutationAllowed === false));
 addCheck("isolated business build records can be listed", !cliAvailable || buildSessionList.some((entry) => entry.buildSessionId === "p972-build-session"));
 addCheck("docs record P97.2", docs.includes("P97.2 is complete") && docs.includes("npm run check:p972-business-build-db-schema"));
-addCheck("platform roadmap records P97.2", platformRoadmap.includes("P97.2 is complete") && platformRoadmap.includes("P97.3 is next"));
+addCheck("platform roadmap records P97.2", platformRoadmap.includes("P97.2 is complete") && (platformRoadmap.includes("P97.3 is next") || platformRoadmap.includes("P97.3 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P97.2")?.status === "complete"
-    && status.currentPhase === "P97.2"
-    && status.previousPhase === "P97.1"
-    && status.nextPhase === "P97.3",
+    && ["P97.2", "P97.3", "P97.4", "P97.5", "P97.6", "P97.7"].includes(status.currentPhase)
+    && ["P97.1", "P97.2", "P97.3", "P97.4", "P97.5", "P97.6"].includes(status.previousPhase)
+    && ["P97.3", "P97.4", "P97.5", "P97.6", "P97.7", "P98"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.2", roadmapById.get("P97.2")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P97.3")?.status));
