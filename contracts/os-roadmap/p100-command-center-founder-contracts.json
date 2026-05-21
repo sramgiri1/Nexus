@@ -61,11 +61,24 @@
     {
       "phaseId": "P100.2",
       "title": "Founder Operations Pages",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "objective": "Audit Operations pages for founder-useful summaries, blockers, owners, next actions, and evidence.",
-      "narrowScope": "Operations page content only.",
-      "allowedFiles": [],
+      "objective": "Add founder-useful action boards to Mission Control, Task Queue, Agent Flow, Founder Intake, and Business Build.",
+      "narrowScope": "Operations page content only; no governance, runtime, delivery, or execution authority changes.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1002-founder-operations-pages.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1002-founder-operations-pages-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -77,7 +90,14 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1002-founder-operations-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder operations pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P100.3",

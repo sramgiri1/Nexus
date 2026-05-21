@@ -240,6 +240,45 @@ test("Agent Flow route loads local lanes directly", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Founder operations pages show useful action boards", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  await page.addInitScript(() => {
+    window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+  });
+
+  for (const route of [
+    { path: "/command-center/mission", title: "Mission Control", expected: ["Task Queue", "Agent Workbench"] },
+    { path: "/command-center/tasks", title: "Task Queue", expected: ["Governed action bridge", "Planned"] },
+    { path: "/command-center/agent-flow", title: "Agent Flow", expected: ["agent dispatch", "Product"] },
+    { path: "/command-center/founder-intake", title: "Founder Intake", expected: ["structured answers", "Cost impact"] },
+    { path: "/command-center/business-build", title: "Business Build", expected: ["PRD readiness", "governed agent workstream"] },
+  ]) {
+    await page.goto(route.path);
+    const board = page.getByLabel(`${route.title} founder operations board`);
+    await expect(board).toBeVisible();
+    await expect(board).toContainText("Founder Operations");
+    await expect(board).toContainText("Founder useful");
+    await expect(board).toContainText("Founder use");
+    await expect(board).toContainText("Current state");
+    await expect(board).toContainText("Next action");
+    await expect(board).toContainText("Blocker");
+    await expect(board).toContainText("Owner");
+    await expect(board).toContainText("Evidence");
+    await expect(board).toContainText("Activity");
+    await expect(board).toContainText("Cost impact");
+    for (const text of route.expected) {
+      await expect(board).toContainText(text);
+    }
+  }
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+  expect(errors).toEqual([]);
+});
+
 test("Command Center Lite route renders interactive founder chat", async ({ page }) => {
   const errors = captureClientErrors(page);
 

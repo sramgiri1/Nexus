@@ -336,6 +336,49 @@ function ProjectContextCard({ vm, surface }) {
   );
 }
 
+function FounderOperationsBoard({ title, purpose, currentState, nextAction, blocker, owner, evidence, activity, cost, lanes = [] }) {
+  const rows = [
+    ["Founder use", purpose],
+    ["Current state", currentState],
+    ["Next action", nextAction],
+    ["Blocker", blocker],
+    ["Owner", owner],
+    ["Evidence", evidence],
+    ["Activity", activity],
+    ["Cost impact", cost],
+  ].filter(([, value]) => value);
+
+  return (
+    <section className="ccv2-card ccv2-founder-ops-board" aria-label={`${title} founder operations board`}>
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">Founder Operations</div>
+          <h3>{title}</h3>
+        </div>
+        <span className="ccv2-pill ccv2-pill--teal">Founder useful</span>
+      </div>
+      <div className="ccv2-page-summary-grid">
+        {rows.map(([label, value]) => (
+          <div key={label} className="ccv2-page-summary-row">
+            <span className="ccv2-page-summary-label">{label}</span>
+            <span className="ccv2-page-summary-value">{value}</span>
+          </div>
+        ))}
+      </div>
+      {lanes.length > 0 && (
+        <div className="ccv2-founder-ops-board__lanes" aria-label={`${title} agent lanes`}>
+          {lanes.map((lane) => (
+            <div key={lane.label} className="ccv2-founder-ops-board__lane">
+              <span>{lane.label}</span>
+              <strong>{lane.value}</strong>
+            </div>
+          ))}
+        </div>
+      )}
+    </section>
+  );
+}
+
 function countEvidenceForTask(taskId) {
   if (!taskId) return 0;
   const evidence = runtimeSnapshot.runtimeState?.evidence?.recent || [];
@@ -2916,6 +2959,21 @@ function AgentFlowPage() {
           Local workstream lanes show what each owner capability needs before governed execution can be enabled.
         </div>
       </div>
+      <FounderOperationsBoard
+        title="Agent Flow"
+        purpose="Show how the founder idea maps to agent lanes before any dispatch is allowed."
+        currentState={businessBuild.liveWorkstreamHandoff?.currentState || "Local agent lanes are planned"}
+        nextAction={businessBuild.liveWorkstreamHandoff?.nextAction || "Review lane blockers and required evidence."}
+        blocker={businessBuild.executionAdmissionDryRun?.disabledReason || "Agent dispatch remains blocked."}
+        owner={businessBuild.liveWorkstreamHandoff?.ownerCapability || "NEXUS Workstream Planner"}
+        evidence={businessBuild.liveWorkstreamHandoff?.evidenceLocation || "Live workstream handoff report"}
+        activity={businessBuild.liveWorkstreamHandoff?.activityLocation || "Activity Log"}
+        cost={businessBuild.liveWorkstreamHandoff?.costImpact || "No provider spend from lane planning"}
+        lanes={businessBuild.workstreamRows.slice(0, 4).map((row) => ({
+          label: row.label,
+          value: row.status,
+        }))}
+      />
       <AgentFlowPanel envelope={envelope} />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
@@ -3169,6 +3227,24 @@ function MissionControlPage({ vm, operatorCommands, onOpenCommandPalette }) {
         <div className="ccv2-page-head__sub">enterprise command surface for governed agentic work</div>
       </div>
 
+      <FounderOperationsBoard
+        title="Mission Control"
+        purpose="Decide what to do next, see project readiness, and route work to governed pages."
+        currentState={hasActiveProject(vm) ? `${vm.taskActivation?.plannedCount || 0} planned tasks, ${vm.taskActivation?.activatedCount || 0} activated tasks` : "Project operations are locked until a project is selected"}
+        nextAction={hasActiveProject(vm) ? "Review next best action, then open Task Queue or Agent Workbench." : "Use Founder Intake or Business Build to define the idea before project execution."}
+        blocker={hasActiveProject(vm) ? "Execution still requires governed activation and evidence checks." : "No selected project for project-scoped execution."}
+        owner="NEXUS Founder Runtime Envelope"
+        evidence="Mission Control evidence, gates, and activity panels"
+        activity={vm.activity?.latest?.[0]?.label || "Activity Log"}
+        cost={vm.cost?.summary || "No provider spend from this page"}
+        lanes={[
+          { label: "Plan", value: "Mission Control" },
+          { label: "Queue", value: "Task Queue" },
+          { label: "Review", value: "Agent Workbench" },
+          { label: "Govern", value: "Evidence and gates" },
+        ]}
+      />
+
       <div className="ccv2-scope-shell">
         <ScopeSwitcher
           activeScope={activeScope}
@@ -3377,6 +3453,24 @@ function TaskQueuePage({ vm }) {
             Plan, activate, and monitor governed tasks across planned and runtime states.
           </div>
         </div>
+
+        <FounderOperationsBoard
+          title="Task Queue"
+          purpose="Turn approved plans into governed task records and show which work is blocked or ready."
+          currentState={`${plannedCount} planned, ${activatedCount} activated, ${total} runtime tasks`}
+          nextAction={plannedCount > 0 ? "Review task risk and evidence, then activate only when the governed action bridge is ready." : "Return to Mission Control to generate a mission plan."}
+          blocker={bridgeOnline ? "Activation still depends on each task approval and evidence posture." : "Governed action bridge is offline."}
+          owner="NEXUS Task Activation Envelope"
+          evidence="Task evidence column and Activity Log"
+          activity={recent.length > 0 ? "Runtime task timeline available" : "No activated task activity yet"}
+          cost="No provider spend from queue inspection"
+          lanes={[
+            { label: "Planned", value: plannedCount },
+            { label: "Queued", value: byState.queued || 0 },
+            { label: "Blocked", value: (byState.blocked || 0) + (byState.awaiting_approval || 0) },
+            { label: "Completed", value: byState.completed || 0 },
+          ]}
+        />
 
         <ProjectContextCard vm={vm} surface="Task Queue" />
 
@@ -9209,6 +9303,22 @@ function FounderIntakePage() {
           <div className="ccv2-page-head__sub">Structured founder idea intake, next question, readiness, blockers, and cost posture.</div>
         </div>
 
+        <FounderOperationsBoard
+          title="Founder Intake"
+          purpose="Capture the business idea as structured answers before PRD and workstream planning."
+          currentState={intake.currentState}
+          nextAction={intake.nextAction}
+          blocker={intake.disabledReason}
+          owner={`${intake.ownerAgent} / ${intake.ownerCapability}`}
+          evidence={intake.evidenceLocation}
+          activity={intake.activityLocation}
+          cost={intake.costImpact}
+          lanes={intake.readinessCards.slice(0, 4).map((card) => ({
+            label: card.label,
+            value: card.value,
+          }))}
+        />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{intake.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{intake.currentState}</span></div>
@@ -9307,6 +9417,22 @@ function BusinessBuildPage() {
           <div className="ccv2-page-head__title">{build.pageTitle}</div>
           <div className="ccv2-page-head__sub">Founder idea, feasibility, PRD readiness, agent work plan, and blocked execution boundaries.</div>
         </div>
+
+        <FounderOperationsBoard
+          title="Business Build"
+          purpose="Convert the founder idea into feasibility, PRD readiness, and governed agent workstream planning."
+          currentState={build.localExecutionReadiness.currentState}
+          nextAction={build.founderNextStep}
+          blocker={build.localExecutionReadiness.disabledReason}
+          owner={build.localExecutionReadiness.ownerCapability}
+          evidence={build.localExecutionReadiness.evidenceLocation}
+          activity={build.localExecutionReadiness.activityLocation}
+          cost={build.localExecutionReadiness.costImpact}
+          lanes={build.workstreamRows.slice(0, 4).map((row) => ({
+            label: row.label,
+            value: row.status,
+          }))}
+        />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder idea</span><span className="ccv2-page-summary-value">{build.founderIdea}</span></div>

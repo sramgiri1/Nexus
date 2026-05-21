@@ -12103,29 +12103,29 @@
     },
     {
       "phaseId": "P100",
-      "title": "Founder Business Build Execution Admission Approval Capture",
+      "title": "Founder Full Command Center Enablement",
       "track": "NEXUS_OS",
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "154ee66c",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P100.1 full founder Command Center navigation shell is complete; P100.2 founder Operations page-content audit is next.",
+      "summary": "P100.2 founder operations pages are complete; P100.3 founder Governance page-content audit is next.",
       "checksRun": [
-        "npm run check:p1001-full-command-center-founder-shell",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Full Command Center\"",
+        "npm run check:p1002-founder-operations-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder operations pages\"",
         "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P100 remains in progress. P100.1 enables founder-safe full navigation and route context only; it does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P100 remains in progress. P100.2 improves founder operations pages only; it does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P100.2",
+      "nextPhase": "P100.3",
       "commandCenterVisible": true,
       "label": "Full Command Center",
-      "detail": "Full founder-safe navigation shell complete; deeper page audits next."
+      "detail": "Founder operations pages now show useful action boards; governance pages next."
     },
     {
       "phaseId": "P100.1",
@@ -12158,19 +12158,27 @@
       "title": "Founder Operations Pages",
       "track": "NEXUS_OS",
       "order": 136.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned founder operations pages subphase.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added founder operations boards to Mission Control, Task Queue, Agent Flow, Founder Intake, and Business Build with purpose, current state, next action, blocker, owner, evidence, activity, cost, and lane context.",
+      "checksRun": [
+        "npm run check:p1002-founder-operations-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder operations pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P100.2 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P100.2 is display-only operations UX. Governance, delivery, runtime, and OS page audits remain planned for P100.3 through P100.5.",
+        "P100.2 does not approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P100.3",
-      "commandCenterVisible": false,
-      "label": "Operations Audit",
-      "detail": "Planned founder usefulness audit for Operations pages."
+      "commandCenterVisible": true,
+      "label": "Founder Operations",
+      "detail": "Founder operations boards visible on Mission Control, Task Queue, Agent Flow, Founder Intake, and Business Build."
     },
     {
       "phaseId": "P100.3",
@@ -12178,16 +12186,16 @@
       "track": "NEXUS_OS",
       "order": 136.3,
       "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "",
       "completedAt": "",
-      "summary": "Planned governance pages subphase.",
+      "summary": "Next scoped handoff for founder-readable Governance pages.",
       "checksRun": [],
       "knownLimitations": [
         "P100.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P100.4",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Governance Audit",
       "detail": "Planned founder usefulness audit for Governance pages."
     },
@@ -12270,8 +12278,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P100.1",
-  "previousPhase": "P99.7",
-  "nextPhase": "P100.2",
+  "currentPhase": "P100.2",
+  "previousPhase": "P100.1",
+  "nextPhase": "P100.3",
   "currentPhaseStatus": "complete"
 }
