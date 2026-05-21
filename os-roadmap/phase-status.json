@@ -11693,7 +11693,7 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "30e191c6",
       "completedAt": "",
       "summary": "P98.6 docs and roadmap readiness is complete; P98.7 final validation and parent closure is next.",
       "checksRun": [
@@ -11846,7 +11846,7 @@
       "order": 134.6,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "30e191c6",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Updated README, PRD, Command Center guide, P98 plan, platform roadmap, OS status, and validation evidence for live-local handoff readiness.",
       "checksRun": [
