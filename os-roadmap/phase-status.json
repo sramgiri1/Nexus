@@ -11693,7 +11693,7 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "356ce915",
       "completedAt": "",
       "summary": "P98.3 handoff dry-run records are complete; P98.4 Command Center UX is next.",
       "checksRun": [
@@ -11767,7 +11767,7 @@
       "order": 134.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "356ce915",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added deterministic local handoff dry-run records from the P98.2 handoff packet.",
       "checksRun": [
