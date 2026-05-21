@@ -7515,7 +7515,7 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1f4a8015",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P101.2 deterministic founder live-use readiness model is complete; P101.3 display-safe review packet is next.",
       "checksRun": [
@@ -7564,7 +7564,7 @@
       "order": 137.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1f4a8015",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added deterministic local founder live-use readiness model with six founder workflow lanes, safety flags, blockers, next action, evidence/activity, and cost impact while unsafe runtime authority remains blocked.",
       "checksRun": [
