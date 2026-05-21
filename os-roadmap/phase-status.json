@@ -11483,7 +11483,7 @@
       "order": 133,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "3f92940",
+      "commit": "4db3d85",
       "completedAt": "",
       "summary": "P97.2 Business Build DB schema is complete; P97.3 CRUD model is next.",
       "checksRun": [
@@ -11533,7 +11533,7 @@
       "order": 133.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "4db3d85",
       "completedAt": "2026-05-21",
       "summary": "Added local SQLite schema definitions for Business Build sessions, execution requests, agent lane state, and PRD-to-workstream snapshots.",
       "checksRun": [
