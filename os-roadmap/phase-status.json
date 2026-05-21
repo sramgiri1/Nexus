@@ -11693,7 +11693,7 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9a9a5131",
       "completedAt": "",
       "summary": "P98.2 handoff packet model is complete; P98.3 safe dry-run handoff preview is next.",
       "checksRun": [
@@ -11742,7 +11742,7 @@
       "order": 134.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "9a9a5131",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added the display-safe founder live workstream handoff packet model from Business Build DB view-model state.",
       "checksRun": [
