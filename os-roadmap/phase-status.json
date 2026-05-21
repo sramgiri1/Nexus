@@ -11483,7 +11483,7 @@
       "order": 133,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6dea1d",
       "completedAt": "",
       "summary": "P97.1 defines the governed Business Build execution-authority contract and safety boundary after P96 local readiness.",
       "checksRun": [
@@ -11507,7 +11507,7 @@
       "order": 133.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6dea1d",
       "completedAt": "2026-05-20",
       "summary": "Defined the P97 governed Business Build execution-authority contract, subphase split, safety boundary, docs handoff, OS status, and checker coverage.",
       "checksRun": [
