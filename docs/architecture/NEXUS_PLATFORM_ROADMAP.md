@@ -2084,6 +2084,10 @@ P99.3 is complete. It adds the display-safe execution admission approval
 envelope over the P99.2 admission model, records missing operator, rollback,
 audit, validation, and cost approvals, and keeps approval-ready and executable
 counts at zero. P99.4 is next for admission dry-run records.
+P99.4 is complete. It adds deterministic execution admission dry-run records
+from the approval envelope, exposes them on the Business Build view model, and
+keeps approval-ready and executable counts at zero. P99.5 is next for Command
+Center UX.
 
 The detailed plan lives in
 [`P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md`](P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md).

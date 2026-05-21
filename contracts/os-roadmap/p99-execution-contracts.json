@@ -165,7 +165,7 @@
     {
       "phaseId": "P99.4",
       "title": "Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Add deterministic admission dry-run records and blocked reasons.",
       "narrowScope": "Dry-run only; executable count remains zero.",

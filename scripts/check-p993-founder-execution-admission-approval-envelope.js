@@ -51,7 +51,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p993-founder-execution-admission-approval-envelope"]));
-addCheck("contract marks P99.3 complete", p993?.status === "complete" && subphaseById.get("P99.4")?.status === "planned");
+addCheck("contract marks P99.3 complete", p993?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P99.4")?.status));
 addCheck("P99.3 allowed files scoped", p993?.allowedFiles?.includes("dashboard/src/data/businessBuild.js") && p993.allowedFiles.includes("reports/p993-founder-execution-admission-approval-envelope-report.md"));
 addCheck("P99.3 allowed files avoid forbidden roots", !p993?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("source exports approval envelope", source.includes("export function buildFounderExecutionAdmissionApprovalEnvelope") && source.includes("export function validateFounderExecutionAdmissionApprovalEnvelope"));
@@ -63,12 +63,12 @@ addCheck("docs record P99.3", p99Plan.includes("P99.3 is complete") && p99Plan.i
 addCheck(
   "phase status advanced",
   statusById.get("P99.3")?.status === "complete"
-    && status.currentPhase === "P99.3"
-    && status.previousPhase === "P99.2"
-    && status.nextPhase === "P99.4",
+    && ["P99.3", "P99.4"].includes(status.currentPhase)
+    && ["P99.2", "P99.3"].includes(status.previousPhase)
+    && ["P99.4", "P99.5"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P99.3", roadmapById.get("P99.3")?.status === "complete" && roadmapById.get("P99.4")?.status === "planned");
+addCheck("roadmap tracks P99.3", roadmapById.get("P99.3")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P99.4")?.status));
 addCheck("no raw private IDs or credentials", !/private-project-|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|Bearer\s+|jwt|id_token|access_token/i.test(JSON.stringify(envelope)));
 addCheck("no fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now|generate app now/i.test(JSON.stringify(envelope)));
 

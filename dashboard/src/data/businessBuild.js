@@ -755,6 +755,58 @@ export function buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummar
   };
 }
 
+export function buildFounderExecutionAdmissionDryRun(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const envelope = buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummary);
+  const lanes = (envelope.lanes || []).map((lane) => ({
+    lane: lane.lane,
+    ownerCapability: lane.ownerCapability,
+    dryRunState: "Blocked Missing Approval Envelope",
+    sourceApprovalState: lane.approvalState,
+    previewDecision: "Do Not Admit Execution",
+    missingApprovals: lane.missingApprovals,
+    requiredEvidence: lane.requiredEvidence,
+    blockers: lane.blockers,
+    nextAction: "Keep this lane in admission dry run until the approval envelope and validation evidence are complete.",
+    disabledReason: "P99.4 dry-run records cannot approve execution, dispatch agents, run workers/tools, mutate projects, call providers, use hosted DBs, deploy, package, use network calls, or spend.",
+    evidenceLocation: "reports/p994-founder-execution-admission-dry-run-report.md",
+    activityLocation: envelope.activityLocation,
+    costImpact: envelope.costImpact,
+    dryRunOnly: true,
+    wouldApproveExecution: false,
+    wouldDispatchAgent: false,
+    wouldRunWorker: false,
+    wouldExecuteTool: false,
+    wouldMutateProject: false,
+    wouldWriteHostedDb: false,
+    wouldDeployOrPackage: false,
+    wouldSpend: false,
+  }));
+
+  return {
+    dryRunId: "local-business-build-execution-admission-dry-run",
+    currentState: "Execution Admission Dry Run Ready Execution Blocked",
+    commandCenterVisible: true,
+    dryRunOnly: true,
+    sourceEnvelopeId: envelope.envelopeId,
+    sourceEnvelopeState: envelope.currentState,
+    founderIdea: envelope.founderIdea,
+    laneCount: lanes.length,
+    blockedLaneCount: lanes.length,
+    executableCount: 0,
+    approvalReadyCount: 0,
+    nextAction: "Use this dry-run preview to prepare P99.5 Command Center UX without enabling execution.",
+    blockers: envelope.blockers,
+    disabledReason: "P99.4 creates deterministic admission dry-run records only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Execution Admission Dry Run",
+    evidenceLocation: "reports/p994-founder-execution-admission-dry-run-report.md",
+    activityLocation: envelope.activityLocation,
+    costImpact: envelope.costImpact,
+    lanes,
+    runtimeFlags: envelope.runtimeFlags,
+    safetyRows: envelope.safetyRows,
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -850,6 +902,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const liveWorkstreamHandoffDryRun = buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary);
   const executionAdmission = buildFounderExecutionAdmissionModel(founderIdeaSummary);
   const executionAdmissionApprovalEnvelope = buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummary);
+  const executionAdmissionDryRun = buildFounderExecutionAdmissionDryRun(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -978,6 +1031,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     liveWorkstreamHandoffDryRun,
     executionAdmission,
     executionAdmissionApprovalEnvelope,
+    executionAdmissionDryRun,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),

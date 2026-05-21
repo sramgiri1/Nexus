@@ -51,8 +51,18 @@ Validation:
 
 ## P99.4 Preview / Safe Dry Run
 
-P99.4 is planned. It will add deterministic admission dry-run records and
-blocked reasons without runnable execution controls.
+P99.4 is complete. It adds deterministic admission dry-run records from the
+P99.3 approval envelope, exposes them on the Business Build view model, and
+keeps approval-ready and executable counts at zero. P99.5 is next for Command
+Center UX.
+
+Validation:
+
+- `npm run check:p994-founder-execution-admission-dry-run`
+- `npm run check:p993-founder-execution-admission-approval-envelope`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P99.5 Command Center UX
 
