@@ -487,6 +487,7 @@
     "check:p973-business-build-crud-model": "node scripts/check-p973-business-build-crud-model.js",
     "check:p974-command-center-business-build-db-ux": "node scripts/check-p974-command-center-business-build-db-ux.js",
     "check:p975-business-build-crud-validation": "node scripts/check-p975-business-build-crud-validation.js",
+    "check:p976-business-build-docs-roadmap": "node scripts/check-p976-business-build-docs-roadmap.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

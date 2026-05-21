@@ -88,9 +88,9 @@ Validation:
 
 ### P97.6 Docs / Roadmap
 
-P97.6 is next. It will update README, PRD, Command Center guide, platform roadmap, OS
+P97.6 is complete. It updates README, PRD, Command Center guide, platform roadmap, OS
 roadmap, phase status, and evidence reports for the DB-backed Business Build
-workflow.
+workflow. P97.7 is next for final validation and parent phase closure.
 
 Validation:
 
@@ -102,7 +102,7 @@ Validation:
 
 ### P97.7 Final Validation
 
-P97.7 will run final validation, stamp real commits, close P97, and hand off to
+P97.7 is next. It will run final validation, stamp real commits, close P97, and hand off to
 P98.
 
 Validation:

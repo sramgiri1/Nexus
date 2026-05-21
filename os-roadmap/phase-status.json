@@ -11642,19 +11642,25 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 133.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned docs and roadmap closure for P97 governed execution-authority review.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Updated README, PRD, Command Center guide, P97 plan, platform roadmap, OS status, and validation evidence for Business Build DB CRUD.",
+      "checksRun": [
+        "npm run check:p976-business-build-docs-roadmap",
+        "npm run check:p975-business-build-crud-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.6 is docs and roadmap closure only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P97.7",
       "commandCenterVisible": true,
       "label": "Docs Roadmap",
-      "detail": "Planned P97 docs and roadmap closure."
+      "detail": "P97 docs and roadmap closure complete; final validation is next."
     },
     {
       "phaseId": "P97.7",
@@ -11678,8 +11684,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P97.5",
-  "previousPhase": "P97.4",
-  "nextPhase": "P97.6",
+  "currentPhase": "P97.6",
+  "previousPhase": "P97.5",
+  "nextPhase": "P97.7",
   "currentPhaseStatus": "complete"
 }

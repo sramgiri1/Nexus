@@ -86,13 +86,13 @@ addCheck("Command Center DB card remains present", commandCenterSource.includes(
 addCheck("Playwright retains P97.4 DB coverage", routeTests.includes("Business Build DB CRUD state appears in Lite, Business Build, Agent Flow, and DB Runtime"));
 addCheck("prior P97 reports exist and passed", reports.every(([, body]) => /Result[\s\S]*PASS|Result: PASS/.test(body)));
 addCheck("docs mark P97.5 complete", docs.includes("P97.5 is complete") && docs.includes("npm run check:p975-business-build-crud-validation"));
-addCheck("platform roadmap marks P97.5 complete", platformRoadmap.includes("P97.5 is complete") && /P97\.6 is\s+next/.test(platformRoadmap));
+addCheck("platform roadmap marks P97.5 complete", platformRoadmap.includes("P97.5 is complete") && (/P97\.6 is\s+next/.test(platformRoadmap) || platformRoadmap.includes("P97.6 is complete")));
 addCheck(
   "phase status advanced to P97.5",
   statusById.get("P97.5")?.status === "complete"
-    && status.currentPhase === "P97.5"
-    && status.previousPhase === "P97.4"
-    && status.nextPhase === "P97.6",
+    && ["P97.5", "P97.6"].includes(status.currentPhase)
+    && ["P97.4", "P97.5"].includes(status.previousPhase)
+    && ["P97.6", "P97.7"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.5", roadmapById.get("P97.5")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P97.6")?.status));

@@ -85,6 +85,25 @@ not enabled yet.
   labels, or fake working actions. Primary cards use friendly labels such as
   `Dry-run admission report` and `OS activity report`.
 
+## Business Build DB CRUD Visibility
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and Durable State / DB Runtime.
+- Purpose: show display-safe Business Build DB records after P97.4 without
+  exposing raw SQLite table names or enabling execution.
+- Current P97 posture: governed local SQLite CRUD state is visible for
+  Business Build sessions, execution requests, agent lanes, and PRD snapshots.
+  Delete,
+  raw SQL, hosted DB mutation, project mutation, provider/model calls, agent
+  dispatch, worker/tool execution, deploy, release, export, package creation,
+  network calls, and provider spend remain blocked.
+- Operator workflow: review owner capability, next action, disabled reason,
+  evidence, activity, and cost impact before any later phase can admit a
+  specific local CRUD request.
+- UX safety: primary cards use labels such as `Business Build session`,
+  `Execution requests`, `Agent lanes`, and `PRD snapshots`; do not show raw
+  project/private IDs, raw JSON/log/policy dumps, or fake runnable actions.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

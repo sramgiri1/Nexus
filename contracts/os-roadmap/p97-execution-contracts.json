@@ -492,12 +492,13 @@
       "id": "nexus-os-p97-6-docs-roadmap",
       "phaseId": "P97.6",
       "objective": "Document Business Build DB CRUD behavior, safety boundaries, and operator workflow.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "README.md",
         "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
         "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "scripts/check-p975-business-build-crud-validation.js",
         "scripts/check-p976-business-build-docs-roadmap.js",
         "package.json",
         "contracts/os-roadmap/p97-execution-contracts.json",
@@ -506,6 +507,8 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
+        "reports/p975-business-build-crud-validation-report.md",
+        "reports/p976-business-build-docs-roadmap-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
@@ -543,6 +546,7 @@
       ],
       "validationCommands": [
         "npm run check:p976-business-build-docs-roadmap",
+        "npm run check:p975-business-build-crud-validation",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"

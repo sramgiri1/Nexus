@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P97.5
-- Generated at: 2026-05-21T10:17:44.754Z
+- Generated at: 2026-05-21T10:24:00.709Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 51900ac3
+- Validation HEAD: b97da19e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,7 +32,7 @@
 | prior P97 reports exist and passed | PASS |  |
 | docs mark P97.5 complete | PASS |  |
 | platform roadmap marks P97.5 complete | PASS |  |
-| phase status advanced to P97.5 | PASS | P97.5/P97.4/P97.6 |
+| phase status advanced to P97.5 | PASS | P97.6/P97.5/P97.7 |
 | roadmap tracks P97.5 | PASS |  |
 | no DemoApp leakage | PASS |  |
 | no raw private IDs or credentials | PASS |  |

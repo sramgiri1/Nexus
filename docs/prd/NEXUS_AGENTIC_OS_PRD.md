@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P97.1 Founder Business Build Governed DB CRUD Contract
+**Status:** Approved; updated through P97.6 Founder Business Build Governed DB CRUD Docs/Roadmap
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P97.1
+## 1A. Current Implementation Status Through P97.6
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P97.1:
+P97.6:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -70,12 +70,13 @@ P97.1:
 - P96 aggregate validation and docs/roadmap readiness prove the founder
   Business Build path is DB-backed locally while unsafe execution remains
   blocked.
-- P97.1 defines the governed Business Build DB CRUD contract, subphase split,
-  safety boundary, and validation commands for moving from local readiness to
-  local SQLite Business Build sessions, execution requests, PRD snapshots, and
-  agent lane state without enabling execution.
+- P97 defines the governed Business Build DB CRUD contract, local SQLite schema,
+  local CRUD admission model, Command Center DB UX, aggregate validation, and
+  docs/roadmap state for moving from local readiness to local SQLite Business
+  Build sessions, execution requests, PRD snapshots, and agent lane state
+  without enabling execution.
 
-Safety boundary as of P97.1:
+Safety boundary as of P97.6:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
@@ -93,9 +94,9 @@ Safety boundary as of P97.1:
   creation, network calls, and provider spend.
 - P96 does not add new execution authority. Business Build readiness remains
   local deterministic readiness plus dry-run admission visibility only.
-- P97.1 is contract-only. It does not dispatch agents, execute workers/tools,
-  mutate project source, use hosted DBs, deploy, package, call providers/models,
-  use network calls, or spend.
+- P97.6 documents governed local SQLite Business Build CRUD only. It does not
+  dispatch agents, execute workers/tools, mutate project source, use hosted DBs,
+  deploy, package, call providers/models, use network calls, or spend.
 
 ---
 
