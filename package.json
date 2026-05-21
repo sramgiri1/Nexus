@@ -503,6 +503,7 @@
     "check:p995-command-center-execution-admission-ux": "node scripts/check-p995-command-center-execution-admission-ux.js",
     "check:p996-execution-admission-validation-docs": "node scripts/check-p996-execution-admission-validation-docs.js",
     "check:p997-execution-admission-final-validation": "node scripts/check-p997-execution-admission-final-validation.js",
+    "check:p1001-full-command-center-founder-shell": "node scripts/check-p1001-full-command-center-founder-shell.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

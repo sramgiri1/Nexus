@@ -49,7 +49,8 @@ import {
 import { getNexusCommandsForScope } from "../data/nexusCommands.js";
 import {
   COMMAND_CENTER_ROUTE_BY_KEY,
-  getCommandCenterLiteSidebarGroups,
+  getCommandCenterFounderSidebarGroups,
+  getFounderRouteContext,
   resolveCommandCenterRoute,
 } from "../data/commandCenterRoutes.js";
 import {
@@ -139,7 +140,7 @@ import "../styles-command-center-v2.css";
  * Task Activation + Agent Assignment from UI
  */
 
-const LITE_NAV_GROUPS_V2 = getCommandCenterLiteSidebarGroups();
+const FOUNDER_NAV_GROUPS_V2 = getCommandCenterFounderSidebarGroups();
 
 /* ─── Sparkline ─── */
 const SPARK_DATA = {
@@ -441,11 +442,11 @@ function Sidebar({ vm, location }) {
       >
         <div className="ccv2-sidebar__brand-mark">N</div>
         <div className="ccv2-sidebar__brand-name">{vm.shell.productName}</div>
-        <div className="ccv2-sidebar__brand-ver">Founder Lite</div>
+        <div className="ccv2-sidebar__brand-ver">Founder Command</div>
       </div>
 
       <nav className="ccv2-nav-groups">
-        {LITE_NAV_GROUPS_V2.map((group) => (
+        {FOUNDER_NAV_GROUPS_V2.map((group) => (
           <div key={group.group} className="ccv2-nav-group">
             <div className="ccv2-nav-group__label">{group.group}</div>
             {group.items.map((item) => {
@@ -495,6 +496,7 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, onOpenAskNe
   const [themeMenuOpen, setThemeMenuOpen] = useState(false);
   const route = COMMAND_CENTER_ROUTE_BY_KEY[currentPage] || COMMAND_CENTER_ROUTE_BY_KEY.mission;
   const pageLabel = COMMAND_CENTER_ROUTE_BY_KEY[currentPage]?.expectedHeading || "Mission Control";
+  const founderContext = getFounderRouteContext(route);
   const founderLiteChrome = currentPage === "lite" || currentPage === "agentFlow";
   const scopeLabel = route.scope === "os"
     ? "NEXUS OS"
@@ -530,6 +532,12 @@ function TopBar({ vm, currentPage, themeState, onOpenCommandPalette, onOpenAskNe
           </div>
         </>
       )}
+
+      <div className="ccv2-topbar__founder-context" title={`${founderContext.purpose} Next: ${founderContext.nextAction}`}>
+        <span className="ccv2-topbar__scope-label">Founder use</span>
+        <span className="ccv2-topbar__founder-purpose">{founderContext.purpose}</span>
+        <span className="ccv2-topbar__founder-next">{founderContext.nextAction}</span>
+      </div>
 
       {route.scope !== "demo" && route.scope !== "os" && (
         <label className="ccv2-project-selector" aria-label="Project selector">

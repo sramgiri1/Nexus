@@ -816,6 +816,39 @@
   color: var(--nexus-text-strong);
 }
 
+.ccv2-topbar__founder-context {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  min-width: 220px;
+  max-width: min(560px, 44vw);
+  padding: 4px 10px;
+  border: 1px solid var(--nexus-border);
+  border-radius: 8px;
+  background: var(--nexus-panel-soft);
+  color: var(--nexus-text);
+  overflow: hidden;
+}
+
+.ccv2-topbar__founder-purpose,
+.ccv2-topbar__founder-next {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1.2;
+}
+
+.ccv2-topbar__founder-purpose {
+  color: var(--nexus-text-strong);
+  font-weight: 700;
+}
+
+.ccv2-topbar__founder-next {
+  color: var(--nexus-muted);
+}
+
 .ccv2-topbar__mission-badge {
   display: flex;
   align-items: center;

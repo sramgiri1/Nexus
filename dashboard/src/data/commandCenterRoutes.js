@@ -739,6 +739,248 @@ export const COMMAND_CENTER_ROUTE_BY_KEY = Object.fromEntries(
   COMMAND_CENTER_ROUTES.map((route) => [route.key, route]),
 );
 
+const FOUNDER_ROUTE_CONTEXT_BY_KEY = {
+  lite: {
+    purpose: "Start here: describe the startup idea and see NEXUS form the PRD and agent plan.",
+    nextAction: "Answer the next founder question or review the local PRD readiness.",
+  },
+  agentFlow: {
+    purpose: "See which owner capabilities would take the work from idea to build.",
+    nextAction: "Review blocked lanes before asking for execution admission.",
+  },
+  mission: {
+    purpose: "Turn founder intent into a governed mission shape before execution exists.",
+    nextAction: "Review mission state, blockers, and the next governed action.",
+  },
+  command: {
+    purpose: "Ask NEXUS where to go next without exposing raw internals.",
+    nextAction: "Use route-first guidance, then open the recommended page.",
+  },
+  workspace: {
+    purpose: "Understand the workspace boundary before a product build begins.",
+    nextAction: "Confirm scope, source boundaries, and setup blockers.",
+  },
+  tasks: {
+    purpose: "Track planned work as founder-readable tasks before dispatch is allowed.",
+    nextAction: "Review queued, blocked, and approval-needed work.",
+  },
+  workbench: {
+    purpose: "Inspect agent work packets and review status without running agents.",
+    nextAction: "Review the task packet and evidence before any later approval.",
+  },
+  projects: {
+    purpose: "Keep startup products and project milestones separated from OS roadmap work.",
+    nextAction: "Review selected project context and milestone state.",
+  },
+  gates: {
+    purpose: "See which verification gates protect the founder build.",
+    nextAction: "Review missing gate evidence before moving work forward.",
+  },
+  contracts: {
+    purpose: "Inspect the contracts that prevent vague agent handoffs.",
+    nextAction: "Check required inputs, owners, and forbidden actions.",
+  },
+  evidence: {
+    purpose: "Find proof for decisions, approvals, validation, and blockers.",
+    nextAction: "Review evidence location before trusting a state change.",
+  },
+  safety: {
+    purpose: "Understand the safety boundary that keeps founder work governed.",
+    nextAction: "Review disabled reasons and approval requirements.",
+  },
+  approvals: {
+    purpose: "See approval posture before any future execution admission.",
+    nextAction: "Review missing approvals and rollback/audit requirements.",
+  },
+  implementation: {
+    purpose: "Preview implementation proposals without applying project mutations.",
+    nextAction: "Review proposal scope, files, and validation requirements.",
+  },
+  release: {
+    purpose: "Understand release readiness before shipping is enabled.",
+    nextAction: "Review release blockers and validation evidence.",
+  },
+  agents: {
+    purpose: "See agent capabilities as owner lanes, not autonomous workers.",
+    nextAction: "Review which capability owns each part of the founder build.",
+  },
+  skills: {
+    purpose: "Inspect available skill contracts before they can influence work.",
+    nextAction: "Review read-only skills and their blocked execution posture.",
+  },
+  hooks: {
+    purpose: "Understand automation hooks before any scheduler or webhook is live.",
+    nextAction: "Review hook purpose, owner, and disabled reason.",
+  },
+  tools: {
+    purpose: "Inspect tool gateway readiness without executing external tools.",
+    nextAction: "Review tool policy, disabled state, and required evidence.",
+  },
+  triggers: {
+    purpose: "Preview integrations and triggers before automation runs.",
+    nextAction: "Review trigger admission blockers and owner capability.",
+  },
+  apiBatch: {
+    purpose: "See API and batch adapter readiness before provider dispatch.",
+    nextAction: "Review batch policy, cost posture, and disabled actions.",
+  },
+  agentRooms: {
+    purpose: "Understand how agents would coordinate in a governed build.",
+    nextAction: "Review room ownership and read-only coordination state.",
+  },
+  tests: {
+    purpose: "Check validation coverage for the founder build and NEXUS OS.",
+    nextAction: "Review required checks before trusting readiness.",
+  },
+  quality: {
+    purpose: "See quality intelligence before work is promoted.",
+    nextAction: "Review risks, tests, and evidence gaps.",
+  },
+  liveapi: {
+    purpose: "Inspect local API health for Command Center data.",
+    nextAction: "Confirm local service state before relying on live data.",
+  },
+  database: {
+    purpose: "Review durable local state and governed DB readiness.",
+    nextAction: "Check allowed records, blockers, and local-only write posture.",
+  },
+  services: {
+    purpose: "Start, inspect, and troubleshoot local NEXUS services.",
+    nextAction: "Review service health before using live-local views.",
+  },
+  batch: {
+    purpose: "See queued batch posture before any provider job runs.",
+    nextAction: "Review disabled execution and cost policy.",
+  },
+  workers: {
+    purpose: "Understand worker runtime readiness before workers can execute.",
+    nextAction: "Review leases, blockers, and disabled worker actions.",
+  },
+  cost: {
+    purpose: "Track budget posture before provider spend can exist.",
+    nextAction: "Review spend gates and blocked provider dispatch.",
+  },
+  policies: {
+    purpose: "See policies that govern founder work and OS behavior.",
+    nextAction: "Review current policy posture and blocked actions.",
+  },
+  secrets: {
+    purpose: "Understand credential boundaries without exposing secrets.",
+    nextAction: "Review missing credentials and safe setup requirements.",
+  },
+  memory: {
+    purpose: "See memory/context posture before runtime injection is allowed.",
+    nextAction: "Review scoped memory rules and disabled runtime use.",
+  },
+  context: {
+    purpose: "Inspect trusted context boundaries before agents receive context.",
+    nextAction: "Review selected context, source trust, and redaction posture.",
+  },
+  roadmap: {
+    purpose: "Track NEXUS OS phases separately from founder project milestones.",
+    nextAction: "Review current, completed, and planned OS phases.",
+  },
+  activity: {
+    purpose: "See recent operator and OS activity in founder-readable language.",
+    nextAction: "Review activity evidence and unresolved blockers.",
+  },
+  recovery: {
+    purpose: "Understand recovery posture before relying on long-running work.",
+    nextAction: "Review snapshots, restore blockers, and disabled actions.",
+  },
+  selfUpdate: {
+    purpose: "Inspect self-update readiness without applying patches.",
+    nextAction: "Review update scope, risks, and validation gates.",
+  },
+  deployMonitoring: {
+    purpose: "See deploy monitoring posture before deployment is enabled.",
+    nextAction: "Review incident blockers and monitoring readiness.",
+  },
+  projectShipping: {
+    purpose: "Understand project shipping and package readiness before export.",
+    nextAction: "Review package blockers and release evidence.",
+  },
+  authGovernance: {
+    purpose: "Inspect auth and access governance before multi-user operation.",
+    nextAction: "Review auth blockers, roles, and disabled mutations.",
+  },
+  observability: {
+    purpose: "See telemetry and SLO posture before production operation.",
+    nextAction: "Review missing instrumentation and paging blockers.",
+  },
+  backupDr: {
+    purpose: "Review backup and recovery readiness for enterprise use.",
+    nextAction: "Check restore evidence and disaster recovery blockers.",
+  },
+  isolation: {
+    purpose: "Verify tenant and project isolation boundaries.",
+    nextAction: "Review isolation rules before allowing shared runtime work.",
+  },
+  compliance: {
+    purpose: "Inspect compliance evidence needed for enterprise founder work.",
+    nextAction: "Review audit pack readiness and missing controls.",
+  },
+  enterprisePreview: {
+    purpose: "See the enterprise founder journey as a governed preview.",
+    nextAction: "Review intake, PRD, agent workplan, and blocked execution.",
+  },
+  liveReadiness: {
+    purpose: "Check what remains before NEXUS can move from local planning to live execution.",
+    nextAction: "Review admission gates, blockers, and disabled operations.",
+  },
+  founderIntake: {
+    purpose: "Collect the founder idea into structured business understanding.",
+    nextAction: "Answer missing questions and confirm PRD readiness.",
+  },
+  businessBuild: {
+    purpose: "Turn the founder idea into PRD, workstreams, DB records, and admission readiness.",
+    nextAction: "Review PRD, workstreams, DB state, handoff, and execution admission.",
+  },
+  docs: {
+    purpose: "Find the operating guides for founder and platform workflows.",
+    nextAction: "Open the guide for the page you are using.",
+  },
+  settings: {
+    purpose: "Review local settings posture before configuration mutation exists.",
+    nextAction: "Use docs until settings mutation is explicitly scoped.",
+  },
+};
+
+const FOUNDER_CONTEXT_BY_SECTION = {
+  FOUNDER: {
+    purpose: "Move from startup idea to structured PRD and agent plan.",
+    nextAction: "Review founder inputs, blockers, and next safe action.",
+  },
+  OPERATIONS: {
+    purpose: "Coordinate founder work without losing governance.",
+    nextAction: "Review scope, project context, blockers, and evidence.",
+  },
+  GOVERNANCE: {
+    purpose: "Keep approvals, evidence, contracts, and safety visible.",
+    nextAction: "Review missing proof before trusting readiness.",
+  },
+  DELIVERY: {
+    purpose: "Inspect delivery capabilities before any execution is allowed.",
+    nextAction: "Review owners, disabled reasons, and validation requirements.",
+  },
+  PLATFORM: {
+    purpose: "Understand runtime, data, cost, service, and policy posture.",
+    nextAction: "Review local health, blockers, and governance state.",
+  },
+  OS: {
+    purpose: "Track NEXUS OS readiness for enterprise founder workflows.",
+    nextAction: "Review phase status, docs, and live-readiness blockers.",
+  },
+};
+
+export function getFounderRouteContext(routeOrKey) {
+  const route = typeof routeOrKey === "string"
+    ? COMMAND_CENTER_ROUTE_BY_KEY[routeOrKey]
+    : routeOrKey;
+  if (!route) return FOUNDER_CONTEXT_BY_SECTION.OS;
+  return FOUNDER_ROUTE_CONTEXT_BY_KEY[route.key] || FOUNDER_CONTEXT_BY_SECTION[route.section] || FOUNDER_CONTEXT_BY_SECTION.OS;
+}
+
 export function resolveCommandCenterRoute(pathname = "/command-center") {
   if (pathname.startsWith("/command-center/docs/")) {
     return COMMAND_CENTER_ROUTE_BY_KEY.docs;
@@ -752,11 +994,28 @@ export function resolveCommandCenterRoute(pathname = "/command-center") {
 }
 
 export function getCommandCenterSidebarGroups() {
-  const sectionOrder = ["OPERATIONS", "GOVERNANCE", "DELIVERY", "PLATFORM", "OS"];
+  const sectionOrder = ["FOUNDER", "OPERATIONS", "GOVERNANCE", "DELIVERY", "PLATFORM", "OS"];
   return sectionOrder.map((section) => ({
     group: section,
-    items: COMMAND_CENTER_ROUTES.filter((route) => route.section === section),
+    items: COMMAND_CENTER_ROUTES.filter((route) => route.section === section && route.scope !== "demo"),
   }));
+}
+
+export function getCommandCenterFounderSidebarGroups() {
+  const groupLabels = {
+    FOUNDER: "FOUNDER",
+    OPERATIONS: "BUILD COMMAND",
+    GOVERNANCE: "GOVERN",
+    DELIVERY: "AGENTS & DELIVERY",
+    PLATFORM: "RUNTIME",
+    OS: "NEXUS OS",
+  };
+  return getCommandCenterSidebarGroups()
+    .map((group) => ({
+      group: groupLabels[group.group] || group.group,
+      items: group.items,
+    }))
+    .filter((group) => group.items.length > 0);
 }
 
 export function getCommandCenterLiteSidebarGroups() {

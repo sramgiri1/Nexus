@@ -133,11 +133,16 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
 
   await expect(page.locator(".ccv2-shell")).toBeVisible();
   await expect(page.locator(".ccv2-sidebar__brand-name")).toContainText("NEXUS OS");
+  await expect(page.locator(".ccv2-sidebar__brand-ver")).toContainText("Founder Command");
   await expect(page.getByRole("link", { name: /Chat with NEXUS/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Agent Flow/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Founder Intake/i })).toBeVisible();
   await expect(page.getByRole("link", { name: /Business Build/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Mission Control/i })).toBeVisible();
+  await expect(page.getByRole("link", { name: /Durable State/i })).toBeVisible();
   await expect(page.getByRole("heading", { name: /Chat with NEXUS and watch the agent plan form/i })).toBeVisible();
+  await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Founder use");
+  await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Start here");
   await expect(page.getByLabel("Chat with NEXUS")).toContainText("NEXUS");
   await expect(page.getByLabel("Agent action flow")).toContainText("Product");
   await expect(page.locator(".ccv2-topbar__breadcrumb")).toHaveCount(0);
@@ -148,7 +153,7 @@ test("home route renders Command Center V2 shell", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
-test("Command Center Lite keeps primary navigation focused", async ({ page }) => {
+test("Full Command Center founder navigation exposes governed areas", async ({ page }) => {
   const errors = captureClientErrors(page);
 
   await page.goto("/command-center");
@@ -157,6 +162,17 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   for (const label of [
     "Chat with NEXUS",
     "Agent Flow",
+    "Mission Control",
+    "Task Queue",
+    "Agent Workbench",
+    "Evidence",
+    "Implementation",
+    "Agent Registry",
+    "Tool Gateway",
+    "Test Center",
+    "Durable State",
+    "Cost Center",
+    "Policy Center",
     "Founder Intake",
     "Business Build",
     "Live Readiness",
@@ -166,18 +182,16 @@ test("Command Center Lite keeps primary navigation focused", async ({ page }) =>
   ]) {
     expect(sidebarText).toContain(label);
   }
-  for (const hidden of [
-    "Worker Runtime",
-    "Cost Center",
-    "Policy Center",
-    "Secrets Boundary",
-    "Deploy Monitoring",
-    "Enterprise Preview",
-    "Demo Mode",
-    "Durable State",
-  ]) {
-    expect(sidebarText).not.toContain(hidden);
-  }
+  expect(sidebarText).toContain("FOUNDER");
+  expect(sidebarText).toContain("BUILD COMMAND");
+  expect(sidebarText).toContain("GOVERN");
+  expect(sidebarText).toContain("AGENTS & DELIVERY");
+  expect(sidebarText).toContain("RUNTIME");
+  expect(sidebarText).toContain("NEXUS OS");
+  expect(sidebarText).not.toContain("Demo Mode");
+  await expect(page.locator(".ccv2-sidebar__brand-ver")).toContainText("Founder Command");
+  await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Founder use");
+  await expect(page.locator(".ccv2-topbar__founder-context")).toContainText("Start here");
 
   const body = await page.locator("body").innerText();
   expect(body).toContain("Planning only: NEXUS will not call providers");
@@ -1408,7 +1422,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("sidebar uses focused founder labels and hides advanced clutter", async ({ page }) => {
+  test("sidebar uses full founder command labels without noisy badges", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.goto("/");
@@ -1418,16 +1432,22 @@ test.describe("Command Center route-wide UX", () => {
     expect(sidebarText).toContain("Agent Flow");
     expect(sidebarText).toContain("Founder Intake");
     expect(sidebarText).toContain("Business Build");
+    expect(sidebarText).toContain("Mission Control");
+    expect(sidebarText).toContain("Agent Workbench");
+    expect(sidebarText).toContain("Implementation");
+    expect(sidebarText).toContain("Live API");
+    expect(sidebarText).toContain("Durable State");
+    expect(sidebarText).toContain("Settings");
     expect(sidebarText).toContain("Activity Log");
     expect(sidebarText).toContain("Docs & Guides");
+    expect(sidebarText).toContain("FOUNDER");
+    expect(sidebarText).toContain("BUILD COMMAND");
+    expect(sidebarText).toContain("AGENTS & DELIVERY");
+    expect(sidebarText).toContain("RUNTIME");
     expect(sidebarText).not.toMatch(/\bREADY\b/i);
     expect(sidebarText).not.toMatch(/\bLOCAL\b/i);
     expect(sidebarText).not.toMatch(/\bNEEDS SETUP\b/i);
-    expect(sidebarText).not.toContain("Agent Workbench");
-    expect(sidebarText).not.toContain("Implementation");
-    expect(sidebarText).not.toContain("Live API");
-    expect(sidebarText).not.toContain("Durable State");
-    expect(sidebarText).not.toContain("Settings");
+    expect(sidebarText).not.toContain("Demo Mode");
     expect(sidebarText).not.toContain("Agent Workbench P38");
     expect(sidebarText).not.toContain("Implementation P39");
     expect(sidebarText).not.toContain("Live API P40");

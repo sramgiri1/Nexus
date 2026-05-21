@@ -1,0 +1,188 @@
+{
+  "phaseId": "P100",
+  "title": "Founder Full Command Center Enablement",
+  "status": "in_progress",
+  "scopeClassification": "NEXUS_OS_CHANGE",
+  "objective": "Make the full Command Center accessible and founder-useful without enabling unsafe execution.",
+  "safetyRules": [
+    "No provider/model calls.",
+    "No agent dispatch.",
+    "No worker/tool execution.",
+    "No project creation or mutation.",
+    "No hosted DB mutation.",
+    "No deploy, release, export, package creation, network calls, or provider spend.",
+    "No DemoApp exposure in full Command Center primary UX.",
+    "No raw private project IDs, raw logs, raw JSON dumps, raw policy dumps, or fake runnable actions."
+  ],
+  "subphases": [
+    {
+      "phaseId": "P100.1",
+      "title": "Full Founder Navigation Shell",
+      "status": "complete",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Expose full founder-safe Command Center navigation and route context.",
+      "narrowScope": "Navigation shell and route metadata only.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "dashboard/src/data/commandCenterRoutes.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/src/styles-command-center-v2.css",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1001-full-command-center-founder-shell.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1001-full-command-center-founder-shell-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": [
+        "npm run check:p1001-full-command-center-founder-shell",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Full Command Center\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
+    },
+    {
+      "phaseId": "P100.2",
+      "title": "Founder Operations Pages",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Audit Operations pages for founder-useful summaries, blockers, owners, next actions, and evidence.",
+      "narrowScope": "Operations page content only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    },
+    {
+      "phaseId": "P100.3",
+      "title": "Governance Pages",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Audit Governance pages for founder-readable approvals, evidence, safety, and contract context.",
+      "narrowScope": "Governance page content only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    },
+    {
+      "phaseId": "P100.4",
+      "title": "Delivery Pages",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Audit Delivery pages for founder-readable agent, skill, tool, implementation, and release usefulness.",
+      "narrowScope": "Delivery page content only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    },
+    {
+      "phaseId": "P100.5",
+      "title": "Runtime And OS Pages",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Audit Runtime, Platform, and OS pages for founder-useful readiness, blockers, and next actions.",
+      "narrowScope": "Runtime and OS page content only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    },
+    {
+      "phaseId": "P100.6",
+      "title": "Tests / Checkers / Docs",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Aggregate P100 validation and update docs, roadmap, reports, and status.",
+      "narrowScope": "Validation and docs only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    },
+    {
+      "phaseId": "P100.7",
+      "title": "Final Validation",
+      "status": "planned",
+      "scopeClassification": "NEXUS_OS_CHANGE",
+      "objective": "Run final P100 validation and close the phase.",
+      "narrowScope": "Final validation only.",
+      "allowedFiles": [],
+      "forbiddenFiles": [
+        "projects/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "validationCommands": []
+    }
+  ]
+}

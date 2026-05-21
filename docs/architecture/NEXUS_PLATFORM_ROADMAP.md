@@ -2106,6 +2106,21 @@ The detailed plan lives in
 Implementation must follow
 [`p99-execution-contracts.json`](../../contracts/os-roadmap/p99-execution-contracts.json).
 
+## P100 - Founder Full Command Center Enablement
+
+P100 makes the full Command Center founder-useful without enabling unsafe
+execution. P100.1 is complete. It replaces the Lite-only primary shell with
+full founder-safe navigation across non-demo Command Center routes, changes the
+brand label to Founder Command, and adds founder purpose plus next-action
+context to the top chrome for every route. Demo Mode remains out of primary
+full navigation. Provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package,
+network calls, and provider spend remain blocked. P100.2 is next for the
+Founder Operations page-content audit.
+
+Implementation follows
+[`p100-command-center-founder-contracts.json`](../../contracts/os-roadmap/p100-command-center-founder-contracts.json).
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow
