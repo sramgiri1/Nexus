@@ -249,10 +249,10 @@ Every API action, screen, and empty state must enforce these product rules.
 ### 5.2.1 Recurring tasks
 
 - Recurring care work is a core product requirement. Examples:
-  - daily medication reminders
+  - daily hydration check-ins
   - weekly grocery runs
   - every-Monday physical therapy transport
-  - every-2-weeks refill pickup
+  - every-2-weeks prescription pickup
 - Recurrence should support:
   - daily
   - weekly
@@ -1238,6 +1238,49 @@ After the receiver-scoped premium phase, implementation should continue in small
 5. TestFlight checklist and final device validation.
 
 **Tests:** release hygiene automation, Release archive inspection, and manual physical-device sign-off for APNs, universal links, StoreKit sandbox purchase/restore, and Sign in with Apple entitlement behavior. H1-H2 added `npm run check:ios-release-hygiene` plus an Xcode Release simulator build to verify target membership and ensure UI-test/demo launch hooks are inert outside Debug. H3 added `npm run check:ios-release-artifact`, which requires a built Release `.app` and fails if demo seed data, mock accounts, local StoreKit fixtures, demo environment keys, or UI-test launch arguments are bundled into the app artifact.
+
+#### Phase I — Field Gap And Reliability Backlog
+
+**Goal:** keep the existing product stable while closing the highest-value gaps seen in comparable care-coordination products.
+
+**Implementation status:** reliability subphase I0 is complete on the active CareLoop branch. Medication-specific product work is explicitly on hold pending approval and legal/liability review.
+
+**Subphases**
+
+1. **I0: Scenario reliability and API-backed test harness.**
+   - Fix scheduler escalation for legacy or malformed unscoped tasks without leaking PII.
+   - Keep demo/persona UI tests aligned with the current activation UX.
+   - Provide a CareLoop-local iOS test runner that starts/verifies the API and reseeds demo data before API-backed Xcode journeys.
+   - Tests: backend reminder/escalation regression, API-backed Xcode UI journeys, smoke suite, and demo readiness.
+   - Status: complete. The implemented scope includes the null-receiver escalation regression, API-backed Xcode runner, admin demo activation repair, persona recording test refresh, and medication-hold copy cleanup.
+2. **I1: Shared care calendar and coverage planning.**
+   - Add a calendar-first view for meals, rides, appointments, visits, and task coverage.
+   - Reuse task/receiver/access policy rather than creating a separate visibility system.
+   - Tests: backend scoped event/task contract tests and organizer/caregiver/receiver calendar UI tests.
+3. **I2: Invite delivery transparency.**
+   - Show sent/resend/revoked/expired state, invite destination, last sent time, and safe resend guidance.
+   - Keep raw delivery provider payloads out of user-visible logs.
+   - Tests: backend invite audit tests, email/SMS provider simulation tests, and UI resend/revoke/expired coverage.
+4. **I3: Care journal and wellness updates.**
+   - Add non-clinical daily updates, observations, photos only if approved later, and receiver-scoped comments/history.
+   - Avoid diagnostic language and avoid presenting the app as a medical record.
+   - Tests: access-scope tests, PII redaction checks, and journal UI tests.
+5. **I4: Care receiver profile and emergency information.**
+   - Add emergency contacts, doctors/pharmacy references, preferences, mobility notes, and safe handoff instructions.
+   - Do not store medical records or regulated attachments in this phase.
+   - Tests: access-control tests, export/delete privacy checks, and profile UI coverage.
+6. **I5: Consent, privacy, and self-service controls.**
+   - Let care receivers review who can see their care, revoke participation where legally/product-wise allowed, and request export/delete.
+   - Preserve organizer audit history without exposing private caregiver details.
+   - Tests: authz tests, export/delete route tests, and receiver settings UI coverage.
+7. **I6: Calendar export and Apple ecosystem integrations.**
+   - Evaluate Apple Calendar/Reminders export for tasks and visits after core care-calendar data model is stable.
+   - Keep StoreKit, Sign in with Apple, APNs, and universal/deep-link behavior aligned with Apple platform guidance.
+   - Tests: simulator deep-link coverage plus physical-device validation for OS integrations.
+8. **Medication module hold.**
+   - A dedicated medication module for dose schedules, refill tracking, adherence, interaction warnings, or medication recommendations is on hold.
+   - Product, legal, and liability approval is required before implementing medication-specific workflows.
+   - Existing generic tasks may reference real-world care work such as prescription pickup, but the app must not claim medication-management functionality until approved.
 
 ---
 

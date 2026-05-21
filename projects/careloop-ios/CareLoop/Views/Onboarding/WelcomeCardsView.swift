@@ -191,7 +191,7 @@ struct WelcomeCardsView: View {
             icon: "heart.text.square.fill",
             gradientColors: [rose, Color(red: 0.95, green: 0.55, blue: 0.30)],
             title: "Let them feel the care too",
-            body: "Invite your parent or loved one so they can see all the care happening around them — and get gentle reminders for their own tasks, like taking medication or a doctor's call.",
+            body: "Invite your parent or loved one so they can see all the care happening around them — and get gentle reminders for their own tasks, like a walk or a doctor's call.",
             accentColor: rose
         ),
     ]}

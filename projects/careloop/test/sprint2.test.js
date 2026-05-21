@@ -2497,7 +2497,7 @@ describe("circle membership management", () => {
       headers: organizer.headers,
       payload: {
         creatorId: organizer.user.id,
-        title: "Receiver confirms morning medication",
+        title: "Receiver confirms morning routine",
         recipientId,
         assigneeId: receiver.user.id,
         dueAt,
@@ -2717,7 +2717,7 @@ describe("circle membership management", () => {
       actor: circleAOwner,
       circleId: circleA.id,
       recipientId: recipientAId,
-      title: "Circle A receiver-only medication",
+      title: "Circle A receiver-only check-in",
       assigneeId: shared.user.id,
     });
     const taskB = await createTask({
@@ -4183,7 +4183,7 @@ describe("receiver-scoped access control", () => {
         url: "/circles/c1/tasks",
         headers: organizerHeaders,
         payload: {
-          title: `${status} plan medication`,
+          title: `${status} plan check-in`,
           creatorId: "u1",
           recipientId: "cr2",
           assigneeId: "u5",
@@ -4207,7 +4207,7 @@ describe("receiver-scoped access control", () => {
       url: "/circles/c1/tasks",
       headers: organizerHeaders,
       payload: {
-        title: "Evening medication",
+        title: "Evening check-in",
         creatorId: "u1",
         recipientId: "cr2",
         assigneeId: "u5",
@@ -4223,7 +4223,7 @@ describe("receiver-scoped access control", () => {
       url: "/circles/c1/tasks",
       headers: organizerHeaders,
       payload: {
-        title: "Morning medication",
+        title: "Morning check-in",
         creatorId: "u1",
         recipientId: "cr1",
         assigneeId: "u4",
@@ -4278,7 +4278,7 @@ describe("receiver-scoped access control", () => {
       url: "/circles/c1/tasks",
       headers: organizerHeaders,
       payload: {
-        title: "Expired plan medication",
+        title: "Expired plan check-in",
         creatorId: "u1",
         recipientId: "cr2",
         assigneeId: "u5",
@@ -4353,6 +4353,60 @@ describe("receiver-scoped access control", () => {
     assert.equal(event.payload.failedCount, 0);
     assert.deepEqual(event.payload.deliveryChannels, ["NONE", "PUSH"]);
     assert.equal(event.payload.deliveries, undefined);
+    assert.equal(JSON.stringify(event.payload).includes("@"), false, "timeline payload must not leak emails");
+  });
+
+  test("escalation fanout handles legacy unscoped tasks without querying null receiver access", async () => {
+    const db = buildDb(scopedAccessSeed());
+    db._s.tasks.push({
+      id: "t-unscoped-escalation",
+      title: "Legacy unscoped reminder",
+      status: "PENDING",
+      priority: "NORMAL",
+      circleId: "c1",
+      creatorId: "u1",
+      assigneeId: "u2",
+      completedById: null,
+      completedAt: null,
+      dueAt: new Date("2026-04-30T12:00:00.000Z"),
+      archivedAt: null,
+      createdAt: new Date("2026-04-29T12:00:00.000Z"),
+      updatedAt: new Date("2026-04-29T12:00:00.000Z"),
+      recurrenceFrequency: "NONE",
+      recurrenceInterval: null,
+      recurrenceWeekdays: [],
+      recurrenceEndsAt: null,
+      seriesId: null,
+      recipientId: null,
+    });
+    db._s.reminders.push({
+      id: "rem-unscoped-escalation",
+      taskId: "t-unscoped-escalation",
+      status: "SENT",
+      scheduledAt: new Date(Date.now() - 30 * 60 * 1000),
+      sentAt: new Date(Date.now() - 20 * 60 * 1000),
+      snoozedUntil: null,
+      snoozeCount: 0,
+      escalationDueAt: new Date(Date.now() - 1000),
+      escalatedAt: null,
+    });
+
+    let receiverAccessQueried = false;
+    db.careRecipientAccess.findMany = async () => {
+      receiverAccessQueried = true;
+      throw new Error("unscoped tasks must not query receiver access with a null recipientId");
+    };
+
+    await processEscalations(db);
+
+    const reminder = db._s.reminders.find((item) => item.id === "rem-unscoped-escalation");
+    assert.equal(receiverAccessQueried, false);
+    assert.equal(reminder.status, "ESCALATED");
+    assert.ok(reminder.escalatedAt);
+    const event = db._s.events.find((item) => item.type === "REMINDER_ESCALATED" && item.payload.taskId === "t-unscoped-escalation");
+    assert.ok(event, "scheduler logs the legacy unscoped escalation");
+    assert.equal(event.payload.recipientId, null);
+    assert.equal(event.payload.recipientCount, 2);
     assert.equal(JSON.stringify(event.payload).includes("@"), false, "timeline payload must not leak emails");
   });
 });

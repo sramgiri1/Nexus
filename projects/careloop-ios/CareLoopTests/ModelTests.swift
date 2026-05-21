@@ -930,7 +930,7 @@ final class TaskDetailPresentationTests: XCTestCase {
     ) -> CareTask {
         CareTask(
             id: "t1",
-            title: "Refill medication",
+            title: "Pick up prescriptions",
             notes: nil,
             dueAt: dueAt,
             status: status,

@@ -140,12 +140,14 @@ export async function processEscalations(db) {
   });
 
   for (const reminder of reminders) {
-    const activeRecipientAccesses = await db.careRecipientAccess.findMany({
-      where: {
-        recipientId: reminder.task.recipientId,
-        revokedAt: null,
-      },
-    });
+    const activeRecipientAccesses = reminder.task.recipientId
+      ? await db.careRecipientAccess.findMany({
+        where: {
+          recipientId: reminder.task.recipientId,
+          revokedAt: null,
+        },
+      })
+      : [];
     const userIds = escalationUserIdsForTask({
       task: reminder.task,
       circleMembers: reminder.task.circle.members,

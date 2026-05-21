@@ -184,8 +184,8 @@ private struct UITestScenarioFixture {
         let organizerTasks = [
             CareTask(
                 id: "t1",
-                title: "Morning medication",
-                notes: "Blood pressure meds after breakfast.",
+                title: "Morning wellness check",
+                notes: "Confirm breakfast and the morning routine.",
                 dueAt: Date().addingTimeInterval(45 * 60),
                 status: .pending,
                 priority: .high,
@@ -645,8 +645,8 @@ private struct UITestScenarioFixture {
             let receiverTasks = [
                 CareTask(
                     id: "t5",
-                    title: "Take lunchtime medication",
-                    notes: "Use the blue pill organizer after lunch.",
+                    title: "Lunchtime hydration check",
+                    notes: "Drink water after lunch and mark this done.",
                     dueAt: Date().addingTimeInterval(20 * 60),
                     status: .pending,
                     priority: .high,
@@ -679,7 +679,7 @@ private struct UITestScenarioFixture {
                 ),
                 CareTask(
                     id: "t8",
-                    title: "Breakfast medication",
+                    title: "Breakfast check-in",
                     notes: "Completed from a reminder earlier today.",
                     dueAt: Date().addingTimeInterval(-2 * 60 * 60),
                     status: .done,

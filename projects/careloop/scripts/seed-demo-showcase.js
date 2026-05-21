@@ -55,7 +55,7 @@ const circleScenarios = [
         key: "elena",
         name: "Lakshmi Ramgiri",
         relationship: "Mom",
-        notes: "Needs diabetes medication coordination and light mobility support after a dizzy spell last week.",
+        notes: "Needs help coordinating appointments, meals, and light mobility support after a dizzy spell last week.",
         isPrimary: true,
         activationStatus: "ACTIVE",
         userKey: "agingRecipient",
@@ -89,9 +89,9 @@ const circleScenarios = [
     ],
     tasks: [
       {
-        key: "aging-med-refill",
-        title: "Refill diabetes medication",
-        notes: "Call Greenway Pharmacy before the evening dose window closes.",
+        key: "aging-pharmacy-pickup",
+        title: "Pick up prescriptions from Greenway Pharmacy",
+        notes: "Call Greenway Pharmacy and confirm pickup before the evening check-in.",
         recipientKey: "elena",
         creatorKey: "organizer",
         assigneeKey: "agingCaregiver",
@@ -100,7 +100,7 @@ const circleScenarios = [
         dueHoursFromNow: 4,
         createdHoursAgo: 8,
         comments: [
-          { authorKey: "organizer", body: "The last refill was delayed and Mom was anxious. Please confirm pickup time.", createdHoursAgo: 7.5 },
+          { authorKey: "organizer", body: "The last pickup was delayed and Mom was anxious. Please confirm pickup time.", createdHoursAgo: 7.5 },
         ],
         reminder: { status: "PENDING" },
       },
@@ -221,9 +221,9 @@ const circleScenarios = [
     ],
     tasks: [
       {
-        key: "recovery-antibiotics",
-        title: "Take antibiotics with lunch",
-        notes: "Food first, then the antibiotic within 10 minutes. Mark done so Daniel knows the dose was not missed.",
+        key: "recovery-lunch-check",
+        title: "Lunch and recovery check-in",
+        notes: "Confirm lunch was delivered, note appetite, and mark done so Daniel knows the midday check happened.",
         recipientKey: "grace",
         creatorKey: "organizer",
         assigneeKey: "recoveryRecipient",
@@ -450,9 +450,9 @@ const circleScenarios = [
     ],
     tasks: [
       {
-        key: "memory-medication",
-        title: "Evening medication confirmation",
-        notes: "Confirm the pill organizer was used after dinner and leave a note if anything looks off.",
+        key: "memory-evening-safety",
+        title: "Evening safety check",
+        notes: "Confirm dinner is done, doors are locked, and leave a note if anything looks off.",
         recipientKey: "walter",
         creatorKey: "organizer",
         assigneeKey: "memoryRecipient",

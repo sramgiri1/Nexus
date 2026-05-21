@@ -4,7 +4,7 @@
 
 Stack: Node.js 20, Fastify 4, Prisma 5, PostgreSQL (Supabase), Resend, APNs, iOS 16+ SwiftUI
 
-Status: Phase 2 premium hardening — receiver-scoped monetization implementation in progress
+Status: Field-gap reliability Phase I0 complete; shared care calendar and release setup remain next
 Agents: ATLAS, PRISM, CORE, SWIFT, BEACON, CANVAS
 
 ⚠️  COMPLIANCE: FTC Health Breach Notification Rule applies.
@@ -20,35 +20,37 @@ Agents: ATLAS, PRISM, CORE, SWIFT, BEACON, CANVAS
 - Free care circles support one active care receiver and one caregiver for that receiver.
 - Premium care receivers unlock recurring routines, insights, unlimited caregivers, and advanced coordination for that receiver only.
 - Expired or revoked Premium keeps existing care data visible and blocks only new premium-only actions.
+- Dedicated medication-management features are on hold pending product, legal, and liability approval. Generic care tasks may cover real-world support such as prescription pickup, but the app must not claim dose scheduling, adherence, refill tracking, or medication advice.
 
 ## Focused Validation
 
-Use the root runner from `/Users/sucheth/Downloads/nexus`:
+Use these CareLoop-local scripts from `/Users/sucheth/Downloads/nexus/projects/careloop`:
+
+```bash
+npm run test:smoke
+npm test
+npm run check:demo-showcase
+npm run test:ios:api
+npm run test:ios
+```
+
+For release hygiene:
+
+```bash
+npm run check:ios-release-hygiene
+npm run check:ios-release-artifact
+```
+
+The repo-root runner from `/Users/sucheth/Downloads/nexus` is still available when a broader Nexus workspace run is needed:
 
 ```bash
 scripts/careloop-test-runner.sh smoke
-scripts/careloop-test-runner.sh backend:circles
-scripts/careloop-test-runner.sh backend:payments
-scripts/careloop-test-runner.sh ios:personas
-scripts/careloop-test-runner.sh ios:payments
-scripts/careloop-test-runner.sh docs:demo
-```
-
-The premium phase contract check is:
-
-```bash
-npm run check:careloop-premium-phase-plan
-```
-
-The demo/StoreKit readiness contract check is:
-
-```bash
-npm run check:careloop-demo-readiness
+scripts/careloop-test-runner.sh full
 ```
 
 ## Room Demo
 
-The single-command demo launcher is available from the repo root:
+The single-command demo launcher is available from `/Users/sucheth/Downloads/nexus/projects/careloop`:
 
 ```bash
 npm run careloop:demo

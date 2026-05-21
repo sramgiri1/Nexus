@@ -522,7 +522,7 @@ curl http://localhost:3000/circles/<circleId>/events \
 ```bash
 curl -X POST http://localhost:3000/circles/<circleId>/tasks/<taskId>/comments \
   -H "Authorization: Bearer $TOKEN" -H "Content-Type: application/json" \
-  -d '{"body":"Picked up the medication."}'
+  -d '{"body":"Picked up the prescriptions."}'
 ```
 
 **curl — delete comment:**

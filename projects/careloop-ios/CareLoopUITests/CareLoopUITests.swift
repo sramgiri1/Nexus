@@ -100,6 +100,47 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertEqual(XCTWaiter.wait(for: [expectation], timeout: timeout), .completed)
     }
 
+    @MainActor
+    private func openRecipientActivationDecision(in app: XCUIApplication) {
+        let managementScreen = waitForAnyElement(in: app, identifier: "receiver-management-screen", timeout: 8)
+        let directButtonById = app.buttons
+            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "recipient-activation-path-"))
+            .firstMatch
+        let directButtonByLabel = app.buttons["Choose activation path"]
+
+        for _ in 0..<5 {
+            if directButtonById.exists, directButtonById.isHittable {
+                directButtonById.tap()
+                return
+            }
+            if directButtonByLabel.exists, directButtonByLabel.isHittable {
+                directButtonByLabel.tap()
+                return
+            }
+            managementScreen.swipeUp()
+        }
+
+        if directButtonById.waitForExistence(timeout: 2) {
+            directButtonById.tap()
+            return
+        }
+        if directButtonByLabel.waitForExistence(timeout: 2) {
+            directButtonByLabel.tap()
+            return
+        }
+
+        let actionsMenu = app.buttons
+            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "recipient-actions-menu-"))
+            .firstMatch
+        for _ in 0..<5 where !(actionsMenu.exists && actionsMenu.isHittable) {
+            managementScreen.swipeDown()
+        }
+        XCTAssertTrue(actionsMenu.waitForExistence(timeout: 5), "Expected recipient actions menu to appear")
+        actionsMenu.tap()
+        XCTAssertTrue(app.buttons["Activation Options"].waitForExistence(timeout: 5))
+        app.buttons["Activation Options"].tap()
+    }
+
     private func enableInviteActionByConfirmingAdult(in app: XCUIApplication) {
         let toggle = app.switches["invite-caregiver-adult-toggle"]
         let inviteButton = app.buttons["invite-caregiver-submit-button"]
@@ -137,6 +178,32 @@ final class CareLoopUITests: XCTestCase {
 
         XCTAssertTrue(button.waitForExistence(timeout: 5), "Expected quick action '\(identifier)' to appear")
         button.tap()
+    }
+
+    @MainActor
+    private func openNewTaskComposer(in app: XCUIApplication) {
+        let addButton = app.buttons["add-task-button"]
+        let titleField = app.textFields["new-task-title-field"]
+
+        for _ in 0..<3 {
+            XCTAssertTrue(addButton.waitForExistence(timeout: 5), "Expected Add Task button to appear")
+            if addButton.isHittable {
+                addButton.tap()
+            } else {
+                addButton.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+            }
+
+            if titleField.waitForExistence(timeout: 8) {
+                return
+            }
+
+            if app.buttons["Cancel"].exists {
+                app.buttons["Cancel"].tap()
+                waitForDisappearance(of: titleField, timeout: 2)
+            }
+        }
+
+        XCTAssertTrue(titleField.waitForExistence(timeout: 8), "Expected New Task composer title field to appear")
     }
 
     private func recordingSession() throws -> RecordingLaunchSession {
@@ -386,7 +453,7 @@ final class CareLoopUITests: XCTestCase {
         let recipientName = "Lakshmi Ramgiri"
         let recipientEmail = "lakshmi.ramgiri.\(UUID().uuidString.prefix(8))@example.com"
         let caregiverEmail = "meera.patel.\(UUID().uuidString.prefix(8))@example.com"
-        let oneTimeTaskTitle = "Confirm diabetes medication pickup"
+        let oneTimeTaskTitle = "Pick up prescriptions from pharmacy"
         let recurringTaskTitle = "Daily morning care check-in"
 
         openCreateCircleFlow(in: app)
@@ -406,9 +473,14 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[recipientName].waitForExistence(timeout: 5))
         print("STEP receiver management visible")
 
-        let inviteButton = app.buttons["Send Invite"].firstMatch
-        XCTAssertTrue(inviteButton.waitForExistence(timeout: 5))
-        inviteButton.tap()
+        openRecipientActivationDecision(in: app)
+        XCTAssertTrue(anyElement(in: app, identifier: "recipient-activation-decision-screen").waitForExistence(timeout: 5))
+
+        let directInviteButton = app.buttons
+            .matching(NSPredicate(format: "identifier BEGINSWITH %@", "recipient-activation-choice-invite-"))
+            .firstMatch
+        XCTAssertTrue(directInviteButton.waitForExistence(timeout: 5))
+        directInviteButton.tap()
         print("STEP invite sheet opened")
 
         let recipientInviteField = app.textFields["recipient-invite-email-field"]
@@ -431,6 +503,11 @@ final class CareLoopUITests: XCTestCase {
         waitForDisappearance(of: anyElement(in: app, identifier: "receiver-management-screen"), timeout: 8)
         print("STEP recipient proxy activated")
 
+        if app.buttons["circle-directory-button"].waitForExistence(timeout: 5) {
+            app.buttons["circle-directory-button"].tap()
+            reopenCircle(in: app, named: circleName)
+        }
+
         tapQuickAction("quick-action-people-access", in: app)
 
         _ = waitForAnyElement(in: app, identifier: "people-access-screen")
@@ -450,8 +527,7 @@ final class CareLoopUITests: XCTestCase {
         tapQuickAction("quick-action-task-board", in: app)
 
         XCTAssertTrue(app.scrollViews["task-board-screen"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 5))
-        app.buttons["add-task-button"].tap()
+        openNewTaskComposer(in: app)
         typeText(into: app.textFields["new-task-title-field"], text: oneTimeTaskTitle)
         app.buttons["new-task-submit-button"].tap()
         XCTAssertTrue(app.staticTexts[oneTimeTaskTitle].waitForExistence(timeout: 8))
@@ -476,8 +552,7 @@ final class CareLoopUITests: XCTestCase {
         }
 
         tapQuickAction("quick-action-task-board", in: app)
-        XCTAssertTrue(app.buttons["add-task-button"].waitForExistence(timeout: 5))
-        app.buttons["add-task-button"].tap()
+        openNewTaskComposer(in: app)
         typeText(into: app.textFields["new-task-title-field"], text: recurringTaskTitle)
         XCTAssertTrue(app.buttons["task-mode-repeating-button"].waitForExistence(timeout: 5))
         app.buttons["task-mode-repeating-button"].tap()
@@ -503,7 +578,7 @@ final class CareLoopUITests: XCTestCase {
         _ = waitForStaticText(containing: "Suresh", in: app, timeout: 5)
 
         tapQuickAction("quick-action-task-board", in: app)
-        _ = waitForStaticText(containing: "Refill diabetes medication", in: app, timeout: 10)
+        _ = waitForStaticText(containing: "Pick up prescriptions from Greenway Pharmacy", in: app, timeout: 10)
         app.swipeUp()
         _ = waitForStaticText(containing: "Install bathroom grab bars", in: app, timeout: 8)
     }
@@ -538,7 +613,7 @@ final class CareLoopUITests: XCTestCase {
         )
 
         XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 15))
-        _ = waitForStaticText(containing: "Take antibiotics with lunch", in: app, timeout: 8)
+        _ = waitForStaticText(containing: "Lunch and recovery check-in", in: app, timeout: 8)
         XCTAssertTrue(app.buttons["receiver-next-task-primary"].waitForExistence(timeout: 5))
         app.buttons["receiver-next-task-primary"].tap()
         XCTAssertTrue(
@@ -1375,7 +1450,7 @@ final class CareLoopUITests: XCTestCase {
         XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.images["receiver-home-plan-badge"].exists)
         XCTAssertFalse(app.buttons["quick-action-upgrade-premium"].exists)
-        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
+        XCTAssertTrue(app.staticTexts["Lunchtime hydration check"].exists)
         XCTAssertTrue(app.buttons["View All My Tasks"].exists)
     }
 
@@ -1384,12 +1459,12 @@ final class CareLoopUITests: XCTestCase {
         let app = launchApp(arguments: ["-careloop-ui-scenario", "receiver-home"])
 
         XCTAssertTrue(app.scrollViews["care-receiver-home"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].exists)
+        XCTAssertTrue(app.staticTexts["Lunchtime hydration check"].exists)
 
         app.buttons["receiver-next-task-primary"].tap()
 
         XCTAssertTrue(app.staticTexts["Drink water"].waitForExistence(timeout: 3))
-        XCTAssertFalse(app.staticTexts["Take lunchtime medication"].exists)
+        XCTAssertFalse(app.staticTexts["Lunchtime hydration check"].exists)
     }
 
     @MainActor
@@ -1400,7 +1475,7 @@ final class CareLoopUITests: XCTestCase {
         ])
 
         XCTAssertTrue(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Take lunchtime medication"].waitForExistence(timeout: 3))
+        XCTAssertTrue(app.staticTexts["Lunchtime hydration check"].waitForExistence(timeout: 3))
     }
 
     @MainActor
@@ -1412,7 +1487,7 @@ final class CareLoopUITests: XCTestCase {
         ])
 
         XCTAssertTrue(app.scrollViews["recipient-task-board-screen"].waitForExistence(timeout: 5))
-        XCTAssertTrue(app.staticTexts["Breakfast medication"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["Breakfast check-in"].waitForExistence(timeout: 5))
         XCTAssertTrue(app.staticTexts["Done by Maya"].waitForExistence(timeout: 3))
     }
 }

@@ -1,8 +1,10 @@
 # CareLoop Test Runbook
 
-Date: 2026-05-17
+Date: 2026-05-20
 
 Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups existing backend, iOS unit, and iOS UI tests so agents can run the smallest useful suite instead of always running the full regression.
+
+CareLoop also exposes project-local iOS runners from `projects/careloop` for API-backed simulator validation. These runners verify or start the local API, seed showcase data when needed, and then run Xcode against `projects/careloop-ios`.
 
 ## Gates
 
@@ -13,6 +15,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | iOS view/model-only change | iOS focused suite | `scripts/careloop-test-runner.sh ios:<area>` |
 | End of phase | Full regression | `scripts/careloop-test-runner.sh full` |
 | Release candidate | Full regression plus manual/device matrix | `scripts/careloop-test-runner.sh full` and `testability-matrix.md` |
+| API-backed iOS journey change | CareLoop-local API-backed Xcode suite | `npm run test:ios:api` from `projects/careloop` |
 
 ## Backend Suites
 
@@ -35,6 +38,9 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | `ios` | Runs the full Xcode suite. |
 | `ios:unit` | Runs iOS unit/model tests only. |
 | `ios:ui` | Runs all iOS UI tests only. |
+| `test:ios` | CareLoop-local package script that verifies/starts the API, then runs the full Xcode suite. |
+| `test:ios:ui` | CareLoop-local package script that verifies/starts the API, then runs all iOS UI tests. |
+| `test:ios:api` | CareLoop-local package script that verifies/starts the API, reseeds showcase data, and runs API-backed admin/persona journeys. |
 | `ios:onboarding` | Onboarding, auth validation, keychain, circle directory. |
 | `ios:personas` | Organizer, caregiver, care receiver dashboards and role switching. |
 | `ios:tasks` | Task board, personal task board, recurrence model, completion flow. |
@@ -54,7 +60,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Task detail delete | Focused iOS UI test for organizer delete cancel/confirm from Task Detail |
 | Task detail blocked actions | Focused iOS UI test for invited care receiver blocking edit/status/comment/snooze/delete actions |
 | Task detail escalation | Focused iOS UI test for escalated task copy plus visible status/snooze recovery actions |
-| Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders`; backend verifies escalation fanout and non-PII delivery summaries, and iOS verifies organizer Activity escalation timeline copy |
+| Reminder -> snooze -> escalation -> deep link | `backend:reminders`, `ios:reminders`; backend verifies escalation fanout, legacy null-receiver escalation safety, and non-PII delivery summaries, and iOS verifies organizer Activity escalation timeline copy |
 | Notification preferences | Backend `PATCH /users/:id/notification-preferences`, assignment/escalation delivery gates, daily digest opt-out test; `xcodebuild build-for-testing`; focused iOS UI `test_settingsNotificationPreferencesCanBeChanged` |
 | Care receiver lifecycle and activation management | Backend receiver lifecycle, activation-conflict, proxy-attestation, and receiver-delete tests; focused iOS UI `test_organizerCanAddEditAndRemoveCareReceiverLocally`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_organizerChoosesReceiverActivationPath`, and `test_organizerSeesBlockedCareReceiverRemovalReason` |
 | New task inactive receiver blocking | Backend inactive-receiver task-create rejection test; focused iOS UI `test_newTaskBlocksInactiveCareReceiverUntilActivation` |
@@ -67,7 +73,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 | Free receiver and premium capability gates | Backend cross-surface premium/free policy regression; `xcodebuild build-for-testing`; focused iOS UI `test_organizerCanOpenCareReceiverManagement`, `test_addSecondReceiverShowsPremiumGateBeforeForm`, and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
 | App Store Server transaction verification readiness | Backend `app-store-server.test.js`; entitlement sync fail-closed route regression; live Apple calls remain external setup |
 | Receiver adherence, missed-trend, caregiver-load, escalation, and premium-state reporting | Backend insights aggregation tests for scheduled/completed/on-time/late/missed adherence fields, daily due/completed/missed trend data, organizer-only caregiver load, escalation history/response timing, and caregiver privacy; `xcodebuild build-for-testing`; focused iOS model `CareLoopTests/CompletionInsightModelTests`; focused iOS UI `test_insightsShowPremiumReportSections` and `test_insightsLockFreeReceiverBehindPremiumUpgrade` |
-| Demo showcase readiness | `npm run check:demo-showcase` validates four scenarios, launch personas, task/reminder/premium state mix, StoreKit product parity, and launcher contract; `npm run careloop:demo:check` validates the one-command launcher contract without opening simulator windows; `npm run careloop:record-personas` records organizer, caregiver, and care receiver journeys; direct `node scripts/seed-demo-showcase.js` verifies the manifest can be emitted |
+| Demo showcase readiness | `npm run check:demo-showcase` validates four scenarios, launch personas, task/reminder/premium state mix, StoreKit product parity, and launcher contract; `npm run test:ios:api` validates API-backed admin/persona journeys after reseeding; `npm run careloop:demo:check` validates the one-command launcher contract without opening simulator windows; `npm run careloop:record-personas` records organizer, caregiver, and care receiver journeys; direct `node scripts/seed-demo-showcase.js` verifies the manifest can be emitted |
 | Release hygiene | `npm run check:ios-release-hygiene` validates iOS target membership and Debug-only demo/UI-test launch hooks; `npm run check:ios-release-artifact` scans the built Release `.app` for bundled demo data, mock accounts, local StoreKit fixtures, demo env keys, and UI-test launch args; Release simulator build verifies the app starts from production `AppState()` outside Debug |
 
 ## Notes
@@ -85,6 +91,7 @@ Use `scripts/careloop-test-runner.sh` from the repo root. The runner groups exis
 - Focused free/premium gate validation can be run with backend tests for add-receiver intent, recurring schedules, insights, and caregiver limits, plus Xcode UI tests `test_addSecondReceiverShowsPremiumGateBeforeForm`, `test_insightsLockFreeReceiverBehindPremiumUpgrade`, and `test_organizerCanOpenCareReceiverManagement`.
 - Focused App Store Server verification readiness can be run with `node --test test/app-store-server.test.js` and backend route test `fails closed when App Store verification is enabled without server credentials`.
 - Focused demo showcase readiness can be run from `projects/careloop` with `npm run check:demo-showcase` and `node scripts/seed-demo-showcase.js > /tmp/careloop-demo-manifest-check.json`.
+- Focused API-backed admin/persona validation can be run from `projects/careloop` with `npm run test:ios:api`; use `npm run test:ios` for the full Xcode suite through the same API-aware runner.
 - Focused one-command demo launcher validation can be run from `projects/careloop` with `npm run careloop:demo:check`; use `npm run careloop:demo` only when you intentionally want to seed data, start/reuse the API, and open simulator sessions.
 - Focused persona video recording can be run from `projects/careloop` with `npm run careloop:record-personas`. It seeds reserved-domain users, runs four Xcode UI journeys, and writes MP4 files under the printed `outputDir`.
 - Focused release-hygiene validation can be run from `projects/careloop-ios` with `DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild build -project CareLoop.xcodeproj -scheme CareLoop -configuration Release -destination 'generic/platform=iOS Simulator' CODE_SIGNING_ALLOWED=NO`, then from `projects/careloop` with `npm run check:ios-release-artifact`.

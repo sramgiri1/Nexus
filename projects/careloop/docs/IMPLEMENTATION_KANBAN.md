@@ -1,6 +1,6 @@
 # CareLoop Implementation Kanban
 
-**Last updated:** 2026-05-18
+**Last updated:** 2026-05-20
 
 This board tracks CareLoop app work only. It mirrors the PRD implementation phases and must be updated whenever a subphase moves state.
 
@@ -16,7 +16,7 @@ A card can move to `Done` only when all of these are true:
 
 ## In Progress
 
-Local Phase H release hygiene is complete through H3. H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
+No CareLoop implementation card is actively in progress. Local Phase H release hygiene is complete through H3. H4/H5 and F5 remain blocked on external Apple/App Store/physical-device setup.
 
 ## Ready
 
@@ -25,12 +25,19 @@ Local Phase H release hygiene is complete through H3. H4/H5 and F5 remain blocke
 | F5 | Physical-device APNs/TestFlight validation. | Apple Developer setup; app entitlements; backend push provider. | Manual physical-device checklist. | No simulator demo dependency. | External Setup |
 | H4 | Verify production API URL, entitlements, privacy strings, push, Sign in with Apple, and StoreKit product IDs. | Xcode config; backend environment; App Store Connect. | Release checklist plus physical-device validation. | No demo dependency. | External Setup |
 | H5 | TestFlight checklist and final device validation. | TestFlight build and devices. | Manual physical-device sign-off. | No demo dependency. | External Setup |
+| I1 | Shared care calendar and coverage planning for meals, rides, appointments, visits, and task coverage. | Existing task/receiver/access policy; new calendar surface. | Backend scoped calendar contract tests plus organizer/caregiver/receiver Xcode UI tests. | Add calendar-oriented demo moments after data model lands. | Planned |
+| I2 | Invite delivery transparency. | Invite routes, email/SMS provider abstraction, People & Access UI. | Provider simulation tests, resend/revoke/expired UI coverage, PII-safe audit checks. | Improves demo credibility for real invite flow. | Planned |
+| I3 | Non-clinical care journal and wellness updates. | Event/comment model extension; receiver-scoped feed UI. | Access-scope tests, PII redaction checks, journal UI coverage. | Add history-rich journal moments. | Planned |
+| I4 | Care receiver profile and emergency information. | Receiver profile schema/UI; privacy/export/delete plumbing. | Authz, export/delete, and profile UI tests. | Adds real handoff context. | Planned |
+| I5 | Consent, privacy, and self-service controls. | Receiver settings, access grants, audit/export/delete routes. | Receiver revoke/export/delete tests and UI coverage. | Demonstrates trust controls. | Planned |
+| I6 | Calendar export and Apple ecosystem integrations. | Calendar/Reminders export, deep links, APNs/device validation. | Simulator deep-link tests plus physical-device validation. | Optional after care calendar stabilizes. | Planned |
 
 ## Backlog
 
 | ID | Outcome | Code Areas | Required Tests | Demo Impact | PRD Status |
 | --- | --- | --- | --- | --- | --- |
-| I1 | Store production API base URL in release-safe configuration once backend hosting is selected. | Xcode build settings/config files; backend deployment. | Release hygiene plus smoke against staging/prod. | No demo dependency. | Blocked |
+| H4a | Store production API base URL in release-safe configuration once backend hosting is selected. | Xcode build settings/config files; backend deployment. | Release hygiene plus smoke against staging/prod. | No demo dependency. | Blocked |
+| I7 | Dedicated medication module. | Medication list, dose schedule, refill, adherence, and medication-specific reminders. | Requires product/legal/liability approval before test design. | On hold; do not implement yet. | On Hold |
 
 ## Done
 
@@ -70,6 +77,7 @@ Local Phase H release hygiene is complete through H3. H4/H5 and F5 remain blocke
 | H1 | Xcode target membership audit. | `npm run check:ios-release-hygiene` validates app target membership for demo/UI-test bridge files without changing Nexus OS files. |
 | H2 | Debug-gate UI-test and demo launch hooks. | `UITestScenario.current`, UI-test fixture data, demo launch session parsing, and app launch activation are compile-time gated behind `DEBUG`; the Xcode Release simulator build passes with production `AppState()` fallback outside Debug. |
 | H3 | Inspect Release archive for demo data, mock accounts, StoreKit config, and launch args. | `npm run check:ios-release-artifact` scans the built Release `.app` and passes only when no demo seed files, mock emails, local StoreKit fixture, demo env keys, or UI-test launch args are bundled. |
+| I0 | Scenario reliability and API-backed test harness. | Fixed scheduler escalation for legacy unscoped tasks without querying null receiver access, added a CareLoop-local API-aware iOS runner, repaired admin demo/persona UI test contracts, reseeded API-backed journeys before launch, and removed medication-module claims from demo/onboarding/test fixtures while leaving prescription pickup as a generic care task. |
 
 ## Blocked / External Setup
 
