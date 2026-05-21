@@ -7301,7 +7301,7 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "154ee66c",
       "completedAt": "",
       "summary": "P100.1 full founder Command Center navigation shell is complete; P100.2 founder Operations page-content audit is next.",
       "checksRun": [
@@ -7327,7 +7327,7 @@
       "order": 136.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "154ee66c",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Enabled full founder-safe Command Center navigation and route-level founder context across non-demo routes.",
       "checksRun": [
