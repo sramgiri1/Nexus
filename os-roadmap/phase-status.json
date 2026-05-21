@@ -11906,7 +11906,7 @@
       "order": 135,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1baa323e",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "P99 founder Business Build governed execution admission handoff is complete; P100 is the next planned scoped handoff.",
       "checksRun": [
@@ -12083,7 +12083,7 @@
       "order": 135.7,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "1baa323e",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Closed P99 with final validation and recorded P100 as the next planned scoped handoff.",
       "checksRun": [
