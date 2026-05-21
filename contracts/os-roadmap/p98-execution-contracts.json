@@ -295,7 +295,7 @@
     {
       "phaseId": "P98.3",
       "title": "Preview / Safe Dry Run",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Add deterministic local handoff readiness preview without dispatching agents or writing projects.",
       "narrowScope": "Safe dry-run records only.",
@@ -308,7 +308,9 @@
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p983-founder-live-workstream-handoff-dry-run-report.md"
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "reports/p982-founder-live-workstream-handoff-model-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -327,6 +329,105 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Create deterministic local handoff dry-run records from the P98.2 handoff packet.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend."
+      ],
+      "reuseCheck": [
+        "Reuse buildFounderLiveWorkstreamHandoffPacket from dashboard/src/data/businessBuild.js.",
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Do not duplicate report writers, redaction helpers, route matrices, or DB/runtime helpers."
+      ],
+      "exactFilesToUpdate": [
+        "dashboard/src/data/businessBuild.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "reports/p982-founder-live-workstream-handoff-model-report.md"
+      ],
+      "expectedExports": [
+        "buildFounderLiveWorkstreamHandoffDryRun",
+        "businessBuildViewModel.liveWorkstreamHandoffDryRun"
+      ],
+      "expectedDataShapes": {
+        "handoffDryRun": [
+          "dryRunId",
+          "currentState",
+          "dryRunOnly",
+          "sourceHandoffState",
+          "founderIdea",
+          "laneCount",
+          "readyPreviewCount",
+          "executableCount",
+          "nextAction",
+          "blockers",
+          "disabledReason",
+          "ownerCapability",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact",
+          "lanes",
+          "runtimeFlags",
+          "safetyRows"
+        ],
+        "lane": [
+          "lane",
+          "ownerCapability",
+          "plannedWork",
+          "dryRunState",
+          "previewNextAction",
+          "requiredEvidence",
+          "blockers",
+          "disabledReason",
+          "evidenceLocation",
+          "activityLocation",
+          "costImpact",
+          "dryRunOnly",
+          "wouldDispatchAgent",
+          "wouldRunWorker",
+          "wouldExecuteTool",
+          "wouldMutateProject",
+          "wouldWriteHostedDb",
+          "wouldDeployOrPackage",
+          "wouldSpend",
+          "validationCommands"
+        ]
+      },
+      "uxUpdate": "No route rendering change in P98.3. The exported dry-run records are ready for later Command Center Lite, Agent Flow, Business Build, and DB Runtime display.",
+      "themeRequirements": "No CSS or route UI changes. Existing dark, light, and system theme behavior must remain untouched.",
+      "testsAndCheckers": [
+        "Add check:p983-founder-live-workstream-handoff-dry-run.",
+        "Keep check:p982-founder-live-workstream-handoff-model forward-compatible after P98.3 advances.",
+        "Validate dry-run records reuse the P98.2 packet, expose validation commands, and keep all unsafe actions blocked.",
+        "No Playwright change in this data-only subphase; UX coverage is reserved for P98.4/P98.5."
+      ],
+      "docsRoadmap": "Update P98 plan and platform roadmap to record P98.3 complete and P98.4 next.",
+      "phaseStatusUpdate": "P98 in progress; P98.3 complete; current P98.3; previous P98.2; next P98.4.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
       ]
     },
     {

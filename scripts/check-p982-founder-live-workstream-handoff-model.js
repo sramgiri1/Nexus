@@ -85,13 +85,13 @@ addCheck("all unsafe runtime flags false", unsafeRuntimeFlags.every((flag) => pa
 addCheck("dispatch and mutation remain blocked in lanes", packet.agentLanes.every((lane) => lane.dispatchAllowed === "Blocked" && lane.projectMutationAllowed === "Blocked"));
 addCheck("P98.1 evidence retained", p981Report.includes("P98.1 Founder Live Workstream Handoff Contract Report") && p981Report.includes("PASS"));
 addCheck("docs record P98.2", p98Plan.includes("P98.2 is complete") && p98Plan.includes("npm run check:p982-founder-live-workstream-handoff-model"));
-addCheck("platform roadmap records P98.2", platformRoadmap.includes("P98.2 is complete") && platformRoadmap.includes("P98.3 is next"));
+addCheck("platform roadmap records P98.2", platformRoadmap.includes("P98.2 is complete") && (platformRoadmap.includes("P98.3 is next") || platformRoadmap.includes("P98.3 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P98.2")?.status === "complete"
-    && status.currentPhase === "P98.2"
-    && status.previousPhase === "P98.1"
-    && status.nextPhase === "P98.3",
+    && ["P98.2", "P98.3"].includes(status.currentPhase)
+    && ["P98.1", "P98.2"].includes(status.previousPhase)
+    && ["P98.3", "P98.4"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.2", roadmapById.get("P98.2")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P98.3")?.status));

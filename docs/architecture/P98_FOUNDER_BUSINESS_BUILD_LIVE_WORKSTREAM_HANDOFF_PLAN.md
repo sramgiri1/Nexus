@@ -37,8 +37,18 @@ Validation:
 
 ## P98.3 Preview / Safe Dry Run
 
-P98.3 is planned. It will add deterministic local handoff readiness preview
-records while keeping all unsafe runtime flags false.
+P98.3 is complete. It adds deterministic local handoff dry-run records from the
+P98.2 packet, exposes lane-level preview state, required evidence, blockers,
+disabled reasons, validation commands, activity, and cost context, and keeps all
+unsafe runtime flags false. P98.4 is next for Command Center UX.
+
+Validation:
+
+- `npm run check:p983-founder-live-workstream-handoff-dry-run`
+- `npm run check:p982-founder-live-workstream-handoff-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P98.4 Command Center UX
 

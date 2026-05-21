@@ -6886,12 +6886,12 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "9a9a5131",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P98.2 handoff packet model is complete; P98.3 safe dry-run handoff preview is next.",
+      "summary": "P98.3 handoff dry-run records are complete; P98.4 Command Center UX is next.",
       "checksRun": [
+        "npm run check:p983-founder-live-workstream-handoff-dry-run",
         "npm run check:p982-founder-live-workstream-handoff-model",
-        "npm run check:p981-founder-live-workstream-handoff-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -6899,10 +6899,10 @@
       "knownLimitations": [
         "P98 is in progress and execution remains blocked. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P98.3",
+      "nextPhase": "P98.4",
       "commandCenterVisible": true,
       "label": "Workstream Handoff",
-      "detail": "P98.2 model complete; P98.3 safe dry-run handoff preview next."
+      "detail": "P98.3 dry-run records complete; P98.4 Command Center UX next."
     },
     {
       "phaseId": "P98.1",
@@ -6955,47 +6955,34 @@
     },
     {
       "phaseId": "P98.3",
-      "title": "Request Envelope",
+      "title": "Preview / Safe Dry Run",
       "track": "NEXUS_OS",
       "order": 134.3,
-      "status": "planned",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned governed workstream handoff request envelope.",
-      "checksRun": [],
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added deterministic local handoff dry-run records from the P98.2 handoff packet.",
+      "checksRun": [
+        "npm run check:p983-founder-live-workstream-handoff-dry-run",
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P98.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P98.3 is dry-run data only. It does not render new Command Center UI, dispatch agents, execute workers/tools, mutate project source, write hosted DB state, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P98.4",
-      "commandCenterVisible": false,
-      "label": "Request Envelope",
-      "detail": "Planned P98 request envelope."
+      "commandCenterVisible": true,
+      "label": "Dry Run",
+      "detail": "Founder live workstream handoff dry-run records complete; Command Center UX next."
     },
     {
       "phaseId": "P98.4",
-      "title": "Safe Dry Run",
-      "track": "NEXUS_OS",
-      "order": 134.4,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned safe local handoff dry run for operator review.",
-      "checksRun": [],
-      "knownLimitations": [
-        "P98.4 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
-      ],
-      "nextPhase": "P98.5",
-      "commandCenterVisible": true,
-      "label": "Dry Run",
-      "detail": "Planned P98 safe dry run."
-    },
-    {
-      "phaseId": "P98.5",
       "title": "Command Center UX",
       "track": "NEXUS_OS",
-      "order": 134.5,
+      "order": 134.4,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
@@ -7003,18 +6990,18 @@
       "summary": "Planned display-safe Command Center handoff UX.",
       "checksRun": [],
       "knownLimitations": [
-        "P98.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P98.4 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P98.6",
+      "nextPhase": "P98.5",
       "commandCenterVisible": true,
       "label": "UX",
       "detail": "Planned P98 Command Center UX."
     },
     {
-      "phaseId": "P98.6",
+      "phaseId": "P98.5",
       "title": "Tests / Checkers",
       "track": "NEXUS_OS",
-      "order": 134.6,
+      "order": 134.5,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
@@ -7022,12 +7009,31 @@
       "summary": "Planned aggregate P98 validation.",
       "checksRun": [],
       "knownLimitations": [
+        "P98.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P98.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned P98 aggregate validation."
+    },
+    {
+      "phaseId": "P98.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 134.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned P98 docs, README, PRD, usage guide, roadmap, and status updates.",
+      "checksRun": [],
+      "knownLimitations": [
         "P98.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P98.7",
       "commandCenterVisible": true,
-      "label": "Validation",
-      "detail": "Planned P98 aggregate validation."
+      "label": "Docs Roadmap",
+      "detail": "Planned P98 docs and roadmap closure."
     },
     {
       "phaseId": "P98.7",
@@ -7050,8 +7056,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P98.2",
-  "previousPhase": "P98.1",
-  "nextPhase": "P98.3",
+  "currentPhase": "P98.3",
+  "previousPhase": "P98.2",
+  "nextPhase": "P98.4",
   "currentPhaseStatus": "complete"
 }

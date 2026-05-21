@@ -491,6 +491,7 @@
     "check:p977-business-build-final-validation": "node scripts/check-p977-business-build-final-validation.js",
     "check:p981-founder-live-workstream-handoff-contract": "node scripts/check-p981-founder-live-workstream-handoff-contract.js",
     "check:p982-founder-live-workstream-handoff-model": "node scripts/check-p982-founder-live-workstream-handoff-model.js",
+    "check:p983-founder-live-workstream-handoff-dry-run": "node scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

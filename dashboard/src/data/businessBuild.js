@@ -477,6 +477,65 @@ export function buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary = DEF
   };
 }
 
+export function buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const packet = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
+  const dryRunLanes = (packet.agentLanes || []).map((lane, index) => ({
+    lane: lane.lane,
+    ownerCapability: lane.ownerCapability,
+    plannedWork: lane.plannedWork,
+    dryRunState: index < 3 ? "Ready For Operator Review Dry Run" : "Blocked Until Handoff Evidence",
+    previewNextAction: "Review required evidence and keep this lane blocked until a later execution admission phase.",
+    requiredEvidence: packet.requiredEvidence,
+    blockers: [lane.blocker, "Operator approval for execution admission is missing."],
+    disabledReason: lane.disabledReason,
+    evidenceLocation: "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+    activityLocation: packet.activityLocation,
+    costImpact: packet.costImpact,
+    dryRunOnly: true,
+    wouldDispatchAgent: false,
+    wouldRunWorker: false,
+    wouldExecuteTool: false,
+    wouldMutateProject: false,
+    wouldWriteHostedDb: false,
+    wouldDeployOrPackage: false,
+    wouldSpend: false,
+    validationCommands: [
+      "npm run check:p983-founder-live-workstream-handoff-dry-run",
+      "npm run check:p982-founder-live-workstream-handoff-model",
+    ],
+  }));
+
+  return {
+    dryRunId: "local-business-build-workstream-handoff-dry-run",
+    currentState: "Local Handoff Dry Run Ready Execution Blocked",
+    dryRunOnly: true,
+    commandCenterVisible: true,
+    sourceHandoffState: packet.currentState,
+    founderIdea: packet.founderIdea,
+    laneCount: dryRunLanes.length,
+    readyPreviewCount: dryRunLanes.filter((lane) => lane.dryRunState === "Ready For Operator Review Dry Run").length,
+    executableCount: 0,
+    nextAction: "Use this dry-run preview to prepare P98.4 Command Center UX without enabling execution.",
+    blockers: packet.blockers,
+    disabledReason: "P98.3 creates deterministic local dry-run records only. Provider/model calls, agent dispatch, tool/worker execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Live Workstream Handoff Dry Run",
+    evidenceLocation: "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+    activityLocation: packet.activityLocation,
+    costImpact: packet.costImpact,
+    lanes: dryRunLanes,
+    runtimeFlags: packet.runtimeFlags,
+    safetyRows: [
+      { label: "Dry run only", value: "Yes" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -569,6 +628,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const dryRunAdmission = buildBusinessBuildDryRunAdmissionView(founderDbWorkflow);
   const businessBuildDbCrud = buildBusinessBuildDbCrudViewModel(founderIdeaSummary);
   const liveWorkstreamHandoff = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
+  const liveWorkstreamHandoffDryRun = buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -694,6 +754,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     businessBuildDbCrud,
     founderDbWorkflow,
     liveWorkstreamHandoff,
+    liveWorkstreamHandoffDryRun,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),
