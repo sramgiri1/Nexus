@@ -11693,15 +11693,12 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b6914163",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P98.5 aggregate live workstream handoff validation is complete; P98.6 docs and roadmap closure is next.",
+      "summary": "P98.6 docs and roadmap readiness is complete; P98.7 final validation and parent closure is next.",
       "checksRun": [
+        "npm run check:p986-live-workstream-handoff-docs-roadmap",
         "npm run check:p985-live-workstream-handoff-validation",
-        "npm run check:p984-command-center-live-workstream-handoff-ux",
-        "npm run check:p983-founder-live-workstream-handoff-dry-run",
-        "npm run check:p982-founder-live-workstream-handoff-model",
-        "npm run check:p981-founder-live-workstream-handoff-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
@@ -11709,10 +11706,10 @@
       "knownLimitations": [
         "P98 is in progress and execution remains blocked. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and provider spend remain disabled."
       ],
-      "nextPhase": "P98.6",
+      "nextPhase": "P98.7",
       "commandCenterVisible": true,
       "label": "Workstream Handoff",
-      "detail": "P98.5 aggregate validation complete; docs and roadmap next."
+      "detail": "P98.6 docs and roadmap complete; final validation next."
     },
     {
       "phaseId": "P98.1",
@@ -11847,19 +11844,25 @@
       "title": "Docs / Roadmap",
       "track": "NEXUS_OS",
       "order": 134.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned P98 docs, README, PRD, usage guide, roadmap, and status updates.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Updated README, PRD, Command Center guide, P98 plan, platform roadmap, OS status, and validation evidence for live-local handoff readiness.",
+      "checksRun": [
+        "npm run check:p986-live-workstream-handoff-docs-roadmap",
+        "npm run check:p985-live-workstream-handoff-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P98.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P98.6 is docs/readiness-only. It does not change Command Center UX, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P98.7",
       "commandCenterVisible": true,
-      "label": "Docs Roadmap",
-      "detail": "Planned P98 docs and roadmap closure."
+      "label": "Docs/Roadmap",
+      "detail": "P98 docs and roadmap readiness complete; final validation next."
     },
     {
       "phaseId": "P98.7",
@@ -11883,8 +11886,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P98.5",
-  "previousPhase": "P98.4",
-  "nextPhase": "P98.6",
+  "currentPhase": "P98.6",
+  "previousPhase": "P98.5",
+  "nextPhase": "P98.7",
   "currentPhaseStatus": "complete"
 }

@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P97.6
+## Current Status Through P98.6
 
-P41.5 through P97.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P98.6 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
@@ -45,7 +45,12 @@ dry-run admission lanes in Business Build, and documents what is live-local
 versus still blocked. P97 adds governed local SQLite Business Build records for
 sessions, PRD snapshots, execution requests, and agent lane state; Command
 Center Lite, Business Build, Agent Flow, and DB Runtime now show that state
-without enabling execution.
+without enabling execution. P98 adds the governed live workstream handoff on
+top of those DB-backed Business Build records: Command Center Lite, Business
+Build, Agent Flow, and DB Runtime show display-safe handoff packets, local
+dry-run lane previews, owner capability, next action, blockers, disabled
+reason, evidence/activity location, and cost posture while execution stays
+blocked.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -114,6 +119,14 @@ The Command Center and local operator surface have:
   execution requests, PRD snapshots, and agent lane state. It does not dispatch
   agents, execute workers/tools, mutate project source, use hosted DBs, deploy,
   package, call providers/models, use network calls, or spend.
+- P98 live workstream handoff readiness: implementation-grade handoff contract,
+  display-safe handoff packet model, deterministic local dry-run lane previews,
+  Command Center visibility across Lite, Business Build, Agent Flow, and DB
+  Runtime, aggregate validation, and docs/roadmap readiness for handing
+  DB-backed Business Build records to future governed workstream execution.
+  It does not dispatch agents, execute workers/tools, mutate project source,
+  use hosted DBs, deploy, package, call providers/models, use network calls, or
+  spend.
 
 ## CareLoop Project Progress
 
@@ -294,13 +307,15 @@ npm run nexus:down
 - Product requirements: [docs/prd/NEXUS_AGENTIC_OS_PRD.md](docs/prd/NEXUS_AGENTIC_OS_PRD.md)
 - P93 Enterprise Live Runtime Expansion: [docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md](docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md)
 - P94 Founder Runtime DB CRUD Workflow Wiring: [docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md](docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md)
+- P98 Founder Business Build Live Workstream Handoff: [docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md](docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md)
 - Conversational command interface: [docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md](docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
 ## Next Steps
 
-P97.7 is next. It should run final P97 validation, stamp real commits, close
-the parent P97 phase, and hand off to P98 while preserving the safety boundary:
+P98.7 is next. It should run final P98 validation, stamp real commits, close
+the parent P98 phase, and prepare the next scoped handoff while preserving the
+safety boundary:
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy/release/export/package, and spend blocked

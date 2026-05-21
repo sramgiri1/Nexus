@@ -104,6 +104,29 @@ not enabled yet.
   `Execution requests`, `Agent lanes`, and `PRD snapshots`; do not show raw
   project/private IDs, raw JSON/log/policy dumps, or fake runnable actions.
 
+## Business Build Live Workstream Handoff
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and Durable State / DB Runtime.
+- Purpose: show the P98 display-safe handoff from DB-backed Business Build
+  records into local workstream planning before any execution authority exists.
+- Current P98 posture: local handoff packet and dry-run lane previews are
+  visible. Admitted execution remains `0`; executable lane count remains `0`;
+  every lane is preview-only.
+- Shown state: source packet, lane previews, owner capability, current state,
+  next action, blockers, disabled reason, validation command, evidence/activity
+  location, and cost impact.
+- Operator workflow: review whether the founder idea, PRD snapshot, execution
+  request, and agent lane evidence are sufficient for a future governed
+  execution phase. Do not treat the handoff as runnable execution.
+- Still blocked: provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, network calls, deploy, release, export,
+  package creation, and provider spend.
+- UX safety: primary cards should use founder/operator labels such as `Live
+  Workstream Handoff`, `Dry run only`, `Local handoff packet`, and `Dry-run
+  handoff report`; do not expose raw table names, raw private IDs, raw JSON/log
+  dumps, policy dumps, demo app surfaces, or fake working actions.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

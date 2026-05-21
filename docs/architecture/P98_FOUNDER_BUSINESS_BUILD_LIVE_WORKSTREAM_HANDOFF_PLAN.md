@@ -88,8 +88,21 @@ Validation:
 
 ## P98.6 Docs / Roadmap
 
-P98.6 is planned. It will update README, PRD, usage docs, platform roadmap, OS
-roadmap, phase status, and validation evidence for P98 handoff readiness.
+P98.6 is complete. It updates README, PRD, Command Center usage docs, platform
+roadmap, OS roadmap, phase status, and validation evidence for P98 handoff
+readiness. It documents that the handoff is live-local and display-safe while
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network calls, and
+provider spend remain blocked. P98.7 is next for final validation and parent
+phase closure.
+
+Validation:
+
+- `npm run check:p986-live-workstream-handoff-docs-roadmap`
+- `npm run check:p985-live-workstream-handoff-validation`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P98.7 Final Validation
 

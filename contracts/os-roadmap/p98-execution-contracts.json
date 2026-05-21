@@ -671,10 +671,10 @@
     {
       "phaseId": "P98.6",
       "title": "Docs / Roadmap",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Update README, PRD, usage docs, roadmap, and reports for live handoff readiness.",
-      "narrowScope": "Docs and status only.",
+      "narrowScope": "Docs, roadmap, status, checker, and report only.",
       "allowedFiles": [
         "README.md",
         "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
@@ -682,11 +682,15 @@
         "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "scripts/check-p986-live-workstream-handoff-docs-roadmap.js",
+        "scripts/check-p985-live-workstream-handoff-validation.js",
         "package.json",
         "contracts/os-roadmap/p98-execution-contracts.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p986-live-workstream-handoff-docs-roadmap-report.md"
+        "reports/p986-live-workstream-handoff-docs-roadmap-report.md",
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -705,6 +709,77 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Document P98 live-local handoff readiness across README, PRD, Command Center guide, P98 plan, platform roadmap, OS status, and validation evidence.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend.",
+        "No raw private IDs, raw DB table names, raw JSON, raw logs, raw policy dumps, DemoApp leakage, or fake runnable actions in primary UX guidance."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Reuse the P98.5 validation report as prior evidence.",
+        "Reuse existing docs/roadmap/status structure and do not duplicate report writers, redaction helpers, route matrices, UI components, or DB/runtime helpers."
+      ],
+      "exactFilesToUpdate": [
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "scripts/check-p986-live-workstream-handoff-docs-roadmap.js",
+        "scripts/check-p985-live-workstream-handoff-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p986-live-workstream-handoff-docs-roadmap-report.md",
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "expectedExports": [
+        "check:p986-live-workstream-handoff-docs-roadmap"
+      ],
+      "expectedDataShapes": {
+        "docsRoadmapValidation": [
+          "readmeStatus",
+          "prdStatus",
+          "commandCenterGuideSection",
+          "p98PlanStatus",
+          "platformRoadmapStatus",
+          "phaseStatus",
+          "priorEvidence",
+          "forbiddenContentChecks"
+        ]
+      },
+      "uxUpdate": "No Command Center source change in P98.6; docs describe the existing Lite, Agent Flow, Business Build, and DB Runtime handoff UX.",
+      "themeRequirements": "No theme source change in P98.6; docs preserve the existing dark, light, and system theme requirements.",
+      "testsAndCheckers": [
+        "Add check:p986-live-workstream-handoff-docs-roadmap.",
+        "Keep check:p985-live-workstream-handoff-validation forward-compatible after P98.6 advances.",
+        "Validate README, PRD, Command Center guide, P98 plan, platform roadmap, phase status, and prior evidence.",
+        "Validate docs do not imply live execution, provider/model calls, agent dispatch, project mutation, hosted DB mutation, deploy/package, network calls, or spend."
+      ],
+      "docsRoadmap": "Update README, PRD, Command Center guide, P98 plan, and platform roadmap to record P98.6 complete and P98.7 next.",
+      "phaseStatusUpdate": "P98 in progress; P98.6 complete; current P98.6; previous P98.5; next P98.7.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
       ]
     },
     {

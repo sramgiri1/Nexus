@@ -72,13 +72,13 @@ addCheck("dry run stays non-executable", viewModel.liveWorkstreamHandoffDryRun?.
 addCheck("Command Center UX retained", commandCenterSource.includes("LiveWorkstreamHandoffCard") && commandCenterSource.includes("DB Runtime Live Workstream Handoff"));
 addCheck("Playwright coverage retained", routeTests.includes("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime"));
 addCheck("docs record P98.5", p98Plan.includes("P98.5 is complete") && p98Plan.includes("npm run check:p985-live-workstream-handoff-validation"));
-addCheck("platform roadmap records P98.5", /P98\.5 is\s+complete/.test(platformRoadmap) && /P98\.6 is\s+next/.test(platformRoadmap));
+addCheck("platform roadmap records P98.5", /P98\.5 is\s+complete/.test(platformRoadmap) && (/P98\.6 is\s+next/.test(platformRoadmap) || /P98\.6 is\s+complete/.test(platformRoadmap)));
 addCheck(
   "phase status advanced",
   statusById.get("P98.5")?.status === "complete"
-    && status.currentPhase === "P98.5"
-    && status.previousPhase === "P98.4"
-    && status.nextPhase === "P98.6",
+    && ["P98.5", "P98.6"].includes(status.currentPhase)
+    && ["P98.4", "P98.5"].includes(status.previousPhase)
+    && ["P98.6", "P98.7"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.5", roadmapById.get("P98.5")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P98.6")?.status));
