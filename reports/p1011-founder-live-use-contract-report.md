@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P101.1
-- Generated at: 2026-05-21T23:46:35.350Z
+- Generated at: 2026-05-21T23:50:45.436Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: a9304aab
+- Validation HEAD: 2fb4a7a4
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | P101.1 plan doc exists | PASS |  |
 | P101.1 plan records contract fields | PASS |  |
 | platform roadmap records P101.1 | PASS |  |
-| phase status is within P101 handoff | PASS | P101.2/P101.1/P101.3 |
+| phase status is within P101 handoff | PASS | P101.3/P101.2/P101.4 |
 | status tracks parent P101 in progress | PASS |  |
 | status tracks P101.1 complete | PASS |  |
 | status tracks P101.2 planned or complete | PASS |  |

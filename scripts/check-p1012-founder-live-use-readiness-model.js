@@ -72,20 +72,20 @@ addCheck("model has required lanes", readyEnvelope.data.liveUseLanes.length === 
 addCheck("execution remains blocked", readyEnvelope.data.founderWorkflowReadiness.executableLaneCount === 0 && readyEnvelope.data.founderWorkflowReadiness.dispatchableLaneCount === 0 && readyEnvelope.data.founderWorkflowReadiness.projectMutationLaneCount === 0);
 addCheck("unsafe runtime flags remain false", allUnsafeFlagsFalse(readyEnvelope) && allUnsafeFlagsFalse(needsContextEnvelope));
 addCheck("model reuses existing live-ready helpers", ["buildFounderRuntimeAdmission", "buildFounderPrdSafeAuthoring", "buildFounderBusinessBuildPersistenceSnapshot", "buildFounderBusinessBuildDryRunAdmission", "buildLocalFounderWorkstreamRuntimeEnvelope"].every((term) => modelText.includes(term)));
-addCheck("contract marks P101.2 complete", p1012?.status === "complete" && p1013?.status === "planned");
+addCheck("contract marks P101.2 complete", p1012?.status === "complete" && ["planned", "complete"].includes(p1013?.status));
 addCheck("contract expected exports retained", ["P101_FOUNDER_LIVE_USE_PHASE", "P101_LIVE_USE_HARDENING_STATES", "P101_LIVE_USE_SAFETY_FLAGS", "buildFounderLiveUseReadiness"].every((term) => JSON.stringify(contract).includes(term)));
 addCheck("docs record P101.2", /P101\.2 Founder Live-Use Readiness Model[\s\S]*Status:\s+complete/.test(docs) && docs.includes("check:p1012-founder-live-use-readiness-model"));
 addCheck("platform roadmap records P101.2", /P101\.2 is\s+complete/.test(platformRoadmap) && /P101\.3 is\s+next/.test(platformRoadmap));
 addCheck(
-  "phase status advanced",
-  status.currentPhase === "P101.2"
-    && status.previousPhase === "P101.1"
-    && status.nextPhase === "P101.3"
+  "phase status advanced within P101",
+  ["P101.2", "P101.3"].includes(status.currentPhase)
+    && ["P101.1", "P101.2"].includes(status.previousPhase)
+    && ["P101.3", "P101.4"].includes(status.nextPhase)
     && statusById.get("P101.2")?.status === "complete"
     && roadmapById.get("P101.2")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P101.3 handoff remains planned", statusById.get("P101.3")?.status === "planned" && roadmapById.get("P101.3")?.status === "planned");
+addCheck("P101.3 handoff planned or complete", ["planned", "complete"].includes(statusById.get("P101.3")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.3")?.status));
 addCheck("no raw private IDs exposed", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized));
 addCheck("no unsafe runnable actions invented", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write hosted db now|execute now/i.test(serialized));
 addCheck("P101.2 avoids forbidden file scope", !p1012.allowedFiles.some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("dashboard/src/") || file.startsWith("dashboard/tests/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));

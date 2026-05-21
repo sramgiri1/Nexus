@@ -202,7 +202,7 @@
     {
       "phaseId": "P101.3",
       "title": "Founder Live-Use Review Packet",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Build a display-safe live-use review packet and operator checklist from the P101.2 readiness model.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -218,7 +218,9 @@
         "os-roadmap/nexus-phases.json",
         "reports/p1013-founder-live-use-review-packet-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -233,7 +235,9 @@
       ],
       "exactFilesToCreateOrUpdate": [
         "live-ready/founderLiveUseReviewPacket.js",
-        "scripts/check-p1013-founder-live-use-review-packet.js"
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js"
       ],
       "expectedExportsSchemasDataShapes": {
         "exports": [

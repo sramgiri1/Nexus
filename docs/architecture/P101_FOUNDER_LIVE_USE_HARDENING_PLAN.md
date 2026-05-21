@@ -97,12 +97,44 @@ flags remain false.
 
 ### P101.3 Founder Live-Use Review Packet
 
-Status: planned.
+Status: complete.
 
 Create a display-safe review packet and operator checklist from the P101.2
 model. The packet must stay local, founder-readable, and free of raw logs, raw
 JSON, private IDs, provider calls, dispatch, worker execution, and project
 mutation.
+
+- Narrow goal: convert P101.2 readiness into a founder/operator checklist and
+  lane review packet.
+- Allowed files: `live-ready/founderLiveUseReviewPacket.js`,
+  `scripts/check-p1013-founder-live-use-review-packet.js`, forward-compatible
+  P101.1/P101.2 checkers, P101 contract/docs, package script, OS roadmap/status
+  files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected exports: `P101_FOUNDER_LIVE_USE_REVIEW_PACKET_PHASE`,
+  `buildFounderLiveUseReviewPacket`, and
+  `validateFounderLiveUseReviewPacket`.
+- Command Center UX requirements: no UI route change in P101.3. P101.4 must
+  render this packet using existing Command Center components without raw JSON,
+  raw logs, raw policy dumps, private IDs, DemoApp leakage, or runnable
+  execution controls.
+- Dark/light/system theme requirements: no theme source change.
+- Playwright tests: none in P101.3 because no UI files changed.
+- Checker updates: `npm run check:p1013-founder-live-use-review-packet`, with
+  P101.1/P101.2 checkers kept forward-compatible after phase advancement.
+- Docs/roadmap: this plan and platform roadmap record P101.3 complete and
+  P101.4 next.
+- OS phase status: P101 in progress, P101.3 complete, current P101.3, previous
+  P101.2, next P101.4.
+- Validation commands: `npm run check:p1013-founder-live-use-review-packet`,
+  `npm run check:p1012-founder-live-use-readiness-model`,
+  `npm run check:p1011-founder-live-use-contract`,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: packet is display-safe; no project files changed; no
+  runnable actions are exposed.
 
 ### P101.4 Command Center Live-Use UX
 
