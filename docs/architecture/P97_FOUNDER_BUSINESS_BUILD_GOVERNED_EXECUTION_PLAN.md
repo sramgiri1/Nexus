@@ -52,8 +52,8 @@ Validation:
 
 ### P97.4 Command Center DB UX
 
-P97.4 is next. It will show DB-backed Chat with NEXUS, Business Build, Agent Flow, and DB
-Runtime state. The primary UX must show saved local state, next action,
+P97.4 is complete. It shows DB-backed Chat with NEXUS, Business Build, Agent Flow, and DB
+Runtime state. The primary UX shows saved local state, next action,
 blockers, disabled reason, owner capability, evidence/activity location, and
 cost posture without raw JSON, raw logs, raw policy dumps, DemoApp, raw private
 IDs, or fake execution controls.
@@ -61,7 +61,7 @@ IDs, or fake execution controls.
 Validation:
 
 - `npm run check:p974-command-center-business-build-db-ux`
-- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build DB"`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build DB CRUD"`
 - `cd dashboard && npm run build`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
@@ -69,7 +69,7 @@ Validation:
 
 ### P97.5 Tests / Checkers
 
-P97.5 will aggregate contract, schema, CRUD model, and UX validation.
+P97.5 is next. It will aggregate contract, schema, CRUD model, and UX validation.
 
 Validation:
 

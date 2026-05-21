@@ -308,12 +308,13 @@
       "id": "nexus-os-p97-4-command-center-db-ux",
       "phaseId": "P97.4",
       "objective": "Wire Command Center Lite, Business Build, Agent Flow, and DB Runtime to display-safe DB-backed Business Build state.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/pages/CommandCenterV2.jsx",
         "dashboard/tests/routes.spec.js",
+        "scripts/check-p973-business-build-crud-model.js",
         "scripts/check-p974-command-center-business-build-db-ux.js",
         "package.json",
         "contracts/os-roadmap/p97-execution-contracts.json",
@@ -322,6 +323,10 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
+        "reports/p971-founder-business-build-governed-execution-contract-report.md",
+        "reports/p972-business-build-db-schema-report.md",
+        "reports/p973-business-build-crud-model-report.md",
+        "reports/p974-command-center-business-build-db-ux-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
@@ -359,6 +364,11 @@
       ],
       "validationCommands": [
         "npm run check:p974-command-center-business-build-db-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build DB CRUD\"",
+        "cd dashboard && npm run build",
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"

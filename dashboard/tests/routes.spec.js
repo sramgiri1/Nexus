@@ -3441,6 +3441,49 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Business Build DB CRUD state appears in Lite, Business Build, Agent Flow, and DB Runtime", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/lite");
+    const liteBusinessBuildDb = page.getByLabel("Business Build DB CRUD");
+    await expect(liteBusinessBuildDb).toContainText("Lite Business Build DB workflow");
+    await expect(liteBusinessBuildDb).toContainText("Business Build DB Workflow");
+    await expect(liteBusinessBuildDb).toContainText("Agent lanes");
+
+    await page.goto("/command-center/business-build");
+    const businessBuildDb = page.getByLabel("Business Build DB CRUD");
+    await expect(businessBuildDb).toContainText("Business Build DB Workflow");
+    await expect(businessBuildDb).toContainText("Business Build session");
+    await expect(businessBuildDb).toContainText("Execution requests");
+    await expect(businessBuildDb).toContainText("Agent lanes");
+    await expect(businessBuildDb).toContainText("PRD snapshots");
+    await expect(businessBuildDb).toContainText("reports/p973-business-build-crud-model-report.md");
+    await expect(businessBuildDb).toContainText("Delete/raw SQL");
+
+    await page.goto("/command-center/agent-flow");
+    await expect(page.getByLabel("Business Build DB CRUD")).toContainText("Agent Flow Business Build DB");
+    await expect(page.getByLabel("Business Build DB CRUD")).toContainText("Agent lanes");
+    await expect(page.getByLabel("Business Build DB CRUD")).toContainText("dispatch blocked");
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+    const dbPanel = activeCommandTabPanel(page);
+    await expect(dbPanel.getByLabel("Business Build DB CRUD")).toContainText("Business Build session");
+    await expect(dbPanel.getByLabel("Business Build DB CRUD")).toContainText("DB Runtime Business Build");
+    await expect(dbPanel.getByLabel("Business Build DB CRUD")).toContainText("Local SQLite CRUD only");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/business_build_sessions|business_build_execution_requests|business_build_agent_lanes|business_build_prd_snapshots/);
+    expect(body).not.toMatch(/private-project|raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

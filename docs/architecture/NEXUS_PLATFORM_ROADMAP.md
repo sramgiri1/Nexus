@@ -2021,8 +2021,9 @@ Build records while delete, raw SQL, hosted DB mutation, provider/model calls,
 agent dispatch, worker/tool execution, project mutation, deploy, package,
 network calls, and spend remain blocked.
 
-P97.4 is next. It will expose the DB-backed Business Build state in Command
-Center Lite, Business Build, Agent Flow, and DB Runtime.
+P97.4 is complete. It exposes the DB-backed Business Build state in Command
+Center Lite, Business Build, Agent Flow, and DB Runtime. P97.5 is next for
+aggregated contract, schema, CRUD model, and UX validation.
 
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).

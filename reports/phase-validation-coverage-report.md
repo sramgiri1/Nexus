@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-21T00:54:26.863Z
+- Generated at: 2026-05-21T01:11:00.808Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: f5beff7d
+- Validation HEAD: 78efecbb
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -172,7 +172,7 @@
 | P85.2 validation coverage | PASS | 4 checkers, 1 reports |
 | P85.3 validation coverage | PASS | 4 checkers, 1 reports |
 | P85.4 validation coverage | PASS | 4 checkers, 1 reports |
-| P85.5 validation coverage | PASS | 7 checkers, 3 reports |
+| P85.5 validation coverage | PASS | 8 checkers, 4 reports |
 | P85.6 validation coverage | PASS | 7 checkers, 3 reports |
 | P85.7 validation coverage | PASS | 42 checkers, 37 reports |
 | P86 validation coverage | PASS | 11 checkers, 7 reports |
@@ -279,17 +279,17 @@
 | P96.5 validation coverage | PASS | 9 checkers, 3 reports |
 | P96.6 validation coverage | PASS | 4 checkers, 1 reports |
 | P96.7 validation coverage | PASS | 46 checkers, 37 reports |
-| P97 validation coverage | PASS | 14 checkers, 9 reports |
+| P97 validation coverage | PASS | 15 checkers, 10 reports |
 | P97.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P97.2 validation coverage | PASS | 5 checkers, 1 reports |
 | P97.3 validation coverage | PASS | 5 checkers, 1 reports |
-| P97.4 validation coverage | PASS | 1 checkers, 1 reports |
+| P97.4 validation coverage | PASS | 7 checkers, 2 reports |
 | P97.5 validation coverage | PASS | 18 checkers, 18 reports |
 | P97.6 validation coverage | PASS | 11 checkers, 11 reports |
 | P97.7 validation coverage | PASS | 37 checkers, 37 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P97.3; next=P97.4; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P97.4; next=P97.5; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 

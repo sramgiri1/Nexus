@@ -2600,6 +2600,7 @@ function CommandCenterLitePage() {
   const taskBoard = buildFounderTaskBoardAdmission({ qnaState: envelope, prdReview }).data;
   const liteFounderDbWorkflow = buildFounderRuntimeDbViewModel(envelope.founderIdeaSummary);
   const liteFounderPersistenceControls = buildFounderPersistenceControlsViewModel(liteFounderDbWorkflow);
+  const liteBusinessBuild = buildBusinessBuildViewModel(envelope.founderIdeaSummary);
   const normalizedDraft = draftMessage.trim();
   const canSendMessage = normalizedDraft.length > 0;
 
@@ -2761,6 +2762,7 @@ function CommandCenterLitePage() {
             </div>
             <div className="ccv2-muted" style={{ marginTop: 10 }}>{liteFounderDbWorkflow.costImpact}</div>
           </section>
+          <BusinessBuildDbCrudCard crud={liteBusinessBuild.businessBuildDbCrud} surfaceLabel="Lite Business Build DB workflow" />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -2885,6 +2887,8 @@ function AgentFlowPanel({ envelope }) {
 
 function AgentFlowPage() {
   const [envelope] = useState(getStoredLiteQnaState);
+  const [founderIdea] = useState(getStoredLiteFounderIdea);
+  const businessBuild = buildBusinessBuildViewModel(founderIdea);
   return (
     <div className="ccv2-content ccv2-lite-page">
       <div className="ccv2-page-head">
@@ -2894,6 +2898,7 @@ function AgentFlowPage() {
         </div>
       </div>
       <AgentFlowPanel envelope={envelope} />
+      <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
     </div>
   );
 }
@@ -7513,6 +7518,7 @@ function DurableStatePage({ vm }) {
   const totalEntities = importPlan.totalEntities ?? entityCount;
   const dbRuntime = dbRuntimeReadinessViewModel;
   const founderPersistenceControls = buildFounderPersistenceControlsViewModel(dbRuntime.founderRuntime);
+  const businessBuildRuntime = buildBusinessBuildViewModel(dbRuntime.founderRuntime?.founderIdea).businessBuildDbCrud;
 
   return (
     <div className="ccv2-content">
@@ -7671,6 +7677,7 @@ function DurableStatePage({ vm }) {
                 ))}
               </div>
             </div>
+            <BusinessBuildDbCrudCard crud={businessBuildRuntime} surfaceLabel="DB Runtime Business Build" />
             <FounderPersistenceControlsCard controls={founderPersistenceControls} />
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
@@ -9345,6 +9352,7 @@ function BusinessBuildPage() {
                 ))}
               </div>
             </div>
+            <BusinessBuildDbCrudCard crud={build.businessBuildDbCrud} surfaceLabel="Business Build DB Workflow" />
             <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
               <div className="ccv2-section-heading">Founder DB Workflow</div>
               <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
@@ -9599,6 +9607,62 @@ function BusinessBuildPage() {
             </div>
           </CommandTabPanel>
         </CommandTabs>
+      </div>
+    </div>
+  );
+}
+
+function BusinessBuildDbCrudCard({ crud, surfaceLabel = "Business Build DB Workflow" }) {
+  if (!crud) return null;
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Business Build DB CRUD">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Business Build DB Workflow</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {crud.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--teal">Local CRUD</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Saved session</span><span className="ccv2-page-summary-value">{crud.savedSessionState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">PRD snapshot</span><span className="ccv2-page-summary-value">{crud.prdSnapshotState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Execution request</span><span className="ccv2-page-summary-value">{crud.executionRequestState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Agent lanes</span><span className="ccv2-page-summary-value">{crud.agentLaneState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Allowed local CRUD</span><span className="ccv2-page-summary-value">{crud.allowedLocalCrudOperations.join(", ")} with explicit approval</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Records ready</span><span className="ccv2-page-summary-value">{crud.readyRecordCount} of {crud.totalRecordCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{crud.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{crud.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{crud.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{crud.costImpact}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{crud.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{crud.disabledReason}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {crud.lanes.map((lane) => (
+          <div
+            key={lane.label}
+            aria-label={`${lane.label} Business Build DB lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.label}</div>
+            <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{lane.currentState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {crud.safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className={row.value === "Guarded" ? "ccv2-safety-row__value--ready" : "ccv2-safety-row__value--disabled"}>{row.value}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

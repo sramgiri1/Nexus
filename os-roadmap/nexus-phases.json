@@ -6776,19 +6776,29 @@
       "title": "Command Center UX",
       "track": "NEXUS_OS",
       "order": 133.4,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned Command Center governed execution-authority review UX without runnable actions.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added display-safe DB-backed Business Build state to Command Center Lite, Business Build, Agent Flow, and DB Runtime.",
+      "checksRun": [
+        "npm run check:p974-command-center-business-build-db-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build DB CRUD\"",
+        "cd dashboard && npm run build",
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.4 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.4 is Command Center DB CRUD UX only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P97.5",
       "commandCenterVisible": true,
-      "label": "Authority UX",
-      "detail": "Planned P97 Command Center UX; no runnable action enabled."
+      "label": "DB UX",
+      "detail": "Command Center shows display-safe Business Build DB CRUD state across Lite, Business Build, Agent Flow, and DB Runtime."
     },
     {
       "phaseId": "P97.5",
@@ -6849,8 +6859,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P97.3",
-  "previousPhase": "P97.2",
-  "nextPhase": "P97.4",
+  "currentPhase": "P97.4",
+  "previousPhase": "P97.3",
+  "nextPhase": "P97.5",
   "currentPhaseStatus": "complete"
 }

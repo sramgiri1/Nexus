@@ -69,6 +69,13 @@ const FOUNDER_DB_BLOCKERS = [
   "SQLite live mode and local write flags are required before local founder workflow persistence.",
 ];
 
+const BUSINESS_BUILD_DB_RECORD_LABELS = {
+  business_build_sessions: "Business Build session",
+  business_build_execution_requests: "Execution requests",
+  business_build_agent_lanes: "Agent lanes",
+  business_build_prd_snapshots: "PRD snapshots",
+};
+
 function buildFounderRuntimeDbWorkflowData(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   return {
     currentState: "founder_runtime_db_view_model_ready",
@@ -210,6 +217,93 @@ function buildBusinessBuildDryRunAdmissionView(founderDbWorkflow = {}) {
   };
 }
 
+export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const recordRows = [
+    {
+      label: BUSINESS_BUILD_DB_RECORD_LABELS.business_build_sessions,
+      currentState: "Planned Locally",
+      ownerCapability: "NEXUS Business Build DB",
+      nextAction: "Review local CRUD admission evidence before saving Business Build state.",
+      blocker: "Operator approval, rollback, audit, validation, sqlite-live mode, and local write flags are required.",
+      evidenceLocation: "reports/p973-business-build-crud-model-report.md",
+    },
+    {
+      label: BUSINESS_BUILD_DB_RECORD_LABELS.business_build_execution_requests,
+      currentState: "Blocked Until Governed Admission",
+      ownerCapability: "NEXUS Execution Governance",
+      nextAction: "Keep execution requests in local review until operator evidence admits a specific DB record.",
+      blocker: "Execution remains blocked; P97.4 displays local CRUD metadata only.",
+      evidenceLocation: "reports/p973-business-build-crud-model-report.md",
+    },
+    {
+      label: BUSINESS_BUILD_DB_RECORD_LABELS.business_build_agent_lanes,
+      currentState: "2 lanes planned locally",
+      ownerCapability: "NEXUS Agent Lane Planner",
+      nextAction: "Show planned agent lanes while dispatch, worker execution, and project mutation remain blocked.",
+      blocker: "Agent dispatch, worker execution, and project mutation remain blocked.",
+      evidenceLocation: "reports/p973-business-build-crud-model-report.md",
+    },
+    {
+      label: BUSINESS_BUILD_DB_RECORD_LABELS.business_build_prd_snapshots,
+      currentState: "Captured Locally",
+      ownerCapability: "NEXUS PRD Governance",
+      nextAction: "Review the local PRD snapshot before routing workstream planning.",
+      blocker: "Project source mutation and generated app writes remain blocked.",
+      evidenceLocation: "reports/p973-business-build-crud-model-report.md",
+    },
+  ];
+
+  const lanes = recordRows.map((record) => ({
+    ...record,
+    disabledReason: "P97.4 only renders governed local SQLite CRUD state for Business Build OS records. Provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, and provider spend remain blocked.",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Business Build DB CRUD Ready For Approved Local Admission",
+    runtimeMode: "Local SQLite Business Build",
+    dbMode: "Local SQLite guarded by explicit approval",
+    founderIdea: founderIdeaSummary,
+    savedSessionState: "Planned Locally",
+    prdSnapshotState: "Captured Locally",
+    executionRequestState: "Blocked Until Governed Admission",
+    agentLaneState: "2 lanes planned locally; dispatch blocked",
+    allowedLocalCrudOperations: ["Create", "Read", "Update", "Upsert", "List"],
+    allowedRecords: Object.values(BUSINESS_BUILD_DB_RECORD_LABELS),
+    readyRecordCount: lanes.length,
+    totalRecordCount: lanes.length,
+    nextAction: "Review approved local CRUD evidence, then admit only selected Business Build records through the governed SQLite helper.",
+    blockers: [
+      "Delete and raw SQL remain blocked.",
+      "Agent dispatch and worker/tool execution remain blocked.",
+      "Project source mutation remains blocked.",
+      "Hosted DB mutation remains blocked.",
+      "Deploy, package, network calls, and provider spend remain blocked.",
+    ],
+    disabledReason: "P97.4 only renders governed local SQLite CRUD state for Business Build OS records. Provider/model calls, agent dispatch, tool/worker execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Business Build DB CRUD",
+    evidenceLocation: "reports/p973-business-build-crud-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local SQLite CRUD only after approval. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    commandCenterVisible: true,
+    lanes,
+    safetyRows: [
+      { label: "Local CRUD", value: "Guarded" },
+      { label: "Delete/raw SQL", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -300,6 +394,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const founderHighlights = buildFounderHighlights(prdFields);
   const founderDbWorkflow = buildFounderRuntimeDbViewModel(founderIdeaSummary);
   const dryRunAdmission = buildBusinessBuildDryRunAdmissionView(founderDbWorkflow);
+  const businessBuildDbCrud = buildBusinessBuildDbCrudViewModel(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -422,6 +517,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
       lanes: (dryRunAdmission.lanes || []).map(toReadinessLane),
       safetyRows: dryRunAdmission.safetyRows,
     },
+    businessBuildDbCrud,
     founderDbWorkflow,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
