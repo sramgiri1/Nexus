@@ -80,13 +80,13 @@ addCheck("Command Center primary source hides raw Business Build table names", !
 addCheck("Playwright covers Business Build DB surfaces", routeTests.includes("Business Build DB CRUD state appears in Lite, Business Build, Agent Flow, and DB Runtime"));
 addCheck("Playwright validates no raw table names", routeTests.includes("business_build_sessions") && routeTests.includes("business_build_prd_snapshots"));
 addCheck("docs record P97.4", docs.includes("P97.4 is complete") && docs.includes("npm run check:p974-command-center-business-build-db-ux"));
-addCheck("platform roadmap records P97.4", platformRoadmap.includes("P97.4 is complete") && (platformRoadmap.includes("P97.5 is next") || platformRoadmap.includes("P97.5 is planned")));
+addCheck("platform roadmap records P97.4", platformRoadmap.includes("P97.4 is complete") && (platformRoadmap.includes("P97.5 is next") || platformRoadmap.includes("P97.5 is planned") || platformRoadmap.includes("P97.5 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P97.4")?.status === "complete"
-    && status.currentPhase === "P97.4"
-    && status.previousPhase === "P97.3"
-    && status.nextPhase === "P97.5",
+    && ["P97.4", "P97.5"].includes(status.currentPhase)
+    && ["P97.3", "P97.4"].includes(status.previousPhase)
+    && ["P97.5", "P97.6"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.4", roadmapById.get("P97.4")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P97.5")?.status));

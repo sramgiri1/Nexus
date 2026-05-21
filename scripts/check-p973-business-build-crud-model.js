@@ -156,9 +156,9 @@ addCheck("platform roadmap records P97.3", platformRoadmap.includes("P97.3 is co
 addCheck(
   "phase status advanced",
   statusById.get("P97.3")?.status === "complete"
-    && ["P97.3", "P97.4"].includes(status.currentPhase)
-    && ["P97.2", "P97.3"].includes(status.previousPhase)
-    && ["P97.4", "P97.5"].includes(status.nextPhase),
+    && ["P97.3", "P97.4", "P97.5"].includes(status.currentPhase)
+    && ["P97.2", "P97.3", "P97.4"].includes(status.previousPhase)
+    && ["P97.4", "P97.5", "P97.6"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.3", roadmapById.get("P97.3")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P97.4")?.status));

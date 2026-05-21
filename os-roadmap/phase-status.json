@@ -11612,19 +11612,30 @@
       "title": "Tests / Checkers",
       "track": "NEXUS_OS",
       "order": 133.5,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned aggregate validation for P97 governed execution-authority review.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added aggregate validation for P97 Business Build DB CRUD contract, schema, CRUD model, Command Center UX, focused Playwright, dashboard build, OS status, and coverage.",
+      "checksRun": [
+        "npm run check:p975-business-build-crud-validation",
+        "npm run check:p974-command-center-business-build-db-ux",
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build DB CRUD\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.5 is aggregate validation only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P97.6",
       "commandCenterVisible": true,
       "label": "Validation",
-      "detail": "Planned aggregate P97 validation."
+      "detail": "Aggregate P97 Business Build DB CRUD validation is complete; docs and roadmap closure is next."
     },
     {
       "phaseId": "P97.6",
@@ -11667,8 +11678,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P97.4",
-  "previousPhase": "P97.3",
-  "nextPhase": "P97.5",
+  "currentPhase": "P97.5",
+  "previousPhase": "P97.4",
+  "nextPhase": "P97.6",
   "currentPhaseStatus": "complete"
 }

@@ -69,7 +69,9 @@ Validation:
 
 ### P97.5 Tests / Checkers
 
-P97.5 is next. It will aggregate contract, schema, CRUD model, and UX validation.
+P97.5 is complete. It aggregates contract, schema, CRUD model, Command Center
+DB UX, focused Playwright, dashboard build, reports, docs, and status
+validation. P97.6 is next for docs and roadmap closure.
 
 Validation:
 
@@ -78,13 +80,15 @@ Validation:
 - `npm run check:p973-business-build-crud-model`
 - `npm run check:p972-business-build-db-schema`
 - `npm run check:p971-founder-business-build-governed-execution-contract`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build DB CRUD"`
+- `cd dashboard && npm run build`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
 ### P97.6 Docs / Roadmap
 
-P97.6 will update README, PRD, Command Center guide, platform roadmap, OS
+P97.6 is next. It will update README, PRD, Command Center guide, platform roadmap, OS
 roadmap, phase status, and evidence reports for the DB-backed Business Build
 workflow.
 
