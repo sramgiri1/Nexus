@@ -1,7 +1,7 @@
 {
   "phaseId": "P100",
   "title": "Founder Full Command Center Enablement",
-  "status": "in_progress",
+  "status": "complete",
   "scopeClassification": "NEXUS_OS_CHANGE",
   "objective": "Make the full Command Center accessible and founder-useful without enabling unsafe execution.",
   "safetyRules": [
@@ -268,13 +268,14 @@
     {
       "phaseId": "P100.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Run final P100 validation and close the phase.",
-      "narrowScope": "Final validation only.",
+      "narrowScope": "Final validation only; no Command Center UX or execution authority changes.",
       "allowedFiles": [
         "contracts/os-roadmap/p100-command-center-founder-contracts.json",
         "scripts/check-p1007-founder-command-center-final.js",
+        "scripts/check-os-phase-status.js",
         "package.json",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",

@@ -509,6 +509,7 @@
     "check:p1004-founder-delivery-pages": "node scripts/check-p1004-founder-delivery-pages.js",
     "check:p1005-founder-runtime-os-pages": "node scripts/check-p1005-founder-runtime-os-pages.js",
     "check:p1006-founder-command-center-validation": "node scripts/check-p1006-founder-command-center-validation.js",
+    "check:p1007-founder-command-center-final": "node scripts/check-p1007-founder-command-center-final.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
