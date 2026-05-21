@@ -661,6 +661,100 @@ export function buildFounderExecutionAdmissionModel(founderIdeaSummary = DEFAULT
   };
 }
 
+export function validateFounderExecutionAdmissionApprovalEnvelope(envelope = {}) {
+  const flags = envelope.runtimeFlags || {};
+  const errors = [];
+
+  if (!Array.isArray(envelope.approvals) || envelope.approvals.length < 4) {
+    errors.push("P99.3 approval envelope must include required approval gates.");
+  }
+  if (!Array.isArray(envelope.lanes) || envelope.lanes.length < 4) {
+    errors.push("P99.3 approval envelope must include lane approval state.");
+  }
+  if (envelope.approvalReady === true || envelope.executableCount !== 0) {
+    errors.push("P99.3 approval envelope must not mark execution approval ready.");
+  }
+  if (Object.values(flags).some((value) => value !== false)) {
+    errors.push("P99.3 approval envelope must keep all unsafe runtime flags false.");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    readyForCommandCenterUx: errors.length === 0,
+    readyForExecution: false,
+  };
+}
+
+export function buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const admission = buildFounderExecutionAdmissionModel(founderIdeaSummary);
+  const approvals = admission.requiredApprovals.map((approval) => ({
+    label: approval,
+    state: "Missing",
+    accepted: false,
+    ownerCapability: "NEXUS Execution Admission Governance",
+    disabledReason: "Approval capture is not enabled in P99.3. This envelope only shows required gates.",
+  }));
+  const lanes = (admission.lanes || []).map((lane) => ({
+    lane: lane.lane,
+    ownerCapability: lane.ownerCapability,
+    approvalState: "Missing Approval Envelope",
+    admissionState: lane.admissionState,
+    requiredApprovals: lane.requiredApprovals,
+    requiredEvidence: lane.requiredEvidence,
+    missingApprovals: lane.requiredApprovals,
+    blockers: lane.blockers,
+    nextAction: "Collect explicit operator approval, rollback acceptance, audit acceptance, validation acceptance, and cost review before any later execution phase.",
+    disabledReason: "P99.3 records the approval envelope only. It cannot approve execution, dispatch agents, run workers/tools, mutate projects, call providers, use hosted DBs, deploy, package, use network calls, or spend.",
+    evidenceLocation: "reports/p993-founder-execution-admission-approval-envelope-report.md",
+    activityLocation: admission.activityLocation,
+    costImpact: admission.costImpact,
+    approvalAccepted: false,
+    readyForExecution: false,
+    canApproveForExecution: false,
+    canDispatchAgent: false,
+    canRunWorker: false,
+    canMutateProject: false,
+    canSpend: false,
+  }));
+  const envelope = {
+    envelopeId: "local-business-build-execution-admission-approval-envelope",
+    currentState: "Approval Envelope Required Execution Blocked",
+    commandCenterVisible: true,
+    sourceAdmissionId: admission.admissionId,
+    sourceAdmissionState: admission.currentState,
+    founderIdea: admission.founderIdea,
+    approvalReady: false,
+    approvalsAcceptedCount: 0,
+    approvalsRequiredCount: approvals.length,
+    executableCount: 0,
+    approvals,
+    requiredEvidence: admission.requiredEvidence,
+    blockedOperations: admission.blockedOperations,
+    runtimeFlags: admission.runtimeFlags,
+    nextAction: "Prepare the approval envelope evidence while keeping every lane non-executable.",
+    blockers: [
+      "Operator approval is missing.",
+      "Rollback acceptance is missing.",
+      "Audit acceptance is missing.",
+      "Validation command acceptance is missing.",
+      "Cost review acceptance is missing.",
+    ],
+    disabledReason: "P99.3 is an approval envelope model only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Execution Admission Approval Envelope",
+    evidenceLocation: "reports/p993-founder-execution-admission-approval-envelope-report.md",
+    activityLocation: admission.activityLocation,
+    costImpact: admission.costImpact,
+    lanes,
+    safetyRows: admission.safetyRows,
+  };
+
+  return {
+    ...envelope,
+    validation: validateFounderExecutionAdmissionApprovalEnvelope(envelope),
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -755,6 +849,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const liveWorkstreamHandoff = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
   const liveWorkstreamHandoffDryRun = buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary);
   const executionAdmission = buildFounderExecutionAdmissionModel(founderIdeaSummary);
+  const executionAdmissionApprovalEnvelope = buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -882,6 +977,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,
+    executionAdmissionApprovalEnvelope,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),

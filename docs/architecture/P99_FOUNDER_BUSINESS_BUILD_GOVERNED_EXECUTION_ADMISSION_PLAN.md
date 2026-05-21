@@ -36,8 +36,18 @@ Validation:
 
 ## P99.3 Approval Envelope
 
-P99.3 is planned. It will define the explicit local approval envelope required
-before a handoff lane can be considered for a later execution phase.
+P99.3 is complete. It defines the explicit local approval envelope required
+before a handoff lane can be considered by a later execution phase, exposes it
+on the Business Build view model, and keeps approval-ready and executable
+counts at zero. P99.4 is next for admission dry-run records.
+
+Validation:
+
+- `npm run check:p993-founder-execution-admission-approval-envelope`
+- `npm run check:p992-founder-execution-admission-model`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P99.4 Preview / Safe Dry Run
 

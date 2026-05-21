@@ -51,7 +51,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p992-founder-execution-admission-model"]));
-addCheck("contract marks P99.2 complete", p992?.status === "complete" && subphaseById.get("P99.3")?.status === "planned");
+addCheck("contract marks P99.2 complete", p992?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P99.3")?.status));
 addCheck("P99.2 allowed files scoped", p992?.allowedFiles?.includes("dashboard/src/data/businessBuild.js") && p992.allowedFiles.includes("reports/p992-founder-execution-admission-model-report.md"));
 addCheck("P99.2 allowed files avoid forbidden roots", !p992?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("source exports admission model", source.includes("export function buildFounderExecutionAdmissionModel") && source.includes("export function validateFounderExecutionAdmissionModel"));
@@ -64,12 +64,12 @@ addCheck("docs record P99.2", p99Plan.includes("P99.2 is complete") && p99Plan.i
 addCheck(
   "phase status advanced",
   statusById.get("P99.2")?.status === "complete"
-    && status.currentPhase === "P99.2"
-    && status.previousPhase === "P99.1"
-    && status.nextPhase === "P99.3",
+    && ["P99.2", "P99.3"].includes(status.currentPhase)
+    && ["P99.1", "P99.2"].includes(status.previousPhase)
+    && ["P99.3", "P99.4"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P99.2", roadmapById.get("P99.2")?.status === "complete" && roadmapById.get("P99.3")?.status === "planned");
+addCheck("roadmap tracks P99.2", roadmapById.get("P99.2")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P99.3")?.status));
 addCheck("no raw private IDs or credentials", !/private-project-|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|Bearer\s+|jwt|id_token|access_token/i.test(JSON.stringify(model)));
 addCheck("no fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now|generate app now/i.test(JSON.stringify(model)));
 

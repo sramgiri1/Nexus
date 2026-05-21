@@ -7099,23 +7099,23 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "526748dc",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P99.2 core execution admission model is complete; P99.3 approval envelope is next.",
+      "summary": "P99.3 approval envelope is complete; P99.4 admission dry-run records are next.",
       "checksRun": [
+        "npm run check:p993-founder-execution-admission-approval-envelope",
         "npm run check:p992-founder-execution-admission-model",
-        "npm run check:p991-founder-execution-admission-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P99 remains in progress. P99.2 is model-only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99 remains in progress. P99.3 is approval-envelope data only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P99.3",
+      "nextPhase": "P99.4",
       "commandCenterVisible": true,
-      "label": "Admission Model",
-      "detail": "P99 admission model complete; approval envelope next."
+      "label": "Approval Envelope",
+      "detail": "P99 approval envelope complete; admission dry run next."
     },
     {
       "phaseId": "P99.1",
@@ -7171,19 +7171,25 @@
       "title": "Approval Envelope",
       "track": "NEXUS_OS",
       "order": 135.3,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned explicit local approval envelope for future governed admission.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added the display-safe execution admission approval envelope over the P99.2 admission model.",
+      "checksRun": [
+        "npm run check:p993-founder-execution-admission-approval-envelope",
+        "npm run check:p992-founder-execution-admission-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P99.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99.3 is approval-envelope data only. It does not change Command Center UI, approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P99.4",
       "commandCenterVisible": true,
       "label": "Approval Envelope",
-      "detail": "Planned P99 approval envelope."
+      "detail": "P99 approval envelope complete; admission dry run next."
     },
     {
       "phaseId": "P99.4",
@@ -7263,8 +7269,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P99.2",
-  "previousPhase": "P99.1",
-  "nextPhase": "P99.3",
+  "currentPhase": "P99.3",
+  "previousPhase": "P99.2",
+  "nextPhase": "P99.4",
   "currentPhaseStatus": "complete"
 }

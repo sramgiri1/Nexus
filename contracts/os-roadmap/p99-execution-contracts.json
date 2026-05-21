@@ -130,7 +130,7 @@
     {
       "phaseId": "P99.3",
       "title": "Approval Envelope",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Define explicit local approval envelopes for future governed execution admission.",
       "narrowScope": "Approval data only; no execution.",

@@ -498,6 +498,7 @@
     "check:p987-live-workstream-handoff-final-validation": "node scripts/check-p987-live-workstream-handoff-final-validation.js",
     "check:p991-founder-execution-admission-contract": "node scripts/check-p991-founder-execution-admission-contract.js",
     "check:p992-founder-execution-admission-model": "node scripts/check-p992-founder-execution-admission-model.js",
+    "check:p993-founder-execution-admission-approval-envelope": "node scripts/check-p993-founder-execution-admission-approval-envelope.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

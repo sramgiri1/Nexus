@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P99.2
-- Generated at: 2026-05-21T11:31:53.463Z
+- Generated at: 2026-05-21T11:34:54.965Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 526748dc
+- Validation HEAD: f4943ef7
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -28,7 +28,7 @@
 | executable count stays zero | PASS |  |
 | required approvals and evidence exist | PASS |  |
 | docs record P99.2 | PASS |  |
-| phase status advanced | PASS | P99.2/P99.1/P99.3 |
+| phase status advanced | PASS | P99.3/P99.2/P99.4 |
 | roadmap tracks P99.2 | PASS |  |
 | no raw private IDs or credentials | PASS |  |
 | no fake runnable actions | PASS |  |
