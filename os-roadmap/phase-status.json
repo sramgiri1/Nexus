@@ -11906,7 +11906,7 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8e1e436f",
       "completedAt": "",
       "summary": "P99.4 admission dry-run records are complete; P99.5 Command Center UX is next.",
       "checksRun": [
@@ -12005,7 +12005,7 @@
       "order": 135.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "8e1e436f",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added deterministic execution admission dry-run records from the P99.3 approval envelope.",
       "checksRun": [
