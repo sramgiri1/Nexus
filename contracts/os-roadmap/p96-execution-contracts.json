@@ -123,9 +123,9 @@
       "id": "nexus-os-p96-3-safe-dry-run-admission",
       "phaseId": "P96.3",
       "objective": "Add a dry-run admission matrix that previews which local Business Build lanes would be eligible after evidence gates, without dispatch or mutation.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
-      "allowedFiles": ["live-ready/founderBusinessBuildExecutionReadiness.js", "scripts/check-p963-founder-business-build-dry-run-admission.js", "package.json", "contracts/os-roadmap/p96-execution-contracts.json", "docs/architecture/P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md", "os-roadmap/phase-status.json", "os-roadmap/nexus-phases.json", "reports/p963-founder-business-build-dry-run-admission-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
+      "allowedFiles": ["live-ready/founderBusinessBuildExecutionReadiness.js", "scripts/check-p963-founder-business-build-dry-run-admission.js", "scripts/check-p962-founder-business-build-readiness-model.js", "scripts/check-p961-founder-business-build-readiness-contract.js", "package.json", "contracts/os-roadmap/p96-execution-contracts.json", "docs/architecture/P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md", "docs/architecture/NEXUS_PLATFORM_ROADMAP.md", "os-roadmap/phase-status.json", "os-roadmap/nexus-phases.json", "reports/p963-founder-business-build-dry-run-admission-report.md", "reports/p962-founder-business-build-readiness-model-report.md", "reports/p961-founder-business-build-readiness-contract-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
       "forbiddenFiles": ["projects/**", "careloop/**", "dashboard/src/**", "dashboard/tests/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
       "expectedExportsSchemasDataShapes": {
         "exports": ["buildFounderBusinessBuildDryRunAdmission"],
