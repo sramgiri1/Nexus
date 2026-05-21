@@ -6455,7 +6455,7 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2645ba9",
       "completedAt": "",
       "summary": "P96.2 local Business Build execution readiness model is complete; P96.3 safe dry-run admission is next.",
       "checksRun": [
@@ -6504,7 +6504,7 @@
       "title": "Local Execution Readiness Model",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "2645ba9",
       "completedAt": "2026-05-20",
       "summary": "Added a display-safe local Business Build execution readiness model reusing P94 founder DB CRUD workflow and P95 persistence controls.",
       "checksRun": [
