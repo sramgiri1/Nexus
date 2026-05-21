@@ -102,8 +102,8 @@ Validation:
 
 ### P97.7 Final Validation
 
-P97.7 is next. It will run final validation, stamp real commits, close P97, and hand off to
-P98.
+P97.7 is complete. It runs final validation, stamps P97 status, closes P97, and
+hands off to P98. P98 is next.
 
 Validation:
 

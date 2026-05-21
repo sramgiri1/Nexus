@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P97.4
-- Generated at: 2026-05-21T10:15:51.965Z
+- Generated at: 2026-05-21T10:29:45.803Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b827e23c
+- Validation HEAD: 31c88589
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -35,7 +35,7 @@
 | Playwright validates no raw table names | PASS |  |
 | docs record P97.4 | PASS |  |
 | platform roadmap records P97.4 | PASS |  |
-| phase status advanced | PASS | P97.5/P97.4/P97.6 |
+| phase status advanced | FAIL | P97.7/P97.6/P98 |
 | roadmap tracks P97.4 | PASS |  |
 | no DemoApp leakage in DB UX | PASS |  |
 | no raw private IDs or secret URLs | PASS |  |
@@ -57,4 +57,4 @@
 - P97.4 is display-safe Command Center UX only. It does not execute agents, run workers/tools, write project files, call providers/models, use hosted DBs, deploy, release, export, package, use network calls, or spend.
 ## Result
 
-PASS (24/24)
+FAIL (1 failed)

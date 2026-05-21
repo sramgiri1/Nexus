@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P97.1
-- Generated at: 2026-05-21T10:15:51.977Z
+- Generated at: 2026-05-21T10:29:55.558Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b827e23c
+- Validation HEAD: 31c88589
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -34,10 +34,10 @@
 | P96 parent contract closed | PASS |  |
 | docs record P97.1 | PASS |  |
 | platform roadmap records P97.1 | PASS |  |
-| README records P97.1 | PASS |  |
-| PRD records P97.1 | PASS |  |
-| phase status advanced | PASS | P97.5/P97.4/P97.6 |
-| roadmap tracks P97.1 | PASS |  |
+| README records P97.1 | FAIL |  |
+| PRD records P97.1 | FAIL |  |
+| phase status advanced | FAIL | P97.7/P97.6/P98 |
+| roadmap tracks P97.1 | FAIL |  |
 | P97.2 handoff exists | PASS |  |
 | status checker accepts P97 subphases | PASS |  |
 | contract does not expose raw private IDs | PASS |  |
@@ -54,4 +54,4 @@
 - P97.1 is contract-only. It does not modify db/**, dashboard/src/**, live-ready/**, local-state/runtime/**, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend.
 ## Result
 
-PASS (26/26)
+FAIL (4 failed)

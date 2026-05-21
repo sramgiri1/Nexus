@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P97.6
-- Generated at: 2026-05-21T10:24:53.822Z
+- Generated at: 2026-05-21T10:29:49.875Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 5ae153e1
+- Validation HEAD: 31c88589
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -29,7 +29,7 @@
 | P97 plan marks P97.6 complete | PASS |  |
 | platform roadmap marks P97.6 complete | PASS |  |
 | P97.5 aggregate evidence retained | PASS |  |
-| phase status advanced to P97.6 | PASS | P97.6/P97.5/P97.7 |
+| phase status advanced to P97.6 | PASS | P97.7/P97.6/P98 |
 | roadmap tracks P97.6 | PASS |  |
 | docs keep unsafe execution blocked | PASS |  |
 | no raw private IDs or credentials | PASS |  |

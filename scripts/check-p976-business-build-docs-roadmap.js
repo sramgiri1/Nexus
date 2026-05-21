@@ -64,14 +64,18 @@ addCheck("README records P97.6 current state", readme.includes("Current Status T
 addCheck("PRD records P97.6 current state", prd.includes("updated through P97.6") && prd.includes("Current Implementation Status Through P97.6") && prd.includes("Safety boundary as of P97.6"));
 addCheck("Command Center guide documents Business Build DB CRUD", guide.includes("Business Build DB CRUD") && guide.includes("/command-center/agent-flow") && guide.includes("Business Build sessions") && guide.includes("PRD snapshots"));
 addCheck("P97 plan marks P97.6 complete", p97Plan.includes("P97.6 is complete") && p97Plan.includes("P97.7 is next"));
-addCheck("platform roadmap marks P97.6 complete", platformRoadmap.includes("P97.6 is complete") && platformRoadmap.includes("P97.7 is next"));
+addCheck("platform roadmap marks P97.6 complete", platformRoadmap.includes("P97.6 is complete") && (platformRoadmap.includes("P97.7 is next") || platformRoadmap.includes("P97.7 is complete")));
 addCheck("P97.5 aggregate evidence retained", p975Report.includes("P97.5 Business Build CRUD Validation Report") && p975Report.includes("PASS"));
 addCheck(
   "phase status advanced to P97.6",
-  statusById.get("P97.6")?.status === "complete"
-    && status.currentPhase === "P97.6"
-    && status.previousPhase === "P97.5"
-    && status.nextPhase === "P97.7",
+  (statusById.get("P97.6")?.status === "complete"
+      && status.currentPhase === "P97.6"
+      && status.previousPhase === "P97.5"
+      && status.nextPhase === "P97.7")
+    || (statusById.get("P97.6")?.status === "complete"
+      && status.currentPhase === "P97.7"
+      && status.previousPhase === "P97.6"
+      && status.nextPhase === "P98"),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.6", roadmapById.get("P97.6")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P97.7")?.status));

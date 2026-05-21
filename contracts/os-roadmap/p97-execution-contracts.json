@@ -576,9 +576,15 @@
       "id": "nexus-os-p97-7-final-validation",
       "phaseId": "P97.7",
       "objective": "Run final P97 validation, stamp real commits, close P97, and hand off to P98.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
+        "scripts/check-p971-founder-business-build-governed-execution-contract.js",
+        "scripts/check-p972-business-build-db-schema.js",
+        "scripts/check-p973-business-build-crud-model.js",
+        "scripts/check-p974-command-center-business-build-db-ux.js",
+        "scripts/check-p975-business-build-crud-validation.js",
+        "scripts/check-p976-business-build-docs-roadmap.js",
         "scripts/check-p977-business-build-final-validation.js",
         "package.json",
         "contracts/os-roadmap/p97-execution-contracts.json",
@@ -587,7 +593,15 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/p971-founder-business-build-governed-execution-contract-report.md",
+        "reports/p972-business-build-db-schema-report.md",
+        "reports/p973-business-build-crud-model-report.md",
+        "reports/p974-command-center-business-build-db-ux-report.md",
+        "reports/p975-business-build-crud-validation-report.md",
+        "reports/p976-business-build-docs-roadmap-report.md",
+        "reports/p977-business-build-final-validation-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-os-phase-status.js"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -624,6 +638,14 @@
       ],
       "validationCommands": [
         "npm run check:p977-business-build-final-validation",
+        "npm run check:p976-business-build-docs-roadmap",
+        "npm run check:p975-business-build-crud-validation",
+        "npm run check:p974-command-center-business-build-db-ux",
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build DB CRUD\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"

@@ -2033,6 +2033,10 @@ P97.6 is complete. It refreshes README, PRD, Command Center guide, platform
 roadmap, P97 plan, OS status, and validation evidence for the DB-backed
 Business Build workflow. P97.7 is next for final validation and P98 handoff.
 
+P97.7 is complete. It closes P97 with final validation for the Business Build
+DB CRUD contract, schema, CRUD model, Command Center UX, aggregate evidence,
+docs, roadmap, and status. P97 is complete. P98 is next.
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow

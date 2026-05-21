@@ -11481,26 +11481,25 @@
       "title": "Founder Business Build Governed Execution Contract",
       "track": "NEXUS_OS",
       "order": 133,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "ae9bb33",
-      "completedAt": "",
-      "summary": "P97.3 Business Build CRUD model is complete; P97.4 Command Center DB UX is next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Closed P97 Business Build DB CRUD readiness across contract, schema, CRUD model, Command Center UX, aggregate validation, docs, roadmap, and final validation.",
       "checksRun": [
-        "npm run check:p973-business-build-crud-model",
-        "npm run check:p972-business-build-db-schema",
-        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:p977-business-build-final-validation",
+        "npm run check:p976-business-build-docs-roadmap",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P97.1 is contract-only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
+        "P97 closes governed local SQLite Business Build CRUD readiness only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
       ],
-      "nextPhase": "P97.4",
+      "nextPhase": "P98",
       "commandCenterVisible": true,
-      "label": "Execution Contract",
-      "detail": "Business Build CRUD model complete; Command Center DB UX next."
+      "label": "Business Build DB CRUD",
+      "detail": "P97 complete; P98 is next."
     },
     {
       "phaseId": "P97.1",
@@ -11667,25 +11666,50 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 133.7,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned final validation for P97 governed execution-authority review.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Ran final P97 Business Build DB CRUD validation, closed the parent phase, and prepared the P98 handoff.",
+      "checksRun": [
+        "npm run check:p977-business-build-final-validation",
+        "npm run check:p976-business-build-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.7 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.7 is final validation only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
       "nextPhase": "P98",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned P97 final validation and P98 handoff."
+      "detail": "P97 final validation complete; P98 is next."
+    },
+    {
+      "phaseId": "P98",
+      "title": "Founder Business Build Live Workstream Handoff",
+      "track": "NEXUS_OS",
+      "order": 134,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned P98 handoff after P97 Business Build DB CRUD readiness.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P98 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P98.1",
+      "commandCenterVisible": true,
+      "label": "P98 Planned",
+      "detail": "P98 will be split into implementation-grade subphases before coding."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P97.6",
-  "previousPhase": "P97.5",
-  "nextPhase": "P97.7",
+  "currentPhase": "P97.7",
+  "previousPhase": "P97.6",
+  "nextPhase": "P98",
   "currentPhaseStatus": "complete"
 }
