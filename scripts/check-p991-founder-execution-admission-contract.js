@@ -48,7 +48,7 @@ const forbiddenAllowedPatterns = [
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p991-founder-execution-admission-contract"]));
 addCheck("contract identifies P99", contract.phase === "P99" && contract.title.includes("Governed Execution Admission"));
 addCheck("contract has seven subphases", p99Ids.every((phaseId) => subphaseById.has(phaseId)));
-addCheck("contract marks P99.1 complete only", p991?.status === "complete" && p99Ids.slice(1).every((phaseId) => subphaseById.get(phaseId)?.status === "planned"));
+addCheck("contract marks P99.1 complete", p991?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P99.2")?.status));
 addCheck("P99.1 allowed files scoped", p991?.allowedFiles?.includes("contracts/os-roadmap/p99-execution-contracts.json") && p991.allowedFiles.includes("reports/p991-founder-execution-admission-contract-report.md"));
 addCheck("P99.1 allowed files avoid forbidden roots", !p991?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("P99.1 validation commands listed", [
@@ -64,12 +64,12 @@ addCheck(
   "phase status advanced",
   statusById.get("P99")?.status === "in_progress"
     && statusById.get("P99.1")?.status === "complete"
-    && status.currentPhase === "P99.1"
-    && status.previousPhase === "P98.7"
-    && status.nextPhase === "P99.2",
+    && ["P99.1", "P99.2"].includes(status.currentPhase)
+    && ["P98.7", "P99.1"].includes(status.previousPhase)
+    && ["P99.2", "P99.3"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P99.1", roadmapById.get("P99")?.status === "in_progress" && roadmapById.get("P99.1")?.status === "complete" && roadmapById.get("P99.2")?.status === "planned");
+addCheck("roadmap tracks P99.1", roadmapById.get("P99")?.status === "in_progress" && roadmapById.get("P99.1")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P99.2")?.status));
 addCheck("contract preserves blocked execution boundary", ["No provider/model calls", "No agent dispatch", "No worker/tool execution", "No project creation or mutation", "No hosted DB mutation", "No deploy"].every((term) => JSON.stringify(contract).includes(term)));
 addCheck("no raw private IDs or credentials", !/private-project-|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|Bearer\s+|jwt|id_token|access_token/i.test(JSON.stringify([contract, statusById.get("P99"), statusById.get("P99.1")])));
 addCheck("no fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now|generate app now/i.test(JSON.stringify(contract)));

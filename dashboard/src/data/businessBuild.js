@@ -536,6 +536,131 @@ export function buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary = DEF
   };
 }
 
+export function validateFounderExecutionAdmissionModel(model = {}) {
+  const flags = model.runtimeFlags || {};
+  const unsafeFlags = [
+    "providerCallsAllowed",
+    "modelCallsAllowed",
+    "agentDispatchAllowed",
+    "workerExecutionAllowed",
+    "toolExecutionAllowed",
+    "projectMutationAllowed",
+    "hostedDbWritesAllowed",
+    "deployAllowed",
+    "releaseAllowed",
+    "exportAllowed",
+    "packageCreationAllowed",
+    "networkCallsAllowed",
+    "providerSpendAllowed",
+  ];
+  const errors = [];
+
+  if (!Array.isArray(model.lanes) || model.lanes.length < 4) {
+    errors.push("P99.2 admission model must include display-safe admission lanes.");
+  }
+  if (!Array.isArray(model.requiredApprovals) || model.requiredApprovals.length < 4) {
+    errors.push("P99.2 admission model must include required approvals.");
+  }
+  if (!Array.isArray(model.requiredEvidence) || model.requiredEvidence.length < 4) {
+    errors.push("P99.2 admission model must include required evidence.");
+  }
+  if (unsafeFlags.some((flag) => flags[flag] !== false)) {
+    errors.push("P99.2 admission model must keep all unsafe runtime flags false.");
+  }
+
+  return {
+    valid: errors.length === 0,
+    errors,
+    readyForCommandCenterUx: errors.length === 0,
+    readyForExecution: false,
+  };
+}
+
+export function buildFounderExecutionAdmissionModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
+  const handoffPacket = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
+  const dryRun = buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary);
+  const requiredApprovals = [
+    "Operator approval for execution admission",
+    "Rollback acceptance for any future local mutation",
+    "Audit acceptance for admission decision",
+    "Validation command acceptance for the lane",
+    "Cost review acceptance with zero provider spend",
+  ];
+  const lanes = (dryRun.lanes || []).map((lane) => ({
+    lane: lane.lane,
+    ownerCapability: lane.ownerCapability,
+    admissionState: lane.dryRunState === "Ready For Operator Review Dry Run"
+      ? "Eligible For Governed Admission Review Execution Blocked"
+      : "Blocked Until Handoff Evidence",
+    sourceDryRunState: lane.dryRunState,
+    plannedWork: lane.plannedWork,
+    requiredApprovals,
+    requiredEvidence: lane.requiredEvidence,
+    blockers: [...lane.blockers, "Execution admission approval envelope is not present."],
+    nextAction: "Prepare the local approval envelope for this lane without dispatching agents or mutating project files.",
+    disabledReason: "P99.2 models governed execution admission only. It cannot dispatch agents, run workers/tools, mutate projects, call providers, use hosted DBs, deploy, package, use network calls, or spend.",
+    evidenceLocation: "reports/p992-founder-execution-admission-model-report.md",
+    activityLocation: dryRun.activityLocation,
+    costImpact: "Local deterministic admission model only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    readyForExecution: false,
+    canDispatchAgent: false,
+    canRunWorker: false,
+    canExecuteTool: false,
+    canMutateProject: false,
+    canWriteHostedDb: false,
+    canDeployOrPackage: false,
+    canSpend: false,
+  }));
+  const model = {
+    admissionId: "local-business-build-execution-admission",
+    currentState: "Governed Admission Review Ready Execution Blocked",
+    commandCenterVisible: true,
+    sourceHandoffId: handoffPacket.handoffId,
+    sourceHandoffState: handoffPacket.currentState,
+    sourceDryRunState: dryRun.currentState,
+    founderIdea: handoffPacket.founderIdea,
+    laneCount: lanes.length,
+    reviewEligibleLaneCount: lanes.filter((lane) => lane.admissionState === "Eligible For Governed Admission Review Execution Blocked").length,
+    executableCount: 0,
+    requiredApprovals,
+    requiredEvidence: [
+      ...handoffPacket.requiredEvidence,
+      "Execution admission approval envelope is not present",
+      "Operator has not accepted lane-specific rollback, audit, validation, and cost gates",
+    ],
+    blockedOperations: handoffPacket.blockedOperations,
+    runtimeFlags: handoffPacket.runtimeFlags,
+    nextAction: "Prepare P99.3 approval envelopes while keeping every lane non-executable.",
+    blockers: [
+      "Approval envelope is missing.",
+      "Agent dispatch is blocked.",
+      "Worker/tool execution is blocked.",
+      "Project source mutation is blocked.",
+      "Provider/model calls, hosted DB mutation, deploy, package, network calls, and provider spend are blocked.",
+    ],
+    disabledReason: "P99.2 is a local admission model only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked.",
+    ownerCapability: "NEXUS Execution Admission Governance",
+    evidenceLocation: "reports/p992-founder-execution-admission-model-report.md",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic admission model only. No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+    lanes,
+    safetyRows: [
+      { label: "Execution", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+
+  return {
+    ...model,
+    validation: validateFounderExecutionAdmissionModel(model),
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -629,6 +754,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const businessBuildDbCrud = buildBusinessBuildDbCrudViewModel(founderIdeaSummary);
   const liveWorkstreamHandoff = buildFounderLiveWorkstreamHandoffPacket(founderIdeaSummary);
   const liveWorkstreamHandoffDryRun = buildFounderLiveWorkstreamHandoffDryRun(founderIdeaSummary);
+  const executionAdmission = buildFounderExecutionAdmissionModel(founderIdeaSummary);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -755,6 +881,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     founderDbWorkflow,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
+    executionAdmission,
     activationReview: {
       currentState: toTitle(activationReviewPacket.currentState),
       packetMode: toTitle(activationReviewPacket.packetMode),

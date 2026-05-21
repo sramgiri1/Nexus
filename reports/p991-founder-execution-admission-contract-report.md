@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P99.1
-- Generated at: 2026-05-21T11:27:29.801Z
+- Generated at: 2026-05-21T11:30:49.233Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8d35ea9b
+- Validation HEAD: d15182ba
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -20,14 +20,14 @@
 | package script registered | PASS |  |
 | contract identifies P99 | PASS |  |
 | contract has seven subphases | PASS |  |
-| contract marks P99.1 complete only | PASS |  |
+| contract marks P99.1 complete | PASS |  |
 | P99.1 allowed files scoped | PASS |  |
 | P99.1 allowed files avoid forbidden roots | PASS |  |
 | P99.1 validation commands listed | PASS |  |
 | OS checker recognizes P99 subphases | PASS |  |
 | P99 plan records P99.1 | PASS |  |
 | platform roadmap records P99.1 | PASS |  |
-| phase status advanced | PASS | P99.1/P98.7/P99.2 |
+| phase status advanced | PASS | P99.2/P99.1/P99.3 |
 | roadmap tracks P99.1 | PASS |  |
 | contract preserves blocked execution boundary | PASS |  |
 | no raw private IDs or credentials | PASS |  |

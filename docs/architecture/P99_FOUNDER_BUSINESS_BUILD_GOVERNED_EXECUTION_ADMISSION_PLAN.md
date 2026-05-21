@@ -21,8 +21,18 @@ Validation:
 
 ## P99.2 Core Admission Model
 
-P99.2 is planned. It will add a display-safe local admission model over the P98
-handoff packet and dry-run lanes without dispatching agents or executing work.
+P99.2 is complete. It adds a display-safe local admission model over the P98
+handoff packet and dry-run lanes, exposes it on the Business Build view model,
+and keeps executable lane count at zero. P99.3 is next for explicit approval
+envelopes.
+
+Validation:
+
+- `npm run check:p992-founder-execution-admission-model`
+- `npm run check:p991-founder-execution-admission-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P99.3 Approval Envelope
 

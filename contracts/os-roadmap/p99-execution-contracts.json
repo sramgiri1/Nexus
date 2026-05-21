@@ -95,7 +95,7 @@
     {
       "phaseId": "P99.2",
       "title": "Core Admission Model",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Build a display-safe local admission model from P98 handoff packets.",
       "narrowScope": "Model-only; no execution.",
