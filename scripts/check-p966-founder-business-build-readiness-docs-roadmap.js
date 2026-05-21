@@ -52,16 +52,16 @@ addCheck("README records P96 readiness", readme.includes("Current Status Through
 addCheck("PRD records P96 status", prd.includes("updated through P96") && prd.includes("Business Build local execution readiness"));
 addCheck("Command Center guide documents readiness", guide.includes("Business Build Local Execution Readiness") && guide.includes("Admitted execution") && guide.includes("Dry-run admission report"));
 addCheck("P96 plan records P96.6", docs.includes("P96.6 is complete") && docs.includes("npm run check:p966-founder-business-build-readiness-docs-roadmap"));
-addCheck("platform roadmap records P96.6", platformRoadmap.includes("P96.6 is complete") && (platformRoadmap.includes("P96.7 is next") || platformRoadmap.includes("P96.7 is planned")));
+addCheck("platform roadmap records P96.6", platformRoadmap.includes("P96.6 is complete") && (platformRoadmap.includes("P96.7 is next") || platformRoadmap.includes("P96.7 is planned") || platformRoadmap.includes("P96.7 is complete")));
 addCheck("docs state blocked operations", blockedTerms.every((term) => docsBundle.toLowerCase().includes(term.toLowerCase())));
 addCheck("docs avoid execution implication", !/execution is enabled|dispatch is enabled|provider calls are enabled|deploy is enabled|spend is enabled/i.test(docsBundle));
 addCheck(
   "phase status advanced",
-  statusById.get("P96")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P96")?.status)
     && statusById.get("P96.6")?.status === "complete"
-    && status.currentPhase === "P96.6"
-    && status.previousPhase === "P96.5"
-    && status.nextPhase === "P96.7",
+    && ["P96.6", "P96.7"].includes(status.currentPhase)
+    && ["P96.5", "P96.6"].includes(status.previousPhase)
+    && ["P96.7", "P97"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.6", roadmapById.get("P96.6")?.track === "NEXUS_OS" && roadmapById.get("P96.6")?.status === "complete");

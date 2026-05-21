@@ -1988,7 +1988,14 @@ coverage.
 P96.6 is complete. README, PRD, Command Center guide, platform roadmap, OS
 status, and reports now describe Business Build local execution readiness,
 local SQLite CRUD-backed founder workflow posture, disabled runtime execution,
-and the P96.7 final validation handoff. P96.7 is next.
+and the P96.7 final validation handoff.
+
+P96.7 is complete. It closes P96 with final validation and hands off to P97.
+
+P96 is complete. Business Build now has local execution readiness, dry-run
+admission lanes, Command Center visibility, aggregate validation, docs/roadmap
+closure, and final validation while execution, dispatch, project mutation,
+hosted DB mutation, deploy, package, network calls, and spend remain blocked.
 
 The detailed plan lives in
 [`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).

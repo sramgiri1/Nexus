@@ -481,6 +481,7 @@
     "check:p964-command-center-business-build-readiness-ux": "node scripts/check-p964-command-center-business-build-readiness-ux.js",
     "check:p965-founder-business-build-readiness-validation": "node scripts/check-p965-founder-business-build-readiness-validation.js",
     "check:p966-founder-business-build-readiness-docs-roadmap": "node scripts/check-p966-founder-business-build-readiness-docs-roadmap.js",
+    "check:p967-founder-business-build-readiness-final-validation": "node scripts/check-p967-founder-business-build-readiness-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

@@ -6453,25 +6453,32 @@
       "title": "Founder Business Build Local Execution Readiness",
       "track": "NEXUS_OS",
       "order": 132,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2c9aee8",
-      "completedAt": "",
-      "summary": "P96.6 docs and roadmap closure is complete; P96.7 final validation is next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "P96 final validation closes Business Build local execution readiness and hands off to P97.",
       "checksRun": [
+        "npm run check:p967-founder-business-build-readiness-final-validation",
         "npm run check:p966-founder-business-build-readiness-docs-roadmap",
         "npm run check:p965-founder-business-build-readiness-validation",
+        "npm run check:p964-command-center-business-build-readiness-ux",
+        "npm run check:p963-founder-business-build-dry-run-admission",
+        "npm run check:p962-founder-business-build-readiness-model",
+        "npm run check:p961-founder-business-build-readiness-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P96.6 is docs and roadmap only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P96 closes local Business Build readiness only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P96.7",
+      "nextPhase": "P97",
       "commandCenterVisible": true,
       "label": "Business Build Readiness",
-      "detail": "Docs and roadmap closure complete; final validation next."
+      "detail": "P96 complete; P97 execution contract planned."
     },
     {
       "phaseId": "P96.1",
@@ -6635,22 +6642,56 @@
       "track": "NEXUS_OS",
       "order": 132.7,
       "title": "Final Validation",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Final P96 validation closes Business Build local execution readiness and hands off to P97.",
+      "checksRun": [
+        "npm run check:p967-founder-business-build-readiness-final-validation",
+        "npm run check:p966-founder-business-build-readiness-docs-roadmap",
+        "npm run check:p965-founder-business-build-readiness-validation",
+        "npm run check:p964-command-center-business-build-readiness-ux",
+        "npm run check:p963-founder-business-build-dry-run-admission",
+        "npm run check:p962-founder-business-build-readiness-model",
+        "npm run check:p961-founder-business-build-readiness-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P96.7 is final validation only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
+      "nextPhase": "P97",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "P96.7 final validation complete; P97 planned."
+    },
+    {
+      "phaseId": "P97",
+      "title": "Founder Business Build Governed Execution Contract",
+      "track": "NEXUS_OS",
+      "order": 133,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned final validation and P97 handoff.",
+      "summary": "Planned scoped contract for future governed Business Build execution authority.",
       "checksRun": [],
-      "knownLimitations": [],
-      "nextPhase": "P97",
+      "knownLimitations": [
+        "P97 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P97.1",
       "commandCenterVisible": true,
-      "label": "Final Validation",
-      "detail": "Planned P96 subphase; next P97."
+      "label": "Execution Contract",
+      "detail": "Planned handoff after P96 final validation."
     }
   ],
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.6",
-  "previousPhase": "P96.5",
-  "nextPhase": "P96.7",
+  "currentPhase": "P96.7",
+  "previousPhase": "P96.6",
+  "nextPhase": "P97",
   "currentPhaseStatus": "complete"
 }

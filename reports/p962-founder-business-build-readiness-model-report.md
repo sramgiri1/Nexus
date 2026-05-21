@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P96.2
-- Generated at: 2026-05-21T00:20:44.773Z
+- Generated at: 2026-05-21T00:34:28.164Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 397421d0
+- Validation HEAD: 8f2e7e30
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -32,7 +32,7 @@
 | model reuses P94 and P95 helpers | PASS |  |
 | docs record P96.2 | PASS |  |
 | platform roadmap records P96.2 | PASS |  |
-| phase status advanced | PASS | P96.5/P96.4/P96.6 |
+| phase status advanced | PASS | P96.7/P96.6/P97 |
 | roadmap tracks P96.2 | PASS |  |
 | P96.3 handoff exists | PASS |  |
 | model does not expose raw private IDs | PASS |  |

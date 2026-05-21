@@ -91,11 +91,11 @@ addCheck("docs record P96.4", docs.includes("P96.4 is complete") && docs.include
 addCheck("platform roadmap records P96.4", platformRoadmap.includes("P96.4 is complete") && (platformRoadmap.includes("P96.5 is next") || platformRoadmap.includes("P96.5 is planned") || platformRoadmap.includes("P96.5 is complete")));
 addCheck(
   "phase status advanced",
-  statusById.get("P96")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P96")?.status)
     && statusById.get("P96.4")?.status === "complete"
-    && ["P96.4", "P96.5"].includes(status.currentPhase)
-    && ["P96.3", "P96.4"].includes(status.previousPhase)
-    && ["P96.5", "P96.6"].includes(status.nextPhase),
+    && ["P96.4", "P96.5", "P96.6", "P96.7"].includes(status.currentPhase)
+    && ["P96.3", "P96.4", "P96.5", "P96.6"].includes(status.previousPhase)
+    && ["P96.5", "P96.6", "P96.7", "P97"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.4", roadmapById.get("P96.4")?.track === "NEXUS_OS" && roadmapById.get("P96.4")?.status === "complete");

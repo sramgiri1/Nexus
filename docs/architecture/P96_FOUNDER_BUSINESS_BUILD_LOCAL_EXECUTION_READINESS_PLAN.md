@@ -150,8 +150,8 @@ Validation:
 
 ### P96.7 Final Validation
 
-P96.7 will run final validation, stamp real commits, close P96, and hand off to
-the next planned phase.
+P96.7 is complete. It runs final validation, stamps real commits, closes P96,
+and hands off to P97.
 
 Validation:
 
@@ -162,7 +162,7 @@ Validation:
 - `npm run check:p963-founder-business-build-dry-run-admission`
 - `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
-- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder business build readiness"`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build local execution readiness"`
 - `cd dashboard && npm run build`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
