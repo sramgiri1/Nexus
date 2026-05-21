@@ -7301,7 +7301,7 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "218389af",
       "completedAt": "",
       "summary": "P100.2 founder operations pages are complete; P100.3 founder Governance page-content audit is next.",
       "checksRun": [
@@ -7353,7 +7353,7 @@
       "order": 136.2,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "218389af",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added founder operations boards to Mission Control, Task Queue, Agent Flow, Founder Intake, and Business Build with purpose, current state, next action, blocker, owner, evidence, activity, cost, and lane context.",
       "checksRun": [
