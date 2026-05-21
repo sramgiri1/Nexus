@@ -11262,7 +11262,7 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "198c00b",
       "completedAt": "",
       "summary": "P96.4 Command Center readiness UX is complete; P96.5 validation aggregation is next.",
       "checksRun": [
@@ -11366,7 +11366,7 @@
       "title": "Command Center Readiness UX",
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "198c00b",
       "completedAt": "2026-05-20",
       "summary": "Rendered Business Build local execution readiness and dry-run admission lanes in Command Center without runnable execution actions.",
       "checksRun": [
