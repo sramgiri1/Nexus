@@ -81,18 +81,18 @@ addCheck("Command Center UX requirements present", serializedContract.includes("
 addCheck("P96 parent contract closed", p96Contract.status === "complete");
 addCheck("docs record P97.1", docs.includes("P97.1 is complete") && docs.includes("npm run check:p971-founder-business-build-governed-execution-contract"));
 addCheck("platform roadmap records P97.1", platformRoadmap.includes("P97.1 is complete") && (platformRoadmap.includes("P97.2 is next") || platformRoadmap.includes("P97.2 is complete")));
-addCheck("README records P97.1", readme.includes("Current Status Through P97.1") && readme.includes("P97.1 governed Business Build DB CRUD contract"));
-addCheck("PRD records P97.1", prd.includes("updated through P97.1") && prd.includes("P97.1 defines the governed Business Build DB CRUD contract"));
+addCheck("README records P97 scope", (readme.includes("Current Status Through P97.1") || readme.includes("Current Status Through P97.6")) && readme.includes("P97 adds governed local SQLite Business Build records"));
+addCheck("PRD records P97 scope", (prd.includes("updated through P97.1") || prd.includes("updated through P97.6")) && prd.includes("P97 defines the governed Business Build DB CRUD contract"));
 addCheck(
   "phase status advanced",
-  statusById.get("P97")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P97")?.status)
     && statusById.get("P97.1")?.status === "complete"
     && ["P97.1", "P97.2", "P97.3", "P97.4", "P97.5", "P97.6", "P97.7"].includes(status.currentPhase)
     && ["P96.7", "P97.1", "P97.2", "P97.3", "P97.4", "P97.5", "P97.6"].includes(status.previousPhase)
     && ["P97.2", "P97.3", "P97.4", "P97.5", "P97.6", "P97.7", "P98"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P97.1", roadmapById.get("P97")?.status === "in_progress" && roadmapById.get("P97.1")?.status === "complete");
+addCheck("roadmap tracks P97.1", ["in_progress", "complete"].includes(roadmapById.get("P97")?.status) && roadmapById.get("P97.1")?.status === "complete");
 addCheck("P97.2 handoff exists", ["planned", "in_progress", "complete"].includes(statusById.get("P97.2")?.status) && ["planned", "in_progress", "complete"].includes(roadmapById.get("P97.2")?.status));
 addCheck("status checker accepts P97 subphases", allSubphases.every((phaseId) => statusChecker.includes(`"${phaseId}"`)));
 addCheck("contract does not expose raw private IDs", !rawPrivateIdPattern.test(serializedContract));
