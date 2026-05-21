@@ -11693,7 +11693,7 @@
       "order": 134,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6a6c6f0",
       "completedAt": "",
       "summary": "P98.1 workstream handoff contract is complete; P98.2 handoff readiness model is next.",
       "checksRun": [
@@ -11717,7 +11717,7 @@
       "order": 134.1,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "b6a6c6f0",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Defined the P98 governed workstream handoff contract and subphase split.",
       "checksRun": [
