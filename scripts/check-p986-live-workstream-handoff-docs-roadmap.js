@@ -69,7 +69,7 @@ addCheck("platform roadmap records P98.6", /P98\.6 is\s+complete/.test(platformR
 addCheck("P98.5 validation evidence retained", /Result[\s\S]*PASS|Result: PASS/.test(p985Report) && p985Report.includes("P98.5 Live Workstream Handoff Validation Report"));
 addCheck(
   "phase status advanced",
-  statusById.get("P98")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P98")?.status)
     && statusById.get("P98.6")?.status === "complete"
     && ["P98.6", "P98.7"].includes(status.currentPhase)
     && ["P98.5", "P98.6"].includes(status.previousPhase)

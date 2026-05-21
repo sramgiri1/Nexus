@@ -785,12 +785,14 @@
     {
       "phaseId": "P98.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Run final P98 validation, close P98, and prepare the next scoped handoff.",
-      "narrowScope": "Final validation and status closure only.",
+      "narrowScope": "Final validation, status closure, checker, report, and next-handoff status only.",
       "allowedFiles": [
         "scripts/check-p987-live-workstream-handoff-final-validation.js",
+        "scripts/check-p986-live-workstream-handoff-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
         "package.json",
         "contracts/os-roadmap/p98-execution-contracts.json",
         "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
@@ -798,8 +800,19 @@
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
         "reports/p987-live-workstream-handoff-final-validation-report.md",
+        "reports/p986-live-workstream-handoff-docs-roadmap-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p985-live-workstream-handoff-validation.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -815,9 +828,93 @@
       "validationCommands": [
         "npm run check:p987-live-workstream-handoff-final-validation",
         "npm run check:p986-live-workstream-handoff-docs-roadmap",
+        "npm run check:p985-live-workstream-handoff-validation",
+        "npm run check:p984-command-center-live-workstream-handoff-ux",
+        "npm run check:p983-founder-live-workstream-handoff-dry-run",
+        "npm run check:p982-founder-live-workstream-handoff-model",
+        "npm run check:p981-founder-live-workstream-handoff-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Close P98 with final validation after contract, model, dry-run, UX, aggregate checks, docs, and roadmap are complete.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend.",
+        "No raw private IDs, raw DB table names, raw JSON, raw logs, raw policy dumps, DemoApp leakage, or fake runnable actions."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Reuse existing P98.1-P98.6 checkers and reports as evidence.",
+        "Reuse existing status and roadmap tracking instead of adding a duplicate phase tracker."
+      ],
+      "exactFilesToUpdate": [
+        "scripts/check-p987-live-workstream-handoff-final-validation.js",
+        "scripts/check-p986-live-workstream-handoff-docs-roadmap.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p987-live-workstream-handoff-final-validation-report.md",
+        "reports/p986-live-workstream-handoff-docs-roadmap-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p985-live-workstream-handoff-validation.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
+      ],
+      "expectedExports": [
+        "check:p987-live-workstream-handoff-final-validation"
+      ],
+      "expectedDataShapes": {
+        "finalValidation": [
+          "contractComplete",
+          "subphaseReportsPassed",
+          "commandCenterUxRetained",
+          "statusClosed",
+          "nextPhase",
+          "blockedExecutionBoundary"
+        ]
+      },
+      "uxUpdate": "No Command Center source change in P98.7; final validation preserves the existing Lite, Agent Flow, Business Build, and DB Runtime handoff UX.",
+      "themeRequirements": "No theme source change in P98.7; final validation preserves existing dark, light, and system theme requirements.",
+      "testsAndCheckers": [
+        "Add check:p987-live-workstream-handoff-final-validation.",
+        "Run P98.6 docs-roadmap validation.",
+        "Run P98.5 aggregate validation and retained P98.1-P98.4 checkers.",
+        "Run OS phase status validation.",
+        "Run phase validation coverage.",
+        "Run git diff --check."
+      ],
+      "docsRoadmap": "Update P98 plan and platform roadmap to record P98 and P98.7 complete with P99 next.",
+      "phaseStatusUpdate": "P98 complete; P98.7 complete; current P98.7; previous P98.6; next P99.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next phase"
       ]
     }
   ]

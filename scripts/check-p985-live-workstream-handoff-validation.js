@@ -76,9 +76,9 @@ addCheck("platform roadmap records P98.5", /P98\.5 is\s+complete/.test(platformR
 addCheck(
   "phase status advanced",
   statusById.get("P98.5")?.status === "complete"
-    && ["P98.5", "P98.6"].includes(status.currentPhase)
-    && ["P98.4", "P98.5"].includes(status.previousPhase)
-    && ["P98.6", "P98.7"].includes(status.nextPhase),
+    && ["P98.5", "P98.6", "P98.7"].includes(status.currentPhase)
+    && ["P98.4", "P98.5", "P98.6"].includes(status.previousPhase)
+    && ["P98.6", "P98.7", "P99"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.5", roadmapById.get("P98.5")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P98.6")?.status));

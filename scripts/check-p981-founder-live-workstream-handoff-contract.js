@@ -83,14 +83,14 @@ addCheck("docs record P98.1", p98Plan.includes("P98.1 is complete") && p98Plan.i
 addCheck("platform roadmap records P98.1", platformRoadmap.includes("## P98 - Founder Business Build Live Workstream Handoff") && platformRoadmap.includes("P98.1 is complete") && (platformRoadmap.includes("P98.2 is next") || platformRoadmap.includes("P98.2 is complete")));
 addCheck(
   "phase status advanced",
-  statusById.get("P98")?.status === "in_progress"
+  ["in_progress", "complete"].includes(statusById.get("P98")?.status)
     && statusById.get("P98.1")?.status === "complete"
-    && ["P98.1", "P98.2", "P98.3", "P98.4", "P98.5"].includes(status.currentPhase)
-    && ["P97.7", "P98.1", "P98.2", "P98.3", "P98.4"].includes(status.previousPhase)
-    && ["P98.2", "P98.3", "P98.4", "P98.5", "P98.6"].includes(status.nextPhase),
+    && ["P98.1", "P98.2", "P98.3", "P98.4", "P98.5", "P98.6", "P98.7"].includes(status.currentPhase)
+    && ["P97.7", "P98.1", "P98.2", "P98.3", "P98.4", "P98.5", "P98.6"].includes(status.previousPhase)
+    && ["P98.2", "P98.3", "P98.4", "P98.5", "P98.6", "P98.7", "P99"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P98.1", roadmapById.get("P98")?.status === "in_progress" && roadmapById.get("P98.1")?.status === "complete");
+addCheck("roadmap tracks P98.1", ["in_progress", "complete"].includes(roadmapById.get("P98")?.status) && roadmapById.get("P98.1")?.status === "complete");
 addCheck("status checker accepts P98.1", statusChecker.includes('"P98.1"'));
 addCheck("no DemoApp leakage", !JSON.stringify([p98Plan, serializedStatus]).includes("DemoApp") && serializedContract.includes("No DemoApp exposure"));
 addCheck("no raw private IDs or credentials", !/(private-project|project_[A-Za-z0-9_-]*\d|Bearer\s+|jwt|id_token|access_token|postgres(?:ql)?:\/\/|mysql:\/\/|mongodb:\/\/)/i.test(JSON.stringify([contract, p98Plan, platformRoadmap, serializedStatus])));
