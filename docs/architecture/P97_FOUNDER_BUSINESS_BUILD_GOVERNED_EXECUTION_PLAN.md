@@ -22,8 +22,8 @@ Validation:
 
 ### P97.2 Business Build DB Schema
 
-P97.2 will add local SQLite schema definitions for Business Build sessions,
-execution requests, agent lane state, and PRD-to-workstream snapshots.
+P97.2 is complete. It adds local SQLite schema definitions for Business Build
+sessions, execution requests, agent lane state, and PRD-to-workstream snapshots.
 
 Validation:
 
@@ -36,7 +36,7 @@ Validation:
 
 ### P97.3 Business Build CRUD Model
 
-P97.3 will add a governed local CRUD model and admission helper for allowlisted
+P97.3 is next. It will add a governed local CRUD model and admission helper for allowlisted
 Business Build DB records. Delete, raw SQL, hosted DB writes, provider calls,
 agent dispatch, worker/tool execution, project mutation, deploy, package, and
 spend remain forbidden.

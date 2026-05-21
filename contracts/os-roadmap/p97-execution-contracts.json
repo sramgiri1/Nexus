@@ -130,18 +130,23 @@
       "id": "nexus-os-p97-2-business-build-db-schema",
       "phaseId": "P97.2",
       "objective": "Add local SQLite schema definitions for Business Build sessions, execution requests, agent lane state, and PRD-to-workstream snapshots.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
       "allowedFiles": [
         "db/schema.json",
         "db/schema.sql",
         "scripts/check-p972-business-build-db-schema.js",
+        "scripts/check-p922-sqlite-crud-repository.js",
+        "scripts/check-p971-founder-business-build-governed-execution-contract.js",
         "package.json",
         "contracts/os-roadmap/p97-execution-contracts.json",
         "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p972-business-build-db-schema-report.md",
+        "reports/p922-sqlite-crud-repository-report.md",
+        "reports/p971-founder-business-build-governed-execution-contract-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
       ],
@@ -176,10 +181,12 @@
         "Run earlier P97 checkers."
       ],
       "docsRoadmapUpdates": [
-        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+        "Update P97 plan doc, platform roadmap, phase status, roadmap, and reports."
       ],
       "validationCommands": [
         "npm run check:p972-business-build-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"

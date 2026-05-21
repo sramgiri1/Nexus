@@ -6676,10 +6676,12 @@
       "order": 133,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "b6dea1d",
+      "commit": "3f92940",
       "completedAt": "",
-      "summary": "P97.1 defines the governed Business Build execution-authority contract and safety boundary after P96 local readiness.",
+      "summary": "P97.2 Business Build DB schema is complete; P97.3 CRUD model is next.",
       "checksRun": [
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
         "npm run check:p971-founder-business-build-governed-execution-contract",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
@@ -6688,10 +6690,10 @@
       "knownLimitations": [
         "P97.1 is contract-only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
       ],
-      "nextPhase": "P97.2",
+      "nextPhase": "P97.3",
       "commandCenterVisible": true,
       "label": "Execution Contract",
-      "detail": "P97.1 contract complete; P97.2 authority model next."
+      "detail": "Business Build DB schema complete; CRUD model next."
     },
     {
       "phaseId": "P97.1",
@@ -6722,19 +6724,26 @@
       "title": "Core Model",
       "track": "NEXUS_OS",
       "order": 133.2,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned local governed execution-authority model for Business Build review state.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21",
+      "summary": "Added local SQLite schema definitions for Business Build sessions, execution requests, agent lane state, and PRD-to-workstream snapshots.",
+      "checksRun": [
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:p922-sqlite-crud-repository",
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P97.2 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.2 is schema-only. It does not wire Command Center to DB records, add runtime CRUD admission, dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, deploy, release, export, package, or spend."
       ],
       "nextPhase": "P97.3",
       "commandCenterVisible": true,
       "label": "Core Model",
-      "detail": "Planned P97 subphase; no execution authority enabled."
+      "detail": "Business Build DB schema complete; CRUD model next."
     },
     {
       "phaseId": "P97.3",
@@ -6832,9 +6841,9 @@
       "detail": "Planned P97 final validation and P98 handoff."
     }
   ],
-  "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P97.1",
-  "previousPhase": "P96.7",
-  "nextPhase": "P97.2",
+  "updatedAt": "2026-05-21T00:00:00.000Z",
+  "currentPhase": "P97.2",
+  "previousPhase": "P97.1",
+  "nextPhase": "P97.3",
   "currentPhaseStatus": "complete"
 }

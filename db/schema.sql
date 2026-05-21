@@ -326,3 +326,94 @@ CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_prd_id           ON foun
 CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_lane             ON founder_workstream_plans (lane);
 CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_current_state    ON founder_workstream_plans (current_state);
 CREATE INDEX IF NOT EXISTS idx_founder_workstream_plans_owner_capability ON founder_workstream_plans (owner_capability);
+
+-- business_build_sessions
+CREATE TABLE IF NOT EXISTS business_build_sessions (
+  build_session_id  TEXT        NOT NULL,
+  public_label      TEXT        NOT NULL,
+  session_id        TEXT,
+  prd_id            TEXT,
+  current_state     TEXT        NOT NULL,
+  readiness_percent INTEGER,
+  next_action       TEXT,
+  owner_capability  TEXT,
+  evidence_refs     JSONB,
+  activity_refs     JSONB,
+  created_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at        TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (build_session_id)
+);
+CREATE INDEX IF NOT EXISTS idx_business_build_sessions_session_id       ON business_build_sessions (session_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_sessions_prd_id           ON business_build_sessions (prd_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_sessions_current_state    ON business_build_sessions (current_state);
+CREATE INDEX IF NOT EXISTS idx_business_build_sessions_owner_capability ON business_build_sessions (owner_capability);
+CREATE INDEX IF NOT EXISTS idx_business_build_sessions_updated_at       ON business_build_sessions (updated_at);
+
+-- business_build_execution_requests
+CREATE TABLE IF NOT EXISTS business_build_execution_requests (
+  request_id               TEXT        NOT NULL,
+  build_session_id         TEXT        NOT NULL,
+  requested_lane           TEXT,
+  requested_operation      TEXT        NOT NULL,
+  request_state            TEXT        NOT NULL,
+  approval_state           TEXT,
+  disabled_reason          TEXT,
+  validation_commands      JSONB,
+  execution_allowed        BOOLEAN     NOT NULL DEFAULT false,
+  dispatch_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs            JSONB,
+  created_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (request_id)
+);
+CREATE INDEX IF NOT EXISTS idx_business_build_execution_requests_build_session_id    ON business_build_execution_requests (build_session_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_execution_requests_requested_lane      ON business_build_execution_requests (requested_lane);
+CREATE INDEX IF NOT EXISTS idx_business_build_execution_requests_requested_operation ON business_build_execution_requests (requested_operation);
+CREATE INDEX IF NOT EXISTS idx_business_build_execution_requests_request_state       ON business_build_execution_requests (request_state);
+CREATE INDEX IF NOT EXISTS idx_business_build_execution_requests_approval_state      ON business_build_execution_requests (approval_state);
+
+-- business_build_agent_lanes
+CREATE TABLE IF NOT EXISTS business_build_agent_lanes (
+  lane_id                  TEXT        NOT NULL,
+  build_session_id         TEXT        NOT NULL,
+  lane                     TEXT        NOT NULL,
+  owner_capability         TEXT,
+  current_state            TEXT        NOT NULL,
+  next_action              TEXT,
+  blocker_summary          TEXT,
+  dispatch_allowed         BOOLEAN     NOT NULL DEFAULT false,
+  worker_execution_allowed BOOLEAN     NOT NULL DEFAULT false,
+  project_mutation_allowed BOOLEAN     NOT NULL DEFAULT false,
+  evidence_refs            JSONB,
+  created_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at               TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (lane_id)
+);
+CREATE INDEX IF NOT EXISTS idx_business_build_agent_lanes_build_session_id ON business_build_agent_lanes (build_session_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_agent_lanes_lane             ON business_build_agent_lanes (lane);
+CREATE INDEX IF NOT EXISTS idx_business_build_agent_lanes_current_state    ON business_build_agent_lanes (current_state);
+CREATE INDEX IF NOT EXISTS idx_business_build_agent_lanes_owner_capability ON business_build_agent_lanes (owner_capability);
+
+-- business_build_prd_snapshots
+CREATE TABLE IF NOT EXISTS business_build_prd_snapshots (
+  snapshot_id            TEXT        NOT NULL,
+  build_session_id       TEXT        NOT NULL,
+  prd_id                 TEXT,
+  title                  TEXT        NOT NULL,
+  problem_summary        TEXT,
+  customer_summary       TEXT,
+  solution_summary       TEXT,
+  business_model_summary TEXT,
+  readiness_percent      INTEGER,
+  snapshot_state         TEXT        NOT NULL,
+  evidence_refs          JSONB,
+  created_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+  updated_at             TIMESTAMPTZ NOT NULL DEFAULT now(),
+  PRIMARY KEY (snapshot_id)
+);
+CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_build_session_id  ON business_build_prd_snapshots (build_session_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_prd_id            ON business_build_prd_snapshots (prd_id);
+CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_snapshot_state    ON business_build_prd_snapshots (snapshot_state);
+CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_readiness_percent ON business_build_prd_snapshots (readiness_percent);
+CREATE INDEX IF NOT EXISTS idx_business_build_prd_snapshots_updated_at        ON business_build_prd_snapshots (updated_at);

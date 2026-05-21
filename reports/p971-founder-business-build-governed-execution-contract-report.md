@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P97.1
-- Generated at: 2026-05-21T00:44:45.855Z
+- Generated at: 2026-05-21T00:49:48.188Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: b6dea1d9
+- Validation HEAD: 3f92940e
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -36,7 +36,7 @@
 | platform roadmap records P97.1 | PASS |  |
 | README records P97.1 | PASS |  |
 | PRD records P97.1 | PASS |  |
-| phase status advanced | PASS | P97.1/P96.7/P97.2 |
+| phase status advanced | PASS | P97.2/P97.1/P97.3 |
 | roadmap tracks P97.1 | PASS |  |
 | P97.2 handoff exists | PASS |  |
 | status checker accepts P97 subphases | PASS |  |

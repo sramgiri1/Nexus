@@ -67,7 +67,7 @@ const rawPrivateIdPattern = /(?:project|private|token|tenant|workspace|founder)_
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p971-founder-business-build-governed-execution-contract"]));
 addCheck("contract phase is P97", contract.phase === "P97" && contract.title === "Founder Business Build Governed Execution Contract" && contract.classification === "NEXUS_OS_CHANGE");
 addCheck("contract has seven subphases", allSubphases.every((phaseId) => contract.subphases?.some((entry) => entry.phaseId === phaseId)));
-addCheck("P97.1 complete and P97.2 handoff exists", p971?.status === "complete" && contract.subphases?.some((entry) => entry.phaseId === "P97.2" && entry.status === "planned"));
+addCheck("P97.1 complete and P97.2 handoff exists", p971?.status === "complete" && contract.subphases?.some((entry) => entry.phaseId === "P97.2" && ["planned", "complete"].includes(entry.status)));
 addCheck("P97.1 includes implementation-grade fields", requiredContractFields.every((field) => Object.prototype.hasOwnProperty.call(p971 || {}, field)));
 addCheck("P97.1 allowed files scoped", p971?.allowedFiles?.includes("contracts/os-roadmap/p97-execution-contracts.json") && p971.allowedFiles.includes("scripts/check-p971-founder-business-build-governed-execution-contract.js"));
 addCheck("P97.1 forbids project and runtime mutation paths", p971?.forbiddenFiles?.includes("projects/**") && p971.forbiddenFiles.includes("providers/**") && p971.forbiddenFiles.includes("worker-runtime/**"));
@@ -80,20 +80,20 @@ addCheck("future data shapes preserve execution blocks", serializedContract.incl
 addCheck("Command Center UX requirements present", serializedContract.includes("DB-backed Chat with NEXUS") && serializedContract.includes("disabled reason") && serializedContract.includes("Preserve System theme"));
 addCheck("P96 parent contract closed", p96Contract.status === "complete");
 addCheck("docs record P97.1", docs.includes("P97.1 is complete") && docs.includes("npm run check:p971-founder-business-build-governed-execution-contract"));
-addCheck("platform roadmap records P97.1", platformRoadmap.includes("P97.1 is complete") && platformRoadmap.includes("P97.2 is next"));
+addCheck("platform roadmap records P97.1", platformRoadmap.includes("P97.1 is complete") && (platformRoadmap.includes("P97.2 is next") || platformRoadmap.includes("P97.2 is complete")));
 addCheck("README records P97.1", readme.includes("Current Status Through P97.1") && readme.includes("P97.1 governed Business Build DB CRUD contract"));
 addCheck("PRD records P97.1", prd.includes("updated through P97.1") && prd.includes("P97.1 defines the governed Business Build DB CRUD contract"));
 addCheck(
   "phase status advanced",
   statusById.get("P97")?.status === "in_progress"
     && statusById.get("P97.1")?.status === "complete"
-    && status.currentPhase === "P97.1"
-    && status.previousPhase === "P96.7"
-    && status.nextPhase === "P97.2",
+    && ["P97.1", "P97.2", "P97.3", "P97.4", "P97.5", "P97.6", "P97.7"].includes(status.currentPhase)
+    && ["P96.7", "P97.1", "P97.2", "P97.3", "P97.4", "P97.5", "P97.6"].includes(status.previousPhase)
+    && ["P97.2", "P97.3", "P97.4", "P97.5", "P97.6", "P97.7", "P98"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P97.1", roadmapById.get("P97")?.status === "in_progress" && roadmapById.get("P97.1")?.status === "complete");
-addCheck("P97.2 handoff exists", ["planned", "in_progress"].includes(statusById.get("P97.2")?.status) && ["planned", "in_progress"].includes(roadmapById.get("P97.2")?.status));
+addCheck("P97.2 handoff exists", ["planned", "in_progress", "complete"].includes(statusById.get("P97.2")?.status) && ["planned", "in_progress", "complete"].includes(roadmapById.get("P97.2")?.status));
 addCheck("status checker accepts P97 subphases", allSubphases.every((phaseId) => statusChecker.includes(`"${phaseId}"`)));
 addCheck("contract does not expose raw private IDs", !rawPrivateIdPattern.test(serializedContract));
 addCheck("contract does not invent runnable actions", !unsafeWords.test(JSON.stringify([contract, docs, platformRoadmap, readme, prd])));

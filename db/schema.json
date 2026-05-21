@@ -17,9 +17,18 @@
         "createdAt": "datetime",
         "updatedAt": "datetime"
       },
-      "requiredFields": ["projectId", "label", "mode"],
-      "indexes": ["mode", "active"],
-      "sourceMapping": ["contracts/missions/private-project-mission-contract.json"],
+      "requiredFields": [
+        "projectId",
+        "label",
+        "mode"
+      ],
+      "indexes": [
+        "mode",
+        "active"
+      ],
+      "sourceMapping": [
+        "contracts/missions/private-project-mission-contract.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "project_state",
       "redactionRequired": true,
@@ -37,9 +46,20 @@
         "source": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["contractId", "projectId", "missionText"],
-      "indexes": ["projectId", "mode", "source"],
-      "sourceMapping": ["contracts/missions/private-project-mission-contract.json", "reports/mission-composer-output.json"],
+      "requiredFields": [
+        "contractId",
+        "projectId",
+        "missionText"
+      ],
+      "indexes": [
+        "projectId",
+        "mode",
+        "source"
+      ],
+      "sourceMapping": [
+        "contracts/missions/private-project-mission-contract.json",
+        "reports/mission-composer-output.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "mission_state",
       "redactionRequired": true,
@@ -62,9 +82,21 @@
         "executionAllowed": "boolean",
         "createdAt": "datetime"
       },
-      "requiredFields": ["taskId", "projectId", "title", "state"],
-      "indexes": ["projectId", "missionId", "targetAgent", "state"],
-      "sourceMapping": ["contracts/missions/private-project-task-plan.json"],
+      "requiredFields": [
+        "taskId",
+        "projectId",
+        "title",
+        "state"
+      ],
+      "indexes": [
+        "projectId",
+        "missionId",
+        "targetAgent",
+        "state"
+      ],
+      "sourceMapping": [
+        "contracts/missions/private-project-task-plan.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "mission_state",
       "redactionRequired": true,
@@ -88,9 +120,23 @@
         "createdAt": "datetime",
         "updatedAt": "datetime"
       },
-      "requiredFields": ["taskId", "projectId", "title", "state"],
-      "indexes": ["projectId", "missionId", "state", "targetAgent", "capabilityId"],
-      "sourceMapping": ["local-state/runtime/tasks.json", "contracts/missions/private-project-task-plan.json"],
+      "requiredFields": [
+        "taskId",
+        "projectId",
+        "title",
+        "state"
+      ],
+      "indexes": [
+        "projectId",
+        "missionId",
+        "state",
+        "targetAgent",
+        "capabilityId"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/tasks.json",
+        "contracts/missions/private-project-task-plan.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "runtime_state",
       "redactionRequired": true,
@@ -108,9 +154,20 @@
         "status": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["actionId", "actionType", "status"],
-      "indexes": ["actionType", "projectId", "taskId", "status"],
-      "sourceMapping": ["local-state/runtime/actions.jsonl"],
+      "requiredFields": [
+        "actionId",
+        "actionType",
+        "status"
+      ],
+      "indexes": [
+        "actionType",
+        "projectId",
+        "taskId",
+        "status"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/actions.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "action_log",
       "redactionRequired": true,
@@ -127,9 +184,17 @@
         "capabilities": "array",
         "active": "boolean"
       },
-      "requiredFields": ["agentId", "role"],
-      "indexes": ["tier", "active"],
-      "sourceMapping": ["memory/agent-status.json"],
+      "requiredFields": [
+        "agentId",
+        "role"
+      ],
+      "indexes": [
+        "tier",
+        "active"
+      ],
+      "sourceMapping": [
+        "memory/agent-status.json"
+      ],
       "piiRisk": "none",
       "retentionClass": "config",
       "redactionRequired": false,
@@ -145,9 +210,16 @@
         "skillId": "string",
         "description": "string"
       },
-      "requiredFields": ["capabilityId", "agentId"],
-      "indexes": ["agentId"],
-      "sourceMapping": ["guardrails/agent-permissions.json"],
+      "requiredFields": [
+        "capabilityId",
+        "agentId"
+      ],
+      "indexes": [
+        "agentId"
+      ],
+      "sourceMapping": [
+        "guardrails/agent-permissions.json"
+      ],
       "piiRisk": "none",
       "retentionClass": "config",
       "redactionRequired": false,
@@ -164,9 +236,19 @@
         "targetAgent": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["contractId", "contractType"],
-      "indexes": ["contractType", "projectId", "targetAgent"],
-      "sourceMapping": ["contracts/missions/private-project-mission-contract.json", "contracts/missions/private-project-task-plan.json"],
+      "requiredFields": [
+        "contractId",
+        "contractType"
+      ],
+      "indexes": [
+        "contractType",
+        "projectId",
+        "targetAgent"
+      ],
+      "sourceMapping": [
+        "contracts/missions/private-project-mission-contract.json",
+        "contracts/missions/private-project-task-plan.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "mission_state",
       "redactionRequired": true,
@@ -183,9 +265,19 @@
         "result": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["evidenceId", "type", "result"],
-      "indexes": ["taskId", "type", "result"],
-      "sourceMapping": ["local-state/runtime/evidence.jsonl"],
+      "requiredFields": [
+        "evidenceId",
+        "type",
+        "result"
+      ],
+      "indexes": [
+        "taskId",
+        "type",
+        "result"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/evidence.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "evidence_log",
       "redactionRequired": true,
@@ -202,9 +294,18 @@
         "agent": "string",
         "timestamp": "datetime"
       },
-      "requiredFields": ["auditId", "eventType"],
-      "indexes": ["taskId", "eventType", "agent"],
-      "sourceMapping": ["local-state/runtime/audit.jsonl"],
+      "requiredFields": [
+        "auditId",
+        "eventType"
+      ],
+      "indexes": [
+        "taskId",
+        "eventType",
+        "agent"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/audit.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "audit_log",
       "redactionRequired": true,
@@ -220,9 +321,17 @@
         "eventType": "string",
         "timestamp": "datetime"
       },
-      "requiredFields": ["eventId", "eventType"],
-      "indexes": ["taskId", "eventType"],
-      "sourceMapping": ["local-state/runtime/events.jsonl"],
+      "requiredFields": [
+        "eventId",
+        "eventType"
+      ],
+      "indexes": [
+        "taskId",
+        "eventType"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/events.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "runtime_state",
       "redactionRequired": true,
@@ -239,9 +348,17 @@
         "requestedBy": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["approvalId", "decision"],
-      "indexes": ["taskId", "decision"],
-      "sourceMapping": ["local-state/runtime/approvals.jsonl"],
+      "requiredFields": [
+        "approvalId",
+        "decision"
+      ],
+      "indexes": [
+        "taskId",
+        "decision"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/approvals.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "approval_log",
       "redactionRequired": true,
@@ -258,9 +375,18 @@
         "agent": "string",
         "timestamp": "datetime"
       },
-      "requiredFields": ["incidentId", "type"],
-      "indexes": ["type", "severity", "agent"],
-      "sourceMapping": ["local-state/runtime/incidents.jsonl"],
+      "requiredFields": [
+        "incidentId",
+        "type"
+      ],
+      "indexes": [
+        "type",
+        "severity",
+        "agent"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/incidents.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "safety_log",
       "redactionRequired": true,
@@ -277,9 +403,19 @@
         "current": "boolean",
         "next": "boolean"
       },
-      "requiredFields": ["phase", "label", "status"],
-      "indexes": ["status", "current", "next"],
-      "sourceMapping": ["docs/architecture/NEXUS_PLATFORM_ROADMAP.md"],
+      "requiredFields": [
+        "phase",
+        "label",
+        "status"
+      ],
+      "indexes": [
+        "status",
+        "current",
+        "next"
+      ],
+      "sourceMapping": [
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md"
+      ],
       "piiRisk": "none",
       "retentionClass": "config",
       "redactionRequired": false,
@@ -295,9 +431,17 @@
         "category": "string",
         "enabledNow": "boolean"
       },
-      "requiredFields": ["workflowId", "label"],
-      "indexes": ["category", "enabledNow"],
-      "sourceMapping": ["dashboard/src/data/commandCenterViewModel.js"],
+      "requiredFields": [
+        "workflowId",
+        "label"
+      ],
+      "indexes": [
+        "category",
+        "enabledNow"
+      ],
+      "sourceMapping": [
+        "dashboard/src/data/commandCenterViewModel.js"
+      ],
       "piiRisk": "none",
       "retentionClass": "config",
       "redactionRequired": false,
@@ -315,9 +459,19 @@
         "validationStatus": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["actionId", "implementationType"],
-      "indexes": ["taskId", "implementationType", "validationStatus"],
-      "sourceMapping": ["reports/implementation-result.json", "local-state/runtime/actions.jsonl"],
+      "requiredFields": [
+        "actionId",
+        "implementationType"
+      ],
+      "indexes": [
+        "taskId",
+        "implementationType",
+        "validationStatus"
+      ],
+      "sourceMapping": [
+        "reports/implementation-result.json",
+        "local-state/runtime/actions.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "action_log",
       "redactionRequired": true,
@@ -334,9 +488,17 @@
         "requestedBy": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["reviewId", "decision"],
-      "indexes": ["taskId", "decision"],
-      "sourceMapping": ["local-state/runtime/reviews.jsonl"],
+      "requiredFields": [
+        "reviewId",
+        "decision"
+      ],
+      "indexes": [
+        "taskId",
+        "decision"
+      ],
+      "sourceMapping": [
+        "local-state/runtime/reviews.jsonl"
+      ],
       "piiRisk": "low",
       "retentionClass": "review_log",
       "redactionRequired": true,
@@ -354,9 +516,17 @@
         "status": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["validationId", "status"],
-      "indexes": ["projectId", "status"],
-      "sourceMapping": ["reports/careloop-backend-validation.json"],
+      "requiredFields": [
+        "validationId",
+        "status"
+      ],
+      "indexes": [
+        "projectId",
+        "status"
+      ],
+      "sourceMapping": [
+        "reports/careloop-backend-validation.json"
+      ],
       "piiRisk": "low",
       "retentionClass": "validation_log",
       "redactionRequired": true,
@@ -379,9 +549,20 @@
         "createdAt": "datetime",
         "updatedAt": "datetime"
       },
-      "requiredFields": ["sessionId", "publicLabel", "currentState"],
-      "indexes": ["currentState", "ownerCapability", "updatedAt"],
-      "sourceMapping": ["dashboard/src/data/founderIntake.js", "dashboard/src/data/businessBuild.js"],
+      "requiredFields": [
+        "sessionId",
+        "publicLabel",
+        "currentState"
+      ],
+      "indexes": [
+        "currentState",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "dashboard/src/data/founderIntake.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
       "piiRisk": "low",
       "retentionClass": "founder_runtime_state",
       "redactionRequired": true,
@@ -400,9 +581,22 @@
         "turnState": "string",
         "createdAt": "datetime"
       },
-      "requiredFields": ["turnId", "sessionId", "speaker", "turnState"],
-      "indexes": ["sessionId", "speaker", "turnState", "createdAt"],
-      "sourceMapping": ["live-ready/enterpriseFounderQnaTurnState.js", "dashboard/src/data/founderIntake.js"],
+      "requiredFields": [
+        "turnId",
+        "sessionId",
+        "speaker",
+        "turnState"
+      ],
+      "indexes": [
+        "sessionId",
+        "speaker",
+        "turnState",
+        "createdAt"
+      ],
+      "sourceMapping": [
+        "live-ready/enterpriseFounderQnaTurnState.js",
+        "dashboard/src/data/founderIntake.js"
+      ],
       "piiRisk": "low",
       "retentionClass": "founder_runtime_state",
       "redactionRequired": true,
@@ -426,9 +620,22 @@
         "createdAt": "datetime",
         "updatedAt": "datetime"
       },
-      "requiredFields": ["prdId", "sessionId", "title", "currentState"],
-      "indexes": ["sessionId", "currentState", "readinessPercent", "updatedAt"],
-      "sourceMapping": ["live-ready/founderPrdSafeAuthoring.js", "dashboard/src/data/businessBuild.js"],
+      "requiredFields": [
+        "prdId",
+        "sessionId",
+        "title",
+        "currentState"
+      ],
+      "indexes": [
+        "sessionId",
+        "currentState",
+        "readinessPercent",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderPrdSafeAuthoring.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
       "piiRisk": "low",
       "retentionClass": "founder_runtime_state",
       "redactionRequired": true,
@@ -454,11 +661,185 @@
         "createdAt": "datetime",
         "updatedAt": "datetime"
       },
-      "requiredFields": ["planId", "sessionId", "lane", "currentState"],
-      "indexes": ["sessionId", "prdId", "lane", "currentState", "ownerCapability"],
-      "sourceMapping": ["live-ready/founderWorkstreamActivationPlan.js", "dashboard/src/data/businessBuild.js"],
+      "requiredFields": [
+        "planId",
+        "sessionId",
+        "lane",
+        "currentState"
+      ],
+      "indexes": [
+        "sessionId",
+        "prdId",
+        "lane",
+        "currentState",
+        "ownerCapability"
+      ],
+      "sourceMapping": [
+        "live-ready/founderWorkstreamActivationPlan.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
       "piiRisk": "low",
       "retentionClass": "founder_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "business_build_sessions",
+      "purpose": "Durable local Business Build session records derived from founder workflow and PRD readiness.",
+      "primaryKey": "buildSessionId",
+      "fields": {
+        "buildSessionId": "string",
+        "publicLabel": "string",
+        "sessionId": "string",
+        "prdId": "string",
+        "currentState": "string",
+        "readinessPercent": "integer",
+        "nextAction": "string",
+        "ownerCapability": "string",
+        "evidenceRefs": "array",
+        "activityRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "buildSessionId",
+        "publicLabel",
+        "currentState"
+      ],
+      "indexes": [
+        "sessionId",
+        "prdId",
+        "currentState",
+        "ownerCapability",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "dashboard/src/data/businessBuild.js",
+        "live-ready/founderBusinessBuildExecutionReadiness.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "business_build_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "business_build_execution_requests",
+      "purpose": "Governed local request records for Business Build execution review without dispatch or project mutation.",
+      "primaryKey": "requestId",
+      "fields": {
+        "requestId": "string",
+        "buildSessionId": "string",
+        "requestedLane": "string",
+        "requestedOperation": "string",
+        "requestState": "string",
+        "approvalState": "string",
+        "disabledReason": "string",
+        "validationCommands": "array",
+        "executionAllowed": "boolean",
+        "dispatchAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "requestId",
+        "buildSessionId",
+        "requestedOperation",
+        "requestState"
+      ],
+      "indexes": [
+        "buildSessionId",
+        "requestedLane",
+        "requestedOperation",
+        "requestState",
+        "approvalState"
+      ],
+      "sourceMapping": [
+        "live-ready/founderBusinessBuildExecutionReadiness.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "business_build_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "business_build_agent_lanes",
+      "purpose": "Durable local graphical agent lane state for Business Build planning before dispatch is allowed.",
+      "primaryKey": "laneId",
+      "fields": {
+        "laneId": "string",
+        "buildSessionId": "string",
+        "lane": "string",
+        "ownerCapability": "string",
+        "currentState": "string",
+        "nextAction": "string",
+        "blockerSummary": "string",
+        "dispatchAllowed": "boolean",
+        "workerExecutionAllowed": "boolean",
+        "projectMutationAllowed": "boolean",
+        "evidenceRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "laneId",
+        "buildSessionId",
+        "lane",
+        "currentState"
+      ],
+      "indexes": [
+        "buildSessionId",
+        "lane",
+        "currentState",
+        "ownerCapability"
+      ],
+      "sourceMapping": [
+        "dashboard/src/data/businessBuild.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "business_build_runtime_state",
+      "redactionRequired": true,
+      "fileFallbackSource": "dashboard/src/data/businessBuild.js"
+    },
+    {
+      "name": "business_build_prd_snapshots",
+      "purpose": "Durable local PRD-to-workstream snapshots used by Business Build planning before execution is allowed.",
+      "primaryKey": "snapshotId",
+      "fields": {
+        "snapshotId": "string",
+        "buildSessionId": "string",
+        "prdId": "string",
+        "title": "string",
+        "problemSummary": "string",
+        "customerSummary": "string",
+        "solutionSummary": "string",
+        "businessModelSummary": "string",
+        "readinessPercent": "integer",
+        "snapshotState": "string",
+        "evidenceRefs": "array",
+        "createdAt": "datetime",
+        "updatedAt": "datetime"
+      },
+      "requiredFields": [
+        "snapshotId",
+        "buildSessionId",
+        "title",
+        "snapshotState"
+      ],
+      "indexes": [
+        "buildSessionId",
+        "prdId",
+        "snapshotState",
+        "readinessPercent",
+        "updatedAt"
+      ],
+      "sourceMapping": [
+        "live-ready/founderPrdSafeAuthoring.js",
+        "dashboard/src/data/businessBuild.js"
+      ],
+      "piiRisk": "low",
+      "retentionClass": "business_build_runtime_state",
       "redactionRequired": true,
       "fileFallbackSource": "dashboard/src/data/businessBuild.js"
     }
