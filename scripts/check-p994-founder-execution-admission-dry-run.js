@@ -51,7 +51,7 @@ const forbiddenAllowedPatterns = [
 ];
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p994-founder-execution-admission-dry-run"]));
-addCheck("contract marks P99.4 complete", p994?.status === "complete" && subphaseById.get("P99.5")?.status === "planned");
+addCheck("contract marks P99.4 complete", p994?.status === "complete" && ["planned", "complete"].includes(subphaseById.get("P99.5")?.status));
 addCheck("P99.4 allowed files scoped", p994?.allowedFiles?.includes("dashboard/src/data/businessBuild.js") && p994.allowedFiles.includes("reports/p994-founder-execution-admission-dry-run-report.md"));
 addCheck("P99.4 allowed files avoid forbidden roots", !p994?.allowedFiles?.some((file) => forbiddenAllowedPatterns.some((pattern) => pattern.test(file))));
 addCheck("source exports admission dry run", source.includes("export function buildFounderExecutionAdmissionDryRun"));
@@ -62,12 +62,12 @@ addCheck("docs record P99.4", p99Plan.includes("P99.4 is complete") && p99Plan.i
 addCheck(
   "phase status advanced",
   statusById.get("P99.4")?.status === "complete"
-    && status.currentPhase === "P99.4"
-    && status.previousPhase === "P99.3"
-    && status.nextPhase === "P99.5",
+    && ["P99.4", "P99.5", "P99.6", "P99.7"].includes(status.currentPhase)
+    && ["P99.3", "P99.4", "P99.5", "P99.6"].includes(status.previousPhase)
+    && ["P99.5", "P99.6", "P99.7", "P100"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("roadmap tracks P99.4", roadmapById.get("P99.4")?.status === "complete" && roadmapById.get("P99.5")?.status === "planned");
+addCheck("roadmap tracks P99.4", roadmapById.get("P99.4")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P99.5")?.status));
 addCheck("no raw private IDs or credentials", !/private-project-|project_[A-Za-z0-9_-]*\d|tenant_[A-Za-z0-9_-]*\d|workspace_[A-Za-z0-9_-]*\d|Bearer\s+|jwt|id_token|access_token/i.test(JSON.stringify(dryRun)));
 addCheck("no fake runnable actions", !/run now|execute now|deploy now|apply now|call provider now|dispatch agent now|create project now|generate app now/i.test(JSON.stringify(dryRun)));
 

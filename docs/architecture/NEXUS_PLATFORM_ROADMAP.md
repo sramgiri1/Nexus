@@ -2088,6 +2088,11 @@ P99.4 is complete. It adds deterministic execution admission dry-run records
 from the approval envelope, exposes them on the Business Build view model, and
 keeps approval-ready and executable counts at zero. P99.5 is next for Command
 Center UX.
+P99.5 is complete. It adds the display-safe Execution Admission card to
+Founder Lite, Agent Flow, Business Build, and DB Runtime, showing admission
+state, approval gates, blocked lanes, owner, next action, evidence, activity,
+and cost impact without enabling executable controls. P99.6 is next for
+aggregate validation, docs, and roadmap updates.
 
 The detailed plan lives in
 [`P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md`](P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md).

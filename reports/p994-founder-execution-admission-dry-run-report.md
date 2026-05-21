@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: P99.4
-- Generated at: 2026-05-21T11:40:37.616Z
+- Generated at: 2026-05-21T11:47:07.344Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 8e1e436f
+- Validation HEAD: 67fd8f59
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -26,7 +26,7 @@
 | dry run remains non-executable | PASS |  |
 | dry run lanes are blocked | PASS |  |
 | docs record P99.4 | PASS |  |
-| phase status advanced | PASS | P99.4/P99.3/P99.5 |
+| phase status advanced | PASS | P99.5/P99.4/P99.6 |
 | roadmap tracks P99.4 | PASS |  |
 | no raw private IDs or credentials | PASS |  |
 | no fake runnable actions | PASS |  |

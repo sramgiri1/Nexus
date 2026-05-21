@@ -66,8 +66,23 @@ Validation:
 
 ## P99.5 Command Center UX
 
-P99.5 is planned. It will show admission readiness in Command Center using
-display-safe language and no fake working actions.
+P99.5 is complete. It adds a display-safe Execution Admission card to Founder
+Lite, Agent Flow, Business Build, and DB Runtime. The card shows admission
+state, missing approval gates, blocked lanes, owner capability, next action,
+disabled reason, evidence, activity, and cost impact without adding runnable
+approval, dispatch, worker/tool, project mutation, hosted DB, deploy, package,
+provider/model, network, or spend actions. P99.6 is next for aggregate
+validation, docs, and roadmap closure.
+
+Validation:
+
+- `npm run check:p995-command-center-execution-admission-ux`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Execution admission"`
+- `cd dashboard && npm run build`
+- `npm run check:p994-founder-execution-admission-dry-run`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P99.6 Tests / Checkers / Docs
 

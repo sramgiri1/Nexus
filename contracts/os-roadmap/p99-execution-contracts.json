@@ -200,7 +200,7 @@
     {
       "phaseId": "P99.5",
       "title": "Command Center UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Surface execution admission readiness in Command Center without runnable actions.",
       "narrowScope": "UX display only.",
@@ -208,11 +208,16 @@
         "dashboard/src/pages/CommandCenterV2.jsx",
         "dashboard/tests/routes.spec.js",
         "scripts/check-p995-command-center-execution-admission-ux.js",
+        "scripts/check-p994-founder-execution-admission-dry-run.js",
         "package.json",
         "contracts/os-roadmap/p99-execution-contracts.json",
+        "docs/architecture/P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p995-command-center-execution-admission-ux-report.md"
+        "reports/p995-command-center-execution-admission-ux-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",

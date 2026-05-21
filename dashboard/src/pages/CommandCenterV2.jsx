@@ -2768,6 +2768,12 @@ function CommandCenterLitePage() {
             dryRun={liteBusinessBuild.liveWorkstreamHandoffDryRun}
             surfaceLabel="Lite Live Workstream Handoff"
           />
+          <ExecutionAdmissionCard
+            admission={liteBusinessBuild.executionAdmission}
+            envelope={liteBusinessBuild.executionAdmissionApprovalEnvelope}
+            dryRun={liteBusinessBuild.executionAdmissionDryRun}
+            surfaceLabel="Lite Execution Admission"
+          />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -2908,6 +2914,12 @@ function AgentFlowPage() {
         handoff={businessBuild.liveWorkstreamHandoff}
         dryRun={businessBuild.liveWorkstreamHandoffDryRun}
         surfaceLabel="Agent Flow Live Workstream Handoff"
+      />
+      <ExecutionAdmissionCard
+        admission={businessBuild.executionAdmission}
+        envelope={businessBuild.executionAdmissionApprovalEnvelope}
+        dryRun={businessBuild.executionAdmissionDryRun}
+        surfaceLabel="Agent Flow Execution Admission"
       />
     </div>
   );
@@ -7694,6 +7706,12 @@ function DurableStatePage({ vm }) {
               dryRun={businessBuildRuntimeView.liveWorkstreamHandoffDryRun}
               surfaceLabel="DB Runtime Live Workstream Handoff"
             />
+            <ExecutionAdmissionCard
+              admission={businessBuildRuntimeView.executionAdmission}
+              envelope={businessBuildRuntimeView.executionAdmissionApprovalEnvelope}
+              dryRun={businessBuildRuntimeView.executionAdmissionDryRun}
+              surfaceLabel="DB Runtime Execution Admission"
+            />
             <FounderPersistenceControlsCard controls={founderPersistenceControls} />
             <div className="ccv2-card">
               <div className="ccv2-section-heading">Blockers</div>
@@ -9374,6 +9392,12 @@ function BusinessBuildPage() {
               dryRun={build.liveWorkstreamHandoffDryRun}
               surfaceLabel="Business Build Live Workstream Handoff"
             />
+            <ExecutionAdmissionCard
+              admission={build.executionAdmission}
+              envelope={build.executionAdmissionApprovalEnvelope}
+              dryRun={build.executionAdmissionDryRun}
+              surfaceLabel="Business Build Execution Admission"
+            />
             <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
               <div className="ccv2-section-heading">Founder DB Workflow</div>
               <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
@@ -9629,6 +9653,84 @@ function BusinessBuildPage() {
           </CommandTabPanel>
         </CommandTabs>
       </div>
+    </div>
+  );
+}
+
+function ExecutionAdmissionCard({
+  admission,
+  envelope,
+  dryRun,
+  surfaceLabel = "Execution Admission",
+}) {
+  if (!admission || !envelope || !dryRun) return null;
+
+  const lanes = Array.isArray(dryRun.lanes) ? dryRun.lanes.slice(0, 4) : [];
+  const approvals = Array.isArray(envelope.approvals) ? envelope.approvals.slice(0, 5) : [];
+  const blockers = Array.isArray(dryRun.blockers) ? dryRun.blockers.slice(0, 5) : [];
+  const safetyRows = Array.isArray(dryRun.safetyRows) ? dryRun.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Execution admission readiness">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Execution Admission</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {dryRun.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Execution blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Admission state</span><span className="ccv2-page-summary-value">{admission.currentState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval envelope</span><span className="ccv2-page-summary-value">{envelope.currentState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Approval gates</span><span className="ccv2-page-summary-value">{envelope.approvalsAcceptedCount || 0} of {envelope.approvalsRequiredCount || approvals.length} accepted</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Blocked lanes</span><span className="ccv2-page-summary-value">{dryRun.blockedLaneCount || lanes.length} of {dryRun.laneCount || lanes.length}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable lanes</span><span className="ccv2-page-summary-value">{dryRun.executableCount || 0}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{dryRun.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{dryRun.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{dryRun.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{dryRun.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{dryRun.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{dryRun.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {lanes.map((lane) => (
+          <div
+            key={lane.lane}
+            aria-label={`${lane.lane} execution admission lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.lane}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{lane.previewDecision}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.dryRunState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {approvals.map((approval) => (
+          <div className="ccv2-safety-row" key={approval.label}>
+            <span className="ccv2-safety-row__label">{approval.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{approval.state}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
     </div>
   );
 }

@@ -3526,6 +3526,51 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
+  test("Execution admission readiness appears without runnable actions", async ({ page }) => {
+    const errors = captureClientErrors(page);
+
+    await page.addInitScript(() => {
+      window.localStorage.setItem("nexus-lite-founder-idea", "Build a simple iOS Snake game for the App Store");
+    });
+
+    await page.goto("/command-center/lite");
+    const liteAdmission = page.getByLabel("Execution admission readiness");
+    await expect(liteAdmission).toContainText("Lite Execution Admission");
+    await expect(liteAdmission).toContainText("Execution Admission");
+    await expect(liteAdmission).toContainText("Execution blocked");
+    await expect(liteAdmission).toContainText("Approval gates");
+    await expect(liteAdmission).toContainText("0 of 5 accepted");
+    await expect(liteAdmission).toContainText("Executable lanes");
+    await expect(liteAdmission).toContainText("reports/p994-founder-execution-admission-dry-run-report.md");
+
+    await page.goto("/command-center/business-build");
+    const businessAdmission = page.getByLabel("Execution admission readiness");
+    await expect(businessAdmission).toContainText("Business Build Execution Admission");
+    await expect(businessAdmission).toContainText("Execution Admission Dry Run Ready Execution Blocked");
+    await expect(businessAdmission).toContainText("Do Not Admit Execution");
+    await expect(businessAdmission).toContainText("Provider spend");
+    await expect(businessAdmission).toContainText("Blocked");
+
+    await page.goto("/command-center/agent-flow");
+    const agentAdmission = page.getByLabel("Execution admission readiness");
+    await expect(agentAdmission).toContainText("Agent Flow Execution Admission");
+    await expect(agentAdmission).toContainText("NEXUS Execution Admission Dry Run");
+    await expect(agentAdmission).toContainText("Approval envelope");
+
+    await page.goto("/command-center/database");
+    await commandTab(page, "DB Runtime").click();
+    const dbAdmission = activeCommandTabPanel(page).getByLabel("Execution admission readiness");
+    await expect(dbAdmission).toContainText("DB Runtime Execution Admission");
+    await expect(dbAdmission).toContainText("Project mutation");
+    await expect(dbAdmission).toContainText("Hosted DB");
+
+    const body = await page.locator("body").innerText();
+    expect(body).not.toContain("DemoApp");
+    expect(body).not.toMatch(/private-project|raw JSON|raw logs|raw policy/i);
+    expect(body).not.toMatch(/run now|execute now|deploy now|apply now|approve now|call provider now|create project now|dispatch agent now|write sqlite now/i);
+    expect(errors).toEqual([]);
+  });
+
   test("Business Build Local PRD tab shows safe in-memory artifact", async ({ page }) => {
     const errors = captureClientErrors(page);
 

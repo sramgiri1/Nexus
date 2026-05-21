@@ -11906,20 +11906,22 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "8e1e436f",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P99.4 admission dry-run records are complete; P99.5 Command Center UX is next.",
+      "summary": "P99.5 Command Center execution admission UX is complete; P99.6 validation/docs is next.",
       "checksRun": [
+        "npm run check:p995-command-center-execution-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Execution admission\"",
+        "cd dashboard && npm run build",
         "npm run check:p994-founder-execution-admission-dry-run",
-        "npm run check:p993-founder-execution-admission-approval-envelope",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P99 remains in progress. P99.4 is dry-run data only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99 remains in progress. P99.5 is display-safe UX only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P99.5",
+      "nextPhase": "P99.6",
       "commandCenterVisible": true,
       "label": "Admission Dry Run",
       "detail": "P99 admission dry run complete; Command Center UX next."
@@ -12028,14 +12030,22 @@
       "title": "Command Center UX",
       "track": "NEXUS_OS",
       "order": 135.5,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned display-safe Command Center execution admission UX.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added display-safe Execution Admission UX to Lite, Agent Flow, Business Build, and DB Runtime.",
+      "checksRun": [
+        "npm run check:p995-command-center-execution-admission-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Execution admission\"",
+        "cd dashboard && npm run build",
+        "npm run check:p994-founder-execution-admission-dry-run",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P99.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99.5 is display-safe UX only. It does not approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P99.6",
       "commandCenterVisible": true,
@@ -12083,8 +12093,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P99.4",
-  "previousPhase": "P99.3",
-  "nextPhase": "P99.5",
+  "currentPhase": "P99.5",
+  "previousPhase": "P99.4",
+  "nextPhase": "P99.6",
   "currentPhaseStatus": "complete"
 }
