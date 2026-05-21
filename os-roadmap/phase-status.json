@@ -12108,7 +12108,7 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6a19a65b",
       "completedAt": "",
       "summary": "P100.3 founder governance pages are complete; P100.4 delivery page utility is next.",
       "checksRun": [
@@ -12187,7 +12187,7 @@
       "order": 136.3,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "6a19a65b",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added founder governance boards to Approvals, Verification Gates, Contracts, Evidence, Safety Center, Cost Center, Policy Center, and Secrets Boundary with purpose, current state, next action, blocker, owner, evidence, activity, cost, and governance lane context.",
       "checksRun": [
