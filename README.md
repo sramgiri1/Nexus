@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P98.6
+## Current Status Through P99.6
 
-P41.5 through P98.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P99.6 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
@@ -50,7 +50,11 @@ top of those DB-backed Business Build records: Command Center Lite, Business
 Build, Agent Flow, and DB Runtime show display-safe handoff packets, local
 dry-run lane previews, owner capability, next action, blockers, disabled
 reason, evidence/activity location, and cost posture while execution stays
-blocked.
+blocked. P99 moves that handoff into governed execution admission review:
+Business Build now exposes a display-safe admission model, missing approval
+envelope, deterministic admission dry-run records, and Command Center Execution
+Admission UX across Lite, Business Build, Agent Flow, and DB Runtime. P99.6
+updates aggregate validation and docs while executable lane count remains `0`.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -127,6 +131,15 @@ The Command Center and local operator surface have:
   It does not dispatch agents, execute workers/tools, mutate project source,
   use hosted DBs, deploy, package, call providers/models, use network calls, or
   spend.
+- P99 governed execution admission readiness: implementation-grade admission
+  contract, display-safe admission model, explicit approval envelope,
+  deterministic admission dry-run records, Command Center Execution Admission
+  UX across Lite, Business Build, Agent Flow, and DB Runtime, aggregate
+  validation, and docs/roadmap readiness for future scoped execution admission.
+  Approval gates are missing by design, executable lane count remains `0`, and
+  provider/model calls, agent dispatch, worker/tool execution, project mutation,
+  hosted DB mutation, deploy, release, export, package creation, network calls,
+  and provider spend remain blocked.
 
 ## CareLoop Project Progress
 
@@ -308,14 +321,15 @@ npm run nexus:down
 - P93 Enterprise Live Runtime Expansion: [docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md](docs/architecture/P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md)
 - P94 Founder Runtime DB CRUD Workflow Wiring: [docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md](docs/architecture/P94_FOUNDER_RUNTIME_DB_CRUD_WORKFLOW_WIRING_PLAN.md)
 - P98 Founder Business Build Live Workstream Handoff: [docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md](docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md)
+- P99 Founder Business Build Governed Execution Admission Handoff: [docs/architecture/P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md](docs/architecture/P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md)
 - Conversational command interface: [docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md](docs/architecture/CONVERSATIONAL_NEXUS_COMMAND_INTERFACE.md)
 - Visual QA audit: [reports/ui-audit](reports/ui-audit/visual-qa-report.md)
 
 ## Next Steps
 
-P98.7 is next. It should run final P98 validation, stamp real commits, close
-the parent P98 phase, and prepare the next scoped handoff while preserving the
-safety boundary:
+P99.7 is next. It should run final P99 validation, stamp real commits, close
+the parent P99 phase, and prepare the next scoped handoff while preserving the
+execution admission safety boundary:
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
   mutation, hosted DB mutation, deploy/release/export/package, and spend blocked

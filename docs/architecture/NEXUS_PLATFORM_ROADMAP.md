@@ -2093,6 +2093,10 @@ Founder Lite, Agent Flow, Business Build, and DB Runtime, showing admission
 state, approval gates, blocked lanes, owner, next action, evidence, activity,
 and cost impact without enabling executable controls. P99.6 is next for
 aggregate validation, docs, and roadmap updates.
+P99.6 is complete. It aggregates P99 validation evidence and updates README,
+PRD, Command Center guide, the P99 plan, platform roadmap, reports, and OS
+phase status while preserving blocked execution admission. P99.7 is next for
+final validation and parent phase closure.
 
 The detailed plan lives in
 [`P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md`](P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md).

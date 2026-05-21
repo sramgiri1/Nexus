@@ -7099,22 +7099,20 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "55535c9a",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P99.5 Command Center execution admission UX is complete; P99.6 validation/docs is next.",
+      "summary": "P99.6 execution admission validation/docs are complete; P99.7 final validation is next.",
       "checksRun": [
+        "npm run check:p996-execution-admission-validation-docs",
         "npm run check:p995-command-center-execution-admission-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Execution admission\"",
-        "cd dashboard && npm run build",
-        "npm run check:p994-founder-execution-admission-dry-run",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P99 remains in progress. P99.5 is display-safe UX only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99 remains in progress. P99.6 is validation/docs only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P99.6",
+      "nextPhase": "P99.7",
       "commandCenterVisible": true,
       "label": "Admission Dry Run",
       "detail": "P99 admission dry run complete; Command Center UX next."
@@ -7250,14 +7248,20 @@
       "title": "Tests / Checkers / Docs",
       "track": "NEXUS_OS",
       "order": 135.6,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned aggregate P99 validation, docs, roadmap, reports, and status updates.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Updated P99 aggregate validation, README, PRD, Command Center guide, roadmap, reports, and OS status.",
+      "checksRun": [
+        "npm run check:p996-execution-admission-validation-docs",
+        "npm run check:p995-command-center-execution-admission-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P99.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99.6 is validation/docs only. It does not change Command Center UX, approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P99.7",
       "commandCenterVisible": true,
@@ -7285,8 +7289,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P99.5",
-  "previousPhase": "P99.4",
-  "nextPhase": "P99.6",
+  "currentPhase": "P99.6",
+  "previousPhase": "P99.5",
+  "nextPhase": "P99.7",
   "currentPhaseStatus": "complete"
 }

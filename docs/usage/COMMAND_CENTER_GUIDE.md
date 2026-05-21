@@ -127,6 +127,29 @@ not enabled yet.
   handoff report`; do not expose raw table names, raw private IDs, raw JSON/log
   dumps, policy dumps, demo app surfaces, or fake working actions.
 
+## Business Build Execution Admission
+
+- Routes: `/command-center/lite`, `/command-center/business-build`,
+  `/command-center/agent-flow`, and Durable State / DB Runtime.
+- Purpose: show the P99 display-safe admission review state for the P98 live
+  workstream handoff before any execution authority exists.
+- Current P99 posture: admission model, approval envelope, and admission
+  dry-run records are visible. Approval gates remain missing by design;
+  executable lane count remains `0`; every lane is blocked.
+- Shown state: admission state, approval envelope state, approval gates,
+  blocked lanes, executable lanes, owner capability, next action, disabled
+  reason, evidence/activity location, cost impact, safety rows, and blockers.
+- Operator workflow: use the card to see exactly which approvals and evidence
+  must exist before a later scoped phase can admit a lane for execution. Do not
+  treat the admission dry run as approval or dispatch.
+- Still blocked: provider/model calls, agent dispatch, worker/tool execution,
+  project mutation, hosted DB mutation, network calls, deploy, release, export,
+  package creation, and provider spend.
+- UX safety: primary cards should use founder/operator labels such as
+  `Execution Admission`, `Execution blocked`, `Approval gates`, and
+  `Do Not Admit Execution`; do not expose raw private IDs, raw table names, raw
+  JSON/log dumps, policy dumps, demo app surfaces, or fake working actions.
+
 ## Using Command Center Tabs
 
 - Tabs split high-density routes into focused operator sections without changing backend behavior.

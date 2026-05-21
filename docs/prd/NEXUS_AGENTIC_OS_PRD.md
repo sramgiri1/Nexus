@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P98.6 Founder Business Build Live Workstream Handoff Docs/Roadmap
+**Status:** Approved; updated through P99.6 Founder Business Build Governed Execution Admission Docs/Roadmap
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P98.6
+## 1A. Current Implementation Status Through P99.6
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P98.6:
+P99.6:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -83,8 +83,18 @@ P98.6:
 - Command Center Lite, Business Build, Agent Flow, and DB Runtime show the P98
   live workstream handoff and dry-run state without raw private IDs, raw DB
   table names, raw JSON/log/policy dumps, or runnable execution actions.
+- P99 defines the governed execution admission handoff over P98 live workstream
+  handoff packets.
+- P99 adds a display-safe admission model, explicit approval envelope, and
+  deterministic admission dry-run records for future scoped execution review.
+- Command Center Lite, Business Build, Agent Flow, and DB Runtime show the P99
+  Execution Admission card with admission state, approval gates, blocked lanes,
+  owner capability, next action, disabled reason, evidence/activity location,
+  and cost impact.
+- P99.6 aggregates validation and updates README, PRD, Command Center guide,
+  roadmap, reports, and phase status before final P99 closure.
 
-Safety boundary as of P98.6:
+Safety boundary as of P99.6:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
@@ -109,6 +119,11 @@ Safety boundary as of P98.6:
   lane previews remain display-safe and non-executable. It does not dispatch
   agents, execute workers/tools, mutate project source, use hosted DBs, deploy,
   package, call providers/models, use network calls, or spend.
+- P99.6 documents governed execution admission readiness only. Approval gates
+  remain missing by design, executable lane count remains `0`, and P99 does not
+  approve execution, dispatch agents, execute workers/tools, mutate project
+  source, use hosted DBs, deploy, release, export, package, call
+  providers/models, use network calls, or spend.
 
 ---
 
@@ -349,6 +364,7 @@ NEXUS achieves its goals when the following are true in runtime behavior:
 | Founder idea can become structured PRD readiness without execution leakage | Command Center Lite and Business Build show idea, next question, PRD readiness, workstreams, blockers, evidence, and disabled actions |
 | Local runtime state can be persisted only through governed SQLite admission | P93.4/P94.3 checkers prove default blocked state, explicit approval/write flags, entity allowlists, and no hosted DB/project/provider execution |
 | Command Center shows DB runtime state without raw internals | P93.5/P94.5 Playwright and checker coverage verify Enterprise Runtime CRUD and Founder DB Workflow UX, evidence links, no raw JSON/log/policy dumps, no DemoApp/private IDs, and no mutation buttons |
+| Governed execution admission is visible before execution is allowed | P99.5/P99.6 show admission model, approval envelope, dry-run blockers, owner, next action, evidence, and cost impact across Lite, Business Build, Agent Flow, and DB Runtime while executable lane count stays `0` |
 
 ---
 

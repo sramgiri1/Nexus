@@ -86,8 +86,19 @@ Validation:
 
 ## P99.6 Tests / Checkers / Docs
 
-P99.6 is planned. It will aggregate P99 validation and update docs, roadmap,
-reports, and status.
+P99.6 is complete. It adds aggregate validation for P99.1 through P99.5,
+updates README, PRD, Command Center guide, platform roadmap, reports, and OS
+phase status, and confirms the execution admission handoff remains
+display-safe and non-executable. P99.7 is next for final validation and parent
+phase closure.
+
+Validation:
+
+- `npm run check:p996-execution-admission-validation-docs`
+- `npm run check:p995-command-center-execution-admission-ux`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P99.7 Final Validation
 

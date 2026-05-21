@@ -242,7 +242,7 @@
     {
       "phaseId": "P99.6",
       "title": "Tests / Checkers / Docs",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Aggregate P99 validation and update docs, roadmap, reports, and status.",
       "narrowScope": "Validation and docs only.",
@@ -257,7 +257,9 @@
         "contracts/os-roadmap/p99-execution-contracts.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p996-execution-admission-validation-docs-report.md"
+        "reports/p996-execution-admission-validation-docs-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
