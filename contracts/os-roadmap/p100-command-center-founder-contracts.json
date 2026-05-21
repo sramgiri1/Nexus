@@ -102,11 +102,23 @@
     {
       "phaseId": "P100.3",
       "title": "Governance Pages",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "objective": "Audit Governance pages for founder-readable approvals, evidence, safety, and contract context.",
-      "narrowScope": "Governance page content only.",
-      "allowedFiles": [],
+      "objective": "Add founder-useful action boards to governance pages.",
+      "narrowScope": "Governance page content only; no delivery, runtime, OS, or execution authority changes.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1003-founder-governance-pages.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1003-founder-governance-pages-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -118,7 +130,14 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1003-founder-governance-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder governance pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P100.4",

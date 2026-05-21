@@ -4007,6 +4007,24 @@ function ApprovalsPage({ vm, studio }) {
           <div className="ccv2-page-head__sub">Action controls require governed action bridge</div>
         </div>
 
+        <FounderOperationsBoard
+          title="Approvals"
+          purpose="Show which high-risk actions need human review before any governed execution can proceed."
+          currentState={`${requested} pending, ${approved} approved, ${rejected} rejected or expired`}
+          nextAction={requested > 0 ? "Review pending approval context, evidence, risk, and rollback posture." : "Use this page when future work requests approval."}
+          blocker="Approval review is display-only; no action approval is executed from this page."
+          owner="WARDEN / AUDITOR Approval Envelope"
+          evidence="Recent approval records and Activity Log"
+          activity={recent.length > 0 ? "Recent approval records available" : "No approval activity yet"}
+          cost="No provider spend from approval review"
+          lanes={[
+            { label: "Pending", value: requested },
+            { label: "Approved", value: approved },
+            { label: "Rejected", value: rejected },
+            { label: "Total", value: total },
+          ]}
+        />
+
         <div className="ccv2-stats-row">
           <div className="ccv2-stat-chip">
             <div className="ccv2-stat-chip__label">Total</div>
@@ -4075,6 +4093,19 @@ function VerificationGatesPage({ vm }) {
           <div className="ccv2-page-head__sub">Blocking gates run after every build phase</div>
         </div>
 
+        <FounderOperationsBoard
+          title="Verification Gates"
+          purpose="Show whether the work is safe enough to move forward, and which validation gates still block execution."
+          currentState={`${Object.values(gates).filter((status) => status === "PASS").length} of ${Object.keys(gates).length} mission gates passing`}
+          nextAction="Review failing or pending gates before activation, release, or agent handoff."
+          blocker={Object.values(gates).every((status) => status === "PASS") ? "No mission gate blockers in the current snapshot." : "One or more mission gates still require validation."}
+          owner="AUDITOR / SENTINEL Gate Review"
+          evidence="Private validation and gate evidence"
+          activity="Validation reports and Activity Log"
+          cost="Local validation display only; no provider spend"
+          lanes={Object.entries(gates).map(([gate, status]) => ({ label: gate, value: status }))}
+        />
+
         <div className="ccv2-gate-grid">
           {Object.entries(gates).map(([gate, status]) => (
             <div key={gate} className="ccv2-gate-card">
@@ -4130,6 +4161,24 @@ function ContractsPage({ vm }) {
           <div className="ccv2-page-head__title">Contracts</div>
           <div className="ccv2-page-head__sub">Mission contracts, task plans, and validation reports</div>
         </div>
+
+        <FounderOperationsBoard
+          title="Contracts"
+          purpose="Show the current operating contract, task plan, and validation evidence before work proceeds."
+          currentState={`${reports.length} validation reports linked`}
+          nextAction="Review the active mission contract and task plan before activating governed work."
+          blocker="Contract review is display-only; no contract mutation is enabled here."
+          owner="NEXUS Contract Registry"
+          evidence={mc.contractPath}
+          activity={mc.taskPlanPath}
+          cost="No provider spend from contract inspection"
+          lanes={[
+            { label: "Mission contract", value: "Active" },
+            { label: "Task plan", value: "Active" },
+            { label: "Reports", value: reports.length },
+            { label: "Mutation", value: "Disabled" },
+          ]}
+        />
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Mission Contract</div>
@@ -4193,6 +4242,24 @@ function EvidencePage({ vm }) {
             </span>
           </div>
         </div>
+
+        <FounderOperationsBoard
+          title="Evidence"
+          purpose="Verify what NEXUS did, which task or agent produced it, and whether records are redacted."
+          currentState={`${total} evidence records, ${redactedCount} redacted`}
+          nextAction={latestEvidence ? "Open the evidence timeline and trace the linked task, agent, and result." : "Run governed work later to create evidence records."}
+          blocker={latestEvidence ? "Raw payloads remain hidden from primary UX." : "No evidence exists until governed work creates it."}
+          owner="AUDITOR Evidence Ledger"
+          evidence={latestEvidence ? "Evidence timeline" : "No evidence records yet"}
+          activity={liveOnline ? "Live local API activity" : "Snapshot fallback activity"}
+          cost="No provider spend from evidence review"
+          lanes={[
+            { label: "Total", value: total },
+            { label: "Redacted", value: redactedCount },
+            { label: "Tasks", value: taskGroups.length },
+            { label: "Agents", value: agentGroups.length },
+          ]}
+        />
 
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Evidence Summary</div>
@@ -4316,6 +4383,24 @@ function SafetyCenterPage({ vm }) {
           <div className="ccv2-page-head__title">Safety Center</div>
           <div className="ccv2-page-head__sub">Understand current safety boundaries, policy posture, and what is blocked by governance.</div>
         </div>
+
+        <FounderOperationsBoard
+          title="Safety Center"
+          purpose="Show what NEXUS is allowed to do, what remains blocked, and why unsafe execution cannot start."
+          currentState={riskPosture}
+          nextAction="Review policy blocks and data boundaries before any activation request."
+          blocker="Provider calls, external network, DB writes, and unsafe mutation remain blocked by governance."
+          owner="WARDEN Safety Boundary"
+          evidence="Safety summary, policy blocks, and data privacy tabs"
+          activity="Activity Log and approval workflow"
+          cost="No provider spend from safety review"
+          lanes={[
+            { label: "Provider calls", value: governance.providerCallsAllowed ? "Enabled" : "Disabled" },
+            { label: "DB writes", value: governance.dbAccessAllowed ? "Enabled" : "Disabled" },
+            { label: "Public safety", value: vm.safety.incidents === 0 ? "Pass" : "Blocked" },
+            { label: "Traffic plane", value: bridgeReadiness.trafficPlane ? "Ready" : "Not ready" },
+          ]}
+        />
 
         <CommandTabs tabs={SAFETY_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Safety Center sections">
           <CommandTabPanel tabId="posture" activeTab={activeTab}>
@@ -5095,7 +5180,7 @@ function CostCenterPage({ vm, studio }) {
     { label: "Tool/test estimate preview", amount: "$0.0045", confidence: "Medium", assumption: "Local runtime seconds only." },
   ];
   const decisions = [
-    { decision: "ALLOW", reason: "Estimate preview is within budget. Execution still remains disabled in P57." },
+    { decision: "ALLOW", reason: "Estimate preview is within budget. Execution still remains disabled until governed execution is explicitly admitted." },
     { decision: "BLOCK", reason: "Provider dispatch requested while provider dispatch is disabled." },
     { decision: "REQUIRE_APPROVAL", reason: "Estimate exceeds the approval threshold." },
     { decision: "RECORD_ONLY", reason: "Estimate-only request records cost preview without execution." },
@@ -5107,6 +5192,24 @@ function CostCenterPage({ vm, studio }) {
           <div className="ccv2-page-head__title">Cost Center</div>
           <div className="ccv2-page-head__sub">Preview cost governance · estimates before future execution · no real provider spend</div>
         </div>
+
+        <FounderOperationsBoard
+          title="Cost Center"
+          purpose="Show estimate posture, budget gates, and spend blockers before any provider-backed work is allowed."
+          currentState="Estimate preview only; real provider spend disabled"
+          nextAction="Review estimate assumptions and budget decisions before any future execution admission."
+          blocker="Provider dispatch, real spend, DB writes, and worker runtime remain disabled."
+          owner="SENTINEL Cost Governance"
+          evidence="Cost estimate and budget preview records"
+          activity="Cost ledger preview"
+          cost="No real provider spend"
+          lanes={[
+            { label: "Budget scopes", value: budgetScopes.length },
+            { label: "Estimates", value: estimates.length },
+            { label: "Decisions", value: decisions.length },
+            { label: "Spend", value: "Disabled" },
+          ]}
+        />
 
         <CommandTabs tabs={COST_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Cost Center sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -5222,6 +5325,24 @@ function PolicyCenterPage() {
           <div className="ccv2-page-head__sub">Governance policy registry, previews, exceptions, and emergency controls · read-only</div>
         </div>
 
+        <FounderOperationsBoard
+          title="Policy Center"
+          purpose="Explain which policies govern execution, exceptions, break-glass, and unsafe action denial."
+          currentState="Policy registry and simulation are available as read-only previews"
+          nextAction="Review simulation outcomes before requesting any policy-sensitive action."
+          blocker="Policy edits, exception grants, break-glass, and runtime enforcement changes are disabled."
+          owner="WARDEN / AUDITOR Policy Review"
+          evidence={policyDispatchCard?.evidenceLocation || "Policy Center reports"}
+          activity={policyDispatchCard?.activityLocation || "Activity Log"}
+          cost={policyDispatchCard?.costImpact || "No provider spend from policy review"}
+          lanes={[
+            { label: "Policies", value: policyFamilies.length },
+            { label: "Simulations", value: simulationCards.length },
+            { label: "Diff checks", value: diffRows.length },
+            { label: "Break-glass", value: "Disabled" },
+          ]}
+        />
+
         <CommandTabs tabs={POLICY_CENTER_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Policy Center sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
             <div className="ccv2-card">
@@ -5234,7 +5355,7 @@ function PolicyCenterPage() {
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Break-glass</span><span className="ccv2-safety-row__value--disabled">Disabled by default</span></div>
                 <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Runtime enforcement changes</span><span className="ccv2-safety-row__value--disabled">Not enabled</span></div>
               </div>
-              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Next action: review policy simulation results before P59 Secrets and Credential Boundary. Policy Center does not edit or apply policies in P58.</p>
+              <p className="ccv2-empty-state" style={{ marginTop: 10 }}>Next action: review policy simulation results before credential boundary work. Policy Center does not edit or apply policies from this page.</p>
             </div>
             {policyDispatchCard && (
               <div className="ccv2-card ccv2-card--accent">
@@ -5348,6 +5469,24 @@ function SecretsBoundaryPage() {
           <div className="ccv2-page-head__title">Secrets Boundary</div>
           <div className="ccv2-page-head__sub">Credential references only · raw values are never displayed, logged, or included in reports</div>
         </div>
+
+        <FounderOperationsBoard
+          title="Secrets Boundary"
+          purpose="Show which credential categories exist as references while keeping raw values hidden."
+          currentState="Credential metadata only; raw values are never displayed"
+          nextAction="Review missing credential categories and keep provider/deploy/project credential use blocked."
+          blocker="Secret values, provider calls, DB writes, deploy credentials, and mobile signing remain unavailable."
+          owner="WARDEN Credential Boundary"
+          evidence="Secrets boundary reports and credential metadata"
+          activity="Activity Log"
+          cost="No provider spend from credential inspection"
+          lanes={[
+            { label: "Credential states", value: statusCards.length },
+            { label: "Project categories", value: projectCategories.length },
+            { label: "Raw values", value: "Hidden" },
+            { label: "Mutation", value: "Disabled" },
+          ]}
+        />
 
         <CommandTabs tabs={SECRETS_BOUNDARY_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Secrets Boundary sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>

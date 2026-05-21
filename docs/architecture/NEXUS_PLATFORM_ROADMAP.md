@@ -2122,6 +2122,12 @@ Control, Task Queue, Agent Flow, Founder Intake, and Business Build so each
 page shows founder use, current state, next action, blocker, owner,
 evidence/activity location, cost impact, and agent/workstream lanes without
 enabling execution. P100.3 is next for founder-readable Governance pages.
+P100.3 is complete. It adds the same Founder Operations board to Approvals,
+Verification Gates, Contracts, Evidence, Safety Center, Cost Center, Policy
+Center, and Secrets Boundary so governance pages show founder use, current
+state, next action, blocker, owner, evidence/activity, cost posture, and
+governance lanes without enabling approvals, policy edits, secret access,
+spend, or execution. P100.4 is next for delivery page utility.
 
 Implementation follows
 [`p100-command-center-founder-contracts.json`](../../contracts/os-roadmap/p100-command-center-founder-contracts.json).
