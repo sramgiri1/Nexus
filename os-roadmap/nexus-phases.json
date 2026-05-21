@@ -6674,24 +6674,167 @@
       "title": "Founder Business Build Governed Execution Contract",
       "track": "NEXUS_OS",
       "order": 133,
+      "status": "in_progress",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P97.1 defines the governed Business Build execution-authority contract and safety boundary after P96 local readiness.",
+      "checksRun": [
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P97.1 is contract-only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
+      ],
+      "nextPhase": "P97.2",
+      "commandCenterVisible": true,
+      "label": "Execution Contract",
+      "detail": "P97.1 contract complete; P97.2 authority model next."
+    },
+    {
+      "phaseId": "P97.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 133.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Defined the P97 governed Business Build execution-authority contract, subphase split, safety boundary, docs handoff, OS status, and checker coverage.",
+      "checksRun": [
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P97.1 is contract-only. It does not dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, package, call providers/models, use network calls, or spend."
+      ],
+      "nextPhase": "P97.2",
+      "commandCenterVisible": true,
+      "label": "Contract",
+      "detail": "P97.1 governed execution contract complete."
+    },
+    {
+      "phaseId": "P97.2",
+      "title": "Core Model",
+      "track": "NEXUS_OS",
+      "order": 133.2,
       "status": "planned",
       "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned scoped contract for future governed Business Build execution authority.",
+      "summary": "Planned local governed execution-authority model for Business Build review state.",
       "checksRun": [],
       "knownLimitations": [
-        "P97 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P97.2 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P97.1",
+      "nextPhase": "P97.3",
       "commandCenterVisible": true,
-      "label": "Execution Contract",
-      "detail": "Planned handoff after P96 final validation."
+      "label": "Core Model",
+      "detail": "Planned P97 subphase; no execution authority enabled."
+    },
+    {
+      "phaseId": "P97.3",
+      "title": "Request Envelope Dry Run",
+      "track": "NEXUS_OS",
+      "order": 133.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned safe review-envelope dry run for governed Business Build execution review.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P97.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P97.4",
+      "commandCenterVisible": true,
+      "label": "Request Dry Run",
+      "detail": "Planned P97 subphase; no execution authority enabled."
+    },
+    {
+      "phaseId": "P97.4",
+      "title": "Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 133.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned Command Center governed execution-authority review UX without runnable actions.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P97.4 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P97.5",
+      "commandCenterVisible": true,
+      "label": "Authority UX",
+      "detail": "Planned P97 Command Center UX; no runnable action enabled."
+    },
+    {
+      "phaseId": "P97.5",
+      "title": "Tests / Checkers",
+      "track": "NEXUS_OS",
+      "order": 133.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate validation for P97 governed execution-authority review.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P97.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P97.6",
+      "commandCenterVisible": true,
+      "label": "Validation",
+      "detail": "Planned aggregate P97 validation."
+    },
+    {
+      "phaseId": "P97.6",
+      "title": "Docs / Roadmap",
+      "track": "NEXUS_OS",
+      "order": 133.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned docs and roadmap closure for P97 governed execution-authority review.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P97.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P97.7",
+      "commandCenterVisible": true,
+      "label": "Docs Roadmap",
+      "detail": "Planned P97 docs and roadmap closure."
+    },
+    {
+      "phaseId": "P97.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 133.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final validation for P97 governed execution-authority review.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P97.7 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P98",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned P97 final validation and P98 handoff."
     }
   ],
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.7",
-  "previousPhase": "P96.6",
-  "nextPhase": "P97",
+  "currentPhase": "P97.1",
+  "previousPhase": "P96.7",
+  "nextPhase": "P97.2",
   "currentPhaseStatus": "complete"
 }

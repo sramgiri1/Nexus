@@ -2002,6 +2002,23 @@ The detailed plan lives in
 Implementation must follow
 [`p96-execution-contracts.json`](../../contracts/os-roadmap/p96-execution-contracts.json).
 
+## P97 - Founder Business Build Governed Execution Contract
+
+P97 defines the governed execution-authority path after P96 local readiness.
+It does not enable provider/model calls, agent dispatch, worker/tool execution,
+project mutation, hosted DB mutation, deploy, release, export, package
+creation, network calls, or provider spend.
+
+P97.1 is complete. It defines the implementation-grade P97 contract, subphase
+split, safety boundary, docs handoff, OS status tracking, and checker coverage.
+
+P97.2 is next. It will add the local governed execution-authority model.
+
+The detailed plan lives in
+[`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_CONTRACT_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_CONTRACT_PLAN.md).
+Implementation must follow
+[`p97-execution-contracts.json`](../../contracts/os-roadmap/p97-execution-contracts.json).
+
 The detailed plan lives in
 [`P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md`](P93_ENTERPRISE_LIVE_RUNTIME_EXPANSION_PLAN.md).
 Implementation must follow

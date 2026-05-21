@@ -1,0 +1,601 @@
+{
+  "phase": "P97",
+  "title": "Founder Business Build Governed Execution Contract",
+  "classification": "NEXUS_OS_CHANGE",
+  "startingBranch": "codex/nexus-e2e-phase-validation",
+  "expectedBaseCommit": "5e21acb6",
+  "globalSafetyRules": [
+    "Implement one subphase at a time.",
+    "Do not modify projects/**, careloop/**, generated app Sources/Tests, providers/**, tools/**, worker-runtime/**, deploy/**, release/**, exports/**, packages/**, or .env*.",
+    "P97.1 is contract-only and must not modify db/**, dashboard source, live runtime models, or local-state/runtime data.",
+    "Later P97 subphases may only add governed local SQLite CRUD for allowlisted NEXUS OS Business Build records where explicitly scoped.",
+    "Do not enable provider/model calls, agent dispatch, tool execution, worker execution, project creation, project mutation, hosted DB mutation, network calls, deploy, release, export, package creation, or provider spend.",
+    "Do not expose DemoApp in full Command Center.",
+    "Do not show project/private raw IDs in primary UX.",
+    "Do not invent fake working actions."
+  ],
+  "reuseRequirements": [
+    "Reuse shared/reportWriter.js, shared/reportMetadata.js, shared/resultEnvelope.js, shared/modeGuard.js, shared/redaction.js, shared/checkResultFormatter.js, and os-roadmap/updatePhaseStatus.js where applicable.",
+    "Reuse db/sqliteRuntime.js, db/sqliteCrudRepository.js, live-ready/founderRuntimeDbCrudWorkflow.js, live-ready/founderBusinessBuildExecutionReadiness.js, and existing Command Center cards/tabs/badges.",
+    "Do not duplicate report writers, mode guards, redaction helpers, checker formatters, result envelopes, route matrices, UI cards/tabs/status components, or activity/evidence/audit appenders."
+  ],
+  "subphases": [
+    {
+      "id": "nexus-os-p97-1-founder-business-build-governed-execution-contract",
+      "phaseId": "P97.1",
+      "objective": "Define the governed Business Build DB CRUD execution contract before schema, runtime, or UX changes.",
+      "status": "complete",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "contracts/os-roadmap/p96-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "scripts/check-p971-founder-business-build-governed-execution-contract.js",
+        "scripts/check-os-phase-status.js",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p971-founder-business-build-governed-execution-contract-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*",
+        "db/**",
+        "dashboard/src/**",
+        "dashboard/tests/**",
+        "live-ready/**",
+        "local-state/runtime/**"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "exports": [],
+        "futureExports": [
+          "P97_FOUNDER_BUSINESS_BUILD_EXECUTION_PHASE",
+          "P97_BUSINESS_BUILD_DB_ENTITIES",
+          "buildFounderBusinessBuildExecutionContract",
+          "validateFounderBusinessBuildExecutionContract",
+          "executeApprovedBusinessBuildDbCrudRequest",
+          "buildBusinessBuildDbViewModel"
+        ],
+        "futureSchemas": [
+          "business_build_sessions",
+          "business_build_execution_requests",
+          "business_build_agent_lanes",
+          "business_build_prd_snapshots"
+        ],
+        "futureDataShape": "Result envelope with schemaVersion, runtimeMode, dbMode, founderSession, businessBuildSession, qnaTurns[], prdArtifact, workstreamPlans[], agentLanes[], executionRequests[], localCrudRequests[], evidenceRefs[], auditRefs[], activityRefs[], allowedLocalCrudOperations[], forbiddenOperations[], mutationGate, runtimeFlags, nextAction, blockers, disabledReason, ownerCapability, activityLocation, costImpact, commandCenterVisible, and all non-scoped unsafe runtime flags false."
+      },
+      "commandCenterUxRequirements": "Preserve current Command Center UX. Later P97 UX must show DB-backed Chat with NEXUS, PRD readiness, Business Build sessions, graphical agent lanes, local CRUD state, next action, blockers, disabled reason, owner capability, evidence/activity location, and cost impact without raw JSON, raw logs, raw policy dumps, DemoApp, raw private IDs, or fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update in P97.1 because no UI files change.",
+        "P97 Command Center UX subphase must add focused Lite, Business Build, Agent Flow, and DB Runtime route coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p971-founder-business-build-governed-execution-contract.",
+        "Update check:os-phase-status to accept P97.1-P97.7."
+      ],
+      "docsRoadmapUpdates": [
+        "Add P97 plan doc.",
+        "Update platform roadmap.",
+        "Update OS roadmap/status and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p971-founder-business-build-governed-execution-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm P97.1 is contract-only.",
+        "Confirm no db/**, dashboard/src/**, dashboard/tests/**, live-ready/**, or local-state/runtime/** files changed.",
+        "Confirm unsafe runtime actions remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.1 files>",
+        "git commit -m \"feat(nexus): define p97 business build execution contract\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-2-business-build-db-schema",
+      "phaseId": "P97.2",
+      "objective": "Add local SQLite schema definitions for Business Build sessions, execution requests, agent lane state, and PRD-to-workstream snapshots.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "db/schema.json",
+        "db/schema.sql",
+        "scripts/check-p972-business-build-db-schema.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Business Build DB Schema implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update unless UI labels or routes change."
+      ],
+      "testsCheckers": [
+        "Add check:p972-business-build-db-schema.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p972-business-build-db-schema",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.2 files>",
+        "git commit -m \"feat(nexus): business build db schema\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-3-business-build-crud-model",
+      "phaseId": "P97.3",
+      "objective": "Add governed local CRUD model and admission for Business Build DB records using the P97.2 schema.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "live-ready/founderBusinessBuildGovernedExecution.js",
+        "scripts/check-p973-business-build-crud-model.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Business Build CRUD Model implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update unless UI labels or routes change."
+      ],
+      "testsCheckers": [
+        "Add check:p973-business-build-crud-model.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p973-business-build-crud-model",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.3 files>",
+        "git commit -m \"feat(nexus): business build crud model\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-4-command-center-db-ux",
+      "phaseId": "P97.4",
+      "objective": "Wire Command Center Lite, Business Build, Agent Flow, and DB Runtime to display-safe DB-backed Business Build state.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "dashboard/src/data/businessBuild.js",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p974-command-center-business-build-db-ux.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Command Center DB UX implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "Add focused Lite, Business Build, Agent Flow, and DB Runtime Playwright coverage."
+      ],
+      "testsCheckers": [
+        "Add check:p974-command-center-business-build-db-ux.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p974-command-center-business-build-db-ux",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.4 files>",
+        "git commit -m \"feat(nexus): command center db ux\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-5-tests-checkers",
+      "phaseId": "P97.5",
+      "objective": "Aggregate P97 contract, schema, CRUD model, and Command Center UX validation.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p975-business-build-crud-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Tests / Checkers implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update unless UI labels or routes change."
+      ],
+      "testsCheckers": [
+        "Add check:p975-business-build-crud-validation.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p975-business-build-crud-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.5 files>",
+        "git commit -m \"test(nexus): tests / checkers\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-6-docs-roadmap",
+      "phaseId": "P97.6",
+      "objective": "Document Business Build DB CRUD behavior, safety boundaries, and operator workflow.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "README.md",
+        "docs/prd/NEXUS_AGENTIC_OS_PRD.md",
+        "docs/usage/COMMAND_CENTER_GUIDE.md",
+        "scripts/check-p976-business-build-docs-roadmap.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Docs / Roadmap implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update unless UI labels or routes change."
+      ],
+      "testsCheckers": [
+        "Add check:p976-business-build-docs-roadmap.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p976-business-build-docs-roadmap",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.6 files>",
+        "git commit -m \"docs(nexus): docs / roadmap\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    },
+    {
+      "id": "nexus-os-p97-7-final-validation",
+      "phaseId": "P97.7",
+      "objective": "Run final P97 validation, stamp real commits, close P97, and hand off to P98.",
+      "status": "planned",
+      "classification": "NEXUS_OS_CHANGE",
+      "allowedFiles": [
+        "scripts/check-p977-business-build-final-validation.js",
+        "package.json",
+        "contracts/os-roadmap/p97-execution-contracts.json",
+        "docs/architecture/P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
+      "forbiddenFiles": [
+        "projects/**",
+        "careloop/**",
+        "generated-projects/*/Sources/**",
+        "generated-projects/*/Tests/**",
+        "providers/**",
+        "tools/**",
+        "worker-runtime/**",
+        "deploy/**",
+        "release/**",
+        "exports/**",
+        "packages/**",
+        ".env*"
+      ],
+      "expectedExportsSchemasDataShapes": {
+        "dataShape": "Final Validation implementation-grade data shape must remain display-safe, local-only, and governed by explicit validation."
+      },
+      "commandCenterUxRequirements": "Improve or preserve Command Center UX; primary UX must hide raw IDs, raw JSON, raw logs, raw policy dumps, DemoApp, and fake runnable actions.",
+      "themeRequirements": [
+        "Preserve System theme.",
+        "Preserve Dark theme.",
+        "Preserve Light theme."
+      ],
+      "playwrightTests": [
+        "No Playwright update unless UI labels or routes change."
+      ],
+      "testsCheckers": [
+        "Add check:p977-business-build-final-validation.",
+        "Run earlier P97 checkers."
+      ],
+      "docsRoadmapUpdates": [
+        "Update P97 plan doc, platform roadmap, OS status, roadmap, and reports."
+      ],
+      "validationCommands": [
+        "npm run check:p977-business-build-final-validation",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "finalSafetyChecks": [
+        "Confirm no forbidden paths changed.",
+        "Confirm provider/model calls, dispatch, project mutation, hosted DB mutation, deploy, package, network, and spend remain blocked."
+      ],
+      "gitCommands": [
+        "git add <allowed P97.7 files>",
+        "git commit -m \"feat(nexus): final validation\"",
+        "git push origin codex/nexus-e2e-phase-validation"
+      ],
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Tests/checkers run",
+        "Docs/roadmap updates",
+        "OS phase status update",
+        "Safety confirmations",
+        "Next phase/subphase"
+      ]
+    }
+  ]
+}

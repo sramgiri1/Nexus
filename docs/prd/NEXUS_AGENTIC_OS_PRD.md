@@ -2,7 +2,7 @@
 
 **Version:** 1.2
 **Date:** 2026-05-20
-**Status:** Approved; updated through P96 Founder Business Build Local Execution Readiness
+**Status:** Approved; updated through P97.1 Founder Business Build Governed DB CRUD Contract
 
 ---
 
@@ -18,11 +18,11 @@ NEXUS is not a collection of agents that chat. It is an OS — with a control pl
 
 ---
 
-## 1A. Current Implementation Status Through P96
+## 1A. Current Implementation Status Through P97.1
 
 NEXUS OS has progressed beyond preview-only architecture foundations into
 governed local live-runtime state and founder workflow persistence. As of
-P96:
+P97.1:
 
 - Command Center Lite is the primary founder-facing surface for Chat with NEXUS,
   Agent Flow, OS Roadmap, Activity, Live Readiness, Founder Intake, Business
@@ -70,8 +70,12 @@ P96:
 - P96 aggregate validation and docs/roadmap readiness prove the founder
   Business Build path is DB-backed locally while unsafe execution remains
   blocked.
+- P97.1 defines the governed Business Build DB CRUD contract, subphase split,
+  safety boundary, and validation commands for moving from local readiness to
+  local SQLite Business Build sessions, execution requests, PRD snapshots, and
+  agent lane state without enabling execution.
 
-Safety boundary as of P96:
+Safety boundary as of P97.1:
 
 - Provider/model calls remain blocked.
 - Agent dispatch, tool execution, and worker execution remain blocked.
@@ -89,6 +93,9 @@ Safety boundary as of P96:
   creation, network calls, and provider spend.
 - P96 does not add new execution authority. Business Build readiness remains
   local deterministic readiness plus dry-run admission visibility only.
+- P97.1 is contract-only. It does not dispatch agents, execute workers/tools,
+  mutate project source, use hosted DBs, deploy, package, call providers/models,
+  use network calls, or spend.
 
 ---
 

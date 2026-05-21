@@ -482,6 +482,7 @@
     "check:p965-founder-business-build-readiness-validation": "node scripts/check-p965-founder-business-build-readiness-validation.js",
     "check:p966-founder-business-build-readiness-docs-roadmap": "node scripts/check-p966-founder-business-build-readiness-docs-roadmap.js",
     "check:p967-founder-business-build-readiness-final-validation": "node scripts/check-p967-founder-business-build-readiness-final-validation.js",
+    "check:p971-founder-business-build-governed-execution-contract": "node scripts/check-p971-founder-business-build-governed-execution-contract.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

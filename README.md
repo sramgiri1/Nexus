@@ -31,9 +31,9 @@ NEXUS is built around:
 - cost, batch, and provider policies
 - a Command Center operator surface with local read-only visibility
 
-## Current Status Through P96
+## Current Status Through P97.1
 
-P41.5 through P96.6 are complete. The current NEXUS OS focus has moved from
+P41.5 through P97.1 are complete. The current NEXUS OS focus has moved from
 preview-only foundations to governed local live-runtime state and founder
 workflow persistence. P94 wires the founder-to-business workflow to governed
 local SQLite CRUD records and shows the DB-backed state in Command Center Lite,
@@ -42,7 +42,9 @@ controls, approved local adapter validation, and docs/readiness evidence for
 the founder workflow persistence boundary. P96 makes Business Build readiness
 DB-backed and validation-covered: it models local execution readiness, renders
 dry-run admission lanes in Business Build, and documents what is live-local
-versus still blocked before final validation.
+versus still blocked. P97.1 defines the governed Business Build DB CRUD
+contract for moving sessions, PRD snapshots, execution requests, and agent lane
+state toward local SQLite without enabling execution.
 
 Provider/model calls, agent dispatch, tool execution, worker execution, project
 source mutation, hosted DB mutation, network calls, deploy/release/export,
@@ -105,6 +107,11 @@ The Command Center and local operator surface have:
   validation, and docs/roadmap readiness for founder workflow records. It does
   not dispatch agents, execute workers/tools, mutate project source, use hosted
   DBs, deploy, package, call providers/models, use network calls, or spend.
+- P97.1 governed Business Build DB CRUD contract: implementation-grade
+  subphase plan for local SQLite Business Build sessions, execution requests,
+  PRD snapshots, and agent lane state after P96 readiness. It does not dispatch
+  agents, execute workers/tools, mutate project source, use hosted DBs, deploy,
+  package, call providers/models, use network calls, or spend.
 
 ## CareLoop Project Progress
 
@@ -290,7 +297,8 @@ npm run nexus:down
 
 ## Next Steps
 
-P96.7 is next. It should close final validation and hand off to P97 while
+P97.2 is next. It should add local SQLite schema definitions for Business Build
+sessions, execution requests, PRD snapshots, and agent lane state while
 preserving the safety boundary:
 
 - keep provider/model calls, agent dispatch, worker/tool execution, project
