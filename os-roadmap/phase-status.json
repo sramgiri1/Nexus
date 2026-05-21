@@ -12108,7 +12108,7 @@
       "order": 136,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "87c8374e",
       "completedAt": "",
       "summary": "P100.4 founder delivery pages are complete; P100.5 runtime and OS page utility is next.",
       "checksRun": [
@@ -12214,7 +12214,7 @@
       "order": 136.4,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "87c8374e",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added founder delivery boards to Projects, Workspace, Implementation, Agent Workbench, Release Control, Agent Registry, Skill Registry, Hook Registry, Tool Gateway, Trigger Integration, API Batch Adapter, Agent Rooms, Test Center, and Quality Intelligence.",
       "checksRun": [
