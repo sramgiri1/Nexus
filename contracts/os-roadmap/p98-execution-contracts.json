@@ -551,19 +551,27 @@
     {
       "phaseId": "P98.5",
       "title": "Tests / Checkers",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Aggregate P98 validation and preserve route-wide safety tests.",
       "narrowScope": "Validation aggregation only.",
       "allowedFiles": [
         "scripts/check-p985-live-workstream-handoff-validation.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
         "package.json",
         "contracts/os-roadmap/p98-execution-contracts.json",
         "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
-        "reports/p985-live-workstream-handoff-validation-report.md"
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -585,6 +593,79 @@
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
+      ],
+      "narrowGoal": "Add aggregate P98 validation that proves P98.1-P98.4 contract, model, dry-run, UX, Playwright, docs, roadmap, and phase status evidence are aligned.",
+      "safetyRules": [
+        "No provider/model calls.",
+        "No agent dispatch.",
+        "No worker/tool execution.",
+        "No project creation or mutation.",
+        "No hosted DB mutation.",
+        "No deploy, release, export, package, network, or provider spend.",
+        "No raw private IDs, raw DB table names, raw JSON, raw logs, or raw policy dumps in primary UX."
+      ],
+      "reuseCheck": [
+        "Reuse shared/reportWriter.js and shared/checkResultFormatter.js for checker output.",
+        "Reuse businessBuildViewModel.liveWorkstreamHandoff and liveWorkstreamHandoffDryRun for validation input.",
+        "Reuse existing P98.1-P98.4 checker and report evidence.",
+        "Do not duplicate report writers, result envelopes, redaction helpers, mode guards, route matrices, UI cards, or DB/runtime helpers."
+      ],
+      "exactFilesToUpdate": [
+        "scripts/check-p985-live-workstream-handoff-validation.js",
+        "scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+        "scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
+        "scripts/check-p982-founder-live-workstream-handoff-model.js",
+        "scripts/check-p981-founder-live-workstream-handoff-contract.js",
+        "package.json",
+        "contracts/os-roadmap/p98-execution-contracts.json",
+        "docs/architecture/P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p985-live-workstream-handoff-validation-report.md",
+        "reports/p984-command-center-live-workstream-handoff-ux-report.md",
+        "reports/p983-founder-live-workstream-handoff-dry-run-report.md",
+        "reports/p982-founder-live-workstream-handoff-model-report.md",
+        "reports/p981-founder-live-workstream-handoff-contract-report.md"
+      ],
+      "expectedExports": [
+        "check:p985-live-workstream-handoff-validation"
+      ],
+      "expectedDataShapes": {
+        "aggregateValidation": [
+          "contractStatus",
+          "packageScripts",
+          "priorReports",
+          "viewModelHandoff",
+          "dryRunSafety",
+          "routeCoverage",
+          "docsRoadmapStatus",
+          "forbiddenContentChecks"
+        ]
+      },
+      "uxUpdate": "No new Command Center source change in P98.5; aggregate validation preserves the P98.4 Lite, Agent Flow, Business Build, and DB Runtime handoff UX.",
+      "themeRequirements": "No theme source change in P98.5; validation preserves existing dark, light, and system theme behavior covered by route-wide tests.",
+      "testsAndCheckers": [
+        "Add check:p985-live-workstream-handoff-validation.",
+        "Keep check:p981 through check:p984 forward-compatible after P98.5 advances.",
+        "Validate retained Playwright coverage for Lite, Business Build, Agent Flow, and DB Runtime handoff surfaces.",
+        "Validate no DemoApp leakage, no raw DB table names, no raw private IDs, no fake runnable actions, and no unsafe execution paths."
+      ],
+      "docsRoadmap": "Update P98 plan and platform roadmap to record P98.5 complete and P98.6 next.",
+      "phaseStatusUpdate": "P98 in progress; P98.5 complete; current P98.5; previous P98.4; next P98.6.",
+      "finalResponseChecklist": [
+        "Branch name",
+        "Commit hash",
+        "Files changed",
+        "What was implemented",
+        "Command Center UX impact",
+        "Tests/checkers",
+        "Validation results",
+        "Docs/roadmap/status updates",
+        "Safety confirmations",
+        "Forbidden paths confirmation",
+        "Known limitations",
+        "Next subphase"
       ]
     },
     {

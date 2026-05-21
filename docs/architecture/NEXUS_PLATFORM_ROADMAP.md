@@ -2050,8 +2050,11 @@ dry-run records with lane evidence, blockers, disabled reasons, validation
 commands, activity, and cost context. P98.4 is complete. Command Center Lite,
 Agent Flow, Business Build, and DB Runtime now show the live workstream handoff
 dry-run state, lane previews, owner capabilities, next action, disabled reason,
-evidence/activity location, cost impact, and blocked safety rows. P98.5 is next
-for aggregate validation.
+evidence/activity location, cost impact, and blocked safety rows. P98.5 is
+complete. It aggregates validation across the P98 contract, handoff
+packet model, dry-run model, Command Center UX, Playwright coverage, docs,
+roadmap, and phase status while preserving the blocked execution boundary.
+P98.6 is next for docs and roadmap closure.
 
 The detailed plan lives in
 [`P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md`](P98_FOUNDER_BUSINESS_BUILD_LIVE_WORKSTREAM_HANDOFF_PLAN.md).

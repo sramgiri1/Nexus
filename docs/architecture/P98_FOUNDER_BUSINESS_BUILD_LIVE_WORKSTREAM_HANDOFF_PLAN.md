@@ -70,8 +70,21 @@ Validation:
 
 ## P98.5 Tests / Checkers
 
-P98.5 is planned. It will aggregate P98 checker and Playwright evidence while
-preserving route-wide safety tests.
+P98.5 is complete. It aggregates P98.1-P98.4 validation across contract, model,
+dry-run records, Command Center UX, Playwright coverage, docs, roadmap, and OS
+phase status while preserving route-wide safety tests. P98.6 is next for docs
+and roadmap closure.
+
+Validation:
+
+- `npm run check:p985-live-workstream-handoff-validation`
+- `npm run check:p984-command-center-live-workstream-handoff-ux`
+- `npm run check:p983-founder-live-workstream-handoff-dry-run`
+- `npm run check:p982-founder-live-workstream-handoff-model`
+- `npm run check:p981-founder-live-workstream-handoff-contract`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`
 
 ## P98.6 Docs / Roadmap
 

@@ -493,6 +493,7 @@
     "check:p982-founder-live-workstream-handoff-model": "node scripts/check-p982-founder-live-workstream-handoff-model.js",
     "check:p983-founder-live-workstream-handoff-dry-run": "node scripts/check-p983-founder-live-workstream-handoff-dry-run.js",
     "check:p984-command-center-live-workstream-handoff-ux": "node scripts/check-p984-command-center-live-workstream-handoff-ux.js",
+    "check:p985-live-workstream-handoff-validation": "node scripts/check-p985-live-workstream-handoff-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

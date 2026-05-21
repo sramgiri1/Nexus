@@ -67,13 +67,13 @@ addCheck("UX exposes blocked safety rows", ["Agent dispatch", "Worker/tool execu
 addCheck("view model has display data", model.liveWorkstreamHandoff?.commandCenterVisible === true && model.liveWorkstreamHandoffDryRun?.commandCenterVisible === true && model.liveWorkstreamHandoffDryRun?.lanes?.some((lane) => lane.lane === "iOS"));
 addCheck("Playwright coverage added", routeTests.includes("Live workstream handoff appears in Lite, Business Build, Agent Flow, and DB Runtime") && routeTests.includes("DB Runtime Live Workstream Handoff"));
 addCheck("docs record P98.4", p98Plan.includes("P98.4 is complete") && p98Plan.includes("npm run check:p984-command-center-live-workstream-handoff-ux"));
-addCheck("platform roadmap records P98.4", platformRoadmap.includes("P98.4 is complete") && platformRoadmap.includes("P98.5 is next"));
+addCheck("platform roadmap records P98.4", platformRoadmap.includes("P98.4 is complete") && (platformRoadmap.includes("P98.5 is next") || platformRoadmap.includes("P98.5 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P98.4")?.status === "complete"
-    && status.currentPhase === "P98.4"
-    && status.previousPhase === "P98.3"
-    && status.nextPhase === "P98.5",
+    && ["P98.4", "P98.5"].includes(status.currentPhase)
+    && ["P98.3", "P98.4"].includes(status.previousPhase)
+    && ["P98.5", "P98.6"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.4", roadmapById.get("P98.4")?.status === "complete" && ["planned", "complete"].includes(roadmapById.get("P98.5")?.status));

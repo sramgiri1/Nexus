@@ -85,9 +85,9 @@ addCheck(
   "phase status advanced",
   statusById.get("P98")?.status === "in_progress"
     && statusById.get("P98.1")?.status === "complete"
-    && ["P98.1", "P98.2"].includes(status.currentPhase)
-    && ["P97.7", "P98.1"].includes(status.previousPhase)
-    && ["P98.2", "P98.3"].includes(status.nextPhase),
+    && ["P98.1", "P98.2", "P98.3", "P98.4", "P98.5"].includes(status.currentPhase)
+    && ["P97.7", "P98.1", "P98.2", "P98.3", "P98.4"].includes(status.previousPhase)
+    && ["P98.2", "P98.3", "P98.4", "P98.5", "P98.6"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P98.1", roadmapById.get("P98")?.status === "in_progress" && roadmapById.get("P98.1")?.status === "complete");
