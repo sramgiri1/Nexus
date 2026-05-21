@@ -3,9 +3,9 @@
 ## Metadata
 
 - Phase: Cross-phase validation
-- Generated at: 2026-05-21T00:02:36.933Z
+- Generated at: 2026-05-21T00:07:24.502Z
 - Validation branch: codex/nexus-e2e-phase-validation
-- Validation HEAD: 2645ba9
+- Validation HEAD: 12502ca
 - Note: Validation HEAD is the commit checked out when the report was generated. It may differ from the final commit that contains this report.
 
 ## Scope
@@ -271,28 +271,24 @@
 | P95.5 validation coverage | PASS | 25 checkers, 19 reports |
 | P95.6 validation coverage | PASS | 14 checkers, 10 reports |
 | P95.7 validation coverage | PASS | 45 checkers, 36 reports |
-| P96 validation coverage | PASS | 6 checkers, 2 reports |
+| P96 validation coverage | PASS | 8 checkers, 3 reports |
 | P96.1 validation coverage | PASS | 3 checkers, 1 reports |
 | P96.2 validation coverage | PASS | 4 checkers, 1 reports |
-| P96.3 validation coverage | PASS | dedicated_checker, validation_report |
+| P96.3 validation coverage | PASS | 5 checkers, 1 reports |
 | P96.4 validation coverage | PASS | 1 checkers, 1 reports |
 | P96.5 validation coverage | PASS | 18 checkers, 18 reports |
 | P96.6 validation coverage | PASS | 10 checkers, 10 reports |
 | P96.7 validation coverage | PASS | 36 checkers, 36 reports |
 | P63 complete | PASS | complete |
 | P64 complete | PASS | complete |
-| P64.8 planned, current, or complete | PASS | current=P96.2; next=P96.3; status=complete |
+| P64.8 planned, current, or complete | PASS | current=P96.3; next=P96.4; status=complete |
 | public safety report known | PASS |  |
 ## Blocking Gaps
 
 - None
 ## Planned Future Gaps
 
-- P96.3 Preview / Safe Dry Run
-  - status: planned
-  - checkers: 0
-  - reports: 0
-  - gaps: dedicated_checker, validation_report
+- None
 ## Result
 
 PASS (266/266)

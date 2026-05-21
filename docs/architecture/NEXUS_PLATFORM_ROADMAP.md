@@ -1972,7 +1972,12 @@ sequence, safety boundary, docs handoff, checker, and OS phase status.
 
 P96.2 is complete. It adds a display-safe local Business Build execution
 readiness model that reuses the P94 founder runtime DB CRUD workflow and P95
-persistence controls. P96.3 is next for safe dry-run admission.
+persistence controls.
+
+P96.3 is complete. It adds a display-safe dry-run admission matrix for local
+Business Build lane inspection while keeping dispatch, worker execution,
+project mutation, deploy, package, and spend blocked. P96.4 is next for Command
+Center readiness UX.
 
 The detailed plan lives in
 [`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).

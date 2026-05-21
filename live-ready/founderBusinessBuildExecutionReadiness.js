@@ -9,6 +9,8 @@ import {
 } from "./founderPersistenceOperatorControls.js";
 
 export const P96_FOUNDER_BUSINESS_BUILD_READINESS_PHASE = "P96.2";
+export const P96_FOUNDER_BUSINESS_BUILD_DRY_RUN_ADMISSION_PHASE = "P96.3";
+export const P96_FOUNDER_BUSINESS_BUILD_DRY_RUN_PHASE = "P96.3";
 
 const BLOCKED_RUNTIME_FLAGS = Object.freeze([
   "providerCallsAllowed",
@@ -109,6 +111,63 @@ function buildLane(entitySummary = {}, index = 0) {
   };
 }
 
+function buildDryRunAdmissionLane(lane = {}, snapshotData = {}) {
+  const snapshotMissingEvidence = snapshotData.missingEvidence || [];
+  const missingEvidence = snapshotMissingEvidence.length === 0
+    ? []
+    : Array.from(new Set([
+      ...(lane.missingEvidence || []),
+      ...snapshotMissingEvidence,
+    ]));
+  const futureReviewEligible = missingEvidence.length === 0;
+  return {
+    laneId: lane.laneId,
+    label: lane.label,
+    ownerCapability: lane.ownerCapability,
+    readinessState: lane.readinessState,
+    dryRunAdmissionState: futureReviewEligible
+      ? "eligible_for_future_governed_execution_review"
+      : "blocked_until_required_evidence",
+    allowedLocalInspection: true,
+    admissionPreviewAllowed: true,
+    futureReviewEligible,
+    executionAllowed: false,
+    dispatchAllowed: false,
+    projectMutationAllowed: false,
+    ...blockedRuntimeFlags(),
+    requiredEvidence: [
+      "operatorApproval",
+      "rollbackAccepted",
+      "auditAccepted",
+      "validationCommandsAccepted",
+      "sqliteLiveMode",
+      "sqliteWritesEnabled",
+      "laterExecutionPhaseContract",
+      "scopedFounderBusinessBuildTask",
+      "postRunReviewPlan",
+    ],
+    missingEvidence,
+    validationCommands: [
+      "npm run check:p963-founder-business-build-dry-run-admission",
+      "npm run check:p962-founder-business-build-readiness-model",
+      "npm run check:p961-founder-business-build-readiness-contract",
+      "npm run check:os-phase-status",
+      "npm run check:phase-validation-coverage",
+    ],
+    nextAction: futureReviewEligible
+      ? "Carry this lane into P96.4 Command Center UX as a blocked admission preview."
+      : "Collect local readiness evidence before this lane can be reviewed by a later execution phase.",
+    disabledReason:
+      "P96.3 is a dry-run admission preview only. No agent dispatch, worker/tool execution, project mutation, provider/model call, hosted DB mutation, deploy, release, export, package, network call, or spend is enabled.",
+    evidenceRefs: [
+      "reports/p963-founder-business-build-dry-run-admission-report.md",
+      ...(lane.evidenceRefs || []),
+    ],
+    activityLocation: lane.activityLocation || "reports/os-phase-status-report.md",
+    costImpact: "Local deterministic dry-run admission only. No provider spend.",
+  };
+}
+
 export function buildFounderBusinessBuildPersistenceSnapshot(input = {}) {
   const workflow = buildFounderRuntimeDbCrudWorkflow(input);
   const controls = buildFounderPersistenceOperatorControls(input);
@@ -205,6 +264,70 @@ export function buildFounderBusinessBuildReadinessViewModel(input = {}) {
   };
 }
 
+export function buildFounderBusinessBuildDryRunAdmission(input = {}) {
+  const snapshot = input.snapshot || buildFounderBusinessBuildPersistenceSnapshot(input);
+  const snapshotData = snapshot.data || {};
+  const lanes = (snapshotData.lanes || []).map((lane) => buildDryRunAdmissionLane(lane, snapshotData));
+  const futureReviewEligibleCount = lanes.filter((lane) => lane.futureReviewEligible).length;
+  return createPassResult({
+    phase: P96_FOUNDER_BUSINESS_BUILD_DRY_RUN_ADMISSION_PHASE,
+    mode: "founder-business-build-dry-run-admission",
+    source: "live-ready/founderBusinessBuildExecutionReadiness.js",
+    summary: "Business Build dry-run admission matrix is available for local readiness review; execution remains blocked.",
+    data: {
+      schemaVersion: "1.0",
+      phaseId: P96_FOUNDER_BUSINESS_BUILD_DRY_RUN_ADMISSION_PHASE,
+      currentState: futureReviewEligibleCount > 0
+        ? "dry_run_admission_preview_ready_execution_blocked"
+        : "dry_run_admission_blocked_until_local_evidence",
+      readinessMode: "dry-run-admission-preview-only",
+      sourceReadinessPhase: snapshot.phase,
+      sourceReadinessState: snapshotData.currentState,
+      laneCount: lanes.length,
+      futureReviewEligibleCount,
+      admittedForExecutionCount: 0,
+      lanes,
+      requiredEvidence: [
+        "operatorApproval",
+        "rollbackAccepted",
+        "auditAccepted",
+        "validationCommandsAccepted",
+        "sqliteLiveMode",
+        "sqliteWritesEnabled",
+        "laterExecutionPhaseContract",
+        "scopedFounderBusinessBuildTask",
+        "postRunReviewPlan",
+      ],
+      missingEvidence: snapshotData.missingEvidence || [],
+      forbiddenOperations: [...FORBIDDEN_OPERATIONS],
+      runtimeFlags: blockedRuntimeFlags(),
+      nextAction: "Render this dry-run admission matrix in P96.4 Command Center UX without runnable execution controls.",
+      blockers: lanes
+        .filter((lane) => lane.missingEvidence.length > 0)
+        .map((lane) => `${lane.label}: ${lane.missingEvidence.join(", ")}`),
+      disabledReason:
+        "P96.3 is dry-run admission only. Execution, dispatch, provider/model calls, worker/tool runs, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and spend remain blocked.",
+      ownerCapability: "NEXUS Business Build Dry-Run Admission",
+      evidenceRefs: [
+        "reports/p963-founder-business-build-dry-run-admission-report.md",
+        "reports/p962-founder-business-build-readiness-model-report.md",
+      ],
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Local deterministic dry-run admission only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      commandCenterVisible: true,
+      ...blockedRuntimeFlags(),
+    },
+    evidence: [
+      "reports/p963-founder-business-build-dry-run-admission-report.md",
+      "reports/p962-founder-business-build-readiness-model-report.md",
+      "contracts/os-roadmap/p96-execution-contracts.json",
+    ],
+    warnings: [
+      "P96.3 does not dispatch agents, execute tools/workers, mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend.",
+    ],
+  });
+}
+
 export function validateFounderBusinessBuildPersistenceSnapshot(envelope = {}) {
   const errors = [];
   const data = envelope.data || {};
@@ -230,5 +353,40 @@ export function validateFounderBusinessBuildPersistenceSnapshot(envelope = {}) {
   const serialized = JSON.stringify(data);
   if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("snapshot must not expose raw private IDs");
   if (/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now/i.test(serialized)) errors.push("snapshot must not expose fake unsafe runnable actions");
+  return { valid: errors.length === 0, errors };
+}
+
+export function validateFounderBusinessBuildDryRunAdmission(envelope = {}) {
+  const errors = [];
+  const data = envelope.data || {};
+  if (envelope.phase !== P96_FOUNDER_BUSINESS_BUILD_DRY_RUN_ADMISSION_PHASE) errors.push("phase must be P96.3");
+  for (const field of ["schemaVersion", "phaseId", "currentState", "readinessMode", "sourceReadinessPhase", "sourceReadinessState", "laneCount", "futureReviewEligibleCount", "admittedForExecutionCount", "lanes", "requiredEvidence", "missingEvidence", "forbiddenOperations", "runtimeFlags", "nextAction", "blockers", "disabledReason", "ownerCapability", "evidenceRefs", "activityLocation", "costImpact", "commandCenterVisible"]) {
+    if (!(field in data)) errors.push(`${field} missing`);
+  }
+  if (data.sourceReadinessPhase !== P96_FOUNDER_BUSINESS_BUILD_READINESS_PHASE) errors.push("sourceReadinessPhase must be P96.2");
+  if (data.readinessMode !== "dry-run-admission-preview-only") errors.push("readinessMode must stay dry-run-admission-preview-only");
+  if (data.admittedForExecutionCount !== 0) errors.push("admittedForExecutionCount must stay 0");
+  if (!Array.isArray(data.lanes) || data.lanes.length !== P94_FOUNDER_RUNTIME_DB_ENTITIES.length) errors.push("lanes must cover founder workflow entities");
+  if (data.laneCount !== data.lanes?.length) errors.push("laneCount must match lanes length");
+  for (const flag of BLOCKED_RUNTIME_FLAGS) {
+    if (data.runtimeFlags?.[flag] !== false) errors.push(`runtimeFlags.${flag} must be false`);
+    if (data[flag] !== false) errors.push(`${flag} must be false`);
+  }
+  for (const lane of data.lanes || []) {
+    for (const field of ["laneId", "label", "ownerCapability", "readinessState", "dryRunAdmissionState", "allowedLocalInspection", "admissionPreviewAllowed", "futureReviewEligible", "executionAllowed", "dispatchAllowed", "projectMutationAllowed", "requiredEvidence", "missingEvidence", "validationCommands", "nextAction", "disabledReason", "evidenceRefs", "activityLocation", "costImpact"]) {
+      if (!(field in lane)) errors.push(`${lane.label || "lane"}.${field} missing`);
+    }
+    if (lane.allowedLocalInspection !== true) errors.push(`${lane.label}.allowedLocalInspection must be true`);
+    if (lane.admissionPreviewAllowed !== true) errors.push(`${lane.label}.admissionPreviewAllowed must be true`);
+    for (const flag of BLOCKED_RUNTIME_FLAGS) {
+      if (lane[flag] !== false) errors.push(`${lane.label}.${flag} must be false`);
+    }
+    if (!Array.isArray(lane.validationCommands) || !lane.validationCommands.includes("npm run check:p963-founder-business-build-dry-run-admission")) {
+      errors.push(`${lane.label}.validationCommands must include P96.3 checker`);
+    }
+  }
+  const serialized = JSON.stringify(data);
+  if (/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized)) errors.push("dry-run admission must not expose raw private IDs");
+  if (/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|generate app now|execute now/i.test(serialized)) errors.push("dry-run admission must not expose fake unsafe runnable actions");
   return { valid: errors.length === 0, errors };
 }

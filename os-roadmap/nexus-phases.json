@@ -6455,10 +6455,11 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "2645ba9",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P96.2 local Business Build execution readiness model is complete; P96.3 safe dry-run admission is next.",
+      "summary": "P96.3 safe dry-run admission is complete; P96.4 Command Center readiness UX is next.",
       "checksRun": [
+        "npm run check:p963-founder-business-build-dry-run-admission",
         "npm run check:p962-founder-business-build-readiness-model",
         "npm run check:p961-founder-business-build-readiness-contract",
         "npm run check:os-phase-status",
@@ -6466,12 +6467,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P96.2 is a display-safe readiness model only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P96.3 is dry-run admission only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P96.3",
+      "nextPhase": "P96.4",
       "commandCenterVisible": true,
       "label": "Business Build Readiness",
-      "detail": "Readiness model complete; dry-run admission next."
+      "detail": "Dry-run admission complete; Command Center UX next."
     },
     {
       "phaseId": "P96.1",
@@ -6526,18 +6527,27 @@
       "phaseId": "P96.3",
       "track": "NEXUS_OS",
       "order": 132.3,
-      "title": "Preview / Safe Dry Run",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned dry-run admission matrix for local readiness.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "title": "Safe Dry-Run Admission",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Added a display-safe Business Build dry-run admission matrix for local lane inspection without dispatch or mutation.",
+      "checksRun": [
+        "npm run check:p963-founder-business-build-dry-run-admission",
+        "npm run check:p962-founder-business-build-readiness-model",
+        "npm run check:p961-founder-business-build-readiness-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P96.3 is dry-run admission only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P96.4",
       "commandCenterVisible": true,
-      "label": "Preview / Safe Dry Run",
-      "detail": "Planned P96 subphase; next P96.4."
+      "label": "Safe Dry Run",
+      "detail": "P96.3 dry-run admission complete."
     },
     {
       "phaseId": "P96.4",
@@ -6609,8 +6619,8 @@
     }
   ],
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.2",
-  "previousPhase": "P96.1",
-  "nextPhase": "P96.3",
+  "currentPhase": "P96.3",
+  "previousPhase": "P96.2",
+  "nextPhase": "P96.4",
   "currentPhaseStatus": "complete"
 }

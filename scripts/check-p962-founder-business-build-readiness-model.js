@@ -96,14 +96,14 @@ addCheck("contract marks P96.2 complete", p962?.status === "complete" && ["plann
 addCheck("contract expected exports retained", contractText.includes("buildFounderBusinessBuildPersistenceSnapshot") && contractText.includes("validateFounderBusinessBuildPersistenceSnapshot") && contractText.includes("buildFounderBusinessBuildReadinessViewModel"));
 addCheck("model reuses P94 and P95 helpers", modelText.includes("buildFounderRuntimeDbCrudWorkflow") && modelText.includes("buildFounderPersistenceOperatorControls") && modelText.includes("P94_FOUNDER_RUNTIME_DB_ENTITIES"));
 addCheck("docs record P96.2", docs.includes("P96.2 is complete") && docs.includes("npm run check:p962-founder-business-build-readiness-model"));
-addCheck("platform roadmap records P96.2", platformRoadmap.includes("P96.2 is complete") && (platformRoadmap.includes("P96.3 is next") || platformRoadmap.includes("P96.3 is planned")));
+addCheck("platform roadmap records P96.2", platformRoadmap.includes("P96.2 is complete") && (platformRoadmap.includes("P96.3 is next") || platformRoadmap.includes("P96.3 is planned") || platformRoadmap.includes("P96.3 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P96")?.status === "in_progress"
     && statusById.get("P96.2")?.status === "complete"
-    && status.currentPhase === "P96.2"
-    && status.previousPhase === "P96.1"
-    && status.nextPhase === "P96.3",
+    && ["P96.2", "P96.3"].includes(status.currentPhase)
+    && ["P96.1", "P96.2"].includes(status.previousPhase)
+    && ["P96.3", "P96.4"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.2", roadmapById.get("P96.2")?.track === "NEXUS_OS" && roadmapById.get("P96.2")?.status === "complete");

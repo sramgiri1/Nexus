@@ -78,16 +78,18 @@ Validation:
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
 
-### P96.3 Local API Readiness Route
+### P96.3 Safe Dry-Run Admission
 
-P96.3 will expose display-safe founder Business Build readiness through the
-existing local-only API pattern. It will not add mutation endpoints, hosted DB
-writes, network fanout, or project mutation.
+P96.3 is complete. It adds a display-safe dry-run admission matrix for local
+Business Build lane inspection. It does not dispatch agents, execute workers or
+tools, add mutation endpoints, mutate projects, mutate hosted DBs, deploy,
+package, or spend.
 
 Validation:
 
-- `npm run check:p963-founder-business-build-local-api`
+- `npm run check:p963-founder-business-build-dry-run-admission`
 - `npm run check:p962-founder-business-build-readiness-model`
+- `npm run check:p961-founder-business-build-readiness-contract`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`
@@ -115,14 +117,14 @@ Validation:
 
 ### P96.5 Validation
 
-P96.5 will aggregate contract, model, local API, Command Center UX, route
-safety, phase status, and forbidden path checks.
+P96.5 will aggregate contract, model, dry-run admission, Command Center UX,
+route safety, phase status, and forbidden path checks.
 
 Validation:
 
 - `npm run check:p965-founder-business-build-readiness-validation`
 - `npm run check:p964-command-center-business-build-readiness-ux`
-- `npm run check:p963-founder-business-build-local-api`
+- `npm run check:p963-founder-business-build-dry-run-admission`
 - `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
 - `npm run check:os-phase-status`
@@ -154,7 +156,7 @@ Validation:
 - `npm run check:p966-founder-business-build-readiness-docs-roadmap`
 - `npm run check:p965-founder-business-build-readiness-validation`
 - `npm run check:p964-command-center-business-build-readiness-ux`
-- `npm run check:p963-founder-business-build-local-api`
+- `npm run check:p963-founder-business-build-dry-run-admission`
 - `npm run check:p962-founder-business-build-readiness-model`
 - `npm run check:p961-founder-business-build-readiness-contract`
 - `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder business build readiness"`
