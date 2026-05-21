@@ -11906,7 +11906,7 @@
       "order": 135,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "55535c9a",
       "completedAt": "",
       "summary": "P99.5 Command Center execution admission UX is complete; P99.6 validation/docs is next.",
       "checksRun": [
@@ -12032,7 +12032,7 @@
       "order": 135.5,
       "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "pending-final-commit",
+      "commit": "55535c9a",
       "completedAt": "2026-05-21T00:00:00.000Z",
       "summary": "Added display-safe Execution Admission UX to Lite, Agent Flow, Business Build, and DB Runtime.",
       "checksRun": [
