@@ -2136,6 +2136,17 @@ show founder use, current state, next action, blockers, owner, evidence,
 activity, cost posture, and delivery lanes without enabling registry mutation,
 tool/worker execution, project writes, deploy, package, provider calls, or
 spend. P100.5 is next for runtime and OS page utility.
+P100.5 is complete. It adds Founder Operations boards to runtime, platform,
+and OS pages: Worker Runtime, Batch Queue, Live API Status, Durable State,
+Service Health, Memory Center, Data & Context Center, OS Roadmap, Activity
+Log, Recovery, Self-Update, Deploy Monitoring, Project Shipping, Auth
+Governance, Observability, Backup / DR, Isolation, Compliance, Enterprise
+Preview, Live Readiness, Docs & Guides, and Settings. These boards show
+founder use, current state, next action, blockers, owner, evidence, activity,
+cost posture, and operating lanes without enabling provider/model calls, agent
+dispatch, worker/tool execution, project mutation, hosted DB writes, deploy,
+release, export, package, network calls, or spend. P100.6 is next for
+aggregate validation, docs, roadmap, and checker closure.
 
 Implementation follows
 [`p100-command-center-founder-contracts.json`](../../contracts/os-roadmap/p100-command-center-founder-contracts.json).

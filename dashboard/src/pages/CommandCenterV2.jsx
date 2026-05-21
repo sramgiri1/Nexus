@@ -620,6 +620,273 @@ const FOUNDER_DELIVERY_BOARDS = {
   },
 };
 
+const FOUNDER_RUNTIME_OS_BOARDS = {
+  workers: {
+    title: "Worker Runtime",
+    purpose: "Show worker runtime posture before any background execution can run.",
+    currentState: "Worker execution is blocked until governed admission exists.",
+    nextAction: "Review queues, worker boundaries, and blockers before enabling runtime work.",
+    blocker: "Worker execution, tool execution, and project mutation remain disabled.",
+    owner: "NEXUS Worker Runtime Boundary",
+    evidence: "Worker runtime readiness reports",
+    activity: "Activity Log",
+    cost: "No provider or worker spend",
+    lanes: [{ label: "Workers", value: "Blocked" }, { label: "Queue", value: "Review" }, { label: "Tools", value: "Disabled" }, { label: "Evidence", value: "Required" }],
+  },
+  batch: {
+    title: "Batch Queue",
+    purpose: "Show batch posture and blockers before provider-backed batch work is allowed.",
+    currentState: "Batch queue is dry-run and preview-only.",
+    nextAction: "Review batch readiness, results, and cost assumptions.",
+    blocker: "Provider batch APIs, uploads, network calls, and spend remain disabled.",
+    owner: "SENTINEL Batch Boundary",
+    evidence: "Batch readiness reports",
+    activity: "Activity Log",
+    cost: "Estimate only; no provider spend",
+    lanes: [{ label: "Jobs", value: "Preview" }, { label: "Results", value: "Unavailable" }, { label: "Upload", value: "Disabled" }, { label: "Spend", value: "Disabled" }],
+  },
+  liveapi: {
+    title: "Live API Status",
+    purpose: "Show whether local API-backed data is online or using snapshot fallback.",
+    currentState: "Local API can be inspected; external provider/network calls remain blocked.",
+    nextAction: "Review endpoint health and fallback state before relying on live local data.",
+    blocker: "Hosted APIs and provider calls are not enabled.",
+    owner: "NEXUS Local API Boundary",
+    evidence: "Live API status cards",
+    activity: "Local API refresh activity",
+    cost: "No provider spend",
+    lanes: [{ label: "Mission data", value: "Readable" }, { label: "Tasks", value: "Readable" }, { label: "Evidence", value: "Readable" }, { label: "Network", value: "Local only" }],
+  },
+  database: {
+    title: "Durable State",
+    purpose: "Show local durable state, DB runtime posture, and persistence blockers.",
+    currentState: "Local state is inspectable; hosted DB mutation remains blocked.",
+    nextAction: "Review local persistence posture and rollback before any runtime write path.",
+    blocker: "Hosted DB mutation and unsafe writes remain disabled.",
+    owner: "NEXUS Durable State Boundary",
+    evidence: "DB runtime readiness reports",
+    activity: "Activity Log",
+    cost: "No hosted DB spend",
+    lanes: [{ label: "Local DB", value: "Readable" }, { label: "Hosted DB", value: "Blocked" }, { label: "Rollback", value: "Review" }, { label: "Writes", value: "Governed" }],
+  },
+  services: {
+    title: "Service Health",
+    purpose: "Show local service health, doctor checks, and startup blockers.",
+    currentState: "Service health is inspectable from local manifests and status snapshots.",
+    nextAction: "Review unhealthy services and local doctor output before runtime work.",
+    blocker: "Service control remains local/operator-run; no deploy or hosted mutation.",
+    owner: "NEXUS Service Health",
+    evidence: "Service status and doctor reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Services", value: "Inspectable" }, { label: "Doctor", value: "Review" }, { label: "Start/stop", value: "Local" }, { label: "Deploy", value: "Disabled" }],
+  },
+  memory: {
+    title: "Memory Center",
+    purpose: "Show memory posture, selected context, and boundaries before agent use.",
+    currentState: "Memory is review-only from Command Center.",
+    nextAction: "Review what memory can be included before routing work.",
+    blocker: "Raw private memory dumps and mutation are not shown in primary UX.",
+    owner: "NEXUS Memory Boundary",
+    evidence: "Memory center reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Memory", value: "Readable" }, { label: "Context", value: "Scoped" }, { label: "Raw dumps", value: "Hidden" }, { label: "Mutation", value: "Disabled" }],
+  },
+  context: {
+    title: "Data & Context Center",
+    purpose: "Show selected context packets and excluded sources before work is routed.",
+    currentState: "Context packets are inspectable and scoped.",
+    nextAction: "Review inclusions and exclusions before execution admission.",
+    blocker: "Raw private data dumps and full tool registry loading remain blocked.",
+    owner: "NEXUS Context Boundary",
+    evidence: "Context packet reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Trusted context", value: "Scoped" }, { label: "Exclusions", value: "Visible" }, { label: "Raw data", value: "Hidden" }, { label: "Tools", value: "Lazy loaded" }],
+  },
+  roadmap: {
+    title: "OS Roadmap",
+    purpose: "Show NEXUS OS phase status without mixing project milestones into OS phases.",
+    currentState: "OS roadmap is visible and phase-scoped.",
+    nextAction: "Review current, previous, and next OS phase before platform work.",
+    blocker: "Project milestones stay out of OS Roadmap.",
+    owner: "NEXUS OS Roadmap",
+    evidence: "OS phase status reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Current", value: "Tracked" }, { label: "Next", value: "Tracked" }, { label: "Reports", value: "Linked" }, { label: "Projects", value: "Separated" }],
+  },
+  activity: {
+    title: "Activity Log",
+    purpose: "Show recent OS and runtime activity in a founder-readable timeline.",
+    currentState: "Activity is inspectable and redacted for primary UX.",
+    nextAction: "Review recent actions, evidence links, and blockers before continuing work.",
+    blocker: "Raw logs and private IDs are not shown in primary UX.",
+    owner: "NEXUS Activity Ledger",
+    evidence: "Activity and audit records",
+    activity: "Current page",
+    cost: "No provider spend",
+    lanes: [{ label: "Events", value: "Readable" }, { label: "Evidence", value: "Linked" }, { label: "Raw logs", value: "Hidden" }, { label: "Audit", value: "Review" }],
+  },
+  recovery: {
+    title: "Recovery",
+    purpose: "Show local recovery posture, blocked actions, and rollback evidence before any restore path is allowed.",
+    currentState: "Recovery snapshots are inspectable only.",
+    nextAction: "Review recovery blockers, snapshot coverage, and rollback evidence before enabling restore execution.",
+    blocker: "Restore execution, backup mutation, package writes, and project mutation remain disabled.",
+    owner: "WARDEN Recovery Boundary",
+    evidence: "Recovery preview reports",
+    activity: "Activity Log",
+    cost: "No storage or provider spend",
+    lanes: [{ label: "Snapshots", value: "Readable" }, { label: "Restore", value: "Disabled" }, { label: "Rollback", value: "Review" }, { label: "Mutation", value: "Blocked" }],
+  },
+  selfUpdate: {
+    title: "Self-Update",
+    purpose: "Show update readiness and blockers before NEXUS can change itself.",
+    currentState: "Self-update is display-only.",
+    nextAction: "Review update plan, rollback, and safety gates.",
+    blocker: "Self-mutation and package/release actions remain disabled.",
+    owner: "WARDEN Self-Update Boundary",
+    evidence: "Self-update readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Plan", value: "Review" }, { label: "Rollback", value: "Required" }, { label: "Mutation", value: "Disabled" }, { label: "Package", value: "Disabled" }],
+  },
+  deployMonitoring: {
+    title: "Deploy Monitoring",
+    purpose: "Show deploy monitoring readiness without enabling deployment.",
+    currentState: "Deploy monitoring is display-only.",
+    nextAction: "Review monitoring gaps and release blockers.",
+    blocker: "Deploy, release, and external monitoring mutation remain disabled.",
+    owner: "SENTINEL Deploy Monitoring",
+    evidence: "Deploy monitoring readiness reports",
+    activity: "Activity Log",
+    cost: "No deploy or provider spend",
+    lanes: [{ label: "Deploy", value: "Disabled" }, { label: "Monitoring", value: "Review" }, { label: "Alerts", value: "Preview" }, { label: "Rollback", value: "Required" }],
+  },
+  projectShipping: {
+    title: "Project Shipping",
+    purpose: "Show shipping readiness, packaging blockers, and release boundaries.",
+    currentState: "Project shipping is display-only.",
+    nextAction: "Review shipping gates, package blockers, and release evidence.",
+    blocker: "Package creation, export, release, and deploy remain disabled.",
+    owner: "SENTINEL Shipping Boundary",
+    evidence: "Project shipping readiness reports",
+    activity: "Activity Log",
+    cost: "No package, deploy, or provider spend",
+    lanes: [{ label: "Package", value: "Disabled" }, { label: "Export", value: "Disabled" }, { label: "Release", value: "Blocked" }, { label: "Evidence", value: "Required" }],
+  },
+  authGovernance: {
+    title: "Auth Governance",
+    purpose: "Show auth readiness, identity boundaries, and blocked mutation paths.",
+    currentState: "Auth governance is display-only.",
+    nextAction: "Review auth gaps before live access or identity changes.",
+    blocker: "Auth provider mutation, secrets, and live identity changes remain disabled.",
+    owner: "WARDEN Auth Governance",
+    evidence: "Auth governance readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Identity", value: "Review" }, { label: "Secrets", value: "Hidden" }, { label: "Provider", value: "Disabled" }, { label: "Mutation", value: "Blocked" }],
+  },
+  observability: {
+    title: "Observability",
+    purpose: "Show logs, metrics, and alert posture without exposing raw dumps.",
+    currentState: "Observability is display-safe and read-only.",
+    nextAction: "Review gaps in logs, metrics, and alerts before runtime work.",
+    blocker: "External telemetry mutation and raw log dumps remain disabled.",
+    owner: "SENTINEL Observability",
+    evidence: "Observability readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Logs", value: "Redacted" }, { label: "Metrics", value: "Review" }, { label: "Alerts", value: "Preview" }, { label: "Raw dumps", value: "Hidden" }],
+  },
+  backupDr: {
+    title: "Backup / DR",
+    purpose: "Show backup and disaster recovery posture before production readiness.",
+    currentState: "Backup and DR readiness is display-only.",
+    nextAction: "Review restore, rollback, and evidence requirements.",
+    blocker: "Backup mutation, restore execution, and hosted storage writes remain disabled.",
+    owner: "WARDEN Backup Boundary",
+    evidence: "Backup / DR readiness reports",
+    activity: "Activity Log",
+    cost: "No storage or provider spend",
+    lanes: [{ label: "Backup", value: "Review" }, { label: "Restore", value: "Disabled" }, { label: "Rollback", value: "Required" }, { label: "Storage", value: "Blocked" }],
+  },
+  isolation: {
+    title: "Isolation",
+    purpose: "Show tenant, project, and runtime isolation readiness.",
+    currentState: "Isolation posture is display-only.",
+    nextAction: "Review isolation gaps before multi-project or live runtime work.",
+    blocker: "Tenant/project mutation and live isolation enforcement changes remain disabled.",
+    owner: "WARDEN Isolation Boundary",
+    evidence: "Isolation readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Tenant", value: "Review" }, { label: "Project", value: "Scoped" }, { label: "Runtime", value: "Blocked" }, { label: "Mutation", value: "Disabled" }],
+  },
+  compliance: {
+    title: "Compliance",
+    purpose: "Show compliance readiness and policy evidence before enterprise use.",
+    currentState: "Compliance readiness is display-only.",
+    nextAction: "Review gaps, evidence, and disabled actions before live use.",
+    blocker: "Compliance controls cannot mutate runtime, auth, DB, or deployment from this page.",
+    owner: "AUDITOR Compliance Review",
+    evidence: "Compliance readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Controls", value: "Review" }, { label: "Evidence", value: "Required" }, { label: "Gaps", value: "Visible" }, { label: "Mutation", value: "Disabled" }],
+  },
+  enterprisePreview: {
+    title: "Enterprise Preview",
+    purpose: "Show enterprise readiness posture without implying live enterprise availability.",
+    currentState: "Enterprise preview is display-only.",
+    nextAction: "Review readiness gaps across auth, compliance, isolation, backup, and observability.",
+    blocker: "Enterprise activation, hosted services, deploy, and provider spend remain disabled.",
+    owner: "NEXUS Enterprise Readiness",
+    evidence: "Enterprise preview readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Auth", value: "Review" }, { label: "Compliance", value: "Review" }, { label: "Isolation", value: "Review" }, { label: "Activation", value: "Blocked" }],
+  },
+  liveReadiness: {
+    title: "Live Readiness",
+    purpose: "Show what remains before NEXUS can move from preview/local planning toward live execution.",
+    currentState: "Live readiness is gated and display-only.",
+    nextAction: "Review missing approvals, provider setup, execution admission, and safety gates.",
+    blocker: "Provider/model calls, dispatch, project mutation, DB writes, deploy, package, and spend remain blocked unless explicitly admitted.",
+    owner: "NEXUS Live Readiness",
+    evidence: "Live readiness reports",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Providers", value: "Blocked" }, { label: "Dispatch", value: "Blocked" }, { label: "DB writes", value: "Blocked" }, { label: "Deploy", value: "Blocked" }],
+  },
+  docs: {
+    title: "Docs & Guides",
+    purpose: "Show founder and operator documentation for using NEXUS safely.",
+    currentState: "Docs are readable and route-linked.",
+    nextAction: "Open the relevant guide before running local commands or reviewing workflow gaps.",
+    blocker: "Docs do not execute commands or mutate state.",
+    owner: "NEXUS Documentation",
+    evidence: "Docs and roadmap references",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Guides", value: "Readable" }, { label: "Architecture", value: "Readable" }, { label: "Commands", value: "Manual" }, { label: "Mutation", value: "Disabled" }],
+  },
+  settings: {
+    title: "Settings",
+    purpose: "Show settings posture without enabling unsafe runtime or project changes.",
+    currentState: "Settings are planned and display-only.",
+    nextAction: "Use existing pages for theme, scope, project context, and local readiness.",
+    blocker: "Provider, tool, project, DB, deploy, and package settings remain disabled.",
+    owner: "NEXUS Settings Boundary",
+    evidence: "Settings route plan",
+    activity: "Activity Log",
+    cost: "No provider spend",
+    lanes: [{ label: "Theme", value: "Available" }, { label: "Scope", value: "Available" }, { label: "Live settings", value: "Disabled" }, { label: "Mutation", value: "Blocked" }],
+  },
+};
+
 function countEvidenceForTask(taskId) {
   if (!taskId) return 0;
   const evidence = runtimeSnapshot.runtimeState?.evidence?.recent || [];
@@ -5239,8 +5506,10 @@ function WorkerRuntimePage({ vm }) {
         </div>
       </div>
 
+      <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.workers} />
+
       <div className="ccv2-warning-card">
-        P60 defines runtime primitives only. It does not execute agents, tools, providers, or project mutations yet.
+        Runtime primitives are defined for review only. This page does not execute agents, tools, providers, or project mutations.
       </div>
 
       <CommandTabs
@@ -5376,6 +5645,8 @@ function BatchQueuePage({ vm }) {
           <div className="ccv2-page-head__title">Batch Queue</div>
           <div className="ccv2-page-head__sub">Async batch processing status</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.batch} />
 
         <CommandTabs tabs={BATCH_QUEUE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Batch Queue sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -7945,6 +8216,8 @@ function LiveApiPage({ vm, onRefresh }) {
           <div className="ccv2-page-head__sub">Track local API availability, live vs snapshot data, and which business surfaces depend on each endpoint group.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.liveapi} />
+
         <CommandTabs tabs={LIVE_API_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live API sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
             <div className="ccv2-card ccv2-page-summary-card">
@@ -8057,6 +8330,8 @@ function DurableStatePage({ vm }) {
           <div className="ccv2-page-head__title">Durable State</div>
           <div className="ccv2-page-head__sub">Understand current persistence, DB foundation readiness, and what remains intentionally disabled by policy.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.database} />
 
         <CommandTabs tabs={DURABLE_STATE_TABS} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Durable State sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -8380,6 +8655,8 @@ function ServiceHealthPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.services} />
+
         <div className="ccv2-card ccv2-page-summary-card">
           <div className="ccv2-section-heading">Service Health Summary</div>
           <div className="ccv2-page-summary-grid">
@@ -8650,6 +8927,8 @@ function SelfUpdatePage() {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.selfUpdate} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -8764,6 +9043,8 @@ function DeployMonitoringPage() {
             Display-only deploy monitoring and incident mitigation readiness with approval, rollback, validation, and safety gates.
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.deployMonitoring} />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
@@ -8880,6 +9161,8 @@ function ProjectShippingPage() {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.projectShipping} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -8993,6 +9276,8 @@ function AuthGovernancePage() {
           <div className="ccv2-page-head__sub">Display-only identity, RBAC, and workspace governance readiness with auth mutation disabled.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.authGovernance} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -9071,6 +9356,8 @@ function ObservabilityPage() {
           <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
           <div className="ccv2-page-head__sub">Display-only telemetry, SLO, health, and incident readiness with exporters and automation disabled.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.observability} />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
@@ -9159,6 +9446,8 @@ function BackupDrPage() {
           <div className="ccv2-page-head__sub">Display-only backup, restore, and disaster recovery readiness with execution disabled.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.backupDr} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -9245,6 +9534,8 @@ function IsolationPage() {
           <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
           <div className="ccv2-page-head__sub">Display-only tenant, project, and access isolation readiness with mutation disabled.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.isolation} />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
@@ -9333,6 +9624,8 @@ function CompliancePage() {
           <div className="ccv2-page-head__sub">Display-only compliance, audit, and control mapping readiness with runtime actions disabled.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.compliance} />
+
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
@@ -9419,6 +9712,8 @@ function EnterprisePreviewPage() {
           <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
           <div className="ccv2-page-head__sub">Display-only founder-to-business readiness with runtime actions disabled.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.enterprisePreview} />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
@@ -9527,6 +9822,8 @@ function LiveReadinessPage() {
           <div className="ccv2-page-head__title">{readiness.pageTitle}</div>
           <div className="ccv2-page-head__sub">Live mode gates, bridge admission, and runtime blockers without runnable live actions.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.liveReadiness} />
 
         <div className="ccv2-page-summary">
           <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">What changed</span><span className="ccv2-page-summary-value">{readiness.whatChanged}</span></div>
@@ -10418,6 +10715,8 @@ function OSRoadmapPage({ vm }) {
           <div className="ccv2-page-head__sub">NEXUS OS platform progress only. Project progress belongs under Projects.</div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.roadmap} />
+
         <div className="ccv2-roadmap-summary-grid">
           <div className="ccv2-roadmap-summary-card">
             <div className="ccv2-roadmap-summary-card__label">Latest completed phase</div>
@@ -10756,6 +11055,8 @@ function DocsGuidesPage() {
           <div className="ccv2-page-head__title">Docs & Guides</div>
           <div className="ccv2-page-head__sub">Operator, architecture, and contributor guidance for running NEXUS safely.</div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.docs} />
 
         <div className="ccv2-docs-shell">
           <section className="ccv2-card ccv2-docs-reader" aria-label="Selected documentation guide">
@@ -11383,6 +11684,8 @@ function ActivityLogPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.activity} />
+
         <div className="ccv2-activity-readiness ccv2-activity-readiness--page">
           <section className="ccv2-card ccv2-activity-readiness__hero">
             <div className="ccv2-section-heading">Operator Activity</div>
@@ -11608,6 +11911,8 @@ function MemoryCenterPage({ vm }) {
           </div>
         </div>
 
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.memory} />
+
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Memory Scope Context</div>
           <div className="ccv2-page-summary-grid" style={{ marginTop: 10 }}>
@@ -11738,6 +12043,8 @@ function DataContextCenterPage({ vm }) {
             <span className="ccv2-pill ccv2-pill--disabled">Runtime injection disabled</span>
           </div>
         </div>
+
+        <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.context} />
 
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Trusted Context Boundary</div>
@@ -12298,6 +12605,8 @@ function PlannedRoutePage({ routeKey }) {
           <div className="ccv2-page-head__sub">Coming Soon · planned Command Center surface with read-only guidance until the capability is implemented.</div>
         </div>
 
+        {routeKey === "settings" && <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.settings} />}
+
         <div className="ccv2-card">
           <div className="ccv2-section-heading">Current State</div>
           <div style={{ marginTop: 8, fontSize: 12, color: "var(--v2-text-dim)" }}>
@@ -12550,7 +12859,16 @@ export default function CommandCenterV2({ studio }) {
           {currentPage === "secrets" && <SecretsBoundaryPage />}
           {currentPage === "memory" && <MemoryCenterPage vm={vmWithApi} />}
           {currentPage === "context" && <DataContextCenterPage vm={vmWithApi} />}
-          {currentPage === "recovery" && <Recovery />}
+          {currentPage === "recovery" && (
+            <>
+              <div className="ccv2-content">
+                <div className="ccv2-page">
+                  <FounderOperationsBoard {...FOUNDER_RUNTIME_OS_BOARDS.recovery} />
+                </div>
+              </div>
+              <Recovery />
+            </>
+          )}
           {currentPage === "selfUpdate" && <SelfUpdatePage />}
           {currentPage === "deployMonitoring" && <DeployMonitoringPage />}
           {currentPage === "projectShipping" && <ProjectShippingPage />}

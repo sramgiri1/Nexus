@@ -507,6 +507,7 @@
     "check:p1002-founder-operations-pages": "node scripts/check-p1002-founder-operations-pages.js",
     "check:p1003-founder-governance-pages": "node scripts/check-p1003-founder-governance-pages.js",
     "check:p1004-founder-delivery-pages": "node scripts/check-p1004-founder-delivery-pages.js",
+    "check:p1005-founder-runtime-os-pages": "node scripts/check-p1005-founder-runtime-os-pages.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

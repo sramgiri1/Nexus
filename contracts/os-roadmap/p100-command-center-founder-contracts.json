@@ -182,11 +182,23 @@
     {
       "phaseId": "P100.5",
       "title": "Runtime And OS Pages",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
-      "objective": "Audit Runtime, Platform, and OS pages for founder-useful readiness, blockers, and next actions.",
-      "narrowScope": "Runtime and OS page content only.",
-      "allowedFiles": [],
+      "objective": "Add founder-useful action boards to runtime, platform, OS, docs, activity, recovery, live readiness, and settings pages.",
+      "narrowScope": "Runtime and OS page content only; no execution authority or project mutation changes.",
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "dashboard/src/pages/CommandCenterV2.jsx",
+        "dashboard/tests/routes.spec.js",
+        "scripts/check-p1005-founder-runtime-os-pages.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1005-founder-runtime-os-pages-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -198,7 +210,14 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1005-founder-runtime-os-pages",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder runtime and OS pages\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P100.6",
@@ -207,7 +226,17 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Aggregate P100 validation and update docs, roadmap, reports, and status.",
       "narrowScope": "Validation and docs only.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "scripts/check-p1006-founder-command-center-validation.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1006-founder-command-center-validation-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -219,7 +248,17 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1006-founder-command-center-validation",
+        "npm run check:p1001-full-command-center-founder-shell",
+        "npm run check:p1002-founder-operations-pages",
+        "npm run check:p1003-founder-governance-pages",
+        "npm run check:p1004-founder-delivery-pages",
+        "npm run check:p1005-founder-runtime-os-pages",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     },
     {
       "phaseId": "P100.7",
@@ -228,7 +267,17 @@
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Run final P100 validation and close the phase.",
       "narrowScope": "Final validation only.",
-      "allowedFiles": [],
+      "allowedFiles": [
+        "contracts/os-roadmap/p100-command-center-founder-contracts.json",
+        "scripts/check-p1007-founder-command-center-final.js",
+        "package.json",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1007-founder-command-center-final-report.md",
+        "reports/os-phase-status-report.md",
+        "reports/phase-validation-coverage-report.md"
+      ],
       "forbiddenFiles": [
         "projects/**",
         "providers/**",
@@ -240,7 +289,14 @@
         "packages/**",
         ".env*"
       ],
-      "validationCommands": []
+      "validationCommands": [
+        "npm run check:p1007-founder-command-center-final",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Full Command Center|Founder operations pages|Founder governance pages|Founder delivery pages|Founder runtime and OS pages|Command Center Lite\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ]
     }
   ]
 }

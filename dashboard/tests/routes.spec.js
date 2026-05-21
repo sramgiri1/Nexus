@@ -361,6 +361,58 @@ test("Founder delivery pages show useful action boards", async ({ page }) => {
   expect(errors).toEqual([]);
 });
 
+test("Founder runtime and OS pages show useful action boards", async ({ page }) => {
+  const errors = captureClientErrors(page);
+
+  for (const route of [
+    { path: "/command-center/workers", title: "Worker Runtime", expected: ["Workers", "Queue"] },
+    { path: "/command-center/batch", title: "Batch Queue", expected: ["Upload", "Spend"] },
+    { path: "/command-center/liveapi", title: "Live API Status", expected: ["Mission data", "Local only"] },
+    { path: "/command-center/database", title: "Durable State", expected: ["Hosted DB", "Writes"] },
+    { path: "/command-center/services", title: "Service Health", expected: ["Services", "Doctor"] },
+    { path: "/command-center/memory", title: "Memory Center", expected: ["Raw dumps", "Mutation"] },
+    { path: "/command-center/context", title: "Data & Context Center", expected: ["Trusted context", "Lazy loaded"] },
+    { path: "/command-center/roadmap", title: "OS Roadmap", expected: ["Projects", "Separated"] },
+    { path: "/command-center/activity", title: "Activity Log", expected: ["Raw logs", "Audit"] },
+    { path: "/command-center/recovery", title: "Recovery", expected: ["Snapshots", "Restore"] },
+    { path: "/command-center/self-update", title: "Self-Update", expected: ["Rollback", "Mutation"] },
+    { path: "/command-center/monitoring", title: "Deploy Monitoring", expected: ["Deploy", "Rollback"] },
+    { path: "/command-center/shipping", title: "Project Shipping", expected: ["Package", "Release"] },
+    { path: "/command-center/auth-governance", title: "Auth Governance", expected: ["Identity", "Secrets"] },
+    { path: "/command-center/observability", title: "Observability", expected: ["Logs", "Raw dumps"] },
+    { path: "/command-center/backup-dr", title: "Backup / DR", expected: ["Restore", "Storage"] },
+    { path: "/command-center/isolation", title: "Isolation", expected: ["Tenant", "Runtime"] },
+    { path: "/command-center/compliance", title: "Compliance", expected: ["Controls", "Gaps"] },
+    { path: "/command-center/enterprise-preview", title: "Enterprise Preview", expected: ["Activation", "Blocked"] },
+    { path: "/command-center/live-readiness", title: "Live Readiness", expected: ["Providers", "Dispatch"] },
+    { path: "/command-center/docs", title: "Docs & Guides", expected: ["Guides", "Commands"] },
+    { path: "/command-center/settings", title: "Settings", expected: ["Theme", "Live settings"] },
+  ]) {
+    await page.goto(route.path);
+    const board = page.getByLabel(`${route.title} founder operations board`);
+    await expect(board).toBeVisible();
+    await expect(board).toContainText("Founder Operations");
+    await expect(board).toContainText("Founder useful");
+    await expect(board).toContainText("Founder use");
+    await expect(board).toContainText("Current state");
+    await expect(board).toContainText("Next action");
+    await expect(board).toContainText("Blocker");
+    await expect(board).toContainText("Owner");
+    await expect(board).toContainText("Evidence");
+    await expect(board).toContainText("Activity");
+    await expect(board).toContainText("Cost impact");
+    for (const text of route.expected) {
+      await expect(board).toContainText(text);
+    }
+  }
+
+  const body = await page.locator("body").innerText();
+  expect(body).not.toContain("DemoApp");
+  expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);
+  expect(body).not.toMatch(/private-project-|project_[A-Za-z0-9_-]*\d|token_|tenant_|workspace_/i);
+  expect(errors).toEqual([]);
+});
+
 test("Command Center Lite route renders interactive founder chat", async ({ page }) => {
   const errors = captureClientErrors(page);
 
