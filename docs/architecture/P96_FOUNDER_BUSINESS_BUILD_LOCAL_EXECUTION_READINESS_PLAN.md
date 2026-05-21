@@ -96,11 +96,10 @@ Validation:
 
 ### P96.4 Command Center DB-Backed Readiness UX
 
-P96.4 will render DB-backed founder readiness in Command Center Lite, Business
-Build, and DB Runtime. The UX must show DB source state, saved founder session,
-Q&A turn count, PRD artifact readiness, workstream plan records, local CRUD
-posture, approval state, next action, blockers, disabled reason, owner
-capability, evidence/activity location, and cost impact.
+P96.4 is complete. It renders P96.2 local readiness and P96.3 dry-run admission
+inside Business Build. The UX shows DB source state, future review lane count,
+admission lanes, next action, blockers, disabled reason, owner capability,
+evidence/activity location, cost impact, and blocked safety rows.
 
 It must preserve system, dark, and light themes, route-wide navigation, no
 DemoApp leakage, no raw JSON/log/policy dumps, no raw table dumps in primary UX,
@@ -109,8 +108,11 @@ and no raw private IDs.
 Validation:
 
 - `npm run check:p964-command-center-business-build-readiness-ux`
-- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder business build readiness"`
+- `cd dashboard && npx playwright test tests/routes.spec.js --grep "Business Build local execution readiness"`
 - `cd dashboard && npm run build`
+- `npm run check:p963-founder-business-build-dry-run-admission`
+- `npm run check:p962-founder-business-build-readiness-model`
+- `npm run check:p961-founder-business-build-readiness-contract`
 - `npm run check:os-phase-status`
 - `npm run check:phase-validation-coverage`
 - `git diff --check`

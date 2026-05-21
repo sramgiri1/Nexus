@@ -9269,7 +9269,7 @@ function BusinessBuildPage() {
         </div>
 
         <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
-          Business Build is live for local planning only. Agents are shown as owner lanes; provider calls, dispatch, project writes, DB writes, deploy, package creation, and spend are still disabled.
+          Business Build is live for local planning and DB-backed readiness. Agents are shown as owner lanes; dispatch, provider calls, project writes, hosted DB mutation, deploy, package creation, and spend are still disabled.
         </div>
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
@@ -9300,6 +9300,51 @@ function BusinessBuildPage() {
                 </ul>
               </div>
             )}
+            <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Business Build local execution readiness">
+              <div className="ccv2-section-heading">Business Build Local Execution Readiness</div>
+              <div className="ccv2-muted" style={{ marginTop: 8 }}>
+                DB-backed founder workflow is ready for local review. Dry-run admission is visible, but execution remains blocked.
+              </div>
+              <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Current state</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.currentState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Readiness mode</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.readinessMode}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">DB source</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.dbSourceState}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Future review lanes</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.readyLaneCount} of {build.localExecutionReadiness.totalLaneCount}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.ownerCapability}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.evidenceLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.activityLocation}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.costImpact}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.nextAction}</span></div>
+                <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{build.localExecutionReadiness.disabledReason}</span></div>
+              </div>
+              <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+                {build.localExecutionReadiness.lanes.map((lane) => (
+                  <div
+                    key={lane.label}
+                    aria-label={`${lane.label} readiness lane`}
+                    style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+                  >
+                    <div className="ccv2-section-heading">{lane.label}</div>
+                    <div className="ccv2-pill ccv2-pill--teal" style={{ marginTop: 8 }}>{lane.currentState}</div>
+                    <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.nextAction}</div>
+                    <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+                    <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                      <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Execution</span><span className="ccv2-safety-row__value--disabled">{lane.executionAllowed}</span></div>
+                      <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Dispatch</span><span className="ccv2-safety-row__value--disabled">{lane.dispatchAllowed}</span></div>
+                      <div className="ccv2-safety-row"><span className="ccv2-safety-row__label">Project mutation</span><span className="ccv2-safety-row__value--disabled">{lane.projectMutationAllowed}</span></div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+                {build.localExecutionReadiness.safetyRows.map((row) => (
+                  <div className="ccv2-safety-row" key={row.label}>
+                    <span className="ccv2-safety-row__label">{row.label}</span>
+                    <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
             <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder DB workflow">
               <div className="ccv2-section-heading">Founder DB Workflow</div>
               <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
@@ -9480,7 +9525,9 @@ function BusinessBuildPage() {
               <article className="ccv2-card">
                 <div className="ccv2-section-heading">Founder Workstream Dry Run</div>
                 <div className="ccv2-pill ccv2-pill--disabled">{build.founderWorkstreamDryRun.currentState}</div>
-                <div className="ccv2-muted" style={{ marginTop: 10 }}>Next action: {build.founderWorkstreamDryRun.nextAction}</div>
+                <div className="ccv2-muted" style={{ marginTop: 10 }}>Future review lanes: {build.founderWorkstreamDryRun.readyLaneCount} of {build.founderWorkstreamDryRun.totalLaneCount}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Admitted for execution: {build.founderWorkstreamDryRun.admittedForExecutionCount}</div>
+                <div className="ccv2-muted" style={{ marginTop: 8 }}>Next action: {build.founderWorkstreamDryRun.nextAction}</div>
                 <div className="ccv2-muted" style={{ marginTop: 8 }}>Owner: {build.founderWorkstreamDryRun.ownerCapability}</div>
                 <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {build.founderWorkstreamDryRun.evidenceLocation}</div>
                 <div className="ccv2-muted" style={{ marginTop: 8 }}>Activity: {build.founderWorkstreamDryRun.activityLocation}</div>
@@ -9495,6 +9542,21 @@ function BusinessBuildPage() {
                   ))}
                 </ul>
               </article>
+            </div>
+            <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }} aria-label="Business Build dry-run admission lanes">
+              {build.founderWorkstreamDryRun.admissionLanes.map((lane) => (
+                <article className="ccv2-card" key={lane.label}>
+                  <div className="ccv2-section-heading">{lane.label}</div>
+                  <div className="ccv2-pill ccv2-pill--teal">{lane.currentState}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 10 }}>Owner: {lane.ownerCapability}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Next: {lane.nextAction}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Blocker: {lane.blocker}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Execution: {lane.executionAllowed}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Dispatch: {lane.dispatchAllowed}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Project mutation: {lane.projectMutationAllowed}</div>
+                  <div className="ccv2-muted" style={{ marginTop: 8 }}>Evidence: {lane.evidenceLocation}</div>
+                </article>
+              ))}
             </div>
             <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
               {build.founderWorkstreamDryRun.rows.map((row) => (

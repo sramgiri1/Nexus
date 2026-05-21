@@ -1976,8 +1976,11 @@ persistence controls.
 
 P96.3 is complete. It adds a display-safe dry-run admission matrix for local
 Business Build lane inspection while keeping dispatch, worker execution,
-project mutation, deploy, package, and spend blocked. P96.4 is next for Command
-Center readiness UX.
+project mutation, deploy, package, and spend blocked.
+
+P96.4 is complete. It renders local execution readiness and dry-run admission
+lanes in Business Build without runnable execution controls. P96.5 is next for
+validation aggregation.
 
 The detailed plan lives in
 [`P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md`](P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md).

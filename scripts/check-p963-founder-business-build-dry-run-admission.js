@@ -92,14 +92,14 @@ addCheck("unsafe runtime flags remain false", allFlagsBlocked(blockedAdmission) 
 addCheck("contract marks P96.3 complete", p963?.status === "complete" && ["planned", "complete"].includes(p964?.status));
 addCheck("contract expected export retained", contractText.includes("buildFounderBusinessBuildDryRunAdmission"));
 addCheck("docs record P96.3", docs.includes("P96.3 is complete") && docs.includes("npm run check:p963-founder-business-build-dry-run-admission") && !docs.includes("check:p963-founder-business-build-local-api"));
-addCheck("platform roadmap records P96.3", platformRoadmap.includes("P96.3 is complete") && (platformRoadmap.includes("P96.4 is next") || platformRoadmap.includes("P96.4 is planned")));
+addCheck("platform roadmap records P96.3", platformRoadmap.includes("P96.3 is complete") && (platformRoadmap.includes("P96.4 is next") || platformRoadmap.includes("P96.4 is planned") || platformRoadmap.includes("P96.4 is complete")));
 addCheck(
   "phase status advanced",
   statusById.get("P96")?.status === "in_progress"
     && statusById.get("P96.3")?.status === "complete"
-    && status.currentPhase === "P96.3"
-    && status.previousPhase === "P96.2"
-    && status.nextPhase === "P96.4",
+    && ["P96.3", "P96.4"].includes(status.currentPhase)
+    && ["P96.2", "P96.3"].includes(status.previousPhase)
+    && ["P96.4", "P96.5"].includes(status.nextPhase),
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
 addCheck("roadmap tracks P96.3", roadmapById.get("P96.3")?.track === "NEXUS_OS" && roadmapById.get("P96.3")?.status === "complete");

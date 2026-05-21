@@ -3333,7 +3333,7 @@ test.describe("Command Center route-wide UX", () => {
     expect(errors).toEqual([]);
   });
 
-  test("Business Build route renders founder workstream dry-run state without runnable actions", async ({ page }) => {
+  test("Business Build local execution readiness renders without runnable actions", async ({ page }) => {
     const errors = captureClientErrors(page);
 
     await page.addInitScript(() => {
@@ -3349,7 +3349,8 @@ test.describe("Command Center route-wide UX", () => {
       await expect(page.locator("body")).toContainText("casual iPhone players");
       await expect(page.locator("body")).toContainText("Next useful step");
       await expect(page.locator("body")).toContainText("Agent plan");
-      await expect(page.locator("body")).toContainText("provider calls, dispatch, project writes, DB writes, deploy, package creation, and spend are still disabled");
+      await expect(page.locator("body")).toContainText("Business Build is live for local planning and DB-backed readiness");
+      await expect(page.locator("body")).toContainText("project writes, hosted DB mutation, deploy, package creation, and spend are still disabled");
       await expect(page.locator("body")).not.toContainText("Needs setup");
     }
 
@@ -3367,6 +3368,18 @@ test.describe("Command Center route-wide UX", () => {
     await expect(founderDbWorkflow).toContainText("reports/p944-founder-db-view-model-report.md");
     await expect(founderDbWorkflow).not.toContainText("founder_sessions");
     await expect(founderDbWorkflow).not.toContainText("p943-session");
+    const localReadiness = page.getByLabel("Business Build local execution readiness");
+    await expect(localReadiness).toContainText("Business Build Local Execution Readiness");
+    await expect(localReadiness).toContainText("DB-backed founder workflow is ready for local review");
+    await expect(localReadiness).toContainText("Future review lanes");
+    await expect(localReadiness).toContainText("4 of 4");
+    await expect(localReadiness).toContainText("NEXUS Business Build Dry-Run Admission");
+    await expect(localReadiness).toContainText("Dry-run admission report");
+    await expect(localReadiness).not.toContainText("P96.3");
+    await expect(localReadiness).toContainText("Agent dispatch");
+    await expect(localReadiness).toContainText("Worker/tool execution");
+    await expect(localReadiness).toContainText("Execution");
+    await expect(localReadiness).toContainText("Blocked");
     await commandTab(page, "PRD Readiness").click();
     await expect(activeCommandTabPanel(page)).toContainText("PRD Readiness");
     await expect(activeCommandTabPanel(page)).toContainText("Founder intake answers");
@@ -3397,7 +3410,13 @@ test.describe("Command Center route-wide UX", () => {
     await expect(activeCommandTabPanel(page)).toContainText("DB writes");
     await commandTab(page, "Founder Dry Run").click();
     await expect(activeCommandTabPanel(page)).toContainText("Founder Workstream Dry Run");
+    await expect(activeCommandTabPanel(page)).toContainText("Future review lanes: 4 of 4");
+    await expect(activeCommandTabPanel(page)).toContainText("Admitted for execution: 0");
+    await expect(activeCommandTabPanel(page)).toContainText("Business Build Dry-Run Admission");
     await expect(activeCommandTabPanel(page)).toContainText("Agent Lane Planning");
+    await expect(activeCommandTabPanel(page)).toContainText("Founder session");
+    await expect(activeCommandTabPanel(page)).toContainText("Eligible For Future Governed Execution Review");
+    await expect(activeCommandTabPanel(page)).toContainText("Project mutation: Blocked");
     await expect(activeCommandTabPanel(page)).toContainText("Local founder task orchestration");
     await expect(activeCommandTabPanel(page)).toContainText("PRD readiness packet outline");
     await expect(activeCommandTabPanel(page)).toContainText("agent lane plan");
@@ -3472,13 +3491,17 @@ test.describe("Command Center route-wide UX", () => {
     await commandTab(page, "Founder Dry Run").click();
     const panel = activeCommandTabPanel(page);
     await expect(panel).toContainText("Founder Workstream Dry Run");
-    await expect(panel).toContainText("Ready Blocked");
-    await expect(panel).toContainText("Founder Dry Run is display-only");
+    await expect(panel).toContainText("Ready Execution Blocked");
+    await expect(panel).toContainText("dry-run admission only");
     await expect(panel).toContainText("Provider/model calls, agent dispatch");
     await expect(panel).toContainText("project mutation");
-    await expect(panel).toContainText("DB writes");
+    await expect(panel).toContainText("hosted DB mutation");
     await expect(panel).toContainText("deploy");
-    await expect(panel).toContainText("spend remain disabled");
+    await expect(panel).toContainText("spend remain blocked");
+    await expect(panel).toContainText("Future review lanes: 4 of 4");
+    await expect(panel).toContainText("Admitted for execution: 0");
+    await expect(panel.getByLabel("Business Build dry-run admission lanes")).toContainText("Founder PRD artifact");
+    await expect(panel.getByLabel("Business Build dry-run admission lanes")).toContainText("Execution: Blocked");
 
     const body = await page.locator("body").innerText();
     expect(body).not.toMatch(/run now|execute now|deploy now|apply now|call provider now|create project now|dispatch agent now/i);

@@ -138,15 +138,15 @@
       "id": "nexus-os-p96-4-command-center-readiness-ux",
       "phaseId": "P96.4",
       "objective": "Show Business Build local execution readiness in Command Center without runnable execution actions.",
-      "status": "planned",
+      "status": "complete",
       "classification": "NEXUS_OS_CHANGE",
-      "allowedFiles": ["dashboard/src/data/businessBuild.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p964-command-center-business-build-readiness-ux.js", "package.json", "contracts/os-roadmap/p96-execution-contracts.json", "docs/architecture/P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md", "os-roadmap/phase-status.json", "os-roadmap/nexus-phases.json", "reports/p964-command-center-business-build-readiness-ux-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
+      "allowedFiles": ["dashboard/src/data/businessBuild.js", "dashboard/src/pages/CommandCenterV2.jsx", "dashboard/tests/routes.spec.js", "scripts/check-p964-command-center-business-build-readiness-ux.js", "scripts/check-p963-founder-business-build-dry-run-admission.js", "scripts/check-p962-founder-business-build-readiness-model.js", "scripts/check-p961-founder-business-build-readiness-contract.js", "package.json", "contracts/os-roadmap/p96-execution-contracts.json", "docs/architecture/P96_FOUNDER_BUSINESS_BUILD_LOCAL_EXECUTION_READINESS_PLAN.md", "docs/architecture/NEXUS_PLATFORM_ROADMAP.md", "os-roadmap/phase-status.json", "os-roadmap/nexus-phases.json", "reports/p964-command-center-business-build-readiness-ux-report.md", "reports/p963-founder-business-build-dry-run-admission-report.md", "reports/p962-founder-business-build-readiness-model-report.md", "reports/p961-founder-business-build-readiness-contract-report.md", "reports/os-phase-status-report.md", "reports/phase-validation-coverage-report.md"],
       "forbiddenFiles": ["projects/**", "careloop/**", "providers/**", "tools/**", "worker-runtime/**", "deploy/**", "release/**", "exports/**", "packages/**", ".env*"],
       "expectedExportsSchemasDataShapes": {
         "viewModelShape": "Business Build view model includes localExecutionReadiness with currentState, readinessMode, DB source state, readyLaneCount, totalLaneCount, blockers, nextAction, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, lanes[], safetyRows[], and all execution flags false."
       },
       "commandCenterUxRequirements": "Business Build must show what changed, current state, next action, blockers, disabled reason, owner capability, evidence/activity location, cost impact, DB source state, and local readiness lanes. Primary UX must not show raw JSON, raw logs, raw policy dumps, raw table dumps, raw IDs, DemoApp, or fake runnable dispatch/project/provider/deploy actions.",
-      "validationCommands": ["npm run check:p964-command-center-business-build-readiness-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"", "cd dashboard && npm run build", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"]
+      "validationCommands": ["npm run check:p964-command-center-business-build-readiness-ux", "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"", "cd dashboard && npm run build", "npm run check:p963-founder-business-build-dry-run-admission", "npm run check:p962-founder-business-build-readiness-model", "npm run check:p961-founder-business-build-readiness-contract", "npm run check:os-phase-status", "npm run check:phase-validation-coverage", "git diff --check"]
     },
     {
       "id": "nexus-os-p96-5-tests-checkers",

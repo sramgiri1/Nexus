@@ -144,6 +144,72 @@ function toDisplayLane(request = {}) {
   };
 }
 
+function toReadinessLane(lane = {}) {
+  return {
+    label: lane.label || "Business Build lane",
+    currentState: lane.currentState || toTitle(lane.dryRunAdmissionState || lane.readinessState || "blocked_until_required_evidence"),
+    ownerCapability: lane.ownerCapability || "NEXUS Business Build Readiness",
+    nextAction: lane.nextAction || "Review local readiness evidence before execution can be considered.",
+    blocker: lane.missingEvidence?.length ? `${toTitle(lane.missingEvidence[0])} required` : "No local evidence blocker",
+    disabledReason: lane.disabledReason || "Dry-run admission is display-only and cannot execute or mutate.",
+    evidenceLocation: lane.evidenceLocation || "Local readiness evidence",
+    activityLocation: lane.activityLocation || "OS activity report",
+    costImpact: lane.costImpact || "Local deterministic preview only. No provider spend.",
+    executionAllowed: lane.executionAllowed === true ? "Allowed" : "Blocked",
+    dispatchAllowed: lane.dispatchAllowed === true ? "Allowed" : "Blocked",
+    projectMutationAllowed: lane.projectMutationAllowed === true ? "Allowed" : "Blocked",
+  };
+}
+
+function buildBusinessBuildDryRunAdmissionView(founderDbWorkflow = {}) {
+  const lanes = (founderDbWorkflow.lanes || FOUNDER_DB_LANES).map((lane) => ({
+    label: lane.label || "Business Build lane",
+    currentState: "Eligible For Future Governed Execution Review",
+    ownerCapability: lane.ownerCapability || "NEXUS Business Build Readiness",
+    nextAction: "Keep this lane in local review until a later execution phase explicitly admits it.",
+    blocker: "Execution blocked",
+    disabledReason: "Dry-run admission is display-only and cannot dispatch agents, execute workers/tools, mutate projects, call providers, deploy, package, or spend.",
+    evidenceLocation: "Dry-run admission report",
+    activityLocation: "OS activity report",
+    costImpact: "Local deterministic dry-run admission only. No provider spend.",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+
+  return {
+    currentState: "Dry Run Admission Ready Execution Blocked",
+    readinessMode: "DB-backed local readiness review",
+    dbSourceState: founderDbWorkflow.currentState || "DB-backed founder workflow is ready for local review",
+    readyLaneCount: lanes.length,
+    totalLaneCount: lanes.length,
+    admittedForExecutionCount: 0,
+    nextAction: "Review the local DB-backed founder workflow and keep execution blocked until a later governed phase admits it.",
+    blockers: [
+      "Agent dispatch is blocked.",
+      "Worker/tool execution is blocked.",
+      "Project mutation is blocked.",
+      "Hosted DB mutation is blocked.",
+      "Provider spend is blocked.",
+    ],
+    disabledReason: "This is dry-run admission only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, package, network calls, and spend remain blocked.",
+    ownerCapability: "NEXUS Business Build Dry-Run Admission",
+    evidenceLocation: "Dry-run admission report",
+    activityLocation: "OS activity report",
+    costImpact: "Local deterministic readiness only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    lanes,
+    safetyRows: [
+      { label: "Execution", value: "Blocked" },
+      { label: "Agent dispatch", value: "Blocked" },
+      { label: "Worker/tool execution", value: "Blocked" },
+      { label: "Project mutation", value: "Blocked" },
+      { label: "Hosted DB mutation", value: "Blocked" },
+      { label: "Deploy/package", value: "Blocked" },
+      { label: "Provider spend", value: "Blocked" },
+    ],
+  };
+}
+
 export function buildFounderRuntimeDbViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const workflow = buildFounderRuntimeDbWorkflowData(founderIdeaSummary);
   const session = workflow.founderSession || {};
@@ -233,6 +299,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const nextAgentLane = founderEnvelope.agentFlow?.[0];
   const founderHighlights = buildFounderHighlights(prdFields);
   const founderDbWorkflow = buildFounderRuntimeDbViewModel(founderIdeaSummary);
+  const dryRunAdmission = buildBusinessBuildDryRunAdmissionView(founderDbWorkflow);
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -249,7 +316,7 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     agentPlanSummary: nextAgentLane
       ? `${nextAgentLane.lane} starts with ${nextAgentLane.nextAction}`
       : "NEXUS will map the PRD to owner lanes after intake is complete.",
-    safetySummary: "Planning is live-local. Execution, spend, project writes, DB writes, and deploy remain blocked.",
+    safetySummary: "Planning is live-local. Local SQLite readiness is visible; dispatch, provider calls, project writes, hosted DB mutation, deploy, package creation, and spend remain blocked.",
     whatChanged: "Business Build now follows the founder idea from Chat with NEXUS into PRD readiness, workstreams, and milestones.",
     currentState: "Founder plan is ready for local review. Runtime execution remains disabled.",
     nextAction: data.nextAction,
@@ -319,21 +386,41 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
       blocker: entry.blockers[0] || "No blocker",
     })),
     founderWorkstreamDryRun: {
-      currentState: "Local Founder Workstream Dry Run Ready Blocked",
-      nextAction: "Use the dry-run preview to complete founder Q&A and PRD readiness before any later execution review.",
-      disabledReason: "Founder Dry Run is display-only. Provider/model calls, agent dispatch, executor runs, project mutation, DB writes, deploy, package, network calls, and spend remain disabled.",
-      ownerCapability: "NEXUS Founder Workstream Dry Run Governance",
-      evidenceLocation: "reports/p893-local-founder-workstream-dry-run-report.md",
-      activityLocation: "reports/os-phase-status-report.md",
-      costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
+      currentState: dryRunAdmission.currentState,
+      nextAction: dryRunAdmission.nextAction,
+      disabledReason: dryRunAdmission.disabledReason,
+      ownerCapability: dryRunAdmission.ownerCapability,
+      evidenceLocation: dryRunAdmission.evidenceLocation,
+      activityLocation: dryRunAdmission.activityLocation,
+      costImpact: dryRunAdmission.costImpact,
+      readyLaneCount: dryRunAdmission.readyLaneCount,
+      totalLaneCount: dryRunAdmission.totalLaneCount,
+      admittedForExecutionCount: dryRunAdmission.admittedForExecutionCount,
+      admissionLanes: (dryRunAdmission.lanes || []).map(toReadinessLane),
       rows: FOUNDER_WORKSTREAM_DRY_RUN_ROWS.map((run) => ({
         ...run,
         nextAction: "Complete founder answers and operator review evidence before any execution-enabling phase.",
         disabledReason: "Dry-run row is display-only and cannot execute or mutate.",
-        evidenceLocation: "reports/p893-local-founder-workstream-dry-run-report.md",
-        activityLocation: "reports/os-phase-status-report.md",
+        evidenceLocation: "Founder workstream dry-run report",
+        activityLocation: "OS phase status report",
         costImpact: "No provider calls, model calls, network calls, worker runtime, deploy, package creation, or provider spend.",
       })),
+    },
+    localExecutionReadiness: {
+      currentState: dryRunAdmission.currentState,
+      readinessMode: dryRunAdmission.readinessMode,
+      dbSourceState: dryRunAdmission.dbSourceState,
+      readyLaneCount: dryRunAdmission.readyLaneCount,
+      totalLaneCount: dryRunAdmission.totalLaneCount,
+      nextAction: dryRunAdmission.nextAction,
+      blockers: dryRunAdmission.blockers,
+      disabledReason: dryRunAdmission.disabledReason,
+      ownerCapability: dryRunAdmission.ownerCapability,
+      evidenceLocation: dryRunAdmission.evidenceLocation,
+      activityLocation: dryRunAdmission.activityLocation,
+      costImpact: dryRunAdmission.costImpact,
+      lanes: (dryRunAdmission.lanes || []).map(toReadinessLane),
+      safetyRows: dryRunAdmission.safetyRows,
     },
     founderDbWorkflow,
     activationReview: {

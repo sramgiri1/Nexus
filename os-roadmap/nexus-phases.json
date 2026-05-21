@@ -6455,10 +6455,13 @@
       "order": 132,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "632da85",
+      "commit": "pending-final-commit",
       "completedAt": "",
-      "summary": "P96.3 safe dry-run admission is complete; P96.4 Command Center readiness UX is next.",
+      "summary": "P96.4 Command Center readiness UX is complete; P96.5 validation aggregation is next.",
       "checksRun": [
+        "npm run check:p964-command-center-business-build-readiness-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"",
+        "cd dashboard && npm run build",
         "npm run check:p963-founder-business-build-dry-run-admission",
         "npm run check:p962-founder-business-build-readiness-model",
         "npm run check:p961-founder-business-build-readiness-contract",
@@ -6467,12 +6470,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P96.3 is dry-run admission only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+        "P96.4 is Command Center UX only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
       ],
-      "nextPhase": "P96.4",
+      "nextPhase": "P96.5",
       "commandCenterVisible": true,
       "label": "Business Build Readiness",
-      "detail": "Dry-run admission complete; Command Center UX next."
+      "detail": "Command Center readiness UX complete; validation aggregation next."
     },
     {
       "phaseId": "P96.1",
@@ -6553,18 +6556,30 @@
       "phaseId": "P96.4",
       "track": "NEXUS_OS",
       "order": 132.4,
-      "title": "Command Center UX",
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned Business Build local execution readiness UX.",
-      "checksRun": [],
-      "knownLimitations": [],
+      "title": "Command Center Readiness UX",
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-20",
+      "summary": "Rendered Business Build local execution readiness and dry-run admission lanes in Command Center without runnable execution actions.",
+      "checksRun": [
+        "npm run check:p964-command-center-business-build-readiness-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Business Build local execution readiness\"",
+        "cd dashboard && npm run build",
+        "npm run check:p963-founder-business-build-dry-run-admission",
+        "npm run check:p962-founder-business-build-readiness-model",
+        "npm run check:p961-founder-business-build-readiness-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P96.4 is Command Center UX only. It does not dispatch agents, execute tools/workers, create or mutate projects, call providers/models, use hosted DBs, use network calls, deploy, release, export, package, or spend."
+      ],
       "nextPhase": "P96.5",
       "commandCenterVisible": true,
-      "label": "Command Center UX",
-      "detail": "Planned P96 subphase; next P96.5."
+      "label": "Readiness UX",
+      "detail": "P96.4 Command Center readiness UX complete."
     },
     {
       "phaseId": "P96.5",
@@ -6619,8 +6634,8 @@
     }
   ],
   "updatedAt": "2026-05-20T00:00:00.000Z",
-  "currentPhase": "P96.3",
-  "previousPhase": "P96.2",
-  "nextPhase": "P96.4",
+  "currentPhase": "P96.4",
+  "previousPhase": "P96.3",
+  "nextPhase": "P96.5",
   "currentPhaseStatus": "complete"
 }
