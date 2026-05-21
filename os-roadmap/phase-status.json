@@ -11904,25 +11904,26 @@
       "title": "Founder Business Build Governed Execution Admission Handoff",
       "track": "NEXUS_OS",
       "order": 135,
-      "status": "in_progress",
+      "status": "complete",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "764e5a29",
-      "completedAt": "",
-      "summary": "P99.6 execution admission validation/docs are complete; P99.7 final validation is next.",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "P99 founder Business Build governed execution admission handoff is complete; P100 is the next planned scoped handoff.",
       "checksRun": [
+        "npm run check:p997-execution-admission-final-validation",
         "npm run check:p996-execution-admission-validation-docs",
-        "npm run check:p995-command-center-execution-admission-ux",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P99 remains in progress. P99.6 is validation/docs only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99 is complete as final validation only. It does not approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend.",
+        "Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package creation, network calls, and provider spend remain blocked."
       ],
-      "nextPhase": "P99.7",
+      "nextPhase": "P100",
       "commandCenterVisible": true,
-      "label": "Admission Dry Run",
-      "detail": "P99 admission dry run complete; Command Center UX next."
+      "label": "Execution Admission Complete",
+      "detail": "P99 admission model, approval envelope, dry run, UX, docs, and final validation complete."
     },
     {
       "phaseId": "P99.1",
@@ -12080,25 +12081,50 @@
       "title": "Final Validation",
       "track": "NEXUS_OS",
       "order": 135.7,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Planned final P99 validation and next scoped handoff.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Closed P99 with final validation and recorded P100 as the next planned scoped handoff.",
+      "checksRun": [
+        "npm run check:p997-execution-admission-final-validation",
+        "npm run check:p996-execution-admission-validation-docs",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "P99.7 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99.7 is final validation only. It does not change Command Center UX, approve execution, dispatch agents, execute workers/tools, mutate project source, use hosted DBs, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P100",
       "commandCenterVisible": true,
       "label": "Final Validation",
-      "detail": "Planned P99 final validation."
+      "detail": "P99 final validation complete; P100 planned next."
+    },
+    {
+      "phaseId": "P100",
+      "title": "Founder Business Build Execution Admission Approval Capture",
+      "track": "NEXUS_OS",
+      "order": 136,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned next scoped handoff after P99 final validation. P100 must be split into implementation-grade subphases before coding.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P100 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P100.1",
+      "commandCenterVisible": false,
+      "label": "Approval Capture Planned",
+      "detail": "Next scoped handoff must be planned under the NEXUS Execution Contract."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P99.6",
-  "previousPhase": "P99.5",
-  "nextPhase": "P99.7",
+  "currentPhase": "P99.7",
+  "previousPhase": "P99.6",
+  "nextPhase": "P100",
   "currentPhaseStatus": "complete"
 }

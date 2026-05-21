@@ -283,7 +283,7 @@
     {
       "phaseId": "P99.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "objective": "Run final P99 validation, close P99, and prepare the next scoped handoff.",
       "narrowScope": "Final validation only.",
@@ -297,7 +297,8 @@
         "os-roadmap/nexus-phases.json",
         "reports/p997-execution-admission-final-validation-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-os-phase-status.js"
       ],
       "forbiddenFiles": [
         "projects/**",

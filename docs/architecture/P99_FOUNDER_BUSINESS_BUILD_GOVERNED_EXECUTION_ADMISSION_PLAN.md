@@ -102,5 +102,15 @@ Validation:
 
 ## P99.7 Final Validation
 
-P99.7 is planned. It will close P99 with final validation and prepare the next
-scoped handoff.
+P99.7 is complete. It runs final P99 validation, verifies P99.1 through P99.7
+evidence, closes the parent P99 phase, and records P100 as the next planned
+scoped handoff. P99 is complete. P100 is next for a separately planned,
+implementation-grade phase; it has no execution authority from P99.
+
+Validation:
+
+- `npm run check:p997-execution-admission-final-validation`
+- `npm run check:p996-execution-admission-validation-docs`
+- `npm run check:os-phase-status`
+- `npm run check:phase-validation-coverage`
+- `git diff --check`

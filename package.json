@@ -502,6 +502,7 @@
     "check:p994-founder-execution-admission-dry-run": "node scripts/check-p994-founder-execution-admission-dry-run.js",
     "check:p995-command-center-execution-admission-ux": "node scripts/check-p995-command-center-execution-admission-ux.js",
     "check:p996-execution-admission-validation-docs": "node scripts/check-p996-execution-admission-validation-docs.js",
+    "check:p997-execution-admission-final-validation": "node scripts/check-p997-execution-admission-final-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {
