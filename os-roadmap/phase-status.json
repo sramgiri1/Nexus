@@ -11904,25 +11904,168 @@
       "title": "Founder Business Build Governed Execution Admission Handoff",
       "track": "NEXUS_OS",
       "order": 135,
-      "status": "planned",
+      "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "",
+      "summary": "P99.1 governed execution admission contract is complete; P99.2 core admission model is next.",
+      "checksRun": [
+        "npm run check:p991-founder-execution-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P99 remains in progress. P99.1 is contract-only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.2",
+      "commandCenterVisible": true,
+      "label": "Admission Contract",
+      "detail": "P99 admission contract complete; core admission model next."
+    },
+    {
+      "phaseId": "P99.1",
+      "title": "Schema / Policy / Contract",
+      "track": "NEXUS_OS",
+      "order": 135.1,
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Defined the P99 governed execution admission contract, subphase split, safety boundary, validation commands, and status handoff.",
+      "checksRun": [
+        "npm run check:p991-founder-execution-admission-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
+      "knownLimitations": [
+        "P99.1 is contract-only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.2",
+      "commandCenterVisible": true,
+      "label": "Contract",
+      "detail": "P99 admission contract complete; core admission model next."
+    },
+    {
+      "phaseId": "P99.2",
+      "title": "Core Admission Model",
+      "track": "NEXUS_OS",
+      "order": 135.2,
+      "status": "planned",
+      "branch": "planned",
       "commit": "planned",
       "completedAt": "",
-      "summary": "Planned next scoped handoff after P98 live workstream handoff closure.",
+      "summary": "Planned display-safe execution admission model over P98 handoff packets.",
       "checksRun": [],
       "knownLimitations": [
-        "P99 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P99.2 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P99.1",
-      "commandCenterVisible": false,
-      "label": "Planned Handoff",
-      "detail": "Planned next scoped handoff; no execution enabled."
+      "nextPhase": "P99.3",
+      "commandCenterVisible": true,
+      "label": "Admission Model",
+      "detail": "Planned P99 core admission model."
+    },
+    {
+      "phaseId": "P99.3",
+      "title": "Approval Envelope",
+      "track": "NEXUS_OS",
+      "order": 135.3,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned explicit local approval envelope for future governed admission.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P99.3 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.4",
+      "commandCenterVisible": true,
+      "label": "Approval Envelope",
+      "detail": "Planned P99 approval envelope."
+    },
+    {
+      "phaseId": "P99.4",
+      "title": "Preview / Safe Dry Run",
+      "track": "NEXUS_OS",
+      "order": 135.4,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned deterministic admission dry-run records with blocked reasons.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P99.4 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.5",
+      "commandCenterVisible": true,
+      "label": "Dry Run",
+      "detail": "Planned P99 admission dry run."
+    },
+    {
+      "phaseId": "P99.5",
+      "title": "Command Center UX",
+      "track": "NEXUS_OS",
+      "order": 135.5,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned display-safe Command Center execution admission UX.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P99.5 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.6",
+      "commandCenterVisible": true,
+      "label": "UX",
+      "detail": "Planned P99 Command Center UX."
+    },
+    {
+      "phaseId": "P99.6",
+      "title": "Tests / Checkers / Docs",
+      "track": "NEXUS_OS",
+      "order": 135.6,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned aggregate P99 validation, docs, roadmap, reports, and status updates.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P99.6 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P99.7",
+      "commandCenterVisible": true,
+      "label": "Validation Docs",
+      "detail": "Planned P99 validation and docs."
+    },
+    {
+      "phaseId": "P99.7",
+      "title": "Final Validation",
+      "track": "NEXUS_OS",
+      "order": 135.7,
+      "status": "planned",
+      "branch": "planned",
+      "commit": "planned",
+      "completedAt": "",
+      "summary": "Planned final P99 validation and next scoped handoff.",
+      "checksRun": [],
+      "knownLimitations": [
+        "P99.7 is planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+      ],
+      "nextPhase": "P100",
+      "commandCenterVisible": true,
+      "label": "Final Validation",
+      "detail": "Planned P99 final validation."
     }
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P98.7",
-  "previousPhase": "P98.6",
-  "nextPhase": "P99",
+  "currentPhase": "P99.1",
+  "previousPhase": "P98.7",
+  "nextPhase": "P99.2",
   "currentPhaseStatus": "complete"
 }

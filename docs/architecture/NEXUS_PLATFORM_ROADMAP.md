@@ -2067,6 +2067,21 @@ The detailed plan lives in
 Implementation must follow
 [`p98-execution-contracts.json`](../../contracts/os-roadmap/p98-execution-contracts.json).
 
+## P99 - Founder Business Build Governed Execution Admission Handoff
+
+P99 starts the governed admission handoff from P98 live workstream packets
+toward later execution review. P99.1 is complete. It defines the
+implementation contract, seven-subphase split, admission safety boundary,
+validation commands, OS status handoff, and checker coverage while keeping
+provider/model calls, agent dispatch, worker/tool execution, project mutation,
+hosted DB mutation, deploy, release, export, package, network, and spend paths
+blocked. P99.2 is next for the core display-safe admission model.
+
+The detailed plan lives in
+[`P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md`](P99_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_ADMISSION_PLAN.md).
+Implementation must follow
+[`p99-execution-contracts.json`](../../contracts/os-roadmap/p99-execution-contracts.json).
+
 The detailed plan lives in
 [`P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md`](P97_FOUNDER_BUSINESS_BUILD_GOVERNED_EXECUTION_PLAN.md).
 Implementation must follow
