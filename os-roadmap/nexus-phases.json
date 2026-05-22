@@ -7515,27 +7515,28 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "76330cfe",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-21T00:00:00.000Z",
-      "summary": "P101.4 Command Center founder live-use UX is complete; P101.5 aggregate tests and checkers is next.",
+      "summary": "P101.5 aggregate founder live-use validation is complete; P101.6 docs and roadmap closure is next.",
       "checksRun": [
+        "npm run check:p1015-founder-live-use-validation",
         "npm run check:p1014-command-center-founder-live-use-ux",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use\"",
-        "cd dashboard && npm run build",
         "npm run check:p1013-founder-live-use-review-packet",
         "npm run check:p1012-founder-live-use-readiness-model",
         "npm run check:p1011-founder-live-use-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",
         "git diff --check"
       ],
       "knownLimitations": [
-        "P101 is in progress. P101.4 adds Command Center UX only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P101 is in progress. P101.5 is aggregate validation only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P101.5",
+      "nextPhase": "P101.6",
       "commandCenterVisible": true,
       "label": "Founder Live Use Hardening",
-      "detail": "P101.4 live-use UX complete; aggregate validation next."
+      "detail": "P101.5 aggregate validation complete; docs and roadmap next."
     },
     {
       "phaseId": "P101.1",
@@ -7646,19 +7647,30 @@
       "title": "Tests / Checkers",
       "track": "NEXUS_OS",
       "order": 137.5,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Tests / Checkers is planned as an independently commit-ready P101 subphase.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Added aggregate validation for P101 contract, readiness model, review packet, Command Center UX, route tests, reports, docs, phase status, and safety coverage.",
+      "checksRun": [
+        "npm run check:p1015-founder-live-use-validation",
+        "npm run check:p1014-command-center-founder-live-use-ux",
+        "npm run check:p1013-founder-live-use-review-packet",
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center demo leakage safety\"",
+        "cd dashboard && npm run build",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P101.5 is aggregate validation only. It does not dispatch agents, execute workers/tools, mutate project source, write hosted DB records, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P101.6",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Tests Checkers",
-      "detail": "Planned aggregate P101 tests and checkers."
+      "detail": "Aggregate founder live-use validation complete."
     },
     {
       "phaseId": "P101.6",
@@ -7719,8 +7731,8 @@
     }
   ],
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P101.4",
-  "previousPhase": "P101.3",
-  "nextPhase": "P101.5",
+  "currentPhase": "P101.5",
+  "previousPhase": "P101.4",
+  "nextPhase": "P101.6",
   "currentPhaseStatus": "complete"
 }

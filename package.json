@@ -514,6 +514,7 @@
     "check:p1012-founder-live-use-readiness-model": "node scripts/check-p1012-founder-live-use-readiness-model.js",
     "check:p1013-founder-live-use-review-packet": "node scripts/check-p1013-founder-live-use-review-packet.js",
     "check:p1014-command-center-founder-live-use-ux": "node scripts/check-p1014-command-center-founder-live-use-ux.js",
+    "check:p1015-founder-live-use-validation": "node scripts/check-p1015-founder-live-use-validation.js",
     "check:phase-validation-coverage": "node scripts/check-phase-validation-coverage.js"
   },
   "dependencies": {

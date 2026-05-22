@@ -77,9 +77,9 @@ addCheck("docs record P101.3", /P101\.3 Founder Live-Use Review Packet[\s\S]*Sta
 addCheck("platform roadmap records P101.3", /P101\.3 is\s+complete/.test(platformRoadmap) && /P101\.4 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced within P101",
-  ["P101.3", "P101.4"].includes(status.currentPhase)
-    && ["P101.2", "P101.3"].includes(status.previousPhase)
-    && ["P101.4", "P101.5"].includes(status.nextPhase)
+  ["P101.3", "P101.4", "P101.5"].includes(status.currentPhase)
+    && ["P101.2", "P101.3", "P101.4"].includes(status.previousPhase)
+    && ["P101.4", "P101.5", "P101.6"].includes(status.nextPhase)
     && statusById.get("P101.3")?.status === "complete"
     && roadmapById.get("P101.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

@@ -61,19 +61,19 @@ addCheck("Agent Flow surface renders card", pageSource.includes("Agent Flow Foun
 addCheck("Live Readiness surface renders card", pageSource.includes("Live Readiness Founder Live Use"));
 addCheck("Playwright coverage added", routeTests.includes("Founder live use readiness appears across founder routes") && routeTests.includes("/command-center/live-readiness"));
 addCheck("theme source preserved", !/data-nexus-theme|setTheme|resolvedTheme/.test(pageSource.replace(readText("dashboard/src/pages/CommandCenterV2.jsx"), "")));
-addCheck("contract marks P101.4 complete", p1014?.status === "complete" && p1015?.status === "planned");
+addCheck("contract marks P101.4 complete", p1014?.status === "complete" && ["planned", "complete"].includes(p1015?.status));
 addCheck("docs record P101.4", /P101\.4 Command Center Live-Use UX[\s\S]*Status:\s+complete/.test(docs) && docs.includes("check:p1014-command-center-founder-live-use-ux"));
 addCheck("platform roadmap records P101.4", /P101\.4 is\s+complete/.test(platformRoadmap) && /P101\.5 is\s+next/.test(platformRoadmap));
 addCheck(
-  "phase status advanced",
-  status.currentPhase === "P101.4"
-    && status.previousPhase === "P101.3"
-    && status.nextPhase === "P101.5"
+  "phase status advanced within P101",
+  ["P101.4", "P101.5"].includes(status.currentPhase)
+    && ["P101.3", "P101.4"].includes(status.previousPhase)
+    && ["P101.5", "P101.6"].includes(status.nextPhase)
     && statusById.get("P101.4")?.status === "complete"
     && roadmapById.get("P101.4")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P101.5 handoff remains planned", statusById.get("P101.5")?.status === "planned" && roadmapById.get("P101.5")?.status === "planned");
+addCheck("P101.5 handoff planned or complete", ["planned", "complete"].includes(statusById.get("P101.5")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.5")?.status));
 addCheck("no raw private IDs exposed", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serializedView + componentSource));
 addCheck("no raw dumps exposed", !/raw JSON|raw logs|raw policy dump/i.test(componentSource));
 addCheck("no DemoApp leakage", !pageSource.includes("DemoApp"));

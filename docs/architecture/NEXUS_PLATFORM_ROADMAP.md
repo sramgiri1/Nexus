@@ -2194,6 +2194,11 @@ current state, next action, disabled reason, owner capability, evidence,
 activity, and cost without raw JSON, raw logs, raw policy dumps, private IDs,
 DemoApp leakage, or runnable execution controls. P101.5 is next for aggregate
 tests and checkers.
+P101.5 is complete. It adds aggregate validation for P101.1 through P101.4,
+covering package scripts, reports, focused route tests, Command Center wiring,
+browser-safe dashboard data, docs, OS phase status, validation coverage, and
+safety checks. P101.6 is next for README, PRD, and roadmap documentation
+closure.
 
 Implementation follows
 [`p101-execution-contracts.json`](../../contracts/os-roadmap/p101-execution-contracts.json).

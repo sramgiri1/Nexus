@@ -179,10 +179,34 @@ state and next action, not fake working controls.
 
 ### P101.5 Tests / Checkers
 
-Status: planned.
+Status: complete.
 
 Aggregate P101.1 through P101.4 validation with package scripts, reports,
 focused route coverage, OS phase status, and phase validation coverage.
+
+- Narrow goal: aggregate P101.1 through P101.4 evidence in one checker.
+- Allowed files: `scripts/check-p1015-founder-live-use-validation.js`,
+  forward-compatible P101 checkers, P101 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms P101 package scripts, reports, route tests,
+  docs, Command Center wiring, status, and safety checks.
+- Command Center UX requirements: no new UX; preserve P101.4.
+- Dark/light/system theme requirements: preserve existing theme behavior.
+- Playwright tests: focused founder live-use route coverage and DemoApp safety
+  coverage are tracked.
+- Checker updates: `npm run check:p1015-founder-live-use-validation`.
+- Docs/roadmap: this plan and platform roadmap record P101.5 complete and
+  P101.6 next.
+- OS phase status: P101 in progress, P101.5 complete, current P101.5, previous
+  P101.4, next P101.6.
+- Validation commands: P101.5 aggregate checker, P101.1-P101.4 checkers,
+  focused Playwright, dashboard build, OS phase status, coverage, and
+  whitespace.
+- Final safety checks: all prior P101 checks pass; route-wide safety remains;
+  no project files changed.
 
 ### P101.6 Docs / Roadmap
 
