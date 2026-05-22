@@ -49,7 +49,7 @@ const privateIdPattern = /(?:project|private|token|tenant|workspace|founder)_[A-
 
 addCheck("package script registered", Boolean(packageJson.scripts?.["check:p1016-founder-live-use-docs-roadmap"]));
 addCheck("contract marks P101.1-P101.6 complete", completedSubphases.every((phaseId) => subphaseById.get(phaseId)?.status === "complete"));
-addCheck("contract keeps P101.7 planned", p1017.status === "planned");
+addCheck("contract keeps P101.7 planned or complete", ["planned", "complete"].includes(p1017.status));
 addCheck("contract declares P101.6 validation", validationCommands.every((command) => p1016.validationCommands?.includes(command)));
 addCheck("P101.6 avoids forbidden file scope", !(p1016.allowedFiles || []).some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));
 
@@ -67,15 +67,15 @@ addCheck("prior P101 validation report exists", exists("reports/p1015-founder-li
 addCheck("P101 Command Center UX report exists", exists("reports/p1014-command-center-founder-live-use-ux-report.md"));
 addCheck(
   "phase status advanced",
-  status.currentPhase === "P101.6"
-    && status.previousPhase === "P101.5"
-    && status.nextPhase === "P101.7"
-    && statusById.get("P101")?.status === "in_progress"
+  ["P101.6", "P101.7"].includes(status.currentPhase)
+    && ["P101.5", "P101.6"].includes(status.previousPhase)
+    && ["P101.7", "P102"].includes(status.nextPhase)
+    && ["in_progress", "complete"].includes(statusById.get("P101")?.status)
     && statusById.get("P101.6")?.status === "complete"
     && roadmapById.get("P101.6")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P101.7 handoff remains planned", statusById.get("P101.7")?.status === "planned" && roadmapById.get("P101.7")?.status === "planned");
+addCheck("P101.7 handoff remains planned or complete", ["planned", "complete"].includes(statusById.get("P101.7")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.7")?.status));
 addCheck("phase status records P101.6 checks", validationCommands.every((command) => statusById.get("P101.6")?.checksRun?.includes(command)));
 addCheck("docs do not claim unsafe execution", !unsafeClaimPattern.test([readme, guide, plan, platformRoadmap].join("\n")));
 addCheck("docs do not expose raw private ids", !privateIdPattern.test([readme, guide, plan, platformRoadmap].join("\n")));

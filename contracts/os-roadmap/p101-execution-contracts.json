@@ -541,19 +541,27 @@
     {
       "phaseId": "P101.7",
       "title": "Final Validation",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Run final P101 validation, stamp real commits, close P101, and hand off to P102.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
       "expectedBaseCommit": "P101.6 final commit",
       "allowedFiles": [
         "scripts/check-p1017-founder-live-use-final.js",
+        "scripts/check-p1016-founder-live-use-docs-roadmap.js",
+        "scripts/check-p1015-founder-live-use-validation.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
         "contracts/os-roadmap/p101-execution-contracts.json",
         "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
         "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
         "package.json",
         "os-roadmap/phase-status.json",
         "os-roadmap/nexus-phases.json",
+        "reports/p1015-founder-live-use-validation-report.md",
+        "reports/p1016-founder-live-use-docs-roadmap-report.md",
         "reports/p1017-founder-live-use-final-report.md",
         "reports/os-phase-status-report.md",
         "reports/phase-validation-coverage-report.md"
@@ -570,7 +578,21 @@
         ".env*"
       ],
       "exactFilesToCreateOrUpdate": [
-        "scripts/check-p1017-founder-live-use-final.js"
+        "scripts/check-p1017-founder-live-use-final.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js",
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "scripts/check-p1015-founder-live-use-validation.js",
+        "scripts/check-p1016-founder-live-use-docs-roadmap.js",
+        "contracts/os-roadmap/p101-execution-contracts.json",
+        "docs/architecture/P101_FOUNDER_LIVE_USE_HARDENING_PLAN.md",
+        "docs/architecture/NEXUS_PLATFORM_ROADMAP.md",
+        "package.json",
+        "os-roadmap/phase-status.json",
+        "os-roadmap/nexus-phases.json",
+        "reports/p1015-founder-live-use-validation-report.md",
+        "reports/p1016-founder-live-use-docs-roadmap-report.md"
       ],
       "expectedExportsSchemasDataShapes": {
         "reportShape": "Final report confirming P101.1-P101.6 complete, validation passed, P101 closed, and P102 planned."
@@ -585,7 +607,7 @@
         "npm run check:p1017-founder-live-use-final",
         "npm run check:p1016-founder-live-use-docs-roadmap",
         "npm run check:p1015-founder-live-use-validation",
-        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center routes do not show DemoApp\"",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use|full Command Center demo leakage safety\"",
         "cd dashboard && npm run build",
         "npm run check:os-phase-status",
         "npm run check:phase-validation-coverage",

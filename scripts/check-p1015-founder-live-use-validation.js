@@ -66,9 +66,9 @@ addCheck("docs record P101.5", /P101\.5 Tests \/ Checkers[\s\S]*Status:\s+comple
 addCheck("platform roadmap records P101.5", /P101\.5 is\s+complete/.test(platformRoadmap) && /P101\.6 is\s+next/.test(platformRoadmap));
 addCheck(
   "phase status advanced",
-  ["P101.5", "P101.6"].includes(status.currentPhase)
-    && ["P101.4", "P101.5"].includes(status.previousPhase)
-    && ["P101.6", "P101.7"].includes(status.nextPhase)
+  ["P101.5", "P101.6", "P101.7"].includes(status.currentPhase)
+    && ["P101.4", "P101.5", "P101.6"].includes(status.previousPhase)
+    && ["P101.6", "P101.7", "P102"].includes(status.nextPhase)
     && statusById.get("P101.5")?.status === "complete"
     && roadmapById.get("P101.5")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,

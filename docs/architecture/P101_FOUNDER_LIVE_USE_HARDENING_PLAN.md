@@ -246,10 +246,39 @@ hardening state is accurate and no stale preview/live labels remain for P101.
 
 ### P101.7 Final Validation
 
-Status: planned.
+Status: complete.
 
 Close P101 with final validation, phase-status closure, Command Center evidence,
 dashboard build/page checks, and a P102 planned handoff.
+
+- Narrow goal: run final P101 validation, stamp real commits, close P101, and
+  hand off to P102.
+- Allowed files: `scripts/check-p1017-founder-live-use-final.js`,
+  forward-compatible P101 checkers, P101 contract, this plan, platform roadmap,
+  package script, OS roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected report shape: confirms P101.1-P101.6 are complete, final validation
+  passes, P101 is closed, and P102 is planned.
+- Command Center UX requirements: no source UX change; preserve P101.4 cards
+  and P101.5 route safety coverage.
+- Dark/light/system theme requirements: preserve existing theme behavior.
+- Playwright tests: focused founder live-use route coverage and route-wide
+  full Command Center demo-leakage safety coverage.
+- Checker updates: `npm run check:p1017-founder-live-use-final`.
+- Docs/roadmap: this plan and platform roadmap record P101 and P101.7 complete
+  with P102 next.
+- OS phase status: P101 complete, P101.7 complete, current P101.7, previous
+  P101.6, next P102.
+- Validation commands: `npm run check:p1017-founder-live-use-final`,
+  `npm run check:p1016-founder-live-use-docs-roadmap`,
+  `npm run check:p1015-founder-live-use-validation`,
+  `cd dashboard && npx playwright test tests/routes.spec.js --grep "Founder live use|full Command Center demo leakage safety"`,
+  `cd dashboard && npm run build`, `npm run check:os-phase-status`,
+  `npm run check:phase-validation-coverage`, and `git diff --check`.
+- Final safety checks: P101 is closed, P102 is only planned, no project files
+  changed, and unsafe execution remains blocked.
 
 ## Rollback Plan
 
