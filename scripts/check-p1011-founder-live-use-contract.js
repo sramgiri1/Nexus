@@ -91,9 +91,9 @@ addCheck("P101.1 plan records contract fields", /Narrow goal/i.test(planDoc) && 
 addCheck("platform roadmap records P101.1", /P101 - Founder Live Use Hardening/.test(platformRoadmap) && /P101\.1 is\s+complete/.test(platformRoadmap));
 addCheck(
   "phase status is within P101 handoff",
-  ["P101.1", "P101.2", "P101.3"].includes(status.currentPhase)
-    && ["P100.7", "P101.1", "P101.2"].includes(status.previousPhase)
-    && ["P101.2", "P101.3", "P101.4"].includes(status.nextPhase)
+  ["P101.1", "P101.2", "P101.3", "P101.4"].includes(status.currentPhase)
+    && ["P100.7", "P101.1", "P101.2", "P101.3"].includes(status.previousPhase)
+    && ["P101.2", "P101.3", "P101.4", "P101.5"].includes(status.nextPhase)
     && status.currentPhaseStatus === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );

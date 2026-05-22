@@ -138,12 +138,44 @@ mutation.
 
 ### P101.4 Command Center Live-Use UX
 
-Status: planned.
+Status: complete.
 
 Wire the readiness and review packet into founder-facing Command Center pages
 using existing cards, tabs, badges, route data, and theme behavior. Add focused
 Playwright coverage for the changed routes. The UX must show useful current
 state and next action, not fake working controls.
+
+- Narrow goal: render founder live-use readiness and review packet on Lite,
+  Business Build, Agent Flow, and Live Readiness.
+- Allowed files: `dashboard/src/data/businessBuild.js`,
+  `dashboard/src/pages/CommandCenterV2.jsx`, `dashboard/tests/routes.spec.js`,
+  `scripts/check-p1014-command-center-founder-live-use-ux.js`,
+  forward-compatible P101 checkers, P101 contract/docs, package script, OS
+  roadmap/status files, and generated reports.
+- Forbidden files: `projects/**`, `providers/**`, `tools/**`,
+  `worker-runtime/**`, `deploy/**`, `release/**`, `exports/**`,
+  `packages/**`, and `.env*`.
+- Expected view model shape: `founderLiveUseReadiness` and
+  `founderLiveUseReview` with current state, next action, blockers, disabled
+  reason, owner capability, evidence, activity, cost, checklist, lane rows,
+  safety rows, and runtime flags false.
+- Command Center UX requirements: show founder live-use readiness without raw
+  JSON, raw logs, raw policy dumps, private IDs, DemoApp leakage, or runnable
+  execution controls.
+- Dark/light/system theme requirements: existing theme controls are preserved.
+- Playwright tests: `cd dashboard && npx playwright test tests/routes.spec.js
+  --grep "Founder live use"`.
+- Checker updates: `npm run check:p1014-command-center-founder-live-use-ux`.
+- Docs/roadmap: this plan and platform roadmap record P101.4 complete and
+  P101.5 next.
+- OS phase status: P101 in progress, P101.4 complete, current P101.4, previous
+  P101.3, next P101.5.
+- Validation commands: `npm run check:p1014-command-center-founder-live-use-ux`,
+  focused Playwright, dashboard build, prior P101 checks,
+  `npm run check:os-phase-status`, `npm run check:phase-validation-coverage`,
+  and `git diff --check`.
+- Final safety checks: no runnable live actions, no DemoApp leakage, no raw
+  private IDs, and route-wide safety remains intact.
 
 ### P101.5 Tests / Checkers
 

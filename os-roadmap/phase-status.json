@@ -12322,10 +12322,13 @@
       "order": 137,
       "status": "in_progress",
       "branch": "codex/nexus-e2e-phase-validation",
-      "commit": "35c10f35",
+      "commit": "pending-final-commit",
       "completedAt": "2026-05-21T00:00:00.000Z",
-      "summary": "P101.3 founder live-use review packet is complete; P101.4 Command Center UX is next.",
+      "summary": "P101.4 Command Center founder live-use UX is complete; P101.5 aggregate tests and checkers is next.",
       "checksRun": [
+        "npm run check:p1014-command-center-founder-live-use-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use\"",
+        "cd dashboard && npm run build",
         "npm run check:p1013-founder-live-use-review-packet",
         "npm run check:p1012-founder-live-use-readiness-model",
         "npm run check:p1011-founder-live-use-contract",
@@ -12334,12 +12337,12 @@
         "git diff --check"
       ],
       "knownLimitations": [
-        "P101 is in progress. P101.3 adds a display-safe review packet only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P101 is in progress. P101.4 adds Command Center UX only and does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
       ],
-      "nextPhase": "P101.4",
+      "nextPhase": "P101.5",
       "commandCenterVisible": true,
       "label": "Founder Live Use Hardening",
-      "detail": "P101.3 review packet complete; Command Center UX next."
+      "detail": "P101.4 live-use UX complete; aggregate validation next."
     },
     {
       "phaseId": "P101.1",
@@ -12421,19 +12424,29 @@
       "title": "Command Center Live-Use UX",
       "track": "NEXUS_OS",
       "order": 137.4,
-      "status": "planned",
-      "branch": "planned",
-      "commit": "planned",
-      "completedAt": "",
-      "summary": "Command Center Live-Use UX is planned as an independently commit-ready P101 subphase.",
-      "checksRun": [],
+      "status": "complete",
+      "branch": "codex/nexus-e2e-phase-validation",
+      "commit": "pending-final-commit",
+      "completedAt": "2026-05-21T00:00:00.000Z",
+      "summary": "Rendered founder live-use readiness on Lite, Business Build, Agent Flow, and Live Readiness with checklist, lane rows, blockers, disabled reason, owner, evidence/activity, cost, and safety rows.",
+      "checksRun": [
+        "npm run check:p1014-command-center-founder-live-use-ux",
+        "cd dashboard && npx playwright test tests/routes.spec.js --grep \"Founder live use\"",
+        "cd dashboard && npm run build",
+        "npm run check:p1013-founder-live-use-review-packet",
+        "npm run check:p1012-founder-live-use-readiness-model",
+        "npm run check:p1011-founder-live-use-contract",
+        "npm run check:os-phase-status",
+        "npm run check:phase-validation-coverage",
+        "git diff --check"
+      ],
       "knownLimitations": [
-        "Planned only. It does not enable provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, or provider spend."
+        "P101.4 is UI wiring only. It does not dispatch agents, execute workers/tools, mutate project source, write hosted DB records, deploy, release, export, package, call providers/models, use network calls, or spend."
       ],
       "nextPhase": "P101.5",
-      "commandCenterVisible": false,
+      "commandCenterVisible": true,
       "label": "Live-Use UX",
-      "detail": "Planned Command Center live-use hardening UX."
+      "detail": "Founder live-use readiness visible across founder Command Center routes."
     },
     {
       "phaseId": "P101.5",
@@ -12514,8 +12527,8 @@
   ],
   "track": "NEXUS_OS",
   "updatedAt": "2026-05-21T00:00:00.000Z",
-  "currentPhase": "P101.3",
-  "previousPhase": "P101.2",
-  "nextPhase": "P101.4",
+  "currentPhase": "P101.4",
+  "previousPhase": "P101.3",
+  "nextPhase": "P101.5",
   "currentPhaseStatus": "complete"
 }

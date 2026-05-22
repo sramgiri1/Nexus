@@ -2187,6 +2187,13 @@ execution-blocked state. The packet is local review only and does not approve
 execution, dispatch agents, run workers/tools, mutate project files, write
 hosted DB records, call providers/models, deploy, release, export, package,
 use network calls, or spend. P101.4 is next for Command Center UX.
+P101.4 is complete. It exposes founder live-use readiness in Lite, Business
+Build, Agent Flow, and Live Readiness using the existing Command Center card,
+summary, lane, checklist, and safety-row patterns. The UX shows what changed,
+current state, next action, disabled reason, owner capability, evidence,
+activity, and cost without raw JSON, raw logs, raw policy dumps, private IDs,
+DemoApp leakage, or runnable execution controls. P101.5 is next for aggregate
+tests and checkers.
 
 Implementation follows
 [`p101-execution-contracts.json`](../../contracts/os-roadmap/p101-execution-contracts.json).

@@ -217,6 +217,169 @@ function buildBusinessBuildDryRunAdmissionView(founderDbWorkflow = {}) {
   };
 }
 
+function buildFounderLiveUseDisplayModels({ prdAuthoringEnvelope = {}, dryRunAdmission = {}, liveWorkstreamHandoff = {}, executionAdmissionDryRun = {} } = {}) {
+  const laneRows = [
+    {
+      label: "Founder Q&A",
+      currentState: "Founder Runtime Local Admitted",
+      reviewState: "Ready For Founder Review",
+      ownerCapability: "NEXUS Founder Runtime Admission",
+      nextAction: "Ask the next founder question locally and keep execution controls blocked.",
+      blocker: "Execution remains blocked by safety contract.",
+      evidenceLocation: "reports/p1012-founder-live-use-readiness-model-report.md",
+    },
+    {
+      label: "Local PRD",
+      currentState: toTitle(prdAuthoringEnvelope.currentState),
+      reviewState: toTitle(prdAuthoringEnvelope.prdArtifact?.reviewState || "ready_for_operator_review"),
+      ownerCapability: prdAuthoringEnvelope.ownerCapability || "NEXUS Founder PRD Safe Authoring",
+      nextAction: "Review the local PRD artifact before workstream review.",
+      blocker: "Execution remains blocked by safety contract.",
+      evidenceLocation: "reports/p903-founder-prd-safe-authoring-report.md",
+    },
+    {
+      label: "Agent Workstream Plan",
+      currentState: liveWorkstreamHandoff.currentState || "Local Handoff Ready",
+      reviewState: "Ready For Founder Review",
+      ownerCapability: liveWorkstreamHandoff.ownerCapability || "NEXUS Live Workstream Handoff",
+      nextAction: liveWorkstreamHandoff.nextAction || "Review agent lane ownership and blockers before dispatch.",
+      blocker: "Agent dispatch remains blocked.",
+      evidenceLocation: liveWorkstreamHandoff.evidenceLocation || "reports/p982-founder-live-workstream-handoff-model-report.md",
+    },
+    {
+      label: "Local DB Readiness",
+      currentState: dryRunAdmission.currentState || "Dry Run Admission Ready Execution Blocked",
+      reviewState: "Ready For Founder Review",
+      ownerCapability: dryRunAdmission.ownerCapability || "NEXUS Business Build Dry-Run Admission",
+      nextAction: "Keep local DB records reviewable and block hosted DB mutation.",
+      blocker: "Hosted DB mutation remains blocked.",
+      evidenceLocation: dryRunAdmission.evidenceLocation || "reports/p1012-founder-live-use-readiness-model-report.md",
+    },
+    {
+      label: "Execution Admission Review",
+      currentState: executionAdmissionDryRun.currentState || "Execution Admission Dry Run Ready Execution Blocked",
+      reviewState: "Ready For Founder Review",
+      ownerCapability: executionAdmissionDryRun.ownerCapability || "NEXUS Execution Admission Dry Run",
+      nextAction: executionAdmissionDryRun.nextAction || "Show dry-run admission state while execution remains blocked.",
+      blocker: "Execution remains blocked.",
+      evidenceLocation: executionAdmissionDryRun.evidenceLocation || "reports/p994-founder-execution-admission-dry-run-report.md",
+    },
+    {
+      label: "Live Readiness Gate",
+      currentState: "Full Command Center Founder Safe Live Readiness Visible",
+      reviewState: "Ready For Founder Review",
+      ownerCapability: "NEXUS Live Readiness Governance",
+      nextAction: "Use this review packet in Command Center without runnable execution controls.",
+      blocker: "Provider/model calls remain blocked.",
+      evidenceLocation: "reports/p1007-founder-command-center-final-report.md",
+    },
+  ].map((lane) => ({
+    ...lane,
+    disabledReason:
+      "Founder live-use readiness is local review only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+    activityLocation: "reports/os-phase-status-report.md",
+    costImpact: "No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+    executionAllowed: "Blocked",
+    dispatchAllowed: "Blocked",
+    projectMutationAllowed: "Blocked",
+  }));
+
+  const checklist = [
+    {
+      label: "Founder context and PRD are reviewable",
+      status: "Complete",
+      ownerCapability: "NEXUS Founder PRD Safe Authoring",
+      nextAction: "Review the local PRD artifact before execution admission.",
+    },
+    {
+      label: "Agent lanes are mapped without dispatch",
+      status: "Complete",
+      ownerCapability: "NEXUS Founder Workstream Runtime Governance",
+      nextAction: "Review agent lane owners, blockers, and evidence before any later dispatch phase.",
+    },
+    {
+      label: "Local DB readiness is reviewable",
+      status: "Complete",
+      ownerCapability: "NEXUS Business Build Local Execution Readiness",
+      nextAction: "Keep local DB review separate from hosted DB mutation.",
+    },
+    {
+      label: "Execution authority remains blocked",
+      status: "Complete",
+      ownerCapability: "NEXUS Safety Governance",
+      nextAction: "Do not expose runnable execution controls in Command Center.",
+    },
+  ];
+
+  const safetyRows = [
+    { label: "Execution", value: "Blocked" },
+    { label: "Agent dispatch", value: "Blocked" },
+    { label: "Worker/tool execution", value: "Blocked" },
+    { label: "Project mutation", value: "Blocked" },
+    { label: "Hosted DB", value: "Blocked" },
+    { label: "Deploy/package", value: "Blocked" },
+    { label: "Provider spend", value: "Blocked" },
+  ];
+
+  return {
+    readiness: {
+      currentState: "Founder Live Use Local Review Ready Execution Blocked",
+      founderLiveUseMode: "Local Governed Readiness Only",
+      readyLaneCount: laneRows.length,
+      totalLaneCount: laneRows.length,
+      executableLaneCount: 0,
+      dispatchableLaneCount: 0,
+      projectMutationLaneCount: 0,
+      nextAction: "Render the founder live-use review packet in Command Center without runnable execution controls.",
+      blockers: [
+        "Agent dispatch is blocked.",
+        "Worker/tool execution is blocked.",
+        "Project mutation is blocked.",
+        "Hosted DB mutation is blocked.",
+        "Provider spend is blocked.",
+      ],
+      disabledReason:
+        "P101.4 renders founder live-use readiness only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      ownerCapability: "NEXUS Founder Live Use Hardening",
+      evidenceLocation: "reports/p1012-founder-live-use-readiness-model-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      laneRows,
+      safetyRows,
+    },
+    review: {
+      currentState: "Founder Live Use Review Packet Ready Execution Blocked",
+      reviewMode: "Display Safe Local Review Only",
+      ready: true,
+      readyItemCount: checklist.length,
+      totalItemCount: checklist.length,
+      laneReviewCount: laneRows.length,
+      executableLaneCount: 0,
+      dispatchableLaneCount: 0,
+      projectMutationLaneCount: 0,
+      nextAction: "Review this founder live-use packet without enabling execution.",
+      blockers: [
+        "Provider/model calls remain blocked.",
+        "Agent dispatch remains blocked.",
+        "Worker/tool execution remains blocked.",
+        "Project mutation remains blocked.",
+        "Hosted DB mutation remains blocked.",
+        "Deploy/release/export/package actions remain blocked.",
+        "Provider spend remains blocked.",
+      ],
+      disabledReason:
+        "P101.4 is Command Center rendering only. Provider/model calls, agent dispatch, worker/tool execution, project mutation, hosted DB mutation, deploy, release, export, package, network calls, and spend remain blocked.",
+      ownerCapability: "NEXUS Founder Live Use Review Governance",
+      evidenceLocation: "reports/p1013-founder-live-use-review-packet-report.md",
+      activityLocation: "reports/os-phase-status-report.md",
+      costImpact: "Display-safe local review only. No provider calls, model calls, network calls, deploy, package creation, or provider spend.",
+      checklist,
+      laneRows,
+      safetyRows,
+    },
+  };
+}
+
 export function buildBusinessBuildDbCrudViewModel(founderIdeaSummary = DEFAULT_BUSINESS_BUILD_IDEA) {
   const recordRows = [
     {
@@ -903,6 +1066,12 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
   const executionAdmission = buildFounderExecutionAdmissionModel(founderIdeaSummary);
   const executionAdmissionApprovalEnvelope = buildFounderExecutionAdmissionApprovalEnvelope(founderIdeaSummary);
   const executionAdmissionDryRun = buildFounderExecutionAdmissionDryRun(founderIdeaSummary);
+  const founderLiveUse = buildFounderLiveUseDisplayModels({
+    prdAuthoringEnvelope,
+    dryRunAdmission,
+    liveWorkstreamHandoff,
+    executionAdmissionDryRun,
+  });
 
   return {
     routeId: BUSINESS_BUILD_ROUTE_ID,
@@ -1027,6 +1196,8 @@ export function buildBusinessBuildViewModel(founderIdeaSummary = DEFAULT_BUSINES
     },
     businessBuildDbCrud,
     founderDbWorkflow,
+    founderLiveUseReadiness: founderLiveUse.readiness,
+    founderLiveUseReview: founderLiveUse.review,
     liveWorkstreamHandoff,
     liveWorkstreamHandoffDryRun,
     executionAdmission,

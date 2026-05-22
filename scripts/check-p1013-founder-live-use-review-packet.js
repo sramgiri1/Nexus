@@ -72,19 +72,19 @@ addCheck("execution remains blocked", packet.data.executableLaneCount === 0 && p
 addCheck("lane reviews are not executable", packet.data.laneReviews.every((lane) => lane.executable === false && lane.dispatchable === false && lane.projectMutationAllowed === false));
 addCheck("unsafe runtime flags remain false", allUnsafeFlagsFalse(packet) && allUnsafeFlagsFalse(blockedPacket));
 addCheck("packet reuses P101.2 readiness model", packetText.includes("buildFounderLiveUseReadiness") && packet.data.sourceReadinessPhase === "P101.2");
-addCheck("contract marks P101.3 complete", p1013?.status === "complete" && p1014?.status === "planned");
+addCheck("contract marks P101.3 complete", p1013?.status === "complete" && ["planned", "complete"].includes(p1014?.status));
 addCheck("docs record P101.3", /P101\.3 Founder Live-Use Review Packet[\s\S]*Status:\s+complete/.test(docs) && docs.includes("check:p1013-founder-live-use-review-packet"));
 addCheck("platform roadmap records P101.3", /P101\.3 is\s+complete/.test(platformRoadmap) && /P101\.4 is\s+next/.test(platformRoadmap));
 addCheck(
-  "phase status advanced",
-  status.currentPhase === "P101.3"
-    && status.previousPhase === "P101.2"
-    && status.nextPhase === "P101.4"
+  "phase status advanced within P101",
+  ["P101.3", "P101.4"].includes(status.currentPhase)
+    && ["P101.2", "P101.3"].includes(status.previousPhase)
+    && ["P101.4", "P101.5"].includes(status.nextPhase)
     && statusById.get("P101.3")?.status === "complete"
     && roadmapById.get("P101.3")?.status === "complete",
   `${status.currentPhase}/${status.previousPhase}/${status.nextPhase}`,
 );
-addCheck("P101.4 handoff remains planned", statusById.get("P101.4")?.status === "planned" && roadmapById.get("P101.4")?.status === "planned");
+addCheck("P101.4 handoff planned or complete", ["planned", "complete"].includes(statusById.get("P101.4")?.status) && ["planned", "complete"].includes(roadmapById.get("P101.4")?.status));
 addCheck("no raw private IDs exposed", !/(?:project|private|token|tenant|workspace|founder)_[A-Za-z0-9_-]*\d[A-Za-z0-9_-]*/i.test(serialized));
 addCheck("no unsafe runnable actions invented", !/dispatch agent now|run worker now|write project now|deploy now|spend now|call provider now|create project now|write hosted db now|execute now/i.test(serialized));
 addCheck("P101.3 avoids forbidden file scope", !p1013.allowedFiles.some((file) => file.startsWith("projects/") || file.startsWith("careloop/") || file.startsWith("dashboard/src/") || file.startsWith("dashboard/tests/") || file.startsWith("providers/") || file.startsWith("tools/") || file.startsWith("worker-runtime/")));

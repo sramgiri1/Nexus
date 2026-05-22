@@ -282,7 +282,7 @@
     {
       "phaseId": "P101.4",
       "title": "Command Center Founder Live-Use UX",
-      "status": "planned",
+      "status": "complete",
       "scopeClassification": "NEXUS_OS_CHANGE",
       "narrowGoal": "Expose founder live-use readiness on Lite, Business Build, Agent Flow, and Live Readiness without enabling execution.",
       "startingBranch": "codex/nexus-e2e-phase-validation",
@@ -300,7 +300,10 @@
         "os-roadmap/nexus-phases.json",
         "reports/p1014-command-center-founder-live-use-ux-report.md",
         "reports/os-phase-status-report.md",
-        "reports/phase-validation-coverage-report.md"
+        "reports/phase-validation-coverage-report.md",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js"
       ],
       "forbiddenFiles": [
         "projects/**",
@@ -317,7 +320,10 @@
         "dashboard/src/data/businessBuild.js",
         "dashboard/src/pages/CommandCenterV2.jsx",
         "dashboard/tests/routes.spec.js",
-        "scripts/check-p1014-command-center-founder-live-use-ux.js"
+        "scripts/check-p1014-command-center-founder-live-use-ux.js",
+        "scripts/check-p1011-founder-live-use-contract.js",
+        "scripts/check-p1012-founder-live-use-readiness-model.js",
+        "scripts/check-p1013-founder-live-use-review-packet.js"
       ],
       "expectedExportsSchemasDataShapes": {
         "viewModelShape": "Business Build view model includes founderLiveUseReadiness and founderLiveUseReview with currentState, nextAction, blockers, disabledReason, ownerCapability, evidenceLocation, activityLocation, costImpact, safetyRows, laneRows, checklist, and runtime flags false."

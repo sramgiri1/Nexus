@@ -3333,6 +3333,11 @@ function CommandCenterLitePage() {
             dryRun={liteBusinessBuild.executionAdmissionDryRun}
             surfaceLabel="Lite Execution Admission"
           />
+          <FounderLiveUseReviewCard
+            readiness={liteBusinessBuild.founderLiveUseReadiness}
+            review={liteBusinessBuild.founderLiveUseReview}
+            surfaceLabel="Lite Founder Live Use"
+          />
           <FounderPersistenceControlsCard controls={liteFounderPersistenceControls} />
           <section className="ccv2-card ccv2-lite-prd-review" aria-label="Local PRD review gate">
             <div className="ccv2-card-header-row">
@@ -3483,6 +3488,11 @@ function AgentFlowPage() {
         }))}
       />
       <AgentFlowPanel envelope={envelope} />
+      <FounderLiveUseReviewCard
+        readiness={businessBuild.founderLiveUseReadiness}
+        review={businessBuild.founderLiveUseReview}
+        surfaceLabel="Agent Flow Founder Live Use"
+      />
       <BusinessBuildDbCrudCard crud={businessBuild.businessBuildDbCrud} surfaceLabel="Agent Flow Business Build DB" />
       <LiveWorkstreamHandoffCard
         handoff={businessBuild.liveWorkstreamHandoff}
@@ -9811,6 +9821,7 @@ function EnterprisePreviewPage() {
 
 function LiveReadinessPage() {
   const readiness = buildLiveReadinessViewModel();
+  const founderLiveUse = buildBusinessBuildViewModel(getStoredLiteFounderIdea());
   const route = COMMAND_CENTER_ROUTE_BY_KEY.liveReadiness || {};
   const tabs = route.tabs || LIVE_READINESS_TABS;
   const [activeTab, setActiveTab] = useState(route.defaultTab || "overview");
@@ -9836,6 +9847,12 @@ function LiveReadinessPage() {
         </div>
 
         <div className="ccv2-info-banner" style={{ marginTop: 16 }}>{readiness.disabledReason}</div>
+
+        <FounderLiveUseReviewCard
+          readiness={founderLiveUse.founderLiveUseReadiness}
+          review={founderLiveUse.founderLiveUseReview}
+          surfaceLabel="Live Readiness Founder Live Use"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Live readiness sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10148,6 +10165,12 @@ function BusinessBuildPage() {
         <div className="ccv2-info-banner" style={{ marginTop: 16 }}>
           Business Build is live for local planning and DB-backed readiness. Agents are shown as owner lanes; dispatch, provider calls, project writes, hosted DB mutation, deploy, package creation, and spend are still disabled.
         </div>
+
+        <FounderLiveUseReviewCard
+          readiness={build.founderLiveUseReadiness}
+          review={build.founderLiveUseReview}
+          surfaceLabel="Business Build Founder Live Use"
+        />
 
         <CommandTabs tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} ariaLabel="Business Build sections">
           <CommandTabPanel tabId="overview" activeTab={activeTab}>
@@ -10489,6 +10512,86 @@ function BusinessBuildPage() {
           </CommandTabPanel>
         </CommandTabs>
       </div>
+    </div>
+  );
+}
+
+function FounderLiveUseReviewCard({ readiness, review, surfaceLabel = "Founder Live Use" }) {
+  if (!readiness || !review) return null;
+
+  const lanes = Array.isArray(review.laneRows) ? review.laneRows.slice(0, 6) : [];
+  const checklist = Array.isArray(review.checklist) ? review.checklist : [];
+  const blockers = Array.isArray(review.blockers) ? review.blockers.slice(0, 6) : [];
+  const safetyRows = Array.isArray(review.safetyRows) ? review.safetyRows : [];
+
+  return (
+    <div className="ccv2-card" style={{ marginTop: 16 }} aria-label="Founder live use readiness">
+      <div className="ccv2-card-header-row">
+        <div>
+          <div className="ccv2-eyebrow">{surfaceLabel}</div>
+          <h3>Founder Live Use Review</h3>
+          <div className="ccv2-muted" style={{ marginTop: 6 }}>
+            {review.currentState}
+          </div>
+        </div>
+        <span className="ccv2-pill ccv2-pill--disabled">Execution blocked</span>
+      </div>
+      <div className="ccv2-page-summary-grid" style={{ marginTop: 8 }}>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Readiness</span><span className="ccv2-page-summary-value">{readiness.currentState}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Review mode</span><span className="ccv2-page-summary-value">{review.reviewMode}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Checklist</span><span className="ccv2-page-summary-value">{review.readyItemCount} of {review.totalItemCount} complete</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Founder lanes</span><span className="ccv2-page-summary-value">{readiness.readyLaneCount} of {readiness.totalLaneCount} review-ready</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Executable lanes</span><span className="ccv2-page-summary-value">{review.executableLaneCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Dispatchable lanes</span><span className="ccv2-page-summary-value">{review.dispatchableLaneCount}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Owner capability</span><span className="ccv2-page-summary-value">{review.ownerCapability}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Next action</span><span className="ccv2-page-summary-value">{review.nextAction}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Disabled reason</span><span className="ccv2-page-summary-value">{review.disabledReason}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Evidence</span><span className="ccv2-page-summary-value">{review.evidenceLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Activity</span><span className="ccv2-page-summary-value">{review.activityLocation}</span></div>
+        <div className="ccv2-page-summary-row"><span className="ccv2-page-summary-label">Cost impact</span><span className="ccv2-page-summary-value">{review.costImpact}</span></div>
+      </div>
+      <div className="ccv2-grid ccv2-grid--4" style={{ marginTop: 16 }}>
+        {checklist.map((item) => (
+          <div
+            key={item.label}
+            aria-label={`${item.label} founder live use checklist item`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{item.label}</div>
+            <div className={`ccv2-pill ccv2-pill--${item.status === "Complete" ? "teal" : "amber"}`} style={{ marginTop: 8 }}>{item.status}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{item.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{item.nextAction}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-grid ccv2-grid--3" style={{ marginTop: 16 }}>
+        {lanes.map((lane) => (
+          <div
+            key={lane.label}
+            aria-label={`${lane.label} founder live use lane`}
+            style={{ border: "1px solid var(--v2-border)", borderRadius: 8, padding: 12 }}
+          >
+            <div className="ccv2-section-heading">{lane.label}</div>
+            <div className="ccv2-pill ccv2-pill--disabled" style={{ marginTop: 8 }}>{lane.reviewState}</div>
+            <div className="ccv2-muted" style={{ marginTop: 10 }}>{lane.ownerCapability}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.nextAction}</div>
+            <div className="ccv2-muted" style={{ marginTop: 8 }}>{lane.blocker}</div>
+          </div>
+        ))}
+      </div>
+      <div className="ccv2-safety-grid" style={{ marginTop: 12 }}>
+        {safetyRows.map((row) => (
+          <div className="ccv2-safety-row" key={row.label}>
+            <span className="ccv2-safety-row__label">{row.label}</span>
+            <span className="ccv2-safety-row__value--disabled">{row.value}</span>
+          </div>
+        ))}
+      </div>
+      {blockers.length > 0 && (
+        <ul className="ccv2-list" style={{ marginTop: 12 }}>
+          {blockers.map((blocker) => <li key={blocker}>{blocker}</li>)}
+        </ul>
+      )}
     </div>
   );
 }
